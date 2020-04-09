@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FlorisBoard</string>
+    <string name="subtype_en_US">English (US)</string>
 </resources>

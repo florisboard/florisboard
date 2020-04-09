@@ -1,0 +1,71 @@
+<dev.patrickgold.florisboard.CustomKeyboard
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    style="@style/CustomKeyboardStyle"
+    custom:layoutName="qwerty">
+
+    <com.google.android.flexbox.FlexboxLayout style="@style/CustomKeyboardStyle.Row">
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="49" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="50" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="51" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="52" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="53" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="54" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="55" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="56" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="57" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="48" />
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <com.google.android.flexbox.FlexboxLayout style="@style/CustomKeyboardStyle.Row">
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="113" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="119" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="101" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="114" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="116" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="121" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="117" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="105" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="111" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="112" />
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <com.google.android.flexbox.FlexboxLayout style="@style/CustomKeyboardStyle.Row">
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="97" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="115" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="100" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="102" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="103" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="104" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="106" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="107" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="108" />
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <com.google.android.flexbox.FlexboxLayout style="@style/CustomKeyboardStyle.Row">
+        <dev.patrickgold.florisboard.CustomKeySpecial style="@style/CustomKeySpecialStyle" custom:cmd="SHIFT" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="122" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="120" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="99" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="118" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="98" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="110" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="109" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="46" />
+        <dev.patrickgold.florisboard.CustomKeySpecial style="@style/CustomKeySpecialStyle" custom:cmd="DEL" />
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <com.google.android.flexbox.FlexboxLayout style="@style/CustomKeyboardStyle.Row">
+        <dev.patrickgold.florisboard.CustomKeySpecial style="@style/CustomKeySpecialStyle" custom:cmd="LANGSWITCH" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="44" />
+        <dev.patrickgold.florisboard.CustomKeySpecial style="@style/CustomKeySpecialStyle" custom:cmd="LANGSWITCH" />
+        <dev.patrickgold.florisboard.CustomKeySpecial style="@style/CustomKeySpecialStyle" custom:cmd="SPACE" app:layout_flexGrow="1" />
+        <dev.patrickgold.florisboard.CustomKey style="@style/CustomKeyStyle" custom:code="47" />
+        <dev.patrickgold.florisboard.CustomKeySpecial style="@style/CustomKeySpecialStyle" custom:cmd="CONFIRM" />
+    </com.google.android.flexbox.FlexboxLayout>
+
+</dev.patrickgold.florisboard.CustomKeyboard>

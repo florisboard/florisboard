@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- CustomKey attributes -->
+    <declare-styleable name="CustomKey">
+        <attr name="code" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="CustomKeyStyleRef">
+        <attr name="customKeyStyle" format="reference" />
+    </declare-styleable>
+
+    <!-- CustomKeySpecial attributes -->
+    <declare-styleable name="CustomKeySpecial">
+        <attr name="cmd" format="enum">
+            <enum name="CONFIRM" value="-4" />
+            <enum name="DEL" value="-5" />
+            <enum name="LANGSWITCH" value="-64" />
+            <enum name="PAGESWITCH" value="-63" />
+            <enum name="SHIFT" value="-1" />
+            <enum name="SPACE" value="32" />
+            <enum name="UNASSIGNED" value="0" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="CustomKeySpecialStyleRef">
+        <attr name="customKeySpecialStyle" format="reference" />
+    </declare-styleable>
+
+    <!-- CustomKeyboard attributes -->
+    <declare-styleable name="CustomKeyboard">
+        <attr name="layoutName" format="string" />
+        <attr name="showLanguageButton" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="CustomKeyboardStyleRef">
+        <attr name="customKeyboardStyle" format="reference" />
+    </declare-styleable>
+
+</resources>
