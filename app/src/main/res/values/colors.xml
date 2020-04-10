@@ -3,4 +3,8 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <color name="keyboardBackground_light">#D6D6D6</color>
+    <color name="keyBackground_light">#E6F0F0F0</color>
+    <color name="keyBackgroundPressed_light">#E6D0D0D0</color>
 </resources>

@@ -1,37 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- CustomKey attributes -->
     <declare-styleable name="CustomKey">
+        <attr name="android:layout_width" />
+        <attr name="android:layout_height" />
         <attr name="code" format="integer" />
-    </declare-styleable>
-    <declare-styleable name="CustomKeyStyleRef">
-        <attr name="customKeyStyle" format="reference" />
-    </declare-styleable>
-
-    <!-- CustomKeySpecial attributes -->
-    <declare-styleable name="CustomKeySpecial">
-        <attr name="cmd" format="enum">
-            <enum name="CONFIRM" value="-4" />
-            <enum name="DEL" value="-5" />
-            <enum name="LANGSWITCH" value="-64" />
-            <enum name="PAGESWITCH" value="-63" />
-            <enum name="SHIFT" value="-1" />
-            <enum name="SPACE" value="32" />
-            <enum name="UNASSIGNED" value="0" />
-        </attr>
-    </declare-styleable>
-    <declare-styleable name="CustomKeySpecialStyleRef">
-        <attr name="customKeySpecialStyle" format="reference" />
+        <attr name="cmd" format="string" />
     </declare-styleable>
 
     <!-- CustomKeyboard attributes -->
     <declare-styleable name="CustomKeyboard">
+        <attr name="android:layout_width" />
+        <attr name="android:layout_height" />
         <attr name="layoutName" format="string" />
         <attr name="showLanguageButton" format="boolean" />
     </declare-styleable>
-    <declare-styleable name="CustomKeyboardStyleRef">
+
+    <!-- CustomKeyboardRow attributes -->
+    <declare-styleable name="CustomKeyboardRow">
+        <attr name="android:layout_width" />
+        <attr name="android:layout_height" />
+    </declare-styleable>
+
+    <declare-styleable name="KeyboardTheme">
+        <attr name="customKeyStyle" format="reference" />
         <attr name="customKeyboardStyle" format="reference" />
+        <attr name="customKeyboardRowStyle" format="reference" />
     </declare-styleable>
 
 </resources>

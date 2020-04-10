@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/florisboard"
-    android:theme="@style/KeyboardTheme.MaterialLight"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/KeyboardTheme.MaterialLight">
 
     <include
         layout="@layout/smartbar"

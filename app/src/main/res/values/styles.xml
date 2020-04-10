@@ -1,48 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="CustomKeyStyle" parent="@style/Widget.AppCompat.Button">
-        <item name="android:background">#ddd</item>
-        <item name="android:layout_width">30dp</item>
-        <item name="android:layout_height">38dp</item>
+    <style name="Widget.AppCompat.Button.Borderless.CustomKey">
         <item name="android:layout_marginStart">4dp</item>
         <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:minWidth">0dp</item>
         <item name="android:textAllCaps">false</item>
     </style>
-
-    <style name="CustomKeySpecialStyle" parent="@style/Widget.AppCompat.ImageButton">
-        <item name="android:background">#ddd</item>
-        <item name="android:layout_width">32dp</item>
-        <item name="android:layout_height">40dp</item>
-        <item name="android:layout_marginStart">4dp</item>
-        <item name="android:layout_marginEnd">4dp</item>
+    <style name="Widget.AppCompat.Button.Borderless.CustomKey.Light">
+        <item name="android:background">@drawable/key_bg_light</item>
     </style>
 
     <style name="CustomKeyboardStyle">
-        <item name="android:background">#e3e3e3</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+    <style name="CustomKeyboardStyle.Light">
+        <item name="android:background">@color/keyboardBackground_light</item>
     </style>
 
-    <style name="CustomKeyboardStyle.Row">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">horizontal</item>
+    <style name="CustomKeyboardStyleRow">
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:layout_marginBottom">4dp</item>
-        <item name="alignItems">center</item>
-        <item name="flexWrap">nowrap</item>
         <item name="justifyContent">center</item>
-    </style>
-
-    <style name="KeyboardTheme" parent="Theme.AppCompat">
-        <item name="customKeyStyle">@style/CustomKeyStyle</item>
-        <item name="customKeySpecialStyle">@style/CustomKeySpecialStyle</item>
-        <item name="customKeyboardStyle">@style/CustomKeyboardStyle</item>
-    </style>
-
-    <style name="KeyboardTheme.MaterialLight">
-        <item name="android:background">#e3e3e3</item>
-        <item name="android:textColor">#000</item>
     </style>
 
 </resources>
