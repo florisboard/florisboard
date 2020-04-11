@@ -7,10 +7,13 @@ import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.core.content.ContextCompat.getDrawable
 import com.google.android.flexbox.FlexboxLayout
@@ -87,7 +90,7 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
     /**
      * Creates a label text from the key's code.
      */
-    private fun getLabel(): String {
+    fun getLabel(): String {
         val label = (code?.toChar() ?: "").toString()
         return when {
             keyboard?.caps ?: false -> label.toUpperCase(Locale.getDefault())
@@ -101,26 +104,27 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
         }
         val keyPopupWidth = resources.getDimension(R.dimen.key_popup_width).toInt()
         val keyPopupHeight = resources.getDimension(R.dimen.key_popup_height).toInt()
-        val keyWidth = resources.getDimension((R.dimen.key_width)).toInt()
-        val keyHeight = resources.getDimension((R.dimen.key_height)).toInt()
-        val keyboardRowMarginV = resources.getDimension((R.dimen.keyboard_row_marginV)).toInt()
         val popupView = View.inflate(context, R.layout.key_popup, null) as LinearLayout
         popupView.measure(MeasureSpec.makeMeasureSpec(keyPopupWidth, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(keyPopupHeight, MeasureSpec.EXACTLY))
         popupView.layout(0, 0, keyPopupWidth, keyPopupHeight)
-        popupView.x = x - ((keyPopupWidth - keyWidth).toFloat() / 2.0f)
-        popupView.y = (parent as CustomKeyboardRow).y - (keyPopupHeight - keyHeight - keyboardRowMarginV)
+        /*popupView.x = x - ((keyPopupWidth - measuredWidth).toFloat() / 2.0f)
+        popupView.y = ((keyboard?.parent as ViewGroup).y) + (parent as CustomKeyboardRow).y + y - measuredHeight*/
         popupView.findViewById<TextView>(R.id.key_popup_text).text = getLabel()
         popupView.findViewById<ImageView>(R.id.key_popup_threedots).visibility = when {
             popupCodes.isEmpty() -> View.INVISIBLE
             else -> View.VISIBLE
         }
-        keyboard?.overlay?.add(popupView)
+        val popupWindow = PopupWindow(popupView, keyPopupWidth, keyPopupHeight, false)
+        popupWindow.isClippingEnabled = false
+        popupWindow.isOutsideTouchable = true
+        popupWindow.showAtLocation(keyboard, Gravity.LEFT or Gravity.TOP, (x - ((keyPopupWidth - measuredWidth).toFloat() / 2.0f)).toInt(), -1000)
+        //(keyboard?.parent?.parent as ViewGroup).overlay?.add(popupView)
     }
     private fun hidePopup() {
         if (code == 32 || code == null) {
             return
         }
-        keyboard?.overlay?.clear()
+        (keyboard?.parent?.parent as ViewGroup).overlay?.clear()
     }
 
     private fun getColorFromAttr(
@@ -136,7 +140,7 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
     override fun onTouch(v: View, event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             isKeyPressed = true
-            showPopup()
+            keyboard?.popupManager?.show(this)
             if (cmd != null && isRepeatable) {
                 osTimer = Timer()
                 osTimer?.scheduleAtFixedRate(object : TimerTask() {
@@ -158,21 +162,26 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
             osHandler.removeCallbacksAndMessages(null)
             osTimer?.cancel()
             osTimer = null
-            hidePopup()
+            keyboard?.popupManager?.hide(this)
             keyboard?.onKeyClicked(code ?: cmd ?: 0)
         }
         return true
     }
 
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
-        val keyboardWidth = (parent as FlexboxLayout).measuredWidth
+        val keyboardWidth = keyboard?.measuredWidth ?: 0
         val keyboardRowMarginH = resources.getDimension((R.dimen.keyboard_row_marginH)).toInt()
         val keyWidthPlusMargin = (keyboardWidth - 2 * keyboardRowMarginH) / 10
         val keyWidth = keyWidthPlusMargin - 2 * keyMarginH
         layoutParams = layoutParams.apply {
             width = keyWidth
         }
+        super.onLayout(changed, left, top, right, bottom)
+    }
+
+    override fun onDraw(canvas: Canvas?) {
+        updateUI()
+        super.onDraw(canvas)
     }
 }

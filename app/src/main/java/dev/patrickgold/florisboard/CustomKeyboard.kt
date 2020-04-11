@@ -8,11 +8,12 @@ import android.widget.LinearLayout
 
 class CustomKeyboard : LinearLayout {
 
-    var layoutName: String?
-    var inputMethodService: InputMethodService? = null
     private val showLanguageButton: Boolean
 
     var caps: Boolean = false
+    var layoutName: String?
+    var inputMethodService: InputMethodService? = null
+    val popupManager = KeyPopupManager(this)
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, R.attr.customKeyboardStyle)
