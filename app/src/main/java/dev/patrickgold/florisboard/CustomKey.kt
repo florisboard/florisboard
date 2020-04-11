@@ -10,6 +10,7 @@ import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat.getDrawable
 import com.google.android.flexbox.FlexboxLayout
@@ -29,9 +30,9 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
     private val osHandler = Handler()
     private var osTimer: Timer? = null
     var cmd: Int?
-        set(v) { updateUI(); field = v }
+        set(v) { field = v; updateUI() }
     var code: Int?
-        set(v) { updateUI(); field = v }
+        set(v) { field = v; updateUI() }
     var keyboard: CustomKeyboard? = null
     var isRepeatable: Boolean = false
     var popupCodes = listOf<Int>()
@@ -56,21 +57,7 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
     }
 
     private fun updateUI() {
-        val label = (code?.toChar() ?: "").toString()
-        super.setText(when {
-            keyboard?.caps ?: false -> label.toUpperCase(Locale.getDefault())
-            else -> label
-        })
-        val drawable: Drawable? = when (cmd) {
-            KeyCodes.ENTER -> getDrawable(context, R.drawable.ic_arrow_forward)
-            KeyCodes.DELETE -> getDrawable(context, R.drawable.ic_backspace)
-            KeyCodes.LANGUAGE_SWITCH -> getDrawable(context, R.drawable.ic_language)
-            KeyCodes.KEYBOARD_CYCLE -> getDrawable(context, R.drawable.ic_language)
-            KeyCodes.SHIFT -> getDrawable(context, R.drawable.ic_capslock)
-            else -> null
-        }
-        drawable?.setBounds(0, 0, resources.getDimension(R.dimen.key_width).toInt(), resources.getDimension(R.dimen.key_width).toInt())
-        super.setCompoundDrawables(null, drawable, null, null)
+        super.setText(getLabel())
         when (cmd) {
             KeyCodes.DELETE -> (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
             KeyCodes.ENTER -> (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
@@ -81,6 +68,20 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
                 super.setText("?123")
             }
         }
+        val drawable: Drawable? = when (cmd) {
+            KeyCodes.ENTER -> getDrawable(context, R.drawable.ic_arrow_forward)
+            KeyCodes.DELETE -> getDrawable(context, R.drawable.ic_backspace)
+            KeyCodes.LANGUAGE_SWITCH -> getDrawable(context, R.drawable.ic_language)
+            KeyCodes.SHIFT -> getDrawable(context, R.drawable.ic_capslock)
+            else -> null
+        }
+        drawable?.setBounds(0, 0, resources.getDimension(R.dimen.key_width).toInt(), resources.getDimension(R.dimen.key_width).toInt())
+        if (drawable != null) {
+            overlay.clear()
+            overlay.add(drawable)
+        }
+        requestLayout()
+        invalidate()
     }
 
     /**
@@ -95,7 +96,19 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
     }
 
     private fun showPopup() {
-        val popupView = View.inflate(context, R.layout.key_popup, null)
+        if (code == 32 || code == null) {
+            return
+        }
+        val keyPopupWidth = resources.getDimension(R.dimen.key_popup_width).toInt()
+        val keyPopupHeight = resources.getDimension(R.dimen.key_popup_height).toInt()
+        val keyWidth = resources.getDimension((R.dimen.key_width)).toInt()
+        val keyHeight = resources.getDimension((R.dimen.key_height)).toInt()
+        val keyboardRowMarginV = resources.getDimension((R.dimen.keyboard_row_marginV)).toInt()
+        val popupView = View.inflate(context, R.layout.key_popup, null) as LinearLayout
+        popupView.measure(MeasureSpec.makeMeasureSpec(keyPopupWidth, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(keyPopupHeight, MeasureSpec.EXACTLY))
+        popupView.layout(0, 0, keyPopupWidth, keyPopupHeight)
+        popupView.x = x - ((keyPopupWidth - keyWidth).toFloat() / 2.0f)
+        popupView.y = (parent as CustomKeyboardRow).y - (keyPopupHeight - keyHeight - keyboardRowMarginV)
         popupView.findViewById<TextView>(R.id.key_popup_text).text = getLabel()
         popupView.findViewById<ImageView>(R.id.key_popup_threedots).visibility = when {
             popupCodes.isEmpty() -> View.INVISIBLE
@@ -104,10 +117,13 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
         keyboard?.overlay?.add(popupView)
     }
     private fun hidePopup() {
+        if (code == 32 || code == null) {
+            return
+        }
         keyboard?.overlay?.clear()
     }
 
-    fun getColorFromAttr(
+    private fun getColorFromAttr(
         attrColor: Int,
         typedValue: TypedValue = TypedValue(),
         resolveRefs: Boolean = true
@@ -120,7 +136,7 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
     override fun onTouch(v: View, event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             isKeyPressed = true
-            //showPopup()
+            showPopup()
             if (cmd != null && isRepeatable) {
                 osTimer = Timer()
                 osTimer?.scheduleAtFixedRate(object : TimerTask() {
@@ -131,7 +147,7 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
                             osTimer = null
                         }
                     }
-                }, 500, 100)
+                }, 500, 50)
             }
             osHandler.postDelayed({
                 //
@@ -142,14 +158,21 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
             osHandler.removeCallbacksAndMessages(null)
             osTimer?.cancel()
             osTimer = null
-            //hidePopup()
+            hidePopup()
             keyboard?.onKeyClicked(code ?: cmd ?: 0)
         }
-        return true;
+        return true
     }
 
     override fun onDraw(canvas: Canvas?) {
-        updateUI()
         super.onDraw(canvas)
+        val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
+        val keyboardWidth = (parent as FlexboxLayout).measuredWidth
+        val keyboardRowMarginH = resources.getDimension((R.dimen.keyboard_row_marginH)).toInt()
+        val keyWidthPlusMargin = (keyboardWidth - 2 * keyboardRowMarginH) / 10
+        val keyWidth = keyWidthPlusMargin - 2 * keyMarginH
+        layoutParams = layoutParams.apply {
+            width = keyWidth
+        }
     }
 }

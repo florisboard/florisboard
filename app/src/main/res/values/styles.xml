@@ -9,6 +9,7 @@
         <item name="android:textAllCaps">false</item>
         <item name="android:background">@drawable/shape_rect_rounded</item>
         <item name="android:backgroundTint">?attr/key_bgColor</item>
+        <item name="android:textSize">@dimen/key_textSize</item>
     </style>
 
     <style name="CustomKeyboardStyle">
@@ -19,6 +20,7 @@
     <style name="CustomKeyboardStyleRow">
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:layout_marginBottom">4dp</item>
+        <item name="flexDirection">row</item>
         <item name="justifyContent">center</item>
     </style>
 

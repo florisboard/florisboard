@@ -15,7 +15,8 @@
         <item name="key_bgColorPressed">#f0f0f0</item>
         <item name="key_fgColor">#000</item>
 
-        <item name="key_popup_bgColor">#fff</item>
+        <item name="key_popup_bgColor">#efefef</item>
+        <item name="key_popup_fgColor">#000</item>
 
         <item name="keyboard_bgColor">#dfdfdf</item>
     </style>

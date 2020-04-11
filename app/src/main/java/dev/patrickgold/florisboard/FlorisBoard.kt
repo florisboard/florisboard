@@ -68,11 +68,11 @@ class FlorisBoard : InputMethodService() {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
-                rowViewLP.setMargins(
-                    0, resources.getDimension(R.dimen.keyboard_row_marginV).toInt(),
-                    0, resources.getDimension(R.dimen.keyboard_row_marginV).toInt()
-                )
                 rowView.layoutParams = rowViewLP
+                rowView.setPadding(
+                    resources.getDimension(R.dimen.keyboard_row_marginH).toInt(), resources.getDimension(R.dimen.keyboard_row_marginV).toInt(),
+                    resources.getDimension(R.dimen.keyboard_row_marginH).toInt(), resources.getDimension(R.dimen.keyboard_row_marginV).toInt()
+                )
                 for (key in row) {
                     val keyView = CustomKey(context)
                     val keyViewLP = FlexboxLayout.LayoutParams(

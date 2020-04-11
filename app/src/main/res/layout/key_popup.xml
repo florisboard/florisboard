@@ -4,15 +4,17 @@
     android:layout_width="@dimen/key_popup_width"
     android:layout_height="@dimen/key_popup_height"
     android:orientation="vertical"
-    android:background="@drawable/shape_rect_rounded"
-    android:backgroundTint="?key_popup_bgColor">
+    android:background="@drawable/key_popup_bgshape"
+    android:backgroundTint="?attr/key_popup_bgColor"
+    android:backgroundTintMode="multiply">
 
     <TextView
         android:id="@+id/key_popup_text"
         android:layout_width="match_parent"
         android:layout_height="@dimen/key_height"
         android:gravity="center"
-        android:textColor="?attr/key_popup_fgColor" />
+        android:textColor="?attr/key_popup_fgColor"
+        android:textSize="@dimen/key_popup_textSize"/>
 
     <ImageView
         android:id="@+id/key_popup_threedots"
