@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:theme="@style/KeyboardTheme.MaterialLight">
 
     <include
         layout="@layout/smartbar"
@@ -17,8 +18,8 @@
         android:layout_height="1dp"
         android:background="?android:attr/listDivider" />
 
-    <include
-        layout="@layout/keyboard"
+    <dev.patrickgold.florisboard.CustomKeyboard
+        android:id="@+id/keyboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

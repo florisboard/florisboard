@@ -1,10 +1,10 @@
 package dev.patrickgold.florisboard
 
+import android.annotation.SuppressLint
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 
@@ -16,6 +16,7 @@ class KeyPopupManager(kbd: CustomKeyboard) {
     val isShowing: Boolean
         get() = this.window?.isShowing ?: false
 
+    @SuppressLint("RtlHardcoded")
     fun show(key: CustomKey) {
         if (key.code == 32 || key.code == null) {
             return
@@ -23,7 +24,7 @@ class KeyPopupManager(kbd: CustomKeyboard) {
         val keyPopupWidth = keyboard.resources.getDimension(R.dimen.key_popup_width).toInt()
         val keyPopupHeight = keyboard.resources.getDimension(R.dimen.key_popup_height).toInt()
         val popupView = View.inflate(key.context, R.layout.key_popup, null) as ViewGroup
-        popupView.findViewById<TextView>(R.id.key_popup_text).text = key.getLabel()
+        popupView.findViewById<TextView>(R.id.key_popup_text).text = key.createLabelText()
         popupView.findViewById<ImageView>(R.id.key_popup_threedots).visibility = when {
             key.popupCodes.isEmpty() -> View.INVISIBLE
             else -> View.VISIBLE
@@ -33,8 +34,8 @@ class KeyPopupManager(kbd: CustomKeyboard) {
         window?.isOutsideTouchable = true
         window?.showAtLocation(
             keyboard, Gravity.LEFT or Gravity.TOP,
-            (key.x - ((keyPopupWidth - key.measuredWidth).toFloat() / 2.0f)).toInt(),
-            ((key.parent as ViewGroup).y - key.measuredHeight).toInt()
+            (keyboard.x + (key.parent as ViewGroup).x + key.x - ((keyPopupWidth - key.measuredWidth).toFloat() / 2.0f)).toInt(),
+            (keyboard.y + (key.parent as ViewGroup).y + key.y - key.measuredHeight).toInt()
         )
     }
 

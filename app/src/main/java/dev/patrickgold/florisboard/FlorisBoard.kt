@@ -25,7 +25,7 @@ class FlorisBoard : InputMethodService() {
 
     override fun onCreateInputView(): View? {
         val florisboard = layoutInflater.inflate(R.layout.florisboard, null) as LinearLayout
-        val keyboardContainer = florisboard.findViewById<LinearLayout>(R.id.keyboard_container)
+        val keyboard = florisboard.findViewById<CustomKeyboard>(R.id.keyboard)
         /*val keyboard = layoutInflater.inflate(R.layout.qwerty, null) as CustomKeyboard
         keyboard.inputMethodService = this
         for (i in 0 until keyboard.childCount) {
@@ -40,14 +40,12 @@ class FlorisBoard : InputMethodService() {
             }
         }
         keyboardContainer.addView(keyboard)*/
-        val keyboard = buildLayout("qwerty")
-        keyboardContainer.addView(keyboard)
+        buildLayout(keyboard, "qwerty")
         return florisboard
     }
 
-    private fun buildLayout(layoutName: String): CustomKeyboard {
+    private fun buildLayout(keyboard: CustomKeyboard, layoutName: String) {
         val context = ContextThemeWrapper(baseContext, R.style.KeyboardTheme_MaterialLight)
-        val keyboard = CustomKeyboard(context)
         keyboard.layoutName = layoutName
         keyboard.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
@@ -102,6 +100,5 @@ class FlorisBoard : InputMethodService() {
                 keyboard.addView(rowView)
             }
         }
-        return keyboard
     }
 }

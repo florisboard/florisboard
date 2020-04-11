@@ -7,18 +7,11 @@ import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.util.AttributeSet
 import android.util.TypedValue
-import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.PopupWindow
-import android.widget.TextView
 import androidx.core.content.ContextCompat.getDrawable
 import com.google.android.flexbox.FlexboxLayout
 import java.util.*
-
 
 class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListener {
 
@@ -60,7 +53,7 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
     }
 
     private fun updateUI() {
-        super.setText(getLabel())
+        super.setText(createLabelText())
         when (cmd) {
             KeyCodes.DELETE -> (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
             KeyCodes.ENTER -> (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
@@ -90,41 +83,12 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
     /**
      * Creates a label text from the key's code.
      */
-    fun getLabel(): String {
+    fun createLabelText(): String {
         val label = (code?.toChar() ?: "").toString()
         return when {
             keyboard?.caps ?: false -> label.toUpperCase(Locale.getDefault())
             else -> label
         }
-    }
-
-    private fun showPopup() {
-        if (code == 32 || code == null) {
-            return
-        }
-        val keyPopupWidth = resources.getDimension(R.dimen.key_popup_width).toInt()
-        val keyPopupHeight = resources.getDimension(R.dimen.key_popup_height).toInt()
-        val popupView = View.inflate(context, R.layout.key_popup, null) as LinearLayout
-        popupView.measure(MeasureSpec.makeMeasureSpec(keyPopupWidth, MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(keyPopupHeight, MeasureSpec.EXACTLY))
-        popupView.layout(0, 0, keyPopupWidth, keyPopupHeight)
-        /*popupView.x = x - ((keyPopupWidth - measuredWidth).toFloat() / 2.0f)
-        popupView.y = ((keyboard?.parent as ViewGroup).y) + (parent as CustomKeyboardRow).y + y - measuredHeight*/
-        popupView.findViewById<TextView>(R.id.key_popup_text).text = getLabel()
-        popupView.findViewById<ImageView>(R.id.key_popup_threedots).visibility = when {
-            popupCodes.isEmpty() -> View.INVISIBLE
-            else -> View.VISIBLE
-        }
-        val popupWindow = PopupWindow(popupView, keyPopupWidth, keyPopupHeight, false)
-        popupWindow.isClippingEnabled = false
-        popupWindow.isOutsideTouchable = true
-        popupWindow.showAtLocation(keyboard, Gravity.LEFT or Gravity.TOP, (x - ((keyPopupWidth - measuredWidth).toFloat() / 2.0f)).toInt(), -1000)
-        //(keyboard?.parent?.parent as ViewGroup).overlay?.add(popupView)
-    }
-    private fun hidePopup() {
-        if (code == 32 || code == null) {
-            return
-        }
-        (keyboard?.parent?.parent as ViewGroup).overlay?.clear()
     }
 
     private fun getColorFromAttr(
@@ -135,7 +99,6 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
         context.theme.resolveAttribute(attrColor, typedValue, resolveRefs)
         return typedValue.data
     }
-
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
