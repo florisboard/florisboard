@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="key_width">30dp</dimen>
+    <dimen name="key_height">38dp</dimen>
+    <dimen name="key_marginH">4dp</dimen>
+    <dimen name="key_borderRadius">6dp</dimen>
+
+    <dimen name="key_popup_width">34dp</dimen>
+    <dimen name="key_popup_height">76dp</dimen>
+
+    <dimen name="keyboard_row_marginV">4dp</dimen>
+</resources>

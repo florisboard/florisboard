@@ -1,0 +1,45 @@
+{
+  "name": "qwerty",
+  "direction": "ltr",
+  "layout": [
+    [
+      { "code": 113, "popup": [49] },
+      { "code": 119, "popup": [50] },
+      { "code": 101, "popup": [51] },
+      { "code": 114, "popup": [52] },
+      { "code": 116, "popup": [53] },
+      { "code": 121, "popup": [54] },
+      { "code": 117, "popup": [55] },
+      { "code": 105, "popup": [56] },
+      { "code": 111, "popup": [57] },
+      { "code": 112, "popup": [48] }
+    ], [
+      { "code":  97, "popup": [] },
+      { "code": 115, "popup": [] },
+      { "code": 100, "popup": [] },
+      { "code": 102, "popup": [] },
+      { "code": 103, "popup": [] },
+      { "code": 104, "popup": [] },
+      { "code": 106, "popup": [] },
+      { "code": 107, "popup": [] },
+      { "code": 108, "popup": [] }
+    ], [
+      { "cmd": "SHIFT" },
+      { "code": 122, "popup": [] },
+      { "code": 120, "popup": [] },
+      { "code":  99, "popup": [] },
+      { "code": 118, "popup": [] },
+      { "code":  98, "popup": [] },
+      { "code": 110, "popup": [] },
+      { "code": 109, "popup": [] },
+      { "cmd": "DELETE", "isRepeatable": true }
+    ], [
+      { "cmd": "VIEW_SYMBOLS" },
+      { "code": 47, "popup": [] },
+      { "cmd": "LANGUAGE_SWITCH" },
+      { "cmd": "SPACE" },
+      { "code": 46, "popup": [] },
+      { "cmd": "ENTER" }
+    ]
+  ]
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/key_popup"
+    android:layout_width="@dimen/key_popup_width"
+    android:layout_height="@dimen/key_popup_height"
+    android:orientation="vertical"
+    android:background="@drawable/shape_rect_rounded"
+    android:backgroundTint="?key_popup_bgColor">
+
+    <TextView
+        android:id="@+id/key_popup_text"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/key_height"
+        android:gravity="center"
+        android:textColor="?attr/key_popup_fgColor" />
+
+    <ImageView
+        android:id="@+id/key_popup_threedots"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:layout_margin="0dp"
+        android:contentDescription="@string/key_popup_threedots_alt"
+        android:layout_gravity="end"
+        android:padding="0dp"
+        android:src="@drawable/ic_more_horiz"
+        android:textSize="12sp"
+        android:tint="?attr/key_popup_fgColor"
+        android:visibility="invisible" />
+
+</LinearLayout>

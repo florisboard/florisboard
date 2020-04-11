@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="KeyboardTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="customKeyStyle">@style/Widget.AppCompat.Button.Borderless.CustomKey</item>
+        <item name="customKeyboardStyle">@style/CustomKeyboardStyle</item>
+        <item name="customKeyboardRowStyle">@style/CustomKeyboardStyleRow</item>
+    </style>
+
+    <style name="KeyboardTheme.MaterialLight">
+        <item name="app_textColor">#000</item>
+        <item name="android:textColor">?attr/app_textColor</item>
+
+        <item name="key_bgColor">#fff</item>
+        <item name="key_bgColorPressed">#f0f0f0</item>
+        <item name="key_fgColor">#000</item>
+
+        <item name="key_popup_bgColor">#fff</item>
+
+        <item name="keyboard_bgColor">#dfdfdf</item>
+    </style>
+
+</resources>
