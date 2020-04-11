@@ -27,6 +27,17 @@
         <attr name="customKeyStyle" format="reference" />
         <attr name="customKeyboardStyle" format="reference" />
         <attr name="customKeyboardRowStyle" format="reference" />
+
+        <attr name="app_textColor" format="color" />
+
+        <attr name="key_bgColor" format="color" />
+        <attr name="key_bgColorPressed" format="color" />
+        <attr name="key_fgColor" format="color" />
+
+        <attr name="key_popup_bgColor" format="color" />
+        <attr name="key_popup_fgColor" format="color" />
+
+        <attr name="keyboard_bgColor" format="color" />
     </declare-styleable>
 
 </resources>

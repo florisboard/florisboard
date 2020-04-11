@@ -69,8 +69,8 @@ class FlorisBoard : InputMethodService() {
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
                 rowViewLP.setMargins(
-                    0, resources.getDimension(R.dimen.keyboardRow_marginV).toInt(),
-                    0, resources.getDimension(R.dimen.keyboardRow_marginV).toInt()
+                    0, resources.getDimension(R.dimen.keyboard_row_marginV).toInt(),
+                    0, resources.getDimension(R.dimen.keyboard_row_marginV).toInt()
                 )
                 rowView.layoutParams = rowViewLP
                 for (key in row) {
@@ -89,6 +89,12 @@ class FlorisBoard : InputMethodService() {
                     }
                     if (key.cmd != null) {
                         keyView.cmd = KeyCodes.fromString(key.cmd)
+                    }
+                    if (key.popup != null) {
+                        keyView.popupCodes = key.popup
+                    }
+                    if (key.isRepeatable != null) {
+                        keyView.isRepeatable = key.isRepeatable
                     }
                     keyView.keyboard = keyboard
                     rowView.addView(keyView)

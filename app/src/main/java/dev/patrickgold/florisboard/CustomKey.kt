@@ -1,21 +1,40 @@
 package dev.patrickgold.florisboard
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
+import android.os.Handler
 import android.util.AttributeSet
+import android.util.TypedValue
+import android.view.MotionEvent
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat.getDrawable
-import java.util.*
 import com.google.android.flexbox.FlexboxLayout
+import java.util.*
 
-class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnClickListener {
 
+class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListener {
+
+    private var isKeyPressed: Boolean = false
+        set(v) {
+            super.setBackgroundTintList(ColorStateList.valueOf(getColorFromAttr(when {
+                v -> R.attr.key_bgColorPressed
+                else -> R.attr.key_bgColor
+            })))
+            field = v
+        }
+    private val osHandler = Handler()
+    private var osTimer: Timer? = null
     var cmd: Int?
         set(v) { updateUI(); field = v }
     var code: Int?
         set(v) { updateUI(); field = v }
     var keyboard: CustomKeyboard? = null
+    var isRepeatable: Boolean = false
+    var popupCodes = listOf<Int>()
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, R.attr.customKeyStyle)
@@ -33,8 +52,7 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnClickListene
             } finally {}
         }.recycle()
 
-        super.setOnClickListener(this)
-
+        super.setOnTouchListener(this)
     }
 
     private fun updateUI() {
@@ -65,8 +83,69 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnClickListene
         }
     }
 
-    override fun onClick(v: View) {
-        keyboard?.onKeyClicked(code ?: cmd ?: 0)
+    /**
+     * Creates a label text from the key's code.
+     */
+    private fun getLabel(): String {
+        val label = (code?.toChar() ?: "").toString()
+        return when {
+            keyboard?.caps ?: false -> label.toUpperCase(Locale.getDefault())
+            else -> label
+        }
+    }
+
+    private fun showPopup() {
+        val popupView = View.inflate(context, R.layout.key_popup, null)
+        popupView.findViewById<TextView>(R.id.key_popup_text).text = getLabel()
+        popupView.findViewById<ImageView>(R.id.key_popup_threedots).visibility = when {
+            popupCodes.isEmpty() -> View.INVISIBLE
+            else -> View.VISIBLE
+        }
+        keyboard?.overlay?.add(popupView)
+    }
+    private fun hidePopup() {
+        keyboard?.overlay?.clear()
+    }
+
+    fun getColorFromAttr(
+        attrColor: Int,
+        typedValue: TypedValue = TypedValue(),
+        resolveRefs: Boolean = true
+    ): Int {
+        context.theme.resolveAttribute(attrColor, typedValue, resolveRefs)
+        return typedValue.data
+    }
+
+
+    override fun onTouch(v: View, event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            isKeyPressed = true
+            //showPopup()
+            if (cmd != null && isRepeatable) {
+                osTimer = Timer()
+                osTimer?.scheduleAtFixedRate(object : TimerTask() {
+                    override fun run() {
+                        keyboard?.onKeyClicked(code ?: cmd ?: 0)
+                        if (!isKeyPressed) {
+                            osTimer?.cancel()
+                            osTimer = null
+                        }
+                    }
+                }, 500, 100)
+            }
+            osHandler.postDelayed({
+                //
+            }, 300)
+        }
+        if (event.action == MotionEvent.ACTION_UP) {
+            isKeyPressed = false
+            osHandler.removeCallbacksAndMessages(null)
+            osTimer?.cancel()
+            osTimer = null
+            //hidePopup()
+            keyboard?.onKeyClicked(code ?: cmd ?: 0)
+        }
+        return true;
     }
 
     override fun onDraw(canvas: Canvas?) {
