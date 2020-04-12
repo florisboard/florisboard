@@ -13,8 +13,6 @@
     <declare-styleable name="CustomKeyboard">
         <attr name="android:layout_width" />
         <attr name="android:layout_height" />
-        <attr name="layoutName" format="string" />
-        <attr name="showLanguageButton" format="boolean" />
     </declare-styleable>
 
     <!-- CustomKeyboardRow attributes -->

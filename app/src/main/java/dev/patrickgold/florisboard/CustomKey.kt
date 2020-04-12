@@ -9,6 +9,7 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat.getDrawable
 import com.google.android.flexbox.FlexboxLayout
 import java.util.*
@@ -17,10 +18,19 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
 
     private var isKeyPressed: Boolean = false
         set(v) {
-            setBackgroundTintColor(when {
-                v -> R.attr.key_bgColorPressed
-                else -> R.attr.key_bgColor
-            })
+            if (cmd == KeyCodes.ENTER) {
+                setBackgroundTintColor(when {
+                    v -> R.attr.app_colorPrimaryDark
+                    else -> R.attr.app_colorPrimary
+                })
+            } else {
+                setBackgroundTintColor(
+                    when {
+                        v -> R.attr.key_bgColorPressed
+                        else -> R.attr.key_bgColor
+                    }
+                )
+            }
             field = v
         }
     private val osHandler = Handler()
@@ -84,16 +94,31 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
     }
 
     private fun updateUI() {
+        isKeyPressed = isKeyPressed
         super.setText(createLabelText())
         var drawable: Drawable? = null
         when (cmd) {
-            KeyCodes.ENTER -> {
-                (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
-                drawable = getDrawable(context, R.drawable.ic_arrow_forward)
-            }
             KeyCodes.DELETE -> {
                 (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
                 drawable = getDrawable(context, R.drawable.key_ic_backspace)
+            }
+            KeyCodes.ENTER -> {
+                (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
+                setDrawableTintColor(R.attr.key_bgColor)
+                val action = keyboard?.inputMethodService?.currentInputEditorInfo?.imeOptions ?: EditorInfo.IME_NULL
+                drawable = getDrawable(context, when (action and EditorInfo.IME_MASK_ACTION) {
+                    EditorInfo.IME_ACTION_DONE -> R.drawable.key_ic_action_done
+                    EditorInfo.IME_ACTION_GO -> R.drawable.key_ic_action_go
+                    EditorInfo.IME_ACTION_NEXT -> R.drawable.key_ic_action_next
+                    EditorInfo.IME_ACTION_NONE -> R.drawable.key_ic_action_none
+                    EditorInfo.IME_ACTION_PREVIOUS -> R.drawable.key_ic_action_previous
+                    EditorInfo.IME_ACTION_SEARCH -> R.drawable.key_ic_action_search
+                    EditorInfo.IME_ACTION_SEND -> R.drawable.key_ic_action_send
+                    else -> R.drawable.key_ic_action_next
+                })
+                if (action and EditorInfo.IME_FLAG_NO_ENTER_ACTION > 0) {
+                    drawable = getDrawable(context, R.drawable.key_ic_action_none)
+                }
             }
             KeyCodes.LANGUAGE_SWITCH -> {
                 drawable = getDrawable(context, R.drawable.key_ic_language)

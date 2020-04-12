@@ -1,0 +1,8 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:top="@dimen/key_ic_padding"
+        android:left="@dimen/key_ic_padding"
+        android:right="@dimen/key_ic_padding"
+        android:bottom="@dimen/key_ic_padding"
+        android:drawable="@drawable/ic_done"/>
+</layer-list>
