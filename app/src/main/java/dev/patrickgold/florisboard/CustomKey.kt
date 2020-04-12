@@ -172,6 +172,17 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
         }
     }
 
+    /**
+     * Creates a label text from the key's code.
+     */
+    fun createPopupKeyText(popupCode: Int): String {
+        val label = popupCode.toChar().toString()
+        return when {
+            keyboard?.caps ?: false -> label.toUpperCase(Locale.getDefault())
+            else -> label
+        }
+    }
+
     override fun onTouch(v: View, event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             isKeyPressed = true
@@ -189,7 +200,9 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
                 }, 500, 50)
             }
             osHandler.postDelayed({
-                //
+                if (popupCodes.isNotEmpty()) {
+                    keyboard?.popupManager?.extend(this)
+                }
             }, 300)
         }
         if (event.action == MotionEvent.ACTION_UP) {

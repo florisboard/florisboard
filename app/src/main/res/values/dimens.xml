@@ -9,8 +9,8 @@
     <dimen name="key_ic_padding">7dp</dimen>
 
     <dimen name="key_popup_width">35dp</dimen>
-    <dimen name="key_popup_height">76dp</dimen>
-    <dimen name="key_popup_textSize">28sp</dimen>
+    <dimen name="key_popup_height">90dp</dimen>
+    <dimen name="key_popup_textSize">26sp</dimen>
 
     <dimen name="keyboard_row_marginH">2dp</dimen>
     <dimen name="keyboard_row_marginV">5dp</dimen>
