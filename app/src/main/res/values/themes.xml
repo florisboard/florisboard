@@ -7,7 +7,11 @@
         <item name="customKeyboardRowStyle">@style/CustomKeyboardStyleRow</item>
     </style>
 
-    <style name="KeyboardTheme.MaterialLight">
+    <style name="KeyboardTheme.MaterialLight">>
+        <item name="app_colorPrimary">@color/colorPrimary</item>
+        <item name="app_colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="app_colorAccent">@color/colorAccent</item>
+        <item name="app_colorAccentDark">@color/colorAccentDark</item>
         <item name="app_textColor">#000</item>
         <item name="android:textColor">?attr/app_textColor</item>
 

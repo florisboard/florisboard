@@ -17,10 +17,10 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
 
     private var isKeyPressed: Boolean = false
         set(v) {
-            super.setBackgroundTintList(ColorStateList.valueOf(getColorFromAttr(when {
+            setBackgroundTintColor(when {
                 v -> R.attr.key_bgColorPressed
                 else -> R.attr.key_bgColor
-            })))
+            })
             field = v
         }
     private val osHandler = Handler()
@@ -52,29 +52,85 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
         super.setOnTouchListener(this)
     }
 
+    private fun getColorFromAttr(
+        attrColor: Int,
+        typedValue: TypedValue = TypedValue(),
+        resolveRefs: Boolean = true
+    ): Int {
+        context.theme.resolveAttribute(attrColor, typedValue, resolveRefs)
+        return typedValue.data
+    }
+
+    private fun setBackgroundTintColor(colorId: Int) {
+        super.setBackgroundTintList(
+            ColorStateList.valueOf(
+                getColorFromAttr(colorId)
+            )
+        )
+    }
+    private fun setDrawableTintColor(colorId: Int) {
+        super.setCompoundDrawableTintList(
+            ColorStateList.valueOf(
+                getColorFromAttr(colorId)
+            )
+        )
+    }
+    private fun setTextTintColor(colorId: Int) {
+        super.setForegroundTintList(
+            ColorStateList.valueOf(
+                getColorFromAttr(colorId)
+            )
+        )
+    }
+
     private fun updateUI() {
         super.setText(createLabelText())
+        var drawable: Drawable? = null
         when (cmd) {
-            KeyCodes.DELETE -> (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
-            KeyCodes.ENTER -> (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
-            KeyCodes.SHIFT -> (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
-            KeyCodes.SPACE -> (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 5.0f
+            KeyCodes.ENTER -> {
+                (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
+                drawable = getDrawable(context, R.drawable.ic_arrow_forward)
+            }
+            KeyCodes.DELETE -> {
+                (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
+                drawable = getDrawable(context, R.drawable.key_ic_backspace)
+            }
+            KeyCodes.LANGUAGE_SWITCH -> {
+                drawable = getDrawable(context, R.drawable.key_ic_language)
+            }
+            KeyCodes.SHIFT -> {
+                (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
+                drawable = getDrawable(context, when {
+                    (keyboard?.caps ?: false) && (keyboard?.capsLock ?: false) -> {
+                        setDrawableTintColor(R.attr.app_colorAccentDark)
+                        R.drawable.key_ic_capslock
+                    }
+                    (keyboard?.caps ?: false) && !(keyboard?.capsLock ?: false) -> {
+                        setDrawableTintColor(R.attr.key_fgColor)
+                        R.drawable.key_ic_capslock
+                    }
+                    else -> {
+                        setDrawableTintColor(R.attr.key_fgColor)
+                        R.drawable.key_ic_caps
+                    }
+                })
+            }
+            KeyCodes.SPACE -> {
+                (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 5.0f
+            }
             KeyCodes.VIEW_SYMOBLS -> {
                 (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
                 super.setText("?123")
             }
         }
-        val drawable: Drawable? = when (cmd) {
-            KeyCodes.ENTER -> getDrawable(context, R.drawable.ic_arrow_forward)
-            KeyCodes.DELETE -> getDrawable(context, R.drawable.ic_backspace)
-            KeyCodes.LANGUAGE_SWITCH -> getDrawable(context, R.drawable.ic_language)
-            KeyCodes.SHIFT -> getDrawable(context, R.drawable.ic_capslock)
-            else -> null
-        }
-        drawable?.setBounds(0, 0, resources.getDimension(R.dimen.key_width).toInt(), resources.getDimension(R.dimen.key_width).toInt())
         if (drawable != null) {
-            overlay.clear()
-            overlay.add(drawable)
+            if (measuredWidth > measuredHeight) {
+                drawable.setBounds(0, 0, measuredHeight, measuredHeight)
+                super.setCompoundDrawables(null, drawable, null, null)
+            } else {
+                drawable.setBounds(0, 0, measuredWidth, measuredWidth)
+                super.setCompoundDrawables(drawable, null, null, null)
+            }
         }
         requestLayout()
         invalidate()
@@ -89,15 +145,6 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
             keyboard?.caps ?: false -> label.toUpperCase(Locale.getDefault())
             else -> label
         }
-    }
-
-    private fun getColorFromAttr(
-        attrColor: Int,
-        typedValue: TypedValue = TypedValue(),
-        resolveRefs: Boolean = true
-    ): Int {
-        context.theme.resolveAttribute(attrColor, typedValue, resolveRefs)
-        return typedValue.data
     }
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {

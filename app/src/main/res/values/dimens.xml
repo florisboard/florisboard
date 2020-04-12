@@ -6,6 +6,8 @@
     <dimen name="key_borderRadius">6dp</dimen>
     <dimen name="key_textSize">18sp</dimen>
 
+    <dimen name="key_ic_padding">7dp</dimen>
+
     <dimen name="key_popup_width">35dp</dimen>
     <dimen name="key_popup_height">76dp</dimen>
     <dimen name="key_popup_textSize">28sp</dimen>

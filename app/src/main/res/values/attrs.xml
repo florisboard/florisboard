@@ -28,6 +28,10 @@
         <attr name="customKeyboardStyle" format="reference" />
         <attr name="customKeyboardRowStyle" format="reference" />
 
+        <attr name="app_colorPrimary" format="color" />
+        <attr name="app_colorPrimaryDark" format="color" />
+        <attr name="app_colorAccent" format="color" />
+        <attr name="app_colorAccentDark" format="color" />
         <attr name="app_textColor" format="color" />
 
         <attr name="key_bgColor" format="color" />

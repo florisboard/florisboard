@@ -2,15 +2,19 @@ package dev.patrickgold.florisboard
 
 import android.content.Context
 import android.inputmethodservice.InputMethodService
+import android.os.Handler
 import android.util.AttributeSet
 import android.view.KeyEvent
 import android.widget.LinearLayout
 
 class CustomKeyboard : LinearLayout {
 
+    private var hasCapsRecentlyChanged: Boolean = false
+    private val osHandler = Handler()
     private val showLanguageButton: Boolean
 
     var caps: Boolean = false
+    var capsLock: Boolean = false
     var layoutName: String?
     var inputMethodService: InputMethodService? = null
     val popupManager = KeyPopupManager(this)
@@ -40,7 +44,19 @@ class CustomKeyboard : LinearLayout {
             )
             KeyCodes.LANGUAGE_SWITCH -> {}
             KeyCodes.SHIFT -> {
-                caps = !caps
+                if (hasCapsRecentlyChanged) {
+                    osHandler.removeCallbacksAndMessages(null)
+                    caps = true
+                    capsLock = true
+                    hasCapsRecentlyChanged = false
+                } else {
+                    caps = !caps
+                    capsLock = false
+                    hasCapsRecentlyChanged = true
+                    osHandler.postDelayed({
+                        hasCapsRecentlyChanged = false
+                    }, 300)
+                }
             }
             KeyCodes.VIEW_SYMOBLS -> {}
             else -> {
@@ -49,6 +65,9 @@ class CustomKeyboard : LinearLayout {
                     text = Character.toUpperCase(text)
                 }
                 ic.commitText(text.toString(), 1)
+                if (!capsLock) {
+                    caps = false
+                }
             }
         }
     }
