@@ -1,9 +1,9 @@
 package dev.patrickgold.florisboard.ime.kbd
 
 enum class KeyboardMode {
-    ALPHABET,
+    CHARACTERS,
     SYMBOLS,
-    SYMBOLS_EXT,
-    NUMPAD,
+    SYMBOLS2,
+    NUMERIC,
     CLIPBOARD
 }

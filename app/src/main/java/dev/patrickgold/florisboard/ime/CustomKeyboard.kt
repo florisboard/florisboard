@@ -10,14 +10,12 @@ import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import com.google.android.flexbox.FlexboxLayout
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.kbd.KeyView
 import dev.patrickgold.florisboard.ime.kbd.KeyCode
 import dev.patrickgold.florisboard.ime.kbd.KeyboardMode
-import dev.patrickgold.florisboard.ime.layout.LayoutData
+import dev.patrickgold.florisboard.ime.layout.ComputedLayoutData
 
 class CustomKeyboard : LinearLayout {
 
@@ -27,7 +25,7 @@ class CustomKeyboard : LinearLayout {
     var caps: Boolean = false
     var capsLock: Boolean = false
     var florisboard: FlorisBoard? = null
-    var layoutName: String? = null
+    var computedLayout: ComputedLayoutData? = null
     var inputMethodService: InputMethodService? = null
     val popupManager = KeyPopupManager(this)
 
@@ -44,7 +42,7 @@ class CustomKeyboard : LinearLayout {
             LayoutParams.MATCH_PARENT,
             LayoutParams.WRAP_CONTENT
         )
-        val layout = florisboard?.layoutManager?.getComputedLayout(KeyboardMode.ALPHABET)
+        val layout = computedLayout
         if (layout != null) {
             for (row in layout.arrangement) {
                 val rowView =
@@ -85,10 +83,9 @@ class CustomKeyboard : LinearLayout {
         this.removeAllViews()
     }
 
-    fun setLayout(name: String): Boolean {
-        this.layoutName = name
+    fun setKeyboardMode(keyboardMode: KeyboardMode) {
+        this.computedLayout = florisboard?.layoutManager?.computeLayoutFor(keyboardMode)
         this.buildLayout()
-        return true
     }
 
     fun onKeyClicked(code: Int) {

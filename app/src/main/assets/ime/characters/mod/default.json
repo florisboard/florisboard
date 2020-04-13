@@ -1,10 +1,11 @@
 {
+  "type": "characters/mod",
   "name": "default",
   "direction": "ltr",
   "arrangement": [
     [
       { "code":   -1, "label": "shift", "type": "modifier" },
-      { "code":    0, "label": "!placeholder:char:row3!" },
+      { "code":    0 },
       { "code":   -5, "label": "delete", "type": "enter_editing" }
     ], [
       { "code": -202, "label": "view_symbols", "type": "system_gui" },

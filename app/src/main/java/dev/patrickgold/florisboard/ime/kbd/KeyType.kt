@@ -2,7 +2,6 @@ package dev.patrickgold.florisboard.ime.kbd
 
 import android.annotation.SuppressLint
 import com.squareup.moshi.FromJson
-import java.lang.Error
 
 /**
  * Enum for declaring the type of the key.
@@ -19,19 +18,17 @@ enum class KeyType {
     NUMERIC,
     LOCK;
 
-    @SuppressLint("DefaultLocale")
-    @FromJson
-    fun fromJson(string: String): KeyType {
-        return when (string.toUpperCase()) {
-            "CHARACTER"     -> CHARACTER
-            "MODIFIER"      -> MODIFIER
-            "ENTER_EDITING" -> ENTER_EDITING
-            "SYSTEM_GUI"    -> SYSTEM_GUI
-            "NAVIGATION"    -> NAVIGATION
-            "FUNCTION"      -> FUNCTION
-            "NUMERIC"       -> NUMERIC
-            "LOCK"          -> LOCK
-            else            -> throw Error("Specified key type '$string' not valid!")
+    companion object {
+        @SuppressLint("DefaultLocale")
+        fun fromString(string: String): KeyType {
+            return valueOf(string.toUpperCase())
         }
+    }
+}
+
+class KeyTypeAdapter {
+    @FromJson
+    fun fromJson(raw: String): KeyType {
+        return KeyType.fromString(raw)
     }
 }

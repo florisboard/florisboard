@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.LinearLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.CustomKeyboard
+import dev.patrickgold.florisboard.ime.kbd.KeyboardMode
 import dev.patrickgold.florisboard.ime.layout.LayoutManager
 
 class FlorisBoard : InputMethodService() {
@@ -13,11 +14,11 @@ class FlorisBoard : InputMethodService() {
 
     override fun onCreateInputView(): View? {
         val florisboard = layoutInflater.inflate(R.layout.florisboard, null) as LinearLayout
-        layoutManager.init()
+        layoutManager.autoFetchAssociationsFromPrefs()
         val keyboard = florisboard.findViewById<CustomKeyboard>(R.id.keyboard)
         keyboard.florisboard = this
         keyboard.inputMethodService = this
-        keyboard.setLayout("qwerty")
+        keyboard.setKeyboardMode(KeyboardMode.CHARACTERS)
         return florisboard
     }
 
