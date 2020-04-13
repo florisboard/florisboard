@@ -1,23 +1,15 @@
-package dev.patrickgold.florisboard
+package dev.patrickgold.florisboard.ime.core
 
 import android.inputmethodservice.InputMethodService
 import android.view.View
 import android.widget.LinearLayout
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.CustomKeyboard
+import dev.patrickgold.florisboard.ime.layout.LayoutManager
 
 class FlorisBoard : InputMethodService() {
 
-    data class JKey(
-        val cmd: String?,
-        val code: Int?,
-        val popup: List<Int>?,
-        val isRepeatable: Boolean?
-    )
-
-    data class JLayout(
-        val name: String,
-        val direction: String,
-        val layout: List<List<JKey>>
-    )
+    //val layoutManager = LayoutManager(baseContext)
 
     override fun onCreateInputView(): View? {
         val florisboard = layoutInflater.inflate(R.layout.florisboard, null) as LinearLayout
@@ -26,4 +18,6 @@ class FlorisBoard : InputMethodService() {
         keyboard.setLayout("qwerty")
         return florisboard
     }
+
+
 }

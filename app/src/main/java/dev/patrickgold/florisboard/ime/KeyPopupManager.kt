@@ -1,20 +1,15 @@
-package dev.patrickgold.florisboard
+package dev.patrickgold.florisboard.ime
 
-import android.animation.LayoutTransition
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.opengl.Visibility
 import android.os.Handler
-import android.provider.Settings
 import android.util.TypedValue
 import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
+import dev.patrickgold.florisboard.R
 import kotlin.math.roundToInt
 
 @SuppressLint("RtlHardcoded")
@@ -30,8 +25,12 @@ class KeyPopupManager(kbd: CustomKeyboard) {
         val textView = TextView(keyboard.context)
         textView.layoutParams = ViewGroup.LayoutParams(keyPopupWidth, key.measuredHeight)
         textView.gravity = Gravity.CENTER
-        setTextTintColor(textView, R.attr.key_popup_fgColor)
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, keyboard.resources.getDimension(R.dimen.key_popup_textSize))
+        setTextTintColor(textView,
+            R.attr.key_popup_fgColor
+        )
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, keyboard.resources.getDimension(
+            R.dimen.key_popup_textSize
+        ))
         textView.text = key.createPopupKeyText(key.popupCodes[k])
         return textView
     }
@@ -79,7 +78,8 @@ class KeyPopupManager(kbd: CustomKeyboard) {
         if (windows.containsKey(code)) {
             return
         }
-        val popupView = View.inflate(keyboard.context, R.layout.key_popup, null) as ViewGroup
+        val popupView = View.inflate(keyboard.context,
+            R.layout.key_popup, null) as ViewGroup
         popupView.findViewById<TextView>(R.id.key_popup_text).text = key.createLabelText()
         popupView.findViewById<ImageView>(R.id.key_popup_threedots).visibility = when {
             key.popupCodes.isEmpty() -> View.INVISIBLE
@@ -102,7 +102,8 @@ class KeyPopupManager(kbd: CustomKeyboard) {
         if (windowsExt.containsKey(code)) {
             return
         }
-        val popupViewExt = View.inflate(keyboard.context, R.layout.key_popup_extended, null) as ViewGroup
+        val popupViewExt = View.inflate(keyboard.context,
+            R.layout.key_popup_extended, null) as ViewGroup
         // Extended popup layout:
         // row 1
         // row 0 (has always items, takes all if size <= 5, when higher and uneven 1 more than row 1

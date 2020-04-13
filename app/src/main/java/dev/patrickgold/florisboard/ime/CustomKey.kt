@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard
+package dev.patrickgold.florisboard.ime
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -12,6 +12,8 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat.getDrawable
 import com.google.android.flexbox.FlexboxLayout
+import dev.patrickgold.florisboard.KeyCodes
+import dev.patrickgold.florisboard.R
 import java.util.*
 
 class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListener {
@@ -44,13 +46,20 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
     var popupCodes = listOf<Int>()
 
     constructor(context: Context) : this(context, null)
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, R.attr.customKeyStyle)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs,
+        R.attr.customKeyStyle
+    )
     constructor(context: Context, attrs: AttributeSet?, defStyleAttrs: Int) : super(context, attrs, defStyleAttrs) {
         context.obtainStyledAttributes(
-            attrs, R.styleable.CustomKey, defStyleAttrs,
-            R.style.Widget_AppCompat_Button_Borderless_CustomKey).apply {
+            attrs,
+            R.styleable.CustomKey, defStyleAttrs,
+            R.style.Widget_AppCompat_Button_Borderless_CustomKey
+        ).apply {
             try {
-                cmd = KeyCodes.fromString(getString(R.styleable.CustomKey_cmd) ?: "")
+                cmd = KeyCodes.fromString(
+                    getString(R.styleable.CustomKey_cmd)
+                        ?: ""
+                )
                 val tmp = getInteger(R.styleable.CustomKey_code, 0)
                 code =  when (tmp) {
                     0 -> null
@@ -100,7 +109,9 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
         when (cmd) {
             KeyCodes.DELETE -> {
                 (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
-                drawable = getDrawable(context, R.drawable.key_ic_backspace)
+                drawable = getDrawable(context,
+                    R.drawable.key_ic_backspace
+                )
             }
             KeyCodes.ENTER -> {
                 (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
@@ -117,11 +128,15 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
                     else -> R.drawable.key_ic_action_next
                 })
                 if (action and EditorInfo.IME_FLAG_NO_ENTER_ACTION > 0) {
-                    drawable = getDrawable(context, R.drawable.key_ic_action_none)
+                    drawable = getDrawable(context,
+                        R.drawable.key_ic_action_none
+                    )
                 }
             }
             KeyCodes.LANGUAGE_SWITCH -> {
-                drawable = getDrawable(context, R.drawable.key_ic_language)
+                drawable = getDrawable(context,
+                    R.drawable.key_ic_language
+                )
             }
             KeyCodes.SHIFT -> {
                 (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
