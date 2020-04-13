@@ -1,6 +1,5 @@
 package dev.patrickgold.florisboard.ime.layout
 
-import com.squareup.moshi.FromJson
 import dev.patrickgold.florisboard.ime.kbd.KeyData
 import dev.patrickgold.florisboard.ime.kbd.KeyboardMode
 

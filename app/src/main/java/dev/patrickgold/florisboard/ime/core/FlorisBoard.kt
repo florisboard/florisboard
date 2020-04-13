@@ -21,6 +21,4 @@ class FlorisBoard : InputMethodService() {
         keyboard.setKeyboardMode(KeyboardMode.CHARACTERS)
         return florisboard
     }
-
-
 }

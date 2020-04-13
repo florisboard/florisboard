@@ -1,12 +1,10 @@
 package dev.patrickgold.florisboard.ime.kbd
 
 import android.content.Context
-import android.content.res.ColorStateList
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo

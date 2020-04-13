@@ -1,7 +1,6 @@
 package dev.patrickgold.florisboard.ime
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
 import android.os.Handler
 import android.util.TypedValue
 import android.view.*
