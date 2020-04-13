@@ -2,7 +2,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- CustomKey attributes -->
-    <declare-styleable name="CustomKey">
+    <declare-styleable name="KeyView">
         <attr name="android:layout_width" />
         <attr name="android:layout_height" />
         <attr name="code" format="integer" />

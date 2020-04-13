@@ -13,7 +13,10 @@ import com.google.android.flexbox.FlexboxLayout
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.kbd.KeyView
 import dev.patrickgold.florisboard.ime.kbd.KeyCode
+import dev.patrickgold.florisboard.ime.kbd.KeyboardMode
 import dev.patrickgold.florisboard.ime.layout.LayoutData
 
 class CustomKeyboard : LinearLayout {
@@ -23,6 +26,7 @@ class CustomKeyboard : LinearLayout {
 
     var caps: Boolean = false
     var capsLock: Boolean = false
+    var florisboard: FlorisBoard? = null
     var layoutName: String? = null
     var inputMethodService: InputMethodService? = null
     val popupManager = KeyPopupManager(this)
@@ -40,13 +44,7 @@ class CustomKeyboard : LinearLayout {
             LayoutParams.MATCH_PARENT,
             LayoutParams.WRAP_CONTENT
         )
-        val jsonRaw = resources.openRawResource(R.raw.kbd_qwerty)
-            .bufferedReader().use { it.readText() }
-        val moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .build()
-        val layoutAdapter = moshi.adapter(LayoutData::class.java)
-        val layout = layoutAdapter.fromJson(jsonRaw)
+        val layout = florisboard?.layoutManager?.getComputedLayout(KeyboardMode.ALPHABET)
         if (layout != null) {
             for (row in layout.arrangement) {
                 val rowView =
@@ -64,7 +62,7 @@ class CustomKeyboard : LinearLayout {
                 )
                 for (key in row) {
                     val keyView =
-                        CustomKey(context)
+                        KeyView(context)
                     val keyViewLP = FlexboxLayout.LayoutParams(
                         resources.getDimension(R.dimen.key_width).toInt(),
                         resources.getDimension(R.dimen.key_height).toInt()
@@ -74,7 +72,7 @@ class CustomKeyboard : LinearLayout {
                         resources.getDimension(R.dimen.key_marginH).toInt(), 0
                     )
                     keyView.layoutParams = keyViewLP
-                    keyView.code = key.code
+                    keyView.data = key
                     keyView.keyboard = this
                     rowView.addView(keyView)
                 }

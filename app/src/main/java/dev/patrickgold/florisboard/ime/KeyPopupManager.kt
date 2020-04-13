@@ -10,6 +10,8 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.kbd.KeyView
+import dev.patrickgold.florisboard.util.*
 import kotlin.math.roundToInt
 
 @SuppressLint("RtlHardcoded")
@@ -21,9 +23,9 @@ class KeyPopupManager(kbd: CustomKeyboard) {
     private var windows: HashMap<Int, PopupWindow> = hashMapOf()
     private var windowsExt: HashMap<Int, PopupWindow> = hashMapOf()
 
-    private fun createTextView(key: CustomKey, k: Int): TextView {
+    private fun createTextView(keyView: KeyView, k: Int): TextView {
         val textView = TextView(keyboard.context)
-        textView.layoutParams = ViewGroup.LayoutParams(keyPopupWidth, key.measuredHeight)
+        textView.layoutParams = ViewGroup.LayoutParams(keyPopupWidth, keyView.measuredHeight)
         textView.gravity = Gravity.CENTER
         setTextTintColor(textView,
             R.attr.key_popup_fgColor
@@ -31,33 +33,8 @@ class KeyPopupManager(kbd: CustomKeyboard) {
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, keyboard.resources.getDimension(
             R.dimen.key_popup_textSize
         ))
-        textView.text = key.createPopupKeyText(key.popupCodes[k])
+        textView.text = keyView.createPopupKeyText(keyView.data.popup[k].code)
         return textView
-    }
-
-    private fun getColorFromAttr(
-        attrColor: Int,
-        typedValue: TypedValue = TypedValue(),
-        resolveRefs: Boolean = true
-    ): Int {
-        keyboard.context.theme.resolveAttribute(attrColor, typedValue, resolveRefs)
-        return typedValue.data
-    }
-
-    private fun setBackgroundTintColor(textView: TextView, colorId: Int) {
-        textView.backgroundTintList = ColorStateList.valueOf(
-            getColorFromAttr(colorId)
-        )
-    }
-    private fun setDrawableTintColor(textView: TextView, colorId: Int) {
-        textView.compoundDrawableTintList = ColorStateList.valueOf(
-            getColorFromAttr(colorId)
-        )
-    }
-    private fun setTextTintColor(textView: TextView, colorId: Int) {
-        textView.foregroundTintList = ColorStateList.valueOf(
-            getColorFromAttr(colorId)
-        )
     }
 
     private fun createPopupWindow(view: View, width: Int, height: Int): PopupWindow {
@@ -70,9 +47,9 @@ class KeyPopupManager(kbd: CustomKeyboard) {
         return w
     }
 
-    fun show(key: CustomKey) {
-        val code = key.code ?: 0
-        if (code == 32 || key.code == null) {
+    fun show(keyView: KeyView) {
+        val code = keyView.data.code ?: 0
+        if (code == 32) {
             return
         }
         if (windows.containsKey(code)) {
@@ -80,23 +57,23 @@ class KeyPopupManager(kbd: CustomKeyboard) {
         }
         val popupView = View.inflate(keyboard.context,
             R.layout.key_popup, null) as ViewGroup
-        popupView.findViewById<TextView>(R.id.key_popup_text).text = key.createLabelText()
+        popupView.findViewById<TextView>(R.id.key_popup_text).text = keyView.createLabelText()
         popupView.findViewById<ImageView>(R.id.key_popup_threedots).visibility = when {
-            key.popupCodes.isEmpty() -> View.INVISIBLE
+            keyView.data.popup.isEmpty() -> View.INVISIBLE
             else -> View.VISIBLE
         }
         val w = createPopupWindow(popupView, keyPopupWidth, keyPopupHeight)
         w.showAtLocation(
             keyboard, Gravity.LEFT or Gravity.TOP,
-            (keyboard.x + (key.parent as ViewGroup).x + key.x - ((keyPopupWidth - key.measuredWidth).toFloat() / 2.0f)).toInt(),
-            (keyboard.y + (key.parent as ViewGroup).y + key.y - (keyPopupHeight - key.measuredHeight)).toInt()
+            (keyboard.x + (keyView.parent as ViewGroup).x + keyView.x - ((keyPopupWidth - keyView.measuredWidth).toFloat() / 2.0f)).toInt(),
+            (keyboard.y + (keyView.parent as ViewGroup).y + keyView.y - (keyPopupHeight - keyView.measuredHeight)).toInt()
         )
         windows[code] = w
     }
 
-    fun extend(key: CustomKey) {
-        val code = key.code ?: 0
-        if (code == 32 || key.code == null || key.popupCodes.isEmpty()) {
+    fun extend(keyView: KeyView) {
+        val code = keyView.data.code ?: 0
+        if (code == 32 || keyView.data.popup.isEmpty()) {
             return
         }
         if (windowsExt.containsKey(code)) {
@@ -108,40 +85,40 @@ class KeyPopupManager(kbd: CustomKeyboard) {
         // row 1
         // row 0 (has always items, takes all if size <= 5, when higher and uneven 1 more than row 1
         val row0count = when {
-            key.popupCodes.size > 5 -> (key.popupCodes.size.toFloat() / 2.0f).roundToInt()
-            else -> key.popupCodes.size
+            keyView.data.popup.size > 5 -> (keyView.data.popup.size.toFloat() / 2.0f).roundToInt()
+            else -> keyView.data.popup.size
         }
-        val row1count = key.popupCodes.size - row0count
+        val row1count = keyView.data.popup.size - row0count
         val row0 = popupViewExt.findViewById<LinearLayout>(R.id.key_popup_extended_row0)
         val row1 = popupViewExt.findViewById<LinearLayout>(R.id.key_popup_extended_row1)
         row0.removeAllViews()
         row1.removeAllViews()
-        for (k in key.popupCodes.indices) {
+        for (k in keyView.data.popup.indices) {
             if (row1count > 0 && k < row1count) {
-                row1.addView(createTextView(key, k))
+                row1.addView(createTextView(keyView, k))
             } else {
-                row0.addView(createTextView(key, k))
+                row0.addView(createTextView(keyView, k))
             }
         }
         //popupView.findViewById<ImageView>(R.id.key_popup_threedots).visibility = View.INVISIBLE
         val w = createPopupWindow(popupViewExt, row0count * keyPopupWidth, when {
-            row1count > 0 -> key.measuredHeight * 2
-            else -> key.measuredHeight
+            row1count > 0 -> keyView.measuredHeight * 2
+            else -> keyView.measuredHeight
         })
         w.showAtLocation(
             keyboard, Gravity.LEFT or Gravity.TOP,
-            (keyboard.x + (key.parent as ViewGroup).x + key.x - ((keyPopupWidth - key.measuredWidth).toFloat() / 2.0f)).toInt(),
-            (keyboard.y + (key.parent as ViewGroup).y + key.y - (keyPopupHeight - key.measuredHeight) - when {
-                row1count > 0 -> key.measuredHeight
+            (keyboard.x + (keyView.parent as ViewGroup).x + keyView.x - ((keyPopupWidth - keyView.measuredWidth).toFloat() / 2.0f)).toInt(),
+            (keyboard.y + (keyView.parent as ViewGroup).y + keyView.y - (keyPopupHeight - keyView.measuredHeight) - when {
+                row1count > 0 -> keyView.measuredHeight
                 else -> 0
             }).toInt()
         )
         windowsExt[code] = w
     }
 
-    fun hide(key: CustomKey) {
-        val code = key.code ?: 0
-        if (code == 32 || key.code == null) {
+    fun hide(keyView: KeyView) {
+        val code = keyView.data.code ?: 0
+        if (code == 32 || keyView.data.code == null) {
             return
         }
         // Hide popup delayed so the popup can show for persons who type fast

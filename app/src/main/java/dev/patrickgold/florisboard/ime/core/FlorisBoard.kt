@@ -9,11 +9,13 @@ import dev.patrickgold.florisboard.ime.layout.LayoutManager
 
 class FlorisBoard : InputMethodService() {
 
-    //val layoutManager = LayoutManager(baseContext)
+    val layoutManager = LayoutManager(this)
 
     override fun onCreateInputView(): View? {
         val florisboard = layoutInflater.inflate(R.layout.florisboard, null) as LinearLayout
+        layoutManager.init()
         val keyboard = florisboard.findViewById<CustomKeyboard>(R.id.keyboard)
+        keyboard.florisboard = this
         keyboard.inputMethodService = this
         keyboard.setLayout("qwerty")
         return florisboard

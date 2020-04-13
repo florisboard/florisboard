@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.ime
+package dev.patrickgold.florisboard.ime.kbd
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -14,108 +14,53 @@ import androidx.core.content.ContextCompat.getDrawable
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.KeyCodes
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.CustomKeyboard
+import dev.patrickgold.florisboard.util.*
 import java.util.*
 
-class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListener {
+class KeyView : androidx.appcompat.widget.AppCompatButton, View.OnTouchListener {
 
     private var isKeyPressed: Boolean = false
         set(v) {
-            if (cmd == KeyCodes.ENTER) {
-                setBackgroundTintColor(when {
+            if (data.code == KeyCodes.ENTER) {
+                setBackgroundTintColor(this, when {
                     v -> R.attr.app_colorPrimaryDark
                     else -> R.attr.app_colorPrimary
                 })
             } else {
-                setBackgroundTintColor(
-                    when {
-                        v -> R.attr.key_bgColorPressed
-                        else -> R.attr.key_bgColor
-                    }
-                )
+                setBackgroundTintColor(this, when {
+                    v -> R.attr.key_bgColorPressed
+                    else -> R.attr.key_bgColor
+                })
             }
             field = v
         }
     private val osHandler = Handler()
     private var osTimer: Timer? = null
-    var cmd: Int?
-        set(v) { field = v; updateUI() }
-    var code: Int?
+    var data: KeyData = KeyData(0)
         set(v) { field = v; updateUI() }
     var keyboard: CustomKeyboard? = null
-    var isRepeatable: Boolean = false
-    var popupCodes = listOf<Int>()
 
     constructor(context: Context) : this(context, null)
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs,
-        R.attr.customKeyStyle
-    )
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, R.attr.customKeyStyle)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttrs: Int) : super(context, attrs, defStyleAttrs) {
-        context.obtainStyledAttributes(
-            attrs,
-            R.styleable.CustomKey, defStyleAttrs,
-            R.style.Widget_AppCompat_Button_Borderless_CustomKey
-        ).apply {
-            try {
-                cmd = KeyCodes.fromString(
-                    getString(R.styleable.CustomKey_cmd)
-                        ?: ""
-                )
-                val tmp = getInteger(R.styleable.CustomKey_code, 0)
-                code =  when (tmp) {
-                    0 -> null
-                    else -> tmp
-                }
-            } finally {}
-        }.recycle()
-
         super.setOnTouchListener(this)
-    }
-
-    private fun getColorFromAttr(
-        attrColor: Int,
-        typedValue: TypedValue = TypedValue(),
-        resolveRefs: Boolean = true
-    ): Int {
-        context.theme.resolveAttribute(attrColor, typedValue, resolveRefs)
-        return typedValue.data
-    }
-
-    private fun setBackgroundTintColor(colorId: Int) {
-        super.setBackgroundTintList(
-            ColorStateList.valueOf(
-                getColorFromAttr(colorId)
-            )
-        )
-    }
-    private fun setDrawableTintColor(colorId: Int) {
-        super.setCompoundDrawableTintList(
-            ColorStateList.valueOf(
-                getColorFromAttr(colorId)
-            )
-        )
-    }
-    private fun setTextTintColor(colorId: Int) {
-        super.setForegroundTintList(
-            ColorStateList.valueOf(
-                getColorFromAttr(colorId)
-            )
-        )
     }
 
     private fun updateUI() {
         isKeyPressed = isKeyPressed
         super.setText(createLabelText())
         var drawable: Drawable? = null
-        when (cmd) {
-            KeyCodes.DELETE -> {
+        when (data.code) {
+            KeyCode.DELETE -> {
                 (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
                 drawable = getDrawable(context,
                     R.drawable.key_ic_backspace
                 )
             }
-            KeyCodes.ENTER -> {
+            KeyCode.ENTER -> {
                 (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
-                setDrawableTintColor(R.attr.key_bgColor)
+                setDrawableTintColor(this, R.attr.key_bgColor)
                 val action = keyboard?.inputMethodService?.currentInputEditorInfo?.imeOptions ?: EditorInfo.IME_NULL
                 drawable = getDrawable(context, when (action and EditorInfo.IME_MASK_ACTION) {
                     EditorInfo.IME_ACTION_DONE -> R.drawable.key_ic_action_done
@@ -133,32 +78,32 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
                     )
                 }
             }
-            KeyCodes.LANGUAGE_SWITCH -> {
+            KeyCode.LANGUAGE_SWITCH -> {
                 drawable = getDrawable(context,
                     R.drawable.key_ic_language
                 )
             }
-            KeyCodes.SHIFT -> {
+            KeyCode.SHIFT -> {
                 (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
                 drawable = getDrawable(context, when {
                     (keyboard?.caps ?: false) && (keyboard?.capsLock ?: false) -> {
-                        setDrawableTintColor(R.attr.app_colorAccentDark)
+                        setDrawableTintColor(this, R.attr.app_colorAccentDark)
                         R.drawable.key_ic_capslock
                     }
                     (keyboard?.caps ?: false) && !(keyboard?.capsLock ?: false) -> {
-                        setDrawableTintColor(R.attr.key_fgColor)
+                        setDrawableTintColor(this, R.attr.key_fgColor)
                         R.drawable.key_ic_capslock
                     }
                     else -> {
-                        setDrawableTintColor(R.attr.key_fgColor)
+                        setDrawableTintColor(this, R.attr.key_fgColor)
                         R.drawable.key_ic_caps
                     }
                 })
             }
-            KeyCodes.SPACE -> {
+            KeyCode.SPACE -> {
                 (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 5.0f
             }
-            KeyCodes.VIEW_SYMOBLS -> {
+            KeyCode.VIEW_SYMOBLS -> {
                 (layoutParams as FlexboxLayout.LayoutParams).flexGrow = 1.0f
                 super.setText("?123")
             }
@@ -180,7 +125,10 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
      * Creates a label text from the key's code.
      */
     fun createLabelText(): String {
-        val label = (code?.toChar() ?: "").toString()
+        if (data.type != KeyType.CHARACTER) {
+            return ""
+        }
+        val label = (data.code.toChar()).toString()
         return when {
             keyboard?.caps ?: false -> label.toUpperCase(Locale.getDefault())
             else -> label
@@ -202,11 +150,11 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
         if (event.action == MotionEvent.ACTION_DOWN) {
             isKeyPressed = true
             keyboard?.popupManager?.show(this)
-            if (cmd != null && isRepeatable) {
+            if (data.code == KeyCode.DELETE && data.type == KeyType.MODIFIER) {
                 osTimer = Timer()
                 osTimer?.scheduleAtFixedRate(object : TimerTask() {
                     override fun run() {
-                        keyboard?.onKeyClicked(code ?: cmd ?: 0)
+                        keyboard?.onKeyClicked(data.code)
                         if (!isKeyPressed) {
                             osTimer?.cancel()
                             osTimer = null
@@ -215,7 +163,7 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
                 }, 500, 50)
             }
             osHandler.postDelayed({
-                if (popupCodes.isNotEmpty()) {
+                if (data.popup.isNotEmpty()) {
                     keyboard?.popupManager?.extend(this)
                 }
             }, 300)
@@ -226,7 +174,7 @@ class CustomKey : androidx.appcompat.widget.AppCompatButton, View.OnTouchListene
             osTimer?.cancel()
             osTimer = null
             keyboard?.popupManager?.hide(this)
-            keyboard?.onKeyClicked(code ?: cmd ?: 0)
+            keyboard?.onKeyClicked(data.code)
         }
         return true
     }
