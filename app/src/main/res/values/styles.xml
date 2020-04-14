@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Widget.AppCompat.Button.Borderless.CustomKey">
+    <style name="Widget.AppCompat.Button.Borderless.KeyView">
         <item name="android:layout_marginStart">4dp</item>
         <item name="android:layout_marginEnd">4dp</item>
         <item name="android:minHeight">0dp</item>
@@ -14,12 +14,12 @@
         <item name="android:textSize">@dimen/key_textSize</item>
     </style>
 
-    <style name="CustomKeyboardStyle">
+    <style name="KeyboardView">
         <item name="android:background">?attr/keyboard_bgColor</item>
         <item name="android:orientation">vertical</item>
     </style>
 
-    <style name="CustomKeyboardStyleRow">
+    <style name="KeyboardRowView">
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:layout_marginBottom">4dp</item>
         <item name="flexDirection">row</item>

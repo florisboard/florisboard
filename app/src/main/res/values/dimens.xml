@@ -12,6 +12,8 @@
     <dimen name="key_popup_height">90dp</dimen>
     <dimen name="key_popup_textSize">26sp</dimen>
 
+    <dimen name="keyboard_preview_height">192sp</dimen>
+
     <dimen name="keyboard_row_marginH">2dp</dimen>
     <dimen name="keyboard_row_marginV">5dp</dimen>
 </resources>

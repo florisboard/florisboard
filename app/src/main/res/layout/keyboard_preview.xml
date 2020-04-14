@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/keyboard_preview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#f00">
+
+    <!-- TODO: make a good looking keyboard preview -->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/keyboard_preview_height"
+        android:text="@string/app_name"/>
+
+</LinearLayout>

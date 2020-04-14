@@ -2,9 +2,9 @@
 <resources>
 
     <style name="KeyboardTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="customKeyStyle">@style/Widget.AppCompat.Button.Borderless.CustomKey</item>
-        <item name="customKeyboardStyle">@style/CustomKeyboardStyle</item>
-        <item name="customKeyboardRowStyle">@style/CustomKeyboardStyleRow</item>
+        <item name="keyViewStyle">@style/Widget.AppCompat.Button.Borderless.KeyView</item>
+        <item name="keyboardViewStyle">@style/KeyboardView</item>
+        <item name="keyboardRowViewStyle">@style/KeyboardRowView</item>
 
         <item name="android:textColor">?attr/app_textColor</item>
     </style>

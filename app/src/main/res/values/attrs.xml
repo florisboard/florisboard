@@ -22,9 +22,9 @@
     </declare-styleable>
 
     <declare-styleable name="KeyboardTheme">
-        <attr name="customKeyStyle" format="reference" />
-        <attr name="customKeyboardStyle" format="reference" />
-        <attr name="customKeyboardRowStyle" format="reference" />
+        <attr name="keyViewStyle" format="reference" />
+        <attr name="keyboardViewStyle" format="reference" />
+        <attr name="keyboardRowViewStyle" format="reference" />
 
         <attr name="app_colorPrimary" format="color" />
         <attr name="app_colorPrimaryDark" format="color" />
