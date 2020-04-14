@@ -8,7 +8,7 @@ import dev.patrickgold.florisboard.R
 class KeyboardRowView : FlexboxLayout {
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs,
-        R.attr.customKeyboardRowStyle
+        R.attr.keyboardRowViewStyle
     )
     constructor(context: Context, attrs: AttributeSet?, defStyleAttrs: Int) : super(context, attrs, defStyleAttrs)
 }

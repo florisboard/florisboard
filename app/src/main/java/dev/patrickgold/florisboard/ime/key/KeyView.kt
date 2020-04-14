@@ -1,5 +1,6 @@
 package dev.patrickgold.florisboard.ime.key
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
@@ -9,18 +10,19 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat.getDrawable
 import com.google.android.flexbox.FlexboxLayout
-import com.google.android.flexbox.FlexboxLayoutManager
 import dev.patrickgold.florisboard.KeyCodes
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardRowView
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
 import dev.patrickgold.florisboard.util.*
 import java.util.*
 
+@SuppressLint("ViewConstructor")
 class KeyView(
-    context: Context, val data: KeyData, val keyboardView: KeyboardView
+    context: Context, val data: KeyData, private val florisboard: FlorisBoard, private val keyboardView: KeyboardView
 ) : androidx.appcompat.widget.AppCompatButton(
-    context, null, R.attr.customKeyStyle
+    context, null, R.attr.keyViewStyle
 ), View.OnTouchListener {
 
     private var isKeyPressed: Boolean = false
@@ -37,7 +39,7 @@ class KeyView(
     fun getComputedLetter(code: Int = data.code): String {
         val label = (code.toChar()).toString()
         return when {
-            keyboardView.caps -> label.toUpperCase(Locale.getDefault())
+            florisboard.caps -> label.toUpperCase(Locale.getDefault())
             else -> label
         }
     }
@@ -50,7 +52,7 @@ class KeyView(
                 osTimer = Timer()
                 osTimer?.scheduleAtFixedRate(object : TimerTask() {
                     override fun run() {
-                        keyboardView.onKeyClicked(data.code)
+                        florisboard.sendKeyPress(data)
                         if (!isKeyPressed) {
                             osTimer?.cancel()
                             osTimer = null
@@ -70,12 +72,14 @@ class KeyView(
             osTimer?.cancel()
             osTimer = null
             keyboardView.popupManager.hide(this)
-            keyboardView.onKeyClicked(data.code)
+            florisboard.sendKeyPress(data)
         }
         return true
     }
 
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+
         val flexLayoutParams = layoutParams as FlexboxLayout.LayoutParams
 
         val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
@@ -113,7 +117,7 @@ class KeyView(
                 }
                 KeyCode.ENTER -> {
                     setDrawableTintColor(this, R.attr.key_bgColor)
-                    val action = keyboardView.inputMethodService?.currentInputEditorInfo?.imeOptions ?: EditorInfo.IME_NULL
+                    val action = florisboard.currentInputEditorInfo.imeOptions
                     drawable = getDrawable(context, when (action and EditorInfo.IME_MASK_ACTION) {
                         EditorInfo.IME_ACTION_DONE -> R.drawable.key_ic_action_done
                         EditorInfo.IME_ACTION_GO -> R.drawable.key_ic_action_go
@@ -137,11 +141,11 @@ class KeyView(
                 }
                 KeyCode.SHIFT -> {
                     drawable = getDrawable(context, when {
-                        keyboardView.caps && keyboardView.capsLock -> {
+                        florisboard.caps && florisboard.capsLock -> {
                             setDrawableTintColor(this, R.attr.app_colorAccentDark)
                             R.drawable.key_ic_capslock
                         }
-                        keyboardView.caps && !keyboardView.capsLock -> {
+                        florisboard.caps && !florisboard.capsLock -> {
                             setDrawableTintColor(this, R.attr.key_fgColor)
                             R.drawable.key_ic_capslock
                         }
