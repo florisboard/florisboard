@@ -10,13 +10,13 @@
     </declare-styleable>
 
     <!-- CustomKeyboard attributes -->
-    <declare-styleable name="CustomKeyboard">
+    <declare-styleable name="KeyboardView">
         <attr name="android:layout_width" />
         <attr name="android:layout_height" />
     </declare-styleable>
 
     <!-- CustomKeyboardRow attributes -->
-    <declare-styleable name="CustomKeyboardRow">
+    <declare-styleable name="KeyboardRowView">
         <attr name="android:layout_width" />
         <attr name="android:layout_height" />
     </declare-styleable>

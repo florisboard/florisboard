@@ -1,6 +1,7 @@
-package dev.patrickgold.florisboard.ime
+package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
+import android.graphics.Canvas
 import android.inputmethodservice.InputMethodService
 import android.os.Handler
 import android.util.AttributeSet
@@ -9,17 +10,20 @@ import android.view.ContextThemeWrapper
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
+import androidx.core.view.children
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.key.KeyView
 import dev.patrickgold.florisboard.ime.key.KeyCode
 import dev.patrickgold.florisboard.ime.key.KeyboardMode
 import dev.patrickgold.florisboard.ime.layout.ComputedLayoutData
 
-class CustomKeyboard : LinearLayout {
+class KeyboardView : LinearLayout {
 
     private var hasCapsRecentlyChanged: Boolean = false
+    private var shouldPrepareKeyPopups: Boolean = false
     private val osHandler = Handler()
 
     var caps: Boolean = false
@@ -27,14 +31,15 @@ class CustomKeyboard : LinearLayout {
     var florisboard: FlorisBoard? = null
     var computedLayout: ComputedLayoutData? = null
     var inputMethodService: InputMethodService? = null
-    val popupManager = KeyPopupManager(this)
+    val popupManager =
+        KeyPopupManager(this)
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, R.attr.customKeyboardStyle)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttrs: Int) : super(context, attrs, defStyleAttrs)
 
     private fun buildLayout() {
-        this.destroyLayout()
+        destroyLayout()
         val context = ContextThemeWrapper(context,
             R.style.KeyboardTheme_MaterialLight
         )
@@ -46,7 +51,9 @@ class CustomKeyboard : LinearLayout {
         if (layout != null) {
             for (row in layout.arrangement) {
                 val rowView =
-                    CustomKeyboardRow(context)
+                    KeyboardRowView(
+                        context
+                    )
                 val rowViewLP = FlexboxLayout.LayoutParams(
                     LayoutParams.MATCH_PARENT,
                     LayoutParams.WRAP_CONTENT
@@ -59,9 +66,8 @@ class CustomKeyboard : LinearLayout {
                     resources.getDimension(R.dimen.keyboard_row_marginV).toInt()
                 )
                 for (key in row) {
-                    val keyView =
-                        KeyView(context)
-                    val keyViewLP = FlexboxLayout.LayoutParams(
+                    val keyView = KeyView(context, key, this)
+                    /*val keyViewLP = FlexboxLayout.LayoutParams(
                         resources.getDimension(R.dimen.key_width).toInt(),
                         resources.getDimension(R.dimen.key_height).toInt()
                     )
@@ -69,23 +75,24 @@ class CustomKeyboard : LinearLayout {
                         resources.getDimension(R.dimen.key_marginH).toInt(), 0,
                         resources.getDimension(R.dimen.key_marginH).toInt(), 0
                     )
-                    keyView.layoutParams = keyViewLP
-                    keyView.data = key
-                    keyView.keyboard = this
+                    keyView.layoutParams = keyViewLP*/
                     rowView.addView(keyView)
                 }
                 this.addView(rowView)
             }
         }
+        shouldPrepareKeyPopups = true
     }
 
     private fun destroyLayout() {
-        this.removeAllViews()
+        removeAllViews()
+        //popupManager.reset()
+        shouldPrepareKeyPopups = false
     }
 
     fun setKeyboardMode(keyboardMode: KeyboardMode) {
-        this.computedLayout = florisboard?.layoutManager?.computeLayoutFor(keyboardMode)
-        this.buildLayout()
+        computedLayout = florisboard?.layoutManager?.computeLayoutFor(keyboardMode)
+        buildLayout()
     }
 
     fun onKeyClicked(code: Int) {
@@ -152,5 +159,26 @@ class CustomKeyboard : LinearLayout {
                 }
             }
         }
+    }
+
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        super.onLayout(changed, l, t, r, b)
+        /*for (rowView in children) {
+            for (keyView in (rowView as KeyboardRowView).children) {
+                popupManager.updateLocation(keyView as KeyView)
+            }
+        }*/
+    }
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+        /*if (shouldPrepareKeyPopups) {
+            for (rowView in children) {
+                for (keyView in (rowView as KeyboardRowView).children) {
+                    popupManager.prepare(keyView as KeyView)
+                }
+            }
+            shouldPrepareKeyPopups = false
+        }*/
     }
 }
