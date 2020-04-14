@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.kbd.KeyView
+import dev.patrickgold.florisboard.ime.key.KeyView
 import dev.patrickgold.florisboard.util.*
 import kotlin.math.roundToInt
 

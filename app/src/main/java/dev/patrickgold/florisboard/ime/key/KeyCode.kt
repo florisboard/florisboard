@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.ime.kbd
+package dev.patrickgold.florisboard.ime.key
 
 object KeyCode {
     const val SPACE =                     32

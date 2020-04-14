@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.ime.kbd
+package dev.patrickgold.florisboard.ime.key
 
 import android.content.Context
 import android.graphics.Canvas

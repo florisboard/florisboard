@@ -12,9 +12,9 @@ import android.widget.LinearLayout
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.kbd.KeyView
-import dev.patrickgold.florisboard.ime.kbd.KeyCode
-import dev.patrickgold.florisboard.ime.kbd.KeyboardMode
+import dev.patrickgold.florisboard.ime.key.KeyView
+import dev.patrickgold.florisboard.ime.key.KeyCode
+import dev.patrickgold.florisboard.ime.key.KeyboardMode
 import dev.patrickgold.florisboard.ime.layout.ComputedLayoutData
 
 class CustomKeyboard : LinearLayout {

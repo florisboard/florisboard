@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.ime.kbd
+package dev.patrickgold.florisboard.ime.key
 
 enum class KeyboardMode {
     CHARACTERS,

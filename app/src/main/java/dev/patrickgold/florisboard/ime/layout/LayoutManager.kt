@@ -3,9 +3,9 @@ package dev.patrickgold.florisboard.ime.layout
 import android.content.Context
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import dev.patrickgold.florisboard.ime.kbd.KeyData
-import dev.patrickgold.florisboard.ime.kbd.KeyTypeAdapter
-import dev.patrickgold.florisboard.ime.kbd.KeyboardMode
+import dev.patrickgold.florisboard.ime.key.KeyData
+import dev.patrickgold.florisboard.ime.key.KeyTypeAdapter
+import dev.patrickgold.florisboard.ime.key.KeyboardMode
 import java.util.*
 
 class LayoutManager(private val context: Context) {

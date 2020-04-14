@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.LinearLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.CustomKeyboard
-import dev.patrickgold.florisboard.ime.kbd.KeyboardMode
+import dev.patrickgold.florisboard.ime.key.KeyboardMode
 import dev.patrickgold.florisboard.ime.layout.LayoutManager
 
 class FlorisBoard : InputMethodService() {
