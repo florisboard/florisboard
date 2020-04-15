@@ -28,6 +28,8 @@ class LayoutManager(private val context: Context) {
         // TODO: Fetch current layout preferences instead of using dev constants
         associate(LayoutType.CHARACTERS, "qwerty")
         associate(LayoutType.CHARACTERS_MOD, "default")
+        associate(LayoutType.SYMBOLS, "western_default")
+        associate(LayoutType.SYMBOLS_MOD, "default")
     }
 
     private fun loadLayout(type: LayoutType?): LayoutData? {

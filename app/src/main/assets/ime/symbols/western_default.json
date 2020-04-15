@@ -1,0 +1,71 @@
+{
+  "type": "symbols",
+  "name": "western_default",
+  "direction": "ltr",
+  "arrangement": [
+    [
+      { "code":   64, "label": "@", "popup": [] },
+      { "code":   35, "label": "#", "popup": [
+        { "code": 8470, "label": "№" }
+      ] },
+      { "code":   36, "label": "$", "popup": [
+        { "code": 8369, "label": "₱" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ] },
+      { "code":   95, "label": "_", "popup": [] },
+      { "code":   38, "label": "&", "popup": [] },
+      { "code":   45, "label": "-", "popup": [
+        { "code": 8212, "label": "—" },
+        { "code":   95, "label": "_" },
+        { "code": 8211, "label": "–" },
+        { "code":  183, "label": "·" }
+      ] },
+      { "code":   43, "label": "+", "popup": [
+        { "code":  177, "label": "±" }
+      ] },
+      { "code":   40, "label": "(", "popup": [
+        { "code":   91, "label": "[" },
+        { "code":   60, "label": "<" },
+        { "code":  123, "label": "{" }
+      ] },
+      { "code":   41, "label": ")", "popup": [
+        { "code":   93, "label": "]" },
+        { "code":   62, "label": ">" },
+        { "code":  125, "label": "}" }
+      ] },
+      { "code":   47, "label": "/", "popup": [] }
+    ], [
+      { "code":   42, "label": "*", "popup": [
+        { "code": 9733, "label": "★" },
+        { "code": 8224, "label": "†" },
+        { "code": 8225, "label": "‡" }
+      ] },
+      { "code":   34, "label": "\"", "popup": [
+        { "code": 8222, "label": "„" },
+        { "code": 8220, "label": "“" },
+        { "code": 8221, "label": "”" },
+        { "code":  171, "label": "«" },
+        { "code":  187, "label": "»" }
+      ] },
+      { "code":   39, "label": "'", "popup": [
+        { "code": 8218, "label": "‚" },
+        { "code": 8216, "label": "‘" },
+        { "code": 8217, "label": "’" },
+        { "code": 8249, "label": "‹" },
+        { "code": 8250, "label": "›" }
+      ] },
+      { "code":   58, "label": ":", "popup": [] },
+      { "code":   59, "label": ";", "popup": [] },
+      { "code":   33, "label": "!", "popup": [
+        { "code":  161, "label": "¡" }
+      ] },
+      { "code":   63, "label": "?", "popup": [
+        { "code":  191, "label": "¿" },
+        { "code": 8253, "label": "‽" }
+      ] }
+    ]
+  ]
+}

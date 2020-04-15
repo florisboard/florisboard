@@ -110,7 +110,10 @@ class FlorisBoard : InputMethodService() {
                         }, 300)
                     }
                 }
+                KeyCode.VIEW_CHARACTERS -> setActiveKeyboardMode(KeyboardMode.CHARACTERS)
+                KeyCode.VIEW_NUMERIC -> setActiveKeyboardMode(KeyboardMode.NUMERIC)
                 KeyCode.VIEW_SYMOBLS -> setActiveKeyboardMode(KeyboardMode.SYMBOLS)
+                KeyCode.VIEW_SYMOBLS2 -> setActiveKeyboardMode(KeyboardMode.SYMBOLS2)
             }
         }
     }

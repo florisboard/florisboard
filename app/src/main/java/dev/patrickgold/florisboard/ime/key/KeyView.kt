@@ -96,7 +96,10 @@ class KeyView(
                 KeyCode.ENTER -> 1.0f
                 KeyCode.SHIFT -> 1.0f
                 KeyCode.SPACE -> 5.0f
+                KeyCode.VIEW_CHARACTERS -> 1.0f
+                KeyCode.VIEW_NUMERIC -> 0.0f
                 KeyCode.VIEW_SYMOBLS -> 1.0f
+                KeyCode.VIEW_SYMOBLS2 -> 1.0f
                 else -> 0.0f
             }
         }
