@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.os.Handler
+import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -95,13 +96,21 @@ class KeyView(
                 KeyCode.DELETE -> 1.0f
                 KeyCode.ENTER -> 1.0f
                 KeyCode.SHIFT -> 1.0f
-                KeyCode.SPACE -> 5.0f
+                KeyCode.SPACE -> 6.0f
                 KeyCode.VIEW_CHARACTERS -> 1.0f
                 KeyCode.VIEW_NUMERIC -> 0.0f
                 KeyCode.VIEW_SYMOBLS -> 1.0f
                 KeyCode.VIEW_SYMOBLS2 -> 1.0f
                 else -> 0.0f
             }
+        }
+
+        if (data.code == KeyCode.VIEW_NUMERIC) {
+            setTextSize(
+                TypedValue.COMPLEX_UNIT_PX, resources.getDimension(
+                    R.dimen.key_numeric_textSize
+                )
+            )
         }
     }
 
@@ -158,8 +167,17 @@ class KeyView(
                         }
                     })
                 }
+                KeyCode.VIEW_CHARACTERS -> {
+                    super.setText("ABC")
+                }
+                KeyCode.VIEW_NUMERIC -> {
+                    super.setText("1 2\n3 4")
+                }
                 KeyCode.VIEW_SYMOBLS -> {
                     super.setText("?123")
+                }
+                KeyCode.VIEW_SYMOBLS2 -> {
+                    super.setText("=\\<")
                 }
             }
             if (drawable != null) {

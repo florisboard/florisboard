@@ -5,6 +5,7 @@
     <dimen name="key_marginH">2dp</dimen>
     <dimen name="key_borderRadius">6dp</dimen>
     <dimen name="key_textSize">18sp</dimen>
+    <dimen name="key_numeric_textSize">12sp</dimen>
 
     <dimen name="key_ic_padding">7dp</dimen>
 
