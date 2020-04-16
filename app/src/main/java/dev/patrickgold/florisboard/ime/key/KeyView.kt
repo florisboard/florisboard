@@ -16,6 +16,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardRowView
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
+import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
 import dev.patrickgold.florisboard.util.*
 import java.util.*
 
@@ -29,6 +30,7 @@ class KeyView(
     private var isKeyPressed: Boolean = false
     private val osHandler = Handler()
     private var osTimer: Timer? = null
+    private val popupManager = KeyPopupManager(keyboardView, this)
 
     init {
         super.setOnTouchListener(this)
@@ -46,34 +48,40 @@ class KeyView(
     }
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
-        if (event.action == MotionEvent.ACTION_DOWN) {
-            isKeyPressed = true
-            keyboardView.popupManager.show(this)
-            if (data.code == KeyCode.DELETE && data.type == KeyType.ENTER_EDITING) {
-                osTimer = Timer()
-                osTimer?.scheduleAtFixedRate(object : TimerTask() {
-                    override fun run() {
-                        florisboard.sendKeyPress(data)
-                        if (!isKeyPressed) {
-                            osTimer?.cancel()
-                            osTimer = null
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                isKeyPressed = true
+                popupManager.show()
+                if (data.code == KeyCode.DELETE && data.type == KeyType.ENTER_EDITING) {
+                    osTimer = Timer()
+                    osTimer?.scheduleAtFixedRate(object : TimerTask() {
+                        override fun run() {
+                            florisboard.sendKeyPress(data)
+                            if (!isKeyPressed) {
+                                osTimer?.cancel()
+                                osTimer = null
+                            }
                         }
-                    }
-                }, 500, 50)
-            }
-            osHandler.postDelayed({
-                if (data.popup.isNotEmpty()) {
-                    keyboardView.popupManager.extend(this)
+                    }, 500, 50)
                 }
-            }, 300)
-        }
-        if (event.action == MotionEvent.ACTION_UP) {
-            isKeyPressed = false
-            osHandler.removeCallbacksAndMessages(null)
-            osTimer?.cancel()
-            osTimer = null
-            keyboardView.popupManager.hide(this)
-            florisboard.sendKeyPress(data)
+                osHandler.postDelayed({
+                    if (data.popup.isNotEmpty()) {
+                        popupManager.extend()
+                    }
+                }, 300)
+            }
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                isKeyPressed = false
+                osHandler.removeCallbacksAndMessages(null)
+                osTimer?.cancel()
+                osTimer = null
+                popupManager.hide()
+                florisboard.sendKeyPress(data)
+            }
+            MotionEvent.ACTION_MOVE -> {
+                // TODO: handle movement
+            }
+            else -> return false
         }
         return true
     }

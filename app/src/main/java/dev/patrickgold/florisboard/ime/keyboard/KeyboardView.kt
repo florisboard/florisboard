@@ -6,7 +6,6 @@ import android.view.ContextThemeWrapper
 import android.widget.LinearLayout
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.key.KeyView
 import dev.patrickgold.florisboard.ime.key.KeyboardMode
@@ -20,7 +19,6 @@ class KeyboardView(
 ) {
 
     var computedLayout: ComputedLayoutData? = null
-    val popupManager = KeyPopupManager(this)
 
     private fun buildLayout() {
         destroyLayout()

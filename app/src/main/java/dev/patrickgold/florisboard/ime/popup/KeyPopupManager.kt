@@ -20,13 +20,19 @@ import kotlin.math.roundToInt
 
 
 @SuppressLint("RtlHardcoded")
-class KeyPopupManager(kbd: KeyboardView) {
+class KeyPopupManager(
+    private val keyboardView: KeyboardView,
+    private val keyView: KeyView
+) {
 
-    private val keyPopupWidth = kbd.resources.getDimension(R.dimen.key_popup_width).toInt()
-    private val keyPopupHeight = kbd.resources.getDimension(R.dimen.key_popup_height).toInt()
-    private val keyboardView: KeyboardView = kbd
-    private var windows: HashMap<Int, PopupWindow> = hashMapOf()
-    private var windowsExt: HashMap<Int, PopupWindow> = hashMapOf()
+    private val keyPopupWidth = keyboardView.resources.getDimension(R.dimen.key_popup_width).toInt()
+    private val keyPopupHeight = keyboardView.resources.getDimension(R.dimen.key_popup_height).toInt()
+    private val popupView = View.inflate(keyboardView.context,
+        R.layout.key_popup, null) as ViewGroup
+    private val popupViewExt = View.inflate(keyboardView.context,
+        R.layout.key_popup_extended, null) as ViewGroup
+    private var window: PopupWindow? = null
+    private var windowExt: PopupWindow? = null
 
     private fun createTextView(keyView: KeyView, k: Int): TextView {
         val textView = TextView(keyboardView.context)
@@ -52,52 +58,14 @@ class KeyPopupManager(kbd: KeyboardView) {
         return w
     }
 
-    /*fun prepare(keyView: KeyView) {
+    fun show() {
         val code = keyView.data.code
         if (code <= 32) {
             return
         }
-        if (windows.containsKey(code)) {
+        if (window != null) {
             return
         }
-        val popupView = View.inflate(keyboardView.context,
-            R.layout.key_popup, null) as ViewGroup
-        val w = createPopupWindow(popupView, 0, 0)
-        w.setTouchInterceptor { _, event ->
-            keyView.dispatchTouchEvent(event)
-            true
-        }
-        w.showAtLocation(
-            keyboardView, Gravity.LEFT or Gravity.TOP,
-            (keyboardView.x + (keyView.parent as ViewGroup).x + keyView.x - ((keyPopupWidth - keyView.measuredWidth).toFloat() / 2.0f)).toInt(),
-            (keyboardView.y + (keyView.parent as ViewGroup).y + keyView.y - (keyPopupHeight - keyView.measuredHeight)).toInt()
-        )
-        windows[code] = w
-    }
-
-    fun updateLocation(keyView: KeyView) {
-        val code = keyView.data.code
-        if (code <= 32) {
-            return
-        }
-        val w = windows[code] ?: return
-        w.update(
-            (keyboardView.x + (keyView.parent as ViewGroup).x + keyView.x - ((keyPopupWidth - keyView.measuredWidth).toFloat() / 2.0f)).toInt(),
-            (keyboardView.y + (keyView.parent as ViewGroup).y + keyView.y - (keyPopupHeight - keyView.measuredHeight)).toInt(),
-            -1, -1
-        )
-    }*/
-
-    fun show(keyView: KeyView) {
-        val code = keyView.data.code
-        if (code <= 32) {
-            return
-        }
-        if (windows.containsKey(code)) {
-            return
-        }
-        val popupView = View.inflate(keyboardView.context,
-            R.layout.key_popup, null) as ViewGroup
         popupView.findViewById<TextView>(R.id.key_popup_text).text = keyView.getComputedLetter()
         popupView.findViewById<ImageView>(R.id.key_popup_threedots).visibility = when {
             keyView.data.popup.isEmpty() -> View.INVISIBLE
@@ -113,19 +81,17 @@ class KeyPopupManager(kbd: KeyboardView) {
             (keyboardView.x + (keyView.parent as ViewGroup).x + keyView.x - ((keyPopupWidth - keyView.measuredWidth).toFloat() / 2.0f)).toInt(),
             (keyboardView.y + (keyView.parent as ViewGroup).y + keyView.y - (keyPopupHeight - keyView.measuredHeight)).toInt()
         )
-        windows[code] = w
+        window = w
     }
 
-    fun extend(keyView: KeyView) {
+    fun extend() {
         val code = keyView.data.code
         if (code <= 32 || keyView.data.popup.isEmpty()) {
             return
         }
-        if (windowsExt.containsKey(code)) {
+        if (windowExt != null) {
             return
         }
-        val popupViewExt = View.inflate(keyboardView.context,
-            R.layout.key_popup_extended, null) as ViewGroup
         // Extended popup layout:
         // row 1
         // row 0 (has always items, takes all if size <= 5, when higher and uneven 1 more than row 1
@@ -145,44 +111,35 @@ class KeyPopupManager(kbd: KeyboardView) {
                 row0.addView(createTextView(keyView, k))
             }
         }
-        windows[code]?.contentView?.findViewById<ImageView>(R.id.key_popup_threedots)?.visibility = View.INVISIBLE
+        popupView.findViewById<ImageView>(R.id.key_popup_threedots)?.visibility = View.INVISIBLE
         val w = createPopupWindow(popupViewExt, row0count * keyPopupWidth, when {
             row1count > 0 -> keyView.measuredHeight * 2
             else -> keyView.measuredHeight
         })
+        val x = when {
+            (keyView.x < keyboardView.measuredWidth / 2) ->
+                (keyboardView.x + (keyView.parent as ViewGroup).x + keyView.x - ((keyPopupWidth - keyView.measuredWidth).toFloat() / 2.0f)).toInt()
+            else ->
+                (keyboardView.x + (keyView.parent as ViewGroup).x + keyView.x - ((keyPopupWidth - keyView.measuredWidth).toFloat() / 2.0f)).toInt() - row0count * keyPopupWidth + keyView.measuredWidth
+        }
         w.showAtLocation(
             keyboardView, Gravity.LEFT or Gravity.TOP,
-            (keyboardView.x + (keyView.parent as ViewGroup).x + keyView.x - ((keyPopupWidth - keyView.measuredWidth).toFloat() / 2.0f)).toInt(),
-            (keyboardView.y + (keyView.parent as ViewGroup).y + keyView.y - (keyPopupHeight - keyView.measuredHeight) - when {
+            x, (keyboardView.y + (keyView.parent as ViewGroup).y + keyView.y - (keyPopupHeight - keyView.measuredHeight) - when {
                 row1count > 0 -> keyView.measuredHeight
                 else -> 0
             }).toInt()
         )
-        windowsExt[code] = w
+        windowExt = w
     }
 
-    fun hide(keyView: KeyView) {
+    fun hide() {
         val code = keyView.data.code
-        if (code < 32) {
+        if (code <= 32) {
             return
         }
-        // Hide popup delayed so the popup can show for persons who type fast
-        /*Handler().postDelayed({*/
-        windows[code]?.dismiss()
-        windows.remove(code)
-        windowsExt[code]?.dismiss()
-        windowsExt.remove(code)
-        /*}, 10)*/
+        window?.dismiss()
+        window = null
+        windowExt?.dismiss()
+        windowExt = null
     }
-
-    /*fun reset() {
-        for ((code, window) in windows) {
-            window.dismiss()
-            windows.remove(code)
-        }
-        for ((code, windowExt) in windowsExt) {
-            windowExt.dismiss()
-            windowsExt.remove(code)
-        }
-    }*/
 }
