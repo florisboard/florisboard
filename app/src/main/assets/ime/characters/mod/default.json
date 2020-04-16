@@ -12,7 +12,24 @@
       { "code":   44, "label": ",", "popup": [] },
       { "code": -210, "label": "language_switch", "type": "system_gui" },
       { "code":   32, "label": " ", "popup": [] },
-      { "code":   46, "label": ".", "popup": [] },
+      { "code":   46, "label": ".", "popup": [
+        { "code":   38, "label": "&" },
+        { "code":   37, "label": "%" },
+        { "code":   43, "label": "+" },
+        { "code":   34, "label": "\"" },
+        { "code":   45, "label": "-" },
+        { "code":   58, "label": ":" },
+        { "code":   39, "label": "'" },
+        { "code":   64, "label": "@" },
+        { "code":   59, "label": ";" },
+        { "code":   47, "label": "/" },
+        { "code":   40, "label": "(" },
+        { "code":   41, "label": ")" },
+        { "code":   35, "label": "#" },
+        { "code":   33, "label": "!" },
+        { "code":   44, "label": "," },
+        { "code":   63, "label": "?" }
+      ] },
       { "code":   10, "label": "enter", "type": "enter_editing" }
     ]
   ]
