@@ -75,11 +75,14 @@ class KeyView(
                 osHandler.removeCallbacksAndMessages(null)
                 osTimer?.cancel()
                 osTimer = null
+                val retData = popupManager.getActiveKeyData()
                 popupManager.hide()
-                florisboard.sendKeyPress(data)
+                florisboard.sendKeyPress(retData)
             }
             MotionEvent.ACTION_MOVE -> {
-                // TODO: handle movement
+                if (popupManager.isShowingExtendedPopup) {
+                    popupManager.propagateMotionEvent(event)
+                }
             }
             else -> return false
         }
@@ -97,7 +100,7 @@ class KeyView(
 
         layoutParams = flexLayoutParams.apply {
             width = keyWidth
-            height = resources.getDimension(R.dimen.key_height).toInt()
+            height = FlexboxLayout.LayoutParams.MATCH_PARENT
             marginStart = keyMarginH
             marginEnd = keyMarginH
             flexGrow = when (data.code) {

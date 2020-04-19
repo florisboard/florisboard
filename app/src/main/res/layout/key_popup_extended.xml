@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.flexbox.FlexboxLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/key_popup_extended"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/key_popup_bgshape"
     android:backgroundTint="?attr/key_popup_bgColor"
-    android:orientation="vertical"
-    android:textSize="@dimen/key_popup_textSize">
-
-    <LinearLayout
-        android:id="@+id/key_popup_extended_row1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"/>
-
-    <LinearLayout
-        android:id="@+id/key_popup_extended_row0"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"/>
-
-</LinearLayout>
+    android:padding="0dp"
+    android:textSize="@dimen/key_popup_textSize"
+    app:flexDirection="row"
+    app:flexWrap="wrap"
+    app:showDivider="none" />

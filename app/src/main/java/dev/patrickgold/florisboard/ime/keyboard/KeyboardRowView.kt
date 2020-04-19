@@ -11,4 +11,13 @@ class KeyboardRowView : FlexboxLayout {
         R.attr.keyboardRowViewStyle
     )
     constructor(context: Context, attrs: AttributeSet?, defStyleAttrs: Int) : super(context, attrs, defStyleAttrs)
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+
+        layoutParams = layoutParams.apply {
+            // TODO: get height from preferences
+            height = resources.getDimension(R.dimen.keyboard_row_height).toInt()
+        }
+    }
 }

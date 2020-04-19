@@ -23,6 +23,9 @@
         <item name="key_popup_bgColor">#efefef</item>
         <item name="key_popup_fgColor">#000</item>
 
+        <item name="key_popup_extended_bgColor">#00000000</item>
+        <item name="key_popup_extended_bgColorActive">#cecece</item>
+
         <item name="keyboard_bgColor">#dfdfdf</item>
     </style>
 
