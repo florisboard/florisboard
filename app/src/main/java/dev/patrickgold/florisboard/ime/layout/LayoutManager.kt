@@ -31,6 +31,8 @@ class LayoutManager(private val context: Context) {
         associate(LayoutType.EXTENSION, "number_row")
         associate(LayoutType.SYMBOLS, "western_default")
         associate(LayoutType.SYMBOLS_MOD, "default")
+        associate(LayoutType.SYMBOLS2, "western_default")
+        associate(LayoutType.SYMBOLS2_MOD, "default")
     }
 
     private fun loadLayout(type: LayoutType?): LayoutData? {
@@ -129,7 +131,7 @@ class LayoutManager(private val context: Context) {
             }
             KeyboardMode.SYMBOLS2 -> {
                 mergeLayouts(
-                    keyboardMode, LayoutType.SYMBOLS2, LayoutType.SYMBOLS2_MOD, true
+                    keyboardMode, LayoutType.SYMBOLS2, LayoutType.SYMBOLS2_MOD, false
                 )
             }
             else -> null
