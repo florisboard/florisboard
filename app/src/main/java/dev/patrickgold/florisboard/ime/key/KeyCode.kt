@@ -52,8 +52,8 @@ object KeyCode {
     const val REDO =                    -137
 
     const val VIEW_CHARACTERS =         -201
-    const val VIEW_SYMOBLS =            -202
-    const val VIEW_SYMOBLS2 =           -203
+    const val VIEW_SYMBOLS =            -202
+    const val VIEW_SYMBOLS2 =           -203
     const val VIEW_NUMERIC =            -204
     const val LANGUAGE_SWITCH =         -210
 }

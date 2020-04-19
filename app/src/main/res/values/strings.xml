@@ -2,5 +2,10 @@
     <string name="app_name">FlorisBoard</string>
     <string name="subtype_en_US">English (US)</string>
 
-    <string name="key_popup_threedots_alt">Three-dot icon. If visible, indicates that more letters can be used if longer pressed.</string>
+    <string name="key__view_characters">ABC</string>
+    <string name="key__view_numeric">1 2\n3 4</string>
+    <string name="key__view_symbols">\?123</string>
+    <string name="key__view_symbols2">=\\&lt;</string>
+
+    <string name="key_popup__threedots_alt">Three-dot icon. If visible, indicates that more letters can be used if longer pressed.</string>
 </resources>

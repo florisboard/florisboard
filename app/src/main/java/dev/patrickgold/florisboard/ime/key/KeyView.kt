@@ -11,7 +11,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat.getDrawable
 import com.google.android.flexbox.FlexboxLayout
-import dev.patrickgold.florisboard.KeyCodes
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardRowView
@@ -64,6 +63,7 @@ class KeyView(
                         }
                     }, 500, 50)
                 }
+                // TODO: Fetch delayMillis from preferences
                 osHandler.postDelayed({
                     if (data.popup.isNotEmpty()) {
                         popupManager.extend()
@@ -80,6 +80,7 @@ class KeyView(
                 florisboard.sendKeyPress(retData)
             }
             MotionEvent.ACTION_MOVE -> {
+                // TODO: Add cancel event if pointer moves to far from key and popup window
                 if (popupManager.isShowingExtendedPopup) {
                     popupManager.propagateMotionEvent(event)
                 }
@@ -110,8 +111,8 @@ class KeyView(
                 KeyCode.SPACE -> 6.0f
                 KeyCode.VIEW_CHARACTERS -> 1.0f
                 KeyCode.VIEW_NUMERIC -> 0.0f
-                KeyCode.VIEW_SYMOBLS -> 1.0f
-                KeyCode.VIEW_SYMOBLS2 -> 1.0f
+                KeyCode.VIEW_SYMBOLS -> 1.0f
+                KeyCode.VIEW_SYMBOLS2 -> 1.0f
                 else -> 0.0f
             }
         }
@@ -179,16 +180,16 @@ class KeyView(
                     })
                 }
                 KeyCode.VIEW_CHARACTERS -> {
-                    super.setText("ABC")
+                    super.setText(R.string.key__view_characters)
                 }
                 KeyCode.VIEW_NUMERIC -> {
-                    super.setText("1 2\n3 4")
+                    super.setText(R.string.key__view_numeric)
                 }
-                KeyCode.VIEW_SYMOBLS -> {
-                    super.setText("?123")
+                KeyCode.VIEW_SYMBOLS -> {
+                    super.setText(R.string.key__view_symbols)
                 }
-                KeyCode.VIEW_SYMOBLS2 -> {
-                    super.setText("=\\<")
+                KeyCode.VIEW_SYMBOLS2 -> {
+                    super.setText(R.string.key__view_symbols2)
                 }
             }
             if (drawable != null) {
@@ -202,7 +203,7 @@ class KeyView(
             }
         }
 
-        if (data.code == KeyCodes.ENTER) {
+        if (data.code == KeyCode.ENTER) {
             setBackgroundTintColor(this, when {
                 isKeyPressed -> R.attr.app_colorPrimaryDark
                 else -> R.attr.app_colorPrimary

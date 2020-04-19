@@ -14,7 +14,6 @@ import com.google.android.flexbox.FlexboxLayout
 import com.google.android.flexbox.JustifyContent
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.key.KeyData
-import dev.patrickgold.florisboard.ime.key.KeyPopupExtendedSingleView
 import dev.patrickgold.florisboard.ime.key.KeyView
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
 import dev.patrickgold.florisboard.util.setTextTintColor
@@ -51,7 +50,7 @@ class KeyPopupManager(
         isInitActive: Boolean = false,
         isWrapBefore: Boolean = false
     ): TextView {
-        val textView = KeyPopupExtendedSingleView(keyboardView.context, keyView.data, isInitActive)
+        val textView = KeyPopupExtendedSingleView(keyboardView.context, isInitActive)
         val lp = FlexboxLayout.LayoutParams(keyPopupWidth, keyView.measuredHeight)
         lp.isWrapBefore = isWrapBefore
         textView.layoutParams = lp
@@ -103,6 +102,7 @@ class KeyPopupManager(
     }
 
     fun extend() {
+        // TODO: cleanup and spilt into multiple functions
         val code = keyView.data.code
         if (code <= 32 || keyView.data.popup.isEmpty()) {
             return

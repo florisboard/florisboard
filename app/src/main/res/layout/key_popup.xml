@@ -20,7 +20,7 @@
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_margin="0dp"
-        android:contentDescription="@string/key_popup_threedots_alt"
+        android:contentDescription="@string/key_popup__threedots_alt"
         android:layout_gravity="end"
         android:padding="0dp"
         android:src="@drawable/ic_more_horiz"
