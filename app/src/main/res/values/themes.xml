@@ -29,4 +29,8 @@
         <item name="keyboard_bgColor">#dfdfdf</item>
     </style>
 
+    <style name="SettingsTheme.Light" parent="Theme.AppCompat.Light">
+        <!---->
+    </style>
+
 </resources>

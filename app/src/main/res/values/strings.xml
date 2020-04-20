@@ -8,4 +8,11 @@
     <string name="key__view_symbols2">=\\&lt;</string>
 
     <string name="key_popup__threedots_alt">Three-dot icon. If visible, indicates that more letters can be used if longer pressed.</string>
+
+    <!-- Settings UI strings -->
+    <string name="settings__title">Settings</string>
+    <string name="settings__kbd__title">Keyboard preferences</string>
+
+    <!-- Preferences UI strings -->
+    <string name="pref__kbd__height_factor__label">Keyboard height</string>
 </resources>

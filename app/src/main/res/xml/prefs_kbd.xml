@@ -1,0 +1,17 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="Layout">
+
+        <ListPreference
+            android:defaultValue="normal"
+            app:entries="@array/pref__kbd__height_factor__entries"
+            app:entryValues="@array/pref__kbd__height_factor__values"
+            app:key="keyboard_height_factor"
+            app:title="@string/pref__kbd__height_factor__label"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

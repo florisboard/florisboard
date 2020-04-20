@@ -7,20 +7,47 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/KeyboardTheme.MaterialLight">
+        android:supportsRtl="true">
 
+        <!-- IME service -->
         <service
             android:name=".ime.core.FlorisBoard"
             android:label="@string/app_name"
-            android:permission="android.permission.BIND_INPUT_METHOD">
+            android:permission="android.permission.BIND_INPUT_METHOD"
+            android:theme="@style/KeyboardTheme.MaterialLight">
             <meta-data
                 android:name="android.view.im"
                 android:resource="@xml/method" />
+
             <intent-filter>
                 <action android:name="android.view.InputMethod" />
             </intent-filter>
         </service>
+
+        <!-- UI related activities -->
+        <activity
+            android:name="dev.patrickgold.florisboard.settings.SettingsLauncherActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@style/SettingsTheme.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="dev.patrickgold.florisboard.settings.SettingsMainActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:theme="@style/SettingsTheme.Light" />
+
+        <activity
+            android:name="dev.patrickgold.florisboard.settings.SettingsKbdActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/settings__kbd__title"
+            android:theme="@style/SettingsTheme.Light" />
 
     </application>
 

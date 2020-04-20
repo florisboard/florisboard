@@ -1,5 +1,6 @@
 package dev.patrickgold.florisboard.ime.core
 
+import android.content.Intent
 import android.inputmethodservice.InputMethodService
 import android.os.Handler
 import android.util.Log
@@ -7,6 +8,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
+import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.key.KeyCode
 import dev.patrickgold.florisboard.ime.key.KeyData
@@ -14,6 +16,7 @@ import dev.patrickgold.florisboard.ime.key.KeyType
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.layout.LayoutManager
+import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import java.util.*
 
 class FlorisBoard : InputMethodService() {
@@ -29,6 +32,9 @@ class FlorisBoard : InputMethodService() {
     val layoutManager = LayoutManager(this)
 
     override fun onCreateInputView(): View? {
+        // Set default preference values if user has not used preferences screen
+        PreferenceManager.setDefaultValues(this, R.xml.prefs_kbd, true)
+
         val rootView = layoutInflater.inflate(R.layout.florisboard, null) as LinearLayout
         layoutManager.autoFetchAssociationsFromPrefs()
         for (mode in KeyboardMode.values()) {
@@ -95,7 +101,11 @@ class FlorisBoard : InputMethodService() {
                         }
                     }
                 }
-                KeyCode.LANGUAGE_SWITCH -> {}
+                KeyCode.LANGUAGE_SWITCH -> {
+                    val i = Intent(this, SettingsMainActivity::class.java)
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(i)
+                }
                 KeyCode.SHIFT -> {
                     if (hasCapsRecentlyChanged) {
                         osHandler.removeCallbacksAndMessages(null)

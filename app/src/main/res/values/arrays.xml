@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref__kbd__height_factor__entries">
+        <item>Short</item>
+        <item>Mid-short</item>
+        <item>Normal</item>
+        <item>Mid-tall</item>
+        <item>Tall</item>
+    </string-array>
+    <string-array name="pref__kbd__height_factor__values">
+        <item>short</item>
+        <item>mid_short</item>
+        <item>normal</item>
+        <item>mid_tall</item>
+        <item>tall</item>
+    </string-array>
+</resources>
