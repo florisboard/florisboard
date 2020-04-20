@@ -12,7 +12,7 @@ import dev.patrickgold.florisboard.ime.key.KeyCode
 import dev.patrickgold.florisboard.ime.key.KeyData
 import dev.patrickgold.florisboard.ime.key.KeyType
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
-import dev.patrickgold.florisboard.ime.key.KeyboardMode
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.layout.LayoutManager
 import java.util.*
 
@@ -20,7 +20,8 @@ class FlorisBoard : InputMethodService() {
 
     private var activeKeyboardMode: KeyboardMode? = null
     private var hasCapsRecentlyChanged: Boolean = false
-    private val keyboardViews = EnumMap<KeyboardMode, KeyboardView>(KeyboardMode::class.java)
+    private val keyboardViews = EnumMap<KeyboardMode, KeyboardView>(
+        KeyboardMode::class.java)
     private val osHandler = Handler()
 
     var caps: Boolean = false
