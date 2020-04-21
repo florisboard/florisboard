@@ -18,6 +18,7 @@ class KeyboardView(
 ) {
 
     var computedLayout: ComputedLayoutData? = null
+    var keyWidth: Int = resources.getDimension(R.dimen.key_height).toInt()
 
     private fun buildLayout() {
         destroyLayout()
@@ -62,5 +63,12 @@ class KeyboardView(
     fun setKeyboardMode(keyboardMode: KeyboardMode) {
         computedLayout = florisboard.layoutManager.computeLayoutFor(keyboardMode)
         buildLayout()
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+
+        val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
+        keyWidth = (measuredWidth / 10) - (2 * keyMarginH)
     }
 }

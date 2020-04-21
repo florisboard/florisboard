@@ -12,12 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider" />
-
     <include
         layout="@layout/keyboard_preview"
         android:layout_width="match_parent"

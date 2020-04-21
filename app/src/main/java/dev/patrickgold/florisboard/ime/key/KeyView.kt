@@ -13,7 +13,6 @@ import androidx.core.content.ContextCompat.getDrawable
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardRowView
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
 import dev.patrickgold.florisboard.util.*
@@ -27,12 +26,46 @@ class KeyView(
 ), View.OnTouchListener {
 
     private var isKeyPressed: Boolean = false
+        set(value) {
+            field = value
+            updateKeyPressedBackground()
+        }
     private val osHandler = Handler()
     private var osTimer: Timer? = null
     private val popupManager = KeyPopupManager(keyboardView, this)
 
     init {
         super.setOnTouchListener(this)
+
+        val flexLayoutParams = FlexboxLayout.LayoutParams(
+            keyboardView.keyWidth, FlexboxLayout.LayoutParams.MATCH_PARENT
+        )
+        layoutParams = flexLayoutParams.apply {
+            marginStart = resources.getDimension((R.dimen.key_marginH)).toInt()
+            marginEnd = resources.getDimension((R.dimen.key_marginH)).toInt()
+            flexGrow = when (data.code) {
+                KeyCode.DELETE -> 1.0f
+                KeyCode.ENTER -> 1.0f
+                KeyCode.SHIFT -> 1.0f
+                KeyCode.SPACE -> 6.0f
+                KeyCode.VIEW_CHARACTERS -> 1.0f
+                KeyCode.VIEW_NUMERIC -> 0.0f
+                KeyCode.VIEW_SYMBOLS -> 1.0f
+                KeyCode.VIEW_SYMBOLS2 -> 1.0f
+                else -> 0.0f
+            }
+        }
+        setPadding(0, 0, 0, 0)
+
+        if (data.code == KeyCode.VIEW_NUMERIC) {
+            setTextSize(
+                TypedValue.COMPLEX_UNIT_PX, resources.getDimension(
+                    R.dimen.key_numeric_textSize
+                )
+            )
+        }
+
+        updateKeyPressedBackground()
     }
 
     /**
@@ -43,6 +76,20 @@ class KeyView(
         return when {
             florisboard.caps -> label.toUpperCase(Locale.getDefault())
             else -> label
+        }
+    }
+
+    private fun updateKeyPressedBackground() {
+        if (data.code == KeyCode.ENTER) {
+            setBackgroundTintColor(this, when {
+                isKeyPressed -> R.attr.app_colorPrimaryDark
+                else -> R.attr.app_colorPrimary
+            })
+        } else {
+            setBackgroundTintColor(this, when {
+                isKeyPressed -> R.attr.key_bgColorPressed
+                else -> R.attr.key_bgColor
+            })
         }
     }
 
@@ -90,47 +137,14 @@ class KeyView(
         return true
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-
-        val flexLayoutParams = layoutParams as FlexboxLayout.LayoutParams
-
-        val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
-        val keyboardRowWidth = (parent as KeyboardRowView).measuredWidth
-        val keyWidth = (keyboardRowWidth / 10) - (2 * keyMarginH)
-
-        layoutParams = flexLayoutParams.apply {
-            width = keyWidth
-            height = FlexboxLayout.LayoutParams.MATCH_PARENT
-            marginStart = keyMarginH
-            marginEnd = keyMarginH
-            flexGrow = when (data.code) {
-                KeyCode.DELETE -> 1.0f
-                KeyCode.ENTER -> 1.0f
-                KeyCode.SHIFT -> 1.0f
-                KeyCode.SPACE -> 6.0f
-                KeyCode.VIEW_CHARACTERS -> 1.0f
-                KeyCode.VIEW_NUMERIC -> 0.0f
-                KeyCode.VIEW_SYMBOLS -> 1.0f
-                KeyCode.VIEW_SYMBOLS2 -> 1.0f
-                else -> 0.0f
-            }
-        }
-
-        if (data.code == KeyCode.VIEW_NUMERIC) {
-            setTextSize(
-                TypedValue.COMPLEX_UNIT_PX, resources.getDimension(
-                    R.dimen.key_numeric_textSize
-                )
-            )
-        }
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
+        layoutParams.width = keyboardView.keyWidth
     }
 
     override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-
         if (data.type == KeyType.CHARACTER) {
-            super.setText(getComputedLetter())
+            text = getComputedLetter()
         } else {
             var drawable: Drawable? = null
             when (data.code) {
@@ -180,39 +194,29 @@ class KeyView(
                     })
                 }
                 KeyCode.VIEW_CHARACTERS -> {
-                    super.setText(R.string.key__view_characters)
+                    setText(R.string.key__view_characters)
                 }
                 KeyCode.VIEW_NUMERIC -> {
-                    super.setText(R.string.key__view_numeric)
+                    setText(R.string.key__view_numeric)
                 }
                 KeyCode.VIEW_SYMBOLS -> {
-                    super.setText(R.string.key__view_symbols)
+                    setText(R.string.key__view_symbols)
                 }
                 KeyCode.VIEW_SYMBOLS2 -> {
-                    super.setText(R.string.key__view_symbols2)
+                    setText(R.string.key__view_symbols2)
                 }
             }
             if (drawable != null) {
                 if (measuredWidth > measuredHeight) {
                     drawable.setBounds(0, 0, measuredHeight, measuredHeight)
-                    super.setCompoundDrawables(null, drawable, null, null)
+                    setCompoundDrawables(null, drawable, null, null)
                 } else {
                     drawable.setBounds(0, 0, measuredWidth, measuredWidth)
-                    super.setCompoundDrawables(drawable, null, null, null)
+                    setCompoundDrawables(drawable, null, null, null)
                 }
             }
         }
 
-        if (data.code == KeyCode.ENTER) {
-            setBackgroundTintColor(this, when {
-                isKeyPressed -> R.attr.app_colorPrimaryDark
-                else -> R.attr.app_colorPrimary
-            })
-        } else {
-            setBackgroundTintColor(this, when {
-                isKeyPressed -> R.attr.key_bgColorPressed
-                else -> R.attr.key_bgColor
-            })
-        }
+        super.onDraw(canvas)
     }
 }

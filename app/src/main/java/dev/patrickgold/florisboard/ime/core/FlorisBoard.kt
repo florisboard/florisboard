@@ -8,6 +8,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
+import androidx.core.view.children
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.key.KeyCode
@@ -47,6 +48,18 @@ class FlorisBoard : InputMethodService() {
         rootView.findViewById<LinearLayout>(R.id.keyboard_preview).visibility = View.GONE
         setActiveKeyboardMode(KeyboardMode.CHARACTERS)
         return rootView
+    }
+
+    override fun onWindowShown() {
+        super.onWindowShown()
+        for (keyboardView in keyboardViews) {
+            keyboardView.value.invalidate()
+            keyboardView.value.requestLayout()
+            for (rowView in keyboardView.value.children) {
+                rowView.invalidate()
+                rowView.requestLayout()
+            }
+        }
     }
 
     private fun setActiveKeyboardMode(mode: KeyboardMode) {
