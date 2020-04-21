@@ -9,7 +9,6 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import androidx.core.view.children
-import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.key.KeyCode
 import dev.patrickgold.florisboard.ime.key.KeyData
@@ -18,6 +17,7 @@ import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.layout.LayoutManager
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
+import dev.patrickgold.florisboard.util.initDefaultPreferences
 import java.util.*
 
 class FlorisBoard : InputMethodService() {
@@ -34,7 +34,7 @@ class FlorisBoard : InputMethodService() {
 
     override fun onCreateInputView(): View? {
         // Set default preference values if user has not used preferences screen
-        PreferenceManager.setDefaultValues(this, R.xml.prefs_kbd, true)
+        initDefaultPreferences(this)
 
         val rootView = layoutInflater.inflate(R.layout.florisboard, null) as LinearLayout
         layoutManager.autoFetchAssociationsFromPrefs()

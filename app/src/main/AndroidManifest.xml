@@ -24,30 +24,32 @@
             </intent-filter>
         </service>
 
-        <!-- UI related activities -->
+        <!-- Settings Activity -->
         <activity
-            android:name="dev.patrickgold.florisboard.settings.SettingsLauncherActivity"
+            android:name="dev.patrickgold.florisboard.settings.SettingsMainActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/settings__title"
+            android:launchMode="singleTask"
+            android:theme="@style/SettingsTheme.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <!-- Using an activity alias to disable/enable the app icon in the launcher -->
+        <activity-alias
+            android:name="dev.patrickgold.florisboard.settings.LauncherAlias"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:launchMode="singleTop"
+            android:targetActivity="dev.patrickgold.florisboard.settings.SettingsMainActivity"
+            android:enabled="false"
             android:theme="@style/SettingsTheme.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity
-            android:name="dev.patrickgold.florisboard.settings.SettingsMainActivity"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:launchMode="singleTask"
-            android:theme="@style/SettingsTheme.Light" />
-
-        <activity
-            android:name="dev.patrickgold.florisboard.settings.SettingsKbdActivity"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/settings__kbd__title"
-            android:theme="@style/SettingsTheme.Light" />
+        </activity-alias>
 
     </application>
 

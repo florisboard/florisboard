@@ -1,0 +1,11 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        app:key="advanced__show_app_icon"
+        app:title="@string/pref__advanced__show_app_icon__label"
+        app:useSimpleSummaryProvider="true" />
+
+</PreferenceScreen>

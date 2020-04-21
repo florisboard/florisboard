@@ -6,10 +6,10 @@
 
         <ListPreference
             android:defaultValue="normal"
-            app:entries="@array/pref__kbd__height_factor__entries"
-            app:entryValues="@array/pref__kbd__height_factor__values"
-            app:key="keyboard_height_factor"
-            app:title="@string/pref__kbd__height_factor__label"
+            app:entries="@array/pref__keyboard__height_factor__entries"
+            app:entryValues="@array/pref__keyboard__height_factor__values"
+            app:key="keyboard__height_factor"
+            app:title="@string/pref__keyboard__height_factor__label"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
