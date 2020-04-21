@@ -2,32 +2,67 @@ package dev.patrickgold.florisboard.settings
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.util.hideAppIcon
 import dev.patrickgold.florisboard.util.showAppIcon
 
-class SettingsMainActivity : AppCompatActivity() {
+private const val TITLE_TAG = "SETTINGS_TITLE_TAG"
+
+class SettingsMainActivity : AppCompatActivity(),
+    PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.settings)
-        supportFragmentManager
-            .beginTransaction()
-            .replace(
-                R.id.settings__keyboard,
-                SettingsKeyboardFragment()
-            )
-            .commit()
-        supportFragmentManager
-            .beginTransaction()
-            .replace(
-                R.id.settings__advanced,
-                SettingsAdvancedFragment()
-            )
-            .commit()
+        setContentView(R.layout.settings_activity)
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.settings, PrefsFragment())
+                .commit()
+        } else {
+            title = savedInstanceState.getCharSequence(TITLE_TAG)
+        }
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount == 0) {
+                setTitle(R.string.settings__title)
+            }
+        }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putCharSequence(TITLE_TAG, title)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        if (supportFragmentManager.popBackStackImmediate()) {
+            return true
+        }
+        return super.onSupportNavigateUp()
+    }
+
+    override fun onPreferenceStartFragment(
+        caller: PreferenceFragmentCompat,
+        pref: Preference
+    ): Boolean {
+        val args = pref.extras
+        val fragment = supportFragmentManager.fragmentFactory.instantiate(
+            classLoader,
+            pref.fragment
+        ).apply {
+            arguments = args
+            setTargetFragment(caller, 0)
+        }
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.settings, fragment)
+            .addToBackStack(null)
+            .commit()
+        title = pref.title
+        return true
     }
 
     override fun onDestroy() {
@@ -45,13 +80,19 @@ class SettingsMainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    class SettingsKeyboardFragment : PreferenceFragmentCompat() {
+    class PrefsFragment : PreferenceFragmentCompat() {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(R.xml.prefs, rootKey)
+        }
+    }
+
+    class KeyboardFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.prefs_keyboard, rootKey)
         }
     }
 
-    class SettingsAdvancedFragment : PreferenceFragmentCompat() {
+    class AdvancedFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.prefs_advanced, rootKey)
         }

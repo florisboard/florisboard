@@ -5,6 +5,7 @@
     <SwitchPreferenceCompat
         android:defaultValue="false"
         app:key="advanced__show_app_icon"
+        app:iconSpaceReserved="false"
         app:title="@string/pref__advanced__show_app_icon__label"
         app:useSimpleSummaryProvider="true" />
 

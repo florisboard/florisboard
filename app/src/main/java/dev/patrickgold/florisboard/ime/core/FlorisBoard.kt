@@ -1,6 +1,7 @@
 package dev.patrickgold.florisboard.ime.core
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.inputmethodservice.InputMethodService
 import android.os.Handler
 import android.util.Log
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import androidx.core.view.children
+import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.key.KeyCode
 import dev.patrickgold.florisboard.ime.key.KeyData
@@ -31,6 +33,8 @@ class FlorisBoard : InputMethodService() {
     var caps: Boolean = false
     var capsLock: Boolean = false
     val layoutManager = LayoutManager(this)
+    var prefs: SharedPreferences? = null
+        private set
 
     override fun onCreateInputView(): View? {
         // Set default preference values if user has not used preferences screen
@@ -38,6 +42,7 @@ class FlorisBoard : InputMethodService() {
 
         val rootView = layoutInflater.inflate(R.layout.florisboard, null) as LinearLayout
         layoutManager.autoFetchAssociationsFromPrefs()
+        prefs = PreferenceManager.getDefaultSharedPreferences(rootView.context)
         for (mode in KeyboardMode.values()) {
             val keyboardView = KeyboardView(rootView.context, this)
             rootView.addView(keyboardView)

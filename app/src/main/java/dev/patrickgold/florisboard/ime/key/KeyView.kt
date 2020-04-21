@@ -110,12 +110,12 @@ class KeyView(
                         }
                     }, 500, 50)
                 }
-                // TODO: Fetch delayMillis from preferences
+                val delayMillis = florisboard.prefs!!.getInt("keyboard__long_press_delay", 300)
                 osHandler.postDelayed({
                     if (data.popup.isNotEmpty()) {
                         popupManager.extend()
                     }
-                }, 300)
+                }, delayMillis.toLong())
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 isKeyPressed = false

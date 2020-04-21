@@ -2,14 +2,34 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="Layout">
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__keyboard__group_layout__label">
 
         <ListPreference
             android:defaultValue="normal"
             app:entries="@array/pref__keyboard__height_factor__entries"
             app:entryValues="@array/pref__keyboard__height_factor__values"
             app:key="keyboard__height_factor"
+            app:iconSpaceReserved="false"
             app:title="@string/pref__keyboard__height_factor__label"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__keyboard__group_keypress__label">
+
+        <SeekBarPreference
+            android:defaultValue="300"
+            app:key="keyboard__long_press_delay"
+            app:min="100"
+            android:max="700"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__long_press_delay__label"
+            app:seekBarIncrement="10"
+            app:showSeekBarValue="true"
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
