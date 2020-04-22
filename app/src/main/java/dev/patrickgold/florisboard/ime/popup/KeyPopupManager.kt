@@ -50,7 +50,7 @@ class KeyPopupManager(
         isInitActive: Boolean = false,
         isWrapBefore: Boolean = false
     ): TextView {
-        val textView = KeyPopupExtendedSingleView(keyboardView.context, isInitActive)
+        val textView = KeyPopupExtendedSingleView(keyView.context, isInitActive)
         val lp = FlexboxLayout.LayoutParams(keyPopupWidth, keyView.measuredHeight)
         lp.isWrapBefore = isWrapBefore
         textView.layoutParams = lp
@@ -77,10 +77,7 @@ class KeyPopupManager(
 
     fun show() {
         val code = keyView.data.code
-        if (code <= 32) {
-            return
-        }
-        if (isShowingPopup) {
+        if (code <= 32 || isShowingPopup) {
             return
         }
         popupView.findViewById<TextView>(R.id.key_popup_text).text = keyView.getComputedLetter()
@@ -93,21 +90,14 @@ class KeyPopupManager(
             keyView.dispatchTouchEvent(event)
             true
         }
-        w.showAtLocation(
-            keyboardView, Gravity.LEFT or Gravity.TOP,
-            (keyboardView.x + (keyView.parent as ViewGroup).x + keyView.x - ((keyPopupWidth - keyView.measuredWidth).toFloat() / 2.0f)).toInt(),
-            (keyboardView.y + (keyView.parent as ViewGroup).y + keyView.y - (keyPopupHeight - keyView.measuredHeight)).toInt()
-        )
+        w.showAsDropDown(keyView, ((keyView.measuredWidth - keyPopupWidth) / 2), -keyPopupHeight)
         window = w
     }
 
     fun extend() {
         // TODO: cleanup and spilt into multiple functions
         val code = keyView.data.code
-        if (code <= 32 || keyView.data.popup.isEmpty()) {
-            return
-        }
-        if (isShowingExtendedPopup) {
+        if (code <= 32 || keyView.data.popup.isEmpty() || isShowingExtendedPopup) {
             return
         }
         anchorLeft = keyView.x < keyboardView.measuredWidth / 2
@@ -139,15 +129,15 @@ class KeyPopupManager(
         popupViewExt.justifyContent = if (anchorLeft) { JustifyContent.FLEX_START } else { JustifyContent.FLEX_END }
         popupViewExt.layoutParams = FlexboxLayout.LayoutParams(extWidth, extHeight)
         val w = createPopupWindow(popupViewExt, extWidth, extHeight)
-        val x = (keyboardView.x + (keyView.parent as ViewGroup).x + keyView.x - ((keyPopupWidth - keyView.measuredWidth).toFloat() / 2.0f)).toInt() + when {
+        val x = ((keyView.measuredWidth - keyPopupWidth) / 2) + when {
             anchorLeft -> 0
             else -> -extWidth + keyPopupWidth
         }
-        val y = (keyboardView.y + (keyView.parent as ViewGroup).y + keyView.y - (keyPopupHeight - keyView.measuredHeight) - when {
+        val y = -keyPopupHeight - when {
             row1count > 0 -> keyView.measuredHeight
             else -> 0
-        }).toInt()
-        w.showAtLocation(keyboardView, Gravity.LEFT or Gravity.TOP, x, y)
+        }
+        w.showAsDropDown(keyView, x, y)
         windowExt = w
     }
 

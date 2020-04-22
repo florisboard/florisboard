@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="key_width">33dp</dimen>
-    <dimen name="key_height">38dp</dimen>
+    <dimen name="key_height">40dp</dimen>
     <dimen name="key_marginH">2dp</dimen>
     <dimen name="key_borderRadius">6dp</dimen>
     <dimen name="key_textSize">18sp</dimen>
@@ -13,7 +13,7 @@
     <dimen name="key_popup_height">90dp</dimen>
     <dimen name="key_popup_textSize">21sp</dimen>
 
-    <dimen name="keyboard_preview_height">192sp</dimen>
+    <dimen name="keyboard_preview_height">200dp</dimen>
 
     <dimen name="keyboard_row_height">48dp</dimen>
     <dimen name="keyboard_row_marginH">2dp</dimen>

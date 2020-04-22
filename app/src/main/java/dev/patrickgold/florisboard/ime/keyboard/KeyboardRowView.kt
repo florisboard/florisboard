@@ -21,11 +21,11 @@ class KeyboardRowView : FlexboxLayout {
             val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
             val factor = preferences.getString("keyboard__height_factor", "normal")
             height = (resources.getDimension(R.dimen.keyboard_row_height).toInt() * when (factor) {
-                "small" -> 0.70f
-                "mid_small" -> 0.85f
+                "short" -> 0.90f
+                "mid_short" -> 0.95f
                 "normal" -> 1.00f
-                "mid_tall" -> 1.15f
-                "tall" -> 1.30f
+                "mid_tall" -> 1.05f
+                "tall" -> 1.10f
                 else -> 1.00f
             }).toInt()
         }
