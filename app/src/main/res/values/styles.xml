@@ -18,8 +18,6 @@
     </style>
 
     <style name="KeyboardRowView">
-        <item name="android:layout_marginTop">@dimen/keyboard_row_marginH</item>
-        <item name="android:layout_marginBottom">@dimen/keyboard_row_marginH</item>
         <item name="flexDirection">row</item>
         <item name="justifyContent">center</item>
     </style>

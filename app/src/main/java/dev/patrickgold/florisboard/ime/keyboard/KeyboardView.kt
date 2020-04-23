@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.view.ContextThemeWrapper
 import android.widget.LinearLayout
-import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.key.KeyView
@@ -18,7 +17,8 @@ class KeyboardView(
 ) {
 
     var computedLayout: ComputedLayoutData? = null
-    var keyWidth: Int = resources.getDimension(R.dimen.key_height).toInt()
+    var desiredKeyWidth: Int = resources.getDimension(R.dimen.key_width).toInt()
+    var desiredKeyHeight: Int = resources.getDimension(R.dimen.key_height).toInt()
 
     private fun buildLayout() {
         destroyLayout()
@@ -32,21 +32,7 @@ class KeyboardView(
         val layout = computedLayout
         if (layout != null) {
             for (row in layout.arrangement) {
-                val rowView =
-                    KeyboardRowView(
-                        context
-                    )
-                val rowViewLP = FlexboxLayout.LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.WRAP_CONTENT
-                )
-                rowView.layoutParams = rowViewLP
-                rowView.setPadding(
-                    resources.getDimension(R.dimen.keyboard_row_marginH).toInt(),
-                    resources.getDimension(R.dimen.keyboard_row_marginV).toInt(),
-                    resources.getDimension(R.dimen.keyboard_row_marginH).toInt(),
-                    resources.getDimension(R.dimen.keyboard_row_marginV).toInt()
-                )
+                val rowView = KeyboardRowView(context)
                 for (key in row) {
                     val keyView = KeyView(context, key, florisboard, this)
                     rowView.addView(keyView)
@@ -66,9 +52,22 @@ class KeyboardView(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        val widthSize = MeasureSpec.getSize(widthMeasureSpec)
 
         val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
-        keyWidth = (measuredWidth / 10) - (2 * keyMarginH)
+        val keyRowMarginH = resources.getDimension((R.dimen.keyboard_row_marginH)).toInt()
+        desiredKeyWidth = ((widthSize - (2 * keyRowMarginH)) / 10) - (2 * keyMarginH)
+
+        val factor = florisboard.prefs!!.getString("keyboard__height_factor", "normal")
+        desiredKeyHeight = (resources.getDimension(R.dimen.key_height).toInt() * when (factor) {
+            "short" -> 0.90f
+            "mid_short" -> 0.95f
+            "normal" -> 1.00f
+            "mid_tall" -> 1.05f
+            "tall" -> 1.10f
+            else -> 1.00f
+        }).toInt()
+
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 }

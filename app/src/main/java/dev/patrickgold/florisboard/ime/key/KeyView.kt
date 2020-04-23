@@ -9,19 +9,21 @@ import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat.getDrawable
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
-import dev.patrickgold.florisboard.util.*
+import dev.patrickgold.florisboard.util.setBackgroundTintColor
+import dev.patrickgold.florisboard.util.setDrawableTintColor
 import java.util.*
 
 @SuppressLint("ViewConstructor")
 class KeyView(
     context: Context, val data: KeyData, private val florisboard: FlorisBoard, private val keyboardView: KeyboardView
-) : androidx.appcompat.widget.AppCompatButton(
+) : AppCompatButton(
     context, null, R.attr.keyViewStyle
 ), View.OnTouchListener {
 
@@ -38,20 +40,22 @@ class KeyView(
         super.setOnTouchListener(this)
 
         val flexLayoutParams = FlexboxLayout.LayoutParams(
-            keyboardView.keyWidth, FlexboxLayout.LayoutParams.MATCH_PARENT
+            FlexboxLayout.LayoutParams.WRAP_CONTENT, FlexboxLayout.LayoutParams.WRAP_CONTENT
         )
         layoutParams = flexLayoutParams.apply {
             marginStart = resources.getDimension((R.dimen.key_marginH)).toInt()
             marginEnd = resources.getDimension((R.dimen.key_marginH)).toInt()
+            flexShrink = when (data.code) {
+                KeyCode.SHIFT,
+                KeyCode.VIEW_CHARACTERS,
+                KeyCode.VIEW_SYMBOLS,
+                KeyCode.VIEW_SYMBOLS2,
+                KeyCode.DELETE,
+                KeyCode.ENTER -> 0.0f
+                else -> 1.0f
+            }
             flexGrow = when (data.code) {
-                KeyCode.DELETE -> 1.0f
-                KeyCode.ENTER -> 1.0f
-                KeyCode.SHIFT -> 1.0f
-                KeyCode.SPACE -> 6.0f
-                KeyCode.VIEW_CHARACTERS -> 1.0f
-                KeyCode.VIEW_NUMERIC -> 0.0f
-                KeyCode.VIEW_SYMBOLS -> 1.0f
-                KeyCode.VIEW_SYMBOLS2 -> 1.0f
+                KeyCode.SPACE -> 1.0f
                 else -> 0.0f
             }
         }
@@ -96,8 +100,8 @@ class KeyView(
     override fun onTouch(v: View, event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                isKeyPressed = true
                 popupManager.show()
+                isKeyPressed = true
                 if (data.code == KeyCode.DELETE && data.type == KeyType.ENTER_EDITING) {
                     osTimer = Timer()
                     osTimer?.scheduleAtFixedRate(object : TimerTask() {
@@ -137,9 +141,63 @@ class KeyView(
         return true
     }
 
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-        layoutParams.width = keyboardView.keyWidth
+    /**
+     * Solution base from this great StackOverflow answer which explained and helped a lot
+     * for handling onMeasure():
+     *  https://stackoverflow.com/a/12267248/6801193
+     *  by Devunwired
+     */
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val desiredWidth = when (data.code) {
+            KeyCode.SHIFT,
+            KeyCode.VIEW_CHARACTERS,
+            KeyCode.VIEW_SYMBOLS,
+            KeyCode.VIEW_SYMBOLS2,
+            KeyCode.DELETE,
+            KeyCode.ENTER -> (keyboardView.desiredKeyWidth * 1.75f).toInt()
+            else -> keyboardView.desiredKeyWidth
+        }
+        val desiredHeight = keyboardView.desiredKeyHeight
+
+        val widthMode = MeasureSpec.getMode(widthMeasureSpec)
+        val widthSize = MeasureSpec.getSize(widthMeasureSpec)
+        val heightMode = MeasureSpec.getMode(heightMeasureSpec)
+        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
+
+        // Measure Width
+        val width = when (widthMode) {
+            MeasureSpec.EXACTLY -> {
+                // Must be this size
+                widthSize
+            }
+            MeasureSpec.AT_MOST -> {
+                // Can't be bigger than...
+                desiredWidth.coerceAtMost(widthSize)
+            }
+            else -> {
+                // Be whatever you want
+                desiredWidth
+            }
+        }
+
+        // Measure Height
+        val height = when (heightMode) {
+            MeasureSpec.EXACTLY -> {
+                // Must be this size
+                heightSize
+            }
+            MeasureSpec.AT_MOST -> {
+                // Can't be bigger than...
+                desiredHeight.coerceAtMost(heightSize)
+            }
+            else -> {
+                // Be whatever you want
+                desiredHeight
+            }
+        }
+
+        // MUST CALL THIS
+        setMeasuredDimension(width, height)
     }
 
     override fun onDraw(canvas: Canvas?) {
