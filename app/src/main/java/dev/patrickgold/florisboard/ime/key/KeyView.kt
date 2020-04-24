@@ -154,7 +154,7 @@ class KeyView(
             KeyCode.VIEW_SYMBOLS,
             KeyCode.VIEW_SYMBOLS2,
             KeyCode.DELETE,
-            KeyCode.ENTER -> (keyboardView.desiredKeyWidth * 1.75f).toInt()
+            KeyCode.ENTER -> (keyboardView.desiredKeyWidth * 1.56f).toInt()
             else -> keyboardView.desiredKeyWidth
         }
         val desiredHeight = keyboardView.desiredKeyHeight

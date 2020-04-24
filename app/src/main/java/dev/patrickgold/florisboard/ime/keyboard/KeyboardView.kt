@@ -55,8 +55,7 @@ class KeyboardView(
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
 
         val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
-        val keyRowMarginH = resources.getDimension((R.dimen.keyboard_row_marginH)).toInt()
-        desiredKeyWidth = ((widthSize - (2 * keyRowMarginH)) / 10) - (2 * keyMarginH)
+        desiredKeyWidth = (widthSize / 10) - (2 * keyMarginH)
 
         val factor = florisboard.prefs!!.getString("keyboard__height_factor", "normal")
         desiredKeyHeight = (resources.getDimension(R.dimen.key_height).toInt() * when (factor) {
