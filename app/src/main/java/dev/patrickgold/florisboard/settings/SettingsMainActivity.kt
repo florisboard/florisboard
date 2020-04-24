@@ -1,6 +1,10 @@
 package dev.patrickgold.florisboard.settings
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -63,6 +67,34 @@ class SettingsMainActivity : AppCompatActivity(),
             .commit()
         title = pref.title
         return true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.settings_main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            R.id.settings__menu_help -> {
+                // TODO: this url should point to the wiki (not existing yet)
+                val browserIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(resources.getString(R.string.florisboard__repo_url))
+                )
+                startActivity(browserIntent)
+                true
+            }
+            R.id.settings__menu_about -> {
+                startActivity(Intent(this, AboutActivity::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroy() {

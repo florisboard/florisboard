@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">FlorisBoard</string>
+    <string name="app_name" translatable="false">FlorisBoard</string>
     <string name="subtype_en_US">English (US)</string>
+
+    <string name="florisboard__repo_url" translatable="false">https://github.com/florisboard/florisboard</string>
+    <string name="florisboard__privacy_policy_url" translatable="false">https://gist.github.com/patrickgold/a18f1e47468d72f0868afc69d6faaf0b</string>
 
     <string name="key__view_characters">ABC</string>
     <string name="key__view_numeric">1 2\n3 4</string>
@@ -11,6 +14,8 @@
 
     <!-- Settings UI strings -->
     <string name="settings__title">Settings</string>
+    <string name="settings__menu_help">Help &amp; feedback</string>
+    <string name="settings__menu_about">About</string>
 
     <string name="settings__advanced__title">Advanced</string>
     <string name="pref__advanced__show_app_icon__label">Show app icon in launcher</string>
@@ -20,4 +25,12 @@
     <string name="pref__keyboard__height_factor__label">Keyboard height</string>
     <string name="pref__keyboard__group_keypress__label">Key press</string>
     <string name="pref__keyboard__long_press_delay__label">Long key press delay</string>
+
+    <!-- About UI strings -->
+    <string name="about__title">About</string>
+    <string name="about__view_licenses">Open source licenses</string>
+    <string name="about__view_privacy_policy">Privacy policy</string>
+    <string name="about__view_source_code">Source code</string>
+
+    <string name="about__license__title">Open-source licenses</string>
 </resources>

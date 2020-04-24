@@ -51,6 +51,17 @@
             </intent-filter>
         </activity-alias>
 
+        <!-- About Activity -->
+        <activity
+            android:name="dev.patrickgold.florisboard.settings.AboutActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/about__title"
+            android:theme="@style/SettingsTheme.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>
