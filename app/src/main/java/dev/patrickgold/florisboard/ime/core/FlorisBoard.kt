@@ -1,22 +1,22 @@
 package dev.patrickgold.florisboard.ime.core
 
+import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.inputmethodservice.InputMethodService
+import android.media.AudioManager
 import android.os.Handler
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
-import androidx.core.view.children
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.key.KeyCode
 import dev.patrickgold.florisboard.ime.key.KeyData
 import dev.patrickgold.florisboard.ime.key.KeyType
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.layout.LayoutManager
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.util.initDefaultPreferences
@@ -33,8 +33,9 @@ class FlorisBoard : InputMethodService() {
     var caps: Boolean = false
     var capsLock: Boolean = false
     val layoutManager = LayoutManager(this)
-    var prefs: SharedPreferences? = null
+    var prefs: PrefCache? = null
         private set
+    var audioManager: AudioManager? = null
 
     override fun onCreateInputView(): View? {
         // Set default preference values if user has not used preferences screen
@@ -42,7 +43,8 @@ class FlorisBoard : InputMethodService() {
 
         val rootView = layoutInflater.inflate(R.layout.florisboard, null) as LinearLayout
         layoutManager.autoFetchAssociationsFromPrefs()
-        prefs = PreferenceManager.getDefaultSharedPreferences(rootView.context)
+        prefs = PrefCache(rootView.context, PreferenceManager.getDefaultSharedPreferences(rootView.context))
+        prefs!!.sync()
         for (mode in KeyboardMode.values()) {
             val keyboardView = KeyboardView(rootView.context, this)
             rootView.addView(keyboardView)
@@ -52,19 +54,13 @@ class FlorisBoard : InputMethodService() {
         }
         rootView.findViewById<LinearLayout>(R.id.keyboard_preview).visibility = View.GONE
         setActiveKeyboardMode(KeyboardMode.CHARACTERS)
+        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         return rootView
     }
 
     override fun onWindowShown() {
         super.onWindowShown()
-        for (keyboardView in keyboardViews) {
-            keyboardView.value.invalidate()
-            keyboardView.value.requestLayout()
-            for (rowView in keyboardView.value.children) {
-                rowView.invalidate()
-                rowView.requestLayout()
-            }
-        }
+        prefs!!.sync()
     }
 
     private fun setActiveKeyboardMode(mode: KeyboardMode) {

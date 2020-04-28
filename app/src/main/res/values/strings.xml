@@ -24,6 +24,10 @@
     <string name="pref__keyboard__group_layout__label">Layout</string>
     <string name="pref__keyboard__height_factor__label">Keyboard height</string>
     <string name="pref__keyboard__group_keypress__label">Key press</string>
+    <string name="pref__keyboard__sound_enabled__label">Sound on key press</string>
+    <string name="pref__keyboard__sound_volume__label">Sound volume on key press</string>
+    <string name="pref__keyboard__vibration_enabled__label">Vibrate on key press</string>
+    <string name="pref__keyboard__vibration_strength__label">Vibration strength on key press</string>
     <string name="pref__keyboard__long_press_delay__label">Long key press delay</string>
 
     <!-- About UI strings -->

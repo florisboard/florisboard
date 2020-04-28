@@ -21,6 +21,42 @@
         app:iconSpaceReserved="false"
         app:title="@string/pref__keyboard__group_keypress__label">
 
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="keyboard__sound_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__sound_enabled__label" />
+
+        <SeekBarPreference
+            android:defaultValue="0"
+            app:dependency="keyboard__sound_enabled"
+            app:key="keyboard__sound_volume"
+            app:min="0"
+            android:max="100"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__sound_volume__label"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="keyboard__vibration_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__vibration_enabled__label" />
+
+        <SeekBarPreference
+            android:defaultValue="0"
+            app:dependency="keyboard__vibration_enabled"
+            app:key="keyboard__vibration_strength"
+            app:min="0"
+            android:max="100"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__vibration_strength__label"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true"
+            app:useSimpleSummaryProvider="true" />
+
         <SeekBarPreference
             android:defaultValue="300"
             app:key="keyboard__long_press_delay"

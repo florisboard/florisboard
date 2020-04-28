@@ -4,7 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
+import android.media.AudioManager
+import android.os.Build
 import android.os.Handler
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
@@ -97,11 +101,51 @@ class KeyView(
         }
     }
 
+    private fun keyPressVibrate() {
+        if (florisboard.prefs!!.vibrationEnabled) {
+            var vibrationStrength = florisboard.prefs!!.vibrationStrength
+            if (vibrationStrength == 0 && florisboard.prefs!!.vibrationEnabledSystem) {
+                vibrationStrength = 36
+            }
+            if (vibrationStrength > 0) {
+                val vib = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vib.vibrate(VibrationEffect.createOneShot(
+                        vibrationStrength.toLong(), VibrationEffect.DEFAULT_AMPLITUDE
+                    ))
+                } else {
+                    @Suppress("DEPRECATION")
+                    vib.vibrate(vibrationStrength.toLong())
+                }
+            }
+        }
+    }
+
+    private fun keyPressSound() {
+        if (florisboard.prefs!!.soundEnabled) {
+            var soundVolume = florisboard.prefs!!.soundVolume
+            if (soundVolume == 0 && florisboard.prefs!!.soundEnabledSystem) {
+                soundVolume = 36
+            }
+            if (soundVolume > 0) {
+                val effect = when (data.code) {
+                    KeyCode.SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR
+                    KeyCode.DELETE -> AudioManager.FX_KEYPRESS_DELETE
+                    KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN
+                    else -> AudioManager.FX_KEYPRESS_STANDARD
+                }
+                florisboard.audioManager!!.playSoundEffect(effect, soundVolume / 100f)
+            }
+        }
+    }
+
     override fun onTouch(v: View, event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 popupManager.show()
                 isKeyPressed = true
+                keyPressVibrate()
+                keyPressSound()
                 if (data.code == KeyCode.DELETE && data.type == KeyType.ENTER_EDITING) {
                     osTimer = Timer()
                     osTimer?.scheduleAtFixedRate(object : TimerTask() {
@@ -114,7 +158,7 @@ class KeyView(
                         }
                     }, 500, 50)
                 }
-                val delayMillis = florisboard.prefs!!.getInt("keyboard__long_press_delay", 300)
+                val delayMillis = florisboard.prefs!!.longPressDelay
                 osHandler.postDelayed({
                     if (data.popup.isNotEmpty()) {
                         popupManager.extend()
