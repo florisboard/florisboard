@@ -46,7 +46,6 @@
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:targetActivity="dev.patrickgold.florisboard.settings.SettingsMainActivity"
-            android:enabled="false"
             android:theme="@style/SettingsTheme.Light">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

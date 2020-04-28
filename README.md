@@ -13,15 +13,18 @@ An open-source keyboard for Android. Currently in early-alpha stage.
 * [ ] Emoji layout
 * [x] Caps + Caps Lock
 * [x] Key popups (buggy atm)
+* [x] Key press sound/vibration
 * [x] More characters on long press
-* [ ] Preferences screen
+* [x] Preferences screen
 * [ ] Customize look and behaviour of keyboard
 * [ ] Theme customization
 * [ ] Adapt to situation in app (password, url, text, etc. )
-* [ ] Auto suggest words
+* [ ] Auto suggest words from user dictionary
+* [ ] Auto suggest contacts
 * [ ] Layout selection
 * [ ] Clipboard manager
 * [ ] One-hand mode
+* [ ] Full integration in IME service list of Android (xml/method)
 * [ ] ...
 
 ## Used libraries and icons

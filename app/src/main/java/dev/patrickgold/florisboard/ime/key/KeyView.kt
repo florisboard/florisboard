@@ -124,16 +124,15 @@ class KeyView(
     private fun keyPressSound() {
         if (florisboard.prefs!!.soundEnabled) {
             var soundVolume = florisboard.prefs!!.soundVolume
-            if (soundVolume == 0 && florisboard.prefs!!.soundEnabledSystem) {
-                soundVolume = 36
+            val effect = when (data.code) {
+                KeyCode.SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR
+                KeyCode.DELETE -> AudioManager.FX_KEYPRESS_DELETE
+                KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN
+                else -> AudioManager.FX_KEYPRESS_STANDARD
             }
-            if (soundVolume > 0) {
-                val effect = when (data.code) {
-                    KeyCode.SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR
-                    KeyCode.DELETE -> AudioManager.FX_KEYPRESS_DELETE
-                    KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN
-                    else -> AudioManager.FX_KEYPRESS_STANDARD
-                }
+            if (soundVolume == 0 && florisboard.prefs!!.soundEnabledSystem) {
+                florisboard.audioManager!!.playSoundEffect(effect)
+            } else if (soundVolume > 0) {
                 florisboard.audioManager!!.playSoundEffect(effect, soundVolume / 100f)
             }
         }
