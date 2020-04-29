@@ -22,4 +22,31 @@
         <item name="justifyContent">center</item>
     </style>
 
+    <style name="SmartbarCandidate">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/smartbar_button_height</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="SmartbarDivider">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">@dimen/smartbar_button_height</item>
+        <item name="android:layout_weight">0</item>
+        <item name="android:background">?attr/smartbar_divider_bgColor</item>
+    </style>
+
+    <style name="SmartbarQuickAction">
+        <item name="android:layout_width">@dimen/smartbar_button_width</item>
+        <item name="android:layout_height">@dimen/smartbar_button_height</item>
+        <item name="android:layout_margin">@dimen/smartbar_button_margin</item>
+        <item name="android:background">@drawable/shape_oval</item>
+        <item name="android:backgroundTint">?attr/smartbar_button_bgColor</item>
+        <item name="android:tint">?attr/smartbar_button_fgColor</item>
+    </style>
+
+    <style name="SmartbarQuickAction.Toggle">
+        <item name="android:layout_weight">0</item>
+    </style>
+
 </resources>

@@ -1,5 +1,6 @@
 package dev.patrickgold.florisboard.ime.core
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.inputmethodservice.InputMethodService
@@ -18,6 +19,7 @@ import dev.patrickgold.florisboard.ime.key.KeyType
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.layout.LayoutManager
+import dev.patrickgold.florisboard.ime.smartbar.SmartbarManager
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.util.initDefaultPreferences
 import java.util.*
@@ -32,11 +34,14 @@ class FlorisBoard : InputMethodService() {
 
     var caps: Boolean = false
     var capsLock: Boolean = false
+
+    var audioManager: AudioManager? = null
     val layoutManager = LayoutManager(this)
     var prefs: PrefCache? = null
         private set
-    var audioManager: AudioManager? = null
+    val smartbarManager: SmartbarManager = SmartbarManager(this)
 
+    @SuppressLint("InflateParams")
     override fun onCreateInputView(): View? {
         // Set default preference values if user has not used preferences screen
         initDefaultPreferences(this)
@@ -58,15 +63,24 @@ class FlorisBoard : InputMethodService() {
         return rootView
     }
 
-    override fun onWindowShown() {
-        super.onWindowShown()
-        prefs!!.sync()
+    override fun onCreateCandidatesView(): View {
+        return smartbarManager.createSmartbarView()
+    }
+
+    override fun onInitializeInterface() {
+        super.onInitializeInterface()
+        prefs?.sync() ?: return
     }
 
     private fun setActiveKeyboardMode(mode: KeyboardMode) {
         keyboardViews[activeKeyboardMode]?.visibility = View.GONE
         keyboardViews[mode]?.visibility = View.VISIBLE
         activeKeyboardMode = mode
+    }
+
+    override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
+        setCandidatesViewShown(true)
+        super.onStartInputView(info, restarting)
     }
 
     fun sendKeyPress(keyData: KeyData) {
@@ -134,6 +148,9 @@ class FlorisBoard : InputMethodService() {
                             hasCapsRecentlyChanged = false
                         }, 300)
                     }
+                }
+                KeyCode.SWITCH_TO_NEXT_IME -> {android.util.Log.i("SW", "SWITCH")
+                    switchInputMethod(null)
                 }
                 KeyCode.VIEW_CHARACTERS -> setActiveKeyboardMode(KeyboardMode.CHARACTERS)
                 KeyCode.VIEW_NUMERIC -> setActiveKeyboardMode(KeyboardMode.NUMERIC)

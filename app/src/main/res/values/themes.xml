@@ -27,6 +27,16 @@
         <item name="key_popup_extended_bgColorActive">#cecece</item>
 
         <item name="keyboard_bgColor">#dfdfdf</item>
+
+        <item name="smartbar_bgColor">?attr/keyboard_bgColor</item>
+        <item name="smartbar_fgColor">?attr/app_textColor</item>
+        <item name="smartbar_button_bgColor">?attr/key_bgColor</item>
+        <item name="smartbar_button_bgColorPressed">?attr/key_bgColorPressed</item>
+        <item name="smartbar_button_fgColor">?attr/key_fgColor</item>
+        <item name="smartbar_candidate_bgColor">#00000000</item>
+        <item name="smartbar_candidate_bgColorPressed">#20000000</item>
+        <item name="smartbar_candidate_fgColor">?attr/app_textColor</item>
+        <item name="smartbar_divider_bgColor">#20000000</item>
     </style>
 
     <style name="SettingsTheme.Light" parent="Theme.AppCompat.Light">

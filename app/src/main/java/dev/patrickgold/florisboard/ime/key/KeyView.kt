@@ -162,6 +162,9 @@ class KeyView(
                     if (data.popup.isNotEmpty()) {
                         popupManager.extend()
                     }
+                    if (data.code == KeyCode.SPACE) {
+                        florisboard.sendKeyPress(KeyData(KeyCode.SWITCH_TO_NEXT_IME))
+                    }
                 }, delayMillis.toLong())
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {

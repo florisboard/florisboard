@@ -43,6 +43,16 @@
         <attr name="key_popup_extended_bgColorActive" format="color" />
 
         <attr name="keyboard_bgColor" format="color" />
+
+        <attr name="smartbar_bgColor" format="color" />
+        <attr name="smartbar_fgColor" format="color" />
+        <attr name="smartbar_button_bgColor" format="color" />
+        <attr name="smartbar_button_bgColorPressed" format="color" />
+        <attr name="smartbar_button_fgColor" format="color" />
+        <attr name="smartbar_candidate_bgColor" format="color" />
+        <attr name="smartbar_candidate_bgColorPressed" format="color" />
+        <attr name="smartbar_candidate_fgColor" format="color" />
+        <attr name="smartbar_divider_bgColor" format="color" />
     </declare-styleable>
 
 </resources>

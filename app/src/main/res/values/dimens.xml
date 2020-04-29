@@ -18,4 +18,10 @@
     <dimen name="keyboard_row_height">48dp</dimen>
     <dimen name="keyboard_row_marginH">2dp</dimen>
     <dimen name="keyboard_row_marginV">5dp</dimen>
+
+    <dimen name="smartbar_height">36dp</dimen>
+    <dimen name="smartbar_button_width">28dp</dimen>
+    <dimen name="smartbar_button_height">28dp</dimen>
+    <dimen name="smartbar_button_margin">4dp</dimen>
+    <dimen name="smartbar_right_empty_space_width">36dp</dimen>
 </resources>

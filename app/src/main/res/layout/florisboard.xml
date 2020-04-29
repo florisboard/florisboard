@@ -8,11 +8,6 @@
     android:theme="@style/KeyboardTheme.MaterialLight">
 
     <include
-        layout="@layout/smartbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <include
         layout="@layout/keyboard_preview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

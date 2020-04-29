@@ -1,15 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/smartbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/smartbar_height"
     android:orientation="horizontal"
-    android:background="#fff">
+    android:background="?attr/smartbar_bgColor"
+    android:theme="@style/KeyboardTheme.MaterialLight"
+    tools:ignore="NestedWeights">
+
+    <ImageButton
+        android:id="@+id/quick_action_toggle"
+        style="@style/SmartbarQuickAction.Toggle"
+        android:contentDescription="TODO" />
+
+    <LinearLayout
+        android:id="@+id/candidates"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/candidate0"
+            style="@style/SmartbarCandidate"
+            android:text="TEST" />
+
+        <View style="@style/SmartbarDivider" />
+
+        <TextView
+            android:id="@+id/candidate1"
+            style="@style/SmartbarCandidate"
+            android:text="TEST" />
+
+        <View style="@style/SmartbarDivider" />
+
+        <TextView
+            android:id="@+id/candidate2"
+            style="@style/SmartbarCandidate"
+            android:text="TEST" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/quick_actions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:visibility="gone">
+
+        <ImageButton
+            android:id="@+id/quick_action_open_settings"
+            style="@style/SmartbarQuickAction"
+            android:contentDescription="TODO" />
+
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="AUTOCORRECT WORDS" />
+        android:layout_width="@dimen/smartbar_right_empty_space_width"
+        android:layout_height="match_parent"
+        android:visibility="invisible" />
 
 </LinearLayout>
