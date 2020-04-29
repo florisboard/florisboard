@@ -39,6 +39,7 @@ class KeyView(
     private val osHandler = Handler()
     private var osTimer: Timer? = null
     private val popupManager = KeyPopupManager(keyboardView, this)
+    private var shouldBlockNextKeyCode: Boolean = false
 
     init {
         super.setOnTouchListener(this)
@@ -163,7 +164,8 @@ class KeyView(
                         popupManager.extend()
                     }
                     if (data.code == KeyCode.SPACE) {
-                        florisboard.sendKeyPress(KeyData(KeyCode.SWITCH_TO_NEXT_IME))
+                        florisboard.sendKeyPress(KeyData(KeyCode.SHOW_INPUT_METHOD_PICKER, type = KeyType.FUNCTION))
+                        shouldBlockNextKeyCode = true
                     }
                 }, delayMillis.toLong())
             }
@@ -174,7 +176,11 @@ class KeyView(
                 osTimer = null
                 val retData = popupManager.getActiveKeyData()
                 popupManager.hide()
-                florisboard.sendKeyPress(retData)
+                if (event.action == MotionEvent.ACTION_UP && !shouldBlockNextKeyCode) {
+                    florisboard.sendKeyPress(retData)
+                } else {
+                    shouldBlockNextKeyCode = false
+                }
             }
             MotionEvent.ACTION_MOVE -> {
                 // TODO: Add cancel event if pointer moves to far from key and popup window

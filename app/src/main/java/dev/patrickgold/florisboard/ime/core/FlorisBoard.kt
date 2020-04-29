@@ -2,7 +2,6 @@ package dev.patrickgold.florisboard.ime.core
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
 import android.os.Handler
@@ -10,7 +9,9 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.key.KeyCode
@@ -20,7 +21,6 @@ import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarManager
-import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.util.initDefaultPreferences
 import java.util.*
 
@@ -67,9 +67,10 @@ class FlorisBoard : InputMethodService() {
         return smartbarManager.createSmartbarView()
     }
 
-    override fun onInitializeInterface() {
-        super.onInitializeInterface()
-        prefs?.sync() ?: return
+    override fun onWindowShown() {
+        super.onWindowShown()
+        prefs!!.sync()
+        smartbarManager.isQuickActionsViewVisible = false
     }
 
     private fun setActiveKeyboardMode(mode: KeyboardMode) {
@@ -130,9 +131,8 @@ class FlorisBoard : InputMethodService() {
                     }
                 }
                 KeyCode.LANGUAGE_SWITCH -> {
-                    val i = Intent(this, SettingsMainActivity::class.java)
-                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(i)
+                    Toast.makeText(this, "[NYI]: Language switch",
+                        Toast.LENGTH_SHORT).show()
                 }
                 KeyCode.SHIFT -> {
                     if (hasCapsRecentlyChanged) {
@@ -149,11 +149,17 @@ class FlorisBoard : InputMethodService() {
                         }, 300)
                     }
                 }
-                KeyCode.SWITCH_TO_NEXT_IME -> {android.util.Log.i("SW", "SWITCH")
-                    switchInputMethod(null)
+                KeyCode.SHOW_INPUT_METHOD_PICKER -> {
+                    val im = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    im.showInputMethodPicker()
                 }
                 KeyCode.VIEW_CHARACTERS -> setActiveKeyboardMode(KeyboardMode.CHARACTERS)
-                KeyCode.VIEW_NUMERIC -> setActiveKeyboardMode(KeyboardMode.NUMERIC)
+                // TODO: Implement numeric layout
+                //KeyCode.VIEW_NUMERIC -> setActiveKeyboardMode(KeyboardMode.NUMERIC)
+                KeyCode.VIEW_NUMERIC -> {
+                    Toast.makeText(this, "[NYI]: Numeric keyboard layout",
+                        Toast.LENGTH_SHORT).show()
+                }
                 KeyCode.VIEW_SYMBOLS -> setActiveKeyboardMode(KeyboardMode.SYMBOLS)
                 KeyCode.VIEW_SYMBOLS2 -> setActiveKeyboardMode(KeyboardMode.SYMBOLS2)
             }

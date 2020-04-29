@@ -4,15 +4,16 @@
     android:id="@+id/smartbar"
     android:layout_width="match_parent"
     android:layout_height="@dimen/smartbar_height"
-    android:orientation="horizontal"
     android:background="?attr/smartbar_bgColor"
     android:theme="@style/KeyboardTheme.MaterialLight"
     tools:ignore="NestedWeights">
 
-    <ImageButton
+    <ToggleButton
         android:id="@+id/quick_action_toggle"
         style="@style/SmartbarQuickAction.Toggle"
-        android:contentDescription="TODO" />
+        android:checked="false"
+        android:contentDescription="@string/smartbar__quick_action_toggle__alt"
+        tools:ignore="RtlSymmetry" />
 
     <LinearLayout
         android:id="@+id/candidates"
@@ -48,14 +49,16 @@
         android:id="@+id/quick_actions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
         android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
         android:visibility="gone">
 
         <ImageButton
             android:id="@+id/quick_action_open_settings"
             style="@style/SmartbarQuickAction"
-            android:contentDescription="TODO" />
+            android:contentDescription="TODO"
+            android:src="@drawable/ic_settings" />
 
     </LinearLayout>
 

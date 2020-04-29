@@ -56,5 +56,5 @@ object KeyCode {
     const val VIEW_SYMBOLS2 =           -203
     const val VIEW_NUMERIC =            -204
     const val LANGUAGE_SWITCH =         -210
-    const val SWITCH_TO_NEXT_IME =      -211
+    const val SHOW_INPUT_METHOD_PICKER =-211
 }

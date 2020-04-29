@@ -12,6 +12,9 @@
 
     <string name="key_popup__threedots_alt">Three-dot icon. If visible, indicates that more letters can be used if longer pressed.</string>
 
+    <!-- Smartbar strings -->
+    <string name="smartbar__quick_action_toggle__alt">Quick action toggle. If pressed, toggles between the word suggestions and the quick action buttons.</string>
+
     <!-- Settings UI strings -->
     <string name="settings__title">Settings</string>
     <string name="settings__menu_help">Help &amp; feedback</string>

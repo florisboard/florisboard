@@ -23,5 +23,6 @@
     <dimen name="smartbar_button_width">28dp</dimen>
     <dimen name="smartbar_button_height">28dp</dimen>
     <dimen name="smartbar_button_margin">4dp</dimen>
+    <dimen name="smartbar_button_padding">6dp</dimen>
     <dimen name="smartbar_right_empty_space_width">36dp</dimen>
 </resources>

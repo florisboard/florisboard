@@ -36,17 +36,25 @@
         <item name="android:background">?attr/smartbar_divider_bgColor</item>
     </style>
 
-    <style name="SmartbarQuickAction">
+    <style name="SmartbarQuickAction" parent="Widget.AppCompat.Button">
         <item name="android:layout_width">@dimen/smartbar_button_width</item>
         <item name="android:layout_height">@dimen/smartbar_button_height</item>
         <item name="android:layout_margin">@dimen/smartbar_button_margin</item>
         <item name="android:background">@drawable/shape_oval</item>
         <item name="android:backgroundTint">?attr/smartbar_button_bgColor</item>
+        <item name="android:padding">@dimen/smartbar_button_padding</item>
+        <item name="android:scaleType">fitCenter</item>
         <item name="android:tint">?attr/smartbar_button_fgColor</item>
     </style>
 
     <style name="SmartbarQuickAction.Toggle">
         <item name="android:layout_weight">0</item>
+        <item name="android:autoMirrored">true</item>
+        <item name="android:drawableStart">@drawable/ic_keyboard_arrow_right</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:paddingStart">2.5dp</item>
+        <item name="android:textOff" />
+        <item name="android:textOn" />
     </style>
 
 </resources>
