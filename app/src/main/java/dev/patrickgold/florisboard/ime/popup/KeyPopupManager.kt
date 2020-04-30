@@ -86,10 +86,7 @@ class KeyPopupManager(
             else -> View.VISIBLE
         }
         val w = createPopupWindow(popupView, keyPopupWidth, keyPopupHeight)
-        w.setTouchInterceptor { _, event ->
-            keyView.dispatchTouchEvent(event)
-            true
-        }
+        w.setTouchInterceptor { _, _ -> false }
         w.showAsDropDown(keyView, ((keyView.measuredWidth - keyPopupWidth) / 2), -keyPopupHeight)
         window = w
     }
@@ -141,15 +138,26 @@ class KeyPopupManager(
         windowExt = w
     }
 
-    fun propagateMotionEvent(event: MotionEvent) {
+    fun propagateMotionEvent(event: MotionEvent): Boolean {
         if (!isShowingExtendedPopup) {
-            return
+            return false
         }
 
         val kX: Float = event.x / keyPopupWidth.toFloat()
+        val keyPopupDiffX = ((keyView.measuredWidth - keyPopupWidth) / 2)
+
+        // check if out of boundary on y-axis
+        if (event.y < -keyPopupHeight || event.y > 0.9f * keyPopupHeight) {
+            return false
+        }
 
         activeExtIndex = when {
             anchorLeft -> when {
+                // check if out of boundary on x-axis
+                event.x < keyPopupDiffX - keyPopupWidth ||
+                event.x > (keyPopupDiffX + (row0count + 1) * keyPopupWidth) -> {
+                    return false
+                }
                 // row 1
                 event.y < 0 && row1count > 0 -> when {
                     kX >= row1count         -> row1count - 1
@@ -164,6 +172,11 @@ class KeyPopupManager(
                 }
             }
             anchorRight -> when {
+                // check if out of boundary on x-axis
+                event.x > keyView.measuredWidth - keyPopupDiffX + keyPopupWidth ||
+                event.x < (keyView.measuredWidth - keyPopupDiffX - (row0count + 1) * keyPopupWidth) -> {
+                    return false
+                }
                 // row 1
                 event.y < 0 && row1count > 0 -> when {
                     kX >= 0                 -> row1count - 1
@@ -184,6 +197,8 @@ class KeyPopupManager(
             val textView = popupViewExt.getChildAt(k) as KeyPopupExtendedSingleView
             textView.isActive = k == activeExtIndex
         }
+
+        return true
     }
 
     fun getActiveKeyData(): KeyData {

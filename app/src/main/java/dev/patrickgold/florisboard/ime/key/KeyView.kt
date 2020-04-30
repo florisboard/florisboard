@@ -11,7 +11,6 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.TypedValue
 import android.view.MotionEvent
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat.getDrawable
@@ -29,8 +28,7 @@ class KeyView(
     context: Context, val data: KeyData, private val florisboard: FlorisBoard, private val keyboardView: KeyboardView
 ) : AppCompatButton(
     context, null, R.attr.keyViewStyle
-), View.OnTouchListener {
-
+) {
     private var isKeyPressed: Boolean = false
         set(value) {
             field = value
@@ -42,8 +40,6 @@ class KeyView(
     private var shouldBlockNextKeyCode: Boolean = false
 
     init {
-        super.setOnTouchListener(this)
-
         val flexLayoutParams = FlexboxLayout.LayoutParams(
             FlexboxLayout.LayoutParams.WRAP_CONTENT, FlexboxLayout.LayoutParams.WRAP_CONTENT
         )
@@ -124,7 +120,7 @@ class KeyView(
 
     private fun keyPressSound() {
         if (florisboard.prefs!!.soundEnabled) {
-            var soundVolume = florisboard.prefs!!.soundVolume
+            val soundVolume = florisboard.prefs!!.soundVolume
             val effect = when (data.code) {
                 KeyCode.SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR
                 KeyCode.DELETE -> AudioManager.FX_KEYPRESS_DELETE
@@ -139,8 +135,10 @@ class KeyView(
         }
     }
 
-    override fun onTouch(v: View, event: MotionEvent): Boolean {
-        when (event.action) {
+    @Suppress("NAME_SHADOWING")
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        val event = event ?: return false
+        when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 popupManager.show()
                 isKeyPressed = true
@@ -169,6 +167,21 @@ class KeyView(
                     }
                 }, delayMillis.toLong())
             }
+            MotionEvent.ACTION_MOVE -> {
+                if (popupManager.isShowingExtendedPopup) {
+                    val isPointerWithinBounds = popupManager.propagateMotionEvent(event)
+                    if (!isPointerWithinBounds && !shouldBlockNextKeyCode) {
+                        keyboardView.shouldStealMotionEvents = true
+                    }
+                } else {
+                    if (event.x < -0.1f * measuredWidth || event.x > 1.1f * measuredWidth
+                        || event.y < -0.35f * measuredHeight || event.y > 1.35f * measuredHeight) {
+                        if (!shouldBlockNextKeyCode) {
+                            keyboardView.shouldStealMotionEvents = true
+                        }
+                    }
+                }
+            }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 isKeyPressed = false
                 osHandler.removeCallbacksAndMessages(null)
@@ -176,16 +189,10 @@ class KeyView(
                 osTimer = null
                 val retData = popupManager.getActiveKeyData()
                 popupManager.hide()
-                if (event.action == MotionEvent.ACTION_UP && !shouldBlockNextKeyCode) {
+                if (event.actionMasked != MotionEvent.ACTION_CANCEL && !shouldBlockNextKeyCode) {
                     florisboard.sendKeyPress(retData)
                 } else {
                     shouldBlockNextKeyCode = false
-                }
-            }
-            MotionEvent.ACTION_MOVE -> {
-                // TODO: Add cancel event if pointer moves to far from key and popup window
-                if (popupManager.isShowingExtendedPopup) {
-                    popupManager.propagateMotionEvent(event)
                 }
             }
             else -> return false

@@ -3,6 +3,7 @@ package dev.patrickgold.florisboard.ime.keyboard
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.ContextThemeWrapper
+import android.view.MotionEvent
 import android.widget.LinearLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
@@ -15,10 +16,10 @@ class KeyboardView(
 ) : LinearLayout(
     context, null, R.attr.keyboardViewStyle
 ) {
-
     var computedLayout: ComputedLayoutData? = null
     var desiredKeyWidth: Int = resources.getDimension(R.dimen.key_width).toInt()
     var desiredKeyHeight: Int = resources.getDimension(R.dimen.key_height).toInt()
+    var shouldStealMotionEvents: Boolean = false
 
     private fun buildLayout() {
         destroyLayout()
@@ -49,6 +50,19 @@ class KeyboardView(
     fun setKeyboardMode(keyboardMode: KeyboardMode) {
         computedLayout = florisboard.layoutManager.computeLayoutFor(keyboardMode)
         buildLayout()
+    }
+
+    override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
+        return shouldStealMotionEvents
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        shouldStealMotionEvents = false
+        if (event != null && event.action == MotionEvent.ACTION_MOVE) {
+            event.action = MotionEvent.ACTION_DOWN
+            dispatchTouchEvent(event)
+        }
+        return true
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
