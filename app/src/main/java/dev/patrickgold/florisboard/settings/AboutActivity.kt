@@ -32,14 +32,14 @@ class AboutActivity : AppCompatActivity() {
         }
 
         // Set onClickListeners for buttons
-        privacyPolicyButton.setOnClickListener { _ ->
+        privacyPolicyButton.setOnClickListener {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW,
                 Uri.parse(resources.getString(R.string.florisboard__privacy_policy_url))
             )
             startActivity(browserIntent)
         }
-        licenseButton.setOnClickListener { _ ->
+        licenseButton.setOnClickListener {
             val webView = WebView(this)
             webView.loadUrl("file:///android_asset/license/open_source_licenses.html")
             licensesAlertDialog = AlertDialog.Builder(this, R.style.SettingsTheme_Light)
@@ -48,7 +48,7 @@ class AboutActivity : AppCompatActivity() {
                 .setPositiveButton(android.R.string.ok, null)
                 .show()
         }
-        sourceCodeButton.setOnClickListener { _ ->
+        sourceCodeButton.setOnClickListener {
             val browserIntent = Intent(
                 Intent.ACTION_VIEW,
                 Uri.parse(resources.getString(R.string.florisboard__repo_url))

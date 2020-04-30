@@ -84,6 +84,13 @@ class FlorisBoard : InputMethodService() {
         super.onStartInputView(info, restarting)
     }
 
+    override fun onComputeInsets(outInsets: Insets?) {
+        super.onComputeInsets(outInsets)
+        if (!isFullscreenMode && outInsets != null) {
+            outInsets.contentTopInsets = outInsets.visibleTopInsets
+        }
+    }
+
     fun sendKeyPress(keyData: KeyData) {
         val ic = currentInputConnection
         if (keyData.type == KeyType.CHARACTER) {

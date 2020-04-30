@@ -2,7 +2,6 @@ package dev.patrickgold.florisboard.ime.layout
 
 import android.annotation.SuppressLint
 import com.squareup.moshi.FromJson
-import java.lang.Error
 
 /**
  * Defines the type of the layout.

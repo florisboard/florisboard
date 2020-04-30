@@ -56,6 +56,7 @@ class KeyboardView(
         return shouldStealMotionEvents
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         shouldStealMotionEvents = false
         if (event != null && event.action == MotionEvent.ACTION_MOVE) {

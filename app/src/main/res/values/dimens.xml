@@ -15,7 +15,6 @@
 
     <dimen name="keyboard_preview_height">200dp</dimen>
 
-    <dimen name="keyboard_row_height">48dp</dimen>
     <dimen name="keyboard_row_marginH">2dp</dimen>
     <dimen name="keyboard_row_marginV">5dp</dimen>
 

@@ -135,6 +135,7 @@ class KeyView(
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Suppress("NAME_SHADOWING")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         val event = event ?: return false
@@ -193,6 +194,9 @@ class KeyView(
                     florisboard.sendKeyPress(retData)
                 } else {
                     shouldBlockNextKeyCode = false
+                }
+                if (event.action == MotionEvent.ACTION_UP) {
+                    performClick()
                 }
             }
             else -> return false

@@ -21,10 +21,10 @@ class SmartbarManager(
     var isQuickActionsViewVisible: Boolean = false
         set(value) { field = value; updateQuickActionVisibility() }
 
-    private val candidateViewOnClickListener = View.OnClickListener { _ ->
+    private val candidateViewOnClickListener = View.OnClickListener { v ->
         //
     }
-    private val candidateViewOnLongClickListener = View.OnLongClickListener { _ ->
+    private val candidateViewOnLongClickListener = View.OnLongClickListener { v ->
         true
     }
     private val quickActionOnClickListener = View.OnClickListener { v ->
@@ -37,7 +37,7 @@ class SmartbarManager(
             else -> return@OnClickListener
         }
     }
-    private val quickActionToggleOnClickListener = View.OnClickListener { _ ->
+    private val quickActionToggleOnClickListener = View.OnClickListener {
         isQuickActionsViewVisible = !isQuickActionsViewVisible
 
     }

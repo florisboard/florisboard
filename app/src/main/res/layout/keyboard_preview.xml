@@ -3,8 +3,7 @@
     android:id="@+id/keyboard_preview"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="#f00">
+    android:orientation="vertical">
 
     <!-- TODO: make a good looking keyboard preview -->
 
