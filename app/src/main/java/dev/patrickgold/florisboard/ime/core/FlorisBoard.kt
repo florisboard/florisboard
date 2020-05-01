@@ -80,8 +80,14 @@ class FlorisBoard : InputMethodService() {
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
-        setCandidatesViewShown(true)
         super.onStartInputView(info, restarting)
+        setCandidatesViewShown(true)
+        smartbarManager.onStartInputView()
+    }
+
+    override fun onFinishInputView(finishingInput: Boolean) {
+        super.onFinishInputView(finishingInput)
+        smartbarManager.onFinishInputView()
     }
 
     override fun onComputeInsets(outInsets: Insets?) {
@@ -98,13 +104,28 @@ class FlorisBoard : InputMethodService() {
             if (caps) {
                 text = text.toUpperCase()
             }
-            ic.commitText(text.toString(), 1)
+            if (keyData.code == KeyCode.SPACE) {
+                ic.finishComposingText()
+                smartbarManager.composingText = ""
+                ic.commitText(text.toString(), 1)
+            } else {
+                smartbarManager.composingText += text.toString()
+                smartbarManager.generateCandidatesFromSuggestions()
+                ic.setComposingText(smartbarManager.composingText, 1)
+            }
             if (!capsLock) {
                 caps = false
             }
         } else {
             when (keyData.code) {
-                KeyCode.DELETE -> ic.deleteSurroundingText(1, 0)
+                KeyCode.DELETE -> {
+                    if (smartbarManager.composingText.isNotBlank()) {
+                        smartbarManager.composingText = smartbarManager.composingText.dropLast(1)
+                        ic.setComposingText(smartbarManager.composingText, 1)
+                    } else {
+                        ic.deleteSurroundingText(1, 0)
+                    }
+                }
                 KeyCode.ENTER -> {
                     val action = currentInputEditorInfo.imeOptions
                     Log.d("imeOptions", action.toString())
