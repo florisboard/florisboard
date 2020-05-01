@@ -24,6 +24,7 @@ An open-source keyboard for Android. Currently in early-alpha stage.
 * [ ] Layout selection
 * [ ] Clipboard manager
 * [ ] One-hand mode
+* [ ] Floating keyboard
 * [ ] Full integration in IME service list of Android (xml/method)
 * [ ] ...
 
@@ -36,4 +37,4 @@ An open-source keyboard for Android. Currently in early-alpha stage.
   [square](https://github.com/square)
 
 ## License
-This project is licensed under the [GPLv3 LICENSE](LICENSE)
+This project is licensed under the [Apache 2.0](LICENSE)
