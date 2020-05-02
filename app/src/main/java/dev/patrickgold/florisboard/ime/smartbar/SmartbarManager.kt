@@ -13,9 +13,6 @@ import androidx.core.view.children
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
-import org.w3c.dom.Text
-import java.util.*
-
 
 class SmartbarManager(
     private val florisboard: FlorisBoard
@@ -90,26 +87,26 @@ class SmartbarManager(
         if (arr == null || arr.isEmpty()) {
             return
         }
-        val suggestions = arr[0]
+        /*val suggestions = arr[0]
         for (i in 0 until suggestions.suggestionsCount) {
             candidateViewList[i].text = suggestions.getSuggestionAt(i)
             if (i == 2) {
                 break
             }
-        }
+        }*/
     }
 
     override fun onGetSentenceSuggestions(arr: Array<out SentenceSuggestionsInfo>?) {
         if (arr == null || arr.isEmpty()) {
             return
         }
-        val suggestions = arr[0].getSuggestionsInfoAt(0)
+        /*val suggestions = arr[0].getSuggestionsInfoAt(0)
         for (i in 0 until suggestions.suggestionsCount) {
             candidateViewList[i].text = suggestions.getSuggestionAt(i)
             if (i == 2) {
                 break
             }
-        }
+        }*/
     }
 
     fun onStartInputView() {

@@ -17,6 +17,7 @@
 
     <!-- Settings UI strings -->
     <string name="settings__title">Settings</string>
+    <string name="settings__menu">More options</string>
     <string name="settings__menu_about">About</string>
     <string name="settings__menu_help">Help &amp; feedback</string>
 

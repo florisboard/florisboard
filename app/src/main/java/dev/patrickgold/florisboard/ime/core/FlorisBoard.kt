@@ -93,12 +93,12 @@ class FlorisBoard : InputMethodService() {
         smartbarManager.onFinishInputView()
     }
 
-    override fun onComputeInsets(outInsets: Insets?) {
+    /*override fun onComputeInsets(outInsets: Insets?) {
         super.onComputeInsets(outInsets)
         if (!isFullscreenMode && outInsets != null) {
             outInsets.contentTopInsets = outInsets.visibleTopInsets
         }
-    }
+    }*/
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
