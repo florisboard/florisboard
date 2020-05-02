@@ -43,6 +43,17 @@ class SmartbarManager(
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 florisboard.startActivity(i)
             }
+            R.id.quick_action_one_handed_toggle -> {
+                when (florisboard.prefs?.oneHandedMode) {
+                    "off" -> {
+                        florisboard.prefs?.oneHandedMode = "end"
+                    }
+                    else -> {
+                        florisboard.prefs?.oneHandedMode = "off"
+                    }
+                }
+                florisboard.updateOneHandedPanelVisibility()
+            }
             else -> return@OnClickListener
         }
     }

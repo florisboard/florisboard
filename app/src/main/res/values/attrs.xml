@@ -44,6 +44,11 @@
 
         <attr name="keyboard_bgColor" format="color" />
 
+        <attr name="one_handed_bgColor" format="color" />
+        <attr name="one_handed_button_bgColor" format="color" />
+        <attr name="one_handed_button_bgColorActive" format="color" />
+        <attr name="one_handed_button_fgColor" format="color" />
+
         <attr name="smartbar_bgColor" format="color" />
         <attr name="smartbar_fgColor" format="color" />
         <attr name="smartbar_button_bgColor" format="color" />

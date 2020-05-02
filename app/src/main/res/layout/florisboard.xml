@@ -4,14 +4,68 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:orientation="vertical"
+    android:orientation="horizontal"
+    android:background="?attr/keyboard_bgColor"
     android:theme="@style/KeyboardTheme.MaterialLight">
+    
+    <LinearLayout
+        android:id="@+id/one_handed_ctrl_panel_start"
+        style="@style/OneHandedPanel"
+        android:visibility="gone">
 
-    <include
-        layout="@layout/keyboard_preview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <ImageButton
+            android:id="@+id/one_handed_ctrl_close_start"
+            style="@style/OneHandedPanelButton"
+            android:src="@drawable/ic_zoom_out_map"/>
 
-    <!-- KeyboardViews will be inserted here dynamically -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/one_handed_button_height"
+            android:visibility="invisible" />
+
+        <ImageButton
+            android:id="@+id/one_handed_ctrl_move_start"
+            style="@style/OneHandedPanelButton"
+            android:src="@drawable/ic_keyboard_arrow_left"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/keyboard_view_panel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/keyboard_preview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- KeyboardViews will be inserted here dynamically -->
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/one_handed_ctrl_panel_end"
+        style="@style/OneHandedPanel"
+        android:visibility="gone">
+
+        <ImageButton
+            android:id="@+id/one_handed_ctrl_close_end"
+            style="@style/OneHandedPanelButton"
+            android:src="@drawable/ic_zoom_out_map"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/one_handed_button_height"
+            android:visibility="invisible" />
+
+        <ImageButton
+            android:id="@+id/one_handed_ctrl_move_end"
+            style="@style/OneHandedPanelButton"
+            android:src="@drawable/ic_keyboard_arrow_right"/>
+
+    </LinearLayout>
 
 </LinearLayout>

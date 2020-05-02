@@ -2,14 +2,17 @@ package dev.patrickgold.florisboard.ime.core
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
 import android.os.Handler
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.preference.PreferenceManager
@@ -30,6 +33,9 @@ class FlorisBoard : InputMethodService() {
     private var hasCapsRecentlyChanged: Boolean = false
     private val keyboardViews = EnumMap<KeyboardMode, KeyboardView>(
         KeyboardMode::class.java)
+    private var keyboardViewPanel: LinearLayout? = null
+    private var oneHandedCtrlPanelStart: LinearLayout? = null
+    private var oneHandedCtrlPanelEnd: LinearLayout? = null
     private val osHandler = Handler()
 
     var caps: Boolean = false
@@ -37,7 +43,7 @@ class FlorisBoard : InputMethodService() {
 
     var audioManager: AudioManager? = null
     val layoutManager = LayoutManager(this)
-    var prefs: PrefCache? = null
+    var prefs: PrefHelper? = null
         private set
     val smartbarManager: SmartbarManager = SmartbarManager(this)
 
@@ -47,12 +53,13 @@ class FlorisBoard : InputMethodService() {
         initDefaultPreferences(this)
 
         val rootView = layoutInflater.inflate(R.layout.florisboard, null) as LinearLayout
-        layoutManager.autoFetchAssociationsFromPrefs()
-        prefs = PrefCache(rootView.context, PreferenceManager.getDefaultSharedPreferences(rootView.context))
+        prefs = PrefHelper(rootView.context, PreferenceManager.getDefaultSharedPreferences(rootView.context))
         prefs!!.sync()
+        layoutManager.autoFetchAssociationsFromPrefs()
+        initializeOneHandedEnvironment(rootView)
         for (mode in KeyboardMode.values()) {
             val keyboardView = KeyboardView(rootView.context, this)
-            rootView.addView(keyboardView)
+            keyboardViewPanel?.addView(keyboardView)
             keyboardView.visibility = View.GONE
             keyboardView.setKeyboardMode(mode)
             keyboardViews[mode] = keyboardView
@@ -63,14 +70,11 @@ class FlorisBoard : InputMethodService() {
         return rootView
     }
 
-    override fun onCreateCandidatesView(): View {
-        return smartbarManager.createSmartbarView()
-    }
-
     override fun onWindowShown() {
         super.onWindowShown()
         prefs!!.sync()
         smartbarManager.isQuickActionsViewVisible = false
+        updateOneHandedPanelVisibility()
     }
 
     private fun setActiveKeyboardMode(mode: KeyboardMode) {
@@ -81,7 +85,6 @@ class FlorisBoard : InputMethodService() {
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         super.onStartInputView(info, restarting)
-        setCandidatesViewShown(true)
         smartbarManager.onStartInputView()
     }
 
@@ -94,6 +97,66 @@ class FlorisBoard : InputMethodService() {
         super.onComputeInsets(outInsets)
         if (!isFullscreenMode && outInsets != null) {
             outInsets.contentTopInsets = outInsets.visibleTopInsets
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        updateOneHandedPanelVisibility()
+    }
+
+    private fun initializeOneHandedEnvironment(rootView: ViewGroup) {
+        oneHandedCtrlPanelStart = rootView.findViewById(R.id.one_handed_ctrl_panel_start)
+        oneHandedCtrlPanelEnd = rootView.findViewById(R.id.one_handed_ctrl_panel_end)
+
+        keyboardViewPanel = rootView.findViewById(R.id.keyboard_view_panel)
+        keyboardViewPanel?.addView(smartbarManager.createSmartbarView())
+
+        rootView.findViewById<ImageButton>(R.id.one_handed_ctrl_move_start)
+            .setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
+        rootView.findViewById<ImageButton>(R.id.one_handed_ctrl_move_end)
+            .setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
+        rootView.findViewById<ImageButton>(R.id.one_handed_ctrl_close_start)
+            .setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
+        rootView.findViewById<ImageButton>(R.id.one_handed_ctrl_close_end)
+            .setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
+    }
+
+    private fun onOneHandedPanelButtonClick(v: View) {
+        when (v.id) {
+            R.id.one_handed_ctrl_move_start -> {
+                prefs?.oneHandedMode = "start"
+            }
+            R.id.one_handed_ctrl_move_end -> {
+                prefs?.oneHandedMode = "end"
+            }
+            R.id.one_handed_ctrl_close_start,
+            R.id.one_handed_ctrl_close_end -> {
+                prefs?.oneHandedMode = "off"
+            }
+        }
+        updateOneHandedPanelVisibility()
+    }
+
+    fun updateOneHandedPanelVisibility() {
+        if (resources.configuration.orientation != Configuration.ORIENTATION_PORTRAIT) {
+            oneHandedCtrlPanelStart?.visibility = View.GONE
+            oneHandedCtrlPanelEnd?.visibility = View.GONE
+        } else {
+            when (prefs?.oneHandedMode) {
+                "off" -> {
+                    oneHandedCtrlPanelStart?.visibility = View.GONE
+                    oneHandedCtrlPanelEnd?.visibility = View.GONE
+                }
+                "start" -> {
+                    oneHandedCtrlPanelStart?.visibility = View.GONE
+                    oneHandedCtrlPanelEnd?.visibility = View.VISIBLE
+                }
+                "end" -> {
+                    oneHandedCtrlPanelStart?.visibility = View.VISIBLE
+                    oneHandedCtrlPanelEnd?.visibility = View.GONE
+                }
+            }
         }
     }
 

@@ -23,7 +23,7 @@ An open-source keyboard for Android. Currently in early-alpha stage.
 * [ ] Auto suggest contacts
 * [ ] Layout selection
 * [ ] Clipboard manager
-* [ ] One-hand mode
+* [x] One-handed mode
 * [ ] Floating keyboard
 * [ ] Full integration in IME service list of Android (xml/method)
 * [ ] ...

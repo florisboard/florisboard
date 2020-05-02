@@ -81,6 +81,10 @@ class KeyboardView(
             "tall" -> 1.10f
             else -> 1.00f
         }).toInt()
+        if (florisboard.prefs?.oneHandedMode == "start" ||
+            florisboard.prefs?.oneHandedMode == "end") {
+            desiredKeyHeight = (desiredKeyHeight * 0.9f).toInt()
+        }
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }

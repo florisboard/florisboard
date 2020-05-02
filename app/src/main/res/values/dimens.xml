@@ -18,6 +18,10 @@
     <dimen name="keyboard_row_marginH">2dp</dimen>
     <dimen name="keyboard_row_marginV">5dp</dimen>
 
+    <dimen name="one_handed_width">42dp</dimen>
+    <dimen name="one_handed_button_width">42dp</dimen>
+    <dimen name="one_handed_button_height">42dp</dimen>
+
     <dimen name="smartbar_height">36dp</dimen>
     <dimen name="smartbar_button_width">28dp</dimen>
     <dimen name="smartbar_button_height">28dp</dimen>

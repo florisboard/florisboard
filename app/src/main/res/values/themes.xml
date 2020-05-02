@@ -28,6 +28,11 @@
 
         <item name="keyboard_bgColor">#dfdfdf</item>
 
+        <item name="one_handed_bgColor">#e8f5e9</item>
+        <item name="one_handed_button_bgColor">@android:color/transparent</item>
+        <item name="one_handed_button_bgColorActive">#20000000</item>
+        <item name="one_handed_button_fgColor">#464646</item>
+
         <item name="smartbar_bgColor">?attr/keyboard_bgColor</item>
         <item name="smartbar_fgColor">?attr/app_textColor</item>
         <item name="smartbar_button_bgColor">?attr/key_bgColor</item>

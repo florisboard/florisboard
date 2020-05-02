@@ -14,4 +14,15 @@
         <item>mid_tall</item>
         <item>tall</item>
     </string-array>
+
+    <string-array name="pref__keyboard__one_handed_mode__entries">
+        <item>Off</item>
+        <item>Right-handed mode</item>
+        <item>Left-handed mode</item>
+    </string-array>
+    <string-array name="pref__keyboard__one_handed_mode__values">
+        <item>off</item>
+        <item>end</item>
+        <item>start</item>
+    </string-array>
 </resources>

@@ -60,6 +60,12 @@
             android:contentDescription="TODO"
             android:src="@drawable/ic_settings" />
 
+        <ImageButton
+            android:id="@+id/quick_action_one_handed_toggle"
+            style="@style/SmartbarQuickAction"
+            android:contentDescription="TODO"
+            android:src="@drawable/ic_keyboard_arrow_right" />
+
     </LinearLayout>
 
     <TextView

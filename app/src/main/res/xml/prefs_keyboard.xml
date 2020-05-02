@@ -7,6 +7,15 @@
         app:title="@string/pref__keyboard__group_layout__label">
 
         <ListPreference
+            android:defaultValue="off"
+            app:entries="@array/pref__keyboard__one_handed_mode__entries"
+            app:entryValues="@array/pref__keyboard__one_handed_mode__values"
+            app:key="keyboard__one_handed_mode"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__one_handed_mode__label"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
             android:defaultValue="normal"
             app:entries="@array/pref__keyboard__height_factor__entries"
             app:entryValues="@array/pref__keyboard__height_factor__values"
