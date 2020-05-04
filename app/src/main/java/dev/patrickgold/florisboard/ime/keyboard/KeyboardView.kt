@@ -70,7 +70,10 @@ class KeyboardView(
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
 
         val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
-        desiredKeyWidth = (widthSize / 10) - (2 * keyMarginH)
+        desiredKeyWidth = when (computedLayout?.mode) {
+            KeyboardMode.NUMERIC -> (widthSize / 4) - (2 * keyMarginH)
+            else -> (widthSize / 10) - (2 * keyMarginH)
+        }
 
         val factor = florisboard.prefs!!.heightFactor
         desiredKeyHeight = (resources.getDimension(R.dimen.key_height).toInt() * when (factor) {

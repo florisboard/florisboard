@@ -3,6 +3,7 @@ package dev.patrickgold.florisboard.ime.smartbar
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.opengl.Visibility
 import android.view.View
 import android.view.textservice.*
 import android.widget.ImageButton
@@ -12,6 +13,7 @@ import android.widget.ToggleButton
 import androidx.core.view.children
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 
 class SmartbarManager(
@@ -21,6 +23,7 @@ class SmartbarManager(
     private var candidatesView: LinearLayout? = null
     private var quickActionsView: LinearLayout? = null
     private var quickActionToggle: ToggleButton? = null
+    private var smartbarView: LinearLayout? = null
     private var spellCheckerSession: SpellCheckerSession? = null
 
     var composingText: String = ""
@@ -80,6 +83,8 @@ class SmartbarManager(
             }
         }
 
+        this.smartbarView = smartbarView
+
         return smartbarView
     }
 
@@ -109,9 +114,14 @@ class SmartbarManager(
         }*/
     }
 
-    fun onStartInputView() {
-        val tsm = florisboard.getSystemService(Context.TEXT_SERVICES_MANAGER_SERVICE) as TextServicesManager
-        spellCheckerSession = tsm.newSpellCheckerSession(null, null, this, true)
+    fun onStartInputView(keyboardMode: KeyboardMode) {
+        if (keyboardMode == KeyboardMode.NUMERIC) {
+            smartbarView?.visibility = View.GONE
+        } else {
+            smartbarView?.visibility = View.VISIBLE
+            val tsm = florisboard.getSystemService(Context.TEXT_SERVICES_MANAGER_SERVICE) as TextServicesManager
+            spellCheckerSession = tsm.newSpellCheckerSession(null, null, this, true)
+        }
     }
 
     fun onFinishInputView() {

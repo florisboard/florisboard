@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
 import android.os.Handler
+import android.text.InputType
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -85,7 +86,15 @@ class FlorisBoard : InputMethodService() {
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         super.onStartInputView(info, restarting)
-        smartbarManager.onStartInputView()
+        val keyboardMode = when (info) {
+            null -> KeyboardMode.CHARACTERS
+            else -> when (info.inputType and InputType.TYPE_MASK_CLASS) {
+                InputType.TYPE_CLASS_NUMBER -> KeyboardMode.NUMERIC
+                else -> KeyboardMode.CHARACTERS
+            }
+        }
+        smartbarManager.onStartInputView(keyboardMode)
+        setActiveKeyboardMode(keyboardMode)
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
@@ -160,9 +169,52 @@ class FlorisBoard : InputMethodService() {
         }
     }
 
+    private fun handleEnter() {
+        val action = currentInputEditorInfo.imeOptions
+        Log.d("imeOptions", action.toString())
+        Log.d("imeOptions action only", (action and 0xFF).toString())
+        if (action and EditorInfo.IME_FLAG_NO_ENTER_ACTION > 0) {
+            currentInputConnection.sendKeyEvent(KeyEvent(
+                KeyEvent.ACTION_DOWN,
+                KeyEvent.KEYCODE_ENTER
+            ))
+        } else {
+            when (action and EditorInfo.IME_MASK_ACTION) {
+                EditorInfo.IME_ACTION_DONE,
+                EditorInfo.IME_ACTION_GO,
+                EditorInfo.IME_ACTION_NEXT,
+                EditorInfo.IME_ACTION_PREVIOUS,
+                EditorInfo.IME_ACTION_SEARCH,
+                EditorInfo.IME_ACTION_SEND -> {
+                    currentInputConnection.performEditorAction(action)
+                }
+                else -> {
+                    currentInputConnection.sendKeyEvent(KeyEvent(
+                        KeyEvent.ACTION_DOWN,
+                        KeyEvent.KEYCODE_ENTER
+                    ))
+                }
+            }
+        }
+    }
+
     fun sendKeyPress(keyData: KeyData) {
         val ic = currentInputConnection
-        if (keyData.type == KeyType.CHARACTER) {
+        if (activeKeyboardMode == KeyboardMode.NUMERIC) {
+            when (keyData.type) {
+                KeyType.CHARACTER,
+                KeyType.NUMERIC-> {
+                    val text = keyData.code.toChar().toString()
+                    ic.commitText(text, 1)
+                }
+                else -> when (keyData.code) {
+                    KeyCode.DELETE -> {
+                        ic.deleteSurroundingText(1, 0)
+                    }
+                    KeyCode.ENTER -> handleEnter()
+                }
+            }
+        } else if (keyData.type == KeyType.CHARACTER) {
             var text = keyData.code.toChar()
             if (caps) {
                 text = text.toUpperCase()
@@ -189,38 +241,7 @@ class FlorisBoard : InputMethodService() {
                         ic.deleteSurroundingText(1, 0)
                     }
                 }
-                KeyCode.ENTER -> {
-                    val action = currentInputEditorInfo.imeOptions
-                    Log.d("imeOptions", action.toString())
-                    Log.d("imeOptions action only", (action and 0xFF).toString())
-                    if (action and EditorInfo.IME_FLAG_NO_ENTER_ACTION > 0) {
-                        ic.sendKeyEvent(
-                            KeyEvent(
-                                KeyEvent.ACTION_DOWN,
-                                KeyEvent.KEYCODE_ENTER
-                            )
-                        )
-                    } else {
-                        when (action and EditorInfo.IME_MASK_ACTION) {
-                            EditorInfo.IME_ACTION_DONE,
-                            EditorInfo.IME_ACTION_GO,
-                            EditorInfo.IME_ACTION_NEXT,
-                            EditorInfo.IME_ACTION_PREVIOUS,
-                            EditorInfo.IME_ACTION_SEARCH,
-                            EditorInfo.IME_ACTION_SEND -> {
-                                ic.performEditorAction(action)
-                            }
-                            else -> {
-                                ic.sendKeyEvent(
-                                    KeyEvent(
-                                        KeyEvent.ACTION_DOWN,
-                                        KeyEvent.KEYCODE_ENTER
-                                    )
-                                )
-                            }
-                        }
-                    }
-                }
+                KeyCode.ENTER -> handleEnter()
                 KeyCode.LANGUAGE_SWITCH -> {
                     Toast.makeText(this, "[NYI]: Language switch",
                         Toast.LENGTH_SHORT).show()

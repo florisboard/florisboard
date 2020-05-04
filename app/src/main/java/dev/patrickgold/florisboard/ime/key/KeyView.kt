@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat.getDrawable
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
 import dev.patrickgold.florisboard.util.setBackgroundTintColor
@@ -46,18 +47,24 @@ class KeyView(
         layoutParams = flexLayoutParams.apply {
             marginStart = resources.getDimension((R.dimen.key_marginH)).toInt()
             marginEnd = resources.getDimension((R.dimen.key_marginH)).toInt()
-            flexShrink = when (data.code) {
-                KeyCode.SHIFT,
-                KeyCode.VIEW_CHARACTERS,
-                KeyCode.VIEW_SYMBOLS,
-                KeyCode.VIEW_SYMBOLS2,
-                KeyCode.DELETE,
-                KeyCode.ENTER -> 0.0f
-                else -> 1.0f
+            flexShrink = when (keyboardView.computedLayout?.mode) {
+                KeyboardMode.NUMERIC -> 1.0f
+                else -> when (data.code) {
+                    KeyCode.SHIFT,
+                    KeyCode.VIEW_CHARACTERS,
+                    KeyCode.VIEW_SYMBOLS,
+                    KeyCode.VIEW_SYMBOLS2,
+                    KeyCode.DELETE,
+                    KeyCode.ENTER -> 0.0f
+                    else -> 1.0f
+                }
             }
-            flexGrow = when (data.code) {
-                KeyCode.SPACE -> 1.0f
-                else -> 0.0f
+            flexGrow = when (keyboardView.computedLayout?.mode) {
+                KeyboardMode.NUMERIC -> 0.0f
+                else -> when (data.code) {
+                    KeyCode.SPACE -> 1.0f
+                    else -> 0.0f
+                }
             }
         }
         setPadding(0, 0, 0, 0)
@@ -211,14 +218,17 @@ class KeyView(
      *  by Devunwired
      */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val desiredWidth = when (data.code) {
-            KeyCode.SHIFT,
-            KeyCode.VIEW_CHARACTERS,
-            KeyCode.VIEW_SYMBOLS,
-            KeyCode.VIEW_SYMBOLS2,
-            KeyCode.DELETE,
-            KeyCode.ENTER -> (keyboardView.desiredKeyWidth * 1.56f).toInt()
-            else -> keyboardView.desiredKeyWidth
+        val desiredWidth = when (keyboardView.computedLayout?.mode) {
+            KeyboardMode.NUMERIC -> keyboardView.desiredKeyWidth
+            else -> when (data.code) {
+                KeyCode.SHIFT,
+                KeyCode.VIEW_CHARACTERS,
+                KeyCode.VIEW_SYMBOLS,
+                KeyCode.VIEW_SYMBOLS2,
+                KeyCode.DELETE,
+                KeyCode.ENTER -> (keyboardView.desiredKeyWidth * 1.56f).toInt()
+                else -> keyboardView.desiredKeyWidth
+            }
         }
         val desiredHeight = keyboardView.desiredKeyHeight
 
@@ -264,7 +274,8 @@ class KeyView(
     }
 
     override fun onDraw(canvas: Canvas?) {
-        if (data.type == KeyType.CHARACTER) {
+        if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE
+            || data.type == KeyType.NUMERIC) {
             text = getComputedLetter()
         } else {
             var drawable: Drawable? = null
@@ -313,6 +324,13 @@ class KeyView(
                             R.drawable.key_ic_caps
                         }
                     })
+                }
+                KeyCode.SPACE -> {
+                    if (keyboardView.computedLayout?.mode == KeyboardMode.NUMERIC) {
+                        drawable = getDrawable(context,
+                            R.drawable.key_ic_space_bar
+                        )
+                    }
                 }
                 KeyCode.VIEW_CHARACTERS -> {
                     setText(R.string.key__view_characters)

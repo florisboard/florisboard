@@ -5,5 +5,6 @@ enum class KeyboardMode {
     SYMBOLS,
     SYMBOLS2,
     NUMERIC,
+    NUMERIC_ADVANCED,
     CLIPBOARD
 }
