@@ -5,6 +5,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.patrickgold.florisboard.ime.key.KeyData
 import dev.patrickgold.florisboard.ime.key.KeyTypeAdapter
+import dev.patrickgold.florisboard.ime.key.KeyVariationAdapter
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import java.util.*
 
@@ -36,11 +37,12 @@ class LayoutManager(private val context: Context) {
         associate(LayoutType.SYMBOLS2_MOD, "default")
     }
 
-    private fun loadLayout(type: LayoutType?): LayoutData? {
-        if (type == null || !layoutAssociations.containsKey(type)) {
+    private fun loadLayout(
+        type: LayoutType?, name: String? = layoutAssociations[type]
+    ): LayoutData? {
+        if (type == null || name == null || !layoutAssociations.containsKey(type)) {
             return null
         }
-        val name = layoutAssociations[type]
         val rawJsonData: String = try {
             context.assets.open("ime/$type/$name.json").bufferedReader().use { it.readText() }
         } catch (e: Exception) {
@@ -50,6 +52,7 @@ class LayoutManager(private val context: Context) {
             .add(KotlinJsonAdapterFactory())
             .add(LayoutTypeAdapter())
             .add(KeyTypeAdapter())
+            .add(KeyVariationAdapter())
             .build()
         val layoutAdapter = moshi.adapter(LayoutData::class.java)
         return layoutAdapter.fromJson(rawJsonData)
@@ -115,6 +118,11 @@ class LayoutManager(private val context: Context) {
             mainLayout?.direction ?: "ltr",
             computedArrangement
         )
+    }
+
+    fun getComputedLayout(keyboardMode: KeyboardMode, type: LayoutType, name: String) : ComputedLayoutData? {
+        val loadedLayout = loadLayout(type, name) ?: return null
+        return loadedLayout.toComputedLayoutData(keyboardMode)
     }
 
     fun computeLayoutFor(keyboardMode: KeyboardMode): ComputedLayoutData? {

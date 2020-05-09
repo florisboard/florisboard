@@ -16,11 +16,11 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.core.view.children
 import androidx.preference.PreferenceManager
+import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.key.KeyCode
-import dev.patrickgold.florisboard.ime.key.KeyData
-import dev.patrickgold.florisboard.ime.key.KeyType
+import dev.patrickgold.florisboard.ime.key.*
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.layout.LayoutManager
@@ -43,6 +43,7 @@ class FlorisBoard : InputMethodService() {
     var capsLock: Boolean = false
 
     var audioManager: AudioManager? = null
+    var keyVariation: KeyVariation = KeyVariation.NORMAL
     val layoutManager = LayoutManager(this)
     var prefs: PrefHelper? = null
         private set
@@ -74,14 +75,28 @@ class FlorisBoard : InputMethodService() {
     override fun onWindowShown() {
         super.onWindowShown()
         prefs!!.sync()
-        smartbarManager.isQuickActionsViewVisible = false
+        smartbarManager.activeContainerId = smartbarManager.getPreferredContainerId()
         updateOneHandedPanelVisibility()
+    }
+
+    fun getActiveKeyboardMode(): KeyboardMode {
+        return activeKeyboardMode ?: KeyboardMode.CHARACTERS
     }
 
     private fun setActiveKeyboardMode(mode: KeyboardMode) {
         keyboardViews[activeKeyboardMode]?.visibility = View.GONE
         keyboardViews[mode]?.visibility = View.VISIBLE
         activeKeyboardMode = mode
+        for (row in keyboardViews[activeKeyboardMode]!!.children) {
+            if (row is FlexboxLayout) {
+                for (keyView in row.children) {
+                    if (keyView is KeyView) {
+                        keyView.updateVariation()
+                    }
+                }
+            }
+        }
+        smartbarManager.activeContainerId = smartbarManager.getPreferredContainerId()
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
@@ -89,8 +104,31 @@ class FlorisBoard : InputMethodService() {
         val keyboardMode = when (info) {
             null -> KeyboardMode.CHARACTERS
             else -> when (info.inputType and InputType.TYPE_MASK_CLASS) {
-                InputType.TYPE_CLASS_NUMBER -> KeyboardMode.NUMERIC
-                else -> KeyboardMode.CHARACTERS
+                InputType.TYPE_CLASS_NUMBER -> {
+                    keyVariation = KeyVariation.NORMAL
+                    KeyboardMode.NUMERIC
+                }
+                InputType.TYPE_CLASS_PHONE -> {
+                    keyVariation = KeyVariation.NORMAL
+                    // TODO: Implement phone layout
+                    KeyboardMode.CHARACTERS
+                }
+                InputType.TYPE_CLASS_TEXT -> {
+                    keyVariation = when (info.inputType and InputType.TYPE_MASK_VARIATION) {
+                        InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
+                            InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS -> KeyVariation.EMAIL_ADDRESS
+                        InputType.TYPE_TEXT_VARIATION_PASSWORD,
+                            InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD,
+                            InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD -> KeyVariation.PASSWORD
+                        InputType.TYPE_TEXT_VARIATION_URI -> KeyVariation.URI
+                        else -> KeyVariation.NORMAL
+                    }
+                    KeyboardMode.CHARACTERS
+                }
+                else -> {
+                    keyVariation = KeyVariation.NORMAL
+                    KeyboardMode.CHARACTERS
+                }
             }
         }
         smartbarManager.onStartInputView(keyboardMode)
@@ -219,14 +257,30 @@ class FlorisBoard : InputMethodService() {
             if (caps) {
                 text = text.toUpperCase()
             }
-            if (keyData.code == KeyCode.SPACE) {
-                ic.finishComposingText()
-                smartbarManager.composingText = ""
+            if (keyVariation == KeyVariation.PASSWORD) {
                 ic.commitText(text.toString(), 1)
             } else {
-                smartbarManager.composingText += text.toString()
-                smartbarManager.generateCandidatesFromSuggestions()
-                ic.setComposingText(smartbarManager.composingText, 1)
+                when (keyData.code) {
+                    KeyCode.SPACE -> {
+                        ic.finishComposingText()
+                        smartbarManager.composingText = ""
+                        ic.commitText(text.toString(), 1)
+                    }
+                    KeyCode.URI_COMPONENT_TLD -> {
+                        val tld = when (caps) {
+                            true -> keyData.label.toUpperCase(Locale.getDefault())
+                            false -> keyData.label.toLowerCase(Locale.getDefault())
+                        }
+                        smartbarManager.composingText += tld
+                        smartbarManager.generateCandidatesFromSuggestions()
+                        ic.setComposingText(smartbarManager.composingText, 1)
+                    }
+                    else -> {
+                        smartbarManager.composingText += text.toString()
+                        smartbarManager.generateCandidatesFromSuggestions()
+                        ic.setComposingText(smartbarManager.composingText, 1)
+                    }
+                }
             }
             if (!capsLock) {
                 caps = false
@@ -234,7 +288,7 @@ class FlorisBoard : InputMethodService() {
         } else {
             when (keyData.code) {
                 KeyCode.DELETE -> {
-                    if (smartbarManager.composingText.isNotBlank()) {
+                    if (smartbarManager.composingText.isNotBlank() && keyVariation != KeyVariation.PASSWORD) {
                         smartbarManager.composingText = smartbarManager.composingText.dropLast(1)
                         ic.setComposingText(smartbarManager.composingText, 1)
                     } else {

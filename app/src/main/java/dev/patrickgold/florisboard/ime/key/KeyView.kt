@@ -11,6 +11,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.TypedValue
 import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat.getDrawable
@@ -83,25 +84,17 @@ class KeyView(
     /**
      * Creates a label text from the key's code.
      */
-    fun getComputedLetter(code: Int = data.code): String {
-        val label = (code.toChar()).toString()
+    fun getComputedLetter(keyData: KeyData = data): String {
+        if (keyData.code == KeyCode.URI_COMPONENT_TLD) {
+            return when (florisboard.caps) {
+                true -> keyData.label.toUpperCase(Locale.getDefault())
+                false -> keyData.label.toLowerCase(Locale.getDefault())
+            }
+        }
+        val label = (keyData.code.toChar()).toString()
         return when {
             florisboard.caps -> label.toUpperCase(Locale.getDefault())
             else -> label
-        }
-    }
-
-    private fun updateKeyPressedBackground() {
-        if (data.code == KeyCode.ENTER) {
-            setBackgroundTintColor(this, when {
-                isKeyPressed -> R.attr.app_colorPrimaryDark
-                else -> R.attr.app_colorPrimary
-            })
-        } else {
-            setBackgroundTintColor(this, when {
-                isKeyPressed -> R.attr.key_bgColorPressed
-                else -> R.attr.key_bgColor
-            })
         }
     }
 
@@ -273,7 +266,35 @@ class KeyView(
         setMeasuredDimension(width, height)
     }
 
+    private fun updateKeyPressedBackground() {
+        if (data.code == KeyCode.ENTER) {
+            setBackgroundTintColor(this, when {
+                isKeyPressed -> R.attr.app_colorPrimaryDark
+                else -> R.attr.app_colorPrimary
+            })
+        } else {
+            setBackgroundTintColor(this, when {
+                isKeyPressed -> R.attr.key_bgColorPressed
+                else -> R.attr.key_bgColor
+            })
+        }
+    }
+
+    fun updateVariation() {
+        if (data.variation != KeyVariation.ALL) {
+            visibility =
+                if (data.variation == KeyVariation.NORMAL && (florisboard.keyVariation == KeyVariation.NORMAL || florisboard.keyVariation == KeyVariation.PASSWORD)) {
+                    View.VISIBLE
+                } else if (data.variation == florisboard.keyVariation) {
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+        }
+    }
+
     override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
         if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE
             || data.type == KeyType.NUMERIC) {
             text = getComputedLetter()
@@ -355,7 +376,5 @@ class KeyView(
                 }
             }
         }
-
-        super.onDraw(canvas)
     }
 }

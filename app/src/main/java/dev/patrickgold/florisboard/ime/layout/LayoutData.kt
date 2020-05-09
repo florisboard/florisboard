@@ -15,6 +15,24 @@ data class LayoutData(
             return LayoutData(LayoutType.CHARACTERS, "", "")
         }
     }
+
+    private fun getComputedLayoutDataArrangement(): ComputedLayoutDataArrangement {
+        val ret = mutableListOf<MutableList<KeyData>>()
+        for (row in arrangement) {
+            val retRow = mutableListOf<KeyData>()
+            for (keyData in row) {
+                retRow.add(keyData)
+            }
+            ret.add(retRow)
+        }
+        return ret
+    }
+
+    fun toComputedLayoutData(keyboardMode: KeyboardMode): ComputedLayoutData {
+        return ComputedLayoutData(
+            keyboardMode, name, direction, getComputedLayoutDataArrangement()
+        )
+    }
 }
 
 typealias ComputedLayoutDataArrangement = MutableList<MutableList<KeyData>>

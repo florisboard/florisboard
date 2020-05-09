@@ -57,4 +57,5 @@ object KeyCode {
     const val VIEW_NUMERIC =            -204
     const val LANGUAGE_SWITCH =         -210
     const val SHOW_INPUT_METHOD_PICKER =-211
+    const val URI_COMPONENT_TLD =       -255
 }

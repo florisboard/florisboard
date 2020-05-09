@@ -9,10 +9,19 @@
       { "code":   -5, "label": "delete", "type": "enter_editing" }
     ], [
       { "code": -202, "label": "view_symbols", "type": "system_gui" },
-      { "code":   44, "label": ",", "popup": [] },
+      { "code":   64, "label": "@", "variation": "email_address", "popup": [] },
+      { "code":   44, "label": ",", "variation": "normal", "popup": [] },
+      { "code":   47, "label": "/", "variation": "uri", "popup": [] },
       { "code": -210, "label": "language_switch", "type": "system_gui" },
       { "code":   32, "label": " ", "popup": [] },
-      { "code":   46, "label": ".", "popup": [
+      { "code":   46, "label": ".", "variation": "email_address", "popup": [
+        { "code": -255, "label": ".gov" },
+        { "code": -255, "label": ".edu" },
+        { "code": -255, "label": ".org" },
+        { "code": -255, "label": ".com" },
+        { "code": -255, "label": ".net" }
+      ] },
+      { "code":   46, "label": ".", "variation": "normal", "popup": [
         { "code":   38, "label": "&" },
         { "code":   37, "label": "%" },
         { "code":   43, "label": "+" },
@@ -29,6 +38,13 @@
         { "code":   33, "label": "!" },
         { "code":   44, "label": "," },
         { "code":   63, "label": "?" }
+      ] },
+      { "code":   46, "label": ".", "variation": "uri", "popup": [
+        { "code": -255, "label": ".gov" },
+        { "code": -255, "label": ".edu" },
+        { "code": -255, "label": ".org" },
+        { "code": -255, "label": ".com" },
+        { "code": -255, "label": ".net" }
       ] },
       { "code":   10, "label": "enter", "type": "enter_editing" }
     ]

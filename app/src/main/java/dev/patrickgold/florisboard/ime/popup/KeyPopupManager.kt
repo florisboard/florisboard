@@ -12,6 +12,7 @@ import android.widget.TextView
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.flexbox.JustifyContent
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.key.KeyCode
 import dev.patrickgold.florisboard.ime.key.KeyData
 import dev.patrickgold.florisboard.ime.key.KeyView
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
@@ -57,10 +58,12 @@ class KeyPopupManager(
         setTextTintColor(textView,
             R.attr.key_popup_fgColor
         )
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, keyboardView.resources.getDimension(
-            R.dimen.key_popup_textSize
-        ))
-        textView.text = keyView.getComputedLetter(keyView.data.popup[k].code)
+        val textSize = keyboardView.resources.getDimension(R.dimen.key_popup_textSize)
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, when (keyView.data.popup[k].code) {
+            KeyCode.URI_COMPONENT_TLD -> textSize * 0.6f
+            else -> textSize
+        })
+        textView.text = keyView.getComputedLetter(keyView.data.popup[k])
         return textView
     }
 
