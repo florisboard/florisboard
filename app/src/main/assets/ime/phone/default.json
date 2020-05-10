@@ -1,6 +1,6 @@
 {
-  "type": "numeric",
-  "name": "basic",
+  "type": "phone",
+  "name": "default",
   "direction": "ltr",
   "arrangement": [
     [
@@ -19,7 +19,7 @@
       { "code":   57, "label": "9", "type": "numeric" },
       { "code":   -5, "label": "delete", "type": "enter_editing" }
     ], [
-      { "code":   44, "label": ",", "popup": [] },
+      { "code": -207, "label": "view_phone2", "type": "system_gui" },
       { "code":   48, "label": "0", "type": "numeric", "popup": [
         { "code":   43, "label": "+" }
       ] },

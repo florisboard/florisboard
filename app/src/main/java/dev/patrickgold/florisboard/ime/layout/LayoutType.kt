@@ -11,6 +11,8 @@ enum class LayoutType {
     CHARACTERS_MOD,
     EXTENSION,
     NUMERIC,
+    PHONE,
+    PHONE2,
     SYMBOLS,
     SYMBOLS_MOD,
     SYMBOLS2,

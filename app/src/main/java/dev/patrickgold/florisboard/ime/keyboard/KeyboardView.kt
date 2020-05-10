@@ -71,7 +71,9 @@ class KeyboardView(
 
         val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
         desiredKeyWidth = when (computedLayout?.mode) {
-            KeyboardMode.NUMERIC -> (widthSize / 4) - (2 * keyMarginH)
+            KeyboardMode.NUMERIC,
+            KeyboardMode.PHONE,
+            KeyboardMode.PHONE2 -> (widthSize / 4) - (2 * keyMarginH)
             else -> (widthSize / 10) - (2 * keyMarginH)
         }
 

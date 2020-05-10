@@ -49,7 +49,9 @@ class KeyView(
             marginStart = resources.getDimension((R.dimen.key_marginH)).toInt()
             marginEnd = resources.getDimension((R.dimen.key_marginH)).toInt()
             flexShrink = when (keyboardView.computedLayout?.mode) {
-                KeyboardMode.NUMERIC -> 1.0f
+                KeyboardMode.NUMERIC,
+                KeyboardMode.PHONE,
+                KeyboardMode.PHONE2 -> 1.0f
                 else -> when (data.code) {
                     KeyCode.SHIFT,
                     KeyCode.VIEW_CHARACTERS,
@@ -61,7 +63,9 @@ class KeyView(
                 }
             }
             flexGrow = when (keyboardView.computedLayout?.mode) {
-                KeyboardMode.NUMERIC -> 0.0f
+                KeyboardMode.NUMERIC,
+                KeyboardMode.PHONE,
+                KeyboardMode.PHONE2 -> 0.0f
                 else -> when (data.code) {
                     KeyCode.SPACE -> 1.0f
                     else -> 0.0f
@@ -212,7 +216,9 @@ class KeyView(
      */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val desiredWidth = when (keyboardView.computedLayout?.mode) {
-            KeyboardMode.NUMERIC -> keyboardView.desiredKeyWidth
+            KeyboardMode.NUMERIC,
+            KeyboardMode.PHONE,
+            KeyboardMode.PHONE2 -> keyboardView.desiredKeyWidth
             else -> when (data.code) {
                 KeyCode.SHIFT,
                 KeyCode.VIEW_CHARACTERS,
@@ -330,6 +336,8 @@ class KeyView(
                         R.drawable.key_ic_language
                     )
                 }
+                KeyCode.PHONE_PAUSE -> setText(R.string.key__phone_pause)
+                KeyCode.PHONE_WAIT -> setText(R.string.key__phone_wait)
                 KeyCode.SHIFT -> {
                     drawable = getDrawable(context, when {
                         florisboard.caps && florisboard.capsLock -> {
@@ -347,10 +355,15 @@ class KeyView(
                     })
                 }
                 KeyCode.SPACE -> {
-                    if (keyboardView.computedLayout?.mode == KeyboardMode.NUMERIC) {
-                        drawable = getDrawable(context,
-                            R.drawable.key_ic_space_bar
-                        )
+                    when (keyboardView.computedLayout?.mode) {
+                        KeyboardMode.NUMERIC,
+                        KeyboardMode.PHONE,
+                        KeyboardMode.PHONE2 -> {
+                            drawable = getDrawable(context,
+                                R.drawable.key_ic_space_bar
+                            )
+                        }
+                        else -> {}
                     }
                 }
                 KeyCode.VIEW_CHARACTERS -> {
@@ -358,6 +371,12 @@ class KeyView(
                 }
                 KeyCode.VIEW_NUMERIC -> {
                     setText(R.string.key__view_numeric)
+                }
+                KeyCode.VIEW_PHONE -> {
+                    setText(R.string.key__view_phone)
+                }
+                KeyCode.VIEW_PHONE2 -> {
+                    setText(R.string.key__view_phone2)
                 }
                 KeyCode.VIEW_SYMBOLS -> {
                     setText(R.string.key__view_symbols)

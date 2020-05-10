@@ -51,10 +51,15 @@ object KeyCode {
     const val UNDO =                    -136
     const val REDO =                    -137
 
+    const val PHONE_PAUSE =               44
+    const val PHONE_WAIT =                59
+
     const val VIEW_CHARACTERS =         -201
     const val VIEW_SYMBOLS =            -202
     const val VIEW_SYMBOLS2 =           -203
     const val VIEW_NUMERIC =            -204
+    const val VIEW_PHONE =              -206
+    const val VIEW_PHONE2 =             -207
     const val LANGUAGE_SWITCH =         -210
     const val SHOW_INPUT_METHOD_PICKER =-211
     const val URI_COMPONENT_TLD =       -255

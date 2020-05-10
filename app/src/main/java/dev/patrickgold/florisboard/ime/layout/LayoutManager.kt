@@ -31,6 +31,8 @@ class LayoutManager(private val context: Context) {
         associate(LayoutType.CHARACTERS_MOD, "default")
         associate(LayoutType.EXTENSION, "number_row")
         associate(LayoutType.NUMERIC, "basic")
+        associate(LayoutType.PHONE, "default")
+        associate(LayoutType.PHONE2, "default")
         associate(LayoutType.SYMBOLS, "western_default")
         associate(LayoutType.SYMBOLS_MOD, "default")
         associate(LayoutType.SYMBOLS2, "western_default")
@@ -133,16 +135,6 @@ class LayoutManager(private val context: Context) {
                     keyboardMode, LayoutType.CHARACTERS, LayoutType.CHARACTERS_MOD, false
                 )
             }
-            KeyboardMode.SYMBOLS -> {
-                mergeLayouts(
-                    keyboardMode, LayoutType.SYMBOLS, LayoutType.SYMBOLS_MOD, true
-                )
-            }
-            KeyboardMode.SYMBOLS2 -> {
-                mergeLayouts(
-                    keyboardMode, LayoutType.SYMBOLS2, LayoutType.SYMBOLS2_MOD, false
-                )
-            }
             KeyboardMode.NUMERIC -> {
                 associate(LayoutType.NUMERIC, "basic")
                 mergeLayouts(
@@ -153,6 +145,26 @@ class LayoutManager(private val context: Context) {
                 associate(LayoutType.NUMERIC, "advanced")
                 mergeLayouts(
                     keyboardMode, LayoutType.NUMERIC, null, false
+                )
+            }
+            KeyboardMode.PHONE -> {
+                mergeLayouts(
+                    keyboardMode, LayoutType.PHONE, null, false
+                )
+            }
+            KeyboardMode.PHONE2 -> {
+                mergeLayouts(
+                    keyboardMode, LayoutType.PHONE2, null, false
+                )
+            }
+            KeyboardMode.SYMBOLS -> {
+                mergeLayouts(
+                    keyboardMode, LayoutType.SYMBOLS, LayoutType.SYMBOLS_MOD, true
+                )
+            }
+            KeyboardMode.SYMBOLS2 -> {
+                mergeLayouts(
+                    keyboardMode, LayoutType.SYMBOLS2, LayoutType.SYMBOLS2_MOD, false
                 )
             }
             else -> null

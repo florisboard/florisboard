@@ -140,7 +140,9 @@ class SmartbarManager(
 
     fun onStartInputView(keyboardMode: KeyboardMode) {
         when {
-            keyboardMode == KeyboardMode.NUMERIC -> {
+            keyboardMode == KeyboardMode.NUMERIC ||
+            keyboardMode == KeyboardMode.PHONE ||
+            keyboardMode == KeyboardMode.PHONE2 -> {
                 smartbarView?.visibility = View.GONE
             }
             florisboard.keyVariation == KeyVariation.PASSWORD -> {

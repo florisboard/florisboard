@@ -1,0 +1,28 @@
+{
+  "type": "phone2",
+  "name": "default",
+  "direction": "ltr",
+  "arrangement": [
+    [
+      { "code":   40, "label": "(", "popup": [] },
+      { "code":   47, "label": "/", "popup": [] },
+      { "code":   41, "label": ")", "popup": [] },
+      { "code":   45, "label": "-", "popup": [] }
+    ], [
+      { "code":   78, "label": "N", "popup": [] },
+      { "code":   44, "label": "pause", "type": "system_gui" },
+      { "code":   44, "label": ",", "popup": [] },
+      { "code":   32, "label": " ", "popup": [] }
+    ], [
+      { "code":   42, "label": "*", "popup": [] },
+      { "code":   59, "label": "wait", "type": "system_gui" },
+      { "code":   35, "label": "#", "popup": [] },
+      { "code":   -5, "label": "delete", "type": "enter_editing" }
+    ], [
+      { "code": -206, "label": "view_phone", "type": "system_gui" },
+      { "code":   43, "label": "+", "popup": [] },
+      { "code":   46, "label": ".", "popup": [] },
+      { "code":   10, "label": "enter", "type": "enter_editing" }
+    ]
+  ]
+}

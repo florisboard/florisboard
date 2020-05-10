@@ -110,8 +110,7 @@ class FlorisBoard : InputMethodService() {
                 }
                 InputType.TYPE_CLASS_PHONE -> {
                     keyVariation = KeyVariation.NORMAL
-                    // TODO: Implement phone layout
-                    KeyboardMode.CHARACTERS
+                    KeyboardMode.PHONE
                 }
                 InputType.TYPE_CLASS_TEXT -> {
                     keyVariation = when (info.inputType and InputType.TYPE_MASK_VARIATION) {
@@ -300,6 +299,11 @@ class FlorisBoard : InputMethodService() {
                     Toast.makeText(this, "[NYI]: Language switch",
                         Toast.LENGTH_SHORT).show()
                 }
+                KeyCode.PHONE_PAUSE,
+                KeyCode.PHONE_WAIT -> {
+                    val text = keyData.code.toChar().toString()
+                    ic.commitText(text, 1)
+                }
                 KeyCode.SHIFT -> {
                     if (hasCapsRecentlyChanged) {
                         osHandler.removeCallbacksAndMessages(null)
@@ -326,6 +330,8 @@ class FlorisBoard : InputMethodService() {
                     Toast.makeText(this, "[NYI]: Numeric keyboard layout",
                         Toast.LENGTH_SHORT).show()
                 }
+                KeyCode.VIEW_PHONE -> setActiveKeyboardMode(KeyboardMode.PHONE)
+                KeyCode.VIEW_PHONE2 -> setActiveKeyboardMode(KeyboardMode.PHONE2)
                 KeyCode.VIEW_SYMBOLS -> setActiveKeyboardMode(KeyboardMode.SYMBOLS)
                 KeyCode.VIEW_SYMBOLS2 -> setActiveKeyboardMode(KeyboardMode.SYMBOLS2)
             }
