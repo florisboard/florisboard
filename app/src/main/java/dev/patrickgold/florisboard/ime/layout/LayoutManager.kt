@@ -30,7 +30,8 @@ class LayoutManager(private val context: Context) {
         associate(LayoutType.CHARACTERS, "qwerty")
         associate(LayoutType.CHARACTERS_MOD, "default")
         associate(LayoutType.EXTENSION, "number_row")
-        associate(LayoutType.NUMERIC, "basic")
+        associate(LayoutType.NUMERIC, "default")
+        associate(LayoutType.NUMERIC_ADVANCED, "default")
         associate(LayoutType.PHONE, "default")
         associate(LayoutType.PHONE2, "default")
         associate(LayoutType.SYMBOLS, "western_default")
@@ -136,15 +137,13 @@ class LayoutManager(private val context: Context) {
                 )
             }
             KeyboardMode.NUMERIC -> {
-                associate(LayoutType.NUMERIC, "basic")
                 mergeLayouts(
                     keyboardMode, LayoutType.NUMERIC, null, false
                 )
             }
             KeyboardMode.NUMERIC_ADVANCED -> {
-                associate(LayoutType.NUMERIC, "advanced")
                 mergeLayouts(
-                    keyboardMode, LayoutType.NUMERIC, null, false
+                    keyboardMode, LayoutType.NUMERIC_ADVANCED, null, false
                 )
             }
             KeyboardMode.PHONE -> {

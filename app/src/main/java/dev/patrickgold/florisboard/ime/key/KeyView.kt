@@ -50,6 +50,7 @@ class KeyView(
             marginEnd = resources.getDimension((R.dimen.key_marginH)).toInt()
             flexShrink = when (keyboardView.computedLayout?.mode) {
                 KeyboardMode.NUMERIC,
+                KeyboardMode.NUMERIC_ADVANCED,
                 KeyboardMode.PHONE,
                 KeyboardMode.PHONE2 -> 1.0f
                 else -> when (data.code) {
@@ -66,6 +67,10 @@ class KeyView(
                 KeyboardMode.NUMERIC,
                 KeyboardMode.PHONE,
                 KeyboardMode.PHONE2 -> 0.0f
+                KeyboardMode.NUMERIC_ADVANCED -> when (data.type) {
+                    KeyType.NUMERIC -> 1.0f
+                    else -> 0.0f
+                }
                 else -> when (data.code) {
                     KeyCode.SPACE -> 1.0f
                     else -> 0.0f
@@ -74,7 +79,7 @@ class KeyView(
         }
         setPadding(0, 0, 0, 0)
 
-        if (data.code == KeyCode.VIEW_NUMERIC) {
+        if (data.code == KeyCode.VIEW_NUMERIC || data.code == KeyCode.VIEW_NUMERIC_ADVANCED) {
             setTextSize(
                 TypedValue.COMPLEX_UNIT_PX, resources.getDimension(
                     R.dimen.key_numeric_textSize
@@ -219,6 +224,11 @@ class KeyView(
             KeyboardMode.NUMERIC,
             KeyboardMode.PHONE,
             KeyboardMode.PHONE2 -> keyboardView.desiredKeyWidth
+            KeyboardMode.NUMERIC_ADVANCED -> when (data.code) {
+                44, 46 -> keyboardView.desiredKeyWidth
+                KeyCode.VIEW_SYMBOLS, 61 -> (keyboardView.desiredKeyWidth * 1.34f).toInt()
+                else -> (keyboardView.desiredKeyWidth * 1.56f).toInt()
+            }
             else -> when (data.code) {
                 KeyCode.SHIFT,
                 KeyCode.VIEW_CHARACTERS,
@@ -357,6 +367,7 @@ class KeyView(
                 KeyCode.SPACE -> {
                     when (keyboardView.computedLayout?.mode) {
                         KeyboardMode.NUMERIC,
+                        KeyboardMode.NUMERIC_ADVANCED,
                         KeyboardMode.PHONE,
                         KeyboardMode.PHONE2 -> {
                             drawable = getDrawable(context,
@@ -369,7 +380,8 @@ class KeyView(
                 KeyCode.VIEW_CHARACTERS -> {
                     setText(R.string.key__view_characters)
                 }
-                KeyCode.VIEW_NUMERIC -> {
+                KeyCode.VIEW_NUMERIC,
+                KeyCode.VIEW_NUMERIC_ADVANCED -> {
                     setText(R.string.key__view_numeric)
                 }
                 KeyCode.VIEW_PHONE -> {

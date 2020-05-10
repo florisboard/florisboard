@@ -251,7 +251,7 @@ class FlorisBoard : InputMethodService() {
                     KeyCode.ENTER -> handleEnter()
                 }
             }
-        } else if (keyData.type == KeyType.CHARACTER) {
+        } else if (keyData.type == KeyType.CHARACTER || keyData.type == KeyType.NUMERIC) {
             var text = keyData.code.toChar()
             if (caps) {
                 text = text.toUpperCase()
@@ -325,11 +325,8 @@ class FlorisBoard : InputMethodService() {
                 }
                 KeyCode.VIEW_CHARACTERS -> setActiveKeyboardMode(KeyboardMode.CHARACTERS)
                 // TODO: Implement numeric layout
-                //KeyCode.VIEW_NUMERIC -> setActiveKeyboardMode(KeyboardMode.NUMERIC)
-                KeyCode.VIEW_NUMERIC -> {
-                    Toast.makeText(this, "[NYI]: Numeric keyboard layout",
-                        Toast.LENGTH_SHORT).show()
-                }
+                KeyCode.VIEW_NUMERIC -> setActiveKeyboardMode(KeyboardMode.NUMERIC)
+                KeyCode.VIEW_NUMERIC_ADVANCED -> setActiveKeyboardMode(KeyboardMode.NUMERIC_ADVANCED)
                 KeyCode.VIEW_PHONE -> setActiveKeyboardMode(KeyboardMode.PHONE)
                 KeyCode.VIEW_PHONE2 -> setActiveKeyboardMode(KeyboardMode.PHONE2)
                 KeyCode.VIEW_SYMBOLS -> setActiveKeyboardMode(KeyboardMode.SYMBOLS)

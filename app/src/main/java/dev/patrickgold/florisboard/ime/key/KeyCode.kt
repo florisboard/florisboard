@@ -58,6 +58,7 @@ object KeyCode {
     const val VIEW_SYMBOLS =            -202
     const val VIEW_SYMBOLS2 =           -203
     const val VIEW_NUMERIC =            -204
+    const val VIEW_NUMERIC_ADVANCED =   -205
     const val VIEW_PHONE =              -206
     const val VIEW_PHONE2 =             -207
     const val LANGUAGE_SWITCH =         -210
