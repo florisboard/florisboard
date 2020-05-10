@@ -2,14 +2,16 @@
 
 An open-source keyboard for Android. Currently in early-alpha stage.
 
-![Preview image](https://imgur.com/X5EkD4p.png)
+![Preview image](https://patrickgold.dev/media/previews/florisboard.png)
 
 ## Feature roadmap
 * [x] Basic implementation of the keyboard core (InputMethodService)
 * [x] Own implementation of deprecated KeyboardView (base only)
 * [x] QWERTY layout
 * [x] Special character layout(s)
-* [ ] Numeric layout
+* [x] Numeric layout
+* [ ] Numeric layout (advanced)
+* [ ] Phone number layout
 * [ ] Emoji layout
 * [x] Caps + Caps Lock
 * [x] Key popups (buggy atm)
@@ -18,11 +20,12 @@ An open-source keyboard for Android. Currently in early-alpha stage.
 * [x] Preferences screen
 * [ ] Customize look and behaviour of keyboard
 * [ ] Theme customization
-* [ ] Adapt to situation in app (password, url, text, etc. )
+* [x] Adapt to situation in app (password, url, text, etc. )
 * [ ] Auto suggest words from precompiled dictionary
 * [ ] Auto suggest words from user dictionary
 * [ ] Auto suggest contacts
 * [ ] Layout selection
+* [ ] Multilingual typing
 * [ ] Clipboard manager
 * [x] One-handed mode
 * [ ] Floating keyboard
