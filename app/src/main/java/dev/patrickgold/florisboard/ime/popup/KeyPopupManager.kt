@@ -68,19 +68,20 @@ class KeyPopupManager(
     }
 
     private fun createPopupWindow(view: View, width: Int, height: Int): PopupWindow {
-        val w = PopupWindow(view, width, height, false)
-        w.animationStyle = 0
-        w.enterTransition = null
-        w.exitTransition = null
-        w.isClippingEnabled = false
-        w.isOutsideTouchable = true
-        return w
+        return PopupWindow(view, width, height, false).apply {
+            animationStyle = 0
+            enterTransition = null
+            exitTransition = null
+            inputMethodMode = PopupWindow.INPUT_METHOD_NOT_NEEDED
+            isClippingEnabled = false
+            isOutsideTouchable = true
+            isTouchable = false
+        }
     }
 
     fun show() {
         // TODO: improve performance of popup creation
-        val code = keyView.data.code
-        if (code <= 32 || isShowingPopup) {
+        if (keyView.data.code <= KeyCode.SPACE || isShowingPopup) {
             return
         }
         popupView.findViewById<TextView>(R.id.key_popup_text).text = keyView.getComputedLetter()
@@ -89,15 +90,13 @@ class KeyPopupManager(
             else -> View.VISIBLE
         }
         val w = createPopupWindow(popupView, keyPopupWidth, keyPopupHeight)
-        w.setTouchInterceptor { _, _ -> false }
         w.showAsDropDown(keyView, ((keyView.measuredWidth - keyPopupWidth) / 2), -keyPopupHeight)
         window = w
     }
 
     fun extend() {
         // TODO: cleanup and spilt into multiple functions
-        val code = keyView.data.code
-        if (code <= 32 || keyView.data.popup.isEmpty() || isShowingExtendedPopup) {
+        if (keyView.data.code <= KeyCode.SPACE || keyView.data.popup.isEmpty() || isShowingExtendedPopup) {
             return
         }
         anchorLeft = keyView.x < keyboardView.measuredWidth / 2

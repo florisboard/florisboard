@@ -16,9 +16,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.core.view.children
 import androidx.preference.PreferenceManager
-import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.key.*
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
@@ -86,16 +84,8 @@ class FlorisBoard : InputMethodService() {
     private fun setActiveKeyboardMode(mode: KeyboardMode) {
         keyboardViews[activeKeyboardMode]?.visibility = View.GONE
         keyboardViews[mode]?.visibility = View.VISIBLE
+        keyboardViews[mode]?.updateVariation()
         activeKeyboardMode = mode
-        for (row in keyboardViews[activeKeyboardMode]!!.children) {
-            if (row is FlexboxLayout) {
-                for (keyView in row.children) {
-                    if (keyView is KeyView) {
-                        keyView.updateVariation()
-                    }
-                }
-            }
-        }
         smartbarManager.activeContainerId = smartbarManager.getPreferredContainerId()
     }
 

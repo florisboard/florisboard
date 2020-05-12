@@ -5,6 +5,8 @@ import android.content.Context
 import android.view.ContextThemeWrapper
 import android.view.MotionEvent
 import android.widget.LinearLayout
+import androidx.core.view.children
+import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.key.KeyView
@@ -92,5 +94,17 @@ class KeyboardView(
         }
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+    }
+
+    fun updateVariation() {
+        for (row in children) {
+            if (row is FlexboxLayout) {
+                for (keyView in row.children) {
+                    if (keyView is KeyView) {
+                        keyView.updateVariation()
+                    }
+                }
+            }
+        }
     }
 }
