@@ -18,6 +18,21 @@ enum class MediaInputTab {
     STICKERS
 }
 
+/**
+ * MediaInputManager is responsible for managing everything which is related to media input. All of
+ * the following count as media input: emojis, gifs, sticker, emoticons.
+ *
+ * All of the UI for the different media tabs are kept under the same container element and
+ * are separated from text-related UI.
+ *
+ * Also within the scope of this class is a search bar for searching media content like stickers,
+ * gifs and emojis.
+ *
+ * All events defined in [FlorisBoard.EventListener] will be passed through to this class by the
+ * core.
+ *
+ * @property florisboard Reference to instance of core class [FlorisBoard].
+ */
 class MediaInputManager(private val florisboard: FlorisBoard) : FlorisBoard.EventListener {
 
     private var activeTab: MediaInputTab? = null

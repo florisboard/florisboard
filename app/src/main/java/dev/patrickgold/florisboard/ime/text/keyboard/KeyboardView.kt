@@ -1,7 +1,6 @@
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.ContextThemeWrapper
 import android.view.MotionEvent
 import android.widget.LinearLayout
@@ -12,6 +11,11 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 
+/**
+ * View class for managing the UI layout and desired key width/height.
+ *
+ * @property florisboard Reference to instance of core class [FlorisBoard].
+ */
 @SuppressLint("ViewConstructor")
 class KeyboardView(
     val florisboard: FlorisBoard

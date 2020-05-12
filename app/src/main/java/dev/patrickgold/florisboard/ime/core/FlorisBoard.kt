@@ -15,6 +15,10 @@ import dev.patrickgold.florisboard.ime.media.MediaInputManager
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.util.initDefaultPreferences
 
+/**
+ * Core class responsible to link together both the text and media input managers as well as
+ * managing the one-handed UI.
+ */
 class FlorisBoard : InputMethodService() {
 
     private var oneHandedCtrlPanelStart: LinearLayout? = null

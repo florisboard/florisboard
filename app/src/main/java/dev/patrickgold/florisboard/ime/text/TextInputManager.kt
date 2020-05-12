@@ -22,6 +22,21 @@ import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarManager
 import java.util.*
 
+/**
+ * TextInputManager is responsible for managing everything which is related to text input. All of
+ * the following count as text input: character, numeric (+advanced), phone and symbol layouts.
+ *
+ * All of the UI for the different keyboard layouts are kept under the same container element and
+ * are separated from media-related UI.
+ *
+ * Also within the scope of this class are the suggestions in the Smartbar. These suggestions are
+ * only available for text input.
+ *
+ * All events defined in [FlorisBoard.EventListener] will be passed through to this class by the
+ * core.
+ *
+ * @property florisboard Reference to instance of core class [FlorisBoard].
+ */
 class TextInputManager(private val florisboard: FlorisBoard) : FlorisBoard.EventListener {
 
     private var activeKeyboardMode: KeyboardMode? = null

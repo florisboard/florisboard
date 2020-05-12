@@ -25,6 +25,14 @@ import dev.patrickgold.florisboard.util.setBackgroundTintColor
 import dev.patrickgold.florisboard.util.setDrawableTintColor
 import java.util.*
 
+/**
+ * View class for managing the rendering and the events of a single keyboard key.
+ *
+ * @property florisboard Reference to instance of core class [FlorisBoard].
+ * @property keyboardView Reference to the parent [KeyboardView].
+ * @property data The data the current key represents. Is used to determine rendering and possible
+ *  behaviour when events occur.
+ */
 @SuppressLint("ViewConstructor")
 class KeyView(
     private val florisboard: FlorisBoard, private val keyboardView: KeyboardView, val data: KeyData
