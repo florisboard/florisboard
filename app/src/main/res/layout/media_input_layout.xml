@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/media_input"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SEARCHBAR" />
+
+    <FrameLayout
+        android:id="@+id/media_input_tab_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/media_input_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/media_input_bottom_switch_to_text_input_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ABC" />
+        <Button
+            android:id="@+id/media_input_bottom_emoji_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="EMOJI" />
+        <Button
+            android:id="@+id/media_input_bottom_gif_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="GIF" />
+        <Button
+            android:id="@+id/media_input_bottom_backspace_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DEL" />
+    </LinearLayout>
+
+</LinearLayout>

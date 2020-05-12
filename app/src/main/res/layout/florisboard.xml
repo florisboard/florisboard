@@ -31,21 +31,9 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/keyboard_view_panel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+    <include layout="@layout/text_input_layout" />
 
-        <include
-            layout="@layout/keyboard_preview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <!-- KeyboardViews will be inserted here dynamically -->
-
-    </LinearLayout>
+    <include layout="@layout/media_input_layout" android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/one_handed_ctrl_panel_end"

@@ -14,9 +14,9 @@ import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 
 @SuppressLint("ViewConstructor")
 class KeyboardView(
-    context: Context, val florisboard: FlorisBoard
+    val florisboard: FlorisBoard
 ) : LinearLayout(
-    context, null, R.attr.keyboardViewStyle
+    florisboard.context, null, R.attr.keyboardViewStyle
 ) {
     var computedLayout: ComputedLayoutData? = null
     var desiredKeyWidth: Int = resources.getDimension(R.dimen.key_width).toInt()
@@ -37,7 +37,7 @@ class KeyboardView(
             for (row in layout.arrangement) {
                 val rowView = KeyboardRowView(context)
                 for (key in row) {
-                    val keyView = KeyView(context, key, florisboard, this)
+                    val keyView = KeyView(florisboard, this, key)
                     rowView.addView(keyView)
                 }
                 this.addView(rowView)
@@ -50,7 +50,7 @@ class KeyboardView(
     }
 
     fun setKeyboardMode(keyboardMode: KeyboardMode) {
-        computedLayout = florisboard.layoutManager.computeLayoutFor(keyboardMode)
+        computedLayout = florisboard.textInputManager.layoutManager.computeLayoutFor(keyboardMode)
         buildLayout()
     }
 

@@ -27,9 +27,9 @@ import java.util.*
 
 @SuppressLint("ViewConstructor")
 class KeyView(
-    context: Context, val data: KeyData, private val florisboard: FlorisBoard, private val keyboardView: KeyboardView
+    private val florisboard: FlorisBoard, private val keyboardView: KeyboardView, val data: KeyData
 ) : AppCompatButton(
-    context, null, R.attr.keyViewStyle
+    florisboard.context, null, R.attr.keyViewStyle
 ) {
     private var isKeyPressed: Boolean = false
         set(value) {
@@ -95,14 +95,14 @@ class KeyView(
      */
     fun getComputedLetter(keyData: KeyData = data): String {
         if (keyData.code == KeyCode.URI_COMPONENT_TLD) {
-            return when (florisboard.caps) {
+            return when (florisboard.textInputManager.caps) {
                 true -> keyData.label.toUpperCase(Locale.getDefault())
                 false -> keyData.label.toLowerCase(Locale.getDefault())
             }
         }
         val label = (keyData.code.toChar()).toString()
         return when {
-            florisboard.caps -> label.toUpperCase(Locale.getDefault())
+            florisboard.textInputManager.caps -> label.toUpperCase(Locale.getDefault())
             else -> label
         }
     }
@@ -158,7 +158,7 @@ class KeyView(
                     osTimer = Timer()
                     osTimer?.scheduleAtFixedRate(object : TimerTask() {
                         override fun run() {
-                            florisboard.sendKeyPress(data)
+                            florisboard.textInputManager.sendKeyPress(data)
                             if (!isKeyPressed) {
                                 osTimer?.cancel()
                                 osTimer = null
@@ -172,7 +172,7 @@ class KeyView(
                         popupManager.extend()
                     }
                     if (data.code == KeyCode.SPACE) {
-                        florisboard.sendKeyPress(KeyData(KeyCode.SHOW_INPUT_METHOD_PICKER, type = KeyType.FUNCTION))
+                        florisboard.textInputManager.sendKeyPress(KeyData(KeyCode.SHOW_INPUT_METHOD_PICKER, type = KeyType.FUNCTION))
                         shouldBlockNextKeyCode = true
                     }
                 }, delayMillis.toLong())
@@ -200,7 +200,7 @@ class KeyView(
                 val retData = popupManager.getActiveKeyData()
                 popupManager.hide()
                 if (event.actionMasked != MotionEvent.ACTION_CANCEL && !shouldBlockNextKeyCode) {
-                    florisboard.sendKeyPress(retData)
+                    florisboard.textInputManager.sendKeyPress(retData)
                 } else {
                     shouldBlockNextKeyCode = false
                 }
@@ -298,10 +298,11 @@ class KeyView(
 
     fun updateVariation() {
         if (data.variation != KeyVariation.ALL) {
+            val keyVariation = florisboard.textInputManager.keyVariation
             visibility =
-                if (data.variation == KeyVariation.NORMAL && (florisboard.keyVariation == KeyVariation.NORMAL || florisboard.keyVariation == KeyVariation.PASSWORD)) {
+                if (data.variation == KeyVariation.NORMAL && (keyVariation == KeyVariation.NORMAL || keyVariation == KeyVariation.PASSWORD)) {
                     View.VISIBLE
-                } else if (data.variation == florisboard.keyVariation) {
+                } else if (data.variation == keyVariation) {
                     View.VISIBLE
                 } else {
                     View.GONE
@@ -350,11 +351,11 @@ class KeyView(
                 KeyCode.PHONE_WAIT -> setText(R.string.key__phone_wait)
                 KeyCode.SHIFT -> {
                     drawable = getDrawable(context, when {
-                        florisboard.caps && florisboard.capsLock -> {
+                        florisboard.textInputManager.caps && florisboard.textInputManager.capsLock -> {
                             setDrawableTintColor(this, R.attr.app_colorAccentDark)
                             R.drawable.key_ic_capslock
                         }
-                        florisboard.caps && !florisboard.capsLock -> {
+                        florisboard.textInputManager.caps && !florisboard.textInputManager.capsLock -> {
                             setDrawableTintColor(this, R.attr.key_fgColor)
                             R.drawable.key_ic_capslock
                         }

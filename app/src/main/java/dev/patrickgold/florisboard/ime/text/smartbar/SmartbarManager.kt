@@ -1,6 +1,5 @@
 package dev.patrickgold.florisboard.ime.text.smartbar
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.View
@@ -49,7 +48,7 @@ class SmartbarManager(
             R.id.number_row_9 -> KeyData(57, "9")
             else -> KeyData(0)
         }
-        florisboard.sendKeyPress(keyData)
+        florisboard.textInputManager.sendKeyPress(keyData)
     }
     private val quickActionOnClickListener = View.OnClickListener { v ->
         when (v.id) {
@@ -79,9 +78,8 @@ class SmartbarManager(
         }
     }
 
-    @SuppressLint("InflateParams")
     fun createSmartbarView(): LinearLayout {
-        val smartbarView = florisboard.layoutInflater.inflate(R.layout.smartbar, null) as LinearLayout
+        val smartbarView = View.inflate(florisboard.context, R.layout.smartbar, null) as LinearLayout
 
         candidateViewList.add(smartbarView.findViewById(R.id.candidate0))
         candidateViewList.add(smartbarView.findViewById(R.id.candidate1))
@@ -145,7 +143,7 @@ class SmartbarManager(
             keyboardMode == KeyboardMode.PHONE2 -> {
                 smartbarView?.visibility = View.GONE
             }
-            florisboard.keyVariation == KeyVariation.PASSWORD -> {
+            florisboard.textInputManager.keyVariation == KeyVariation.PASSWORD -> {
                 smartbarView?.visibility = View.VISIBLE
                 activeContainerId = R.id.number_row
             }
@@ -192,8 +190,8 @@ class SmartbarManager(
     }
 
     fun getPreferredContainerId(): Int {
-        return when (florisboard.keyVariation) {
-            KeyVariation.PASSWORD -> when(florisboard.getActiveKeyboardMode()) {
+        return when (florisboard.textInputManager.keyVariation) {
+            KeyVariation.PASSWORD -> when(florisboard.textInputManager.getActiveKeyboardMode()) {
                 KeyboardMode.CHARACTERS -> R.id.number_row
                 else -> 0
             }
