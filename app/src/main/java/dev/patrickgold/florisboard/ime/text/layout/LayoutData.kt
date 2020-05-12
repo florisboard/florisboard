@@ -1,7 +1,7 @@
-package dev.patrickgold.florisboard.ime.layout
+package dev.patrickgold.florisboard.ime.text.layout
 
-import dev.patrickgold.florisboard.ime.key.KeyData
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 
 typealias LayoutDataArrangement = List<List<KeyData>>
 data class LayoutData(

@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.ime.keyboard
+package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,8 +9,8 @@ import androidx.core.view.children
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.key.KeyView
-import dev.patrickgold.florisboard.ime.layout.ComputedLayoutData
+import dev.patrickgold.florisboard.ime.text.key.KeyView
+import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 
 @SuppressLint("ViewConstructor")
 class KeyboardView(

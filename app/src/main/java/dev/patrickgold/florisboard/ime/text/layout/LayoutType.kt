@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.ime.layout
+package dev.patrickgold.florisboard.ime.text.layout
 
 import android.annotation.SuppressLint
 import com.squareup.moshi.FromJson

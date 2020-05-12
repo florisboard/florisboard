@@ -12,10 +12,10 @@ import android.widget.TextView
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.flexbox.JustifyContent
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.key.KeyCode
-import dev.patrickgold.florisboard.ime.key.KeyData
-import dev.patrickgold.florisboard.ime.key.KeyView
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.ime.text.key.KeyView
+import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.util.setTextTintColor
 import kotlin.math.roundToInt
 

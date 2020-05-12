@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.ime.keyboard
+package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.annotation.SuppressLint
 import android.content.Context

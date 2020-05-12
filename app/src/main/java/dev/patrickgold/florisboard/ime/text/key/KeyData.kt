@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.ime.key
+package dev.patrickgold.florisboard.ime.text.key
 
 data class KeyData(
     var code: Int,

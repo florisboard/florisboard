@@ -18,11 +18,11 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.key.*
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
-import dev.patrickgold.florisboard.ime.layout.LayoutManager
-import dev.patrickgold.florisboard.ime.smartbar.SmartbarManager
+import dev.patrickgold.florisboard.ime.text.key.*
+import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
+import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
+import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarManager
 import dev.patrickgold.florisboard.util.initDefaultPreferences
 import java.util.*
 

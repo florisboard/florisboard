@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.ime.smartbar
+package dev.patrickgold.florisboard.ime.text.smartbar
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,9 +9,9 @@ import android.widget.*
 import androidx.core.view.children
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.key.KeyData
-import dev.patrickgold.florisboard.ime.key.KeyVariation
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.ime.text.key.KeyVariation
+import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 
 class SmartbarManager(

@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.ime.key
+package dev.patrickgold.florisboard.ime.text.key
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -18,8 +18,8 @@ import androidx.core.content.ContextCompat.getDrawable
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
+import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
 import dev.patrickgold.florisboard.util.setBackgroundTintColor
 import dev.patrickgold.florisboard.util.setDrawableTintColor
