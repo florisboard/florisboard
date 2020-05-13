@@ -46,7 +46,7 @@ class KeyView(
         }
     private val osHandler = Handler()
     private var osTimer: Timer? = null
-    private val popupManager = KeyPopupManager(keyboardView, this)
+    private val popupManager = KeyPopupManager(keyboardView)
     private var shouldBlockNextKeyCode: Boolean = false
 
     init {
@@ -158,7 +158,7 @@ class KeyView(
         val event = event ?: return false
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
-                popupManager.show()
+                popupManager.show(this)
                 isKeyPressed = true
                 keyPressVibrate()
                 keyPressSound()
@@ -177,7 +177,7 @@ class KeyView(
                 val delayMillis = florisboard.prefs!!.longPressDelay
                 osHandler.postDelayed({
                     if (data.popup.isNotEmpty()) {
-                        popupManager.extend()
+                        popupManager.extend(this)
                     }
                     if (data.code == KeyCode.SPACE) {
                         florisboard.textInputManager.sendKeyPress(KeyData(KeyCode.SHOW_INPUT_METHOD_PICKER, type = KeyType.FUNCTION))
@@ -187,7 +187,7 @@ class KeyView(
             }
             MotionEvent.ACTION_MOVE -> {
                 if (popupManager.isShowingExtendedPopup) {
-                    val isPointerWithinBounds = popupManager.propagateMotionEvent(event)
+                    val isPointerWithinBounds = popupManager.propagateMotionEvent(this, event)
                     if (!isPointerWithinBounds && !shouldBlockNextKeyCode) {
                         keyboardView.shouldStealMotionEvents = true
                     }
@@ -205,7 +205,7 @@ class KeyView(
                 osHandler.removeCallbacksAndMessages(null)
                 osTimer?.cancel()
                 osTimer = null
-                val retData = popupManager.getActiveKeyData()
+                val retData = popupManager.getActiveKeyData(this)
                 popupManager.hide()
                 if (event.actionMasked != MotionEvent.ACTION_CANCEL && !shouldBlockNextKeyCode) {
                     florisboard.textInputManager.sendKeyPress(retData)

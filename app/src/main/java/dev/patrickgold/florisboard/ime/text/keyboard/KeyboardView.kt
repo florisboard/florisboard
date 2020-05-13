@@ -1,6 +1,7 @@
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.view.ContextThemeWrapper
 import android.view.MotionEvent
 import android.widget.LinearLayout
@@ -8,6 +9,7 @@ import androidx.core.view.children
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 
@@ -25,6 +27,7 @@ class KeyboardView(
     var computedLayout: ComputedLayoutData? = null
     var desiredKeyWidth: Int = resources.getDimension(R.dimen.key_width).toInt()
     var desiredKeyHeight: Int = resources.getDimension(R.dimen.key_height).toInt()
+    var popupManager: KeyPopupManager = KeyPopupManager(this)
     var shouldStealMotionEvents: Boolean = false
 
     private fun buildLayout() {
@@ -84,18 +87,25 @@ class KeyboardView(
         }
 
         val factor = florisboard.prefs!!.heightFactor
-        desiredKeyHeight = (resources.getDimension(R.dimen.key_height).toInt() * when (factor) {
+        val keyHeightNormal = resources.getDimension(R.dimen.key_height) * when(resources.configuration.orientation) {
+            Configuration.ORIENTATION_LANDSCAPE -> 0.85f
+            else -> if (florisboard.prefs?.oneHandedMode == "start" ||
+                florisboard.prefs?.oneHandedMode == "end") {
+                0.9f
+            } else {
+                1.0f
+            }
+        }
+        desiredKeyHeight = (keyHeightNormal * when (factor) {
+            "extra_short" -> 0.85f
             "short" -> 0.90f
             "mid_short" -> 0.95f
             "normal" -> 1.00f
             "mid_tall" -> 1.05f
             "tall" -> 1.10f
+            "extra_tall" -> 1.15f
             else -> 1.00f
         }).toInt()
-        if (florisboard.prefs?.oneHandedMode == "start" ||
-            florisboard.prefs?.oneHandedMode == "end") {
-            desiredKeyHeight = (desiredKeyHeight * 0.9f).toInt()
-        }
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }

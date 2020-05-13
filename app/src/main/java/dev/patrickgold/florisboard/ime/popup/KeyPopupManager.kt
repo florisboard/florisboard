@@ -20,10 +20,7 @@ import dev.patrickgold.florisboard.util.setTextTintColor
 import kotlin.math.roundToInt
 
 @SuppressLint("RtlHardcoded")
-class KeyPopupManager(
-    private val keyboardView: KeyboardView,
-    private val keyView: KeyView
-) {
+class KeyPopupManager(private val keyboardView: KeyboardView) {
 
     private var anchorLeft: Boolean = false
     private var anchorRight: Boolean = false
@@ -36,13 +33,13 @@ class KeyPopupManager(
         R.layout.key_popup_extended, null) as FlexboxLayout
     private var row0count: Int = 0
     private var row1count: Int = 0
-    private var window: PopupWindow? = null
-    private var windowExt: PopupWindow? = null
+    private var window: PopupWindow = createPopupWindow(popupView)
+    private var windowExt: PopupWindow = createPopupWindow(popupViewExt)
 
     val isShowingPopup: Boolean
-        get() = window != null
+        get() = window?.isShowing ?: false
     val isShowingExtendedPopup: Boolean
-        get() = windowExt != null
+        get() = windowExt?.isShowing ?: false
 
     private fun createTextView(
         keyView: KeyView,
@@ -67,21 +64,24 @@ class KeyPopupManager(
         return textView
     }
 
-    private fun createPopupWindow(view: View, width: Int, height: Int): PopupWindow {
-        return PopupWindow(view, width, height, false).apply {
+    private fun createPopupWindow(view: View): PopupWindow {
+        return PopupWindow(keyboardView.context).apply {
             animationStyle = 0
+            contentView = view
             enterTransition = null
             exitTransition = null
             inputMethodMode = PopupWindow.INPUT_METHOD_NOT_NEEDED
             isClippingEnabled = false
+            isFocusable = false
             isOutsideTouchable = true
             isTouchable = false
+            setBackgroundDrawable(null)
         }
     }
 
-    fun show() {
+    fun show(keyView: KeyView) {
         // TODO: improve performance of popup creation
-        if (keyView.data.code <= KeyCode.SPACE || isShowingPopup) {
+        if (keyView.data.code <= KeyCode.SPACE) {
             return
         }
         popupView.findViewById<TextView>(R.id.key_popup_text).text = keyView.getComputedLetter()
@@ -89,14 +89,21 @@ class KeyPopupManager(
             keyView.data.popup.isEmpty() -> View.INVISIBLE
             else -> View.VISIBLE
         }
-        val w = createPopupWindow(popupView, keyPopupWidth, keyPopupHeight)
-        w.showAsDropDown(keyView, ((keyView.measuredWidth - keyPopupWidth) / 2), -keyPopupHeight)
-        window = w
+        val keyPopupX = (keyView.measuredWidth - keyPopupWidth) / 2
+        val keyPopupY = -keyPopupHeight
+        if (window.isShowing) {
+            window.update(keyView, keyPopupX, keyPopupY, keyPopupWidth, keyPopupHeight)
+        } else {
+            window.width = keyPopupWidth
+            window.height = keyPopupHeight
+            window.showAsDropDown(keyView, keyPopupX, keyPopupY, Gravity.NO_GRAVITY)
+        }
+        popupView.visibility = View.VISIBLE
     }
 
-    fun extend() {
+    fun extend(keyView: KeyView) {
         // TODO: cleanup and spilt into multiple functions
-        if (keyView.data.code <= KeyCode.SPACE || keyView.data.popup.isEmpty() || isShowingExtendedPopup) {
+        if (keyView.data.code <= KeyCode.SPACE || keyView.data.popup.isEmpty()) {
             return
         }
         anchorLeft = keyView.x < keyboardView.measuredWidth / 2
@@ -127,7 +134,6 @@ class KeyPopupManager(
         }
         popupViewExt.justifyContent = if (anchorLeft) { JustifyContent.FLEX_START } else { JustifyContent.FLEX_END }
         popupViewExt.layoutParams = FlexboxLayout.LayoutParams(extWidth, extHeight)
-        val w = createPopupWindow(popupViewExt, extWidth, extHeight)
         val x = ((keyView.measuredWidth - keyPopupWidth) / 2) + when {
             anchorLeft -> 0
             else -> -extWidth + keyPopupWidth
@@ -136,11 +142,17 @@ class KeyPopupManager(
             row1count > 0 -> keyView.measuredHeight
             else -> 0
         }
-        w.showAsDropDown(keyView, x, y)
-        windowExt = w
+        if (windowExt.isShowing) {
+            windowExt.update(keyView, x, y, keyPopupWidth, keyPopupHeight)
+        } else {
+            windowExt.width = extWidth
+            windowExt.height = extHeight
+            windowExt.showAsDropDown(keyView, x, y, Gravity.NO_GRAVITY)
+        }
+        popupViewExt.visibility = View.VISIBLE
     }
 
-    fun propagateMotionEvent(event: MotionEvent): Boolean {
+    fun propagateMotionEvent(keyView: KeyView, event: MotionEvent): Boolean {
         if (!isShowingExtendedPopup) {
             return false
         }
@@ -203,15 +215,13 @@ class KeyPopupManager(
         return true
     }
 
-    fun getActiveKeyData(): KeyData {
+    fun getActiveKeyData(keyView: KeyView): KeyData {
         return keyView.data.popup.getOrNull(activeExtIndex ?: -1) ?: keyView.data
     }
 
     fun hide() {
-        window?.dismiss()
-        window = null
-        windowExt?.dismiss()
-        windowExt = null
+        popupView.visibility = View.INVISIBLE
+        popupViewExt.visibility = View.INVISIBLE
 
         activeExtIndex = null
     }

@@ -91,6 +91,8 @@ class FlorisBoard : InputMethodService() {
         mediaInputManager.onConfigurationChanged(newConfig)
     }
 
+
+
     /*override fun onComputeInsets(outInsets: Insets?) {
         super.onComputeInsets(outInsets)
         if (!isFullscreenMode && outInsets != null) {
