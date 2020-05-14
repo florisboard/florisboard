@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.view.ContextThemeWrapper
 import android.view.MotionEvent
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.view.children
 import com.google.android.flexbox.FlexboxLayout
@@ -24,6 +25,7 @@ class KeyboardView(
 ) : LinearLayout(
     florisboard.context, null, R.attr.keyboardViewStyle
 ) {
+    var activeKeyView: KeyView? = null
     var computedLayout: ComputedLayoutData? = null
     var desiredKeyWidth: Int = resources.getDimension(R.dimen.key_width).toInt()
     var desiredKeyHeight: Int = resources.getDimension(R.dimen.key_height).toInt()
@@ -62,17 +64,70 @@ class KeyboardView(
     }
 
     override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
-        return shouldStealMotionEvents
+        return true
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        shouldStealMotionEvents = false
-        if (event != null && event.action == MotionEvent.ACTION_MOVE) {
-            event.action = MotionEvent.ACTION_DOWN
-            dispatchTouchEvent(event)
+        val event = event ?: return false
+        when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                getActiveKeyViewFor(event)
+                activeKeyView?.onFlorisTouchEvent(transformToKeyViewEvent(event))
+            }
+            MotionEvent.ACTION_MOVE -> {
+                if (activeKeyView == null) {
+                    getActiveKeyViewFor(event)
+                    activeKeyView?.onFlorisTouchEvent(transformToKeyViewEvent(event.apply {
+                        action = MotionEvent.ACTION_DOWN
+                    }))
+                } else {
+                    activeKeyView?.onFlorisTouchEvent(transformToKeyViewEvent(event))
+                }
+            }
+            MotionEvent.ACTION_UP,
+            MotionEvent.ACTION_CANCEL -> {
+                activeKeyView?.onFlorisTouchEvent(transformToKeyViewEvent(event))
+                activeKeyView = null
+            }
+            else -> return false
         }
         return true
+    }
+
+    private fun transformToKeyViewEvent(event: MotionEvent): MotionEvent {
+        val keyView = activeKeyView ?: return event
+        val keyViewParent = keyView.parent as ViewGroup
+        return event.apply {
+            setLocation(
+                event.x - keyViewParent.x - keyView.x,
+                event.y - keyViewParent.y - keyView.y
+            )
+        }
+    }
+
+    private fun getActiveKeyViewFor(event: MotionEvent) {
+        loop@ for (row in children) {
+            if (row is FlexboxLayout) {
+                for (keyView in row.children) {
+                    if (keyView is KeyView) {
+                        if (keyView.touchHitBox.contains(
+                                event.x.toInt(), event.y.toInt()
+                            )) {
+                            activeKeyView = keyView
+                            break@loop
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun invalidateActiveKeyViewReference() {
+        activeKeyView?.onFlorisTouchEvent(MotionEvent.obtain(
+            0, 0, MotionEvent.ACTION_CANCEL, 0.0f, 0.0f, 0
+        ))
+        activeKeyView = null
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

@@ -10,7 +10,7 @@
     <dimen name="key_ic_padding">7dp</dimen>
 
     <dimen name="key_popup_width">35dp</dimen>
-    <dimen name="key_popup_height">90dp</dimen>
+    <dimen name="key_popup_height">110dp</dimen>
     <dimen name="key_popup_textSize">21sp</dimen>
 
     <dimen name="keyboard_preview_height">200dp</dimen>

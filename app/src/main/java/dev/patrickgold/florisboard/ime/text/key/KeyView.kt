@@ -3,6 +3,7 @@ package dev.patrickgold.florisboard.ime.text.key
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.media.AudioManager
 import android.os.Build
@@ -12,6 +13,7 @@ import android.os.Vibrator
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat.getDrawable
@@ -20,7 +22,6 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
-import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
 import dev.patrickgold.florisboard.util.setBackgroundTintColor
 import dev.patrickgold.florisboard.util.setDrawableTintColor
 import java.util.*
@@ -46,8 +47,9 @@ class KeyView(
         }
     private val osHandler = Handler()
     private var osTimer: Timer? = null
-    private val popupManager = KeyPopupManager(keyboardView)
     private var shouldBlockNextKeyCode: Boolean = false
+
+    var touchHitBox: Rect = Rect(0, 0, 0, 0)
 
     init {
         val flexLayoutParams = FlexboxLayout.LayoutParams(
@@ -152,13 +154,12 @@ class KeyView(
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Suppress("NAME_SHADOWING")
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
+    fun onFlorisTouchEvent(event: MotionEvent?): Boolean {
         val event = event ?: return false
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
-                popupManager.show(this)
+                keyboardView.popupManager.show(this)
                 isKeyPressed = true
                 keyPressVibrate()
                 keyPressSound()
@@ -177,7 +178,7 @@ class KeyView(
                 val delayMillis = florisboard.prefs!!.longPressDelay
                 osHandler.postDelayed({
                     if (data.popup.isNotEmpty()) {
-                        popupManager.extend(this)
+                        keyboardView.popupManager.extend(this)
                     }
                     if (data.code == KeyCode.SPACE) {
                         florisboard.textInputManager.sendKeyPress(KeyData(KeyCode.SHOW_INPUT_METHOD_PICKER, type = KeyType.FUNCTION))
@@ -186,16 +187,16 @@ class KeyView(
                 }, delayMillis.toLong())
             }
             MotionEvent.ACTION_MOVE -> {
-                if (popupManager.isShowingExtendedPopup) {
-                    val isPointerWithinBounds = popupManager.propagateMotionEvent(this, event)
+                if (keyboardView.popupManager.isShowingExtendedPopup) {
+                    val isPointerWithinBounds = keyboardView.popupManager.propagateMotionEvent(this, event)
                     if (!isPointerWithinBounds && !shouldBlockNextKeyCode) {
-                        keyboardView.shouldStealMotionEvents = true
+                        keyboardView.invalidateActiveKeyViewReference()
                     }
                 } else {
                     if (event.x < -0.1f * measuredWidth || event.x > 1.1f * measuredWidth
                         || event.y < -0.35f * measuredHeight || event.y > 1.35f * measuredHeight) {
                         if (!shouldBlockNextKeyCode) {
-                            keyboardView.shouldStealMotionEvents = true
+                            keyboardView.invalidateActiveKeyViewReference()
                         }
                     }
                 }
@@ -205,15 +206,13 @@ class KeyView(
                 osHandler.removeCallbacksAndMessages(null)
                 osTimer?.cancel()
                 osTimer = null
-                val retData = popupManager.getActiveKeyData(this)
-                popupManager.hide()
+                val retData = keyboardView.popupManager.getActiveKeyData(this)
+                keyboardView.popupManager.hide()
                 if (event.actionMasked != MotionEvent.ACTION_CANCEL && !shouldBlockNextKeyCode) {
                     florisboard.textInputManager.sendKeyPress(retData)
+                    performClick()
                 } else {
                     shouldBlockNextKeyCode = false
-                }
-                if (event.action == MotionEvent.ACTION_UP) {
-                    performClick()
                 }
             }
             else -> return false
@@ -290,6 +289,11 @@ class KeyView(
         setMeasuredDimension(width, height)
     }
 
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
+        updateTouchHitBox()
+    }
+
     private fun updateKeyPressedBackground() {
         if (data.code == KeyCode.ENTER) {
             setBackgroundTintColor(this, when {
@@ -301,6 +305,19 @@ class KeyView(
                 isKeyPressed -> R.attr.key_bgColorPressed
                 else -> R.attr.key_bgColor
             })
+        }
+    }
+
+    private fun updateTouchHitBox() {
+        val parent = parent as ViewGroup
+        val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
+        val keyboardRowMarginV = resources.getDimension((R.dimen.keyboard_row_marginV)).toInt()
+
+        touchHitBox.apply {
+            left = (parent.x + x - keyMarginH).toInt()
+            right = (parent.x + x + measuredWidth + keyMarginH).toInt()
+            top = (parent.y + y - keyboardRowMarginV).toInt()
+            bottom = (parent.y + y + measuredHeight + keyboardRowMarginV).toInt()
         }
     }
 

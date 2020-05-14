@@ -1,10 +1,12 @@
 package dev.patrickgold.florisboard.ime.popup
 
+import android.animation.LayoutTransition
 import android.annotation.SuppressLint
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
@@ -37,9 +39,14 @@ class KeyPopupManager(private val keyboardView: KeyboardView) {
     private var windowExt: PopupWindow = createPopupWindow(popupViewExt)
 
     val isShowingPopup: Boolean
-        get() = window?.isShowing ?: false
+        get() = popupView.visibility == View.VISIBLE
     val isShowingExtendedPopup: Boolean
-        get() = windowExt?.isShowing ?: false
+        get() = popupViewExt.visibility == View.VISIBLE
+
+    init {
+        popupView.visibility = View.INVISIBLE
+        popupViewExt.visibility = View.INVISIBLE
+    }
 
     private fun createTextView(
         keyView: KeyView,
@@ -66,14 +73,12 @@ class KeyPopupManager(private val keyboardView: KeyboardView) {
 
     private fun createPopupWindow(view: View): PopupWindow {
         return PopupWindow(keyboardView.context).apply {
-            animationStyle = 0
+            animationStyle = android.R.style.Animation
             contentView = view
             enterTransition = null
             exitTransition = null
-            inputMethodMode = PopupWindow.INPUT_METHOD_NOT_NEEDED
             isClippingEnabled = false
             isFocusable = false
-            isOutsideTouchable = true
             isTouchable = false
             setBackgroundDrawable(null)
         }
@@ -84,11 +89,6 @@ class KeyPopupManager(private val keyboardView: KeyboardView) {
         if (keyView.data.code <= KeyCode.SPACE) {
             return
         }
-        popupView.findViewById<TextView>(R.id.key_popup_text).text = keyView.getComputedLetter()
-        popupView.findViewById<ImageView>(R.id.key_popup_threedots).visibility = when {
-            keyView.data.popup.isEmpty() -> View.INVISIBLE
-            else -> View.VISIBLE
-        }
         val keyPopupX = (keyView.measuredWidth - keyPopupWidth) / 2
         val keyPopupY = -keyPopupHeight
         if (window.isShowing) {
@@ -97,6 +97,11 @@ class KeyPopupManager(private val keyboardView: KeyboardView) {
             window.width = keyPopupWidth
             window.height = keyPopupHeight
             window.showAsDropDown(keyView, keyPopupX, keyPopupY, Gravity.NO_GRAVITY)
+        }
+        popupView.findViewById<TextView>(R.id.key_popup_text).text = keyView.getComputedLetter()
+        popupView.findViewById<ImageView>(R.id.key_popup_threedots).visibility = when {
+            keyView.data.popup.isEmpty() -> View.INVISIBLE
+            else -> View.VISIBLE
         }
         popupView.visibility = View.VISIBLE
     }
@@ -133,7 +138,14 @@ class KeyPopupManager(private val keyboardView: KeyboardView) {
             else -> keyView.measuredHeight
         }
         popupViewExt.justifyContent = if (anchorLeft) { JustifyContent.FLEX_START } else { JustifyContent.FLEX_END }
-        popupViewExt.layoutParams = FlexboxLayout.LayoutParams(extWidth, extHeight)
+        if (popupViewExt.layoutParams == null) {
+            popupViewExt.layoutParams = ViewGroup.LayoutParams(extWidth, extHeight)
+        } else {
+            popupViewExt.layoutParams.apply {
+                width = extWidth
+                height = extHeight
+            }
+        }
         val x = ((keyView.measuredWidth - keyPopupWidth) / 2) + when {
             anchorLeft -> 0
             else -> -extWidth + keyPopupWidth
@@ -143,7 +155,7 @@ class KeyPopupManager(private val keyboardView: KeyboardView) {
             else -> 0
         }
         if (windowExt.isShowing) {
-            windowExt.update(keyView, x, y, keyPopupWidth, keyPopupHeight)
+            windowExt.update(keyView, x, y, extWidth, extHeight)
         } else {
             windowExt.width = extWidth
             windowExt.height = extHeight
@@ -208,8 +220,11 @@ class KeyPopupManager(private val keyboardView: KeyboardView) {
         }
 
         for (k in keyView.data.popup.indices) {
-            val textView = popupViewExt.getChildAt(k) as KeyPopupExtendedSingleView
-            textView.isActive = k == activeExtIndex
+            val view = popupViewExt.getChildAt(k)
+            if (view != null) {
+                val textView = view as KeyPopupExtendedSingleView
+                textView.isActive = k == activeExtIndex
+            }
         }
 
         return true
