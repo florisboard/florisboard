@@ -260,14 +260,14 @@ class KeyView(
                     val isPointerWithinBounds =
                         keyboardView.popupManager.propagateMotionEvent(this, event)
                     if (!isPointerWithinBounds && !shouldBlockNextKeyCode) {
-                        keyboardView.invalidateActiveKeyViewReference()
+                        keyboardView.dismissActiveKeyViewReference()
                     }
                 } else {
                     if (event.x < -0.1f * measuredWidth || event.x > 1.1f * measuredWidth
                         || event.y < -0.35f * measuredHeight || event.y > 1.35f * measuredHeight
                     ) {
                         if (!shouldBlockNextKeyCode) {
-                            keyboardView.invalidateActiveKeyViewReference()
+                            keyboardView.dismissActiveKeyViewReference()
                         }
                     }
                 }

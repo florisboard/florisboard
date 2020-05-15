@@ -2,9 +2,6 @@
 <resources>
 
     <style name="KeyboardTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="keyboardViewStyle">@style/KeyboardView</item>
-        <item name="keyboardRowViewStyle">@style/KeyboardRowView</item>
-
         <item name="android:textColor">?attr/app_textColor</item>
     </style>
 

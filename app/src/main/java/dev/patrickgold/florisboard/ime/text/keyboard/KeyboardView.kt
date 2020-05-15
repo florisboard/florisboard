@@ -1,8 +1,24 @@
+/*
+ * Copyright (C) 2020 Patrick Goldinger
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
-import android.view.ContextThemeWrapper
+import android.graphics.drawable.ColorDrawable
 import android.view.MotionEvent
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -13,30 +29,41 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
+import dev.patrickgold.florisboard.util.getColorFromAttr
 
 /**
- * View class for managing the UI layout and desired key width/height.
+ * Manages the layout of the keyboard, key measurement, key selection and all touch events.
+ * Supports multi touch events.
+ *
+ * TODO: Implement swipe gesture support
  *
  * @property florisboard Reference to instance of core class [FlorisBoard].
  */
 @SuppressLint("ViewConstructor")
 class KeyboardView(
     val florisboard: FlorisBoard
-) : LinearLayout(
-    florisboard.context, null, R.attr.keyboardViewStyle
-) {
-    var activeKeyView: KeyView? = null
+) : LinearLayout(florisboard.context) {
+
+    private var activeKeyView: KeyView? = null
+    private var activePointerId: Int? = null
+    private var activeX: Float = 0.0f
+    private var activeY: Float = 0.0f
+
     var computedLayout: ComputedLayoutData? = null
     var desiredKeyWidth: Int = resources.getDimension(R.dimen.key_width).toInt()
     var desiredKeyHeight: Int = resources.getDimension(R.dimen.key_height).toInt()
     var popupManager: KeyPopupManager = KeyPopupManager(this)
-    var shouldStealMotionEvents: Boolean = false
 
+    init {
+        background = ColorDrawable(getColorFromAttr(context, R.attr.keyboard_bgColor))
+        orientation = VERTICAL
+    }
+
+    /**
+     * Builds the UI layout based on the [computedLayout].
+     */
     private fun buildLayout() {
         destroyLayout()
-        val context = ContextThemeWrapper(context,
-            R.style.KeyboardTheme_MaterialLight
-        )
         this.layoutParams = LayoutParams(
             LayoutParams.MATCH_PARENT,
             LayoutParams.WRAP_CONTENT
@@ -54,68 +81,122 @@ class KeyboardView(
         }
     }
 
+    /**
+     * Removes all keys.
+     */
     private fun destroyLayout() {
         removeAllViews()
     }
 
+    /**
+     * Sets the keyboard mode and triggers a request for the [ComputedLayoutData] for the given
+     * [keyboardMode].
+     *
+     * @param keyboardMode The keyboard mode to set this keyboard to.
+     */
     fun setKeyboardMode(keyboardMode: KeyboardMode) {
         computedLayout = florisboard.textInputManager.layoutManager.computeLayoutFor(keyboardMode)
         buildLayout()
     }
 
+    /**
+     * Catch all events which are designated for child views.
+     */
     override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {
         return true
     }
 
-    // TODO: Implement multi touch to prevent key loss when user taps fast and it occurs roughly at
-    //       the same time
+    /**
+     * This is the main logic for choosing which [KeyView] is the current active one.
+     */
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        val event = event ?: return false
+        event ?: return false
+        val eventFloris = MotionEvent.obtainNoHistory(event)
+        val pointerIndex = event.actionIndex
+        var pointerId = event.getPointerId(pointerIndex)
         when (event.actionMasked) {
-            MotionEvent.ACTION_DOWN -> {
-                getActiveKeyViewFor(event)
-                activeKeyView?.onFlorisTouchEvent(transformToKeyViewEvent(event))
+            MotionEvent.ACTION_DOWN,
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                if (activePointerId == null) {
+                    activePointerId = pointerId
+                    activeX = event.getX(pointerIndex)
+                    activeY = event.getY(pointerIndex)
+                    searchForActiveKeyView()
+                    sendFlorisTouchEvent(eventFloris, MotionEvent.ACTION_DOWN)
+                } else if (activePointerId != pointerId) {
+                    // New pointer arrived. Send ACTION_UP to current active view and move on
+                    sendFlorisTouchEvent(eventFloris, MotionEvent.ACTION_UP)
+                    activePointerId = pointerId
+                    activeX = event.getX(pointerIndex)
+                    activeY = event.getY(pointerIndex)
+                    searchForActiveKeyView()
+                    sendFlorisTouchEvent(eventFloris, MotionEvent.ACTION_DOWN)
+                }
             }
             MotionEvent.ACTION_MOVE -> {
-                if (activeKeyView == null) {
-                    getActiveKeyViewFor(event)
-                    activeKeyView?.onFlorisTouchEvent(transformToKeyViewEvent(event.apply {
-                        action = MotionEvent.ACTION_DOWN
-                    }))
-                } else {
-                    activeKeyView?.onFlorisTouchEvent(transformToKeyViewEvent(event))
+                for (index in 0 until event.pointerCount) {
+                    pointerId = event.getPointerId(index)
+                    if (activePointerId == pointerId) {
+                        activeX = event.getX(index)
+                        activeY = event.getY(index)
+                        if (activeKeyView == null) {
+                            searchForActiveKeyView()
+                            sendFlorisTouchEvent(eventFloris, MotionEvent.ACTION_DOWN)
+                        } else {
+                            sendFlorisTouchEvent(eventFloris, MotionEvent.ACTION_MOVE)
+                        }
+                    }
                 }
             }
             MotionEvent.ACTION_UP,
-            MotionEvent.ACTION_CANCEL -> {
-                activeKeyView?.onFlorisTouchEvent(transformToKeyViewEvent(event))
-                activeKeyView = null
+            MotionEvent.ACTION_CANCEL,
+            MotionEvent.ACTION_POINTER_UP -> {
+                if (activePointerId == pointerId) {
+                    sendFlorisTouchEvent(eventFloris, MotionEvent.ACTION_UP)
+                    activeKeyView = null
+                    activePointerId = null
+                }
             }
             else -> return false
         }
+        eventFloris.recycle()
         return true
     }
 
-    private fun transformToKeyViewEvent(event: MotionEvent): MotionEvent {
-        val keyView = activeKeyView ?: return event
+    /**
+     * Sends a touch [event] to [activeKeyView] with action set to [actionParam]. Normalizes passed
+     * actions (ACTION_POINTER_* will be converted to ACTION_*). Translates the absolute coords of
+     * a passed [event] to relative ones so the [activeKeyView] can work with it.
+     *
+     * @param event The event to pass to [activeKeyView].
+     * @param actionParam The action to set the [event] to.
+     */
+    private fun sendFlorisTouchEvent(event: MotionEvent, actionParam: Int) {
+        val keyView = activeKeyView ?: return
         val keyViewParent = keyView.parent as ViewGroup
-        return event.apply {
+        keyView.onFlorisTouchEvent(event.apply {
+            action = when (actionParam) {
+                MotionEvent.ACTION_POINTER_DOWN -> MotionEvent.ACTION_DOWN
+                MotionEvent.ACTION_POINTER_UP -> MotionEvent.ACTION_UP
+                else -> actionParam
+            }
             setLocation(
-                event.x - keyViewParent.x - keyView.x,
-                event.y - keyViewParent.y - keyView.y
+                activeX - keyViewParent.x - keyView.x,
+                activeY - keyViewParent.y - keyView.y
             )
-        }
+        })
     }
 
-    private fun getActiveKeyViewFor(event: MotionEvent) {
+    /**
+     * Searches for an active key view at [activeX]/[activeY].
+     */
+    private fun searchForActiveKeyView() {
         loop@ for (row in children) {
             if (row is FlexboxLayout) {
                 for (keyView in row.children) {
                     if (keyView is KeyView) {
-                        if (keyView.touchHitBox.contains(
-                                event.x.toInt(), event.y.toInt()
-                            )) {
+                        if (keyView.touchHitBox.contains(activeX.toInt(), activeY.toInt())) {
                             activeKeyView = keyView
                             break@loop
                         }
@@ -125,13 +206,20 @@ class KeyboardView(
         }
     }
 
-    fun invalidateActiveKeyViewReference() {
+    /**
+     * Invalidates the current [activeKeyView] and sends a [MotionEvent.ACTION_CANCEL] to indicate
+     * the loss of focus.
+     */
+    fun dismissActiveKeyViewReference() {
         activeKeyView?.onFlorisTouchEvent(MotionEvent.obtain(
             0, 0, MotionEvent.ACTION_CANCEL, 0.0f, 0.0f, 0
         ))
         activeKeyView = null
     }
 
+    /**
+     * The desired key heights/widths are being calculated here.
+     */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
 
@@ -167,6 +255,9 @@ class KeyboardView(
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
+    /**
+     * Queues a redraw for all keys.
+     */
     fun invalidateAllKeys() {
         for (row in children) {
             if (row is FlexboxLayout) {
@@ -179,6 +270,9 @@ class KeyboardView(
         }
     }
 
+    /**
+     * Syncs the current key variation with all keys.
+     */
     fun updateVariation() {
         for (row in children) {
             if (row is FlexboxLayout) {
