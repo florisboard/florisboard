@@ -2,7 +2,6 @@
 <resources>
 
     <style name="KeyboardTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="keyViewStyle">@style/Widget.AppCompat.Button.Borderless.KeyView</item>
         <item name="keyboardViewStyle">@style/KeyboardView</item>
         <item name="keyboardRowViewStyle">@style/KeyboardRowView</item>
 

@@ -129,7 +129,6 @@ class LayoutManager(private val context: Context) {
     }
 
     fun computeLayoutFor(keyboardMode: KeyboardMode): ComputedLayoutData? {
-        // TODO: add support for more keyboard types
         return when (keyboardMode) {
             KeyboardMode.CHARACTERS -> {
                 mergeLayouts(

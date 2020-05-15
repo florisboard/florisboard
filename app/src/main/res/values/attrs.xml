@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- CustomKey attributes -->
-    <declare-styleable name="KeyView">
-        <attr name="android:layout_width" />
-        <attr name="android:layout_height" />
-        <attr name="code" format="integer" />
-        <attr name="cmd" format="string" />
-    </declare-styleable>
-
     <!-- CustomKeyboard attributes -->
     <declare-styleable name="KeyboardView">
         <attr name="android:layout_width" />
@@ -22,7 +14,6 @@
     </declare-styleable>
 
     <declare-styleable name="KeyboardTheme">
-        <attr name="keyViewStyle" format="reference" />
         <attr name="keyboardViewStyle" format="reference" />
         <attr name="keyboardRowViewStyle" format="reference" />
 

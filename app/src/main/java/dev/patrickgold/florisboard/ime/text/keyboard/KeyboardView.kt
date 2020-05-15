@@ -67,6 +67,8 @@ class KeyboardView(
         return true
     }
 
+    // TODO: Implement multi touch to prevent key loss when user taps fast and it occurs roughly at
+    //       the same time
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         val event = event ?: return false
@@ -163,6 +165,18 @@ class KeyboardView(
         }).toInt()
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+    }
+
+    fun invalidateAllKeys() {
+        for (row in children) {
+            if (row is FlexboxLayout) {
+                for (keyView in row.children) {
+                    if (keyView is KeyView) {
+                        keyView.invalidate()
+                    }
+                }
+            }
+        }
     }
 
     fun updateVariation() {

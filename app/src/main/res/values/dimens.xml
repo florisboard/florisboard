@@ -3,6 +3,7 @@
     <dimen name="key_width">33dp</dimen>
     <dimen name="key_height">40dp</dimen>
     <dimen name="key_marginH">2dp</dimen>
+    <dimen name="key_marginV">5dp</dimen>
     <dimen name="key_borderRadius">6dp</dimen>
     <dimen name="key_textSize">18sp</dimen>
     <dimen name="key_numeric_textSize">12sp</dimen>
@@ -16,7 +17,6 @@
     <dimen name="keyboard_preview_height">200dp</dimen>
 
     <dimen name="keyboard_row_marginH">2dp</dimen>
-    <dimen name="keyboard_row_marginV">5dp</dimen>
 
     <dimen name="one_handed_width">50dp</dimen>
     <dimen name="one_handed_button_width">50dp</dimen>

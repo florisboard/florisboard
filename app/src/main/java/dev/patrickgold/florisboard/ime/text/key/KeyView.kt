@@ -1,29 +1,46 @@
+/*
+ * Copyright (C) 2020 Patrick Goldinger
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.patrickgold.florisboard.ime.text.key
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Rect
+import android.content.res.Configuration
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.media.AudioManager
 import android.os.Build
 import android.os.Handler
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewOutlineProvider
 import android.view.inputmethod.EditorInfo
-import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat.getDrawable
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
+import dev.patrickgold.florisboard.util.getColorFromAttr
 import dev.patrickgold.florisboard.util.setBackgroundTintColor
-import dev.patrickgold.florisboard.util.setDrawableTintColor
 import java.util.*
 
 /**
@@ -36,10 +53,11 @@ import java.util.*
  */
 @SuppressLint("ViewConstructor")
 class KeyView(
-    private val florisboard: FlorisBoard, private val keyboardView: KeyboardView, val data: KeyData
-) : AppCompatButton(
-    florisboard.context, null, R.attr.keyViewStyle
-) {
+    private val florisboard: FlorisBoard,
+    private val keyboardView: KeyboardView,
+    val data: KeyData
+) : View(florisboard.context) {
+
     private var isKeyPressed: Boolean = false
         set(value) {
             field = value
@@ -49,15 +67,32 @@ class KeyView(
     private var osTimer: Timer? = null
     private var shouldBlockNextKeyCode: Boolean = false
 
+    private var drawable: Drawable? = null
+    private var drawableColor: Int = getColorFromAttr(context, R.attr.key_fgColor)
+    private var drawablePadding: Int = resources.getDimension(R.dimen.key_ic_padding).toInt()
+    private var label: String? = null
+    private var labelPaint: Paint = Paint().apply {
+        alpha = 255
+        color = getColorFromAttr(context, R.attr.key_fgColor)
+        isAntiAlias = true
+        isFakeBoldText = true
+        textAlign = Paint.Align.CENTER
+        textSize = resources.getDimension(R.dimen.key_textSize)
+        typeface = Typeface.DEFAULT
+    }
+
     var touchHitBox: Rect = Rect(0, 0, 0, 0)
 
     init {
-        val flexLayoutParams = FlexboxLayout.LayoutParams(
+        layoutParams = FlexboxLayout.LayoutParams(
             FlexboxLayout.LayoutParams.WRAP_CONTENT, FlexboxLayout.LayoutParams.WRAP_CONTENT
-        )
-        layoutParams = flexLayoutParams.apply {
-            marginStart = resources.getDimension((R.dimen.key_marginH)).toInt()
-            marginEnd = resources.getDimension((R.dimen.key_marginH)).toInt()
+        ).apply {
+            setMargins(
+                resources.getDimension((R.dimen.key_marginH)).toInt(),
+                resources.getDimension(R.dimen.key_marginV).toInt(),
+                resources.getDimension((R.dimen.key_marginH)).toInt(),
+                resources.getDimension(R.dimen.key_marginV).toInt()
+            )
             flexShrink = when (keyboardView.computedLayout?.mode) {
                 KeyboardMode.NUMERIC,
                 KeyboardMode.NUMERIC_ADVANCED,
@@ -89,19 +124,17 @@ class KeyView(
         }
         setPadding(0, 0, 0, 0)
 
-        if (data.code == KeyCode.VIEW_NUMERIC || data.code == KeyCode.VIEW_NUMERIC_ADVANCED) {
-            setTextSize(
-                TypedValue.COMPLEX_UNIT_PX, resources.getDimension(
-                    R.dimen.key_numeric_textSize
-                )
-            )
-        }
+        background = getDrawable(context, R.drawable.shape_rect_rounded)
+        elevation = 4.0f
 
         updateKeyPressedBackground()
     }
 
     /**
-     * Creates a label text from the key's code.
+     * Creates a label text from the given [keyData].
+     *
+     * @param keyData Optional. The key data to generate the label from. Defaults to [data].
+     * @return The generated label.
      */
     fun getComputedLetter(keyData: KeyData = data): String {
         if (keyData.code == KeyCode.URI_COMPONENT_TLD) {
@@ -117,6 +150,9 @@ class KeyView(
         }
     }
 
+    /**
+     * Makes a key press vibration if the user has this feature enabled in the preferences.
+     */
     private fun keyPressVibrate() {
         if (florisboard.prefs!!.vibrationEnabled) {
             var vibrationStrength = florisboard.prefs!!.vibrationStrength
@@ -126,9 +162,11 @@ class KeyView(
             if (vibrationStrength > 0) {
                 val vib = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vib.vibrate(VibrationEffect.createOneShot(
-                        vibrationStrength.toLong(), VibrationEffect.DEFAULT_AMPLITUDE
-                    ))
+                    vib.vibrate(
+                        VibrationEffect.createOneShot(
+                            vibrationStrength.toLong(), VibrationEffect.DEFAULT_AMPLITUDE
+                        )
+                    )
                 } else {
                     @Suppress("DEPRECATION")
                     vib.vibrate(vibrationStrength.toLong())
@@ -137,6 +175,9 @@ class KeyView(
         }
     }
 
+    /**
+     * Makes a key press sound if the user has this feature enabled in the preferences.
+     */
     private fun keyPressSound() {
         if (florisboard.prefs!!.soundEnabled) {
             val soundVolume = florisboard.prefs!!.soundVolume
@@ -154,9 +195,32 @@ class KeyView(
         }
     }
 
-    @Suppress("NAME_SHADOWING")
+    /**
+     * Disable receiving touch events by the Android system. All touch events should be handled
+     * only by the parent [KeyboardView].
+     *
+     * @see [onFlorisTouchEvent] for an explanation why.
+     */
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        return false
+    }
+
+    /**
+     * Basically the same as [onTouchEvent], but is only called by the parent [KeyboardView].
+     * The parent [KeyboardView] can at any time send an [MotionEvent.ACTION_CANCEL], which means
+     * the pointer has lost interest in this key and thus this key should return back to the
+     * default, non-pressed state. An [MotionEvent.ACTION_CANCEL] can also be requested by this
+     * [KeyView] itself, if it notices that the pointer moved to far from the key and/or from the
+     * eventually showing extended popup.
+     *
+     * The reason why a custom onTouch event listener is being used is that in the default
+     * implementation of the Android touch system there isn't really a way for a child view to tell
+     * its parent that it has lost interest in having the focus of the parent and the parent should
+     * go look at which child the pointer is actually above.
+     */
     fun onFlorisTouchEvent(event: MotionEvent?): Boolean {
-        val event = event ?: return false
+        event ?: return false
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 keyboardView.popupManager.show(this)
@@ -181,20 +245,27 @@ class KeyView(
                         keyboardView.popupManager.extend(this)
                     }
                     if (data.code == KeyCode.SPACE) {
-                        florisboard.textInputManager.sendKeyPress(KeyData(KeyCode.SHOW_INPUT_METHOD_PICKER, type = KeyType.FUNCTION))
+                        florisboard.textInputManager.sendKeyPress(
+                            KeyData(
+                                KeyCode.SHOW_INPUT_METHOD_PICKER,
+                                type = KeyType.FUNCTION
+                            )
+                        )
                         shouldBlockNextKeyCode = true
                     }
                 }, delayMillis.toLong())
             }
             MotionEvent.ACTION_MOVE -> {
                 if (keyboardView.popupManager.isShowingExtendedPopup) {
-                    val isPointerWithinBounds = keyboardView.popupManager.propagateMotionEvent(this, event)
+                    val isPointerWithinBounds =
+                        keyboardView.popupManager.propagateMotionEvent(this, event)
                     if (!isPointerWithinBounds && !shouldBlockNextKeyCode) {
                         keyboardView.invalidateActiveKeyViewReference()
                     }
                 } else {
                     if (event.x < -0.1f * measuredWidth || event.x > 1.1f * measuredWidth
-                        || event.y < -0.35f * measuredHeight || event.y > 1.35f * measuredHeight) {
+                        || event.y < -0.35f * measuredHeight || event.y > 1.35f * measuredHeight
+                    ) {
                         if (!shouldBlockNextKeyCode) {
                             keyboardView.invalidateActiveKeyViewReference()
                         }
@@ -294,99 +365,121 @@ class KeyView(
         updateTouchHitBox()
     }
 
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        outlineProvider = KeyViewOutline(w, h)
+    }
+
+    /**
+     * Updates the background depending on [isKeyPressed] and [data].
+     */
     private fun updateKeyPressedBackground() {
         if (data.code == KeyCode.ENTER) {
-            setBackgroundTintColor(this, when {
-                isKeyPressed -> R.attr.app_colorPrimaryDark
-                else -> R.attr.app_colorPrimary
-            })
+            setBackgroundTintColor(
+                this, when {
+                    isKeyPressed -> R.attr.app_colorPrimaryDark
+                    else -> R.attr.app_colorPrimary
+                }
+            )
         } else {
-            setBackgroundTintColor(this, when {
-                isKeyPressed -> R.attr.key_bgColorPressed
-                else -> R.attr.key_bgColor
-            })
+            setBackgroundTintColor(
+                this, when {
+                    isKeyPressed -> R.attr.key_bgColorPressed
+                    else -> R.attr.key_bgColor
+                }
+            )
         }
     }
 
+    /**
+     * Updates the touch hit box of this [KeyView] with its current absolute position within the
+     * parent [KeyboardView].
+     */
     private fun updateTouchHitBox() {
         val parent = parent as ViewGroup
         val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
-        val keyboardRowMarginV = resources.getDimension((R.dimen.keyboard_row_marginV)).toInt()
+        val keyMarginV = resources.getDimension((R.dimen.key_marginV)).toInt()
 
         touchHitBox.apply {
             left = (parent.x + x - keyMarginH).toInt()
             right = (parent.x + x + measuredWidth + keyMarginH).toInt()
-            top = (parent.y + y - keyboardRowMarginV).toInt()
-            bottom = (parent.y + y + measuredHeight + keyboardRowMarginV).toInt()
+            top = (parent.y + y - keyMarginV).toInt()
+            bottom = (parent.y + y + measuredHeight + keyMarginV).toInt()
         }
     }
 
+    /**
+     * Updates the visibility of this [KeyView] by checking the current key variation of the parent
+     * TextInputManager.
+     */
     fun updateVariation() {
         if (data.variation != KeyVariation.ALL) {
             val keyVariation = florisboard.textInputManager.keyVariation
             visibility =
-                if (data.variation == KeyVariation.NORMAL && (keyVariation == KeyVariation.NORMAL || keyVariation == KeyVariation.PASSWORD)) {
-                    View.VISIBLE
+                if (data.variation == KeyVariation.NORMAL && (keyVariation == KeyVariation.NORMAL
+                            || keyVariation == KeyVariation.PASSWORD)
+                ) {
+                    VISIBLE
                 } else if (data.variation == keyVariation) {
-                    View.VISIBLE
+                    VISIBLE
                 } else {
-                    View.GONE
+                    GONE
                 }
         }
     }
 
+    /**
+     * Draw the key label / drawable.
+     */
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+
+        canvas ?: return
+
         if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE
-            || data.type == KeyType.NUMERIC) {
-            text = getComputedLetter()
+            || data.type == KeyType.NUMERIC
+        ) {
+            label = getComputedLetter()
         } else {
-            var drawable: Drawable? = null
             when (data.code) {
                 KeyCode.DELETE -> {
-                    drawable = getDrawable(context,
-                        R.drawable.key_ic_backspace
-                    )
+                    drawable = getDrawable(context, R.drawable.ic_backspace)
                 }
                 KeyCode.ENTER -> {
-                    setDrawableTintColor(this, R.attr.key_bgColor)
                     val action = florisboard.currentInputEditorInfo.imeOptions
                     drawable = getDrawable(context, when (action and EditorInfo.IME_MASK_ACTION) {
-                        EditorInfo.IME_ACTION_DONE -> R.drawable.key_ic_action_done
-                        EditorInfo.IME_ACTION_GO -> R.drawable.key_ic_action_go
-                        EditorInfo.IME_ACTION_NEXT -> R.drawable.key_ic_action_next
-                        EditorInfo.IME_ACTION_NONE -> R.drawable.key_ic_action_none
-                        EditorInfo.IME_ACTION_PREVIOUS -> R.drawable.key_ic_action_previous
-                        EditorInfo.IME_ACTION_SEARCH -> R.drawable.key_ic_action_search
-                        EditorInfo.IME_ACTION_SEND -> R.drawable.key_ic_action_send
-                        else -> R.drawable.key_ic_action_next
+                        EditorInfo.IME_ACTION_DONE -> R.drawable.ic_done
+                        EditorInfo.IME_ACTION_GO -> R.drawable.ic_arrow_right_alt
+                        EditorInfo.IME_ACTION_NEXT -> R.drawable.ic_arrow_right_alt
+                        EditorInfo.IME_ACTION_NONE -> R.drawable.ic_keyboard_return
+                        EditorInfo.IME_ACTION_PREVIOUS -> R.drawable.ic_arrow_right_alt
+                        EditorInfo.IME_ACTION_SEARCH -> R.drawable.ic_search
+                        EditorInfo.IME_ACTION_SEND -> R.drawable.ic_send
+                        else -> R.drawable.ic_arrow_right_alt
                     })
+                    drawableColor = getColorFromAttr(context, R.attr.key_bgColor)
                     if (action and EditorInfo.IME_FLAG_NO_ENTER_ACTION > 0) {
-                        drawable = getDrawable(context,
-                            R.drawable.key_ic_action_none
-                        )
+                        drawable = getDrawable(context, R.drawable.ic_keyboard_return)
                     }
                 }
                 KeyCode.LANGUAGE_SWITCH -> {
-                    drawable = getDrawable(context,
-                        R.drawable.key_ic_language
-                    )
+                    drawable = getDrawable(context, R.drawable.ic_language)
                 }
-                KeyCode.PHONE_PAUSE -> setText(R.string.key__phone_pause)
-                KeyCode.PHONE_WAIT -> setText(R.string.key__phone_wait)
+                KeyCode.PHONE_PAUSE -> label = resources.getString(R.string.key__phone_pause)
+                KeyCode.PHONE_WAIT -> label = resources.getString(R.string.key__phone_wait)
                 KeyCode.SHIFT -> {
                     drawable = getDrawable(context, when {
                         florisboard.textInputManager.caps && florisboard.textInputManager.capsLock -> {
-                            setDrawableTintColor(this, R.attr.app_colorAccentDark)
-                            R.drawable.key_ic_capslock
+                            drawableColor = getColorFromAttr(context, R.attr.app_colorAccentDark)
+                            R.drawable.ic_keyboard_capslock
                         }
                         florisboard.textInputManager.caps && !florisboard.textInputManager.capsLock -> {
-                            setDrawableTintColor(this, R.attr.key_fgColor)
-                            R.drawable.key_ic_capslock
+                            drawableColor = getColorFromAttr(context, R.attr.key_fgColor)
+                            R.drawable.ic_keyboard_capslock
                         }
                         else -> {
-                            setDrawableTintColor(this, R.attr.key_fgColor)
-                            R.drawable.key_ic_caps
+                            drawableColor = getColorFromAttr(context, R.attr.key_fgColor)
+                            R.drawable.ic_keyboard_arrow_up
                         }
                     })
                 }
@@ -396,42 +489,99 @@ class KeyView(
                         KeyboardMode.NUMERIC_ADVANCED,
                         KeyboardMode.PHONE,
                         KeyboardMode.PHONE2 -> {
-                            drawable = getDrawable(context,
-                                R.drawable.key_ic_space_bar
-                            )
+                            drawable = getDrawable(context, R.drawable.ic_space_bar)
                         }
                         else -> {}
                     }
                 }
                 KeyCode.VIEW_CHARACTERS -> {
-                    setText(R.string.key__view_characters)
+                    label = resources.getString(R.string.key__view_characters)
                 }
                 KeyCode.VIEW_NUMERIC,
                 KeyCode.VIEW_NUMERIC_ADVANCED -> {
-                    setText(R.string.key__view_numeric)
+                    label = resources.getString(R.string.key__view_numeric)
                 }
                 KeyCode.VIEW_PHONE -> {
-                    setText(R.string.key__view_phone)
+                    label = resources.getString(R.string.key__view_phone)
                 }
                 KeyCode.VIEW_PHONE2 -> {
-                    setText(R.string.key__view_phone2)
+                    label = resources.getString(R.string.key__view_phone2)
                 }
                 KeyCode.VIEW_SYMBOLS -> {
-                    setText(R.string.key__view_symbols)
+                    label = resources.getString(R.string.key__view_symbols)
                 }
                 KeyCode.VIEW_SYMBOLS2 -> {
-                    setText(R.string.key__view_symbols2)
+                    label = resources.getString(R.string.key__view_symbols2)
                 }
             }
-            if (drawable != null) {
-                if (measuredWidth > measuredHeight) {
-                    drawable.setBounds(0, 0, measuredHeight, measuredHeight)
-                    setCompoundDrawables(null, drawable, null, null)
-                } else {
-                    drawable.setBounds(0, 0, measuredWidth, measuredWidth)
-                    setCompoundDrawables(drawable, null, null, null)
-                }
+        }
+
+        // Draw drawable
+        val drawable = drawable
+        if (drawable != null) {
+            var marginV = 0
+            var marginH = 0
+            if (measuredWidth > measuredHeight) {
+                marginH = (measuredWidth - measuredHeight) / 2
+            } else {
+                marginV = (measuredHeight - measuredWidth) / 2
             }
+            drawable.setBounds(
+                marginH + drawablePadding,
+                marginV + drawablePadding,
+                measuredWidth - marginH - drawablePadding,
+                measuredHeight - marginV - drawablePadding)
+            drawable.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+                drawableColor,
+                BlendModeCompat.SRC_ATOP
+            )
+            drawable.draw(canvas)
+        }
+
+        // Draw label
+        val label = label
+        if (label != null) {
+            if (data.code == KeyCode.VIEW_NUMERIC || data.code == KeyCode.VIEW_NUMERIC_ADVANCED) {
+                labelPaint.textSize = resources.getDimension(R.dimen.key_numeric_textSize)
+            } else {
+                labelPaint.textSize = resources.getDimension(R.dimen.key_textSize)
+            }
+            val isPortrait =
+                resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+            if (florisboard.prefs!!.oneHandedMode != "off" && isPortrait) {
+                labelPaint.textSize *= 0.9f
+            }
+            val centerX = measuredWidth / 2.0f
+            val centerY = measuredHeight / 2.0f + (labelPaint.textSize - labelPaint.descent()) / 2
+            if (label.contains("\n")) {
+                // Even if more lines may be existing only the first 2 are shown
+                val labelLines = label.split("\n")
+                canvas.drawText(labelLines[0], centerX, centerY * 0.70f, labelPaint)
+                canvas.drawText(labelLines[1], centerX, centerY * 1.30f, labelPaint)
+            } else {
+                canvas.drawText(label, centerX, centerY, labelPaint)
+            }
+        }
+    }
+
+    /**
+     * Custom Outline Provider, needed for the [KeyView] elevation rendering.
+     */
+    private class KeyViewOutline(
+        private val width: Int,
+        private val height: Int
+    ) : ViewOutlineProvider() {
+
+        override fun getOutline(view: View?, outline: Outline?) {
+            view ?: return
+            outline ?: return
+            outline.setRoundRect(
+                0,
+                0,
+                width,
+                height,
+                view.resources.getDimension(R.dimen.key_borderRadius)
+            )
         }
     }
 }

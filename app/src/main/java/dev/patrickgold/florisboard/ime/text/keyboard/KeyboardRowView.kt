@@ -13,12 +13,11 @@ class KeyboardRowView : FlexboxLayout {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttrs: Int) : super(context, attrs, defStyleAttrs) {
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
             setMargins(
-                resources.getDimension(R.dimen.keyboard_row_marginH).toInt(),
-                resources.getDimension(R.dimen.keyboard_row_marginV).toInt(),
-                resources.getDimension(R.dimen.keyboard_row_marginH).toInt(),
-                resources.getDimension(R.dimen.keyboard_row_marginV).toInt()
+                resources.getDimension(R.dimen.keyboard_row_marginH).toInt(), 0,
+                resources.getDimension(R.dimen.keyboard_row_marginH).toInt(), 0
             )
         }
+        setPadding(0, 0, 0, 0)
     }
 
     override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {

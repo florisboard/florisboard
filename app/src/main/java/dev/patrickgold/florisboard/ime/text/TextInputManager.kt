@@ -208,6 +208,7 @@ class TextInputManager(private val florisboard: FlorisBoard) : FlorisBoard.Event
             }
             if (!capsLock) {
                 caps = false
+                keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
             }
         } else {
             when (keyData.code) {
@@ -244,13 +245,13 @@ class TextInputManager(private val florisboard: FlorisBoard) : FlorisBoard.Event
                             hasCapsRecentlyChanged = false
                         }, 300)
                     }
+                    keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
                 }
                 KeyCode.SHOW_INPUT_METHOD_PICKER -> {
                     val im = florisboard.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     im.showInputMethodPicker()
                 }
                 KeyCode.VIEW_CHARACTERS -> setActiveKeyboardMode(KeyboardMode.CHARACTERS)
-                // TODO: Implement numeric layout
                 KeyCode.VIEW_NUMERIC -> setActiveKeyboardMode(KeyboardMode.NUMERIC)
                 KeyCode.VIEW_NUMERIC_ADVANCED -> setActiveKeyboardMode(KeyboardMode.NUMERIC_ADVANCED)
                 KeyCode.VIEW_PHONE -> setActiveKeyboardMode(KeyboardMode.PHONE)
