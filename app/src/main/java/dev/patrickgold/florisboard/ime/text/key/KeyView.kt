@@ -34,6 +34,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
+import androidx.core.view.children
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
@@ -81,7 +82,7 @@ class KeyView(
         typeface = Typeface.DEFAULT
     }
 
-    var touchHitBox: Rect = Rect(0, 0, 0, 0)
+    var touchHitBox: Rect = Rect(-1, -1, -1, -1)
 
     init {
         layoutParams = FlexboxLayout.LayoutParams(
@@ -301,7 +302,7 @@ class KeyView(
         val desiredWidth = when (keyboardView.computedLayout?.mode) {
             KeyboardMode.NUMERIC,
             KeyboardMode.PHONE,
-            KeyboardMode.PHONE2 -> keyboardView.desiredKeyWidth
+            KeyboardMode.PHONE2 -> (keyboardView.desiredKeyWidth * 2.58f).toInt()
             KeyboardMode.NUMERIC_ADVANCED -> when (data.code) {
                 44, 46 -> keyboardView.desiredKeyWidth
                 KeyCode.VIEW_SYMBOLS, 61 -> (keyboardView.desiredKeyWidth * 1.34f).toInt()
@@ -396,15 +397,26 @@ class KeyView(
      * parent [KeyboardView].
      */
     private fun updateTouchHitBox() {
-        val parent = parent as ViewGroup
-        val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
-        val keyMarginV = resources.getDimension((R.dimen.key_marginV)).toInt()
+        if (visibility == GONE) {
+            touchHitBox.set(-1, -1, -1, -1)
+        } else {
+            val parent = parent as ViewGroup
+            val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
+            val keyMarginV = resources.getDimension((R.dimen.key_marginV)).toInt()
 
-        touchHitBox.apply {
-            left = (parent.x + x - keyMarginH).toInt()
-            right = (parent.x + x + measuredWidth + keyMarginH).toInt()
-            top = (parent.y + y - keyMarginV).toInt()
-            bottom = (parent.y + y + measuredHeight + keyMarginV).toInt()
+            val self = this
+            touchHitBox.apply {
+                left = when (self) {
+                    parent.children.first() -> 0
+                    else -> (parent.x + x - keyMarginH).toInt()
+                }
+                right = when (self) {
+                    parent.children.last() -> keyboardView.measuredWidth
+                    else -> (parent.x + x + measuredWidth + keyMarginH).toInt()
+                }
+                top = (parent.y + y - keyMarginV).toInt()
+                bottom = (parent.y + y + measuredHeight + keyMarginV).toInt()
+            }
         }
     }
 
@@ -425,6 +437,7 @@ class KeyView(
                 } else {
                     GONE
                 }
+            updateTouchHitBox()
         }
     }
 

@@ -224,15 +224,10 @@ class KeyboardView(
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
 
         val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
-        desiredKeyWidth = when (computedLayout?.mode) {
-            KeyboardMode.NUMERIC,
-            KeyboardMode.PHONE,
-            KeyboardMode.PHONE2 -> (widthSize / 4) - (2 * keyMarginH)
-            else -> (widthSize / 10) - (2 * keyMarginH)
-        }
+        desiredKeyWidth = (widthSize / 10) - (2 * keyMarginH)
 
         val factor = florisboard.prefs!!.heightFactor
-        val keyHeightNormal = resources.getDimension(R.dimen.key_height) * when(resources.configuration.orientation) {
+        val keyHeightNormal = resources.getDimension(R.dimen.key_height) * when (resources.configuration.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> 0.85f
             else -> if (florisboard.prefs?.oneHandedMode == "start" ||
                 florisboard.prefs?.oneHandedMode == "end") {
