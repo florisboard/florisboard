@@ -6,7 +6,6 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/key_popup_bgshape"
-    android:backgroundTint="?attr/key_popup_bgColor"
     android:padding="0dp"
     android:textSize="@dimen/key_popup_textSize"
     app:flexDirection="row"

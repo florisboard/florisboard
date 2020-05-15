@@ -3,10 +3,15 @@
     <item>
         <shape>
             <padding android:top="1dp" android:right="1dp" android:bottom="1dp" android:left="1dp" />
-            <solid android:color="#25000000" />
+            <solid android:color="#CDCACACA" />
             <corners android:radius="@dimen/key_borderRadius" />
         </shape>
     </item>
 
-    <item android:drawable="@drawable/shape_rect_rounded"/>
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="?attr/key_popup_bgColor" />
+            <corners android:radius="@dimen/key_borderRadius" />
+        </shape>
+    </item>
 </layer-list>

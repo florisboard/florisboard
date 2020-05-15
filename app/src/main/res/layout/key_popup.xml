@@ -4,8 +4,7 @@
     android:layout_width="@dimen/key_popup_width"
     android:layout_height="@dimen/key_popup_height"
     android:orientation="vertical"
-    android:background="@drawable/key_popup_bgshape"
-    android:backgroundTint="?attr/key_popup_bgColor">
+    android:background="@drawable/key_popup_bgshape">
 
     <TextView
         android:id="@+id/key_popup_text"
