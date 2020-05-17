@@ -6,7 +6,9 @@ import android.content.res.Configuration
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
 import android.view.View
+import android.view.inputmethod.CursorAnchorInfo
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputConnection
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.preference.PreferenceManager
@@ -57,12 +59,16 @@ class FlorisBoard : InputMethodService() {
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
+        currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
+
         super.onStartInputView(info, restarting)
         textInputManager.onStartInputView(info, restarting)
         mediaInputManager.onStartInputView(info, restarting)
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
+        currentInputConnection.requestCursorUpdates(0)
+
         super.onFinishInputView(finishingInput)
         textInputManager.onFinishInputView(finishingInput)
         mediaInputManager.onFinishInputView(finishingInput)
@@ -89,6 +95,46 @@ class FlorisBoard : InputMethodService() {
         super.onConfigurationChanged(newConfig)
         textInputManager.onConfigurationChanged(newConfig)
         mediaInputManager.onConfigurationChanged(newConfig)
+    }
+
+    override fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {
+        super.onUpdateCursorAnchorInfo(cursorAnchorInfo)
+        textInputManager.onUpdateCursorAnchorInfo(cursorAnchorInfo)
+        mediaInputManager.onUpdateCursorAnchorInfo(cursorAnchorInfo)
+    }
+
+    override fun onUpdateSelection(
+        oldSelStart: Int,
+        oldSelEnd: Int,
+        newSelStart: Int,
+        newSelEnd: Int,
+        candidatesStart: Int,
+        candidatesEnd: Int
+    ) {
+        super.onUpdateSelection(
+            oldSelStart,
+            oldSelEnd,
+            newSelStart,
+            newSelEnd,
+            candidatesStart,
+            candidatesEnd
+        )
+        textInputManager.onUpdateSelection(
+            oldSelStart,
+            oldSelEnd,
+            newSelStart,
+            newSelEnd,
+            candidatesStart,
+            candidatesEnd
+        )
+        mediaInputManager.onUpdateSelection(
+            oldSelStart,
+            oldSelEnd,
+            newSelStart,
+            newSelEnd,
+            candidatesStart,
+            candidatesEnd
+        )
     }
 
 
@@ -175,5 +221,15 @@ class FlorisBoard : InputMethodService() {
         fun onWindowHidden() {}
 
         fun onConfigurationChanged(newConfig: Configuration) {}
+
+        fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {}
+        fun onUpdateSelection(
+            oldSelStart: Int,
+            oldSelEnd: Int,
+            newSelStart: Int,
+            newSelEnd: Int,
+            candidatesStart: Int,
+            candidatesEnd: Int
+        ) {}
     }
 }

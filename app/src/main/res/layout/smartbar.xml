@@ -22,22 +22,19 @@
 
         <Button
             android:id="@+id/candidate0"
-            style="@style/SmartbarCandidate"
-            android:text="TEST" />
+            style="@style/SmartbarCandidate" />
 
         <View style="@style/SmartbarDivider" />
 
         <Button
             android:id="@+id/candidate1"
-            style="@style/SmartbarCandidate"
-            android:text="TEST" />
+            style="@style/SmartbarCandidate" />
 
         <View style="@style/SmartbarDivider" />
 
         <Button
             android:id="@+id/candidate2"
-            style="@style/SmartbarCandidate"
-            android:text="TEST" />
+            style="@style/SmartbarCandidate" />
 
     </LinearLayout>
 

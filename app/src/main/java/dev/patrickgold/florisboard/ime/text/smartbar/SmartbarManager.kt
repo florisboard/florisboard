@@ -3,21 +3,31 @@ package dev.patrickgold.florisboard.ime.text.smartbar
 import android.content.Context
 import android.content.Intent
 import android.view.View
-import android.view.textservice.*
-import android.widget.*
+import android.view.textservice.SentenceSuggestionsInfo
+import android.view.textservice.SpellCheckerSession
+import android.view.textservice.SuggestionsInfo
+import android.view.textservice.TextServicesManager
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.ToggleButton
 import androidx.core.view.children
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.key.KeyData
-import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 
+// TODO: Implement suggestion creation functionality
 class SmartbarManager(
-    private val florisboard: FlorisBoard
+    private val florisboard: FlorisBoard,
+    private val textInputManager: TextInputManager
 ) : SpellCheckerSession.SpellCheckerSessionListener {
+
     private val candidateViewList: MutableList<Button> = mutableListOf()
     private var candidatesView: LinearLayout? = null
+    private var isComposingEnabled: Boolean = false
     private var numberRowView: LinearLayout? = null
     private var quickActionsView: LinearLayout? = null
     private var quickActionToggle: ToggleButton? = null
@@ -26,10 +36,13 @@ class SmartbarManager(
 
     var activeContainerId: Int = R.id.candidates
         set(value) { field = value; updateActiveContainerVisibility() }
-    var composingText: String = ""
 
     private val candidateViewOnClickListener = View.OnClickListener { v ->
-        //
+        val view = v as Button
+        val text = view.text.toString()
+        if (text.isNotEmpty()) {
+            textInputManager.commitCandidate(text)
+        }
     }
     private val candidateViewOnLongClickListener = View.OnLongClickListener { v ->
         true
@@ -104,6 +117,10 @@ class SmartbarManager(
                 numberRowButton.setOnClickListener(numberRowButtonOnClickListener)
             }
         }
+        for (candidateView in candidateViewList) {
+            candidateView.setOnClickListener(candidateViewOnClickListener)
+            candidateView.setOnLongClickListener(candidateViewOnLongClickListener)
+        }
 
         this.smartbarView = smartbarView
 
@@ -136,14 +153,15 @@ class SmartbarManager(
         }*/
     }
 
-    fun onStartInputView(keyboardMode: KeyboardMode) {
+    fun onStartInputView(keyboardMode: KeyboardMode, isComposingEnabled: Boolean) {
+        this.isComposingEnabled = isComposingEnabled
         when {
             keyboardMode == KeyboardMode.NUMERIC ||
             keyboardMode == KeyboardMode.PHONE ||
             keyboardMode == KeyboardMode.PHONE2 -> {
                 smartbarView?.visibility = View.GONE
             }
-            florisboard.textInputManager.keyVariation == KeyVariation.PASSWORD -> {
+            !isComposingEnabled -> {
                 smartbarView?.visibility = View.VISIBLE
                 activeContainerId = R.id.number_row
             }
@@ -168,8 +186,19 @@ class SmartbarManager(
         //
     }
 
-    fun generateCandidatesFromSuggestions(composing: String = composingText) {
-        spellCheckerSession?.getSentenceSuggestions(arrayOf(TextInfo(composing)), 3)
+    fun generateCandidatesFromComposing(composingText: String?) {
+        if (composingText == null) {
+            candidateViewList[0].text = "candidate"
+            candidateViewList[1].text = "suggestions"
+            candidateViewList[2].text = "nyi"
+        } else {
+            activeContainerId = R.id.candidates
+            updateActiveContainerVisibility()
+            candidateViewList[0].text = ""
+            candidateViewList[1].text = composingText + "test"
+            candidateViewList[2].text = ""
+        }
+        //spellCheckerSession?.getSentenceSuggestions(arrayOf(TextInfo(composing)), 3)
         //android.util.Log.i("SPELL", "GEN")
         /*val dic: Uri = UserDictionary.Words.CONTENT_URI
         val resolver: ContentResolver = florisboard.contentResolver
@@ -190,8 +219,8 @@ class SmartbarManager(
     }
 
     fun getPreferredContainerId(): Int {
-        return when (florisboard.textInputManager.keyVariation) {
-            KeyVariation.PASSWORD -> when(florisboard.textInputManager.getActiveKeyboardMode()) {
+        return when {
+            !isComposingEnabled -> when(textInputManager.getActiveKeyboardMode()) {
                 KeyboardMode.CHARACTERS -> R.id.number_row
                 else -> 0
             }
