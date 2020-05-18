@@ -11,35 +11,54 @@
         android:layout_height="wrap_content"
         android:text="SEARCHBAR" />
 
-    <FrameLayout
-        android:id="@+id/media_input_tab_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <LinearLayout
-        android:id="@+id/media_input_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <Button
-            android:id="@+id/media_input_bottom_switch_to_text_input_button"
+            android:id="@+id/media_input_switch_to_text_input_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ABC" />
-        <Button
-            android:id="@+id/media_input_bottom_emoji_button"
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1.0" />
+        
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/media_input_tabs"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="EMOJI" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_image_search" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_sentiment_satisfied" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=":-)" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1.0" />
+        
         <Button
-            android:id="@+id/media_input_bottom_gif_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="GIF" />
-        <Button
-            android:id="@+id/media_input_bottom_backspace_button"
+            android:id="@+id/media_input_backspace_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="DEL" />
+
     </LinearLayout>
 
 </LinearLayout>

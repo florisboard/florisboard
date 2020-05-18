@@ -1,26 +1,19 @@
 package dev.patrickgold.florisboard.ime.media
 
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
-import android.widget.FrameLayout
 import android.widget.LinearLayout
-import androidx.core.view.children
-import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyboardView
+import dev.patrickgold.florisboard.ime.media.home.HomeView
 import java.util.*
-
-enum class MediaInputTab {
-    EMOJIS,
-    EMOTICONS,
-    GIFS,
-    OVERVIEW,
-    STICKERS
-}
 
 /**
  * MediaInputManager is responsible for managing everything which is related to media input. All of
  * the following count as media input: emojis, gifs, sticker, emoticons.
+ * NOTE: if gifs and stickers end up to be implemented at all is not sure atm.
  *
  * All of the UI for the different media tabs are kept under the same container element and
  * are separated from text-related UI.
@@ -35,26 +28,36 @@ enum class MediaInputTab {
  */
 class MediaInputManager(private val florisboard: FlorisBoard) : FlorisBoard.EventListener {
 
-    private var activeTab: MediaInputTab? = null
-    private var frameLayout: FrameLayout? = null
+    private var activeTab: Tab? = null
     private var mediaViewGroup: LinearLayout? = null
-    private val tabViews = EnumMap<MediaInputTab, LinearLayout>(MediaInputTab::class.java)
+    private var tabLayout: TabLayout? = null
+    private val tabViews = EnumMap<Tab, LinearLayout>(Tab::class.java)
 
     override fun onCreateInputView() {
         val rootViewGroup = florisboard.rootViewGroup ?: return
+        mediaViewGroup = rootViewGroup.findViewById(R.id.media_input)
 
         // Init bottom buttons
-        val bottom = rootViewGroup.findViewById<ViewGroup>(R.id.media_input_bottom)
-        for (button in bottom.children) {
-            if (button is Button) {
-                button.setOnClickListener { v -> onBottomButtonClick(v) }
+        rootViewGroup.findViewById<Button>(R.id.media_input_switch_to_text_input_button)
+            .setOnClickListener { v -> onBottomButtonClick(v) }
+        rootViewGroup.findViewById<Button>(R.id.media_input_backspace_button)
+            .setOnClickListener { v -> onBottomButtonClick(v) }
+
+        tabLayout = rootViewGroup.findViewById(R.id.media_input_tabs)
+        tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                when (tab.position) {
+                    0 -> setActiveTab(Tab.HOME)
+                    1 -> setActiveTab(Tab.EMOJIS)
+                    2 -> setActiveTab(Tab.EMOTICONS)
+                }
             }
-        }
 
-        frameLayout = florisboard.rootViewGroup?.findViewById(R.id.media_input_tab_container)
-        mediaViewGroup = florisboard.rootViewGroup?.findViewById(R.id.media_input)
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
 
-        setActiveTab(MediaInputTab.OVERVIEW)
+        setActiveTab(Tab.HOME)
     }
 
     fun show() {
@@ -66,31 +69,40 @@ class MediaInputManager(private val florisboard: FlorisBoard) : FlorisBoard.Even
 
     private fun onBottomButtonClick(v: View) {
         when (v.id) {
-            R.id.media_input_bottom_switch_to_text_input_button -> {
+            R.id.media_input_switch_to_text_input_button -> {
                 florisboard.setActiveInput(R.id.text_input)
             }
         }
     }
 
-    fun createTabViewFor(tab: MediaInputTab): LinearLayout {
+    private fun createTabViewFor(tab: Tab): LinearLayout {
         return when (tab) {
-            MediaInputTab.OVERVIEW -> {
-                OverviewTab(florisboard)
-            }
-            else -> {
-                LinearLayout(florisboard)
-            }
+            Tab.HOME -> HomeView(
+                florisboard
+            )
+            Tab.EMOJIS -> EmojiKeyboardView(
+                florisboard
+            )
+            else -> LinearLayout(florisboard)
         }
     }
 
-    fun setActiveTab(newActiveTab: MediaInputTab) {
+    fun setActiveTab(newActiveTab: Tab) {
         if (!tabViews.containsKey(newActiveTab)) {
             val tabView = createTabViewFor(newActiveTab)
             tabViews[newActiveTab] = tabView
-            frameLayout?.addView(tabView)
+            mediaViewGroup?.addView(tabView, 1)
         }
         tabViews[activeTab]?.visibility = View.GONE
         tabViews[newActiveTab]?.visibility = View.VISIBLE
         activeTab = newActiveTab
+    }
+
+    enum class Tab {
+        EMOJIS,
+        EMOTICONS,
+        GIFS,
+        HOME,
+        STICKERS
     }
 }
