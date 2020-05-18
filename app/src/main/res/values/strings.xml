@@ -16,6 +16,17 @@
 
     <string name="key_popup__threedots_alt">Three-dot icon. If visible, indicates that more letters can be used if longer pressed.</string>
 
+    <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion">Smileys &amp; Emotions</string>
+    <string name="emoji__category__people_body">People &amp; Body</string>
+    <string name="emoji__category__animals_nature">Animals &amp; Nature</string>
+    <string name="emoji__category__food_drink">Food &amp; Drink</string>
+    <string name="emoji__category__travel_places">Travel &amp; Places</string>
+    <string name="emoji__category__activities">Activities</string>
+    <string name="emoji__category__objects">Objects</string>
+    <string name="emoji__category__symbols">Symbols</string>
+    <string name="emoji__category__flags">Flags</string>
+
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt">Quick action toggle. If pressed, toggles between the word suggestions and the quick action buttons.</string>
 

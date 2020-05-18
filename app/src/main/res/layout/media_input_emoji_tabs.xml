@@ -8,46 +8,55 @@
     <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0" />
+        android:icon="@drawable/ic_emoji_emotions"
+        android:contentDescription="@string/emoji__category__smileys_emotion"/>
 
     <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="1" />
+        android:icon="@drawable/ic_emoji_people"
+        android:contentDescription="@string/emoji__category__people_body"/>
 
     <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2" />
+        android:icon="@drawable/ic_emoji_nature"
+        android:contentDescription="@string/emoji__category__animals_nature"/>
 
     <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="3" />
+        android:icon="@drawable/ic_emoji_food_beverage"
+        android:contentDescription="@string/emoji__category__food_drink"/>
 
     <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="4" />
+        android:icon="@drawable/ic_emoji_transportation"
+        android:contentDescription="@string/emoji__category__travel_places"/>
 
     <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="5" />
+        android:icon="@drawable/ic_emoji_events"
+        android:contentDescription="@string/emoji__category__activities"/>
 
     <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="6" />
+        android:icon="@drawable/ic_emoji_objects"
+        android:contentDescription="@string/emoji__category__objects"/>
 
     <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="7" />
+        android:icon="@drawable/ic_emoji_symbols"
+        android:contentDescription="@string/emoji__category__symbols"/>
 
     <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="8" />
+        android:icon="@drawable/ic_emoji_flags"
+        android:contentDescription="@string/emoji__category__flags"/>
 
 </com.google.android.material.tabs.TabLayout>
