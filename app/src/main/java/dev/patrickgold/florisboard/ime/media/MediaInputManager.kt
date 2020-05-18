@@ -2,12 +2,17 @@ package dev.patrickgold.florisboard.ime.media
 
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyboardView
 import dev.patrickgold.florisboard.ime.media.home.HomeView
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.ime.text.key.KeyType
 import java.util.*
 
 /**
@@ -40,7 +45,7 @@ class MediaInputManager(private val florisboard: FlorisBoard) : FlorisBoard.Even
         // Init bottom buttons
         rootViewGroup.findViewById<Button>(R.id.media_input_switch_to_text_input_button)
             .setOnClickListener { v -> onBottomButtonClick(v) }
-        rootViewGroup.findViewById<Button>(R.id.media_input_backspace_button)
+        rootViewGroup.findViewById<ImageButton>(R.id.media_input_backspace_button)
             .setOnClickListener { v -> onBottomButtonClick(v) }
 
         tabLayout = rootViewGroup.findViewById(R.id.media_input_tabs)
@@ -72,6 +77,11 @@ class MediaInputManager(private val florisboard: FlorisBoard) : FlorisBoard.Even
             R.id.media_input_switch_to_text_input_button -> {
                 florisboard.setActiveInput(R.id.text_input)
             }
+            R.id.media_input_backspace_button -> {
+                florisboard.textInputManager.sendKeyPress(
+                    KeyData(KeyCode.DELETE, type = KeyType.ENTER_EDITING)
+                )
+            }
         }
     }
 
@@ -96,6 +106,12 @@ class MediaInputManager(private val florisboard: FlorisBoard) : FlorisBoard.Even
         tabViews[activeTab]?.visibility = View.GONE
         tabViews[newActiveTab]?.visibility = View.VISIBLE
         activeTab = newActiveTab
+    }
+
+    fun sendEmojiKeyPress(emojiKeyData: EmojiKeyData) {
+        val ic = florisboard.currentInputConnection
+        ic.finishComposingText()
+        ic.commitText(emojiKeyData.getCodePointsAsString(), 1)
     }
 
     enum class Tab {

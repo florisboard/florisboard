@@ -1,6 +1,7 @@
 package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.annotation.SuppressLint
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.MotionEvent
 import androidx.core.content.ContextCompat
@@ -18,14 +19,21 @@ class EmojiKeyView(
         background = ContextCompat.getDrawable(context, R.drawable.button_transparent_bg_on_press)
         gravity = Gravity.CENTER
         setPadding(0, 0, 0, 0)
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.emoji_key_textSize))
 
         text = emojiKeyData.getCodePointsAsString()
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        android.util.Log.i("EKV", "HI")
-        return super.onTouchEvent(event)
+        event ?: return false
+
+        when (event.actionMasked) {
+            MotionEvent.ACTION_UP -> {
+                florisboard.mediaInputManager.sendEmojiKeyPress(emojiKeyData)
+            }
+        }
+        return true
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
