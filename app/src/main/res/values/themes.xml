@@ -19,10 +19,13 @@
         <item name="key_popup_bgColor">#efefef</item>
         <item name="key_popup_fgColor">#000</item>
 
-        <item name="key_popup_extended_bgColor">#00000000</item>
+        <item name="key_popup_extended_bgColor">@android:color/transparent</item>
         <item name="key_popup_extended_bgColorActive">#cecece</item>
 
         <item name="keyboard_bgColor">#dfdfdf</item>
+
+        <item name="emoji_key_bgColor">?attr/keyboard_bgColor</item>
+        <item name="emoji_key_bgColorPressed">?attr/key_popup_extended_bgColorActive</item>
 
         <item name="one_handed_bgColor">#e8f5e9</item>
         <item name="one_handed_button_bgColor">@android:color/transparent</item>

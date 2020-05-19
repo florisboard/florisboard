@@ -5,6 +5,9 @@ import android.content.Context
 import android.content.res.Configuration
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.View
 import android.view.inputmethod.CursorAnchorInfo
 import android.view.inputmethod.EditorInfo
@@ -16,6 +19,8 @@ import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.media.MediaInputManager
 import dev.patrickgold.florisboard.ime.text.TextInputManager
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.util.initDefaultPreferences
 
 /**
@@ -143,7 +148,50 @@ class FlorisBoard : InputMethodService() {
         )
     }
 
+    /**
+     * Makes a key press vibration if the user has this feature enabled in the preferences.
+     */
+    fun keyPressVibrate() {
+        if (prefs!!.vibrationEnabled) {
+            var vibrationStrength = prefs!!.vibrationStrength
+            if (vibrationStrength == 0 && prefs!!.vibrationEnabledSystem) {
+                vibrationStrength = 36
+            }
+            if (vibrationStrength > 0) {
+                val vib = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vib.vibrate(
+                        VibrationEffect.createOneShot(
+                            vibrationStrength.toLong(), VibrationEffect.DEFAULT_AMPLITUDE
+                        )
+                    )
+                } else {
+                    @Suppress("DEPRECATION")
+                    vib.vibrate(vibrationStrength.toLong())
+                }
+            }
+        }
+    }
 
+    /**
+     * Makes a key press sound if the user has this feature enabled in the preferences.
+     */
+    fun keyPressSound(keyData: KeyData? = null) {
+        if (prefs!!.soundEnabled) {
+            val soundVolume = prefs!!.soundVolume
+            val effect = when (keyData?.code) {
+                KeyCode.SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR
+                KeyCode.DELETE -> AudioManager.FX_KEYPRESS_DELETE
+                KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN
+                else -> AudioManager.FX_KEYPRESS_STANDARD
+            }
+            if (soundVolume == 0 && prefs!!.soundEnabledSystem) {
+                audioManager!!.playSoundEffect(effect)
+            } else if (soundVolume > 0) {
+                audioManager!!.playSoundEffect(effect, soundVolume / 100f)
+            }
+        }
+    }
 
     /*override fun onComputeInsets(outInsets: Insets?) {
         super.onComputeInsets(outInsets)

@@ -12,6 +12,7 @@ import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
 import java.util.*
 
 @SuppressLint("ViewConstructor")
@@ -24,6 +25,7 @@ class EmojiKeyboardView(
     // TODO: run this task async (coroutines?) to avoid blocking the ui thread
     private val layouts =
         parseRawEmojiSpecsFile(context, "ime/emoji/emoji-test.txt")
+    var popupManager = KeyPopupManager<EmojiKeyboardView, EmojiKeyView>(this)
     private val uiLayouts = EnumMap<EmojiCategory, HorizontalScrollView>(EmojiCategory::class.java)
 
     init {

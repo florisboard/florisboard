@@ -28,6 +28,7 @@ import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
+import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import dev.patrickgold.florisboard.util.getColorFromAttr
@@ -53,7 +54,7 @@ class KeyboardView(
     var computedLayout: ComputedLayoutData? = null
     var desiredKeyWidth: Int = resources.getDimension(R.dimen.key_width).toInt()
     var desiredKeyHeight: Int = resources.getDimension(R.dimen.key_height).toInt()
-    var popupManager: KeyPopupManager = KeyPopupManager(this)
+    var popupManager = KeyPopupManager<KeyboardView, KeyView>(this)
 
     init {
         background = ColorDrawable(getColorFromAttr(context, R.attr.keyboard_bgColor))

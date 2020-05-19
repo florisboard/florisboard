@@ -152,51 +152,6 @@ class KeyView(
     }
 
     /**
-     * Makes a key press vibration if the user has this feature enabled in the preferences.
-     */
-    private fun keyPressVibrate() {
-        if (florisboard.prefs!!.vibrationEnabled) {
-            var vibrationStrength = florisboard.prefs!!.vibrationStrength
-            if (vibrationStrength == 0 && florisboard.prefs!!.vibrationEnabledSystem) {
-                vibrationStrength = 36
-            }
-            if (vibrationStrength > 0) {
-                val vib = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vib.vibrate(
-                        VibrationEffect.createOneShot(
-                            vibrationStrength.toLong(), VibrationEffect.DEFAULT_AMPLITUDE
-                        )
-                    )
-                } else {
-                    @Suppress("DEPRECATION")
-                    vib.vibrate(vibrationStrength.toLong())
-                }
-            }
-        }
-    }
-
-    /**
-     * Makes a key press sound if the user has this feature enabled in the preferences.
-     */
-    private fun keyPressSound() {
-        if (florisboard.prefs!!.soundEnabled) {
-            val soundVolume = florisboard.prefs!!.soundVolume
-            val effect = when (data.code) {
-                KeyCode.SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR
-                KeyCode.DELETE -> AudioManager.FX_KEYPRESS_DELETE
-                KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN
-                else -> AudioManager.FX_KEYPRESS_STANDARD
-            }
-            if (soundVolume == 0 && florisboard.prefs!!.soundEnabledSystem) {
-                florisboard.audioManager!!.playSoundEffect(effect)
-            } else if (soundVolume > 0) {
-                florisboard.audioManager!!.playSoundEffect(effect, soundVolume / 100f)
-            }
-        }
-    }
-
-    /**
      * Disable receiving touch events by the Android system. All touch events should be handled
      * only by the parent [KeyboardView].
      *
@@ -226,8 +181,8 @@ class KeyView(
             MotionEvent.ACTION_DOWN -> {
                 keyboardView.popupManager.show(this)
                 isKeyPressed = true
-                keyPressVibrate()
-                keyPressSound()
+                florisboard.keyPressVibrate()
+                florisboard.keyPressSound(data)
                 if (data.code == KeyCode.DELETE && data.type == KeyType.ENTER_EDITING) {
                     osTimer = Timer()
                     osTimer?.scheduleAtFixedRate(object : TimerTask() {
@@ -280,7 +235,7 @@ class KeyView(
                 osTimer = null
                 val retData = keyboardView.popupManager.getActiveKeyData(this)
                 keyboardView.popupManager.hide()
-                if (event.actionMasked != MotionEvent.ACTION_CANCEL && !shouldBlockNextKeyCode) {
+                if (event.actionMasked != MotionEvent.ACTION_CANCEL && !shouldBlockNextKeyCode && retData != null) {
                     florisboard.textInputManager.sendKeyPress(retData)
                     performClick()
                 } else {
