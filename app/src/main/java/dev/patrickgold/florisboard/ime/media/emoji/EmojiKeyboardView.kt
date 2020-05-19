@@ -1,6 +1,7 @@
 package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.annotation.SuppressLint
+import android.view.MotionEvent
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
@@ -22,11 +23,15 @@ class EmojiKeyboardView(
 
     private var activeCategory: EmojiCategory = EmojiCategory.SMILEYS_EMOTION
     private var emojiViewFlipper: ViewFlipper
+    private val emojiKeyWidth = resources.getDimension(R.dimen.emoji_key_width).toInt()
+    private val emojiKeyHeight = resources.getDimension(R.dimen.emoji_key_height).toInt()
     // TODO: run this task async (coroutines?) to avoid blocking the ui thread
     private val layouts =
         parseRawEmojiSpecsFile(context, "ime/emoji/emoji-test.txt")
-    var popupManager = KeyPopupManager<EmojiKeyboardView, EmojiKeyView>(this)
     private val uiLayouts = EnumMap<EmojiCategory, HorizontalScrollView>(EmojiCategory::class.java)
+
+    var isScrollBlocked: Boolean = false
+    var popupManager = KeyPopupManager<EmojiKeyboardView, EmojiKeyView>(this)
 
     init {
         orientation = VERTICAL
@@ -69,9 +74,8 @@ class EmojiKeyboardView(
         setActiveCategory(EmojiCategory.SMILEYS_EMOTION)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun buildLayoutForCategory(category: EmojiCategory): HorizontalScrollView {
-        val emojiKeyWidth = resources.getDimension(R.dimen.emoji_key_width).toInt()
-        val emojiKeyHeight = resources.getDimension(R.dimen.emoji_key_height).toInt()
         val hsv = HorizontalScrollView(context)
         hsv.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         val flexboxLayout = FlexboxLayout(context)
@@ -85,6 +89,9 @@ class EmojiKeyboardView(
             )
             flexboxLayout.addView(emojiKeyView)
         }
+        hsv.setOnTouchListener { _, _ ->
+            return@setOnTouchListener isScrollBlocked
+        }
         hsv.addView(flexboxLayout)
         return hsv
     }
@@ -93,5 +100,23 @@ class EmojiKeyboardView(
         emojiViewFlipper.displayedChild =
             emojiViewFlipper.indexOfChild(uiLayouts[newActiveCategory])
         activeCategory = newActiveCategory
+    }
+
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        if (ev?.actionMasked == MotionEvent.ACTION_DOWN) {
+            isScrollBlocked = false
+        }
+        return false
+    }
+
+    /**
+     * Invalidates the passed [keyView], sends a [MotionEvent.ACTION_CANCEL] to indicate the loss
+     * of focus and prevents the HorizontalScrollView to scroll within this MotionEvent.
+     */
+    fun dismissKeyView(keyView: EmojiKeyView) {
+        keyView.onTouchEvent(MotionEvent.obtain(
+            0, 0, MotionEvent.ACTION_CANCEL, 0.0f, 0.0f, 0
+        ))
+        isScrollBlocked = true
     }
 }

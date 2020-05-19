@@ -5,10 +5,10 @@ import android.os.Handler
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.MotionEvent
+import android.widget.HorizontalScrollView
 import androidx.core.content.ContextCompat
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.util.setBackgroundTintColor
 
 @SuppressLint("ViewConstructor")
 class EmojiKeyView(
@@ -17,22 +17,16 @@ class EmojiKeyView(
     val data: EmojiKeyData
 ) : androidx.appcompat.widget.AppCompatButton(florisboard.context) {
 
-    private var isKeyPressed: Boolean = false
-        set(value) {
-            field = value
-            updateKeyPressedBackground()
-        }
+    private var isCancelled: Boolean = false
     private val osHandler = Handler()
 
     init {
-        background = ContextCompat.getDrawable(context, R.drawable.shape_rect)
+        setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
         gravity = Gravity.CENTER
         setPadding(0, 0, 0, 0)
         setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.emoji_key_textSize))
 
         text = data.getCodePointsAsString()
-
-        updateKeyPressedBackground()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -41,15 +35,15 @@ class EmojiKeyView(
 
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
-                emojiKeyboardView.popupManager.show(this)
-                isKeyPressed = true
-                florisboard.keyPressVibrate()
-                florisboard.keyPressSound()
+                isCancelled = false
                 val delayMillis = florisboard.prefs!!.longPressDelay
                 osHandler.postDelayed({
-                    if (data.popup.isNotEmpty()) {
-                        emojiKeyboardView.popupManager.extend(this)
-                    }
+                    (parent.parent as HorizontalScrollView).requestDisallowInterceptTouchEvent(true)
+                    emojiKeyboardView.isScrollBlocked = true
+                    emojiKeyboardView.popupManager.show(this)
+                    emojiKeyboardView.popupManager.extend(this)
+                    florisboard.keyPressVibrate()
+                    florisboard.keyPressSound()
                 }, delayMillis.toLong())
             }
             MotionEvent.ACTION_MOVE -> {
@@ -57,38 +51,34 @@ class EmojiKeyView(
                     val isPointerWithinBounds =
                         emojiKeyboardView.popupManager.propagateMotionEvent(this, event)
                     if (!isPointerWithinBounds) {
-                        //emojiKeyboardView.dismissActiveKeyViewReference()
+                        emojiKeyboardView.dismissKeyView(this)
                     }
                 } else {
                     if (event.x < -0.1f * measuredWidth || event.x > 1.1f * measuredWidth
-                        || event.y < -0.35f * measuredHeight || event.y > 1.35f * measuredHeight
+                        || event.y < -0.1f * measuredHeight || event.y > 1.1f * measuredHeight
                     ) {
-                        //emojiKeyboardView.dismissActiveKeyViewReference()
+                        emojiKeyboardView.dismissKeyView(this)
                     }
                 }
             }
             MotionEvent.ACTION_UP,
             MotionEvent.ACTION_CANCEL -> {
-                isKeyPressed = false
                 osHandler.removeCallbacksAndMessages(null)
                 val retData = emojiKeyboardView.popupManager.getActiveEmojiKeyData(this)
                 emojiKeyboardView.popupManager.hide()
-                if (event.actionMasked != MotionEvent.ACTION_CANCEL && retData != null) {
+                if (event.actionMasked != MotionEvent.ACTION_CANCEL && retData != null && !isCancelled) {
+                    if (!emojiKeyboardView.isScrollBlocked) {
+                        florisboard.keyPressVibrate()
+                        florisboard.keyPressSound()
+                    }
                     florisboard.mediaInputManager.sendEmojiKeyPress(retData)
                     performClick()
+                }
+                if (event.actionMasked == MotionEvent.ACTION_CANCEL) {
+                    isCancelled = true
                 }
             }
         }
         return true
-    }
-
-    /**
-     * Updates the background depending on [isKeyPressed].
-     */
-    private fun updateKeyPressedBackground() {
-        setBackgroundTintColor(this, when {
-            isKeyPressed -> R.attr.emoji_key_bgColorPressed
-            else -> R.attr.emoji_key_bgColor
-        })
     }
 }

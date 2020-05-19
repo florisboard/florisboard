@@ -22,10 +22,7 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.PopupWindow
-import android.widget.TextView
+import android.widget.*
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.flexbox.JustifyContent
 import dev.patrickgold.florisboard.R
@@ -218,7 +215,12 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
         }
 
         // Anchor left if keyView is in left half of keyboardView, else anchor right
-        anchorLeft = keyView.x < keyboardView.measuredWidth / 2
+        if (keyView is KeyView) {
+            anchorLeft = keyView.x < keyboardView.measuredWidth / 2
+        } else if (keyView is EmojiKeyView) {
+            val hsv = (keyView.parent.parent as HorizontalScrollView)
+            anchorLeft = (keyView.x - hsv.scrollX) < keyboardView.measuredWidth / 2
+        }
         anchorRight = !anchorLeft
 
         // Determine key counts for each row

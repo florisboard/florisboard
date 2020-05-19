@@ -327,11 +327,12 @@ class TextInputManager(
         val ic = florisboard.currentInputConnection
         ic.beginBatchEdit()
         resetComposingText()
-        if (isTextSelected) {
-            ic.commitText("", 1)
-        } else {
-            ic.deleteSurroundingText(1, 0)
-        }
+        ic.sendKeyEvent(
+            KeyEvent(
+                KeyEvent.ACTION_DOWN,
+                KeyEvent.KEYCODE_DEL
+            )
+        )
         ic.endBatchEdit()
     }
 
