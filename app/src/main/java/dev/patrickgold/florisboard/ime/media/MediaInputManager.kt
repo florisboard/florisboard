@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.ViewFlipper
 import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
@@ -34,13 +35,16 @@ import java.util.*
 class MediaInputManager(private val florisboard: FlorisBoard) : FlorisBoard.EventListener {
 
     private var activeTab: Tab? = null
-    private var mediaViewGroup: LinearLayout? = null
+    private var mediaViewFlipper: ViewFlipper? = null
     private var tabLayout: TabLayout? = null
     private val tabViews = EnumMap<Tab, LinearLayout>(Tab::class.java)
+
+    var mediaViewGroup: LinearLayout? = null
 
     override fun onCreateInputView() {
         val rootViewGroup = florisboard.rootViewGroup ?: return
         mediaViewGroup = rootViewGroup.findViewById(R.id.media_input)
+        mediaViewFlipper = rootViewGroup.findViewById(R.id.media_input_view_flipper)
 
         // Init bottom buttons
         rootViewGroup.findViewById<Button>(R.id.media_input_switch_to_text_input_button)
@@ -63,13 +67,6 @@ class MediaInputManager(private val florisboard: FlorisBoard) : FlorisBoard.Even
         })
 
         setActiveTab(Tab.HOME)
-    }
-
-    fun show() {
-        mediaViewGroup?.visibility = View.VISIBLE
-    }
-    fun hide() {
-        mediaViewGroup?.visibility = View.GONE
     }
 
     private fun onBottomButtonClick(v: View) {
@@ -101,10 +98,10 @@ class MediaInputManager(private val florisboard: FlorisBoard) : FlorisBoard.Even
         if (!tabViews.containsKey(newActiveTab)) {
             val tabView = createTabViewFor(newActiveTab)
             tabViews[newActiveTab] = tabView
-            mediaViewGroup?.addView(tabView, 1)
+            mediaViewFlipper?.addView(tabView)
         }
-        tabViews[activeTab]?.visibility = View.GONE
-        tabViews[newActiveTab]?.visibility = View.VISIBLE
+        mediaViewFlipper?.displayedChild =
+            mediaViewFlipper?.indexOfChild(tabViews[newActiveTab]) ?: 0
         activeTab = newActiveTab
     }
 

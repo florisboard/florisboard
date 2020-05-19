@@ -21,6 +21,7 @@ import android.content.res.Configuration
 import android.graphics.drawable.ColorDrawable
 import android.view.MotionEvent
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.core.view.children
 import com.google.android.flexbox.FlexboxLayout
@@ -64,9 +65,9 @@ class KeyboardView(
      */
     private fun buildLayout() {
         destroyLayout()
-        this.layoutParams = LayoutParams(
-            LayoutParams.MATCH_PARENT,
-            LayoutParams.WRAP_CONTENT
+        this.layoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
         )
         val layout = computedLayout
         if (layout != null) {

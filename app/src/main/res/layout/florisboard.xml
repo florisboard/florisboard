@@ -31,9 +31,18 @@
 
     </LinearLayout>
 
-    <include layout="@layout/text_input_layout" />
+    <ViewFlipper
+        android:id="@+id/main_view_flipper"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.0"
+        android:measureAllChildren="false">
 
-    <include layout="@layout/media_input_layout" android:visibility="gone" />
+        <include layout="@layout/text_input_layout" />
+
+        <include layout="@layout/media_input_layout" />
+
+    </ViewFlipper>
 
     <LinearLayout
         android:id="@+id/one_handed_ctrl_panel_end"

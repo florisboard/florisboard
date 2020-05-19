@@ -1,10 +1,11 @@
 package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.annotation.SuppressLint
-import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
+import android.widget.ViewFlipper
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayout
@@ -19,6 +20,7 @@ class EmojiKeyboardView(
 ) : LinearLayout(florisboard.context) {
 
     private var activeCategory: EmojiCategory = EmojiCategory.SMILEYS_EMOTION
+    private var emojiViewFlipper: ViewFlipper
     // TODO: run this task async (coroutines?) to avoid blocking the ui thread
     private val layouts =
         parseRawEmojiSpecsFile(context, "ime/emoji/emoji-test.txt")
@@ -27,10 +29,17 @@ class EmojiKeyboardView(
     init {
         orientation = VERTICAL
 
+        emojiViewFlipper = ViewFlipper(context)
+        emojiViewFlipper.layoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
+        )
+        emojiViewFlipper.measureAllChildren = false
+        addView(emojiViewFlipper)
+
         for (category in EmojiCategory.values()) {
             val hsv = buildLayoutForCategory(category)
             uiLayouts[category] = hsv
-            addView(hsv)
+            emojiViewFlipper.addView(hsv)
         }
 
         val tabs = ViewGroup.inflate(context, R.layout.media_input_emoji_tabs, null) as TabLayout
@@ -63,7 +72,6 @@ class EmojiKeyboardView(
         val emojiKeyHeight = resources.getDimension(R.dimen.emoji_key_height).toInt()
         val hsv = HorizontalScrollView(context)
         hsv.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-        hsv.visibility = View.GONE
         val flexboxLayout = FlexboxLayout(context)
         flexboxLayout.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, emojiKeyHeight * 3)
         flexboxLayout.flexDirection = FlexDirection.COLUMN
@@ -80,8 +88,8 @@ class EmojiKeyboardView(
     }
 
     fun setActiveCategory(newActiveCategory: EmojiCategory) {
-        uiLayouts[activeCategory]?.visibility = View.GONE
-        uiLayouts[newActiveCategory]?.visibility = View.VISIBLE
+        emojiViewFlipper.displayedChild =
+            emojiViewFlipper.indexOfChild(uiLayouts[newActiveCategory])
         activeCategory = newActiveCategory
     }
 }

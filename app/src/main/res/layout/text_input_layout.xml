@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/text_input"
-    android:layout_width="0dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_weight="1"
     android:orientation="vertical">
@@ -25,6 +25,11 @@
 
     </LinearLayout>
 
-    <!-- KeyboardViews will be inserted here dynamically -->
+    <!-- KeyboardViews will be inserted in ViewFlipper below dynamically -->
+    <ViewFlipper
+        android:id="@+id/text_input_view_flipper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:measureAllChildren="false"/>
 
 </LinearLayout>

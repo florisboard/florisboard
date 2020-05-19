@@ -11,6 +11,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.ViewFlipper
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.media.MediaInputManager
@@ -30,6 +31,7 @@ class FlorisBoard : InputMethodService() {
         private set
     val context: Context
         get() = rootViewGroup?.context ?: this
+    var mainViewFlipper: ViewFlipper? = null
     var prefs: PrefHelper? = null
         private set
     var rootViewGroup: LinearLayout? = null
@@ -45,6 +47,8 @@ class FlorisBoard : InputMethodService() {
 
         rootViewGroup = layoutInflater.inflate(R.layout.florisboard, null) as LinearLayout
 
+        mainViewFlipper = rootViewGroup?.findViewById(R.id.main_view_flipper)
+
         prefs = PrefHelper(this, PreferenceManager.getDefaultSharedPreferences(this))
         prefs!!.sync()
 
@@ -54,6 +58,8 @@ class FlorisBoard : InputMethodService() {
 
         textInputManager.onCreateInputView()
         mediaInputManager.onCreateInputView()
+
+        setActiveInput(R.id.text_input)
 
         return rootViewGroup
     }
@@ -149,12 +155,12 @@ class FlorisBoard : InputMethodService() {
     fun setActiveInput(type: Int) {
         when (type) {
             R.id.text_input -> {
-                textInputManager.show()
-                mediaInputManager.hide()
+                mainViewFlipper?.displayedChild =
+                    mainViewFlipper?.indexOfChild(textInputManager.textViewGroup) ?: 0
             }
             R.id.media_input -> {
-                textInputManager.hide()
-                mediaInputManager.show()
+                mainViewFlipper?.displayedChild =
+                    mainViewFlipper?.indexOfChild(mediaInputManager.mediaViewGroup) ?: 0
             }
         }
     }

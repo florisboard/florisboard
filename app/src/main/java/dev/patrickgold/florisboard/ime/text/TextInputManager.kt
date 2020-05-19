@@ -27,6 +27,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedTextRequest
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
+import android.widget.ViewFlipper
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -60,7 +61,8 @@ class TextInputManager(
     private var activeKeyboardMode: KeyboardMode? = null
     private val keyboardViews = EnumMap<KeyboardMode, KeyboardView>(KeyboardMode::class.java)
     private val osHandler = Handler()
-    private var textViewGroup: LinearLayout? = null
+    private var textViewFlipper: ViewFlipper? = null
+    var textViewGroup: LinearLayout? = null
 
     var keyVariation: KeyVariation = KeyVariation.NORMAL
     val layoutManager = LayoutManager(florisboard)
@@ -89,11 +91,11 @@ class TextInputManager(
         layoutManager.autoFetchAssociationsFromPrefs()
 
         textViewGroup = florisboard.rootViewGroup?.findViewById(R.id.text_input)
-        textViewGroup?.addView(smartbarManager.createSmartbarView())
+        textViewGroup?.addView(smartbarManager.createSmartbarView(), 0)
+        textViewFlipper = textViewGroup?.findViewById(R.id.text_input_view_flipper)
         for (mode in KeyboardMode.values()) {
             val keyboardView = KeyboardView(florisboard)
-            textViewGroup?.addView(keyboardView)
-            keyboardView.visibility = View.GONE
+            textViewFlipper?.addView(keyboardView)
             keyboardView.setKeyboardMode(mode)
             keyboardViews[mode] = keyboardView
         }
@@ -165,20 +167,6 @@ class TextInputManager(
     }
 
     /**
-     * Shows the text input UI.
-     */
-    fun show() {
-        textViewGroup?.visibility = View.VISIBLE
-    }
-
-    /**
-     * Hides the text input UI.
-     */
-    fun hide() {
-        textViewGroup?.visibility = View.GONE
-    }
-
-    /**
      * Gets [activeKeyboardMode].
      *
      * @return If null [KeyboardMode.CHARACTERS], else [activeKeyboardMode].
@@ -191,8 +179,8 @@ class TextInputManager(
      * Sets [activeKeyboardMode] and updates the [SmartbarManager.activeContainerId].
      */
     private fun setActiveKeyboardMode(mode: KeyboardMode) {
-        keyboardViews[activeKeyboardMode]?.visibility = View.GONE
-        keyboardViews[mode]?.visibility = View.VISIBLE
+        textViewFlipper?.displayedChild =
+            textViewFlipper?.indexOfChild(keyboardViews[mode]) ?: 0
         keyboardViews[mode]?.updateVariation()
         activeKeyboardMode = mode
         smartbarManager.activeContainerId = smartbarManager.getPreferredContainerId()
