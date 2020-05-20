@@ -66,7 +66,13 @@ class MediaInputManager(private val florisboard: FlorisBoard) : FlorisBoard.Even
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
 
-        setActiveTab(Tab.HOME)
+        for (tab in Tab.values()) {
+            val tabView = createTabViewFor(tab)
+            tabViews[tab] = tabView
+            mediaViewFlipper?.addView(tabView)
+        }
+
+        tabLayout?.selectTab(tabLayout?.getTabAt(1))
     }
 
     private fun onBottomButtonClick(v: View) {
@@ -95,11 +101,6 @@ class MediaInputManager(private val florisboard: FlorisBoard) : FlorisBoard.Even
     }
 
     fun setActiveTab(newActiveTab: Tab) {
-        if (!tabViews.containsKey(newActiveTab)) {
-            val tabView = createTabViewFor(newActiveTab)
-            tabViews[newActiveTab] = tabView
-            mediaViewFlipper?.addView(tabView)
-        }
         mediaViewFlipper?.displayedChild =
             mediaViewFlipper?.indexOfChild(tabViews[newActiveTab]) ?: 0
         activeTab = newActiveTab

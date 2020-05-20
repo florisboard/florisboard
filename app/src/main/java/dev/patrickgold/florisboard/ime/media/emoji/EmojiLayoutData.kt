@@ -29,6 +29,8 @@ private const val BALD                      = "1F9B3"
 private val NAME_JUNK_SPLIT_REGEX   = "E([0-9]+)\\.([0-9]+)\\s+".toRegex()
 private val CODE_POINT_REGEX        = "([a-fA-F0-9]+)\\s".toRegex()
 
+typealias EmojiLayoutDataMap = EnumMap<EmojiCategory, MutableList<EmojiKeyData>>
+
 private fun listStringToListInt(list: List<String>): List<Int> {
     val ret: MutableList<Int> = mutableListOf()
     for (num in list) {
@@ -41,8 +43,8 @@ private fun listStringToListInt(list: List<String>): List<Int> {
 
 fun parseRawEmojiSpecsFile(
     context: Context, path: String
-): EnumMap<EmojiCategory, MutableList<EmojiKeyData>> {
-    val layouts = EnumMap<EmojiCategory, MutableList<EmojiKeyData>>(EmojiCategory::class.java)
+): EmojiLayoutDataMap {
+    val layouts = EmojiLayoutDataMap(EmojiCategory::class.java)
     for (category in EmojiCategory.values()) {
         layouts[category] = mutableListOf()
     }

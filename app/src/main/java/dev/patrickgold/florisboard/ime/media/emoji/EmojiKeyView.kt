@@ -6,7 +6,6 @@ import android.util.TypedValue
 import android.view.Gravity
 import android.view.MotionEvent
 import android.widget.HorizontalScrollView
-import androidx.core.content.ContextCompat
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 
@@ -15,13 +14,13 @@ class EmojiKeyView(
     private val florisboard: FlorisBoard,
     private val emojiKeyboardView: EmojiKeyboardView,
     val data: EmojiKeyData
-) : androidx.appcompat.widget.AppCompatButton(florisboard.context) {
+) : androidx.appcompat.widget.AppCompatTextView(florisboard.context) {
 
     private var isCancelled: Boolean = false
-    private val osHandler = Handler()
+    private var osHandler: Handler? = null
 
     init {
-        setBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
+        background = null
         gravity = Gravity.CENTER
         setPadding(0, 0, 0, 0)
         setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.emoji_key_textSize))
@@ -37,7 +36,10 @@ class EmojiKeyView(
             MotionEvent.ACTION_DOWN -> {
                 isCancelled = false
                 val delayMillis = florisboard.prefs!!.longPressDelay
-                osHandler.postDelayed({
+                if (osHandler == null) {
+                    osHandler = Handler()
+                }
+                osHandler?.postDelayed({
                     (parent.parent as HorizontalScrollView).requestDisallowInterceptTouchEvent(true)
                     emojiKeyboardView.isScrollBlocked = true
                     emojiKeyboardView.popupManager.show(this)
@@ -63,7 +65,7 @@ class EmojiKeyView(
             }
             MotionEvent.ACTION_UP,
             MotionEvent.ACTION_CANCEL -> {
-                osHandler.removeCallbacksAndMessages(null)
+                osHandler?.removeCallbacksAndMessages(null)
                 val retData = emojiKeyboardView.popupManager.getActiveEmojiKeyData(this)
                 emojiKeyboardView.popupManager.hide()
                 if (event.actionMasked != MotionEvent.ACTION_CANCEL && retData != null && !isCancelled) {

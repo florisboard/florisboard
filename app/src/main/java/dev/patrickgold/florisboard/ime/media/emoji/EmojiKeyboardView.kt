@@ -14,20 +14,19 @@ import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
+import kotlinx.coroutines.*
 import java.util.*
 
 @SuppressLint("ViewConstructor")
 class EmojiKeyboardView(
     private val florisboard: FlorisBoard
-) : LinearLayout(florisboard.context) {
+) : LinearLayout(florisboard.context), CoroutineScope by MainScope() {
 
     private var activeCategory: EmojiCategory = EmojiCategory.SMILEYS_EMOTION
     private var emojiViewFlipper: ViewFlipper
     private val emojiKeyWidth = resources.getDimension(R.dimen.emoji_key_width).toInt()
     private val emojiKeyHeight = resources.getDimension(R.dimen.emoji_key_height).toInt()
-    // TODO: run this task async (coroutines?) to avoid blocking the ui thread
-    private val layouts =
-        parseRawEmojiSpecsFile(context, "ime/emoji/emoji-test.txt")
+    private var layouts: EmojiLayoutDataMap? = null
     private val uiLayouts = EnumMap<EmojiCategory, HorizontalScrollView>(EmojiCategory::class.java)
 
     var isScrollBlocked: Boolean = false
@@ -42,12 +41,6 @@ class EmojiKeyboardView(
         )
         emojiViewFlipper.measureAllChildren = false
         addView(emojiViewFlipper)
-
-        for (category in EmojiCategory.values()) {
-            val hsv = buildLayoutForCategory(category)
-            uiLayouts[category] = hsv
-            emojiViewFlipper.addView(hsv)
-        }
 
         val tabs = ViewGroup.inflate(context, R.layout.media_input_emoji_tabs, null) as TabLayout
         addView(tabs)
@@ -71,19 +64,37 @@ class EmojiKeyboardView(
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
         })
 
-        setActiveCategory(EmojiCategory.SMILEYS_EMOTION)
+        launch {
+            layouts = withContext(Dispatchers.IO) {
+                parseRawEmojiSpecsFile(context, "ime/emoji/emoji-test.txt")
+            }
+            buildLayout()
+            setActiveCategory(EmojiCategory.SMILEYS_EMOTION)
+        }
+    }
+
+    private suspend fun buildLayout() = withContext(Dispatchers.Default) {
+        for (category in EmojiCategory.values()) {
+            val hsv = buildLayoutForCategory(category)
+            uiLayouts[category] = hsv
+            withContext(Dispatchers.Main) {
+                emojiViewFlipper.addView(hsv)
+            }
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun buildLayoutForCategory(category: EmojiCategory): HorizontalScrollView {
+    private suspend fun buildLayoutForCategory(
+        category: EmojiCategory
+    ): HorizontalScrollView = withContext(Dispatchers.Default) {
         val hsv = HorizontalScrollView(context)
         hsv.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         val flexboxLayout = FlexboxLayout(context)
         flexboxLayout.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, emojiKeyHeight * 3)
         flexboxLayout.flexDirection = FlexDirection.COLUMN
         flexboxLayout.flexWrap = FlexWrap.WRAP
-        for (emojiKeyData in layouts[category].orEmpty()) {
-            val emojiKeyView = EmojiKeyView(florisboard, this, emojiKeyData)
+        for (emojiKeyData in layouts.orEmpty()[category].orEmpty()) {
+            val emojiKeyView = EmojiKeyView(florisboard, this@EmojiKeyboardView, emojiKeyData)
             emojiKeyView.layoutParams = FlexboxLayout.LayoutParams(
                 emojiKeyWidth, emojiKeyHeight
             )
@@ -93,7 +104,7 @@ class EmojiKeyboardView(
             return@setOnTouchListener isScrollBlocked
         }
         hsv.addView(flexboxLayout)
-        return hsv
+        return@withContext hsv
     }
 
     fun setActiveCategory(newActiveCategory: EmojiCategory) {
