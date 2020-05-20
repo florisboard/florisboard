@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2020 Patrick Goldinger
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.annotation.SuppressLint
@@ -9,6 +25,14 @@ import android.widget.HorizontalScrollView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 
+/**
+ * View class for managing the rendering and the events of a single emoji keyboard key.
+ *
+ * @property florisboard Reference to instance of core class [FlorisBoard].
+ * @property emojiKeyboardView Reference to the parent [EmojiKeyboardView].
+ * @property data The data the current key represents. Is used to determine rendering and possible
+ *  behaviour when events occur.
+ */
 @SuppressLint("ViewConstructor")
 class EmojiKeyView(
     private val florisboard: FlorisBoard,
@@ -28,6 +52,13 @@ class EmojiKeyView(
         text = data.getCodePointsAsString()
     }
 
+    /**
+     * Logic for handling a touch event. Cancels the touch event if the pointer moves to far from
+     * popup and/or key.
+     *
+     * @param event The [MotionEvent] that should be processed by this view.
+     * @return If this view has handled the touch event.
+     */
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
@@ -40,7 +71,8 @@ class EmojiKeyView(
                     osHandler = Handler()
                 }
                 osHandler?.postDelayed({
-                    (parent.parent as HorizontalScrollView).requestDisallowInterceptTouchEvent(true)
+                    (parent.parent as HorizontalScrollView)
+                        .requestDisallowInterceptTouchEvent(true)
                     emojiKeyboardView.isScrollBlocked = true
                     emojiKeyboardView.popupManager.show(this)
                     emojiKeyboardView.popupManager.extend(this)
@@ -66,9 +98,11 @@ class EmojiKeyView(
             MotionEvent.ACTION_UP,
             MotionEvent.ACTION_CANCEL -> {
                 osHandler?.removeCallbacksAndMessages(null)
-                val retData = emojiKeyboardView.popupManager.getActiveEmojiKeyData(this)
+                val retData =
+                    emojiKeyboardView.popupManager.getActiveEmojiKeyData(this)
                 emojiKeyboardView.popupManager.hide()
-                if (event.actionMasked != MotionEvent.ACTION_CANCEL && retData != null && !isCancelled) {
+                if (event.actionMasked != MotionEvent.ACTION_CANCEL &&
+                    retData != null && !isCancelled) {
                     if (!emojiKeyboardView.isScrollBlocked) {
                         florisboard.keyPressVibrate()
                         florisboard.keyPressSound()

@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2020 Patrick Goldinger
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.annotation.SuppressLint
@@ -17,6 +33,13 @@ import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
 import kotlinx.coroutines.*
 import java.util.*
 
+/**
+ * Manages the layout creation and touch events for the emoji section of the media context. Parts
+ * of the layout of this view will be generated in coroutines and will therefore not instantly be
+ * visible.
+ *
+ * @property florisboard Reference to instance of core class [FlorisBoard].
+ */
 @SuppressLint("ViewConstructor")
 class EmojiKeyboardView(
     private val florisboard: FlorisBoard
@@ -42,7 +65,8 @@ class EmojiKeyboardView(
         emojiViewFlipper.measureAllChildren = false
         addView(emojiViewFlipper)
 
-        val tabs = ViewGroup.inflate(context, R.layout.media_input_emoji_tabs, null) as TabLayout
+        val tabs =
+            ViewGroup.inflate(context, R.layout.media_input_emoji_tabs, null) as TabLayout
         addView(tabs)
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -73,6 +97,11 @@ class EmojiKeyboardView(
         }
     }
 
+    /**
+     * Requests the layout for each category and attaches the built layout to [emojiViewFlipper].
+     * This method runs in the [Dispatchers.Default] context and will block the main thread only
+     * when it attaches a built category layout to the view hierarchy.
+     */
     private suspend fun buildLayout() = withContext(Dispatchers.Default) {
         for (category in EmojiCategory.values()) {
             val hsv = buildLayoutForCategory(category)
@@ -83,6 +112,13 @@ class EmojiKeyboardView(
         }
     }
 
+    /**
+     * Builds the layout for a given [category]. This function runs in the [Dispatchers.Default]
+     * context and will not block the main UI thread.
+     *
+     * @param category The category for which a layout should be built.
+     * @return The layout (top-most view is a [HorizontalScrollView]).
+     */
     @SuppressLint("ClickableViewAccessibility")
     private suspend fun buildLayoutForCategory(
         category: EmojiCategory
@@ -90,11 +126,13 @@ class EmojiKeyboardView(
         val hsv = HorizontalScrollView(context)
         hsv.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
         val flexboxLayout = FlexboxLayout(context)
-        flexboxLayout.layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, emojiKeyHeight * 3)
+        flexboxLayout.layoutParams =
+            LayoutParams(LayoutParams.WRAP_CONTENT, emojiKeyHeight * 3)
         flexboxLayout.flexDirection = FlexDirection.COLUMN
         flexboxLayout.flexWrap = FlexWrap.WRAP
         for (emojiKeyData in layouts.orEmpty()[category].orEmpty()) {
-            val emojiKeyView = EmojiKeyView(florisboard, this@EmojiKeyboardView, emojiKeyData)
+            val emojiKeyView =
+                EmojiKeyView(florisboard, this@EmojiKeyboardView, emojiKeyData)
             emojiKeyView.layoutParams = FlexboxLayout.LayoutParams(
                 emojiKeyWidth, emojiKeyHeight
             )
@@ -107,12 +145,24 @@ class EmojiKeyboardView(
         return@withContext hsv
     }
 
+    /**
+     * Sets the [activeCategory] and changes the active view of [emojiViewFlipper] accordingly.
+     *
+     * @param newActiveCategory The new active category.
+     */
     fun setActiveCategory(newActiveCategory: EmojiCategory) {
         emojiViewFlipper.displayedChild =
             emojiViewFlipper.indexOfChild(uiLayouts[newActiveCategory])
         activeCategory = newActiveCategory
     }
 
+    /**
+     * Resets the [isScrollBlocked] flag whenever a [MotionEvent.ACTION_DOWN] occurs. This method
+     * never intercepts any events and thus always returns false.
+     *
+     * @param ev The [MotionEvent] of the current touch event.
+     * @return If this view wants to intercept the touch event. Always returns false here.
+     */
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
         if (ev?.actionMasked == MotionEvent.ACTION_DOWN) {
             isScrollBlocked = false

@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2020 Patrick Goldinger
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.content.Context
@@ -29,8 +45,17 @@ private const val BALD                      = "1F9B3"
 private val NAME_JUNK_SPLIT_REGEX   = "E([0-9]+)\\.([0-9]+)\\s+".toRegex()
 private val CODE_POINT_REGEX        = "([a-fA-F0-9]+)\\s".toRegex()
 
+/**
+ * Type alias for a emoji layout data map.
+ */
 typealias EmojiLayoutDataMap = EnumMap<EmojiCategory, MutableList<EmojiKeyData>>
 
+/**
+ * Converts a mutable list of Strings (which represent a number) to a list of Ints.
+ *
+ * @param list The input list.
+ * @return The converted output list.
+ */
 private fun listStringToListInt(list: List<String>): List<Int> {
     val ret: MutableList<Int> = mutableListOf()
     for (num in list) {
@@ -41,6 +66,16 @@ private fun listStringToListInt(list: List<String>): List<Int> {
     return ret.toList()
 }
 
+/**
+ * Reads the emoji list at the given [path] and returns an parsed [EmojiLayoutDataMap]. If the
+ * given file path does not exist, an empty [EmojiLayoutDataMap] is returned.
+ *
+ * TODO: Fix potential bug where the base version of a emoji is missing and therefore the emoji
+ *       before has like 25 popups...
+ *
+ * @param context The initiating view's context.
+ * @param path The path to the asset file.
+ */
 fun parseRawEmojiSpecsFile(
     context: Context, path: String
 ): EmojiLayoutDataMap {
@@ -126,7 +161,7 @@ fun parseRawEmojiSpecsFile(
     } finally {
         if (reader != null) {
             try {
-                reader.close();
+                reader.close()
             } catch (e: IOException) {
                 //log the exception
             }
