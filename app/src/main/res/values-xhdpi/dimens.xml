@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="key_width">33dp</dimen>
-    <dimen name="key_height">40dp</dimen>
+    <dimen name="key_height">42dp</dimen>
     <dimen name="key_marginH">2dp</dimen>
     <dimen name="key_marginV">5dp</dimen>
     <dimen name="key_borderRadius">6dp</dimen>
@@ -18,16 +18,16 @@
 
     <dimen name="keyboard_row_marginH">2dp</dimen>
 
-    <dimen name="emoji_key_width">40dp</dimen>
-    <dimen name="emoji_key_height">40dp</dimen>
+    <dimen name="emoji_key_width">@dimen/key_height</dimen>
+    <dimen name="emoji_key_height">@dimen/key_height</dimen>
     <dimen name="emoji_key_textSize">22sp</dimen>
 
     <dimen name="media_bottom_button_width">60dp</dimen>
-    <dimen name="media_bottom_button_height">40dp</dimen>
+    <dimen name="media_bottom_button_height">@dimen/key_height</dimen>
 
     <dimen name="one_handed_width">50dp</dimen>
-    <dimen name="one_handed_button_width">50dp</dimen>
-    <dimen name="one_handed_button_height">50dp</dimen>
+    <dimen name="one_handed_button_width">@dimen/one_handed_width</dimen>
+    <dimen name="one_handed_button_height">@dimen/one_handed_width</dimen>
 
     <dimen name="smartbar_height">36dp</dimen>
     <dimen name="smartbar_button_width">28dp</dimen>

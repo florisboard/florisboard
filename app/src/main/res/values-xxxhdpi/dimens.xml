@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="key_width">37dp</dimen>
+    <dimen name="key_height">47dp</dimen>
+    <dimen name="key_marginH">2dp</dimen>
+    <dimen name="key_marginV">6dp</dimen>
+    <dimen name="key_borderRadius">6dp</dimen>
+    <dimen name="key_textSize">21sp</dimen>
+    <dimen name="key_numeric_textSize">13sp</dimen>
+
+    <dimen name="key_ic_padding">9dp</dimen>
+
+    <dimen name="key_popup_width">39dp</dimen>
+    <dimen name="key_popup_height">124dp</dimen>
+    <dimen name="key_popup_textSize">24sp</dimen>
+
+    <dimen name="keyboard_preview_height">225dp</dimen>
+
+    <dimen name="keyboard_row_marginH">2dp</dimen>
+
+    <dimen name="emoji_key_width">@dimen/key_height</dimen>
+    <dimen name="emoji_key_height">@dimen/key_height</dimen>
+    <dimen name="emoji_key_textSize">25sp</dimen>
+
+    <dimen name="media_bottom_button_width">68dp</dimen>
+    <dimen name="media_bottom_button_height">@dimen/key_height</dimen>
+
+    <dimen name="one_handed_width">56dp</dimen>
+    <dimen name="one_handed_button_width">@dimen/one_handed_width</dimen>
+    <dimen name="one_handed_button_height">@dimen/one_handed_width</dimen>
+
+    <dimen name="smartbar_height">40dp</dimen>
+    <dimen name="smartbar_button_width">32dp</dimen>
+    <dimen name="smartbar_button_height">32dp</dimen>
+    <dimen name="smartbar_button_margin">4dp</dimen>
+    <dimen name="smartbar_button_padding">6dp</dimen>
+    <dimen name="smartbar_right_empty_space_width">40dp</dimen>
+</resources>
