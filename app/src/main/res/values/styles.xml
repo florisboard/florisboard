@@ -5,6 +5,7 @@
         <item name="android:layout_width">@dimen/one_handed_width</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">0</item>
+        <item name="android:layout_alignParentBottom">true</item>
         <item name="android:background">?attr/one_handed_bgColor</item>
         <item name="android:gravity">center</item>
         <item name="android:orientation">vertical</item>

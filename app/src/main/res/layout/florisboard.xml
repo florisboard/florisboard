@@ -6,8 +6,8 @@
     android:layout_alignParentBottom="true"
     android:orientation="horizontal"
     android:background="?attr/keyboard_bgColor"
-    android:theme="@style/KeyboardTheme.MaterialLight"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    android:theme="@style/KeyboardTheme.MaterialLight">
     
     <LinearLayout
         android:id="@+id/one_handed_ctrl_panel_start"
@@ -36,6 +36,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1.0"
+
         android:measureAllChildren="false">
 
         <include layout="@layout/text_input_layout" />
