@@ -17,13 +17,18 @@
 package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.annotation.SuppressLint
+import android.graphics.Canvas
+import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.MotionEvent
 import android.widget.HorizontalScrollView
+import androidx.core.graphics.BlendModeColorFilterCompat
+import androidx.core.graphics.BlendModeCompat
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.util.getColorFromAttr
 
 /**
  * View class for managing the rendering and the events of a single emoji keyboard key.
@@ -42,12 +47,20 @@ class EmojiKeyView(
 
     private var isCancelled: Boolean = false
     private var osHandler: Handler? = null
+    private var triangleDrawable: Drawable? = null
 
     init {
         background = null
         gravity = Gravity.CENTER
         setPadding(0, 0, 0, 0)
         setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.emoji_key_textSize))
+
+        triangleDrawable = resources.getDrawable(
+            R.drawable.triangle_bottom_right, context.theme
+        )
+        triangleDrawable?.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+            getColorFromAttr(context, R.attr.emoji_key_fgColor), BlendModeCompat.SRC_ATOP
+        )
 
         text = data.getCodePointsAsString()
     }
@@ -116,5 +129,21 @@ class EmojiKeyView(
             }
         }
         return true
+    }
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+
+        canvas ?: return
+
+        if (data.popup.isNotEmpty()) {
+            triangleDrawable?.setBounds(
+                (measuredWidth * 0.75f).toInt(),
+                (measuredHeight * 0.75f).toInt(),
+                (measuredWidth * 0.85f).toInt(),
+                (measuredHeight * 0.85f).toInt()
+            )
+            triangleDrawable?.draw(canvas)
+        }
     }
 }

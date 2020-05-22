@@ -17,6 +17,9 @@
 package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.content.Context
+import android.graphics.Paint
+import android.graphics.Typeface
+import androidx.core.graphics.PaintCompat
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -88,6 +91,9 @@ fun parseRawEmojiSpecsFile(
         reader = BufferedReader(
             InputStreamReader(context.assets.open(path))
         )
+        val paint = Paint().apply {
+            typeface = Typeface.DEFAULT
+        }
         var ec: EmojiCategory? = null
         var lastKey: EmojiKeyData? = null
         var skipUntilNextGroup = true
@@ -125,31 +131,38 @@ fun parseRawEmojiSpecsFile(
                             // Only fully-qualified emojis are accepted
                             val dataCPs = dataC.split(" ")
                             val key = EmojiKeyData(listStringToListInt(dataCPs), dataN)
-                            if (dataCPs.size > 1) {
-                                // Emoji COULD be an extension
-                                when (dataCPs[1]) {
-                                    LIGHT_SKIN_TONE,
-                                    MEDIUM_LIGHT_SKIN_TONE,
-                                    MEDIUM_SKIN_TONE,
-                                    MEDIUM_DARK_SKIN_TONE,
-                                    DARK_SKIN_TONE,
-                                    RED_HAIR,
-                                    CURLY_HAIR,
-                                    WHITE_HAIR,
-                                    BALD -> {
-                                        // Emoji is extension, add it as popup to last one
-                                        lastKey?.popup?.add(key)
+                            // Check if system font can render the emoji, else skip it as it makes
+                            //  no include it in the emoji keyboard as it will be the default
+                            //  glyph not found box.
+                            if (PaintCompat.hasGlyph(paint, key.getCodePointsAsString())) {
+                                if (dataCPs.size > 1) {
+                                    // Emoji COULD be an extension
+                                    when (dataCPs[1]) {
+                                        LIGHT_SKIN_TONE,
+                                        MEDIUM_LIGHT_SKIN_TONE,
+                                        MEDIUM_SKIN_TONE,
+                                        MEDIUM_DARK_SKIN_TONE,
+                                        DARK_SKIN_TONE,
+                                        RED_HAIR,
+                                        CURLY_HAIR,
+                                        WHITE_HAIR,
+                                        BALD -> {
+                                            // Emoji is extension, add it as popup to last one
+                                            lastKey?.popup?.add(key)
+                                        }
+                                        else -> {
+                                            // Emoji is standalone
+                                            layouts[ec]?.add(key)
+                                            lastKey = key
+                                        }
                                     }
-                                    else -> {
-                                        // Emoji is standalone
-                                        layouts[ec]?.add(key)
-                                        lastKey = key
-                                    }
+                                } else {
+                                    // Emoji is standalone
+                                    layouts[ec]?.add(key)
+                                    lastKey = key
                                 }
                             } else {
-                                // Emoji is standalone
-                                layouts[ec]?.add(key)
-                                lastKey = key
+                                lastKey = null
                             }
                         }
                     }

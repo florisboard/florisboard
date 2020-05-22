@@ -26,6 +26,7 @@
 
         <item name="emoji_key_bgColor">?attr/keyboard_bgColor</item>
         <item name="emoji_key_bgColorPressed">?attr/key_popup_extended_bgColorActive</item>
+        <item name="emoji_key_fgColor">#898989</item>
 
         <item name="one_handed_bgColor">#e8f5e9</item>
         <item name="one_handed_button_bgColor">@android:color/transparent</item>

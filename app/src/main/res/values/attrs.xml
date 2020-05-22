@@ -25,6 +25,7 @@
 
         <attr name="emoji_key_bgColor" format="color" />
         <attr name="emoji_key_bgColorPressed" format="color" />
+        <attr name="emoji_key_fgColor" format="color" />
 
         <attr name="one_handed_bgColor" format="color" />
         <attr name="one_handed_button_bgColor" format="color" />
