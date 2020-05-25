@@ -65,6 +65,9 @@ class SmartbarManager(
     }
     private val quickActionOnClickListener = View.OnClickListener { v ->
         when (v.id) {
+            R.id.quick_action_switch_to_media_context -> {
+                florisboard.setActiveInput(R.id.media_input)
+            }
             R.id.quick_action_open_settings -> {
                 val i = Intent(florisboard, SettingsMainActivity::class.java)
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

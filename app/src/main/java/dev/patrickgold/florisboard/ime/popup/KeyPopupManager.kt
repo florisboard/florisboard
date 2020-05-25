@@ -63,8 +63,8 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
         get() = windowExt.isShowing
 
     init {
-        keyPopupWidth = keyboardView.resources.getDimension(R.dimen.key_popup_width).toInt()
-        keyPopupHeight = keyboardView.resources.getDimension(R.dimen.key_popup_width).toInt()
+        keyPopupWidth = keyboardView.resources.getDimension(R.dimen.key_width).toInt()
+        keyPopupHeight = keyboardView.resources.getDimension(R.dimen.key_height).toInt()
         popupView = View.inflate(
             keyboardView.context,
             R.layout.key_popup, null

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/smartbar"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/smartbar_height"
+    android:layout_height="wrap_content"
     android:background="?attr/smartbar_bgColor"
     tools:ignore="NestedWeights">
 
@@ -43,15 +43,21 @@
         android:visibility="gone">
 
         <ImageButton
+            android:id="@+id/quick_action_switch_to_media_context"
+            style="@style/SmartbarQuickAction"
+            android:contentDescription="@string/smartbar__quick_action__switch_to_media_context"
+            android:src="@drawable/ic_sentiment_satisfied" />
+
+        <ImageButton
             android:id="@+id/quick_action_open_settings"
             style="@style/SmartbarQuickAction"
-            android:contentDescription="TODO"
+            android:contentDescription="@string/smartbar__quick_action__open_settings"
             android:src="@drawable/ic_settings" />
 
         <ImageButton
             android:id="@+id/quick_action_one_handed_toggle"
             style="@style/SmartbarQuickAction"
-            android:contentDescription="TODO"
+            android:contentDescription="@string/smartbar__quick_action__one_handed_mode"
             android:src="@drawable/ic_keyboard_arrow_right" />
 
     </LinearLayout>
@@ -114,9 +120,10 @@
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="@dimen/smartbar_right_empty_space_width"
-        android:layout_height="match_parent"
+    <View
+        android:layout_width="@dimen/smartbar_button_width"
+        android:layout_height="@dimen/smartbar_button_height"
+        android:layout_margin="@dimen/smartbar_button_margin"
         android:visibility="invisible" />
 
 </LinearLayout>

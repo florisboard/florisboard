@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.tabs.TabLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/media_input_emoji_tabs"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:tabIndicator="@drawable/media_tab_indicator"
+    app:tabIndicatorColor="?attr/app_colorAccent"
+    app:tabIndicatorFullWidth="false"
+    app:tabIndicatorHeight="@dimen/media_tab_indicator_height">
 
     <com.google.android.material.tabs.TabItem
         android:layout_width="wrap_content"
