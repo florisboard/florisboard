@@ -38,20 +38,32 @@
     <string name="settings__menu">More options</string>
     <string name="settings__menu_about">About</string>
     <string name="settings__menu_help">Help &amp; feedback</string>
+    <string name="settings__navigation__home">Home</string>
+    <string name="settings__navigation__keyboard">Keyboard</string>
+    <string name="settings__navigation__looknfeel">Look &amp; feel</string>
+    <string name="settings__navigation__gestures">Gestures</string>
+    <string name="settings__navigation__advanced">Advanced</string>
+
+    <string name="settings__home__title">Welcome to %s</string>
+
+    <string name="settings__keyboard__title">Keyboard &amp; Input</string>
+    <string name="pref__keyboard__group_text_correction__label">Text correction</string>
+
+    <string name="settings__looknfeel__title">Look &amp; feel</string>
+    <string name="pref__looknfeel__group_layout__label">Layout</string>
+    <string name="pref__looknfeel__height_factor__label">Keyboard height</string>
+    <string name="pref__looknfeel__one_handed_mode__label">One-handed mode</string>
+    <string name="pref__looknfeel__group_keypress__label">Key press</string>
+    <string name="pref__looknfeel__long_press_delay__label">Long key press delay</string>
+    <string name="pref__looknfeel__sound_enabled__label">Sound on key press</string>
+    <string name="pref__looknfeel__sound_volume__label">Sound volume on key press</string>
+    <string name="pref__looknfeel__vibration_enabled__label">Vibrate on key press</string>
+    <string name="pref__looknfeel__vibration_strength__label">Vibration strength on key press</string>
+
+    <string name="settings__gestures__title">Gestures</string>
 
     <string name="settings__advanced__title">Advanced</string>
     <string name="pref__advanced__show_app_icon__label">Show app icon in launcher</string>
-
-    <string name="settings__keyboard__title">Keyboard preferences</string>
-    <string name="pref__keyboard__group_layout__label">Layout</string>
-    <string name="pref__keyboard__group_keypress__label">Key press</string>
-    <string name="pref__keyboard__height_factor__label">Keyboard height</string>
-    <string name="pref__keyboard__long_press_delay__label">Long key press delay</string>
-    <string name="pref__keyboard__one_handed_mode__label">One-handed mode</string>
-    <string name="pref__keyboard__sound_enabled__label">Sound on key press</string>
-    <string name="pref__keyboard__sound_volume__label">Sound volume on key press</string>
-    <string name="pref__keyboard__vibration_enabled__label">Vibrate on key press</string>
-    <string name="pref__keyboard__vibration_strength__label">Vibration strength on key press</string>
 
     <!-- About UI strings -->
     <string name="about__title">About</string>

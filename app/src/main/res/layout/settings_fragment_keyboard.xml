@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        style="@style/SettingsCardView"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TODO: implement language and layout selection" />
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Must be RelativeLayout, because it blocks RecyclerView to create a second scrollbar -->
+    <RelativeLayout
+        android:id="@+id/settings__keyboard__frame_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

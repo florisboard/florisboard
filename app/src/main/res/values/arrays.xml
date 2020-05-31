@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="pref__keyboard__height_factor__entries">
+    <string-array name="pref__looknfeel__height_factor__entries">
         <item>Extra-short</item>
         <item>Short</item>
         <item>Mid-short</item>
@@ -9,7 +9,7 @@
         <item>Tall</item>
         <item>Extra-tall</item>
     </string-array>
-    <string-array name="pref__keyboard__height_factor__values">
+    <string-array name="pref__looknfeel__height_factor__values">
         <item>extra_short</item>
         <item>short</item>
         <item>mid_short</item>
@@ -19,12 +19,12 @@
         <item>extra_tall</item>
     </string-array>
 
-    <string-array name="pref__keyboard__one_handed_mode__entries">
+    <string-array name="pref__looknfeel__one_handed_mode__entries">
         <item>Off</item>
         <item>Right-handed mode</item>
         <item>Left-handed mode</item>
     </string-array>
-    <string-array name="pref__keyboard__one_handed_mode__values">
+    <string-array name="pref__looknfeel__one_handed_mode__values">
         <item>off</item>
         <item>end</item>
         <item>start</item>

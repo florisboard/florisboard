@@ -44,8 +44,13 @@
         <item name="smartbar_divider_bgColor">#20000000</item>
     </style>
 
-    <style name="SettingsTheme.Light" parent="Theme.AppCompat.Light">
-        <!---->
+    <style name="SettingsTheme" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="SettingsTheme.Light">
+        <item name="cardView_bgColor">#fff</item>
+        <item name="cardView_fgColor">#675</item>
     </style>
 
 </resources>

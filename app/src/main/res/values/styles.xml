@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
+<resources xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <style name="OneHandedPanel">
         <item name="android:layout_width">@dimen/one_handed_width</item>
@@ -65,6 +66,18 @@
         <item name="android:paddingStart">@dimen/smartbar_qat_button_padding_start</item>
         <item name="android:textOff" />
         <item name="android:textOn" />
+    </style>
+
+    <style name="SettingsCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+        <item name="contentPadding">8dp</item>
+        <item name="cardBackgroundColor">?attr/cardView_bgColor</item>
+        <item name="cardCornerRadius">4dp</item>
     </style>
 
 </resources>

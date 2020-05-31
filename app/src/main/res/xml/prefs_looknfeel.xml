@@ -1,0 +1,82 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__looknfeel__group_layout__label">
+
+        <ListPreference
+            android:defaultValue="off"
+            app:entries="@array/pref__looknfeel__one_handed_mode__entries"
+            app:entryValues="@array/pref__looknfeel__one_handed_mode__values"
+            app:key="looknfeel__one_handed_mode"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__looknfeel__one_handed_mode__label"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            android:defaultValue="normal"
+            app:entries="@array/pref__looknfeel__height_factor__entries"
+            app:entryValues="@array/pref__looknfeel__height_factor__values"
+            app:key="looknfeel__height_factor"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__looknfeel__height_factor__label"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__looknfeel__group_keypress__label">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="looknfeel__sound_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__looknfeel__sound_enabled__label" />
+
+        <SeekBarPreference
+            android:defaultValue="0"
+            app:dependency="looknfeel__sound_enabled"
+            app:key="looknfeel__sound_volume"
+            app:min="0"
+            android:max="100"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__looknfeel__sound_volume__label"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="looknfeel__vibration_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__looknfeel__vibration_enabled__label" />
+
+        <SeekBarPreference
+            android:defaultValue="0"
+            app:dependency="looknfeel__vibration_enabled"
+            app:key="looknfeel__vibration_strength"
+            app:min="0"
+            android:max="100"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__looknfeel__vibration_strength__label"
+            app:seekBarIncrement="1"
+            app:showSeekBarValue="true"
+            app:useSimpleSummaryProvider="true" />
+
+        <SeekBarPreference
+            android:defaultValue="300"
+            app:key="looknfeel__long_press_delay"
+            app:min="100"
+            android:max="700"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__looknfeel__long_press_delay__label"
+            app:seekBarIncrement="10"
+            app:showSeekBarValue="true"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

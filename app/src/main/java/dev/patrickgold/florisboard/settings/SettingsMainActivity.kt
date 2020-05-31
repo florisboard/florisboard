@@ -5,68 +5,88 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
+import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.util.hideAppIcon
 import dev.patrickgold.florisboard.util.showAppIcon
 
-private const val TITLE_TAG = "SETTINGS_TITLE_TAG"
+private const val SELECTED_ITEM_ID = "SELECTED_ITEM_ID"
 
 class SettingsMainActivity : AppCompatActivity(),
-    PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
+    BottomNavigationView.OnNavigationItemSelectedListener {
+
+    private lateinit var navigationView: BottomNavigationView
+    private lateinit var scrollView: ScrollView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
-        if (savedInstanceState == null) {
-            supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.settings, PrefsFragment())
-                .commit()
+
+        navigationView = findViewById(R.id.settings__navigation)
+        navigationView.setOnNavigationItemSelectedListener(this)
+
+        scrollView = findViewById(R.id.settings__scroll_view)
+
+        if (savedInstanceState != null) {
+            val selectedId = savedInstanceState.getInt(SELECTED_ITEM_ID)
+            navigationView.selectedItemId = selectedId
         } else {
-            title = savedInstanceState.getCharSequence(TITLE_TAG)
+            supportActionBar?.title = String.format(
+                resources.getString(R.string.settings__home__title),
+                resources.getString(R.string.app_name)
+            )
+            loadFragment(HomeFragment())
         }
-        supportFragmentManager.addOnBackStackChangedListener {
-            if (supportFragmentManager.backStackEntryCount == 0) {
-                setTitle(R.string.settings__title)
-            }
-        }
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putCharSequence(TITLE_TAG, title)
+        outState.putInt(SELECTED_ITEM_ID, navigationView.selectedItemId)
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        if (supportFragmentManager.popBackStackImmediate()) {
-            return true
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.settings__navigation__home -> {
+                supportActionBar?.title = String.format(
+                    resources.getString(R.string.settings__home__title),
+                    resources.getString(R.string.app_name)
+                )
+                loadFragment(HomeFragment())
+                true
+            }
+            R.id.settings__navigation__keyboard -> {
+                supportActionBar?.setTitle(R.string.settings__keyboard__title)
+                loadFragment(KeyboardFragment())
+                true
+            }
+            R.id.settings__navigation__looknfeel -> {
+                supportActionBar?.setTitle(R.string.settings__looknfeel__title)
+                loadFragment(LooknfeelFragment())
+                true
+            }
+            R.id.settings__navigation__gestures -> {
+                supportActionBar?.setTitle(R.string.settings__gestures__title)
+                loadFragment(GesturesFragment())
+                true
+            }
+            R.id.settings__navigation__advanced -> {
+                supportActionBar?.setTitle(R.string.settings__advanced__title)
+                loadFragment(AdvancedFragment())
+                true
+            }
+            else -> false
         }
-        return super.onSupportNavigateUp()
     }
 
-    override fun onPreferenceStartFragment(
-        caller: PreferenceFragmentCompat,
-        pref: Preference
-    ): Boolean {
-        val args = pref.extras
-        val fragment = supportFragmentManager.fragmentFactory.instantiate(
-            classLoader,
-            pref.fragment
-        ).apply {
-            arguments = args
-            setTargetFragment(caller, 0)
-        }
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.settings, fragment)
-            .addToBackStack(null)
-            .commit()
-        title = pref.title
-        return true
+    private fun loadFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.settings__frame_container, fragment)
+        //transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -81,7 +101,6 @@ class SettingsMainActivity : AppCompatActivity(),
                 true
             }
             R.id.settings__menu_help -> {
-                // TODO: this url should point to the wiki (not existing yet)
                 val browserIntent = Intent(
                     Intent.ACTION_VIEW,
                     Uri.parse(resources.getString(R.string.florisboard__repo_url))
@@ -97,10 +116,7 @@ class SettingsMainActivity : AppCompatActivity(),
         }
     }
 
-    override fun onDestroy() {
-        // TODO: The app icon show/hide process should happen immediately as the pref is changed,
-        //       but this causes the app to close itself. The current way (doing it onDestroy) is
-        //       only a workaround, until I've found a solution for this.
+    private fun updateLauncherIconStatus() {
         // Set LauncherAlias enabled/disabled state just before destroying this activity
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         if (prefs.getBoolean("advanced__show_app_icon", false)) {
@@ -108,25 +124,15 @@ class SettingsMainActivity : AppCompatActivity(),
         } else {
             hideAppIcon(this)
         }
+    }
 
+    override fun onPause() {
+        updateLauncherIconStatus()
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        updateLauncherIconStatus()
         super.onDestroy()
-    }
-
-    class PrefsFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.prefs, rootKey)
-        }
-    }
-
-    class KeyboardFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.prefs_keyboard, rootKey)
-        }
-    }
-
-    class AdvancedFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.prefs_advanced, rootKey)
-        }
     }
 }

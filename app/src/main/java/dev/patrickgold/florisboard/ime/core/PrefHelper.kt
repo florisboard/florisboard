@@ -9,13 +9,13 @@ class PrefHelper(
     val shared: SharedPreferences
 ) {
     companion object {
-        const val HEIGHT_FACTOR =           "keyboard__height_factor"
-        const val LONG_PRESS_DELAY =        "keyboard__long_press_delay"
-        const val ONE_HANDED_MODE =         "keyboard__one_handed_mode"
-        const val SOUND_ENABLED =           "keyboard__sound_enabled"
-        const val SOUND_VOLUME =            "keyboard__sound_volume"
-        const val VIBRATION_ENABLED =       "keyboard__vibration_enabled"
-        const val VIBRATION_STRENGTH =      "keyboard__vibration_strength"
+        const val HEIGHT_FACTOR =           "looknfeel__height_factor"
+        const val LONG_PRESS_DELAY =        "looknfeel__long_press_delay"
+        const val ONE_HANDED_MODE =         "looknfeel__one_handed_mode"
+        const val SOUND_ENABLED =           "looknfeel__sound_enabled"
+        const val SOUND_VOLUME =            "looknfeel__sound_volume"
+        const val VIBRATION_ENABLED =       "looknfeel__vibration_enabled"
+        const val VIBRATION_STRENGTH =      "looknfeel__vibration_strength"
     }
 
     var heightFactor: String = ""
