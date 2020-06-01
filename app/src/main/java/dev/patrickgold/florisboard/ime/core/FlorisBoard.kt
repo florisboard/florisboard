@@ -32,12 +32,11 @@ class FlorisBoard : InputMethodService() {
     private var oneHandedCtrlPanelStart: LinearLayout? = null
     private var oneHandedCtrlPanelEnd: LinearLayout? = null
 
-    var audioManager: AudioManager? = null
-        private set
+    private var audioManager: AudioManager? = null
     val context: Context
         get() = rootViewGroup?.context ?: this
-    var mainViewFlipper: ViewFlipper? = null
-    var prefs: PrefHelper? = null
+    private var mainViewFlipper: ViewFlipper? = null
+    lateinit var prefs: PrefHelper
         private set
     var rootViewGroup: LinearLayout? = null
         private set
@@ -55,7 +54,7 @@ class FlorisBoard : InputMethodService() {
         mainViewFlipper = rootViewGroup?.findViewById(R.id.main_view_flipper)
 
         prefs = PrefHelper(this, PreferenceManager.getDefaultSharedPreferences(this))
-        prefs!!.sync()
+        prefs.sync()
 
         initializeOneHandedEnvironment()
 
@@ -86,7 +85,7 @@ class FlorisBoard : InputMethodService() {
     }
 
     override fun onWindowShown() {
-        prefs!!.sync()
+        prefs.sync()
         updateOneHandedPanelVisibility()
 
         super.onWindowShown()
@@ -101,7 +100,9 @@ class FlorisBoard : InputMethodService() {
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
-        updateOneHandedPanelVisibility()
+        if (isInputViewShown) {
+            updateOneHandedPanelVisibility()
+        }
 
         super.onConfigurationChanged(newConfig)
         textInputManager.onConfigurationChanged(newConfig)
@@ -152,9 +153,9 @@ class FlorisBoard : InputMethodService() {
      * Makes a key press vibration if the user has this feature enabled in the preferences.
      */
     fun keyPressVibrate() {
-        if (prefs!!.vibrationEnabled) {
-            var vibrationStrength = prefs!!.vibrationStrength
-            if (vibrationStrength == 0 && prefs!!.vibrationEnabledSystem) {
+        if (prefs.looknfeel.vibrationEnabled) {
+            var vibrationStrength = prefs.looknfeel.vibrationStrength
+            if (vibrationStrength == 0 && prefs.looknfeel.vibrationEnabledSystem) {
                 vibrationStrength = 36
             }
             if (vibrationStrength > 0) {
@@ -177,15 +178,15 @@ class FlorisBoard : InputMethodService() {
      * Makes a key press sound if the user has this feature enabled in the preferences.
      */
     fun keyPressSound(keyData: KeyData? = null) {
-        if (prefs!!.soundEnabled) {
-            val soundVolume = prefs!!.soundVolume
+        if (prefs.looknfeel.soundEnabled) {
+            val soundVolume = prefs.looknfeel.soundVolume
             val effect = when (keyData?.code) {
                 KeyCode.SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR
                 KeyCode.DELETE -> AudioManager.FX_KEYPRESS_DELETE
                 KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN
                 else -> AudioManager.FX_KEYPRESS_STANDARD
             }
-            if (soundVolume == 0 && prefs!!.soundEnabledSystem) {
+            if (soundVolume == 0 && prefs.looknfeel.soundEnabledSystem) {
                 audioManager!!.playSoundEffect(effect)
             } else if (soundVolume > 0) {
                 audioManager!!.playSoundEffect(effect, soundVolume / 100f)
@@ -230,14 +231,14 @@ class FlorisBoard : InputMethodService() {
     private fun onOneHandedPanelButtonClick(v: View) {
         when (v.id) {
             R.id.one_handed_ctrl_move_start -> {
-                prefs?.oneHandedMode = "start"
+                prefs.looknfeel.oneHandedMode = "start"
             }
             R.id.one_handed_ctrl_move_end -> {
-                prefs?.oneHandedMode = "end"
+                prefs.looknfeel.oneHandedMode = "end"
             }
             R.id.one_handed_ctrl_close_start,
             R.id.one_handed_ctrl_close_end -> {
-                prefs?.oneHandedMode = "off"
+                prefs.looknfeel.oneHandedMode = "off"
             }
         }
         updateOneHandedPanelVisibility()
@@ -248,7 +249,7 @@ class FlorisBoard : InputMethodService() {
             oneHandedCtrlPanelStart?.visibility = View.GONE
             oneHandedCtrlPanelEnd?.visibility = View.GONE
         } else {
-            when (prefs?.oneHandedMode) {
+            when (prefs.looknfeel.oneHandedMode) {
                 "off" -> {
                     oneHandedCtrlPanelStart?.visibility = View.GONE
                     oneHandedCtrlPanelEnd?.visibility = View.GONE

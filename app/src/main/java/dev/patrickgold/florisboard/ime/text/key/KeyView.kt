@@ -190,7 +190,7 @@ class KeyView(
                         }
                     }, 500, 50)
                 }
-                val delayMillis = florisboard?.prefs?.longPressDelay ?: 0
+                val delayMillis = keyboardView.prefs.looknfeel.longPressDelay
                 if (osHandler == null) {
                     osHandler = Handler()
                 }
@@ -514,7 +514,7 @@ class KeyView(
             }
             val isPortrait =
                 resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-            if ((florisboard?.prefs?.oneHandedMode ?: "off") != "off" && isPortrait) {
+            if (keyboardView.prefs.looknfeel.oneHandedMode != "off" && isPortrait) {
                 labelPaint.textSize *= 0.9f
             }
             val centerX = measuredWidth / 2.0f

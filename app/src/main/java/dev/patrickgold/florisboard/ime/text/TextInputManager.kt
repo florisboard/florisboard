@@ -28,8 +28,10 @@ import android.view.inputmethod.ExtractedTextRequest
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.ViewFlipper
+import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyType
@@ -96,6 +98,7 @@ class TextInputManager(
         for (mode in KeyboardMode.values()) {
             val keyboardView = KeyboardView(florisboard.context)
             keyboardView.florisboard = florisboard
+            keyboardView.prefs = florisboard.prefs
             textViewFlipper?.addView(keyboardView)
             keyboardView.setKeyboardMode(mode)
             keyboardViews[mode] = keyboardView

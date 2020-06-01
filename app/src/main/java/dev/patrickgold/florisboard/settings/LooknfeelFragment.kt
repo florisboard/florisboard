@@ -7,14 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import kotlinx.coroutines.*
 
 class LooknfeelFragment : Fragment(), CoroutineScope by MainScope() {
+
+    lateinit var keyboardView: KeyboardView
     private lateinit var rootView: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +35,8 @@ class LooknfeelFragment : Fragment(), CoroutineScope by MainScope() {
             val themeContext = ContextThemeWrapper(context, R.style.KeyboardTheme_MaterialLight)
             val layoutManager = LayoutManager(themeContext)
             layoutManager.autoFetchAssociationsFromPrefs()
-            val keyboardView = KeyboardView(themeContext)
+            keyboardView = KeyboardView(themeContext)
+            keyboardView.prefs = PrefHelper(requireContext(), PreferenceManager.getDefaultSharedPreferences(requireContext()))
             keyboardView.isPreviewMode = true
             keyboardView.setKeyboardMode(KeyboardMode.CHARACTERS, layoutManager)
             keyboardView.updateVariation()
@@ -43,8 +47,10 @@ class LooknfeelFragment : Fragment(), CoroutineScope by MainScope() {
         }
 
         val transaction = childFragmentManager.beginTransaction()
-        transaction.replace(R.id.settings__looknfeel__frame_container, PrefFragment())
-        //transaction.addToBackStack(null)
+        transaction.replace(
+            R.id.settings__looknfeel__frame_container,
+            SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_looknfeel)
+        )
         transaction.commit()
 
         return rootView
@@ -53,11 +59,5 @@ class LooknfeelFragment : Fragment(), CoroutineScope by MainScope() {
     override fun onDestroy() {
         cancel()
         super.onDestroy()
-    }
-
-    class PrefFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.prefs_looknfeel, rootKey)
-        }
     }
 }

@@ -6,44 +6,10 @@ import android.provider.Settings
 
 class PrefHelper(
     private val context: Context,
-    val shared: SharedPreferences
+    private val shared: SharedPreferences
 ) {
-    companion object {
-        const val HEIGHT_FACTOR =           "looknfeel__height_factor"
-        const val LONG_PRESS_DELAY =        "looknfeel__long_press_delay"
-        const val ONE_HANDED_MODE =         "looknfeel__one_handed_mode"
-        const val SOUND_ENABLED =           "looknfeel__sound_enabled"
-        const val SOUND_VOLUME =            "looknfeel__sound_volume"
-        const val VIBRATION_ENABLED =       "looknfeel__vibration_enabled"
-        const val VIBRATION_STRENGTH =      "looknfeel__vibration_strength"
-    }
-
-    var heightFactor: String = ""
-        get() = getPref(HEIGHT_FACTOR, "normal")
-        private set
-    var longPressDelay: Int = 0
-        get() = getPref(LONG_PRESS_DELAY, 300)
-        private set
-    var oneHandedMode: String
-        get() = getPref(ONE_HANDED_MODE, "off")
-        set(value) = setPref(ONE_HANDED_MODE, value)
-    var soundEnabled: Boolean = false
-        get() = getPref(SOUND_ENABLED, true)
-        private set
-    var soundEnabledSystem: Boolean = false
-        get() = getPref(SOUND_ENABLED, true)
-        private set
-    var soundVolume: Int = 0
-        get() = getPref(SOUND_VOLUME, 0)
-        private set
-    var vibrationEnabled: Boolean = false
-        get() = getPref(VIBRATION_ENABLED, true)
-        private set
-    var vibrationEnabledSystem: Boolean = false
-        private set
-    var vibrationStrength: Int = 0
-        get() = getPref(VIBRATION_STRENGTH, 0)
-        private set
+    val advanced = Advanced(this)
+    val looknfeel = Looknfeel(this)
 
     private inline fun <reified T> getPref(key: String, default: T): T {
         return when {
@@ -77,12 +43,62 @@ class PrefHelper(
     fun sync() {
         val contentResolver = context.contentResolver
 
-        soundEnabledSystem = Settings.System.getInt(
+        looknfeel.soundEnabledSystem = Settings.System.getInt(
             contentResolver, Settings.System.SOUND_EFFECTS_ENABLED, 0
         ) != 0
 
-        vibrationEnabledSystem = Settings.System.getInt(
+        looknfeel.vibrationEnabledSystem = Settings.System.getInt(
             contentResolver, Settings.System.HAPTIC_FEEDBACK_ENABLED, 0
         ) != 0
+    }
+
+    class Advanced(private val prefHelper: PrefHelper) {
+        companion object {
+            const val SETTINGS_THEME =          "advanced__settings_theme"
+            const val SHOW_APP_ICON =           "advanced__show_app_icon"
+        }
+
+        var settingsTheme: String = ""
+            get() = prefHelper.getPref(SETTINGS_THEME, "auto")
+            private set
+        var longPressDelay: Boolean = false
+            get() = prefHelper.getPref(SHOW_APP_ICON, true)
+            private set
+    }
+
+    class Looknfeel(private val prefHelper: PrefHelper) {
+        companion object {
+            const val HEIGHT_FACTOR =           "looknfeel__height_factor"
+            const val LONG_PRESS_DELAY =        "looknfeel__long_press_delay"
+            const val ONE_HANDED_MODE =         "looknfeel__one_handed_mode"
+            const val SOUND_ENABLED =           "looknfeel__sound_enabled"
+            const val SOUND_VOLUME =            "looknfeel__sound_volume"
+            const val VIBRATION_ENABLED =       "looknfeel__vibration_enabled"
+            const val VIBRATION_STRENGTH =      "looknfeel__vibration_strength"
+        }
+
+        var heightFactor: String = ""
+            get() = prefHelper.getPref(HEIGHT_FACTOR, "normal")
+            private set
+        var longPressDelay: Int = 0
+            get() = prefHelper.getPref(LONG_PRESS_DELAY, 300)
+            private set
+        var oneHandedMode: String
+            get() = prefHelper.getPref(ONE_HANDED_MODE, "off")
+            set(value) = prefHelper.setPref(ONE_HANDED_MODE, value)
+        var soundEnabled: Boolean = false
+            get() = prefHelper.getPref(SOUND_ENABLED, true)
+            private set
+        var soundEnabledSystem: Boolean = false
+        var soundVolume: Int = 0
+            get() = prefHelper.getPref(SOUND_VOLUME, 0)
+            private set
+        var vibrationEnabled: Boolean = false
+            get() = prefHelper.getPref(VIBRATION_ENABLED, true)
+            private set
+        var vibrationEnabledSystem: Boolean = false
+        var vibrationStrength: Int = 0
+            get() = prefHelper.getPref(VIBRATION_STRENGTH, 0)
+            private set
     }
 }

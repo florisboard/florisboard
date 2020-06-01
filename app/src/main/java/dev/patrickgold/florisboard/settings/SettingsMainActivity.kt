@@ -6,17 +6,22 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.hideAppIcon
 import dev.patrickgold.florisboard.util.showAppIcon
 
+private const val FRAGMENT_TAG = "FRAGMENT_TAG"
+private const val PREF_RES_ID = "PREF_RES_ID"
 private const val SELECTED_ITEM_ID = "SELECTED_ITEM_ID"
 
 class SettingsMainActivity : AppCompatActivity(),
@@ -30,7 +35,7 @@ class SettingsMainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         prefs = PreferenceManager.getDefaultSharedPreferences(this)
 
-        val mode = when (prefs.getString("advanced__settings_theme", "auto")) {
+        val mode = when (prefs.getString(PrefHelper.Advanced.SETTINGS_THEME, "auto")) {
             "light" -> AppCompatDelegate.MODE_NIGHT_NO
             "dark" -> AppCompatDelegate.MODE_NIGHT_YES
             "auto" -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
@@ -102,9 +107,10 @@ class SettingsMainActivity : AppCompatActivity(),
 
     private fun loadFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.settings__frame_container, fragment)
+        transaction.replace(R.id.settings__frame_container, fragment, FRAGMENT_TAG)
         //transaction.addToBackStack(null)
         transaction.commit()
+        supportFragmentManager.executePendingTransactions()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -135,14 +141,23 @@ class SettingsMainActivity : AppCompatActivity(),
     }
 
     override fun onSharedPreferenceChanged(prefs: SharedPreferences?, key: String?) {
-        if (key == "advanced__settings_theme") {
+        if (key == PrefHelper.Advanced.SETTINGS_THEME) {
             recreate()
+        }
+        val fragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
+        if (fragment != null && fragment.isVisible) {
+            if (fragment is LooknfeelFragment) {
+                fragment.keyboardView.invalidate()
+                fragment.keyboardView.invalidateAllKeys()
+                fragment.keyboardView.requestLayout()
+                fragment.keyboardView.requestLayoutAllKeys()
+            }
         }
     }
 
     private fun updateLauncherIconStatus() {
-        // Set LauncherAlias enabled/disabled state just before destroying this activity
-        if (prefs.getBoolean("advanced__show_app_icon", false)) {
+        // Set LauncherAlias enabled/disabled state just before destroying/pausing this activity
+        if (prefs.getBoolean(PrefHelper.Advanced.SHOW_APP_ICON, false)) {
             showAppIcon(this)
         } else {
             hideAppIcon(this)
@@ -164,5 +179,27 @@ class SettingsMainActivity : AppCompatActivity(),
         prefs.unregisterOnSharedPreferenceChangeListener(this)
         updateLauncherIconStatus()
         super.onDestroy()
+    }
+
+    class PrefFragment : PreferenceFragmentCompat() {
+        companion object {
+            fun createFromResource(prefResId: Int): PrefFragment {
+                val args = Bundle()
+                args.putInt(PREF_RES_ID, prefResId)
+                val fragment = PrefFragment()
+                fragment.arguments = args
+                return fragment
+            }
+        }
+
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+            setPreferencesFromResource(arguments?.getInt(PREF_RES_ID) ?: 0, rootKey)
+        }
+
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            listView.isFocusable = false
+            listView.isNestedScrollingEnabled = false
+            super.onViewCreated(view, savedInstanceState)
+        }
     }
 }

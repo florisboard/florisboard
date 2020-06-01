@@ -29,6 +29,7 @@ import androidx.core.view.children
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
@@ -51,11 +52,12 @@ class KeyboardView : LinearLayout {
     private var activeY: Float = 0.0f
 
     var computedLayout: ComputedLayoutData? = null
-    var florisboard: FlorisBoard? = null
     var desiredKeyWidth: Int = resources.getDimension(R.dimen.key_width).toInt()
     var desiredKeyHeight: Int = resources.getDimension(R.dimen.key_height).toInt()
+    var florisboard: FlorisBoard? = null
     var isPreviewMode: Boolean = false
     var popupManager = KeyPopupManager<KeyboardView, KeyView>(this)
+    lateinit var prefs: PrefHelper
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -238,11 +240,11 @@ class KeyboardView : LinearLayout {
         val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
         desiredKeyWidth = (widthSize / 10) - (2 * keyMarginH)
 
-        val factor = florisboard?.prefs?.heightFactor
+        val factor = prefs.looknfeel.heightFactor
         val keyHeightNormal = resources.getDimension(R.dimen.key_height) * when (resources.configuration.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> 0.85f
-            else -> if (florisboard?.prefs?.oneHandedMode == "start" ||
-                florisboard?.prefs?.oneHandedMode == "end") {
+            else -> if (prefs.looknfeel.oneHandedMode == "start" ||
+                prefs.looknfeel.oneHandedMode == "end") {
                 0.9f
             } else {
                 1.0f
@@ -263,6 +265,21 @@ class KeyboardView : LinearLayout {
         }).toInt()
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+    }
+
+    /**
+     * Queues a layout request for all keys.
+     */
+    fun requestLayoutAllKeys() {
+        for (row in children) {
+            if (row is FlexboxLayout) {
+                for (keyView in row.children) {
+                    if (keyView is KeyView) {
+                        keyView.requestLayout()
+                    }
+                }
+            }
+        }
     }
 
     /**

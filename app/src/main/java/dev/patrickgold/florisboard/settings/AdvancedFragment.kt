@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import androidx.preference.PreferenceFragmentCompat
 import dev.patrickgold.florisboard.R
 
 class AdvancedFragment : Fragment() {
@@ -24,16 +23,12 @@ class AdvancedFragment : Fragment() {
         rootView = inflater.inflate(R.layout.settings_fragment_advanced, container, false) as LinearLayout
 
         val transaction = childFragmentManager.beginTransaction()
-        transaction.replace(R.id.settings__advanced__frame_container, PrefFragment())
-        //transaction.addToBackStack(null)
+        transaction.replace(
+            R.id.settings__advanced__frame_container,
+            SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_advanced)
+        )
         transaction.commit()
 
         return rootView
-    }
-
-    class PrefFragment : PreferenceFragmentCompat() {
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(R.xml.prefs_advanced, rootKey)
-        }
     }
 }

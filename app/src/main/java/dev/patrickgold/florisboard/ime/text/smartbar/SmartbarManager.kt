@@ -74,12 +74,12 @@ class SmartbarManager(
                 florisboard.startActivity(i)
             }
             R.id.quick_action_one_handed_toggle -> {
-                when (florisboard.prefs?.oneHandedMode) {
+                when (florisboard.prefs.looknfeel.oneHandedMode) {
                     "off" -> {
-                        florisboard.prefs?.oneHandedMode = "end"
+                        florisboard.prefs.looknfeel.oneHandedMode = "end"
                     }
                     else -> {
-                        florisboard.prefs?.oneHandedMode = "off"
+                        florisboard.prefs.looknfeel.oneHandedMode = "off"
                     }
                 }
                 florisboard.updateOneHandedPanelVisibility()
