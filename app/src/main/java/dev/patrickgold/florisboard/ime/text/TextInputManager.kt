@@ -94,7 +94,8 @@ class TextInputManager(
         textViewGroup?.addView(smartbarManager.createSmartbarView(), 0)
         textViewFlipper = textViewGroup?.findViewById(R.id.text_input_view_flipper)
         for (mode in KeyboardMode.values()) {
-            val keyboardView = KeyboardView(florisboard)
+            val keyboardView = KeyboardView(florisboard.context)
+            keyboardView.florisboard = florisboard
             textViewFlipper?.addView(keyboardView)
             keyboardView.setKeyboardMode(mode)
             keyboardViews[mode] = keyboardView

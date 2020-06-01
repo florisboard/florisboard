@@ -17,8 +17,10 @@
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.res.Configuration
 import android.graphics.drawable.ColorDrawable
+import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -28,9 +30,9 @@ import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
-import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
+import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.util.getColorFromAttr
 
 /**
@@ -41,10 +43,7 @@ import dev.patrickgold.florisboard.util.getColorFromAttr
  *
  * @property florisboard Reference to instance of core class [FlorisBoard].
  */
-@SuppressLint("ViewConstructor")
-class KeyboardView(
-    val florisboard: FlorisBoard
-) : LinearLayout(florisboard.context) {
+class KeyboardView : LinearLayout {
 
     private var activeKeyView: KeyView? = null
     private var activePointerId: Int? = null
@@ -52,11 +51,15 @@ class KeyboardView(
     private var activeY: Float = 0.0f
 
     var computedLayout: ComputedLayoutData? = null
+    var florisboard: FlorisBoard? = null
     var desiredKeyWidth: Int = resources.getDimension(R.dimen.key_width).toInt()
     var desiredKeyHeight: Int = resources.getDimension(R.dimen.key_height).toInt()
+    var isPreviewMode: Boolean = false
     var popupManager = KeyPopupManager<KeyboardView, KeyView>(this)
 
-    init {
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         background = ColorDrawable(getColorFromAttr(context, R.attr.keyboard_bgColor))
         orientation = VERTICAL
     }
@@ -75,7 +78,8 @@ class KeyboardView(
             for (row in layout.arrangement) {
                 val rowView = KeyboardRowView(context)
                 for (key in row) {
-                    val keyView = KeyView(florisboard, this, key)
+                    val keyView = KeyView(this, key)
+                    keyView.florisboard = florisboard
                     rowView.addView(keyView)
                 }
                 this.addView(rowView)
@@ -96,8 +100,11 @@ class KeyboardView(
      *
      * @param keyboardMode The keyboard mode to set this keyboard to.
      */
-    fun setKeyboardMode(keyboardMode: KeyboardMode) {
-        computedLayout = florisboard.textInputManager.layoutManager.computeLayoutFor(keyboardMode)
+    fun setKeyboardMode(
+        keyboardMode: KeyboardMode,
+        layoutManager: LayoutManager? = florisboard?.textInputManager?.layoutManager
+    ) {
+        computedLayout = layoutManager?.computeLayoutFor(keyboardMode)
         buildLayout()
     }
 
@@ -114,6 +121,9 @@ class KeyboardView(
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
+        if (isPreviewMode) {
+            return false
+        }
         val eventFloris = MotionEvent.obtainNoHistory(event)
         val pointerIndex = event.actionIndex
         var pointerId = event.getPointerId(pointerIndex)
@@ -228,11 +238,11 @@ class KeyboardView(
         val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
         desiredKeyWidth = (widthSize / 10) - (2 * keyMarginH)
 
-        val factor = florisboard.prefs!!.heightFactor
+        val factor = florisboard?.prefs?.heightFactor
         val keyHeightNormal = resources.getDimension(R.dimen.key_height) * when (resources.configuration.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> 0.85f
-            else -> if (florisboard.prefs?.oneHandedMode == "start" ||
-                florisboard.prefs?.oneHandedMode == "end") {
+            else -> if (florisboard?.prefs?.oneHandedMode == "start" ||
+                florisboard?.prefs?.oneHandedMode == "end") {
                 0.9f
             } else {
                 1.0f
@@ -246,6 +256,9 @@ class KeyboardView(
             "mid_tall" -> 1.05f
             "tall" -> 1.10f
             "extra_tall" -> 1.15f
+            else -> 1.00f
+        } * when (isPreviewMode) {
+            true -> 0.90f
             else -> 1.00f
         }).toInt()
 

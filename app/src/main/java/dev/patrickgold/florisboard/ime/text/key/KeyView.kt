@@ -17,15 +17,10 @@
 package dev.patrickgold.florisboard.ime.text.key
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.res.Configuration
 import android.graphics.*
 import android.graphics.drawable.Drawable
-import android.media.AudioManager
-import android.os.Build
 import android.os.Handler
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -54,17 +49,16 @@ import java.util.*
  */
 @SuppressLint("ViewConstructor")
 class KeyView(
-    private val florisboard: FlorisBoard,
     private val keyboardView: KeyboardView,
     val data: KeyData
-) : View(florisboard.context) {
+) : View(keyboardView.context) {
 
     private var isKeyPressed: Boolean = false
         set(value) {
             field = value
             updateKeyPressedBackground()
         }
-    private val osHandler = Handler()
+    private var osHandler: Handler? = null
     private var osTimer: Timer? = null
     private var shouldBlockNextKeyCode: Boolean = false
 
@@ -82,6 +76,7 @@ class KeyView(
         typeface = Typeface.DEFAULT
     }
 
+    var florisboard: FlorisBoard? = null
     var touchHitBox: Rect = Rect(-1, -1, -1, -1)
 
     init {
@@ -139,14 +134,14 @@ class KeyView(
      */
     fun getComputedLetter(keyData: KeyData = data): String {
         if (keyData.code == KeyCode.URI_COMPONENT_TLD) {
-            return when (florisboard.textInputManager.caps) {
+            return when (florisboard?.textInputManager?.caps) {
                 true -> keyData.label.toUpperCase(Locale.getDefault())
-                false -> keyData.label.toLowerCase(Locale.getDefault())
+                else -> keyData.label.toLowerCase(Locale.getDefault())
             }
         }
         val label = (keyData.code.toChar()).toString()
         return when {
-            florisboard.textInputManager.caps -> label.toUpperCase(Locale.getDefault())
+            florisboard?.textInputManager?.caps ?: false -> label.toUpperCase(Locale.getDefault())
             else -> label
         }
     }
@@ -181,13 +176,13 @@ class KeyView(
             MotionEvent.ACTION_DOWN -> {
                 keyboardView.popupManager.show(this)
                 isKeyPressed = true
-                florisboard.keyPressVibrate()
-                florisboard.keyPressSound(data)
+                florisboard?.keyPressVibrate()
+                florisboard?.keyPressSound(data)
                 if (data.code == KeyCode.DELETE && data.type == KeyType.ENTER_EDITING) {
                     osTimer = Timer()
                     osTimer?.scheduleAtFixedRate(object : TimerTask() {
                         override fun run() {
-                            florisboard.textInputManager.sendKeyPress(data)
+                            florisboard?.textInputManager?.sendKeyPress(data)
                             if (!isKeyPressed) {
                                 osTimer?.cancel()
                                 osTimer = null
@@ -195,13 +190,16 @@ class KeyView(
                         }
                     }, 500, 50)
                 }
-                val delayMillis = florisboard.prefs!!.longPressDelay
-                osHandler.postDelayed({
+                val delayMillis = florisboard?.prefs?.longPressDelay ?: 0
+                if (osHandler == null) {
+                    osHandler = Handler()
+                }
+                osHandler?.postDelayed({
                     if (data.popup.isNotEmpty()) {
                         keyboardView.popupManager.extend(this)
                     }
                     if (data.code == KeyCode.SPACE) {
-                        florisboard.textInputManager.sendKeyPress(
+                        florisboard?.textInputManager?.sendKeyPress(
                             KeyData(
                                 KeyCode.SHOW_INPUT_METHOD_PICKER,
                                 type = KeyType.FUNCTION
@@ -230,13 +228,13 @@ class KeyView(
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 isKeyPressed = false
-                osHandler.removeCallbacksAndMessages(null)
+                osHandler?.removeCallbacksAndMessages(null)
                 osTimer?.cancel()
                 osTimer = null
                 val retData = keyboardView.popupManager.getActiveKeyData(this)
                 keyboardView.popupManager.hide()
                 if (event.actionMasked != MotionEvent.ACTION_CANCEL && !shouldBlockNextKeyCode && retData != null) {
-                    florisboard.textInputManager.sendKeyPress(retData)
+                    florisboard?.textInputManager?.sendKeyPress(retData)
                     performClick()
                 } else {
                     shouldBlockNextKeyCode = false
@@ -381,7 +379,7 @@ class KeyView(
      */
     fun updateVariation() {
         if (data.variation != KeyVariation.ALL) {
-            val keyVariation = florisboard.textInputManager.keyVariation
+            val keyVariation = florisboard?.textInputManager?.keyVariation ?: KeyVariation.NORMAL
             visibility =
                 if (data.variation == KeyVariation.NORMAL && (keyVariation == KeyVariation.NORMAL
                             || keyVariation == KeyVariation.PASSWORD)
@@ -414,7 +412,7 @@ class KeyView(
                     drawable = getDrawable(context, R.drawable.ic_backspace)
                 }
                 KeyCode.ENTER -> {
-                    val action = florisboard.currentInputEditorInfo.imeOptions
+                    val action = florisboard?.currentInputEditorInfo?.imeOptions ?: 0
                     drawable = getDrawable(context, when (action and EditorInfo.IME_MASK_ACTION) {
                         EditorInfo.IME_ACTION_DONE -> R.drawable.ic_done
                         EditorInfo.IME_ACTION_GO -> R.drawable.ic_arrow_right_alt
@@ -437,11 +435,11 @@ class KeyView(
                 KeyCode.PHONE_WAIT -> label = resources.getString(R.string.key__phone_wait)
                 KeyCode.SHIFT -> {
                     drawable = getDrawable(context, when {
-                        florisboard.textInputManager.caps && florisboard.textInputManager.capsLock -> {
+                        florisboard?.textInputManager?.caps ?: false && florisboard?.textInputManager?.capsLock ?: false -> {
                             drawableColor = getColorFromAttr(context, R.attr.app_colorAccentDark)
                             R.drawable.ic_keyboard_capslock
                         }
-                        florisboard.textInputManager.caps && !florisboard.textInputManager.capsLock -> {
+                        florisboard?.textInputManager?.caps ?: false && !(florisboard?.textInputManager?.capsLock ?: false) -> {
                             drawableColor = getColorFromAttr(context, R.attr.key_fgColor)
                             R.drawable.ic_keyboard_capslock
                         }
@@ -516,7 +514,7 @@ class KeyView(
             }
             val isPortrait =
                 resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-            if (florisboard.prefs!!.oneHandedMode != "off" && isPortrait) {
+            if ((florisboard?.prefs?.oneHandedMode ?: "off") != "off" && isPortrait) {
                 labelPaint.textSize *= 0.9f
             }
             val centerX = measuredWidth / 2.0f
