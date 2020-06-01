@@ -2,6 +2,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <ListPreference
+        android:defaultValue="auto"
+        app:entries="@array/pref__advanced__settings_theme__entries"
+        app:entryValues="@array/pref__advanced__settings_theme__values"
+        app:key="advanced__settings_theme"
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__advanced__settings_theme__label"
+        app:useSimpleSummaryProvider="true" />
+
     <SwitchPreferenceCompat
         android:defaultValue="true"
         app:key="advanced__show_app_icon"

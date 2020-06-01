@@ -76,7 +76,7 @@
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_marginBottom">8dp</item>
         <item name="contentPadding">8dp</item>
-        <item name="cardBackgroundColor">?attr/cardView_bgColor</item>
+        <item name="cardBackgroundColor">@color/cardViewBackgroundColor</item>
         <item name="cardCornerRadius">4dp</item>
     </style>
 

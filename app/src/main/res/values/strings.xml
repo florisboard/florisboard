@@ -63,6 +63,7 @@
     <string name="settings__gestures__title">Gestures</string>
 
     <string name="settings__advanced__title">Advanced</string>
+    <string name="pref__advanced__settings_theme__label">Settings theme</string>
     <string name="pref__advanced__show_app_icon__label">Show app icon in launcher</string>
 
     <!-- About UI strings -->

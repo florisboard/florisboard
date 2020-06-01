@@ -1,55 +1,66 @@
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
 
-        <ImageView
-            android:id="@+id/about__app_icon"
-            android:src="@mipmap/ic_launcher"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp" />
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/about__app_icon"
+                android:src="@mipmap/ic_launcher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp" />
 
-        <TextView
-            android:id="@+id/about__app_version"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="16dp"
-            android:textSize="16sp"
-            android:textStyle="italic" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/about__view_licenses"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/about__view_licenses"/>
+            <TextView
+                android:id="@+id/about__app_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                android:textSize="16sp"
+                android:textStyle="italic" />
 
-        <Button
-            android:id="@+id/about__view_privacy_policy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/about__view_privacy_policy"/>
+            <Button
+                android:id="@+id/about__view_licenses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about__view_licenses"/>
 
-        <Button
-            android:id="@+id/about__view_source_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/about__view_source_code"/>
+            <Button
+                android:id="@+id/about__view_privacy_policy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about__view_privacy_policy"/>
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/about__view_source_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about__view_source_code"/>
 
-</ScrollView>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

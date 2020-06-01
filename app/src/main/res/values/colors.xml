@@ -6,4 +6,8 @@
     <color name="colorAccentDark">#f57c00</color>
 
     <color name="ic_launcher_background">#78909C</color>
+
+    <color name="cardViewBackgroundColor">#FFFFFF</color>
+    <color name="toolbarForegroundColor">#000000</color>
+    <color name="windowBackground">#FAFAFA</color>
 </resources>

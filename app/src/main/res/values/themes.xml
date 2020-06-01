@@ -44,13 +44,21 @@
         <item name="smartbar_divider_bgColor">#20000000</item>
     </style>
 
-    <style name="SettingsTheme" parent="Theme.AppCompat.Light">
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="SettingsToolbarTheme" parent="ThemeOverlay.AppCompat.DayNight.ActionBar">
+        <item name="android:textColorPrimary">@color/toolbarForegroundColor</item>
+        <item name="android:drawableTint">@color/toolbarForegroundColor</item>
     </style>
 
-    <style name="SettingsTheme.Light">
-        <item name="cardView_bgColor">#fff</item>
-        <item name="cardView_fgColor">#675</item>
+    <style name="SettingsTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- IMPORTANT: the following 2 colors MUST be references and not inline colors, or older
+             versions of Android will not set the window background and thus causing weird
+             rendering glitches!! -->
+        <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="android:colorBackground">@color/windowBackground</item>
     </style>
 
 </resources>

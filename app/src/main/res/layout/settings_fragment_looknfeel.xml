@@ -9,10 +9,20 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="0dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/settings__looknfeel__card_linear_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TODO: implement keyboard preview and theme creation/selection" />
+            android:orientation="vertical">
+
+            <!-- KeyboardView preview will be inserted here programmatically -->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TODO: implement theme creation/selection" />
+
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

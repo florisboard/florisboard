@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="cardViewBackgroundColor">#404040</color>
+    <color name="toolbarForegroundColor">#FFFFFF</color>
+    <color name="windowBackground">#303030</color>
+</resources>

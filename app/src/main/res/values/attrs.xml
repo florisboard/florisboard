@@ -43,9 +43,4 @@
         <attr name="smartbar_divider_bgColor" format="color" />
     </declare-styleable>
 
-    <declare-styleable name="SettingsTheme">
-        <attr name="cardView_bgColor" format="color" />
-        <attr name="cardView_fgColor" format="color" />
-    </declare-styleable>
-
 </resources>

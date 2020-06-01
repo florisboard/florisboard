@@ -29,4 +29,15 @@
         <item>end</item>
         <item>start</item>
     </string-array>
+
+    <string-array name="pref__advanced__settings_theme__entries">
+        <item>System default</item>
+        <item>Light</item>
+        <item>Dark</item>
+    </string-array>
+    <string-array name="pref__advanced__settings_theme__values">
+        <item>auto</item>
+        <item>light</item>
+        <item>dark</item>
+    </string-array>
 </resources>
