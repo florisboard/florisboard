@@ -66,7 +66,7 @@ class TextInputManager(
 
     var keyVariation: KeyVariation = KeyVariation.NORMAL
     val layoutManager = LayoutManager(florisboard)
-    private val smartbarManager: SmartbarManager = SmartbarManager(florisboard, this)
+    val smartbarManager: SmartbarManager = SmartbarManager(florisboard, this)
 
     // Caps related properties
     var caps: Boolean = false

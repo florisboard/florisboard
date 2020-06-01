@@ -32,7 +32,8 @@ stage.
 
 ### Preferences
 * [x] Preferences screen
-* [ ] Customize look and behaviour of keyboard
+* [x] Customize look and behaviour of keyboard (currently only
+      light/dark theme)
 * [ ] Theme customization
 * [ ] Theme import/export (?)
 * [ ] Layout selection
