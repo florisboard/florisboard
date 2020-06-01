@@ -5,9 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:orientation="horizontal"
-    android:background="?attr/keyboard_bgColor"
-    android:baselineAligned="false"
-    android:theme="@style/KeyboardTheme.MaterialLight">
+    android:background="?keyboard_bgColor"
+    android:baselineAligned="false">
     
     <LinearLayout
         android:id="@+id/one_handed_ctrl_panel_start"

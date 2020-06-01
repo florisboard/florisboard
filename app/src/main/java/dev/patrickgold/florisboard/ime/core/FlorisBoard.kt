@@ -21,7 +21,6 @@ import dev.patrickgold.florisboard.ime.media.MediaInputManager
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
-import dev.patrickgold.florisboard.util.initDefaultPreferences
 
 /**
  * Core class responsible to link together both the text and media input managers as well as
@@ -34,31 +33,33 @@ class FlorisBoard : InputMethodService() {
 
     private var audioManager: AudioManager? = null
     val context: Context
-        get() = rootViewGroup?.context ?: this
+        get() = rootViewGroup.context
     private var mainViewFlipper: ViewFlipper? = null
     lateinit var prefs: PrefHelper
         private set
-    var rootViewGroup: LinearLayout? = null
+    lateinit var rootViewGroup: LinearLayout
         private set
 
     val textInputManager: TextInputManager = TextInputManager(this)
     val mediaInputManager: MediaInputManager = MediaInputManager(this)
 
-    @SuppressLint("InflateParams")
-    override fun onCreateInputView(): View? {
-        // Set default preference values if user has not used preferences screen
-        initDefaultPreferences(this)
-
-        rootViewGroup = layoutInflater.inflate(R.layout.florisboard, null) as LinearLayout
-
-        mainViewFlipper = rootViewGroup?.findViewById(R.id.main_view_flipper)
-
-        prefs = PrefHelper(this, PreferenceManager.getDefaultSharedPreferences(this))
-        prefs.sync()
-
-        initializeOneHandedEnvironment()
+    override fun onCreate() {
+        super.onCreate()
 
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        prefs = PrefHelper(this, PreferenceManager.getDefaultSharedPreferences(this))
+        prefs.initDefaultPreferences()
+        prefs.sync()
+    }
+
+    @SuppressLint("InflateParams")
+    override fun onCreateInputView(): View? {
+        baseContext.setTheme(prefs.theme.getSelectedThemeResId())
+
+        rootViewGroup = layoutInflater.inflate(R.layout.florisboard, null) as LinearLayout
+        mainViewFlipper = rootViewGroup.findViewById(R.id.main_view_flipper)
+
+        initializeOneHandedEnvironment()
 
         textInputManager.onCreateInputView()
         mediaInputManager.onCreateInputView()
@@ -69,7 +70,7 @@ class FlorisBoard : InputMethodService() {
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
-        currentInputConnection.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
+        currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
 
         super.onStartInputView(info, restarting)
         textInputManager.onStartInputView(info, restarting)
@@ -77,7 +78,7 @@ class FlorisBoard : InputMethodService() {
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
-        currentInputConnection.requestCursorUpdates(0)
+        currentInputConnection?.requestCursorUpdates(0)
 
         super.onFinishInputView(finishingInput)
         textInputManager.onFinishInputView(finishingInput)
@@ -215,16 +216,16 @@ class FlorisBoard : InputMethodService() {
     }
 
     private fun initializeOneHandedEnvironment() {
-        oneHandedCtrlPanelStart = rootViewGroup?.findViewById(R.id.one_handed_ctrl_panel_start)
-        oneHandedCtrlPanelEnd = rootViewGroup?.findViewById(R.id.one_handed_ctrl_panel_end)
+        oneHandedCtrlPanelStart = rootViewGroup.findViewById(R.id.one_handed_ctrl_panel_start)
+        oneHandedCtrlPanelEnd = rootViewGroup.findViewById(R.id.one_handed_ctrl_panel_end)
 
-        rootViewGroup?.findViewById<ImageButton>(R.id.one_handed_ctrl_move_start)
+        rootViewGroup.findViewById<ImageButton>(R.id.one_handed_ctrl_move_start)
             ?.setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
-        rootViewGroup?.findViewById<ImageButton>(R.id.one_handed_ctrl_move_end)
+        rootViewGroup.findViewById<ImageButton>(R.id.one_handed_ctrl_move_end)
             ?.setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
-        rootViewGroup?.findViewById<ImageButton>(R.id.one_handed_ctrl_close_start)
+        rootViewGroup.findViewById<ImageButton>(R.id.one_handed_ctrl_close_start)
             ?.setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
-        rootViewGroup?.findViewById<ImageButton>(R.id.one_handed_ctrl_close_end)
+        rootViewGroup.findViewById<ImageButton>(R.id.one_handed_ctrl_close_end)
             ?.setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
     }
 

@@ -1,47 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="KeyboardTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:textColor">?attr/app_textColor</item>
-    </style>
+    <style name="KeyboardTheme" parent="Theme.AppCompat.Light.NoActionBar" />
 
-    <style name="KeyboardTheme.MaterialLight">>
-        <item name="app_colorPrimary">@color/colorPrimary</item>
-        <item name="app_colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="app_colorAccent">@color/colorAccent</item>
-        <item name="app_colorAccentDark">@color/colorAccentDark</item>
-        <item name="app_textColor">#000</item>
+    <style name="KeyboardTheme.FlorisLight">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">#000000</item><!-- Black -->
+        <item name="semiTransparentColor">#20000000</item><!-- Black, semi transparent -->
 
-        <item name="key_bgColor">#fff</item>
-        <item name="key_bgColorPressed">#f0f0f0</item>
-        <item name="key_fgColor">#000</item>
+        <item name="key_bgColor">#FFFFFF</item><!-- White -->
+        <item name="key_bgColorPressed">#F5F5F5</item><!-- Gray 100 -->
+        <item name="key_fgColor">?android:textColor</item>
+        <item name="key_enter_fgColor">#FFFFFF</item><!-- White -->
 
-        <item name="key_popup_bgColor">#efefef</item>
-        <item name="key_popup_fgColor">#000</item>
+        <item name="key_popup_bgColor">#EEEEEE</item><!-- Gray 200 -->
+        <item name="key_popup_fgColor">?android:textColor</item>
 
         <item name="key_popup_extended_bgColor">@android:color/transparent</item>
-        <item name="key_popup_extended_bgColorActive">#cecece</item>
+        <item name="key_popup_extended_bgColorActive">#BDBDBD</item><!-- Gray 400 -->
+        <item name="key_popup_extended_shadowColor">#CDCACACA</item>
 
-        <item name="keyboard_bgColor">#dfdfdf</item>
+        <item name="keyboard_bgColor">#E0E0E0</item><!-- Gray 300 -->
 
-        <item name="emoji_key_bgColor">?attr/keyboard_bgColor</item>
-        <item name="emoji_key_bgColorPressed">?attr/key_popup_extended_bgColorActive</item>
-        <item name="emoji_key_fgColor">#898989</item>
+        <item name="emoji_key_bgColor">?keyboard_bgColor</item>
+        <item name="emoji_key_bgColorPressed">?key_popup_extended_bgColorActive</item>
+        <item name="emoji_key_fgColor">#757575</item><!-- Gray 600 -->
 
-        <item name="one_handed_bgColor">#e8f5e9</item>
-        <item name="one_handed_button_bgColor">@android:color/transparent</item>
-        <item name="one_handed_button_bgColorActive">#20000000</item>
-        <item name="one_handed_button_fgColor">#464646</item>
+        <item name="one_handed_bgColor">#E8F5E9</item><!-- Green 50 -->
+        <item name="one_handed_button_fgColor">#424242</item><!-- Gray 800 -->
 
-        <item name="smartbar_bgColor">?attr/keyboard_bgColor</item>
-        <item name="smartbar_fgColor">?attr/app_textColor</item>
-        <item name="smartbar_button_bgColor">?attr/key_bgColor</item>
-        <item name="smartbar_button_bgColorPressed">?attr/key_bgColorPressed</item>
-        <item name="smartbar_button_fgColor">?attr/key_fgColor</item>
-        <item name="smartbar_candidate_bgColor">#00000000</item>
-        <item name="smartbar_candidate_bgColorPressed">#20000000</item>
-        <item name="smartbar_candidate_fgColor">?attr/app_textColor</item>
-        <item name="smartbar_divider_bgColor">#20000000</item>
+        <item name="smartbar_bgColor">?keyboard_bgColor</item>
+        <item name="smartbar_fgColor">?android:textColor</item>
+        <item name="smartbar_button_bgColor">?key_bgColor</item>
+        <item name="smartbar_button_bgColorPressed">?key_bgColorPressed</item>
+        <item name="smartbar_button_fgColor">?key_fgColor</item>
+        <item name="smartbar_candidate_fgColor">?android:textColor</item>
+    </style>
+
+    <style name="KeyboardTheme.FlorisDark">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">#FFFFFF</item><!-- White -->
+        <item name="semiTransparentColor">#20FFFFFF</item><!-- White, semi transparent -->
+
+        <item name="key_bgColor">#424242</item><!-- Gray 800 -->
+        <item name="key_bgColorPressed">#616161</item><!-- Gray 700 -->
+        <item name="key_fgColor">?android:textColor</item>
+        <item name="key_enter_fgColor">#FFFFFF</item><!-- White -->
+
+        <item name="key_popup_bgColor">#757575</item><!-- Gray 600 -->
+        <item name="key_popup_fgColor">?android:textColor</item>
+
+        <item name="key_popup_extended_bgColor">@android:color/transparent</item>
+        <item name="key_popup_extended_bgColorActive">#BDBDBD</item><!-- Gray 400 -->
+        <item name="key_popup_extended_shadowColor">#CD353535</item>
+
+        <item name="keyboard_bgColor">#212121</item><!-- Gray 900 -->
+
+        <item name="emoji_key_bgColor">?keyboard_bgColor</item>
+        <item name="emoji_key_bgColorPressed">?key_popup_extended_bgColorActive</item>
+        <item name="emoji_key_fgColor">#BDBDBD</item><!-- Gray 400 -->
+
+        <item name="one_handed_bgColor">#1B5E20</item><!-- Green 900 -->
+        <item name="one_handed_button_fgColor">#EEEEEE</item><!-- Gray 200 -->
+
+        <item name="smartbar_bgColor">?keyboard_bgColor</item>
+        <item name="smartbar_fgColor">?android:textColor</item>
+        <item name="smartbar_button_bgColor">?key_bgColor</item>
+        <item name="smartbar_button_bgColorPressed">?key_bgColorPressed</item>
+        <item name="smartbar_button_fgColor">?key_fgColor</item>
+        <item name="smartbar_candidate_fgColor">?android:textColor</item>
     </style>
 
     <style name="SettingsToolbarTheme" parent="ThemeOverlay.AppCompat.DayNight.ActionBar">

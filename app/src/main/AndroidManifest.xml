@@ -10,14 +10,14 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:theme="@style/SettingsTheme">
 
         <!-- IME service -->
         <service
             android:name=".ime.core.FlorisBoard"
             android:label="@string/app_name"
-            android:permission="android.permission.BIND_INPUT_METHOD"
-            android:theme="@style/KeyboardTheme.MaterialLight">
+            android:permission="android.permission.BIND_INPUT_METHOD">
             <meta-data
                 android:name="android.view.im"
                 android:resource="@xml/method" />

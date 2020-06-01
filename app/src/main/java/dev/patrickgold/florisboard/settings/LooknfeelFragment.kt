@@ -18,10 +18,13 @@ import kotlinx.coroutines.*
 class LooknfeelFragment : Fragment(), CoroutineScope by MainScope() {
 
     lateinit var keyboardView: KeyboardView
+    lateinit var prefs: PrefHelper
     private lateinit var rootView: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        prefs = (activity as SettingsMainActivity).prefs
     }
 
     override fun onCreateView(
@@ -32,11 +35,11 @@ class LooknfeelFragment : Fragment(), CoroutineScope by MainScope() {
         rootView = inflater.inflate(R.layout.settings_fragment_looknfeel, container, false) as LinearLayout
 
         launch(Dispatchers.Default) {
-            val themeContext = ContextThemeWrapper(context, R.style.KeyboardTheme_MaterialLight)
+            val themeContext = ContextThemeWrapper(context, prefs.theme.getSelectedThemeResId())
             val layoutManager = LayoutManager(themeContext)
             layoutManager.autoFetchAssociationsFromPrefs()
             keyboardView = KeyboardView(themeContext)
-            keyboardView.prefs = PrefHelper(requireContext(), PreferenceManager.getDefaultSharedPreferences(requireContext()))
+            keyboardView.prefs = prefs
             keyboardView.isPreviewMode = true
             keyboardView.setKeyboardMode(KeyboardMode.CHARACTERS, layoutManager)
             keyboardView.updateVariation()
@@ -50,6 +53,10 @@ class LooknfeelFragment : Fragment(), CoroutineScope by MainScope() {
         transaction.replace(
             R.id.settings__looknfeel__frame_container,
             SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_looknfeel)
+        )
+        transaction.replace(
+            R.id.settings__theme__frame_container,
+            SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_theme)
         )
         transaction.commit()
 

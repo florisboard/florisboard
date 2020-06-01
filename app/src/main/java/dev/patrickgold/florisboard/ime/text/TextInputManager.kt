@@ -28,10 +28,8 @@ import android.view.inputmethod.ExtractedTextRequest
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.ViewFlipper
-import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyType
@@ -92,7 +90,7 @@ class TextInputManager(
     override fun onCreateInputView() {
         layoutManager.autoFetchAssociationsFromPrefs()
 
-        textViewGroup = florisboard.rootViewGroup?.findViewById(R.id.text_input)
+        textViewGroup = florisboard.rootViewGroup.findViewById(R.id.text_input)
         textViewGroup?.addView(smartbarManager.createSmartbarView(), 0)
         textViewFlipper = textViewGroup?.findViewById(R.id.text_input_view_flipper)
         for (mode in KeyboardMode.values()) {
@@ -103,7 +101,7 @@ class TextInputManager(
             keyboardView.setKeyboardMode(mode)
             keyboardViews[mode] = keyboardView
         }
-        florisboard.rootViewGroup?.findViewById<LinearLayout>(R.id.keyboard_preview)?.visibility =
+        florisboard.rootViewGroup.findViewById<LinearLayout>(R.id.keyboard_preview)?.visibility =
             View.GONE
         setActiveKeyboardMode(KeyboardMode.CHARACTERS)
     }
@@ -237,7 +235,7 @@ class TextInputManager(
     private fun resetComposingText(notifyInputConnection: Boolean = true) {
         if (notifyInputConnection) {
             val ic = florisboard.currentInputConnection
-            ic.finishComposingText()
+            ic?.finishComposingText()
         }
         composingText = null
         composingTextStart = null
@@ -307,7 +305,7 @@ class TextInputManager(
     private fun fetchCurrentCursorCapsMode(): CapsMode {
         val ic = florisboard.currentInputConnection
         val info = florisboard.currentInputEditorInfo
-        val capsFlags = ic.getCursorCapsMode(info.inputType)
+        val capsFlags = ic?.getCursorCapsMode(info.inputType) ?: 0
         return parseCapsModeFromFlags(capsFlags)
     }
 

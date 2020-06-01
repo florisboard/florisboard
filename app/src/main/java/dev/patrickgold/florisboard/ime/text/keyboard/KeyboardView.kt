@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Canvas
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -51,6 +52,7 @@ class KeyboardView : LinearLayout {
     private var activeX: Float = 0.0f
     private var activeY: Float = 0.0f
 
+    private var colorDrawable: ColorDrawable
     var computedLayout: ComputedLayoutData? = null
     var desiredKeyWidth: Int = resources.getDimension(R.dimen.key_width).toInt()
     var desiredKeyHeight: Int = resources.getDimension(R.dimen.key_height).toInt()
@@ -62,7 +64,8 @@ class KeyboardView : LinearLayout {
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        background = ColorDrawable(getColorFromAttr(context, R.attr.keyboard_bgColor))
+        colorDrawable = ColorDrawable(getColorFromAttr(context, R.attr.keyboard_bgColor))
+        background = colorDrawable
         orientation = VERTICAL
     }
 
@@ -310,5 +313,11 @@ class KeyboardView : LinearLayout {
                 }
             }
         }
+    }
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+
+        colorDrawable.color = getColorFromAttr(context, R.attr.keyboard_bgColor)
     }
 }

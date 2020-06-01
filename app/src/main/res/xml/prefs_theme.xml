@@ -1,0 +1,14 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ListPreference
+        android:defaultValue="floris_light"
+        app:entries="@array/pref__theme__name__entries"
+        app:entryValues="@array/pref__theme__name__values"
+        app:key="theme__name"
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__theme__name__label"
+        app:useSimpleSummaryProvider="true" />
+
+</PreferenceScreen>

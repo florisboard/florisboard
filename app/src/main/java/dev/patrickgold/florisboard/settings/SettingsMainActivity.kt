@@ -17,7 +17,9 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.util.getColorFromAttr
 import dev.patrickgold.florisboard.util.hideAppIcon
+import dev.patrickgold.florisboard.util.setBackgroundTintColor
 import dev.patrickgold.florisboard.util.showAppIcon
 
 private const val FRAGMENT_TAG = "FRAGMENT_TAG"
@@ -29,13 +31,13 @@ class SettingsMainActivity : AppCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var navigationView: BottomNavigationView
-    private lateinit var prefs: SharedPreferences
+    lateinit var prefs: PrefHelper
     private lateinit var scrollView: ScrollView
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        prefs = PrefHelper(this, PreferenceManager.getDefaultSharedPreferences(this))
 
-        val mode = when (prefs.getString(PrefHelper.Advanced.SETTINGS_THEME, "auto")) {
+        val mode = when (prefs.advanced.settingsTheme) {
             "light" -> AppCompatDelegate.MODE_NIGHT_NO
             "dark" -> AppCompatDelegate.MODE_NIGHT_YES
             "auto" -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
@@ -140,13 +142,16 @@ class SettingsMainActivity : AppCompatActivity(),
         }
     }
 
-    override fun onSharedPreferenceChanged(prefs: SharedPreferences?, key: String?) {
+    override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
         if (key == PrefHelper.Advanced.SETTINGS_THEME) {
             recreate()
         }
         val fragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
         if (fragment != null && fragment.isVisible) {
             if (fragment is LooknfeelFragment) {
+                if (key == PrefHelper.Theme.NAME) {
+                    fragment.keyboardView.context.setTheme(prefs.theme.getSelectedThemeResId())
+                }
                 fragment.keyboardView.invalidate()
                 fragment.keyboardView.invalidateAllKeys()
                 fragment.keyboardView.requestLayout()
@@ -157,7 +162,7 @@ class SettingsMainActivity : AppCompatActivity(),
 
     private fun updateLauncherIconStatus() {
         // Set LauncherAlias enabled/disabled state just before destroying/pausing this activity
-        if (prefs.getBoolean(PrefHelper.Advanced.SHOW_APP_ICON, false)) {
+        if (prefs.advanced.showAppIcon) {
             showAppIcon(this)
         } else {
             hideAppIcon(this)
@@ -165,18 +170,18 @@ class SettingsMainActivity : AppCompatActivity(),
     }
 
     override fun onResume() {
-        prefs.registerOnSharedPreferenceChangeListener(this)
+        prefs.shared.registerOnSharedPreferenceChangeListener(this)
         super.onResume()
     }
 
     override fun onPause() {
-        prefs.unregisterOnSharedPreferenceChangeListener(this)
+        prefs.shared.unregisterOnSharedPreferenceChangeListener(this)
         updateLauncherIconStatus()
         super.onPause()
     }
 
     override fun onDestroy() {
-        prefs.unregisterOnSharedPreferenceChangeListener(this)
+        prefs.shared.unregisterOnSharedPreferenceChangeListener(this)
         updateLauncherIconStatus()
         super.onDestroy()
     }

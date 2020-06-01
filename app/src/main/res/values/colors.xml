@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#4caf50</color>
-    <color name="colorPrimaryDark">#388e3c</color>
-    <color name="colorAccent">#ff9800</color>
-    <color name="colorAccentDark">#f57c00</color>
+    <color name="colorPrimary">#4CAF50</color><!-- Green 500 -->
+    <color name="colorPrimaryDark">#388E3C</color><!-- Green 700 -->
+    <color name="colorAccent">#FF9800</color><!-- Orange 500 -->
+    <color name="colorAccentDark">#F57C00</color><!-- Orange 700 -->
 
     <color name="ic_launcher_background">#78909C</color>
 
-    <color name="cardViewBackgroundColor">#FFFFFF</color>
-    <color name="toolbarForegroundColor">#000000</color>
-    <color name="windowBackground">#FAFAFA</color>
+    <color name="cardViewBackgroundColor">#FFFFFF</color><!-- White -->
+    <color name="toolbarForegroundColor">#000000</color><!-- Black -->
+    <color name="windowBackground">#FAFAFA</color><!-- Gray 50 -->
 </resources>

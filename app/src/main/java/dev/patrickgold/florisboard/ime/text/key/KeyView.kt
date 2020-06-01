@@ -26,6 +26,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
 import android.view.inputmethod.EditorInfo
+import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
@@ -331,8 +332,8 @@ class KeyView(
         if (data.code == KeyCode.ENTER) {
             setBackgroundTintColor(
                 this, when {
-                    isKeyPressed -> R.attr.app_colorPrimaryDark
-                    else -> R.attr.app_colorPrimary
+                    isKeyPressed -> R.attr.colorPrimaryDark
+                    else -> R.attr.colorPrimary
                 }
             )
         } else {
@@ -402,6 +403,8 @@ class KeyView(
 
         canvas ?: return
 
+        updateKeyPressedBackground()
+
         if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE
             || data.type == KeyType.NUMERIC
         ) {
@@ -410,6 +413,7 @@ class KeyView(
             when (data.code) {
                 KeyCode.DELETE -> {
                     drawable = getDrawable(context, R.drawable.ic_backspace)
+                    drawableColor = getColorFromAttr(context, R.attr.key_fgColor)
                 }
                 KeyCode.ENTER -> {
                     val action = florisboard?.currentInputEditorInfo?.imeOptions ?: 0
@@ -423,20 +427,21 @@ class KeyView(
                         EditorInfo.IME_ACTION_SEND -> R.drawable.ic_send
                         else -> R.drawable.ic_arrow_right_alt
                     })
-                    drawableColor = getColorFromAttr(context, R.attr.key_bgColor)
+                    drawableColor = getColorFromAttr(context, R.attr.key_enter_fgColor)
                     if (action and EditorInfo.IME_FLAG_NO_ENTER_ACTION > 0) {
                         drawable = getDrawable(context, R.drawable.ic_keyboard_return)
                     }
                 }
                 KeyCode.LANGUAGE_SWITCH -> {
                     drawable = getDrawable(context, R.drawable.ic_language)
+                    drawableColor = getColorFromAttr(context, R.attr.key_fgColor)
                 }
                 KeyCode.PHONE_PAUSE -> label = resources.getString(R.string.key__phone_pause)
                 KeyCode.PHONE_WAIT -> label = resources.getString(R.string.key__phone_wait)
                 KeyCode.SHIFT -> {
                     drawable = getDrawable(context, when {
                         florisboard?.textInputManager?.caps ?: false && florisboard?.textInputManager?.capsLock ?: false -> {
-                            drawableColor = getColorFromAttr(context, R.attr.app_colorAccentDark)
+                            drawableColor = getColorFromAttr(context, R.attr.colorAccent)
                             R.drawable.ic_keyboard_capslock
                         }
                         florisboard?.textInputManager?.caps ?: false && !(florisboard?.textInputManager?.capsLock ?: false) -> {
@@ -448,6 +453,7 @@ class KeyView(
                             R.drawable.ic_keyboard_arrow_up
                         }
                     })
+                    drawableColor = getColorFromAttr(context, R.attr.key_fgColor)
                 }
                 KeyCode.SPACE -> {
                     when (keyboardView.computedLayout?.mode) {
@@ -456,6 +462,7 @@ class KeyView(
                         KeyboardMode.PHONE,
                         KeyboardMode.PHONE2 -> {
                             drawable = getDrawable(context, R.drawable.ic_space_bar)
+                            drawableColor = getColorFromAttr(context, R.attr.key_fgColor)
                         }
                         else -> {}
                     }
@@ -512,6 +519,7 @@ class KeyView(
             } else {
                 labelPaint.textSize = resources.getDimension(R.dimen.key_textSize)
             }
+            labelPaint.color = getColorFromAttr(context, R.attr.key_fgColor)
             val isPortrait =
                 resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
             if (keyboardView.prefs.looknfeel.oneHandedMode != "off" && isPortrait) {

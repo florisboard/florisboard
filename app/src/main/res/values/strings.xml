@@ -59,6 +59,7 @@
     <string name="pref__looknfeel__sound_volume__label">Sound volume on key press</string>
     <string name="pref__looknfeel__vibration_enabled__label">Vibrate on key press</string>
     <string name="pref__looknfeel__vibration_strength__label">Vibration strength on key press</string>
+    <string name="pref__theme__name__label">Keyboard Theme</string>
 
     <string name="settings__gestures__title">Gestures</string>
 

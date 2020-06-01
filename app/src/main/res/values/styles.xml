@@ -7,7 +7,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">0</item>
         <item name="android:layout_alignParentBottom">true</item>
-        <item name="android:background">?attr/one_handed_bgColor</item>
+        <item name="android:background">?one_handed_bgColor</item>
         <item name="android:gravity">center</item>
         <item name="android:orientation">vertical</item>
     </style>
@@ -18,7 +18,7 @@
         <item name="android:autoMirrored">true</item>
         <item name="android:background">@drawable/button_transparent_bg_on_press</item>
         <item name="android:padding">0dp</item>
-        <item name="android:tint">?attr/one_handed_button_fgColor</item>
+        <item name="android:tint">?one_handed_button_fgColor</item>
     </style>
 
     <style name="SmartbarCandidate">
@@ -44,7 +44,7 @@
         <item name="android:layout_width">1dp</item>
         <item name="android:layout_height">@dimen/smartbar_button_height</item>
         <item name="android:layout_weight">0</item>
-        <item name="android:background">?attr/smartbar_divider_bgColor</item>
+        <item name="android:background">?semiTransparentColor</item>
     </style>
 
     <style name="SmartbarQuickAction" parent="Widget.AppCompat.Button">
@@ -52,16 +52,17 @@
         <item name="android:layout_height">@dimen/smartbar_button_height</item>
         <item name="android:layout_margin">@dimen/smartbar_button_margin</item>
         <item name="android:background">@drawable/shape_oval</item>
-        <item name="android:backgroundTint">?attr/smartbar_button_bgColor</item>
+        <item name="android:backgroundTint">?smartbar_button_bgColor</item>
         <item name="android:padding">@dimen/smartbar_button_padding</item>
         <item name="android:scaleType">fitCenter</item>
-        <item name="android:tint">?attr/smartbar_button_fgColor</item>
+        <item name="android:tint">?smartbar_button_fgColor</item>
     </style>
 
     <style name="SmartbarQuickAction.Toggle">
         <item name="android:layout_weight">0</item>
         <item name="android:autoMirrored">true</item>
         <item name="android:drawableStart">@drawable/ic_keyboard_arrow_right</item>
+        <item name="android:drawableTint">?android:textColor</item>
         <item name="android:padding">0dp</item>
         <item name="android:paddingStart">@dimen/smartbar_qat_button_padding_start</item>
         <item name="android:textOff" />

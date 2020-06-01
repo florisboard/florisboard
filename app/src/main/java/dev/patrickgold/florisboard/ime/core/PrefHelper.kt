@@ -3,13 +3,16 @@ package dev.patrickgold.florisboard.ime.core
 import android.content.Context
 import android.content.SharedPreferences
 import android.provider.Settings
+import androidx.preference.PreferenceManager
+import dev.patrickgold.florisboard.R
 
 class PrefHelper(
     private val context: Context,
-    private val shared: SharedPreferences
+    val shared: SharedPreferences
 ) {
     val advanced = Advanced(this)
     val looknfeel = Looknfeel(this)
+    val theme = Theme(this)
 
     private inline fun <reified T> getPref(key: String, default: T): T {
         return when {
@@ -40,6 +43,13 @@ class PrefHelper(
         }
     }
 
+    fun initDefaultPreferences() {
+        PreferenceManager.setDefaultValues(context, R.xml.prefs_advanced, true)
+        PreferenceManager.setDefaultValues(context, R.xml.prefs_keyboard, true)
+        PreferenceManager.setDefaultValues(context, R.xml.prefs_looknfeel, true)
+        PreferenceManager.setDefaultValues(context, R.xml.prefs_theme, true)
+    }
+
     fun sync() {
         val contentResolver = context.contentResolver
 
@@ -61,7 +71,7 @@ class PrefHelper(
         var settingsTheme: String = ""
             get() = prefHelper.getPref(SETTINGS_THEME, "auto")
             private set
-        var longPressDelay: Boolean = false
+        var showAppIcon: Boolean = false
             get() = prefHelper.getPref(SHOW_APP_ICON, true)
             private set
     }
@@ -100,5 +110,22 @@ class PrefHelper(
         var vibrationStrength: Int = 0
             get() = prefHelper.getPref(VIBRATION_STRENGTH, 0)
             private set
+    }
+
+    class Theme(private val prefHelper: PrefHelper) {
+        companion object {
+            const val NAME =                    "theme__name"
+        }
+
+        var name: String = ""
+            get() = prefHelper.getPref(NAME, "floris_light")
+            private set
+        fun getSelectedThemeResId(): Int {
+            return when (name) {
+                "floris_light" -> R.style.KeyboardTheme_FlorisLight
+                "floris_dark" -> R.style.KeyboardTheme_FlorisDark
+                else -> R.style.KeyboardTheme_FlorisLight
+            }
+        }
     }
 }

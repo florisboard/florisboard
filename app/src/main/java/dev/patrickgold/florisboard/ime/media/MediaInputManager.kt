@@ -42,7 +42,7 @@ class MediaInputManager(private val florisboard: FlorisBoard) : FlorisBoard.Even
     var mediaViewGroup: LinearLayout? = null
 
     override fun onCreateInputView() {
-        val rootViewGroup = florisboard.rootViewGroup ?: return
+        val rootViewGroup = florisboard.rootViewGroup
         mediaViewGroup = rootViewGroup.findViewById(R.id.media_input)
         mediaViewFlipper = rootViewGroup.findViewById(R.id.media_input_view_flipper)
 

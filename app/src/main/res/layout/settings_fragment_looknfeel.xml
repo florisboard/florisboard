@@ -17,10 +17,11 @@
 
             <!-- KeyboardView preview will be inserted here programmatically -->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TODO: implement theme creation/selection" />
+            <!-- Must be RelativeLayout, because it blocks RecyclerView to create a second scrollbar -->
+            <RelativeLayout
+                android:id="@+id/settings__theme__frame_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
