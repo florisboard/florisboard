@@ -19,9 +19,11 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
+import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -244,7 +246,7 @@ class KeyboardView : LinearLayout {
         desiredKeyWidth = (widthSize / 10) - (2 * keyMarginH)
 
         val factor = prefs.looknfeel.heightFactor
-        val keyHeightNormal = resources.getDimension(R.dimen.key_height) * when (resources.configuration.orientation) {
+        val keyHeightFactor = when (resources.configuration.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> 0.85f
             else -> if (prefs.looknfeel.oneHandedMode == "start" ||
                 prefs.looknfeel.oneHandedMode == "end") {
@@ -252,8 +254,7 @@ class KeyboardView : LinearLayout {
             } else {
                 1.0f
             }
-        }
-        desiredKeyHeight = (keyHeightNormal * when (factor) {
+        } * when (factor) {
             "extra_short" -> 0.85f
             "short" -> 0.90f
             "mid_short" -> 0.95f
@@ -265,7 +266,9 @@ class KeyboardView : LinearLayout {
         } * when (isPreviewMode) {
             true -> 0.90f
             else -> 1.00f
-        }).toInt()
+        }
+        desiredKeyHeight = (resources.getDimension(R.dimen.key_height) * keyHeightFactor).toInt()
+        florisboard?.textInputManager?.smartbarManager?.setSmartbarHeightFactor(keyHeightFactor)
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }

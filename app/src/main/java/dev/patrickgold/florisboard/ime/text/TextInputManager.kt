@@ -184,6 +184,8 @@ class TextInputManager(
         textViewFlipper?.displayedChild =
             textViewFlipper?.indexOfChild(keyboardViews[mode]) ?: 0
         keyboardViews[mode]?.updateVariation()
+        keyboardViews[mode]?.requestLayout()
+        keyboardViews[mode]?.requestLayoutAllKeys()
         activeKeyboardMode = mode
         smartbarManager.activeContainerId = smartbarManager.getPreferredContainerId()
     }

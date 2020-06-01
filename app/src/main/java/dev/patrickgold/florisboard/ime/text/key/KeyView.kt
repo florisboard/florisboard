@@ -65,7 +65,7 @@ class KeyView(
 
     private var drawable: Drawable? = null
     private var drawableColor: Int = getColorFromAttr(context, R.attr.key_fgColor)
-    private var drawablePadding: Int = resources.getDimension(R.dimen.key_ic_padding).toInt()
+    private var drawablePadding: Int = 0
     private var label: String? = null
     private var labelPaint: Paint = Paint().apply {
         alpha = 255
@@ -311,6 +311,8 @@ class KeyView(
             }
         }
 
+        drawablePadding = (0.2f * height).toInt()
+
         // MUST CALL THIS
         setMeasuredDimension(width, height)
     }
@@ -453,7 +455,6 @@ class KeyView(
                             R.drawable.ic_keyboard_arrow_up
                         }
                     })
-                    drawableColor = getColorFromAttr(context, R.attr.key_fgColor)
                 }
                 KeyCode.SPACE -> {
                     when (keyboardView.computedLayout?.mode) {

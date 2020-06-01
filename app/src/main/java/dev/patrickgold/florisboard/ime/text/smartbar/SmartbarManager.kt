@@ -31,6 +31,7 @@ class SmartbarManager(
     private var numberRowView: LinearLayout? = null
     private var quickActionsView: LinearLayout? = null
     private var quickActionToggle: ToggleButton? = null
+    private var quickActionTogglePlaceholder: View? = null
     private var smartbarView: LinearLayout? = null
     private var spellCheckerSession: SpellCheckerSession? = null
 
@@ -107,6 +108,7 @@ class SmartbarManager(
 
         quickActionToggle = smartbarView.findViewById(R.id.quick_action_toggle)
         quickActionToggle?.setOnClickListener(quickActionToggleOnClickListener)
+        quickActionTogglePlaceholder = smartbarView.findViewById(R.id.quick_action_toggle_placeholder)
 
         val quickActions = smartbarView.findViewById<LinearLayout>(R.id.quick_actions)
         for (quickAction in quickActions.children) {
@@ -258,5 +260,14 @@ class SmartbarManager(
                 quickActionToggle?.rotation = 0.0f
             }
         }
+    }
+
+    fun setSmartbarHeightFactor(factor: Float) {
+        val baseSize = florisboard.context.resources.getDimension(R.dimen.smartbar_button_width)
+        val size = (baseSize * factor).toInt()
+        quickActionToggle?.layoutParams?.width = size
+        quickActionToggle?.layoutParams?.height = size
+        quickActionTogglePlaceholder?.layoutParams?.width = size
+        quickActionTogglePlaceholder?.layoutParams?.height = size
     }
 }

@@ -121,6 +121,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/quick_action_toggle_placeholder"
         android:layout_width="@dimen/smartbar_button_width"
         android:layout_height="@dimen/smartbar_button_height"
         android:layout_margin="@dimen/smartbar_button_margin"

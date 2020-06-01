@@ -10,7 +10,6 @@
     <dimen name="keyboard_row_marginH">@dimen/key_marginH</dimen>
 
     <dimen name="key_borderRadius">6dp</dimen>
-    <dimen name="key_ic_padding">7dp</dimen>
 
     <dimen name="key_textSize">18sp</dimen>
     <dimen name="key_numeric_textSize">12sp</dimen>
@@ -25,9 +24,9 @@
     <dimen name="one_handed_button_width">@dimen/one_handed_width</dimen>
     <dimen name="one_handed_button_height">@dimen/one_handed_width</dimen>
 
-    <dimen name="smartbar_button_width">28dp</dimen>
+    <dimen name="smartbar_button_width">32dp</dimen>
     <dimen name="smartbar_button_height">@dimen/smartbar_button_width</dimen>
     <dimen name="smartbar_button_margin">4dp</dimen>
     <dimen name="smartbar_button_padding">6dp</dimen>
-    <dimen name="smartbar_qat_button_padding_start">2.5dp</dimen>
+    <dimen name="smartbar_qat_button_padding_start">5dp</dimen>
 </resources>

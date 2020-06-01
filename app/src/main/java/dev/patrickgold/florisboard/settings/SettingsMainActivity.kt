@@ -17,9 +17,7 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.PrefHelper
-import dev.patrickgold.florisboard.util.getColorFromAttr
 import dev.patrickgold.florisboard.util.hideAppIcon
-import dev.patrickgold.florisboard.util.setBackgroundTintColor
 import dev.patrickgold.florisboard.util.showAppIcon
 
 private const val FRAGMENT_TAG = "FRAGMENT_TAG"
