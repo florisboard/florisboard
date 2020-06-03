@@ -16,6 +16,16 @@ fun getColorFromAttr(
     return typedValue.data
 }
 
+fun getBooleanFromAttr(
+    context: Context,
+    attrBoolean: Int,
+    typedValue: TypedValue = TypedValue(),
+    resolveRefs: Boolean = true
+): Boolean {
+    context.theme.resolveAttribute(attrBoolean, typedValue, resolveRefs)
+    return typedValue.data != 0
+}
+
 fun setBackgroundTintColor(view: View, colorId: Int) {
     view.backgroundTintList = ColorStateList.valueOf(
         getColorFromAttr(view.context, colorId)

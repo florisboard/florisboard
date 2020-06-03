@@ -180,4 +180,11 @@ class EmojiKeyboardView(
         ))
         isScrollBlocked = true
     }
+
+    /**
+     * Cancels all coroutines and cleans up
+     */
+    fun onDestroy() {
+        cancel()
+    }
 }

@@ -204,14 +204,14 @@ class TextInputManager(
                 val newCursorPos = cursorAnchorInfo.selectionStart
                 val prevComposingText = (cursorAnchorInfo.composingText ?: "").toString()
                 val inputText =
-                    (ic.getExtractedText(ExtractedTextRequest(), 0).text ?: "").toString()
+                    (ic?.getExtractedText(ExtractedTextRequest(), 0)?.text ?: "").toString()
                 setComposingTextBasedOnInput(inputText, newCursorPos)
                 if ((newCursorPos == cursorPos) && (composingText == prevComposingText)) {
                     // Ignore this, as nothing has changed
                 } else {
                     cursorPos = newCursorPos
                     if (composingText != null && composingTextStart != null) {
-                        ic.setComposingRegion(
+                        ic?.setComposingRegion(
                             composingTextStart!!,
                             composingTextStart!! + composingText!!.length
                         )
@@ -272,8 +272,8 @@ class TextInputManager(
      */
     fun commitCandidate(candidateText: String) {
         val ic = florisboard.currentInputConnection
-        ic.setComposingText(candidateText, 1)
-        ic.finishComposingText()
+        ic?.setComposingText(candidateText, 1)
+        ic?.finishComposingText()
     }
 
     /**
@@ -329,15 +329,15 @@ class TextInputManager(
      */
     private fun handleDelete() {
         val ic = florisboard.currentInputConnection
-        ic.beginBatchEdit()
+        ic?.beginBatchEdit()
         resetComposingText()
-        ic.sendKeyEvent(
+        ic?.sendKeyEvent(
             KeyEvent(
                 KeyEvent.ACTION_DOWN,
                 KeyEvent.KEYCODE_DEL
             )
         )
-        ic.endBatchEdit()
+        ic?.endBatchEdit()
     }
 
     /**
@@ -345,11 +345,11 @@ class TextInputManager(
      */
     private fun handleEnter() {
         val ic = florisboard.currentInputConnection
-        ic.beginBatchEdit()
+        ic?.beginBatchEdit()
         resetComposingText()
-        val action = florisboard.currentInputEditorInfo.imeOptions
+        val action = florisboard.currentInputEditorInfo?.imeOptions ?: 0
         if (action and EditorInfo.IME_FLAG_NO_ENTER_ACTION > 0) {
-            florisboard.currentInputConnection.sendKeyEvent(
+            ic?.sendKeyEvent(
                 KeyEvent(
                     KeyEvent.ACTION_DOWN,
                     KeyEvent.KEYCODE_ENTER
@@ -363,10 +363,10 @@ class TextInputManager(
                 EditorInfo.IME_ACTION_PREVIOUS,
                 EditorInfo.IME_ACTION_SEARCH,
                 EditorInfo.IME_ACTION_SEND -> {
-                    florisboard.currentInputConnection.performEditorAction(action)
+                    ic?.performEditorAction(action)
                 }
                 else -> {
-                    florisboard.currentInputConnection.sendKeyEvent(
+                    ic?.sendKeyEvent(
                         KeyEvent(
                             KeyEvent.ACTION_DOWN,
                             KeyEvent.KEYCODE_ENTER
@@ -375,7 +375,7 @@ class TextInputManager(
                 }
             }
         }
-        ic.endBatchEdit()
+        ic?.endBatchEdit()
     }
 
     /**
@@ -430,7 +430,7 @@ class TextInputManager(
             KeyCode.VIEW_SYMBOLS -> setActiveKeyboardMode(KeyboardMode.SYMBOLS)
             KeyCode.VIEW_SYMBOLS2 -> setActiveKeyboardMode(KeyboardMode.SYMBOLS2)
             else -> {
-                ic.beginBatchEdit()
+                ic?.beginBatchEdit()
                 resetComposingText()
                 when (activeKeyboardMode) {
                     KeyboardMode.NUMERIC,
@@ -440,13 +440,13 @@ class TextInputManager(
                         KeyType.CHARACTER,
                         KeyType.NUMERIC -> {
                             val text = keyData.code.toChar().toString()
-                            ic.commitText(text, 1)
+                            ic?.commitText(text, 1)
                         }
                         else -> when (keyData.code) {
                             KeyCode.PHONE_PAUSE,
                             KeyCode.PHONE_WAIT -> {
                                 val text = keyData.code.toChar().toString()
-                                ic.commitText(text, 1)
+                                ic?.commitText(text, 1)
                             }
                         }
                     }
@@ -463,10 +463,10 @@ class TextInputManager(
                                         true -> keyData.label.toUpperCase(Locale.getDefault())
                                         false -> keyData.label.toLowerCase(Locale.getDefault())
                                     }
-                                    ic.commitText(tld, 1)
+                                    ic?.commitText(tld, 1)
                                 }
                                 else -> {
-                                    ic.commitText(text, 1)
+                                    ic?.commitText(text, 1)
                                 }
                             }
                         }
@@ -478,7 +478,7 @@ class TextInputManager(
                         }
                     }
                 }
-                ic.endBatchEdit()
+                ic?.endBatchEdit()
             }
         }
     }

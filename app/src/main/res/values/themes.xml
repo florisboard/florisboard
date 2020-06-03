@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="KeyboardTheme" parent="Theme.AppCompat.Light.NoActionBar" />
 
@@ -7,6 +7,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:navigationBarColor" tools:targetApi="o_mr1">?keyboard_bgColor</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
         <item name="android:textColor">#000000</item><!-- Black -->
         <item name="semiTransparentColor">#20000000</item><!-- Black, semi transparent -->
 
@@ -43,6 +46,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:navigationBarColor" tools:targetApi="o_mr1">?keyboard_bgColor</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
         <item name="android:textColor">#FFFFFF</item><!-- White -->
         <item name="semiTransparentColor">#20FFFFFF</item><!-- White, semi transparent -->
 
@@ -90,6 +96,8 @@
              rendering glitches!! -->
         <item name="android:windowBackground">@color/windowBackground</item>
         <item name="android:colorBackground">@color/windowBackground</item>
+
+        <item name="android:navigationBarColor">@color/navigationBarColor</item>
     </style>
 
 </resources>

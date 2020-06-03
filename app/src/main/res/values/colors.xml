@@ -8,6 +8,7 @@
     <color name="ic_launcher_background">#78909C</color>
 
     <color name="cardViewBackgroundColor">#FFFFFF</color><!-- White -->
+    <color name="navigationBarColor">#000000</color><!-- Black -->
     <color name="toolbarForegroundColor">#000000</color><!-- Black -->
     <color name="windowBackground">#FAFAFA</color><!-- Gray 50 -->
 </resources>

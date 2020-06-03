@@ -70,7 +70,7 @@ class SmartbarManager(
                 florisboard.setActiveInput(R.id.media_input)
             }
             R.id.quick_action_open_settings -> {
-                val i = Intent(florisboard, SettingsMainActivity::class.java)
+                val i = Intent(florisboard.applicationContext, SettingsMainActivity::class.java)
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 florisboard.startActivity(i)
             }

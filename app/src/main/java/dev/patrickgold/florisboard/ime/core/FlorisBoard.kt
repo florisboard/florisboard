@@ -2,7 +2,9 @@ package dev.patrickgold.florisboard.ime.core
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
+import android.graphics.Color
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
 import android.os.Build
@@ -21,6 +23,8 @@ import dev.patrickgold.florisboard.ime.media.MediaInputManager
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.util.getBooleanFromAttr
+import dev.patrickgold.florisboard.util.getColorFromAttr
 
 /**
  * Core class responsible to link together both the text and media input managers as well as
@@ -34,6 +38,7 @@ class FlorisBoard : InputMethodService() {
     private var audioManager: AudioManager? = null
     val context: Context
         get() = rootViewGroup.context
+    private var currentThemeResId: Int = 0
     private var mainViewFlipper: ViewFlipper? = null
     lateinit var prefs: PrefHelper
         private set
@@ -44,17 +49,22 @@ class FlorisBoard : InputMethodService() {
     val mediaInputManager: MediaInputManager = MediaInputManager(this)
 
     override fun onCreate() {
-        super.onCreate()
-
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         prefs = PrefHelper(this, PreferenceManager.getDefaultSharedPreferences(this))
         prefs.initDefaultPreferences()
         prefs.sync()
+
+        currentThemeResId = prefs.theme.getSelectedThemeResId()
+        setTheme(currentThemeResId)
+
+        super.onCreate()
+        textInputManager.onCreate()
+        mediaInputManager.onCreate()
     }
 
     @SuppressLint("InflateParams")
     override fun onCreateInputView(): View? {
-        baseContext.setTheme(prefs.theme.getSelectedThemeResId())
+        baseContext.setTheme(currentThemeResId)
 
         rootViewGroup = layoutInflater.inflate(R.layout.florisboard, null) as LinearLayout
         mainViewFlipper = rootViewGroup.findViewById(R.id.main_view_flipper)
@@ -67,6 +77,12 @@ class FlorisBoard : InputMethodService() {
         setActiveInput(R.id.text_input)
 
         return rootViewGroup
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        textInputManager.onDestroy()
+        mediaInputManager.onDestroy()
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
@@ -149,6 +165,27 @@ class FlorisBoard : InputMethodService() {
             candidatesEnd
         )
     }
+
+    /*fun applyTheme(theme: Int, shouldRecreateInputView: Boolean = true) {
+        if (shouldRecreateInputView) {
+            setInputView(onCreateInputView())
+        } else {
+            if (currentThemeResId == theme) {
+                return
+            }
+            currentThemeResId = theme
+            baseContext.setTheme(theme)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+                val w = window?.window ?: return
+                w.navigationBarColor = getColorFromAttr(baseContext, android.R.attr.navigationBarColor)
+                val flags = w.decorView.systemUiVisibility
+                val isLight = getBooleanFromAttr(baseContext, android.R.attr.windowLightNavigationBar)
+                if (isLight) {
+                    w.decorView.systemUiVisibility = flags
+                }
+            }
+        }
+    }*/
 
     /**
      * Makes a key press vibration if the user has this feature enabled in the preferences.
@@ -268,7 +305,9 @@ class FlorisBoard : InputMethodService() {
     }
 
     interface EventListener {
+        fun onCreate() {}
         fun onCreateInputView()
+        fun onDestroy() {}
 
         fun onStartInputView(info: EditorInfo?, restarting: Boolean) {}
         fun onFinishInputView(finishingInput: Boolean) {}

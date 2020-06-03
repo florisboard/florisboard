@@ -75,6 +75,13 @@ class MediaInputManager(private val florisboard: FlorisBoard) : FlorisBoard.Even
         tabLayout?.selectTab(tabLayout?.getTabAt(1))
     }
 
+    override fun onDestroy() {
+        val emojiKeyboardView = tabViews[Tab.EMOJIS]
+        if (emojiKeyboardView is EmojiKeyboardView) {
+            emojiKeyboardView.onDestroy()
+        }
+    }
+
     private fun onBottomButtonClick(v: View) {
         when (v.id) {
             R.id.media_input_switch_to_text_input_button -> {
@@ -108,8 +115,8 @@ class MediaInputManager(private val florisboard: FlorisBoard) : FlorisBoard.Even
 
     fun sendEmojiKeyPress(emojiKeyData: EmojiKeyData) {
         val ic = florisboard.currentInputConnection
-        ic.finishComposingText()
-        ic.commitText(emojiKeyData.getCodePointsAsString(), 1)
+        ic?.finishComposingText()
+        ic?.commitText(emojiKeyData.getCodePointsAsString(), 1)
     }
 
     enum class Tab {
