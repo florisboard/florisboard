@@ -45,7 +45,7 @@
             android:name="dev.patrickgold.florisboard.settings.LauncherAlias"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:targetActivity="dev.patrickgold.florisboard.settings.SettingsMainActivity"
             android:theme="@style/SettingsTheme">

@@ -13,6 +13,7 @@
       { "code":   44, "label": ",", "variation": "normal", "popup": [] },
       { "code":   47, "label": "/", "variation": "uri", "popup": [] },
       { "code": -210, "label": "language_switch", "type": "system_gui" },
+      { "code": -213, "label": "switch_to_media_context", "type": "system_gui" },
       { "code":   32, "label": " ", "popup": [] },
       { "code":   46, "label": ".", "variation": "email_address", "popup": [
         { "code": -255, "label": ".gov" },

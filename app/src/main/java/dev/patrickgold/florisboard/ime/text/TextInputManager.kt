@@ -27,6 +27,7 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedTextRequest
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
+import android.widget.Toast
 import android.widget.ViewFlipper
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
@@ -412,9 +413,8 @@ class TextInputManager(
             KeyCode.DELETE -> handleDelete()
             KeyCode.ENTER -> handleEnter()
             KeyCode.LANGUAGE_SWITCH -> {
-                /*Toast.makeText(florisboard, "[NYI]: Language switch",
-                    Toast.LENGTH_SHORT).show()*/
-                florisboard.setActiveInput(R.id.media_input)
+                Toast.makeText(florisboard, "[NYI]: Language switch",
+                    Toast.LENGTH_SHORT).show()
             }
             KeyCode.SHIFT -> handleShift()
             KeyCode.SHOW_INPUT_METHOD_PICKER -> {
@@ -422,6 +422,8 @@ class TextInputManager(
                     florisboard.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 im.showInputMethodPicker()
             }
+            KeyCode.SWITCH_TO_MEDIA_CONTEXT -> florisboard.setActiveInput(R.id.media_input)
+            KeyCode.SWITCH_TO_TEXT_CONTEXT -> florisboard.setActiveInput(R.id.text_input)
             KeyCode.VIEW_CHARACTERS -> setActiveKeyboardMode(KeyboardMode.CHARACTERS)
             KeyCode.VIEW_NUMERIC -> setActiveKeyboardMode(KeyboardMode.NUMERIC)
             KeyCode.VIEW_NUMERIC_ADVANCED -> setActiveKeyboardMode(KeyboardMode.NUMERIC_ADVANCED)

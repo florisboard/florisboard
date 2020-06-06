@@ -19,11 +19,9 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
-import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
-import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -311,7 +309,7 @@ class KeyboardView : LinearLayout {
             if (row is FlexboxLayout) {
                 for (keyView in row.children) {
                     if (keyView is KeyView) {
-                        keyView.updateVariation()
+                        keyView.updateVisibility()
                     }
                 }
             }

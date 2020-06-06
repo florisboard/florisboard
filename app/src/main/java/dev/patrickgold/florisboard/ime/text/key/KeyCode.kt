@@ -61,7 +61,10 @@ object KeyCode {
     const val VIEW_NUMERIC_ADVANCED =   -205
     const val VIEW_PHONE =              -206
     const val VIEW_PHONE2 =             -207
+
     const val LANGUAGE_SWITCH =         -210
     const val SHOW_INPUT_METHOD_PICKER =-211
+    const val SWITCH_TO_TEXT_CONTEXT   =-212
+    const val SWITCH_TO_MEDIA_CONTEXT  =-213
     const val URI_COMPONENT_TLD =       -255
 }

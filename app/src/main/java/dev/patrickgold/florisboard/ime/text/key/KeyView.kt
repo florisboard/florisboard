@@ -26,7 +26,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
 import android.view.inputmethod.EditorInfo
-import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
@@ -64,12 +63,12 @@ class KeyView(
     private var shouldBlockNextKeyCode: Boolean = false
 
     private var drawable: Drawable? = null
-    private var drawableColor: Int = getColorFromAttr(context, R.attr.key_fgColor)
+    private var drawableColor: Int = 0
     private var drawablePadding: Int = 0
     private var label: String? = null
     private var labelPaint: Paint = Paint().apply {
         alpha = 255
-        color = getColorFromAttr(context, R.attr.key_fgColor)
+        color = 0
         isAntiAlias = true
         isFakeBoldText = true
         textAlign = Paint.Align.CENTER
@@ -360,13 +359,12 @@ class KeyView(
             val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
             val keyMarginV = resources.getDimension((R.dimen.key_marginV)).toInt()
 
-            val self = this
             touchHitBox.apply {
-                left = when (self) {
+                left = when (this@KeyView) {
                     parent.children.first() -> 0
                     else -> (parent.x + x - keyMarginH).toInt()
                 }
-                right = when (self) {
+                right = when (this@KeyView) {
                     parent.children.last() -> keyboardView.measuredWidth
                     else -> (parent.x + x + measuredWidth + keyMarginH).toInt()
                 }
@@ -380,20 +378,37 @@ class KeyView(
      * Updates the visibility of this [KeyView] by checking the current key variation of the parent
      * TextInputManager.
      */
-    fun updateVariation() {
-        if (data.variation != KeyVariation.ALL) {
-            val keyVariation = florisboard?.textInputManager?.keyVariation ?: KeyVariation.NORMAL
-            visibility =
-                if (data.variation == KeyVariation.NORMAL && (keyVariation == KeyVariation.NORMAL
-                            || keyVariation == KeyVariation.PASSWORD)
-                ) {
+    fun updateVisibility() {
+        when (data.code) {
+            KeyCode.SWITCH_TO_TEXT_CONTEXT,
+            KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
+                visibility = if (florisboard?.shouldShowLanguageSwitch() == true) {
+                    GONE
+                } else {
                     VISIBLE
-                } else if (data.variation == keyVariation) {
+                }
+            }
+            KeyCode.LANGUAGE_SWITCH -> {
+                visibility = if (florisboard?.shouldShowLanguageSwitch() == true) {
                     VISIBLE
                 } else {
                     GONE
                 }
-            updateTouchHitBox()
+            }
+            else -> if (data.variation != KeyVariation.ALL) {
+                val keyVariation = florisboard?.textInputManager?.keyVariation ?: KeyVariation.NORMAL
+                visibility =
+                    if (data.variation == KeyVariation.NORMAL && (keyVariation == KeyVariation.NORMAL
+                                || keyVariation == KeyVariation.PASSWORD)
+                    ) {
+                        VISIBLE
+                    } else if (data.variation == keyVariation) {
+                        VISIBLE
+                    } else {
+                        GONE
+                    }
+                updateTouchHitBox()
+            }
         }
     }
 
@@ -468,6 +483,11 @@ class KeyView(
                         else -> {}
                     }
                 }
+                KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
+                    drawable = getDrawable(context, R.drawable.ic_sentiment_satisfied)
+                    drawableColor = getColorFromAttr(context, R.attr.key_fgColor)
+                }
+                KeyCode.SWITCH_TO_TEXT_CONTEXT,
                 KeyCode.VIEW_CHARACTERS -> {
                     label = resources.getString(R.string.key__view_characters)
                 }

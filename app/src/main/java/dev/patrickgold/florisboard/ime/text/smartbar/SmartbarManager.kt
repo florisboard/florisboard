@@ -1,7 +1,6 @@
 package dev.patrickgold.florisboard.ime.text.smartbar
 
 import android.content.Context
-import android.content.Intent
 import android.view.View
 import android.view.textservice.SentenceSuggestionsInfo
 import android.view.textservice.SpellCheckerSession
@@ -17,7 +16,6 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.settings.SettingsMainActivity
 
 // TODO: Implement suggestion creation functionality
 class SmartbarManager(
@@ -69,11 +67,7 @@ class SmartbarManager(
             R.id.quick_action_switch_to_media_context -> {
                 florisboard.setActiveInput(R.id.media_input)
             }
-            R.id.quick_action_open_settings -> {
-                val i = Intent(florisboard.applicationContext, SettingsMainActivity::class.java)
-                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                florisboard.startActivity(i)
-            }
+            R.id.quick_action_open_settings -> florisboard.launchSettings()
             R.id.quick_action_one_handed_toggle -> {
                 when (florisboard.prefs.looknfeel.oneHandedMode) {
                     "off" -> {

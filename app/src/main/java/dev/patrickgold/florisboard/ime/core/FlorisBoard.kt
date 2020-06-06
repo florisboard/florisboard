@@ -23,6 +23,7 @@ import dev.patrickgold.florisboard.ime.media.MediaInputManager
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.util.getBooleanFromAttr
 import dev.patrickgold.florisboard.util.getColorFromAttr
 
@@ -104,6 +105,7 @@ class FlorisBoard : InputMethodService() {
     override fun onWindowShown() {
         prefs.sync()
         updateOneHandedPanelVisibility()
+        setActiveInput(R.id.text_input)
 
         super.onWindowShown()
         textInputManager.onWindowShown()
@@ -230,6 +232,26 @@ class FlorisBoard : InputMethodService() {
                 audioManager!!.playSoundEffect(effect, soundVolume / 100f)
             }
         }
+    }
+
+    /**
+     * Hides the IME and launches [SettingsMainActivity].
+     */
+    fun launchSettings() {
+        requestHideSelf(0)
+        val i = Intent(this, SettingsMainActivity::class.java)
+        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                  Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
+                  Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(i)
+    }
+
+    /**
+     * TODO: evaluate the boolean based on the language prefs
+     * @return If the language switch should be shown
+     */
+    fun shouldShowLanguageSwitch(): Boolean {
+        return false
     }
 
     /*override fun onComputeInsets(outInsets: Insets?) {
