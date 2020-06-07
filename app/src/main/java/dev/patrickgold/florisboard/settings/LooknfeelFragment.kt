@@ -42,7 +42,7 @@ class LooknfeelFragment : Fragment(), CoroutineScope by MainScope() {
             keyboardView.prefs = prefs
             keyboardView.isPreviewMode = true
             keyboardView.setKeyboardMode(KeyboardMode.CHARACTERS, layoutManager)
-            keyboardView.updateVariation()
+            keyboardView.updateVisibility()
             val cardLinearLayout = rootView.findViewById<LinearLayout>(R.id.settings__looknfeel__card_linear_layout)
             withContext(Dispatchers.Main) {
                 cardLinearLayout.addView(keyboardView, 0)

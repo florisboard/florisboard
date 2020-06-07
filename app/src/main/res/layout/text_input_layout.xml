@@ -10,27 +10,29 @@
 
     <include layout="@layout/smartbar" />
 
-    <LinearLayout
-        android:id="@+id/keyboard_preview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:ignore="UselessParent">
-
-        <!-- TODO: make a good looking keyboard preview -->
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"/>
-
-    </LinearLayout>
-
     <!-- KeyboardViews will be inserted in ViewFlipper below dynamically -->
     <ViewFlipper
         android:id="@+id/text_input_view_flipper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:measureAllChildren="false"/>
+        android:measureAllChildren="false">
+
+        <LinearLayout
+            android:id="@+id/keyboard_preview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
+
+            <!-- TODO: make a good looking keyboard preview -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:text="Loading keyboard, please wait..."/>
+
+        </LinearLayout>
+
+    </ViewFlipper>
 
 </LinearLayout>

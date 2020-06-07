@@ -302,9 +302,9 @@ class KeyboardView : LinearLayout {
     }
 
     /**
-     * Syncs the current key variation with all keys.
+     * Syncs the current key variation with all keys and updates their visibility.
      */
-    fun updateVariation() {
+    fun updateVisibility() {
         for (row in children) {
             if (row is FlexboxLayout) {
                 for (keyView in row.children) {

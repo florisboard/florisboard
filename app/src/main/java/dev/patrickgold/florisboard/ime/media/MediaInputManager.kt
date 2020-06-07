@@ -14,6 +14,7 @@ import dev.patrickgold.florisboard.ime.media.home.HomeView
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyType
+import kotlinx.coroutines.*
 import java.util.*
 
 /**
@@ -30,7 +31,8 @@ import java.util.*
  * All events defined in [FlorisBoard.EventListener] will be passed through to this class by the
  * core.
  */
-class MediaInputManager private constructor() : FlorisBoard.EventListener {
+class MediaInputManager private constructor() : CoroutineScope by MainScope(),
+    FlorisBoard.EventListener {
 
     private val florisboard = FlorisBoard.getInstance()
 
@@ -51,40 +53,47 @@ class MediaInputManager private constructor() : FlorisBoard.EventListener {
     }
 
     override fun onCreateInputView() {
-        val rootViewGroup = florisboard.rootViewGroup
-        mediaViewGroup = rootViewGroup.findViewById(R.id.media_input)
-        mediaViewFlipper = rootViewGroup.findViewById(R.id.media_input_view_flipper)
+        launch(Dispatchers.Default) {
+            val rootViewGroup = florisboard.rootViewGroup
+            mediaViewGroup = rootViewGroup.findViewById(R.id.media_input)
+            mediaViewFlipper = rootViewGroup.findViewById(R.id.media_input_view_flipper)
 
-        // Init bottom buttons
-        rootViewGroup.findViewById<Button>(R.id.media_input_switch_to_text_input_button)
-            .setOnClickListener { v -> onBottomButtonClick(v) }
-        rootViewGroup.findViewById<ImageButton>(R.id.media_input_backspace_button)
-            .setOnClickListener { v -> onBottomButtonClick(v) }
+            // Init bottom buttons
+            rootViewGroup.findViewById<Button>(R.id.media_input_switch_to_text_input_button)
+                .setOnClickListener { v -> onBottomButtonClick(v) }
+            rootViewGroup.findViewById<ImageButton>(R.id.media_input_backspace_button)
+                .setOnClickListener { v -> onBottomButtonClick(v) }
 
-        tabLayout = rootViewGroup.findViewById(R.id.media_input_tabs)
-        tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                when (tab.position) {
-                    0 -> setActiveTab(Tab.HOME)
-                    1 -> setActiveTab(Tab.EMOJIS)
-                    2 -> setActiveTab(Tab.EMOTICONS)
+            tabLayout = rootViewGroup.findViewById(R.id.media_input_tabs)
+            tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    when (tab.position) {
+                        0 -> setActiveTab(Tab.HOME)
+                        1 -> setActiveTab(Tab.EMOJIS)
+                        2 -> setActiveTab(Tab.EMOTICONS)
+                    }
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab) {}
+                override fun onTabReselected(tab: TabLayout.Tab) {}
+            })
+
+            for (tab in Tab.values()) {
+                val tabView = createTabViewFor(tab)
+                tabViews[tab] = tabView
+                withContext(Dispatchers.Main) {
+                    mediaViewFlipper?.addView(tabView)
                 }
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
-            override fun onTabReselected(tab: TabLayout.Tab) {}
-        })
-
-        for (tab in Tab.values()) {
-            val tabView = createTabViewFor(tab)
-            tabViews[tab] = tabView
-            mediaViewFlipper?.addView(tabView)
+            withContext(Dispatchers.Main) {
+                tabLayout?.selectTab(tabLayout?.getTabAt(1))
+            }
         }
-
-        tabLayout?.selectTab(tabLayout?.getTabAt(1))
     }
 
     override fun onDestroy() {
+        cancel()
         val emojiKeyboardView = tabViews[Tab.EMOJIS]
         if (emojiKeyboardView is EmojiKeyboardView) {
             emojiKeyboardView.onDestroy()
@@ -106,12 +115,8 @@ class MediaInputManager private constructor() : FlorisBoard.EventListener {
 
     private fun createTabViewFor(tab: Tab): LinearLayout {
         return when (tab) {
-            Tab.HOME -> HomeView(
-                florisboard
-            )
-            Tab.EMOJIS -> EmojiKeyboardView(
-                florisboard
-            )
+            Tab.HOME -> HomeView(florisboard)
+            Tab.EMOJIS -> EmojiKeyboardView(florisboard)
             else -> LinearLayout(florisboard)
         }
     }

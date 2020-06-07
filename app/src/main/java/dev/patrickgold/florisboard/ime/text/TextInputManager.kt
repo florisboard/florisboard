@@ -21,7 +21,6 @@ import android.os.Handler
 import android.text.InputType
 import android.util.Log
 import android.view.KeyEvent
-import android.view.View
 import android.view.inputmethod.CursorAnchorInfo
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedTextRequest
@@ -39,6 +38,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarManager
+import kotlinx.coroutines.*
 import java.util.*
 
 /**
@@ -53,7 +53,8 @@ import java.util.*
  * Smartbar, which, depending on the mode and variation, may create candidates.
  * @see SmartbarManager.generateCandidatesFromComposing for more information.
  */
-class TextInputManager private constructor() : FlorisBoard.EventListener {
+class TextInputManager private constructor() : CoroutineScope by MainScope(),
+    FlorisBoard.EventListener {
 
     private val florisboard = FlorisBoard.getInstance()
 
@@ -105,19 +106,32 @@ class TextInputManager private constructor() : FlorisBoard.EventListener {
      * UI-related setup + initialize all keyboard views with their designated layouts.
      */
     override fun onCreateInputView() {
-        textViewGroup = florisboard.rootViewGroup.findViewById(R.id.text_input)
-        textViewFlipper = textViewGroup?.findViewById(R.id.text_input_view_flipper)
-        for (mode in KeyboardMode.values()) {
-            val keyboardView = KeyboardView(florisboard.context)
-            keyboardView.florisboard = florisboard
-            keyboardView.prefs = florisboard.prefs
-            textViewFlipper?.addView(keyboardView)
-            keyboardView.setKeyboardMode(mode)
-            keyboardViews[mode] = keyboardView
+        launch(Dispatchers.Default) {
+            val rootViewGroup = florisboard.rootViewGroup
+            textViewGroup = rootViewGroup.findViewById(R.id.text_input)
+            textViewFlipper = rootViewGroup.findViewById(R.id.text_input_view_flipper)
+
+            for (mode in KeyboardMode.values()) {
+                val keyboardView = KeyboardView(florisboard.context)
+                keyboardView.florisboard = florisboard
+                keyboardView.prefs = florisboard.prefs
+                keyboardView.setKeyboardMode(mode)
+                keyboardViews[mode] = keyboardView
+                withContext(Dispatchers.Main) {
+                    textViewFlipper?.addView(keyboardView)
+                    if (keyboardView.computedLayout?.mode == KeyboardMode.CHARACTERS) {
+                        setActiveKeyboardMode(KeyboardMode.CHARACTERS)
+                    }
+                }
+            }
         }
-        florisboard.rootViewGroup.findViewById<LinearLayout>(R.id.keyboard_preview)?.visibility =
-            View.GONE
-        setActiveKeyboardMode(KeyboardMode.CHARACTERS)
+    }
+
+    /**
+     * Cancels all coroutines and cleans up.
+     */
+    override fun onDestroy() {
+        cancel()
     }
 
     /**
@@ -197,7 +211,7 @@ class TextInputManager private constructor() : FlorisBoard.EventListener {
     private fun setActiveKeyboardMode(mode: KeyboardMode) {
         textViewFlipper?.displayedChild =
             textViewFlipper?.indexOfChild(keyboardViews[mode]) ?: 0
-        keyboardViews[mode]?.updateVariation()
+        keyboardViews[mode]?.updateVisibility()
         keyboardViews[mode]?.requestLayout()
         keyboardViews[mode]?.requestLayoutAllKeys()
         activeKeyboardMode = mode

@@ -97,12 +97,12 @@ class FlorisBoard : InputMethodService() {
         textInputManager.onCreateInputView()
         mediaInputManager.onCreateInputView()
 
-        setActiveInput(R.id.text_input)
-
         return rootViewGroup
     }
 
     override fun onDestroy() {
+        florisboardInstance = null
+
         super.onDestroy()
         textInputManager.onDestroy()
         mediaInputManager.onDestroy()
