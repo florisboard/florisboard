@@ -29,10 +29,10 @@ import java.util.*
  *
  * All events defined in [FlorisBoard.EventListener] will be passed through to this class by the
  * core.
- *
- * @property florisboard Reference to instance of core class [FlorisBoard].
  */
-class MediaInputManager(private val florisboard: FlorisBoard) : FlorisBoard.EventListener {
+class MediaInputManager private constructor() : FlorisBoard.EventListener {
+
+    private val florisboard = FlorisBoard.getInstance()
 
     private var activeTab: Tab? = null
     private var mediaViewFlipper: ViewFlipper? = null
@@ -40,6 +40,15 @@ class MediaInputManager(private val florisboard: FlorisBoard) : FlorisBoard.Even
     private val tabViews = EnumMap<Tab, LinearLayout>(Tab::class.java)
 
     var mediaViewGroup: LinearLayout? = null
+
+    companion object {
+        private val instance: MediaInputManager = MediaInputManager()
+
+        @Synchronized
+        fun getInstance(): MediaInputManager {
+            return instance
+        }
+    }
 
     override fun onCreateInputView() {
         val rootViewGroup = florisboard.rootViewGroup

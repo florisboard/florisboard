@@ -52,8 +52,6 @@ import java.util.*
  * TextInputManager also keeps track of the current composing word and syncs this value with the
  * Smartbar, which, depending on the mode and variation, may create candidates.
  * @see SmartbarManager.generateCandidatesFromComposing for more information.
- *
- * @property florisboard Reference to instance of core class [FlorisBoard].
  */
 class TextInputManager private constructor() : FlorisBoard.EventListener {
 
@@ -95,13 +93,18 @@ class TextInputManager private constructor() : FlorisBoard.EventListener {
     }
 
     /**
-     * Create the UI and initialize all keyboard views with their designated layouts.
+     * Non-UI-related setup.
      */
-    override fun onCreateInputView() {
+    override fun onCreate() {
         layoutManager.autoFetchAssociationsFromPrefs()
 
         smartbarManager = SmartbarManager.getInstance()
+    }
 
+    /**
+     * UI-related setup + initialize all keyboard views with their designated layouts.
+     */
+    override fun onCreateInputView() {
         textViewGroup = florisboard.rootViewGroup.findViewById(R.id.text_input)
         textViewFlipper = textViewGroup?.findViewById(R.id.text_input_view_flipper)
         for (mode in KeyboardMode.values()) {

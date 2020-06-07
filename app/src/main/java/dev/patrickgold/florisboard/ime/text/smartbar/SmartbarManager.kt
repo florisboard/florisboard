@@ -80,6 +80,7 @@ class SmartbarManager private constructor() : SpellCheckerSession.SpellCheckerSe
     private val quickActionOnClickListener = View.OnClickListener { v ->
         when (v.id) {
             R.id.quick_action_switch_to_media_context -> {
+                activeContainerId = getPreferredContainerId()
                 florisboard.setActiveInput(R.id.media_input)
             }
             R.id.quick_action_open_settings -> florisboard.launchSettings()

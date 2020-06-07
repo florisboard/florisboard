@@ -61,7 +61,7 @@ class FlorisBoard : InputMethodService() {
         florisboardInstance = this
 
         textInputManager = TextInputManager.getInstance()
-        mediaInputManager = MediaInputManager(this)
+        mediaInputManager = MediaInputManager.getInstance()
     }
 
     companion object {
