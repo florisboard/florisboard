@@ -9,7 +9,6 @@ import android.view.textservice.TextServicesManager
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
-import android.widget.ToggleButton
 import androidx.core.view.children
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
@@ -18,20 +17,36 @@ import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 
 // TODO: Implement suggestion creation functionality
-class SmartbarManager(
-    private val florisboard: FlorisBoard,
-    private val textInputManager: TextInputManager
-) : SpellCheckerSession.SpellCheckerSessionListener {
+// TODO: Cleanup and reorganize SmartbarManager
+class SmartbarManager private constructor() : SpellCheckerSession.SpellCheckerSessionListener {
 
-    private val candidateViewList: MutableList<Button> = mutableListOf()
-    private var candidatesView: LinearLayout? = null
+    private val florisboard: FlorisBoard = FlorisBoard.getInstance()
     private var isComposingEnabled: Boolean = false
-    private var numberRowView: LinearLayout? = null
-    private var quickActionsView: LinearLayout? = null
-    private var quickActionToggle: ToggleButton? = null
-    private var quickActionTogglePlaceholder: View? = null
-    private var smartbarView: LinearLayout? = null
     private var spellCheckerSession: SpellCheckerSession? = null
+    private val textInputManager: TextInputManager = TextInputManager.getInstance()
+    var smartbarView: SmartbarView? = null
+        set(value) {
+            field = value
+            if (value != null) {
+                value.quickActionToggle?.setOnClickListener(quickActionToggleOnClickListener)
+                val quickActions = value.findViewById<LinearLayout>(R.id.quick_actions)
+                for (quickAction in quickActions.children) {
+                    if (quickAction is ImageButton) {
+                        quickAction.setOnClickListener(quickActionOnClickListener)
+                    }
+                }
+                val numberRow = value.findViewById<LinearLayout>(R.id.number_row)
+                for (numberRowButton in numberRow.children) {
+                    if (numberRowButton is Button) {
+                        numberRowButton.setOnClickListener(numberRowButtonOnClickListener)
+                    }
+                }
+                for (candidateView in value.candidateViewList) {
+                    candidateView.setOnClickListener(candidateViewOnClickListener)
+                    candidateView.setOnLongClickListener(candidateViewOnLongClickListener)
+                }
+            }
+        }
 
     var activeContainerId: Int = R.id.candidates
         set(value) { field = value; updateActiveContainerVisibility() }
@@ -89,41 +104,13 @@ class SmartbarManager(
         }
     }
 
-    fun createSmartbarView(): LinearLayout {
-        val smartbarView = View.inflate(florisboard.context, R.layout.smartbar, null) as LinearLayout
+    companion object {
+        private val instance: SmartbarManager = SmartbarManager()
 
-        candidateViewList.add(smartbarView.findViewById(R.id.candidate0))
-        candidateViewList.add(smartbarView.findViewById(R.id.candidate1))
-        candidateViewList.add(smartbarView.findViewById(R.id.candidate2))
-
-        candidatesView = smartbarView.findViewById(R.id.candidates)
-        numberRowView = smartbarView.findViewById(R.id.number_row)
-        quickActionsView = smartbarView.findViewById(R.id.quick_actions)
-
-        quickActionToggle = smartbarView.findViewById(R.id.quick_action_toggle)
-        quickActionToggle?.setOnClickListener(quickActionToggleOnClickListener)
-        quickActionTogglePlaceholder = smartbarView.findViewById(R.id.quick_action_toggle_placeholder)
-
-        val quickActions = smartbarView.findViewById<LinearLayout>(R.id.quick_actions)
-        for (quickAction in quickActions.children) {
-            if (quickAction is ImageButton) {
-                quickAction.setOnClickListener(quickActionOnClickListener)
-            }
+        @Synchronized
+        fun getInstance(): SmartbarManager {
+            return instance
         }
-        val numberRow = smartbarView.findViewById<LinearLayout>(R.id.number_row)
-        for (numberRowButton in numberRow.children) {
-            if (numberRowButton is Button) {
-                numberRowButton.setOnClickListener(numberRowButtonOnClickListener)
-            }
-        }
-        for (candidateView in candidateViewList) {
-            candidateView.setOnClickListener(candidateViewOnClickListener)
-            candidateView.setOnLongClickListener(candidateViewOnLongClickListener)
-        }
-
-        this.smartbarView = smartbarView
-
-        return smartbarView
     }
 
     override fun onGetSuggestions(arr: Array<out SuggestionsInfo>?) {
@@ -167,14 +154,14 @@ class SmartbarManager(
             else -> {
                 smartbarView?.visibility = View.VISIBLE
                 activeContainerId = R.id.candidates
-                val tsm = florisboard.getSystemService(Context.TEXT_SERVICES_MANAGER_SERVICE) as TextServicesManager
-                spellCheckerSession = tsm.newSpellCheckerSession(null, null, this, true)
+                //val tsm = florisboard.getSystemService(Context.TEXT_SERVICES_MANAGER_SERVICE) as TextServicesManager
+                //spellCheckerSession = tsm.newSpellCheckerSession(null, null, this, true)
             }
         }
     }
 
     fun onFinishInputView() {
-        spellCheckerSession?.close()
+        //spellCheckerSession?.close()
     }
 
     fun deleteCandidateFromDictionary(candidate: String) {
@@ -186,16 +173,18 @@ class SmartbarManager(
     }
 
     fun generateCandidatesFromComposing(composingText: String?) {
+        val smartbarView = smartbarView ?: return
+
         if (composingText == null) {
-            candidateViewList[0].text = "candidate"
-            candidateViewList[1].text = "suggestions"
-            candidateViewList[2].text = "nyi"
+            smartbarView.candidateViewList[0].text = "candidate"
+            smartbarView.candidateViewList[1].text = "suggestions"
+            smartbarView.candidateViewList[2].text = "nyi"
         } else {
             activeContainerId = R.id.candidates
             updateActiveContainerVisibility()
-            candidateViewList[0].text = ""
-            candidateViewList[1].text = composingText + "test"
-            candidateViewList[2].text = ""
+            smartbarView.candidateViewList[0].text = ""
+            smartbarView.candidateViewList[1].text = composingText + "test"
+            smartbarView.candidateViewList[2].text = ""
         }
         //spellCheckerSession?.getSentenceSuggestions(arrayOf(TextInfo(composing)), 3)
         //android.util.Log.i("SPELL", "GEN")
@@ -228,40 +217,33 @@ class SmartbarManager(
     }
 
     private fun updateActiveContainerVisibility() {
+        val smartbarView = smartbarView ?: return
+
         when (activeContainerId) {
             R.id.quick_actions -> {
-                candidatesView?.visibility = View.GONE
-                numberRowView?.visibility = View.GONE
-                quickActionsView?.visibility = View.VISIBLE
-                quickActionToggle?.rotation = -180.0f
+                smartbarView.candidatesView?.visibility = View.GONE
+                smartbarView.numberRowView?.visibility = View.GONE
+                smartbarView.quickActionsView?.visibility = View.VISIBLE
+                smartbarView.quickActionToggle?.rotation = -180.0f
             }
             R.id.number_row -> {
-                candidatesView?.visibility = View.GONE
-                numberRowView?.visibility = View.VISIBLE
-                quickActionsView?.visibility = View.GONE
-                quickActionToggle?.rotation = 0.0f
+                smartbarView.candidatesView?.visibility = View.GONE
+                smartbarView.numberRowView?.visibility = View.VISIBLE
+                smartbarView.quickActionsView?.visibility = View.GONE
+                smartbarView.quickActionToggle?.rotation = 0.0f
             }
             R.id.candidates -> {
-                candidatesView?.visibility = View.VISIBLE
-                numberRowView?.visibility = View.GONE
-                quickActionsView?.visibility = View.GONE
-                quickActionToggle?.rotation = 0.0f
+                smartbarView.candidatesView?.visibility = View.VISIBLE
+                smartbarView.numberRowView?.visibility = View.GONE
+                smartbarView.quickActionsView?.visibility = View.GONE
+                smartbarView.quickActionToggle?.rotation = 0.0f
             }
             else -> {
-                candidatesView?.visibility = View.GONE
-                numberRowView?.visibility = View.GONE
-                quickActionsView?.visibility = View.GONE
-                quickActionToggle?.rotation = 0.0f
+                smartbarView.candidatesView?.visibility = View.GONE
+                smartbarView.numberRowView?.visibility = View.GONE
+                smartbarView.quickActionsView?.visibility = View.GONE
+                smartbarView.quickActionToggle?.rotation = 0.0f
             }
         }
-    }
-
-    fun setSmartbarHeightFactor(factor: Float) {
-        val baseSize = florisboard.context.resources.getDimension(R.dimen.smartbar_button_width)
-        val size = (baseSize * factor).toInt()
-        quickActionToggle?.layoutParams?.width = size
-        quickActionToggle?.layoutParams?.height = size
-        quickActionTogglePlaceholder?.layoutParams?.width = size
-        quickActionTogglePlaceholder?.layoutParams?.height = size
     }
 }

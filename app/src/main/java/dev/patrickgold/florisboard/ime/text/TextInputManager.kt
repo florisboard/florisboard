@@ -55,9 +55,9 @@ import java.util.*
  *
  * @property florisboard Reference to instance of core class [FlorisBoard].
  */
-class TextInputManager(
-    private val florisboard: FlorisBoard
-) : FlorisBoard.EventListener {
+class TextInputManager private constructor() : FlorisBoard.EventListener {
+
+    private val florisboard = FlorisBoard.getInstance()
 
     private var activeKeyboardMode: KeyboardMode? = null
     private val keyboardViews = EnumMap<KeyboardMode, KeyboardView>(KeyboardMode::class.java)
@@ -67,7 +67,7 @@ class TextInputManager(
 
     var keyVariation: KeyVariation = KeyVariation.NORMAL
     val layoutManager = LayoutManager(florisboard)
-    val smartbarManager: SmartbarManager = SmartbarManager(florisboard, this)
+    lateinit var smartbarManager: SmartbarManager
 
     // Caps related properties
     var caps: Boolean = false
@@ -85,14 +85,24 @@ class TextInputManager(
     private var isComposingEnabled: Boolean = false
     private var isTextSelected: Boolean = false
 
+    companion object {
+        private val instance: TextInputManager = TextInputManager()
+
+        @Synchronized
+        fun getInstance(): TextInputManager {
+            return instance
+        }
+    }
+
     /**
      * Create the UI and initialize all keyboard views with their designated layouts.
      */
     override fun onCreateInputView() {
         layoutManager.autoFetchAssociationsFromPrefs()
 
+        smartbarManager = SmartbarManager.getInstance()
+
         textViewGroup = florisboard.rootViewGroup.findViewById(R.id.text_input)
-        textViewGroup?.addView(smartbarManager.createSmartbarView(), 0)
         textViewFlipper = textViewGroup?.findViewById(R.id.text_input_view_flipper)
         for (mode in KeyboardMode.values()) {
             val keyboardView = KeyboardView(florisboard.context)

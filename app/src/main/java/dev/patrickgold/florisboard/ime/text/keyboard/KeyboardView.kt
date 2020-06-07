@@ -266,7 +266,7 @@ class KeyboardView : LinearLayout {
             else -> 1.00f
         }
         desiredKeyHeight = (resources.getDimension(R.dimen.key_height) * keyHeightFactor).toInt()
-        florisboard?.textInputManager?.smartbarManager?.setSmartbarHeightFactor(keyHeightFactor)
+        florisboard?.textInputManager?.smartbarManager?.smartbarView?.setHeightFactor(keyHeightFactor)
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }

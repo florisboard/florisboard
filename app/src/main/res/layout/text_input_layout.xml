@@ -8,7 +8,7 @@
     android:layout_alignParentBottom="true"
     android:orientation="vertical">
 
-    <!-- Smartbar layout is added here dynamically -->
+    <include layout="@layout/smartbar" />
 
     <LinearLayout
         android:id="@+id/keyboard_preview"

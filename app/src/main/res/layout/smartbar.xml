@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/smartbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?smartbar_bgColor"
-    tools:ignore="NestedWeights">
+    android:layout_height="@dimen/smartbar_height"
+    android:background="?smartbar_bgColor">
 
-    <ToggleButton
+    <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
         android:id="@+id/quick_action_toggle"
         style="@style/SmartbarQuickAction.Toggle"
-        android:checked="false"
         android:contentDescription="@string/smartbar__quick_action_toggle__alt"
-        tools:ignore="RtlSymmetry" />
+        android:src="@drawable/ic_keyboard_arrow_right" />
 
     <LinearLayout
         android:id="@+id/candidates"
@@ -42,19 +41,20 @@
         style="@style/SmartbarContainer"
         android:visibility="gone">
 
-        <ImageButton
+        <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
             android:id="@+id/quick_action_switch_to_media_context"
             style="@style/SmartbarQuickAction"
             android:contentDescription="@string/smartbar__quick_action__switch_to_media_context"
             android:src="@drawable/ic_sentiment_satisfied" />
 
-        <ImageButton
+        <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
             android:id="@+id/quick_action_open_settings"
             style="@style/SmartbarQuickAction"
             android:contentDescription="@string/smartbar__quick_action__open_settings"
             android:src="@drawable/ic_settings" />
 
-        <ImageButton
+        <!-- TODO: find better icon for one-handed mode -->
+        <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
             android:id="@+id/quick_action_one_handed_toggle"
             style="@style/SmartbarQuickAction"
             android:contentDescription="@string/smartbar__quick_action__one_handed_mode"
@@ -62,6 +62,7 @@
 
     </LinearLayout>
 
+    <!-- TODO: integrate a KeyboardView instead of hardcoding these buttons -->
     <LinearLayout
         android:id="@+id/number_row"
         style="@style/SmartbarContainer"
@@ -120,11 +121,12 @@
 
     </LinearLayout>
 
-    <View
-        android:id="@+id/quick_action_toggle_placeholder"
-        android:layout_width="@dimen/smartbar_button_width"
-        android:layout_height="@dimen/smartbar_button_height"
+    <!-- Placeholder on the right which reserves the space for a second button -->
+    <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="@dimen/smartbar_button_margin"
+        android:clickable="false"
         android:visibility="invisible" />
 
-</LinearLayout>
+</dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView>

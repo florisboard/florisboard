@@ -28,8 +28,16 @@ import dev.patrickgold.florisboard.util.getBooleanFromAttr
 import dev.patrickgold.florisboard.util.getColorFromAttr
 
 /**
+ * Variable which holds the current [FlorisBoard] instance. To get this instance from another
+ * package, see [FlorisBoard.getInstance].
+ */
+private var florisboardInstance: FlorisBoard? = null
+
+/**
  * Core class responsible to link together both the text and media input managers as well as
  * managing the one-handed UI.
+ *
+ * TODO: fix layout issue when turning one-handed mode on or off
  */
 class FlorisBoard : InputMethodService() {
 
@@ -46,8 +54,22 @@ class FlorisBoard : InputMethodService() {
     lateinit var rootViewGroup: LinearLayout
         private set
 
-    val textInputManager: TextInputManager = TextInputManager(this)
-    val mediaInputManager: MediaInputManager = MediaInputManager(this)
+    val textInputManager: TextInputManager
+    val mediaInputManager: MediaInputManager
+
+    init {
+        florisboardInstance = this
+
+        textInputManager = TextInputManager.getInstance()
+        mediaInputManager = MediaInputManager(this)
+    }
+
+    companion object {
+        @Synchronized
+        fun getInstance(): FlorisBoard {
+            return florisboardInstance!!
+        }
+    }
 
     override fun onCreate() {
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
