@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -45,10 +45,8 @@
             android:name="dev.patrickgold.florisboard.settings.LauncherAlias"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:launchMode="singleTask"
             android:roundIcon="@mipmap/ic_launcher_round"
-            android:targetActivity="dev.patrickgold.florisboard.settings.SettingsMainActivity"
-            android:theme="@style/SettingsTheme">
+            android:targetActivity="dev.patrickgold.florisboard.settings.SettingsMainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

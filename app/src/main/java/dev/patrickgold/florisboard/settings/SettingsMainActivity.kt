@@ -54,16 +54,8 @@ class SettingsMainActivity : AppCompatActivity(),
 
         scrollView = findViewById(R.id.settings__scroll_view)
 
-        if (savedInstanceState != null) {
-            val selectedId = savedInstanceState.getInt(SELECTED_ITEM_ID)
-            navigationView.selectedItemId = selectedId
-        } else {
-            supportActionBar?.title = String.format(
-                resources.getString(R.string.settings__home__title),
-                resources.getString(R.string.app_name)
-            )
-            loadFragment(HomeFragment())
-        }
+        navigationView.selectedItemId =
+            savedInstanceState?.getInt(SELECTED_ITEM_ID) ?: R.id.settings__navigation__home
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -110,7 +102,6 @@ class SettingsMainActivity : AppCompatActivity(),
         transaction.replace(R.id.settings__frame_container, fragment, FRAGMENT_TAG)
         //transaction.addToBackStack(null)
         transaction.commit()
-        supportFragmentManager.executePendingTransactions()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
