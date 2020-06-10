@@ -7,6 +7,7 @@ import android.content.res.Configuration
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
 import android.os.Build
+import android.os.Handler
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
@@ -23,6 +24,7 @@ import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
+import dev.patrickgold.florisboard.util.refreshLayoutOf
 
 /**
  * Variable which holds the current [FlorisBoard] instance. To get this instance from another
@@ -33,8 +35,6 @@ private var florisboardInstance: FlorisBoard? = null
 /**
  * Core class responsible to link together both the text and media input managers as well as
  * managing the one-handed UI.
- *
- * TODO: fix layout issue when turning one-handed mode on or off
  */
 class FlorisBoard : InputMethodService() {
 
@@ -44,6 +44,7 @@ class FlorisBoard : InputMethodService() {
     private var currentThemeResId: Int = 0
     lateinit var prefs: PrefHelper
         private set
+    private val osHandler = Handler()
     private lateinit var inputView: InputView
 
     val textInputManager: TextInputManager
@@ -107,6 +108,7 @@ class FlorisBoard : InputMethodService() {
     override fun onDestroy() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onDestroy()")
 
+        osHandler.removeCallbacksAndMessages(null)
         florisboardInstance = null
 
         super.onDestroy()
@@ -353,6 +355,10 @@ class FlorisBoard : InputMethodService() {
                 }
             }
         }
+        // Delay execution so this function can return, then refresh the whole layout
+        osHandler.postDelayed({
+            refreshLayoutOf(inputView)
+        }, 0)
     }
 
     interface EventListener {

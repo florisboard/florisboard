@@ -67,6 +67,10 @@ class KeyboardView : LinearLayout {
         colorDrawable = ColorDrawable(getColorFromAttr(context, R.attr.keyboard_bgColor))
         background = colorDrawable
         orientation = VERTICAL
+        layoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
     }
 
     /**
@@ -74,10 +78,6 @@ class KeyboardView : LinearLayout {
      */
     private fun buildLayout() {
         destroyLayout()
-        this.layoutParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT
-        )
         val layout = computedLayout
         if (layout != null) {
             for (row in layout.arrangement) {

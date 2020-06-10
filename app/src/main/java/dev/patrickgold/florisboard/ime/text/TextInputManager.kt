@@ -105,10 +105,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onCreate()")
 
         layoutManager.autoFetchAssociationsFromPrefs()
-
         smartbarManager = SmartbarManager.getInstance()
     }
 
+    /**
+     * Sets up the newly registered input view.
+     */
     override fun onRegisterInputView(inputView: InputView) {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onRegisterInputView(inputView)")
 
@@ -139,6 +141,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onDestroy()")
 
         cancel()
+        osHandler.removeCallbacksAndMessages(null)
         smartbarManager.onDestroy()
         instance = null
     }
@@ -510,7 +513,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                         }
                         else -> {
                             Log.e(
-                                "TextInputManager",
+                                this::class.simpleName,
                                 "sendKeyPress(keyData): Received unknown key: $keyData"
                             )
                         }
