@@ -11,10 +11,6 @@ import dev.patrickgold.florisboard.R
 class AdvancedFragment : Fragment() {
     private lateinit var rootView: LinearLayout
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

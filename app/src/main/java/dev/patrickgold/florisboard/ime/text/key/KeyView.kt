@@ -255,7 +255,7 @@ class KeyView(
         val desiredWidth = when (keyboardView.computedLayout?.mode) {
             KeyboardMode.NUMERIC,
             KeyboardMode.PHONE,
-            KeyboardMode.PHONE2 -> (keyboardView.desiredKeyWidth * 2.58f).toInt()
+            KeyboardMode.PHONE2 -> (keyboardView.desiredKeyWidth * 2.68f).toInt()
             KeyboardMode.NUMERIC_ADVANCED -> when (data.code) {
                 44, 46 -> keyboardView.desiredKeyWidth
                 KeyCode.VIEW_SYMBOLS, 61 -> (keyboardView.desiredKeyWidth * 1.34f).toInt()

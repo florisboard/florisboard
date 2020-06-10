@@ -1,6 +1,7 @@
 package dev.patrickgold.florisboard.ime.text.smartbar
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.view.textservice.SentenceSuggestionsInfo
 import android.view.textservice.SpellCheckerSession
@@ -10,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.core.view.children
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.text.TextInputManager
@@ -18,35 +20,15 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 
 // TODO: Implement suggestion creation functionality
 // TODO: Cleanup and reorganize SmartbarManager
-class SmartbarManager private constructor() : SpellCheckerSession.SpellCheckerSessionListener {
+class SmartbarManager private constructor() :
+    SpellCheckerSession.SpellCheckerSessionListener, FlorisBoard.EventListener {
 
     private val florisboard: FlorisBoard = FlorisBoard.getInstance()
     private var isComposingEnabled: Boolean = false
     private var spellCheckerSession: SpellCheckerSession? = null
     private val textInputManager: TextInputManager = TextInputManager.getInstance()
     var smartbarView: SmartbarView? = null
-        set(value) {
-            field = value
-            if (value != null) {
-                value.quickActionToggle?.setOnClickListener(quickActionToggleOnClickListener)
-                val quickActions = value.findViewById<LinearLayout>(R.id.quick_actions)
-                for (quickAction in quickActions.children) {
-                    if (quickAction is ImageButton) {
-                        quickAction.setOnClickListener(quickActionOnClickListener)
-                    }
-                }
-                val numberRow = value.findViewById<LinearLayout>(R.id.number_row)
-                for (numberRowButton in numberRow.children) {
-                    if (numberRowButton is Button) {
-                        numberRowButton.setOnClickListener(numberRowButtonOnClickListener)
-                    }
-                }
-                for (candidateView in value.candidateViewList) {
-                    candidateView.setOnClickListener(candidateViewOnClickListener)
-                    candidateView.setOnLongClickListener(candidateViewOnLongClickListener)
-                }
-            }
-        }
+        private set
 
     var activeContainerId: Int = R.id.candidates
         set(value) { field = value; updateActiveContainerVisibility() }
@@ -106,12 +88,46 @@ class SmartbarManager private constructor() : SpellCheckerSession.SpellCheckerSe
     }
 
     companion object {
-        private val instance: SmartbarManager = SmartbarManager()
+        private var instance: SmartbarManager? = null
 
         @Synchronized
         fun getInstance(): SmartbarManager {
-            return instance
+            if (instance == null) {
+                instance = SmartbarManager()
+            }
+            return instance!!
         }
+    }
+
+    fun registerSmartbarView(smartbarView: SmartbarView) {
+        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "registerSmartbarView(smartbarView)")
+
+        this.smartbarView = smartbarView
+
+        smartbarView.quickActionToggle?.setOnClickListener(quickActionToggleOnClickListener)
+        val quickActions = smartbarView.findViewById<LinearLayout>(R.id.quick_actions)
+        for (quickAction in quickActions.children) {
+            if (quickAction is ImageButton) {
+                quickAction.setOnClickListener(quickActionOnClickListener)
+            }
+        }
+        val numberRow = smartbarView.findViewById<LinearLayout>(R.id.number_row)
+        for (numberRowButton in numberRow.children) {
+            if (numberRowButton is Button) {
+                numberRowButton.setOnClickListener(numberRowButtonOnClickListener)
+            }
+        }
+        for (candidateView in smartbarView.candidateViewList) {
+            candidateView.setOnClickListener(candidateViewOnClickListener)
+            candidateView.setOnLongClickListener(candidateViewOnLongClickListener)
+        }
+    }
+
+    // TODO: clean up resources here
+    override fun onDestroy() {
+        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onDestroy()")
+
+        instance = null
     }
 
     override fun onGetSuggestions(arr: Array<out SuggestionsInfo>?) {

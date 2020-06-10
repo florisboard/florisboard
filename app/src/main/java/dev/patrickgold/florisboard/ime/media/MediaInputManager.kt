@@ -1,13 +1,16 @@
 package dev.patrickgold.florisboard.ime.media
 
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ViewFlipper
 import com.google.android.material.tabs.TabLayout
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.InputView
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyboardView
 import dev.patrickgold.florisboard.ime.media.home.HomeView
@@ -44,27 +47,31 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
     var mediaViewGroup: LinearLayout? = null
 
     companion object {
-        private val instance: MediaInputManager = MediaInputManager()
+        private var instance: MediaInputManager? = null
 
         @Synchronized
         fun getInstance(): MediaInputManager {
-            return instance
+            if (instance == null) {
+                instance = MediaInputManager()
+            }
+            return instance!!
         }
     }
 
-    override fun onCreateInputView() {
+    override fun onRegisterInputView(inputView: InputView) {
+        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onRegisterInputView(inputView)")
+
         launch(Dispatchers.Default) {
-            val rootViewGroup = florisboard.rootViewGroup
-            mediaViewGroup = rootViewGroup.findViewById(R.id.media_input)
-            mediaViewFlipper = rootViewGroup.findViewById(R.id.media_input_view_flipper)
+            mediaViewGroup = inputView.findViewById(R.id.media_input)
+            mediaViewFlipper = inputView.findViewById(R.id.media_input_view_flipper)
 
             // Init bottom buttons
-            rootViewGroup.findViewById<Button>(R.id.media_input_switch_to_text_input_button)
+            inputView.findViewById<Button>(R.id.media_input_switch_to_text_input_button)
                 .setOnClickListener { v -> onBottomButtonClick(v) }
-            rootViewGroup.findViewById<ImageButton>(R.id.media_input_backspace_button)
+            inputView.findViewById<ImageButton>(R.id.media_input_backspace_button)
                 .setOnClickListener { v -> onBottomButtonClick(v) }
 
-            tabLayout = rootViewGroup.findViewById(R.id.media_input_tabs)
+            tabLayout = inputView.findViewById(R.id.media_input_tabs)
             tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     when (tab.position) {
@@ -93,11 +100,14 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
     }
 
     override fun onDestroy() {
-        cancel()
+        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onDestroy()")
+
         val emojiKeyboardView = tabViews[Tab.EMOJIS]
         if (emojiKeyboardView is EmojiKeyboardView) {
             emojiKeyboardView.onDestroy()
         }
+        cancel()
+        instance = null
     }
 
     private fun onBottomButtonClick(v: View) {

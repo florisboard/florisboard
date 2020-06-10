@@ -4,28 +4,25 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import android.graphics.Color
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.CursorAnchorInfo
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.ViewFlipper
 import androidx.preference.PreferenceManager
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.media.MediaInputManager
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
-import dev.patrickgold.florisboard.util.getBooleanFromAttr
-import dev.patrickgold.florisboard.util.getColorFromAttr
 
 /**
  * Variable which holds the current [FlorisBoard] instance. To get this instance from another
@@ -41,18 +38,13 @@ private var florisboardInstance: FlorisBoard? = null
  */
 class FlorisBoard : InputMethodService() {
 
-    private var oneHandedCtrlPanelStart: LinearLayout? = null
-    private var oneHandedCtrlPanelEnd: LinearLayout? = null
-
     private var audioManager: AudioManager? = null
     val context: Context
-        get() = rootViewGroup.context
+        get() = inputView.context
     private var currentThemeResId: Int = 0
-    private var mainViewFlipper: ViewFlipper? = null
     lateinit var prefs: PrefHelper
         private set
-    lateinit var rootViewGroup: LinearLayout
-        private set
+    private lateinit var inputView: InputView
 
     val textInputManager: TextInputManager
     val mediaInputManager: MediaInputManager
@@ -72,6 +64,8 @@ class FlorisBoard : InputMethodService() {
     }
 
     override fun onCreate() {
+        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onCreate()")
+
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         prefs = PrefHelper(this, PreferenceManager.getDefaultSharedPreferences(this))
         prefs.initDefaultPreferences()
@@ -87,20 +81,32 @@ class FlorisBoard : InputMethodService() {
 
     @SuppressLint("InflateParams")
     override fun onCreateInputView(): View? {
+        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onCreateInputView()")
+
         baseContext.setTheme(currentThemeResId)
 
-        rootViewGroup = layoutInflater.inflate(R.layout.florisboard, null) as LinearLayout
-        mainViewFlipper = rootViewGroup.findViewById(R.id.main_view_flipper)
-
-        initializeOneHandedEnvironment()
+        inputView = layoutInflater.inflate(R.layout.florisboard, null) as InputView
 
         textInputManager.onCreateInputView()
         mediaInputManager.onCreateInputView()
 
-        return rootViewGroup
+        return inputView
+    }
+
+    fun registerInputView(inputView: InputView) {
+        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "registerInputView(inputView)")
+
+        this.inputView = inputView
+        initializeOneHandedEnvironment()
+        updateOneHandedPanelVisibility()
+
+        textInputManager.onRegisterInputView(inputView)
+        mediaInputManager.onRegisterInputView(inputView)
     }
 
     override fun onDestroy() {
+        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onDestroy()")
+
         florisboardInstance = null
 
         super.onDestroy()
@@ -125,6 +131,8 @@ class FlorisBoard : InputMethodService() {
     }
 
     override fun onWindowShown() {
+        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onWindowShown()")
+
         prefs.sync()
         updateOneHandedPanelVisibility()
         setActiveInput(R.id.text_input)
@@ -135,6 +143,8 @@ class FlorisBoard : InputMethodService() {
     }
 
     override fun onWindowHidden() {
+        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onWindowHidden()")
+
         super.onWindowHidden()
         textInputManager.onWindowHidden()
         mediaInputManager.onWindowHidden()
@@ -286,27 +296,24 @@ class FlorisBoard : InputMethodService() {
     fun setActiveInput(type: Int) {
         when (type) {
             R.id.text_input -> {
-                mainViewFlipper?.displayedChild =
-                    mainViewFlipper?.indexOfChild(textInputManager.textViewGroup) ?: 0
+                inputView.mainViewFlipper?.displayedChild =
+                    inputView.mainViewFlipper?.indexOfChild(textInputManager.textViewGroup) ?: 0
             }
             R.id.media_input -> {
-                mainViewFlipper?.displayedChild =
-                    mainViewFlipper?.indexOfChild(mediaInputManager.mediaViewGroup) ?: 0
+                inputView.mainViewFlipper?.displayedChild =
+                    inputView.mainViewFlipper?.indexOfChild(mediaInputManager.mediaViewGroup) ?: 0
             }
         }
     }
 
     private fun initializeOneHandedEnvironment() {
-        oneHandedCtrlPanelStart = rootViewGroup.findViewById(R.id.one_handed_ctrl_panel_start)
-        oneHandedCtrlPanelEnd = rootViewGroup.findViewById(R.id.one_handed_ctrl_panel_end)
-
-        rootViewGroup.findViewById<ImageButton>(R.id.one_handed_ctrl_move_start)
+        inputView.findViewById<ImageButton>(R.id.one_handed_ctrl_move_start)
             ?.setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
-        rootViewGroup.findViewById<ImageButton>(R.id.one_handed_ctrl_move_end)
+        inputView.findViewById<ImageButton>(R.id.one_handed_ctrl_move_end)
             ?.setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
-        rootViewGroup.findViewById<ImageButton>(R.id.one_handed_ctrl_close_start)
+        inputView.findViewById<ImageButton>(R.id.one_handed_ctrl_close_start)
             ?.setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
-        rootViewGroup.findViewById<ImageButton>(R.id.one_handed_ctrl_close_end)
+        inputView.findViewById<ImageButton>(R.id.one_handed_ctrl_close_end)
             ?.setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
     }
 
@@ -328,21 +335,21 @@ class FlorisBoard : InputMethodService() {
 
     fun updateOneHandedPanelVisibility() {
         if (resources.configuration.orientation != Configuration.ORIENTATION_PORTRAIT) {
-            oneHandedCtrlPanelStart?.visibility = View.GONE
-            oneHandedCtrlPanelEnd?.visibility = View.GONE
+            inputView.oneHandedCtrlPanelStart?.visibility = View.GONE
+            inputView.oneHandedCtrlPanelEnd?.visibility = View.GONE
         } else {
             when (prefs.looknfeel.oneHandedMode) {
                 "off" -> {
-                    oneHandedCtrlPanelStart?.visibility = View.GONE
-                    oneHandedCtrlPanelEnd?.visibility = View.GONE
+                    inputView.oneHandedCtrlPanelStart?.visibility = View.GONE
+                    inputView.oneHandedCtrlPanelEnd?.visibility = View.GONE
                 }
                 "start" -> {
-                    oneHandedCtrlPanelStart?.visibility = View.GONE
-                    oneHandedCtrlPanelEnd?.visibility = View.VISIBLE
+                    inputView.oneHandedCtrlPanelStart?.visibility = View.GONE
+                    inputView.oneHandedCtrlPanelEnd?.visibility = View.VISIBLE
                 }
                 "end" -> {
-                    oneHandedCtrlPanelStart?.visibility = View.VISIBLE
-                    oneHandedCtrlPanelEnd?.visibility = View.GONE
+                    inputView.oneHandedCtrlPanelStart?.visibility = View.VISIBLE
+                    inputView.oneHandedCtrlPanelEnd?.visibility = View.GONE
                 }
             }
         }
@@ -350,7 +357,8 @@ class FlorisBoard : InputMethodService() {
 
     interface EventListener {
         fun onCreate() {}
-        fun onCreateInputView()
+        fun onCreateInputView() {}
+        fun onRegisterInputView(inputView: InputView) {}
         fun onDestroy() {}
 
         fun onStartInputView(info: EditorInfo?, restarting: Boolean) {}

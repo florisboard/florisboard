@@ -18,9 +18,11 @@ package dev.patrickgold.florisboard.ime.text.smartbar
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 
 /**
@@ -47,21 +49,21 @@ class SmartbarView : LinearLayout {
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    override fun onFinishInflate() {
-        super.onFinishInflate()
+    override fun onAttachedToWindow() {
+        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onAttachedToWindow()")
+
+        super.onAttachedToWindow()
 
         candidatesView = findViewById(R.id.candidates)
         candidateViewList.add(findViewById(R.id.candidate0))
         candidateViewList.add(findViewById(R.id.candidate1))
         candidateViewList.add(findViewById(R.id.candidate2))
 
-        candidatesView = findViewById(R.id.candidates)
         numberRowView = findViewById(R.id.number_row)
         quickActionsView = findViewById(R.id.quick_actions)
-
         quickActionToggle = findViewById(R.id.quick_action_toggle)
 
-        smartbarManager.smartbarView = this
+        smartbarManager.registerSmartbarView(this)
     }
 
     /**

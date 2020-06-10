@@ -28,8 +28,10 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.Toast
 import android.widget.ViewFlipper
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.InputView
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyType
@@ -85,11 +87,14 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     private var isTextSelected: Boolean = false
 
     companion object {
-        private val instance: TextInputManager = TextInputManager()
+        private var instance: TextInputManager? = null
 
         @Synchronized
         fun getInstance(): TextInputManager {
-            return instance
+            if (instance == null) {
+                instance = TextInputManager()
+            }
+            return instance!!
         }
     }
 
@@ -97,19 +102,19 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * Non-UI-related setup.
      */
     override fun onCreate() {
+        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onCreate()")
+
         layoutManager.autoFetchAssociationsFromPrefs()
 
         smartbarManager = SmartbarManager.getInstance()
     }
 
-    /**
-     * UI-related setup + initialize all keyboard views with their designated layouts.
-     */
-    override fun onCreateInputView() {
+    override fun onRegisterInputView(inputView: InputView) {
+        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onRegisterInputView(inputView)")
+
         launch(Dispatchers.Default) {
-            val rootViewGroup = florisboard.rootViewGroup
-            textViewGroup = rootViewGroup.findViewById(R.id.text_input)
-            textViewFlipper = rootViewGroup.findViewById(R.id.text_input_view_flipper)
+            textViewGroup = inputView.findViewById(R.id.text_input)
+            textViewFlipper = inputView.findViewById(R.id.text_input_view_flipper)
 
             for (mode in KeyboardMode.values()) {
                 val keyboardView = KeyboardView(florisboard.context)
@@ -119,10 +124,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                 keyboardViews[mode] = keyboardView
                 withContext(Dispatchers.Main) {
                     textViewFlipper?.addView(keyboardView)
-                    if (keyboardView.computedLayout?.mode == KeyboardMode.CHARACTERS) {
-                        setActiveKeyboardMode(KeyboardMode.CHARACTERS)
-                    }
                 }
+            }
+            withContext(Dispatchers.Main) {
+                setActiveKeyboardMode(activeKeyboardMode ?: KeyboardMode.CHARACTERS)
             }
         }
     }
@@ -131,7 +136,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * Cancels all coroutines and cleans up.
      */
     override fun onDestroy() {
+        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onDestroy()")
+
         cancel()
+        smartbarManager.onDestroy()
+        instance = null
     }
 
     /**
