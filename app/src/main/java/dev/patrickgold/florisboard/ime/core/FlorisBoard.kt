@@ -24,6 +24,8 @@ import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
+import dev.patrickgold.florisboard.util.getBooleanFromAttr
+import dev.patrickgold.florisboard.util.getColorFromAttr
 import dev.patrickgold.florisboard.util.refreshLayoutOf
 
 /**
@@ -136,6 +138,7 @@ class FlorisBoard : InputMethodService() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onWindowShown()")
 
         prefs.sync()
+        updateThemeIfNecessary()
         updateOneHandedPanelVisibility()
         setActiveInput(R.id.text_input)
 
@@ -202,26 +205,28 @@ class FlorisBoard : InputMethodService() {
         )
     }
 
-    /*fun applyTheme(theme: Int, shouldRecreateInputView: Boolean = true) {
-        if (shouldRecreateInputView) {
+    /**
+     * Checks the preferences if the selected theme res id has changed and updates the theme only
+     * then by rebuilding the UI and setting the navigation bar theme manually.
+     */
+    private fun updateThemeIfNecessary() {
+        val newThemeResId = prefs.theme.getSelectedThemeResId()
+        if (newThemeResId != currentThemeResId) {
+            currentThemeResId = newThemeResId
             setInputView(onCreateInputView())
-        } else {
-            if (currentThemeResId == theme) {
-                return
-            }
-            currentThemeResId = theme
-            baseContext.setTheme(theme)
+            val w = window?.window ?: return
+            w.navigationBarColor = getColorFromAttr(baseContext, android.R.attr.navigationBarColor)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-                val w = window?.window ?: return
-                w.navigationBarColor = getColorFromAttr(baseContext, android.R.attr.navigationBarColor)
-                val flags = w.decorView.systemUiVisibility
-                val isLight = getBooleanFromAttr(baseContext, android.R.attr.windowLightNavigationBar)
-                if (isLight) {
-                    w.decorView.systemUiVisibility = flags
+                var flags = w.decorView.systemUiVisibility
+                flags = if (getBooleanFromAttr(baseContext, android.R.attr.windowLightNavigationBar)) {
+                    flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                } else {
+                    flags and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
                 }
+                w.decorView.systemUiVisibility = flags
             }
         }
-    }*/
+    }
 
     /**
      * Makes a key press vibration if the user has this feature enabled in the preferences.
