@@ -34,6 +34,7 @@ class SettingsMainActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         prefs = PrefHelper(this, PreferenceManager.getDefaultSharedPreferences(this))
+        prefs.initDefaultPreferences()
 
         val mode = when (prefs.advanced.settingsTheme) {
             "light" -> AppCompatDelegate.MODE_NIGHT_NO
@@ -139,12 +140,10 @@ class SettingsMainActivity : AppCompatActivity(),
         if (fragment != null && fragment.isVisible) {
             if (fragment is LooknfeelFragment) {
                 if (key == PrefHelper.Theme.NAME) {
-                    fragment.keyboardView.context.setTheme(prefs.theme.getSelectedThemeResId())
+                    // TODO: recreate() is only a lazy solution, better would be to only recreate
+                    //  the keyboard view
+                    recreate()
                 }
-                fragment.keyboardView.invalidate()
-                fragment.keyboardView.invalidateAllKeys()
-                fragment.keyboardView.requestLayout()
-                fragment.keyboardView.requestLayoutAllKeys()
             }
         }
     }

@@ -11,7 +11,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import dev.patrickgold.florisboard.R
-import kotlinx.android.synthetic.main.toolbar.*
 import java.lang.Exception
 
 class AboutActivity : AppCompatActivity() {
