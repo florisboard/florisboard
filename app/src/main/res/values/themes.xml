@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="KeyboardTheme" parent="Theme.AppCompat.Light.NoActionBar" />
+    <style name="KeyboardTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 
     <style name="KeyboardTheme.FlorisLight">
         <item name="colorPrimary">@color/colorPrimary</item>

@@ -11,11 +11,14 @@ import android.os.Handler
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.WindowManager
 import android.view.inputmethod.CursorAnchorInfo
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
@@ -24,6 +27,7 @@ import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
+import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import dev.patrickgold.florisboard.util.getBooleanFromAttr
 import dev.patrickgold.florisboard.util.getColorFromAttr
 import dev.patrickgold.florisboard.util.refreshLayoutOf
@@ -42,12 +46,12 @@ class FlorisBoard : InputMethodService() {
 
     private var audioManager: AudioManager? = null
     val context: Context
-        get() = inputView.context
+        get() = inputView?.context ?: this
     private var currentThemeResId: Int = 0
     lateinit var prefs: PrefHelper
         private set
     private val osHandler = Handler()
-    private lateinit var inputView: InputView
+    private var inputView: InputView? = null
 
     val textInputManager: TextInputManager
     val mediaInputManager: MediaInputManager
@@ -101,6 +105,7 @@ class FlorisBoard : InputMethodService() {
 
         this.inputView = inputView
         initializeOneHandedEnvironment()
+        updateSoftInputWindowLayoutParameters()
         updateOneHandedPanelVisibility()
 
         textInputManager.onRegisterInputView(inputView)
@@ -228,6 +233,47 @@ class FlorisBoard : InputMethodService() {
         }
     }
 
+    override fun onComputeInsets(outInsets: Insets?) {
+        super.onComputeInsets(outInsets)
+        val inputView = this.inputView ?: return
+        // TODO: Check also if the keyboard is currently suppressed by a hardware keyboard
+        if (!isInputViewShown) {
+            outInsets?.contentTopInsets = inputView.height
+            outInsets?.visibleTopInsets = inputView.height
+            return
+        }
+        val innerInputViewContainer =
+            inputView.findViewById<LinearLayout>(R.id.inner_input_view_container) ?: return
+        val visibleTopY = inputView.height - innerInputViewContainer.measuredHeight
+        outInsets?.contentTopInsets = visibleTopY
+        outInsets?.visibleTopInsets = visibleTopY
+    }
+
+    override fun updateFullscreenMode() {
+        super.updateFullscreenMode()
+        updateSoftInputWindowLayoutParameters()
+    }
+
+    /**
+     * Updates the layout params of the window and input view.
+     */
+    private fun updateSoftInputWindowLayoutParameters() {
+        val w = window?.window ?: return
+        ViewLayoutUtils.updateLayoutHeightOf(w, WindowManager.LayoutParams.MATCH_PARENT)
+        val inputView = this.inputView
+        if (inputView != null) {
+            val layoutHeight = if (isFullscreenMode) {
+                WindowManager.LayoutParams.WRAP_CONTENT
+            } else {
+                WindowManager.LayoutParams.MATCH_PARENT
+            }
+            val inputArea = w.findViewById<View>(android.R.id.inputArea)
+            ViewLayoutUtils.updateLayoutHeightOf(inputArea, layoutHeight)
+            ViewLayoutUtils.updateLayoutGravityOf(inputArea, Gravity.BOTTOM)
+            ViewLayoutUtils.updateLayoutHeightOf(inputView, layoutHeight)
+        }
+    }
+
     /**
      * Makes a key press vibration if the user has this feature enabled in the preferences.
      */
@@ -293,34 +339,27 @@ class FlorisBoard : InputMethodService() {
         return false
     }
 
-    /*override fun onComputeInsets(outInsets: Insets?) {
-        super.onComputeInsets(outInsets)
-        if (!isFullscreenMode && outInsets != null) {
-            outInsets.contentTopInsets = outInsets.visibleTopInsets
-        }
-    }*/
-
     fun setActiveInput(type: Int) {
         when (type) {
             R.id.text_input -> {
-                inputView.mainViewFlipper?.displayedChild =
-                    inputView.mainViewFlipper?.indexOfChild(textInputManager.textViewGroup) ?: 0
+                inputView?.mainViewFlipper?.displayedChild =
+                    inputView?.mainViewFlipper?.indexOfChild(textInputManager.textViewGroup) ?: 0
             }
             R.id.media_input -> {
-                inputView.mainViewFlipper?.displayedChild =
-                    inputView.mainViewFlipper?.indexOfChild(mediaInputManager.mediaViewGroup) ?: 0
+                inputView?.mainViewFlipper?.displayedChild =
+                    inputView?.mainViewFlipper?.indexOfChild(mediaInputManager.mediaViewGroup) ?: 0
             }
         }
     }
 
     private fun initializeOneHandedEnvironment() {
-        inputView.findViewById<ImageButton>(R.id.one_handed_ctrl_move_start)
+        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_move_start)
             ?.setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
-        inputView.findViewById<ImageButton>(R.id.one_handed_ctrl_move_end)
+        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_move_end)
             ?.setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
-        inputView.findViewById<ImageButton>(R.id.one_handed_ctrl_close_start)
+        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_close_start)
             ?.setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
-        inputView.findViewById<ImageButton>(R.id.one_handed_ctrl_close_end)
+        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_close_end)
             ?.setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
     }
 
@@ -342,21 +381,21 @@ class FlorisBoard : InputMethodService() {
 
     fun updateOneHandedPanelVisibility() {
         if (resources.configuration.orientation != Configuration.ORIENTATION_PORTRAIT) {
-            inputView.oneHandedCtrlPanelStart?.visibility = View.GONE
-            inputView.oneHandedCtrlPanelEnd?.visibility = View.GONE
+            inputView?.oneHandedCtrlPanelStart?.visibility = View.GONE
+            inputView?.oneHandedCtrlPanelEnd?.visibility = View.GONE
         } else {
             when (prefs.looknfeel.oneHandedMode) {
                 "off" -> {
-                    inputView.oneHandedCtrlPanelStart?.visibility = View.GONE
-                    inputView.oneHandedCtrlPanelEnd?.visibility = View.GONE
+                    inputView?.oneHandedCtrlPanelStart?.visibility = View.GONE
+                    inputView?.oneHandedCtrlPanelEnd?.visibility = View.GONE
                 }
                 "start" -> {
-                    inputView.oneHandedCtrlPanelStart?.visibility = View.GONE
-                    inputView.oneHandedCtrlPanelEnd?.visibility = View.VISIBLE
+                    inputView?.oneHandedCtrlPanelStart?.visibility = View.GONE
+                    inputView?.oneHandedCtrlPanelEnd?.visibility = View.VISIBLE
                 }
                 "end" -> {
-                    inputView.oneHandedCtrlPanelStart?.visibility = View.VISIBLE
-                    inputView.oneHandedCtrlPanelEnd?.visibility = View.GONE
+                    inputView?.oneHandedCtrlPanelStart?.visibility = View.VISIBLE
+                    inputView?.oneHandedCtrlPanelEnd?.visibility = View.GONE
                 }
             }
         }

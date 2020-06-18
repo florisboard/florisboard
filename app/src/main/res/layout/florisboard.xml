@@ -5,65 +5,76 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:orientation="horizontal"
-    android:background="?keyboard_bgColor"
+    android:gravity="bottom"
+    android:orientation="vertical"
     android:baselineAligned="false">
-    
+
     <LinearLayout
-        android:id="@+id/one_handed_ctrl_panel_start"
-        style="@style/OneHandedPanel"
-        android:visibility="gone">
-
-        <ImageButton
-            android:id="@+id/one_handed_ctrl_close_start"
-            style="@style/OneHandedPanelButton"
-            android:src="@drawable/ic_zoom_out_map"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/one_handed_button_height"
-            android:visibility="invisible" />
-
-        <ImageButton
-            android:id="@+id/one_handed_ctrl_move_start"
-            style="@style/OneHandedPanelButton"
-            android:src="@drawable/ic_keyboard_arrow_left"/>
-
-    </LinearLayout>
-
-    <ViewFlipper
-        android:id="@+id/main_view_flipper"
-        android:layout_width="0dp"
+        android:id="@+id/inner_input_view_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1.0"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:background="?keyboard_bgColor"
+        android:baselineAligned="false">
 
-        android:measureAllChildren="false">
+        <LinearLayout
+            android:id="@+id/one_handed_ctrl_panel_start"
+            style="@style/OneHandedPanel"
+            android:visibility="gone">
 
-        <include layout="@layout/text_input_layout" />
+            <ImageButton
+                android:id="@+id/one_handed_ctrl_close_start"
+                style="@style/OneHandedPanelButton"
+                android:src="@drawable/ic_zoom_out_map"/>
 
-        <include layout="@layout/media_input_layout" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/one_handed_button_height"
+                android:visibility="invisible" />
 
-    </ViewFlipper>
+            <ImageButton
+                android:id="@+id/one_handed_ctrl_move_start"
+                style="@style/OneHandedPanelButton"
+                android:src="@drawable/ic_keyboard_arrow_left"/>
 
-    <LinearLayout
-        android:id="@+id/one_handed_ctrl_panel_end"
-        style="@style/OneHandedPanel"
-        android:visibility="gone">
+        </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/one_handed_ctrl_close_end"
-            style="@style/OneHandedPanelButton"
-            android:src="@drawable/ic_zoom_out_map"/>
+        <ViewFlipper
+            android:id="@+id/main_view_flipper"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/one_handed_button_height"
-            android:visibility="invisible" />
+            android:measureAllChildren="false">
 
-        <ImageButton
-            android:id="@+id/one_handed_ctrl_move_end"
-            style="@style/OneHandedPanelButton"
-            android:src="@drawable/ic_keyboard_arrow_right"/>
+            <include layout="@layout/text_input_layout" />
+
+            <include layout="@layout/media_input_layout" />
+
+        </ViewFlipper>
+
+        <LinearLayout
+            android:id="@+id/one_handed_ctrl_panel_end"
+            style="@style/OneHandedPanel"
+            android:visibility="gone">
+
+            <ImageButton
+                android:id="@+id/one_handed_ctrl_close_end"
+                style="@style/OneHandedPanelButton"
+                android:src="@drawable/ic_zoom_out_map"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/one_handed_button_height"
+                android:visibility="invisible" />
+
+            <ImageButton
+                android:id="@+id/one_handed_ctrl_move_end"
+                style="@style/OneHandedPanelButton"
+                android:src="@drawable/ic_keyboard_arrow_right"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

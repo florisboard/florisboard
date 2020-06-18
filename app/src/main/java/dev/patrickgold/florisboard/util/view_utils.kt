@@ -44,7 +44,7 @@ fun setTextTintColor(view: View, colorId: Int) {
     )
 }
 
-fun refreshLayoutOf(view: View) {
+fun refreshLayoutOf(view: View?) {
     if (view is ViewGroup) {
         view.invalidate()
         view.requestLayout()
@@ -52,7 +52,7 @@ fun refreshLayoutOf(view: View) {
             refreshLayoutOf(childView)
         }
     } else {
-        view.invalidate()
-        view.requestLayout()
+        view?.invalidate()
+        view?.requestLayout()
     }
 }
