@@ -9,8 +9,8 @@
     app:tabIndicatorColor="?colorAccent"
     app:tabIndicatorFullWidth="false"
     app:tabIndicatorHeight="@dimen/media_tab_indicator_height"
-    app:tabPaddingStart="0dp"
-    app:tabPaddingEnd="0dp"
+    app:tabPaddingStart="@dimen/media_tab_paddingH"
+    app:tabPaddingEnd="@dimen/media_tab_paddingH"
     app:tabRippleColor="?semiTransparentColor"
     app:tabIconTint="?android:textColor">
 

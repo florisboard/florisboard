@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:gravity="bottom"
-    android:orientation="vertical"
-    android:baselineAligned="false">
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/inner_input_view_container"
@@ -44,8 +43,7 @@
             android:id="@+id/main_view_flipper"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-
+            android:layout_weight="1"
             android:measureAllChildren="false">
 
             <include layout="@layout/text_input_layout" />

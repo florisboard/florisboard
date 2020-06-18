@@ -4,15 +4,13 @@
     android:id="@+id/media_input"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_weight="1"
-    android:layout_alignParentBottom="true"
     android:orientation="vertical">
 
     <ViewFlipper
         android:id="@+id/media_input_view_flipper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:measureAllChildren="false"/>
+        android:measureAllChildren="true"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,22 +44,26 @@
             app:tabIndicatorHeight="@dimen/media_tab_indicator_height"
             app:tabRippleColor="?semiTransparentColor"
             app:tabIconTint="?android:textColor"
-            app:tabTextColor="?android:textColor">
+            app:tabTextColor="?android:textColor"
+            app:tabMode="scrollable">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/ic_image_search" />
+                android:icon="@drawable/ic_sentiment_satisfied"
+                android:contentDescription="@string/media__tab__emojis"/>
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/ic_sentiment_satisfied" />
+                android:text="@string/media__tab__emoticons_label"
+                android:contentDescription="@string/media__tab__emoticons"/>
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=":-)" />
+                android:text="@string/media__tab__kaomoji_label"
+                android:contentDescription="@string/media__tab__kaomoji"/>
 
         </com.google.android.material.tabs.TabLayout>
 

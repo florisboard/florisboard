@@ -29,7 +29,6 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputView
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyboardView
-import dev.patrickgold.florisboard.ime.media.home.HomeView
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyType
@@ -38,14 +37,10 @@ import java.util.*
 
 /**
  * MediaInputManager is responsible for managing everything which is related to media input. All of
- * the following count as media input: emojis, gifs, sticker, emoticons.
- * NOTE: if gifs and stickers end up to be implemented at all is not sure atm.
+ * the following count as media input: emojis, emoticons, kaomoji.
  *
  * All of the UI for the different media tabs are kept under the same container element and
  * are separated from text-related UI.
- *
- * Also within the scope of this class is a search bar for searching media content like stickers,
- * gifs and emojis.
  *
  * All events defined in [FlorisBoard.EventListener] will be passed through to this class by the
  * core.
@@ -96,9 +91,9 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
             tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     when (tab.position) {
-                        0 -> setActiveTab(Tab.HOME)
-                        1 -> setActiveTab(Tab.EMOJIS)
-                        2 -> setActiveTab(Tab.EMOTICONS)
+                        0 -> setActiveTab(Tab.EMOJIS)
+                        1 -> setActiveTab(Tab.EMOTICONS)
+                        2 -> setActiveTab(Tab.KAOMOJI)
                     }
                 }
 
@@ -115,7 +110,7 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
             }
 
             withContext(Dispatchers.Main) {
-                tabLayout?.selectTab(tabLayout?.getTabAt(1))
+                tabLayout?.selectTab(tabLayout?.getTabAt(0))
             }
         }
     }
@@ -126,10 +121,6 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
     override fun onDestroy() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onDestroy()")
 
-        val emojiKeyboardView = tabViews[Tab.EMOJIS]
-        if (emojiKeyboardView is EmojiKeyboardView) {
-            emojiKeyboardView.onDestroy()
-        }
         cancel()
         instance = null
     }
@@ -160,7 +151,6 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
      */
     private fun createTabViewFor(tab: Tab): LinearLayout {
         return when (tab) {
-            Tab.HOME -> HomeView(florisboard)
             Tab.EMOJIS -> EmojiKeyboardView(florisboard)
             else -> LinearLayout(florisboard)
         }
@@ -186,14 +176,10 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
 
     /**
      * Enum which defines the tabs for the media context.
-     * TODO: evaluate if GIFs and stickers may become irrelevant and should be removed.
-     * TODO: add kaomoji to the list.
      */
     enum class Tab {
         EMOJIS,
         EMOTICONS,
-        GIFS,
-        HOME,
-        STICKERS
+        KAOMOJI
     }
 }

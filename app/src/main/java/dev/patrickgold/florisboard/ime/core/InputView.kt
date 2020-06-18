@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.core
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.ViewFlipper
 import dev.patrickgold.florisboard.BuildConfig
@@ -27,7 +28,7 @@ import dev.patrickgold.florisboard.R
 /**
  * Root view of the keyboard. Notifies [FlorisBoard] when it has been attached to a window.
  */
-class InputView : LinearLayout {
+class InputView : FrameLayout {
 
     private var florisboard: FlorisBoard = FlorisBoard.getInstance()
 

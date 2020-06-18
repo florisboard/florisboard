@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.media.emoji
 import android.content.Context
 import android.graphics.Paint
 import android.graphics.Typeface
+import android.util.Log
 import androidx.core.graphics.PaintCompat
 import java.io.BufferedReader
 import java.io.IOException
@@ -170,13 +171,13 @@ fun parseRawEmojiSpecsFile(
             }
         }
     } catch (e: IOException) {
-        //log the exception
+        Log.e("EmojiLayoutDataMap", "parseRawEmojiSpecsFile(): $e")
     } finally {
         if (reader != null) {
             try {
                 reader.close()
             } catch (e: IOException) {
-                //log the exception
+                Log.e("EmojiLayoutDataMap", "parseRawEmojiSpecsFile(): $e")
             }
         }
     }

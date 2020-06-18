@@ -19,6 +19,7 @@
     <dimen name="media_bottom_button_width">60dp</dimen>
     <dimen name="media_bottom_button_height">@dimen/key_height</dimen>
     <dimen name="media_tab_indicator_height">4dp</dimen>
+    <dimen name="media_tab_paddingH">0dp</dimen>
 
     <dimen name="one_handed_width">50dp</dimen>
     <dimen name="one_handed_button_width">@dimen/one_handed_width</dimen>
