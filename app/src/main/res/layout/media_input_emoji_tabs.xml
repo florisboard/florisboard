@@ -3,12 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/media_input_emoji_tabs"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:tabIndicator="@drawable/media_tab_indicator"
     app:tabIndicatorColor="?colorAccent"
     app:tabIndicatorFullWidth="false"
     app:tabIndicatorHeight="@dimen/media_tab_indicator_height"
+    app:tabPaddingStart="0dp"
+    app:tabPaddingEnd="0dp"
+    app:tabRippleColor="?semiTransparentColor"
     app:tabIconTint="?android:textColor">
 
     <com.google.android.material.tabs.TabItem

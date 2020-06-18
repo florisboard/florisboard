@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2020 Patrick Goldinger
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.patrickgold.florisboard.ime.media
 
 import android.util.Log
@@ -58,6 +74,11 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
         }
     }
 
+    /**
+     * Called when a new input view has been registered. Used to initialize all media-relevant
+     * views and layouts.
+     * TODO: evaluate if the view initializing process can be optimized.
+     */
     override fun onRegisterInputView(inputView: InputView) {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onRegisterInputView(inputView)")
 
@@ -99,6 +120,9 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
         }
     }
 
+    /**
+     * Clean-up of resources and stopping all coroutines.
+     */
     override fun onDestroy() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onDestroy()")
 
@@ -110,19 +134,30 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
         instance = null
     }
 
+    /**
+     * Handles clicks on the bottom buttons.
+     */
     private fun onBottomButtonClick(v: View) {
-        when (v.id) {
+        val keyData = when (v.id) {
             R.id.media_input_switch_to_text_input_button -> {
+                val keyData = KeyData(KeyCode.SWITCH_TO_TEXT_CONTEXT)
                 florisboard.setActiveInput(R.id.text_input)
+                keyData
             }
             R.id.media_input_backspace_button -> {
-                florisboard.textInputManager.sendKeyPress(
-                    KeyData(KeyCode.DELETE, type = KeyType.ENTER_EDITING)
-                )
+                val keyData = KeyData(KeyCode.DELETE, type = KeyType.ENTER_EDITING)
+                florisboard.textInputManager.sendKeyPress(keyData)
+                keyData
             }
+            else -> null
         }
+        florisboard.keyPressVibrate()
+        florisboard.keyPressSound(keyData)
     }
 
+    /**
+     * Creates and returns a tab view for the given [tab].
+     */
     private fun createTabViewFor(tab: Tab): LinearLayout {
         return when (tab) {
             Tab.HOME -> HomeView(florisboard)
@@ -131,18 +166,29 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
         }
     }
 
+    /**
+     * Sets the actively shown tab.
+     */
     fun setActiveTab(newActiveTab: Tab) {
         mediaViewFlipper?.displayedChild =
             mediaViewFlipper?.indexOfChild(tabViews[newActiveTab]) ?: 0
         activeTab = newActiveTab
     }
 
+    /**
+     * Sends a given [emojiKeyData] to the current input editor.
+     */
     fun sendEmojiKeyPress(emojiKeyData: EmojiKeyData) {
         val ic = florisboard.currentInputConnection
         ic?.finishComposingText()
         ic?.commitText(emojiKeyData.getCodePointsAsString(), 1)
     }
 
+    /**
+     * Enum which defines the tabs for the media context.
+     * TODO: evaluate if GIFs and stickers may become irrelevant and should be removed.
+     * TODO: add kaomoji to the list.
+     */
     enum class Tab {
         EMOJIS,
         EMOTICONS,

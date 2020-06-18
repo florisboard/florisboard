@@ -26,6 +26,8 @@
             android:layout_weight="0"
             android:layout_gravity="center_vertical"
             android:background="@drawable/button_transparent_bg_on_press"
+            android:soundEffectsEnabled="false"
+            android:hapticFeedbackEnabled="false"
             android:text="@string/key__view_characters" />
 
         <View
@@ -42,6 +44,7 @@
             app:tabIndicatorColor="?colorPrimary"
             app:tabIndicatorFullWidth="false"
             app:tabIndicatorHeight="@dimen/media_tab_indicator_height"
+            app:tabRippleColor="?semiTransparentColor"
             app:tabIconTint="?android:textColor"
             app:tabTextColor="?android:textColor">
 
@@ -74,6 +77,8 @@
             android:layout_weight="0"
             android:layout_gravity="center_vertical"
             android:background="@drawable/button_transparent_bg_on_press"
+            android:soundEffectsEnabled="false"
+            android:hapticFeedbackEnabled="false"
             android:src="@drawable/ic_backspace"
             android:tint="?android:textColor"
             android:contentDescription="TODO" />
