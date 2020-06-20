@@ -21,6 +21,9 @@ import android.content.SharedPreferences
 import android.provider.Settings
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.util.LocaleUtils
+import java.util.*
+import kotlin.collections.HashMap
 
 /**
  * Helper class for an organized access to the shared preferences.
@@ -34,6 +37,7 @@ class PrefHelper(
     private val cacheString: HashMap<String, String> = hashMapOf()
 
     val advanced = Advanced(this)
+    val keyboard = Keyboard(this)
     val looknfeel = Looknfeel(this)
     val theme = Theme(this)
 
@@ -110,9 +114,11 @@ class PrefHelper(
      */
     fun initDefaultPreferences() {
         PreferenceManager.setDefaultValues(context, R.xml.prefs_advanced, true)
+        PreferenceManager.setDefaultValues(context, R.xml.prefs_correction, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_keyboard, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_looknfeel, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_theme, true)
+        //setPref(Keyboard.SUBTYPES, "")
     }
 
     /**
@@ -147,6 +153,111 @@ class PrefHelper(
         var showAppIcon: Boolean = false
             get() = prefHelper.getPref(SHOW_APP_ICON, true)
             private set
+    }
+
+    /**
+     * Wrapper class for keyboard preferences.
+     */
+    class Keyboard(private val prefHelper: PrefHelper) {
+        companion object {
+            const val ACTIVE_SUBTYPE_ID =       "keyboard__active_subtype_id"
+            const val SUBTYPES =                "keyboard__subtypes"
+        }
+
+        private var activeSubtypeId: Int
+            get() = prefHelper.getPref(ACTIVE_SUBTYPE_ID, -1)
+            private set(v) = prefHelper.setPref(ACTIVE_SUBTYPE_ID, v)
+        var subtypes: List<FlorisBoard.Subtype>
+            get() {
+                val listRaw = prefHelper.getPref(SUBTYPES, "")
+                return if (listRaw == "") {
+                    listOf()
+                } else {
+                    listRaw.split(";").map {
+                        FlorisBoard.Subtype.fromString(it)
+                    }
+                }
+            }
+            set(value) = prefHelper.setPref(SUBTYPES, value.joinToString(";"))
+
+        private fun addSubtype(subtype: FlorisBoard.Subtype) {
+            val oldListRaw = prefHelper.getPref(SUBTYPES, "")
+            if (oldListRaw.isBlank()) {
+                prefHelper.setPref(SUBTYPES, "$subtype")
+            } else {
+                prefHelper.setPref(SUBTYPES, "$oldListRaw;$subtype")
+            }
+        }
+        fun addSubtype(locale: Locale, layoutName: String) {
+            addSubtype(FlorisBoard.Subtype(
+                locale.hashCode() + layoutName.hashCode(),
+                locale,
+                layoutName
+            ))
+        }
+        fun fetchActiveSubtype(): FlorisBoard.Subtype? {
+            for (s in subtypes) {
+                if (s.id == activeSubtypeId) {
+                    return s
+                }
+            }
+            val subtypes = this.subtypes
+            return if (subtypes.isNotEmpty()) {
+                activeSubtypeId = subtypes[0].id
+                subtypes[0]
+            } else {
+                activeSubtypeId = -1
+                null
+            }
+        }
+        fun getSubtypeById(id: Int): FlorisBoard.Subtype? {
+            for (s in subtypes) {
+                if (s.id == id) {
+                    return s
+                }
+            }
+            return null
+        }
+        fun removeSubtype(subtype: FlorisBoard.Subtype) {
+            val oldListRaw = prefHelper.getPref(SUBTYPES, "")
+            var newListRaw = ""
+            for (s in oldListRaw.split(";")) {
+                if (s != subtype.toString()) {
+                    newListRaw += "$s;"
+                }
+            }
+            if (newListRaw.isNotEmpty()) {
+                newListRaw = newListRaw.substring(0, newListRaw.length - 1)
+            }
+            prefHelper.setPref(SUBTYPES, newListRaw)
+            if (subtype.id == activeSubtypeId) {
+                fetchActiveSubtype()
+            }
+        }
+        fun switchToNextSubtype(): FlorisBoard.Subtype? {
+            val subtypes = this.subtypes
+            val activeSubtype = fetchActiveSubtype() ?: return null
+            var triggerNextSubtype = false
+            var newActiveSubtype: FlorisBoard.Subtype? = null
+            for (s in subtypes) {
+                if (triggerNextSubtype) {
+                    triggerNextSubtype = false
+                    newActiveSubtype = s
+                } else if (s == activeSubtype) {
+                    triggerNextSubtype = true
+                }
+            }
+            if (triggerNextSubtype) {
+                newActiveSubtype = subtypes[0]
+            }
+            return if (newActiveSubtype == null) {
+                activeSubtypeId = -1
+                null
+            } else {
+                activeSubtypeId = newActiveSubtype.id
+                newActiveSubtype
+            }
+        }
     }
 
     /**

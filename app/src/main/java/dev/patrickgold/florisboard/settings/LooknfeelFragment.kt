@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
@@ -17,7 +16,7 @@ import kotlinx.coroutines.*
 
 class LooknfeelFragment : Fragment(), CoroutineScope by MainScope() {
 
-    lateinit var keyboardView: KeyboardView
+    private lateinit var keyboardView: KeyboardView
     lateinit var prefs: PrefHelper
     private lateinit var rootView: LinearLayout
 
@@ -37,7 +36,7 @@ class LooknfeelFragment : Fragment(), CoroutineScope by MainScope() {
         launch(Dispatchers.Default) {
             val themeContext = ContextThemeWrapper(context, prefs.theme.getSelectedThemeResId())
             val layoutManager = LayoutManager(themeContext)
-            layoutManager.autoFetchAssociationsFromPrefs()
+            layoutManager.autoFetchAssociationsFromPrefs(prefs)
             keyboardView = KeyboardView(themeContext)
             keyboardView.prefs = prefs
             keyboardView.isPreviewMode = true

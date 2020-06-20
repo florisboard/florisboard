@@ -3,6 +3,8 @@ package dev.patrickgold.florisboard.ime.text.layout
 import android.content.Context
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyTypeAdapter
 import dev.patrickgold.florisboard.ime.text.key.KeyVariationAdapter
@@ -25,9 +27,10 @@ class LayoutManager(private val context: Context) {
      * This method automatically fetches the current user selected keyboard layout prefs from
      * the shared preferences and sets the associations for each layout type.
      */
-    fun autoFetchAssociationsFromPrefs() {
+    fun autoFetchAssociationsFromPrefs(prefs: PrefHelper) {
         // TODO: Fetch current layout preferences instead of using dev constants
-        associate(LayoutType.CHARACTERS, "qwerty")
+        val activeSubtype = prefs.keyboard.fetchActiveSubtype()
+        associate(LayoutType.CHARACTERS, activeSubtype?.layoutName ?: "qwerty")
         associate(LayoutType.CHARACTERS_MOD, "default")
         associate(LayoutType.EXTENSION, "number_row")
         associate(LayoutType.NUMERIC, "default")

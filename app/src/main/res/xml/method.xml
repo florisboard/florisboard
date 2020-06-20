@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <input-method xmlns:android="https://schemas.android.com/apk/res/android"
     android:icon="@mipmap/ic_launcher"
-    android:settingsActivity="dev.patrickgold.florisboard.settings.SettingsMainActivity">
-    <subtype
-        android:label="@string/subtype_en_US"
-        android:imeSubtypeLocale="en_US"
-        android:imeSubtypeMode="keyboard" />
-</input-method>
+    android:isDefault="false"
+    android:settingsActivity="dev.patrickgold.florisboard.settings.SettingsMainActivity" />

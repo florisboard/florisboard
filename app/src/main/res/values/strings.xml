@@ -53,8 +53,18 @@
 
     <string name="settings__home__title">Welcome to %s</string>
 
-    <string name="settings__keyboard__title">Keyboard &amp; Input</string>
-    <string name="pref__keyboard__group_text_correction__label">Text correction</string>
+    <string name="settings__keyboard__title">Keyboard &amp; Text Correction</string>
+    <string name="settings__keyboard__subtype_no_subtypes_configured_warning">It seems that you haven\'t configured any subtypes. As a fallback the subtype English/QWERTY will be used!</string>
+    <string name="settings__keyboard__subtype_add">Add</string>
+    <string name="settings__keyboard__subtype_add_title">Add subtype</string>
+    <string name="settings__keyboard__subtype_apply">Apply</string>
+    <string name="settings__keyboard__subtype_cancel">Cancel</string>
+    <string name="settings__keyboard__subtype_delete">Delete</string>
+    <string name="settings__keyboard__subtype_edit_title">Edit subtype</string>
+    <string name="settings__keyboard__subtype_locale">Locale</string>
+    <string name="settings__keyboard__subtype_layout">Keyboard layout</string>
+    <string name="pref__correction__group_suggestions__label">Suggestions</string>
+    <string name="pref__correction__group_corrections__label">Corrections</string>
 
     <string name="settings__looknfeel__title">Look &amp; feel</string>
     <string name="pref__looknfeel__group_layout__label">Layout</string>

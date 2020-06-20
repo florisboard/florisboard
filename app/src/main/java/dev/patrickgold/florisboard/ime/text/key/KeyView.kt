@@ -217,8 +217,11 @@ class KeyView(
                         keyboardView.dismissActiveKeyViewReference()
                     }
                 } else {
-                    if (event.x < -0.1f * measuredWidth || event.x > 1.1f * measuredWidth
-                        || event.y < -0.35f * measuredHeight || event.y > 1.35f * measuredHeight
+                    val parent = parent as ViewGroup
+                    if ((event.x < -0.1f * measuredWidth && parent.children.first() != this)
+                        || (event.x > 1.1f * measuredWidth && parent.children.last() != this)
+                        || event.y < -0.35f * measuredHeight
+                        || event.y > 1.35f * measuredHeight
                     ) {
                         if (!shouldBlockNextKeyCode) {
                             keyboardView.dismissActiveKeyViewReference()
@@ -480,6 +483,9 @@ class KeyView(
                             drawable = getDrawable(context, R.drawable.ic_space_bar)
                             drawableColor = getColorFromAttr(context, R.attr.key_fgColor)
                         }
+                        KeyboardMode.CHARACTERS -> {
+                            label = florisboard?.activeSubtype?.locale?.displayName
+                        }
                         else -> {}
                     }
                 }
@@ -535,12 +541,15 @@ class KeyView(
         // Draw label
         val label = label
         if (label != null) {
-            if (data.code == KeyCode.VIEW_NUMERIC || data.code == KeyCode.VIEW_NUMERIC_ADVANCED) {
+            if (data.code == KeyCode.VIEW_NUMERIC || data.code == KeyCode.VIEW_NUMERIC_ADVANCED
+                || data.code == KeyCode.SPACE) {
                 labelPaint.textSize = resources.getDimension(R.dimen.key_numeric_textSize)
             } else {
                 labelPaint.textSize = resources.getDimension(R.dimen.key_textSize)
             }
             labelPaint.color = getColorFromAttr(context, R.attr.key_fgColor)
+            labelPaint.alpha = if (keyboardView.computedLayout?.mode == KeyboardMode.CHARACTERS &&
+                data.code == KeyCode.SPACE) { 120 } else { 255 }
             val isPortrait =
                 resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
             if (keyboardView.prefs.looknfeel.oneHandedMode != "off" && isPortrait) {

@@ -1,0 +1,19 @@
+<!-- TODO: properly configure this temporary file -->
+<!-- NOTE: The specified layouts and languages currently do not represent what the keyboard
+           really supports!! -->
+<resources>
+    <string-array name="valid_layout_names">
+        <item>qwerty</item>
+        <item>qwertz</item>
+    </string-array>
+
+    <string-array name="supported_languages">
+        <item>en_US</item>
+        <item>en_UK</item>
+        <item>en_CA</item>
+        <item>en_AU</item>
+        <item>de_DE</item>
+        <item>de_AT</item>
+        <item>de_CH</item>
+    </string-array>
+</resources>

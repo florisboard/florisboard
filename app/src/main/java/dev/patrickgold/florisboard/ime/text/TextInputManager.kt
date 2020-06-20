@@ -26,7 +26,6 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedTextRequest
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
-import android.widget.Toast
 import android.widget.ViewFlipper
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
@@ -104,7 +103,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     override fun onCreate() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onCreate()")
 
-        layoutManager.autoFetchAssociationsFromPrefs()
+        layoutManager.autoFetchAssociationsFromPrefs(florisboard.prefs)
         smartbarManager = SmartbarManager.getInstance()
     }
 
@@ -208,6 +207,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         smartbarManager.onFinishInputView()
     }
 
+    override fun onWindowShown() {
+        keyboardViews[KeyboardMode.CHARACTERS]?.updateVisibility()
+    }
+
     /**
      * Gets [activeKeyboardMode].
      *
@@ -228,6 +231,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         keyboardViews[mode]?.requestLayoutAllKeys()
         activeKeyboardMode = mode
         smartbarManager.activeContainerId = smartbarManager.getPreferredContainerId()
+    }
+
+    override fun onSubtypeChanged(newSubtype: FlorisBoard.Subtype) {
+        layoutManager.autoFetchAssociationsFromPrefs(florisboard.prefs)
+        val keyboardView = keyboardViews[KeyboardMode.CHARACTERS]
+        keyboardView?.setKeyboardMode(KeyboardMode.CHARACTERS)
+        keyboardView?.updateVisibility()
     }
 
     /**
@@ -451,10 +461,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         when (keyData.code) {
             KeyCode.DELETE -> handleDelete()
             KeyCode.ENTER -> handleEnter()
-            KeyCode.LANGUAGE_SWITCH -> {
-                Toast.makeText(florisboard, "[NYI]: Language switch",
-                    Toast.LENGTH_SHORT).show()
-            }
+            KeyCode.LANGUAGE_SWITCH -> florisboard.switchToNextSubtype()
             KeyCode.SHIFT -> handleShift()
             KeyCode.SHOW_INPUT_METHOD_PICKER -> {
                 val im =

@@ -1,0 +1,21 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__correction__group_suggestions__label">
+
+        <!-- TODO: implement text correction prefs -->
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__correction__group_corrections__label">
+
+        <!-- TODO: implement text correction prefs -->
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

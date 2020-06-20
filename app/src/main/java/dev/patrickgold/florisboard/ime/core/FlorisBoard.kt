@@ -27,10 +27,8 @@ import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
-import dev.patrickgold.florisboard.util.ViewLayoutUtils
-import dev.patrickgold.florisboard.util.getBooleanFromAttr
-import dev.patrickgold.florisboard.util.getColorFromAttr
-import dev.patrickgold.florisboard.util.refreshLayoutOf
+import dev.patrickgold.florisboard.util.*
+import java.util.*
 
 /**
  * Variable which holds the current [FlorisBoard] instance. To get this instance from another
@@ -44,6 +42,7 @@ private var florisboardInstance: FlorisBoard? = null
  */
 class FlorisBoard : InputMethodService() {
 
+    lateinit var activeSubtype: Subtype
     private var audioManager: AudioManager? = null
     val context: Context
         get() = inputView?.context ?: this
@@ -77,6 +76,8 @@ class FlorisBoard : InputMethodService() {
         prefs = PrefHelper(this, PreferenceManager.getDefaultSharedPreferences(this))
         prefs.initDefaultPreferences()
         prefs.sync()
+
+        activeSubtype = prefs.keyboard.fetchActiveSubtype() ?: Subtype(-1, Locale.ENGLISH, "qwerty")
 
         currentThemeResId = prefs.theme.getSelectedThemeResId()
         setTheme(currentThemeResId)
@@ -145,6 +146,8 @@ class FlorisBoard : InputMethodService() {
         prefs.sync()
         updateThemeIfNecessary()
         updateOneHandedPanelVisibility()
+        activeSubtype = prefs.keyboard.fetchActiveSubtype() ?: Subtype(-1, Locale.ENGLISH, "qwerty")
+        onSubtypeChanged(activeSubtype)
         setActiveInput(R.id.text_input)
 
         super.onWindowShown()
@@ -332,11 +335,20 @@ class FlorisBoard : InputMethodService() {
     }
 
     /**
-     * TODO: evaluate the boolean based on the language prefs
      * @return If the language switch should be shown
      */
     fun shouldShowLanguageSwitch(): Boolean {
-        return false
+        return prefs.keyboard.subtypes.size > 1
+    }
+
+    fun switchToNextSubtype() {
+        activeSubtype = prefs.keyboard.switchToNextSubtype() ?: Subtype(-1, Locale.ENGLISH, "qwerty")
+        onSubtypeChanged(activeSubtype)
+    }
+
+    private fun onSubtypeChanged(newSubtype: Subtype) {
+        textInputManager.onSubtypeChanged(newSubtype)
+        mediaInputManager.onSubtypeChanged(newSubtype)
     }
 
     fun setActiveInput(type: Int) {
@@ -405,6 +417,28 @@ class FlorisBoard : InputMethodService() {
         }, 0)
     }
 
+    data class Subtype(
+        var id: Int,
+        var locale: Locale,
+        var layoutName: String
+    ) {
+        companion object {
+            fun fromString(string: String): Subtype {
+                val data = string.split("/")
+                if (data.size != 3) {
+                    throw Exception("Given string is malformed...")
+                } else {
+                    val locale = LocaleUtils.stringToLocale(data[1])
+                    return Subtype(data[0].toInt(), locale, data[2])
+                }
+            }
+        }
+
+        override fun toString(): String {
+            return "$id/$locale/$layoutName"
+        }
+    }
+
     interface EventListener {
         fun onCreate() {}
         fun onCreateInputView() {}
@@ -428,5 +462,7 @@ class FlorisBoard : InputMethodService() {
             candidatesStart: Int,
             candidatesEnd: Int
         ) {}
+
+        fun onSubtypeChanged(newSubtype: Subtype) {}
     }
 }
