@@ -1,10 +1,11 @@
 <!-- TODO: properly configure this temporary file -->
-<!-- NOTE: The specified layouts and languages currently do not represent what the keyboard
+<!-- NOTE: The specified languages currently do not represent what the keyboard
            really supports!! -->
 <resources>
     <string-array name="valid_layout_names">
         <item>qwerty</item>
         <item>qwertz</item>
+        <item>azerty</item>
     </string-array>
 
     <string-array name="supported_languages">
