@@ -21,23 +21,28 @@ stage.
 
 ### Layouts
 * [x] Latin character layout (QWERTY)
-* [ ] Other character layouts (both latin and non-latin)
+* [x] Other character layouts (both latin and non-latin) (Currently
+      QWERTZ and AZERTY are supported besides QWERTY)
 * [x] Adapt to situation in app (password, url, text, etc. )
 * [x] Special character layout(s)
 * [x] Numeric layout
 * [x] Numeric layout (advanced)
 * [x] Phone number layout
-* [x] Emoji layout (buggy atm)
+* [x] Emoji layout (popups buggy atm)
 * [ ] Emoticon layout
+* [ ] Kaomoji layout
 
 ### Preferences
+* [ ] Setup wizard
 * [x] Preferences screen
 * [x] Customize look and behaviour of keyboard (currently only
       light/dark theme)
 * [ ] Theme customization
 * [ ] Theme import/export (?)
-* [ ] Layout selection
+* [x] Subtype selection (language/layout)
+* [x] Keyboard behaviour preferences
 * [ ] Text suggestion / Auto correct preferences
+* [ ] Gesture preferences
 
 ### Composing suggestions
 * [ ] Auto suggest words from precompiled dictionary
@@ -51,8 +56,10 @@ stage.
 * [ ] Floating keyboard
 * [ ] Gesture support
 * [ ] Glide typing (?)
-* [ ] Search emojis/emoticons by name within media context
-* [ ] Full integration in IME service list of Android (xml/method)
+* [x] Full integration in IME service list of Android (xml/method)
+      (integration is internal-only, because Android's default subtype
+      implementation not really allows for dynamic language/layout
+      pairs, only compile-time defined ones)
 * [ ] (dev only) Generate well-structured documentation of code
 * [ ] ...
 
