@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.provider.Settings
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -63,6 +64,26 @@ class FlorisBoard : InputMethodService() {
     }
 
     companion object {
+        private const val IME_ID: String = "dev.patrickgold.florisboard/.ime.core.FlorisBoard"
+
+        fun checkIfImeIsEnabled(context: Context): Boolean {
+            val activeImeIds = Settings.Secure.getString(
+                context.contentResolver,
+                Settings.Secure.ENABLED_INPUT_METHODS
+            )
+            if (BuildConfig.DEBUG) Log.i(FlorisBoard::class.simpleName, "List of active IMEs: $activeImeIds")
+            return activeImeIds.split(":").contains(IME_ID)
+        }
+
+        fun checkIfImeIsSelected(context: Context): Boolean {
+            val selectedImeId = Settings.Secure.getString(
+                context.contentResolver,
+                Settings.Secure.DEFAULT_INPUT_METHOD
+            )
+            if (BuildConfig.DEBUG) Log.i(FlorisBoard::class.simpleName, "Selected IME: $selectedImeId")
+            return selectedImeId == IME_ID
+        }
+
         @Synchronized
         fun getInstance(): FlorisBoard {
             return florisboardInstance!!

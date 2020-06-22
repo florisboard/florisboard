@@ -94,6 +94,13 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        
+        <item name="colorSuccess">@color/colorSuccess</item>
+        <item name="textColorSuccess">@color/textColorSuccess</item>
+        <item name="colorWarning">@color/colorWarning</item>
+        <item name="textColorWarning">@color/textColorWarning</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="textColorError">@color/textColorError</item>
 
         <!-- IMPORTANT: the following 2 colors MUST be references and not inline colors, or older
              versions of Android will not set the window background and thus causing weird

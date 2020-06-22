@@ -5,6 +5,13 @@
     <color name="colorAccent">#FF9800</color><!-- Orange 500 -->
     <color name="colorAccentDark">#F57C00</color><!-- Orange 700 -->
 
+    <color name="colorSuccess">@color/colorPrimary</color><!-- Green 500 -->
+    <color name="textColorSuccess">#FFFFFF</color><!-- White -->
+    <color name="colorWarning">#FFFF00</color><!-- Yellow A200 -->
+    <color name="textColorWarning">#000000</color><!-- Black -->
+    <color name="colorError">#B00020</color><!-- Red 1000? -->
+    <color name="textColorError">#FFFFFF</color><!-- White -->
+
     <color name="ic_launcher_background">#78909C</color>
 
     <color name="cardViewBackgroundColor">#FFFFFF</color><!-- White -->

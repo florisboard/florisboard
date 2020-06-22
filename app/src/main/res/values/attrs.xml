@@ -36,4 +36,12 @@
         <attr name="smartbar_candidate_fgColor" format="color" />
     </declare-styleable>
 
+    <declare-styleable name="SettingsTheme">
+        <attr name="colorSuccess" format="reference|color"/>
+        <attr name="textColorSuccess" format="reference|color"/>
+        <attr name="colorWarning" format="reference|color"/>
+        <attr name="textColorWarning" format="reference|color"/>
+        <attr name="textColorError" format="reference|color"/>
+    </declare-styleable>
+
 </resources>

@@ -24,9 +24,9 @@
                 android:layout_marginEnd="4dp"
                 android:padding="8dp"
                 android:background="@drawable/shape_rect_rounded"
-                android:backgroundTint="#F8F808"
+                android:backgroundTint="?colorWarning"
                 android:text="@string/settings__keyboard__subtype_no_subtypes_configured_warning"
-                android:textColor="#000000"/>
+                android:textColor="?textColorWarning"/>
 
             <LinearLayout
                 android:id="@+id/settings__keyboard__subtype_list"

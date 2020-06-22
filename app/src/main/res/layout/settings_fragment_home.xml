@@ -6,6 +6,18 @@
     android:paddingVertical="8dp">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/ime_not_enabled_card"
+        style="@style/SettingsCardView.Clickable.Error">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings__home__ime_not_enabled"
+            android:textColor="?textColorError"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
         style="@style/SettingsCardView">
 
         <TextView

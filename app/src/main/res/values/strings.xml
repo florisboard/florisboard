@@ -52,6 +52,7 @@
     <string name="settings__navigation__advanced">Advanced</string>
 
     <string name="settings__home__title">Welcome to %s</string>
+    <string name="settings__home__ime_not_enabled">FlorisBoard is not enabled in the system and thus won\'t be available as an input method in the input picker. Click here to resolve this issue.</string>
 
     <string name="settings__keyboard__title">Keyboard &amp; Text Correction</string>
     <string name="settings__keyboard__subtype_no_subtypes_configured_warning">It seems that you haven\'t configured any subtypes. As a fallback the subtype English/QWERTY will be used!</string>

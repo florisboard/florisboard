@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp"
+        android:paddingHorizontal="8dp"
         android:gravity="center_vertical">
 
         <TextView
@@ -27,7 +27,7 @@
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/language_dropdown"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:entries="@array/supported_languages"/>
 
     </LinearLayout>
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp"
+        android:paddingHorizontal="8dp"
         android:gravity="center_vertical">
 
         <TextView
@@ -52,7 +52,7 @@
         <androidx.appcompat.widget.AppCompatSpinner
             android:id="@+id/layout_dropdown"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:entries="@array/valid_layout_names"/>
 
     </LinearLayout>
