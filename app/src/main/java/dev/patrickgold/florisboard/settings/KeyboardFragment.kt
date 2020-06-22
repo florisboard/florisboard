@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2020 Patrick Goldinger
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.patrickgold.florisboard.settings
 
 import android.app.AlertDialog
@@ -5,22 +21,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.AppCompatSpinner
-import androidx.appcompat.widget.AppCompatTextView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.databinding.SettingsFragmentKeyboardBinding
+import dev.patrickgold.florisboard.databinding.SettingsFragmentKeyboardSubtypeDialogBinding
+import dev.patrickgold.florisboard.databinding.SettingsFragmentKeyboardSubtypeListItemBinding
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.LocaleUtils
 import java.util.*
 
 class KeyboardFragment : Fragment() {
     private lateinit var prefs: PrefHelper
-    private lateinit var rootView: LinearLayout
-    private lateinit var subtypeListView: LinearLayout
-    private lateinit var subtypeAddButton: AppCompatButton
-    private lateinit var subtypeNotConfiguredView: AppCompatTextView
+    private lateinit var binding: SettingsFragmentKeyboardBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,36 +46,31 @@ class KeyboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        rootView = inflater.inflate(R.layout.settings_fragment_keyboard, container, false) as LinearLayout
-        subtypeListView = rootView.findViewById(R.id.settings__keyboard__subtype_list)
-        subtypeNotConfiguredView = rootView.findViewById(R.id.settings__keyboard__subtype_not_conf_warning)
-        subtypeAddButton = rootView.findViewById(R.id.subtype_add_btn)
-        subtypeAddButton.setOnClickListener { showAddSubtypeDialog() }
+        binding = SettingsFragmentKeyboardBinding.inflate(inflater, container, false)
+        binding.subtypeAddBtn.setOnClickListener { showAddSubtypeDialog() }
 
         updateSubtypeListView()
 
         val transaction = childFragmentManager.beginTransaction()
         transaction.replace(
-            R.id.settings__keyboard__frame_container,
+            binding.prefsCorrectionFrame.id,
             SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_correction)
         )
         transaction.commit()
 
-        return rootView
+        return binding.root
     }
 
     private fun showAddSubtypeDialog() {
         val dialogView =
-            View.inflate(context, R.layout.settings_fragment_keyboard_subtype_dialog, null)
-        val languageSpinner = dialogView.findViewById<AppCompatSpinner>(R.id.language_dropdown)
-        val layoutSpinner = dialogView.findViewById<AppCompatSpinner>(R.id.layout_dropdown)
+            SettingsFragmentKeyboardSubtypeDialogBinding.inflate(layoutInflater)
         AlertDialog.Builder(context).apply {
             setTitle(R.string.settings__keyboard__subtype_add_title)
             setCancelable(true)
-            setView(dialogView)
+            setView(dialogView.root)
             setPositiveButton(R.string.settings__keyboard__subtype_add) { _, _ ->
-                val languageCode = languageSpinner.selectedItem.toString()
-                val layoutName = layoutSpinner.selectedItem.toString()
+                val languageCode = dialogView.languageSpinner.selectedItem.toString()
+                val layoutName = dialogView.layoutSpinner.selectedItem.toString()
                 prefs.keyboard.addSubtype(LocaleUtils.stringToLocale(languageCode), layoutName)
                 updateSubtypeListView()
             }
@@ -86,18 +94,20 @@ class KeyboardFragment : Fragment() {
             return
         }
         val dialogView =
-            View.inflate(context, R.layout.settings_fragment_keyboard_subtype_dialog, null)
-        val languageSpinner = dialogView.findViewById<AppCompatSpinner>(R.id.language_dropdown)
-        languageSpinner.setSelection((languageSpinner.adapter as ArrayAdapter<String>).getPosition(subtypes[subtypeIndex].locale.toString()))
-        val layoutSpinner = dialogView.findViewById<AppCompatSpinner>(R.id.layout_dropdown)
-        layoutSpinner.setSelection((layoutSpinner.adapter as ArrayAdapter<String>).getPosition(subtypes[subtypeIndex].layoutName))
+            SettingsFragmentKeyboardSubtypeDialogBinding.inflate(layoutInflater)
+        dialogView.languageSpinner.setSelection(
+            (dialogView.languageSpinner.adapter as ArrayAdapter<String>).getPosition(subtypes[subtypeIndex].locale.toString())
+        )
+        dialogView.layoutSpinner.setSelection(
+            (dialogView.layoutSpinner.adapter as ArrayAdapter<String>).getPosition(subtypes[subtypeIndex].layoutName)
+        )
         AlertDialog.Builder(context).apply {
             setTitle(R.string.settings__keyboard__subtype_edit_title)
             setCancelable(true)
-            setView(dialogView)
+            setView(dialogView.root)
             setPositiveButton(R.string.settings__keyboard__subtype_apply) { _, _ ->
-                val languageCode = languageSpinner.selectedItem.toString()
-                val layoutName = layoutSpinner.selectedItem.toString()
+                val languageCode = dialogView.languageSpinner.selectedItem.toString()
+                val layoutName = dialogView.layoutSpinner.selectedItem.toString()
                 subtypes[subtypeIndex].locale = LocaleUtils.stringToLocale(languageCode)
                 subtypes[subtypeIndex].layoutName = layoutName
                 prefs.keyboard.subtypes = subtypes
@@ -115,20 +125,18 @@ class KeyboardFragment : Fragment() {
 
     private fun updateSubtypeListView() {
         val subtypes = prefs.keyboard.subtypes
-        subtypeListView.removeAllViews()
+        binding.subtypeListView.removeAllViews()
         if (subtypes.isEmpty()) {
-            subtypeNotConfiguredView.visibility = View.VISIBLE
+            binding.subtypeNotConfWarning.visibility = View.VISIBLE
         } else {
-            subtypeNotConfiguredView.visibility = View.GONE
+            binding.subtypeNotConfWarning.visibility = View.GONE
             for (subtype in subtypes) {
                 val itemView =
-                    View.inflate(context, R.layout.settings_fragment_keyboard_subtype_list_item, null)
-                itemView.findViewById<TextView>(R.id.titleText)?.text =
-                    subtype.locale.displayName
-                itemView.findViewById<TextView>(R.id.captionText)?.text =
-                    subtype.layoutName.toUpperCase(Locale.getDefault())
-                itemView.setOnClickListener { showEditSubtypeDialog(subtype.id) }
-                subtypeListView.addView(itemView)
+                    SettingsFragmentKeyboardSubtypeListItemBinding.inflate(layoutInflater)
+                itemView.title.text = subtype.locale.displayName
+                itemView.caption.text = subtype.layoutName.toUpperCase(Locale.getDefault())
+                itemView.root.setOnClickListener { showEditSubtypeDialog(subtype.id) }
+                binding.subtypeListView.addView(itemView.root)
             }
         }
     }

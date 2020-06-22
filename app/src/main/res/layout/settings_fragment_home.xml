@@ -23,7 +23,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="This is the HOME screen. Currently NYI..." />
+            android:text="This is the HOME screen. Currently NYI..."/>
 
     </androidx.cardview.widget.CardView>
 
@@ -33,7 +33,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Box test" />
+            android:text="Box test"/>
 
     </androidx.cardview.widget.CardView>
 

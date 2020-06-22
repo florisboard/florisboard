@@ -10,7 +10,7 @@
     android:background="?selectableItemBackground">
 
     <TextView
-        android:id="@+id/titleText"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="14sp"
@@ -18,7 +18,7 @@
         tools:text="Title"/>
 
     <TextView
-        android:id="@+id/captionText"
+        android:id="@+id/caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="12sp"

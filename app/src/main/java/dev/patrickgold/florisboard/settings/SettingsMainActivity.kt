@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2020 Patrick Goldinger
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.patrickgold.florisboard.settings
 
 import android.content.Intent
@@ -7,7 +23,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
@@ -16,6 +31,7 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.databinding.SettingsActivityBinding
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.hideAppIcon
 import dev.patrickgold.florisboard.util.showAppIcon
@@ -28,9 +44,8 @@ class SettingsMainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener,
     SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private lateinit var navigationView: BottomNavigationView
+    private lateinit var binding: SettingsActivityBinding
     lateinit var prefs: PrefHelper
-    private lateinit var scrollView: ScrollView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         prefs = PrefHelper(this, PreferenceManager.getDefaultSharedPreferences(this))
@@ -45,23 +60,22 @@ class SettingsMainActivity : AppCompatActivity(),
         AppCompatDelegate.setDefaultNightMode(mode)
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.settings_activity)
+        binding = SettingsActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        // NOTE: using findViewById() instead of view binding because the binding does not include
+        //       a reference to the included layout...
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        navigationView = findViewById(R.id.settings__navigation)
-        navigationView.setOnNavigationItemSelectedListener(this)
-
-        scrollView = findViewById(R.id.settings__scroll_view)
-
-        navigationView.selectedItemId =
+        binding.bottomNavigation.setOnNavigationItemSelectedListener(this)
+        binding.bottomNavigation.selectedItemId =
             savedInstanceState?.getInt(SELECTED_ITEM_ID) ?: R.id.settings__navigation__home
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(SELECTED_ITEM_ID, navigationView.selectedItemId)
+        outState.putInt(SELECTED_ITEM_ID, binding.bottomNavigation.selectedItemId)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -100,7 +114,7 @@ class SettingsMainActivity : AppCompatActivity(),
 
     private fun loadFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.settings__frame_container, fragment, FRAGMENT_TAG)
+        transaction.replace(binding.pageFrame.id, fragment, FRAGMENT_TAG)
         //transaction.addToBackStack(null)
         transaction.commit()
     }

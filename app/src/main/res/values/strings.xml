@@ -87,6 +87,7 @@
 
     <!-- About UI strings -->
     <string name="about__title">About</string>
+    <string name="about__app_icon_content_description">App icon of FlorisBoard</string>
     <string name="about__view_licenses">Open source licenses</string>
     <string name="about__view_privacy_policy">Privacy policy</string>
     <string name="about__view_source_code">Source code</string>

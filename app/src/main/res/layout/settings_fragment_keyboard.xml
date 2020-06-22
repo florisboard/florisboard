@@ -15,7 +15,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/settings__keyboard__subtype_not_conf_warning"
+                android:id="@+id/subtype_not_conf_warning"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -29,7 +29,7 @@
                 android:textColor="?textColorWarning"/>
 
             <LinearLayout
-                android:id="@+id/settings__keyboard__subtype_list"
+                android:id="@+id/subtype_list_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"/>
@@ -51,7 +51,7 @@
 
     <!-- Must be RelativeLayout, because it blocks RecyclerView to create a second scrollbar -->
     <RelativeLayout
-        android:id="@+id/settings__keyboard__frame_container"
+        android:id="@+id/prefs_correction_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

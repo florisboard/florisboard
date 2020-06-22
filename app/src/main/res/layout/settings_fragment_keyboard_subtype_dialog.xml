@@ -25,7 +25,7 @@
             android:layout_weight="1"/>
 
         <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/language_dropdown"
+            android:id="@+id/language_spinner"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:entries="@array/supported_languages"/>
@@ -50,7 +50,7 @@
             android:layout_weight="1"/>
 
         <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/layout_dropdown"
+            android:id="@+id/layout_spinner"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:entries="@array/valid_layout_names"/>
