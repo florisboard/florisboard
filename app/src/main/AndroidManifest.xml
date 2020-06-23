@@ -43,11 +43,11 @@
 
         <!-- Using an activity alias to disable/enable the app icon in the launcher -->
         <activity-alias
-            android:name="dev.patrickgold.florisboard.settings.LauncherAlias"
+            android:name="dev.patrickgold.florisboard.FlorisBoardImeLauncherAlias"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
-            android:targetActivity="dev.patrickgold.florisboard.settings.SettingsMainActivity">
+            android:targetActivity="dev.patrickgold.florisboard.setup.SetupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -59,6 +59,15 @@
             android:name="dev.patrickgold.florisboard.settings.AboutActivity"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/about__title"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:theme="@style/SettingsTheme" />
+
+        <!-- Setup Activity -->
+        <activity
+            android:name="dev.patrickgold.florisboard.setup.SetupActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/setup__title"
+            android:launchMode="singleTask"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:theme="@style/SettingsTheme" />
 

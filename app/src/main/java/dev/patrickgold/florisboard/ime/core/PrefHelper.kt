@@ -21,7 +21,6 @@ import android.content.SharedPreferences
 import android.provider.Settings
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.util.LocaleUtils
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -30,13 +29,14 @@ import kotlin.collections.HashMap
  */
 class PrefHelper(
     private val context: Context,
-    val shared: SharedPreferences
+    val shared: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 ) {
     private val cacheBoolean: HashMap<String, Boolean> = hashMapOf()
     private val cacheInt: HashMap<String, Int> = hashMapOf()
     private val cacheString: HashMap<String, String> = hashMapOf()
 
     val advanced = Advanced(this)
+    val internal = Internal(this)
     val keyboard = Keyboard(this)
     val looknfeel = Looknfeel(this)
     val theme = Theme(this)
@@ -119,6 +119,7 @@ class PrefHelper(
         PreferenceManager.setDefaultValues(context, R.xml.prefs_looknfeel, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_theme, true)
         //setPref(Keyboard.SUBTYPES, "")
+        //setPref(Internal.IS_IME_SET_UP, false)
     }
 
     /**
@@ -153,6 +154,19 @@ class PrefHelper(
         var showAppIcon: Boolean = false
             get() = prefHelper.getPref(SHOW_APP_ICON, true)
             private set
+    }
+
+    /**
+     * Wrapper class for internal preferences.
+     */
+    class Internal(private val prefHelper: PrefHelper) {
+        companion object {
+            const val IS_IME_SET_UP =           "internal__is_ime_set_up"
+        }
+
+        var isImeSetUp: Boolean
+            get() = prefHelper.getPref(IS_IME_SET_UP, false)
+            set(value) = prefHelper.setPref(IS_IME_SET_UP, value)
     }
 
     /**

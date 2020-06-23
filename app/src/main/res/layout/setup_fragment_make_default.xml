@@ -1,0 +1,36 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setup__make_default__text_before_switch"
+            android:layout_marginBottom="24dp"/>
+
+        <Button
+            android:id="@+id/switch_keyboard_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setup__make_default__text_switch_button"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:id="@+id/text_after_enabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setup__make_default__text_after_switch"
+            android:textColor="?colorSuccess"
+            android:visibility="invisible"/>
+
+    </LinearLayout>
+
+</ScrollView>

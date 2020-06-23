@@ -93,4 +93,29 @@
     <string name="about__view_source_code">Source code</string>
 
     <string name="about__license__title">Open-source licenses</string>
+
+    <!-- Setup UI strings -->
+    <string name="setup__title">Setup</string>
+    <string name="setup__prev_button">Prev</string>
+    <string name="setup__next_button">Next</string>
+    <string name="setup__finish_button">Finish</string>
+
+    <string name="setup__welcome__title">Welcome!</string>
+    <string name="setup__welcome__intro">Thanks for trying out FlorisBoard! Before you can start using it, we have to do the usual stuff and enable it in the system settings, set up your preferred language/layout, etc… But no worries - the setup wizard will guide you through this!</string>
+    <string name="setup__welcome__privacy">[NOTE: this paragraph describes a currently NYI feature!!] To improve predictions while you type, FlorisBoard collects words and word pairs you type. This data is stored <b>locally</b> and will under <b>no circumstances</b> leave your device. To ensure that, FlorisBoard does not even have the <i>NETWORK</i> permission. More information on why FlorisBoard does request certain permissions can be found in the privacy policy:</string>
+    <string name="setup__welcome__trust">The source code for FlorisBoard is publicly accessible for anyone, so you can easily review what FlorisBoard does in the background. Check out the repository link below.</string>
+    <string name="setup__welcome__contribute">One last thing before you start the setup - if you encounter any bugs/crashes/issues with FlorisBoard or you have a feature request - head over to the GitHub repository linked below and file an issue. This helps in improving the experience for all users!</string>
+    <string name="setup__welcome__outro">To start the setup, click on <i>NEXT</i>.</string>
+
+    <string name="setup__enable_ime__title">Enable FlorisBoard</string>
+    <string name="setup__enable_ime__text_before_enabled">Android requires that every custom keyboard has to be manually enabled before you can use it. Click the button below to go to the <i>Language &amp; Input</i> settings, then make sure to check \'<i>FlorisBoard</i>\'.</string>
+    <string name="setup__enable_ime__text_button_language_and_input">Open Language &amp; Input settings</string>
+    <string name="setup__enable_ime__text_after_enabled">FlorisBoard has been successfully enabled. To continue click <i>NEXT</i>!</string>
+
+    <string name="setup__make_default__title">Make FlorisBoard default</string>
+    <string name="setup__make_default__text_before_switch">FlorisBoard is now enabled in your system. To actively use it, switch to FlorisBoard by selecting it in the input selector dialog!</string>
+    <string name="setup__make_default__text_switch_button">Switch keyboard</string>
+    <string name="setup__make_default__text_after_switch">Successfully switched the default keyboard to FlorisBoard!</string>
+
+    <string name="setup__finish__title">Setup finished!</string>
 </resources>
