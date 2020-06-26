@@ -48,10 +48,10 @@ class EnableImeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         if (FlorisBoard.checkIfImeIsEnabled(requireContext())) {
-            (activity as SetupActivity).changeNextButtonState(true)
+            (activity as SetupActivity).changePositiveButtonState(true)
             binding.textAfterEnabled.visibility = View.VISIBLE
         } else {
-            (activity as SetupActivity).changeNextButtonState(false)
+            (activity as SetupActivity).changePositiveButtonState(false)
             binding.textAfterEnabled.visibility = View.INVISIBLE
         }
     }

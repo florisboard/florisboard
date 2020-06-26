@@ -38,6 +38,6 @@ class FinishFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (activity as SetupActivity).changeNextButtonState(true)
+        (activity as SetupActivity).changePositiveButtonState(true)
     }
 }

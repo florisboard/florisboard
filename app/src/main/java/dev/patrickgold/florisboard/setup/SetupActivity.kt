@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.setup
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -32,11 +33,16 @@ import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 
 class SetupActivity : AppCompatActivity() {
+    companion object {
+        const val EXTRA_SHOW_SINGLE_STEP = "EXTRA_SHOW_SINGLE_STEP"
+    }
+
     private lateinit var adapter: ViewPagerAdapter
     private lateinit var binding: SetupActivityBinding
     lateinit var imm: InputMethodManager
     private lateinit var prefs: PrefHelper
     private var shouldFinish: Boolean = false
+    private var shouldLaunchSettings: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         prefs = PrefHelper(this)
@@ -72,6 +78,9 @@ class SetupActivity : AppCompatActivity() {
         binding.prevButton.setOnClickListener {
             loadPage(binding.viewPager.currentItem - 1)
         }
+        binding.cancelButton.setOnClickListener {
+            finish()
+        }
         binding.nextButton.setOnClickListener {
             loadPage(binding.viewPager.currentItem + 1)
         }
@@ -79,8 +88,17 @@ class SetupActivity : AppCompatActivity() {
             prefs.internal.isImeSetUp = true
             launchSettingsAndSetFinishFlag()
         }
+        binding.okButton.setOnClickListener {
+            finish()
+        }
 
-        loadPage(Step.WELCOME)
+        val extraShowSingleStep = intent.getIntExtra(EXTRA_SHOW_SINGLE_STEP, -1)
+        if (extraShowSingleStep >= 0) {
+            shouldLaunchSettings = false
+            loadPage(extraShowSingleStep, true)
+        } else {
+            loadPage(Step.WELCOME)
+        }
     }
 
     override fun onResume() {
@@ -91,7 +109,7 @@ class SetupActivity : AppCompatActivity() {
             }
             return
         }
-        if (prefs.internal.isImeSetUp) {
+        if (prefs.internal.isImeSetUp && shouldLaunchSettings) {
             launchSettingsAndSetFinishFlag()
         }
     }
@@ -104,29 +122,36 @@ class SetupActivity : AppCompatActivity() {
     }
 
     private fun launchSettingsAndSetFinishFlag() {
-        val i = Intent(this, SettingsMainActivity::class.java)
-        i.flags = Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
-                Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(i)
+        Intent(this, SettingsMainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
+                    Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(this)
+        }
         shouldFinish = true
     }
 
-    private fun loadPage(pageIndex: Int) {
-        binding.prevButton.isEnabled = pageIndex > 0
+    private fun loadPage(pageIndex: Int, isSingleStepOnly: Boolean = false) {
+        binding.prevButton.isEnabled = pageIndex > 0 && !isSingleStepOnly
+        binding.cancelButton.isEnabled = isSingleStepOnly
         binding.progressBar.progress = pageIndex
+        binding.progressBar.visibility = if (isSingleStepOnly) { View.INVISIBLE } else { View.VISIBLE }
         val isLast = pageIndex + 1 == adapter.itemCount
-        binding.viewFlipper.displayedChild = if (isLast) { 1 } else { 0 }
-        changeNextButtonState(false)
+        binding.negativeButtonViewFlipper.displayedChild =
+            if (isSingleStepOnly) { 1 } else { 0 }
+        binding.positiveButtonViewFlipper.displayedChild =
+            if (isSingleStepOnly) { 2 } else { if (isLast) { 1 } else { 0 } }
+        changePositiveButtonState(false)
         supportActionBar?.title = adapter.getPageTitle(pageIndex)
         binding.viewPager.currentItem = pageIndex
     }
 
-    fun changeNextButtonState(enabled: Boolean) {
+    fun changePositiveButtonState(enabled: Boolean) {
         binding.nextButton.isEnabled = enabled
         binding.finishButton.isEnabled = enabled
+        binding.okButton.isEnabled = enabled
     }
 
-    private object Step {
+    object Step {
         const val WELCOME =         0
         const val ENABLE_IME =      1
         const val MAKE_DEFAULT =    2

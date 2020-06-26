@@ -20,15 +20,30 @@
         style="?buttonBarStyle"
         android:gravity="center_vertical">
 
-        <Button
-            android:id="@+id/prev_button"
+        <ViewFlipper
+            android:id="@+id/negative_button_view_flipper"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="?buttonBarButtonStyle"
-            android:text="@string/setup__prev_button"
-            android:drawableStart="@drawable/ic_keyboard_arrow_left"
-            android:drawableTint="@drawable/button_enable_color_selector"
-            android:enabled="false"/>
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/prev_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?buttonBarButtonStyle"
+                android:text="@string/setup__prev_button"
+                android:drawableStart="@drawable/ic_keyboard_arrow_left"
+                android:drawableTint="@drawable/button_enable_color_selector"
+                android:enabled="false"/>
+
+            <Button
+                android:id="@+id/cancel_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?buttonBarButtonStyle"
+                android:text="@string/setup__cancel_button"
+                android:enabled="false"/>
+
+        </ViewFlipper>
 
         <View
             android:layout_width="0dp"
@@ -49,7 +64,7 @@
             android:layout_weight="1.0"/>
 
         <ViewFlipper
-            android:id="@+id/view_flipper"
+            android:id="@+id/positive_button_view_flipper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -71,6 +86,15 @@
                 android:layout_gravity="end"
                 style="?buttonBarButtonStyle"
                 android:text="@string/setup__finish_button"
+                android:enabled="false"/>
+
+            <Button
+                android:id="@+id/ok_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                style="?buttonBarButtonStyle"
+                android:text="@string/setup__ok_button"
                 android:enabled="false"/>
 
         </ViewFlipper>

@@ -42,11 +42,11 @@ class MakeDefaultFragment : Fragment(), SetupActivity.EventListener {
 
     private fun updateState(): Boolean {
         return if (FlorisBoard.checkIfImeIsSelected(requireContext())) {
-            (activity as SetupActivity).changeNextButtonState(true)
+            (activity as SetupActivity).changePositiveButtonState(true)
             binding.textAfterEnabled.visibility = View.VISIBLE
             true
         } else {
-            (activity as SetupActivity).changeNextButtonState(false)
+            (activity as SetupActivity).changePositiveButtonState(false)
             binding.textAfterEnabled.visibility = View.INVISIBLE
             false
         }

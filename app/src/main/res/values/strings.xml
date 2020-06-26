@@ -97,8 +97,10 @@
     <!-- Setup UI strings -->
     <string name="setup__title">Setup</string>
     <string name="setup__prev_button">Prev</string>
+    <string name="setup__cancel_button">Cancel</string>
     <string name="setup__next_button">Next</string>
     <string name="setup__finish_button">Finish</string>
+    <string name="setup__ok_button">OK</string>
 
     <string name="setup__welcome__title">Welcome!</string>
     <string name="setup__welcome__intro">Thanks for trying out FlorisBoard! Before you can start using it, we have to do the usual stuff and enable it in the system settings, set up your preferred language/layout, etc… But no worries - the setup wizard will guide you through this!</string>

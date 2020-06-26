@@ -16,14 +16,15 @@
 
 package dev.patrickgold.florisboard.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import dev.patrickgold.florisboard.databinding.SettingsFragmentHomeBinding
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.setup.SetupActivity
 
 class HomeFragment : Fragment() {
     private lateinit var binding: SettingsFragmentHomeBinding
@@ -35,8 +36,10 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = SettingsFragmentHomeBinding.inflate(inflater, container, false)
         binding.imeNotEnabledCard.setOnClickListener {
-            // TODO: Open setup wizard here
-            Toast.makeText(context, "Setup wizard NYI!!", Toast.LENGTH_SHORT).show()
+            Intent(context, SetupActivity::class.java).apply {
+                putExtra(SetupActivity.EXTRA_SHOW_SINGLE_STEP, SetupActivity.Step.ENABLE_IME)
+                startActivity(this)
+            }
         }
 
         return binding.root
