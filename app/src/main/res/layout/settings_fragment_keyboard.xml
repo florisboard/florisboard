@@ -51,7 +51,7 @@
 
     <!-- Must be RelativeLayout, because it blocks RecyclerView to create a second scrollbar -->
     <RelativeLayout
-        android:id="@+id/prefs_correction_frame"
+        android:id="@+id/prefs_keyboard_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

@@ -36,9 +36,11 @@ class PrefHelper(
     private val cacheString: HashMap<String, String> = hashMapOf()
 
     val advanced = Advanced(this)
+    val correction = Correction(this)
     val internal = Internal(this)
     val keyboard = Keyboard(this)
     val looknfeel = Looknfeel(this)
+    val suggestion = Suggestion(this)
     val theme = Theme(this)
 
     /**
@@ -114,7 +116,6 @@ class PrefHelper(
      */
     fun initDefaultPreferences() {
         PreferenceManager.setDefaultValues(context, R.xml.prefs_advanced, true)
-        PreferenceManager.setDefaultValues(context, R.xml.prefs_correction, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_keyboard, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_looknfeel, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_theme, true)
@@ -153,6 +154,19 @@ class PrefHelper(
             private set
         var showAppIcon: Boolean = false
             get() = prefHelper.getPref(SHOW_APP_ICON, true)
+            private set
+    }
+
+    /**
+     * Wrapper class for correction preferences.
+     */
+    class Correction(private val prefHelper: PrefHelper) {
+        companion object {
+            const val DOUBLE_SPACE_PERIOD =     "correction__double_space_period"
+        }
+
+        var doubleSpacePeriod: Boolean = false
+            get() = prefHelper.getPref(DOUBLE_SPACE_PERIOD, true)
             private set
     }
 
@@ -310,6 +324,23 @@ class PrefHelper(
         var vibrationEnabledSystem: Boolean = false
         var vibrationStrength: Int = 0
             get() = prefHelper.getPref(VIBRATION_STRENGTH, 0)
+            private set
+    }
+
+    /**
+     * Wrapper class for suggestion preferences.
+     */
+    class Suggestion(private val prefHelper: PrefHelper) {
+        companion object {
+            const val ENABLED =                 "suggestion__enabled"
+            const val USE_PREV_WORDS =          "suggestion__use_prev_words"
+        }
+
+        var enabled: Boolean = false
+            get() = prefHelper.getPref(ENABLED, true)
+            private set
+        var usePrevWords: Boolean = false
+            get() = prefHelper.getPref(USE_PREV_WORDS, true)
             private set
     }
 

@@ -53,8 +53,8 @@ class KeyboardFragment : Fragment() {
 
         val transaction = childFragmentManager.beginTransaction()
         transaction.replace(
-            binding.prefsCorrectionFrame.id,
-            SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_correction)
+            binding.prefsKeyboardFrame.id,
+            SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_keyboard)
         )
         transaction.commit()
 

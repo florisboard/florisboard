@@ -2,6 +2,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__suggestion__title">
 
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            app:key="suggestion__enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__suggestion__enabled__label"
+            app:summary="@string/pref__suggestion__enabled__summary"/>
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            app:dependency="suggestion__enabled"
+            app:key="suggestion__use_prev_words"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__suggestion__use_pref_words__label"
+            app:summary="@string/pref__suggestion__use_pref_words__summary"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__correction__title">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            app:key="correction__double_space_period"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__correction__double_space_period__label"
+            app:summary="@string/pref__correction__double_space_period__summary"/>
+
+    </PreferenceCategory>
 
 </PreferenceScreen>
