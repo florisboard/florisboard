@@ -50,7 +50,7 @@ class LayoutManager(private val context: Context) {
             return null
         }
         val rawJsonData: String = try {
-            context.assets.open("ime/$type/$name.json").bufferedReader().use { it.readText() }
+            context.assets.open("ime/text/$type/$name.json").bufferedReader().use { it.readText() }
         } catch (e: Exception) {
             null
         } ?: return null
