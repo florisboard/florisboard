@@ -29,6 +29,8 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputView
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyboardView
+import dev.patrickgold.florisboard.ime.media.emoticon.EmoticonKeyData
+import dev.patrickgold.florisboard.ime.media.emoticon.EmoticonKeyboardView
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyType
@@ -91,8 +93,8 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
             tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     when (tab.position) {
-                        0 -> setActiveTab(Tab.EMOJIS)
-                        1 -> setActiveTab(Tab.EMOTICONS)
+                        0 -> setActiveTab(Tab.EMOJI)
+                        1 -> setActiveTab(Tab.EMOTICON)
                         2 -> setActiveTab(Tab.KAOMOJI)
                     }
                 }
@@ -151,7 +153,8 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
      */
     private fun createTabViewFor(tab: Tab): LinearLayout {
         return when (tab) {
-            Tab.EMOJIS -> EmojiKeyboardView(florisboard)
+            Tab.EMOJI -> EmojiKeyboardView(florisboard)
+            Tab.EMOTICON -> EmoticonKeyboardView(florisboard.context)
             else -> LinearLayout(florisboard)
         }
     }
@@ -175,11 +178,20 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
     }
 
     /**
+     * Sends a given [emoticonKeyData] to the current input editor.
+     */
+    fun sendEmoticonKeyPress(emoticonKeyData: EmoticonKeyData) {
+        val ic = florisboard.currentInputConnection
+        ic?.finishComposingText()
+        ic?.commitText(emoticonKeyData.icon, 1)
+    }
+
+    /**
      * Enum which defines the tabs for the media context.
      */
     enum class Tab {
-        EMOJIS,
-        EMOTICONS,
+        EMOJI,
+        EMOTICON,
         KAOMOJI
     }
 }

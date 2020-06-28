@@ -1,0 +1,32 @@
+{
+  "type": "emoticon",
+  "name": "emoticons",
+  "direction": "ltr",
+  "arrangement": [
+    [
+      { "icon":   "=-O", "meaning": ["laughing", "big grin"] },
+      { "icon":   ":-P", "meaning": ["cheeky", "tongue sticking out"] },
+      { "icon":   ";-)", "meaning": ["wink", "smirk"] },
+      { "icon":   ":-(", "meaning": ["sad", "frown"] },
+      { "icon":   ":-)", "meaning": ["happy", "smiley"] },
+      { "icon":   ":-!", "meaning": ["indecision"] },
+      { "icon":   ":-$", "meaning": ["embarrassing"] }
+    ], [
+      { "icon":   "B-)", "meaning": ["happy", "smiley"] },
+      { "icon":    ":O", "meaning": ["surprised"] },
+      { "icon":   ":-*", "meaning": ["kiss"] },
+      { "icon":   ":-D", "meaning": ["laughing", "big grin"] },
+      { "icon":   ":'(", "meaning": ["crying"] },
+      { "icon":  ":-\\", "meaning": ["skeptical", "annoyed"] },
+      { "icon":  "O:-)", "meaning": ["angel", "saint", "innocent"] }
+    ], [
+      { "icon":   ":-[", "meaning": ["sad", "frown", "angry"] },
+      { "icon":  "(^^)", "meaning": ["joyful"] },
+      { "icon":   "^_^", "meaning": ["joyful"] },
+      { "icon":   ":-|", "meaning": ["indecision", "straight face"] },
+      { "icon":  "(TT)", "meaning": ["crying"] },
+      { "icon":   "=_=", "meaning": ["tired"] },
+      { "icon": "(+_+)", "meaning": ["amazed"] }
+    ]
+  ]
+}
