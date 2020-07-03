@@ -69,7 +69,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     val layoutManager = LayoutManager(florisboard)
     lateinit var smartbarManager: SmartbarManager
 
-    // Caps related properties
+    // Caps/Space related properties
     var caps: Boolean = false
         private set
     var capsLock: Boolean = false
@@ -77,6 +77,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     private var cursorCapsMode: CapsMode = CapsMode.NONE
     private var editorCapsMode: CapsMode = CapsMode.NONE
     private var hasCapsRecentlyChanged: Boolean = false
+    private var hasSpaceRecentlyPressed: Boolean = false
 
     // Composing text related properties
     private var composingText: String? = null
@@ -317,7 +318,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     }
 
     /**
-     * Should primarily pe used by [SmartbarManager.numberRowButtonOnClickListener] to commit
+     * Should primarily pe used by [SmartbarManager.candidateViewOnClickListener] to commit
      * a candidate if a user has pressed on it.
      */
     fun commitCandidate(candidateText: String) {
@@ -449,6 +450,31 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     }
 
     /**
+     * Handles a [KeyCode.SPACE] event. Also handles the auto-correction of two space taps if
+     * enabled by the user.
+     */
+    private fun handleSpace() {
+        val ic = florisboard.currentInputConnection
+        if (florisboard.prefs.correction.doubleSpacePeriod) {
+            if (hasSpaceRecentlyPressed) {
+                osHandler.removeCallbacksAndMessages(null)
+                val text = ic?.getTextBeforeCursor(2, 0) ?: ""
+                if (text.length == 2 && !text.matches("""[.!?‽\s][\s]""".toRegex())) {
+                    ic?.deleteSurroundingText(1, 0)
+                    ic?.commitText(".", 1)
+                }
+                hasSpaceRecentlyPressed = false
+            } else {
+                hasSpaceRecentlyPressed = true
+                osHandler.postDelayed({
+                    hasSpaceRecentlyPressed = false
+                }, 300)
+            }
+        }
+        ic?.commitText(KeyCode.SPACE.toChar().toString(), 1)
+    }
+
+    /**
      * Main logic point for sending a key press. Different actions may occur depending on the given
      * [KeyData]. This method handles all key press send events, which are text based. For media
      * input send events see MediaInputManager.
@@ -499,23 +525,22 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                         }
                     }
                     else -> when (keyData.type) {
-                        KeyType.CHARACTER -> {
-                            var text = keyData.code.toChar().toString()
-                            text = when (caps) {
-                                true -> text.toUpperCase(Locale.getDefault())
-                                false -> text.toLowerCase(Locale.getDefault())
+                        KeyType.CHARACTER -> when (keyData.code) {
+                            KeyCode.SPACE -> handleSpace()
+                            KeyCode.URI_COMPONENT_TLD -> {
+                                val tld = when (caps) {
+                                    true -> keyData.label.toUpperCase(Locale.getDefault())
+                                    false -> keyData.label.toLowerCase(Locale.getDefault())
+                                }
+                                ic?.commitText(tld, 1)
                             }
-                            when (keyData.code) {
-                                KeyCode.URI_COMPONENT_TLD -> {
-                                    val tld = when (caps) {
-                                        true -> keyData.label.toUpperCase(Locale.getDefault())
-                                        false -> keyData.label.toLowerCase(Locale.getDefault())
-                                    }
-                                    ic?.commitText(tld, 1)
+                            else -> {
+                                var text = keyData.code.toChar().toString()
+                                text = when (caps) {
+                                    true -> text.toUpperCase(Locale.getDefault())
+                                    false -> text.toLowerCase(Locale.getDefault())
                                 }
-                                else -> {
-                                    ic?.commitText(text, 1)
-                                }
+                                ic?.commitText(text, 1)
                             }
                         }
                         else -> {
