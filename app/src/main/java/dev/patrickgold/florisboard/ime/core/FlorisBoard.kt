@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2020 Patrick Goldinger
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.patrickgold.florisboard.ime.core
 
 import android.annotation.SuppressLint
@@ -29,7 +45,6 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.util.*
-import java.util.*
 
 /**
  * Variable which holds the current [FlorisBoard] instance. To get this instance from another
@@ -44,6 +59,7 @@ private var florisboardInstance: FlorisBoard? = null
 class FlorisBoard : InputMethodService() {
 
     lateinit var activeSubtype: Subtype
+    lateinit var subtypeManager: SubtypeManager
     private var audioManager: AudioManager? = null
     val context: Context
         get() = inputView?.context ?: this
@@ -97,8 +113,8 @@ class FlorisBoard : InputMethodService() {
         prefs = PrefHelper(this, PreferenceManager.getDefaultSharedPreferences(this))
         prefs.initDefaultPreferences()
         prefs.sync()
-
-        activeSubtype = prefs.keyboard.fetchActiveSubtype() ?: Subtype(-1, Locale.ENGLISH, "qwerty")
+        subtypeManager = SubtypeManager(this, prefs)
+        activeSubtype = subtypeManager.getActiveSubtype() ?: SubtypeManager.fallbackSubtype
 
         currentThemeResId = prefs.theme.getSelectedThemeResId()
         setTheme(currentThemeResId)
@@ -167,7 +183,7 @@ class FlorisBoard : InputMethodService() {
         prefs.sync()
         updateThemeIfNecessary()
         updateOneHandedPanelVisibility()
-        activeSubtype = prefs.keyboard.fetchActiveSubtype() ?: Subtype(-1, Locale.ENGLISH, "qwerty")
+        activeSubtype = subtypeManager.getActiveSubtype() ?: SubtypeManager.fallbackSubtype
         onSubtypeChanged(activeSubtype)
         setActiveInput(R.id.text_input)
 
@@ -359,11 +375,11 @@ class FlorisBoard : InputMethodService() {
      * @return If the language switch should be shown
      */
     fun shouldShowLanguageSwitch(): Boolean {
-        return prefs.keyboard.subtypes.size > 1
+        return subtypeManager.subtypes.size > 1
     }
 
     fun switchToNextSubtype() {
-        activeSubtype = prefs.keyboard.switchToNextSubtype() ?: Subtype(-1, Locale.ENGLISH, "qwerty")
+        activeSubtype = subtypeManager.switchToNextSubtype() ?: SubtypeManager.fallbackSubtype
         onSubtypeChanged(activeSubtype)
     }
 
@@ -438,28 +454,6 @@ class FlorisBoard : InputMethodService() {
         }, 0)
     }
 
-    data class Subtype(
-        var id: Int,
-        var locale: Locale,
-        var layoutName: String
-    ) {
-        companion object {
-            fun fromString(string: String): Subtype {
-                val data = string.split("/")
-                if (data.size != 3) {
-                    throw Exception("Given string is malformed...")
-                } else {
-                    val locale = LocaleUtils.stringToLocale(data[1])
-                    return Subtype(data[0].toInt(), locale, data[2])
-                }
-            }
-        }
-
-        override fun toString(): String {
-            return "$id/$locale/$layoutName"
-        }
-    }
-
     interface EventListener {
         fun onCreate() {}
         fun onCreateInputView() {}
@@ -485,5 +479,37 @@ class FlorisBoard : InputMethodService() {
         ) {}
 
         fun onSubtypeChanged(newSubtype: Subtype) {}
+    }
+
+    /**
+     * Data class which holds the base information for this IME. Matches the structure of
+     * ime/config.json so it can be parsed. Used by [SubtypeManager] and by the prefs.
+     * NOTE: this class and its corresponding json file is subject to change in future versions.
+     * @property packageName The package name of this IME.
+     * @property characterLayouts A list of valid layout names to use from. Each value defined
+     *  should have a <layout_name>.json file in ime/text/characters/ to avoid empty layouts.
+     * @property defaultSubtypes A list of predefined default subtypes. This subtypes are used to
+     *  define which locales are supported and which layout is preferred for that locale.
+     * @property defaultSubtypesLanguageCodes Helper list for Settings Subtype Spinner elements.
+     * @property defaultSubtypesLanguageNames Helper list for Settings Subtype Spinner elements.
+     */
+    data class ImeConfig(
+        val packageName: String,
+        val characterLayouts: List<String> = listOf(),
+        val defaultSubtypes: List<DefaultSubtype> = listOf()
+    ) {
+        val defaultSubtypesLanguageCodes: List<String>
+        val defaultSubtypesLanguageNames: List<String>
+
+        init {
+            val tmpCodes = mutableListOf<String>()
+            val tmpNames = mutableListOf<String>()
+            for (defaultSubtype in defaultSubtypes) {
+                tmpCodes.add(defaultSubtype.locale.toString())
+                tmpNames.add(defaultSubtype.locale.displayName)
+            }
+            defaultSubtypesLanguageCodes = tmpCodes.toList()
+            defaultSubtypesLanguageNames = tmpNames.toList()
+        }
     }
 }

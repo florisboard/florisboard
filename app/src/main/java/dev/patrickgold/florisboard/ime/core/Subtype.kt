@@ -1,0 +1,88 @@
+/*
+ * Copyright (C) 2020 Patrick Goldinger
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package dev.patrickgold.florisboard.ime.core
+
+import dev.patrickgold.florisboard.util.LocaleUtils
+import java.util.*
+
+/**
+ * Data class which represents an user-specified set of language and layout. String representations
+ * of this object are stored as an array in the shared prefs.
+ * @property id The ID of this subtype. Although this can be any numeric value, its value
+ *  typically matches the one of the [DefaultSubtype] with the same locale.
+ * @property locale The locale this subtype is bound to.
+ * @property layout The name of the layout the user wants to use within the bounds of this subtype.
+ *  Must be a string which also exists in [FlorisBoard.ImeConfig.characterLayouts]. If the value is
+ *  not included within this list, no layout will be shown to the user.
+ */
+data class Subtype(
+    var id: Int,
+    var locale: Locale,
+    var layout: String
+) {
+    companion object {
+        /**
+         * Converts the string representation of this object to a [Subtype]. Must be in the
+         * following format:
+         *  <id>/<language_code>/<layout_name>
+         * Eg: 101/en_US/qwerty
+         * If the given [string] does not match this format an [Exception] will be thrown.
+         */
+        fun fromString(string: String): Subtype {
+            val data = string.split("/")
+            if (data.size != 3) {
+                throw Exception("Given string is malformed...")
+            } else {
+                val locale = LocaleUtils.stringToLocale(data[1])
+                return Subtype(
+                    data[0].toInt(),
+                    locale,
+                    data[2]
+                )
+            }
+        }
+    }
+
+    /**
+     * Converts this object into its string representation. Format:
+     *  <id>/<language_code>/<layout_name>
+     */
+    override fun toString(): String {
+        return "$id/$locale/$layout"
+    }
+}
+
+/**
+ * Data class which represents a predefined set of language and preferred layout.
+ * @property id The ID of this subtype.
+ * @property locale The locale of this subtype.
+ * @property preferredLayout The preferred layout for this subtype's locale.
+ *  Must be a string which also exists in [FlorisBoard.ImeConfig.characterLayouts]. If the value is
+ *  not included within this list, no layout will be shown to the user if the user selects the
+ *  predefined layout value.
+ * @property isAsciiCapable Legacy attribute for Android's InputMethodSubtype. Currently no real
+ *  use within this project.
+ * @property isEmojiCapable Legacy attribute for Android's InputMethodSubtype. Currently no real
+ *  use within this project.
+ */
+data class DefaultSubtype(
+    var id: Int,
+    var locale: Locale,
+    var preferredLayout: String,
+    var isAsciiCapable: Boolean,
+    var isEmojiCapable: Boolean
+)

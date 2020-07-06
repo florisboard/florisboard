@@ -33,6 +33,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsActivityBinding
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.util.hideAppIcon
 import dev.patrickgold.florisboard.util.showAppIcon
 
@@ -46,10 +47,13 @@ class SettingsMainActivity : AppCompatActivity(),
 
     private lateinit var binding: SettingsActivityBinding
     lateinit var prefs: PrefHelper
+    lateinit var subtypeManager: SubtypeManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         prefs = PrefHelper(this, PreferenceManager.getDefaultSharedPreferences(this))
         prefs.initDefaultPreferences()
+        subtypeManager =
+            SubtypeManager(this, prefs)
 
         val mode = when (prefs.advanced.settingsTheme) {
             "light" -> AppCompatDelegate.MODE_NIGHT_NO

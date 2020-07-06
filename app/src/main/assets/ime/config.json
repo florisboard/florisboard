@@ -1,0 +1,57 @@
+{
+  "packageName": "dev.patrickgold.florisboard",
+  "characterLayouts": [
+    "qwerty", "qwertz", "azerty"
+  ],
+  "defaultSubtypes": [
+    {
+      "id": 101,
+      "locale": "en_US",
+      "preferredLayout": "qwerty",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    },
+    {
+      "id": 102,
+      "locale": "en_UK",
+      "preferredLayout": "qwerty",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    },
+    {
+      "id": 103,
+      "locale": "en_CA",
+      "preferredLayout": "qwerty",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    },
+    {
+      "id": 104,
+      "locale": "en_AU",
+      "preferredLayout": "qwerty",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    },
+    {
+      "id": 201,
+      "locale": "de_DE",
+      "preferredLayout": "qwerty",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    },
+    {
+      "id": 202,
+      "locale": "de_AT",
+      "preferredLayout": "qwerty",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    },
+    {
+      "id": 203,
+      "locale": "de_CH",
+      "preferredLayout": "qwerty",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    }
+  ]
+}

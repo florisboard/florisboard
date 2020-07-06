@@ -31,6 +31,7 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputView
+import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyType
@@ -104,7 +105,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     override fun onCreate() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onCreate()")
 
-        layoutManager.autoFetchAssociationsFromPrefs(florisboard.prefs)
+        layoutManager.autoFetchAssociationsFromPrefs(florisboard.prefs, florisboard.subtypeManager)
         smartbarManager = SmartbarManager.getInstance()
     }
 
@@ -234,8 +235,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         smartbarManager.activeContainerId = smartbarManager.getPreferredContainerId()
     }
 
-    override fun onSubtypeChanged(newSubtype: FlorisBoard.Subtype) {
-        layoutManager.autoFetchAssociationsFromPrefs(florisboard.prefs)
+    override fun onSubtypeChanged(newSubtype: Subtype) {
+        layoutManager.autoFetchAssociationsFromPrefs(florisboard.prefs, florisboard.subtypeManager)
         val keyboardView = keyboardViews[KeyboardMode.CHARACTERS]
         keyboardView?.setKeyboardMode(KeyboardMode.CHARACTERS)
         keyboardView?.updateVisibility()

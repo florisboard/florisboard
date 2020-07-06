@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsFragmentLooknfeelBinding
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
@@ -32,6 +33,7 @@ import kotlinx.coroutines.*
 
 class LooknfeelFragment : Fragment(), CoroutineScope by MainScope() {
     private lateinit var prefs: PrefHelper
+    private lateinit var subtypeManager: SubtypeManager
     private lateinit var binding: SettingsFragmentLooknfeelBinding
     private lateinit var keyboardView: KeyboardView
 
@@ -39,6 +41,7 @@ class LooknfeelFragment : Fragment(), CoroutineScope by MainScope() {
         super.onCreate(savedInstanceState)
 
         prefs = (activity as SettingsMainActivity).prefs
+        subtypeManager = (activity as SettingsMainActivity).subtypeManager
     }
 
     override fun onCreateView(
@@ -51,7 +54,7 @@ class LooknfeelFragment : Fragment(), CoroutineScope by MainScope() {
         launch(Dispatchers.Default) {
             val themeContext = ContextThemeWrapper(context, prefs.theme.getSelectedThemeResId())
             val layoutManager = LayoutManager(themeContext)
-            layoutManager.autoFetchAssociationsFromPrefs(prefs)
+            layoutManager.autoFetchAssociationsFromPrefs(prefs, subtypeManager)
             keyboardView = KeyboardView(themeContext)
             keyboardView.prefs = prefs
             keyboardView.isPreviewMode = true

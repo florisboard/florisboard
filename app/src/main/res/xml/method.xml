@@ -2,4 +2,5 @@
 <input-method xmlns:android="https://schemas.android.com/apk/res/android"
     android:icon="@mipmap/ic_launcher"
     android:isDefault="false"
-    android:settingsActivity="dev.patrickgold.florisboard.settings.SettingsMainActivity" />
+    android:settingsActivity="dev.patrickgold.florisboard.settings.SettingsMainActivity"
+    android:supportsSwitchingToNextInputMethod="true"/>

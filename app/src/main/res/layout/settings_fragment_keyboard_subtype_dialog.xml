@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingHorizontal="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="0dp"
         android:gravity="center_vertical">
 
         <TextView
@@ -28,7 +29,7 @@
             android:id="@+id/language_spinner"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:entries="@array/supported_languages"/>
+            android:gravity="end"/>
 
     </LinearLayout>
 
@@ -36,7 +37,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingHorizontal="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="0dp"
         android:gravity="center_vertical">
 
         <TextView
@@ -53,7 +55,7 @@
             android:id="@+id/layout_spinner"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:entries="@array/valid_layout_names"/>
+            android:gravity="end"/>
 
     </LinearLayout>
 
