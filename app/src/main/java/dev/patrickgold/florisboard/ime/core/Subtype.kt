@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.core
 
+import com.squareup.moshi.Json
 import dev.patrickgold.florisboard.util.LocaleUtils
 import java.util.*
 
@@ -62,14 +63,15 @@ data class Subtype(
      *  <id>/<language_code>/<layout_name>
      */
     override fun toString(): String {
-        return "$id/$locale/$layout"
+        val languageTag = locale.toLanguageTag()
+        return "$id/$languageTag/$layout"
     }
 }
 
 /**
  * Data class which represents a predefined set of language and preferred layout.
  * @property id The ID of this subtype.
- * @property locale The locale of this subtype.
+ * @property locale The locale of this subtype. Beware its different name in json: 'languageTag'.
  * @property preferredLayout The preferred layout for this subtype's locale.
  *  Must be a string which also exists in [FlorisBoard.ImeConfig.characterLayouts]. If the value is
  *  not included within this list, no layout will be shown to the user if the user selects the
@@ -81,6 +83,7 @@ data class Subtype(
  */
 data class DefaultSubtype(
     var id: Int,
+    @Json(name = "languageTag")
     var locale: Locale,
     var preferredLayout: String,
     var isAsciiCapable: Boolean,

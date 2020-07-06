@@ -21,6 +21,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import dev.patrickgold.florisboard.R
@@ -83,6 +84,21 @@ class KeyboardFragment : Fragment() {
             subtypeManager.imeConfig.defaultSubtypesLanguageNames
         )
         dialogView.languageSpinner.adapter = languageAdapter
+        // Add listener to languageSpinner to automatically pre-select the preferred layout for the
+        // selected language in layoutSpinner.
+        dialogView.languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+                val selectedCode = subtypeManager.imeConfig.defaultSubtypesLanguageCodes[pos]
+                val defaultSubtype = subtypeManager.getDefaultSubtypeForLocale(LocaleUtils.stringToLocale(selectedCode)) ?: return
+                dialogView.layoutSpinner.setSelection(
+                    subtypeManager.imeConfig.characterLayouts.indexOf(defaultSubtype.preferredLayout)
+                )
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Auto-generated stub method
+            }
+        }
         val layoutAdapter: ArrayAdapter<String> = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,

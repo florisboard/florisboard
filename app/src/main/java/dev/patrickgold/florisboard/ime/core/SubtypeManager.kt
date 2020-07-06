@@ -120,7 +120,7 @@ class SubtypeManager(private val context: Context, private val prefs: PrefHelper
         }
         return null
     }
-    private fun getDefaultSubtypeForLocale(locale: Locale): DefaultSubtype? {
+    fun getDefaultSubtypeForLocale(locale: Locale): DefaultSubtype? {
         for (systemSubtype in imeConfig.defaultSubtypes) {
             if (systemSubtype.locale == locale) {
                 return systemSubtype

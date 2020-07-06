@@ -21,10 +21,12 @@ import com.squareup.moshi.ToJson
 import java.util.*
 
 object LocaleUtils {
+    private val DELIMITER = """[_-]""".toRegex()
+
     fun stringToLocale(string: String): Locale {
         return when {
-            string.contains("_") -> {
-                val lc = string.split("_")
+            string.contains(DELIMITER) -> {
+                val lc = string.split(DELIMITER)
                 Locale(lc[0], lc[1])
             }
             else -> {
