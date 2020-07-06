@@ -34,8 +34,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsActivityBinding
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
-import dev.patrickgold.florisboard.util.hideAppIcon
-import dev.patrickgold.florisboard.util.showAppIcon
+import dev.patrickgold.florisboard.util.PackageManagerUtils
 
 private const val FRAGMENT_TAG = "FRAGMENT_TAG"
 private const val PREF_RES_ID = "PREF_RES_ID"
@@ -169,9 +168,9 @@ class SettingsMainActivity : AppCompatActivity(),
     private fun updateLauncherIconStatus() {
         // Set LauncherAlias enabled/disabled state just before destroying/pausing this activity
         if (prefs.advanced.showAppIcon) {
-            showAppIcon(this)
+            PackageManagerUtils.showAppIcon(this)
         } else {
-            hideAppIcon(this)
+            PackageManagerUtils.hideAppIcon(this)
         }
     }
 

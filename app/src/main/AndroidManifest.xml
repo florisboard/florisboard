@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2020 Patrick Goldinger
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dev.patrickgold.florisboard">
 
     <!-- Permission needed to vibrate if the user has key press vibration enabled -->
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:allowBackup="false"
@@ -21,10 +36,10 @@
             android:permission="android.permission.BIND_INPUT_METHOD">
             <meta-data
                 android:name="android.view.im"
-                android:resource="@xml/method" />
+                android:resource="@xml/method"/>
 
             <intent-filter>
-                <action android:name="android.view.InputMethod" />
+                <action android:name="android.view.InputMethod"/>
             </intent-filter>
         </service>
 
@@ -37,21 +52,21 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:theme="@style/SettingsTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
 
         <!-- Using an activity alias to disable/enable the app icon in the launcher -->
         <activity-alias
-            android:name="dev.patrickgold.florisboard.FlorisBoardImeLauncherAlias"
+            android:name="dev.patrickgold.florisboard.SettingsLauncherAlias"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:targetActivity="dev.patrickgold.florisboard.setup.SetupActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity-alias>
 
@@ -61,7 +76,7 @@
             android:icon="@mipmap/ic_launcher"
             android:label="@string/about__title"
             android:roundIcon="@mipmap/ic_launcher_round"
-            android:theme="@style/SettingsTheme" />
+            android:theme="@style/SettingsTheme"/>
 
         <!-- Setup Activity -->
         <activity
@@ -69,7 +84,7 @@
             android:icon="@mipmap/ic_launcher"
             android:label="@string/setup__title"
             android:roundIcon="@mipmap/ic_launcher_round"
-            android:theme="@style/SettingsTheme" />
+            android:theme="@style/SettingsTheme"/>
 
     </application>
 
