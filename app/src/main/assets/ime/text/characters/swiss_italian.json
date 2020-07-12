@@ -1,0 +1,92 @@
+{
+  "type": "characters",
+  "name": "swiss_italian",
+  "direction": "ltr",
+  "arrangement": [
+    [
+      { "code":  113, "label": "q", "popup": [] },
+      { "code":  119, "label": "w", "popup": [] },
+      { "code":  101, "label": "e", "popup": [
+        { "code":  275, "label": "ē" },
+        { "code":  235, "label": "ë" },
+        { "code":  279, "label": "ė" },
+        { "code":  234, "label": "ê" },
+        { "code":  233, "label": "é" },
+        { "code":  232, "label": "è" }
+      ] },
+      { "code":  114, "label": "r", "popup": [] },
+      { "code":  116, "label": "t", "popup": [] },
+      { "code":  122, "label": "z", "popup": [] },
+      { "code":  117, "label": "u", "popup": [
+        { "code":  363, "label": "ū" },
+        { "code":  249, "label": "ù" },
+        { "code":  252, "label": "ü" },
+        { "code":  251, "label": "û" },
+        { "code":  250, "label": "ú" }
+      ] },
+      { "code":  105, "label": "i", "popup": [
+        { "code":  236, "label": "ì" },
+        { "code":  239, "label": "ï" },
+        { "code":  237, "label": "í" },
+        { "code":  238, "label": "î" },
+        { "code":  299, "label": "ī" }
+      ] },
+      { "code":  111, "label": "o", "popup": [
+        { "code":  333, "label": "ō" },
+        { "code":  248, "label": "ø" },
+        { "code":  245, "label": "õ" },
+        { "code":  339, "label": "œ" },
+        { "code":  243, "label": "ó" },
+        { "code":  242, "label": "ò" },
+        { "code":  246, "label": "ö" },
+        { "code":  244, "label": "ô" }
+      ] },
+      { "code":  112, "label": "p", "popup": [] },
+      { "code":  252, "label": "ü", "popup": [
+        { "code":  232, "label": "è" }
+      ] }
+    ], [
+      { "code":   97, "label": "a", "popup": [
+        { "code":  230, "label": "æ" },
+        { "code":  227, "label": "ã" },
+        { "code":  229, "label": "å" },
+        { "code":  257, "label": "ā" },
+        { "code":  228, "label": "ä" },
+        { "code":  226, "label": "â" },
+        { "code":  224, "label": "à" },
+        { "code":  225, "label": "á" }
+      ] },
+      { "code":  115, "label": "s", "popup": [
+        { "code":  223, "label": "ß" },
+        { "code":  347, "label": "ś" },
+        { "code":  353, "label": "š" }
+      ] },
+      { "code":  100, "label": "d", "popup": [] },
+      { "code":  102, "label": "f", "popup": [] },
+      { "code":  103, "label": "g", "popup": [] },
+      { "code":  104, "label": "h", "popup": [] },
+      { "code":  106, "label": "j", "popup": [] },
+      { "code":  107, "label": "k", "popup": [] },
+      { "code":  108, "label": "l", "popup": [] },
+      { "code":  246, "label": "ö", "popup": [
+        { "code":  233, "label": "é" }
+      ] },
+      { "code":  228, "label": "ä", "popup": [
+        { "code":  224, "label": "à" }
+      ] }
+    ], [
+      { "code":  121, "label": "y", "popup": [] },
+      { "code":  120, "label": "x", "popup": [] },
+      { "code":   99, "label": "c", "popup": [
+        { "code":  231, "label": "ç" }
+      ] },
+      { "code":  118, "label": "v", "popup": [] },
+      { "code":   98, "label": "b", "popup": [] },
+      { "code":  110, "label": "n", "popup": [
+        { "code":  241, "label": "ñ" },
+        { "code":  324, "label": "ń" }
+      ] },
+      { "code":  109, "label": "m", "popup": [] }
+    ]
+  ]
+}
