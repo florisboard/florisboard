@@ -1,7 +1,7 @@
 {
   "packageName": "dev.patrickgold.florisboard",
   "characterLayouts": [
-    "qwerty", "qwertz", "azerty", "swiss_german", "swiss_french", "swiss_italian"
+    "qwerty", "qwertz", "azerty", "spanish", "swiss_german", "swiss_french", "swiss_italian"
   ],
   "defaultSubtypes": [
     {
@@ -63,7 +63,7 @@
     {
       "id": 302,
       "languageTag": "fr-CA",
-      "preferredLayout": "azerty",
+      "preferredLayout": "qwerty",
       "isAsciiCapable": true,
       "isEmojiCapable": true
     },
@@ -85,6 +85,27 @@
       "id": 402,
       "languageTag": "it-CH",
       "preferredLayout": "swiss_italian",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    },
+    {
+      "id": 501,
+      "languageTag": "es-ES",
+      "preferredLayout": "spanish",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    },
+    {
+      "id": 502,
+      "languageTag": "es-US",
+      "preferredLayout": "spanish",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    },
+    {
+      "id": 503,
+      "languageTag": "es-419",
+      "preferredLayout": "spanish",
       "isAsciiCapable": true,
       "isEmojiCapable": true
     }
