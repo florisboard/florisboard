@@ -1,25 +1,45 @@
+/*
+ * Copyright (C) 2020 Patrick Goldinger
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package dev.patrickgold.florisboard.ime.text.layout
 
 import android.content.Context
+import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyTypeAdapter
+import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.key.KeyVariationAdapter
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import java.util.*
 
 class LayoutManager(private val context: Context) {
-
+    private var subtype: Subtype = SubtypeManager.fallbackSubtype
     private val layoutAssociations = EnumMap<LayoutType, String>(LayoutType::class.java)
 
-    fun associate(type: LayoutType, name: String) {
+    private fun associate(type: LayoutType, name: String) {
         layoutAssociations[type] = name
     }
 
-    fun disassociate(type: LayoutType) {
+    private fun disassociate(type: LayoutType) {
         layoutAssociations.remove(type)
     }
 
@@ -29,8 +49,8 @@ class LayoutManager(private val context: Context) {
      */
     fun autoFetchAssociationsFromPrefs(prefs: PrefHelper, subtypeManager: SubtypeManager) {
         // TODO: Fetch current layout preferences instead of using dev constants
-        val activeSubtype = subtypeManager.getActiveSubtype()
-        associate(LayoutType.CHARACTERS, activeSubtype?.layout ?: "qwerty")
+        subtype = subtypeManager.getActiveSubtype() ?: SubtypeManager.fallbackSubtype
+        associate(LayoutType.CHARACTERS, subtype.layout)
         associate(LayoutType.CHARACTERS_MOD, "default")
         associate(LayoutType.EXTENSION, "number_row")
         associate(LayoutType.NUMERIC, "default")
@@ -62,6 +82,36 @@ class LayoutManager(private val context: Context) {
             .build()
         val layoutAdapter = moshi.adapter(LayoutData::class.java)
         return layoutAdapter.fromJson(rawJsonData)
+    }
+
+    private fun loadExtendedPopups(subtype: Subtype): Map<String, List<KeyData>> {
+        val lang = subtype.locale.language
+        val map = loadExtendedPopupsInternal("ime/text/characters/extended_popups/$lang.json")
+        return map ?: mapOf()
+    }
+
+    private fun loadExtendedPopupsInternal(path: String): Map<String, List<KeyData>>? {
+        val rawJsonData: String = try {
+            context.assets.open(path).bufferedReader().use { it.readText() }
+        } catch (e: Exception) {
+            null
+        } ?: return null
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .add(KeyTypeAdapter())
+            .build()
+        val mapAdaptor: JsonAdapter<Map<String, List<KeyData>>> =
+            moshi.adapter(
+                Types.newParameterizedType(
+                    Map::class.java,
+                    String::class.java,
+                    Types.newParameterizedType(
+                        List::class.java,
+                        KeyData::class.java
+                    )
+                )
+            )
+        return mapAdaptor.fromJson(rawJsonData)
     }
 
     private fun mergeLayouts(
@@ -115,6 +165,32 @@ class LayoutManager(private val context: Context) {
         } else if (mainLayout == null && modifierLayout != null) {
             for (modRow in modifierLayout.arrangement) {
                 computedArrangement.add(modRow.toMutableList())
+            }
+        }
+
+        // TODO: rewrite this part
+        if (keyboardMode == KeyboardMode.CHARACTERS) {
+            val extendedPopups = loadExtendedPopups(subtype)
+            for (computedRow in computedArrangement) {
+                for (keyData in computedRow) {
+                    if (keyData.variation != KeyVariation.ALL) {
+                        if (keyData.variation == KeyVariation.NORMAL ||
+                            keyData.variation == KeyVariation.PASSWORD) {
+                            if (extendedPopups.containsKey(keyData.label + "~normal")) {
+                                keyData.popup.addAll(extendedPopups[keyData.label + "~normal"] ?: listOf())
+                            }
+                        }
+                        if (keyData.variation == KeyVariation.EMAIL_ADDRESS ||
+                            keyData.variation == KeyVariation.URI) {
+                            if (extendedPopups.containsKey(keyData.label + "~uri")) {
+                                keyData.popup.addAll(extendedPopups[keyData.label + "~uri"] ?: listOf())
+                            }
+                        }
+                    }
+                    if (extendedPopups.containsKey(keyData.label)) {
+                        keyData.popup.addAll(extendedPopups[keyData.label] ?: listOf())
+                    }
+                }
             }
         }
 

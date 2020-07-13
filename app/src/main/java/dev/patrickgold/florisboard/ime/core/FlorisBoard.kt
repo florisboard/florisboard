@@ -37,6 +37,7 @@ import android.view.inputmethod.InputConnection
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.preference.PreferenceManager
+import com.squareup.moshi.Json
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.media.MediaInputManager
@@ -494,6 +495,7 @@ class FlorisBoard : InputMethodService() {
      * @property defaultSubtypesLanguageNames Helper list for Settings Subtype Spinner elements.
      */
     data class ImeConfig(
+        @Json(name = "package")
         val packageName: String,
         val characterLayouts: List<String> = listOf(),
         val defaultSubtypes: List<DefaultSubtype> = listOf()

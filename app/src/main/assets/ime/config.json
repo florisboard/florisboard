@@ -1,5 +1,5 @@
 {
-  "packageName": "dev.patrickgold.florisboard",
+  "package": "dev.patrickgold.florisboard",
   "characterLayouts": [
     "qwerty", "qwertz", "azerty", "spanish", "swiss_german", "swiss_french", "swiss_italian"
   ],
@@ -106,6 +106,20 @@
       "id": 503,
       "languageTag": "es-419",
       "preferredLayout": "spanish",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    },
+    {
+      "id": 601,
+      "languageTag": "pt-PT",
+      "preferredLayout": "qwerty",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    },
+    {
+      "id": 602,
+      "languageTag": "pt-BR",
+      "preferredLayout": "qwerty",
       "isAsciiCapable": true,
       "isEmojiCapable": true
     }

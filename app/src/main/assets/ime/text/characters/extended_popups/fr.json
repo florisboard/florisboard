@@ -1,0 +1,90 @@
+{
+  "a": [
+    { "code":  227, "label": "ã" },
+    { "code":  229, "label": "å" },
+    { "code":  257, "label": "ā" },
+    { "code":  170, "label": "ª" },
+    { "code":  224, "label": "à" },
+    { "code":  226, "label": "â" },
+    { "code":  230, "label": "æ" },
+    { "code":  225, "label": "á" },
+    { "code":  228, "label": "ä" }
+  ],
+  "c": [
+    { "code":  269, "label": "č" },
+    { "code":  231, "label": "ç" },
+    { "code":  263, "label": "ć" }
+  ],
+  "e": [
+    { "code":  275, "label": "ē" },
+    { "code":  281, "label": "ę" },
+    { "code":  279, "label": "ė" },
+    { "code":  234, "label": "ê" },
+    { "code":  233, "label": "é" },
+    { "code":  232, "label": "è" },
+    { "code":  235, "label": "ë" }
+  ],
+  "i": [
+    { "code":  299, "label": "ī" },
+    { "code":  237, "label": "í" },
+    { "code":  303, "label": "į" },
+    { "code":  236, "label": "ì" },
+    { "code":  238, "label": "î" },
+    { "code":  239, "label": "ï" }
+  ],
+  "n": [
+    { "code":  324, "label": "ń" },
+    { "code":  241, "label": "ñ" }
+  ],
+  "o": [
+    { "code":  186, "label": "º" },
+    { "code":  333, "label": "ō" },
+    { "code":  245, "label": "õ" },
+    { "code":  248, "label": "ø" },
+    { "code":  243, "label": "ó" },
+    { "code":  242, "label": "ò" },
+    { "code":  246, "label": "ö" },
+    { "code":  244, "label": "ô" },
+    { "code":  339, "label": "œ" }
+  ],
+  "s": [
+    { "code":  353, "label": "š" },
+    { "code":  223, "label": "ß" },
+    { "code":  347, "label": "ś" }
+  ],
+  "u": [
+    { "code":  363, "label": "ū" },
+    { "code":  252, "label": "ü" },
+    { "code":  249, "label": "ù" },
+    { "code":  251, "label": "û" },
+    { "code":  250, "label": "ú" }
+  ],
+  "y": [
+    { "code":  255, "label": "ÿ" }
+  ],
+  ".~normal": [
+    { "code":   38, "label": "&" },
+    { "code":   37, "label": "%" },
+    { "code":   43, "label": "+" },
+    { "code":   34, "label": "\"" },
+    { "code":   45, "label": "-" },
+    { "code":   58, "label": ":" },
+    { "code":   39, "label": "'" },
+    { "code":   64, "label": "@" },
+    { "code":   59, "label": ";" },
+    { "code":   47, "label": "/" },
+    { "code":   40, "label": "(" },
+    { "code":   41, "label": ")" },
+    { "code":   35, "label": "#" },
+    { "code":   33, "label": "!" },
+    { "code":   44, "label": "," },
+    { "code":   63, "label": "?" }
+  ],
+  ".~uri": [
+    { "code": -255, "label": ".gov" },
+    { "code": -255, "label": ".edu" },
+    { "code": -255, "label": ".org" },
+    { "code": -255, "label": ".com" },
+    { "code": -255, "label": ".net" }
+  ]
+}
