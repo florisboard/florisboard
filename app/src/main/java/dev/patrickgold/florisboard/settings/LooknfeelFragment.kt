@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsFragmentLooknfeelBinding
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
@@ -54,11 +55,10 @@ class LooknfeelFragment : Fragment(), CoroutineScope by MainScope() {
         launch(Dispatchers.Default) {
             val themeContext = ContextThemeWrapper(context, prefs.theme.getSelectedThemeResId())
             val layoutManager = LayoutManager(themeContext)
-            layoutManager.autoFetchAssociationsFromPrefs(prefs, subtypeManager)
             keyboardView = KeyboardView(themeContext)
             keyboardView.prefs = prefs
             keyboardView.isPreviewMode = true
-            keyboardView.setKeyboardMode(KeyboardMode.CHARACTERS, layoutManager)
+            keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, Subtype.DEFAULT).await()
             keyboardView.updateVisibility()
             withContext(Dispatchers.Main) {
                 binding.themeLinearLayout.addView(keyboardView, 0)

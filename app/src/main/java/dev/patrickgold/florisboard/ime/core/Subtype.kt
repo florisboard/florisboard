@@ -37,6 +37,11 @@ data class Subtype(
 ) {
     companion object {
         /**
+         * Subtype to use when prefs do not contain any valid subtypes.
+         */
+        val DEFAULT = Subtype(-1, Locale.ENGLISH, "qwerty")
+
+        /**
          * Converts the string representation of this object to a [Subtype]. Must be in the
          * following format:
          *  <id>/<language_code>/<layout_name>

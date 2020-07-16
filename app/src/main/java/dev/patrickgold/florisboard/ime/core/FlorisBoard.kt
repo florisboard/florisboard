@@ -22,10 +22,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
-import android.os.Build
-import android.os.Handler
-import android.os.VibrationEffect
-import android.os.Vibrator
+import android.os.*
 import android.provider.Settings
 import android.util.Log
 import android.view.Gravity
@@ -45,7 +42,10 @@ import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
-import dev.patrickgold.florisboard.util.*
+import dev.patrickgold.florisboard.util.ViewLayoutUtils
+import dev.patrickgold.florisboard.util.getBooleanFromAttr
+import dev.patrickgold.florisboard.util.getColorFromAttr
+import dev.patrickgold.florisboard.util.refreshLayoutOf
 
 /**
  * Variable which holds the current [FlorisBoard] instance. To get this instance from another
@@ -60,7 +60,7 @@ private var florisboardInstance: FlorisBoard? = null
 class FlorisBoard : InputMethodService() {
 
     lateinit var activeSubtype: Subtype
-    lateinit var subtypeManager: SubtypeManager
+    private lateinit var subtypeManager: SubtypeManager
     private var audioManager: AudioManager? = null
     val context: Context
         get() = inputView?.context ?: this
@@ -108,6 +108,24 @@ class FlorisBoard : InputMethodService() {
     }
 
     override fun onCreate() {
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(
+                StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .detectNetwork() // or .detectAll() for all detectable problems
+                    .penaltyLog()
+                    .build()
+            )
+            StrictMode.setVmPolicy(
+                StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build()
+            )
+        }
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onCreate()")
 
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -115,7 +133,7 @@ class FlorisBoard : InputMethodService() {
         prefs.initDefaultPreferences()
         prefs.sync()
         subtypeManager = SubtypeManager(this, prefs)
-        activeSubtype = subtypeManager.getActiveSubtype() ?: SubtypeManager.fallbackSubtype
+        activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
 
         currentThemeResId = prefs.theme.getSelectedThemeResId()
         setTheme(currentThemeResId)
@@ -184,7 +202,7 @@ class FlorisBoard : InputMethodService() {
         prefs.sync()
         updateThemeIfNecessary()
         updateOneHandedPanelVisibility()
-        activeSubtype = subtypeManager.getActiveSubtype() ?: SubtypeManager.fallbackSubtype
+        activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
         onSubtypeChanged(activeSubtype)
         setActiveInput(R.id.text_input)
 
@@ -380,7 +398,7 @@ class FlorisBoard : InputMethodService() {
     }
 
     fun switchToNextSubtype() {
-        activeSubtype = subtypeManager.switchToNextSubtype() ?: SubtypeManager.fallbackSubtype
+        activeSubtype = subtypeManager.switchToNextSubtype() ?: Subtype.DEFAULT
         onSubtypeChanged(activeSubtype)
     }
 

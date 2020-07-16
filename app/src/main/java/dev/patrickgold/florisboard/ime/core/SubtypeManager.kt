@@ -32,13 +32,8 @@ import java.util.*
  * @property subtypes Dynamic property which parses the raw subtype list from prefs and returns a
  *  list of [Subtype]s. When setting this property, the given list is converted to a raw string
  *  and written to prefs.
- * @property fallbackSubtype Subtype to use when prefs do not contain any valid subtypes.
  */
 class SubtypeManager(private val context: Context, private val prefs: PrefHelper) {
-    companion object {
-        val fallbackSubtype: Subtype = Subtype(-1, Locale.ENGLISH, "qwerty")
-    }
-
     val imeConfig: FlorisBoard.ImeConfig
     var subtypes: List<Subtype>
         get() {

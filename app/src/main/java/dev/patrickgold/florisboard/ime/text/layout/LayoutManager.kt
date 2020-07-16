@@ -21,52 +21,32 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyTypeAdapter
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.key.KeyVariationAdapter
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
+import kotlinx.coroutines.*
 import java.util.*
 
-class LayoutManager(private val context: Context) {
-    private var subtype: Subtype = SubtypeManager.fallbackSubtype
-    private val layoutAssociations = EnumMap<LayoutType, String>(LayoutType::class.java)
+private typealias LTN = Pair<LayoutType, String>
+private typealias KMS = Pair<KeyboardMode, Subtype>
 
-    private fun associate(type: LayoutType, name: String) {
-        layoutAssociations[type] = name
-    }
-
-    private fun disassociate(type: LayoutType) {
-        layoutAssociations.remove(type)
-    }
+/**
+ * Class which manages layout loading and caching.
+ */
+class LayoutManager(private val context: Context) : CoroutineScope by MainScope() {
+    private val layoutCache: HashMap<KMS, Deferred<ComputedLayoutData>> = hashMapOf()
 
     /**
-     * This method automatically fetches the current user selected keyboard layout prefs from
-     * the shared preferences and sets the associations for each layout type.
+     * Loads the layout for the specified type and name.
+     *
+     * @returns the [LayoutData] or null.
      */
-    fun autoFetchAssociationsFromPrefs(prefs: PrefHelper, subtypeManager: SubtypeManager) {
-        // TODO: Fetch current layout preferences instead of using dev constants
-        subtype = subtypeManager.getActiveSubtype() ?: SubtypeManager.fallbackSubtype
-        associate(LayoutType.CHARACTERS, subtype.layout)
-        associate(LayoutType.CHARACTERS_MOD, "default")
-        associate(LayoutType.EXTENSION, "number_row")
-        associate(LayoutType.NUMERIC, "default")
-        associate(LayoutType.NUMERIC_ADVANCED, "default")
-        associate(LayoutType.PHONE, "default")
-        associate(LayoutType.PHONE2, "default")
-        associate(LayoutType.SYMBOLS, "western_default")
-        associate(LayoutType.SYMBOLS_MOD, "default")
-        associate(LayoutType.SYMBOLS2, "western_default")
-        associate(LayoutType.SYMBOLS2_MOD, "default")
-    }
-
-    private fun loadLayout(
-        type: LayoutType?, name: String? = layoutAssociations[type]
-    ): LayoutData? {
-        if (type == null || name == null || !layoutAssociations.containsKey(type)) {
+    private fun loadLayout(ltn: LTN?) = loadLayout(ltn?.first, ltn?.second)
+    private fun loadLayout(type: LayoutType?, name: String?): LayoutData? {
+        if (type == null || name == null) {
             return null
         }
         val rawJsonData: String = try {
@@ -114,24 +94,41 @@ class LayoutManager(private val context: Context) {
         return mapAdaptor.fromJson(rawJsonData)
     }
 
+    /**
+     * Merges the specified layouts (LTNs) and returns the computed layout.
+     * The computed layout may looks like this:
+     *   e e e e e e e e e e      e = extension
+     *   c c c c c c c c c c      c = main
+     *    c c c c c c c c c       m = mod
+     *   m c c c c c c c c m
+     *   m m m m m m m m m m
+     *
+     * @param keyboardMode The keyboard mode for the returning [ComputedLayoutData].
+     * @param subtype The subtype used for populating the extended popups.
+     * @param main The main layout type and name.
+     * @param modifier The modifier (mod) layout type and name.
+     * @param extension The extension layout type and name.
+     * @returns a [ComputedLayoutData] object, regardless of the specified LTNs or errors.
+     */
     private fun mergeLayouts(
         keyboardMode: KeyboardMode,
-        main: LayoutType?,
-        modifier: LayoutType?,
-        includeExtension: Boolean
+        subtype: Subtype,
+        main: LTN? = null,
+        modifier: LTN? = null,
+        extension: LTN? = null
     ): ComputedLayoutData {
         val computedArrangement: ComputedLayoutDataArrangement = mutableListOf()
 
-        if (includeExtension) {
-            val extensionLayout = loadLayout(LayoutType.EXTENSION) ?: LayoutData.empty()
+        val mainLayout = loadLayout(main)
+        val modifierLayout =  loadLayout(modifier)
+        val extensionLayout = loadLayout(extension)
+
+        if (extensionLayout != null) {
             val row = extensionLayout.arrangement.firstOrNull()
             if (row != null) {
                 computedArrangement.add(row.toMutableList())
             }
         }
-
-        val mainLayout = loadLayout(main)
-        val modifierLayout =  loadLayout(modifier)
 
         if (mainLayout != null && modifierLayout != null) {
             for (mainRowI in mainLayout.arrangement.indices) {
@@ -202,49 +199,81 @@ class LayoutManager(private val context: Context) {
         )
     }
 
-    fun getComputedLayout(keyboardMode: KeyboardMode, type: LayoutType, name: String) : ComputedLayoutData? {
-        val loadedLayout = loadLayout(type, name) ?: return null
-        return loadedLayout.toComputedLayoutData(keyboardMode)
-    }
+    /**
+     * Computes a layout for [keyboardMode] based on the given [subtype] and returns it.
+     *
+     * TODO: used layouts for symbols should be dynamically selected based on subtype
+     *
+     * @param keyboardMode The keyboard mode for which the layout should be computed.
+     * @param subtype The subtype which localizes the computed layout.
+     */
+    private fun computeLayoutFor(
+        keyboardMode: KeyboardMode,
+        subtype: Subtype
+    ): ComputedLayoutData {
+        var main: LTN? = null
+        var modifier: LTN? = null
+        var extension: LTN? = null
 
-    fun computeLayoutFor(keyboardMode: KeyboardMode): ComputedLayoutData? {
-        return when (keyboardMode) {
+        when (keyboardMode) {
             KeyboardMode.CHARACTERS -> {
-                mergeLayouts(
-                    keyboardMode, LayoutType.CHARACTERS, LayoutType.CHARACTERS_MOD, false
-                )
+                main = LTN(LayoutType.CHARACTERS, subtype.layout)
+                modifier = LTN(LayoutType.CHARACTERS_MOD, "default")
             }
             KeyboardMode.NUMERIC -> {
-                mergeLayouts(
-                    keyboardMode, LayoutType.NUMERIC, null, false
-                )
+                main = LTN(LayoutType.NUMERIC, "default")
             }
             KeyboardMode.NUMERIC_ADVANCED -> {
-                mergeLayouts(
-                    keyboardMode, LayoutType.NUMERIC_ADVANCED, null, false
-                )
+                main = LTN(LayoutType.NUMERIC_ADVANCED, "default")
             }
             KeyboardMode.PHONE -> {
-                mergeLayouts(
-                    keyboardMode, LayoutType.PHONE, null, false
-                )
+                main = LTN(LayoutType.PHONE, "default")
             }
             KeyboardMode.PHONE2 -> {
-                mergeLayouts(
-                    keyboardMode, LayoutType.PHONE2, null, false
-                )
+                main = LTN(LayoutType.PHONE2, "default")
             }
             KeyboardMode.SYMBOLS -> {
-                mergeLayouts(
-                    keyboardMode, LayoutType.SYMBOLS, LayoutType.SYMBOLS_MOD, true
-                )
+                main = LTN(LayoutType.SYMBOLS, "western_default")
+                modifier = LTN(LayoutType.SYMBOLS_MOD, "default")
+                extension = LTN(LayoutType.EXTENSION, "number_row")
             }
             KeyboardMode.SYMBOLS2 -> {
-                mergeLayouts(
-                    keyboardMode, LayoutType.SYMBOLS2, LayoutType.SYMBOLS2_MOD, false
-                )
+                main = LTN(LayoutType.SYMBOLS2, "western_default")
+                modifier = LTN(LayoutType.SYMBOLS2_MOD, "default")
             }
-            else -> null
+        }
+
+        return mergeLayouts(keyboardMode, subtype, main, modifier, extension)
+    }
+
+    @Synchronized
+    fun fetchComputedLayoutAsync(
+        keyboardMode: KeyboardMode,
+        subtype: Subtype
+    ): Deferred<ComputedLayoutData> {
+        val kms = KMS(keyboardMode, subtype)
+        val cachedComputedLayout = layoutCache[kms]
+        return if (cachedComputedLayout != null) {
+            cachedComputedLayout
+        } else {
+            val computedLayout = async(Dispatchers.IO) {
+                computeLayoutFor(keyboardMode, subtype)
+            }
+            layoutCache[kms] = computedLayout
+            computedLayout
+        }
+    }
+
+    @Synchronized
+    fun prefetchComputedLayout(
+        keyboardMode: KeyboardMode,
+        subtype: Subtype
+    ) {
+        val kms = KMS(keyboardMode, subtype)
+        if (layoutCache[kms] == null) {
+            layoutCache[kms] = async(Dispatchers.IO) {
+                computeLayoutFor(keyboardMode, subtype)
+            }
         }
     }
 }

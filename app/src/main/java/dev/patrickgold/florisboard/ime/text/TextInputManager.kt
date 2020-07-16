@@ -67,7 +67,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     var textViewGroup: LinearLayout? = null
 
     var keyVariation: KeyVariation = KeyVariation.NORMAL
-    val layoutManager = LayoutManager(florisboard)
+    private val layoutManager = LayoutManager(florisboard)
     lateinit var smartbarManager: SmartbarManager
 
     // Caps/Space related properties
@@ -105,7 +105,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     override fun onCreate() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onCreate()")
 
-        layoutManager.autoFetchAssociationsFromPrefs(florisboard.prefs, florisboard.subtypeManager)
+        layoutManager.prefetchComputedLayout(KeyboardMode.CHARACTERS, florisboard.activeSubtype)
         smartbarManager = SmartbarManager.getInstance()
     }
 
@@ -123,7 +123,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                 val keyboardView = KeyboardView(florisboard.context)
                 keyboardView.florisboard = florisboard
                 keyboardView.prefs = florisboard.prefs
-                keyboardView.setKeyboardMode(mode)
+                keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(mode, florisboard.activeSubtype).await()
                 keyboardViews[mode] = keyboardView
                 withContext(Dispatchers.Main) {
                     textViewFlipper?.addView(keyboardView)
@@ -236,10 +236,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     }
 
     override fun onSubtypeChanged(newSubtype: Subtype) {
-        layoutManager.autoFetchAssociationsFromPrefs(florisboard.prefs, florisboard.subtypeManager)
-        val keyboardView = keyboardViews[KeyboardMode.CHARACTERS]
-        keyboardView?.setKeyboardMode(KeyboardMode.CHARACTERS)
-        keyboardView?.updateVisibility()
+        launch {
+            val keyboardView = keyboardViews[KeyboardMode.CHARACTERS]
+            keyboardView?.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, newSubtype).await()
+            keyboardView?.updateVisibility()
+        }
     }
 
     /**

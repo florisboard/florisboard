@@ -34,7 +34,6 @@ import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
-import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.util.getColorFromAttr
 
 /**
@@ -46,7 +45,6 @@ import dev.patrickgold.florisboard.util.getColorFromAttr
  * @property florisboard Reference to instance of core class [FlorisBoard].
  */
 class KeyboardView : LinearLayout {
-
     private var activeKeyView: KeyView? = null
     private var activePointerId: Int? = null
     private var activeX: Float = 0.0f
@@ -54,6 +52,10 @@ class KeyboardView : LinearLayout {
 
     private var colorDrawable: ColorDrawable
     var computedLayout: ComputedLayoutData? = null
+        set(v) {
+            field = v
+            buildLayout()
+        }
     var desiredKeyWidth: Int = resources.getDimension(R.dimen.key_width).toInt()
     var desiredKeyHeight: Int = resources.getDimension(R.dimen.key_height).toInt()
     var florisboard: FlorisBoard? = null
@@ -67,7 +69,7 @@ class KeyboardView : LinearLayout {
         colorDrawable = ColorDrawable(getColorFromAttr(context, R.attr.keyboard_bgColor))
         background = colorDrawable
         orientation = VERTICAL
-        layoutParams = FrameLayout.LayoutParams(
+        layoutParams = layoutParams ?: FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
         )
@@ -78,17 +80,15 @@ class KeyboardView : LinearLayout {
      */
     private fun buildLayout() {
         destroyLayout()
-        val layout = computedLayout
-        if (layout != null) {
-            for (row in layout.arrangement) {
-                val rowView = KeyboardRowView(context)
-                for (key in row) {
-                    val keyView = KeyView(this, key)
-                    keyView.florisboard = florisboard
-                    rowView.addView(keyView)
-                }
-                this.addView(rowView)
+        val computedLayout = computedLayout ?: return
+        for (row in computedLayout.arrangement) {
+            val rowView = KeyboardRowView(context)
+            for (key in row) {
+                val keyView = KeyView(this, key)
+                keyView.florisboard = florisboard
+                rowView.addView(keyView)
             }
+            addView(rowView)
         }
     }
 
@@ -97,20 +97,6 @@ class KeyboardView : LinearLayout {
      */
     private fun destroyLayout() {
         removeAllViews()
-    }
-
-    /**
-     * Sets the keyboard mode and triggers a request for the [ComputedLayoutData] for the given
-     * [keyboardMode].
-     *
-     * @param keyboardMode The keyboard mode to set this keyboard to.
-     */
-    fun setKeyboardMode(
-        keyboardMode: KeyboardMode,
-        layoutManager: LayoutManager? = florisboard?.textInputManager?.layoutManager
-    ) {
-        computedLayout = layoutManager?.computeLayoutFor(keyboardMode)
-        buildLayout()
     }
 
     /**
