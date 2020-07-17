@@ -20,6 +20,7 @@ import android.content.Context
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.patrickgold.florisboard.util.LocaleUtils
+import kotlinx.coroutines.*
 import java.util.*
 
 /**
@@ -33,8 +34,11 @@ import java.util.*
  *  list of [Subtype]s. When setting this property, the given list is converted to a raw string
  *  and written to prefs.
  */
-class SubtypeManager(private val context: Context, private val prefs: PrefHelper) {
-    val imeConfig: FlorisBoard.ImeConfig
+class SubtypeManager(
+    private val context: Context,
+    private val prefs: PrefHelper
+) : CoroutineScope by MainScope() {
+    var imeConfig: FlorisBoard.ImeConfig = FlorisBoard.ImeConfig(context.packageName)
     var subtypes: List<Subtype>
         get() {
             val listRaw = prefs.keyboard.subtypes
@@ -51,7 +55,9 @@ class SubtypeManager(private val context: Context, private val prefs: PrefHelper
         }
 
     init {
-        imeConfig = loadImeConfig()
+        launch(Dispatchers.IO) {
+            imeConfig = loadImeConfig()
+        }
     }
 
     /**

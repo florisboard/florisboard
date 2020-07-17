@@ -246,6 +246,14 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
         return mergeLayouts(keyboardMode, subtype, main, modifier, extension)
     }
 
+    /**
+     * Preloads the layout for the given [keyboardMode]/[subtype] combo or returns the cached entry,
+     * if it exists. The returned value is a deferred  computed layout data. This function returns
+     * immediately and won't block. To retrieve the actual computed layout await the returned value.
+     *
+     * @param keyboardMode The keyboard mode for which the layout should be computed.
+     * @param subtype The subtype which localizes the computed layout.
+     */
     @Synchronized
     fun fetchComputedLayoutAsync(
         keyboardMode: KeyboardMode,
@@ -264,8 +272,16 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
         }
     }
 
+    /**
+     * Asynchronously preloads the layout for the given [keyboardMode]/[subtype] combo. Adds the
+     * deferred async result for the layout to the cache and returns immediately. To retrieve the
+     * layout use [fetchComputedLayoutAsync].
+     *
+     * @param keyboardMode The keyboard mode for which the layout should be computed.
+     * @param subtype The subtype which localizes the computed layout.
+     */
     @Synchronized
-    fun prefetchComputedLayout(
+    fun preloadComputedLayout(
         keyboardMode: KeyboardMode,
         subtype: Subtype
     ) {
@@ -275,5 +291,12 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
                 computeLayoutFor(keyboardMode, subtype)
             }
         }
+    }
+
+    /**
+     * Called when the application is destroyed. Used to cancel any pending coroutines.
+     */
+    fun onDestroy() {
+        cancel()
     }
 }

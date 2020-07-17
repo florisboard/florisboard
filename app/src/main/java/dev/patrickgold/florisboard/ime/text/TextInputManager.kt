@@ -100,13 +100,37 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     }
 
     /**
-     * Non-UI-related setup.
+     * Non-UI-related setup + preloading of all required computed layouts (asynchronous in the
+     * background).
      */
     override fun onCreate() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onCreate()")
 
-        layoutManager.prefetchComputedLayout(KeyboardMode.CHARACTERS, florisboard.activeSubtype)
+        for (mode in KeyboardMode.values()) {
+            if (mode == KeyboardMode.CHARACTERS) {
+                var subtypes = florisboard.subtypeManager.subtypes
+                if (subtypes.isEmpty()) {
+                    subtypes = listOf(Subtype.DEFAULT)
+                }
+                for (subtype in subtypes) {
+                    layoutManager.preloadComputedLayout(mode, subtype)
+                }
+            } else {
+                layoutManager.preloadComputedLayout(mode, florisboard.activeSubtype)
+            }
+        }
         smartbarManager = SmartbarManager.getInstance()
+    }
+
+    private suspend fun addKeyboardView(mode: KeyboardMode) {
+        val keyboardView = KeyboardView(florisboard.context)
+        keyboardView.florisboard = florisboard
+        keyboardView.prefs = florisboard.prefs
+        keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(mode, florisboard.activeSubtype).await()
+        keyboardViews[mode] = keyboardView
+        withContext(Dispatchers.Main) {
+            textViewFlipper?.addView(keyboardView)
+        }
     }
 
     /**
@@ -119,18 +143,15 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             textViewGroup = inputView.findViewById(R.id.text_input)
             textViewFlipper = inputView.findViewById(R.id.text_input_view_flipper)
 
-            for (mode in KeyboardMode.values()) {
-                val keyboardView = KeyboardView(florisboard.context)
-                keyboardView.florisboard = florisboard
-                keyboardView.prefs = florisboard.prefs
-                keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(mode, florisboard.activeSubtype).await()
-                keyboardViews[mode] = keyboardView
-                withContext(Dispatchers.Main) {
-                    textViewFlipper?.addView(keyboardView)
-                }
-            }
+            val activeKeyboardMode = getActiveKeyboardMode()
+            addKeyboardView(activeKeyboardMode)
             withContext(Dispatchers.Main) {
-                setActiveKeyboardMode(activeKeyboardMode ?: KeyboardMode.CHARACTERS)
+                setActiveKeyboardMode(activeKeyboardMode)
+            }
+            for (mode in KeyboardMode.values()) {
+                if (mode != activeKeyboardMode) {
+                    addKeyboardView(mode)
+                }
             }
         }
     }
@@ -143,6 +164,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
 
         cancel()
         osHandler.removeCallbacksAndMessages(null)
+        layoutManager.onDestroy()
         smartbarManager.onDestroy()
         instance = null
     }

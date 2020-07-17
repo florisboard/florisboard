@@ -33,7 +33,6 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.widget.ImageButton
 import android.widget.LinearLayout
-import androidx.preference.PreferenceManager
 import com.squareup.moshi.Json
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
@@ -58,17 +57,20 @@ private var florisboardInstance: FlorisBoard? = null
  * managing the one-handed UI.
  */
 class FlorisBoard : InputMethodService() {
-
-    lateinit var activeSubtype: Subtype
-    private lateinit var subtypeManager: SubtypeManager
-    private var audioManager: AudioManager? = null
-    val context: Context
-        get() = inputView?.context ?: this
-    private var currentThemeResId: Int = 0
     lateinit var prefs: PrefHelper
         private set
-    private val osHandler = Handler()
+
+    val context: Context
+        get() = inputView?.context ?: this
     private var inputView: InputView? = null
+
+    private var audioManager: AudioManager? = null
+    private var vibrator: Vibrator? = null
+    private val osHandler = Handler()
+
+    lateinit var subtypeManager: SubtypeManager
+    lateinit var activeSubtype: Subtype
+    private var currentThemeResId: Int = 0
 
     val textInputManager: TextInputManager
     val mediaInputManager: MediaInputManager
@@ -129,7 +131,8 @@ class FlorisBoard : InputMethodService() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onCreate()")
 
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        prefs = PrefHelper(this, PreferenceManager.getDefaultSharedPreferences(this))
+        vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        prefs = PrefHelper(this)
         prefs.initDefaultPreferences()
         prefs.sync()
         subtypeManager = SubtypeManager(this, prefs)
@@ -343,16 +346,15 @@ class FlorisBoard : InputMethodService() {
                 vibrationStrength = 36
             }
             if (vibrationStrength > 0) {
-                val vib = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vib.vibrate(
+                    vibrator?.vibrate(
                         VibrationEffect.createOneShot(
                             vibrationStrength.toLong(), VibrationEffect.DEFAULT_AMPLITUDE
                         )
                     )
                 } else {
                     @Suppress("DEPRECATION")
-                    vib.vibrate(vibrationStrength.toLong())
+                    vibrator?.vibrate(vibrationStrength.toLong())
                 }
             }
         }
@@ -391,7 +393,7 @@ class FlorisBoard : InputMethodService() {
     }
 
     /**
-     * @return If the language switch should be shown
+     * @return If the language switch should be shown.
      */
     fun shouldShowLanguageSwitch(): Boolean {
         return subtypeManager.subtypes.size > 1
