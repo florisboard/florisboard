@@ -66,17 +66,7 @@ class SmartbarManager private constructor() :
                 florisboard.setActiveInput(R.id.media_input)
             }
             R.id.quick_action_open_settings -> florisboard.launchSettings()
-            R.id.quick_action_one_handed_toggle -> {
-                when (florisboard.prefs.looknfeel.oneHandedMode) {
-                    "off" -> {
-                        florisboard.prefs.looknfeel.oneHandedMode = "end"
-                    }
-                    else -> {
-                        florisboard.prefs.looknfeel.oneHandedMode = "off"
-                    }
-                }
-                florisboard.updateOneHandedPanelVisibility()
-            }
+            R.id.quick_action_one_handed_toggle -> florisboard.toggleOneHandedMode()
             else -> return@OnClickListener
         }
     }

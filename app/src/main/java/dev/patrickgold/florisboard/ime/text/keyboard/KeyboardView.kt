@@ -100,6 +100,14 @@ class KeyboardView : LinearLayout {
     }
 
     /**
+     * Dismisses all shown key popups when keyboard is detached from window.
+     */
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        popupManager.dismissAllPopups()
+    }
+
+    /**
      * Catch all events which are designated for child views.
      */
     override fun onInterceptTouchEvent(event: MotionEvent?): Boolean {

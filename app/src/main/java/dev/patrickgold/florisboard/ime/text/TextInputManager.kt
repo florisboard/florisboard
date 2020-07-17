@@ -512,6 +512,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             KeyCode.DELETE -> handleDelete()
             KeyCode.ENTER -> handleEnter()
             KeyCode.LANGUAGE_SWITCH -> florisboard.switchToNextSubtype()
+            KeyCode.SETTINGS -> florisboard.launchSettings()
             KeyCode.SHIFT -> handleShift()
             KeyCode.SHOW_INPUT_METHOD_PICKER -> {
                 val im =
@@ -520,6 +521,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             }
             KeyCode.SWITCH_TO_MEDIA_CONTEXT -> florisboard.setActiveInput(R.id.media_input)
             KeyCode.SWITCH_TO_TEXT_CONTEXT -> florisboard.setActiveInput(R.id.text_input)
+            KeyCode.TOGGLE_ONE_HANDED_MODE -> florisboard.toggleOneHandedMode()
             KeyCode.VIEW_CHARACTERS -> setActiveKeyboardMode(KeyboardMode.CHARACTERS)
             KeyCode.VIEW_NUMERIC -> setActiveKeyboardMode(KeyboardMode.NUMERIC)
             KeyCode.VIEW_NUMERIC_ADVANCED -> setActiveKeyboardMode(KeyboardMode.NUMERIC_ADVANCED)

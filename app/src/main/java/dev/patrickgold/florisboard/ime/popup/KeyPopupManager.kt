@@ -23,6 +23,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat.getDrawable
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.flexbox.JustifyContent
 import dev.patrickgold.florisboard.R
@@ -47,6 +48,12 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
     private var anchorRight: Boolean = false
     private var anchorOffset: Int = 0
     private var activeExtIndex: Int? = null
+    private val exceptionsForKeyCodes = listOf(
+        KeyCode.ENTER,
+        KeyCode.LANGUAGE_SWITCH,
+        KeyCode.SWITCH_TO_TEXT_CONTEXT,
+        KeyCode.SWITCH_TO_MEDIA_CONTEXT
+    )
     private var keyPopupWidth: Int
     private var keyPopupHeight: Int
     private var keyPopupDiffX: Int = 0
@@ -106,13 +113,36 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
         )
         val textSize = keyboardView.resources.getDimension(R.dimen.key_popup_textSize)
         if (keyView is KeyView) {
-            textView.setTextSize(
-                TypedValue.COMPLEX_UNIT_PX, when (keyView.data.popup[k].code) {
-                    KeyCode.URI_COMPONENT_TLD -> textSize * 0.6f
-                    else -> textSize
+            when (keyView.data.popup[k].code) {
+                KeyCode.SETTINGS -> {
+                    textView.iconDrawable = getDrawable(
+                        keyView.context, R.drawable.ic_settings
+                    )
                 }
-            )
-            textView.text = keyView.getComputedLetter(keyView.data.popup[k])
+                KeyCode.SWITCH_TO_TEXT_CONTEXT -> {
+                    textView.text = keyView.resources.getString(R.string.key__view_characters)
+                }
+                KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
+                    textView.iconDrawable = getDrawable(
+                        keyView.context, R.drawable.ic_sentiment_satisfied
+                    )
+                }
+                KeyCode.TOGGLE_ONE_HANDED_MODE -> {
+                    textView.iconDrawable = getDrawable(
+                        keyView.context, R.drawable.ic_keyboard_arrow_right
+                    )
+                }
+                else -> {
+                    textView.setTextSize(
+                        TypedValue.COMPLEX_UNIT_PX, when (keyView.data.popup[k].code) {
+                            KeyCode.URI_COMPONENT_TLD,
+                            KeyCode.SWITCH_TO_TEXT_CONTEXT -> textSize * 0.6f
+                            else -> textSize
+                        }
+                    )
+                    textView.text = keyView.getComputedLetter(keyView.data.popup[k])
+                }
+            }
         } else if (keyView is EmojiKeyView) {
             textView.text = keyView.data.popup[k].getCodePointsAsString()
         }
@@ -140,12 +170,15 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
 
     /**
      * Shows a preview popup for the passed [keyView]. Ignores show requests for key views which
-     * key code is equal to or less than [KeyCode.SPACE]. Always shows a popup for emoji key views.
+     * key code is equal to or less than [KeyCode.SPACE]. KeyViews with a code defined in
+     * [exceptionsForKeyCodes] will only shadow-calculating the size of the key popup, as these
+     * sizes are needed for the extended popup. No popup will be shown to the user in this case.
      *
      * @param keyView Reference to the keyView currently controlling the popup.
      */
     fun show(keyView: T_KV) {
-        if (keyView is KeyView && keyView.data.code <= KeyCode.SPACE) {
+        if (keyView is KeyView && keyView.data.code <= KeyCode.SPACE
+            && !exceptionsForKeyCodes.contains(keyView.data.code)) {
             return
         }
 
@@ -166,6 +199,10 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
             keyPopupHeight = (keyView.measuredHeight * 2.5f).toInt()
         }
         keyPopupDiffX = (keyView.measuredWidth - keyPopupWidth) / 2
+        // Calculating is done, so exit show() here if this key view is a special one.
+        if (keyView is KeyView && exceptionsForKeyCodes.contains(keyView.data.code)) {
+            return
+        }
 
         val keyPopupX = keyPopupDiffX
         val keyPopupY = -keyPopupHeight
@@ -195,7 +232,8 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
     /**
      * Extends the currently showing key preview popup if there are popup keys defined in the
      * key data of the passed [keyView]. Ignores extend requests for key views which key code
-     * is equal to or less than [KeyCode.SPACE].
+     * is equal to or less than [KeyCode.SPACE]. An exception is made for the codes defined in
+     * [exceptionsForKeyCodes], as they most likely have special keys bound to them.
      *
      * Layout of the extended key popup: (n = keyView.data.popup.size)
      *   when n <= 5: single line, row0 only
@@ -213,7 +251,8 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
      * @param keyView Reference to the keyView currently controlling the popup.
      */
     fun extend(keyView: T_KV) {
-        if (keyView is KeyView && keyView.data.code <= KeyCode.SPACE) {
+        if (keyView is KeyView && keyView.data.code <= KeyCode.SPACE
+            && !exceptionsForKeyCodes.contains(keyView.data.code)) {
             return
         }
 

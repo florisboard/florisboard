@@ -449,7 +449,19 @@ class FlorisBoard : InputMethodService() {
         updateOneHandedPanelVisibility()
     }
 
-    fun updateOneHandedPanelVisibility() {
+    fun toggleOneHandedMode() {
+        when (prefs.looknfeel.oneHandedMode) {
+            "off" -> {
+                prefs.looknfeel.oneHandedMode = "end"
+            }
+            else -> {
+                prefs.looknfeel.oneHandedMode = "off"
+            }
+        }
+        updateOneHandedPanelVisibility()
+    }
+
+    private fun updateOneHandedPanelVisibility() {
         if (resources.configuration.orientation != Configuration.ORIENTATION_PORTRAIT) {
             inputView?.oneHandedCtrlPanelStart?.visibility = View.GONE
             inputView?.oneHandedCtrlPanelEnd?.visibility = View.GONE
