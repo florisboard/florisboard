@@ -1,7 +1,10 @@
 # FlorisBoard
 
-An open-source keyboard for Android. Currently in early-alpha/alpha
-stage.
+An open-source keyboard for Android. Currently in alpha stage.
+
+Wanna try it out on your device? FlorisBoard will soon be available in
+the PlayStore as a public alpha test. Watch this repository's release
+panel to see when it becomes available!
 
 ![Preview image](https://patrickgold.dev/media/previews/florisboard.png)
 
@@ -22,18 +25,18 @@ stage.
 ### Layouts
 * [x] Latin character layout (QWERTY)
 * [x] Other character layouts (both latin and non-latin) (Currently
-      QWERTZ and AZERTY are supported besides QWERTY)
+      QWERTZ, AZERTY, swiss and spanish are supported besides QWERTY)
 * [x] Adapt to situation in app (password, url, text, etc. )
 * [x] Special character layout(s)
 * [x] Numeric layout
 * [x] Numeric layout (advanced)
 * [x] Phone number layout
 * [x] Emoji layout (popups buggy atm)
-* [ ] Emoticon layout
+* [x] Emoticon layout
 * [ ] Kaomoji layout
 
 ### Preferences
-* [ ] Setup wizard
+* [x] Setup wizard
 * [x] Preferences screen
 * [x] Customize look and behaviour of keyboard (currently only
       light/dark theme)
