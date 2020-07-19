@@ -31,14 +31,13 @@ import dev.patrickgold.florisboard.databinding.SettingsFragmentKeyboardSubtypeLi
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.util.LocaleUtils
-import java.util.*
 
 class KeyboardFragment : Fragment() {
     private lateinit var prefs: PrefHelper
     private lateinit var subtypeManager: SubtypeManager
     private lateinit var binding: SettingsFragmentKeyboardBinding
     /**
-     * Must always have a reference to an open AlertDialog to dismiss the AlertDialog in the event
+     * Must always have a reference to the open AlertDialog to dismiss the AlertDialog in the event
      * of onDestroy(), if this is not done a memory leak will most likely happen!
      */
     private var activeDialogWindow: AlertDialog? = null
@@ -91,7 +90,7 @@ class KeyboardFragment : Fragment() {
                 val selectedCode = subtypeManager.imeConfig.defaultSubtypesLanguageCodes[pos]
                 val defaultSubtype = subtypeManager.getDefaultSubtypeForLocale(LocaleUtils.stringToLocale(selectedCode)) ?: return
                 dialogView.layoutSpinner.setSelection(
-                    subtypeManager.imeConfig.characterLayouts.indexOf(defaultSubtype.preferredLayout)
+                    subtypeManager.imeConfig.characterLayouts.keys.toList().indexOf(defaultSubtype.preferredLayout)
                 )
             }
 
@@ -102,7 +101,7 @@ class KeyboardFragment : Fragment() {
         val layoutAdapter: ArrayAdapter<String> = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
-            subtypeManager.imeConfig.characterLayouts
+            subtypeManager.imeConfig.characterLayouts.values.toList()
         )
         dialogView.layoutSpinner.adapter = layoutAdapter
         AlertDialog.Builder(context).apply {
@@ -111,7 +110,7 @@ class KeyboardFragment : Fragment() {
             setView(dialogView.root)
             setPositiveButton(R.string.settings__keyboard__subtype_add) { _, _ ->
                 val languageCode = subtypeManager.imeConfig.defaultSubtypesLanguageCodes[dialogView.languageSpinner.selectedItemPosition]
-                val layoutName = subtypeManager.imeConfig.characterLayouts[dialogView.layoutSpinner.selectedItemPosition]
+                val layoutName = subtypeManager.imeConfig.characterLayouts.keys.toList()[dialogView.layoutSpinner.selectedItemPosition]
                 subtypeManager.addSubtype(LocaleUtils.stringToLocale(languageCode), layoutName)
                 updateSubtypeListView()
             }
@@ -138,11 +137,11 @@ class KeyboardFragment : Fragment() {
         val layoutAdapter: ArrayAdapter<String> = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
-            subtypeManager.imeConfig.characterLayouts
+            subtypeManager.imeConfig.characterLayouts.values.toList()
         )
         dialogView.layoutSpinner.adapter = layoutAdapter
         dialogView.layoutSpinner.setSelection(
-            subtypeManager.imeConfig.characterLayouts.indexOf(subtype.layout)
+            subtypeManager.imeConfig.characterLayouts.keys.toList().indexOf(subtype.layout)
         )
         AlertDialog.Builder(context).apply {
             setTitle(R.string.settings__keyboard__subtype_edit_title)
@@ -150,7 +149,7 @@ class KeyboardFragment : Fragment() {
             setView(dialogView.root)
             setPositiveButton(R.string.settings__keyboard__subtype_apply) { _, _ ->
                 val languageCode = subtypeManager.imeConfig.defaultSubtypesLanguageCodes[dialogView.languageSpinner.selectedItemPosition]
-                val layoutName = subtypeManager.imeConfig.characterLayouts[dialogView.layoutSpinner.selectedItemPosition]
+                val layoutName = subtypeManager.imeConfig.characterLayouts.keys.toList()[dialogView.layoutSpinner.selectedItemPosition]
                 subtype.locale = LocaleUtils.stringToLocale(languageCode)
                 subtype.layout = layoutName
                 subtypeManager.modifySubtypeWithSameId(subtype)
@@ -178,7 +177,7 @@ class KeyboardFragment : Fragment() {
                 val itemView =
                     SettingsFragmentKeyboardSubtypeListItemBinding.inflate(layoutInflater)
                 itemView.title.text = subtype.locale.displayName
-                itemView.caption.text = subtype.layout.toUpperCase(Locale.getDefault())
+                itemView.caption.text = subtypeManager.imeConfig.characterLayouts[subtype.layout]
                 itemView.root.setOnClickListener { showEditSubtypeDialog(subtype.id) }
                 binding.subtypeListView.addView(itemView.root)
             }
