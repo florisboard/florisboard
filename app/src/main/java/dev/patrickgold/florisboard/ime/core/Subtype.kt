@@ -45,13 +45,19 @@ data class Subtype(
          * Converts the string representation of this object to a [Subtype]. Must be in the
          * following format:
          *  <id>/<language_code>/<layout_name>
+         * or
+         *  <id>/<language_tag>/<layout_name>
          * Eg: 101/en_US/qwerty
-         * If the given [string] does not match this format an [Exception] will be thrown.
+         *     201/de-DE/qwertz
+         * If the given [string] does not match this format an [InvalidPropertiesFormatException]
+         * will be thrown.
          */
         fun fromString(string: String): Subtype {
             val data = string.split("/")
             if (data.size != 3) {
-                throw Exception("Given string is malformed...")
+                throw InvalidPropertiesFormatException(
+                    "Given string contains more or less than 3 properties..."
+                )
             } else {
                 val locale = LocaleUtils.stringToLocale(data[1])
                 return Subtype(
@@ -65,7 +71,7 @@ data class Subtype(
 
     /**
      * Converts this object into its string representation. Format:
-     *  <id>/<language_code>/<layout_name>
+     *  <id>/<language_tag>/<layout_name>
      */
     override fun toString(): String {
         val languageTag = locale.toLanguageTag()
