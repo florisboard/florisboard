@@ -1,8 +1,8 @@
 package dev.patrickgold.florisboard.ime.core
 
-import org.junit.Assert
+import org.hamcrest.CoreMatchers.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
-import java.lang.NumberFormatException
 import java.util.*
 
 class SubtypeTest {
@@ -10,14 +10,14 @@ class SubtypeTest {
     fun fromString_ReturnsCorrectObject_WithLanguageCode() {
         val expected = Subtype(203, Locale("de", "ch"), "swiss_german")
         val actual = Subtype.fromString("203/de_CH/swiss_german")
-        Assert.assertEquals(expected, actual)
+        assertThat(actual, `is`(expected))
     }
 
     @Test
     fun fromString_ReturnsCorrectObject_WithLanguageTag() {
         val expected = Subtype(203, Locale("de", "ch"), "swiss_german")
         val actual = Subtype.fromString("203/de-CH/swiss_german")
-        Assert.assertEquals(expected, actual)
+        assertThat(actual, `is`(expected))
     }
 
     @Test(expected = InvalidPropertiesFormatException::class)
@@ -40,6 +40,6 @@ class SubtypeTest {
         val expected = "203/de-CH/swiss_german"
         val actual =
             Subtype(203, Locale("de", "ch"), "swiss_german").toString()
-        Assert.assertEquals(expected, actual)
+        assertThat(actual, `is`(expected))
     }
 }
