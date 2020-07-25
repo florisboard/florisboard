@@ -34,39 +34,48 @@ import java.util.*
  *  list of [Subtype]s. When setting this property, the given list is converted to a raw string
  *  and written to prefs.
  */
+@Suppress("SameParameterValue")
 class SubtypeManager(
     private val context: Context,
     private val prefs: PrefHelper
 ) : CoroutineScope by MainScope() {
+
+    companion object {
+        const val IME_CONFIG_FILE_PATH = "ime/config.json"
+        const val SUBTYPE_LIST_STR_DELIMITER = ";"
+    }
+
     var imeConfig: FlorisBoard.ImeConfig = FlorisBoard.ImeConfig(context.packageName)
     var subtypes: List<Subtype>
         get() {
             val listRaw = prefs.keyboard.subtypes
-            return if (listRaw == "") {
+            return if (listRaw.isBlank()) {
                 listOf()
             } else {
-                listRaw.split(";").map {
+                listRaw.split(SUBTYPE_LIST_STR_DELIMITER).map {
                     Subtype.fromString(it)
                 }
             }
         }
         set(v) {
-            prefs.keyboard.subtypes = v.joinToString(";")
+            prefs.keyboard.subtypes = v.joinToString(SUBTYPE_LIST_STR_DELIMITER)
         }
 
     init {
         launch(Dispatchers.IO) {
-            imeConfig = loadImeConfig()
+            imeConfig = loadImeConfig(IME_CONFIG_FILE_PATH)
         }
     }
 
     /**
      * Loads the [FlorisBoard.ImeConfig] from ime/config.json.
+     *
+     * @param path The path to to IME config file.
      * @returns The [FlorisBoard.ImeConfig] or a default config.
      */
-    private fun loadImeConfig(): FlorisBoard.ImeConfig {
+    private fun loadImeConfig(path: String): FlorisBoard.ImeConfig {
         val rawJsonData: String = try {
-            context.assets.open("ime/config.json").bufferedReader().use { it.readText() }
+            context.assets.open(path).bufferedReader().use { it.readText() }
         } catch (e: Exception) {
             null
         } ?: return FlorisBoard.ImeConfig(context.packageName)
@@ -80,103 +89,159 @@ class SubtypeManager(
         )
     }
 
-    private fun addSubtype(subtype: Subtype) {
-        val oldListRaw = prefs.keyboard.subtypes
-        if (oldListRaw.isBlank()) {
-            prefs.keyboard.subtypes = "$subtype"
-        } else {
-            prefs.keyboard.subtypes = "$oldListRaw;$subtype"
+    /**
+     * Adds a given [subtypeToAdd] to the subtype list, if it does not exist.
+     *
+     * @param subtypeToAdd The subtype which should be added.
+     * @returns True if the subtype was added, false otherwise. A return value of false indicates
+     *  that the subtype already exists.
+     */
+    private fun addSubtype(subtypeToAdd: Subtype): Boolean {
+        val subtypeList = subtypes.toMutableList()
+        if (subtypeList.contains(subtypeToAdd)) {
+            return false
         }
+        subtypeList.add(subtypeToAdd)
+        subtypes = subtypeList
+        return true
     }
-    fun addSubtype(locale: Locale, layoutName: String) {
-        addSubtype(
+
+    /**
+     * Creates a [Subtype] from the given [locale] and [layoutName] and adds it to the subtype
+     * list, if it does not exist.
+     *
+     * @param locale The locale of the subtype to be added.
+     * @param layoutName The layout name of the subtype to be added.
+     * @returns True if the subtype was added, false otherwise. A return value of false indicates
+     *  that the subtype already exists.
+     */
+    fun addSubtype(locale: Locale, layoutName: String): Boolean {
+        return addSubtype(
             Subtype(
-                getDefaultSubtypeForLocale(locale)?.id
-                    ?: (locale.hashCode() + layoutName.hashCode()),
+                (locale.hashCode() + layoutName.hashCode()),
                 locale,
                 layoutName
             )
         )
     }
+
+    /**
+     * Gets the active subtype and returns it. If the activeSubtypeId points to a non-existent
+     * subtype, this method tries to determine a new active subtype.
+     *
+     * @returns The active subtype or null, if the subtype list is empty or no new active subtype
+     *  could be determined.
+     */
     fun getActiveSubtype(): Subtype? {
-        for (s in subtypes) {
-            if (s.id == prefs.keyboard.activeSubtypeId) {
-                return s
+        for (subtype in subtypes) {
+            if (subtype.id == prefs.keyboard.activeSubtypeId) {
+                return subtype
             }
         }
-        val subtypes = this.subtypes
-        return if (subtypes.isNotEmpty()) {
-            prefs.keyboard.activeSubtypeId = subtypes[0].id
-            subtypes[0]
+        val subtypeList = subtypes
+        return if (subtypeList.isNotEmpty()) {
+            prefs.keyboard.activeSubtypeId = subtypeList[0].id
+            subtypeList[0]
         } else {
             prefs.keyboard.activeSubtypeId = -1
             null
         }
     }
+
+    /**
+     * Gets a subtype by the given [id].
+     *
+     * @param id The id of the subtype you want to get.
+     * @returns The subtype or null, if no matching subtype could be found.
+     */
     fun getSubtypeById(id: Int): Subtype? {
-        for (s in subtypes) {
-            if (s.id == id) {
-                return s
-            }
-        }
-        return null
-    }
-    fun getDefaultSubtypeForLocale(locale: Locale): DefaultSubtype? {
-        for (systemSubtype in imeConfig.defaultSubtypes) {
-            if (systemSubtype.locale == locale) {
-                return systemSubtype
-            }
-        }
-        return null
-    }
-    fun modifySubtypeWithSameId(subtypeToModify: Subtype) {
-        val subtypes = this.subtypes
         for (subtype in subtypes) {
+            if (subtype.id == id) {
+                return subtype
+            }
+        }
+        return null
+    }
+
+    /**
+     * Gets the default system subtype for a given [locale].
+     *
+     * @param locale The locale of the default system subtype to get.
+     * @returns The default system locale or null, if no matching default system subtype could be
+     *  found.
+     */
+    fun getDefaultSubtypeForLocale(locale: Locale): DefaultSubtype? {
+        for (defaultSubtype in imeConfig.defaultSubtypes) {
+            if (defaultSubtype.locale == locale) {
+                return defaultSubtype
+            }
+        }
+        return null
+    }
+
+    /**
+     * Modifies an existing subtype with the newly provided details. In order to determine which
+     * subtype should be updated, the id must be the same.
+     *
+     * @param subtypeToModify The subtype with the new details but same id.
+     */
+    fun modifySubtypeWithSameId(subtypeToModify: Subtype) {
+        val subtypeList = subtypes
+        for (subtype in subtypeList) {
             if (subtype.id == subtypeToModify.id) {
                 subtype.locale = subtypeToModify.locale
                 subtype.layout = subtypeToModify.layout
+                break
             }
         }
-        this.subtypes = subtypes
+        subtypes = subtypeList
     }
-    fun removeSubtype(subtype: Subtype) {
-        val oldListRaw = prefs.keyboard.subtypes
-        var newListRaw = ""
-        for (s in oldListRaw.split(";")) {
-            if (s != subtype.toString()) {
-                newListRaw += "$s;"
+
+    /**
+     * Removes a given [subtypeToRemove]. Nothing happens if the given [subtypeToRemove] does not
+     * exist.
+     *
+     * @param subtypeToRemove The subtype which should be removed.
+     */
+    fun removeSubtype(subtypeToRemove: Subtype) {
+        val subtypeList = subtypes.toMutableList()
+        for (subtype in subtypeList) {
+            if (subtype == subtypeToRemove) {
+                subtypeList.remove(subtypeToRemove)
+                break
             }
         }
-        if (newListRaw.isNotEmpty()) {
-            newListRaw = newListRaw.substring(0, newListRaw.length - 1)
-        }
-        prefs.keyboard.subtypes = newListRaw
-        if (subtype.id == prefs.keyboard.activeSubtypeId) {
+        subtypes = subtypeList
+        if (subtypeToRemove.id == prefs.keyboard.activeSubtypeId) {
             getActiveSubtype()
         }
     }
+
+    /**
+     * Switch to the next subtype in the subtype list if possible.
+     *
+     * @returns The new active subtype or null if the determination process failed.
+     */
     fun switchToNextSubtype(): Subtype? {
-        val subtypes = this.subtypes
+        val subtypeList = subtypes
         val activeSubtype = getActiveSubtype() ?: return null
         var triggerNextSubtype = false
         var newActiveSubtype: Subtype? = null
-        for (s in subtypes) {
+        for (subtype in subtypeList) {
             if (triggerNextSubtype) {
                 triggerNextSubtype = false
-                newActiveSubtype = s
-            } else if (s == activeSubtype) {
+                newActiveSubtype = subtype
+            } else if (subtype == activeSubtype) {
                 triggerNextSubtype = true
             }
         }
         if (triggerNextSubtype) {
-            newActiveSubtype = subtypes[0]
+            newActiveSubtype = subtypeList[0]
         }
-        return if (newActiveSubtype == null) {
-            prefs.keyboard.activeSubtypeId = -1
-            null
-        } else {
-            prefs.keyboard.activeSubtypeId = newActiveSubtype.id
-            newActiveSubtype
+        prefs.keyboard.activeSubtypeId = when (newActiveSubtype) {
+            null -> -1
+            else -> newActiveSubtype.id
         }
+        return newActiveSubtype
     }
 }
