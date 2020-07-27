@@ -21,29 +21,17 @@ import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsFragmentLooknfeelBinding
-import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import kotlinx.coroutines.*
 
-class LooknfeelFragment : Fragment(), CoroutineScope by MainScope() {
-    private lateinit var prefs: PrefHelper
-    private lateinit var subtypeManager: SubtypeManager
+class LooknfeelFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by MainScope() {
     private lateinit var binding: SettingsFragmentLooknfeelBinding
     private lateinit var keyboardView: KeyboardView
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        prefs = (activity as SettingsMainActivity).prefs
-        subtypeManager = (activity as SettingsMainActivity).subtypeManager
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

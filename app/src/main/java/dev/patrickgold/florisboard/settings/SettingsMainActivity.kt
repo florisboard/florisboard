@@ -20,6 +20,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.renderscript.ScriptGroup
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -32,6 +33,7 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsActivityBinding
+import dev.patrickgold.florisboard.databinding.SettingsFragmentLooknfeelBinding
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.util.PackageManagerUtils
@@ -44,7 +46,7 @@ class SettingsMainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener,
     SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private lateinit var binding: SettingsActivityBinding
+    lateinit var binding: SettingsActivityBinding
     lateinit var prefs: PrefHelper
     lateinit var subtypeManager: SubtypeManager
 
@@ -189,6 +191,20 @@ class SettingsMainActivity : AppCompatActivity(),
         prefs.shared.unregisterOnSharedPreferenceChangeListener(this)
         updateLauncherIconStatus()
         super.onDestroy()
+    }
+
+    abstract class SettingsFragment : Fragment() {
+        protected lateinit var prefs: PrefHelper
+        protected lateinit var settingsMainActivity: SettingsMainActivity
+        protected lateinit var subtypeManager: SubtypeManager
+
+        override fun onCreate(savedInstanceState: Bundle?) {
+            super.onCreate(savedInstanceState)
+
+            settingsMainActivity = activity as SettingsMainActivity
+            prefs = settingsMainActivity.prefs
+            subtypeManager = settingsMainActivity.subtypeManager
+        }
     }
 
     class PrefFragment : PreferenceFragmentCompat() {

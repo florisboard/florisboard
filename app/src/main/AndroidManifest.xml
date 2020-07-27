@@ -50,11 +50,7 @@
             android:label="@string/settings__title"
             android:launchMode="singleTask"
             android:roundIcon="@mipmap/ic_launcher_round"
-            android:theme="@style/SettingsTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-            </intent-filter>
-        </activity>
+            android:theme="@style/SettingsTheme"/>
 
         <!-- Using an activity alias to disable/enable the app icon in the launcher -->
         <activity-alias

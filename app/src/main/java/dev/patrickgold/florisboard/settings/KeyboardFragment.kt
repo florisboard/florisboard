@@ -23,31 +23,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import androidx.fragment.app.Fragment
+import android.widget.FrameLayout
+import com.google.android.material.snackbar.Snackbar
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsFragmentKeyboardBinding
 import dev.patrickgold.florisboard.databinding.SettingsFragmentKeyboardSubtypeDialogBinding
 import dev.patrickgold.florisboard.databinding.SettingsFragmentKeyboardSubtypeListItemBinding
-import dev.patrickgold.florisboard.ime.core.PrefHelper
-import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.util.LocaleUtils
 
-class KeyboardFragment : Fragment() {
-    private lateinit var prefs: PrefHelper
-    private lateinit var subtypeManager: SubtypeManager
+class KeyboardFragment : SettingsMainActivity.SettingsFragment() {
     private lateinit var binding: SettingsFragmentKeyboardBinding
     /**
      * Must always have a reference to the open AlertDialog to dismiss the AlertDialog in the event
      * of onDestroy(), if this is not done a memory leak will most likely happen!
      */
     private var activeDialogWindow: AlertDialog? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        prefs = (activity as SettingsMainActivity).prefs
-        subtypeManager = (activity as SettingsMainActivity).subtypeManager
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -108,16 +98,25 @@ class KeyboardFragment : Fragment() {
             setTitle(R.string.settings__keyboard__subtype_add_title)
             setCancelable(true)
             setView(dialogView.root)
-            setPositiveButton(R.string.settings__keyboard__subtype_add) { _, _ ->
-                val languageCode = subtypeManager.imeConfig.defaultSubtypesLanguageCodes[dialogView.languageSpinner.selectedItemPosition]
-                val layoutName = subtypeManager.imeConfig.characterLayouts.keys.toList()[dialogView.layoutSpinner.selectedItemPosition]
-                subtypeManager.addSubtype(LocaleUtils.stringToLocale(languageCode), layoutName)
-                updateSubtypeListView()
-            }
+            setPositiveButton(R.string.settings__keyboard__subtype_add, null)
             setNegativeButton(R.string.settings__keyboard__subtype_cancel) { _, _ -> }
             setOnDismissListener { activeDialogWindow = null }
             create()
             activeDialogWindow = show()
+            // Overriding positive button click listener here to prevent dismiss() when subtype
+            // already exists.
+            activeDialogWindow?.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
+                val languageCode = subtypeManager.imeConfig.defaultSubtypesLanguageCodes[dialogView.languageSpinner.selectedItemPosition]
+                val layoutName = subtypeManager.imeConfig.characterLayouts.keys.toList()[dialogView.layoutSpinner.selectedItemPosition]
+                val success = subtypeManager.addSubtype(LocaleUtils.stringToLocale(languageCode), layoutName)
+                if (!success) {
+                    dialogView.errorBox.setText(R.string.settings__keyboard__subtype_error_already_exists)
+                    dialogView.errorBox.visibility = View.VISIBLE
+                } else {
+                    updateSubtypeListView()
+                    activeDialogWindow?.dismiss()
+                }
+            }
         }
     }
 

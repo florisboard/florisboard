@@ -20,11 +20,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsFragmentGesturesBinding
 
-class GesturesFragment : Fragment() {
+class GesturesFragment : SettingsMainActivity.SettingsFragment() {
     private lateinit var binding: SettingsFragmentGesturesBinding
 
     override fun onCreateView(

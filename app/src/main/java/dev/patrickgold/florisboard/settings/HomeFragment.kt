@@ -21,12 +21,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import dev.patrickgold.florisboard.databinding.SettingsFragmentHomeBinding
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.setup.SetupActivity
 
-class HomeFragment : Fragment() {
+class HomeFragment : SettingsMainActivity.SettingsFragment() {
     private lateinit var binding: SettingsFragmentHomeBinding
 
     override fun onCreateView(
