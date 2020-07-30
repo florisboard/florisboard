@@ -20,7 +20,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.renderscript.ScriptGroup
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -33,9 +32,9 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsActivityBinding
-import dev.patrickgold.florisboard.databinding.SettingsFragmentLooknfeelBinding
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
+import dev.patrickgold.florisboard.util.AppVersionUtils
 import dev.patrickgold.florisboard.util.PackageManagerUtils
 
 private const val FRAGMENT_TAG = "FRAGMENT_TAG"
@@ -76,6 +75,8 @@ class SettingsMainActivity : AppCompatActivity(),
         binding.bottomNavigation.setOnNavigationItemSelectedListener(this)
         binding.bottomNavigation.selectedItemId =
             savedInstanceState?.getInt(SELECTED_ITEM_ID) ?: R.id.settings__navigation__home
+
+        AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

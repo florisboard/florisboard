@@ -26,7 +26,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.AboutActivityBinding
-import java.lang.Exception
+import dev.patrickgold.florisboard.util.AppVersionUtils
 
 class AboutActivity : AppCompatActivity() {
     private lateinit var binding: AboutActivityBinding
@@ -41,11 +41,7 @@ class AboutActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         // Set app version string
-        binding.appVersion.text = try {
-            packageManager.getPackageInfo(packageName, 0).versionName
-        } catch (e: Exception) {
-            "undefined"
-        }
+        binding.appVersion.text = AppVersionUtils.getRawVersionName(this)
 
         // Set onClickListeners for buttons
         binding.privacyPolicyButton.setOnClickListener {

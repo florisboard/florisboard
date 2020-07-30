@@ -41,10 +41,7 @@ import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
-import dev.patrickgold.florisboard.util.ViewLayoutUtils
-import dev.patrickgold.florisboard.util.getBooleanFromAttr
-import dev.patrickgold.florisboard.util.getColorFromAttr
-import dev.patrickgold.florisboard.util.refreshLayoutOf
+import dev.patrickgold.florisboard.util.*
 
 /**
  * Variable which holds the current [FlorisBoard] instance. To get this instance from another
@@ -140,6 +137,8 @@ class FlorisBoard : InputMethodService() {
 
         currentThemeResId = prefs.theme.getSelectedThemeResId()
         setTheme(currentThemeResId)
+
+        AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
 
         super.onCreate()
         textInputManager.onCreate()

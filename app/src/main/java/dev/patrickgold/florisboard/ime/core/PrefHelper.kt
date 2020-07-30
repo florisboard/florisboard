@@ -21,6 +21,7 @@ import android.content.SharedPreferences
 import android.provider.Settings
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.util.VersionName
 import kotlin.collections.HashMap
 
 /**
@@ -175,11 +176,23 @@ class PrefHelper(
     class Internal(private val prefHelper: PrefHelper) {
         companion object {
             const val IS_IME_SET_UP =           "internal__is_ime_set_up"
+            const val VERSION_ON_INSTALL =      "internal__version_on_install"
+            const val VERSION_LAST_USE =        "internal__version_last_use"
+            const val VERSION_LAST_CHANGELOG =  "internal__version_last_changelog"
         }
 
         var isImeSetUp: Boolean
             get() = prefHelper.getPref(IS_IME_SET_UP, false)
             set(value) = prefHelper.setPref(IS_IME_SET_UP, value)
+        var versionOnInstall: String
+            get() = prefHelper.getPref(VERSION_ON_INSTALL, VersionName.DEFAULT_RAW)
+            set(value) = prefHelper.setPref(VERSION_ON_INSTALL, value)
+        var versionLastUse: String
+            get() = prefHelper.getPref(VERSION_LAST_USE, VersionName.DEFAULT_RAW)
+            set(value) = prefHelper.setPref(VERSION_LAST_USE, value)
+        var versionLastChangelog: String
+            get() = prefHelper.getPref(VERSION_LAST_CHANGELOG, VersionName.DEFAULT_RAW)
+            set(value) = prefHelper.setPref(VERSION_LAST_CHANGELOG, value)
     }
 
     /**
