@@ -52,6 +52,8 @@
 
     <string name="settings__home__title">Welcome to %s</string>
     <string name="settings__home__ime_not_enabled">FlorisBoard is not enabled in the system and thus won\'t be available as an input method in the input picker. Click here to resolve this issue.</string>
+    <string name="settings__home__ime_not_selected">FlorisBoard is not selected as the default input method. Click here to resolve this issue.</string>
+    <string name="settings__home__contribute">Thanks for trying out FlorisBoard! This project is still in alpha and therefore missing features. If you find any bugs or want to make a suggestion, please check out the repo on GitHub and file an issue. This helps making FlorisBoard better. Thank you!</string>
 
     <string name="settings__keyboard__title">Keyboard &amp; Text Correction</string>
     <string name="settings__keyboard__subtype_no_subtypes_configured_warning">It seems that you haven\'t configured any subtypes. As a fallback the subtype English/QWERTY will be used!</string>

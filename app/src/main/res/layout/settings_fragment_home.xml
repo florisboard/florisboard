@@ -18,12 +18,14 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        style="@style/SettingsCardView">
+        android:id="@+id/ime_not_selected_card"
+        style="@style/SettingsCardView.Clickable.Warning">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="This is the HOME screen. Currently NYI..."/>
+            android:text="@string/settings__home__ime_not_selected"
+            android:textColor="?textColorWarning"/>
 
     </androidx.cardview.widget.CardView>
 
@@ -33,7 +35,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Box test"/>
+            android:text="@string/settings__home__contribute"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/repo_url_card"
+        style="@style/SettingsCardView.Clickable">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/florisboard__repo_url"/>
 
     </androidx.cardview.widget.CardView>
 

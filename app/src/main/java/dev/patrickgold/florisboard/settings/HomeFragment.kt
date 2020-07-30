@@ -17,10 +17,12 @@
 package dev.patrickgold.florisboard.settings
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsFragmentHomeBinding
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.setup.SetupActivity
@@ -40,18 +42,40 @@ class HomeFragment : SettingsMainActivity.SettingsFragment() {
                 startActivity(this)
             }
         }
+        binding.imeNotSelectedCard.setOnClickListener {
+            Intent(context, SetupActivity::class.java).apply {
+                putExtra(SetupActivity.EXTRA_SHOW_SINGLE_STEP, SetupActivity.Step.MAKE_DEFAULT)
+                startActivity(this)
+            }
+        }
+        binding.repoUrlCard.setOnClickListener {
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(resources.getString(R.string.florisboard__repo_url))
+            ).apply {
+                startActivity(this)
+            }
+        }
 
         return binding.root
     }
 
     override fun onResume() {
         super.onResume()
-        updateImeNotEnabledCardVisibility()
+        updateImeIssueCardsVisibilities()
     }
 
-    private fun updateImeNotEnabledCardVisibility() {
+    private fun updateImeIssueCardsVisibilities() {
+        val isImeEnabled = FlorisBoard.checkIfImeIsEnabled(requireContext())
+        val isImeSelected = FlorisBoard.checkIfImeIsSelected(requireContext())
         binding.imeNotEnabledCard.visibility =
-            if (FlorisBoard.checkIfImeIsEnabled(requireContext())) {
+            if (isImeEnabled) {
+                View.GONE
+            } else {
+                View.VISIBLE
+            }
+        binding.imeNotSelectedCard.visibility =
+            if (!isImeEnabled || isImeSelected) {
                 View.GONE
             } else {
                 View.VISIBLE
