@@ -5,6 +5,7 @@
     "qwertz": "QWERTZ",
     "azerty": "AZERTY",
     "spanish": "Spanish (QWERTY)",
+    "norwegian": "Norwegian (QWERTY)",
     "swedish_finnish": "Swedish/Finnish (QWERTY)",
     "danish": "Danish (QWERTY)",
     "icelandic": "Icelandic (QWERTY)",
@@ -129,6 +130,20 @@
       "id": 602,
       "languageTag": "pt-BR",
       "preferredLayout": "qwerty",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    },
+    {
+      "id": 701,
+      "languageTag": "nb-NO",
+      "preferredLayout": "norwegian",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    },
+    {
+      "id": 702,
+      "languageTag": "nn-NO",
+      "preferredLayout": "norwegian",
       "isAsciiCapable": true,
       "isEmojiCapable": true
     },
