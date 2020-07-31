@@ -5,6 +5,7 @@
     "qwertz": "QWERTZ",
     "azerty": "AZERTY",
     "spanish": "Spanish (QWERTY)",
+    "icelandic": "Icelandic (QWERTY)",
     "swiss_german": "Swiss German (QWERTZ)",
     "swiss_french": "Swiss French (QWERTZ)",
     "swiss_italian": "Swiss Italian (QWERTZ)"
@@ -126,6 +127,13 @@
       "id": 602,
       "languageTag": "pt-BR",
       "preferredLayout": "qwerty",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    },
+    {
+      "id": 741,
+      "languageTag": "is-IS",
+      "preferredLayout": "icelandic",
       "isAsciiCapable": true,
       "isEmojiCapable": true
     }
