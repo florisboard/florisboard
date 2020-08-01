@@ -26,12 +26,12 @@
             android:background="@drawable/button_transparent_bg_on_press"
             android:soundEffectsEnabled="false"
             android:hapticFeedbackEnabled="false"
-            android:text="@string/key__view_characters" />
+            android:text="@string/key__view_characters"/>
 
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
         
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/media_input_tabs"
@@ -70,7 +70,7 @@
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"/>
         
         <ImageButton
             android:id="@+id/media_input_backspace_button"
@@ -83,7 +83,7 @@
             android:hapticFeedbackEnabled="false"
             android:src="@drawable/ic_backspace"
             android:tint="?android:textColor"
-            android:contentDescription="TODO" />
+            android:contentDescription="TODO"/>
 
     </LinearLayout>
 

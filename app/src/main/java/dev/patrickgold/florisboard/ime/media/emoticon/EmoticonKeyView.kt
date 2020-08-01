@@ -25,13 +25,16 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.widget.LinearLayout
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.media.MediaInputManager
+import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.util.getColorFromAttr
 
 /**
  * View class for managing the rendering and the events of a single emoticon keyboard key.
  */
 class EmoticonKeyView : androidx.appcompat.widget.AppCompatTextView {
+    private val florisboard: FlorisBoard = FlorisBoard.getInstance()
     private val mediaInputManager: MediaInputManager = MediaInputManager.getInstance()
     var data: EmoticonKeyData? = null
         set(value) {
@@ -64,6 +67,8 @@ class EmoticonKeyView : androidx.appcompat.widget.AppCompatTextView {
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 setBackgroundColor(getColorFromAttr(context, R.attr.semiTransparentColor))
+                florisboard.keyPressVibrate()
+                florisboard.keyPressSound(KeyData(0))
             }
             MotionEvent.ACTION_UP -> {
                 setBackgroundColor(Color.TRANSPARENT)

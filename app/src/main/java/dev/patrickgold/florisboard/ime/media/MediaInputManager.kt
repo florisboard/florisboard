@@ -16,12 +16,11 @@
 
 package dev.patrickgold.florisboard.ime.media
 
+import android.annotation.SuppressLint
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.ViewFlipper
+import android.widget.*
 import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
@@ -54,6 +53,7 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
 
     private var activeTab: Tab? = null
     private var mediaViewFlipper: ViewFlipper? = null
+    private var osTimer: Timer? = null
     private var tabLayout: TabLayout? = null
     private val tabViews = EnumMap<Tab, LinearLayout>(Tab::class.java)
 
@@ -76,6 +76,7 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
      * views and layouts.
      * TODO: evaluate if the view initializing process can be optimized.
      */
+    @SuppressLint("ClickableViewAccessibility")
     override fun onRegisterInputView(inputView: InputView) {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onRegisterInputView(inputView)")
 
@@ -85,9 +86,9 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
 
             // Init bottom buttons
             inputView.findViewById<Button>(R.id.media_input_switch_to_text_input_button)
-                .setOnClickListener { v -> onBottomButtonClick(v) }
+                .setOnTouchListener { view, event -> onBottomButtonEvent(view, event) }
             inputView.findViewById<ImageButton>(R.id.media_input_backspace_button)
-                .setOnClickListener { v -> onBottomButtonClick(v) }
+                .setOnTouchListener { view, event -> onBottomButtonEvent(view, event) }
 
             tabLayout = inputView.findViewById(R.id.media_input_tabs)
             tabLayout?.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -130,22 +131,40 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
     /**
      * Handles clicks on the bottom buttons.
      */
-    private fun onBottomButtonClick(v: View) {
-        val keyData = when (v.id) {
+    private fun onBottomButtonEvent(view: View, event: MotionEvent?): Boolean {
+        event ?: return false
+        val data = when (view.id) {
             R.id.media_input_switch_to_text_input_button -> {
-                val keyData = KeyData(KeyCode.SWITCH_TO_TEXT_CONTEXT)
-                florisboard.setActiveInput(R.id.text_input)
-                keyData
+                KeyData(KeyCode.SWITCH_TO_TEXT_CONTEXT)
             }
             R.id.media_input_backspace_button -> {
-                val keyData = KeyData(KeyCode.DELETE, type = KeyType.ENTER_EDITING)
-                florisboard.textInputManager.sendKeyPress(keyData)
-                keyData
+                KeyData(KeyCode.DELETE, type = KeyType.ENTER_EDITING)
             }
             else -> null
         }
-        florisboard.keyPressVibrate()
-        florisboard.keyPressSound(keyData)
+        when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                florisboard.keyPressVibrate()
+                florisboard.keyPressSound(data)
+                if (data?.code == KeyCode.DELETE && data.type == KeyType.ENTER_EDITING) {
+                    osTimer = Timer()
+                    osTimer?.scheduleAtFixedRate(object : TimerTask() {
+                        override fun run() {
+                            florisboard.textInputManager.sendKeyPress(data)
+                        }
+                    }, 500, 50)
+                }
+            }
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                osTimer?.cancel()
+                osTimer = null
+                if (event.actionMasked != MotionEvent.ACTION_CANCEL && data != null) {
+                    florisboard.textInputManager.sendKeyPress(data)
+                }
+            }
+        }
+        // MUST return false here so the background selector for showing a transparent bg works
+        return false
     }
 
     /**
@@ -155,7 +174,11 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
         return when (tab) {
             Tab.EMOJI -> EmojiKeyboardView(florisboard)
             Tab.EMOTICON -> EmoticonKeyboardView(florisboard.context)
-            else -> LinearLayout(florisboard)
+            else -> LinearLayout(florisboard.context).apply {
+                addView(TextView(context).apply {
+                    text = "not yet implemented"
+                })
+            }
         }
     }
 
