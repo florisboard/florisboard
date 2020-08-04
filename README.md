@@ -2,9 +2,38 @@
 
 An open-source keyboard for Android. Currently in alpha stage.
 
-Wanna try it out on your device? FlorisBoard will soon be available in
-the PlayStore as a public alpha test. Watch this repository's release
-panel to see when it becomes available!
+#### Public Alpha Test Programme
+Wanna try it out on your device? You can join the public alpha test
+programme on Google Play. To become a tester, follow these steps:
+1. Join the
+   [FlorisBoard Public Alpha Test](https://groups.google.com/g/florisboard-public-alpha-test)
+   Google Group to be able to access the testing programme.
+2. Go to the
+   [FlorisBoard Testing Page](https://play.google.com/apps/testing/dev.patrickgold.florisboard),
+   then click "Become a tester". Now you are enrolled in the testing
+   programme.
+3. To try out FlorisBoard, download it via Google Play. To do so, click
+   on "Download it on Google Play", which takes you to the [PlayStore
+   listing](https://play.google.com/store/apps/details?id=dev.patrickgold.florisboard).
+4. Finished! You will receive future versions of FlorisBoard via Google
+   Play.
+
+##### Giving feedback
+If you want to give feedback to FlorisBoard, there are 2 ways to do so,
+as listed below:
+- *General feedback:* use the private feedback to developer section on
+  the PlayStore listing.
+- *Bug reports or feature requests:* see the
+  [contribution guidelines](CONTRIBUTING.md)
+
+Thank you for contributing to FlorisBoard!
+
+##### Note on F-Droid release
+FlorisBoard is currently only available through Google Play, but it is
+planned to also release it via F-Droid later on. There is no exact
+timeline for this, but I aim for the 0.2.0 or 0.3.0 release.
+
+---
 
 ![Preview image](https://patrickgold.dev/media/previews/florisboard.png)
 
