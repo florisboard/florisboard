@@ -1,26 +1,12 @@
 <resources>
-    <string name="app_name" translatable="false">FlorisBoard</string>
-
-    <string name="florisboard__repo_url" translatable="false">https://github.com/florisboard/florisboard</string>
-    <string name="florisboard__privacy_policy_url" translatable="false">https://gist.github.com/patrickgold/a18f1e47468d72f0868afc69d6faaf0b</string>
-
     <string name="key__phone_pause">Pause</string>
     <string name="key__phone_wait">Wait</string>
-    <string name="key__view_characters">ABC</string>
-    <string name="key__view_numeric">1 2\n3 4</string>
-    <string name="key__view_phone">123</string>
-    <string name="key__view_phone2">* #</string>
-    <string name="key__view_symbols">\?123</string>
-    <string name="key__view_symbols2">=\\&lt;</string>
-
     <string name="key_popup__threedots_alt">Three-dot icon. If visible, indicates that more letters can be used if longer pressed.</string>
 
     <!-- Media strings -->
     <string name="media__tab__emojis">Emojis</string>
     <string name="media__tab__emoticons">Emoticons</string>
-    <string name="media__tab__emoticons_label">;-)</string>
     <string name="media__tab__kaomoji">Kaomoji</string>
-    <string name="media__tab__kaomoji_label">(^-^*)/</string>
 
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion">Smileys &amp; Emotions</string>
