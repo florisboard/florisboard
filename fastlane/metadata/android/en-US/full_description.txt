@@ -4,7 +4,7 @@ Note: This project is currently in alpha stage. If you want to see a feature bei
 
 Currently implemented and fully working features:
 * Latin keyboard layouts
- * QWERTY, QWERTZ, AZERTY, Spanish and Swiss. More coming in future releases
+ * QWERTY, QWERTZ, AZERTY, Spanish, Norwegian, Swedish/Finnish, Danish, Icelandic and Swiss. More coming in future releases
 * Easy switching between languages/layouts by defining subtypes in the settings
 * Keyboard layouts for typing in a (phone) number
 * Special characters input
