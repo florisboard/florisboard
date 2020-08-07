@@ -35,6 +35,7 @@
     <string name="settings__navigation__looknfeel">Look &amp; feel</string>
     <string name="settings__navigation__gestures">Gestures</string>
     <string name="settings__navigation__advanced">Advanced</string>
+    <string name="settings__system_default">System default</string>
 
     <string name="settings__home__title">Welcome to %s</string>
     <string name="settings__home__ime_not_enabled">FlorisBoard is not enabled in the system and thus won\'t be available as an input method in the input picker. Click here to resolve this issue.</string>
@@ -64,7 +65,17 @@
     <string name="settings__looknfeel__title">Look &amp; feel</string>
     <string name="pref__looknfeel__group_layout__label">Layout</string>
     <string name="pref__looknfeel__height_factor__label">Keyboard height</string>
+    <string name="pref__looknfeel__height_factor__extra_short">Extra-short</string>
+    <string name="pref__looknfeel__height_factor__short">Short</string>
+    <string name="pref__looknfeel__height_factor__mid_short">Mid-short</string>
+    <string name="pref__looknfeel__height_factor__normal">Normal</string>
+    <string name="pref__looknfeel__height_factor__mid_tall">Mid-tall</string>
+    <string name="pref__looknfeel__height_factor__tall">Tall</string>
+    <string name="pref__looknfeel__height_factor__extra_tall">Extra-tall</string>
     <string name="pref__looknfeel__one_handed_mode__label">One-handed mode</string>
+    <string name="pref__looknfeel__one_handed_mode__off">Off</string>
+    <string name="pref__looknfeel__one_handed_mode__right">Right-handed mode</string>
+    <string name="pref__looknfeel__one_handed_mode__left">Left-handed mode</string>
     <string name="pref__looknfeel__group_keypress__label">Key press</string>
     <string name="pref__looknfeel__long_press_delay__label">Long key press delay</string>
     <string name="pref__looknfeel__sound_enabled__label">Sound on key press</string>
@@ -77,6 +88,8 @@
 
     <string name="settings__advanced__title">Advanced</string>
     <string name="pref__advanced__settings_theme__label">Settings theme</string>
+    <string name="pref__advanced__settings_theme__light">Light</string>
+    <string name="pref__advanced__settings_theme__dark">Dark</string>
     <string name="pref__advanced__show_app_icon__label">Show app icon in launcher</string>
 
     <!-- About UI strings -->
