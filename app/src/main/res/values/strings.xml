@@ -54,7 +54,7 @@
     <string name="settings__keyboard__subtype_layout">Keyboard layout</string>
     <string name="settings__keyboard__subtype_error_already_exists">This subtype already exists!</string>
     <string name="pref__suggestion__title">Suggestions</string>
-    <string name="pref__suggestion__enabled__label">[NYI] Display suggestions while you type</string>
+    <string name="pref__suggestion__enabled__label">Display suggestions while you type</string>
     <string name="pref__suggestion__enabled__summary">Will show on top of the keyboard</string>
     <string name="pref__suggestion__use_pref_words__label">[NYI] Next-word suggestions</string>
     <string name="pref__suggestion__use_pref_words__summary">Use previous words for generating suggestions</string>

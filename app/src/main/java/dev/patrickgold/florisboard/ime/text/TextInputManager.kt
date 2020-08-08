@@ -233,6 +233,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
 
     override fun onWindowShown() {
         keyboardViews[KeyboardMode.CHARACTERS]?.updateVisibility()
+        smartbarManager.onWindowShown()
     }
 
     /**
@@ -245,7 +246,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     }
 
     /**
-     * Sets [activeKeyboardMode] and updates the [SmartbarManager.activeContainerId].
+     * Sets [activeKeyboardMode] and updates the [SmartbarManager.isQuickActionsVisible].
      */
     private fun setActiveKeyboardMode(mode: KeyboardMode) {
         textViewFlipper?.displayedChild =
@@ -254,7 +255,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         keyboardViews[mode]?.requestLayout()
         keyboardViews[mode]?.requestLayoutAllKeys()
         activeKeyboardMode = mode
-        smartbarManager.activeContainerId = smartbarManager.getPreferredContainerId()
+        smartbarManager.isQuickActionsVisible = false
     }
 
     override fun onSubtypeChanged(newSubtype: Subtype) {

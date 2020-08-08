@@ -30,7 +30,7 @@ class SmartbarManager private constructor() :
     var smartbarView: SmartbarView? = null
         private set
 
-    var activeContainerId: Int = R.id.candidates
+    var isQuickActionsVisible: Boolean = false
         set(value) { field = value; updateActiveContainerVisibility() }
 
     private val candidateViewOnClickListener = View.OnClickListener { v ->
@@ -60,21 +60,16 @@ class SmartbarManager private constructor() :
         florisboard.textInputManager.sendKeyPress(keyData)
     }
     private val quickActionOnClickListener = View.OnClickListener { v ->
+        isQuickActionsVisible = false
         when (v.id) {
-            R.id.quick_action_switch_to_media_context -> {
-                activeContainerId = getPreferredContainerId()
-                florisboard.setActiveInput(R.id.media_input)
-            }
+            R.id.quick_action_switch_to_media_context -> florisboard.setActiveInput(R.id.media_input)
             R.id.quick_action_open_settings -> florisboard.launchSettings()
             R.id.quick_action_one_handed_toggle -> florisboard.toggleOneHandedMode()
             else -> return@OnClickListener
         }
     }
     private val quickActionToggleOnClickListener = View.OnClickListener {
-        activeContainerId = when (activeContainerId) {
-            R.id.quick_actions -> getPreferredContainerId()
-            else -> R.id.quick_actions
-        }
+        isQuickActionsVisible = !isQuickActionsVisible
     }
 
     companion object {
@@ -113,6 +108,10 @@ class SmartbarManager private constructor() :
         }
     }
 
+    override fun onWindowShown() {
+        isQuickActionsVisible = false
+    }
+
     // TODO: clean up resources here
     override fun onDestroy() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onDestroy()")
@@ -148,21 +147,13 @@ class SmartbarManager private constructor() :
 
     fun onStartInputView(keyboardMode: KeyboardMode, isComposingEnabled: Boolean) {
         this.isComposingEnabled = isComposingEnabled
-        when {
-            keyboardMode == KeyboardMode.NUMERIC ||
-            keyboardMode == KeyboardMode.PHONE ||
-            keyboardMode == KeyboardMode.PHONE2 -> {
+        when (keyboardMode) {
+            KeyboardMode.NUMERIC, KeyboardMode.PHONE, KeyboardMode.PHONE2 -> {
                 smartbarView?.visibility = View.GONE
-            }
-            !isComposingEnabled -> {
-                smartbarView?.visibility = View.VISIBLE
-                activeContainerId = R.id.number_row
             }
             else -> {
                 smartbarView?.visibility = View.VISIBLE
-                activeContainerId = R.id.candidates
-                //val tsm = florisboard.getSystemService(Context.TEXT_SERVICES_MANAGER_SERVICE) as TextServicesManager
-                //spellCheckerSession = tsm.newSpellCheckerSession(null, null, this, true)
+                isQuickActionsVisible = false
             }
         }
     }
@@ -187,8 +178,6 @@ class SmartbarManager private constructor() :
             smartbarView.candidateViewList[1].text = "suggestions"
             smartbarView.candidateViewList[2].text = "nyi"
         } else {
-            activeContainerId = R.id.candidates
-            updateActiveContainerVisibility()
             smartbarView.candidateViewList[0].text = ""
             smartbarView.candidateViewList[1].text = composingText + "test"
             smartbarView.candidateViewList[2].text = ""
@@ -226,31 +215,26 @@ class SmartbarManager private constructor() :
     private fun updateActiveContainerVisibility() {
         val smartbarView = smartbarView ?: return
 
-        when (activeContainerId) {
-            R.id.quick_actions -> {
-                smartbarView.candidatesView?.visibility = View.GONE
-                smartbarView.numberRowView?.visibility = View.GONE
-                smartbarView.quickActionsView?.visibility = View.VISIBLE
-                smartbarView.quickActionToggle?.rotation = -180.0f
-            }
-            R.id.number_row -> {
-                smartbarView.candidatesView?.visibility = View.GONE
-                smartbarView.numberRowView?.visibility = View.VISIBLE
-                smartbarView.quickActionsView?.visibility = View.GONE
-                smartbarView.quickActionToggle?.rotation = 0.0f
-            }
-            R.id.candidates -> {
+        if (isQuickActionsVisible) {
+            smartbarView.candidatesView?.visibility = View.GONE
+            smartbarView.numberRowView?.visibility = View.GONE
+            smartbarView.quickActionsView?.visibility = View.VISIBLE
+            smartbarView.quickActionToggle?.rotation = -180.0f
+        } else {
+            if (florisboard.prefs.suggestion.enabled) {
                 smartbarView.candidatesView?.visibility = View.VISIBLE
                 smartbarView.numberRowView?.visibility = View.GONE
                 smartbarView.quickActionsView?.visibility = View.GONE
-                smartbarView.quickActionToggle?.rotation = 0.0f
-            }
-            else -> {
+            } else if (textInputManager.getActiveKeyboardMode() == KeyboardMode.CHARACTERS) {
+                smartbarView.candidatesView?.visibility = View.GONE
+                smartbarView.numberRowView?.visibility = View.VISIBLE
+                smartbarView.quickActionsView?.visibility = View.GONE
+            } else {
                 smartbarView.candidatesView?.visibility = View.GONE
                 smartbarView.numberRowView?.visibility = View.GONE
                 smartbarView.quickActionsView?.visibility = View.GONE
-                smartbarView.quickActionToggle?.rotation = 0.0f
             }
+            smartbarView.quickActionToggle?.rotation = 0.0f
         }
     }
 }
