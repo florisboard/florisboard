@@ -426,7 +426,7 @@ class KeyView(
         updateKeyPressedBackground()
 
         if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE
-            || data.type == KeyType.NUMERIC
+            && data.code != KeyCode.HALF_SPACE || data.type == KeyType.NUMERIC
         ) {
             label = getComputedLetter()
         } else {
@@ -512,6 +512,9 @@ class KeyView(
                 }
                 KeyCode.VIEW_SYMBOLS2 -> {
                     label = resources.getString(R.string.key__view_symbols2)
+                }
+                KeyCode.HALF_SPACE -> {
+                    label = resources.getString(R.string.key__view_half_space)
                 }
             }
         }
