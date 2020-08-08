@@ -1,0 +1,79 @@
+{
+  "ض": [
+    { "code": 1777, "label": "۱" }
+  ],
+  "ص": [
+    { "code": 1778, "label": "۲" }
+  ],
+  "ث": [
+    { "code": 1779, "label": "۳" }
+  ],
+  "ق": [
+    { "code": 1780, "label": "۴" }
+  ],
+  "ف": [
+    { "code": 1781, "label": "۵" }
+  ],
+  "غ": [
+    { "code": 1782, "label": "۶" }
+  ],
+  "ع": [
+    { "code": 1783, "label": "۷" }
+  ],
+  "ه": [
+    { "code": 1784, "label": "۸" }
+  ],
+  "خ": [
+    { "code": 1785, "label": "۹" }
+  ],
+  "ح": [
+    { "code": 1776, "label": "۰" }
+  ],
+  "ی": [
+    { "code": 1574, "label": "ئ" },
+    { "code": 1610, "label": "ي" }
+  ],
+  "ا": [
+    { "code": 1649, "label": "ٱ" },
+    { "code": 1569, "label": "ء" },
+    { "code": 1570, "label": "آ" },
+    { "code": 1571, "label": "أ" },
+    { "code": 1573, "label": "إ" }
+  ],
+  "ت": [
+    { "code": 1577, "label": "ة" }
+  ],
+  "ک": [
+    { "code": 1603, "label": "ك" }
+  ],
+  "ز": [
+    { "code": 1688, "label": "ژ" }
+  ],
+  "و": [
+    { "code": 1572, "label": "ؤ" }
+  ],
+  ".~normal": [
+    { "code": 1622, "label": "ٖ" },
+    { "code": 1648, "label": "ٰ" },
+    { "code": 1619, "label": "ٓ" },
+    { "code": 1615, "label": "ُ" },
+    { "code": 1616, "label": "ِ" },
+    { "code": 1614, "label": "َ" },
+    { "code": 1600, "label": "ـ" },
+    { "code": 1621, "label": "ٕ" },
+    { "code": 1618, "label": "ْ" },
+    { "code": 1617, "label": "ّ" },
+    { "code": 1612, "label": "ٌ" },
+    { "code": 1613, "label": "ٍ" },
+    { "code": 1611, "label": "ً" },
+    { "code": 1620, "label": "ٔ" }
+  ],
+  ".~uri": [
+    { "code": -255, "label": ".gov" },
+    { "code": -255, "label": ".edu" },
+    { "code": -255, "label": ".org" },
+    { "code": -255, "label": ".com" },
+    { "code": -255, "label": ".net" },
+    { "code": -255, "label": ".ir"}
+  ]
+}
