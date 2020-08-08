@@ -1,15 +1,15 @@
-FlorisBoard Ë una tastiera open source mirata a fornirti un modo semplice per digitare nel rispetto della tua privacy.
+FlorisBoard &egrave una tastiera open source mirata a fornirti un modo semplice per digitare nel rispetto della tua privacy.
 
-Nota: questo progetto Ë attualmente in fase alpha. Se desideri vedere una funzionalit‡ implementata o segnalare un bug, visita il repository di questo progetto (link alla fine della descrizione) su GitHub e segnala un problema. Questo aiuta a rendere FlorisBoard ancora migliore! Grazie!
+Nota: questo progetto &egrave attualmente in fase alpha. Se desideri vedere una funzionalit√† implementata o segnalare un bug, visita il repository di questo progetto (link alla fine della descrizione) su GitHub e segnala un problema. Questo aiuta a rendere FlorisBoard ancora migliore! Grazie!
 
-Funzionalit‡ attualmente implementate e completamente funzionanti:
+Funzionalit&agrave; attualmente implementate e completamente funzionanti:
 * Layout della tastiera
- * QWERTY, QWERTZ, AZERTY, Spagnolo, norvegese, svedese,finlandese, danese, islandese e svizzero. Altre novit‡ in arrivo nelle versioni future
+ * QWERTY, QWERTZ, AZERTY, Spagnolo, norvegese, svedese,finlandese, danese, islandese e svizzero. Altre novit√† in arrivo nelle versioni future
 * Facile passaggio tra lingue / layout nelle impostazioni
 * Layout di tastiera tipo tastierino telefonico per digitazione di un numero
 * Inserimento di caratteri speciali
 * Tastiera Emoji/Emoticon 
-* Modalit‡ con una sola mano per digitare pi˘ facilmente su dispositivi di grandi dimensioni
+* Modalit&agrave; con una sola mano per digitare pi√π facilmente su dispositivi di grandi dimensioni
 * Tema chiaro e scuro per l'interfaccia utente e per tastiera (altri temi arriveranno nelle versioni future)
 * Personalizzazione del suono / vibrazione della pressione dei tasti
 
