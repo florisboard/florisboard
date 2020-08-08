@@ -24,6 +24,7 @@ data class LayoutData(
     val type: LayoutType,
     val name: String,
     val direction: String,
+    val modifier: String?,
     val arrangement: LayoutDataArrangement = listOf()
 ) {
     private fun getComputedLayoutDataArrangement(): ComputedLayoutDataArrangement {
