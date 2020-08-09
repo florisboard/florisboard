@@ -39,8 +39,7 @@
       { "code":  1583, "label": "د" },
       { "code":  1662, "label": "پ" },
       { "code":  1608, "label": "و" },
-      { "code":  1670, "label": "چ" },
-      { "code":   -5, "label": "delete", "type": "enter_editing" }
+      { "code":  1670, "label": "چ" }
     ]
   ]
 }

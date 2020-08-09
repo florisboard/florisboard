@@ -3,7 +3,10 @@
   "name": "persian",
   "direction": "rtl",
   "arrangement": [
-    [],
+    [
+      { "code":    0 },
+      { "code":   -5, "label": "delete", "type": "enter_editing" }
+    ],
     [
       { "code": -202, "label": "view_symbols", "type": "system_gui" },
       { "code":   64, "label": "@", "variation": "email_address" },
