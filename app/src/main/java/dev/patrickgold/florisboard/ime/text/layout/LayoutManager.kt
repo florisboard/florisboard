@@ -144,14 +144,12 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
                     // merge main and mod here
                     val mergedRow = mutableListOf<KeyData>()
                     val firstModRow = modifierLayout.arrangement.firstOrNull()
-                    val firstModKey = firstModRow?.firstOrNull()
-                    if (firstModKey != null) {
-                        mergedRow.add(firstModKey)
-                    }
-                    mergedRow.addAll(mainRow)
-                    val lastModKey = firstModRow?.lastOrNull()
-                    if (lastModKey != null && firstModKey != lastModKey) {
-                        mergedRow.add(lastModKey)
+                    for (modKey in (firstModRow ?: listOf())) {
+                        if (modKey.code == 0) {
+                            mergedRow.addAll(mainRow)
+                        } else {
+                            mergedRow.add(modKey)
+                        }
                     }
                     computedArrangement.add(mergedRow)
                 }
