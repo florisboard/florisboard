@@ -120,7 +120,12 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
         val computedArrangement: ComputedLayoutDataArrangement = mutableListOf()
 
         val mainLayout = loadLayout(main)
-        val modifierLayout =  loadLayout(modifier)
+        val modifierToLoad = if (mainLayout?.modifier != null) {
+            LTN(LayoutType.CHARACTERS_MOD, mainLayout.modifier)
+        } else {
+            modifier
+        }
+        val modifierLayout = loadLayout(modifierToLoad)
         val extensionLayout = loadLayout(extension)
 
         if (extensionLayout != null) {

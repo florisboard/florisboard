@@ -10,6 +10,7 @@
     <string name="key__view_phone2" translatable="false">* #</string>
     <string name="key__view_symbols" translatable="false">\?123</string>
     <string name="key__view_symbols2" translatable="false">=\\&lt;</string>
+    <string name="key__view_half_space" translatable="false">&#8626;</string>
 
     <!-- Media strings -->
     <string name="media__tab__emoticons_label" translatable="false">;-)</string>

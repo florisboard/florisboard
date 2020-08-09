@@ -11,7 +11,8 @@
     "icelandic": "Icelandic (QWERTY)",
     "swiss_german": "Swiss German (QWERTZ)",
     "swiss_french": "Swiss French (QWERTZ)",
-    "swiss_italian": "Swiss Italian (QWERTZ)"
+    "swiss_italian": "Swiss Italian (QWERTZ)",
+    "persian": "Persian"
   },
   "defaultSubtypes": [
     {
@@ -172,6 +173,13 @@
       "id": 741,
       "languageTag": "is-IS",
       "preferredLayout": "icelandic",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    },
+    {
+      "id": 800,
+      "languageTag": "fa-FA",
+      "preferredLayout": "persian",
       "isAsciiCapable": true,
       "isEmojiCapable": true
     }
