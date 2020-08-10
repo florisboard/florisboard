@@ -59,8 +59,11 @@
     <string name="pref__suggestion__use_pref_words__label">[NYI] Next-word suggestions</string>
     <string name="pref__suggestion__use_pref_words__summary">Use previous words for generating suggestions</string>
     <string name="pref__correction__title">Corrections</string>
+    <string name="pref__popup__title">PopUp</string>
     <string name="pref__correction__double_space_period__label">Double-space period</string>
     <string name="pref__correction__double_space_period__summary">Tapping twice on spacebar inserts a period followed by a space</string>
+    <string name="pref__popup__visible__label">PopUp Visibility</string>
+    <string name="pref__popup__visible__summary">Show popup when you press a key</string>
 
     <string name="settings__looknfeel__title">Look &amp; feel</string>
     <string name="pref__looknfeel__group_layout__label">Layout</string>

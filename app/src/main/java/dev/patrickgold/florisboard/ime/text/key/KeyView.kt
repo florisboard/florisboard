@@ -174,7 +174,11 @@ class KeyView(
         event ?: return false
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
-                keyboardView.popupManager.show(this)
+                florisboard?.prefs?.popup?.let {
+                    if (it.enabled){
+                        keyboardView.popupManager.show(this)
+                    }
+                }
                 isKeyPressed = true
                 florisboard?.keyPressVibrate()
                 florisboard?.keyPressSound(data)

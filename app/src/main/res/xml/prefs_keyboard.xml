@@ -36,4 +36,19 @@
 
     </PreferenceCategory>
 
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__popup__title">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            app:key="popup__enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__popup__visible__label"
+            app:summary="@string/pref__popup__visible__summary"/>
+
+    </PreferenceCategory>
+
+
 </PreferenceScreen>
