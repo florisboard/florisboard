@@ -426,7 +426,7 @@ class KeyView(
         updateKeyPressedBackground()
 
         if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE
-            && data.code != KeyCode.HALF_SPACE || data.type == KeyType.NUMERIC
+            && data.code != KeyCode.HALF_SPACE && data.code != KeyCode.KESHIDA || data.type == KeyType.NUMERIC
         ) {
             label = getComputedLetter()
         } else {
@@ -515,6 +515,9 @@ class KeyView(
                 }
                 KeyCode.HALF_SPACE -> {
                     label = resources.getString(R.string.key__view_half_space)
+                }
+                KeyCode.KESHIDA -> {
+                    label = resources.getString(R.string.key__view_keshida)
                 }
             }
         }
