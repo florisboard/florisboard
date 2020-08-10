@@ -41,6 +41,7 @@ class PrefHelper(
     val keyboard = Keyboard(this)
     val looknfeel = Looknfeel(this)
     val suggestion = Suggestion(this)
+    val popup = PopUp(this)
     val theme = Theme(this)
 
     /**
@@ -265,6 +266,19 @@ class PrefHelper(
             private set
         var usePrevWords: Boolean = false
             get() = prefHelper.getPref(USE_PREV_WORDS, true)
+            private set
+    }
+
+    /**
+     * Wrapper class for popup preferences.
+     */
+    class PopUp(private val prefHelper: PrefHelper) {
+        companion object {
+            const val ENABLED =                 "popup__enabled"
+        }
+
+        var enabled: Boolean = false
+            get() = prefHelper.getPref(ENABLED, true)
             private set
     }
 

@@ -58,8 +58,11 @@
     <string name="pref__suggestion__use_pref_words__label">Suggerimenti per la parola successiva</string>
     <string name="pref__suggestion__use_pref_words__summary">Utilizzare le parole precedenti per generare suggerimenti</string>
     <string name="pref__correction__title">Correzioni</string>
+    <string name="pref__popup__title">PopUp</string>
     <string name="pref__correction__double_space_period__label">Doppio tocco barra spaziatrice</string>
     <string name="pref__correction__double_space_period__summary">Doppio tocco su barra spaziatrice per mettere il punto (.) seguito da uno spazio</string>
+    <string name="pref__popup__visible__label">Visibilità Popup</string>
+    <string name="pref__popup__visible__summary">Mostra popup quando si preme un tasto</string>
 
     <string name="settings__looknfeel__title">Aspetto &amp; funzionalità</string>
     <string name="pref__looknfeel__group_layout__label">Layout</string>

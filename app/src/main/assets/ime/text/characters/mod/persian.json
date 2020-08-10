@@ -21,6 +21,7 @@
       ] },
       { "code":   32, "label": " " },
       { "code": 8204, "label": "half_space", "variation": "normal" },
+      { "code": 1600, "label": "kashida", "variation": "normal" },
       { "code":   46, "label": ".", "variation": "email_address" },
       { "code":   46, "label": ".", "variation": "normal" },
       { "code":   46, "label": ".", "variation": "uri" },
