@@ -169,20 +169,10 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
     }
 
     /**
-     * Shows a preview popup for the passed [keyView]. Ignores show requests for key views which
-     * key code is equal to or less than [KeyCode.SPACE]. KeyViews with a code defined in
-     * [exceptionsForKeyCodes] will only shadow-calculating the size of the key popup, as these
-     * sizes are needed for the extended popup. No popup will be shown to the user in this case.
-     *
-     * @param keyView Reference to the keyView currently controlling the popup.
+     * Calculates all attributes required by both the normal and the extended popup, regardless of
+     * the passed [keyView]'s code.
      */
-    fun show(keyView: T_KV) {
-        if (keyView is KeyView && keyView.data.code <= KeyCode.SPACE
-            && !exceptionsForKeyCodes.contains(keyView.data.code)) {
-            return
-        }
-
-        // Update keyPopupWidth and keyPopupHeight
+    private fun calc(keyView: T_KV) {
         if (keyboardView is KeyboardView) {
             when (keyboardView.resources.configuration.orientation) {
                 Configuration.ORIENTATION_LANDSCAPE -> {
@@ -199,10 +189,20 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
             keyPopupHeight = (keyView.measuredHeight * 2.5f).toInt()
         }
         keyPopupDiffX = (keyView.measuredWidth - keyPopupWidth) / 2
-        // Calculating is done, so exit show() here if this key view is a special one.
-        if (keyView is KeyView && exceptionsForKeyCodes.contains(keyView.data.code)) {
+    }
+
+    /**
+     * Shows a preview popup for the passed [keyView]. Ignores show requests for key views which
+     * key code is equal to or less than [KeyCode.SPACE].
+     *
+     * @param keyView Reference to the keyView currently controlling the popup.
+     */
+    fun show(keyView: T_KV) {
+        if (keyView is KeyView && keyView.data.code <= KeyCode.SPACE) {
             return
         }
+
+        calc(keyView)
 
         val keyPopupX = keyPopupDiffX
         val keyPopupY = -keyPopupHeight
@@ -254,6 +254,10 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
         if (keyView is KeyView && keyView.data.code <= KeyCode.SPACE
             && !exceptionsForKeyCodes.contains(keyView.data.code)) {
             return
+        }
+
+        if (!isShowingPopup) {
+            calc(keyView)
         }
 
         // Anchor left if keyView is in left half of keyboardView, else anchor right
