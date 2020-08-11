@@ -341,7 +341,7 @@ class FlorisBoard : InputMethodService() {
     fun keyPressVibrate() {
         if (prefs.looknfeel.vibrationEnabled) {
             var vibrationStrength = prefs.looknfeel.vibrationStrength
-            if (vibrationStrength == 0 && prefs.looknfeel.vibrationEnabledSystem) {
+            if (vibrationStrength == -1 && prefs.looknfeel.vibrationEnabledSystem) {
                 vibrationStrength = 36
             }
             if (vibrationStrength > 0) {
@@ -371,7 +371,7 @@ class FlorisBoard : InputMethodService() {
                 KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN
                 else -> AudioManager.FX_KEYPRESS_STANDARD
             }
-            if (soundVolume == 0 && prefs.looknfeel.soundEnabledSystem) {
+            if (soundVolume == -1 && prefs.looknfeel.soundEnabledSystem) {
                 audioManager!!.playSoundEffect(effect)
             } else if (soundVolume > 0) {
                 audioManager!!.playSoundEffect(effect, soundVolume / 100f)

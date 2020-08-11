@@ -241,14 +241,14 @@ class PrefHelper(
             private set
         var soundEnabledSystem: Boolean = false
         var soundVolume: Int = 0
-            get() = prefHelper.getPref(SOUND_VOLUME, 0)
+            get() = prefHelper.getPref(SOUND_VOLUME, -1)
             private set
         var vibrationEnabled: Boolean = false
             get() = prefHelper.getPref(VIBRATION_ENABLED, true)
             private set
         var vibrationEnabledSystem: Boolean = false
         var vibrationStrength: Int = 0
-            get() = prefHelper.getPref(VIBRATION_STRENGTH, 0)
+            get() = prefHelper.getPref(VIBRATION_STRENGTH, -1)
             private set
     }
 
