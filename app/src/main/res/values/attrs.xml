@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="DialogSeekBarPreferenceAttrs">
+        <attr name="android:defaultValue" format="integer"/>
+        <attr name="systemDefaultValue" format="integer"/>
+        <attr name="systemDefaultValueText" format="reference|string"/>
+        <attr name="min" format="integer"/>
+        <attr name="max" format="integer"/>
+        <attr name="seekBarIncrement" format="integer"/>
+        <attr name="unit" format="string"/>
+    </declare-styleable>
 
     <declare-styleable name="KeyboardTheme">
         <attr name="keyboardViewStyle" format="reference" />

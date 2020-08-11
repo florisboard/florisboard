@@ -35,6 +35,7 @@
     <string name="settings__navigation__looknfeel">Look &amp; feel</string>
     <string name="settings__navigation__gestures">Gestures</string>
     <string name="settings__navigation__advanced">Advanced</string>
+    <string name="settings__default">Default</string>
     <string name="settings__system_default">System default</string>
 
     <string name="settings__home__title">Welcome to %s</string>
