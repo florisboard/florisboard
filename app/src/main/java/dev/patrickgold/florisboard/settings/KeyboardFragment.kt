@@ -23,12 +23,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.FrameLayout
-import com.google.android.material.snackbar.Snackbar
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.databinding.ListItemBinding
 import dev.patrickgold.florisboard.databinding.SettingsFragmentKeyboardBinding
 import dev.patrickgold.florisboard.databinding.SettingsFragmentKeyboardSubtypeDialogBinding
-import dev.patrickgold.florisboard.databinding.SettingsFragmentKeyboardSubtypeListItemBinding
 import dev.patrickgold.florisboard.util.LocaleUtils
 
 class KeyboardFragment : SettingsMainActivity.SettingsFragment() {
@@ -174,9 +172,9 @@ class KeyboardFragment : SettingsMainActivity.SettingsFragment() {
             binding.subtypeNotConfWarning.visibility = View.GONE
             for (subtype in subtypes) {
                 val itemView =
-                    SettingsFragmentKeyboardSubtypeListItemBinding.inflate(layoutInflater)
+                    ListItemBinding.inflate(layoutInflater)
                 itemView.title.text = subtype.locale.displayName
-                itemView.caption.text = subtypeManager.imeConfig.characterLayouts[subtype.layout]
+                itemView.summary.text = subtypeManager.imeConfig.characterLayouts[subtype.layout]
                 itemView.root.setOnClickListener { showEditSubtypeDialog(subtype.id) }
                 binding.subtypeListView.addView(itemView.root)
             }
