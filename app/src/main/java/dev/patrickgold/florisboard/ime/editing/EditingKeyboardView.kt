@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.keyboard
+package dev.patrickgold.florisboard.ime.editing
 
-enum class KeyboardMode {
-    CHARACTERS,
-    EDITING,
-    SYMBOLS,
-    SYMBOLS2,
-    NUMERIC,
-    NUMERIC_ADVANCED,
-    PHONE,
-    PHONE2
+import android.content.Context
+import android.util.AttributeSet
+import androidx.constraintlayout.widget.ConstraintLayout
+
+class EditingKeyboardView : ConstraintLayout {
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+
+    }
 }

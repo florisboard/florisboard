@@ -104,6 +104,11 @@ class FlorisBoard : InputMethodService() {
         fun getInstance(): FlorisBoard {
             return florisboardInstance!!
         }
+
+        @Synchronized
+        fun getInstanceOrNull(): FlorisBoard? {
+            return florisboardInstance
+        }
     }
 
     override fun onCreate() {

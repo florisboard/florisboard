@@ -10,6 +10,10 @@
         <attr name="unit" format="string"/>
     </declare-styleable>
 
+    <declare-styleable name="EditingKeyView">
+        <attr name="android:text" format="string|reference"/>
+    </declare-styleable>
+
     <declare-styleable name="KeyboardTheme">
         <attr name="keyboardViewStyle" format="reference" />
         <attr name="keyboardRowViewStyle" format="reference" />

@@ -23,6 +23,7 @@
     <string name="smartbar__quick_action_toggle__alt">Quick action toggle. If pressed, toggles between the word suggestions and the quick action buttons.</string>
     <string name="smartbar__quick_action__one_handed_mode">Toggle the state of the one-handed mode.</string>
     <string name="smartbar__quick_action__open_settings">Open settings.</string>
+    <string name="smartbar__quick_action__switch_to_editing_context">Switch to text editing panel.</string>
     <string name="smartbar__quick_action__switch_to_media_context">Switch to media input view.</string>
 
     <!-- Settings UI strings -->
