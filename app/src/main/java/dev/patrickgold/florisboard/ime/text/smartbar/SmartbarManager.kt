@@ -62,6 +62,13 @@ class SmartbarManager private constructor() :
     private val quickActionOnClickListener = View.OnClickListener { v ->
         isQuickActionsVisible = false
         when (v.id) {
+            R.id.quick_action_switch_to_editing_context -> {
+                if (florisboard.textInputManager.getActiveKeyboardMode() == KeyboardMode.EDITING) {
+                    florisboard.textInputManager.setActiveKeyboardMode(KeyboardMode.CHARACTERS)
+                } else {
+                    florisboard.textInputManager.setActiveKeyboardMode(KeyboardMode.EDITING)
+                }
+            }
             R.id.quick_action_switch_to_media_context -> florisboard.setActiveInput(R.id.media_input)
             R.id.quick_action_open_settings -> florisboard.launchSettings()
             R.id.quick_action_one_handed_toggle -> florisboard.toggleOneHandedMode()

@@ -32,6 +32,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputView
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.editing.EditingKeyboardView
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyType
@@ -62,6 +63,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
 
     private var activeKeyboardMode: KeyboardMode? = null
     private val keyboardViews = EnumMap<KeyboardMode, KeyboardView>(KeyboardMode::class.java)
+    private var editingKeyboardView: EditingKeyboardView? = null
     private val osHandler = Handler()
     private var textViewFlipper: ViewFlipper? = null
     var textViewGroup: LinearLayout? = null
@@ -142,6 +144,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         launch(Dispatchers.Default) {
             textViewGroup = inputView.findViewById(R.id.text_input)
             textViewFlipper = inputView.findViewById(R.id.text_input_view_flipper)
+            editingKeyboardView = inputView.findViewById(R.id.editing)
 
             val activeKeyboardMode = getActiveKeyboardMode()
             addKeyboardView(activeKeyboardMode)
@@ -248,9 +251,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     /**
      * Sets [activeKeyboardMode] and updates the [SmartbarManager.isQuickActionsVisible].
      */
-    private fun setActiveKeyboardMode(mode: KeyboardMode) {
-        textViewFlipper?.displayedChild =
-            textViewFlipper?.indexOfChild(keyboardViews[mode]) ?: 0
+    fun setActiveKeyboardMode(mode: KeyboardMode) {
+        textViewFlipper?.displayedChild = textViewFlipper?.indexOfChild(when (mode) {
+            KeyboardMode.EDITING -> editingKeyboardView
+            else -> keyboardViews[mode]
+        }) ?: 0
         keyboardViews[mode]?.updateVisibility()
         keyboardViews[mode]?.requestLayout()
         keyboardViews[mode]?.requestLayoutAllKeys()

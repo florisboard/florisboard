@@ -45,20 +45,27 @@
             android:id="@+id/quick_action_switch_to_media_context"
             style="@style/SmartbarQuickAction"
             android:contentDescription="@string/smartbar__quick_action__switch_to_media_context"
-            android:src="@drawable/ic_sentiment_satisfied" />
+            android:src="@drawable/ic_sentiment_satisfied"/>
 
         <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
             android:id="@+id/quick_action_open_settings"
             style="@style/SmartbarQuickAction"
             android:contentDescription="@string/smartbar__quick_action__open_settings"
-            android:src="@drawable/ic_settings" />
+            android:src="@drawable/ic_settings"/>
 
         <!-- TODO: find better icon for one-handed mode -->
         <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
             android:id="@+id/quick_action_one_handed_toggle"
             style="@style/SmartbarQuickAction"
             android:contentDescription="@string/smartbar__quick_action__one_handed_mode"
-            android:src="@drawable/ic_keyboard_arrow_right" />
+            android:src="@drawable/ic_keyboard_arrow_right"/>
+
+        <!-- TODO: find better icon for editing -->
+        <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
+            android:id="@+id/quick_action_switch_to_editing_context"
+            style="@style/SmartbarQuickAction"
+            android:contentDescription="@string/smartbar__quick_action__switch_to_editing_context"
+            android:src="@drawable/ic_format_italic"/>
 
     </LinearLayout>
 
