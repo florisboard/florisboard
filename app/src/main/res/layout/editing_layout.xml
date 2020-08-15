@@ -87,17 +87,26 @@
         style="@style/TextEditingButton"
         app:layout_constraintWidth_percent="0.3"
         app:layout_constraintHeight_percent="0.25"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/select_all"
         app:layout_constraintLeft_toRightOf="@+id/arrow_right"
         app:layout_constraintRight_toRightOf="parent"
         android:text="@android:string/cut"/>
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="select_all,clipboard_cut"/>
 
     <dev.patrickgold.florisboard.ime.editing.EditingKeyView
         android:id="@+id/clipboard_copy"
         style="@style/TextEditingButton"
         app:layout_constraintWidth_percent="0.3"
         app:layout_constraintHeight_percent="0.25"
-        app:layout_constraintTop_toBottomOf="@+id/clipboard_cut"
+        app:layout_constraintTop_toBottomOf="@+id/barrier1"
+        app:layout_constraintBottom_toTopOf="@+id/clipboard_paste"
         app:layout_constraintLeft_toRightOf="@+id/arrow_right"
         app:layout_constraintRight_toRightOf="parent"
         android:text="@android:string/copy"/>
@@ -108,6 +117,7 @@
         app:layout_constraintWidth_percent="0.3"
         app:layout_constraintHeight_percent="0.25"
         app:layout_constraintTop_toBottomOf="@+id/clipboard_copy"
+        app:layout_constraintBottom_toTopOf="@+id/backspace"
         app:layout_constraintLeft_toRightOf="@+id/arrow_right"
         app:layout_constraintRight_toRightOf="parent"
         android:text="@android:string/paste"/>

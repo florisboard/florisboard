@@ -71,6 +71,10 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
         }
     }
 
+    init {
+        florisboard.addEventListener(this)
+    }
+
     /**
      * Called when a new input view has been registered. Used to initialize all media-relevant
      * views and layouts.
@@ -125,6 +129,7 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onDestroy()")
 
         cancel()
+        florisboard.removeEventListener(this)
         instance = null
     }
 

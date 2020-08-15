@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.core
 
 import android.annotation.SuppressLint
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -60,8 +61,10 @@ class FlorisBoard : InputMethodService() {
     val context: Context
         get() = inputView?.context ?: this
     private var inputView: InputView? = null
+    private var eventListeners: MutableList<EventListener> = mutableListOf()
 
     private var audioManager: AudioManager? = null
+    var clipboardManager: ClipboardManager? = null
     private var vibrator: Vibrator? = null
     private val osHandler = Handler()
 
@@ -133,6 +136,7 @@ class FlorisBoard : InputMethodService() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onCreate()")
 
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         prefs = PrefHelper(this)
         prefs.initDefaultPreferences()
@@ -146,8 +150,7 @@ class FlorisBoard : InputMethodService() {
         AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
 
         super.onCreate()
-        textInputManager.onCreate()
-        mediaInputManager.onCreate()
+        eventListeners.forEach { it.onCreate() }
     }
 
     @SuppressLint("InflateParams")
@@ -158,8 +161,7 @@ class FlorisBoard : InputMethodService() {
 
         inputView = layoutInflater.inflate(R.layout.florisboard, null) as InputView
 
-        textInputManager.onCreateInputView()
-        mediaInputManager.onCreateInputView()
+        eventListeners.forEach { it.onCreateInputView() }
 
         return inputView
     }
@@ -172,8 +174,7 @@ class FlorisBoard : InputMethodService() {
         updateSoftInputWindowLayoutParameters()
         updateOneHandedPanelVisibility()
 
-        textInputManager.onRegisterInputView(inputView)
-        mediaInputManager.onRegisterInputView(inputView)
+        eventListeners.forEach { it.onRegisterInputView(inputView) }
     }
 
     override fun onDestroy() {
@@ -183,24 +184,21 @@ class FlorisBoard : InputMethodService() {
         florisboardInstance = null
 
         super.onDestroy()
-        textInputManager.onDestroy()
-        mediaInputManager.onDestroy()
+        eventListeners.forEach { it.onDestroy() }
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
 
         super.onStartInputView(info, restarting)
-        textInputManager.onStartInputView(info, restarting)
-        mediaInputManager.onStartInputView(info, restarting)
+        eventListeners.forEach { it.onStartInputView(info, restarting) }
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
         currentInputConnection?.requestCursorUpdates(0)
 
         super.onFinishInputView(finishingInput)
-        textInputManager.onFinishInputView(finishingInput)
-        mediaInputManager.onFinishInputView(finishingInput)
+        eventListeners.forEach { it.onFinishInputView(finishingInput) }
     }
 
     override fun onWindowShown() {
@@ -214,16 +212,14 @@ class FlorisBoard : InputMethodService() {
         setActiveInput(R.id.text_input)
 
         super.onWindowShown()
-        textInputManager.onWindowShown()
-        mediaInputManager.onWindowShown()
+        eventListeners.forEach { it.onWindowShown() }
     }
 
     override fun onWindowHidden() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onWindowHidden()")
 
         super.onWindowHidden()
-        textInputManager.onWindowHidden()
-        mediaInputManager.onWindowHidden()
+        eventListeners.forEach { it.onWindowHidden() }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -232,14 +228,11 @@ class FlorisBoard : InputMethodService() {
         }
 
         super.onConfigurationChanged(newConfig)
-        textInputManager.onConfigurationChanged(newConfig)
-        mediaInputManager.onConfigurationChanged(newConfig)
     }
 
     override fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {
         super.onUpdateCursorAnchorInfo(cursorAnchorInfo)
-        textInputManager.onUpdateCursorAnchorInfo(cursorAnchorInfo)
-        mediaInputManager.onUpdateCursorAnchorInfo(cursorAnchorInfo)
+        eventListeners.forEach { it.onUpdateCursorAnchorInfo(cursorAnchorInfo) }
     }
 
     override fun onUpdateSelection(
@@ -258,22 +251,16 @@ class FlorisBoard : InputMethodService() {
             candidatesStart,
             candidatesEnd
         )
-        textInputManager.onUpdateSelection(
-            oldSelStart,
-            oldSelEnd,
-            newSelStart,
-            newSelEnd,
-            candidatesStart,
-            candidatesEnd
-        )
-        mediaInputManager.onUpdateSelection(
-            oldSelStart,
-            oldSelEnd,
-            newSelStart,
-            newSelEnd,
-            candidatesStart,
-            candidatesEnd
-        )
+        eventListeners.forEach {
+            it.onUpdateSelection(
+                oldSelStart,
+                oldSelEnd,
+                newSelStart,
+                newSelEnd,
+                candidatesStart,
+                candidatesEnd
+            )
+        }
     }
 
     /**
@@ -491,6 +478,27 @@ class FlorisBoard : InputMethodService() {
         }, 0)
     }
 
+    /**
+     * Adds a given [listener] to the list which will receive FlorisBoard events.
+     *
+     * @param listener The listener object which receives the events.
+     * @returns True if the listener has been added successfully, false otherwise.
+     */
+    fun addEventListener(listener: EventListener): Boolean {
+        return eventListeners.add(listener)
+    }
+
+    /**
+     * Removes a given [listener] from the list which will receive FlorisBoard events.
+     *
+     * @param listener The same listener object which was used in [addEventListener].
+     * @returns True if the listener has been removed successfully, false otherwise. A false return
+     *  value may also indicate that the [listener] was not added previously.
+     */
+    fun removeEventListener(listener: EventListener): Boolean {
+        return eventListeners.remove(listener)
+    }
+
     interface EventListener {
         fun onCreate() {}
         fun onCreateInputView() {}
@@ -502,8 +510,6 @@ class FlorisBoard : InputMethodService() {
 
         fun onWindowShown() {}
         fun onWindowHidden() {}
-
-        fun onConfigurationChanged(newConfig: Configuration) {}
 
         fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {}
         fun onUpdateSelection(

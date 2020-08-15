@@ -16,15 +16,13 @@
 
 package dev.patrickgold.florisboard.ime.text
 
+import android.content.ClipData
 import android.content.Context
 import android.os.Handler
 import android.text.InputType
 import android.util.Log
 import android.view.KeyEvent
-import android.view.inputmethod.CursorAnchorInfo
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.ExtractedTextRequest
-import android.view.inputmethod.InputMethodManager
+import android.view.inputmethod.*
 import android.widget.LinearLayout
 import android.widget.ViewFlipper
 import dev.patrickgold.florisboard.BuildConfig
@@ -87,7 +85,16 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     private var composingTextStart: Int? = null
     private var cursorPos: Int = 0
     private var isComposingEnabled: Boolean = false
-    private var isTextSelected: Boolean = false
+    var isManualSelectionMode: Boolean = false
+    private var isManualSelectionModeLeft: Boolean = false
+    private var isManualSelectionModeRight: Boolean = false
+    val isTextSelected: Boolean
+        get() = selectionEnd - selectionStart != 0
+    private var lastCursorAnchorInfo: CursorAnchorInfo? = null
+    private var selectionStart: Int = 0
+    private val selectionStartMin: Int = 0
+    private var selectionEnd: Int = 0
+    private var selectionEndMax: Int = 0
 
     companion object {
         private var instance: TextInputManager? = null
@@ -99,6 +106,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             }
             return instance!!
         }
+    }
+
+    init {
+        florisboard.addEventListener(this)
     }
 
     /**
@@ -169,6 +180,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         osHandler.removeCallbacksAndMessages(null)
         layoutManager.onDestroy()
         smartbarManager.onDestroy()
+        florisboard.removeEventListener(this)
         instance = null
     }
 
@@ -261,6 +273,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         keyboardViews[mode]?.requestLayoutAllKeys()
         activeKeyboardMode = mode
         smartbarManager.isQuickActionsVisible = false
+        isManualSelectionMode = false
+        isManualSelectionModeLeft = false
+        isManualSelectionModeRight = false
     }
 
     override fun onSubtypeChanged(newSubtype: Subtype) {
@@ -277,15 +292,24 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      */
     override fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {
         cursorAnchorInfo ?: return
+        lastCursorAnchorInfo = cursorAnchorInfo
 
         val ic = florisboard.currentInputConnection
 
+        val isNewSelectionInBoundsOfOld =
+            cursorAnchorInfo.selectionStart >= (selectionStart - 1) &&
+            cursorAnchorInfo.selectionStart <= (selectionStart + 1) &&
+            cursorAnchorInfo.selectionEnd >= (selectionEnd - 1) &&
+            cursorAnchorInfo.selectionEnd <= (selectionEnd + 1)
+        selectionStart = cursorAnchorInfo.selectionStart
+        selectionEnd = cursorAnchorInfo.selectionEnd
+        val inputText =
+            (ic?.getExtractedText(ExtractedTextRequest(), 0)?.text ?: "").toString()
+        selectionEndMax = inputText.length
         if (isComposingEnabled) {
-            if (cursorAnchorInfo.selectionEnd - cursorAnchorInfo.selectionStart == 0) {
+            if (!isTextSelected) {
                 val newCursorPos = cursorAnchorInfo.selectionStart
                 val prevComposingText = (cursorAnchorInfo.composingText ?: "").toString()
-                val inputText =
-                    (ic?.getExtractedText(ExtractedTextRequest(), 0)?.text ?: "").toString()
                 setComposingTextBasedOnInput(inputText, newCursorPos)
                 if ((newCursorPos == cursorPos) && (composingText == prevComposingText)) {
                     // Ignore this, as nothing has changed
@@ -305,7 +329,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             }
             smartbarManager.generateCandidatesFromComposing(composingText)
         }
-        isTextSelected = cursorAnchorInfo.selectionEnd - cursorAnchorInfo.selectionStart != 0
+        if (!isNewSelectionInBoundsOfOld) {
+            isManualSelectionMode = false
+            isManualSelectionModeLeft = false
+            isManualSelectionModeRight = false
+        }
         updateCapsState()
     }
 
@@ -406,18 +434,46 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     }
 
     /**
+     * Sends a given [keyCode] as a [KeyEvent.ACTION_DOWN].
+     *
+     * @param ic The input connection on which this operation should be performed.
+     * @param keyCode The key code to send, use a key code defined in Android's [KeyEvent], not in
+     *  [KeyCode] or this call may send a weird character, as this key codes do not match!!
+     */
+    private fun sendSystemKeyEvent(ic: InputConnection?, keyCode: Int) {
+        ic?.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, keyCode))
+    }
+
+    /**
+     * Sends a given [keyCode] as a [KeyEvent.ACTION_DOWN] with ALT pressed.
+     *
+     * @param ic The input connection on which this operation should be performed.
+     * @param keyCode The key code to send, use a key code defined in Android's [KeyEvent], not in
+     *  [KeyCode] or this call may send a weird character, as this key codes do not match!!
+     */
+    private fun sendSystemKeyEventAlt(ic: InputConnection?, keyCode: Int) {
+        ic?.sendKeyEvent(
+            KeyEvent(
+                0,
+                1,
+                KeyEvent.ACTION_DOWN, keyCode,
+                0,
+                KeyEvent.META_ALT_LEFT_ON
+            )
+        )
+    }
+
+    /**
      * Handles a [KeyCode.DELETE] event.
      */
     private fun handleDelete() {
         val ic = florisboard.currentInputConnection
         ic?.beginBatchEdit()
         resetComposingText()
-        ic?.sendKeyEvent(
-            KeyEvent(
-                KeyEvent.ACTION_DOWN,
-                KeyEvent.KEYCODE_DEL
-            )
-        )
+        isManualSelectionMode = false
+        isManualSelectionModeLeft = false
+        isManualSelectionModeRight = false
+        sendSystemKeyEvent(ic, KeyEvent.KEYCODE_DEL)
         ic?.endBatchEdit()
     }
 
@@ -430,12 +486,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         resetComposingText()
         val action = florisboard.currentInputEditorInfo?.imeOptions ?: 0
         if (action and EditorInfo.IME_FLAG_NO_ENTER_ACTION > 0) {
-            ic?.sendKeyEvent(
-                KeyEvent(
-                    KeyEvent.ACTION_DOWN,
-                    KeyEvent.KEYCODE_ENTER
-                )
-            )
+            sendSystemKeyEvent(ic, KeyEvent.KEYCODE_ENTER)
         } else {
             when (action and EditorInfo.IME_MASK_ACTION) {
                 EditorInfo.IME_ACTION_DONE,
@@ -446,14 +497,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                 EditorInfo.IME_ACTION_SEND -> {
                     ic?.performEditorAction(action)
                 }
-                else -> {
-                    ic?.sendKeyEvent(
-                        KeyEvent(
-                            KeyEvent.ACTION_DOWN,
-                            KeyEvent.KEYCODE_ENTER
-                        )
-                    )
-                }
+                else -> sendSystemKeyEvent(ic, KeyEvent.KEYCODE_ENTER)
             }
         }
         ic?.endBatchEdit()
@@ -505,6 +549,194 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     }
 
     /**
+     * Handles [KeyCode] arrow and move events, behaves differently depending on text selection.
+     */
+    private fun handleArrow(code: Int) {
+        val ic = florisboard.currentInputConnection
+        resetComposingText()
+        if (isTextSelected && isManualSelectionMode) {
+            // Text is selected and it is manual selection -> Expand selection depending on started
+            //  direction.
+            when (code) {
+                KeyCode.ARROW_DOWN -> {}
+                KeyCode.ARROW_LEFT -> {
+                    if (isManualSelectionModeLeft) {
+                        ic?.setSelection(
+                            (selectionStart - 1).coerceAtLeast(selectionStartMin),
+                            selectionEnd
+                        )
+                    } else {
+                        ic?.setSelection(selectionStart, selectionEnd - 1)
+                    }
+                }
+                KeyCode.ARROW_RIGHT -> {
+                    if (isManualSelectionModeRight) {
+                        ic?.setSelection(
+                            selectionStart,
+                            (selectionEnd + 1).coerceAtMost(selectionEndMax)
+                        )
+                    } else {
+                        ic?.setSelection(selectionStart + 1, selectionEnd)
+                    }
+                }
+                KeyCode.ARROW_UP -> {}
+                KeyCode.MOVE_HOME -> {
+                    if (isManualSelectionModeLeft) {
+                        ic?.setSelection(selectionStartMin, selectionEnd)
+                    } else {
+                        ic?.setSelection(selectionStartMin, selectionStart)
+                    }
+                }
+                KeyCode.MOVE_END -> {
+                    if (isManualSelectionModeRight) {
+                        ic?.setSelection(selectionStart, selectionEndMax)
+                    } else {
+                        ic?.setSelection(selectionEnd, selectionEndMax)
+                    }
+                }
+            }
+        } else if (isTextSelected && !isManualSelectionMode) {
+            // Text is selected but no manual selection mode -> arrows behave as if selection was
+            //  started in manual left mode
+            when (code) {
+                KeyCode.ARROW_DOWN -> {}
+                KeyCode.ARROW_LEFT -> {
+                    ic?.setSelection(selectionStart, selectionEnd - 1)
+                }
+                KeyCode.ARROW_RIGHT -> {
+                    ic?.setSelection(
+                        selectionStart,
+                        (selectionEnd + 1).coerceAtMost(selectionEndMax)
+                    )
+                }
+                KeyCode.ARROW_UP -> {}
+                KeyCode.MOVE_HOME -> {
+                    ic?.setSelection(selectionStartMin, selectionStart)
+                }
+                KeyCode.MOVE_END -> {
+                    ic?.setSelection(selectionStart, selectionEndMax)
+                }
+            }
+        } else if (!isTextSelected && isManualSelectionMode) {
+            // No text is selected but manual selection mode is active, user wants to start a new
+            //  selection. Must set manual selection direction.
+            when (code) {
+                KeyCode.ARROW_DOWN -> {}
+                KeyCode.ARROW_LEFT -> {
+                    ic?.setSelection(
+                        (selectionStart - 1).coerceAtLeast(selectionStartMin),
+                        selectionStart
+                    )
+                    isManualSelectionModeLeft = true
+                    isManualSelectionModeRight = false
+                }
+                KeyCode.ARROW_RIGHT -> {
+                    ic?.setSelection(
+                        selectionEnd,
+                        (selectionEnd + 1).coerceAtMost(selectionEndMax)
+                    )
+                    isManualSelectionModeLeft = false
+                    isManualSelectionModeRight = true
+                }
+                KeyCode.ARROW_UP -> {}
+                KeyCode.MOVE_HOME -> {
+                    ic?.setSelection(selectionStartMin, selectionStart)
+                    isManualSelectionModeLeft = true
+                    isManualSelectionModeRight = false
+                }
+                KeyCode.MOVE_END -> {
+                    ic?.setSelection(selectionEnd, selectionEndMax)
+                    isManualSelectionModeLeft = false
+                    isManualSelectionModeRight = true
+                }
+            }
+        } else {
+            // No selection and no manual selection mode -> move cursor around
+            when (code) {
+                KeyCode.ARROW_DOWN -> sendSystemKeyEvent(ic, KeyEvent.KEYCODE_DPAD_DOWN)
+                KeyCode.ARROW_LEFT -> sendSystemKeyEvent(ic, KeyEvent.KEYCODE_DPAD_LEFT)
+                KeyCode.ARROW_RIGHT -> sendSystemKeyEvent(ic, KeyEvent.KEYCODE_DPAD_RIGHT)
+                KeyCode.ARROW_UP -> sendSystemKeyEvent(ic, KeyEvent.KEYCODE_DPAD_UP)
+                KeyCode.MOVE_HOME -> sendSystemKeyEventAlt(ic, KeyEvent.KEYCODE_DPAD_UP)
+                KeyCode.MOVE_END -> sendSystemKeyEventAlt(ic, KeyEvent.KEYCODE_DPAD_DOWN)
+            }
+        }
+    }
+
+    /**
+     * Handles a [KeyCode.CLIPBOARD_CUT] event.
+     * TODO: handle other data than text too, e.g. Uri, Intent, ...
+     */
+    private fun handleClipboardCut() {
+        val ic = florisboard.currentInputConnection
+        val selectedText = ic?.getSelectedText(0)
+        if (selectedText != null) {
+            florisboard.clipboardManager
+                ?.setPrimaryClip(ClipData.newPlainText(selectedText, selectedText))
+        }
+        resetComposingText()
+        ic?.commitText("", 1)
+    }
+
+    /**
+     * Handles a [KeyCode.CLIPBOARD_COPY] event.
+     * TODO: handle other data than text too, e.g. Uri, Intent, ...
+     */
+    private fun handleClipboardCopy() {
+        val ic = florisboard.currentInputConnection
+        val selectedText = ic?.getSelectedText(0)
+        if (selectedText != null) {
+            florisboard.clipboardManager
+                ?.setPrimaryClip(ClipData.newPlainText(selectedText, selectedText))
+        }
+        resetComposingText()
+        ic?.setSelection(selectionEnd, selectionEnd)
+    }
+
+    /**
+     * Handles a [KeyCode.CLIPBOARD_PASTE] event.
+     * TODO: handle other data than text too, e.g. Uri, Intent, ...
+     */
+    private fun handleClipboardPaste() {
+        val ic = florisboard.currentInputConnection
+        val item = florisboard.clipboardManager?.primaryClip?.getItemAt(0)
+        val pasteText = item?.text
+        if (pasteText != null) {
+            resetComposingText()
+            ic?.commitText(pasteText, 1)
+        }
+    }
+
+    /**
+     * Handles a [KeyCode.CLIPBOARD_SELECT] event.
+     */
+    private fun handleClipboardSelect() {
+        val ic = florisboard.currentInputConnection
+        resetComposingText()
+        if (isTextSelected) {
+            if (isManualSelectionMode && isManualSelectionModeLeft) {
+                ic?.setSelection(selectionStart, selectionStart)
+            } else {
+                ic?.setSelection(selectionEnd, selectionEnd)
+            }
+            isManualSelectionMode = false
+        } else {
+            isManualSelectionMode = !isManualSelectionMode
+            // Must recall to update UI properly
+            florisboard.onUpdateCursorAnchorInfo(lastCursorAnchorInfo)
+        }
+}
+
+    /**
+     * Handles a [KeyCode.CLIPBOARD_SELECT_ALL] event.
+     */
+    private fun handleClipboardSelectAll() {
+        val ic = florisboard.currentInputConnection
+        resetComposingText()
+        ic?.setSelection(selectionStartMin, selectionEndMax)
+    }
+
+    /**
      * Main logic point for sending a key press. Different actions may occur depending on the given
      * [KeyData]. This method handles all key press send events, which are text based. For media
      * input send events see MediaInputManager.
@@ -515,6 +747,17 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         val ic = florisboard.currentInputConnection
 
         when (keyData.code) {
+            KeyCode.ARROW_DOWN,
+            KeyCode.ARROW_LEFT,
+            KeyCode.ARROW_RIGHT,
+            KeyCode.ARROW_UP,
+            KeyCode.MOVE_HOME,
+            KeyCode.MOVE_END -> handleArrow(keyData.code)
+            KeyCode.CLIPBOARD_CUT -> handleClipboardCut()
+            KeyCode.CLIPBOARD_COPY -> handleClipboardCopy()
+            KeyCode.CLIPBOARD_PASTE -> handleClipboardPaste()
+            KeyCode.CLIPBOARD_SELECT -> handleClipboardSelect()
+            KeyCode.CLIPBOARD_SELECT_ALL -> handleClipboardSelectAll()
             KeyCode.DELETE -> handleDelete()
             KeyCode.ENTER -> handleEnter()
             KeyCode.LANGUAGE_SWITCH -> florisboard.switchToNextSubtype()
