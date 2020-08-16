@@ -21,8 +21,10 @@
 
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt">Quick action toggle. If pressed, toggles between the word suggestions and the quick action buttons.</string>
+    <string name="smartbar__quick_action__exit_editing">Exit text editing panel.</string>
     <string name="smartbar__quick_action__one_handed_mode">Toggle the state of the one-handed mode.</string>
     <string name="smartbar__quick_action__open_settings">Open settings.</string>
+    <string name="smartbar__quick_action__switch_to_editing_context">Switch to text editing panel.</string>
     <string name="smartbar__quick_action__switch_to_media_context">Switch to media input view.</string>
 
     <!-- Settings UI strings -->
@@ -57,6 +59,9 @@
     <string name="pref__suggestion__title">Suggestions</string>
     <string name="pref__suggestion__enabled__label">Display suggestions while you type</string>
     <string name="pref__suggestion__enabled__summary">Will show on top of the keyboard</string>
+    <string name="pref__suggestion__show_instead__label">What to show instead of suggestions</string>
+    <string name="pref__suggestion__show_instead__number_row">Number row</string>
+    <string name="pref__suggestion__show_instead__clipboard_cursor_tools">Clipboard cursor tools</string>
     <string name="pref__suggestion__use_pref_words__label">[NYI] Next-word suggestions</string>
     <string name="pref__suggestion__use_pref_words__summary">Use previous words for generating suggestions</string>
     <string name="pref__correction__title">Corrections</string>

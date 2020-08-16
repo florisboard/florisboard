@@ -13,6 +13,7 @@
         <item name="android:navigationBarColor" tools:targetApi="o_mr1">?keyboard_bgColor</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
         <item name="android:colorControlNormal">#8A000000</item><!-- Black, semi transparent -->
+        <item name="android:colorButtonNormal">#4A000000</item><!-- Black, semi transparent -->
         <item name="android:textColor">#000000</item><!-- Black -->
         <item name="semiTransparentColor">#20000000</item><!-- Black, semi transparent -->
 
@@ -53,6 +54,7 @@
         <item name="android:navigationBarColor" tools:targetApi="o_mr1">?keyboard_bgColor</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
         <item name="android:colorControlNormal">#B3FFFFFF</item><!-- White, semi transparent -->
+        <item name="android:colorButtonNormal">#73FFFFFF</item><!-- White, semi transparent -->
         <item name="android:textColor">#FFFFFF</item><!-- White -->
         <item name="semiTransparentColor">#20FFFFFF</item><!-- White, semi transparent -->
 

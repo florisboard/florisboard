@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 
 enum class KeyboardMode {
     CHARACTERS,
+    EDITING,
     SYMBOLS,
     SYMBOLS2,
     NUMERIC,

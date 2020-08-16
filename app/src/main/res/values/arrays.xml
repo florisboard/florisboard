@@ -41,6 +41,15 @@
         <item>dark</item>
     </string-array>
 
+    <string-array name="pref__suggestion__show_instead__entries">
+        <item>@string/pref__suggestion__show_instead__number_row</item>
+        <item>@string/pref__suggestion__show_instead__clipboard_cursor_tools</item>
+    </string-array>
+    <string-array name="pref__suggestion__show_instead__values">
+        <item>number_row</item>
+        <item>clipboard_cursor_tools</item>
+    </string-array>
+
     <string-array name="pref__theme__name__entries">
         <item>Floris Light</item>
         <item>Floris Dark</item>

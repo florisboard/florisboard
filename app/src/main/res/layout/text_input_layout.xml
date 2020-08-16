@@ -13,7 +13,7 @@
         android:id="@+id/text_input_view_flipper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:measureAllChildren="false">
+        android:measureAllChildren="true">
 
         <LinearLayout
             android:id="@+id/keyboard_preview"
@@ -30,6 +30,8 @@
                 android:text="Loading keyboard, please wait..."/>
 
         </LinearLayout>
+
+        <include layout="@layout/editing_layout"/>
 
     </ViewFlipper>
 
