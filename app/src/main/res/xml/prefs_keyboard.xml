@@ -13,6 +13,15 @@
             app:title="@string/pref__suggestion__enabled__label"
             app:summary="@string/pref__suggestion__enabled__summary"/>
 
+        <ListPreference
+            android:defaultValue="number_row"
+            app:entries="@array/pref__suggestion__show_instead__entries"
+            app:entryValues="@array/pref__suggestion__show_instead__values"
+            app:key="suggestion__show_instead"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__suggestion__show_instead__label"
+            app:useSimpleSummaryProvider="true"/>
+
         <SwitchPreferenceCompat
             android:defaultValue="true"
             app:dependency="suggestion__enabled"

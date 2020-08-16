@@ -231,7 +231,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             KeyboardMode.NUMERIC,
             KeyboardMode.PHONE,
             KeyboardMode.PHONE2 -> false
-            else -> keyVariation != KeyVariation.PASSWORD
+            else -> keyVariation != KeyVariation.PASSWORD && florisboard.prefs.suggestion.enabled
         }
         updateCapsState()
         resetComposingText()
@@ -335,6 +335,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             isManualSelectionModeRight = false
         }
         updateCapsState()
+        smartbarManager.onUpdateCursorAnchorInfo(cursorAnchorInfo)
     }
 
     /**

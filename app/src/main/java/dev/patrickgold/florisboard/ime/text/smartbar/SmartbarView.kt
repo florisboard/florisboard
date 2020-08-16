@@ -19,9 +19,12 @@ package dev.patrickgold.florisboard.ime.text.smartbar
 import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import androidx.annotation.IdRes
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 
@@ -34,15 +37,10 @@ class SmartbarView : LinearLayout {
 
     private val smartbarManager = SmartbarManager.getInstance()
 
-    var candidatesView: LinearLayout? = null
-        private set
+    private var variants: MutableList<ViewGroup> = mutableListOf()
+    private var containers: MutableList<ViewGroup> = mutableListOf()
+
     var candidateViewList: MutableList<Button> = mutableListOf()
-        private set
-    var numberRowView: LinearLayout? = null
-        private set
-    var quickActionsView: LinearLayout? = null
-        private set
-    var quickActionToggle: ImageButton? = null
         private set
 
     constructor(context: Context) : this(context, null)
@@ -54,16 +52,52 @@ class SmartbarView : LinearLayout {
 
         super.onAttachedToWindow()
 
-        candidatesView = findViewById(R.id.candidates)
+        variants.add(findViewById(R.id.smartbar_variant_default))
+        variants.add(findViewById(R.id.smartbar_variant_back_only))
+
+        containers.add(findViewById(R.id.candidates))
+        containers.add(findViewById(R.id.clipboard_cursor_row))
+        containers.add(findViewById(R.id.number_row))
+        containers.add(findViewById(R.id.quick_actions))
+
         candidateViewList.add(findViewById(R.id.candidate0))
         candidateViewList.add(findViewById(R.id.candidate1))
         candidateViewList.add(findViewById(R.id.candidate2))
 
-        numberRowView = findViewById(R.id.number_row)
-        quickActionsView = findViewById(R.id.quick_actions)
-        quickActionToggle = findViewById(R.id.quick_action_toggle)
-
         smartbarManager.registerSmartbarView(this)
+    }
+
+    /**
+     * Sets the active Smartbar variant based on the given id. Pass null to hide all variants and
+     * show an empty Smartbar.
+     *
+     * @param which Which variant to show. Pass null to hide all.
+     */
+    fun setActiveVariant(@IdRes which: Int?) {
+        for (variant in variants) {
+            if (variant.id == which) {
+                variant.visibility = View.VISIBLE
+            } else {
+                variant.visibility = View.GONE
+            }
+        }
+    }
+
+    /**
+     * Sets the active Smartbar container based on the given id. Does only work if the currently
+     * shown Smartbar variant is [R.id.smartbar_variant_default]. Pass null to hide all containers
+     * and show only the quick action toggle.
+     *
+     * @param which Which container to show. Pass null to hide all.
+     */
+    fun setActiveContainer(@IdRes which: Int?) {
+        for (container in containers) {
+            if (container.id == which) {
+                container.visibility = View.VISIBLE
+            } else {
+                container.visibility = View.GONE
+            }
+        }
     }
 
     /**

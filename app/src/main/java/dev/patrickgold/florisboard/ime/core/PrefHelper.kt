@@ -258,11 +258,15 @@ class PrefHelper(
     class Suggestion(private val prefHelper: PrefHelper) {
         companion object {
             const val ENABLED =                 "suggestion__enabled"
+            const val SHOW_INSTEAD =            "suggestion__show_instead"
             const val USE_PREV_WORDS =          "suggestion__use_prev_words"
         }
 
         var enabled: Boolean = false
             get() = prefHelper.getPref(ENABLED, true)
+            private set
+        var showInstead: String = ""
+            get() = prefHelper.getPref(SHOW_INSTEAD, "number_row")
             private set
         var usePrevWords: Boolean = false
             get() = prefHelper.getPref(USE_PREV_WORDS, true)

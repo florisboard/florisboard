@@ -1,12 +1,9 @@
 package dev.patrickgold.florisboard.ime.text.smartbar
 
-import android.content.Context
 import android.util.Log
 import android.view.View
-import android.view.textservice.SentenceSuggestionsInfo
-import android.view.textservice.SpellCheckerSession
-import android.view.textservice.SuggestionsInfo
-import android.view.textservice.TextServicesManager
+import android.view.ViewGroup
+import android.view.inputmethod.CursorAnchorInfo
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -15,17 +12,16 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.text.TextInputManager
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 
 // TODO: Implement suggestion creation functionality
 // TODO: Cleanup and reorganize SmartbarManager
-class SmartbarManager private constructor() :
-    SpellCheckerSession.SpellCheckerSessionListener, FlorisBoard.EventListener {
+class SmartbarManager private constructor() : FlorisBoard.EventListener {
 
     private val florisboard: FlorisBoard = FlorisBoard.getInstance()
     private var isComposingEnabled: Boolean = false
-    private var spellCheckerSession: SpellCheckerSession? = null
     private val textInputManager: TextInputManager = TextInputManager.getInstance()
     var smartbarView: SmartbarView? = null
         private set
@@ -43,7 +39,7 @@ class SmartbarManager private constructor() :
     private val candidateViewOnLongClickListener = View.OnLongClickListener { v ->
         true
     }
-    private val numberRowButtonOnClickListener = View.OnClickListener { v ->
+    private val keyButtonOnClickListener = View.OnClickListener { v ->
         val keyData = when (v.id) {
             R.id.number_row_0 -> KeyData(48, "0")
             R.id.number_row_1 -> KeyData(49, "1")
@@ -55,18 +51,29 @@ class SmartbarManager private constructor() :
             R.id.number_row_7 -> KeyData(55, "7")
             R.id.number_row_8 -> KeyData(56, "8")
             R.id.number_row_9 -> KeyData(57, "9")
+            R.id.cc_select_all -> KeyData(KeyCode.CLIPBOARD_SELECT_ALL)
+            R.id.cc_copy -> KeyData(KeyCode.CLIPBOARD_COPY)
+            R.id.cc_arrow_left -> KeyData(KeyCode.ARROW_LEFT)
+            R.id.cc_arrow_right -> KeyData(KeyCode.ARROW_RIGHT)
+            R.id.cc_cut -> KeyData(KeyCode.CLIPBOARD_CUT)
+            R.id.cc_paste -> KeyData(KeyCode.CLIPBOARD_PASTE)
             else -> KeyData(0)
         }
         florisboard.textInputManager.sendKeyPress(keyData)
     }
     private val quickActionOnClickListener = View.OnClickListener { v ->
-        isQuickActionsVisible = false
         when (v.id) {
+            R.id.back_button -> {
+                florisboard.textInputManager.setActiveKeyboardMode(KeyboardMode.CHARACTERS)
+                smartbarView?.setActiveVariant(R.id.smartbar_variant_default)
+            }
             R.id.quick_action_switch_to_editing_context -> {
                 if (florisboard.textInputManager.getActiveKeyboardMode() == KeyboardMode.EDITING) {
                     florisboard.textInputManager.setActiveKeyboardMode(KeyboardMode.CHARACTERS)
+                    smartbarView?.setActiveVariant(R.id.smartbar_variant_default)
                 } else {
                     florisboard.textInputManager.setActiveKeyboardMode(KeyboardMode.EDITING)
+                    smartbarView?.setActiveVariant(R.id.smartbar_variant_back_only)
                 }
             }
             R.id.quick_action_switch_to_media_context -> florisboard.setActiveInput(R.id.media_input)
@@ -74,6 +81,7 @@ class SmartbarManager private constructor() :
             R.id.quick_action_one_handed_toggle -> florisboard.toggleOneHandedMode()
             else -> return@OnClickListener
         }
+        isQuickActionsVisible = false
     }
     private val quickActionToggleOnClickListener = View.OnClickListener {
         isQuickActionsVisible = !isQuickActionsVisible
@@ -96,7 +104,7 @@ class SmartbarManager private constructor() :
 
         this.smartbarView = smartbarView
 
-        smartbarView.quickActionToggle?.setOnClickListener(quickActionToggleOnClickListener)
+        smartbarView.findViewById<View>(R.id.quick_action_toggle)?.setOnClickListener(quickActionToggleOnClickListener)
         val quickActions = smartbarView.findViewById<LinearLayout>(R.id.quick_actions)
         for (quickAction in quickActions.children) {
             if (quickAction is ImageButton) {
@@ -106,13 +114,23 @@ class SmartbarManager private constructor() :
         val numberRow = smartbarView.findViewById<LinearLayout>(R.id.number_row)
         for (numberRowButton in numberRow.children) {
             if (numberRowButton is Button) {
-                numberRowButton.setOnClickListener(numberRowButtonOnClickListener)
+                numberRowButton.setOnClickListener(keyButtonOnClickListener)
             }
         }
+        val clipboardCursorRow = smartbarView.findViewById<ViewGroup>(R.id.clipboard_cursor_row)
+        for (clipboardCursorRowButton in clipboardCursorRow.children) {
+            if (clipboardCursorRowButton is ImageButton) {
+                clipboardCursorRowButton.setOnClickListener(keyButtonOnClickListener)
+            }
+        }
+        val backButton = smartbarView.findViewById<View>(R.id.back_button)
+        backButton.setOnClickListener(quickActionOnClickListener)
         for (candidateView in smartbarView.candidateViewList) {
             candidateView.setOnClickListener(candidateViewOnClickListener)
             candidateView.setOnLongClickListener(candidateViewOnLongClickListener)
         }
+
+        smartbarView.setActiveVariant(R.id.smartbar_variant_default)
     }
 
     override fun onWindowShown() {
@@ -126,40 +144,14 @@ class SmartbarManager private constructor() :
         instance = null
     }
 
-    override fun onGetSuggestions(arr: Array<out SuggestionsInfo>?) {
-        if (arr == null || arr.isEmpty()) {
-            return
-        }
-        /*val suggestions = arr[0]
-        for (i in 0 until suggestions.suggestionsCount) {
-            candidateViewList[i].text = suggestions.getSuggestionAt(i)
-            if (i == 2) {
-                break
-            }
-        }*/
-    }
-
-    override fun onGetSentenceSuggestions(arr: Array<out SentenceSuggestionsInfo>?) {
-        if (arr == null || arr.isEmpty()) {
-            return
-        }
-        /*val suggestions = arr[0].getSuggestionsInfoAt(0)
-        for (i in 0 until suggestions.suggestionsCount) {
-            candidateViewList[i].text = suggestions.getSuggestionAt(i)
-            if (i == 2) {
-                break
-            }
-        }*/
-    }
-
     fun onStartInputView(keyboardMode: KeyboardMode, isComposingEnabled: Boolean) {
         this.isComposingEnabled = isComposingEnabled
         when (keyboardMode) {
             KeyboardMode.NUMERIC, KeyboardMode.PHONE, KeyboardMode.PHONE2 -> {
-                smartbarView?.visibility = View.GONE
+                smartbarView?.setActiveVariant(null)
             }
             else -> {
-                smartbarView?.visibility = View.VISIBLE
+                smartbarView?.setActiveVariant(R.id.smartbar_variant_default)
                 isQuickActionsVisible = false
             }
         }
@@ -167,6 +159,14 @@ class SmartbarManager private constructor() :
 
     fun onFinishInputView() {
         //spellCheckerSession?.close()
+    }
+
+    override fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {
+        val isSelectionActive = florisboard.textInputManager.isTextSelected
+        smartbarView?.findViewById<View>(R.id.cc_cut)?.isEnabled = isSelectionActive
+        smartbarView?.findViewById<View>(R.id.cc_copy)?.isEnabled = isSelectionActive
+        smartbarView?.findViewById<View>(R.id.cc_paste)?.isEnabled =
+            florisboard.clipboardManager?.hasPrimaryClip() ?: false
     }
 
     fun deleteCandidateFromDictionary(candidate: String) {
@@ -209,39 +209,25 @@ class SmartbarManager private constructor() :
         //
     }
 
-    fun getPreferredContainerId(): Int {
-        return when {
-            !isComposingEnabled -> when(textInputManager.getActiveKeyboardMode()) {
-                KeyboardMode.CHARACTERS -> R.id.number_row
-                else -> 0
-            }
-            else -> R.id.candidates
-        }
-    }
-
     private fun updateActiveContainerVisibility() {
         val smartbarView = smartbarView ?: return
 
         if (isQuickActionsVisible) {
-            smartbarView.candidatesView?.visibility = View.GONE
-            smartbarView.numberRowView?.visibility = View.GONE
-            smartbarView.quickActionsView?.visibility = View.VISIBLE
-            smartbarView.quickActionToggle?.rotation = -180.0f
+            smartbarView.setActiveContainer(R.id.quick_actions)
+            smartbarView.findViewById<View>(R.id.quick_action_toggle)?.rotation = -180.0f
         } else {
-            if (florisboard.prefs.suggestion.enabled) {
-                smartbarView.candidatesView?.visibility = View.VISIBLE
-                smartbarView.numberRowView?.visibility = View.GONE
-                smartbarView.quickActionsView?.visibility = View.GONE
+            if (isComposingEnabled) {
+                smartbarView.setActiveContainer(R.id.candidates)
             } else if (textInputManager.getActiveKeyboardMode() == KeyboardMode.CHARACTERS) {
-                smartbarView.candidatesView?.visibility = View.GONE
-                smartbarView.numberRowView?.visibility = View.VISIBLE
-                smartbarView.quickActionsView?.visibility = View.GONE
+                smartbarView.setActiveContainer(when (florisboard.prefs.suggestion.showInstead) {
+                    "number_row" -> R.id.number_row
+                    "clipboard_cursor_tools" -> R.id.clipboard_cursor_row
+                    else -> null
+                })
             } else {
-                smartbarView.candidatesView?.visibility = View.GONE
-                smartbarView.numberRowView?.visibility = View.GONE
-                smartbarView.quickActionsView?.visibility = View.GONE
+                smartbarView.setActiveContainer(null)
             }
-            smartbarView.quickActionToggle?.rotation = 0.0f
+            smartbarView.findViewById<View>(R.id.quick_action_toggle)?.rotation = 0.0f
         }
     }
 }
