@@ -52,9 +52,9 @@ timeline for this, but I aim for the 0.2.0 or 0.3.0 release.
 * [ ] Tablet screen support
 
 ### Layouts
-* [x] Latin character layout (QWERTY)
-* [x] Other character layouts (both latin and non-latin) (Currently
-      QWERTZ, AZERTY, swiss and spanish are supported besides QWERTY)
+* [x] Latin character layouts (QWERTY, QWERTZ, AZERTY, Swiss, Spanish,
+      Norwegian, Swedish/Finnish, Icelandic, Danish)
+* [x] Non-latin character layouts (Persian)
 * [x] Adapt to situation in app (password, url, text, etc. )
 * [x] Special character layout(s)
 * [x] Numeric layout
@@ -84,7 +84,7 @@ timeline for this, but I aim for the 0.2.0 or 0.3.0 release.
 
 ### Other useful features
 * [x] One-handed mode
-* [ ] Clipboard manager (?)
+* [x] Clipboard/cursor tools
 * [ ] Floating keyboard
 * [ ] Gesture support
 * [ ] Glide typing (?)
