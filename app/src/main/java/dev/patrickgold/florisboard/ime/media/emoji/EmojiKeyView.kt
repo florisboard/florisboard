@@ -79,7 +79,7 @@ class EmojiKeyView(
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 isCancelled = false
-                val delayMillis = florisboard.prefs.looknfeel.longPressDelay
+                val delayMillis = florisboard.prefs.keyboard.longPressDelay
                 if (osHandler == null) {
                     osHandler = Handler()
                 }

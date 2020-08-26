@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorError"
-        tools:text="@string/settings__keyboard__subtype_error_already_exists"
+        tools:text="@string/settings__localization__subtype_error_already_exists"
         android:textColor="@color/textColorError"
         android:layout_marginBottom="8dp"
         android:padding="8dp"
@@ -27,7 +27,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settings__keyboard__subtype_locale"
+            android:text="@string/settings__localization__subtype_locale"
             android:paddingHorizontal="8dp"/>
 
         <androidx.appcompat.widget.AppCompatSpinner
@@ -46,7 +46,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settings__keyboard__subtype_layout"
+            android:text="@string/settings__localization__subtype_layout"
             android:paddingHorizontal="8dp"/>
 
         <androidx.appcompat.widget.AppCompatSpinner

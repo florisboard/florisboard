@@ -34,7 +34,7 @@
     <string name="settings__menu_help">Help &amp; feedback</string>
     <string name="settings__navigation__home">Home</string>
     <string name="settings__navigation__keyboard">Keyboard</string>
-    <string name="settings__navigation__looknfeel">Look &amp; feel</string>
+    <string name="settings__navigation__typing">Typing</string>
     <string name="settings__navigation__gestures">Gestures</string>
     <string name="settings__navigation__advanced">Advanced</string>
     <string name="settings__default">Default</string>
@@ -45,17 +45,21 @@
     <string name="settings__home__ime_not_selected">FlorisBoard is not selected as the default input method. Click here to resolve this issue.</string>
     <string name="settings__home__contribute">Thanks for trying out FlorisBoard! This project is still in alpha and therefore missing features. If you find any bugs or want to make a suggestion, please check out the repo on GitHub and file an issue. This helps making FlorisBoard better. Thank you!</string>
 
-    <string name="settings__keyboard__title">Keyboard &amp; Text Correction</string>
-    <string name="settings__keyboard__subtype_no_subtypes_configured_warning">It seems that you haven\'t configured any subtypes. As a fallback the subtype English/QWERTY will be used!</string>
-    <string name="settings__keyboard__subtype_add">Add</string>
-    <string name="settings__keyboard__subtype_add_title">Add subtype</string>
-    <string name="settings__keyboard__subtype_apply">Apply</string>
-    <string name="settings__keyboard__subtype_cancel">Cancel</string>
-    <string name="settings__keyboard__subtype_delete">Delete</string>
-    <string name="settings__keyboard__subtype_edit_title">Edit subtype</string>
-    <string name="settings__keyboard__subtype_locale">Locale</string>
-    <string name="settings__keyboard__subtype_layout">Keyboard layout</string>
-    <string name="settings__keyboard__subtype_error_already_exists">This subtype already exists!</string>
+    <string name="settings__localization__title">Localization</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning">It seems that you haven\'t configured any subtypes. As a fallback the subtype English/QWERTY will be used!</string>
+    <string name="settings__localization__subtype_add">Add</string>
+    <string name="settings__localization__subtype_add_title">Add subtype</string>
+    <string name="settings__localization__subtype_apply">Apply</string>
+    <string name="settings__localization__subtype_cancel">Cancel</string>
+    <string name="settings__localization__subtype_delete">Delete</string>
+    <string name="settings__localization__subtype_edit_title">Edit subtype</string>
+    <string name="settings__localization__subtype_locale">Locale</string>
+    <string name="settings__localization__subtype_layout">Keyboard layout</string>
+    <string name="settings__localization__subtype_error_already_exists">This subtype already exists!</string>
+
+    <string name="pref__theme__name__label">Keyboard Theme</string>
+
+    <string name="settings__typing__title">Typing</string>
     <string name="pref__suggestion__title">Suggestions</string>
     <string name="pref__suggestion__enabled__label">Display suggestions while you type</string>
     <string name="pref__suggestion__enabled__summary">Will show on top of the keyboard</string>
@@ -65,33 +69,31 @@
     <string name="pref__suggestion__use_pref_words__label">[NYI] Next-word suggestions</string>
     <string name="pref__suggestion__use_pref_words__summary">Use previous words for generating suggestions</string>
     <string name="pref__correction__title">Corrections</string>
-    <string name="pref__popup__title">PopUp</string>
     <string name="pref__correction__double_space_period__label">Double-space period</string>
     <string name="pref__correction__double_space_period__summary">Tapping twice on spacebar inserts a period followed by a space</string>
-    <string name="pref__popup__visible__label">PopUp Visibility</string>
-    <string name="pref__popup__visible__summary">Show popup when you press a key</string>
 
-    <string name="settings__looknfeel__title">Look &amp; feel</string>
-    <string name="pref__looknfeel__group_layout__label">Layout</string>
-    <string name="pref__looknfeel__height_factor__label">Keyboard height</string>
-    <string name="pref__looknfeel__height_factor__extra_short">Extra-short</string>
-    <string name="pref__looknfeel__height_factor__short">Short</string>
-    <string name="pref__looknfeel__height_factor__mid_short">Mid-short</string>
-    <string name="pref__looknfeel__height_factor__normal">Normal</string>
-    <string name="pref__looknfeel__height_factor__mid_tall">Mid-tall</string>
-    <string name="pref__looknfeel__height_factor__tall">Tall</string>
-    <string name="pref__looknfeel__height_factor__extra_tall">Extra-tall</string>
-    <string name="pref__looknfeel__one_handed_mode__label">One-handed mode</string>
-    <string name="pref__looknfeel__one_handed_mode__off">Off</string>
-    <string name="pref__looknfeel__one_handed_mode__right">Right-handed mode</string>
-    <string name="pref__looknfeel__one_handed_mode__left">Left-handed mode</string>
-    <string name="pref__looknfeel__group_keypress__label">Key press</string>
-    <string name="pref__looknfeel__long_press_delay__label">Long key press delay</string>
-    <string name="pref__looknfeel__sound_enabled__label">Sound on key press</string>
-    <string name="pref__looknfeel__sound_volume__label">Sound volume on key press</string>
-    <string name="pref__looknfeel__vibration_enabled__label">Vibrate on key press</string>
-    <string name="pref__looknfeel__vibration_strength__label">Vibration strength on key press</string>
-    <string name="pref__theme__name__label">Keyboard Theme</string>
+    <string name="settings__keyboard__title">Keyboard</string>
+    <string name="pref__keyboard__group_layout__label">Layout</string>
+    <string name="pref__keyboard__one_handed_mode__label">One-handed mode</string>
+    <string name="pref__keyboard__one_handed_mode__off">Off</string>
+    <string name="pref__keyboard__one_handed_mode__right">Right-handed mode</string>
+    <string name="pref__keyboard__one_handed_mode__left">Left-handed mode</string>
+    <string name="pref__keyboard__height_factor__label">Keyboard height</string>
+    <string name="pref__keyboard__height_factor__extra_short">Extra-short</string>
+    <string name="pref__keyboard__height_factor__short">Short</string>
+    <string name="pref__keyboard__height_factor__mid_short">Mid-short</string>
+    <string name="pref__keyboard__height_factor__normal">Normal</string>
+    <string name="pref__keyboard__height_factor__mid_tall">Mid-tall</string>
+    <string name="pref__keyboard__height_factor__tall">Tall</string>
+    <string name="pref__keyboard__height_factor__extra_tall">Extra-tall</string>
+    <string name="pref__keyboard__group_keypress__label">Key press</string>
+    <string name="pref__keyboard__sound_enabled__label">Sound on key press</string>
+    <string name="pref__keyboard__sound_volume__label">Sound volume on key press</string>
+    <string name="pref__keyboard__vibration_enabled__label">Vibrate on key press</string>
+    <string name="pref__keyboard__vibration_strength__label">Vibration strength on key press</string>
+    <string name="pref__keyboard__popup_visible__label">PopUp Visibility</string>
+    <string name="pref__keyboard__popup_visible__summary">Show popup when you press a key</string>
+    <string name="pref__keyboard__long_press_delay__label">Long key press delay</string>
 
     <string name="settings__gestures__title">Gestures</string>
 

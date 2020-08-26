@@ -25,7 +25,7 @@
                 android:padding="8dp"
                 android:background="@drawable/shape_rect_rounded"
                 android:backgroundTint="?colorWarning"
-                android:text="@string/settings__keyboard__subtype_no_subtypes_configured_warning"
+                android:text="@string/settings__localization__subtype_no_subtypes_configured_warning"
                 android:textColor="?textColorWarning"/>
 
             <LinearLayout
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:textAllCaps="false"
-                android:text="@string/settings__keyboard__subtype_add_title"
+                android:text="@string/settings__localization__subtype_add_title"
                 android:drawableStart="@drawable/ic_add"
                 android:drawablePadding="8dp"
                 android:drawableTint="?colorAccent"/>

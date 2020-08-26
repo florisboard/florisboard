@@ -39,9 +39,8 @@ class PrefHelper(
     val correction = Correction(this)
     val internal = Internal(this)
     val keyboard = Keyboard(this)
-    val looknfeel = Looknfeel(this)
+    val localization = Localization(this)
     val suggestion = Suggestion(this)
-    val popup = PopUp(this)
     val theme = Theme(this)
 
     /**
@@ -117,8 +116,8 @@ class PrefHelper(
      */
     fun initDefaultPreferences() {
         PreferenceManager.setDefaultValues(context, R.xml.prefs_advanced, true)
+        PreferenceManager.setDefaultValues(context, R.xml.prefs_typing, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_keyboard, true)
-        PreferenceManager.setDefaultValues(context, R.xml.prefs_looknfeel, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_theme, true)
         //setPref(Keyboard.SUBTYPES, "")
         //setPref(Internal.IS_IME_SET_UP, false)
@@ -129,10 +128,10 @@ class PrefHelper(
      */
     fun sync() {
         val contentResolver = context.contentResolver
-        looknfeel.soundEnabledSystem = Settings.System.getInt(
+        keyboard.soundEnabledSystem = Settings.System.getInt(
             contentResolver, Settings.System.SOUND_EFFECTS_ENABLED, 0
         ) != 0
-        looknfeel.vibrationEnabledSystem = Settings.System.getInt(
+        keyboard.vibrationEnabledSystem = Settings.System.getInt(
             contentResolver, Settings.System.HAPTIC_FEEDBACK_ENABLED, 0
         ) != 0
 
@@ -201,30 +200,14 @@ class PrefHelper(
      */
     class Keyboard(private val prefHelper: PrefHelper) {
         companion object {
-            const val ACTIVE_SUBTYPE_ID =       "keyboard__active_subtype_id"
-            const val SUBTYPES =                "keyboard__subtypes"
-        }
-
-        var activeSubtypeId: Int
-            get() = prefHelper.getPref(ACTIVE_SUBTYPE_ID, -1)
-            set(v) = prefHelper.setPref(ACTIVE_SUBTYPE_ID, v)
-        var subtypes: String
-            get() = prefHelper.getPref(SUBTYPES, "")
-            set(v) = prefHelper.setPref(SUBTYPES, v)
-    }
-
-    /**
-     * Wrapper class for looknfeel preferences.
-     */
-    class Looknfeel(private val prefHelper: PrefHelper) {
-        companion object {
-            const val HEIGHT_FACTOR =           "looknfeel__height_factor"
-            const val LONG_PRESS_DELAY =        "looknfeel__long_press_delay"
-            const val ONE_HANDED_MODE =         "looknfeel__one_handed_mode"
-            const val SOUND_ENABLED =           "looknfeel__sound_enabled"
-            const val SOUND_VOLUME =            "looknfeel__sound_volume"
-            const val VIBRATION_ENABLED =       "looknfeel__vibration_enabled"
-            const val VIBRATION_STRENGTH =      "looknfeel__vibration_strength"
+            const val HEIGHT_FACTOR =           "keyboard__height_factor"
+            const val LONG_PRESS_DELAY =        "keyboard__long_press_delay"
+            const val ONE_HANDED_MODE =         "keyboard__one_handed_mode"
+            const val POPUP_ENABLED =           "keyboard__popup_enabled"
+            const val SOUND_ENABLED =           "keyboard__sound_enabled"
+            const val SOUND_VOLUME =            "keyboard__sound_volume"
+            const val VIBRATION_ENABLED =       "keyboard__vibration_enabled"
+            const val VIBRATION_STRENGTH =      "keyboard__vibration_strength"
         }
 
         var heightFactor: String = ""
@@ -236,6 +219,9 @@ class PrefHelper(
         var oneHandedMode: String
             get() = prefHelper.getPref(ONE_HANDED_MODE, "off")
             set(value) = prefHelper.setPref(ONE_HANDED_MODE, value)
+        var popupEnabled: Boolean = false
+            get() = prefHelper.getPref(POPUP_ENABLED, true)
+            private set
         var soundEnabled: Boolean = false
             get() = prefHelper.getPref(SOUND_ENABLED, true)
             private set
@@ -250,6 +236,23 @@ class PrefHelper(
         var vibrationStrength: Int = 0
             get() = prefHelper.getPref(VIBRATION_STRENGTH, -1)
             private set
+    }
+
+    /**
+     * Wrapper class for localization preferences.
+     */
+    class Localization(private val prefHelper: PrefHelper) {
+        companion object {
+            const val ACTIVE_SUBTYPE_ID =       "localization__active_subtype_id"
+            const val SUBTYPES =                "localization__subtypes"
+        }
+
+        var activeSubtypeId: Int
+            get() = prefHelper.getPref(ACTIVE_SUBTYPE_ID, -1)
+            set(v) = prefHelper.setPref(ACTIVE_SUBTYPE_ID, v)
+        var subtypes: String
+            get() = prefHelper.getPref(SUBTYPES, "")
+            set(v) = prefHelper.setPref(SUBTYPES, v)
     }
 
     /**
@@ -270,19 +273,6 @@ class PrefHelper(
             private set
         var usePrevWords: Boolean = false
             get() = prefHelper.getPref(USE_PREV_WORDS, true)
-            private set
-    }
-
-    /**
-     * Wrapper class for popup preferences.
-     */
-    class PopUp(private val prefHelper: PrefHelper) {
-        companion object {
-            const val ENABLED =                 "popup__enabled"
-        }
-
-        var enabled: Boolean = false
-            get() = prefHelper.getPref(ENABLED, true)
             private set
     }
 

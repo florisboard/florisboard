@@ -99,8 +99,8 @@ class SettingsMainActivity : AppCompatActivity(),
                 loadFragment(KeyboardFragment())
                 true
             }
-            R.id.settings__navigation__looknfeel -> {
-                supportActionBar?.setTitle(R.string.settings__looknfeel__title)
+            R.id.settings__navigation__typing -> {
+                supportActionBar?.setTitle(R.string.settings__typing__title)
                 loadFragment(LooknfeelFragment())
                 true
             }

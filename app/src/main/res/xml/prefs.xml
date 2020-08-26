@@ -4,7 +4,7 @@
         app:fragment="dev.patrickgold.florisboard.settings.SettingsMainActivity$KeyboardFragment"
         app:key="pref__keyboard"
         app:icon="@drawable/ic_keyboard"
-        app:title="@string/settings__keyboard__title" />
+        app:title="@string/settings__localization__title" />
 
     <Preference
         app:fragment="dev.patrickgold.florisboard.settings.SettingsMainActivity$AdvancedFragment"

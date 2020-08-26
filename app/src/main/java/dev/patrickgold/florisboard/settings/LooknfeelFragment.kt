@@ -56,7 +56,7 @@ class LooknfeelFragment : SettingsMainActivity.SettingsFragment(), CoroutineScop
         val transaction = childFragmentManager.beginTransaction()
         transaction.replace(
             binding.prefsLooknfeelFrame.id,
-            SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_looknfeel)
+            SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_keyboard)
         )
         transaction.replace(
             binding.prefsThemeFrame.id,

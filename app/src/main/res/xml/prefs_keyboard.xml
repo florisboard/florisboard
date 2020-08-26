@@ -4,60 +4,90 @@
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/pref__suggestion__title">
-
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            app:key="suggestion__enabled"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__suggestion__enabled__label"
-            app:summary="@string/pref__suggestion__enabled__summary"/>
+        app:title="@string/pref__keyboard__group_layout__label">
 
         <ListPreference
-            android:defaultValue="number_row"
-            app:entries="@array/pref__suggestion__show_instead__entries"
-            app:entryValues="@array/pref__suggestion__show_instead__values"
-            app:key="suggestion__show_instead"
+            android:defaultValue="off"
+            app:entries="@array/pref__keyboard__one_handed_mode__entries"
+            app:entryValues="@array/pref__keyboard__one_handed_mode__values"
+            app:key="keyboard__one_handed_mode"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__suggestion__show_instead__label"
+            app:title="@string/pref__keyboard__one_handed_mode__label"
             app:useSimpleSummaryProvider="true"/>
 
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            app:dependency="suggestion__enabled"
-            app:key="suggestion__use_prev_words"
+        <ListPreference
+            android:defaultValue="normal"
+            app:entries="@array/pref__keyboard__height_factor__entries"
+            app:entryValues="@array/pref__keyboard__height_factor__values"
+            app:key="keyboard__height_factor"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__suggestion__use_pref_words__label"
-            app:summary="@string/pref__suggestion__use_pref_words__summary"/>
+            app:title="@string/pref__keyboard__height_factor__label"
+            app:useSimpleSummaryProvider="true"/>
 
     </PreferenceCategory>
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/pref__correction__title">
+        app:title="@string/pref__keyboard__group_keypress__label">
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
-            app:key="correction__double_space_period"
+            android:key="keyboard__sound_enabled"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__correction__double_space_period__label"
-            app:summary="@string/pref__correction__double_space_period__summary"/>
+            app:title="@string/pref__keyboard__sound_enabled__label"/>
 
-    </PreferenceCategory>
-
-
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        app:title="@string/pref__popup__title">
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="-1"
+            app:systemDefaultValue="-1"
+            app:systemDefaultValueText="@string/settings__system_default"
+            app:dependency="keyboard__sound_enabled"
+            app:key="keyboard__sound_volume"
+            app:min="0"
+            app:max="100"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__sound_volume__label"
+            app:seekBarIncrement="1"
+            app:unit="%"/>
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
-            app:key="popup__enabled"
+            android:key="keyboard__vibration_enabled"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__popup__visible__label"
-            app:summary="@string/pref__popup__visible__summary"/>
+            app:title="@string/pref__keyboard__vibration_enabled__label"/>
+
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="-1"
+            app:systemDefaultValue="-1"
+            app:systemDefaultValueText="@string/settings__system_default"
+            app:dependency="keyboard__vibration_enabled"
+            app:key="keyboard__vibration_strength"
+            app:min="0"
+            app:max="100"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__vibration_strength__label"
+            app:seekBarIncrement="1"
+            app:unit="%"/>
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            app:key="keyboard__popup_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__popup_visible__label"
+            app:summary="@string/pref__keyboard__popup_visible__summary"/>
+
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="300"
+            app:key="keyboard__long_press_delay"
+            app:min="100"
+            app:max="700"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__long_press_delay__label"
+            app:seekBarIncrement="10"
+            app:unit=" ms"/>
 
     </PreferenceCategory>
-
 
 </PreferenceScreen>
