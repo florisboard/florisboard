@@ -9,6 +9,6 @@
         app:key="theme__name"
         app:iconSpaceReserved="false"
         app:title="@string/pref__theme__name__label"
-        app:useSimpleSummaryProvider="true" />
+        app:useSimpleSummaryProvider="true"/>
 
 </PreferenceScreen>

@@ -116,8 +116,9 @@ class PrefHelper(
      */
     fun initDefaultPreferences() {
         PreferenceManager.setDefaultValues(context, R.xml.prefs_advanced, true)
-        PreferenceManager.setDefaultValues(context, R.xml.prefs_typing, true)
+        PreferenceManager.setDefaultValues(context, R.xml.prefs_gestures, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_keyboard, true)
+        PreferenceManager.setDefaultValues(context, R.xml.prefs_typing, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_theme, true)
         //setPref(Keyboard.SUBTYPES, "")
         //setPref(Internal.IS_IME_SET_UP, false)

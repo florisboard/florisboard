@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings
+package dev.patrickgold.florisboard.settings.fragments
 
 import android.os.Bundle
 import android.view.ContextThemeWrapper
@@ -22,15 +22,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.databinding.SettingsFragmentLooknfeelBinding
+import dev.patrickgold.florisboard.databinding.SettingsFragmentThemeBinding
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
+import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import kotlinx.coroutines.*
 
-class LooknfeelFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by MainScope() {
-    private lateinit var binding: SettingsFragmentLooknfeelBinding
+class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by MainScope() {
+    private lateinit var binding: SettingsFragmentThemeBinding
     private lateinit var keyboardView: KeyboardView
 
     override fun onCreateView(
@@ -38,7 +39,7 @@ class LooknfeelFragment : SettingsMainActivity.SettingsFragment(), CoroutineScop
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = SettingsFragmentLooknfeelBinding.inflate(inflater, container, false)
+        binding = SettingsFragmentThemeBinding.inflate(inflater, container, false)
 
         launch(Dispatchers.Default) {
             val themeContext = ContextThemeWrapper(context, prefs.theme.getSelectedThemeResId())
@@ -55,12 +56,10 @@ class LooknfeelFragment : SettingsMainActivity.SettingsFragment(), CoroutineScop
 
         val transaction = childFragmentManager.beginTransaction()
         transaction.replace(
-            binding.prefsLooknfeelFrame.id,
-            SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_keyboard)
-        )
-        transaction.replace(
             binding.prefsThemeFrame.id,
-            SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_theme)
+            SettingsMainActivity.PrefFragment.createFromResource(
+                R.xml.prefs_theme
+            )
         )
         transaction.commit()
 

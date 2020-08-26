@@ -9,13 +9,13 @@
         app:key="advanced__settings_theme"
         app:iconSpaceReserved="false"
         app:title="@string/pref__advanced__settings_theme__label"
-        app:useSimpleSummaryProvider="true" />
+        app:useSimpleSummaryProvider="true"/>
 
     <SwitchPreferenceCompat
         android:defaultValue="true"
         app:key="advanced__show_app_icon"
         app:iconSpaceReserved="false"
         app:title="@string/pref__advanced__show_app_icon__label"
-        app:useSimpleSummaryProvider="true" />
+        app:useSimpleSummaryProvider="true"/>
 
 </PreferenceScreen>

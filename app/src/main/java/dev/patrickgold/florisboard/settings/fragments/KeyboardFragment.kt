@@ -14,25 +14,14 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings
+package dev.patrickgold.florisboard.settings.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.preference.PreferenceFragmentCompat
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.databinding.SettingsFragmentGesturesBinding
 
-class GesturesFragment : SettingsMainActivity.SettingsFragment() {
-    private lateinit var binding: SettingsFragmentGesturesBinding
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = SettingsFragmentGesturesBinding.inflate(inflater, container, false)
-
-        return binding.root
+class KeyboardFragment : PreferenceFragmentCompat() {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        addPreferencesFromResource(R.xml.prefs_keyboard)
     }
 }

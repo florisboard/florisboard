@@ -17,19 +17,13 @@
 
             <!-- KeyboardView preview will be inserted here programmatically -->
 
-            <!-- Must be RelativeLayout, because it blocks RecyclerView to create a second scrollbar -->
-            <RelativeLayout
-                android:id="@+id/prefs_theme_frame"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
     <!-- Must be RelativeLayout, because it blocks RecyclerView to create a second scrollbar -->
     <RelativeLayout
-        android:id="@+id/prefs_looknfeel_frame"
+        android:id="@+id/prefs_theme_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

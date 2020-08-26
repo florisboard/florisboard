@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings
+package dev.patrickgold.florisboard.settings.fragments
 
 import android.content.Intent
 import android.net.Uri
@@ -25,6 +25,8 @@ import android.view.ViewGroup
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsFragmentHomeBinding
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.settings.FRAGMENT_TAG
+import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.setup.SetupActivity
 
 class HomeFragment : SettingsMainActivity.SettingsFragment() {
@@ -55,6 +57,18 @@ class HomeFragment : SettingsMainActivity.SettingsFragment() {
             ).apply {
                 startActivity(this)
             }
+        }
+        binding.localizationCard.setOnClickListener {
+            settingsMainActivity.supportFragmentManager.beginTransaction()
+                .replace(R.id.page_frame, LocalizationFragment(), FRAGMENT_TAG)
+                .commit()
+            settingsMainActivity.supportActionBar?.setTitle(R.string.settings__localization__title)
+        }
+        binding.themeCard.setOnClickListener {
+            settingsMainActivity.supportFragmentManager.beginTransaction()
+                .replace(R.id.page_frame, ThemeFragment(), FRAGMENT_TAG)
+                .commit()
+            settingsMainActivity.supportActionBar?.setTitle(R.string.settings__theme__title)
         }
 
         return binding.root

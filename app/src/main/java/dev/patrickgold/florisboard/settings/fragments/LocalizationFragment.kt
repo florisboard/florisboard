@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings
+package dev.patrickgold.florisboard.settings.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -25,12 +25,13 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ListItemBinding
-import dev.patrickgold.florisboard.databinding.SettingsFragmentKeyboardBinding
-import dev.patrickgold.florisboard.databinding.SettingsFragmentKeyboardSubtypeDialogBinding
+import dev.patrickgold.florisboard.databinding.SettingsFragmentLocalizationBinding
+import dev.patrickgold.florisboard.databinding.SettingsFragmentLocalizationSubtypeDialogBinding
+import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.util.LocaleUtils
 
-class KeyboardFragment : SettingsMainActivity.SettingsFragment() {
-    private lateinit var binding: SettingsFragmentKeyboardBinding
+class LocalizationFragment : SettingsMainActivity.SettingsFragment() {
+    private lateinit var binding: SettingsFragmentLocalizationBinding
     /**
      * Must always have a reference to the open AlertDialog to dismiss the AlertDialog in the event
      * of onDestroy(), if this is not done a memory leak will most likely happen!
@@ -42,17 +43,10 @@ class KeyboardFragment : SettingsMainActivity.SettingsFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = SettingsFragmentKeyboardBinding.inflate(inflater, container, false)
+        binding = SettingsFragmentLocalizationBinding.inflate(inflater, container, false)
         binding.subtypeAddBtn.setOnClickListener { showAddSubtypeDialog() }
 
         updateSubtypeListView()
-
-        val transaction = childFragmentManager.beginTransaction()
-        transaction.replace(
-            binding.prefsKeyboardFrame.id,
-            SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_typing)
-        )
-        transaction.commit()
 
         return binding.root
     }
@@ -64,7 +58,7 @@ class KeyboardFragment : SettingsMainActivity.SettingsFragment() {
 
     private fun showAddSubtypeDialog() {
         val dialogView =
-            SettingsFragmentKeyboardSubtypeDialogBinding.inflate(layoutInflater)
+            SettingsFragmentLocalizationSubtypeDialogBinding.inflate(layoutInflater)
         val languageAdapter: ArrayAdapter<String> = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
@@ -121,7 +115,7 @@ class KeyboardFragment : SettingsMainActivity.SettingsFragment() {
     private fun showEditSubtypeDialog(id: Int) {
         val subtype = subtypeManager.getSubtypeById(id) ?: return
         val dialogView =
-            SettingsFragmentKeyboardSubtypeDialogBinding.inflate(layoutInflater)
+            SettingsFragmentLocalizationSubtypeDialogBinding.inflate(layoutInflater)
         val languageAdapter: ArrayAdapter<String> = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_spinner_dropdown_item,
