@@ -45,7 +45,7 @@
     <string name="settings__home__ime_not_selected">FlorisBoard is not selected as the default input method. Click here to resolve this issue.</string>
     <string name="settings__home__contribute">Thanks for trying out FlorisBoard! This project is still in alpha and therefore missing features. If you find any bugs or want to make a suggestion, please check out the repo on GitHub and file an issue. This helps making FlorisBoard better. Thank you!</string>
 
-    <string name="settings__localization__title">Localization</string>
+    <string name="settings__localization__title">Languages &amp; Keyboard layouts</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning">It seems that you haven\'t configured any subtypes. As a fallback the subtype English/QWERTY will be used!</string>
     <string name="settings__localization__subtype_add">Add</string>
     <string name="settings__localization__subtype_add_title">Add subtype</string>

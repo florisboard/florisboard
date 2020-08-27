@@ -17,57 +17,11 @@
 package dev.patrickgold.florisboard.settings.fragments
 
 import android.os.Bundle
-import android.view.ContextThemeWrapper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.preference.PreferenceFragmentCompat
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.databinding.SettingsFragmentThemeBinding
-import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
-import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
-import dev.patrickgold.florisboard.settings.SettingsMainActivity
-import kotlinx.coroutines.*
 
-class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by MainScope() {
-    private lateinit var binding: SettingsFragmentThemeBinding
-    private lateinit var keyboardView: KeyboardView
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = SettingsFragmentThemeBinding.inflate(inflater, container, false)
-
-        launch(Dispatchers.Default) {
-            val themeContext = ContextThemeWrapper(context, prefs.theme.getSelectedThemeResId())
-            val layoutManager = LayoutManager(themeContext)
-            keyboardView = KeyboardView(themeContext)
-            keyboardView.prefs = prefs
-            keyboardView.isPreviewMode = true
-            keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, Subtype.DEFAULT).await()
-            keyboardView.updateVisibility()
-            withContext(Dispatchers.Main) {
-                binding.themeLinearLayout.addView(keyboardView, 0)
-            }
-        }
-
-        val transaction = childFragmentManager.beginTransaction()
-        transaction.replace(
-            binding.prefsThemeFrame.id,
-            SettingsMainActivity.PrefFragment.createFromResource(
-                R.xml.prefs_theme
-            )
-        )
-        transaction.commit()
-
-        return binding.root
-    }
-
-    override fun onDestroy() {
-        cancel()
-        super.onDestroy()
+class ThemeFragment : PreferenceFragmentCompat() {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        addPreferencesFromResource(R.xml.prefs_theme)
     }
 }

@@ -41,7 +41,7 @@
     <string name="settings__home__ime_not_selected">FlorisBoard non è la tastiera predefinita. Clicca quì per risolvere questo problema.</string>
     <string name="settings__home__contribute">Grazie per aver provato FlorisBoard! Questo progetto è ancora in fase alfa e quindi manca di alcune funzionalità. Se trovate qualche bug o volete dare un suggerimento, date un\'occhiata al repo su GitHub e segnalate un problema. Questo aiuta a rendere FlorisBoard migliore. Grazie!</string>
 
-    <string name="settings__localization__title">Localizzazione</string>
+    <string name="settings__localization__title">Lingue &amp; Layout della tastiera</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning">Sembra che tu non abbia configurato nessuno stile di input personalizzato. Come ripiego verrà utilizzato lo stile input English/QWERTY!</string>
     <string name="settings__localization__subtype_add">Aggiungi</string>
     <string name="settings__localization__subtype_add_title">Aggiungi stile input</string>

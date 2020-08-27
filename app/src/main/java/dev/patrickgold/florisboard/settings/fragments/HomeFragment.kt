@@ -25,7 +25,6 @@ import android.view.ViewGroup
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsFragmentHomeBinding
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.settings.FRAGMENT_TAG
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.setup.SetupActivity
 
@@ -59,16 +58,10 @@ class HomeFragment : SettingsMainActivity.SettingsFragment() {
             }
         }
         binding.localizationCard.setOnClickListener {
-            settingsMainActivity.supportFragmentManager.beginTransaction()
-                .replace(R.id.page_frame, LocalizationFragment(), FRAGMENT_TAG)
-                .commit()
-            settingsMainActivity.supportActionBar?.setTitle(R.string.settings__localization__title)
+            settingsMainActivity.binding.bottomNavigation.selectedItemId = R.id.settings__navigation__typing
         }
         binding.themeCard.setOnClickListener {
-            settingsMainActivity.supportFragmentManager.beginTransaction()
-                .replace(R.id.page_frame, ThemeFragment(), FRAGMENT_TAG)
-                .commit()
-            settingsMainActivity.supportActionBar?.setTitle(R.string.settings__theme__title)
+            settingsMainActivity.binding.bottomNavigation.selectedItemId = R.id.settings__navigation__keyboard
         }
 
         return binding.root

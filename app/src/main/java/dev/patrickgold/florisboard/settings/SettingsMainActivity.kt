@@ -154,18 +154,8 @@ class SettingsMainActivity : AppCompatActivity(),
     }
 
     override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
-        if (key == PrefHelper.Advanced.SETTINGS_THEME) {
+        if (key == PrefHelper.Advanced.SETTINGS_THEME || key == PrefHelper.Theme.NAME) {
             recreate()
-        }
-        val fragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
-        if (fragment != null && fragment.isVisible) {
-            if (fragment is ThemeFragment) {
-                if (key == PrefHelper.Theme.NAME) {
-                    // TODO: recreate() is only a lazy solution, better would be to only recreate
-                    //  the keyboard view
-                    recreate()
-                }
-            }
         }
     }
 

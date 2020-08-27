@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        style="@style/SettingsCardView"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="0dp">
+
+        <LinearLayout
+            android:id="@+id/themeLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:theme="@style/PreferenceThemeOverlay">
+
+            <TextView
+                android:id="@+id/subtype_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:padding="8dp"
+                android:text="@string/settings__theme__title"
+                android:textAppearance="?preferenceCategoryTitleTextAppearance"
+                android:textColor="?colorAccent"/>
+
+            <!-- KeyboardView preview will be inserted here programmatically -->
+
+            <Button
+                android:id="@+id/theme_modify_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textAllCaps="false"
+                android:text="@string/settings__theme__title"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Must be RelativeLayout, because it blocks RecyclerView to create a second scrollbar -->
+    <RelativeLayout
+        android:id="@+id/prefs_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
