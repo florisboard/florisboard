@@ -174,8 +174,8 @@ class KeyView(
         event ?: return false
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
-                florisboard?.prefs?.popup?.let {
-                    if (it.enabled){
+                florisboard?.prefs?.keyboard?.let {
+                    if (it.popupEnabled){
                         keyboardView.popupManager.show(this)
                     }
                 }
@@ -194,7 +194,7 @@ class KeyView(
                         }
                     }, 500, 50)
                 }
-                val delayMillis = keyboardView.prefs.looknfeel.longPressDelay
+                val delayMillis = keyboardView.prefs.keyboard.longPressDelay
                 if (osHandler == null) {
                     osHandler = Handler()
                 }
@@ -562,7 +562,7 @@ class KeyView(
                 data.code == KeyCode.SPACE) { 120 } else { 255 }
             val isPortrait =
                 resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-            if (keyboardView.prefs.looknfeel.oneHandedMode != "off" && isPortrait) {
+            if (keyboardView.prefs.keyboard.oneHandedMode != "off" && isPortrait) {
                 labelPaint.textSize *= 0.9f
             }
             val centerX = measuredWidth / 2.0f

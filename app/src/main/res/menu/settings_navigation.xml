@@ -4,26 +4,26 @@
     <item
         android:id="@+id/settings__navigation__home"
         android:icon="@drawable/ic_home"
-        android:title="@string/settings__navigation__home" />
+        android:title="@string/settings__navigation__home"/>
 
     <item
         android:id="@+id/settings__navigation__keyboard"
         android:icon="@drawable/ic_keyboard"
-        android:title="@string/settings__navigation__keyboard" />
+        android:title="@string/settings__navigation__keyboard"/>
 
     <item
-        android:id="@+id/settings__navigation__looknfeel"
-        android:icon="@drawable/ic_palette"
-        android:title="@string/settings__navigation__looknfeel" />
+        android:id="@+id/settings__navigation__typing"
+        android:icon="@drawable/ic_spellcheck"
+        android:title="@string/settings__navigation__typing"/>
 
     <item
         android:id="@+id/settings__navigation__gestures"
         android:icon="@drawable/ic_gesture"
-        android:title="@string/settings__navigation__gestures" />
+        android:title="@string/settings__navigation__gestures"/>
 
     <item
         android:id="@+id/settings__navigation__advanced"
         android:icon="@drawable/ic_more_vert"
-        android:title="@string/settings__navigation__advanced" />
+        android:title="@string/settings__navigation__advanced"/>
 
 </menu>

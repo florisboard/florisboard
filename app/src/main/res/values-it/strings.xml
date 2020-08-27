@@ -32,7 +32,7 @@
     <string name="settings__menu_help">Aiuto &amp; feedback</string>
     <string name="settings__navigation__home">Home</string>
     <string name="settings__navigation__keyboard">Tastiera</string>
-    <string name="settings__navigation__looknfeel">Aspetto &amp; funzionalità</string>
+    <string name="settings__navigation__typing">Digitazione</string>
     <string name="settings__navigation__gestures">Gesti</string>
     <string name="settings__navigation__advanced">Avanzate</string>
 
@@ -41,42 +41,45 @@
     <string name="settings__home__ime_not_selected">FlorisBoard non è la tastiera predefinita. Clicca quì per risolvere questo problema.</string>
     <string name="settings__home__contribute">Grazie per aver provato FlorisBoard! Questo progetto è ancora in fase alfa e quindi manca di alcune funzionalità. Se trovate qualche bug o volete dare un suggerimento, date un\'occhiata al repo su GitHub e segnalate un problema. Questo aiuta a rendere FlorisBoard migliore. Grazie!</string>
 
-    <string name="settings__keyboard__title">Tastiera &amp; Correzione del testo</string>
-    <string name="settings__keyboard__subtype_no_subtypes_configured_warning">Sembra che tu non abbia configurato nessuno stile di input personalizzato. Come ripiego verrà utilizzato lo stile input English/QWERTY!</string>
-    <string name="settings__keyboard__subtype_add">Aggiungi</string>
-    <string name="settings__keyboard__subtype_add_title">Aggiungi stile input</string>
-    <string name="settings__keyboard__subtype_apply">Applica</string>
-    <string name="settings__keyboard__subtype_cancel">Annulla</string>
-    <string name="settings__keyboard__subtype_delete">Elimina</string>
-    <string name="settings__keyboard__subtype_edit_title">Modifica stile di input</string>
-    <string name="settings__keyboard__subtype_locale">Locale</string>
-    <string name="settings__keyboard__subtype_layout">Layout della tastiera</string>
-    <string name="settings__keyboard__subtype_error_already_exists">Questo stile di input esiste già !</string>
+    <string name="settings__localization__title">Lingue &amp; Layout della tastiera</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning">Sembra che tu non abbia configurato nessuno stile di input personalizzato. Come ripiego verrà utilizzato lo stile input English/QWERTY!</string>
+    <string name="settings__localization__subtype_add">Aggiungi</string>
+    <string name="settings__localization__subtype_add_title">Aggiungi stile input</string>
+    <string name="settings__localization__subtype_apply">Applica</string>
+    <string name="settings__localization__subtype_cancel">Annulla</string>
+    <string name="settings__localization__subtype_delete">Elimina</string>
+    <string name="settings__localization__subtype_edit_title">Modifica stile di input</string>
+    <string name="settings__localization__subtype_locale">Locale</string>
+    <string name="settings__localization__subtype_layout">Layout della tastiera</string>
+    <string name="settings__localization__subtype_error_already_exists">Questo stile di input esiste già !</string>
+
+    <string name="settings__theme__title">Tema tastiera</string>
+    <string name="pref__theme__name__label">Tema tastiera</string>
+
+    <string name="settings__keyboard__title">Tastiera preferenze</string>
+    <string name="pref__keyboard__group_layout__label">Layout</string>
+    <string name="pref__keyboard__one_handed_mode__label">Modalità ad una mano</string>
+    <string name="pref__keyboard__height_factor__label">Altezza tastiera</string>
+    <string name="pref__keyboard__group_keypress__label">Pressione tasti</string>
+    <string name="pref__keyboard__sound_enabled__label">Suono pressione tasti</string>
+    <string name="pref__keyboard__sound_volume__label">Volume del suono alla pressione dei tasti</string>
+    <string name="pref__keyboard__vibration_enabled__label">Vibrazione alla pressione dei tasti</string>
+    <string name="pref__keyboard__vibration_strength__label">Intensità della vibrazione alla pressione dei tasti</string>
+    <string name="pref__keyboard__popup_visible__label">Visibilità Popup</string>
+    <string name="pref__keyboard__popup_visible__summary">Mostra popup quando si preme un tasto</string>
+    <string name="pref__keyboard__long_press_delay__label">Ritardo lunga pressione tasti</string>
+
+    <string name="settings__typing__title">Esperienza di digitazione</string>
     <string name="pref__suggestion__title">Suggerimenti</string>
     <string name="pref__suggestion__enabled__label">Visualizza suggerimenti mentre digiti</string>
     <string name="pref__suggestion__enabled__summary">Verrà visualizzato nella parte superiore della tastiera</string>
     <string name="pref__suggestion__use_pref_words__label">Suggerimenti per la parola successiva</string>
     <string name="pref__suggestion__use_pref_words__summary">Utilizzare le parole precedenti per generare suggerimenti</string>
     <string name="pref__correction__title">Correzioni</string>
-    <string name="pref__popup__title">PopUp</string>
     <string name="pref__correction__double_space_period__label">Doppio tocco barra spaziatrice</string>
     <string name="pref__correction__double_space_period__summary">Doppio tocco su barra spaziatrice per mettere il punto (.) seguito da uno spazio</string>
-    <string name="pref__popup__visible__label">Visibilità Popup</string>
-    <string name="pref__popup__visible__summary">Mostra popup quando si preme un tasto</string>
 
-    <string name="settings__looknfeel__title">Aspetto &amp; funzionalità</string>
-    <string name="pref__looknfeel__group_layout__label">Layout</string>
-    <string name="pref__looknfeel__height_factor__label">Altezza tastiera</string>
-    <string name="pref__looknfeel__one_handed_mode__label">Modalità ad una mano</string>
-    <string name="pref__looknfeel__group_keypress__label">Pressione tasti</string>
-    <string name="pref__looknfeel__long_press_delay__label">Ritardo lunga pressione tasti</string>
-    <string name="pref__looknfeel__sound_enabled__label">Suono pressione tasti</string>
-    <string name="pref__looknfeel__sound_volume__label">Volume del suono alla pressione dei tasti</string>
-    <string name="pref__looknfeel__vibration_enabled__label">Vibrazione alla pressione dei tasti</string>
-    <string name="pref__looknfeel__vibration_strength__label">Intensità della vibrazione alla pressione dei tasti</string>
-    <string name="pref__theme__name__label">Tema tastiera</string>
-
-    <string name="settings__gestures__title">Gesti</string>
+    <string name="settings__gestures__title">Gesti &amp; Digitazione a scorrimento</string>
 
     <string name="settings__advanced__title">Avanzate</string>
     <string name="pref__advanced__settings_theme__label">Impostazioni tema</string>
@@ -100,7 +103,7 @@
     <string name="setup__ok_button">OK</string>
 
     <string name="setup__welcome__title">Benvenuto!</string>
-    <string name="setup__welcome__intro">TGrazie per aver provato FlorisBoard! Prima che possiate iniziare ad usarlo, dobbiamo fare le solite cose e abilitarlo nelle impostazioni di sistema, impostare la vostra lingua/ il layout preferito, ecc... Ma non preoccuparti: segui questa procedura guidata </string>
+    <string name="setup__welcome__intro">Grazie per aver provato FlorisBoard! Prima che possiate iniziare ad usarlo, dobbiamo fare le solite cose e abilitarlo nelle impostazioni di sistema, impostare la vostra lingua/ il layout preferito, ecc... Ma non preoccuparti: segui questa procedura guidata </string>
     <string name="setup__welcome__privacy">[[ TODO: inserisci quì la descrizione della privacy ]]</string>
     <string name="setup__welcome__trust">Il codice sorgente di FlorisBoard è accessibile pubblicamente a chiunque, quindi puoi facilmente rivedere cosa fa FlorisBoard in background. Controlla il link nel repository in basso.</string>
     <string name="setup__welcome__contribute">Un\'ultima cosa prima di iniziare l\'installazione - se riscontri errori / arresti anomali / problemi con FlorisBoard o hai una richiesta di funzionalità - vai al repository GitHub collegato di seguito e presenta un problema. Questo aiuta a migliorare l\'esperienza per tutti gli utenti!</string>

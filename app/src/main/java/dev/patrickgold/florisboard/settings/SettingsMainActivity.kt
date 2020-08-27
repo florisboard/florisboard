@@ -34,10 +34,11 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsActivityBinding
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
+import dev.patrickgold.florisboard.settings.fragments.*
 import dev.patrickgold.florisboard.util.AppVersionUtils
 import dev.patrickgold.florisboard.util.PackageManagerUtils
 
-private const val FRAGMENT_TAG = "FRAGMENT_TAG"
+internal const val FRAGMENT_TAG = "FRAGMENT_TAG"
 private const val PREF_RES_ID = "PREF_RES_ID"
 private const val SELECTED_ITEM_ID = "SELECTED_ITEM_ID"
 
@@ -99,9 +100,9 @@ class SettingsMainActivity : AppCompatActivity(),
                 loadFragment(KeyboardFragment())
                 true
             }
-            R.id.settings__navigation__looknfeel -> {
-                supportActionBar?.setTitle(R.string.settings__looknfeel__title)
-                loadFragment(LooknfeelFragment())
+            R.id.settings__navigation__typing -> {
+                supportActionBar?.setTitle(R.string.settings__typing__title)
+                loadFragment(TypingFragment())
                 true
             }
             R.id.settings__navigation__gestures -> {
@@ -153,18 +154,8 @@ class SettingsMainActivity : AppCompatActivity(),
     }
 
     override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
-        if (key == PrefHelper.Advanced.SETTINGS_THEME) {
+        if (key == PrefHelper.Advanced.SETTINGS_THEME || key == PrefHelper.Theme.NAME) {
             recreate()
-        }
-        val fragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG)
-        if (fragment != null && fragment.isVisible) {
-            if (fragment is LooknfeelFragment) {
-                if (key == PrefHelper.Theme.NAME) {
-                    // TODO: recreate() is only a lazy solution, better would be to only recreate
-                    //  the keyboard view
-                    recreate()
-                }
-            }
         }
     }
 

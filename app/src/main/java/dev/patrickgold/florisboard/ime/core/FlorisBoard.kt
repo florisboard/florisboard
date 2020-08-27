@@ -331,9 +331,9 @@ class FlorisBoard : InputMethodService() {
      * Makes a key press vibration if the user has this feature enabled in the preferences.
      */
     fun keyPressVibrate() {
-        if (prefs.looknfeel.vibrationEnabled) {
-            var vibrationStrength = prefs.looknfeel.vibrationStrength
-            if (vibrationStrength == -1 && prefs.looknfeel.vibrationEnabledSystem) {
+        if (prefs.keyboard.vibrationEnabled) {
+            var vibrationStrength = prefs.keyboard.vibrationStrength
+            if (vibrationStrength == -1 && prefs.keyboard.vibrationEnabledSystem) {
                 vibrationStrength = 36
             }
             if (vibrationStrength > 0) {
@@ -355,15 +355,15 @@ class FlorisBoard : InputMethodService() {
      * Makes a key press sound if the user has this feature enabled in the preferences.
      */
     fun keyPressSound(keyData: KeyData? = null) {
-        if (prefs.looknfeel.soundEnabled) {
-            val soundVolume = prefs.looknfeel.soundVolume
+        if (prefs.keyboard.soundEnabled) {
+            val soundVolume = prefs.keyboard.soundVolume
             val effect = when (keyData?.code) {
                 KeyCode.SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR
                 KeyCode.DELETE -> AudioManager.FX_KEYPRESS_DELETE
                 KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN
                 else -> AudioManager.FX_KEYPRESS_STANDARD
             }
-            if (soundVolume == -1 && prefs.looknfeel.soundEnabledSystem) {
+            if (soundVolume == -1 && prefs.keyboard.soundEnabledSystem) {
                 audioManager!!.playSoundEffect(effect)
             } else if (soundVolume > 0) {
                 audioManager!!.playSoundEffect(effect, soundVolume / 100f)
@@ -427,26 +427,26 @@ class FlorisBoard : InputMethodService() {
     private fun onOneHandedPanelButtonClick(v: View) {
         when (v.id) {
             R.id.one_handed_ctrl_move_start -> {
-                prefs.looknfeel.oneHandedMode = "start"
+                prefs.keyboard.oneHandedMode = "start"
             }
             R.id.one_handed_ctrl_move_end -> {
-                prefs.looknfeel.oneHandedMode = "end"
+                prefs.keyboard.oneHandedMode = "end"
             }
             R.id.one_handed_ctrl_close_start,
             R.id.one_handed_ctrl_close_end -> {
-                prefs.looknfeel.oneHandedMode = "off"
+                prefs.keyboard.oneHandedMode = "off"
             }
         }
         updateOneHandedPanelVisibility()
     }
 
     fun toggleOneHandedMode() {
-        when (prefs.looknfeel.oneHandedMode) {
+        when (prefs.keyboard.oneHandedMode) {
             "off" -> {
-                prefs.looknfeel.oneHandedMode = "end"
+                prefs.keyboard.oneHandedMode = "end"
             }
             else -> {
-                prefs.looknfeel.oneHandedMode = "off"
+                prefs.keyboard.oneHandedMode = "off"
             }
         }
         updateOneHandedPanelVisibility()
@@ -457,7 +457,7 @@ class FlorisBoard : InputMethodService() {
             inputView?.oneHandedCtrlPanelStart?.visibility = View.GONE
             inputView?.oneHandedCtrlPanelEnd?.visibility = View.GONE
         } else {
-            when (prefs.looknfeel.oneHandedMode) {
+            when (prefs.keyboard.oneHandedMode) {
                 "off" -> {
                     inputView?.oneHandedCtrlPanelStart?.visibility = View.GONE
                     inputView?.oneHandedCtrlPanelEnd?.visibility = View.GONE

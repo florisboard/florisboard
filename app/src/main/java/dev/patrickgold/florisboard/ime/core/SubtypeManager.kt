@@ -48,7 +48,7 @@ class SubtypeManager(
     var imeConfig: FlorisBoard.ImeConfig = FlorisBoard.ImeConfig(context.packageName)
     var subtypes: List<Subtype>
         get() {
-            val listRaw = prefs.keyboard.subtypes
+            val listRaw = prefs.localization.subtypes
             return if (listRaw.isBlank()) {
                 listOf()
             } else {
@@ -58,7 +58,7 @@ class SubtypeManager(
             }
         }
         set(v) {
-            prefs.keyboard.subtypes = v.joinToString(SUBTYPE_LIST_STR_DELIMITER)
+            prefs.localization.subtypes = v.joinToString(SUBTYPE_LIST_STR_DELIMITER)
         }
 
     init {
@@ -134,16 +134,16 @@ class SubtypeManager(
      */
     fun getActiveSubtype(): Subtype? {
         for (subtype in subtypes) {
-            if (subtype.id == prefs.keyboard.activeSubtypeId) {
+            if (subtype.id == prefs.localization.activeSubtypeId) {
                 return subtype
             }
         }
         val subtypeList = subtypes
         return if (subtypeList.isNotEmpty()) {
-            prefs.keyboard.activeSubtypeId = subtypeList[0].id
+            prefs.localization.activeSubtypeId = subtypeList[0].id
             subtypeList[0]
         } else {
-            prefs.keyboard.activeSubtypeId = -1
+            prefs.localization.activeSubtypeId = -1
             null
         }
     }
@@ -212,7 +212,7 @@ class SubtypeManager(
             }
         }
         subtypes = subtypeList
-        if (subtypeToRemove.id == prefs.keyboard.activeSubtypeId) {
+        if (subtypeToRemove.id == prefs.localization.activeSubtypeId) {
             getActiveSubtype()
         }
     }
@@ -238,7 +238,7 @@ class SubtypeManager(
         if (triggerNextSubtype) {
             newActiveSubtype = subtypeList[0]
         }
-        prefs.keyboard.activeSubtypeId = when (newActiveSubtype) {
+        prefs.localization.activeSubtypeId = when (newActiveSubtype) {
             null -> -1
             else -> newActiveSubtype.id
         }

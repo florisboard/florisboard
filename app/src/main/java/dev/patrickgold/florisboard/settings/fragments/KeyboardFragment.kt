@@ -14,23 +14,25 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings
+package dev.patrickgold.florisboard.settings.fragments
 
 import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.databinding.SettingsFragmentLooknfeelBinding
+import dev.patrickgold.florisboard.databinding.SettingsFragmentKeyboardBinding
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
+import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import kotlinx.coroutines.*
 
-class LooknfeelFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by MainScope() {
-    private lateinit var binding: SettingsFragmentLooknfeelBinding
+class KeyboardFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by MainScope() {
+    private lateinit var binding: SettingsFragmentKeyboardBinding
     private lateinit var keyboardView: KeyboardView
 
     override fun onCreateView(
@@ -38,31 +40,45 @@ class LooknfeelFragment : SettingsMainActivity.SettingsFragment(), CoroutineScop
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = SettingsFragmentLooknfeelBinding.inflate(inflater, container, false)
+        binding = SettingsFragmentKeyboardBinding.inflate(inflater, container, false)
+
+        binding.themeModifyBtn.setOnClickListener {
+            settingsMainActivity.supportFragmentManager
+                .beginTransaction()
+                .replace(
+                    settingsMainActivity.binding.pageFrame.id,
+                    ThemeFragment()
+                )
+                .commit()
+                settingsMainActivity.supportActionBar?.setTitle(R.string.settings__theme__title)
+        }
 
         launch(Dispatchers.Default) {
             val themeContext = ContextThemeWrapper(context, prefs.theme.getSelectedThemeResId())
             val layoutManager = LayoutManager(themeContext)
             keyboardView = KeyboardView(themeContext)
+            keyboardView.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(8,8,8,16)
+            }
             keyboardView.prefs = prefs
             keyboardView.isPreviewMode = true
             keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, Subtype.DEFAULT).await()
             keyboardView.updateVisibility()
             withContext(Dispatchers.Main) {
-                binding.themeLinearLayout.addView(keyboardView, 0)
+                binding.themeLinearLayout.addView(keyboardView, 1)
             }
         }
 
-        val transaction = childFragmentManager.beginTransaction()
-        transaction.replace(
-            binding.prefsLooknfeelFrame.id,
-            SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_looknfeel)
-        )
-        transaction.replace(
-            binding.prefsThemeFrame.id,
-            SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_theme)
-        )
-        transaction.commit()
+        childFragmentManager
+            .beginTransaction()
+            .replace(
+                binding.prefsFrame.id,
+                SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_keyboard)
+            )
+            .commit()
 
         return binding.root
     }

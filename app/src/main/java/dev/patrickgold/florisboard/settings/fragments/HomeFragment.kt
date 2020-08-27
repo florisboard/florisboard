@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings
+package dev.patrickgold.florisboard.settings.fragments
 
 import android.content.Intent
 import android.net.Uri
@@ -25,6 +25,7 @@ import android.view.ViewGroup
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsFragmentHomeBinding
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.setup.SetupActivity
 
 class HomeFragment : SettingsMainActivity.SettingsFragment() {
@@ -55,6 +56,12 @@ class HomeFragment : SettingsMainActivity.SettingsFragment() {
             ).apply {
                 startActivity(this)
             }
+        }
+        binding.localizationCard.setOnClickListener {
+            settingsMainActivity.binding.bottomNavigation.selectedItemId = R.id.settings__navigation__typing
+        }
+        binding.themeCard.setOnClickListener {
+            settingsMainActivity.binding.bottomNavigation.selectedItemId = R.id.settings__navigation__keyboard
         }
 
         return binding.root

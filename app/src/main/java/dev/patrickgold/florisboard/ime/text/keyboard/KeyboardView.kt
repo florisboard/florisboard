@@ -237,11 +237,11 @@ class KeyboardView : LinearLayout {
         val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
         desiredKeyWidth = (widthSize / 10) - (2 * keyMarginH)
 
-        val factor = prefs.looknfeel.heightFactor
+        val factor = prefs.keyboard.heightFactor
         val keyHeightFactor = when (resources.configuration.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> 0.85f
-            else -> if (prefs.looknfeel.oneHandedMode == "start" ||
-                prefs.looknfeel.oneHandedMode == "end") {
+            else -> if (prefs.keyboard.oneHandedMode == "start" ||
+                prefs.keyboard.oneHandedMode == "end") {
                 0.9f
             } else {
                 1.0f

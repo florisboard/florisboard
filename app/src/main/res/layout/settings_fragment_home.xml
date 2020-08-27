@@ -50,4 +50,28 @@
 
     </androidx.cardview.widget.CardView>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/localization_card"
+        style="@style/SettingsCardView.Clickable">
+
+        <!-- TODO: create lang preview and make nice feature graphic for this card -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Localization prefs -->"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/theme_card"
+        style="@style/SettingsCardView.Clickable">
+
+        <!-- TODO: create theme preview and make nice feature graphic for this card -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Theme prefs -->"/>
+
+    </androidx.cardview.widget.CardView>
+
 </LinearLayout>
