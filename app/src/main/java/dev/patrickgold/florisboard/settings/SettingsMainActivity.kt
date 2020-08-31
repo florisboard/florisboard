@@ -28,7 +28,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsActivityBinding
@@ -47,14 +46,13 @@ class SettingsMainActivity : AppCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener {
 
     lateinit var binding: SettingsActivityBinding
-    lateinit var prefs: PrefHelper
+    private lateinit var prefs: PrefHelper
     lateinit var subtypeManager: SubtypeManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        prefs = PrefHelper(this, PreferenceManager.getDefaultSharedPreferences(this))
+        prefs = PrefHelper.getDefaultInstance(this)
         prefs.initDefaultPreferences()
-        subtypeManager =
-            SubtypeManager(this, prefs)
+        subtypeManager = SubtypeManager(this, prefs)
 
         val mode = when (prefs.advanced.settingsTheme) {
             "light" -> AppCompatDelegate.MODE_NIGHT_NO
@@ -186,7 +184,6 @@ class SettingsMainActivity : AppCompatActivity(),
     }
 
     abstract class SettingsFragment : Fragment() {
-        protected lateinit var prefs: PrefHelper
         protected lateinit var settingsMainActivity: SettingsMainActivity
         protected lateinit var subtypeManager: SubtypeManager
 
@@ -194,7 +191,6 @@ class SettingsMainActivity : AppCompatActivity(),
             super.onCreate(savedInstanceState)
 
             settingsMainActivity = activity as SettingsMainActivity
-            prefs = settingsMainActivity.prefs
             subtypeManager = settingsMainActivity.subtypeManager
         }
     }

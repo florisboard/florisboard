@@ -110,6 +110,18 @@ class PrefHelper(
         }
     }
 
+    companion object {
+        private var defaultInstance: PrefHelper? = null
+
+        @Synchronized
+        fun getDefaultInstance(context: Context): PrefHelper {
+            if (defaultInstance == null) {
+                defaultInstance = PrefHelper(context)
+            }
+            return defaultInstance!!
+        }
+    }
+
     /**
      * Tells the [PreferenceManager] to set the defined preferences to their default values, if
      * they have not been initialized yet.
@@ -118,8 +130,8 @@ class PrefHelper(
         PreferenceManager.setDefaultValues(context, R.xml.prefs_advanced, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_gestures, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_keyboard, true)
-        PreferenceManager.setDefaultValues(context, R.xml.prefs_typing, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_theme, true)
+        PreferenceManager.setDefaultValues(context, R.xml.prefs_typing, true)
         //setPref(Keyboard.SUBTYPES, "")
         //setPref(Internal.IS_IME_SET_UP, false)
     }
@@ -282,7 +294,18 @@ class PrefHelper(
      */
     class Theme(private val prefHelper: PrefHelper) {
         companion object {
-            const val NAME =                    "theme__name"
+            const val NAME =                        "theme__name"
+            const val KEYBOARD_BG_COLOR =           "theme__keyboard_bgColor"
+            const val KEY_BG_COLOR =                "theme__key_bgColor"
+            const val KEY_BG_COLOR_PRESSED =        "theme__key_bgColorPressed"
+            const val KEY_FG_COLOR =                "theme__key_fgColor"
+            const val KEY_ENTER_BG_COLOR =          "theme__keyEnter_bgColor"
+            const val KEY_ENTER_BG_COLOR_PRESSED =  "theme__keyEnter_bgColorPressed"
+            const val KEY_ENTER_FG_COLOR =          "theme__keyEnter_fgColor"
+            const val KEY_SHIFT_BG_COLOR =          "theme__keyShift_bgColor"
+            const val KEY_SHIFT_BG_COLOR_PRESSED =  "theme__keyShift_bgColorPressed"
+            const val KEY_SHIFT_FG_COLOR =          "theme__keyShift_fgColor"
+            const val KEY_SHIFT_FG_COLOR_CAPSLOCK = "theme__keyShift_fgColorCapsLock"
         }
 
         var name: String = ""
@@ -295,5 +318,38 @@ class PrefHelper(
                 else -> R.style.KeyboardTheme_FlorisLight
             }
         }
+        var keyboardBgColor: Int
+            get() =  prefHelper.getPref(KEYBOARD_BG_COLOR, 0)
+            set(v) = prefHelper.setPref(KEYBOARD_BG_COLOR, v)
+        var keyBgColor: Int
+            get() =  prefHelper.getPref(KEY_BG_COLOR, 0)
+            set(v) = prefHelper.setPref(KEY_BG_COLOR, v)
+        var keyBgColorPressed: Int
+            get() =  prefHelper.getPref(KEY_BG_COLOR_PRESSED, 0)
+            set(v) = prefHelper.setPref(KEY_BG_COLOR_PRESSED, v)
+        var keyFgColor: Int
+            get() =  prefHelper.getPref(KEY_FG_COLOR, 0)
+            set(v) = prefHelper.setPref(KEY_FG_COLOR, v)
+        var keyEnterBgColor: Int
+            get() =  prefHelper.getPref(KEY_ENTER_BG_COLOR, 0)
+            set(v) = prefHelper.setPref(KEY_ENTER_BG_COLOR, v)
+        var keyEnterBgColorPressed: Int
+            get() =  prefHelper.getPref(KEY_ENTER_BG_COLOR_PRESSED, 0)
+            set(v) = prefHelper.setPref(KEY_ENTER_BG_COLOR_PRESSED, v)
+        var keyEnterFgColor: Int
+            get() =  prefHelper.getPref(KEY_ENTER_FG_COLOR, 0)
+            set(v) = prefHelper.setPref(KEY_ENTER_FG_COLOR, v)
+        var keyShiftBgColor: Int
+            get() =  prefHelper.getPref(KEY_SHIFT_BG_COLOR, 0)
+            set(v) = prefHelper.setPref(KEY_SHIFT_BG_COLOR, v)
+        var keyShiftBgColorPressed: Int
+            get() =  prefHelper.getPref(KEY_SHIFT_BG_COLOR_PRESSED, 0)
+            set(v) = prefHelper.setPref(KEY_SHIFT_BG_COLOR_PRESSED, v)
+        var keyShiftFgColor: Int
+            get() =  prefHelper.getPref(KEY_SHIFT_FG_COLOR, 0)
+            set(v) = prefHelper.setPref(KEY_SHIFT_FG_COLOR, v)
+        var keyShiftFgColorCapsLock: Int
+            get() =  prefHelper.getPref(KEY_SHIFT_FG_COLOR_CAPSLOCK, 0)
+            set(v) = prefHelper.setPref(KEY_SHIFT_FG_COLOR_CAPSLOCK, v)
     }
 }

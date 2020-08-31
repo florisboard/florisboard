@@ -4,6 +4,9 @@
   "isNightTheme": false,
   "attributes": {
     "window": {
+      "colorPrimary": "#4CAF50",
+      "colorPrimaryDark": "#388E3C",
+      "colorAccent": "#FF9800",
       "colorButtonNormal": "#4A000000",
       "colorControlNormal": "#8A000000",
       "navigationBarColor": "@keyboard/bgColor",
@@ -21,8 +24,8 @@
       "fgColor": "@window/textColor"
     },
     "keyEnter": {
-      "bgColor": "#4CAF50",
-      "bgColorPressed": "#388E3C",
+      "bgColor": "@window/colorPrimary",
+      "bgColorPressed": "@window/colorPrimaryDark",
       "fgColor": "@window/textColorInverted"
     },
     "keyPopup": {
@@ -34,6 +37,12 @@
       "bgColorActive": "#BDBDBD",
       "fgColor": "@window/textColor",
       "shadowColor": "#CDCACACA"
+    },
+    "keyShift": {
+      "bgColor": "@key/bgColor",
+      "bgColorPressed": "@key/bgColorPressed",
+      "fgColor": "@window/textColor",
+      "fgColorCapsLock": "@window/colorAccent"
     },
     "emojiKey": {
       "bgColor": "@keyboard/bgColor",

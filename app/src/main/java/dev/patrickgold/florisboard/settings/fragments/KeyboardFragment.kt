@@ -24,6 +24,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsFragmentKeyboardBinding
+import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
@@ -34,12 +35,14 @@ import kotlinx.coroutines.*
 class KeyboardFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by MainScope() {
     private lateinit var binding: SettingsFragmentKeyboardBinding
     private lateinit var keyboardView: KeyboardView
+    private lateinit var prefs: PrefHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        prefs = PrefHelper.getDefaultInstance(requireContext())
         binding = SettingsFragmentKeyboardBinding.inflate(inflater, container, false)
 
         binding.themeModifyBtn.setOnClickListener {
@@ -63,7 +66,7 @@ class KeyboardFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope
             ).apply {
                 setMargins(8,8,8,16)
             }
-            keyboardView.prefs = prefs
+            prefs.sync()
             keyboardView.isPreviewMode = true
             keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, Subtype.DEFAULT).await()
             keyboardView.updateVisibility()

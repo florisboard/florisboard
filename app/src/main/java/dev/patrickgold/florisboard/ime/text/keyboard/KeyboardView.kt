@@ -61,7 +61,7 @@ class KeyboardView : LinearLayout {
     var florisboard: FlorisBoard? = null
     var isPreviewMode: Boolean = false
     var popupManager = KeyPopupManager<KeyboardView, KeyView>(this)
-    lateinit var prefs: PrefHelper
+    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -313,6 +313,6 @@ class KeyboardView : LinearLayout {
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        colorDrawable.color = getColorFromAttr(context, R.attr.keyboard_bgColor)
+        colorDrawable.color = prefs.theme.keyboardBgColor
     }
 }

@@ -33,6 +33,9 @@ fun setBackgroundTintColor(view: View, colorId: Int) {
         getColorFromAttr(view.context, colorId)
     )
 }
+fun setBackgroundTintColor2(view: View, colorInt: Int) {
+    view.backgroundTintList = ColorStateList.valueOf(colorInt)
+}
 fun setDrawableTintColor(view: Button, colorId: Int) {
     view.compoundDrawableTintList = ColorStateList.valueOf(
         getColorFromAttr(view.context, colorId)

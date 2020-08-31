@@ -138,7 +138,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     private suspend fun addKeyboardView(mode: KeyboardMode) {
         val keyboardView = KeyboardView(florisboard.context)
         keyboardView.florisboard = florisboard
-        keyboardView.prefs = florisboard.prefs
         keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(mode, florisboard.activeSubtype).await()
         keyboardViews[mode] = keyboardView
         withContext(Dispatchers.Main) {

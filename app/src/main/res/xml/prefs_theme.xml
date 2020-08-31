@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--suppress AndroidUnknownAttribute -->
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -10,5 +12,95 @@
         app:iconSpaceReserved="false"
         app:title="@string/pref__theme__name__label"
         app:useSimpleSummaryProvider="true"/>
+
+    <PreferenceCategory
+        app:title="@string/settings__theme__group_keyboard"
+        app:iconSpaceReserved="false">
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__keyboard_bgColor"
+            android:title="@string/settings__theme__background"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/settings__theme__group_key"
+        app:iconSpaceReserved="false">
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__key_bgColor"
+            android:title="@string/settings__theme__background"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__key_bgColorPressed"
+            android:title="@string/settings__theme__background_pressed"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__key_fgColor"
+            android:title="@string/settings__theme__foreground"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/settings__theme__group_key_enter"
+        app:iconSpaceReserved="false">
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__keyEnter_bgColor"
+            android:title="@string/settings__theme__background"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__keyEnter_bgColorPressed"
+            android:title="@string/settings__theme__background_pressed"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__keyEnter_fgColor"
+            android:title="@string/settings__theme__foreground"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/settings__theme__group_key_shift"
+        app:iconSpaceReserved="false">
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__keyShift_bgColor"
+            android:title="@string/settings__theme__background"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__keyShift_bgColorPressed"
+            android:title="@string/settings__theme__background_pressed"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__keyShift_fgColor"
+            android:title="@string/settings__theme__foreground"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__keyShift_fgColorCapsLock"
+            android:title="@string/settings__theme__foreground_capslock"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

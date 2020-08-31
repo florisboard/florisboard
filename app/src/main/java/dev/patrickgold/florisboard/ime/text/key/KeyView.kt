@@ -33,10 +33,10 @@ import androidx.core.view.children
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
-import dev.patrickgold.florisboard.util.getColorFromAttr
-import dev.patrickgold.florisboard.util.setBackgroundTintColor
+import dev.patrickgold.florisboard.util.setBackgroundTintColor2
 import java.util.*
 
 /**
@@ -60,6 +60,7 @@ class KeyView(
         }
     private var osHandler: Handler? = null
     private var osTimer: Timer? = null
+    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private var shouldBlockNextKeyCode: Boolean = false
 
     private var drawable: Drawable? = null
@@ -194,7 +195,7 @@ class KeyView(
                         }
                     }, 500, 50)
                 }
-                val delayMillis = keyboardView.prefs.keyboard.longPressDelay
+                val delayMillis = prefs.keyboard.longPressDelay
                 if (osHandler == null) {
                     osHandler = Handler()
                 }
@@ -337,20 +338,31 @@ class KeyView(
      * Updates the background depending on [isKeyPressed] and [data].
      */
     private fun updateKeyPressedBackground() {
-        if (data.code == KeyCode.ENTER) {
-            setBackgroundTintColor(
-                this, when {
-                    isKeyPressed -> R.attr.colorPrimaryDark
-                    else -> R.attr.colorPrimary
-                }
-            )
-        } else {
-            setBackgroundTintColor(
-                this, when {
-                    isKeyPressed -> R.attr.key_bgColorPressed
-                    else -> R.attr.key_bgColor
-                }
-            )
+        when (data.code) {
+            KeyCode.ENTER -> {
+                setBackgroundTintColor2(
+                    this, when {
+                        isKeyPressed -> prefs.theme.keyEnterBgColorPressed
+                        else -> prefs.theme.keyEnterBgColor
+                    }
+                )
+            }
+            KeyCode.SHIFT -> {
+                setBackgroundTintColor2(
+                    this, when {
+                        isKeyPressed -> prefs.theme.keyShiftBgColorPressed
+                        else -> prefs.theme.keyShiftBgColor
+                    }
+                )
+            }
+            else -> {
+                setBackgroundTintColor2(
+                    this, when {
+                        isKeyPressed -> prefs.theme.keyBgColorPressed
+                        else -> prefs.theme.keyBgColor
+                    }
+                )
+            }
         }
     }
 
@@ -437,7 +449,7 @@ class KeyView(
             when (data.code) {
                 KeyCode.DELETE -> {
                     drawable = getDrawable(context, R.drawable.ic_backspace)
-                    drawableColor = getColorFromAttr(context, R.attr.key_fgColor)
+                    drawableColor = prefs.theme.keyFgColor
                 }
                 KeyCode.ENTER -> {
                     val action = florisboard?.currentInputEditorInfo?.imeOptions ?: 0
@@ -451,29 +463,29 @@ class KeyView(
                         EditorInfo.IME_ACTION_SEND -> R.drawable.ic_send
                         else -> R.drawable.ic_arrow_right_alt
                     })
-                    drawableColor = getColorFromAttr(context, R.attr.key_enter_fgColor)
+                    drawableColor = prefs.theme.keyEnterFgColor
                     if (action and EditorInfo.IME_FLAG_NO_ENTER_ACTION > 0) {
                         drawable = getDrawable(context, R.drawable.ic_keyboard_return)
                     }
                 }
                 KeyCode.LANGUAGE_SWITCH -> {
                     drawable = getDrawable(context, R.drawable.ic_language)
-                    drawableColor = getColorFromAttr(context, R.attr.key_fgColor)
+                    drawableColor = prefs.theme.keyFgColor
                 }
                 KeyCode.PHONE_PAUSE -> label = resources.getString(R.string.key__phone_pause)
                 KeyCode.PHONE_WAIT -> label = resources.getString(R.string.key__phone_wait)
                 KeyCode.SHIFT -> {
                     drawable = getDrawable(context, when {
                         florisboard?.textInputManager?.caps ?: false && florisboard?.textInputManager?.capsLock ?: false -> {
-                            drawableColor = getColorFromAttr(context, R.attr.colorAccent)
+                            drawableColor = prefs.theme.keyShiftFgColorCapsLock
                             R.drawable.ic_keyboard_capslock
                         }
                         florisboard?.textInputManager?.caps ?: false && !(florisboard?.textInputManager?.capsLock ?: false) -> {
-                            drawableColor = getColorFromAttr(context, R.attr.key_fgColor)
+                            drawableColor = prefs.theme.keyShiftFgColor
                             R.drawable.ic_keyboard_capslock
                         }
                         else -> {
-                            drawableColor = getColorFromAttr(context, R.attr.key_fgColor)
+                            drawableColor = prefs.theme.keyShiftFgColor
                             R.drawable.ic_keyboard_arrow_up
                         }
                     })
@@ -485,7 +497,7 @@ class KeyView(
                         KeyboardMode.PHONE,
                         KeyboardMode.PHONE2 -> {
                             drawable = getDrawable(context, R.drawable.ic_space_bar)
-                            drawableColor = getColorFromAttr(context, R.attr.key_fgColor)
+                            drawableColor = prefs.theme.keyFgColor
                         }
                         KeyboardMode.CHARACTERS -> {
                             label = florisboard?.activeSubtype?.locale?.displayName
@@ -495,7 +507,7 @@ class KeyView(
                 }
                 KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
                     drawable = getDrawable(context, R.drawable.ic_sentiment_satisfied)
-                    drawableColor = getColorFromAttr(context, R.attr.key_fgColor)
+                    drawableColor = prefs.theme.keyFgColor
                 }
                 KeyCode.SWITCH_TO_TEXT_CONTEXT,
                 KeyCode.VIEW_CHARACTERS -> {
@@ -557,12 +569,12 @@ class KeyView(
             } else {
                 labelPaint.textSize = resources.getDimension(R.dimen.key_textSize)
             }
-            labelPaint.color = getColorFromAttr(context, R.attr.key_fgColor)
+            labelPaint.color = prefs.theme.keyFgColor
             labelPaint.alpha = if (keyboardView.computedLayout?.mode == KeyboardMode.CHARACTERS &&
                 data.code == KeyCode.SPACE) { 120 } else { 255 }
             val isPortrait =
                 resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-            if (keyboardView.prefs.keyboard.oneHandedMode != "off" && isPortrait) {
+            if (prefs.keyboard.oneHandedMode != "off" && isPortrait) {
                 labelPaint.textSize *= 0.9f
             }
             val centerX = measuredWidth / 2.0f
