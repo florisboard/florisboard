@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.flexbox.FlexboxLayout
+<dev.patrickgold.florisboard.ime.popup.KeyPopupExtendedView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/key_popup_extended"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/key_popup_bgshape"
+    android:backgroundTintMode="multiply"
     android:padding="0dp"
     android:textSize="@dimen/key_popup_textSize"
     app:flexDirection="row"
     app:flexWrap="wrap"
-    app:showDivider="none" />
+    app:showDivider="none"/>

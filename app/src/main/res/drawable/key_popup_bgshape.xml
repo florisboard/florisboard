@@ -2,16 +2,16 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape>
-            <padding android:top="1dp" android:right="1dp" android:bottom="1dp" android:left="1dp" />
-            <solid android:color="?key_popup_extended_shadowColor" />
-            <corners android:radius="@dimen/key_borderRadius" />
+            <padding android:top="1dp" android:right="1dp" android:bottom="1dp" android:left="1dp"/>
+            <solid android:color="#CDAFAFAF"/>
+            <corners android:radius="@dimen/key_borderRadius"/>
         </shape>
     </item>
 
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="?key_popup_bgColor" />
-            <corners android:radius="@dimen/key_borderRadius" />
+            <solid android:color="@android:color/white"/>
+            <corners android:radius="@dimen/key_borderRadius"/>
         </shape>
     </item>
 </layer-list>

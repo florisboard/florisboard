@@ -138,7 +138,7 @@ class FlorisBoard : InputMethodService() {
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        prefs = PrefHelper(this)
+        prefs = PrefHelper.getDefaultInstance(this)
         prefs.initDefaultPreferences()
         prefs.sync()
         subtypeManager = SubtypeManager(this, prefs)
@@ -146,6 +146,7 @@ class FlorisBoard : InputMethodService() {
 
         currentThemeResId = prefs.theme.getSelectedThemeResId()
         setTheme(currentThemeResId)
+        updateTheme()
 
         AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
 
@@ -171,6 +172,7 @@ class FlorisBoard : InputMethodService() {
 
         this.inputView = inputView
         initializeOneHandedEnvironment()
+        updateTheme()
         updateSoftInputWindowLayoutParameters()
         updateOneHandedPanelVisibility()
 
@@ -205,7 +207,7 @@ class FlorisBoard : InputMethodService() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onWindowShown()")
 
         prefs.sync()
-        updateThemeIfNecessary()
+        updateTheme()
         updateOneHandedPanelVisibility()
         activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
         onSubtypeChanged(activeSubtype)
@@ -264,25 +266,20 @@ class FlorisBoard : InputMethodService() {
     }
 
     /**
-     * Checks the preferences if the selected theme res id has changed and updates the theme only
-     * then by rebuilding the UI and setting the navigation bar theme manually.
+     * Reapplies the supplies colors and settings from prefs to navigation bar.
      */
-    private fun updateThemeIfNecessary() {
-        val newThemeResId = prefs.theme.getSelectedThemeResId()
-        if (newThemeResId != currentThemeResId) {
-            currentThemeResId = newThemeResId
-            setInputView(onCreateInputView())
-            val w = window?.window ?: return
-            w.navigationBarColor = getColorFromAttr(baseContext, android.R.attr.navigationBarColor)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-                var flags = w.decorView.systemUiVisibility
-                flags = if (getBooleanFromAttr(baseContext, android.R.attr.windowLightNavigationBar)) {
-                    flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-                } else {
-                    flags and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
-                }
-                w.decorView.systemUiVisibility = flags
+    private fun updateTheme() {
+        val w = window?.window ?: return
+        inputView?.mainViewFlipper?.setBackgroundColor(prefs.theme.keyboardBgColor)
+        w.navigationBarColor = prefs.theme.navBarColor
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            var flags = w.decorView.systemUiVisibility
+            flags = if (prefs.theme.navBarIsLight) {
+                flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            } else {
+                flags and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
             }
+            w.decorView.systemUiVisibility = flags
         }
     }
 

@@ -30,13 +30,8 @@
     },
     "keyPopup": {
       "bgColor": "#EEEEEE",
-      "fgColor": "@window/textColor"
-    },
-    "keyPopupExtended": {
-      "bgColor": "transparent",
       "bgColorActive": "#BDBDBD",
-      "fgColor": "@window/textColor",
-      "shadowColor": "#CDCACACA"
+      "fgColor": "@window/textColor"
     },
     "keyShift": {
       "bgColor": "@key/bgColor",
@@ -59,15 +54,12 @@
     },
     "smartbar": {
       "bgColor": "@keyboard/bgColor",
-      "fgColor": "@window/textColor"
+      "fgColor": "@window/textColor",
+      "fgColorDisabled": "#4A000000"
     },
     "smartbarButton": {
       "bgColor": "@key/bgColor",
-      "bgColorPressed": "@key/bgColorPressed",
       "fgColor": "@key/fgColor"
-    },
-    "smartbarCandidate": {
-      "fgColor": "@window/textColor"
     }
   }
 }

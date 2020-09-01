@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/editing"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:backgroundTintMode="multiply">
 
     <dev.patrickgold.florisboard.ime.editing.EditingKeyView
         android:id="@+id/arrow_left"

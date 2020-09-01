@@ -14,6 +14,25 @@
         app:useSimpleSummaryProvider="true"/>
 
     <PreferenceCategory
+        app:title="@string/settings__theme__group_window"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreferenceCompat
+            app:key="theme__window_navBarIsLight"
+            app:title="@string/pref__theme__window_navBarIsLight_title"
+            app:summary="@string/pref__theme__window_navBarIsLight_summary"
+            app:iconSpaceReserved="false"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__window_navBarColor"
+            android:title="@string/pref__theme__window_navBarColor_title"
+            android:summary="@string/pref__theme__window_navBarColor_summary"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         app:title="@string/settings__theme__group_keyboard"
         app:iconSpaceReserved="false">
 
@@ -98,6 +117,72 @@
         <com.skydoves.colorpickerpreference.ColorPickerPreference
             android:key="theme__keyShift_fgColorCapsLock"
             android:title="@string/settings__theme__foreground_capslock"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/settings__theme__group_key_popup"
+        app:iconSpaceReserved="false">
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__keyPopup_bgColor"
+            android:title="@string/settings__theme__background"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__keyPopup_bgColorActive"
+            android:title="@string/settings__theme__background_active"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__keyPopup_fgColor"
+            android:title="@string/settings__theme__foreground"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/settings__theme__group_smartbar"
+        app:iconSpaceReserved="false">
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__smartbar_bgColor"
+            android:title="@string/settings__theme__background"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__smartbar_fgColor"
+            android:title="@string/settings__theme__foreground"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__smartbar_fgColorDisabled"
+            android:title="@string/settings__theme__foreground_disabled"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/settings__theme__group_smartbar_button"
+        app:iconSpaceReserved="false">
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__smartbarButton_bgColor"
+            android:title="@string/settings__theme__background"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__smartbarButton_fgColor"
+            android:title="@string/settings__theme__foreground"
             app:preference_attachAlphaSlideBar="false"
             style="@style/ColorPreferenceDefaultAttrs"/>
 

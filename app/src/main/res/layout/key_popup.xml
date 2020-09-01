@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<dev.patrickgold.florisboard.ime.popup.KeyPopupView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/key_popup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/key_popup_bgshape">
+    android:background="@drawable/key_popup_bgshape"
+    android:backgroundTintMode="multiply">
 
     <TextView
         android:id="@+id/key_popup_text"
         android:layout_width="match_parent"
         android:layout_height="@dimen/key_height"
         android:gravity="center"
-        android:textColor="?attr/key_popup_fgColor"
         android:textSize="@dimen/key_popup_textSize"/>
 
     <ImageView
@@ -23,7 +24,6 @@
         android:layout_gravity="end"
         android:padding="0dp"
         android:src="@drawable/ic_more_horiz"
-        android:tint="?attr/key_popup_fgColor"
-        android:visibility="visible" />
+        android:visibility="visible"/>
 
-</LinearLayout>
+</dev.patrickgold.florisboard.ime.popup.KeyPopupView>

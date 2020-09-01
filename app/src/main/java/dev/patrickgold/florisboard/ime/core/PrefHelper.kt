@@ -295,6 +295,8 @@ class PrefHelper(
     class Theme(private val prefHelper: PrefHelper) {
         companion object {
             const val NAME =                        "theme__name"
+            const val WINDOW_NAV_BAR_COLOR =        "theme__window_navBarColor"
+            const val WINDOW_NAV_BAR_IS_LIGHT =     "theme__window_navBarIsLight"
             const val KEYBOARD_BG_COLOR =           "theme__keyboard_bgColor"
             const val KEY_BG_COLOR =                "theme__key_bgColor"
             const val KEY_BG_COLOR_PRESSED =        "theme__key_bgColorPressed"
@@ -306,6 +308,14 @@ class PrefHelper(
             const val KEY_SHIFT_BG_COLOR_PRESSED =  "theme__keyShift_bgColorPressed"
             const val KEY_SHIFT_FG_COLOR =          "theme__keyShift_fgColor"
             const val KEY_SHIFT_FG_COLOR_CAPSLOCK = "theme__keyShift_fgColorCapsLock"
+            const val KEY_POPUP_BG_COLOR =          "theme__keyPopup_bgColor"
+            const val KEY_POPUP_BG_COLOR_ACTIVE =   "theme__keyPopup_bgColorActive"
+            const val KEY_POPUP_FG_COLOR =          "theme__keyPopup_fgColor"
+            const val SMARTBAR_BG_COLOR =           "theme__smartbar_bgColor"
+            const val SMARTBAR_FG_COLOR =           "theme__smartbar_fgColor"
+            const val SMARTBAR_FG_COLOR_DISABLED =  "theme__smartbar_fgColorDisabled"
+            const val SMARTBAR_BUTTON_BG_COLOR =    "theme__smartbarButton_bgColor"
+            const val SMARTBAR_BUTTON_FG_COLOR =    "theme__smartbarButton_fgColor"
         }
 
         var name: String = ""
@@ -318,6 +328,12 @@ class PrefHelper(
                 else -> R.style.KeyboardTheme_FlorisLight
             }
         }
+        var navBarColor: Int
+            get() =  prefHelper.getPref(WINDOW_NAV_BAR_COLOR, 0)
+            set(v) = prefHelper.setPref(WINDOW_NAV_BAR_COLOR, v)
+        var navBarIsLight: Boolean
+            get() =  prefHelper.getPref(WINDOW_NAV_BAR_IS_LIGHT, false)
+            set(v) = prefHelper.setPref(WINDOW_NAV_BAR_IS_LIGHT, v)
         var keyboardBgColor: Int
             get() =  prefHelper.getPref(KEYBOARD_BG_COLOR, 0)
             set(v) = prefHelper.setPref(KEYBOARD_BG_COLOR, v)
@@ -351,5 +367,29 @@ class PrefHelper(
         var keyShiftFgColorCapsLock: Int
             get() =  prefHelper.getPref(KEY_SHIFT_FG_COLOR_CAPSLOCK, 0)
             set(v) = prefHelper.setPref(KEY_SHIFT_FG_COLOR_CAPSLOCK, v)
+        var keyPopupBgColor: Int
+            get() =  prefHelper.getPref(KEY_POPUP_BG_COLOR, 0)
+            set(v) = prefHelper.setPref(KEY_POPUP_BG_COLOR, v)
+        var keyPopupBgColorActive: Int
+            get() =  prefHelper.getPref(KEY_POPUP_BG_COLOR_ACTIVE, 0)
+            set(v) = prefHelper.setPref(KEY_POPUP_BG_COLOR_ACTIVE, v)
+        var keyPopupFgColor: Int
+            get() =  prefHelper.getPref(KEY_POPUP_FG_COLOR, 0)
+            set(v) = prefHelper.setPref(KEY_POPUP_FG_COLOR, v)
+        var smartbarBgColor: Int
+            get() =  prefHelper.getPref(SMARTBAR_BG_COLOR, 0)
+            set(v) = prefHelper.setPref(SMARTBAR_BG_COLOR, v)
+        var smartbarFgColor: Int
+            get() =  prefHelper.getPref(SMARTBAR_FG_COLOR, 0)
+            set(v) = prefHelper.setPref(SMARTBAR_FG_COLOR, v)
+        var smartbarFgColorDisabled: Int
+            get() =  prefHelper.getPref(SMARTBAR_FG_COLOR_DISABLED, 0)
+            set(v) = prefHelper.setPref(SMARTBAR_FG_COLOR_DISABLED, v)
+        var smartbarButtonBgColor: Int
+            get() =  prefHelper.getPref(SMARTBAR_BUTTON_BG_COLOR, 0)
+            set(v) = prefHelper.setPref(SMARTBAR_BUTTON_BG_COLOR, v)
+        var smartbarButtonFgColor: Int
+            get() =  prefHelper.getPref(SMARTBAR_BUTTON_FG_COLOR, 0)
+            set(v) = prefHelper.setPref(SMARTBAR_BUTTON_FG_COLOR, v)
     }
 }

@@ -17,18 +17,22 @@
 package dev.patrickgold.florisboard.ime.editing
 
 import android.content.Context
+import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.View
 import android.view.inputmethod.CursorAnchorInfo
 import androidx.constraintlayout.widget.ConstraintLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.util.setBackgroundTintColor2
 
 /**
  * View class for updating the key views depending on the current selection and clipboard state.
  */
 class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
+    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
 
     private var arrowUpKey: EditingKeyView? = null
     private var arrowDownKey: EditingKeyView? = null
@@ -78,5 +82,10 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener {
         }
         copyKey?.isEnabled = isSelectionActive
         pasteKey?.isEnabled = florisboard?.clipboardManager?.hasPrimaryClip() ?: false
+    }
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+        setBackgroundTintColor2(this, prefs.theme.smartbarBgColor)
     }
 }

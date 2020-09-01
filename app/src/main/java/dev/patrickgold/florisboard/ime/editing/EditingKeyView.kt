@@ -29,6 +29,7 @@ import android.widget.Button
 import androidx.appcompat.widget.AppCompatImageButton
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.util.getColorFromAttr
@@ -39,6 +40,7 @@ import java.util.*
  */
 class EditingKeyView : AppCompatImageButton {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
+    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val data: KeyData
     private var isKeyPressed: Boolean = false
     private var osTimer: Timer? = null
@@ -133,10 +135,10 @@ class EditingKeyView : AppCompatImageButton {
 
         canvas ?: return
 
-        imageTintList = ColorStateList.valueOf(getColorFromAttr(context, when {
-            isEnabled -> R.attr.key_fgColor
-            else -> android.R.attr.colorButtonNormal
-        }))
+        imageTintList = ColorStateList.valueOf(when {
+            isEnabled -> prefs.theme.smartbarFgColor
+            else -> prefs.theme.smartbarFgColorDisabled
+        })
 
         // Draw label
         val label = label
@@ -144,9 +146,9 @@ class EditingKeyView : AppCompatImageButton {
             labelPaint.color = if (isHighlighted && isEnabled) {
                 getColorFromAttr(context, R.attr.colorPrimary)
             } else if (!isEnabled) {
-                getColorFromAttr(context, android.R.attr.colorButtonNormal)
+                prefs.theme.smartbarFgColorDisabled
             } else {
-                getColorFromAttr(context, R.attr.key_fgColor)
+                prefs.theme.smartbarFgColor
             }
             val isPortrait =
                 resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT

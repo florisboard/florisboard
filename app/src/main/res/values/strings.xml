@@ -63,15 +63,21 @@
     <string name="settings__theme__background_pressed">Background color when pressed</string>
     <string name="settings__theme__foreground">Foreground color</string>
     <string name="settings__theme__foreground_capslock">Foreground color (caps lock)</string>
-    <string name="settings__theme__shadow">Shadow color</string>
+    <string name="settings__theme__foreground_disabled">Foreground color (disabled)</string>
     <string name="settings__theme__dialog_title">Select a color</string>
+    <string name="settings__theme__group_window">Window &amp; System</string>
     <string name="settings__theme__group_keyboard">Keyboard</string>
     <string name="settings__theme__group_key">Key</string>
     <string name="settings__theme__group_key_enter">Enter key</string>
     <string name="settings__theme__group_key_popup">Key popup</string>
-    <string name="settings__theme__group_key_popup_extended">Key popup (extended panel)</string>
     <string name="settings__theme__group_key_shift">Shift key</string>
+    <string name="settings__theme__group_smartbar">Smartbar</string>
+    <string name="settings__theme__group_smartbar_button">Smartbar button</string>
     <string name="pref__theme__name__label">Keyboard Theme</string>
+    <string name="pref__theme__window_navBarColor_title">Navigation bar color</string>
+    <string name="pref__theme__window_navBarColor_summary">The background of the navigation bar.</string>
+    <string name="pref__theme__window_navBarIsLight_title">Navigation bar dark foreground</string>
+    <string name="pref__theme__window_navBarIsLight_summary">Set to ON for dark or to OFF for light foreground.</string>
 
     <string name="settings__keyboard__title">Keyboard Preferences</string>
     <string name="pref__keyboard__group_layout__label">Layout</string>

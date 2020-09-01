@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.text.smartbar
 
 import android.content.Context
+import android.graphics.Canvas
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
@@ -25,8 +26,12 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.annotation.IdRes
+import androidx.core.view.children
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.util.setBackgroundTintColor2
+import dev.patrickgold.florisboard.util.setImageTintColor2
 
 /**
  * View class which keeps the references to important children and informs [SmartbarManager] that
@@ -34,7 +39,7 @@ import dev.patrickgold.florisboard.R
  * a theme change).
  */
 class SmartbarView : LinearLayout {
-
+    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val smartbarManager = SmartbarManager.getInstance()
 
     private var variants: MutableList<ViewGroup> = mutableListOf()
@@ -107,5 +112,41 @@ class SmartbarView : LinearLayout {
         val baseSize = resources.getDimension(R.dimen.smartbar_height)
         val size = (baseSize * factor).toInt()
         layoutParams?.height = size
+    }
+
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+        setBackgroundTintColor2(this, prefs.theme.smartbarBgColor)
+        for (container in containers) {
+            when (container.id) {
+                R.id.number_row -> {
+                    for (button in container.children) {
+                        if (button is Button) {
+                            button.setTextColor(prefs.theme.smartbarFgColor)
+                        }
+                    }
+                }
+                R.id.clipboard_cursor_row -> {
+                    for (button in container.children) {
+                        if (button is ImageButton) {
+                            if (button.isEnabled) {
+                                setImageTintColor2(button, prefs.theme.smartbarFgColor)
+                            } else {
+                                setImageTintColor2(button, prefs.theme.smartbarFgColorDisabled)
+                            }
+                        }
+                    }
+                }
+                R.id.candidates -> {
+                    for (view in container.children) {
+                        if (view is Button) {
+                            view.setTextColor(prefs.theme.smartbarFgColor)
+                        } else {
+                            view.setBackgroundColor(prefs.theme.smartbarFgColorDisabled)
+                        }
+                    }
+                }
+            }
+        }
     }
 }

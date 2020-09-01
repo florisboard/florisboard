@@ -14,37 +14,37 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.smartbar
+package dev.patrickgold.florisboard.ime.popup
 
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.PrefHelper
-import dev.patrickgold.florisboard.util.setBackgroundTintColor2
+import dev.patrickgold.florisboard.util.*
 
-/**
- * Basically the same as an ImageButton.
- * @see [onMeasure] why this view class exists.
- */
-class SmartbarQuickActionButton : androidx.appcompat.widget.AppCompatImageButton {
+class KeyPopupView : LinearLayout {
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+    private lateinit var text: TextView
+    private lateinit var threedots: ImageView
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    /**
-     * Override onMeasure() to automatically set the height of the button equal to the width of
-     * the button. The height is MATCH_PARENT and the exact same calculated pixel size should be
-     * used for the width.
-     */
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(heightMeasureSpec, heightMeasureSpec)
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        text = findViewById(R.id.key_popup_text)
+        threedots = findViewById(R.id.key_popup_threedots)
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        setBackgroundTintColor2(this, prefs.theme.smartbarButtonBgColor)
-        setColorFilter(prefs.theme.smartbarButtonFgColor)
+        setBackgroundTintColor2(this, prefs.theme.keyPopupBgColor)
+        text.setTextColor(prefs.theme.keyPopupFgColor)
+        setImageTintColor2(threedots, prefs.theme.keyPopupFgColor)
     }
 }
