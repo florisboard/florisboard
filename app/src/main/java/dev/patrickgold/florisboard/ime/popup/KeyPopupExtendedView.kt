@@ -31,7 +31,7 @@ class KeyPopupExtendedView : FlexboxLayout {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
         setBackgroundTintColor2(this, prefs.theme.keyPopupBgColor)
+        super.onDraw(canvas)
     }
 }

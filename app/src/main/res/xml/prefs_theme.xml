@@ -153,7 +153,7 @@
         <com.skydoves.colorpickerpreference.ColorPickerPreference
             android:key="theme__smartbar_bgColor"
             android:title="@string/settings__theme__background"
-            app:preference_attachAlphaSlideBar="false"
+            app:preference_attachAlphaSlideBar="true"
             style="@style/ColorPreferenceDefaultAttrs"/>
 
         <com.skydoves.colorpickerpreference.ColorPickerPreference

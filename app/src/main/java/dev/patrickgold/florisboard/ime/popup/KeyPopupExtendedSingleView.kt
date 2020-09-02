@@ -42,15 +42,15 @@ class KeyPopupExtendedSingleView(
     }
 
     override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-
-        canvas ?: return
-
         setBackgroundTintColor2(this, when {
             isActive -> prefs.theme.keyPopupBgColorActive
             else -> Color.TRANSPARENT
         })
         setTextColor(prefs.theme.keyPopupFgColor)
+
+        super.onDraw(canvas)
+
+        canvas ?: return
 
         val drawable = iconDrawable
         val drawablePadding = (0.2f * measuredHeight).toInt()

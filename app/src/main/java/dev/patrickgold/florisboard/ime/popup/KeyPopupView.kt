@@ -42,9 +42,9 @@ class KeyPopupView : LinearLayout {
     }
 
     override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
         setBackgroundTintColor2(this, prefs.theme.keyPopupBgColor)
         text.setTextColor(prefs.theme.keyPopupFgColor)
         setImageTintColor2(threedots, prefs.theme.keyPopupFgColor)
+        super.onDraw(canvas)
     }
 }
