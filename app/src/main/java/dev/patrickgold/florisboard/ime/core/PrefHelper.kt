@@ -295,8 +295,11 @@ class PrefHelper(
     class Theme(private val prefHelper: PrefHelper) {
         companion object {
             const val NAME =                        "theme__name"
-            const val WINDOW_NAV_BAR_COLOR =        "theme__window_navBarColor"
-            const val WINDOW_NAV_BAR_IS_LIGHT =     "theme__window_navBarIsLight"
+            const val COLOR_PRIMARY =               "theme__colorPrimary"
+            const val COLOR_PRIMARY_DARK =          "theme__colorPrimaryDark"
+            const val COLOR_ACCENT =                "theme__colorAccent"
+            const val NAV_BAR_COLOR =               "theme__navBarColor"
+            const val NAV_BAR_IS_LIGHT =            "theme__navBarIsLight"
             const val KEYBOARD_BG_COLOR =           "theme__keyboard_bgColor"
             const val KEY_BG_COLOR =                "theme__key_bgColor"
             const val KEY_BG_COLOR_PRESSED =        "theme__key_bgColorPressed"
@@ -311,9 +314,11 @@ class PrefHelper(
             const val KEY_POPUP_BG_COLOR =          "theme__keyPopup_bgColor"
             const val KEY_POPUP_BG_COLOR_ACTIVE =   "theme__keyPopup_bgColorActive"
             const val KEY_POPUP_FG_COLOR =          "theme__keyPopup_fgColor"
+            const val MEDIA_FG_COLOR =              "theme__media_fgColor"
+            const val MEDIA_FG_COLOR_ALT =          "theme__media_fgColorAlt"
             const val SMARTBAR_BG_COLOR =           "theme__smartbar_bgColor"
             const val SMARTBAR_FG_COLOR =           "theme__smartbar_fgColor"
-            const val SMARTBAR_FG_COLOR_DISABLED =  "theme__smartbar_fgColorDisabled"
+            const val SMARTBAR_FG_COLOR_ALT =       "theme__smartbar_fgColorAlt"
             const val SMARTBAR_BUTTON_BG_COLOR =    "theme__smartbarButton_bgColor"
             const val SMARTBAR_BUTTON_FG_COLOR =    "theme__smartbarButton_fgColor"
         }
@@ -328,12 +333,21 @@ class PrefHelper(
                 else -> R.style.KeyboardTheme_FlorisLight
             }
         }
+        var colorPrimary: Int
+            get() =  prefHelper.getPref(COLOR_PRIMARY, 0)
+            set(v) = prefHelper.setPref(COLOR_PRIMARY, v)
+        var colorPrimaryDark: Int
+            get() =  prefHelper.getPref(COLOR_PRIMARY_DARK, 0)
+            set(v) = prefHelper.setPref(COLOR_PRIMARY_DARK, v)
+        var colorAccent: Int
+            get() =  prefHelper.getPref(COLOR_ACCENT, 0)
+            set(v) = prefHelper.setPref(COLOR_ACCENT, v)
         var navBarColor: Int
-            get() =  prefHelper.getPref(WINDOW_NAV_BAR_COLOR, 0)
-            set(v) = prefHelper.setPref(WINDOW_NAV_BAR_COLOR, v)
+            get() =  prefHelper.getPref(NAV_BAR_COLOR, 0)
+            set(v) = prefHelper.setPref(NAV_BAR_COLOR, v)
         var navBarIsLight: Boolean
-            get() =  prefHelper.getPref(WINDOW_NAV_BAR_IS_LIGHT, false)
-            set(v) = prefHelper.setPref(WINDOW_NAV_BAR_IS_LIGHT, v)
+            get() =  prefHelper.getPref(NAV_BAR_IS_LIGHT, false)
+            set(v) = prefHelper.setPref(NAV_BAR_IS_LIGHT, v)
         var keyboardBgColor: Int
             get() =  prefHelper.getPref(KEYBOARD_BG_COLOR, 0)
             set(v) = prefHelper.setPref(KEYBOARD_BG_COLOR, v)
@@ -376,15 +390,21 @@ class PrefHelper(
         var keyPopupFgColor: Int
             get() =  prefHelper.getPref(KEY_POPUP_FG_COLOR, 0)
             set(v) = prefHelper.setPref(KEY_POPUP_FG_COLOR, v)
+        var mediaFgColor: Int
+            get() =  prefHelper.getPref(MEDIA_FG_COLOR, 0)
+            set(v) = prefHelper.setPref(MEDIA_FG_COLOR, v)
+        var mediaFgColorAlt: Int
+            get() =  prefHelper.getPref(MEDIA_FG_COLOR_ALT, 0)
+            set(v) = prefHelper.setPref(MEDIA_FG_COLOR_ALT, v)
         var smartbarBgColor: Int
             get() =  prefHelper.getPref(SMARTBAR_BG_COLOR, 0)
             set(v) = prefHelper.setPref(SMARTBAR_BG_COLOR, v)
         var smartbarFgColor: Int
             get() =  prefHelper.getPref(SMARTBAR_FG_COLOR, 0)
             set(v) = prefHelper.setPref(SMARTBAR_FG_COLOR, v)
-        var smartbarFgColorDisabled: Int
-            get() =  prefHelper.getPref(SMARTBAR_FG_COLOR_DISABLED, 0)
-            set(v) = prefHelper.setPref(SMARTBAR_FG_COLOR_DISABLED, v)
+        var smartbarFgColorAlt: Int
+            get() =  prefHelper.getPref(SMARTBAR_FG_COLOR_ALT, 0)
+            set(v) = prefHelper.setPref(SMARTBAR_FG_COLOR_ALT, v)
         var smartbarButtonBgColor: Int
             get() =  prefHelper.getPref(SMARTBAR_BUTTON_BG_COLOR, 0)
             set(v) = prefHelper.setPref(SMARTBAR_BUTTON_BG_COLOR, v)

@@ -178,7 +178,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         osHandler.removeCallbacksAndMessages(null)
         layoutManager.onDestroy()
         smartbarManager.onDestroy()
-        florisboard.removeEventListener(this)
         instance = null
     }
 

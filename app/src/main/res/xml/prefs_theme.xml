@@ -17,16 +17,37 @@
         app:title="@string/settings__theme__group_window"
         app:iconSpaceReserved="false">
 
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            app:key="theme__colorPrimary"
+            app:title="@string/pref__theme__colorPrimary_title"
+            app:summary="@string/pref__theme__colorPrimary_summary"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            app:key="theme__colorPrimaryDark"
+            app:title="@string/pref__theme__colorPrimaryDark_title"
+            app:summary="@string/pref__theme__colorPrimaryDark_summary"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            app:key="theme__colorAccent"
+            app:title="@string/pref__theme__colorAccent_title"
+            app:summary="@string/pref__theme__colorAccent_summary"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
         <SwitchPreferenceCompat
-            app:key="theme__window_navBarIsLight"
-            app:title="@string/pref__theme__window_navBarIsLight_title"
-            app:summary="@string/pref__theme__window_navBarIsLight_summary"
+            app:key="theme__navBarIsLight"
+            app:title="@string/pref__theme__navBarIsLight_title"
+            app:summary="@string/pref__theme__navBarIsLight_summary"
             app:iconSpaceReserved="false"/>
 
         <com.skydoves.colorpickerpreference.ColorPickerPreference
-            android:key="theme__window_navBarColor"
-            android:title="@string/pref__theme__window_navBarColor_title"
-            android:summary="@string/pref__theme__window_navBarColor_summary"
+            android:key="theme__navBarColor"
+            android:title="@string/pref__theme__navBarColor_title"
+            android:summary="@string/pref__theme__navBarColor_summary"
             app:preference_attachAlphaSlideBar="false"
             style="@style/ColorPreferenceDefaultAttrs"/>
 
@@ -147,6 +168,24 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        app:title="@string/settings__theme__group_media"
+        app:iconSpaceReserved="false">
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__media_fgColor"
+            android:title="@string/settings__theme__foreground"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__media_fgColorAlt"
+            android:title="@string/settings__theme__foreground_alt"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         app:title="@string/settings__theme__group_smartbar"
         app:iconSpaceReserved="false">
 
@@ -163,8 +202,8 @@
             style="@style/ColorPreferenceDefaultAttrs"/>
 
         <com.skydoves.colorpickerpreference.ColorPickerPreference
-            android:key="theme__smartbar_fgColorDisabled"
-            android:title="@string/settings__theme__foreground_disabled"
+            android:key="theme__smartbar_fgColorAlt"
+            android:title="@string/settings__theme__foreground_alt"
             app:preference_attachAlphaSlideBar="false"
             style="@style/ColorPreferenceDefaultAttrs"/>
 

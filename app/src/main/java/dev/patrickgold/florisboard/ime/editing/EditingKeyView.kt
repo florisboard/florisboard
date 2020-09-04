@@ -32,7 +32,6 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
-import dev.patrickgold.florisboard.util.getColorFromAttr
 import java.util.*
 
 /**
@@ -137,16 +136,16 @@ class EditingKeyView : AppCompatImageButton {
 
         imageTintList = ColorStateList.valueOf(when {
             isEnabled -> prefs.theme.smartbarFgColor
-            else -> prefs.theme.smartbarFgColorDisabled
+            else -> prefs.theme.smartbarFgColorAlt
         })
 
         // Draw label
         val label = label
         if (label != null) {
             labelPaint.color = if (isHighlighted && isEnabled) {
-                getColorFromAttr(context, R.attr.colorPrimary)
+                prefs.theme.colorPrimary
             } else if (!isEnabled) {
-                prefs.theme.smartbarFgColorDisabled
+                prefs.theme.smartbarFgColorAlt
             } else {
                 prefs.theme.smartbarFgColor
             }

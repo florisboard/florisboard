@@ -185,8 +185,9 @@ class FlorisBoard : InputMethodService() {
         osHandler.removeCallbacksAndMessages(null)
         florisboardInstance = null
 
-        super.onDestroy()
         eventListeners.forEach { it.onDestroy() }
+        eventListeners.clear()
+        super.onDestroy()
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
@@ -281,6 +282,7 @@ class FlorisBoard : InputMethodService() {
             }
             w.decorView.systemUiVisibility = flags
         }
+        eventListeners.forEach { it.onApplyThemeAttributes() }
     }
 
     override fun onComputeInsets(outInsets: Insets?) {
@@ -518,6 +520,7 @@ class FlorisBoard : InputMethodService() {
             candidatesEnd: Int
         ) {}
 
+        fun onApplyThemeAttributes() {}
         fun onSubtypeChanged(newSubtype: Subtype) {}
     }
 

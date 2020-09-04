@@ -132,7 +132,7 @@ class SmartbarView : LinearLayout {
                             if (button.isEnabled) {
                                 setImageTintColor2(button, prefs.theme.smartbarFgColor)
                             } else {
-                                setImageTintColor2(button, prefs.theme.smartbarFgColorDisabled)
+                                setImageTintColor2(button, prefs.theme.smartbarFgColorAlt)
                             }
                         }
                     }
@@ -142,7 +142,7 @@ class SmartbarView : LinearLayout {
                         if (view is Button) {
                             view.setTextColor(prefs.theme.smartbarFgColor)
                         } else {
-                            view.setBackgroundColor(prefs.theme.smartbarFgColorDisabled)
+                            view.setBackgroundColor(prefs.theme.smartbarFgColorAlt)
                         }
                     }
                 }

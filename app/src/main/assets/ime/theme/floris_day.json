@@ -7,8 +7,6 @@
       "colorPrimary": "#4CAF50",
       "colorPrimaryDark": "#388E3C",
       "colorAccent": "#FF9800",
-      "colorButtonNormal": "#4A000000",
-      "colorControlNormal": "#8A000000",
       "navigationBarColor": "@keyboard/bgColor",
       "navigationBarLight": "true",
       "semiTransparentColor": "#20000000",
@@ -39,10 +37,9 @@
       "fgColor": "@window/textColor",
       "fgColorCapsLock": "@window/colorAccent"
     },
-    "emojiKey": {
-      "bgColor": "@keyboard/bgColor",
-      "bgColorPressed": "@keyPopupExtended/bgColorActive",
-      "fgColor": "#757575"
+    "media": {
+      "fgColor": "@window/textColor",
+      "fgColorAlt": "#757575"
     },
     "oneHanded": {
       "bgColor": "#E8F5E9"
@@ -55,7 +52,7 @@
     "smartbar": {
       "bgColor": "@keyboard/bgColor",
       "fgColor": "@window/textColor",
-      "fgColorDisabled": "#4A000000"
+      "fgColorAlt": "#4A000000"
     },
     "smartbarButton": {
       "bgColor": "@key/bgColor",

@@ -62,7 +62,6 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener {
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-
         florisboard?.removeEventListener(this)
     }
 
