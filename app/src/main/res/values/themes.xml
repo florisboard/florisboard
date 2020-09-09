@@ -1,90 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="KeyboardTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@android:color/transparent</item>
-    </style>
-
-    <style name="KeyboardTheme.FlorisLight">
+    <style name="KeyboardThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="android:navigationBarColor" tools:targetApi="o_mr1">?keyboard_bgColor</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="KeyboardThemeBase.Day">
+        <item name="android:navigationBarColor" tools:targetApi="o_mr1">#FFFFFF</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
         <item name="android:colorControlNormal">#8A000000</item><!-- Black, semi transparent -->
         <item name="android:colorButtonNormal">#4A000000</item><!-- Black, semi transparent -->
         <item name="android:textColor">#000000</item><!-- Black -->
         <item name="semiTransparentColor">#20000000</item><!-- Black, semi transparent -->
-
-        <item name="key_bgColor">#FFFFFF</item><!-- White -->
-        <item name="key_bgColorPressed">#F5F5F5</item><!-- Gray 100 -->
-        <item name="key_fgColor">?android:textColor</item>
-        <item name="key_enter_fgColor">#FFFFFF</item><!-- White -->
-
-        <item name="key_popup_bgColor">#EEEEEE</item><!-- Gray 200 -->
-        <item name="key_popup_fgColor">?android:textColor</item>
-
-        <item name="key_popup_extended_bgColor">@android:color/transparent</item>
-        <item name="key_popup_extended_bgColorActive">#BDBDBD</item><!-- Gray 400 -->
-        <item name="key_popup_extended_shadowColor">#CDCACACA</item>
-
-        <item name="keyboard_bgColor">#E0E0E0</item><!-- Gray 300 -->
-
-        <item name="emoji_key_bgColor">?keyboard_bgColor</item>
-        <item name="emoji_key_bgColorPressed">?key_popup_extended_bgColorActive</item>
-        <item name="emoji_key_fgColor">#757575</item><!-- Gray 600 -->
-
-        <item name="one_handed_bgColor">#E8F5E9</item><!-- Green 50 -->
-        <item name="one_handed_button_fgColor">#424242</item><!-- Gray 800 -->
-
-        <item name="smartbar_bgColor">?keyboard_bgColor</item>
-        <item name="smartbar_fgColor">?android:textColor</item>
-        <item name="smartbar_button_bgColor">?key_bgColor</item>
-        <item name="smartbar_button_bgColorPressed">?key_bgColorPressed</item>
-        <item name="smartbar_button_fgColor">?key_fgColor</item>
-        <item name="smartbar_candidate_fgColor">?android:textColor</item>
+        <item name="inputView_bgColorFallback">#FFFFFF</item>
     </style>
 
-    <style name="KeyboardTheme.FlorisDark">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-
-        <item name="android:navigationBarColor" tools:targetApi="o_mr1">?keyboard_bgColor</item>
+    <style name="KeyboardThemeBase.Night">
+        <item name="android:navigationBarColor" tools:targetApi="o_mr1">#000000</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">false</item>
         <item name="android:colorControlNormal">#B3FFFFFF</item><!-- White, semi transparent -->
         <item name="android:colorButtonNormal">#73FFFFFF</item><!-- White, semi transparent -->
         <item name="android:textColor">#FFFFFF</item><!-- White -->
         <item name="semiTransparentColor">#20FFFFFF</item><!-- White, semi transparent -->
-
-        <item name="key_bgColor">#424242</item><!-- Gray 800 -->
-        <item name="key_bgColorPressed">#616161</item><!-- Gray 700 -->
-        <item name="key_fgColor">?android:textColor</item>
-        <item name="key_enter_fgColor">#FFFFFF</item><!-- White -->
-
-        <item name="key_popup_bgColor">#757575</item><!-- Gray 600 -->
-        <item name="key_popup_fgColor">?android:textColor</item>
-
-        <item name="key_popup_extended_bgColor">@android:color/transparent</item>
-        <item name="key_popup_extended_bgColorActive">#BDBDBD</item><!-- Gray 400 -->
-        <item name="key_popup_extended_shadowColor">#CD353535</item>
-
-        <item name="keyboard_bgColor">#212121</item><!-- Gray 900 -->
-
-        <item name="emoji_key_bgColor">?keyboard_bgColor</item>
-        <item name="emoji_key_bgColorPressed">?key_popup_extended_bgColorActive</item>
-        <item name="emoji_key_fgColor">#BDBDBD</item><!-- Gray 400 -->
-
-        <item name="one_handed_bgColor">#1B5E20</item><!-- Green 900 -->
-        <item name="one_handed_button_fgColor">#EEEEEE</item><!-- Gray 200 -->
-
-        <item name="smartbar_bgColor">?keyboard_bgColor</item>
-        <item name="smartbar_fgColor">?android:textColor</item>
-        <item name="smartbar_button_bgColor">?key_bgColor</item>
-        <item name="smartbar_button_bgColorPressed">?key_bgColorPressed</item>
-        <item name="smartbar_button_fgColor">?key_fgColor</item>
-        <item name="smartbar_candidate_fgColor">?android:textColor</item>
+        <item name="inputView_bgColorFallback">#000000</item>
     </style>
 
     <style name="SettingsToolbarTheme" parent="ThemeOverlay.AppCompat.DayNight.ActionBar">

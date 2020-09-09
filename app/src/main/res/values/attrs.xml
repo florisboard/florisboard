@@ -14,39 +14,12 @@
         <attr name="android:text" format="string|reference"/>
     </declare-styleable>
 
-    <declare-styleable name="KeyboardTheme">
-        <attr name="keyboardViewStyle" format="reference" />
-        <attr name="keyboardRowViewStyle" format="reference" />
+    <declare-styleable name="KeyboardThemeBase">
+        <attr name="keyboardViewStyle" format="reference"/>
+        <attr name="keyboardRowViewStyle" format="reference"/>
 
-        <attr name="semiTransparentColor" format="color" />
-
-        <attr name="key_bgColor" format="color" />
-        <attr name="key_bgColorPressed" format="color" />
-        <attr name="key_fgColor" format="color" />
-        <attr name="key_enter_fgColor" format="color" />
-
-        <attr name="key_popup_bgColor" format="color" />
-        <attr name="key_popup_fgColor" format="color" />
-
-        <attr name="key_popup_extended_bgColor" format="color" />
-        <attr name="key_popup_extended_bgColorActive" format="color" />
-        <attr name="key_popup_extended_shadowColor" format="color" />
-
-        <attr name="keyboard_bgColor" format="color" />
-
-        <attr name="emoji_key_bgColor" format="color" />
-        <attr name="emoji_key_bgColorPressed" format="color" />
-        <attr name="emoji_key_fgColor" format="color" />
-
-        <attr name="one_handed_bgColor" format="color" />
-        <attr name="one_handed_button_fgColor" format="color" />
-
-        <attr name="smartbar_bgColor" format="color" />
-        <attr name="smartbar_fgColor" format="color" />
-        <attr name="smartbar_button_bgColor" format="color" />
-        <attr name="smartbar_button_bgColorPressed" format="color" />
-        <attr name="smartbar_button_fgColor" format="color" />
-        <attr name="smartbar_candidate_fgColor" format="color" />
+        <attr name="semiTransparentColor" format="color"/>
+        <attr name="inputView_bgColorFallback" format="color"/>
     </declare-styleable>
 
     <declare-styleable name="SettingsTheme">

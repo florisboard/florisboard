@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:orientation="horizontal"
-        android:background="?keyboard_bgColor"
+        android:background="?inputView_bgColorFallback"
         android:baselineAligned="false">
 
         <LinearLayout

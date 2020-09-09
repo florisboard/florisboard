@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewGroup
@@ -259,6 +260,13 @@ class KeyboardView : LinearLayout {
         florisboard?.textInputManager?.smartbarManager?.smartbarView?.setHeightFactor(keyHeightFactor)
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+    }
+
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        super.onLayout(changed, l, t, r, b)
+        if (isPreviewMode) {
+            setBackgroundColor(prefs.theme.keyboardBgColor)
+        }
     }
 
     /**

@@ -35,8 +35,8 @@
     <string name="settings__navigation__home">Home</string>
     <string name="settings__navigation__keyboard">Keyboard</string>
     <string name="settings__navigation__typing">Typing</string>
+    <string name="settings__navigation__theme">Theme</string>
     <string name="settings__navigation__gestures">Gestures</string>
-    <string name="settings__navigation__advanced">Advanced</string>
     <string name="settings__default">Default</string>
     <string name="settings__system_default">System default</string>
 
@@ -72,6 +72,8 @@
     <string name="settings__theme__group_key_popup">Key popup</string>
     <string name="settings__theme__group_key_shift">Shift key</string>
     <string name="settings__theme__group_media">Media context</string>
+    <string name="settings__theme__group_one_handed">One-handed</string>
+    <string name="settings__theme__group_one_handed_button">One-handed button</string>
     <string name="settings__theme__group_smartbar">Smartbar</string>
     <string name="settings__theme__group_smartbar_button">Smartbar button</string>
     <string name="pref__theme__name__label">Keyboard Theme</string>

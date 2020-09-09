@@ -30,7 +30,6 @@ import androidx.core.view.children
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.PrefHelper
-import dev.patrickgold.florisboard.util.setBackgroundTintColor2
 import dev.patrickgold.florisboard.util.setImageTintColor2
 
 /**
@@ -116,7 +115,7 @@ class SmartbarView : LinearLayout {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        setBackgroundTintColor2(this, prefs.theme.smartbarBgColor)
+        setBackgroundColor(prefs.theme.smartbarBgColor)
         for (container in containers) {
             when (container.id) {
                 R.id.number_row -> {
@@ -141,8 +140,6 @@ class SmartbarView : LinearLayout {
                     for (view in container.children) {
                         if (view is Button) {
                             view.setTextColor(prefs.theme.smartbarFgColor)
-                        } else {
-                            view.setBackgroundColor(prefs.theme.smartbarFgColorAlt)
                         }
                     }
                 }

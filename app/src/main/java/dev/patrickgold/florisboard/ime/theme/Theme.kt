@@ -21,6 +21,7 @@ import android.graphics.Color
 import com.squareup.moshi.Json
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import dev.patrickgold.florisboard.ime.core.PrefHelper
 
 /**
  * Data class which holds a parsed theme json file. Used for loading a theme
@@ -111,6 +112,59 @@ data class Theme(
             val layoutAdapter = moshi.adapter(Theme::class.java)
             return layoutAdapter.fromJson(rawData)
         }
+
+        /**
+         * Writes a given [theme] to the [prefs]. The default color values are based off the
+         * Floris Day theme and are not intended to be modified. Instead, themes should be defined
+         * in assets/ime/theme/<theme_id>.json
+         *
+         * @param theme The theme data.
+         * @param prefs The preference object to write the theme to.
+         */
+        fun writeThemeToPrefs(prefs: PrefHelper, theme: Theme) {
+            // Internal prefs part I
+            prefs.internal.themeCurrentBasedOn = theme.displayName
+            prefs.internal.themeCurrentIsNight = theme.isNightTheme
+
+            // Theme attributes
+            prefs.theme.keyboardBgColor = theme.getAttr("keyboard/bgColor", "#E0E0E0")
+
+            prefs.theme.keyBgColor = theme.getAttr("key/bgColor", "#FFFFFF")
+            prefs.theme.keyBgColorPressed = theme.getAttr("key/bgColorPressed", "#F5F5F5")
+            prefs.theme.keyFgColor = theme.getAttr("key/fgColor", "#000000")
+
+            prefs.theme.keyEnterBgColor = theme.getAttr("keyEnter/bgColor", "#4CAF50")
+            prefs.theme.keyEnterBgColorPressed = theme.getAttr("keyEnter/bgColorPressed", "#388E3C")
+            prefs.theme.keyEnterFgColor = theme.getAttr("keyEnter/fgColor", "#FFFFFF")
+
+            prefs.theme.keyPopupBgColor = theme.getAttr("keyPopup/bgColor", "#EEEEEE")
+            prefs.theme.keyPopupBgColorActive = theme.getAttr("keyPopup/bgColorActive", "#BDBDBD")
+            prefs.theme.keyPopupFgColor = theme.getAttr("keyPopup/fgColor", "#000000")
+
+            prefs.theme.keyShiftBgColor = theme.getAttr("keyShift/bgColor", "#FFFFFF")
+            prefs.theme.keyShiftBgColorPressed = theme.getAttr("keyShift/bgColorActive", "#F5F5F5")
+            prefs.theme.keyShiftFgColor = theme.getAttr("keyShift/fgColor", "#000000")
+            prefs.theme.keyShiftFgColorCapsLock = theme.getAttr("keyShift/fgColorCapsLock", "#FF9800")
+
+            prefs.theme.mediaFgColor = theme.getAttr("media/fgColor", "#000000")
+            prefs.theme.mediaFgColorAlt = theme.getAttr("media/fgColorAlt", "#757575")
+
+            prefs.theme.oneHandedBgColor = theme.getAttr("oneHanded/bgColor", "#E8F5E9")
+
+            prefs.theme.oneHandedButtonBgColor = theme.getAttr("oneHandedButton/bgColor", "#00000000")
+            prefs.theme.oneHandedButtonBgColorPressed = theme.getAttr("oneHandedButton/bgColorPressed", "#20000000")
+            prefs.theme.oneHandedButtonFgColor = theme.getAttr("oneHandedButton/fgColor", "#424242")
+
+            prefs.theme.smartbarBgColor = theme.getAttr("smartbar/bgColor", "#E0E0E0")
+            prefs.theme.smartbarFgColor = theme.getAttr("smartbar/fgColor", "#000000")
+            prefs.theme.smartbarFgColorAlt = theme.getAttr("smartbar/fgColorAlt", "#4A000000")
+
+            prefs.theme.smartbarButtonBgColor = theme.getAttr("smartbarButton/bgColor", "#FFFFFF")
+            prefs.theme.smartbarButtonFgColor = theme.getAttr("smartbarButton/fgColor", "#000000")
+
+            // Internal prefs part II (must be written at the end!!)
+            prefs.internal.themeCurrentIsModified = false
+        }
     }
 
     init {
@@ -159,11 +213,11 @@ data class Theme(
         android.util.Log.i("TEST", parsedAttrs.toString())
     }
 
-    fun getAttr(key: String): Int {
-        return getAttrOrNull(key)!!
+    fun getAttr(key: String, defaultColor: String): Int {
+        return getAttrOrNull(key) ?: Color.parseColor(defaultColor)
     }
-    fun getAttr(group: String, attr: String): Int {
-        return getAttrOrNull(group, attr)!!
+    fun getAttr(group: String, attr: String, defaultColor: String): Int {
+        return getAttrOrNull(group, attr) ?: Color.parseColor(defaultColor)
     }
 
     fun getAttrOrNull(key: String): Int? {

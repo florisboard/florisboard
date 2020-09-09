@@ -33,8 +33,8 @@
     <string name="settings__navigation__home">Home</string>
     <string name="settings__navigation__keyboard">Tastiera</string>
     <string name="settings__navigation__typing">Digitazione</string>
+    <string name="settings__navigation__theme">Tema</string>
     <string name="settings__navigation__gestures">Gesti</string>
-    <string name="settings__navigation__advanced">Avanzate</string>
 
     <string name="settings__home__title">Benvenuto in %s</string>
     <string name="settings__home__ime_not_enabled">FlorisBoard non è abilitato nel sistema e quindi non sarà disponibile come metodo di immissione.Clicca quì per risolvere questo problema.</string>

@@ -184,28 +184,41 @@ class PrefHelper(
     }
 
     /**
-     * Wrapper class for internal preferences.
+     * Wrapper class for internal preferences. A preference qualifies as an internal pref if the
+     * user has no ability to control this preference's value directly (via a UI pref view).
      */
     class Internal(private val prefHelper: PrefHelper) {
         companion object {
-            const val IS_IME_SET_UP =           "internal__is_ime_set_up"
-            const val VERSION_ON_INSTALL =      "internal__version_on_install"
-            const val VERSION_LAST_USE =        "internal__version_last_use"
-            const val VERSION_LAST_CHANGELOG =  "internal__version_last_changelog"
+            const val IS_IME_SET_UP =               "internal__is_ime_set_up"
+            const val THEME_CURRENT_BASED_ON =      "internal__theme_current_based_on"
+            const val THEME_CURRENT_IS_MODIFIED =   "internal__theme_current_is_modified"
+            const val THEME_CURRENT_IS_NIGHT =      "internal__theme_current_is_night"
+            const val VERSION_ON_INSTALL =          "internal__version_on_install"
+            const val VERSION_LAST_USE =            "internal__version_last_use"
+            const val VERSION_LAST_CHANGELOG =      "internal__version_last_changelog"
         }
 
         var isImeSetUp: Boolean
-            get() = prefHelper.getPref(IS_IME_SET_UP, false)
-            set(value) = prefHelper.setPref(IS_IME_SET_UP, value)
+            get() =  prefHelper.getPref(IS_IME_SET_UP, false)
+            set(v) = prefHelper.setPref(IS_IME_SET_UP, v)
+        var themeCurrentBasedOn: String
+            get() =  prefHelper.getPref(THEME_CURRENT_BASED_ON, "undefined")
+            set(v) = prefHelper.setPref(THEME_CURRENT_BASED_ON, v)
+        var themeCurrentIsModified: Boolean
+            get() =  prefHelper.getPref(THEME_CURRENT_IS_MODIFIED, false)
+            set(v) = prefHelper.setPref(THEME_CURRENT_IS_MODIFIED, v)
+        var themeCurrentIsNight: Boolean
+            get() =  prefHelper.getPref(THEME_CURRENT_IS_NIGHT, false)
+            set(v) = prefHelper.setPref(THEME_CURRENT_IS_NIGHT, v)
         var versionOnInstall: String
-            get() = prefHelper.getPref(VERSION_ON_INSTALL, VersionName.DEFAULT_RAW)
-            set(value) = prefHelper.setPref(VERSION_ON_INSTALL, value)
+            get() =  prefHelper.getPref(VERSION_ON_INSTALL, VersionName.DEFAULT_RAW)
+            set(v) = prefHelper.setPref(VERSION_ON_INSTALL, v)
         var versionLastUse: String
-            get() = prefHelper.getPref(VERSION_LAST_USE, VersionName.DEFAULT_RAW)
-            set(value) = prefHelper.setPref(VERSION_LAST_USE, value)
+            get() =  prefHelper.getPref(VERSION_LAST_USE, VersionName.DEFAULT_RAW)
+            set(v) = prefHelper.setPref(VERSION_LAST_USE, v)
         var versionLastChangelog: String
-            get() = prefHelper.getPref(VERSION_LAST_CHANGELOG, VersionName.DEFAULT_RAW)
-            set(value) = prefHelper.setPref(VERSION_LAST_CHANGELOG, value)
+            get() =  prefHelper.getPref(VERSION_LAST_CHANGELOG, VersionName.DEFAULT_RAW)
+            set(v) = prefHelper.setPref(VERSION_LAST_CHANGELOG, v)
     }
 
     /**
@@ -294,45 +307,38 @@ class PrefHelper(
      */
     class Theme(private val prefHelper: PrefHelper) {
         companion object {
-            const val NAME =                        "theme__name"
-            const val COLOR_PRIMARY =               "theme__colorPrimary"
-            const val COLOR_PRIMARY_DARK =          "theme__colorPrimaryDark"
-            const val COLOR_ACCENT =                "theme__colorAccent"
-            const val NAV_BAR_COLOR =               "theme__navBarColor"
-            const val NAV_BAR_IS_LIGHT =            "theme__navBarIsLight"
-            const val KEYBOARD_BG_COLOR =           "theme__keyboard_bgColor"
-            const val KEY_BG_COLOR =                "theme__key_bgColor"
-            const val KEY_BG_COLOR_PRESSED =        "theme__key_bgColorPressed"
-            const val KEY_FG_COLOR =                "theme__key_fgColor"
-            const val KEY_ENTER_BG_COLOR =          "theme__keyEnter_bgColor"
-            const val KEY_ENTER_BG_COLOR_PRESSED =  "theme__keyEnter_bgColorPressed"
-            const val KEY_ENTER_FG_COLOR =          "theme__keyEnter_fgColor"
-            const val KEY_SHIFT_BG_COLOR =          "theme__keyShift_bgColor"
-            const val KEY_SHIFT_BG_COLOR_PRESSED =  "theme__keyShift_bgColorPressed"
-            const val KEY_SHIFT_FG_COLOR =          "theme__keyShift_fgColor"
-            const val KEY_SHIFT_FG_COLOR_CAPSLOCK = "theme__keyShift_fgColorCapsLock"
-            const val KEY_POPUP_BG_COLOR =          "theme__keyPopup_bgColor"
-            const val KEY_POPUP_BG_COLOR_ACTIVE =   "theme__keyPopup_bgColorActive"
-            const val KEY_POPUP_FG_COLOR =          "theme__keyPopup_fgColor"
-            const val MEDIA_FG_COLOR =              "theme__media_fgColor"
-            const val MEDIA_FG_COLOR_ALT =          "theme__media_fgColorAlt"
-            const val SMARTBAR_BG_COLOR =           "theme__smartbar_bgColor"
-            const val SMARTBAR_FG_COLOR =           "theme__smartbar_fgColor"
-            const val SMARTBAR_FG_COLOR_ALT =       "theme__smartbar_fgColorAlt"
-            const val SMARTBAR_BUTTON_BG_COLOR =    "theme__smartbarButton_bgColor"
-            const val SMARTBAR_BUTTON_FG_COLOR =    "theme__smartbarButton_fgColor"
+            const val COLOR_PRIMARY =                       "theme__colorPrimary"
+            const val COLOR_PRIMARY_DARK =                  "theme__colorPrimaryDark"
+            const val COLOR_ACCENT =                        "theme__colorAccent"
+            const val NAV_BAR_COLOR =                       "theme__navBarColor"
+            const val NAV_BAR_IS_LIGHT =                    "theme__navBarIsLight"
+            const val KEYBOARD_BG_COLOR =                   "theme__keyboard_bgColor"
+            const val KEY_BG_COLOR =                        "theme__key_bgColor"
+            const val KEY_BG_COLOR_PRESSED =                "theme__key_bgColorPressed"
+            const val KEY_FG_COLOR =                        "theme__key_fgColor"
+            const val KEY_ENTER_BG_COLOR =                  "theme__keyEnter_bgColor"
+            const val KEY_ENTER_BG_COLOR_PRESSED =          "theme__keyEnter_bgColorPressed"
+            const val KEY_ENTER_FG_COLOR =                  "theme__keyEnter_fgColor"
+            const val KEY_SHIFT_BG_COLOR =                  "theme__keyShift_bgColor"
+            const val KEY_SHIFT_BG_COLOR_PRESSED =          "theme__keyShift_bgColorPressed"
+            const val KEY_SHIFT_FG_COLOR =                  "theme__keyShift_fgColor"
+            const val KEY_SHIFT_FG_COLOR_CAPSLOCK =         "theme__keyShift_fgColorCapsLock"
+            const val KEY_POPUP_BG_COLOR =                  "theme__keyPopup_bgColor"
+            const val KEY_POPUP_BG_COLOR_ACTIVE =           "theme__keyPopup_bgColorActive"
+            const val KEY_POPUP_FG_COLOR =                  "theme__keyPopup_fgColor"
+            const val MEDIA_FG_COLOR =                      "theme__media_fgColor"
+            const val MEDIA_FG_COLOR_ALT =                  "theme__media_fgColorAlt"
+            const val ONE_HANDED_BG_COLOR =                 "theme__oneHanded_bgColor"
+            const val ONE_HANDED_BUTTON_BG_COLOR =          "theme__oneHandedButton_bgColor"
+            const val ONE_HANDED_BUTTON_BG_COLOR_PRESSED =  "theme__oneHandedButton_bgColorPressed"
+            const val ONE_HANDED_BUTTON_FG_COLOR =          "theme__oneHandedButton_fgColor"
+            const val SMARTBAR_BG_COLOR =                   "theme__smartbar_bgColor"
+            const val SMARTBAR_FG_COLOR =                   "theme__smartbar_fgColor"
+            const val SMARTBAR_FG_COLOR_ALT =               "theme__smartbar_fgColorAlt"
+            const val SMARTBAR_BUTTON_BG_COLOR =            "theme__smartbarButton_bgColor"
+            const val SMARTBAR_BUTTON_FG_COLOR =            "theme__smartbarButton_fgColor"
         }
 
-        var name: String = ""
-            get() = prefHelper.getPref(NAME, "floris_light")
-            private set
-        fun getSelectedThemeResId(): Int {
-            return when (name) {
-                "floris_light" -> R.style.KeyboardTheme_FlorisLight
-                "floris_dark" -> R.style.KeyboardTheme_FlorisDark
-                else -> R.style.KeyboardTheme_FlorisLight
-            }
-        }
         var colorPrimary: Int
             get() =  prefHelper.getPref(COLOR_PRIMARY, 0)
             set(v) = prefHelper.setPref(COLOR_PRIMARY, v)
@@ -396,6 +402,18 @@ class PrefHelper(
         var mediaFgColorAlt: Int
             get() =  prefHelper.getPref(MEDIA_FG_COLOR_ALT, 0)
             set(v) = prefHelper.setPref(MEDIA_FG_COLOR_ALT, v)
+        var oneHandedBgColor: Int
+            get() =  prefHelper.getPref(ONE_HANDED_BG_COLOR, 0)
+            set(v) = prefHelper.setPref(ONE_HANDED_BG_COLOR, v)
+        var oneHandedButtonBgColor: Int
+            get() =  prefHelper.getPref(ONE_HANDED_BUTTON_BG_COLOR, 0)
+            set(v) = prefHelper.setPref(ONE_HANDED_BUTTON_BG_COLOR, v)
+        var oneHandedButtonBgColorPressed: Int
+            get() =  prefHelper.getPref(ONE_HANDED_BUTTON_BG_COLOR_PRESSED, 0)
+            set(v) = prefHelper.setPref(ONE_HANDED_BUTTON_BG_COLOR_PRESSED, v)
+        var oneHandedButtonFgColor: Int
+            get() =  prefHelper.getPref(ONE_HANDED_BUTTON_FG_COLOR, 0)
+            set(v) = prefHelper.setPref(ONE_HANDED_BUTTON_FG_COLOR, v)
         var smartbarBgColor: Int
             get() =  prefHelper.getPref(SMARTBAR_BG_COLOR, 0)
             set(v) = prefHelper.setPref(SMARTBAR_BG_COLOR, v)

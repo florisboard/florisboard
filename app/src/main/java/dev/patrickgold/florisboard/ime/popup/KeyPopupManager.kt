@@ -34,7 +34,6 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
-import dev.patrickgold.florisboard.util.setTextTintColor
 
 /**
  * Manages the creation and dismissal of key popups as well as the checks if the pointer moved
@@ -107,10 +106,6 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
         lp.isWrapBefore = isWrapBefore
         textView.layoutParams = lp
         textView.gravity = Gravity.CENTER
-        setTextTintColor(
-            textView,
-            R.attr.key_popup_fgColor
-        )
         val textSize = keyboardView.resources.getDimension(R.dimen.key_popup_textSize)
         if (keyView is KeyView) {
             when (keyView.data.popup[k].code) {

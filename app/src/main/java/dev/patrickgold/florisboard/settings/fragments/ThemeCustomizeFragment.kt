@@ -20,8 +20,8 @@ import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
 import dev.patrickgold.florisboard.R
 
-class KeyboardFragment : PreferenceFragmentCompat() {
+class ThemeCustomizeFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        addPreferencesFromResource(R.xml.prefs_keyboard)
+        addPreferencesFromResource(R.xml.prefs_theme)
     }
 }

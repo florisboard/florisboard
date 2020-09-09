@@ -70,6 +70,7 @@ class FlorisBoard : InputMethodService() {
 
     lateinit var subtypeManager: SubtypeManager
     lateinit var activeSubtype: Subtype
+    private var currentThemeIsNight: Boolean = false
     private var currentThemeResId: Int = 0
 
     val textInputManager: TextInputManager
@@ -112,6 +113,13 @@ class FlorisBoard : InputMethodService() {
         fun getInstanceOrNull(): FlorisBoard? {
             return florisboardInstance
         }
+
+        fun getDayNightBaseThemeId(isNightTheme: Boolean): Int {
+            return when (isNightTheme) {
+                true -> R.style.KeyboardThemeBase_Night
+                else -> R.style.KeyboardThemeBase_Day
+            }
+        }
     }
 
     override fun onCreate() {
@@ -144,7 +152,8 @@ class FlorisBoard : InputMethodService() {
         subtypeManager = SubtypeManager(this, prefs)
         activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
 
-        currentThemeResId = prefs.theme.getSelectedThemeResId()
+        currentThemeIsNight = prefs.internal.themeCurrentIsNight
+        currentThemeResId = getDayNightBaseThemeId(currentThemeIsNight)
         setTheme(currentThemeResId)
         updateTheme()
 
@@ -270,6 +279,12 @@ class FlorisBoard : InputMethodService() {
      * Reapplies the supplies colors and settings from prefs to navigation bar.
      */
     private fun updateTheme() {
+        val newThemeIsNightMode =  prefs.internal.themeCurrentIsNight
+        if (currentThemeIsNight != newThemeIsNightMode) {
+            currentThemeResId = getDayNightBaseThemeId(newThemeIsNightMode)
+            setInputView(onCreateInputView())
+            return
+        }
         val w = window?.window ?: return
         inputView?.mainViewFlipper?.setBackgroundColor(prefs.theme.keyboardBgColor)
         w.navigationBarColor = prefs.theme.navBarColor
@@ -282,6 +297,8 @@ class FlorisBoard : InputMethodService() {
             }
             w.decorView.systemUiVisibility = flags
         }
+        inputView?.oneHandedCtrlPanelStart?.setBackgroundColor(prefs.theme.oneHandedBgColor)
+        inputView?.oneHandedCtrlPanelEnd?.setBackgroundColor(prefs.theme.oneHandedBgColor)
         eventListeners.forEach { it.onApplyThemeAttributes() }
     }
 

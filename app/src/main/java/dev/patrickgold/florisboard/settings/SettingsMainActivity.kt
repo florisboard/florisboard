@@ -103,14 +103,14 @@ class SettingsMainActivity : AppCompatActivity(),
                 loadFragment(TypingFragment())
                 true
             }
+            R.id.settings__navigation__theme -> {
+                supportActionBar?.setTitle(R.string.settings__theme__title)
+                loadFragment(ThemeFragment())
+                true
+            }
             R.id.settings__navigation__gestures -> {
                 supportActionBar?.setTitle(R.string.settings__gestures__title)
                 loadFragment(GesturesFragment())
-                true
-            }
-            R.id.settings__navigation__advanced -> {
-                supportActionBar?.setTitle(R.string.settings__advanced__title)
-                loadFragment(AdvancedFragment())
                 true
             }
             else -> false
@@ -152,7 +152,7 @@ class SettingsMainActivity : AppCompatActivity(),
     }
 
     override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
-        if (key == PrefHelper.Advanced.SETTINGS_THEME || key == PrefHelper.Theme.NAME) {
+        if (key == PrefHelper.Advanced.SETTINGS_THEME) {
             recreate()
         }
     }

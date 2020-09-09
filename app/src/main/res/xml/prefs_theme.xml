@@ -186,6 +186,42 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        app:title="@string/settings__theme__group_one_handed"
+        app:iconSpaceReserved="false">
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__oneHanded_bgColor"
+            android:title="@string/settings__theme__background"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/settings__theme__group_one_handed_button"
+        app:iconSpaceReserved="false">
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__oneHandedButton_bgColor"
+            android:title="@string/settings__theme__background"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__oneHandedButton_bgColorPressed"
+            android:title="@string/settings__theme__background_pressed"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            android:key="theme__oneHandedButton_fgColor"
+            android:title="@string/settings__theme__foreground"
+            app:preference_attachAlphaSlideBar="false"
+            style="@style/ColorPreferenceDefaultAttrs"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         app:title="@string/settings__theme__group_smartbar"
         app:iconSpaceReserved="false">
 
