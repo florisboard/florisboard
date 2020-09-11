@@ -52,11 +52,6 @@ class MediaInputView : LinearLayout, FlorisBoard.EventListener {
         onApplyThemeAttributes()
     }
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        florisboard?.removeEventListener(this)
-    }
-
     override fun onApplyThemeAttributes() {
         tabLayout?.setTabTextColors(prefs.theme.mediaFgColor, prefs.theme.mediaFgColor)
         tabLayout?.tabIconTint = ColorStateList.valueOf(prefs.theme.mediaFgColor)

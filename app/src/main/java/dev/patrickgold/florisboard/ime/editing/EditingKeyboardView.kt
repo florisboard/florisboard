@@ -60,11 +60,6 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener {
         pasteKey = findViewById(R.id.clipboard_paste)
     }
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        florisboard?.removeEventListener(this)
-    }
-
     override fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {
         val isSelectionActive = florisboard?.textInputManager?.isTextSelected ?: false
         val isSelectionMode = florisboard?.textInputManager?.isManualSelectionMode ?: false

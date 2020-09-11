@@ -16,12 +16,14 @@
 
 package dev.patrickgold.florisboard.settings.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.skydoves.colorpickerpreference.ColorPickerPreference
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsFragmentThemeBinding
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
@@ -33,7 +35,8 @@ import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import kotlinx.coroutines.*
 
-class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by MainScope() {
+class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by MainScope(),
+    SharedPreferences.OnSharedPreferenceChangeListener {
     private lateinit var binding: SettingsFragmentThemeBinding
     private lateinit var keyboardView: KeyboardView
     private lateinit var prefs: PrefHelper
@@ -61,11 +64,18 @@ class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by
             keyboardView.isPreviewMode = true
             keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, Subtype.DEFAULT).await()
             keyboardView.updateVisibility()
+            keyboardView.onApplyThemeAttributes()
             withContext(Dispatchers.Main) {
                 binding.root.addView(keyboardView, 0)
             }
         }
 
+        loadThemePrefFragment()
+
+        return binding.root
+    }
+
+    private fun loadThemePrefFragment() {
         childFragmentManager
             .beginTransaction()
             .replace(
@@ -73,8 +83,30 @@ class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by
                 SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_theme)
             )
             .commit()
+    }
 
-        return binding.root
+    override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
+        prefs.sync()
+        key ?: return
+        if (key == PrefHelper.Internal.THEME_CURRENT_BASED_ON) {
+            loadThemePrefFragment()
+        }
+        if (key.startsWith("theme__")) {
+            prefs.internal.themeCurrentIsModified = true
+            keyboardView.onApplyThemeAttributes()
+            keyboardView.invalidate()
+            keyboardView.invalidateAllKeys()
+        }
+    }
+
+    override fun onResume() {
+        prefs.shared.registerOnSharedPreferenceChangeListener(this)
+        super.onResume()
+    }
+
+    override fun onPause() {
+        prefs.shared.unregisterOnSharedPreferenceChangeListener(this)
+        super.onPause()
     }
 
     override fun onDestroy() {

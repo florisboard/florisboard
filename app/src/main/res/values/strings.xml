@@ -58,6 +58,12 @@
     <string name="settings__localization__subtype_error_already_exists">This subtype already exists!</string>
 
     <string name="settings__theme__title">Keyboard theme</string>
+    <string name="settings__theme__undefined">Undefined</string>
+    <string name="settings__theme__preset_title">Theme</string>
+    <string name="settings__theme__preset_summary">Custom (based on %s)</string>
+    <string name="settings__theme__preset_dialog_selected_theme">Selected theme:</string>
+    <string name="settings__theme__preset_dialog_available_themes">Available themes:</string>
+    <string name="settings__theme__preset_dialog_alt_arrow_right">Arrow right</string>
     <string name="settings__theme__background">Background color</string>
     <string name="settings__theme__background_active">Background color when active</string>
     <string name="settings__theme__background_pressed">Background color when pressed</string>

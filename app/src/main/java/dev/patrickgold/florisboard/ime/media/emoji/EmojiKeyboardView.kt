@@ -110,12 +110,6 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener {
         onApplyThemeAttributes()
     }
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        mainScope.cancel()
-        florisboard?.removeEventListener(this)
-    }
-
     /**
      * Requests the layout for each category and attaches the built layout to [emojiViewFlipper].
      * This method runs in the [Dispatchers.Default] context and will block the main thread only

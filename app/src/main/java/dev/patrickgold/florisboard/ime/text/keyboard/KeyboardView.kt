@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
-import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewGroup
@@ -44,7 +43,7 @@ import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
  *
  * @property florisboard Reference to instance of core class [FlorisBoard].
  */
-class KeyboardView : LinearLayout {
+class KeyboardView : LinearLayout, FlorisBoard.EventListener {
     private var activeKeyView: KeyView? = null
     private var activePointerId: Int? = null
     private var activeX: Float = 0.0f
@@ -70,6 +69,7 @@ class KeyboardView : LinearLayout {
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
         )
+        florisboard?.addEventListener(this)
     }
 
     /**
@@ -262,8 +262,7 @@ class KeyboardView : LinearLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
-    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
-        super.onLayout(changed, l, t, r, b)
+    override fun onApplyThemeAttributes() {
         if (isPreviewMode) {
             setBackgroundColor(prefs.theme.keyboardBgColor)
         }

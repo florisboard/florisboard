@@ -4,14 +4,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ListPreference
-        android:defaultValue="floris_light"
-        app:entries="@array/pref__theme__name__entries"
-        app:entryValues="@array/pref__theme__name__values"
-        app:key="theme__name"
+    <dev.patrickgold.florisboard.settings.components.ThemePresetSelectorPreference
+        app:key="theme__preset"
         app:iconSpaceReserved="false"
-        app:title="@string/pref__theme__name__label"
-        app:useSimpleSummaryProvider="true"/>
+        app:title="@string/settings__theme__preset_title"/>
 
     <PreferenceCategory
         app:title="@string/settings__theme__group_window"
@@ -204,13 +200,13 @@
         <com.skydoves.colorpickerpreference.ColorPickerPreference
             android:key="theme__oneHandedButton_bgColor"
             android:title="@string/settings__theme__background"
-            app:preference_attachAlphaSlideBar="false"
+            app:preference_attachAlphaSlideBar="true"
             style="@style/ColorPreferenceDefaultAttrs"/>
 
         <com.skydoves.colorpickerpreference.ColorPickerPreference
             android:key="theme__oneHandedButton_bgColorPressed"
             android:title="@string/settings__theme__background_pressed"
-            app:preference_attachAlphaSlideBar="false"
+            app:preference_attachAlphaSlideBar="true"
             style="@style/ColorPreferenceDefaultAttrs"/>
 
         <com.skydoves.colorpickerpreference.ColorPickerPreference

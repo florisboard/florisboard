@@ -1,6 +1,6 @@
 {
-  "name": "floris_day",
-  "displayName": "Floris Day",
+  "name": "floris_night",
+  "displayName": "Floris Night",
   "author": "patrickgold",
   "isNightTheme": false,
   "attributes": {
@@ -9,16 +9,16 @@
       "colorPrimaryDark": "#388E3C",
       "colorAccent": "#FF9800",
       "navigationBarColor": "@keyboard/bgColor",
-      "navigationBarLight": "true",
-      "semiTransparentColor": "#20000000",
-      "textColor": "#000000"
+      "navigationBarLight": "false",
+      "semiTransparentColor": "#20FFFFFF",
+      "textColor": "#FFFFFF"
     },
     "keyboard": {
-      "bgColor": "#E0E0E0"
+      "bgColor": "#212121"
     },
     "key": {
-      "bgColor": "#FFFFFF",
-      "bgColorPressed": "#F5F5F5",
+      "bgColor": "#424242",
+      "bgColorPressed": "#616161",
       "fgColor": "@window/textColor"
     },
     "keyEnter": {
@@ -27,7 +27,7 @@
       "fgColor": "#FFFFFF"
     },
     "keyPopup": {
-      "bgColor": "#EEEEEE",
+      "bgColor": "#757575",
       "bgColorActive": "#BDBDBD",
       "fgColor": "@window/textColor"
     },
@@ -39,20 +39,20 @@
     },
     "media": {
       "fgColor": "@window/textColor",
-      "fgColorAlt": "#757575"
+      "fgColorAlt": "#BDBDBD"
     },
     "oneHanded": {
-      "bgColor": "#E8F5E9"
+      "bgColor": "#1B5E20"
     },
     "oneHandedButton": {
       "bgColor": "transparent",
       "bgColorPressed": "@window/semiTransparentColor",
-      "fgColor": "#424242"
+      "fgColor": "#EEEEEE"
     },
     "smartbar": {
       "bgColor": "@keyboard/bgColor",
       "fgColor": "@window/textColor",
-      "fgColorAlt": "#4A000000"
+      "fgColorAlt": "#73FFFFFF"
     },
     "smartbarButton": {
       "bgColor": "@key/bgColor",

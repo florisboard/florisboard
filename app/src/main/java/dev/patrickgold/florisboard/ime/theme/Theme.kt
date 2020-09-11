@@ -36,6 +36,8 @@ import dev.patrickgold.florisboard.ime.core.PrefHelper
  *  an underline (_).
  * @property displayName The name of this theme when shown to the user. Can
  *  contain any valid Unicode character.
+ * @property author The name of the author of this theme. Should be your
+ *  username on GitHub/GitLab/BitBucket/... or your full name.
  * @property isNightTheme If this theme is meant for display at day (false)
  *  or night (true). This property is only used to auto-assign this theme to
  *  either the day or night theme list in Settings, which is used when the
@@ -68,7 +70,8 @@ import dev.patrickgold.florisboard.ime.core.PrefHelper
  */
 data class Theme(
     val name: String,
-    val displayName: String = name,
+    val displayName: String,
+    val author: String,
     val isNightTheme: Boolean = false,
     @Json(name = "attributes")
     private val rawAttrs: Map<String, Map<String, String>>
@@ -123,10 +126,16 @@ data class Theme(
          */
         fun writeThemeToPrefs(prefs: PrefHelper, theme: Theme) {
             // Internal prefs part I
-            prefs.internal.themeCurrentBasedOn = theme.displayName
+            prefs.internal.themeCurrentBasedOn = theme.name
             prefs.internal.themeCurrentIsNight = theme.isNightTheme
 
             // Theme attributes
+            prefs.theme.colorPrimary = theme.getAttr("window/colorPrimary", "#4CAF50")
+            prefs.theme.colorPrimaryDark = theme.getAttr("window/colorPrimaryDark", "#388E3C")
+            prefs.theme.colorAccent = theme.getAttr("window/colorAccent", "#FF9800")
+            prefs.theme.navBarColor = theme.getAttr("window/navigationBarColor", "#E0E0E0")
+            prefs.theme.navBarIsLight = (theme.getAttrOrNull("window/navigationBarLight") ?: 0) > 0
+
             prefs.theme.keyboardBgColor = theme.getAttr("keyboard/bgColor", "#E0E0E0")
 
             prefs.theme.keyBgColor = theme.getAttr("key/bgColor", "#FFFFFF")
@@ -142,7 +151,7 @@ data class Theme(
             prefs.theme.keyPopupFgColor = theme.getAttr("keyPopup/fgColor", "#000000")
 
             prefs.theme.keyShiftBgColor = theme.getAttr("keyShift/bgColor", "#FFFFFF")
-            prefs.theme.keyShiftBgColorPressed = theme.getAttr("keyShift/bgColorActive", "#F5F5F5")
+            prefs.theme.keyShiftBgColorPressed = theme.getAttr("keyShift/bgColorPressed", "#F5F5F5")
             prefs.theme.keyShiftFgColor = theme.getAttr("keyShift/fgColor", "#000000")
             prefs.theme.keyShiftFgColorCapsLock = theme.getAttr("keyShift/fgColorCapsLock", "#FF9800")
 
@@ -242,7 +251,8 @@ data class Theme(
  */
 data class ThemeMetaOnly(
     val name: String,
-    val displayName: String = name,
+    val displayName: String,
+    val author: String,
     val isNightTheme: Boolean = false
 ) {
     companion object {

@@ -72,11 +72,6 @@ class EmojiKeyView(
         onApplyThemeAttributes()
     }
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        florisboard?.removeEventListener(this)
-    }
-
     /**
      * Logic for handling a touch event. Cancels the touch event if the pointer moves to far from
      * popup and/or key.

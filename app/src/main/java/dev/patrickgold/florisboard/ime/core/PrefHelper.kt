@@ -307,6 +307,7 @@ class PrefHelper(
      */
     class Theme(private val prefHelper: PrefHelper) {
         companion object {
+            const val PRESET =                              "theme__preset"
             const val COLOR_PRIMARY =                       "theme__colorPrimary"
             const val COLOR_PRIMARY_DARK =                  "theme__colorPrimaryDark"
             const val COLOR_ACCENT =                        "theme__colorAccent"
@@ -339,6 +340,9 @@ class PrefHelper(
             const val SMARTBAR_BUTTON_FG_COLOR =            "theme__smartbarButton_fgColor"
         }
 
+        var preset: Int
+            get() =  prefHelper.getPref(PRESET, 0)
+            set(v) = prefHelper.setPref(PRESET, v)
         var colorPrimary: Int
             get() =  prefHelper.getPref(COLOR_PRIMARY, 0)
             set(v) = prefHelper.setPref(COLOR_PRIMARY, v)
