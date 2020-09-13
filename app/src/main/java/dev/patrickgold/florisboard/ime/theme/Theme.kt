@@ -160,8 +160,6 @@ data class Theme(
 
             prefs.theme.oneHandedBgColor = theme.getAttr("oneHanded/bgColor", "#E8F5E9")
 
-            prefs.theme.oneHandedButtonBgColor = theme.getAttr("oneHandedButton/bgColor", "#00000000")
-            prefs.theme.oneHandedButtonBgColorPressed = theme.getAttr("oneHandedButton/bgColorPressed", "#20000000")
             prefs.theme.oneHandedButtonFgColor = theme.getAttr("oneHandedButton/fgColor", "#424242")
 
             prefs.theme.smartbarBgColor = theme.getAttr("smartbar/bgColor", "#E0E0E0")
@@ -219,7 +217,6 @@ data class Theme(
                 throw IllegalArgumentException("The specified attr '${attrToReevaluate.second}' = '${attrToReevaluate.third}' is not valid!")
             }
         }
-        android.util.Log.i("TEST", parsedAttrs.toString())
     }
 
     fun getAttr(key: String, defaultColor: String): Int {

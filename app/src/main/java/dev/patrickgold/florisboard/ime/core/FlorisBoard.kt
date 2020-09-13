@@ -20,6 +20,7 @@ import android.annotation.SuppressLint
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
@@ -160,7 +161,7 @@ class FlorisBoard : InputMethodService() {
         AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
 
         super.onCreate()
-        eventListeners.forEach { it.onCreate() }
+        eventListeners.toList().forEach { it.onCreate() }
     }
 
     @SuppressLint("InflateParams")
@@ -171,7 +172,7 @@ class FlorisBoard : InputMethodService() {
 
         inputView = layoutInflater.inflate(R.layout.florisboard, null) as InputView
 
-        eventListeners.forEach { it.onCreateInputView() }
+        eventListeners.toList().forEach { it.onCreateInputView() }
 
         return inputView
     }
@@ -185,7 +186,7 @@ class FlorisBoard : InputMethodService() {
         updateSoftInputWindowLayoutParameters()
         updateOneHandedPanelVisibility()
 
-        eventListeners.forEach { it.onRegisterInputView(inputView) }
+        eventListeners.toList().forEach { it.onRegisterInputView(inputView) }
     }
 
     override fun onDestroy() {
@@ -194,7 +195,7 @@ class FlorisBoard : InputMethodService() {
         osHandler.removeCallbacksAndMessages(null)
         florisboardInstance = null
 
-        eventListeners.forEach { it.onDestroy() }
+        eventListeners.toList().forEach { it.onDestroy() }
         eventListeners.clear()
         super.onDestroy()
     }
@@ -203,14 +204,14 @@ class FlorisBoard : InputMethodService() {
         currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
 
         super.onStartInputView(info, restarting)
-        eventListeners.forEach { it.onStartInputView(info, restarting) }
+        eventListeners.toList().forEach { it.onStartInputView(info, restarting) }
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
         currentInputConnection?.requestCursorUpdates(0)
 
         super.onFinishInputView(finishingInput)
-        eventListeners.forEach { it.onFinishInputView(finishingInput) }
+        eventListeners.toList().forEach { it.onFinishInputView(finishingInput) }
     }
 
     override fun onWindowShown() {
@@ -224,14 +225,14 @@ class FlorisBoard : InputMethodService() {
         setActiveInput(R.id.text_input)
 
         super.onWindowShown()
-        eventListeners.forEach { it.onWindowShown() }
+        eventListeners.toList().forEach { it.onWindowShown() }
     }
 
     override fun onWindowHidden() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onWindowHidden()")
 
         super.onWindowHidden()
-        eventListeners.forEach { it.onWindowHidden() }
+        eventListeners.toList().forEach { it.onWindowHidden() }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -244,7 +245,7 @@ class FlorisBoard : InputMethodService() {
 
     override fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {
         super.onUpdateCursorAnchorInfo(cursorAnchorInfo)
-        eventListeners.forEach { it.onUpdateCursorAnchorInfo(cursorAnchorInfo) }
+        eventListeners.toList().forEach { it.onUpdateCursorAnchorInfo(cursorAnchorInfo) }
     }
 
     override fun onUpdateSelection(
@@ -263,7 +264,7 @@ class FlorisBoard : InputMethodService() {
             candidatesStart,
             candidatesEnd
         )
-        eventListeners.forEach {
+        eventListeners.toList().forEach {
             it.onUpdateSelection(
                 oldSelStart,
                 oldSelEnd,
@@ -299,7 +300,15 @@ class FlorisBoard : InputMethodService() {
         }
         inputView?.oneHandedCtrlPanelStart?.setBackgroundColor(prefs.theme.oneHandedBgColor)
         inputView?.oneHandedCtrlPanelEnd?.setBackgroundColor(prefs.theme.oneHandedBgColor)
-        eventListeners.forEach { it.onApplyThemeAttributes() }
+        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_move_start)
+            ?.imageTintList = ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor)
+        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_move_end)
+            ?.imageTintList = ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor)
+        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_close_start)
+            ?.imageTintList = ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor)
+        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_close_end)
+            ?.imageTintList = ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor)
+        eventListeners.toList().forEach { it.onApplyThemeAttributes() }
     }
 
     override fun onComputeInsets(outInsets: Insets?) {

@@ -307,7 +307,6 @@ class PrefHelper(
      */
     class Theme(private val prefHelper: PrefHelper) {
         companion object {
-            const val PRESET =                              "theme__preset"
             const val COLOR_PRIMARY =                       "theme__colorPrimary"
             const val COLOR_PRIMARY_DARK =                  "theme__colorPrimaryDark"
             const val COLOR_ACCENT =                        "theme__colorAccent"
@@ -330,8 +329,6 @@ class PrefHelper(
             const val MEDIA_FG_COLOR =                      "theme__media_fgColor"
             const val MEDIA_FG_COLOR_ALT =                  "theme__media_fgColorAlt"
             const val ONE_HANDED_BG_COLOR =                 "theme__oneHanded_bgColor"
-            const val ONE_HANDED_BUTTON_BG_COLOR =          "theme__oneHandedButton_bgColor"
-            const val ONE_HANDED_BUTTON_BG_COLOR_PRESSED =  "theme__oneHandedButton_bgColorPressed"
             const val ONE_HANDED_BUTTON_FG_COLOR =          "theme__oneHandedButton_fgColor"
             const val SMARTBAR_BG_COLOR =                   "theme__smartbar_bgColor"
             const val SMARTBAR_FG_COLOR =                   "theme__smartbar_fgColor"
@@ -340,9 +337,6 @@ class PrefHelper(
             const val SMARTBAR_BUTTON_FG_COLOR =            "theme__smartbarButton_fgColor"
         }
 
-        var preset: Int
-            get() =  prefHelper.getPref(PRESET, 0)
-            set(v) = prefHelper.setPref(PRESET, v)
         var colorPrimary: Int
             get() =  prefHelper.getPref(COLOR_PRIMARY, 0)
             set(v) = prefHelper.setPref(COLOR_PRIMARY, v)
@@ -409,12 +403,6 @@ class PrefHelper(
         var oneHandedBgColor: Int
             get() =  prefHelper.getPref(ONE_HANDED_BG_COLOR, 0)
             set(v) = prefHelper.setPref(ONE_HANDED_BG_COLOR, v)
-        var oneHandedButtonBgColor: Int
-            get() =  prefHelper.getPref(ONE_HANDED_BUTTON_BG_COLOR, 0)
-            set(v) = prefHelper.setPref(ONE_HANDED_BUTTON_BG_COLOR, v)
-        var oneHandedButtonBgColorPressed: Int
-            get() =  prefHelper.getPref(ONE_HANDED_BUTTON_BG_COLOR_PRESSED, 0)
-            set(v) = prefHelper.setPref(ONE_HANDED_BUTTON_BG_COLOR_PRESSED, v)
         var oneHandedButtonFgColor: Int
             get() =  prefHelper.getPref(ONE_HANDED_BUTTON_FG_COLOR, 0)
             set(v) = prefHelper.setPref(ONE_HANDED_BUTTON_FG_COLOR, v)

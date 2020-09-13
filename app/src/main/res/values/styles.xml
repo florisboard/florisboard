@@ -98,15 +98,4 @@
         <item name="cardBackgroundColor">?colorError</item>
     </style>
 
-    <style name="ColorPreferenceDefaultAttrs">
-        <item name="iconSpaceReserved">false</item>
-        <item name="preference_attachBrightnessSlideBar">true</item>
-        <item name="preference_colorBox_radius">26dp</item>
-        <item name="preference_dialog_negative">@android:string/cancel</item>
-        <item name="preference_dialog_positive">@android:string/ok</item>
-        <item name="preference_dialog_title">@string/settings__theme__dialog_title</item>
-        <item name="preference_palette">@drawable/palette</item>
-        <item name="preference_selector">@drawable/wheel</item>
-    </style>
-
 </resources>

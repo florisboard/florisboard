@@ -23,7 +23,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import com.skydoves.colorpickerpreference.ColorPickerPreference
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsFragmentThemeBinding
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
@@ -88,7 +87,8 @@ class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by
     override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
         prefs.sync()
         key ?: return
-        if (key == PrefHelper.Internal.THEME_CURRENT_BASED_ON) {
+        if (key == PrefHelper.Internal.THEME_CURRENT_BASED_ON ||
+            key == PrefHelper.Internal.THEME_CURRENT_IS_MODIFIED && !prefs.internal.themeCurrentIsModified) {
             loadThemePrefFragment()
         }
         if (key.startsWith("theme__")) {

@@ -2,7 +2,7 @@
   "name": "floris_night",
   "displayName": "Floris Night",
   "author": "patrickgold",
-  "isNightTheme": false,
+  "isNightTheme": true,
   "attributes": {
     "window": {
       "colorPrimary": "#4CAF50",
@@ -45,8 +45,6 @@
       "bgColor": "#1B5E20"
     },
     "oneHandedButton": {
-      "bgColor": "transparent",
-      "bgColorPressed": "@window/semiTransparentColor",
       "fgColor": "#EEEEEE"
     },
     "smartbar": {

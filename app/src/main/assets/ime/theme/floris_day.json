@@ -45,8 +45,6 @@
       "bgColor": "#E8F5E9"
     },
     "oneHandedButton": {
-      "bgColor": "transparent",
-      "bgColorPressed": "@window/semiTransparentColor",
       "fgColor": "#424242"
     },
     "smartbar": {

@@ -1,38 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--suppress AndroidUnknownAttribute -->
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <dev.patrickgold.florisboard.settings.components.ThemePresetSelectorPreference
         app:key="theme__preset"
-        app:iconSpaceReserved="false"
-        app:title="@string/settings__theme__preset_title"/>
+        app:title="@string/settings__theme__preset_title"
+        app:iconSpaceReserved="false"/>
 
     <PreferenceCategory
         app:title="@string/settings__theme__group_window"
         app:iconSpaceReserved="false">
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             app:key="theme__colorPrimary"
             app:title="@string/pref__theme__colorPrimary_title"
             app:summary="@string/pref__theme__colorPrimary_summary"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             app:key="theme__colorPrimaryDark"
             app:title="@string/pref__theme__colorPrimaryDark_title"
             app:summary="@string/pref__theme__colorPrimaryDark_summary"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             app:key="theme__colorAccent"
             app:title="@string/pref__theme__colorAccent_title"
             app:summary="@string/pref__theme__colorAccent_summary"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
         <SwitchPreferenceCompat
             app:key="theme__navBarIsLight"
@@ -40,12 +36,11 @@
             app:summary="@string/pref__theme__navBarIsLight_summary"
             app:iconSpaceReserved="false"/>
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__navBarColor"
             android:title="@string/pref__theme__navBarColor_title"
             android:summary="@string/pref__theme__navBarColor_summary"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 
@@ -53,11 +48,10 @@
         app:title="@string/settings__theme__group_keyboard"
         app:iconSpaceReserved="false">
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__keyboard_bgColor"
             android:title="@string/settings__theme__background"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 
@@ -65,23 +59,20 @@
         app:title="@string/settings__theme__group_key"
         app:iconSpaceReserved="false">
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__key_bgColor"
             android:title="@string/settings__theme__background"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__key_bgColorPressed"
             android:title="@string/settings__theme__background_pressed"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__key_fgColor"
             android:title="@string/settings__theme__foreground"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 
@@ -89,23 +80,20 @@
         app:title="@string/settings__theme__group_key_enter"
         app:iconSpaceReserved="false">
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__keyEnter_bgColor"
             android:title="@string/settings__theme__background"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__keyEnter_bgColorPressed"
             android:title="@string/settings__theme__background_pressed"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__keyEnter_fgColor"
             android:title="@string/settings__theme__foreground"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 
@@ -113,29 +101,25 @@
         app:title="@string/settings__theme__group_key_shift"
         app:iconSpaceReserved="false">
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__keyShift_bgColor"
             android:title="@string/settings__theme__background"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__keyShift_bgColorPressed"
             android:title="@string/settings__theme__background_pressed"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__keyShift_fgColor"
             android:title="@string/settings__theme__foreground"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__keyShift_fgColorCapsLock"
             android:title="@string/settings__theme__foreground_capslock"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 
@@ -143,23 +127,20 @@
         app:title="@string/settings__theme__group_key_popup"
         app:iconSpaceReserved="false">
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__keyPopup_bgColor"
             android:title="@string/settings__theme__background"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__keyPopup_bgColorActive"
             android:title="@string/settings__theme__background_active"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__keyPopup_fgColor"
             android:title="@string/settings__theme__foreground"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 
@@ -167,17 +148,15 @@
         app:title="@string/settings__theme__group_media"
         app:iconSpaceReserved="false">
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__media_fgColor"
             android:title="@string/settings__theme__foreground"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__media_fgColorAlt"
             android:title="@string/settings__theme__foreground_alt"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 
@@ -185,11 +164,10 @@
         app:title="@string/settings__theme__group_one_handed"
         app:iconSpaceReserved="false">
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__oneHanded_bgColor"
             android:title="@string/settings__theme__background"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 
@@ -197,23 +175,10 @@
         app:title="@string/settings__theme__group_one_handed_button"
         app:iconSpaceReserved="false">
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
-            android:key="theme__oneHandedButton_bgColor"
-            android:title="@string/settings__theme__background"
-            app:preference_attachAlphaSlideBar="true"
-            style="@style/ColorPreferenceDefaultAttrs"/>
-
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
-            android:key="theme__oneHandedButton_bgColorPressed"
-            android:title="@string/settings__theme__background_pressed"
-            app:preference_attachAlphaSlideBar="true"
-            style="@style/ColorPreferenceDefaultAttrs"/>
-
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__oneHandedButton_fgColor"
             android:title="@string/settings__theme__foreground"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 
@@ -221,23 +186,20 @@
         app:title="@string/settings__theme__group_smartbar"
         app:iconSpaceReserved="false">
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__smartbar_bgColor"
             android:title="@string/settings__theme__background"
-            app:preference_attachAlphaSlideBar="true"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__smartbar_fgColor"
             android:title="@string/settings__theme__foreground"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__smartbar_fgColorAlt"
             android:title="@string/settings__theme__foreground_alt"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 
@@ -245,17 +207,15 @@
         app:title="@string/settings__theme__group_smartbar_button"
         app:iconSpaceReserved="false">
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__smartbarButton_bgColor"
             android:title="@string/settings__theme__background"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
-        <com.skydoves.colorpickerpreference.ColorPickerPreference
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__smartbarButton_fgColor"
             android:title="@string/settings__theme__foreground"
-            app:preference_attachAlphaSlideBar="false"
-            style="@style/ColorPreferenceDefaultAttrs"/>
+            app:iconSpaceReserved="false"/>
 
     </PreferenceCategory>
 
