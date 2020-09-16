@@ -17,13 +17,13 @@
         android:title="@string/settings__navigation__typing"/>
 
     <item
+        android:id="@+id/settings__navigation__theme"
+        android:icon="@drawable/ic_palette"
+        android:title="@string/settings__navigation__theme"/>
+
+    <item
         android:id="@+id/settings__navigation__gestures"
         android:icon="@drawable/ic_gesture"
         android:title="@string/settings__navigation__gestures"/>
-
-    <item
-        android:id="@+id/settings__navigation__advanced"
-        android:icon="@drawable/ic_more_vert"
-        android:title="@string/settings__navigation__advanced"/>
 
 </menu>

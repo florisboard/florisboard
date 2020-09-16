@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewGroup
@@ -31,6 +32,7 @@ import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
 import kotlinx.coroutines.*
 import java.util.*
@@ -42,15 +44,17 @@ import java.util.*
  *
  * @property florisboard Reference to instance of core class [FlorisBoard].
  */
-class EmojiKeyboardView : LinearLayout {
+class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener {
+    private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
+    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
 
     private var activeCategory: EmojiCategory = EmojiCategory.SMILEYS_EMOTION
     private var emojiViewFlipper: ViewFlipper
     private val emojiKeyWidth = resources.getDimension(R.dimen.emoji_key_width).toInt()
     private val emojiKeyHeight = resources.getDimension(R.dimen.emoji_key_height).toInt()
-    private val florisboard: FlorisBoard = FlorisBoard.getInstance()
     private var layouts: Deferred<EmojiLayoutDataMap>
     private val mainScope = MainScope()
+    private val tabLayout: TabLayout
     private val uiLayouts = EnumMap<EmojiCategory, HorizontalScrollView>(EmojiCategory::class.java)
 
     var isScrollBlocked: Boolean = false
@@ -71,9 +75,9 @@ class EmojiKeyboardView : LinearLayout {
         emojiViewFlipper.measureAllChildren = false
         addView(emojiViewFlipper)
 
-        val tabs =
+        tabLayout =
             ViewGroup.inflate(context, R.layout.media_input_emoji_tabs, null) as TabLayout
-        tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 setActiveCategory(when (tab?.position) {
                     0 -> EmojiCategory.SMILEYS_EMOTION
@@ -92,7 +96,8 @@ class EmojiKeyboardView : LinearLayout {
             override fun onTabReselected(tab: TabLayout.Tab?) {}
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
         })
-        addView(tabs)
+        addView(tabLayout)
+        florisboard?.addEventListener(this)
     }
 
     override fun onAttachedToWindow() {
@@ -102,11 +107,7 @@ class EmojiKeyboardView : LinearLayout {
             buildLayout()
             setActiveCategory(EmojiCategory.SMILEYS_EMOTION)
         }
-    }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        mainScope.cancel()
+        onApplyThemeAttributes()
     }
 
     /**
@@ -144,7 +145,7 @@ class EmojiKeyboardView : LinearLayout {
         flexboxLayout.flexWrap = FlexWrap.WRAP
         for (emojiKeyData in layouts.await()[category].orEmpty()) {
             val emojiKeyView =
-                EmojiKeyView(florisboard, this@EmojiKeyboardView, emojiKeyData)
+                EmojiKeyView(this@EmojiKeyboardView, emojiKeyData)
             emojiKeyView.layoutParams = FlexboxLayout.LayoutParams(
                 emojiKeyWidth, emojiKeyHeight
             )
@@ -191,5 +192,10 @@ class EmojiKeyboardView : LinearLayout {
             0, 0, MotionEvent.ACTION_CANCEL, 0.0f, 0.0f, 0
         ))
         isScrollBlocked = true
+    }
+
+    override fun onApplyThemeAttributes() {
+        tabLayout.tabIconTint = ColorStateList.valueOf(prefs.theme.mediaFgColor)
+        tabLayout.setSelectedTabIndicatorColor(prefs.theme.colorAccent)
     }
 }

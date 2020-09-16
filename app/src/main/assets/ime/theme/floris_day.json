@@ -1,0 +1,60 @@
+{
+  "name": "floris_day",
+  "displayName": "Floris Day",
+  "author": "patrickgold",
+  "isNightTheme": false,
+  "attributes": {
+    "window": {
+      "colorPrimary": "#4CAF50",
+      "colorPrimaryDark": "#388E3C",
+      "colorAccent": "#FF9800",
+      "navigationBarColor": "@keyboard/bgColor",
+      "navigationBarLight": "true",
+      "semiTransparentColor": "#20000000",
+      "textColor": "#000000"
+    },
+    "keyboard": {
+      "bgColor": "#E0E0E0"
+    },
+    "key": {
+      "bgColor": "#FFFFFF",
+      "bgColorPressed": "#F5F5F5",
+      "fgColor": "@window/textColor"
+    },
+    "keyEnter": {
+      "bgColor": "@window/colorPrimary",
+      "bgColorPressed": "@window/colorPrimaryDark",
+      "fgColor": "#FFFFFF"
+    },
+    "keyPopup": {
+      "bgColor": "#EEEEEE",
+      "bgColorActive": "#BDBDBD",
+      "fgColor": "@window/textColor"
+    },
+    "keyShift": {
+      "bgColor": "@key/bgColor",
+      "bgColorPressed": "@key/bgColorPressed",
+      "fgColor": "@window/textColor",
+      "fgColorCapsLock": "@window/colorAccent"
+    },
+    "media": {
+      "fgColor": "@window/textColor",
+      "fgColorAlt": "#757575"
+    },
+    "oneHanded": {
+      "bgColor": "#E8F5E9"
+    },
+    "oneHandedButton": {
+      "fgColor": "#424242"
+    },
+    "smartbar": {
+      "bgColor": "transparent",
+      "fgColor": "@window/textColor",
+      "fgColorAlt": "#8A8A8A"
+    },
+    "smartbarButton": {
+      "bgColor": "@key/bgColor",
+      "fgColor": "@key/fgColor"
+    }
+  }
+}

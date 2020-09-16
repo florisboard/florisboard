@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.editing
+package dev.patrickgold.florisboard.ime.text.editing
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -29,9 +29,9 @@ import android.widget.Button
 import androidx.appcompat.widget.AppCompatImageButton
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
-import dev.patrickgold.florisboard.util.getColorFromAttr
 import java.util.*
 
 /**
@@ -39,6 +39,7 @@ import java.util.*
  */
 class EditingKeyView : AppCompatImageButton {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
+    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val data: KeyData
     private var isKeyPressed: Boolean = false
     private var osTimer: Timer? = null
@@ -133,20 +134,20 @@ class EditingKeyView : AppCompatImageButton {
 
         canvas ?: return
 
-        imageTintList = ColorStateList.valueOf(getColorFromAttr(context, when {
-            isEnabled -> R.attr.key_fgColor
-            else -> android.R.attr.colorButtonNormal
-        }))
+        imageTintList = ColorStateList.valueOf(when {
+            isEnabled -> prefs.theme.smartbarFgColor
+            else -> prefs.theme.smartbarFgColorAlt
+        })
 
         // Draw label
         val label = label
         if (label != null) {
             labelPaint.color = if (isHighlighted && isEnabled) {
-                getColorFromAttr(context, R.attr.colorPrimary)
+                prefs.theme.colorPrimary
             } else if (!isEnabled) {
-                getColorFromAttr(context, android.R.attr.colorButtonNormal)
+                prefs.theme.smartbarFgColorAlt
             } else {
-                getColorFromAttr(context, R.attr.key_fgColor)
+                prefs.theme.smartbarFgColor
             }
             val isPortrait =
                 resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT

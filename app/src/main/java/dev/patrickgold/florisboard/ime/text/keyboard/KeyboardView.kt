@@ -19,8 +19,6 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
-import android.graphics.Canvas
-import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewGroup
@@ -34,23 +32,23 @@ import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
-import dev.patrickgold.florisboard.util.getColorFromAttr
 
 /**
  * Manages the layout of the keyboard, key measurement, key selection and all touch events.
- * Supports multi touch events.
+ * Supports multi touch events. Note that the keyboard's background is transparent. The 'real'
+ * background of this keyboard is the background of the underlying mainViewFlipper. This prevents
+ * rendering issues when a keyboard is being loaded for the first time.
  *
  * TODO: Implement swipe gesture support
  *
  * @property florisboard Reference to instance of core class [FlorisBoard].
  */
-class KeyboardView : LinearLayout {
+class KeyboardView : LinearLayout, FlorisBoard.EventListener {
     private var activeKeyView: KeyView? = null
     private var activePointerId: Int? = null
     private var activeX: Float = 0.0f
     private var activeY: Float = 0.0f
 
-    private var colorDrawable: ColorDrawable
     var computedLayout: ComputedLayoutData? = null
         set(v) {
             field = v
@@ -58,21 +56,20 @@ class KeyboardView : LinearLayout {
         }
     var desiredKeyWidth: Int = resources.getDimension(R.dimen.key_width).toInt()
     var desiredKeyHeight: Int = resources.getDimension(R.dimen.key_height).toInt()
-    var florisboard: FlorisBoard? = null
+    var florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
     var isPreviewMode: Boolean = false
     var popupManager = KeyPopupManager<KeyboardView, KeyView>(this)
-    lateinit var prefs: PrefHelper
+    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        colorDrawable = ColorDrawable(getColorFromAttr(context, R.attr.keyboard_bgColor))
-        background = colorDrawable
         orientation = VERTICAL
         layoutParams = layoutParams ?: FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
         )
+        florisboard?.addEventListener(this)
     }
 
     /**
@@ -265,6 +262,12 @@ class KeyboardView : LinearLayout {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
     }
 
+    override fun onApplyThemeAttributes() {
+        if (isPreviewMode) {
+            setBackgroundColor(prefs.theme.keyboardBgColor)
+        }
+    }
+
     /**
      * Queues a layout request for all keys.
      */
@@ -308,11 +311,5 @@ class KeyboardView : LinearLayout {
                 }
             }
         }
-    }
-
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-
-        colorDrawable.color = getColorFromAttr(context, R.attr.keyboard_bgColor)
     }
 }

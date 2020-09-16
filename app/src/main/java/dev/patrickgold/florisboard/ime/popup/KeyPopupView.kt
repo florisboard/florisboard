@@ -14,42 +14,37 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.core
+package dev.patrickgold.florisboard.ime.popup
 
 import android.content.Context
+import android.graphics.Canvas
 import android.util.AttributeSet
-import android.util.Log
+import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.ViewFlipper
-import dev.patrickgold.florisboard.BuildConfig
+import android.widget.TextView
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.util.*
 
-/**
- * Root view of the keyboard. Notifies [FlorisBoard] when it has been attached to a window.
- */
-class InputView : LinearLayout {
-    private var florisboard: FlorisBoard = FlorisBoard.getInstance()
-
-    var mainViewFlipper: ViewFlipper? = null
-        private set
-    var oneHandedCtrlPanelStart: LinearLayout? = null
-        private set
-    var oneHandedCtrlPanelEnd: LinearLayout? = null
-        private set
+class KeyPopupView : LinearLayout {
+    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+    private lateinit var text: TextView
+    private lateinit var threedots: ImageView
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     override fun onAttachedToWindow() {
-        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onAttachedToWindow()")
-
         super.onAttachedToWindow()
+        text = findViewById(R.id.key_popup_text)
+        threedots = findViewById(R.id.key_popup_threedots)
+    }
 
-        mainViewFlipper = findViewById(R.id.main_view_flipper)
-        oneHandedCtrlPanelStart = findViewById(R.id.one_handed_ctrl_panel_start)
-        oneHandedCtrlPanelEnd = findViewById(R.id.one_handed_ctrl_panel_end)
-
-        florisboard.registerInputView(this)
+    override fun onDraw(canvas: Canvas?) {
+        setBackgroundTintColor2(this, prefs.theme.keyPopupBgColor)
+        text.setTextColor(prefs.theme.keyPopupFgColor)
+        setImageTintColor2(threedots, prefs.theme.keyPopupFgColor)
+        super.onDraw(canvas)
     }
 }

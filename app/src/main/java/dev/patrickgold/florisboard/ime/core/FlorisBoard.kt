@@ -20,6 +20,7 @@ import android.annotation.SuppressLint
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
@@ -59,8 +60,9 @@ class FlorisBoard : InputMethodService() {
         private set
 
     val context: Context
-        get() = inputView?.context ?: this
+        get() = inputWindowView?.context ?: this
     private var inputView: InputView? = null
+    private var inputWindowView: InputWindowView? = null
     private var eventListeners: MutableList<EventListener> = mutableListOf()
 
     private var audioManager: AudioManager? = null
@@ -70,6 +72,7 @@ class FlorisBoard : InputMethodService() {
 
     lateinit var subtypeManager: SubtypeManager
     lateinit var activeSubtype: Subtype
+    private var currentThemeIsNight: Boolean = false
     private var currentThemeResId: Int = 0
 
     val textInputManager: TextInputManager
@@ -112,6 +115,13 @@ class FlorisBoard : InputMethodService() {
         fun getInstanceOrNull(): FlorisBoard? {
             return florisboardInstance
         }
+
+        fun getDayNightBaseThemeId(isNightTheme: Boolean): Int {
+            return when (isNightTheme) {
+                true -> R.style.KeyboardThemeBase_Night
+                else -> R.style.KeyboardThemeBase_Day
+            }
+        }
     }
 
     override fun onCreate() {
@@ -138,19 +148,21 @@ class FlorisBoard : InputMethodService() {
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        prefs = PrefHelper(this)
+        prefs = PrefHelper.getDefaultInstance(this)
         prefs.initDefaultPreferences()
         prefs.sync()
         subtypeManager = SubtypeManager(this, prefs)
         activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
 
-        currentThemeResId = prefs.theme.getSelectedThemeResId()
+        currentThemeIsNight = prefs.internal.themeCurrentIsNight
+        currentThemeResId = getDayNightBaseThemeId(currentThemeIsNight)
         setTheme(currentThemeResId)
+        updateTheme()
 
         AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
 
         super.onCreate()
-        eventListeners.forEach { it.onCreate() }
+        eventListeners.toList().forEach { it.onCreate() }
     }
 
     @SuppressLint("InflateParams")
@@ -159,11 +171,11 @@ class FlorisBoard : InputMethodService() {
 
         baseContext.setTheme(currentThemeResId)
 
-        inputView = layoutInflater.inflate(R.layout.florisboard, null) as InputView
+        inputWindowView = layoutInflater.inflate(R.layout.florisboard, null) as InputWindowView
 
-        eventListeners.forEach { it.onCreateInputView() }
+        eventListeners.toList().forEach { it.onCreateInputView() }
 
-        return inputView
+        return inputWindowView
     }
 
     fun registerInputView(inputView: InputView) {
@@ -171,10 +183,11 @@ class FlorisBoard : InputMethodService() {
 
         this.inputView = inputView
         initializeOneHandedEnvironment()
+        updateTheme()
         updateSoftInputWindowLayoutParameters()
         updateOneHandedPanelVisibility()
 
-        eventListeners.forEach { it.onRegisterInputView(inputView) }
+        eventListeners.toList().forEach { it.onRegisterInputView(inputView) }
     }
 
     override fun onDestroy() {
@@ -183,43 +196,44 @@ class FlorisBoard : InputMethodService() {
         osHandler.removeCallbacksAndMessages(null)
         florisboardInstance = null
 
+        eventListeners.toList().forEach { it.onDestroy() }
+        eventListeners.clear()
         super.onDestroy()
-        eventListeners.forEach { it.onDestroy() }
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
 
         super.onStartInputView(info, restarting)
-        eventListeners.forEach { it.onStartInputView(info, restarting) }
+        eventListeners.toList().forEach { it.onStartInputView(info, restarting) }
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
         currentInputConnection?.requestCursorUpdates(0)
 
         super.onFinishInputView(finishingInput)
-        eventListeners.forEach { it.onFinishInputView(finishingInput) }
+        eventListeners.toList().forEach { it.onFinishInputView(finishingInput) }
     }
 
     override fun onWindowShown() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onWindowShown()")
 
         prefs.sync()
-        updateThemeIfNecessary()
+        updateTheme()
         updateOneHandedPanelVisibility()
         activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
         onSubtypeChanged(activeSubtype)
         setActiveInput(R.id.text_input)
 
         super.onWindowShown()
-        eventListeners.forEach { it.onWindowShown() }
+        eventListeners.toList().forEach { it.onWindowShown() }
     }
 
     override fun onWindowHidden() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onWindowHidden()")
 
         super.onWindowHidden()
-        eventListeners.forEach { it.onWindowHidden() }
+        eventListeners.toList().forEach { it.onWindowHidden() }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -232,7 +246,7 @@ class FlorisBoard : InputMethodService() {
 
     override fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {
         super.onUpdateCursorAnchorInfo(cursorAnchorInfo)
-        eventListeners.forEach { it.onUpdateCursorAnchorInfo(cursorAnchorInfo) }
+        eventListeners.toList().forEach { it.onUpdateCursorAnchorInfo(cursorAnchorInfo) }
     }
 
     override fun onUpdateSelection(
@@ -251,7 +265,7 @@ class FlorisBoard : InputMethodService() {
             candidatesStart,
             candidatesEnd
         )
-        eventListeners.forEach {
+        eventListeners.toList().forEach {
             it.onUpdateSelection(
                 oldSelStart,
                 oldSelEnd,
@@ -264,40 +278,52 @@ class FlorisBoard : InputMethodService() {
     }
 
     /**
-     * Checks the preferences if the selected theme res id has changed and updates the theme only
-     * then by rebuilding the UI and setting the navigation bar theme manually.
+     * Reapplies the supplies colors and settings from prefs to navigation bar.
      */
-    private fun updateThemeIfNecessary() {
-        val newThemeResId = prefs.theme.getSelectedThemeResId()
-        if (newThemeResId != currentThemeResId) {
-            currentThemeResId = newThemeResId
+    private fun updateTheme() {
+        val newThemeIsNightMode =  prefs.internal.themeCurrentIsNight
+        if (currentThemeIsNight != newThemeIsNightMode) {
+            currentThemeResId = getDayNightBaseThemeId(newThemeIsNightMode)
+            currentThemeIsNight = newThemeIsNightMode
             setInputView(onCreateInputView())
-            val w = window?.window ?: return
-            w.navigationBarColor = getColorFromAttr(baseContext, android.R.attr.navigationBarColor)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-                var flags = w.decorView.systemUiVisibility
-                flags = if (getBooleanFromAttr(baseContext, android.R.attr.windowLightNavigationBar)) {
-                    flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-                } else {
-                    flags and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
-                }
-                w.decorView.systemUiVisibility = flags
-            }
+            return
         }
+        val w = window?.window ?: return
+        inputView?.setBackgroundColor(prefs.theme.keyboardBgColor)
+        w.navigationBarColor = prefs.theme.navBarColor
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            var flags = w.decorView.systemUiVisibility
+            flags = if (prefs.theme.navBarIsLight) {
+                flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            } else {
+                flags and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
+            }
+            w.decorView.systemUiVisibility = flags
+        }
+        inputView?.oneHandedCtrlPanelStart?.setBackgroundColor(prefs.theme.oneHandedBgColor)
+        inputView?.oneHandedCtrlPanelEnd?.setBackgroundColor(prefs.theme.oneHandedBgColor)
+        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_move_start)
+            ?.imageTintList = ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor)
+        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_move_end)
+            ?.imageTintList = ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor)
+        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_close_start)
+            ?.imageTintList = ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor)
+        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_close_end)
+            ?.imageTintList = ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor)
+        eventListeners.toList().forEach { it.onApplyThemeAttributes() }
     }
 
     override fun onComputeInsets(outInsets: Insets?) {
         super.onComputeInsets(outInsets)
         val inputView = this.inputView ?: return
+        val inputWindowView = this.inputWindowView ?: return
         // TODO: Check also if the keyboard is currently suppressed by a hardware keyboard
         if (!isInputViewShown) {
-            outInsets?.contentTopInsets = inputView.height
-            outInsets?.visibleTopInsets = inputView.height
+            outInsets?.contentTopInsets = inputWindowView.height
+            outInsets?.visibleTopInsets = inputWindowView.height
             return
         }
-        val innerInputViewContainer =
-            inputView.findViewById<LinearLayout>(R.id.inner_input_view_container) ?: return
-        val visibleTopY = inputView.height - innerInputViewContainer.measuredHeight
+        val visibleTopY = inputWindowView.height - inputView.measuredHeight
         outInsets?.contentTopInsets = visibleTopY
         outInsets?.visibleTopInsets = visibleTopY
     }
@@ -313,8 +339,8 @@ class FlorisBoard : InputMethodService() {
     private fun updateSoftInputWindowLayoutParameters() {
         val w = window?.window ?: return
         ViewLayoutUtils.updateLayoutHeightOf(w, WindowManager.LayoutParams.MATCH_PARENT)
-        val inputView = this.inputView
-        if (inputView != null) {
+        val inputWindowView = this.inputWindowView
+        if (inputWindowView != null) {
             val layoutHeight = if (isFullscreenMode) {
                 WindowManager.LayoutParams.WRAP_CONTENT
             } else {
@@ -323,7 +349,7 @@ class FlorisBoard : InputMethodService() {
             val inputArea = w.findViewById<View>(android.R.id.inputArea)
             ViewLayoutUtils.updateLayoutHeightOf(inputArea, layoutHeight)
             ViewLayoutUtils.updateLayoutGravityOf(inputArea, Gravity.BOTTOM)
-            ViewLayoutUtils.updateLayoutHeightOf(inputView, layoutHeight)
+            ViewLayoutUtils.updateLayoutHeightOf(inputWindowView, layoutHeight)
         }
     }
 
@@ -521,6 +547,7 @@ class FlorisBoard : InputMethodService() {
             candidatesEnd: Int
         ) {}
 
+        fun onApplyThemeAttributes() {}
         fun onSubtypeChanged(newSubtype: Subtype) {}
     }
 

@@ -3,6 +3,11 @@
     <string name="key__phone_wait">Wait</string>
     <string name="key_popup__threedots_alt">Three-dot icon. If visible, indicates that more letters can be used if longer pressed.</string>
 
+    <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description">Close one-handed mode.</string>
+    <string name="one_handed__move_start_btn_content_description">Move keyboard to the left.</string>
+    <string name="one_handed__move_end_btn_content_description">Move keyboard to the right.</string>
+
     <!-- Media strings -->
     <string name="media__tab__emojis">Emojis</string>
     <string name="media__tab__emoticons">Emoticons</string>
@@ -35,8 +40,8 @@
     <string name="settings__navigation__home">Home</string>
     <string name="settings__navigation__keyboard">Keyboard</string>
     <string name="settings__navigation__typing">Typing</string>
+    <string name="settings__navigation__theme">Theme</string>
     <string name="settings__navigation__gestures">Gestures</string>
-    <string name="settings__navigation__advanced">Advanced</string>
     <string name="settings__default">Default</string>
     <string name="settings__system_default">System default</string>
 
@@ -58,7 +63,41 @@
     <string name="settings__localization__subtype_error_already_exists">This subtype already exists!</string>
 
     <string name="settings__theme__title">Keyboard theme</string>
+    <string name="settings__theme__undefined">Undefined</string>
+    <string name="settings__theme__preset_title">Theme</string>
+    <string name="settings__theme__preset_summary">Custom (based on %s)</string>
+    <string name="settings__theme__preset_dialog_selected_theme">Selected theme:</string>
+    <string name="settings__theme__preset_dialog_available_themes">Available themes:</string>
+    <string name="settings__theme__preset_dialog_alt_arrow_right">Arrow right</string>
+    <string name="settings__theme__background">Background color</string>
+    <string name="settings__theme__background_active">Background color when active</string>
+    <string name="settings__theme__background_pressed">Background color when pressed</string>
+    <string name="settings__theme__foreground">Foreground color</string>
+    <string name="settings__theme__foreground_alt">Foreground color (alternative)</string>
+    <string name="settings__theme__foreground_capslock">Foreground color (caps lock)</string>
+    <string name="settings__theme__dialog_title">Select a color</string>
+    <string name="settings__theme__group_window">Window &amp; System</string>
+    <string name="settings__theme__group_keyboard">Keyboard</string>
+    <string name="settings__theme__group_key">Key</string>
+    <string name="settings__theme__group_key_enter">Enter key</string>
+    <string name="settings__theme__group_key_popup">Key popup</string>
+    <string name="settings__theme__group_key_shift">Shift key</string>
+    <string name="settings__theme__group_media">Media context</string>
+    <string name="settings__theme__group_one_handed">One-handed</string>
+    <string name="settings__theme__group_one_handed_button">One-handed button</string>
+    <string name="settings__theme__group_smartbar">Smartbar</string>
+    <string name="settings__theme__group_smartbar_button">Smartbar button</string>
     <string name="pref__theme__name__label">Keyboard Theme</string>
+    <string name="pref__theme__colorPrimary_title">Primary color</string>
+    <string name="pref__theme__colorPrimary_summary">Applied to main media tab ripple and selection highlight</string>
+    <string name="pref__theme__colorPrimaryDark_title">Primary color (dark)</string>
+    <string name="pref__theme__colorPrimaryDark_summary">Currently not used, reserved for future implementation</string>
+    <string name="pref__theme__colorAccent_title">Accent color</string>
+    <string name="pref__theme__colorAccent_summary">Applied to emoji tab ripple</string>
+    <string name="pref__theme__navBarColor_title">Navigation bar color</string>
+    <string name="pref__theme__navBarColor_summary">The background of the navigation bar.</string>
+    <string name="pref__theme__navBarIsLight_title">Navigation bar dark foreground</string>
+    <string name="pref__theme__navBarIsLight_summary">Set to ON for dark or to OFF for light foreground.</string>
 
     <string name="settings__keyboard__title">Keyboard Preferences</string>
     <string name="pref__keyboard__group_layout__label">Layout</string>

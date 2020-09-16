@@ -69,7 +69,7 @@ timeline for this, but I aim for the 0.2.0 or 0.3.0 release.
 * [x] Preferences screen
 * [x] Customize look and behaviour of keyboard (currently only
       light/dark theme)
-* [ ] Theme customization
+* [x] Theme customization
 * [ ] Theme import/export (?)
 * [x] Subtype selection (language/layout)
 * [x] Keyboard behaviour preferences
@@ -97,13 +97,15 @@ timeline for this, but I aim for the 0.2.0 or 0.3.0 release.
 
 Note: (?) = not sure if it will be implemented
 
-## Used libraries and icons
+## Used libraries, components and icons
 * [Google Flexbox Layout for Android](https://github.com/google/flexbox-layout)
   by [google](https://github.com/google)
 * [Google Material icons](https://github.com/google/material-design-icons) by
   [google](https://github.com/google)
 * [Moshi JSON library](https://github.com/square/moshi) by
   [square](https://github.com/square)
+* [ColorPicker preference](https://github.com/jaredrummler/ColorPicker) by
+  [Jared Rummler](https://github.com/jaredrummler)
 
 ## License
 ```

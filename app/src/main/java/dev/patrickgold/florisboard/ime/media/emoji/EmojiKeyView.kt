@@ -18,17 +18,20 @@ package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.annotation.SuppressLint
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.ColorFilter
 import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.MotionEvent
 import android.widget.HorizontalScrollView
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.util.getColorFromAttr
+import dev.patrickgold.florisboard.ime.core.PrefHelper
 
 /**
  * View class for managing the rendering and the events of a single emoji keyboard key.
@@ -40,10 +43,12 @@ import dev.patrickgold.florisboard.util.getColorFromAttr
  */
 @SuppressLint("ViewConstructor")
 class EmojiKeyView(
-    private val florisboard: FlorisBoard,
     private val emojiKeyboardView: EmojiKeyboardView,
     val data: EmojiKeyData
-) : androidx.appcompat.widget.AppCompatTextView(florisboard.context) {
+) : androidx.appcompat.widget.AppCompatTextView(emojiKeyboardView.context),
+    FlorisBoard.EventListener {
+    private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
+    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
 
     private var isCancelled: Boolean = false
     private var osHandler: Handler? = null
@@ -55,14 +60,16 @@ class EmojiKeyView(
         setPadding(0, 0, 0, 0)
         setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.emoji_key_textSize))
 
-        triangleDrawable = resources.getDrawable(
-            R.drawable.triangle_bottom_right, context.theme
-        )
-        triangleDrawable?.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
-            getColorFromAttr(context, R.attr.emoji_key_fgColor), BlendModeCompat.SRC_ATOP
-        )
+        triangleDrawable = ContextCompat.getDrawable(context, R.drawable.triangle_bottom_right)
 
         text = data.getCodePointsAsString()
+
+        florisboard?.addEventListener(this)
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        onApplyThemeAttributes()
     }
 
     /**
@@ -79,7 +86,7 @@ class EmojiKeyView(
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 isCancelled = false
-                val delayMillis = florisboard.prefs.keyboard.longPressDelay
+                val delayMillis = prefs.keyboard.longPressDelay
                 if (osHandler == null) {
                     osHandler = Handler()
                 }
@@ -89,8 +96,8 @@ class EmojiKeyView(
                     emojiKeyboardView.isScrollBlocked = true
                     emojiKeyboardView.popupManager.show(this)
                     emojiKeyboardView.popupManager.extend(this)
-                    florisboard.keyPressVibrate()
-                    florisboard.keyPressSound()
+                    florisboard?.keyPressVibrate()
+                    florisboard?.keyPressSound()
                 }, delayMillis.toLong())
             }
             MotionEvent.ACTION_MOVE -> {
@@ -117,10 +124,10 @@ class EmojiKeyView(
                 if (event.actionMasked != MotionEvent.ACTION_CANCEL &&
                     retData != null && !isCancelled) {
                     if (!emojiKeyboardView.isScrollBlocked) {
-                        florisboard.keyPressVibrate()
-                        florisboard.keyPressSound()
+                        florisboard?.keyPressVibrate()
+                        florisboard?.keyPressSound()
                     }
-                    florisboard.mediaInputManager.sendEmojiKeyPress(retData)
+                    florisboard?.mediaInputManager?.sendEmojiKeyPress(retData)
                     performClick()
                 }
                 if (event.actionMasked == MotionEvent.ACTION_CANCEL) {
@@ -131,18 +138,29 @@ class EmojiKeyView(
         return true
     }
 
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        triangleDrawable?.setBounds(
+            (measuredWidth * 0.75f).toInt(),
+            (measuredHeight * 0.75f).toInt(),
+            (measuredWidth * 0.85f).toInt(),
+            (measuredHeight * 0.85f).toInt()
+        )
+    }
+
+    override fun onApplyThemeAttributes() {
+        triangleDrawable?.colorFilter =
+            BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
+                prefs.theme.mediaFgColorAlt, BlendModeCompat.SRC_ATOP
+            )
+    }
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
         canvas ?: return
 
         if (data.popup.isNotEmpty()) {
-            triangleDrawable?.setBounds(
-                (measuredWidth * 0.75f).toInt(),
-                (measuredHeight * 0.75f).toInt(),
-                (measuredWidth * 0.85f).toInt(),
-                (measuredHeight * 0.85f).toInt()
-            )
             triangleDrawable?.draw(canvas)
         }
     }

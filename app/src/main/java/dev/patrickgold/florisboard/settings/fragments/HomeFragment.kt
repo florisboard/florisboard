@@ -61,7 +61,7 @@ class HomeFragment : SettingsMainActivity.SettingsFragment() {
             settingsMainActivity.binding.bottomNavigation.selectedItemId = R.id.settings__navigation__typing
         }
         binding.themeCard.setOnClickListener {
-            settingsMainActivity.binding.bottomNavigation.selectedItemId = R.id.settings__navigation__keyboard
+            settingsMainActivity.binding.bottomNavigation.selectedItemId = R.id.settings__navigation__theme
         }
 
         return binding.root

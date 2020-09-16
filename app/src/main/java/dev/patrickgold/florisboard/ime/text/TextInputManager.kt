@@ -30,7 +30,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputView
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.editing.EditingKeyboardView
+import dev.patrickgold.florisboard.ime.text.editing.EditingKeyboardView
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyType
@@ -137,8 +137,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
 
     private suspend fun addKeyboardView(mode: KeyboardMode) {
         val keyboardView = KeyboardView(florisboard.context)
-        keyboardView.florisboard = florisboard
-        keyboardView.prefs = florisboard.prefs
         keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(mode, florisboard.activeSubtype).await()
         keyboardViews[mode] = keyboardView
         withContext(Dispatchers.Main) {
@@ -180,7 +178,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         osHandler.removeCallbacksAndMessages(null)
         layoutManager.onDestroy()
         smartbarManager.onDestroy()
-        florisboard.removeEventListener(this)
         instance = null
     }
 

@@ -129,7 +129,6 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onDestroy()")
 
         cancel()
-        florisboard.removeEventListener(this)
         instance = null
     }
 

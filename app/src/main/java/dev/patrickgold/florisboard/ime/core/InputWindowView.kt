@@ -14,14 +14,22 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings.fragments
+package dev.patrickgold.florisboard.ime.core
 
-import android.os.Bundle
-import androidx.preference.PreferenceFragmentCompat
+import android.content.Context
+import android.util.AttributeSet
+import android.util.Log
+import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.ViewFlipper
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 
-class KeyboardFragment : PreferenceFragmentCompat() {
-    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-        addPreferencesFromResource(R.xml.prefs_keyboard)
-    }
+/**
+ * Root view of the keyboard.
+ */
+class InputWindowView : FrameLayout {
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 }
