@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.editing
+package dev.patrickgold.florisboard.ime.text.editing
 
 import android.content.Context
 import android.graphics.Canvas

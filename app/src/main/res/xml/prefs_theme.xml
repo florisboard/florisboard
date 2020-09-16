@@ -189,17 +189,20 @@
         <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__smartbar_bgColor"
             android:title="@string/settings__theme__background"
-            app:iconSpaceReserved="false"/>
+            app:iconSpaceReserved="false"
+            app:cpv_showAlphaSlider="true"/>
 
         <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__smartbar_fgColor"
             android:title="@string/settings__theme__foreground"
-            app:iconSpaceReserved="false"/>
+            app:iconSpaceReserved="false"
+            app:cpv_showAlphaSlider="true"/>
 
         <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
             android:key="theme__smartbar_fgColorAlt"
             android:title="@string/settings__theme__foreground_alt"
-            app:iconSpaceReserved="false"/>
+            app:iconSpaceReserved="false"
+            app:cpv_showAlphaSlider="true"/>
 
     </PreferenceCategory>
 

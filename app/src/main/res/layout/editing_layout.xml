@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dev.patrickgold.florisboard.ime.editing.EditingKeyboardView
+<dev.patrickgold.florisboard.ime.text.editing.EditingKeyboardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/editing"
@@ -8,7 +8,7 @@
     android:background="@android:color/white"
     android:backgroundTintMode="multiply">
 
-    <dev.patrickgold.florisboard.ime.editing.EditingKeyView
+    <dev.patrickgold.florisboard.ime.text.editing.EditingKeyView
         android:id="@+id/arrow_left"
         style="@style/TextEditingButton"
         app:layout_constraintWidth_percent="0.2"
@@ -18,7 +18,7 @@
         app:layout_constraintBottom_toTopOf="@+id/move_home"
         android:src="@drawable/ic_keyboard_arrow_left"/>
 
-    <dev.patrickgold.florisboard.ime.editing.EditingKeyView
+    <dev.patrickgold.florisboard.ime.text.editing.EditingKeyView
         android:id="@+id/arrow_up"
         style="@style/TextEditingButton"
         app:layout_constraintWidth_percent="0.3"
@@ -27,7 +27,7 @@
         app:layout_constraintLeft_toRightOf="@+id/arrow_left"
         android:src="@drawable/ic_keyboard_arrow_up"/>
 
-    <dev.patrickgold.florisboard.ime.editing.EditingKeyView
+    <dev.patrickgold.florisboard.ime.text.editing.EditingKeyView
         android:id="@+id/select"
         style="@style/TextEditingButton"
         app:layout_constraintWidth_percent="0.3"
@@ -36,7 +36,7 @@
         app:layout_constraintLeft_toRightOf="@+id/arrow_left"
         android:text="@android:string/selectTextMode"/>
 
-    <dev.patrickgold.florisboard.ime.editing.EditingKeyView
+    <dev.patrickgold.florisboard.ime.text.editing.EditingKeyView
         android:id="@+id/arrow_down"
         style="@style/TextEditingButton"
         app:layout_constraintWidth_percent="0.3"
@@ -45,7 +45,7 @@
         app:layout_constraintLeft_toRightOf="@+id/arrow_left"
         android:src="@drawable/ic_keyboard_arrow_down"/>
 
-    <dev.patrickgold.florisboard.ime.editing.EditingKeyView
+    <dev.patrickgold.florisboard.ime.text.editing.EditingKeyView
         android:id="@+id/arrow_right"
         style="@style/TextEditingButton"
         app:layout_constraintWidth_percent="0.2"
@@ -55,7 +55,7 @@
         app:layout_constraintLeft_toRightOf="@+id/select"
         android:src="@drawable/ic_keyboard_arrow_right"/>
 
-    <dev.patrickgold.florisboard.ime.editing.EditingKeyView
+    <dev.patrickgold.florisboard.ime.text.editing.EditingKeyView
         android:id="@+id/move_home"
         style="@style/TextEditingButton"
         app:layout_constraintWidth_percent="0.35"
@@ -64,7 +64,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:src="@drawable/ic_first_page"/>
 
-    <dev.patrickgold.florisboard.ime.editing.EditingKeyView
+    <dev.patrickgold.florisboard.ime.text.editing.EditingKeyView
         android:id="@+id/move_end"
         style="@style/TextEditingButton"
         app:layout_constraintWidth_percent="0.35"
@@ -73,7 +73,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:src="@drawable/ic_last_page"/>
 
-    <dev.patrickgold.florisboard.ime.editing.EditingKeyView
+    <dev.patrickgold.florisboard.ime.text.editing.EditingKeyView
         android:id="@+id/select_all"
         style="@style/TextEditingButton"
         app:layout_constraintWidth_percent="0.3"
@@ -84,7 +84,7 @@
         android:text="@android:string/selectAll"
         android:visibility="gone"/>
 
-    <dev.patrickgold.florisboard.ime.editing.EditingKeyView
+    <dev.patrickgold.florisboard.ime.text.editing.EditingKeyView
         android:id="@+id/clipboard_cut"
         style="@style/TextEditingButton"
         app:layout_constraintWidth_percent="0.3"
@@ -102,7 +102,7 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="select_all,clipboard_cut"/>
 
-    <dev.patrickgold.florisboard.ime.editing.EditingKeyView
+    <dev.patrickgold.florisboard.ime.text.editing.EditingKeyView
         android:id="@+id/clipboard_copy"
         style="@style/TextEditingButton"
         app:layout_constraintWidth_percent="0.3"
@@ -113,7 +113,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:text="@android:string/copy"/>
 
-    <dev.patrickgold.florisboard.ime.editing.EditingKeyView
+    <dev.patrickgold.florisboard.ime.text.editing.EditingKeyView
         android:id="@+id/clipboard_paste"
         style="@style/TextEditingButton"
         app:layout_constraintWidth_percent="0.3"
@@ -124,7 +124,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:text="@android:string/paste"/>
 
-    <dev.patrickgold.florisboard.ime.editing.EditingKeyView
+    <dev.patrickgold.florisboard.ime.text.editing.EditingKeyView
         android:id="@+id/backspace"
         style="@style/TextEditingButton"
         app:layout_constraintWidth_percent="0.3"
@@ -135,4 +135,4 @@
         app:layout_constraintRight_toRightOf="parent"
         android:src="@drawable/ic_backspace"/>
 
-</dev.patrickgold.florisboard.ime.editing.EditingKeyboardView>
+</dev.patrickgold.florisboard.ime.text.editing.EditingKeyboardView>

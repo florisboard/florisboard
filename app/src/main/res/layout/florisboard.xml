@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<dev.patrickgold.florisboard.ime.core.InputView
+<dev.patrickgold.florisboard.ime.core.InputWindowView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/florisboard"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
     android:gravity="bottom"
     android:orientation="vertical">
 
-    <LinearLayout
+    <dev.patrickgold.florisboard.ime.core.InputView
         android:id="@+id/inner_input_view_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,32 +25,34 @@
             <ImageButton
                 android:id="@+id/one_handed_ctrl_close_start"
                 style="@style/OneHandedPanelButton"
-                android:src="@drawable/ic_zoom_out_map"/>
+                android:src="@drawable/ic_zoom_out_map"
+                android:contentDescription="@string/one_handed__close_btn_content_description"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/one_handed_button_height"
-                android:visibility="invisible" />
+                android:visibility="invisible"/>
 
             <ImageButton
                 android:id="@+id/one_handed_ctrl_move_start"
                 style="@style/OneHandedPanelButton"
-                android:src="@drawable/ic_keyboard_arrow_left"/>
+                android:src="@drawable/ic_keyboard_arrow_left"
+                android:contentDescription="@string/one_handed__move_start_btn_content_description"/>
 
         </LinearLayout>
 
-        <ViewFlipper
+        <dev.patrickgold.florisboard.ime.core.FlorisViewFlipper
             android:id="@+id/main_view_flipper"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:measureAllChildren="false">
 
-            <include layout="@layout/text_input_layout" />
+            <include layout="@layout/text_input_layout"/>
 
-            <include layout="@layout/media_input_layout" />
+            <include layout="@layout/media_input_layout"/>
 
-        </ViewFlipper>
+        </dev.patrickgold.florisboard.ime.core.FlorisViewFlipper>
 
         <LinearLayout
             android:id="@+id/one_handed_ctrl_panel_end"
@@ -60,20 +62,22 @@
             <ImageButton
                 android:id="@+id/one_handed_ctrl_close_end"
                 style="@style/OneHandedPanelButton"
-                android:src="@drawable/ic_zoom_out_map"/>
+                android:src="@drawable/ic_zoom_out_map"
+                android:contentDescription="@string/one_handed__close_btn_content_description"/>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/one_handed_button_height"
-                android:visibility="invisible" />
+                android:visibility="invisible"/>
 
             <ImageButton
                 android:id="@+id/one_handed_ctrl_move_end"
                 style="@style/OneHandedPanelButton"
-                android:src="@drawable/ic_keyboard_arrow_right"/>
+                android:src="@drawable/ic_keyboard_arrow_right"
+                android:contentDescription="@string/one_handed__move_end_btn_content_description"/>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </dev.patrickgold.florisboard.ime.core.InputView>
 
-</dev.patrickgold.florisboard.ime.core.InputView>
+</dev.patrickgold.florisboard.ime.core.InputWindowView>

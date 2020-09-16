@@ -60,8 +60,9 @@ class FlorisBoard : InputMethodService() {
         private set
 
     val context: Context
-        get() = inputView?.context ?: this
+        get() = inputWindowView?.context ?: this
     private var inputView: InputView? = null
+    private var inputWindowView: InputWindowView? = null
     private var eventListeners: MutableList<EventListener> = mutableListOf()
 
     private var audioManager: AudioManager? = null
@@ -170,11 +171,11 @@ class FlorisBoard : InputMethodService() {
 
         baseContext.setTheme(currentThemeResId)
 
-        inputView = layoutInflater.inflate(R.layout.florisboard, null) as InputView
+        inputWindowView = layoutInflater.inflate(R.layout.florisboard, null) as InputWindowView
 
         eventListeners.toList().forEach { it.onCreateInputView() }
 
-        return inputView
+        return inputWindowView
     }
 
     fun registerInputView(inputView: InputView) {
@@ -283,11 +284,12 @@ class FlorisBoard : InputMethodService() {
         val newThemeIsNightMode =  prefs.internal.themeCurrentIsNight
         if (currentThemeIsNight != newThemeIsNightMode) {
             currentThemeResId = getDayNightBaseThemeId(newThemeIsNightMode)
+            currentThemeIsNight = newThemeIsNightMode
             setInputView(onCreateInputView())
             return
         }
         val w = window?.window ?: return
-        inputView?.mainViewFlipper?.setBackgroundColor(prefs.theme.keyboardBgColor)
+        inputView?.setBackgroundColor(prefs.theme.keyboardBgColor)
         w.navigationBarColor = prefs.theme.navBarColor
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             var flags = w.decorView.systemUiVisibility
@@ -314,15 +316,14 @@ class FlorisBoard : InputMethodService() {
     override fun onComputeInsets(outInsets: Insets?) {
         super.onComputeInsets(outInsets)
         val inputView = this.inputView ?: return
+        val inputWindowView = this.inputWindowView ?: return
         // TODO: Check also if the keyboard is currently suppressed by a hardware keyboard
         if (!isInputViewShown) {
-            outInsets?.contentTopInsets = inputView.height
-            outInsets?.visibleTopInsets = inputView.height
+            outInsets?.contentTopInsets = inputWindowView.height
+            outInsets?.visibleTopInsets = inputWindowView.height
             return
         }
-        val innerInputViewContainer =
-            inputView.findViewById<LinearLayout>(R.id.inner_input_view_container) ?: return
-        val visibleTopY = inputView.height - innerInputViewContainer.measuredHeight
+        val visibleTopY = inputWindowView.height - inputView.measuredHeight
         outInsets?.contentTopInsets = visibleTopY
         outInsets?.visibleTopInsets = visibleTopY
     }
@@ -338,8 +339,8 @@ class FlorisBoard : InputMethodService() {
     private fun updateSoftInputWindowLayoutParameters() {
         val w = window?.window ?: return
         ViewLayoutUtils.updateLayoutHeightOf(w, WindowManager.LayoutParams.MATCH_PARENT)
-        val inputView = this.inputView
-        if (inputView != null) {
+        val inputWindowView = this.inputWindowView
+        if (inputWindowView != null) {
             val layoutHeight = if (isFullscreenMode) {
                 WindowManager.LayoutParams.WRAP_CONTENT
             } else {
@@ -348,7 +349,7 @@ class FlorisBoard : InputMethodService() {
             val inputArea = w.findViewById<View>(android.R.id.inputArea)
             ViewLayoutUtils.updateLayoutHeightOf(inputArea, layoutHeight)
             ViewLayoutUtils.updateLayoutGravityOf(inputArea, Gravity.BOTTOM)
-            ViewLayoutUtils.updateLayoutHeightOf(inputView, layoutHeight)
+            ViewLayoutUtils.updateLayoutHeightOf(inputWindowView, layoutHeight)
         }
     }
 

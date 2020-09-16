@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <ViewFlipper
+    <dev.patrickgold.florisboard.ime.core.FlorisViewFlipper
         android:id="@+id/media_input_view_flipper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

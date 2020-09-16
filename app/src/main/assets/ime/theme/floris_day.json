@@ -48,9 +48,9 @@
       "fgColor": "#424242"
     },
     "smartbar": {
-      "bgColor": "@keyboard/bgColor",
+      "bgColor": "transparent",
       "fgColor": "@window/textColor",
-      "fgColorAlt": "#4A000000"
+      "fgColorAlt": "#8A8A8A"
     },
     "smartbarButton": {
       "bgColor": "@key/bgColor",
