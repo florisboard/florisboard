@@ -40,6 +40,7 @@ import dev.patrickgold.florisboard.util.PackageManagerUtils
 internal const val FRAGMENT_TAG = "FRAGMENT_TAG"
 private const val PREF_RES_ID = "PREF_RES_ID"
 private const val SELECTED_ITEM_ID = "SELECTED_ITEM_ID"
+private const val ADVANCED_REQ_CODE = 0x145F
 
 class SettingsMainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener,
@@ -118,15 +119,23 @@ class SettingsMainActivity : AppCompatActivity(),
     }
 
     private fun loadFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(binding.pageFrame.id, fragment, FRAGMENT_TAG)
-        //transaction.addToBackStack(null)
-        transaction.commit()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(binding.pageFrame.id, fragment, FRAGMENT_TAG)
+            .commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.settings_main_menu, menu)
         return true
+    }
+
+    override fun onBackPressed() {
+        if (binding.bottomNavigation.selectedItemId != R.id.settings__navigation__home) {
+            binding.bottomNavigation.selectedItemId = R.id.settings__navigation__home
+        } else {
+            super.onBackPressed()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -143,6 +152,10 @@ class SettingsMainActivity : AppCompatActivity(),
                 startActivity(browserIntent)
                 true
             }
+            R.id.settings__menu_advanced -> {
+                startActivityForResult(Intent(this, AdvancedActivity::class.java), ADVANCED_REQ_CODE)
+                true
+            }
             R.id.settings__menu_about -> {
                 startActivity(Intent(this, AboutActivity::class.java))
                 true
@@ -151,11 +164,17 @@ class SettingsMainActivity : AppCompatActivity(),
         }
     }
 
-    override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
-        if (key == PrefHelper.Advanced.SETTINGS_THEME) {
-            recreate()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == ADVANCED_REQ_CODE) {
+            if (resultCode == AdvancedActivity.RESULT_APPLY_THEME) {
+                recreate()
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
     }
+
+    override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {}
 
     private fun updateLauncherIconStatus() {
         // Set LauncherAlias enabled/disabled state just before destroying/pausing this activity

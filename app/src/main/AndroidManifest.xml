@@ -74,6 +74,14 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:theme="@style/SettingsTheme"/>
 
+        <!-- Advanced Activity -->
+        <activity
+            android:name="dev.patrickgold.florisboard.settings.AdvancedActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/settings__advanced__title"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:theme="@style/SettingsTheme"/>
+
         <!-- Setup Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.setup.SetupActivity"

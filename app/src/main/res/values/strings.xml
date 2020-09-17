@@ -36,6 +36,7 @@
     <string name="settings__title">Settings</string>
     <string name="settings__menu">More options</string>
     <string name="settings__menu_about">About</string>
+    <string name="settings__menu_advanced">@string/settings__advanced__title</string>
     <string name="settings__menu_help">Help &amp; feedback</string>
     <string name="settings__navigation__home">Home</string>
     <string name="settings__navigation__keyboard">Keyboard</string>
