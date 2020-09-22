@@ -59,4 +59,9 @@ class MediaInputView : LinearLayout, FlorisBoard.EventListener {
         switchToTextInputButton?.setTextColor(prefs.theme.mediaFgColor)
         backspaceButton?.imageTintList = ColorStateList.valueOf(prefs.theme.mediaFgColor)
     }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val height = florisboard?.inputView?.desiredInputViewHeight ?: 0
+        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY))
+    }
 }

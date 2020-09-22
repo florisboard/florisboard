@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="inputView_baseHeight">248dp</dimen>
+    <dimen name="smartbar_baseHeight">40dp</dimen>
+    <dimen name="textKeyboardView_baseHeight">208dp</dimen>
+    <dimen name="mediaKeyboardView_baseHeight">@dimen/inputView_baseHeight</dimen>
+
     <dimen name="key_width">33dp</dimen>
     <dimen name="key_height">42dp</dimen>
     <dimen name="emoji_key_width">@dimen/key_height</dimen>

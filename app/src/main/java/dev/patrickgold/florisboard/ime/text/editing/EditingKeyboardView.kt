@@ -78,6 +78,27 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener {
         pasteKey?.isEnabled = florisboard?.clipboardManager?.hasPrimaryClip() ?: false
     }
 
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val heightMode = MeasureSpec.getMode(heightMeasureSpec)
+        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
+        val height = when (heightMode) {
+            MeasureSpec.EXACTLY -> {
+                // Must be this size
+                heightSize
+            }
+            MeasureSpec.AT_MOST -> {
+                // Can't be bigger than...
+                (florisboard?.inputView?.desiredTextKeyboardViewHeight ?: 0).coerceAtMost(heightSize)
+            }
+            else -> {
+                // Be whatever you want
+                florisboard?.inputView?.desiredTextKeyboardViewHeight ?: 0
+            }
+        }
+
+        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY))
+    }
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         setBackgroundTintColor2(this, prefs.theme.smartbarBgColor)

@@ -29,8 +29,10 @@ import androidx.annotation.IdRes
 import androidx.core.view.children
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.setImageTintColor2
+import kotlinx.android.synthetic.main.florisboard.view.*
 
 /**
  * View class which keeps the references to important children and informs [SmartbarManager] that
@@ -38,6 +40,7 @@ import dev.patrickgold.florisboard.util.setImageTintColor2
  * a theme change).
  */
 class SmartbarView : LinearLayout {
+    private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val smartbarManager = SmartbarManager.getInstance()
 
@@ -104,13 +107,25 @@ class SmartbarView : LinearLayout {
         }
     }
 
-    /**
-     * Multiplies the default smartbar height with the given [factor] and sets it.
-     */
-    fun setHeightFactor(factor: Float) {
-        val baseSize = resources.getDimension(R.dimen.smartbar_height)
-        val size = (baseSize * factor).toInt()
-        layoutParams?.height = size
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val heightMode = MeasureSpec.getMode(heightMeasureSpec)
+        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
+        val height = when (heightMode) {
+            MeasureSpec.EXACTLY -> {
+                // Must be this size
+                heightSize
+            }
+            MeasureSpec.AT_MOST -> {
+                // Can't be bigger than...
+                (florisboard?.inputView?.desiredSmartbarHeight ?: 0).coerceAtMost(heightSize)
+            }
+            else -> {
+                // Be whatever you want
+                florisboard?.inputView?.desiredSmartbarHeight ?: 0
+            }
+        }
+
+        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY))
     }
 
     override fun onDraw(canvas: Canvas?) {

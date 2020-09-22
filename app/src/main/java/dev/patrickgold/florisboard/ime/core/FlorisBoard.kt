@@ -61,7 +61,8 @@ class FlorisBoard : InputMethodService() {
 
     val context: Context
         get() = inputWindowView?.context ?: this
-    private var inputView: InputView? = null
+    var inputView: InputView? = null
+        private set
     private var inputWindowView: InputWindowView? = null
     private var eventListeners: MutableList<EventListener> = mutableListOf()
 

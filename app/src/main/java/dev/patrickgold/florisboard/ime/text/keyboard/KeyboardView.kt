@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.Configuration
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewGroup
@@ -32,6 +31,7 @@ import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
+import kotlin.math.roundToInt
 
 /**
  * Manages the layout of the keyboard, key measurement, key selection and all touch events.
@@ -234,32 +234,15 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener {
         val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
         desiredKeyWidth = (widthSize / 10) - (2 * keyMarginH)
 
-        val factor = prefs.keyboard.heightFactor
-        val keyHeightFactor = when (resources.configuration.orientation) {
-            Configuration.ORIENTATION_LANDSCAPE -> 0.85f
-            else -> if (prefs.keyboard.oneHandedMode == "start" ||
-                prefs.keyboard.oneHandedMode == "end") {
-                0.9f
-            } else {
-                1.0f
-            }
-        } * when (factor) {
-            "extra_short" -> 0.85f
-            "short" -> 0.90f
-            "mid_short" -> 0.95f
-            "normal" -> 1.00f
-            "mid_tall" -> 1.05f
-            "tall" -> 1.10f
-            "extra_tall" -> 1.15f
-            else -> 1.00f
-        } * when (isPreviewMode) {
+        val keyMarginV = resources.getDimension((R.dimen.key_marginV)).toInt()
+        val keyHeightFactor = when (isPreviewMode) {
             true -> 0.90f
             else -> 1.00f
         }
-        desiredKeyHeight = (resources.getDimension(R.dimen.key_height) * keyHeightFactor).toInt()
-        florisboard?.textInputManager?.smartbarManager?.smartbarView?.setHeightFactor(keyHeightFactor)
+        val desiredHeight = keyHeightFactor * (florisboard?.inputView?.desiredTextKeyboardViewHeight ?: 0)
+        desiredKeyHeight = (desiredHeight / 4 - 2 * keyMarginV).roundToInt()
 
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(desiredHeight.roundToInt(), MeasureSpec.EXACTLY))
     }
 
     override fun onApplyThemeAttributes() {
