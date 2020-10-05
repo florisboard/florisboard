@@ -480,25 +480,24 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      */
     private fun handleEnter() {
         val ic = florisboard.currentInputConnection
-        ic?.beginBatchEdit()
         resetComposingText()
         val action = florisboard.currentInputEditorInfo?.imeOptions ?: 0
+        val actionMasked = action and EditorInfo.IME_MASK_ACTION
         if (action and EditorInfo.IME_FLAG_NO_ENTER_ACTION > 0) {
             sendSystemKeyEvent(ic, KeyEvent.KEYCODE_ENTER)
         } else {
-            when (action and EditorInfo.IME_MASK_ACTION) {
+            when (actionMasked) {
                 EditorInfo.IME_ACTION_DONE,
                 EditorInfo.IME_ACTION_GO,
                 EditorInfo.IME_ACTION_NEXT,
                 EditorInfo.IME_ACTION_PREVIOUS,
                 EditorInfo.IME_ACTION_SEARCH,
                 EditorInfo.IME_ACTION_SEND -> {
-                    ic?.performEditorAction(action)
+                    ic?.performEditorAction(actionMasked)
                 }
                 else -> sendSystemKeyEvent(ic, KeyEvent.KEYCODE_ENTER)
             }
         }
-        ic?.endBatchEdit()
     }
 
     /**
