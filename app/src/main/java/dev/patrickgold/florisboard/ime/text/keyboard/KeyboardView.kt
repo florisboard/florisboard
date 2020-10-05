@@ -239,7 +239,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener {
             true -> 0.90f
             else -> 1.00f
         }
-        val desiredHeight = keyHeightFactor * (florisboard?.inputView?.desiredTextKeyboardViewHeight ?: 0)
+        val desiredHeight = keyHeightFactor * (florisboard?.inputView?.desiredTextKeyboardViewHeight ?: resources.getDimension(R.dimen.textKeyboardView_baseHeight).toInt())
         desiredKeyHeight = (desiredHeight / 4 - 2 * keyMarginV).roundToInt()
 
         super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(desiredHeight.roundToInt(), MeasureSpec.EXACTLY))

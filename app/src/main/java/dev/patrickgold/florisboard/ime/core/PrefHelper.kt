@@ -274,7 +274,7 @@ class PrefHelper(
         }
 
         var activeSubtypeId: Int
-            get() = prefHelper.getPref(ACTIVE_SUBTYPE_ID, -1)
+            get() = prefHelper.getPref(ACTIVE_SUBTYPE_ID, Subtype.DEFAULT.id)
             set(v) = prefHelper.setPref(ACTIVE_SUBTYPE_ID, v)
         var subtypes: String
             get() = prefHelper.getPref(SUBTYPES, "")

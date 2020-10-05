@@ -40,7 +40,7 @@ class SetupActivity : AppCompatActivity() {
     private lateinit var adapter: ViewPagerAdapter
     private lateinit var binding: SetupActivityBinding
     lateinit var imm: InputMethodManager
-    private lateinit var prefs: PrefHelper
+    lateinit var prefs: PrefHelper
     private var shouldFinish: Boolean = false
     private var shouldLaunchSettings: Boolean = true
 

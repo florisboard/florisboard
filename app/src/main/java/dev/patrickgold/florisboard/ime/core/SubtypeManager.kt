@@ -143,7 +143,7 @@ class SubtypeManager(
             prefs.localization.activeSubtypeId = subtypeList[0].id
             subtypeList[0]
         } else {
-            prefs.localization.activeSubtypeId = -1
+            prefs.localization.activeSubtypeId = Subtype.DEFAULT.id
             null
         }
     }

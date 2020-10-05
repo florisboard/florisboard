@@ -125,7 +125,7 @@
 
     <string name="settings__typing__title">Typing experience</string>
     <string name="pref__suggestion__title">Suggestions</string>
-    <string name="pref__suggestion__enabled__label">Display suggestions while you type</string>
+    <string name="pref__suggestion__enabled__label">[NYI] Display suggestions while you type</string>
     <string name="pref__suggestion__enabled__summary">Will show on top of the keyboard</string>
     <string name="pref__suggestion__show_instead__label">What to show instead of suggestions</string>
     <string name="pref__suggestion__show_instead__number_row">Number row</string>

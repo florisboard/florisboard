@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.setup
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,7 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 
 class MakeDefaultFragment : Fragment(), SetupActivity.EventListener {
     private lateinit var binding: SetupFragmentMakeDefaultBinding
+    private var osHandler: Handler? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,6 +62,11 @@ class MakeDefaultFragment : Fragment(), SetupActivity.EventListener {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         if (hasFocus && context != null) {
             updateState()
+            if (osHandler == null) {
+                osHandler = Handler()
+            }
+            osHandler?.postDelayed({ updateState() }, 250)
+            osHandler?.postDelayed({ updateState() }, 500)
         }
     }
 }

@@ -7,14 +7,14 @@
         app:title="@string/pref__suggestion__title">
 
         <SwitchPreferenceCompat
-            android:defaultValue="true"
+            android:defaultValue="false"
             app:key="suggestion__enabled"
             app:iconSpaceReserved="false"
             app:title="@string/pref__suggestion__enabled__label"
             app:summary="@string/pref__suggestion__enabled__summary"/>
 
         <ListPreference
-            android:defaultValue="number_row"
+            android:defaultValue="clipboard_cursor_tools"
             app:entries="@array/pref__suggestion__show_instead__entries"
             app:entryValues="@array/pref__suggestion__show_instead__values"
             app:key="suggestion__show_instead"

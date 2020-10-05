@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.AdvancedActivityBinding
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.util.PackageManagerUtils
 
 class AdvancedActivity : AppCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener {
@@ -59,8 +60,8 @@ class AdvancedActivity : AppCompatActivity(),
     }
 
     override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
+        prefs.sync()
         if (key == PrefHelper.Advanced.SETTINGS_THEME) {
-            prefs.sync()
             setResult(RESULT_APPLY_THEME)
             finish()
         }
@@ -73,6 +74,16 @@ class AdvancedActivity : AppCompatActivity(),
 
     override fun onPause() {
         prefs.shared.unregisterOnSharedPreferenceChangeListener(this)
+        updateLauncherIconStatus()
         super.onPause()
+    }
+
+    private fun updateLauncherIconStatus() {
+        // Set LauncherAlias enabled/disabled state just before destroying/pausing this activity
+        if (prefs.advanced.showAppIcon) {
+            PackageManagerUtils.showAppIcon(this)
+        } else {
+            PackageManagerUtils.hideAppIcon(this)
+        }
     }
 }

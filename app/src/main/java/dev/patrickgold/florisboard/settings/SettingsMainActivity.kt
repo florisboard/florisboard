@@ -53,6 +53,7 @@ class SettingsMainActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         prefs = PrefHelper.getDefaultInstance(this)
         prefs.initDefaultPreferences()
+        prefs.sync()
         subtypeManager = SubtypeManager(this, prefs)
 
         val mode = when (prefs.advanced.settingsTheme) {
