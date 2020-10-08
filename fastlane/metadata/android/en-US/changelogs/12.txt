@@ -1,0 +1,9 @@
+- Add theming capability
+  - Preset selection
+  - Modify each color individually
+  - Themes are now defined in assets/ime/theme/ as a json file, which allows for a more convenient way to add custom themes (base for future feature)
+- Restructure settings naming scheme and structure
+- Add back button functionality in settings
+- Add clipboard/cursor tools
+- Improve layout measurement and height behaviour
+- Fix enter action key bug (#17)
