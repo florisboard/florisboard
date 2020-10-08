@@ -3,8 +3,16 @@
 An open-source keyboard for Android. Currently in alpha stage.
 
 #### Public Alpha Test Programme
-Wanna try it out on your device? You can join the public alpha test
-programme on Google Play. To become a tester, follow these steps:
+Wanna try it out on your device? Use one of the following options:
+
+_A. IzzySoft's repo for F-Droid_:
+
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="64" alt="IzzySoft repo badge">](https://apt.izzysoft.de/fdroid/index/apk/dev.patrickgold.florisboard)
+
+_B. Google Play Public Alpha Test_:
+
+You can join the public alpha test programme on Google Play. To become a
+tester, follow these steps:
 1. Join the
    [FlorisBoard Public Alpha Test](https://groups.google.com/g/florisboard-public-alpha-test)
    Google Group to be able to access the testing programme.
@@ -18,6 +26,8 @@ programme on Google Play. To become a tester, follow these steps:
 4. Finished! You will receive future versions of FlorisBoard via Google
    Play.
 
+_C. Use the APK provided in the release section of this repo_
+
 ##### Giving feedback
 If you want to give feedback to FlorisBoard, there are 2 ways to do so,
 as listed below:
@@ -29,54 +39,55 @@ as listed below:
 Thank you for contributing to FlorisBoard!
 
 ##### Note on F-Droid release
-FlorisBoard is currently only available through Google Play, but it is
-planned to also release it via F-Droid later on. There is no exact
-timeline for this, but I aim for the 0.2.0 or 0.3.0 release.
+FlorisBoard is currently available through Google Play and IzzySoft's
+repo for F-Droid, but will soon begin with the inclusion process for the
+main F-Droid repo. Planned proper F-Droid release is version 0.3.0.
 
 ---
 
-![Preview image](https://patrickgold.dev/media/previews/florisboard.png)
+<img src="https://patrickgold.dev/media/previews/florisboard.png"
+height="256" alt="Preview Image">
 
 ## Feature roadmap
 
 ### Basics
 * [x] Implementation of the keyboard core (InputMethodService)
-* [x] Own implementation of deprecated KeyboardView (base only)
+* [x] Custom implementation of deprecated KeyboardView (base only)
 * [x] Caps + Caps Lock
 * [x] Key popups
-* [x] Extended key popups (e.g. a -> á, à, ä, ...) (needs tweaks for
-      emojis)
+* [x] Extended key popups (e.g. a -> á, à, ä, ...)
 * [x] Key press sound/vibration
 * [x] Portrait orientation support
 * [x] Landscape orientation support (needs tweaks)
-* [ ] Tablet screen support
+* [ ] Tablet screen support (0.4.0)
 
 ### Layouts
 * [x] Latin character layouts (QWERTY, QWERTZ, AZERTY, Swiss, Spanish,
-      Norwegian, Swedish/Finnish, Icelandic, Danish)
+      Norwegian, Swedish/Finnish, Icelandic, Danish); more coming in
+      future versions
 * [x] Non-latin character layouts (Persian)
 * [x] Adapt to situation in app (password, url, text, etc. )
 * [x] Special character layout(s)
 * [x] Numeric layout
 * [x] Numeric layout (advanced)
 * [x] Phone number layout
-* [x] Emoji layout (popups buggy atm)
+* [x] Emoji layout (tweaks: 0.3.0)
 * [x] Emoticon layout
-* [ ] Kaomoji layout
+* [ ] Kaomoji layout (0.3.0)
 
 ### Preferences
 * [x] Setup wizard
 * [x] Preferences screen
-* [x] Customize look and behaviour of keyboard (currently only
-      light/dark theme)
+* [x] Customize look and behaviour of keyboard
+* [x] Theme presets (currently only day/night theme)
 * [x] Theme customization
-* [ ] Theme import/export (?)
+* [ ] Theme import/export (0.4.0 or 0.5.0)
 * [x] Subtype selection (language/layout)
 * [x] Keyboard behaviour preferences
-* [ ] Text suggestion / Auto correct preferences
-* [ ] Gesture preferences
+* [ ] Text suggestion / Auto correct preferences (0.4.0 or 0.5.0)
+* [ ] Gesture preferences (0.3.0)
 
-### Composing suggestions
+### Composing suggestions (0.4.0 or 0.5.0)
 * [ ] Auto suggest words from precompiled dictionary
 * [ ] Auto suggest words from user dictionary
 * [ ] Auto suggest contacts
@@ -85,17 +96,22 @@ timeline for this, but I aim for the 0.2.0 or 0.3.0 release.
 ### Other useful features
 * [x] One-handed mode
 * [x] Clipboard/cursor tools
-* [ ] Floating keyboard
-* [ ] Gesture support
-* [ ] Glide typing (?)
+* [ ] Floating keyboard (0.4.0)
+* [ ] Gesture support (0.3.0)
+* [ ] Glide typing (0.3.0)
 * [x] Full integration in IME service list of Android (xml/method)
       (integration is internal-only, because Android's default subtype
       implementation not really allows for dynamic language/layout
       pairs, only compile-time defined ones)
+* [ ] Description and settings reference in System Language & Input
 * [ ] (dev only) Generate well-structured documentation of code
 * [ ] ...
 
-Note: (?) = not sure if it will be implemented
+Note:
+
+(?) = not sure if it will be implemented
+
+(0.x.0) = planned version when feature will be implemented.
 
 ## Used libraries, components and icons
 * [Google Flexbox Layout for Android](https://github.com/google/flexbox-layout)
