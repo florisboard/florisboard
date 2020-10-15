@@ -41,6 +41,7 @@ class PrefHelper(
     val advanced = Advanced(this)
     val correction = Correction(this)
     val gestures = Gestures(this)
+    val glide = Glide(this)
     val internal = Internal(this)
     val keyboard = Keyboard(this)
     val localization = Localization(this)
@@ -230,6 +231,23 @@ class PrefHelper(
         var swipeDistanceThreshold: DistanceThreshold
             get() =  DistanceThreshold.fromString(prefHelper.getPref(SWIPE_DISTANCE_THRESHOLD, "normal"))
             set(v) = prefHelper.setPref(SWIPE_DISTANCE_THRESHOLD, v)
+    }
+
+    /**
+     * Wrapper class for glide preferences.
+     */
+    class Glide(private val prefHelper: PrefHelper) {
+        companion object {
+            const val ENABLED =                     "glide__enabled"
+            const val SHOW_TRAIL =                  "glide__show_trail"
+        }
+
+        var enabled: Boolean
+            get() =  prefHelper.getPref(ENABLED, false)
+            set(v) = prefHelper.setPref(ENABLED, v)
+        var showTrail: Boolean
+            get() =  prefHelper.getPref(SHOW_TRAIL, false)
+            set(v) = prefHelper.setPref(SHOW_TRAIL, v)
     }
 
     /**

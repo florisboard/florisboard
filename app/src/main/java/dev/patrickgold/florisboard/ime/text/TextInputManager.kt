@@ -31,6 +31,7 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputView
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.editing.EditingKeyboardView
+import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyType
@@ -428,6 +429,22 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         if (!capsLock) {
             caps = cursorCapsMode != CapsMode.NONE
             keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
+        }
+    }
+
+    /**
+     * Executes a given [SwipeAction]. Ignores any [SwipeAction] but the ones relevant for this
+     * class.
+     */
+    fun executeSwipeAction(swipeAction: SwipeAction) {
+        when (swipeAction) {
+            SwipeAction.DELETE_WORD -> {}
+            SwipeAction.MOVE_CURSOR_DOWN -> handleArrow(KeyCode.ARROW_DOWN)
+            SwipeAction.MOVE_CURSOR_UP -> handleArrow(KeyCode.ARROW_UP)
+            SwipeAction.MOVE_CURSOR_LEFT -> handleArrow(KeyCode.ARROW_LEFT)
+            SwipeAction.MOVE_CURSOR_RIGHT -> handleArrow(KeyCode.ARROW_RIGHT)
+            SwipeAction.SHIFT -> handleShift()
+            else -> {}
         }
     }
 
