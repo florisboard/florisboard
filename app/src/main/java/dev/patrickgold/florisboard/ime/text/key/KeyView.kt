@@ -34,6 +34,7 @@ import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.util.setBackgroundTintColor2
@@ -51,7 +52,7 @@ import java.util.*
 class KeyView(
     private val keyboardView: KeyboardView,
     val data: KeyData
-) : View(keyboardView.context) {
+) : View(keyboardView.context), SwipeGesture.Listener {
 
     private var isKeyPressed: Boolean = false
         set(value) {
@@ -78,6 +79,7 @@ class KeyView(
     }
 
     var florisboard: FlorisBoard? = null
+    private val swipeGestureDetector = SwipeGesture.Detector(context, this)
     var touchHitBox: Rect = Rect(-1, -1, -1, -1)
 
     init {
@@ -173,6 +175,9 @@ class KeyView(
      */
     fun onFlorisTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
+        if (swipeGestureDetector.onTouchEvent(event)) {
+            return true
+        }
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 florisboard?.prefs?.keyboard?.let {
@@ -251,6 +256,34 @@ class KeyView(
             else -> return false
         }
         return true
+    }
+
+    /**
+     * Swipe event handler.
+     */
+    override fun onSwipe(direction: SwipeGesture.Direction, type: SwipeGesture.Type): Boolean {
+        android.util.Log.i("SWIPE", direction.toString() + " " + type.toString())
+        return when (data.code) {
+            KeyCode.SPACE -> when (type) {
+                SwipeGesture.Type.TOUCH_MOVE -> when (direction) {
+                    SwipeGesture.Direction.LEFT -> {
+                        florisboard?.executeSwipeAction(prefs.gestures.spaceBarSwipeLeft)
+                        osHandler?.removeCallbacksAndMessages(null)
+                        shouldBlockNextKeyCode = true
+                        true
+                    }
+                    SwipeGesture.Direction.RIGHT -> {
+                        florisboard?.executeSwipeAction(prefs.gestures.spaceBarSwipeRight)
+                        osHandler?.removeCallbacksAndMessages(null)
+                        shouldBlockNextKeyCode = true
+                        true
+                    }
+                    else -> false
+                }
+                else -> false
+            }
+            else -> false
+        }
     }
 
     /**

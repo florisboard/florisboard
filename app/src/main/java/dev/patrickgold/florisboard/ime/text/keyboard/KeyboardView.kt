@@ -23,7 +23,6 @@ import android.view.MotionEvent
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-import androidx.core.view.GestureDetectorCompat
 import androidx.core.view.children
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
@@ -32,10 +31,8 @@ import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
-import dev.patrickgold.florisboard.ime.text.gestures.SimpleOnGestureListener
-import dev.patrickgold.florisboard.ime.text.gestures.Swipe
-import dev.patrickgold.florisboard.ime.text.gestures.SwipeHandler
-import kotlin.math.abs
+import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import kotlin.math.roundToInt
 
 /**
@@ -48,7 +45,7 @@ import kotlin.math.roundToInt
  *
  * @property florisboard Reference to instance of core class [FlorisBoard].
  */
-class KeyboardView : LinearLayout, FlorisBoard.EventListener, SimpleOnGestureListener {
+class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Listener {
     private var activeKeyView: KeyView? = null
     private var activePointerId: Int? = null
     private var activeX: Float = 0.0f
@@ -65,10 +62,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SimpleOnGestureLis
     var isPreviewMode: Boolean = false
     var popupManager = KeyPopupManager<KeyboardView, KeyView>(this)
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
-
-    private var gestureDetector: GestureDetectorCompat? = null
-    private var shouldIgnoreGesture: Boolean = false
-    private val swipeHandler: SwipeHandler = SwipeHandler(prefs)
+    private val swipeGestureDetector = SwipeGesture.Detector(context, this)
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -79,6 +73,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SimpleOnGestureLis
             FrameLayout.LayoutParams.WRAP_CONTENT
         )
         florisboard?.addEventListener(this)
+        onWindowShown()
     }
 
     /**
@@ -105,18 +100,19 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SimpleOnGestureLis
         removeAllViews()
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        gestureDetector = GestureDetectorCompat(context, this)
-        gestureDetector?.setIsLongpressEnabled(true)
-    }
-
     /**
      * Dismisses all shown key popups when keyboard is detached from window.
      */
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         popupManager.dismissAllPopups()
+    }
+
+    override fun onWindowShown() {
+        swipeGestureDetector.apply {
+            distanceThreshold = prefs.gestures.swipeDistanceThreshold
+            velocityThreshold = prefs.gestures.swipeVelocityThreshold
+        }
     }
 
     /**
@@ -135,15 +131,12 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SimpleOnGestureLis
         if (isPreviewMode) {
             return false
         }
+        if (swipeGestureDetector.onTouchEvent(event)) {
+            return true
+        }
         val eventFloris = MotionEvent.obtainNoHistory(event)
         val pointerIndex = event.actionIndex
         var pointerId = event.getPointerId(pointerIndex)
-        if (gestureDetector?.onTouchEvent(event) == true) {
-            sendFlorisTouchEvent(eventFloris, MotionEvent.ACTION_CANCEL)
-            activeKeyView = null
-            activePointerId = null
-            return true
-        }
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN,
             MotionEvent.ACTION_POINTER_DOWN -> {
@@ -162,7 +155,6 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SimpleOnGestureLis
                     searchForActiveKeyView()
                     sendFlorisTouchEvent(eventFloris, MotionEvent.ACTION_DOWN)
                 }
-                shouldIgnoreGesture = false
             }
             MotionEvent.ACTION_MOVE -> {
                 for (index in 0 until event.pointerCount) {
@@ -218,53 +210,36 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SimpleOnGestureLis
         })
     }
 
-    override fun onFling(
-        event1: MotionEvent?,
-        event2: MotionEvent?,
-        velocityX: Float,
-        velocityY: Float
-    ): Boolean {
-        event1 ?: return false
-        event2 ?: return false
-        android.util.Log.i("EVENT", event1.toString())
-        android.util.Log.i("EVENT", event2.toString())
-        android.util.Log.i("EVENT", velocityX.toString())
-        android.util.Log.i("EVENT", velocityY.toString())
-
-        if (shouldIgnoreGesture) {
-            return false
-        }
-
-        val diffX = (event2.x - event1.x).toInt()
-        val diffY = (event2.y - event1.y).toInt()
-        if (abs(diffX) > 2 * abs(diffY) || abs(diffY) > 2 * abs(diffX)) {
-            // Exclude diagonal swipes
-            if (abs(diffX) > abs(diffY)) {
-                // Swipe along x-axis
-                if (diffX > 0) {
-                    // Swipe right
-                    swipeHandler.handle(Swipe.RIGHT)
-                } else {
-                    // Swipe left
-                    swipeHandler.handle(Swipe.LEFT)
+    /**
+     * Swipe event hanlder.
+     */
+    override fun onSwipe(direction: SwipeGesture.Direction, type: SwipeGesture.Type): Boolean {
+        android.util.Log.i("SWIPE", direction.toString() + " " + type.toString())
+        return when {
+            !prefs.glide.enabled -> when (type) {
+                SwipeGesture.Type.TOUCH_UP -> when (direction) {
+                    SwipeGesture.Direction.UP -> {
+                        florisboard?.executeSwipeAction(prefs.gestures.swipeUp)
+                        true
+                    }
+                    SwipeGesture.Direction.DOWN -> {
+                        florisboard?.executeSwipeAction(prefs.gestures.swipeDown)
+                        true
+                    }
+                    SwipeGesture.Direction.LEFT -> {
+                        florisboard?.executeSwipeAction(prefs.gestures.swipeLeft)
+                        true
+                    }
+                    SwipeGesture.Direction.RIGHT -> {
+                        florisboard?.executeSwipeAction(prefs.gestures.swipeRight)
+                        true
+                    }
+                    else -> false
                 }
-            } else {
-                // Swipe along y-axis
-                if (diffY > 0) {
-                    // Swipe down
-                    swipeHandler.handle(Swipe.DOWN)
-                } else {
-                    // Swipe up
-                    swipeHandler.handle(Swipe.UP)
-                }
+                else -> false
             }
-            return true
+            else -> false
         }
-        return false
-    }
-
-    override fun onLongPress(event: MotionEvent?) {
-        shouldIgnoreGesture = true
     }
 
     /**
