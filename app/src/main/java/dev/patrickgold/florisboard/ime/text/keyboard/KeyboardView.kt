@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import kotlin.math.roundToInt
 
 /**
@@ -57,6 +58,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     var desiredKeyWidth: Int = resources.getDimension(R.dimen.key_width).toInt()
     var desiredKeyHeight: Int = resources.getDimension(R.dimen.key_height).toInt()
     var florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
+    private var initialKeyCode: Int = 0
     var isPreviewMode: Boolean = false
     var popupManager = KeyPopupManager<KeyboardView, KeyView>(this)
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
@@ -146,6 +148,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
                     activeX = event.getX(pointerIndex)
                     activeY = event.getY(pointerIndex)
                     searchForActiveKeyView()
+                    initialKeyCode = activeKeyView?.data?.code ?: 0
                     sendFlorisTouchEvent(eventFloris, MotionEvent.ACTION_DOWN)
                 } else if (activePointerId != pointerId) {
                     // New pointer arrived. Send ACTION_UP to current active view and move on
@@ -154,6 +157,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
                     activeX = event.getX(pointerIndex)
                     activeY = event.getY(pointerIndex)
                     searchForActiveKeyView()
+                    initialKeyCode = activeKeyView?.data?.code ?: 0
                     sendFlorisTouchEvent(eventFloris, MotionEvent.ACTION_DOWN)
                 }
             }
@@ -217,21 +221,32 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
      */
     override fun onSwipe(direction: SwipeGesture.Direction, type: SwipeGesture.Type): Boolean {
         return when {
-            !prefs.glide.enabled -> when (type) {
-                SwipeGesture.Type.TOUCH_UP -> {
-                    val swipeAction = when (direction) {
-                        SwipeGesture.Direction.UP -> prefs.gestures.swipeUp
-                        SwipeGesture.Direction.DOWN -> prefs.gestures.swipeDown
-                        SwipeGesture.Direction.LEFT -> prefs.gestures.swipeLeft
-                        SwipeGesture.Direction.RIGHT -> prefs.gestures.swipeRight
-                        else -> SwipeAction.NO_ACTION
+            initialKeyCode == KeyCode.DELETE -> {
+                if (type == SwipeGesture.Type.TOUCH_UP && direction == SwipeGesture.Direction.LEFT) {
+                    florisboard?.executeSwipeAction(prefs.gestures.deleteKeySwipeLeft)
+                    true
+                } else {
+                    false
+                }
+            }
+            initialKeyCode > KeyCode.SPACE && !popupManager.isShowingExtendedPopup -> when {
+                !prefs.glide.enabled -> when (type) {
+                    SwipeGesture.Type.TOUCH_UP -> {
+                        val swipeAction = when (direction) {
+                            SwipeGesture.Direction.UP -> prefs.gestures.swipeUp
+                            SwipeGesture.Direction.DOWN -> prefs.gestures.swipeDown
+                            SwipeGesture.Direction.LEFT -> prefs.gestures.swipeLeft
+                            SwipeGesture.Direction.RIGHT -> prefs.gestures.swipeRight
+                            else -> SwipeAction.NO_ACTION
+                        }
+                        if (swipeAction != SwipeAction.NO_ACTION) {
+                            florisboard?.executeSwipeAction(swipeAction)
+                            true
+                        } else {
+                            false
+                        }
                     }
-                    if (swipeAction != SwipeAction.NO_ACTION) {
-                        florisboard?.executeSwipeAction(swipeAction)
-                        true
-                    } else {
-                        false
-                    }
+                    else -> false
                 }
                 else -> false
             }

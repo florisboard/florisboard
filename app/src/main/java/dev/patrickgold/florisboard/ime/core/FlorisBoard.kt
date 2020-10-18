@@ -405,7 +405,7 @@ class FlorisBoard : InputMethodService() {
     fun executeSwipeAction(swipeAction: SwipeAction) {
         when (swipeAction) {
             SwipeAction.HIDE_KEYBOARD -> requestHideSelf(0)
-            SwipeAction.SWITCH_TO_PREV_SUBTYPE -> {}
+            SwipeAction.SWITCH_TO_PREV_SUBTYPE -> switchToPrevSubtype()
             SwipeAction.SWITCH_TO_NEXT_SUBTYPE -> switchToNextSubtype()
             else -> textInputManager.executeSwipeAction(swipeAction)
         }
@@ -428,6 +428,11 @@ class FlorisBoard : InputMethodService() {
      */
     fun shouldShowLanguageSwitch(): Boolean {
         return subtypeManager.subtypes.size > 1
+    }
+
+    fun switchToPrevSubtype() {
+        activeSubtype = subtypeManager.switchToPrevSubtype() ?: Subtype.DEFAULT
+        onSubtypeChanged(activeSubtype)
     }
 
     fun switchToNextSubtype() {

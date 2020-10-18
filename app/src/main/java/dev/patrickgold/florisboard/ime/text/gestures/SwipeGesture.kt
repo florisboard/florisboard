@@ -76,7 +76,6 @@ abstract class SwipeGesture {
                                 sqrt(diffX.pow(2) + diffY.pow(2)),
                                 context
                             ) / event.downTime) * 10.0f.pow(8)).toInt()
-                        android.util.Log.i("DOWN", velocity.toString())
                         clearEventList()
                         return if ((abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV) && velocity >= velocityThresholdNV) {
                             val direction = detectDirection(diffX.toDouble(), diffY.toDouble())
