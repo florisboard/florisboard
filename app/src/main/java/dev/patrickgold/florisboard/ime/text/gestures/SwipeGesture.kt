@@ -17,11 +17,12 @@
 package dev.patrickgold.florisboard.ime.text.gestures
 
 import android.content.Context
+import android.util.DisplayMetrics
 import android.view.MotionEvent
 import dev.patrickgold.florisboard.R
-import kotlin.math.PI
-import kotlin.math.abs
-import kotlin.math.atan
+import java.lang.Exception
+import kotlin.math.*
+
 
 /**
  * Wrapper class which holds all enums, interfaces and classes for detecting a swipe gesture.
@@ -42,47 +43,57 @@ abstract class SwipeGesture {
         var velocityThreshold: VelocityThreshold = VelocityThreshold.NORMAL
 
         fun onTouchEvent(event: MotionEvent): Boolean {
-            when (event.actionMasked) {
-                MotionEvent.ACTION_DOWN,
-                MotionEvent.ACTION_POINTER_DOWN -> {
-                    clearEventList()
-                    eventList.add(MotionEvent.obtainNoHistory(event))
-                    indexFirst = 0
-                    indexLastMoveRecognized = 0
-                }
-                MotionEvent.ACTION_MOVE -> {
-                    eventList.add(MotionEvent.obtainNoHistory(event))
-                    val lastEvent = eventList[indexLastMoveRecognized]
-                    val diffX = event.x - lastEvent.x
-                    val diffY = event.y - lastEvent.y
-                    val distanceThresholdNV = numericValue(distanceThreshold) / 2.0f
-                    return if (abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV) {
-                        indexLastMoveRecognized = eventList.size - 1
-                        val direction = detectDirection(diffX.toDouble(), diffY.toDouble())
-                        listener.onSwipe(direction, Type.TOUCH_MOVE)
-                    } else {
-                        false
+            try {
+                when (event.actionMasked) {
+                    MotionEvent.ACTION_DOWN,
+                    MotionEvent.ACTION_POINTER_DOWN -> {
+                        clearEventList()
+                        eventList.add(MotionEvent.obtainNoHistory(event))
                     }
-                }
-                MotionEvent.ACTION_UP,
-                MotionEvent.ACTION_POINTER_UP -> {
-                    val firstEvent = eventList[indexFirst]
-                    val diffX = event.x - firstEvent.x
-                    val diffY = event.y - firstEvent.y
-                    val distanceThresholdNV = numericValue(distanceThreshold)
-                    return if (abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV) {
-                        val direction = detectDirection(diffX.toDouble(), diffY.toDouble())
-                        listener.onSwipe(direction, Type.TOUCH_UP)
-                    } else {
-                        false
+                    MotionEvent.ACTION_MOVE -> {
+                        eventList.add(MotionEvent.obtainNoHistory(event))
+                        val lastEvent = eventList[indexLastMoveRecognized]
+                        val diffX = event.x - lastEvent.x
+                        val diffY = event.y - lastEvent.y
+                        val distanceThresholdNV = numericValue(distanceThreshold) / 2.0f
+                        return if (abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV) {
+                            indexLastMoveRecognized = eventList.size - 1
+                            val direction = detectDirection(diffX.toDouble(), diffY.toDouble())
+                            listener.onSwipe(direction, Type.TOUCH_MOVE)
+                        } else {
+                            false
+                        }
                     }
+                    MotionEvent.ACTION_UP,
+                    MotionEvent.ACTION_POINTER_UP -> {
+                        val firstEvent = eventList[indexFirst]
+                        val diffX = event.x - firstEvent.x
+                        val diffY = event.y - firstEvent.y
+                        val distanceThresholdNV = numericValue(distanceThreshold)
+                        val velocityThresholdNV = numericValue(velocityThreshold)
+                        val velocity =
+                            ((convertPixelsToDp(
+                                sqrt(diffX.pow(2) + diffY.pow(2)),
+                                context
+                            ) / event.downTime) * 10.0f.pow(8)).toInt()
+                        android.util.Log.i("DOWN", velocity.toString())
+                        clearEventList()
+                        return if ((abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV) && velocity >= velocityThresholdNV) {
+                            val direction = detectDirection(diffX.toDouble(), diffY.toDouble())
+                            listener.onSwipe(direction, Type.TOUCH_UP)
+                        } else {
+                            false
+                        }
+                    }
+                    MotionEvent.ACTION_CANCEL -> {
+                        clearEventList()
+                    }
+                    else -> return false
                 }
-                MotionEvent.ACTION_CANCEL -> {
-                    clearEventList()
-                }
-                else -> return false
+                return false
+            } catch(e: Exception) {
+                return false
             }
-            return false
         }
 
         /**
@@ -132,6 +143,8 @@ abstract class SwipeGesture {
                 event.recycle()
             }
             eventList.clear()
+            indexFirst = 0
+            indexLastMoveRecognized = 0
         }
 
         /**
@@ -146,6 +159,34 @@ abstract class SwipeGesture {
                 DistanceThreshold.LONG -> context.resources.getDimension(R.dimen.gesture_distance_threshold_long)
                 DistanceThreshold.VERY_LONG -> context.resources.getDimension(R.dimen.gesture_distance_threshold_very_long)
             }.toDouble()
+        }
+
+        /**
+         * Returns a numeric value for a given [VelocityThreshold], based on the values defined in
+         * the resources dimens.xml file.
+         */
+        private fun numericValue(of: VelocityThreshold): Double {
+            return when (of) {
+                VelocityThreshold.VERY_SLOW -> context.resources.getInteger(R.integer.gesture_velocity_threshold_very_slow)
+                VelocityThreshold.SLOW -> context.resources.getInteger(R.integer.gesture_velocity_threshold_slow)
+                VelocityThreshold.NORMAL -> context.resources.getInteger(R.integer.gesture_velocity_threshold_normal)
+                VelocityThreshold.FAST -> context.resources.getInteger(R.integer.gesture_velocity_threshold_fast)
+                VelocityThreshold.VERY_FAST -> context.resources.getInteger(R.integer.gesture_velocity_threshold_very_fast)
+            }.toDouble()
+        }
+
+
+        /**
+         * This method converts device specific pixels to density independent pixels.
+         *
+         * Source: https://stackoverflow.com/a/9563438/6801193 (by Muhammad Nabeel Arif)
+         *
+         * @param px A value in px (pixels) unit. Which we need to convert into db
+         * @param context Context to get resources and device specific display metrics
+         * @return A float value to represent dp equivalent to px value
+         */
+        private fun convertPixelsToDp(px: Float, context: Context): Float {
+            return px / (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
         }
     }
 

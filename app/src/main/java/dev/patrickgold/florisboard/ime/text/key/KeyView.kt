@@ -176,10 +176,16 @@ class KeyView(
     fun onFlorisTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
         if (swipeGestureDetector.onTouchEvent(event)) {
+            isKeyPressed = false
+            osHandler?.removeCallbacksAndMessages(null)
+            osTimer?.cancel()
+            osTimer = null
+            keyboardView.popupManager.hide()
             return true
         }
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
+                shouldBlockNextKeyCode = false
                 florisboard?.prefs?.keyboard?.let {
                     if (it.popupEnabled){
                         keyboardView.popupManager.show(this)
@@ -259,10 +265,10 @@ class KeyView(
     }
 
     /**
-     * Swipe event handler.
+     * Swipe event handler. Listens to touch_move left/right swipes and triggers the swipe action
+     * defined in the prefs.
      */
     override fun onSwipe(direction: SwipeGesture.Direction, type: SwipeGesture.Type): Boolean {
-        android.util.Log.i("SWIPE", direction.toString() + " " + type.toString())
         return when (data.code) {
             KeyCode.SPACE -> when (type) {
                 SwipeGesture.Type.TOUCH_MOVE -> when (direction) {

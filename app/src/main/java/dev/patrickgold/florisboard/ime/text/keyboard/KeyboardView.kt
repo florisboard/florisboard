@@ -29,10 +29,10 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
+import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import kotlin.math.roundToInt
 
 /**
@@ -40,8 +40,6 @@ import kotlin.math.roundToInt
  * Supports multi touch events. Note that the keyboard's background is transparent. The 'real'
  * background of this keyboard is the background of the underlying mainViewFlipper. This prevents
  * rendering issues when a keyboard is being loaded for the first time.
- *
- * TODO: Implement swipe gesture support
  *
  * @property florisboard Reference to instance of core class [FlorisBoard].
  */
@@ -131,10 +129,13 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
         if (isPreviewMode) {
             return false
         }
+        val eventFloris = MotionEvent.obtainNoHistory(event)
         if (swipeGestureDetector.onTouchEvent(event)) {
+            sendFlorisTouchEvent(eventFloris, MotionEvent.ACTION_CANCEL)
+            activeKeyView = null
+            activePointerId = null
             return true
         }
-        val eventFloris = MotionEvent.obtainNoHistory(event)
         val pointerIndex = event.actionIndex
         var pointerId = event.getPointerId(pointerIndex)
         when (event.actionMasked) {
@@ -211,30 +212,26 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     }
 
     /**
-     * Swipe event hanlder.
+     * Swipe event handler. Listens to touch_up swipes and executes the swipe action defined for it
+     * in the prefs.
      */
     override fun onSwipe(direction: SwipeGesture.Direction, type: SwipeGesture.Type): Boolean {
-        android.util.Log.i("SWIPE", direction.toString() + " " + type.toString())
         return when {
             !prefs.glide.enabled -> when (type) {
-                SwipeGesture.Type.TOUCH_UP -> when (direction) {
-                    SwipeGesture.Direction.UP -> {
-                        florisboard?.executeSwipeAction(prefs.gestures.swipeUp)
-                        true
+                SwipeGesture.Type.TOUCH_UP -> {
+                    val swipeAction = when (direction) {
+                        SwipeGesture.Direction.UP -> prefs.gestures.swipeUp
+                        SwipeGesture.Direction.DOWN -> prefs.gestures.swipeDown
+                        SwipeGesture.Direction.LEFT -> prefs.gestures.swipeLeft
+                        SwipeGesture.Direction.RIGHT -> prefs.gestures.swipeRight
+                        else -> SwipeAction.NO_ACTION
                     }
-                    SwipeGesture.Direction.DOWN -> {
-                        florisboard?.executeSwipeAction(prefs.gestures.swipeDown)
+                    if (swipeAction != SwipeAction.NO_ACTION) {
+                        florisboard?.executeSwipeAction(swipeAction)
                         true
+                    } else {
+                        false
                     }
-                    SwipeGesture.Direction.LEFT -> {
-                        florisboard?.executeSwipeAction(prefs.gestures.swipeLeft)
-                        true
-                    }
-                    SwipeGesture.Direction.RIGHT -> {
-                        florisboard?.executeSwipeAction(prefs.gestures.swipeRight)
-                        true
-                    }
-                    else -> false
                 }
                 else -> false
             }
