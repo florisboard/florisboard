@@ -40,8 +40,8 @@ Thank you for contributing to FlorisBoard!
 
 ##### Note on F-Droid release
 FlorisBoard is currently available through Google Play and IzzySoft's
-repo for F-Droid, but will soon begin with the inclusion process for the
-main F-Droid repo. Planned proper F-Droid release is version 0.3.0.
+repo for F-Droid, but is currently in the inclusion process for the main
+F-Droid repo. Planned proper F-Droid release is version 0.3.0.
 
 ---
 
@@ -85,7 +85,7 @@ height="256" alt="Preview Image">
 * [x] Subtype selection (language/layout)
 * [x] Keyboard behaviour preferences
 * [ ] Text suggestion / Auto correct preferences (0.4.0 or 0.5.0)
-* [ ] Gesture preferences (0.3.0)
+* [x] Gesture preferences (0.3.0)
 
 ### Composing suggestions (0.4.0 or 0.5.0)
 * [ ] Auto suggest words from precompiled dictionary
@@ -97,7 +97,7 @@ height="256" alt="Preview Image">
 * [x] One-handed mode
 * [x] Clipboard/cursor tools
 * [ ] Floating keyboard (0.4.0)
-* [ ] Gesture support (0.3.0)
+* [x] Gesture support (0.3.0)
 * [ ] Glide typing (0.3.0)
 * [x] Full integration in IME service list of Android (xml/method)
       (integration is internal-only, because Android's default subtype

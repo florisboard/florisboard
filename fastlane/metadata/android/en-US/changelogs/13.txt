@@ -1,0 +1,4 @@
+- Add gestures & scrolling space bar
+  - Swipe up / down / left / right
+  - Swipe left from delete key (defaults to deleting current word)
+  - Moving your finger along the space bar will move the cursor
