@@ -31,6 +31,7 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputView
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.editing.EditingKeyboardView
+import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyType
@@ -303,7 +304,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         val inputText =
             (ic?.getExtractedText(ExtractedTextRequest(), 0)?.text ?: "").toString()
         selectionEndMax = inputText.length
-        if (isComposingEnabled) {
+        // TODO: separate composing text from delete swipe word detection
+        //if (isComposingEnabled) {
             if (!isTextSelected) {
                 val newCursorPos = cursorAnchorInfo.selectionStart
                 val prevComposingText = (cursorAnchorInfo.composingText ?: "").toString()
@@ -325,7 +327,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                 resetComposingText()
             }
             smartbarManager.generateCandidatesFromComposing(composingText)
-        }
+        //}
         if (!isNewSelectionInBoundsOfOld) {
             isManualSelectionMode = false
             isManualSelectionModeLeft = false
@@ -432,6 +434,22 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     }
 
     /**
+     * Executes a given [SwipeAction]. Ignores any [SwipeAction] but the ones relevant for this
+     * class.
+     */
+    fun executeSwipeAction(swipeAction: SwipeAction) {
+        when (swipeAction) {
+            SwipeAction.DELETE_WORD -> handleDeleteWord()
+            SwipeAction.MOVE_CURSOR_DOWN -> handleArrow(KeyCode.ARROW_DOWN)
+            SwipeAction.MOVE_CURSOR_UP -> handleArrow(KeyCode.ARROW_UP)
+            SwipeAction.MOVE_CURSOR_LEFT -> handleArrow(KeyCode.ARROW_LEFT)
+            SwipeAction.MOVE_CURSOR_RIGHT -> handleArrow(KeyCode.ARROW_RIGHT)
+            SwipeAction.SHIFT -> handleShift()
+            else -> {}
+        }
+    }
+
+    /**
      * Sends a given [keyCode] as a [KeyEvent.ACTION_DOWN].
      *
      * @param ic The input connection on which this operation should be performed.
@@ -472,6 +490,25 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         isManualSelectionModeLeft = false
         isManualSelectionModeRight = false
         sendSystemKeyEvent(ic, KeyEvent.KEYCODE_DEL)
+        ic?.endBatchEdit()
+    }
+
+    /**
+     * Handles a [KeyCode.DELETE_WORD] event.
+     */
+    private fun handleDeleteWord() {
+        val ic = florisboard.currentInputConnection
+        ic?.beginBatchEdit()
+        isManualSelectionMode = false
+        isManualSelectionModeLeft = false
+        isManualSelectionModeRight = false
+        ic?.setComposingText("", 1)
+        ic?.finishComposingText()
+        if (ic?.getTextBeforeCursor(1, 0)?.length ?: 0 > 0) {
+            ic?.deleteSurroundingText(1, 0)
+        }
+        composingText = null
+        composingTextStart = null
         ic?.endBatchEdit()
     }
 

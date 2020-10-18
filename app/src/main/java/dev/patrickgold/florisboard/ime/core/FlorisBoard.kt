@@ -34,12 +34,12 @@ import android.view.inputmethod.CursorAnchorInfo
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import com.squareup.moshi.Json
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.media.MediaInputManager
 import dev.patrickgold.florisboard.ime.text.TextInputManager
+import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
@@ -399,6 +399,19 @@ class FlorisBoard : InputMethodService() {
     }
 
     /**
+     * Executes a given [SwipeAction]. Ignores any [SwipeAction] but the ones relevant for this
+     * class.
+     */
+    fun executeSwipeAction(swipeAction: SwipeAction) {
+        when (swipeAction) {
+            SwipeAction.HIDE_KEYBOARD -> requestHideSelf(0)
+            SwipeAction.SWITCH_TO_PREV_SUBTYPE -> switchToPrevSubtype()
+            SwipeAction.SWITCH_TO_NEXT_SUBTYPE -> switchToNextSubtype()
+            else -> textInputManager.executeSwipeAction(swipeAction)
+        }
+    }
+
+    /**
      * Hides the IME and launches [SettingsMainActivity].
      */
     fun launchSettings() {
@@ -415,6 +428,11 @@ class FlorisBoard : InputMethodService() {
      */
     fun shouldShowLanguageSwitch(): Boolean {
         return subtypeManager.subtypes.size > 1
+    }
+
+    fun switchToPrevSubtype() {
+        activeSubtype = subtypeManager.switchToPrevSubtype() ?: Subtype.DEFAULT
+        onSubtypeChanged(activeSubtype)
     }
 
     fun switchToNextSubtype() {

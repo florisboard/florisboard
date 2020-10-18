@@ -49,4 +49,59 @@
         <item>number_row</item>
         <item>clipboard_cursor_tools</item>
     </string-array>
+
+    <string-array name="pref__gestures__swipe_action__entries">
+        <item>@string/pref__gestures__swipe_action__no_action</item>
+        <item>@string/pref__gestures__swipe_action__delete_word</item>
+        <item>@string/pref__gestures__swipe_action__hide_keyboard</item>
+        <item>@string/pref__gestures__swipe_action__move_cursor_up</item>
+        <item>@string/pref__gestures__swipe_action__move_cursor_down</item>
+        <item>@string/pref__gestures__swipe_action__move_cursor_left</item>
+        <item>@string/pref__gestures__swipe_action__move_cursor_right</item>
+        <item>@string/pref__gestures__swipe_action__shift</item>
+        <item>@string/pref__gestures__swipe_action__switch_to_prev_subtype</item>
+        <item>@string/pref__gestures__swipe_action__switch_to_next_subtype</item>
+    </string-array>
+    <string-array name="pref__gestures__swipe_action__values">
+        <item>no_action</item>
+        <item>delete_word</item>
+        <item>hide_keyboard</item>
+        <item>move_cursor_up</item>
+        <item>move_cursor_down</item>
+        <item>move_cursor_left</item>
+        <item>move_cursor_right</item>
+        <item>shift</item>
+        <item>switch_to_prev_subtype</item>
+        <item>switch_to_next_subtype</item>
+    </string-array>
+
+    <string-array name="pref__gestures__swipe_velocity_threshold__entries">
+        <item>@string/pref__gestures__swipe_velocity_threshold__very_slow</item>
+        <item>@string/pref__gestures__swipe_velocity_threshold__slow</item>
+        <item>@string/pref__gestures__swipe_velocity_threshold__normal</item>
+        <item>@string/pref__gestures__swipe_velocity_threshold__fast</item>
+        <item>@string/pref__gestures__swipe_velocity_threshold__very_fast</item>
+    </string-array>
+    <string-array name="pref__gestures__swipe_velocity_threshold__values">
+        <item>very_slow</item>
+        <item>slow</item>
+        <item>normal</item>
+        <item>fast</item>
+        <item>very_fast</item>
+    </string-array>
+
+    <string-array name="pref__gestures__swipe_distance_threshold__entries">
+        <item>@string/pref__gestures__swipe_distance_threshold__very_short</item>
+        <item>@string/pref__gestures__swipe_distance_threshold__short</item>
+        <item>@string/pref__gestures__swipe_distance_threshold__normal</item>
+        <item>@string/pref__gestures__swipe_distance_threshold__long</item>
+        <item>@string/pref__gestures__swipe_distance_threshold__very_long</item>
+    </string-array>
+    <string-array name="pref__gestures__swipe_distance_threshold__values">
+        <item>very_short</item>
+        <item>short</item>
+        <item>normal</item>
+        <item>long</item>
+        <item>very_long</item>
+    </string-array>
 </resources>

@@ -29,8 +29,11 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
+import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
+import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import kotlin.math.roundToInt
 
 /**
@@ -39,11 +42,9 @@ import kotlin.math.roundToInt
  * background of this keyboard is the background of the underlying mainViewFlipper. This prevents
  * rendering issues when a keyboard is being loaded for the first time.
  *
- * TODO: Implement swipe gesture support
- *
  * @property florisboard Reference to instance of core class [FlorisBoard].
  */
-class KeyboardView : LinearLayout, FlorisBoard.EventListener {
+class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Listener {
     private var activeKeyView: KeyView? = null
     private var activePointerId: Int? = null
     private var activeX: Float = 0.0f
@@ -57,9 +58,11 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener {
     var desiredKeyWidth: Int = resources.getDimension(R.dimen.key_width).toInt()
     var desiredKeyHeight: Int = resources.getDimension(R.dimen.key_height).toInt()
     var florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
+    private var initialKeyCode: Int = 0
     var isPreviewMode: Boolean = false
     var popupManager = KeyPopupManager<KeyboardView, KeyView>(this)
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+    private val swipeGestureDetector = SwipeGesture.Detector(context, this)
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -70,6 +73,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener {
             FrameLayout.LayoutParams.WRAP_CONTENT
         )
         florisboard?.addEventListener(this)
+        onWindowShown()
     }
 
     /**
@@ -104,6 +108,13 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener {
         popupManager.dismissAllPopups()
     }
 
+    override fun onWindowShown() {
+        swipeGestureDetector.apply {
+            distanceThreshold = prefs.gestures.swipeDistanceThreshold
+            velocityThreshold = prefs.gestures.swipeVelocityThreshold
+        }
+    }
+
     /**
      * Catch all events which are designated for child views.
      */
@@ -121,6 +132,12 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener {
             return false
         }
         val eventFloris = MotionEvent.obtainNoHistory(event)
+        if (swipeGestureDetector.onTouchEvent(event)) {
+            sendFlorisTouchEvent(eventFloris, MotionEvent.ACTION_CANCEL)
+            activeKeyView = null
+            activePointerId = null
+            return true
+        }
         val pointerIndex = event.actionIndex
         var pointerId = event.getPointerId(pointerIndex)
         when (event.actionMasked) {
@@ -131,6 +148,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener {
                     activeX = event.getX(pointerIndex)
                     activeY = event.getY(pointerIndex)
                     searchForActiveKeyView()
+                    initialKeyCode = activeKeyView?.data?.code ?: 0
                     sendFlorisTouchEvent(eventFloris, MotionEvent.ACTION_DOWN)
                 } else if (activePointerId != pointerId) {
                     // New pointer arrived. Send ACTION_UP to current active view and move on
@@ -139,6 +157,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener {
                     activeX = event.getX(pointerIndex)
                     activeY = event.getY(pointerIndex)
                     searchForActiveKeyView()
+                    initialKeyCode = activeKeyView?.data?.code ?: 0
                     sendFlorisTouchEvent(eventFloris, MotionEvent.ACTION_DOWN)
                 }
             }
@@ -194,6 +213,45 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener {
                 activeY - keyViewParent.y - keyView.y
             )
         })
+    }
+
+    /**
+     * Swipe event handler. Listens to touch_up swipes and executes the swipe action defined for it
+     * in the prefs.
+     */
+    override fun onSwipe(direction: SwipeGesture.Direction, type: SwipeGesture.Type): Boolean {
+        return when {
+            initialKeyCode == KeyCode.DELETE -> {
+                if (type == SwipeGesture.Type.TOUCH_UP && direction == SwipeGesture.Direction.LEFT) {
+                    florisboard?.executeSwipeAction(prefs.gestures.deleteKeySwipeLeft)
+                    true
+                } else {
+                    false
+                }
+            }
+            initialKeyCode > KeyCode.SPACE && !popupManager.isShowingExtendedPopup -> when {
+                !prefs.glide.enabled -> when (type) {
+                    SwipeGesture.Type.TOUCH_UP -> {
+                        val swipeAction = when (direction) {
+                            SwipeGesture.Direction.UP -> prefs.gestures.swipeUp
+                            SwipeGesture.Direction.DOWN -> prefs.gestures.swipeDown
+                            SwipeGesture.Direction.LEFT -> prefs.gestures.swipeLeft
+                            SwipeGesture.Direction.RIGHT -> prefs.gestures.swipeRight
+                            else -> SwipeAction.NO_ACTION
+                        }
+                        if (swipeAction != SwipeAction.NO_ACTION) {
+                            florisboard?.executeSwipeAction(swipeAction)
+                            true
+                        } else {
+                            false
+                        }
+                    }
+                    else -> false
+                }
+                else -> false
+            }
+            else -> false
+        }
     }
 
     /**

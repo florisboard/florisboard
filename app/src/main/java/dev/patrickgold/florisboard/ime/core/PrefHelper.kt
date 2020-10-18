@@ -21,6 +21,9 @@ import android.content.SharedPreferences
 import android.provider.Settings
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.text.gestures.DistanceThreshold
+import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
+import dev.patrickgold.florisboard.ime.text.gestures.VelocityThreshold
 import dev.patrickgold.florisboard.util.VersionName
 import kotlin.collections.HashMap
 
@@ -37,6 +40,8 @@ class PrefHelper(
 
     val advanced = Advanced(this)
     val correction = Correction(this)
+    val gestures = Gestures(this)
+    val glide = Glide(this)
     val internal = Internal(this)
     val keyboard = Keyboard(this)
     val localization = Localization(this)
@@ -181,6 +186,68 @@ class PrefHelper(
         var doubleSpacePeriod: Boolean = false
             get() = prefHelper.getPref(DOUBLE_SPACE_PERIOD, true)
             private set
+    }
+
+    /**
+     * Wrapper class for gestures preferences.
+     */
+    class Gestures(private val prefHelper: PrefHelper) {
+        companion object {
+            const val SWIPE_UP =                    "gestures__swipe_up"
+            const val SWIPE_DOWN =                  "gestures__swipe_down"
+            const val SWIPE_LEFT =                  "gestures__swipe_left"
+            const val SWIPE_RIGHT =                 "gestures__swipe_right"
+            const val SPACE_BAR_SWIPE_LEFT =        "gestures__space_bar_swipe_left"
+            const val SPACE_BAR_SWIPE_RIGHT =       "gestures__space_bar_swipe_right"
+            const val DELETE_KEY_SWIPE_LEFT =       "gestures__delete_key_swipe_left"
+            const val SWIPE_VELOCITY_THRESHOLD =    "gestures__swipe_velocity_threshold"
+            const val SWIPE_DISTANCE_THRESHOLD =    "gestures__swipe_distance_threshold"
+        }
+
+        var swipeUp: SwipeAction
+            get() =  SwipeAction.fromString(prefHelper.getPref(SWIPE_UP, "no_action"))
+            set(v) = prefHelper.setPref(SWIPE_UP, v)
+        var swipeDown: SwipeAction
+            get() =  SwipeAction.fromString(prefHelper.getPref(SWIPE_DOWN, "no_action"))
+            set(v) = prefHelper.setPref(SWIPE_DOWN, v)
+        var swipeLeft: SwipeAction
+            get() =  SwipeAction.fromString(prefHelper.getPref(SWIPE_LEFT, "no_action"))
+            set(v) = prefHelper.setPref(SWIPE_LEFT, v)
+        var swipeRight: SwipeAction
+            get() =  SwipeAction.fromString(prefHelper.getPref(SWIPE_RIGHT, "no_action"))
+            set(v) = prefHelper.setPref(SWIPE_RIGHT, v)
+        var spaceBarSwipeLeft: SwipeAction
+            get() =  SwipeAction.fromString(prefHelper.getPref(SPACE_BAR_SWIPE_LEFT, "no_action"))
+            set(v) = prefHelper.setPref(SPACE_BAR_SWIPE_LEFT, v)
+        var spaceBarSwipeRight: SwipeAction
+            get() =  SwipeAction.fromString(prefHelper.getPref(SPACE_BAR_SWIPE_RIGHT, "no_action"))
+            set(v) = prefHelper.setPref(SPACE_BAR_SWIPE_RIGHT, v)
+        var deleteKeySwipeLeft: SwipeAction
+            get() =  SwipeAction.fromString(prefHelper.getPref(DELETE_KEY_SWIPE_LEFT, "no_action"))
+            set(v) = prefHelper.setPref(DELETE_KEY_SWIPE_LEFT, v)
+        var swipeVelocityThreshold: VelocityThreshold
+            get() =  VelocityThreshold.fromString(prefHelper.getPref(SWIPE_VELOCITY_THRESHOLD, "normal"))
+            set(v) = prefHelper.setPref(SWIPE_VELOCITY_THRESHOLD, v)
+        var swipeDistanceThreshold: DistanceThreshold
+            get() =  DistanceThreshold.fromString(prefHelper.getPref(SWIPE_DISTANCE_THRESHOLD, "normal"))
+            set(v) = prefHelper.setPref(SWIPE_DISTANCE_THRESHOLD, v)
+    }
+
+    /**
+     * Wrapper class for glide preferences.
+     */
+    class Glide(private val prefHelper: PrefHelper) {
+        companion object {
+            const val ENABLED =                     "glide__enabled"
+            const val SHOW_TRAIL =                  "glide__show_trail"
+        }
+
+        var enabled: Boolean
+            get() =  prefHelper.getPref(ENABLED, false)
+            set(v) = prefHelper.setPref(ENABLED, v)
+        var showTrail: Boolean
+            get() =  prefHelper.getPref(SHOW_TRAIL, false)
+            set(v) = prefHelper.setPref(SHOW_TRAIL, v)
     }
 
     /**

@@ -218,6 +218,34 @@ class SubtypeManager(
     }
 
     /**
+     * Switch to the previous subtype in the subtype list if possible.
+     *
+     * @returns The new active subtype or null if the determination process failed.
+     */
+    fun switchToPrevSubtype(): Subtype? {
+        val subtypeList = subtypes
+        val activeSubtype = getActiveSubtype() ?: return null
+        var triggerNextSubtype = false
+        var newActiveSubtype: Subtype? = null
+        for (subtype in subtypeList.reversed()) {
+            if (triggerNextSubtype) {
+                triggerNextSubtype = false
+                newActiveSubtype = subtype
+            } else if (subtype == activeSubtype) {
+                triggerNextSubtype = true
+            }
+        }
+        if (triggerNextSubtype) {
+            newActiveSubtype = subtypeList.last()
+        }
+        prefs.localization.activeSubtypeId = when (newActiveSubtype) {
+            null -> Subtype.DEFAULT.id
+            else -> newActiveSubtype.id
+        }
+        return newActiveSubtype
+    }
+
+    /**
      * Switch to the next subtype in the subtype list if possible.
      *
      * @returns The new active subtype or null if the determination process failed.
@@ -236,10 +264,10 @@ class SubtypeManager(
             }
         }
         if (triggerNextSubtype) {
-            newActiveSubtype = subtypeList[0]
+            newActiveSubtype = subtypeList.first()
         }
         prefs.localization.activeSubtypeId = when (newActiveSubtype) {
-            null -> -1
+            null -> Subtype.DEFAULT.id
             else -> newActiveSubtype.id
         }
         return newActiveSubtype
