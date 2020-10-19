@@ -1,34 +1,34 @@
 ---
 name: Bug report
-about: Create a report to help fix a bug
+about: Create a report to help FlorisBoard improve
 title: ''
 labels: bug
 assignees: ''
 
 ---
 
-#### Short description of bug
-A short but clear and concise description of what the bug is.
+<!--
+- Describe the bug in a short but concise way.
+- If you have a screenshot or screen recording of the bug, link them at
+  the end of this issue.
+- Please search existing bug reports to avoid creating duplicates.
+- Thank you for your help in making FlorisBoard better!
+-->
 
-#### Steps to reproduce
+**Environment information**
+- FlorisBoard Version: <!-- e.g. 0.1.0 -->
+- Install Source: <!-- Google PlayStore/F-Droid/GitHub/? -->
+- Device: <!-- e.g. OnePlus 7T -->
+- Android version, ROM: <!-- e.g. 10, Stock -->
+
+**Steps to reproduce**
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
 4. See error
 
-#### Expected behavior
-A clear and concise description of what you expected to happen.
-
-#### What happened instead?
-A detailed description of what you expected to happen. If you have screenshots or a screen recording, add it here.
-
-#### Additional info
- - Version: [e.g. 0.1.0]
- - Source: [e.g. Google PlayStore/F-Droid/GitHub/?]
- - Device: [e.g. OnePlus 7T]
- - Android version, ROM: [e.g. 10, Stock]
-
-#### Log
+<!--
 ```
 If applicable, paste the captured debug log here.
 ```
+-->
