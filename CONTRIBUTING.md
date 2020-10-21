@@ -5,6 +5,12 @@ First off, thanks for considering contributing to FlorisBoard!
 There are several ways to contribute to FlorisBoard. This document provides some
 general guidelines for each type of contribution.
 
+## Giving general feedback
+
+Either use the review function within Google Play or email me at
+[florisboard@patrickgold.dev](mailto:florisboard@patrickgold.dev). I
+love to hear from you!
+
 ## Adding a new feature or making large changes
 
 If you intend to add a new feature or to make large changes, please discuss this
@@ -51,6 +57,7 @@ Notes for tips below:
   will get accepted.
 
 ### Tips when updating a translation
+
 - To update a translation, check the `strings.xml` in
   `app/src/main/res/values` for newly added strings and add them to the
   translation file in `app/src/main/res/values-<code>`
