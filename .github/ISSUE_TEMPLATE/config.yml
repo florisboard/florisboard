@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
   - name: General feedback
-  - url: mailto:florisboard@patrickgold.dev
-  - about: Give general feedback about this project
+    url: mailto:florisboard@patrickgold.dev
+    about: Give general feedback about this project
