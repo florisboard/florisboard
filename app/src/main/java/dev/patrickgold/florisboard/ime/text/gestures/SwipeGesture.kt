@@ -23,7 +23,6 @@ import dev.patrickgold.florisboard.R
 import java.lang.Exception
 import kotlin.math.*
 
-
 /**
  * Wrapper class which holds all enums, interfaces and classes for detecting a swipe gesture.
  */
@@ -70,14 +69,15 @@ abstract class SwipeGesture {
                         val diffX = event.x - firstEvent.x
                         val diffY = event.y - firstEvent.y
                         val distanceThresholdNV = numericValue(distanceThreshold)
-                        val velocityThresholdNV = numericValue(velocityThreshold)
+                        /*val velocityThresholdNV = numericValue(velocityThreshold)
                         val velocity =
                             ((convertPixelsToDp(
                                 sqrt(diffX.pow(2) + diffY.pow(2)),
                                 context
-                            ) / event.downTime) * 10.0f.pow(8)).toInt()
+                            ) / event.downTime) * 10.0f.pow(8)).toInt()*/
                         clearEventList()
-                        return if ((abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV) && velocity >= velocityThresholdNV) {
+                        // return if ((abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV) && velocity >= velocityThresholdNV) {
+                        return if ((abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV)) {
                             val direction = detectDirection(diffX.toDouble(), diffY.toDouble())
                             listener.onSwipe(direction, Type.TOUCH_UP)
                         } else {
