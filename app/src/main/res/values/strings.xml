@@ -133,6 +133,8 @@
     <string name="pref__suggestion__use_pref_words__label">[NYI] Next-word suggestions</string>
     <string name="pref__suggestion__use_pref_words__summary">Use previous words for generating suggestions</string>
     <string name="pref__correction__title">Corrections</string>
+    <string name="pref__correction__auto_capitalization__label">Auto-capitalization</string>
+    <string name="pref__correction__auto_capitalization__summary">Capitalize words based on the current input context</string>
     <string name="pref__correction__double_space_period__label">Double-space period</string>
     <string name="pref__correction__double_space_period__summary">Tapping twice on spacebar inserts a period followed by a space</string>
 

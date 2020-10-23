@@ -38,6 +38,13 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
+            app:key="correction__auto_capitalization"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__correction__auto_capitalization__label"
+            app:summary="@string/pref__correction__auto_capitalization__summary"/>
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
             app:key="correction__double_space_period"
             app:iconSpaceReserved="false"
             app:title="@string/pref__correction__double_space_period__label"

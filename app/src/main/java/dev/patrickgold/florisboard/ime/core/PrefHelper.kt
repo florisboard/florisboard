@@ -180,8 +180,13 @@ class PrefHelper(
      */
     class Correction(private val prefHelper: PrefHelper) {
         companion object {
+            const val AUTO_CAPITALIZATION =     "correction__auto_capitalization"
             const val DOUBLE_SPACE_PERIOD =     "correction__double_space_period"
         }
+
+        var autoCapitalization: Boolean = false
+            get() = prefHelper.getPref(AUTO_CAPITALIZATION, true)
+            private set
 
         var doubleSpacePeriod: Boolean = false
             get() = prefHelper.getPref(DOUBLE_SPACE_PERIOD, true)

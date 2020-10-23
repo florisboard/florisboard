@@ -422,13 +422,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
 
     /**
      * Updates the current caps state according to the [cursorCapsMode], while respecting
-     * [capsLock] property.
+     * [capsLock] property and the correction.autoCapitalization preference.
      */
     private fun updateCapsState() {
         cursorCapsMode = fetchCurrentCursorCapsMode()
         editorCapsMode = parseCapsModeFromFlags(florisboard.currentInputEditorInfo.inputType)
         if (!capsLock) {
-            caps = cursorCapsMode != CapsMode.NONE
+            caps = florisboard.prefs.correction.autoCapitalization && cursorCapsMode != CapsMode.NONE
             keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
         }
     }
