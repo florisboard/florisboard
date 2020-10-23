@@ -298,6 +298,7 @@ class PrefHelper(
      */
     class Keyboard(private val prefHelper: PrefHelper) {
         companion object {
+            const val BOTTOM_OFFSET =           "keyboard__bottom_offset"
             const val HEIGHT_FACTOR =           "keyboard__height_factor"
             const val LONG_PRESS_DELAY =        "keyboard__long_press_delay"
             const val ONE_HANDED_MODE =         "keyboard__one_handed_mode"
@@ -308,6 +309,9 @@ class PrefHelper(
             const val VIBRATION_STRENGTH =      "keyboard__vibration_strength"
         }
 
+        var bottomOffset: Int = 0
+            get() = prefHelper.getPref(BOTTOM_OFFSET, 0)
+            private set
         var heightFactor: String = ""
             get() = prefHelper.getPref(HEIGHT_FACTOR, "normal")
             private set

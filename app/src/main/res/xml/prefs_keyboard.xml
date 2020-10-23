@@ -24,6 +24,17 @@
             app:title="@string/pref__keyboard__height_factor__label"
             app:useSimpleSummaryProvider="true"/>
 
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="0"
+            app:key="keyboard__bottom_offset"
+            app:min="0"
+            app:max="24"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__bottom_offset__label"
+            app:seekBarIncrement="1"
+            app:unit=" dp"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

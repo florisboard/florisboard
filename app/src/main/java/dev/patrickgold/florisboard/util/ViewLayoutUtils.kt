@@ -16,10 +16,13 @@
 
 package dev.patrickgold.florisboard.util
 
+import android.content.Context
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.Window
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+
 
 /**
  * This file has been taken from the Android LatinIME project. Following modifications were done to
@@ -70,5 +73,31 @@ object ViewLayoutUtils {
                         + lp.javaClass.name
             )
         }
+    }
+
+    /**
+     * This method converts dp unit to equivalent pixels, depending on device density.
+     *
+     * Source: https://stackoverflow.com/a/9563438/6801193 (by Muhammad Nabeel Arif)
+     *
+     * @param dp A value in dp (density independent pixels) unit. Which we need to convert into pixels
+     * @param context Context to get resources and device specific display metrics
+     * @return A float value to represent px equivalent to dp depending on device density
+     */
+    fun convertDpToPixel(dp: Float, context: Context): Float {
+        return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+    }
+
+    /**
+     * This method converts device specific pixels to density independent pixels.
+     *
+     * Source: https://stackoverflow.com/a/9563438/6801193 (by Muhammad Nabeel Arif)
+     *
+     * @param px A value in px (pixels) unit. Which we need to convert into db
+     * @param context Context to get resources and device specific display metrics
+     * @return A float value to represent dp equivalent to px value
+     */
+    fun convertPixelsToDp(px: Float, context: Context): Float {
+        return px / (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
     }
 }

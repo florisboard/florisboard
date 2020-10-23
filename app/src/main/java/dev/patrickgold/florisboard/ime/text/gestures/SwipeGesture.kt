@@ -173,20 +173,6 @@ abstract class SwipeGesture {
                 VelocityThreshold.VERY_FAST -> context.resources.getInteger(R.integer.gesture_velocity_threshold_very_fast)
             }.toDouble()
         }
-
-
-        /**
-         * This method converts device specific pixels to density independent pixels.
-         *
-         * Source: https://stackoverflow.com/a/9563438/6801193 (by Muhammad Nabeel Arif)
-         *
-         * @param px A value in px (pixels) unit. Which we need to convert into db
-         * @param context Context to get resources and device specific display metrics
-         * @return A float value to represent dp equivalent to px value
-         */
-        private fun convertPixelsToDp(px: Float, context: Context): Float {
-            return px / (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-        }
     }
 
     interface Listener {

@@ -114,6 +114,7 @@
     <string name="pref__keyboard__height_factor__mid_tall">Mid-tall</string>
     <string name="pref__keyboard__height_factor__tall">Tall</string>
     <string name="pref__keyboard__height_factor__extra_tall">Extra-tall</string>
+    <string name="pref__keyboard__bottom_offset__label">Bottom offset (for curved screens)</string>
     <string name="pref__keyboard__group_keypress__label">Key press</string>
     <string name="pref__keyboard__sound_enabled__label">Sound on key press</string>
     <string name="pref__keyboard__sound_volume__label">Sound volume on key press</string>

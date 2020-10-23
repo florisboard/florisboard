@@ -24,6 +24,7 @@ import android.widget.LinearLayout
 import android.widget.ViewFlipper
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import kotlin.math.roundToInt
 
 /**
@@ -83,11 +84,14 @@ class InputView : LinearLayout {
             "extra_tall" -> 1.15f
             else -> 1.00f
         }
-        val height = (resources.getDimension(R.dimen.inputView_baseHeight) * heightFactor).roundToInt()
+        var height = (resources.getDimension(R.dimen.inputView_baseHeight) * heightFactor).roundToInt()
         desiredInputViewHeight = height
         desiredSmartbarHeight = (0.16129 * height).roundToInt()
         desiredTextKeyboardViewHeight = height - desiredSmartbarHeight
         desiredMediaKeyboardViewHeight = height
+        // Add bottom offset for curved screens here. As the desired heights have already been set,
+        //  adding a value to the height now will result in a bottom padding (aka offset).
+        height += ViewLayoutUtils.convertDpToPixel(florisboard.prefs.keyboard.bottomOffset.toFloat(), context).toInt()
 
         super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY))
     }

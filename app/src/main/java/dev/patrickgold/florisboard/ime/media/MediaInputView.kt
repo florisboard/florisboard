@@ -61,7 +61,7 @@ class MediaInputView : LinearLayout, FlorisBoard.EventListener {
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val height = florisboard?.inputView?.desiredInputViewHeight ?: 0
+        val height = florisboard?.inputView?.desiredMediaKeyboardViewHeight ?: 0
         super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY))
     }
 }
