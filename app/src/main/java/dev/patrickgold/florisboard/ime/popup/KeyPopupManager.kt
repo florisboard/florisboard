@@ -42,7 +42,6 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
  * @property keyboardView Reference to the keyboard view to which this manager class belongs to.
  */
 class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) {
-
     private var anchorLeft: Boolean = false
     private var anchorRight: Boolean = false
     private var anchorOffset: Int = 0
@@ -256,12 +255,7 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
         }
 
         // Anchor left if keyView is in left half of keyboardView, else anchor right
-        if (keyView is KeyView) {
-            anchorLeft = keyView.x < keyboardView.measuredWidth / 2
-        } else if (keyView is EmojiKeyView) {
-            val hsv = (keyView.parent.parent as HorizontalScrollView)
-            anchorLeft = (keyView.x - hsv.scrollX) < keyboardView.measuredWidth / 2
-        }
+        anchorLeft = keyView.x < keyboardView.measuredWidth / 2
         anchorRight = !anchorLeft
 
         // Determine key counts for each row

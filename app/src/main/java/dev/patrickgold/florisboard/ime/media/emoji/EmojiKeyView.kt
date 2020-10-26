@@ -18,14 +18,12 @@ package dev.patrickgold.florisboard.ime.media.emoji
 
 import android.annotation.SuppressLint
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.ColorFilter
 import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.MotionEvent
-import android.widget.HorizontalScrollView
+import android.widget.ScrollView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
@@ -91,7 +89,7 @@ class EmojiKeyView(
                     osHandler = Handler()
                 }
                 osHandler?.postDelayed({
-                    (parent.parent as HorizontalScrollView)
+                    (parent.parent as ScrollView)
                         .requestDisallowInterceptTouchEvent(true)
                     emojiKeyboardView.isScrollBlocked = true
                     emojiKeyboardView.popupManager.show(this)

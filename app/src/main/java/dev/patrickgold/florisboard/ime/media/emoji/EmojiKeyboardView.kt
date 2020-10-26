@@ -21,14 +21,13 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.HorizontalScrollView
-import android.widget.LinearLayout
-import android.widget.ViewFlipper
+import android.widget.*
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayout
+import com.google.android.flexbox.JustifyContent
 import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
@@ -55,7 +54,7 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener {
     private var layouts: Deferred<EmojiLayoutDataMap>
     private val mainScope = MainScope()
     private val tabLayout: TabLayout
-    private val uiLayouts = EnumMap<EmojiCategory, HorizontalScrollView>(EmojiCategory::class.java)
+    private val uiLayouts = EnumMap<EmojiCategory, ScrollView>(EmojiCategory::class.java)
 
     var isScrollBlocked: Boolean = false
     var popupManager = KeyPopupManager<EmojiKeyboardView, EmojiKeyView>(this)
@@ -66,12 +65,15 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener {
         layouts = mainScope.async(Dispatchers.IO) {
             parseRawEmojiSpecsFile(context, "ime/media/emoji/emoji-test.txt")
         }
+        layoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
+        )
         orientation = VERTICAL
 
         emojiViewFlipper = ViewFlipper(context)
-        emojiViewFlipper.layoutParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT
-        )
+        emojiViewFlipper.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, 0).apply {
+            weight = 1.0f
+        }
         emojiViewFlipper.measureAllChildren = false
         addView(emojiViewFlipper)
 
@@ -117,10 +119,10 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener {
      */
     private suspend fun buildLayout() = withContext(Dispatchers.Default) {
         for (category in EmojiCategory.values()) {
-            val hsv = buildLayoutForCategory(category)
-            uiLayouts[category] = hsv
+            val scrollView = buildLayoutForCategory(category)
+            uiLayouts[category] = scrollView
             withContext(Dispatchers.Main) {
-                emojiViewFlipper.addView(hsv)
+                emojiViewFlipper.addView(scrollView)
             }
         }
     }
@@ -130,18 +132,19 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener {
      * context and will not block the main UI thread.
      *
      * @param category The category for which a layout should be built.
-     * @return The layout (top-most view is a [HorizontalScrollView]).
+     * @return The layout (top-most view is a [ScrollView]).
      */
     @SuppressLint("ClickableViewAccessibility")
     private suspend fun buildLayoutForCategory(
         category: EmojiCategory
-    ): HorizontalScrollView = withContext(Dispatchers.Default) {
-        val hsv = HorizontalScrollView(context)
-        hsv.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+    ): ScrollView = withContext(Dispatchers.Default) {
+        val scrollView = ScrollView(context)
+        scrollView.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         val flexboxLayout = FlexboxLayout(context)
         flexboxLayout.layoutParams =
-            LayoutParams(LayoutParams.WRAP_CONTENT, emojiKeyHeight * 3)
-        flexboxLayout.flexDirection = FlexDirection.COLUMN
+            LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        flexboxLayout.flexDirection = FlexDirection.ROW
+        flexboxLayout.justifyContent = JustifyContent.SPACE_BETWEEN
         flexboxLayout.flexWrap = FlexWrap.WRAP
         for (emojiKeyData in layouts.await()[category].orEmpty()) {
             val emojiKeyView =
@@ -151,11 +154,30 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener {
             )
             flexboxLayout.addView(emojiKeyView)
         }
-        hsv.setOnTouchListener { _, _ ->
+        // Add empty placeholder emojis at the end so the grid view. Below is an illustration how
+        // the UI looks with and without an placeholder (e = emoji):
+        //   Without placeholder        With placeholder
+        //     e e e e e e e             e e e e e e e
+        //     .............             .............
+        //     e e e e e e e             e e e e e e e
+        //        e e e e                e e e e
+        //
+        // Based on this SO's answer idea (by La Nube - Luis R. Díaz Muñiz):
+        //  https://stackoverflow.com/a/31478004/6801193
+        //
+        // 24 items are chosen here because that's probably the max items that will be shown per
+        // row, even in landscape mode.
+        for (n in 0 until 24) {
+            val gridPlaceholderView = View(context).apply {
+                layoutParams = LayoutParams(emojiKeyWidth, 0)
+            }
+            flexboxLayout.addView(gridPlaceholderView)
+        }
+        scrollView.setOnTouchListener { _, _ ->
             return@setOnTouchListener isScrollBlocked
         }
-        hsv.addView(flexboxLayout)
-        return@withContext hsv
+        scrollView.addView(flexboxLayout)
+        return@withContext scrollView
     }
 
     /**
