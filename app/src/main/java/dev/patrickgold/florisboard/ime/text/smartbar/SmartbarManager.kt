@@ -167,6 +167,7 @@ class SmartbarManager private constructor() : FlorisBoard.EventListener {
         smartbarView?.findViewById<View>(R.id.cc_copy)?.isEnabled = isSelectionActive
         smartbarView?.findViewById<View>(R.id.cc_paste)?.isEnabled =
             florisboard.clipboardManager?.hasPrimaryClip() ?: false
+        smartbarView?.invalidate()
     }
 
     fun deleteCandidateFromDictionary(candidate: String) {
