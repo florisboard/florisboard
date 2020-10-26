@@ -40,6 +40,16 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        style="@style/SettingsCardView">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note: Preferences tagged with [NYI] are not yet implemented and thus won\'t do anything or do some basic placeholder stuff only. Please do not file a bug report for these."/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/repo_url_card"
         style="@style/SettingsCardView.Clickable">
 
