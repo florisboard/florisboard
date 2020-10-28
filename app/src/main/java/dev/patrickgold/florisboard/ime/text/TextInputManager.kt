@@ -120,17 +120,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     override fun onCreate() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onCreate()")
 
-        for (mode in KeyboardMode.values()) {
-            if (mode == KeyboardMode.CHARACTERS) {
-                var subtypes = florisboard.subtypeManager.subtypes
-                if (subtypes.isEmpty()) {
-                    subtypes = listOf(Subtype.DEFAULT)
-                }
-                for (subtype in subtypes) {
-                    layoutManager.preloadComputedLayout(mode, subtype)
-                }
-            } else {
-                layoutManager.preloadComputedLayout(mode, florisboard.activeSubtype)
+        var subtypes = florisboard.subtypeManager.subtypes
+        if (subtypes.isEmpty()) {
+            subtypes = listOf(Subtype.DEFAULT)
+        }
+        for (subtype in subtypes) {
+            for (mode in KeyboardMode.values()) {
+                layoutManager.preloadComputedLayout(mode, subtype)
             }
         }
         smartbarManager = SmartbarManager.getInstance()

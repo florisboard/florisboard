@@ -22,10 +22,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.text.key.KeyData
-import dev.patrickgold.florisboard.ime.text.key.KeyTypeAdapter
-import dev.patrickgold.florisboard.ime.text.key.KeyVariation
-import dev.patrickgold.florisboard.ime.text.key.KeyVariationAdapter
+import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import kotlinx.coroutines.*
 import java.util.*
@@ -37,7 +34,7 @@ private typealias KMS = Pair<KeyboardMode, Subtype>
  * Class which manages layout loading and caching.
  */
 class LayoutManager(private val context: Context) : CoroutineScope by MainScope() {
-    private val layoutCache: HashMap<KMS, Deferred<ComputedLayoutData>> = hashMapOf()
+    private val computedLayoutCache: HashMap<KMS, Deferred<ComputedLayoutData>> = hashMapOf()
 
     /**
      * Loads the layout for the specified type and name.
@@ -49,6 +46,7 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
         if (type == null || name == null) {
             return null
         }
+
         val rawJsonData: String = try {
             context.assets.open("ime/text/$type/$name.json").bufferedReader().use { it.readText() }
         } catch (e: Exception) {
@@ -110,7 +108,7 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
      * @param extension The extension layout type and name.
      * @returns a [ComputedLayoutData] object, regardless of the specified LTNs or errors.
      */
-    private fun mergeLayouts(
+    private suspend fun mergeLayoutsAsync(
         keyboardMode: KeyboardMode,
         subtype: Subtype,
         main: LTN? = null,
@@ -194,6 +192,28 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
             }
         }
 
+        // Add hints to keys
+        if (keyboardMode == KeyboardMode.CHARACTERS) {
+            val symbolsComputedArrangement = fetchComputedLayoutAsync(KeyboardMode.SYMBOLS, subtype).await().arrangement
+            for ((r, row) in computedArrangement.withIndex()) {
+                if (r >= 3) {
+                    break
+                }
+                if (symbolsComputedArrangement.getOrNull(r) != null) {
+                    for ((k, key) in row.withIndex()) {
+                        if (key.type == KeyType.CHARACTER) {
+                            val symbol = symbolsComputedArrangement[r].getOrNull(k)
+                            if (r == 0) {
+                                key.hintedNumber = symbol
+                            } else {
+                                key.hintedSymbol = symbol
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         return ComputedLayoutData(
             keyboardMode,
             "computed",
@@ -210,7 +230,7 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
      * @param keyboardMode The keyboard mode for which the layout should be computed.
      * @param subtype The subtype which localizes the computed layout.
      */
-    private fun computeLayoutFor(
+    private suspend fun computeLayoutFor(
         keyboardMode: KeyboardMode,
         subtype: Subtype
     ): ComputedLayoutData {
@@ -222,6 +242,9 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
             KeyboardMode.CHARACTERS -> {
                 main = LTN(LayoutType.CHARACTERS, subtype.layout)
                 modifier = LTN(LayoutType.CHARACTERS_MOD, "default")
+            }
+            KeyboardMode.EDITING -> {
+                // Layout for this mode is defined in custom layout xml file.
             }
             KeyboardMode.NUMERIC -> {
                 main = LTN(LayoutType.NUMERIC, "default")
@@ -246,7 +269,7 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
             }
         }
 
-        return mergeLayouts(keyboardMode, subtype, main, modifier, extension)
+        return mergeLayoutsAsync(keyboardMode, subtype, main, modifier, extension)
     }
 
     /**
@@ -263,14 +286,14 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
         subtype: Subtype
     ): Deferred<ComputedLayoutData> {
         val kms = KMS(keyboardMode, subtype)
-        val cachedComputedLayout = layoutCache[kms]
+        val cachedComputedLayout = computedLayoutCache[kms]
         return if (cachedComputedLayout != null) {
             cachedComputedLayout
         } else {
             val computedLayout = async(Dispatchers.IO) {
                 computeLayoutFor(keyboardMode, subtype)
             }
-            layoutCache[kms] = computedLayout
+            computedLayoutCache[kms] = computedLayout
             computedLayout
         }
     }
@@ -289,8 +312,8 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
         subtype: Subtype
     ) {
         val kms = KMS(keyboardMode, subtype)
-        if (layoutCache[kms] == null) {
-            layoutCache[kms] = async(Dispatchers.IO) {
+        if (computedLayoutCache[kms] == null) {
+            computedLayoutCache[kms] = async(Dispatchers.IO) {
                 computeLayoutFor(keyboardMode, subtype)
             }
         }

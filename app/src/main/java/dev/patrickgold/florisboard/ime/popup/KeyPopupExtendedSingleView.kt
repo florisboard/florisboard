@@ -30,7 +30,7 @@ import dev.patrickgold.florisboard.util.*
 
 @SuppressLint("ViewConstructor")
 class KeyPopupExtendedSingleView(
-    context: Context, var isActive: Boolean = false
+    context: Context, val adjustedIndex: Int, var isActive: Boolean = false
 ) : androidx.appcompat.widget.AppCompatTextView(
     context, null, 0
 ) {

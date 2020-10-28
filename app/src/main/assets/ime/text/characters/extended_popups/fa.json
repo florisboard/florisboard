@@ -34,9 +34,9 @@
     { "code": 1610, "label": "ي" }
   ],
   "ا": [
+    { "code": 1570, "label": "آ" },
     { "code": 1649, "label": "ٱ" },
     { "code": 1569, "label": "ء" },
-    { "code": 1570, "label": "آ" },
     { "code": 1571, "label": "أ" },
     { "code": 1573, "label": "إ" }
   ],
@@ -44,8 +44,8 @@
     { "code": 1577, "label": "ة" }
   ],
   "ک": [
-    { "code": 1603, "label": "ك" },
-    { "code": 1706, "label": "ڪ"}
+    { "code": 1706, "label": "ڪ"},
+    { "code": 1603, "label": "ك" }
   ],
   "ز": [
     { "code": 1688, "label": "ژ" }
@@ -54,6 +54,7 @@
     { "code": 1572, "label": "ؤ" }
   ],
   ".~normal": [
+    { "code": 1611, "label": "ً" },
     { "code": 1622, "label": "ٖ" },
     { "code": 1648, "label": "ٰ" },
     { "code": 1619, "label": "ٓ" },
@@ -66,15 +67,14 @@
     { "code": 1617, "label": "ّ" },
     { "code": 1612, "label": "ٌ" },
     { "code": 1613, "label": "ٍ" },
-    { "code": 1611, "label": "ً" },
     { "code": 1620, "label": "ٔ" }
   ],
   ".~uri": [
+    { "code": -255, "label": ".ir"},
     { "code": -255, "label": ".gov" },
     { "code": -255, "label": ".edu" },
     { "code": -255, "label": ".org" },
     { "code": -255, "label": ".com" },
-    { "code": -255, "label": ".net" },
-    { "code": -255, "label": ".ir"}
+    { "code": -255, "label": ".net" }
   ]
 }

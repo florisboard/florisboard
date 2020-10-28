@@ -101,6 +101,11 @@
     <string name="pref__theme__navBarIsLight_summary">Set to ON for dark or to OFF for light foreground.</string>
 
     <string name="settings__keyboard__title">Keyboard Preferences</string>
+    <string name="pref__keyboard__group_keys__label">Keys</string>
+    <string name="pref__keyboard__hinted_number_row__label">Number row</string>
+    <string name="pref__keyboard__hinted_number_row__summary">First row of character layout hints number row</string>
+    <string name="pref__keyboard__hinted_symbols__label">Symbols</string>
+    <string name="pref__keyboard__hinted_symbols__summary">Second and third row of character layout hint symbols</string>
     <string name="pref__keyboard__group_layout__label">Layout</string>
     <string name="pref__keyboard__one_handed_mode__label">One-handed mode</string>
     <string name="pref__keyboard__one_handed_mode__off">Off</string>

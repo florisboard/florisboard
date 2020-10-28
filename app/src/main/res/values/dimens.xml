@@ -18,6 +18,7 @@
     <dimen name="key_borderRadius">6dp</dimen>
 
     <dimen name="key_textSize">18sp</dimen>
+    <dimen name="key_textHintSize">10sp</dimen>
     <dimen name="key_numeric_textSize">12sp</dimen>
     <dimen name="key_popup_textSize">21sp</dimen>
     <dimen name="emoji_key_textSize">22sp</dimen>

@@ -300,6 +300,8 @@ class PrefHelper(
         companion object {
             const val BOTTOM_OFFSET =           "keyboard__bottom_offset"
             const val HEIGHT_FACTOR =           "keyboard__height_factor"
+            const val HINTED_NUMBER_ROW =       "keyboard__hinted_number_row"
+            const val HINTED_SYMBOLS =          "keyboard__hinted_symbols"
             const val LONG_PRESS_DELAY =        "keyboard__long_press_delay"
             const val ONE_HANDED_MODE =         "keyboard__one_handed_mode"
             const val POPUP_ENABLED =           "keyboard__popup_enabled"
@@ -315,6 +317,12 @@ class PrefHelper(
         var heightFactor: String = ""
             get() = prefHelper.getPref(HEIGHT_FACTOR, "normal")
             private set
+        var hintedNumberRow: Boolean
+            get() =  prefHelper.getPref(HINTED_NUMBER_ROW, true)
+            set(v) = prefHelper.setPref(HINTED_NUMBER_ROW, v)
+        var hintedSymbols: Boolean
+            get() =  prefHelper.getPref(HINTED_SYMBOLS, true)
+            set(v) = prefHelper.setPref(HINTED_SYMBOLS, v)
         var longPressDelay: Int = 0
             get() = prefHelper.getPref(LONG_PRESS_DELAY, 300)
             private set
@@ -350,10 +358,10 @@ class PrefHelper(
         }
 
         var activeSubtypeId: Int
-            get() = prefHelper.getPref(ACTIVE_SUBTYPE_ID, Subtype.DEFAULT.id)
+            get() =  prefHelper.getPref(ACTIVE_SUBTYPE_ID, Subtype.DEFAULT.id)
             set(v) = prefHelper.setPref(ACTIVE_SUBTYPE_ID, v)
         var subtypes: String
-            get() = prefHelper.getPref(SUBTYPES, "")
+            get() =  prefHelper.getPref(SUBTYPES, "")
             set(v) = prefHelper.setPref(SUBTYPES, v)
     }
 

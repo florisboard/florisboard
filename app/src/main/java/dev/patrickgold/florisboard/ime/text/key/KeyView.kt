@@ -53,7 +53,7 @@ class KeyView(
     private val keyboardView: KeyboardView,
     val data: KeyData
 ) : View(keyboardView.context), SwipeGesture.Listener {
-
+    val dataPopupWithHint: MutableList<KeyData>
     private var isKeyPressed: Boolean = false
         set(value) {
             field = value
@@ -75,6 +75,16 @@ class KeyView(
         isFakeBoldText = true
         textAlign = Paint.Align.CENTER
         textSize = resources.getDimension(R.dimen.key_textSize)
+        typeface = Typeface.DEFAULT
+    }
+    private var hintedLabel: String? = null
+    private var hintedLabelPaint: Paint = Paint().apply {
+        alpha = 120
+        color = 0
+        isAntiAlias = true
+        isFakeBoldText = true
+        textAlign = Paint.Align.CENTER
+        textSize = resources.getDimension(R.dimen.key_textHintSize)
         typeface = Typeface.DEFAULT
     }
 
@@ -125,6 +135,23 @@ class KeyView(
 
         background = getDrawable(context, R.drawable.shape_rect_rounded)
         elevation = 4.0f
+
+        var hintKeyData: KeyData? = null
+        val hintedNumber = data.hintedNumber
+        if (prefs.keyboard.hintedNumberRow && hintedNumber != null) {
+            hintKeyData = hintedNumber
+        }
+        val hintedSymbol = data.hintedSymbol
+        if (prefs.keyboard.hintedSymbols && hintedSymbol != null) {
+            hintKeyData = hintedSymbol
+        }
+        dataPopupWithHint = if (hintKeyData == null) {
+            data.popup.toMutableList()
+        } else {
+            val popupList = data.popup.toMutableList()
+            popupList.add(hintKeyData)
+            popupList
+        }
 
         updateKeyPressedBackground()
     }
@@ -211,7 +238,7 @@ class KeyView(
                     osHandler = Handler()
                 }
                 osHandler?.postDelayed({
-                    if (data.popup.isNotEmpty()) {
+                    if (dataPopupWithHint.isNotEmpty()) {
                         keyboardView.popupManager.extend(this)
                     }
                     if (data.code == KeyCode.SPACE) {
@@ -484,6 +511,15 @@ class KeyView(
             && data.code != KeyCode.HALF_SPACE && data.code != KeyCode.KESHIDA || data.type == KeyType.NUMERIC
         ) {
             label = getComputedLetter()
+            val hintedNumber = data.hintedNumber
+            if (prefs.keyboard.hintedNumberRow && hintedNumber != null) {
+                hintedLabel = getComputedLetter(hintedNumber)
+            }
+            val hintedSymbol = data.hintedSymbol
+            if (prefs.keyboard.hintedSymbols && hintedSymbol != null) {
+                hintedLabel = getComputedLetter(hintedSymbol)
+            }
+
         } else {
             when (data.code) {
                 KeyCode.DELETE -> {
@@ -577,6 +613,9 @@ class KeyView(
             }
         }
 
+        val isPortrait =
+            resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+
         // Draw drawable
         val drawable = drawable
         if (drawable != null) {
@@ -608,14 +647,12 @@ class KeyView(
             } else {
                 labelPaint.textSize = resources.getDimension(R.dimen.key_textSize)
             }
-            labelPaint.color = prefs.theme.keyFgColor
-            labelPaint.alpha = if (keyboardView.computedLayout?.mode == KeyboardMode.CHARACTERS &&
-                data.code == KeyCode.SPACE) { 120 } else { 255 }
-            val isPortrait =
-                resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
             if (prefs.keyboard.oneHandedMode != "off" && isPortrait) {
                 labelPaint.textSize *= 0.9f
             }
+            labelPaint.color = prefs.theme.keyFgColor
+            labelPaint.alpha = if (keyboardView.computedLayout?.mode == KeyboardMode.CHARACTERS &&
+                data.code == KeyCode.SPACE) { 120 } else { 255 }
             val centerX = measuredWidth / 2.0f
             val centerY = measuredHeight / 2.0f + (labelPaint.textSize - labelPaint.descent()) / 2
             if (label.contains("\n")) {
@@ -626,6 +663,20 @@ class KeyView(
             } else {
                 canvas.drawText(label, centerX, centerY, labelPaint)
             }
+        }
+
+        // Draw hinted label
+        val hintedLabel = hintedLabel
+        if (hintedLabel != null) {
+            hintedLabelPaint.textSize = resources.getDimension(R.dimen.key_textHintSize)
+            if (prefs.keyboard.oneHandedMode != "off" && isPortrait) {
+                hintedLabelPaint.textSize *= 0.9f
+            }
+            hintedLabelPaint.color = prefs.theme.keyFgColor
+            hintedLabelPaint.alpha = 120
+            val centerX = measuredWidth * 5.0f / 6.0f
+            val centerY = measuredHeight * 1.0f / 6.0f + (hintedLabelPaint.textSize - hintedLabelPaint.descent()) / 2
+            canvas.drawText(hintedLabel, centerX, centerY, hintedLabelPaint)
         }
     }
 
