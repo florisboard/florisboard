@@ -1,0 +1,14 @@
+- Add number row / underlying symbol support in character layouts
+  - First row of each character layout has numbers 1-9 and 0 integrated
+  - Second and third row have symbols according to the symbol layout
+  - Number row / Underlying symbols can be enabled/disabled seperately
+    in the preferences
+- Add bottom offset option to accommodate for curved screens (#20)
+- Add option to turn off auto-capitalization (#21)
+- Fix clipboard/cursor UI not updating in Smartbar when text selection
+  has changed
+- Improve emoji layout
+  - Scroll orientation is now vertical to better scale to different sizes
+    of the keyboard
+- Temporarily remove swipe velocity threshold as it causes gestures to be
+  ignored in certain circumstances

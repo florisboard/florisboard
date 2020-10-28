@@ -29,12 +29,8 @@ tester, follow these steps:
 _C. Use the APK provided in the release section of this repo_
 
 ##### Giving feedback
-If you want to give feedback to FlorisBoard, there are 2 ways to do so,
-as listed below:
-- *General feedback:* use the private feedback to developer section on
-  the PlayStore listing.
-- *Bug reports or feature requests:* see the
-  [contribution guidelines](CONTRIBUTING.md)
+If you want to give feedback to FlorisBoard, there are several ways to
+do so, as listed in the [contribution guidelines](CONTRIBUTING.md).
 
 Thank you for contributing to FlorisBoard!
 
@@ -96,9 +92,10 @@ height="256" alt="Preview Image">
 ### Other useful features
 * [x] One-handed mode
 * [x] Clipboard/cursor tools
+* [x] Integrated number row / symbols in character layouts (0.3.0)
 * [ ] Floating keyboard (0.4.0)
 * [x] Gesture support (0.3.0)
-* [ ] Glide typing (0.3.0)
+* [ ] Glide typing (0.4.0)
 * [x] Full integration in IME service list of Android (xml/method)
       (integration is internal-only, because Android's default subtype
       implementation not really allows for dynamic language/layout
