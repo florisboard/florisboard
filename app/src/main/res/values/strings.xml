@@ -141,6 +141,8 @@
     <string name="pref__correction__title">Corrections</string>
     <string name="pref__correction__auto_capitalization__label">Auto-capitalization</string>
     <string name="pref__correction__auto_capitalization__summary">Capitalize words based on the current input context</string>
+    <string name="pref__correction__remember_caps_lock_state__label">Remember caps lock state</string>
+    <string name="pref__correction__remember_caps_lock_state__summary">Caps lock will stay on when moving to another text field</string>
     <string name="pref__correction__double_space_period__label">Double-space period</string>
     <string name="pref__correction__double_space_period__summary">Tapping twice on spacebar inserts a period followed by a space</string>
 

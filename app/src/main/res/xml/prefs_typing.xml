@@ -45,6 +45,13 @@
             app:summary="@string/pref__correction__auto_capitalization__summary"/>
 
         <SwitchPreferenceCompat
+            android:defaultValue="false"
+            app:key="correction__remember_caps_lock_state"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__correction__remember_caps_lock_state__label"
+            app:summary="@string/pref__correction__remember_caps_lock_state__summary"/>
+
+        <SwitchPreferenceCompat
             android:defaultValue="true"
             app:key="correction__double_space_period"
             app:iconSpaceReserved="false"

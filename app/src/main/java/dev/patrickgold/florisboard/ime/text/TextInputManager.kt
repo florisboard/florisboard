@@ -227,6 +227,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             KeyboardMode.PHONE2 -> false
             else -> keyVariation != KeyVariation.PASSWORD && florisboard.prefs.suggestion.enabled
         }
+        if (!florisboard.prefs.correction.rememberCapsLockState) {
+            capsLock = false
+        }
         updateCapsState()
         resetComposingText()
         setActiveKeyboardMode(keyboardMode)
