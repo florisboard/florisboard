@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.text.key
 
 import android.annotation.SuppressLint
-import android.content.res.Configuration
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.os.Handler
@@ -39,6 +38,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.util.setBackgroundTintColor2
 import java.util.*
+import kotlin.math.abs
 
 /**
  * View class for managing the rendering and the events of a single keyboard key.
@@ -64,6 +64,8 @@ class KeyView(
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private var shouldBlockNextKeyCode: Boolean = false
 
+    private var desiredWidth: Int = 0
+    private var desiredHeight: Int = 0
     private var drawable: Drawable? = null
     private var drawableColor: Int = 0
     private var drawablePadding: Int = 0
@@ -87,6 +89,7 @@ class KeyView(
         textSize = resources.getDimension(R.dimen.key_textHintSize)
         typeface = Typeface.DEFAULT
     }
+    private val tempRect: Rect = Rect()
 
     var florisboard: FlorisBoard? = null
     private val swipeGestureDetector = SwipeGesture.Detector(context, this)
@@ -326,7 +329,7 @@ class KeyView(
      *  by Devunwired
      */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val desiredWidth = when (keyboardView.computedLayout?.mode) {
+        desiredWidth = when (keyboardView.computedLayout?.mode) {
             KeyboardMode.NUMERIC,
             KeyboardMode.PHONE,
             KeyboardMode.PHONE2 -> (keyboardView.desiredKeyWidth * 2.68f).toInt()
@@ -345,7 +348,7 @@ class KeyView(
                 else -> keyboardView.desiredKeyWidth
             }
         }
-        val desiredHeight = keyboardView.desiredKeyHeight
+        desiredHeight = keyboardView.desiredKeyHeight
 
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
@@ -498,6 +501,40 @@ class KeyView(
     }
 
     /**
+     * Automatically sets the text size of [boxPaint] for given [text] so it fits within the given
+     * bounds.
+     *
+     * Implementation based on this SO answer by Michael Scheper, but has been modified to
+     * incorporate the height as well: https://stackoverflow.com/a/21895626/6801193
+     *
+     * @param boxPaint The [Paint] object which the text size should be applied to.
+     * @param boxWidth The max width for the surrounding box of [text].
+     * @param boxHeight The max height for the surrounding box of [text].
+     * @param text The text for which the size should be calculated.
+     */
+    private fun setTextSizeFor(boxPaint: Paint, boxWidth: Float, boxHeight: Float, text: String) {
+        val textSize = 64.0f
+        boxPaint.textSize = textSize
+        boxPaint.getTextBounds(text, 0, text.length, tempRect)
+        val diffWidth = tempRect.width() - boxWidth
+        val diffHeight = tempRect.height() - boxHeight
+        val factor = if (diffWidth < 0 && diffHeight < 0) {
+            // Text box is smaller as given box, text size must be increased
+            if (abs(diffWidth) < abs(diffHeight)) {
+                boxWidth / tempRect.width()
+            } else {
+                boxHeight / tempRect.height()
+            }
+        } else if (diffWidth > diffHeight) {
+            // Text box is larger on minimum one side than given box, text size must be decreased
+            boxWidth / tempRect.width()
+        } else {
+            boxHeight / tempRect.height()
+        }
+        boxPaint.textSize = textSize * factor
+    }
+
+    /**
      * Draw the key label / drawable.
      */
     override fun onDraw(canvas: Canvas?) {
@@ -613,9 +650,6 @@ class KeyView(
             }
         }
 
-        val isPortrait =
-            resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-
         // Draw drawable
         val drawable = drawable
         if (drawable != null) {
@@ -641,14 +675,36 @@ class KeyView(
         // Draw label
         val label = label
         if (label != null) {
-            if (data.code == KeyCode.VIEW_NUMERIC || data.code == KeyCode.VIEW_NUMERIC_ADVANCED
-                || data.code == KeyCode.SPACE) {
-                labelPaint.textSize = resources.getDimension(R.dimen.key_numeric_textSize)
-            } else {
-                labelPaint.textSize = resources.getDimension(R.dimen.key_textSize)
-            }
-            if (prefs.keyboard.oneHandedMode != "off" && isPortrait) {
-                labelPaint.textSize *= 0.9f
+            when (data.code) {
+                KeyCode.VIEW_NUMERIC, KeyCode.VIEW_NUMERIC_ADVANCED -> {
+                    labelPaint.textSize = resources.getDimension(R.dimen.key_numeric_textSize)
+                }
+                else -> when {
+                    data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE -> {
+                        setTextSizeFor(
+                            labelPaint,
+                            desiredWidth - (2.6f * drawablePadding),
+                            desiredHeight - (3.6f * drawablePadding),
+                            // Note: taking a "X" here because it is one of the biggest letters and
+                            //  the keys must have the same base character for calculation, else
+                            //  they will all look different and weird...
+                            "X"
+                        )
+                    }
+                    else -> {
+                        setTextSizeFor(
+                            labelPaint,
+                            measuredWidth - (2.6f * drawablePadding),
+                            measuredHeight - (3.6f * drawablePadding),
+                            when (data.code) {
+                                KeyCode.VIEW_CHARACTERS, KeyCode.VIEW_SYMBOLS, KeyCode.VIEW_SYMBOLS2 -> {
+                                    resources.getString(R.string.key__view_symbols)
+                                }
+                                else -> label
+                            }
+                        )
+                    }
+                }
             }
             labelPaint.color = prefs.theme.keyFgColor
             labelPaint.alpha = if (keyboardView.computedLayout?.mode == KeyboardMode.CHARACTERS &&
@@ -668,10 +724,15 @@ class KeyView(
         // Draw hinted label
         val hintedLabel = hintedLabel
         if (hintedLabel != null) {
-            hintedLabelPaint.textSize = resources.getDimension(R.dimen.key_textHintSize)
-            if (prefs.keyboard.oneHandedMode != "off" && isPortrait) {
-                hintedLabelPaint.textSize *= 0.9f
-            }
+            setTextSizeFor(
+                hintedLabelPaint,
+                desiredWidth * 1.0f / 6.0f,
+                desiredHeight * 1.0f / 6.0f,
+                // Note: taking a "X" here because it is one of the biggest letters and
+                //  the keys must have the same base character for calculation, else
+                //  they will all look different and weird...
+                "X"
+            )
             hintedLabelPaint.color = prefs.theme.keyFgColor
             hintedLabelPaint.alpha = 120
             val centerX = measuredWidth * 5.0f / 6.0f
