@@ -513,25 +513,30 @@ class KeyView(
      * @param text The text for which the size should be calculated.
      */
     private fun setTextSizeFor(boxPaint: Paint, boxWidth: Float, boxHeight: Float, text: String) {
-        val textSize = 64.0f
-        boxPaint.textSize = textSize
-        boxPaint.getTextBounds(text, 0, text.length, tempRect)
-        val diffWidth = tempRect.width() - boxWidth
-        val diffHeight = tempRect.height() - boxHeight
-        val factor = if (diffWidth < 0 && diffHeight < 0) {
-            // Text box is smaller as given box, text size must be increased
-            if (abs(diffWidth) < abs(diffHeight)) {
+        var textSize = 64.0f
+        // Must loop twice as there can be bot with and height which are too big, which requires
+        // 2 iterations to adjust
+        for (n in 0..1) {
+            boxPaint.textSize = textSize
+            boxPaint.getTextBounds(text, 0, text.length, tempRect)
+            val diffWidth = tempRect.width() - boxWidth
+            val diffHeight = tempRect.height() - boxHeight
+            val factor = if (diffWidth < 0 && diffHeight < 0) {
+                // Text box is smaller as given box, text size must be increased
+                if (abs(diffWidth) < abs(diffHeight)) {
+                    boxWidth / tempRect.width()
+                } else {
+                    boxHeight / tempRect.height()
+                }
+            } else if (diffWidth > diffHeight) {
+                // Text box is larger on minimum one side than given box, text size must be decreased
                 boxWidth / tempRect.width()
             } else {
                 boxHeight / tempRect.height()
             }
-        } else if (diffWidth > diffHeight) {
-            // Text box is larger on minimum one side than given box, text size must be decreased
-            boxWidth / tempRect.width()
-        } else {
-            boxHeight / tempRect.height()
+            textSize *= factor
         }
-        boxPaint.textSize = textSize * factor
+        boxPaint.textSize = textSize
     }
 
     /**
