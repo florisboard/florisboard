@@ -40,6 +40,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarManager
+import dev.patrickgold.florisboard.util.debugSummarize
 import kotlinx.coroutines.*
 import java.util.*
 
@@ -98,6 +99,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     private var selectionEndMax: Int = 0
 
     companion object {
+        private val TAG: String? = TextInputManager::class.simpleName
         private var instance: TextInputManager? = null
 
         @Synchronized
@@ -118,7 +120,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * background).
      */
     override fun onCreate() {
-        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onCreate()")
+        if (BuildConfig.DEBUG) Log.i(TAG, "onCreate()")
 
         var subtypes = florisboard.subtypeManager.subtypes
         if (subtypes.isEmpty()) {
@@ -145,7 +147,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * Sets up the newly registered input view.
      */
     override fun onRegisterInputView(inputView: InputView) {
-        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onRegisterInputView(inputView)")
+        if (BuildConfig.DEBUG) Log.i(TAG, "onRegisterInputView(inputView)")
 
         launch(Dispatchers.Default) {
             textViewGroup = inputView.findViewById(R.id.text_input)
@@ -169,7 +171,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * Cancels all coroutines and cleans up.
      */
     override fun onDestroy() {
-        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onDestroy()")
+        if (BuildConfig.DEBUG) Log.i(TAG, "onDestroy()")
 
         cancel()
         osHandler.removeCallbacksAndMessages(null)
@@ -184,8 +186,15 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * initial caps mode accordingly.
      */
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
+        if (info != null && BuildConfig.DEBUG) {
+            Log.i(TAG, "onStartInputView: " + info.debugSummarize())
+        }
         val keyboardMode = when (info) {
-            null -> KeyboardMode.CHARACTERS
+            null -> {
+                Log.e(TAG, "onStartInputView: Received null as EditorInfo -> "
+                        + "Falling back to KeyboardMode.CHARACTERS")
+                KeyboardMode.CHARACTERS
+            }
             else -> when (info.inputType and InputType.TYPE_MASK_CLASS) {
                 InputType.TYPE_CLASS_NUMBER -> {
                     keyVariation = KeyVariation.NORMAL
@@ -283,6 +292,14 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         }
     }
 
+    override fun onUpdateSelection(
+        oldSelStart: Int, oldSelEnd: Int,
+        newSelStart: Int, newSelEnd: Int,
+        candidatesStart: Int, candidatesEnd: Int) {
+
+        updateCapsState()
+    }
+
     /**
      * Main logic point for processing cursor updates as well as parsing the current composing word
      * and passing this info on to the [SmartbarManager] to turn it into candidate suggestions.
@@ -332,7 +349,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             isManualSelectionModeLeft = false
             isManualSelectionModeRight = false
         }
-        updateCapsState()
         smartbarManager.onUpdateCursorAnchorInfo(cursorAnchorInfo)
     }
 
@@ -852,10 +868,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                             }
                         }
                         else -> {
-                            Log.e(
-                                this::class.simpleName,
-                                "sendKeyPress(keyData): Received unknown key: $keyData"
-                            )
+                            Log.e(TAG,"sendKeyPress(keyData): Received unknown key: $keyData")
                         }
                     }
                 }

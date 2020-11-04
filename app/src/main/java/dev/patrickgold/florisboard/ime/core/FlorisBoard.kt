@@ -88,6 +88,7 @@ class FlorisBoard : InputMethodService() {
 
     companion object {
         private const val IME_ID: String = "dev.patrickgold.florisboard/.ime.core.FlorisBoard"
+        private val TAG: String? = FlorisBoard::class.simpleName
 
         fun checkIfImeIsEnabled(context: Context): Boolean {
             val activeImeIds = Settings.Secure.getString(
@@ -144,7 +145,7 @@ class FlorisBoard : InputMethodService() {
                     .build()
             )
         }
-        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onCreate()")
+        if (BuildConfig.DEBUG) Log.i(TAG, "onCreate()")
 
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -168,7 +169,7 @@ class FlorisBoard : InputMethodService() {
 
     @SuppressLint("InflateParams")
     override fun onCreateInputView(): View? {
-        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onCreateInputView()")
+        if (BuildConfig.DEBUG) Log.i(TAG, "onCreateInputView()")
 
         baseContext.setTheme(currentThemeResId)
 
@@ -180,7 +181,7 @@ class FlorisBoard : InputMethodService() {
     }
 
     fun registerInputView(inputView: InputView) {
-        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "registerInputView(inputView)")
+        if (BuildConfig.DEBUG) Log.i(TAG, "registerInputView($inputView)")
 
         this.inputView = inputView
         initializeOneHandedEnvironment()
@@ -192,7 +193,7 @@ class FlorisBoard : InputMethodService() {
     }
 
     override fun onDestroy() {
-        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onDestroy()")
+        if (BuildConfig.DEBUG) Log.i(TAG, "onDestroy()")
 
         osHandler.removeCallbacksAndMessages(null)
         florisboardInstance = null
@@ -203,6 +204,7 @@ class FlorisBoard : InputMethodService() {
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
+        if (BuildConfig.DEBUG) Log.i(TAG, "onStartInputView($info, $restarting)")
         currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
 
         super.onStartInputView(info, restarting)
@@ -210,6 +212,7 @@ class FlorisBoard : InputMethodService() {
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
+        if (BuildConfig.DEBUG) Log.i(TAG, "onFinishInputView($finishingInput)")
         currentInputConnection?.requestCursorUpdates(0)
 
         super.onFinishInputView(finishingInput)
@@ -217,7 +220,7 @@ class FlorisBoard : InputMethodService() {
     }
 
     override fun onWindowShown() {
-        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onWindowShown()")
+        if (BuildConfig.DEBUG) Log.i(TAG, "onWindowShown()")
 
         prefs.sync()
         updateTheme()
@@ -231,13 +234,14 @@ class FlorisBoard : InputMethodService() {
     }
 
     override fun onWindowHidden() {
-        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onWindowHidden()")
+        if (BuildConfig.DEBUG) Log.i(TAG, "onWindowHidden()")
 
         super.onWindowHidden()
         eventListeners.toList().forEach { it.onWindowHidden() }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
+        if (BuildConfig.DEBUG) Log.i(TAG, "onConfigurationChanged($newConfig)")
         if (isInputViewShown) {
             updateOneHandedPanelVisibility()
         }
@@ -246,6 +250,8 @@ class FlorisBoard : InputMethodService() {
     }
 
     override fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {
+        if (BuildConfig.DEBUG) Log.i(TAG, "onUpdateCursorAnchorInfo($cursorAnchorInfo)")
+
         super.onUpdateCursorAnchorInfo(cursorAnchorInfo)
         eventListeners.toList().forEach { it.onUpdateCursorAnchorInfo(cursorAnchorInfo) }
     }
@@ -258,6 +264,8 @@ class FlorisBoard : InputMethodService() {
         candidatesStart: Int,
         candidatesEnd: Int
     ) {
+        if (BuildConfig.DEBUG) Log.i(TAG, "onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd)")
+
         super.onUpdateSelection(
             oldSelStart,
             oldSelEnd,
