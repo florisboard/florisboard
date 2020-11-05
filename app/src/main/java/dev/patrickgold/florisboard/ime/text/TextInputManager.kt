@@ -186,47 +186,49 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * initial caps mode accordingly.
      */
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
-        if (info != null && BuildConfig.DEBUG) {
-            Log.i(TAG, "onStartInputView: " + info.debugSummarize())
-        }
         val keyboardMode = when (info) {
             null -> {
                 Log.e(TAG, "onStartInputView: Received null as EditorInfo -> "
                         + "Falling back to KeyboardMode.CHARACTERS")
+                editorCapsMode = CapsMode.NONE
                 KeyboardMode.CHARACTERS
             }
-            else -> when (info.inputType and InputType.TYPE_MASK_CLASS) {
-                InputType.TYPE_CLASS_NUMBER -> {
-                    keyVariation = KeyVariation.NORMAL
-                    KeyboardMode.NUMERIC
-                }
-                InputType.TYPE_CLASS_PHONE -> {
-                    keyVariation = KeyVariation.NORMAL
-                    KeyboardMode.PHONE
-                }
-                InputType.TYPE_CLASS_TEXT -> {
-                    keyVariation = when (info.inputType and InputType.TYPE_MASK_VARIATION) {
-                        InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
-                        InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS -> {
-                            KeyVariation.EMAIL_ADDRESS
-                        }
-                        InputType.TYPE_TEXT_VARIATION_PASSWORD,
-                        InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD,
-                        InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD -> {
-                            KeyVariation.PASSWORD
-                        }
-                        InputType.TYPE_TEXT_VARIATION_URI -> {
-                            KeyVariation.URI
-                        }
-                        else -> {
-                            KeyVariation.NORMAL
-                        }
+            else -> {
+                Log.i(TAG, "onStartInputView: " + info.debugSummarize())
+                editorCapsMode = CapsMode.fromFlags(info.inputType)
+                when (info.inputType and InputType.TYPE_MASK_CLASS) {
+                    InputType.TYPE_CLASS_NUMBER -> {
+                        keyVariation = KeyVariation.NORMAL
+                        KeyboardMode.NUMERIC
                     }
-                    KeyboardMode.CHARACTERS
-                }
-                else -> {
-                    keyVariation = KeyVariation.NORMAL
-                    KeyboardMode.CHARACTERS
+                    InputType.TYPE_CLASS_PHONE -> {
+                        keyVariation = KeyVariation.NORMAL
+                        KeyboardMode.PHONE
+                    }
+                    InputType.TYPE_CLASS_TEXT -> {
+                        keyVariation = when (info.inputType and InputType.TYPE_MASK_VARIATION) {
+                            InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
+                            InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS -> {
+                                KeyVariation.EMAIL_ADDRESS
+                            }
+                            InputType.TYPE_TEXT_VARIATION_PASSWORD,
+                            InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD,
+                            InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD -> {
+                                KeyVariation.PASSWORD
+                            }
+                            InputType.TYPE_TEXT_VARIATION_URI -> {
+                                KeyVariation.URI
+                            }
+                            else -> {
+                                KeyVariation.NORMAL
+                            }
+                        }
+                        KeyboardMode.CHARACTERS
+                    }
+                    else -> {
+                        keyVariation = KeyVariation.NORMAL
+                        KeyboardMode.CHARACTERS
+                    }
                 }
             }
         }
@@ -401,29 +403,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     }
 
     /**
-     * Parses the [CapsMode] out of the given [flags].
-     *
-     * @param flags The input flags.
-     * @return A [CapsMode] value.
-     */
-    private fun parseCapsModeFromFlags(flags: Int): CapsMode {
-        return when {
-            flags and InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS > 0 -> {
-                CapsMode.ALL
-            }
-            flags and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES > 0 -> {
-                CapsMode.SENTENCES
-            }
-            flags and InputType.TYPE_TEXT_FLAG_CAP_WORDS > 0 -> {
-                CapsMode.WORDS
-            }
-            else -> {
-                CapsMode.NONE
-            }
-        }
-    }
-
-    /**
      * Fetches the current cursor caps mode from the current input connection.
      *
      * @return The [CapsMode] according to the returned flags by the current input connection.
@@ -432,7 +411,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         val ic = florisboard.currentInputConnection
         val info = florisboard.currentInputEditorInfo
         val capsFlags = ic?.getCursorCapsMode(info.inputType) ?: 0
-        return parseCapsModeFromFlags(capsFlags)
+        return CapsMode.fromFlags(capsFlags)
     }
 
     /**
@@ -441,7 +420,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      */
     private fun updateCapsState() {
         cursorCapsMode = fetchCurrentCursorCapsMode()
-        editorCapsMode = parseCapsModeFromFlags(florisboard.currentInputEditorInfo.inputType)
         if (!capsLock) {
             caps = florisboard.prefs.correction.autoCapitalization && cursorCapsMode != CapsMode.NONE
             keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
@@ -882,5 +860,21 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         NONE,
         SENTENCES,
         WORDS;
+        companion object {
+            /**
+             * Parses the [CapsMode] out of the given [flags].
+             *
+             * @param flags The input flags.
+             * @return A [CapsMode] value.
+             */
+            fun fromFlags(flags: Int): CapsMode {
+                return when {
+                    flags and InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS > 0 -> ALL
+                    flags and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES > 0 -> SENTENCES
+                    flags and InputType.TYPE_TEXT_FLAG_CAP_WORDS > 0 -> WORDS
+                    else -> NONE
+                }
+            }
+        }
     }
 }
