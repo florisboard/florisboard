@@ -20,7 +20,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.View
-import android.view.inputmethod.CursorAnchorInfo
 import androidx.constraintlayout.widget.ConstraintLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
@@ -60,8 +59,8 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener {
         pasteKey = findViewById(R.id.clipboard_paste)
     }
 
-    override fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {
-        val isSelectionActive = florisboard?.textInputManager?.isTextSelected ?: false
+    override fun onUpdateSelection() {
+        val isSelectionActive = florisboard?.activeEditorInstance?.selection?.isSelectionMode ?: false
         val isSelectionMode = florisboard?.textInputManager?.isManualSelectionMode ?: false
         arrowUpKey?.isEnabled = !(isSelectionActive || isSelectionMode)
         arrowDownKey?.isEnabled = !(isSelectionActive || isSelectionMode)

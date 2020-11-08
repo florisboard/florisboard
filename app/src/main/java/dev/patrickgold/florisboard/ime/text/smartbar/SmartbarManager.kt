@@ -33,7 +33,7 @@ class SmartbarManager private constructor() : FlorisBoard.EventListener {
         val view = v as Button
         val text = view.text.toString()
         if (text.isNotEmpty()) {
-            textInputManager.commitCandidate(text)
+            florisboard.activeEditorInstance.commitCompletion(text)
         }
     }
     private val candidateViewOnLongClickListener = View.OnLongClickListener { v ->
@@ -161,8 +161,8 @@ class SmartbarManager private constructor() : FlorisBoard.EventListener {
         //spellCheckerSession?.close()
     }
 
-    override fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {
-        val isSelectionActive = florisboard.textInputManager.isTextSelected
+    override fun onUpdateSelection() {
+        val isSelectionActive = florisboard.activeEditorInstance.selection.isSelectionMode
         smartbarView?.findViewById<View>(R.id.cc_cut)?.isEnabled = isSelectionActive
         smartbarView?.findViewById<View>(R.id.cc_copy)?.isEnabled = isSelectionActive
         smartbarView?.findViewById<View>(R.id.cc_paste)?.isEnabled =
@@ -178,10 +178,10 @@ class SmartbarManager private constructor() : FlorisBoard.EventListener {
         //
     }
 
-    fun generateCandidatesFromComposing(composingText: String?) {
+    fun generateCandidatesFromComposing(composingText: String) {
         val smartbarView = smartbarView ?: return
 
-        if (composingText == null) {
+        if (composingText == "") {
             smartbarView.candidateViewList[0].text = "candidate"
             smartbarView.candidateViewList[1].text = "suggestions"
             smartbarView.candidateViewList[2].text = "nyi"

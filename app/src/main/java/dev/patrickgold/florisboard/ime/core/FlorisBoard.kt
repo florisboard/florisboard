@@ -30,7 +30,6 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
-import android.view.inputmethod.CursorAnchorInfo
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.widget.ImageButton
@@ -70,6 +69,8 @@ class FlorisBoard : InputMethodService() {
     var clipboardManager: ClipboardManager? = null
     private var vibrator: Vibrator? = null
     private val osHandler = Handler()
+
+    var activeEditorInstance: EditorInstance = EditorInstance.default()
 
     lateinit var subtypeManager: SubtypeManager
     lateinit var activeSubtype: Subtype
@@ -203,20 +204,40 @@ class FlorisBoard : InputMethodService() {
         super.onDestroy()
     }
 
+    override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
+        if (BuildConfig.DEBUG) Log.i(TAG, "onStartInput($attribute, $restarting)")
+
+        super.onStartInput(attribute, restarting)
+        currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)
+    }
+
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         if (BuildConfig.DEBUG) Log.i(TAG, "onStartInputView($info, $restarting)")
-        currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
+        Log.i(TAG, "onStartInputView: " + info?.debugSummarize())
 
         super.onStartInputView(info, restarting)
-        eventListeners.toList().forEach { it.onStartInputView(info, restarting) }
+        activeEditorInstance = EditorInstance.from(info, currentInputConnection)
+        eventListeners.toList().forEach {
+            it.onStartInputView(activeEditorInstance, restarting)
+        }
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
         if (BuildConfig.DEBUG) Log.i(TAG, "onFinishInputView($finishingInput)")
-        currentInputConnection?.requestCursorUpdates(0)
+
+        if (finishingInput) {
+            activeEditorInstance = EditorInstance.default()
+        }
 
         super.onFinishInputView(finishingInput)
         eventListeners.toList().forEach { it.onFinishInputView(finishingInput) }
+    }
+
+    override fun onFinishInput() {
+        if (BuildConfig.DEBUG) Log.i(TAG, "onFinishInput()")
+
+        super.onFinishInput()
+        currentInputConnection?.requestCursorUpdates(0)
     }
 
     override fun onWindowShown() {
@@ -249,41 +270,23 @@ class FlorisBoard : InputMethodService() {
         super.onConfigurationChanged(newConfig)
     }
 
-    override fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onUpdateCursorAnchorInfo($cursorAnchorInfo)")
-
-        super.onUpdateCursorAnchorInfo(cursorAnchorInfo)
-        eventListeners.toList().forEach { it.onUpdateCursorAnchorInfo(cursorAnchorInfo) }
-    }
-
     override fun onUpdateSelection(
-        oldSelStart: Int,
-        oldSelEnd: Int,
-        newSelStart: Int,
-        newSelEnd: Int,
-        candidatesStart: Int,
-        candidatesEnd: Int
+        oldSelStart: Int, oldSelEnd: Int,
+        newSelStart: Int, newSelEnd: Int,
+        candidatesStart: Int, candidatesEnd: Int
     ) {
         if (BuildConfig.DEBUG) Log.i(TAG, "onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd)")
 
         super.onUpdateSelection(
-            oldSelStart,
-            oldSelEnd,
-            newSelStart,
-            newSelEnd,
-            candidatesStart,
-            candidatesEnd
+            oldSelStart, oldSelEnd,
+            newSelStart, newSelEnd,
+            candidatesStart, candidatesEnd
         )
-        eventListeners.toList().forEach {
-            it.onUpdateSelection(
-                oldSelStart,
-                oldSelEnd,
-                newSelStart,
-                newSelEnd,
-                candidatesStart,
-                candidatesEnd
-            )
-        }
+        activeEditorInstance.onUpdateSelection(
+            oldSelStart, oldSelEnd,
+            newSelStart, newSelEnd
+        )
+        eventListeners.toList().forEach { it.onUpdateSelection() }
     }
 
     /**
@@ -558,21 +561,13 @@ class FlorisBoard : InputMethodService() {
         fun onRegisterInputView(inputView: InputView) {}
         fun onDestroy() {}
 
-        fun onStartInputView(info: EditorInfo?, restarting: Boolean) {}
+        fun onStartInputView(instance: EditorInstance, restarting: Boolean) {}
         fun onFinishInputView(finishingInput: Boolean) {}
 
         fun onWindowShown() {}
         fun onWindowHidden() {}
 
-        fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {}
-        fun onUpdateSelection(
-            oldSelStart: Int,
-            oldSelEnd: Int,
-            newSelStart: Int,
-            newSelEnd: Int,
-            candidatesStart: Int,
-            candidatesEnd: Int
-        ) {}
+        fun onUpdateSelection() {}
 
         fun onApplyThemeAttributes() {}
         fun onSubtypeChanged(newSubtype: Subtype) {}

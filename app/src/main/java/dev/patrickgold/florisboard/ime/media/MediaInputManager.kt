@@ -24,6 +24,7 @@ import android.widget.*
 import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.core.EditorInstance
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputView
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
@@ -50,6 +51,8 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
     FlorisBoard.EventListener {
 
     private val florisboard = FlorisBoard.getInstance()
+    private val activeEditorInstance: EditorInstance
+        get() = florisboard.activeEditorInstance
 
     private var activeTab: Tab? = null
     private var mediaViewFlipper: ViewFlipper? = null
@@ -199,18 +202,14 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
      * Sends a given [emojiKeyData] to the current input editor.
      */
     fun sendEmojiKeyPress(emojiKeyData: EmojiKeyData) {
-        val ic = florisboard.currentInputConnection
-        ic?.finishComposingText()
-        ic?.commitText(emojiKeyData.getCodePointsAsString(), 1)
+        activeEditorInstance.commitText(emojiKeyData.getCodePointsAsString())
     }
 
     /**
      * Sends a given [emoticonKeyData] to the current input editor.
      */
     fun sendEmoticonKeyPress(emoticonKeyData: EmoticonKeyData) {
-        val ic = florisboard.currentInputConnection
-        ic?.finishComposingText()
-        ic?.commitText(emoticonKeyData.icon, 1)
+        activeEditorInstance.commitText(emoticonKeyData.icon)
     }
 
     /**

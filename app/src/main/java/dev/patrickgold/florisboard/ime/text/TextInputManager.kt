@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.ime.text
 import android.content.ClipData
 import android.content.Context
 import android.os.Handler
-import android.text.InputType
 import android.util.Log
 import android.view.KeyEvent
 import android.view.inputmethod.*
@@ -27,9 +26,7 @@ import android.widget.LinearLayout
 import android.widget.ViewFlipper
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.core.InputView
-import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.text.editing.EditingKeyboardView
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -40,7 +37,6 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarManager
-import dev.patrickgold.florisboard.util.debugSummarize
 import kotlinx.coroutines.*
 import java.util.*
 
@@ -60,6 +56,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     FlorisBoard.EventListener {
 
     private val florisboard = FlorisBoard.getInstance()
+    private val activeEditorInstance: EditorInstance
+        get() = florisboard.activeEditorInstance
 
     private var activeKeyboardMode: KeyboardMode? = null
     private val keyboardViews = EnumMap<KeyboardMode, KeyboardView>(KeyboardMode::class.java)
@@ -70,33 +68,20 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
 
     var keyVariation: KeyVariation = KeyVariation.NORMAL
     private val layoutManager = LayoutManager(florisboard)
-    lateinit var smartbarManager: SmartbarManager
+    private lateinit var smartbarManager: SmartbarManager
 
     // Caps/Space related properties
     var caps: Boolean = false
         private set
     var capsLock: Boolean = false
         private set
-    private var cursorCapsMode: CapsMode = CapsMode.NONE
-    private var editorCapsMode: CapsMode = CapsMode.NONE
     private var hasCapsRecentlyChanged: Boolean = false
     private var hasSpaceRecentlyPressed: Boolean = false
 
     // Composing text related properties
-    private var composingText: String? = null
-    private var composingTextStart: Int? = null
-    private var cursorPos: Int = 0
-    private var isComposingEnabled: Boolean = false
     var isManualSelectionMode: Boolean = false
     private var isManualSelectionModeLeft: Boolean = false
     private var isManualSelectionModeRight: Boolean = false
-    val isTextSelected: Boolean
-        get() = selectionEnd - selectionStart != 0
-    private var lastCursorAnchorInfo: CursorAnchorInfo? = null
-    private var selectionStart: Int = 0
-    private val selectionStartMin: Int = 0
-    private var selectionEnd: Int = 0
-    private var selectionEndMax: Int = 0
 
     companion object {
         private val TAG: String? = TextInputManager::class.simpleName
@@ -181,70 +166,60 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     }
 
     /**
-     * Evaluates the [activeKeyboardMode], [keyVariation] and [isComposingEnabled] property values
-     * when starting to interact with a input editor. Also resets the composing texts and sets the
-     * initial caps mode accordingly.
+     * Evaluates the [activeKeyboardMode], [keyVariation] and [EditorInstance.isComposingEnabled]
+     * property values when starting to interact with a input editor. Also resets the composing
+     * texts and sets the initial caps mode accordingly.
      */
-    override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
-        val keyboardMode = when (info) {
-            null -> {
-                Log.e(TAG, "onStartInputView: Received null as EditorInfo -> "
-                        + "Falling back to KeyboardMode.CHARACTERS")
-                editorCapsMode = CapsMode.NONE
+    override fun onStartInputView(instance: EditorInstance, restarting: Boolean) {
+        val keyboardMode = when (instance.inputAttributes.type) {
+            InputAttributes.Type.NUMBER -> {
+                keyVariation = KeyVariation.NORMAL
+                KeyboardMode.NUMERIC
+            }
+            InputAttributes.Type.PHONE -> {
+                keyVariation = KeyVariation.NORMAL
+                KeyboardMode.PHONE
+            }
+            InputAttributes.Type.TEXT -> {
+                keyVariation = when (instance.inputAttributes.variation) {
+                    InputAttributes.Variation.EMAIL_ADDRESS,
+                    InputAttributes.Variation.WEB_EMAIL_ADDRESS -> {
+                        KeyVariation.EMAIL_ADDRESS
+                    }
+                    InputAttributes.Variation.PASSWORD,
+                    InputAttributes.Variation.VISIBLE_PASSWORD,
+                    InputAttributes.Variation.WEB_PASSWORD -> {
+                        KeyVariation.PASSWORD
+                    }
+                    InputAttributes.Variation.URI -> {
+                        KeyVariation.URI
+                    }
+                    else -> {
+                        KeyVariation.NORMAL
+                    }
+                }
                 KeyboardMode.CHARACTERS
             }
             else -> {
-                Log.i(TAG, "onStartInputView: " + info.debugSummarize())
-                editorCapsMode = CapsMode.fromFlags(info.inputType)
-                when (info.inputType and InputType.TYPE_MASK_CLASS) {
-                    InputType.TYPE_CLASS_NUMBER -> {
-                        keyVariation = KeyVariation.NORMAL
-                        KeyboardMode.NUMERIC
-                    }
-                    InputType.TYPE_CLASS_PHONE -> {
-                        keyVariation = KeyVariation.NORMAL
-                        KeyboardMode.PHONE
-                    }
-                    InputType.TYPE_CLASS_TEXT -> {
-                        keyVariation = when (info.inputType and InputType.TYPE_MASK_VARIATION) {
-                            InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
-                            InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS -> {
-                                KeyVariation.EMAIL_ADDRESS
-                            }
-                            InputType.TYPE_TEXT_VARIATION_PASSWORD,
-                            InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD,
-                            InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD -> {
-                                KeyVariation.PASSWORD
-                            }
-                            InputType.TYPE_TEXT_VARIATION_URI -> {
-                                KeyVariation.URI
-                            }
-                            else -> {
-                                KeyVariation.NORMAL
-                            }
-                        }
-                        KeyboardMode.CHARACTERS
-                    }
-                    else -> {
-                        keyVariation = KeyVariation.NORMAL
-                        KeyboardMode.CHARACTERS
-                    }
-                }
+                keyVariation = KeyVariation.NORMAL
+                KeyboardMode.CHARACTERS
             }
         }
-        isComposingEnabled = when (keyboardMode) {
+        instance.isComposingEnabled = when (keyboardMode) {
             KeyboardMode.NUMERIC,
             KeyboardMode.PHONE,
             KeyboardMode.PHONE2 -> false
-            else -> keyVariation != KeyVariation.PASSWORD && florisboard.prefs.suggestion.enabled
+            else -> keyVariation != KeyVariation.PASSWORD &&
+                    florisboard.prefs.suggestion.enabled &&
+                    //!instance.inputAttributes.flagTextAutoComplete &&
+                    !instance.inputAttributes.flagTextNoSuggestions
         }
         if (!florisboard.prefs.correction.rememberCapsLockState) {
             capsLock = false
         }
         updateCapsState()
-        resetComposingText()
         setActiveKeyboardMode(keyboardMode)
-        smartbarManager.onStartInputView(keyboardMode, isComposingEnabled)
+        smartbarManager.onStartInputView(keyboardMode, instance.isComposingEnabled)
     }
 
     /**
@@ -294,134 +269,31 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         }
     }
 
-    override fun onUpdateSelection(
-        oldSelStart: Int, oldSelEnd: Int,
-        newSelStart: Int, newSelEnd: Int,
-        candidatesStart: Int, candidatesEnd: Int) {
-
-        updateCapsState()
-    }
-
     /**
      * Main logic point for processing cursor updates as well as parsing the current composing word
      * and passing this info on to the [SmartbarManager] to turn it into candidate suggestions.
      */
-    override fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {
-        cursorAnchorInfo ?: return
-        lastCursorAnchorInfo = cursorAnchorInfo
-
-        val ic = florisboard.currentInputConnection
-
-        val isNewSelectionInBoundsOfOld =
-            cursorAnchorInfo.selectionStart >= (selectionStart - 1) &&
-            cursorAnchorInfo.selectionStart <= (selectionStart + 1) &&
-            cursorAnchorInfo.selectionEnd >= (selectionEnd - 1) &&
-            cursorAnchorInfo.selectionEnd <= (selectionEnd + 1)
-        selectionStart = cursorAnchorInfo.selectionStart
-        selectionEnd = cursorAnchorInfo.selectionEnd
-        val inputText =
-            (ic?.getExtractedText(ExtractedTextRequest(), 0)?.text ?: "").toString()
-        selectionEndMax = inputText.length
-        // TODO: separate composing text from delete swipe word detection
-        //if (isComposingEnabled) {
-            if (!isTextSelected) {
-                val newCursorPos = cursorAnchorInfo.selectionStart
-                val prevComposingText = (cursorAnchorInfo.composingText ?: "").toString()
-                setComposingTextBasedOnInput(inputText, newCursorPos)
-                if ((newCursorPos == cursorPos) && (composingText == prevComposingText)) {
-                    // Ignore this, as nothing has changed
-                } else {
-                    cursorPos = newCursorPos
-                    if (composingText != null && composingTextStart != null) {
-                        ic?.setComposingRegion(
-                            composingTextStart!!,
-                            composingTextStart!! + composingText!!.length
-                        )
-                    } else {
-                        resetComposingText()
-                    }
-                }
-            } else {
-                resetComposingText()
-            }
-            smartbarManager.generateCandidatesFromComposing(composingText)
-        //}
-        if (!isNewSelectionInBoundsOfOld) {
+    override fun onUpdateSelection() {
+        if (activeEditorInstance.selection.isCursorMode) {
+            smartbarManager.generateCandidatesFromComposing(activeEditorInstance.currentWord.text)
+        }
+        if (!activeEditorInstance.isNewSelectionInBoundsOfOld) {
             isManualSelectionMode = false
             isManualSelectionModeLeft = false
             isManualSelectionModeRight = false
         }
-        smartbarManager.onUpdateCursorAnchorInfo(cursorAnchorInfo)
+        updateCapsState()
+        smartbarManager.onUpdateSelection()
     }
 
     /**
-     * Resets the [composingText] and [composingTextStart] properties. Does NOT sync with
-     * [SmartbarManager]!
-     *
-     * @param notifyInputConnection If the current input connection should be notified.
-     */
-    private fun resetComposingText(notifyInputConnection: Boolean = true) {
-        if (notifyInputConnection) {
-            val ic = florisboard.currentInputConnection
-            ic?.finishComposingText()
-        }
-        composingText = null
-        composingTextStart = null
-    }
-
-    /**
-     * Tries to parse the [composingText] from a given [inputCursorPos] within [inputText].
-     * Sets both [composingText] and [composingTextStart] to null if it fails, else to its
-     * parsed values.
-     *
-     * @param inputText The input text to search in.
-     * @param inputCursorPos The position where to search in [inputText].
-     */
-    private fun setComposingTextBasedOnInput(inputText: String, inputCursorPos: Int) {
-        val words = inputText.split("[^\\p{L}]".toRegex())
-        var pos = 0
-        resetComposingText(false)
-        for (word in words) {
-            if (inputCursorPos >= pos && inputCursorPos <= pos + word.length && word.isNotEmpty()) {
-                composingText = word
-                composingTextStart = pos
-                break
-            } else {
-                pos += word.length + 1
-            }
-        }
-    }
-
-    /**
-     * Should primarily pe used by [SmartbarManager.candidateViewOnClickListener] to commit
-     * a candidate if a user has pressed on it.
-     */
-    fun commitCandidate(candidateText: String) {
-        val ic = florisboard.currentInputConnection
-        ic?.setComposingText(candidateText, 1)
-        ic?.finishComposingText()
-    }
-
-    /**
-     * Fetches the current cursor caps mode from the current input connection.
-     *
-     * @return The [CapsMode] according to the returned flags by the current input connection.
-     */
-    private fun fetchCurrentCursorCapsMode(): CapsMode {
-        val ic = florisboard.currentInputConnection
-        val info = florisboard.currentInputEditorInfo
-        val capsFlags = ic?.getCursorCapsMode(info.inputType) ?: 0
-        return CapsMode.fromFlags(capsFlags)
-    }
-
-    /**
-     * Updates the current caps state according to the [cursorCapsMode], while respecting
-     * [capsLock] property and the correction.autoCapitalization preference.
+     * Updates the current caps state according to the [EditorInstance.cursorCapsMode], while
+     * respecting [capsLock] property and the correction.autoCapitalization preference.
      */
     private fun updateCapsState() {
-        cursorCapsMode = fetchCurrentCursorCapsMode()
         if (!capsLock) {
-            caps = florisboard.prefs.correction.autoCapitalization && cursorCapsMode != CapsMode.NONE
+            caps = florisboard.prefs.correction.autoCapitalization &&
+                    activeEditorInstance.cursorCapsMode != InputAttributes.CapsMode.NONE
             keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
         }
     }
@@ -476,33 +348,20 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * Handles a [KeyCode.DELETE] event.
      */
     private fun handleDelete() {
-        val ic = florisboard.currentInputConnection
-        ic?.beginBatchEdit()
-        resetComposingText()
         isManualSelectionMode = false
         isManualSelectionModeLeft = false
         isManualSelectionModeRight = false
-        sendSystemKeyEvent(ic, KeyEvent.KEYCODE_DEL)
-        ic?.endBatchEdit()
+        activeEditorInstance.deleteBackwards()
     }
 
     /**
      * Handles a [KeyCode.DELETE_WORD] event.
      */
     private fun handleDeleteWord() {
-        val ic = florisboard.currentInputConnection
-        ic?.beginBatchEdit()
         isManualSelectionMode = false
         isManualSelectionModeLeft = false
         isManualSelectionModeRight = false
-        ic?.setComposingText("", 1)
-        ic?.finishComposingText()
-        if (ic?.getTextBeforeCursor(1, 0)?.length ?: 0 > 0) {
-            ic?.deleteSurroundingText(1, 0)
-        }
-        composingText = null
-        composingTextStart = null
-        ic?.endBatchEdit()
+        activeEditorInstance.deleteWordsBeforeCursor(1)
     }
 
     /**
@@ -510,20 +369,17 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      */
     private fun handleEnter() {
         val ic = florisboard.currentInputConnection
-        resetComposingText()
-        val action = florisboard.currentInputEditorInfo?.imeOptions ?: 0
-        val actionMasked = action and EditorInfo.IME_MASK_ACTION
-        if (action and EditorInfo.IME_FLAG_NO_ENTER_ACTION > 0) {
+        if (activeEditorInstance.imeOptions.flagNoEnterAction) {
             sendSystemKeyEvent(ic, KeyEvent.KEYCODE_ENTER)
         } else {
-            when (actionMasked) {
-                EditorInfo.IME_ACTION_DONE,
-                EditorInfo.IME_ACTION_GO,
-                EditorInfo.IME_ACTION_NEXT,
-                EditorInfo.IME_ACTION_PREVIOUS,
-                EditorInfo.IME_ACTION_SEARCH,
-                EditorInfo.IME_ACTION_SEND -> {
-                    ic?.performEditorAction(actionMasked)
+            when (activeEditorInstance.imeOptions.action) {
+                ImeOptions.Action.DONE,
+                ImeOptions.Action.GO,
+                ImeOptions.Action.NEXT,
+                ImeOptions.Action.PREVIOUS,
+                ImeOptions.Action.SEARCH,
+                ImeOptions.Action.SEND -> {
+                    activeEditorInstance.performEnterAction(activeEditorInstance.imeOptions.action)
                 }
                 else -> sendSystemKeyEvent(ic, KeyEvent.KEYCODE_ENTER)
             }
@@ -555,14 +411,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * enabled by the user.
      */
     private fun handleSpace() {
-        val ic = florisboard.currentInputConnection
         if (florisboard.prefs.correction.doubleSpacePeriod) {
             if (hasSpaceRecentlyPressed) {
                 osHandler.removeCallbacksAndMessages(null)
-                val text = ic?.getTextBeforeCursor(2, 0) ?: ""
+                val text = activeEditorInstance.getTextBeforeCursor(2)
                 if (text.length == 2 && !text.matches("""[.!?‽\s][\s]""".toRegex())) {
-                    ic?.deleteSurroundingText(1, 0)
-                    ic?.commitText(".", 1)
+                    activeEditorInstance.deleteBackwards()
+                    activeEditorInstance.commitText(".")
                 }
                 hasSpaceRecentlyPressed = false
             } else {
@@ -572,113 +427,114 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                 }, 300)
             }
         }
-        ic?.commitText(KeyCode.SPACE.toChar().toString(), 1)
+        activeEditorInstance.commitText(KeyCode.SPACE.toChar().toString())
     }
 
     /**
      * Handles [KeyCode] arrow and move events, behaves differently depending on text selection.
      */
-    private fun handleArrow(code: Int) {
-        val ic = florisboard.currentInputConnection
-        resetComposingText()
-        if (isTextSelected && isManualSelectionMode) {
+    private fun handleArrow(code: Int) = activeEditorInstance.apply {
+        val selectionStartMin = 0
+        val selectionEndMax = text.length
+        if (selection.isSelectionMode && isManualSelectionMode) {
             // Text is selected and it is manual selection -> Expand selection depending on started
             //  direction.
             when (code) {
                 KeyCode.ARROW_DOWN -> {}
                 KeyCode.ARROW_LEFT -> {
                     if (isManualSelectionModeLeft) {
-                        ic?.setSelection(
-                            (selectionStart - 1).coerceAtLeast(selectionStartMin),
-                            selectionEnd
+                        setSelection(
+                            (selection.start - 1).coerceAtLeast(selectionStartMin),
+                            selection.end
                         )
                     } else {
-                        ic?.setSelection(selectionStart, selectionEnd - 1)
+                        setSelection(selection.start, selection.end - 1)
                     }
                 }
                 KeyCode.ARROW_RIGHT -> {
                     if (isManualSelectionModeRight) {
-                        ic?.setSelection(
-                            selectionStart,
-                            (selectionEnd + 1).coerceAtMost(selectionEndMax)
+                        setSelection(
+                            selection.start,
+                            (selection.end + 1).coerceAtMost(selectionEndMax)
                         )
                     } else {
-                        ic?.setSelection(selectionStart + 1, selectionEnd)
+                        setSelection(selection.start + 1, selection.end)
                     }
                 }
                 KeyCode.ARROW_UP -> {}
                 KeyCode.MOVE_HOME -> {
                     if (isManualSelectionModeLeft) {
-                        ic?.setSelection(selectionStartMin, selectionEnd)
+                        setSelection(selectionStartMin, selection.end)
                     } else {
-                        ic?.setSelection(selectionStartMin, selectionStart)
+                        setSelection(selectionStartMin, selection.start)
                     }
                 }
                 KeyCode.MOVE_END -> {
                     if (isManualSelectionModeRight) {
-                        ic?.setSelection(selectionStart, selectionEndMax)
+                        setSelection(selection.start, selectionEndMax)
                     } else {
-                        ic?.setSelection(selectionEnd, selectionEndMax)
+                        setSelection(selection.end, selectionEndMax)
                     }
                 }
             }
-        } else if (isTextSelected && !isManualSelectionMode) {
+        } else if (selection.isSelectionMode && !isManualSelectionMode) {
             // Text is selected but no manual selection mode -> arrows behave as if selection was
             //  started in manual left mode
             when (code) {
                 KeyCode.ARROW_DOWN -> {}
                 KeyCode.ARROW_LEFT -> {
-                    ic?.setSelection(selectionStart, selectionEnd - 1)
+                    setSelection(selection.start, selection.end - 1)
                 }
                 KeyCode.ARROW_RIGHT -> {
-                    ic?.setSelection(
-                        selectionStart,
-                        (selectionEnd + 1).coerceAtMost(selectionEndMax)
+                    setSelection(
+                        selection.start,
+                        (selection.end + 1).coerceAtMost(selectionEndMax)
                     )
                 }
                 KeyCode.ARROW_UP -> {}
                 KeyCode.MOVE_HOME -> {
-                    ic?.setSelection(selectionStartMin, selectionStart)
+                    setSelection(selectionStartMin, selection.start)
                 }
                 KeyCode.MOVE_END -> {
-                    ic?.setSelection(selectionStart, selectionEndMax)
+                    setSelection(selection.start, selectionEndMax)
                 }
             }
-        } else if (!isTextSelected && isManualSelectionMode) {
+        } else if (!selection.isSelectionMode && isManualSelectionMode) {
             // No text is selected but manual selection mode is active, user wants to start a new
             //  selection. Must set manual selection direction.
             when (code) {
                 KeyCode.ARROW_DOWN -> {}
                 KeyCode.ARROW_LEFT -> {
-                    ic?.setSelection(
-                        (selectionStart - 1).coerceAtLeast(selectionStartMin),
-                        selectionStart
+                    setSelection(
+                        (selection.start - 1).coerceAtLeast(selectionStartMin),
+                        selection.start
                     )
                     isManualSelectionModeLeft = true
                     isManualSelectionModeRight = false
                 }
                 KeyCode.ARROW_RIGHT -> {
-                    ic?.setSelection(
-                        selectionEnd,
-                        (selectionEnd + 1).coerceAtMost(selectionEndMax)
+                    setSelection(
+                        selection.end,
+                        (selection.end + 1).coerceAtMost(selectionEndMax)
                     )
                     isManualSelectionModeLeft = false
                     isManualSelectionModeRight = true
                 }
                 KeyCode.ARROW_UP -> {}
                 KeyCode.MOVE_HOME -> {
-                    ic?.setSelection(selectionStartMin, selectionStart)
+                    setSelection(selectionStartMin, selection.start)
                     isManualSelectionModeLeft = true
                     isManualSelectionModeRight = false
                 }
                 KeyCode.MOVE_END -> {
-                    ic?.setSelection(selectionEnd, selectionEndMax)
+                    setSelection(selection.end, selectionEndMax)
                     isManualSelectionModeLeft = false
                     isManualSelectionModeRight = true
                 }
             }
         } else {
             // No selection and no manual selection mode -> move cursor around
+            val ic = florisboard.currentInputConnection
             when (code) {
                 KeyCode.ARROW_DOWN -> sendSystemKeyEvent(ic, KeyEvent.KEYCODE_DPAD_DOWN)
                 KeyCode.ARROW_LEFT -> sendSystemKeyEvent(ic, KeyEvent.KEYCODE_DPAD_LEFT)
@@ -695,14 +551,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * TODO: handle other data than text too, e.g. Uri, Intent, ...
      */
     private fun handleClipboardCut() {
-        val ic = florisboard.currentInputConnection
-        val selectedText = ic?.getSelectedText(0)
-        if (selectedText != null) {
-            florisboard.clipboardManager
-                ?.setPrimaryClip(ClipData.newPlainText(selectedText, selectedText))
-        }
-        resetComposingText()
-        ic?.commitText("", 1)
+        val selectedText = activeEditorInstance.selection.text
+        florisboard.clipboardManager
+            ?.setPrimaryClip(ClipData.newPlainText(selectedText, selectedText))
+        activeEditorInstance.commitText("")
     }
 
     /**
@@ -710,14 +562,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * TODO: handle other data than text too, e.g. Uri, Intent, ...
      */
     private fun handleClipboardCopy() {
-        val ic = florisboard.currentInputConnection
-        val selectedText = ic?.getSelectedText(0)
-        if (selectedText != null) {
-            florisboard.clipboardManager
-                ?.setPrimaryClip(ClipData.newPlainText(selectedText, selectedText))
-        }
-        resetComposingText()
-        ic?.setSelection(selectionEnd, selectionEnd)
+        val selectedText = activeEditorInstance.selection.text
+        florisboard.clipboardManager
+            ?.setPrimaryClip(ClipData.newPlainText(selectedText, selectedText))
+        activeEditorInstance.apply { setSelection(selection.end, selection.end) }
     }
 
     /**
@@ -725,42 +573,36 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * TODO: handle other data than text too, e.g. Uri, Intent, ...
      */
     private fun handleClipboardPaste() {
-        val ic = florisboard.currentInputConnection
         val item = florisboard.clipboardManager?.primaryClip?.getItemAt(0)
         val pasteText = item?.text
         if (pasteText != null) {
-            resetComposingText()
-            ic?.commitText(pasteText, 1)
+            activeEditorInstance.commitText(pasteText.toString())
         }
     }
 
     /**
      * Handles a [KeyCode.CLIPBOARD_SELECT] event.
      */
-    private fun handleClipboardSelect() {
-        val ic = florisboard.currentInputConnection
-        resetComposingText()
-        if (isTextSelected) {
+    private fun handleClipboardSelect() = activeEditorInstance.apply {
+        if (selection.isSelectionMode) {
             if (isManualSelectionMode && isManualSelectionModeLeft) {
-                ic?.setSelection(selectionStart, selectionStart)
+                setSelection(selection.start, selection.start)
             } else {
-                ic?.setSelection(selectionEnd, selectionEnd)
+                setSelection(selection.end, selection.end)
             }
             isManualSelectionMode = false
         } else {
             isManualSelectionMode = !isManualSelectionMode
-            // Must recall to update UI properly
-            florisboard.onUpdateCursorAnchorInfo(lastCursorAnchorInfo)
+            // Must call to update UI properly
+            editingKeyboardView?.onUpdateSelection()
         }
-}
+    }
 
     /**
      * Handles a [KeyCode.CLIPBOARD_SELECT_ALL] event.
      */
     private fun handleClipboardSelectAll() {
-        val ic = florisboard.currentInputConnection
-        resetComposingText()
-        ic?.setSelection(selectionStartMin, selectionEndMax)
+        activeEditorInstance.setSelection(0, activeEditorInstance.text.length)
     }
 
     /**
@@ -771,8 +613,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * @param keyData The [KeyData] object which should be sent.
      */
     fun sendKeyPress(keyData: KeyData) {
-        val ic = florisboard.currentInputConnection
-
         when (keyData.code) {
             KeyCode.ARROW_DOWN,
             KeyCode.ARROW_LEFT,
@@ -806,8 +646,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             KeyCode.VIEW_SYMBOLS -> setActiveKeyboardMode(KeyboardMode.SYMBOLS)
             KeyCode.VIEW_SYMBOLS2 -> setActiveKeyboardMode(KeyboardMode.SYMBOLS2)
             else -> {
-                ic?.beginBatchEdit()
-                resetComposingText()
                 when (activeKeyboardMode) {
                     KeyboardMode.NUMERIC,
                     KeyboardMode.NUMERIC_ADVANCED,
@@ -816,13 +654,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                         KeyType.CHARACTER,
                         KeyType.NUMERIC -> {
                             val text = keyData.code.toChar().toString()
-                            ic?.commitText(text, 1)
+                            activeEditorInstance.commitText(text)
                         }
                         else -> when (keyData.code) {
                             KeyCode.PHONE_PAUSE,
                             KeyCode.PHONE_WAIT -> {
                                 val text = keyData.code.toChar().toString()
-                                ic?.commitText(text, 1)
+                                activeEditorInstance.commitText(text)
                             }
                         }
                     }
@@ -834,7 +672,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                                     true -> keyData.label.toUpperCase(Locale.getDefault())
                                     false -> keyData.label.toLowerCase(Locale.getDefault())
                                 }
-                                ic?.commitText(tld, 1)
+                                activeEditorInstance.commitText(tld)
                             }
                             else -> {
                                 var text = keyData.code.toChar().toString()
@@ -842,37 +680,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                                     true -> text.toUpperCase(Locale.getDefault())
                                     false -> text.toLowerCase(Locale.getDefault())
                                 }
-                                ic?.commitText(text, 1)
+                                activeEditorInstance.commitText(text)
                             }
                         }
                         else -> {
                             Log.e(TAG,"sendKeyPress(keyData): Received unknown key: $keyData")
                         }
                     }
-                }
-                ic?.endBatchEdit()
-            }
-        }
-    }
-
-    enum class CapsMode {
-        ALL,
-        NONE,
-        SENTENCES,
-        WORDS;
-        companion object {
-            /**
-             * Parses the [CapsMode] out of the given [flags].
-             *
-             * @param flags The input flags.
-             * @return A [CapsMode] value.
-             */
-            fun fromFlags(flags: Int): CapsMode {
-                return when {
-                    flags and InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS > 0 -> ALL
-                    flags and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES > 0 -> SENTENCES
-                    flags and InputType.TYPE_TEXT_FLAG_CAP_WORDS > 0 -> WORDS
-                    else -> NONE
                 }
             }
         }
