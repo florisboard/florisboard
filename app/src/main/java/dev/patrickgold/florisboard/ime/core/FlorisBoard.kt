@@ -216,7 +216,7 @@ class FlorisBoard : InputMethodService() {
         Log.i(TAG, "onStartInputView: " + info?.debugSummarize())
 
         super.onStartInputView(info, restarting)
-        activeEditorInstance = EditorInstance.from(info, currentInputConnection)
+        activeEditorInstance = EditorInstance.from(info, this)
         eventListeners.toList().forEach {
             it.onStartInputView(activeEditorInstance, restarting)
         }

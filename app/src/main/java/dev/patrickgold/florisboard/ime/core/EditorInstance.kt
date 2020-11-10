@@ -16,23 +16,51 @@
 
 package dev.patrickgold.florisboard.ime.core
 
+import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.text.InputType
+import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedTextRequest
-import android.view.inputmethod.InputConnection
 import androidx.annotation.RequiresApi
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import java.lang.StringBuilder
 
+// Constants for detectLastUnicodeCharacterLengthBeforeCursor method
+private const val LIGHT_SKIN_TONE           = 0x1F3FB
+private const val MEDIUM_LIGHT_SKIN_TONE    = 0x1F3FC
+private const val MEDIUM_SKIN_TONE          = 0x1F3FD
+private const val MEDIUM_DARK_SKIN_TONE     = 0x1F3FE
+private const val DARK_SKIN_TONE            = 0x1F3FF
+private const val RED_HAIR                  = 0x1F9B0
+private const val CURLY_HAIR                = 0x1F9B1
+private const val WHITE_HAIR                = 0x1F9B2
+private const val BALD                      = 0x1F9B3
+private const val ZERO_WIDTH_JOINER         =  0x200D
+private const val VARIATION_SELECTOR        =  0xFE0F
+
+// Array which holds all variations for easier checking (convenience only)
+private val emojiVariationArray: Array<Int> = arrayOf(
+    LIGHT_SKIN_TONE,
+    MEDIUM_LIGHT_SKIN_TONE,
+    MEDIUM_SKIN_TONE,
+    MEDIUM_DARK_SKIN_TONE,
+    DARK_SKIN_TONE,
+    RED_HAIR,
+    CURLY_HAIR,
+    WHITE_HAIR,
+    BALD
+)
+
 /**
- * Class which holds information relevant to an editor instance like the input [text], [selection],
+ * Class which holds information relevant to an editor instance like the input [cachedText], [selection],
  * [inputAttributes], [imeOptions], etc. This class is thought to be an improved [EditorInfo]
  * object which also holds the state of the currently focused input editor.
  */
-class EditorInstance private constructor(private val inputConnection: InputConnection?) {
+class EditorInstance private constructor(private val ims: InputMethodService?) {
     val cursorCapsMode: InputAttributes.CapsMode
         get() {
-            val ic = inputConnection ?: return InputAttributes.CapsMode.NONE
+            val ic = ims?.currentInputConnection ?: return InputAttributes.CapsMode.NONE
             return InputAttributes.CapsMode.fromFlags(
                 ic.getCursorCapsMode(inputAttributes.capsMode.toFlags())
             )
@@ -59,18 +87,18 @@ class EditorInstance private constructor(private val inputConnection: InputConne
         private set
     var selection: Selection = Selection(this)
         private set
-    val text: String
-        get() = textInternal.toString()
-    private var textInternal: StringBuilder = StringBuilder(getExtractedTextFromInputConnection())
+    val cachedText: String
+        get() = cachedTextInternal.toString()
+    private var cachedTextInternal: StringBuilder = StringBuilder(getExtractedTextFromInputConnection())
 
     companion object {
         fun default(): EditorInstance {
             return EditorInstance(null)
         }
 
-        fun from(editorInfo: EditorInfo?, inputConnection: InputConnection?): EditorInstance {
+        fun from(editorInfo: EditorInfo?, ims: InputMethodService?): EditorInstance {
             return if (editorInfo == null) { default() } else {
-                EditorInstance(inputConnection).apply {
+                EditorInstance(ims).apply {
                     imeOptions = ImeOptions.fromImeOptionsInt(editorInfo.imeOptions)
                     inputAttributes = InputAttributes.fromInputTypeInt(editorInfo.inputType)
                     packageName = editorInfo.packageName
@@ -90,7 +118,7 @@ class EditorInstance private constructor(private val inputConnection: InputConne
         oldSelStart: Int, oldSelEnd: Int,
         newSelStart: Int, newSelEnd: Int
     ) {
-        textInternal.replace(0, textInternal.length, getExtractedTextFromInputConnection())
+        cachedTextInternal.replace(0, cachedTextInternal.length, getExtractedTextFromInputConnection())
         isNewSelectionInBoundsOfOld =
             newSelStart >= (oldSelStart - 1) &&
             newSelStart <= (oldSelStart + 1) &&
@@ -109,45 +137,45 @@ class EditorInstance private constructor(private val inputConnection: InputConne
     }
 
     /**
-     * Completes the given [str] in the current composing region. Does nothing if the current
+     * Completes the given [text] in the current composing region. Does nothing if the current
      * composing region is of zero length or null.
      *
-     * @param str The text to complete in this editor's composing region.
+     * @param text The text to complete in this editor's composing region.
      *
      * @returns True on success, false if an error occurred or the input connection is invalid.
      */
 
-    fun commitCompletion(str: String): Boolean {
+    fun commitCompletion(text: String): Boolean {
         return false
     }
 
     /**
-     * Commits the given [str] to this editor instance and adjusts both the cursor position and
+     * Commits the given [text] to this editor instance and adjusts both the cursor position and
      * composing region, if any.
      *
-     * This method overwrites any selected text and replaces it with given [str]. If there is no
-     * text selected (selection is in cursor mode), then this method will insert the [str] after
+     * This method overwrites any selected text and replaces it with given [text]. If there is no
+     * text selected (selection is in cursor mode), then this method will insert the [text] after
      * the cursor, then set the cursor position to the first character after the inserted text.
      *
-     * @param str The text to commit.
+     * @param text The text to commit.
      *
      * @returns True on success, false if an error occurred or the input connection is invalid.
      */
-    fun commitText(str: String): Boolean {
-        val ic = inputConnection ?: return false
+    fun commitText(text: String): Boolean {
+        val ic = ims?.currentInputConnection ?: return false
         ic.beginBatchEdit()
         markComposingRegion(null)
         if (selection.isCursorMode) {
-            textInternal.insert(selection.start, str)
+            cachedTextInternal.insert(selection.start, text)
         } else if (selection.isSelectionMode) {
-            textInternal.replace(selection.start, selection.end, str)
+            cachedTextInternal.replace(selection.start, selection.end, text)
         }
         selection.apply {
-            start += str.length
+            start += text.length
             end = start
         }
         reevaluate()
-        ic.commitText(str, 1)
+        ic.commitText(text, 1)
         if (isComposingEnabled) {
             markComposingRegion(currentWord)
         }
@@ -164,18 +192,19 @@ class EditorInstance private constructor(private val inputConnection: InputConne
      * @returns True on success, false if an error occurred or the input connection is invalid.
      */
     fun deleteBackwards(): Boolean {
-        val ic = inputConnection ?: return false
+        val ic = ims?.currentInputConnection ?: return false
         ic.beginBatchEdit()
         markComposingRegion(null)
         if (selection.isCursorMode && selection.start > 0) {
-            textInternal.replace(selection.start - 1, selection.start, "")
+            val length = detectLastUnicodeCharacterLengthBeforeCursor()
+            cachedTextInternal.replace(selection.start - length, selection.start, "")
             selection.apply {
-                start -= 1
+                start -= length
                 end = start
             }
-            ic.deleteSurroundingText(1, 0)
+            ic.deleteSurroundingText(length, 0)
         } else if (selection.isSelectionMode) {
-            textInternal.replace(selection.start, selection.end, "")
+            cachedTextInternal.replace(selection.start, selection.end, "")
             selection.apply {
                 end = start
             }
@@ -201,14 +230,14 @@ class EditorInstance private constructor(private val inputConnection: InputConne
      * @returns True on success, false if an error occurred or the input connection is invalid.
      */
     fun deleteWordsBeforeCursor(n: Int): Boolean {
-        val ic = inputConnection ?: return false
+        val ic = ims?.currentInputConnection ?: return false
         if (n < 1) {
             return false
         }
         ic.beginBatchEdit()
         markComposingRegion(null)
         if (currentWord.isValid) {
-            textInternal.replace(currentWord.start, currentWord.end, "")
+            cachedTextInternal.replace(currentWord.start, currentWord.end, "")
             selection.apply {
                 start = currentWord.start
                 end = start
@@ -236,8 +265,8 @@ class EditorInstance private constructor(private val inputConnection: InputConne
             return ""
         }
         val from = selection.end
-        val to = (selection.end + n).coerceAtMost(textInternal.length)
-        return textInternal.substring(from, to)
+        val to = (selection.end + n).coerceAtMost(cachedTextInternal.length)
+        return cachedTextInternal.substring(from, to)
     }
 
     /**
@@ -255,7 +284,7 @@ class EditorInstance private constructor(private val inputConnection: InputConne
         }
         val from = (selection.start - n).coerceAtLeast(0)
         val to = selection.start
-        return textInternal.substring(from, to)
+        return cachedTextInternal.substring(from, to)
     }
 
     /**
@@ -266,8 +295,44 @@ class EditorInstance private constructor(private val inputConnection: InputConne
      * @returns True on success, false if an error occurred or the input connection is invalid.
      */
     fun performEnterAction(action: ImeOptions.Action): Boolean {
-        val ic = inputConnection ?: return false
+        val ic = ims?.currentInputConnection ?: return false
         return ic.performEditorAction(action.toInt())
+    }
+
+    /**
+     * Sends a given [keyCode] as a [KeyEvent.ACTION_DOWN].
+     *
+     * @param ic The input connection on which this operation should be performed.
+     * @param keyCode The key code to send, use a key code defined in Android's [KeyEvent], not in
+     *  [KeyCode] or this call may send a weird character, as this key codes do not match!!
+     *
+     * @returns True on success, false if an error occurred or the input connection is invalid.
+     */
+    fun sendSystemKeyEvent(keyCode: Int): Boolean {
+        val ic = ims?.currentInputConnection ?: return false
+        return ic.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, keyCode))
+    }
+
+    /**
+     * Sends a given [keyCode] as a [KeyEvent.ACTION_DOWN] with ALT pressed.
+     *
+     * @param ic The input connection on which this operation should be performed.
+     * @param keyCode The key code to send, use a key code defined in Android's [KeyEvent], not in
+     *  [KeyCode] or this call may send a weird character, as this key codes do not match!!
+     *
+     * @returns True on success, false if an error occurred or the input connection is invalid.
+     */
+    fun sendSystemKeyEventAlt(keyCode: Int): Boolean {
+        val ic = ims?.currentInputConnection ?: return false
+        return ic.sendKeyEvent(
+            KeyEvent(
+                0,
+                1,
+                KeyEvent.ACTION_DOWN, keyCode,
+                0,
+                KeyEvent.META_ALT_LEFT_ON
+            )
+        )
     }
 
     /**
@@ -279,7 +344,7 @@ class EditorInstance private constructor(private val inputConnection: InputConne
      * @returns True on success, false if an error occurred or the input connection is invalid.
      */
     fun setSelection(from: Int, to: Int): Boolean {
-        val ic = inputConnection ?: return false
+        val ic = ims?.currentInputConnection ?: return false
         selection.apply {
             start = from
             end = to
@@ -288,12 +353,53 @@ class EditorInstance private constructor(private val inputConnection: InputConne
     }
 
     /**
+     * Detects the length of the character before the cursor, as many Unicode characters nowadays
+     * are longer than 1 Java char and thus the length has to be calculated in order to avoid
+     * deleting only half of an emoji...
+     * Is used primarily in [deleteBackwards].
+     *
+     * @returns The length of the last Unicode character, in Java characters or 0 if the current
+     *  selection is invalid.
+     */
+    private fun detectLastUnicodeCharacterLengthBeforeCursor(): Int {
+        if (!selection.isValid) {
+            return 0
+        }
+        var charIndex = 0
+        var charLength = 0
+        var charShouldGlue = false
+        val textToSearch = cachedTextInternal.substring(0, selection.start)
+        var i = 0
+        while (i < textToSearch.length) {
+            val cp = textToSearch.codePointAt(i)
+            val cpLength = Character.charCount(cp)
+            when {
+                charShouldGlue || cp == VARIATION_SELECTOR || emojiVariationArray.contains(cp) -> {
+                    charLength += cpLength
+                    charShouldGlue = false
+                }
+                cp == ZERO_WIDTH_JOINER -> {
+                    charLength += cpLength
+                    charShouldGlue = true
+                }
+                else -> {
+                    charIndex = i
+                    charLength = 0
+                    charShouldGlue = false
+                }
+            }
+            i += cpLength
+        }
+        return textToSearch.length - charIndex
+    }
+
+    /**
      * Gets the current text from the app's editor view.
      *
      * @returns The target editor's content string.
      */
     private fun getExtractedTextFromInputConnection(): String {
-        return (inputConnection?.getExtractedText(
+        return (ims?.currentInputConnection?.getExtractedText(
             ExtractedTextRequest(), 0
         )?.text ?: "").toString()
     }
@@ -306,7 +412,7 @@ class EditorInstance private constructor(private val inputConnection: InputConne
      * @returns True on success, false if an error occurred or the input connection is invalid.
      */
     private fun markComposingRegion(region: Region?): Boolean {
-        val ic = inputConnection ?: return false
+        val ic = ims?.currentInputConnection ?: return false
         return when (region) {
             null -> ic.finishComposingText()
             else -> if (region.isValid) {
@@ -329,7 +435,7 @@ class EditorInstance private constructor(private val inputConnection: InputConne
     private fun reevaluateCurrentWord(regex: Regex): Boolean {
         var foundValidWord = false
         if (selection.isValid && selection.isCursorMode) {
-            val words = text.split("((?<=$regex)|(?=$regex))".toRegex())
+            val words = cachedText.split("((?<=$regex)|(?=$regex))".toRegex())
             var pos = 0
             for (word in words) {
                 if (selection.start >= pos && selection.start <= pos + word.length &&
@@ -585,12 +691,12 @@ open class Region(private val editorInstance: EditorInstance) {
         get() = end - start
     val text: String
         get() {
-            val eiText = editorInstance.text
+            val eiText = editorInstance.cachedText
             return if (!isValid || start >= eiText.length) {
                 ""
             } else {
                 val end = if (end >= eiText.length) { eiText.length } else { end }
-                editorInstance.text.substring(start, end)
+                editorInstance.cachedText.substring(start, end)
             }
         }
 

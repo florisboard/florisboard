@@ -8,7 +8,7 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
-            app:enabled="true"
+            app:enabled="false"
             app:key="suggestion__enabled"
             app:iconSpaceReserved="false"
             app:title="@string/pref__suggestion__enabled__label"

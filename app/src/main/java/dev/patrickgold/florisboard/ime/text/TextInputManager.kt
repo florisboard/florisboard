@@ -315,36 +315,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     }
 
     /**
-     * Sends a given [keyCode] as a [KeyEvent.ACTION_DOWN].
-     *
-     * @param ic The input connection on which this operation should be performed.
-     * @param keyCode The key code to send, use a key code defined in Android's [KeyEvent], not in
-     *  [KeyCode] or this call may send a weird character, as this key codes do not match!!
-     */
-    private fun sendSystemKeyEvent(ic: InputConnection?, keyCode: Int) {
-        ic?.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, keyCode))
-    }
-
-    /**
-     * Sends a given [keyCode] as a [KeyEvent.ACTION_DOWN] with ALT pressed.
-     *
-     * @param ic The input connection on which this operation should be performed.
-     * @param keyCode The key code to send, use a key code defined in Android's [KeyEvent], not in
-     *  [KeyCode] or this call may send a weird character, as this key codes do not match!!
-     */
-    private fun sendSystemKeyEventAlt(ic: InputConnection?, keyCode: Int) {
-        ic?.sendKeyEvent(
-            KeyEvent(
-                0,
-                1,
-                KeyEvent.ACTION_DOWN, keyCode,
-                0,
-                KeyEvent.META_ALT_LEFT_ON
-            )
-        )
-    }
-
-    /**
      * Handles a [KeyCode.DELETE] event.
      */
     private fun handleDelete() {
@@ -368,9 +338,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * Handles a [KeyCode.ENTER] event.
      */
     private fun handleEnter() {
-        val ic = florisboard.currentInputConnection
         if (activeEditorInstance.imeOptions.flagNoEnterAction) {
-            sendSystemKeyEvent(ic, KeyEvent.KEYCODE_ENTER)
+            activeEditorInstance.sendSystemKeyEvent(KeyEvent.KEYCODE_ENTER)
         } else {
             when (activeEditorInstance.imeOptions.action) {
                 ImeOptions.Action.DONE,
@@ -381,7 +350,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                 ImeOptions.Action.SEND -> {
                     activeEditorInstance.performEnterAction(activeEditorInstance.imeOptions.action)
                 }
-                else -> sendSystemKeyEvent(ic, KeyEvent.KEYCODE_ENTER)
+                else -> activeEditorInstance.sendSystemKeyEvent(KeyEvent.KEYCODE_ENTER)
             }
         }
     }
@@ -435,7 +404,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      */
     private fun handleArrow(code: Int) = activeEditorInstance.apply {
         val selectionStartMin = 0
-        val selectionEndMax = text.length
+        val selectionEndMax = cachedText.length
         if (selection.isSelectionMode && isManualSelectionMode) {
             // Text is selected and it is manual selection -> Expand selection depending on started
             //  direction.
@@ -534,14 +503,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             }
         } else {
             // No selection and no manual selection mode -> move cursor around
-            val ic = florisboard.currentInputConnection
             when (code) {
-                KeyCode.ARROW_DOWN -> sendSystemKeyEvent(ic, KeyEvent.KEYCODE_DPAD_DOWN)
-                KeyCode.ARROW_LEFT -> sendSystemKeyEvent(ic, KeyEvent.KEYCODE_DPAD_LEFT)
-                KeyCode.ARROW_RIGHT -> sendSystemKeyEvent(ic, KeyEvent.KEYCODE_DPAD_RIGHT)
-                KeyCode.ARROW_UP -> sendSystemKeyEvent(ic, KeyEvent.KEYCODE_DPAD_UP)
-                KeyCode.MOVE_HOME -> sendSystemKeyEventAlt(ic, KeyEvent.KEYCODE_DPAD_UP)
-                KeyCode.MOVE_END -> sendSystemKeyEventAlt(ic, KeyEvent.KEYCODE_DPAD_DOWN)
+                KeyCode.ARROW_DOWN -> activeEditorInstance.sendSystemKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN)
+                KeyCode.ARROW_LEFT -> activeEditorInstance.sendSystemKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT)
+                KeyCode.ARROW_RIGHT -> activeEditorInstance.sendSystemKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT)
+                KeyCode.ARROW_UP -> activeEditorInstance.sendSystemKeyEvent(KeyEvent.KEYCODE_DPAD_UP)
+                KeyCode.MOVE_HOME -> activeEditorInstance.sendSystemKeyEventAlt(KeyEvent.KEYCODE_DPAD_UP)
+                KeyCode.MOVE_END -> activeEditorInstance.sendSystemKeyEventAlt(KeyEvent.KEYCODE_DPAD_DOWN)
             }
         }
     }
@@ -602,7 +570,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * Handles a [KeyCode.CLIPBOARD_SELECT_ALL] event.
      */
     private fun handleClipboardSelectAll() {
-        activeEditorInstance.setSelection(0, activeEditorInstance.text.length)
+        activeEditorInstance.setSelection(0, activeEditorInstance.cachedText.length)
     }
 
     /**
