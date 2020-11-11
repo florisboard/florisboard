@@ -1,0 +1,5 @@
+- Rework core to better implement interface between FlorisBoard and other apps
+  - Shift state should now update after a key press (#35)
+  - Send key should now send the desired action or a newline character (#33)
+- Adjusting keyboard height also affects font size of keys (#32)
+- Add option to remember / forget caps lock state throughout different input fields (#30)
