@@ -339,7 +339,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      */
     private fun handleEnter() {
         if (activeEditorInstance.imeOptions.flagNoEnterAction) {
-            activeEditorInstance.sendSystemKeyEvent(KeyEvent.KEYCODE_ENTER)
+            activeEditorInstance.commitText("\n")
         } else {
             when (activeEditorInstance.imeOptions.action) {
                 ImeOptions.Action.DONE,
@@ -350,7 +350,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                 ImeOptions.Action.SEND -> {
                     activeEditorInstance.performEnterAction(activeEditorInstance.imeOptions.action)
                 }
-                else -> activeEditorInstance.sendSystemKeyEvent(KeyEvent.KEYCODE_ENTER)
+                else -> activeEditorInstance.commitText("\n")
             }
         }
     }

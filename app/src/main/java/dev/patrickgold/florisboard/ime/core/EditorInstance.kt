@@ -89,7 +89,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
         private set
     val cachedText: String
         get() = cachedTextInternal.toString()
-    private var cachedTextInternal: StringBuilder = StringBuilder(getExtractedTextFromInputConnection())
+    private var cachedTextInternal: StringBuilder = StringBuilder("")
 
     companion object {
         fun default(): EditorInstance {
@@ -102,13 +102,18 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
                     imeOptions = ImeOptions.fromImeOptionsInt(editorInfo.imeOptions)
                     inputAttributes = InputAttributes.fromInputTypeInt(editorInfo.inputType)
                     packageName = editorInfo.packageName
-                    selection = Selection(this).apply {
+                    /*selection = Selection(this).apply {
                         start = editorInfo.initialSelStart
                         end = editorInfo.initialSelEnd
-                    }
+                    }*/
                 }
             }
         }
+    }
+
+    init {
+        fetchExtractedTextFromInputConnection()
+        reevaluate()
     }
 
     /**
@@ -118,7 +123,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
         oldSelStart: Int, oldSelEnd: Int,
         newSelStart: Int, newSelEnd: Int
     ) {
-        cachedTextInternal.replace(0, cachedTextInternal.length, getExtractedTextFromInputConnection())
+        fetchExtractedTextFromInputConnection()
         isNewSelectionInBoundsOfOld =
             newSelStart >= (oldSelStart - 1) &&
             newSelStart <= (oldSelStart + 1) &&
@@ -144,7 +149,6 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      *
      * @returns True on success, false if an error occurred or the input connection is invalid.
      */
-
     fun commitCompletion(text: String): Boolean {
         return false
     }
@@ -368,7 +372,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
         var charIndex = 0
         var charLength = 0
         var charShouldGlue = false
-        val textToSearch = cachedTextInternal.substring(0, selection.start)
+        val textToSearch = cachedTextInternal.substring(0, selection.start.coerceAtMost(cachedTextInternal.length))
         var i = 0
         while (i < textToSearch.length) {
             val cp = textToSearch.codePointAt(i)
@@ -398,10 +402,18 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      *
      * @returns The target editor's content string.
      */
-    private fun getExtractedTextFromInputConnection(): String {
-        return (ims?.currentInputConnection?.getExtractedText(
+    private fun fetchExtractedTextFromInputConnection() {
+        val ic = ims?.currentInputConnection ?: return
+        val et = ic.getExtractedText(
             ExtractedTextRequest(), 0
-        )?.text ?: "").toString()
+        ) ?: return
+        val text = et.text ?: ""
+        cachedTextInternal.setLength(0)
+        cachedTextInternal.append(text)
+        selection.apply {
+            start = et.selectionStart.coerceAtMost(cachedTextInternal.length)
+            end = et.selectionEnd.coerceAtMost(cachedTextInternal.length)
+        }
     }
 
     /**
