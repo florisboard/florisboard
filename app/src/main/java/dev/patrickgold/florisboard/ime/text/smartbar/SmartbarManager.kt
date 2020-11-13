@@ -162,9 +162,11 @@ class SmartbarManager private constructor() : FlorisBoard.EventListener {
     }
 
     override fun onUpdateSelection() {
-        val isSelectionActive = florisboard.activeEditorInstance.selection.isSelectionMode
-        smartbarView?.findViewById<View>(R.id.cc_cut)?.isEnabled = isSelectionActive
-        smartbarView?.findViewById<View>(R.id.cc_copy)?.isEnabled = isSelectionActive
+        val ei = florisboard.activeEditorInstance
+        val isSelectionActive = ei.selection.isSelectionMode
+        smartbarView?.findViewById<View>(R.id.cc_select_all)?.isEnabled = !ei.isRawInputEditor
+        smartbarView?.findViewById<View>(R.id.cc_cut)?.isEnabled = isSelectionActive && !ei.isRawInputEditor
+        smartbarView?.findViewById<View>(R.id.cc_copy)?.isEnabled = isSelectionActive && !ei.isRawInputEditor
         smartbarView?.findViewById<View>(R.id.cc_paste)?.isEnabled =
             florisboard.clipboardManager?.hasPrimaryClip() ?: false
         smartbarView?.invalidate()

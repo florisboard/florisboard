@@ -74,7 +74,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
     var isComposingEnabled: Boolean = false
         set(v) {
             field = v
-            reevaluate()
+            reevaluateCurrentWord()
             if (v) {
                 markComposingRegion(currentWord)
             } else {
@@ -82,6 +82,8 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
             }
         }
     var isNewSelectionInBoundsOfOld: Boolean = false
+        private set
+    var isRawInputEditor: Boolean = true
         private set
     var packageName: String = "undefined"
         private set
@@ -112,8 +114,8 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
     }
 
     init {
-        fetchExtractedTextFromInputConnection()
-        reevaluate()
+        updateEditorState()
+        reevaluateCurrentWord()
     }
 
     /**
@@ -123,7 +125,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
         oldSelStart: Int, oldSelEnd: Int,
         newSelStart: Int, newSelEnd: Int
     ) {
-        fetchExtractedTextFromInputConnection()
+        updateEditorState()
         isNewSelectionInBoundsOfOld =
             newSelStart >= (oldSelStart - 1) &&
             newSelStart <= (oldSelStart + 1) &&
@@ -133,8 +135,8 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
             start = newSelStart
             end = newSelEnd
         }
-        reevaluate()
-        if (selection.isCursorMode && isComposingEnabled) {
+        reevaluateCurrentWord()
+        if (selection.isCursorMode && isComposingEnabled && !isRawInputEditor) {
             markComposingRegion(currentWord)
         } else {
             markComposingRegion(null)
@@ -150,7 +152,11 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      * @returns True on success, false if an error occurred or the input connection is invalid.
      */
     fun commitCompletion(text: String): Boolean {
-        return false
+        return if (isRawInputEditor) {
+            false
+        } else {
+            false // TODO: complete text here
+        }
     }
 
     /**
@@ -167,25 +173,29 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      */
     fun commitText(text: String): Boolean {
         val ic = ims?.currentInputConnection ?: return false
-        ic.beginBatchEdit()
-        markComposingRegion(null)
-        if (selection.isCursorMode) {
-            cachedTextInternal.insert(selection.start, text)
-        } else if (selection.isSelectionMode) {
-            cachedTextInternal.replace(selection.start, selection.end, text)
+        if (isRawInputEditor) {
+            return ic.commitText(text, 1)
+        } else {
+            ic.beginBatchEdit()
+            markComposingRegion(null)
+            if (selection.isCursorMode) {
+                cachedTextInternal.insert(selection.start, text)
+            } else if (selection.isSelectionMode) {
+                cachedTextInternal.replace(selection.start, selection.end, text)
+            }
+            selection.apply {
+                start += text.length
+                end = start
+            }
+            reevaluateCurrentWord()
+            ic.commitText(text, 1)
+            if (isComposingEnabled) {
+                markComposingRegion(currentWord)
+            }
+            ic.setSelection(selection.start, selection.end)
+            ic.endBatchEdit()
+            return true
         }
-        selection.apply {
-            start += text.length
-            end = start
-        }
-        reevaluate()
-        ic.commitText(text, 1)
-        if (isComposingEnabled) {
-            markComposingRegion(currentWord)
-        }
-        ic.setSelection(selection.start, selection.end)
-        ic.endBatchEdit()
-        return true
     }
 
     /**
@@ -197,30 +207,34 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      */
     fun deleteBackwards(): Boolean {
         val ic = ims?.currentInputConnection ?: return false
-        ic.beginBatchEdit()
-        markComposingRegion(null)
-        if (selection.isCursorMode && selection.start > 0) {
-            val length = detectLastUnicodeCharacterLengthBeforeCursor()
-            cachedTextInternal.replace(selection.start - length, selection.start, "")
-            selection.apply {
-                start -= length
-                end = start
+        if (isRawInputEditor) {
+            return sendSystemKeyEvent(KeyEvent.KEYCODE_DEL)
+        } else {
+            ic.beginBatchEdit()
+            markComposingRegion(null)
+            if (selection.isCursorMode && selection.start > 0) {
+                val length = detectLastUnicodeCharacterLengthBeforeCursor()
+                cachedTextInternal.replace(selection.start - length, selection.start, "")
+                selection.apply {
+                    start -= length
+                    end = start
+                }
+                ic.deleteSurroundingText(length, 0)
+            } else if (selection.isSelectionMode) {
+                cachedTextInternal.replace(selection.start, selection.end, "")
+                selection.apply {
+                    end = start
+                }
+                ic.commitText("", 1)
             }
-            ic.deleteSurroundingText(length, 0)
-        } else if (selection.isSelectionMode) {
-            cachedTextInternal.replace(selection.start, selection.end, "")
-            selection.apply {
-                end = start
+            reevaluateCurrentWord()
+            if (isComposingEnabled) {
+                markComposingRegion(currentWord)
             }
-            ic.commitText("", 1)
+            ic.setSelection(selection.start, selection.end)
+            ic.endBatchEdit()
+            return true
         }
-        reevaluate()
-        if (isComposingEnabled) {
-            markComposingRegion(currentWord)
-        }
-        ic.setSelection(selection.start, selection.end)
-        ic.endBatchEdit()
-        return true
     }
 
     /**
@@ -235,24 +249,25 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      */
     fun deleteWordsBeforeCursor(n: Int): Boolean {
         val ic = ims?.currentInputConnection ?: return false
-        if (n < 1) {
+        if (n < 1 || isRawInputEditor) {
             return false
-        }
-        ic.beginBatchEdit()
-        markComposingRegion(null)
-        if (currentWord.isValid) {
-            cachedTextInternal.replace(currentWord.start, currentWord.end, "")
-            selection.apply {
-                start = currentWord.start
-                end = start
+        } else {
+            ic.beginBatchEdit()
+            markComposingRegion(null)
+            if (currentWord.isValid) {
+                cachedTextInternal.replace(currentWord.start, currentWord.end, "")
+                selection.apply {
+                    start = currentWord.start
+                    end = start
+                }
+                ic.setSelection(currentWord.start, currentWord.end)
+                ic.commitText("", 1)
             }
-            ic.setSelection(currentWord.start, currentWord.end)
-            ic.commitText("", 1)
+            reevaluateCurrentWord()
+            ic.setSelection(selection.start, selection.end)
+            ic.endBatchEdit()
+            return true
         }
-        reevaluate()
-        ic.setSelection(selection.start, selection.end)
-        ic.endBatchEdit()
-        return true
     }
 
     /**
@@ -265,7 +280,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      * @returns [n] or less characters after the cursor.
      */
     fun getTextAfterCursor(n: Int): String {
-        if (!selection.isValid || n < 1) {
+        if (!selection.isValid || n < 1 || isRawInputEditor) {
             return ""
         }
         val from = selection.end
@@ -283,12 +298,25 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      * @returns [n] or less characters after the cursor.
      */
     fun getTextBeforeCursor(n: Int): String {
-        if (!selection.isValid || n < 1) {
+        if (!selection.isValid || n < 1 || isRawInputEditor) {
             return ""
         }
         val from = (selection.start - n).coerceAtLeast(0)
         val to = selection.start
         return cachedTextInternal.substring(from, to)
+    }
+
+    /**
+     * Performs an enter key press on the current input editor.
+     *
+     * @returns True on success, false if an error occurred or the input connection is invalid.
+     */
+    fun performEnter(): Boolean {
+        return if (isRawInputEditor) {
+            sendSystemKeyEvent(KeyEvent.KEYCODE_ENTER)
+        } else {
+            commitText("\n")
+        }
     }
 
     /**
@@ -306,7 +334,6 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
     /**
      * Sends a given [keyCode] as a [KeyEvent.ACTION_DOWN].
      *
-     * @param ic The input connection on which this operation should be performed.
      * @param keyCode The key code to send, use a key code defined in Android's [KeyEvent], not in
      *  [KeyCode] or this call may send a weird character, as this key codes do not match!!
      *
@@ -320,7 +347,6 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
     /**
      * Sends a given [keyCode] as a [KeyEvent.ACTION_DOWN] with ALT pressed.
      *
-     * @param ic The input connection on which this operation should be performed.
      * @param keyCode The key code to send, use a key code defined in Android's [KeyEvent], not in
      *  [KeyCode] or this call may send a weird character, as this key codes do not match!!
      *
@@ -349,11 +375,19 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      */
     fun setSelection(from: Int, to: Int): Boolean {
         val ic = ims?.currentInputConnection ?: return false
-        selection.apply {
-            start = from
-            end = to
+        return if (isRawInputEditor) {
+            selection.apply {
+                start = -1
+                end = -1
+            }
+            false
+        } else {
+            selection.apply {
+                start = from
+                end = to
+            }
+            ic.setSelection(from, to)
         }
-        return ic.setSelection(from, to)
     }
 
     /**
@@ -395,25 +429,6 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
             i += cpLength
         }
         return textToSearch.length - charIndex
-    }
-
-    /**
-     * Gets the current text from the app's editor view.
-     *
-     * @returns The target editor's content string.
-     */
-    private fun fetchExtractedTextFromInputConnection() {
-        val ic = ims?.currentInputConnection ?: return
-        val et = ic.getExtractedText(
-            ExtractedTextRequest(), 0
-        ) ?: return
-        val text = et.text ?: ""
-        cachedTextInternal.setLength(0)
-        cachedTextInternal.append(text)
-        selection.apply {
-            start = et.selectionStart.coerceAtMost(cachedTextInternal.length)
-            end = et.selectionEnd.coerceAtMost(cachedTextInternal.length)
-        }
     }
 
     /**
@@ -473,11 +488,41 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
     }
 
     /**
-     * Triggers all reevaluation processes.
+     * Evaluates the current word with the correct delimiter regex for current subtype.
+     * TODO: currently only supports en-US
      */
-    private fun reevaluate() {
+    private fun reevaluateCurrentWord() {
         val regex = "[^\\p{L}]".toRegex()
         reevaluateCurrentWord(regex)
+    }
+
+    /**
+     * Gets the current text from the app's editor view.
+     *
+     * @returns The target editor's content string.
+     */
+    private fun updateEditorState() {
+        val ic = ims?.currentInputConnection
+        val et = ic?.getExtractedText(
+            ExtractedTextRequest(), 0
+        )
+        val text = et?.text
+        cachedTextInternal.setLength(0)
+        if (ic == null || et == null || text == null) {
+            isRawInputEditor = true
+            selection.apply {
+                start = -1
+                end = -1
+            }
+        } else {
+            isRawInputEditor = false
+            cachedTextInternal.append(text)
+            selection.apply {
+                start = et.selectionStart.coerceAtMost(cachedTextInternal.length)
+                end = et.selectionEnd.coerceAtMost(cachedTextInternal.length)
+            }
+        }
+        reevaluateCurrentWord()
     }
 }
 

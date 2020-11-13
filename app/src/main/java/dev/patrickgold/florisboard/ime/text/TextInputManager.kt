@@ -339,7 +339,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      */
     private fun handleEnter() {
         if (activeEditorInstance.imeOptions.flagNoEnterAction) {
-            activeEditorInstance.commitText("\n")
+            activeEditorInstance.performEnter()
         } else {
             when (activeEditorInstance.imeOptions.action) {
                 ImeOptions.Action.DONE,
@@ -350,7 +350,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                 ImeOptions.Action.SEND -> {
                     activeEditorInstance.performEnterAction(activeEditorInstance.imeOptions.action)
                 }
-                else -> activeEditorInstance.commitText("\n")
+                else -> activeEditorInstance.performEnter()
             }
         }
     }
@@ -657,6 +657,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                     }
                 }
             }
+        }
+        if (keyData.code != KeyCode.SHIFT && !capsLock) {
+            updateCapsState()
         }
     }
 }
