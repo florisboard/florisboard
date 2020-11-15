@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import kotlinx.coroutines.*
+import kotlin.math.roundToInt
 
 class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by MainScope(),
     SharedPreferences.OnSharedPreferenceChangeListener {
@@ -54,7 +55,7 @@ class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by
             keyboardView = KeyboardView(themeContext)
             keyboardView.layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
+                resources.getDimension(R.dimen.textKeyboardView_baseHeight).roundToInt()
             ).apply {
                 val m = resources.getDimension(R.dimen.keyboard_preview_margin).toInt()
                 setMargins(m, m, m, m)

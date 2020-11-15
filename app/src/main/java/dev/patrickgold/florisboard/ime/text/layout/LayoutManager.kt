@@ -246,6 +246,9 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
             KeyboardMode.EDITING -> {
                 // Layout for this mode is defined in custom layout xml file.
             }
+            KeyboardMode.NUMBER_ROW -> {
+                extension = LTN(LayoutType.EXTENSION, "number_row")
+            }
             KeyboardMode.NUMERIC -> {
                 main = LTN(LayoutType.NUMERIC, "default")
             }

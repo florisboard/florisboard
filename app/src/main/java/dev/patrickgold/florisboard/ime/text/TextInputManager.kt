@@ -67,7 +67,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     var textViewGroup: LinearLayout? = null
 
     var keyVariation: KeyVariation = KeyVariation.NORMAL
-    private val layoutManager = LayoutManager(florisboard)
+    val layoutManager = LayoutManager(florisboard)
     private lateinit var smartbarManager: SmartbarManager
 
     // Caps/Space related properties
@@ -145,7 +145,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                 setActiveKeyboardMode(activeKeyboardMode)
             }
             for (mode in KeyboardMode.values()) {
-                if (mode != activeKeyboardMode) {
+                if (mode != activeKeyboardMode && mode != KeyboardMode.NUMBER_ROW) {
                     addKeyboardView(mode)
                 }
             }

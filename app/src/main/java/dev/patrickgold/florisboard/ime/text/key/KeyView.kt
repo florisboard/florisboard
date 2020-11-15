@@ -407,30 +407,39 @@ class KeyView(
      * Updates the background depending on [isKeyPressed] and [data].
      */
     private fun updateKeyPressedBackground() {
-        when (data.code) {
-            KeyCode.ENTER -> {
-                setBackgroundTintColor2(
-                    this, when {
-                        isKeyPressed -> prefs.theme.keyEnterBgColorPressed
-                        else -> prefs.theme.keyEnterBgColor
-                    }
-                )
-            }
-            KeyCode.SHIFT -> {
-                setBackgroundTintColor2(
-                    this, when {
-                        isKeyPressed -> prefs.theme.keyShiftBgColorPressed
-                        else -> prefs.theme.keyShiftBgColor
-                    }
-                )
+        when {
+            keyboardView.isSmartbarKeyboardView -> {
+                setBackgroundTintColor2(this, prefs.theme.smartbarBgColor)
+                elevation = 0.0f
             }
             else -> {
-                setBackgroundTintColor2(
-                    this, when {
-                        isKeyPressed -> prefs.theme.keyBgColorPressed
-                        else -> prefs.theme.keyBgColor
+                elevation = 4.0f
+                when (data.code) {
+                    KeyCode.ENTER -> {
+                        setBackgroundTintColor2(
+                            this, when {
+                                isKeyPressed -> prefs.theme.keyEnterBgColorPressed
+                                else -> prefs.theme.keyEnterBgColor
+                            }
+                        )
                     }
-                )
+                    KeyCode.SHIFT -> {
+                        setBackgroundTintColor2(
+                            this, when {
+                                isKeyPressed -> prefs.theme.keyShiftBgColorPressed
+                                else -> prefs.theme.keyShiftBgColor
+                            }
+                        )
+                    }
+                    else -> {
+                        setBackgroundTintColor2(
+                            this, when {
+                                isKeyPressed -> prefs.theme.keyBgColorPressed
+                                else -> prefs.theme.keyBgColor
+                            }
+                        )
+                    }
+                }
             }
         }
     }

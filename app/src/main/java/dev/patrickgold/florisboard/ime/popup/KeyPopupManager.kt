@@ -102,7 +102,7 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
         isWrapBefore: Boolean = false
     ): KeyPopupExtendedSingleView? {
         val textView = KeyPopupExtendedSingleView(keyView.context, k, isInitActive)
-        val lp = FlexboxLayout.LayoutParams(keyPopupWidth, keyView.measuredHeight)
+        val lp = FlexboxLayout.LayoutParams(keyPopupWidth, (keyPopupHeight * 0.4f).toInt())
         lp.isWrapBefore = isWrapBefore
         textView.layoutParams = lp
         textView.gravity = Gravity.CENTER
@@ -178,6 +178,9 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
                     keyPopupWidth = (keyboardView.desiredKeyWidth * 1.1f).toInt()
                     keyPopupHeight = (keyboardView.desiredKeyHeight * 2.5f).toInt()
                 }
+            }
+            if (keyboardView.isSmartbarKeyboardView) {
+                keyPopupHeight = (keyPopupHeight * 1.2f).toInt()
             }
         } else if (keyboardView is EmojiKeyboardView) {
             keyPopupWidth = keyView.measuredWidth
@@ -344,9 +347,9 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
         // Calculate layout params
         val extWidth = row0count * keyPopupWidth
         val extHeight = when {
-            row1count > 0 -> keyView.measuredHeight * 2
-            else -> keyView.measuredHeight
-        }
+            row1count > 0 -> keyPopupHeight * 0.4f * 2.0f
+            else -> keyPopupHeight * 0.4f
+        }.toInt()
         popupViewExt.justifyContent = if (anchorLeft) {
             JustifyContent.FLEX_START
         } else {
@@ -366,7 +369,7 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
             else -> 0
         }
         val y = -keyPopupHeight - when {
-            row1count > 0 -> keyView.measuredHeight
+            row1count > 0 -> (keyPopupHeight * 0.4f).toInt()
             else -> 0
         }
 
@@ -480,8 +483,12 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
         return if (keyView is KeyView) {
             val activeExtIndex = activeExtIndex
             if (activeExtIndex != null) {
-                val singleView = popupViewExt[activeExtIndex] as KeyPopupExtendedSingleView
-                keyView.dataPopupWithHint.getOrNull(singleView.adjustedIndex) ?: keyView.data
+                val singleView = popupViewExt[activeExtIndex]
+                if (singleView is KeyPopupExtendedSingleView) {
+                    keyView.dataPopupWithHint.getOrNull(singleView.adjustedIndex) ?: keyView.data
+                } else {
+                    keyView.data
+                }
             } else {
                 keyView.data
             }

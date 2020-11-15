@@ -21,6 +21,7 @@ enum class KeyboardMode {
     EDITING,
     SYMBOLS,
     SYMBOLS2,
+    NUMBER_ROW,
     NUMERIC,
     NUMERIC_ADVANCED,
     PHONE,

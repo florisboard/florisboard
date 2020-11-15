@@ -60,6 +60,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     var florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
     private var initialKeyCode: Int = 0
     var isPreviewMode: Boolean = false
+    var isSmartbarKeyboardView: Boolean = false
     var popupManager = KeyPopupManager<KeyboardView, KeyView>(this)
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val swipeGestureDetector = SwipeGesture.Detector(context, this)
@@ -132,7 +133,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
             return false
         }
         val eventFloris = MotionEvent.obtainNoHistory(event)
-        if (swipeGestureDetector.onTouchEvent(event)) {
+        if (!isSmartbarKeyboardView && swipeGestureDetector.onTouchEvent(event)) {
             sendFlorisTouchEvent(eventFloris, MotionEvent.ACTION_CANCEL)
             activeKeyView = null
             activePointerId = null
@@ -287,20 +288,21 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
      * The desired key heights/widths are being calculated here.
      */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val widthSize = MeasureSpec.getSize(widthMeasureSpec)
-
         val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
-        desiredKeyWidth = (widthSize / 10) - (2 * keyMarginH)
-
         val keyMarginV = resources.getDimension((R.dimen.key_marginV)).toInt()
-        val keyHeightFactor = when (isPreviewMode) {
-            true -> 0.90f
-            else -> 1.00f
-        }
-        val desiredHeight = keyHeightFactor * (florisboard?.inputView?.desiredTextKeyboardViewHeight ?: resources.getDimension(R.dimen.textKeyboardView_baseHeight).toInt())
-        desiredKeyHeight = (desiredHeight / 4 - 2 * keyMarginV).roundToInt()
 
-        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(desiredHeight.roundToInt(), MeasureSpec.EXACTLY))
+        val desiredWidth = MeasureSpec.getSize(widthMeasureSpec).toFloat()
+        desiredKeyWidth = (desiredWidth / 10.0f - 2.0f * keyMarginH).roundToInt()
+        val desiredHeight = MeasureSpec.getSize(heightMeasureSpec) * if (isPreviewMode) { 0.90f } else { 1.00f }
+        desiredKeyHeight = when {
+            isSmartbarKeyboardView -> desiredHeight - 1.5f * keyMarginV
+            else -> desiredHeight / 4.0f - 2.0f * keyMarginV
+        }.roundToInt()
+
+        super.onMeasure(
+            MeasureSpec.makeMeasureSpec(desiredWidth.roundToInt(), MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(desiredHeight.roundToInt(), MeasureSpec.EXACTLY)
+        )
     }
 
     override fun onApplyThemeAttributes() {

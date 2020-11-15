@@ -3,7 +3,6 @@ package dev.patrickgold.florisboard.ime.text.smartbar
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.CursorAnchorInfo
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -11,20 +10,26 @@ import androidx.core.view.children
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 // TODO: Implement suggestion creation functionality
 // TODO: Cleanup and reorganize SmartbarManager
-class SmartbarManager private constructor() : FlorisBoard.EventListener {
+class SmartbarManager private constructor() : CoroutineScope by MainScope(),
+    FlorisBoard.EventListener {
 
     private val florisboard: FlorisBoard = FlorisBoard.getInstance()
     private var isComposingEnabled: Boolean = false
     private val textInputManager: TextInputManager = TextInputManager.getInstance()
-    var smartbarView: SmartbarView? = null
-        private set
+    private var smartbarView: SmartbarView? = null
 
     var isQuickActionsVisible: Boolean = false
         set(value) { field = value; updateActiveContainerVisibility() }
@@ -41,16 +46,6 @@ class SmartbarManager private constructor() : FlorisBoard.EventListener {
     }
     private val keyButtonOnClickListener = View.OnClickListener { v ->
         val keyData = when (v.id) {
-            R.id.number_row_0 -> KeyData(48, "0")
-            R.id.number_row_1 -> KeyData(49, "1")
-            R.id.number_row_2 -> KeyData(50, "2")
-            R.id.number_row_3 -> KeyData(51, "3")
-            R.id.number_row_4 -> KeyData(52, "4")
-            R.id.number_row_5 -> KeyData(53, "5")
-            R.id.number_row_6 -> KeyData(54, "6")
-            R.id.number_row_7 -> KeyData(55, "7")
-            R.id.number_row_8 -> KeyData(56, "8")
-            R.id.number_row_9 -> KeyData(57, "9")
             R.id.cc_select_all -> KeyData(KeyCode.CLIPBOARD_SELECT_ALL)
             R.id.cc_copy -> KeyData(KeyCode.CLIPBOARD_COPY)
             R.id.cc_arrow_left -> KeyData(KeyCode.ARROW_LEFT)
@@ -111,11 +106,10 @@ class SmartbarManager private constructor() : FlorisBoard.EventListener {
                 quickAction.setOnClickListener(quickActionOnClickListener)
             }
         }
-        val numberRow = smartbarView.findViewById<LinearLayout>(R.id.number_row)
-        for (numberRowButton in numberRow.children) {
-            if (numberRowButton is Button) {
-                numberRowButton.setOnClickListener(keyButtonOnClickListener)
-            }
+        launch(Dispatchers.Default) {
+            val numberRow = smartbarView.findViewById<KeyboardView>(R.id.smartbar_variant_number_row)
+            numberRow.isSmartbarKeyboardView = true
+            numberRow.computedLayout = textInputManager.layoutManager.fetchComputedLayoutAsync(KeyboardMode.NUMBER_ROW, Subtype.DEFAULT).await()
         }
         val clipboardCursorRow = smartbarView.findViewById<ViewGroup>(R.id.clipboard_cursor_row)
         for (clipboardCursorRowButton in clipboardCursorRow.children) {
@@ -216,19 +210,35 @@ class SmartbarManager private constructor() : FlorisBoard.EventListener {
         val smartbarView = smartbarView ?: return
 
         if (isQuickActionsVisible) {
+            smartbarView.setActiveVariant(R.id.smartbar_variant_default)
             smartbarView.setActiveContainer(R.id.quick_actions)
             smartbarView.findViewById<View>(R.id.quick_action_toggle)?.rotation = -180.0f
         } else {
-            if (isComposingEnabled) {
-                smartbarView.setActiveContainer(R.id.candidates)
-            } else if (textInputManager.getActiveKeyboardMode() == KeyboardMode.CHARACTERS) {
-                smartbarView.setActiveContainer(when (florisboard.prefs.suggestion.showInstead) {
-                    "number_row" -> R.id.number_row
-                    "clipboard_cursor_tools" -> R.id.clipboard_cursor_row
-                    else -> null
-                })
-            } else {
-                smartbarView.setActiveContainer(null)
+            when {
+                isComposingEnabled -> {
+                    smartbarView.setActiveVariant(R.id.smartbar_variant_default)
+                    smartbarView.setActiveContainer(R.id.candidates)
+                }
+                textInputManager.getActiveKeyboardMode() == KeyboardMode.CHARACTERS -> {
+                    when (florisboard.prefs.suggestion.showInstead) {
+                        "number_row" -> {
+                            smartbarView.setActiveVariant(R.id.smartbar_variant_number_row)
+                            smartbarView.setActiveContainer(null)
+                        }
+                        "clipboard_cursor_tools" -> {
+                            smartbarView.setActiveVariant(R.id.smartbar_variant_default)
+                            smartbarView.setActiveContainer(R.id.clipboard_cursor_row)
+                        }
+                        else -> {
+                            smartbarView.setActiveVariant(null)
+                            smartbarView.setActiveContainer(null)
+                        }
+                    }
+                }
+                else -> {
+                    smartbarView.setActiveVariant(null)
+                    smartbarView.setActiveContainer(null)
+                }
             }
             smartbarView.findViewById<View>(R.id.quick_action_toggle)?.rotation = 0.0f
         }

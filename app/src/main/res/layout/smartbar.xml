@@ -78,65 +78,6 @@
 
         <!-- TODO: integrate a KeyboardView instead of hardcoding these buttons -->
         <LinearLayout
-            android:id="@+id/number_row"
-            style="@style/SmartbarContainer"
-            android:visibility="gone"
-            tools:ignore="HardcodedText">
-
-            <Button
-                android:id="@+id/number_row_1"
-                style="@style/SmartbarCandidate"
-                android:text="1"/>
-
-            <Button
-                android:id="@+id/number_row_2"
-                style="@style/SmartbarCandidate"
-                android:text="2"/>
-
-            <Button
-                android:id="@+id/number_row_3"
-                style="@style/SmartbarCandidate"
-                android:text="3"/>
-
-            <Button
-                android:id="@+id/number_row_4"
-                style="@style/SmartbarCandidate"
-                android:text="4"/>
-
-            <Button
-                android:id="@+id/number_row_5"
-                style="@style/SmartbarCandidate"
-                android:text="5"/>
-
-            <Button
-                android:id="@+id/number_row_6"
-                style="@style/SmartbarCandidate"
-                android:text="6"/>
-
-            <Button
-                android:id="@+id/number_row_7"
-                style="@style/SmartbarCandidate"
-                android:text="7"/>
-
-            <Button
-                android:id="@+id/number_row_8"
-                style="@style/SmartbarCandidate"
-                android:text="8"/>
-
-            <Button
-                android:id="@+id/number_row_9"
-                style="@style/SmartbarCandidate"
-                android:text="9"/>
-
-            <Button
-                android:id="@+id/number_row_0"
-                style="@style/SmartbarCandidate"
-                android:text="0"/>
-
-        </LinearLayout>
-
-        <!-- TODO: integrate a KeyboardView instead of hardcoding these buttons -->
-        <LinearLayout
             android:id="@+id/clipboard_cursor_row"
             style="@style/SmartbarContainer"
             android:visibility="gone"
@@ -189,6 +130,12 @@
             android:visibility="invisible"/>
 
     </LinearLayout>
+
+    <dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
+        android:id="@+id/smartbar_variant_number_row"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/smartbar_variant_back_only"

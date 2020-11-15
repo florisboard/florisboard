@@ -75,7 +75,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
         set(v) {
             field = v
             reevaluateCurrentWord()
-            if (v) {
+            if (v && !isRawInputEditor) {
                 markComposingRegion(currentWord)
             } else {
                 markComposingRegion(null)

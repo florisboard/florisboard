@@ -32,7 +32,6 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.setImageTintColor2
-import kotlinx.android.synthetic.main.florisboard.view.*
 
 /**
  * View class which keeps the references to important children and informs [SmartbarManager] that
@@ -61,10 +60,10 @@ class SmartbarView : LinearLayout {
 
         variants.add(findViewById(R.id.smartbar_variant_default))
         variants.add(findViewById(R.id.smartbar_variant_back_only))
+        variants.add(findViewById(R.id.smartbar_variant_number_row))
 
         containers.add(findViewById(R.id.candidates))
         containers.add(findViewById(R.id.clipboard_cursor_row))
-        containers.add(findViewById(R.id.number_row))
         containers.add(findViewById(R.id.quick_actions))
 
         candidateViewList.add(findViewById(R.id.candidate0))
@@ -131,9 +130,9 @@ class SmartbarView : LinearLayout {
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         setBackgroundColor(prefs.theme.smartbarBgColor)
-        for (container in containers) {
+        for (container in containers + variants) {
             when (container.id) {
-                R.id.number_row -> {
+                R.id.smartbar_variant_number_row -> {
                     for (button in container.children) {
                         if (button is Button) {
                             button.setTextColor(prefs.theme.smartbarFgColor)
