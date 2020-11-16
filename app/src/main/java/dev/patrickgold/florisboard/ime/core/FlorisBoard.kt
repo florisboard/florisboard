@@ -54,7 +54,7 @@ private var florisboardInstance: FlorisBoard? = null
  * Core class responsible to link together both the text and media input managers as well as
  * managing the one-handed UI.
  */
-class FlorisBoard : InputMethodService() {
+class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedListener {
     lateinit var prefs: PrefHelper
         private set
 
@@ -150,6 +150,7 @@ class FlorisBoard : InputMethodService() {
 
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipboardManager?.addPrimaryClipChangedListener(this)
         vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         prefs = PrefHelper.getDefaultInstance(this)
         prefs.initDefaultPreferences()
@@ -196,6 +197,7 @@ class FlorisBoard : InputMethodService() {
     override fun onDestroy() {
         if (BuildConfig.DEBUG) Log.i(TAG, "onDestroy()")
 
+        clipboardManager?.removePrimaryClipChangedListener(this)
         osHandler.removeCallbacksAndMessages(null)
         florisboardInstance = null
 
@@ -534,6 +536,10 @@ class FlorisBoard : InputMethodService() {
         }, 0)
     }
 
+    override fun onPrimaryClipChanged() {
+        eventListeners.toList().forEach { it.onPrimaryClipChanged() }
+    }
+
     /**
      * Adds a given [listener] to the list which will receive FlorisBoard events.
      *
@@ -570,6 +576,7 @@ class FlorisBoard : InputMethodService() {
         fun onUpdateSelection() {}
 
         fun onApplyThemeAttributes() {}
+        fun onPrimaryClipChanged() {}
         fun onSubtypeChanged(newSubtype: Subtype) {}
     }
 

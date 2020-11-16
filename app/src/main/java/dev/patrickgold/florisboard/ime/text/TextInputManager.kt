@@ -219,7 +219,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         }
         updateCapsState()
         setActiveKeyboardMode(keyboardMode)
-        smartbarManager.onStartInputView(keyboardMode, instance.isComposingEnabled)
+        smartbarManager.onStartInputView(keyboardMode)
     }
 
     /**
@@ -274,9 +274,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * and passing this info on to the [SmartbarManager] to turn it into candidate suggestions.
      */
     override fun onUpdateSelection() {
-        if (activeEditorInstance.selection.isCursorMode) {
-            smartbarManager.generateCandidatesFromComposing(activeEditorInstance.currentWord.text)
-        }
         if (!activeEditorInstance.isNewSelectionInBoundsOfOld) {
             isManualSelectionMode = false
             isManualSelectionModeLeft = false
@@ -284,6 +281,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         }
         updateCapsState()
         smartbarManager.onUpdateSelection()
+    }
+
+    override fun onPrimaryClipChanged() {
+        smartbarManager.onPrimaryClipChanged()
     }
 
     /**

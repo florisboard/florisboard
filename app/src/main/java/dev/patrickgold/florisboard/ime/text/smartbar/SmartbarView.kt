@@ -31,6 +31,8 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.util.setBackgroundTintColor2
+import dev.patrickgold.florisboard.util.setDrawableTintColor2
 import dev.patrickgold.florisboard.util.setImageTintColor2
 
 /**
@@ -63,6 +65,7 @@ class SmartbarView : LinearLayout {
         variants.add(findViewById(R.id.smartbar_variant_number_row))
 
         containers.add(findViewById(R.id.candidates))
+        containers.add(findViewById(R.id.clipboard_suggestion_row))
         containers.add(findViewById(R.id.clipboard_cursor_row))
         containers.add(findViewById(R.id.quick_actions))
 
@@ -138,6 +141,12 @@ class SmartbarView : LinearLayout {
                             button.setTextColor(prefs.theme.smartbarFgColor)
                         }
                     }
+                }
+                R.id.clipboard_suggestion_row -> {
+                    val clipboardSuggestion = findViewById<Button>(R.id.clipboard_suggestion)
+                    setBackgroundTintColor2(clipboardSuggestion, prefs.theme.smartbarButtonBgColor)
+                    setDrawableTintColor2(clipboardSuggestion, prefs.theme.smartbarButtonFgColor)
+                    clipboardSuggestion.setTextColor(prefs.theme.smartbarButtonFgColor)
                 }
                 R.id.clipboard_cursor_row -> {
                     for (button in container.children) {

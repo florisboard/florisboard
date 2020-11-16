@@ -33,6 +33,7 @@
     <dimen name="one_handed_button_height">@dimen/one_handed_width</dimen>
 
     <dimen name="smartbar_height">40dp</dimen>
+    <dimen name="smartbar_radius">20dp</dimen>
     <dimen name="smartbar_button_margin">4dp</dimen>
     <dimen name="smartbar_button_padding">6dp</dimen>
 
