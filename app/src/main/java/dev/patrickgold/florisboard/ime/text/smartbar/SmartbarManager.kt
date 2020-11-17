@@ -123,7 +123,10 @@ class SmartbarManager private constructor() : CoroutineScope by MainScope(),
         launch(Dispatchers.Default) {
             val numberRow = smartbarView.findViewById<KeyboardView>(R.id.smartbar_variant_number_row)
             numberRow.isSmartbarKeyboardView = true
-            numberRow.computedLayout = textInputManager.layoutManager.fetchComputedLayoutAsync(KeyboardMode.NUMBER_ROW, Subtype.DEFAULT).await()
+            val layout = textInputManager.layoutManager.fetchComputedLayoutAsync(KeyboardMode.NUMBER_ROW, Subtype.DEFAULT).await()
+            launch(Dispatchers.Main) {
+                numberRow.computedLayout = layout
+            }
         }
         val clipboardSuggestion = smartbarView.findViewById<Button>(R.id.clipboard_suggestion)
         clipboardSuggestion.setOnClickListener(clipboardSuggestionViewOnClickListener)

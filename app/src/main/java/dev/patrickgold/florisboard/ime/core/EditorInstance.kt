@@ -89,9 +89,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
         private set
     var selection: Selection = Selection(this)
         private set
-    val cachedText: String
-        get() = cachedTextInternal.toString()
-    private var cachedTextInternal: StringBuilder = StringBuilder("")
+    var cachedText: String = ""
 
     companion object {
         fun default(): EditorInstance {
@@ -152,10 +150,17 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      * @returns True on success, false if an error occurred or the input connection is invalid.
      */
     fun commitCompletion(text: String): Boolean {
+        val ic = ims?.currentInputConnection ?: return false
         return if (isRawInputEditor) {
             false
         } else {
-            false // TODO: complete text here
+            ic.beginBatchEdit()
+            ic.setComposingText(text, 1)
+            markComposingRegion(null)
+            updateEditorState()
+            reevaluateCurrentWord()
+            ic.endBatchEdit()
+            true
         }
     }
 
@@ -173,28 +178,19 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      */
     fun commitText(text: String): Boolean {
         val ic = ims?.currentInputConnection ?: return false
-        if (isRawInputEditor) {
-            return ic.commitText(text, 1)
+        return if (isRawInputEditor) {
+            ic.commitText(text, 1)
         } else {
             ic.beginBatchEdit()
             markComposingRegion(null)
-            if (selection.isCursorMode) {
-                cachedTextInternal.insert(selection.start, text)
-            } else if (selection.isSelectionMode) {
-                cachedTextInternal.replace(selection.start, selection.end, text)
-            }
-            selection.apply {
-                start += text.length
-                end = start
-            }
-            reevaluateCurrentWord()
             ic.commitText(text, 1)
+            updateEditorState()
+            reevaluateCurrentWord()
             if (isComposingEnabled) {
                 markComposingRegion(currentWord)
             }
-            ic.setSelection(selection.start, selection.end)
             ic.endBatchEdit()
-            return true
+            true
         }
     }
 
@@ -214,24 +210,15 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
             markComposingRegion(null)
             if (selection.isCursorMode && selection.start > 0) {
                 val length = detectLastUnicodeCharacterLengthBeforeCursor()
-                cachedTextInternal.replace(selection.start - length, selection.start, "")
-                selection.apply {
-                    start -= length
-                    end = start
-                }
                 ic.deleteSurroundingText(length, 0)
             } else if (selection.isSelectionMode) {
-                cachedTextInternal.replace(selection.start, selection.end, "")
-                selection.apply {
-                    end = start
-                }
                 ic.commitText("", 1)
             }
+            updateEditorState()
             reevaluateCurrentWord()
             if (isComposingEnabled) {
                 markComposingRegion(currentWord)
             }
-            ic.setSelection(selection.start, selection.end)
             ic.endBatchEdit()
             return true
         }
@@ -249,24 +236,18 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      */
     fun deleteWordsBeforeCursor(n: Int): Boolean {
         val ic = ims?.currentInputConnection ?: return false
-        if (n < 1 || isRawInputEditor) {
-            return false
+        return if (n < 1 || isRawInputEditor) {
+            false
         } else {
             ic.beginBatchEdit()
             markComposingRegion(null)
             if (currentWord.isValid) {
-                cachedTextInternal.replace(currentWord.start, currentWord.end, "")
-                selection.apply {
-                    start = currentWord.start
-                    end = start
-                }
                 ic.setSelection(currentWord.start, currentWord.end)
                 ic.commitText("", 1)
             }
             reevaluateCurrentWord()
-            ic.setSelection(selection.start, selection.end)
             ic.endBatchEdit()
-            return true
+            true
         }
     }
 
@@ -283,9 +264,9 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
         if (!selection.isValid || n < 1 || isRawInputEditor) {
             return ""
         }
-        val from = selection.end
-        val to = (selection.end + n).coerceAtMost(cachedTextInternal.length)
-        return cachedTextInternal.substring(from, to)
+        val from = selection.end.coerceIn(0, cachedText.length)
+        val to = (selection.end + n).coerceIn(0, cachedText.length)
+        return cachedText.substring(from, to)
     }
 
     /**
@@ -301,9 +282,9 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
         if (!selection.isValid || n < 1 || isRawInputEditor) {
             return ""
         }
-        val from = (selection.start - n).coerceAtLeast(0)
-        val to = selection.start
-        return cachedTextInternal.substring(from, to)
+        val from = (selection.start - n).coerceIn(0, cachedText.length)
+        val to = selection.start.coerceIn(0, cachedText.length)
+        return cachedText.substring(from, to)
     }
 
     /**
@@ -406,7 +387,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
         var charIndex = 0
         var charLength = 0
         var charShouldGlue = false
-        val textToSearch = cachedTextInternal.substring(0, selection.start.coerceAtMost(cachedTextInternal.length))
+        val textToSearch = cachedText.substring(0, selection.start.coerceAtMost(cachedText.length))
         var i = 0
         while (i < textToSearch.length) {
             val cp = textToSearch.codePointAt(i)
@@ -507,19 +488,19 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
             ExtractedTextRequest(), 0
         )
         val text = et?.text
-        cachedTextInternal.setLength(0)
         if (ic == null || et == null || text == null) {
             isRawInputEditor = true
+            cachedText = ""
             selection.apply {
                 start = -1
                 end = -1
             }
         } else {
             isRawInputEditor = false
-            cachedTextInternal.append(text)
+            cachedText = text.toString()
             selection.apply {
-                start = et.selectionStart.coerceAtMost(cachedTextInternal.length)
-                end = et.selectionEnd.coerceAtMost(cachedTextInternal.length)
+                start = et.selectionStart.coerceAtMost(cachedText.length)
+                end = et.selectionEnd.coerceAtMost(cachedText.length)
             }
         }
         reevaluateCurrentWord()
