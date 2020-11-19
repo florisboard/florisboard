@@ -55,4 +55,6 @@
         <item name="android:navigationBarColor">@color/navigationBarColor</item>
     </style>
 
+    <style name="CrashDialogTheme" parent="Theme.AppCompat.DayNight"/>
+
 </resources>

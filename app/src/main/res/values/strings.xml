@@ -224,4 +224,16 @@
     <string name="setup__make_default__text_after_switch">Successfully switched the default keyboard to FlorisBoard!</string>
 
     <string name="setup__finish__title">Setup finished!</string>
+
+    <!-- Crash Dialog strings -->
+    <string name="crash_dialog__title">FlorisBoard error report</string>
+    <string name="crash_dialog__description">Sorry for the inconvenience, but FlorisBoard has crashed due to an unexpected error.\n\nIf you wish to report this error, click on "Copy to clipboard", then on the "Open bug report" button. Fill out the bug report and paste the log. This helps in making FlorisBoard better and more stable for everyone. Thank you!</string>
+    <string name="crash_dialog__copy_to_clipboard">Copy to clipboard</string>
+    <string name="crash_dialog__open_bug_report_form">Open bug report form (github.com)</string>
+    <string name="crash_dialog__close">Close</string>
+    <string name="crash_notification_channel__title">FlorisBoard error reports</string>
+    <string name="crash_once_notification__title">FlorisBoard has stopped working…</string>
+    <string name="crash_once_notification__body">Tap to view error details</string>
+    <string name="crash_multiple_notification__title">FlorisBoard seems to stop working repeatedly…</string>
+    <string name="crash_multiple_notification__body">Falling back to previous keyboard to stop infinite crash loop. Tap to view error details</string>
 </resources>

@@ -21,6 +21,7 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
+        android:name=".ime.core.FlorisApplication"
         android:allowBackup="false"
         android:extractNativeLibs="false"
         android:icon="@mipmap/ic_launcher"
@@ -89,6 +90,13 @@
             android:label="@string/setup__title"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:theme="@style/SettingsTheme"/>
+
+        <!-- Crash Dialog Activity -->
+        <activity
+            android:name="dev.patrickgold.florisboard.crashutility.CrashDialogActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/crash_dialog__title"
+            android:theme="@style/CrashDialogTheme"/>
 
     </application>
 

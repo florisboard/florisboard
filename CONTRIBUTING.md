@@ -77,4 +77,5 @@ is and how to solve it.
 
 ### Capturing ADB debug logs
 
-[[ TODO: create tutorial ]]
+Logs are captured by FlorisBoard's crash handler, which gives you the
+ability to copy it to the clipboard and paste it in GitHub.

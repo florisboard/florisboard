@@ -27,8 +27,8 @@ assignees: ''
 3. Scroll down to '....'
 4. See error
 
-<!--
+<!-- (remove this line if you paste a log)
 ```
 If applicable, paste the captured debug log here.
 ```
--->
+(remove this line if you paste a log) -->

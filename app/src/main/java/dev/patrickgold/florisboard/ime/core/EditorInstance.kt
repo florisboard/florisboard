@@ -24,7 +24,6 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedTextRequest
 import androidx.annotation.RequiresApi
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import java.lang.StringBuilder
 
 // Constants for detectLastUnicodeCharacterLengthBeforeCursor method
 private const val LIGHT_SKIN_TONE           = 0x1F3FB
