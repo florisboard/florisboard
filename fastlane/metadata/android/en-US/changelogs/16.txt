@@ -1,0 +1,5 @@
+- Add clipboard content suggestions (#38)
+- Add support for raw input editors (like terminal apps, etc.)
+- Add crash handler and error form
+- Improve layout of Smartbar and number row (#31)
+- Rework core to fix potential crashes when entering text
