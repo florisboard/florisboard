@@ -39,7 +39,7 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
     /**
      * Loads the layout for the specified type and name.
      *
-     * @returns the [LayoutData] or null.
+     * @return the [LayoutData] or null.
      */
     private fun loadLayout(ltn: LTN?) = loadLayout(ltn?.first, ltn?.second)
     private fun loadLayout(type: LayoutType?, name: String?): LayoutData? {
@@ -106,7 +106,7 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
      * @param main The main layout type and name.
      * @param modifier The modifier (mod) layout type and name.
      * @param extension The extension layout type and name.
-     * @returns a [ComputedLayoutData] object, regardless of the specified LTNs or errors.
+     * @return a [ComputedLayoutData] object, regardless of the specified LTNs or errors.
      */
     private suspend fun mergeLayoutsAsync(
         keyboardMode: KeyboardMode,
@@ -246,9 +246,6 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
             KeyboardMode.EDITING -> {
                 // Layout for this mode is defined in custom layout xml file.
             }
-            KeyboardMode.NUMBER_ROW -> {
-                extension = LTN(LayoutType.EXTENSION, "number_row")
-            }
             KeyboardMode.NUMERIC -> {
                 main = LTN(LayoutType.NUMERIC, "default")
             }
@@ -269,6 +266,12 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
             KeyboardMode.SYMBOLS2 -> {
                 main = LTN(LayoutType.SYMBOLS2, "western_default")
                 modifier = LTN(LayoutType.SYMBOLS2_MOD, "default")
+            }
+            KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW -> {
+                extension = LTN(LayoutType.EXTENSION, "clipboard_cursor_row")
+            }
+            KeyboardMode.SMARTBAR_NUMBER_ROW -> {
+                extension = LTN(LayoutType.EXTENSION, "number_row")
             }
         }
 

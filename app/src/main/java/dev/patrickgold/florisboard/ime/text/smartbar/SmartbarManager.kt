@@ -2,7 +2,6 @@ package dev.patrickgold.florisboard.ime.text.smartbar
 
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -11,10 +10,9 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.EditorInstance
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.TextInputManager
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import kotlinx.coroutines.CoroutineScope
@@ -30,13 +28,14 @@ class SmartbarManager private constructor() : CoroutineScope by MainScope(),
     private val florisboard: FlorisBoard = FlorisBoard.getInstance()
     private val activeEditorInstance: EditorInstance
         get() = florisboard.activeEditorInstance
+    private val prefs: PrefHelper
+        get() = florisboard.prefs
 
     private val textInputManager: TextInputManager = TextInputManager.getInstance()
     private var shouldSuggestClipboardContents: Boolean = false
     private var smartbarView: SmartbarView? = null
 
     var isQuickActionsVisible: Boolean = false
-        //set(value) { field = value; updateActiveContainerVisibility() }
 
     private val candidateViewOnClickListener = View.OnClickListener { v ->
         val view = v as Button
@@ -48,25 +47,10 @@ class SmartbarManager private constructor() : CoroutineScope by MainScope(),
     private val candidateViewOnLongClickListener = View.OnLongClickListener { v ->
         true
     }
-    private val clipboardSuggestionViewOnClickListener = View.OnClickListener { v ->
-        val view = v as Button
-        val text = view.text.toString()
-        if (text.isNotEmpty()) {
-            florisboard.activeEditorInstance.commitText(text)
-            shouldSuggestClipboardContents = false
-        }
-    }
-    private val keyButtonOnClickListener = View.OnClickListener { v ->
-        val keyData = when (v.id) {
-            R.id.cc_select_all -> KeyData(KeyCode.CLIPBOARD_SELECT_ALL)
-            R.id.cc_copy -> KeyData(KeyCode.CLIPBOARD_COPY)
-            R.id.cc_arrow_left -> KeyData(KeyCode.ARROW_LEFT)
-            R.id.cc_arrow_right -> KeyData(KeyCode.ARROW_RIGHT)
-            R.id.cc_cut -> KeyData(KeyCode.CLIPBOARD_CUT)
-            R.id.cc_paste -> KeyData(KeyCode.CLIPBOARD_PASTE)
-            else -> KeyData(0)
-        }
-        florisboard.textInputManager.sendKeyPress(keyData)
+    private val clipboardSuggestionViewOnClickListener = View.OnClickListener {
+        activeEditorInstance.performClipboardPaste()
+        shouldSuggestClipboardContents = false
+        updateActiveContainerVisibility()
     }
     private val quickActionOnClickListener = View.OnClickListener { v ->
         when (v.id) {
@@ -123,17 +107,21 @@ class SmartbarManager private constructor() : CoroutineScope by MainScope(),
         launch(Dispatchers.Default) {
             val numberRow = smartbarView.findViewById<KeyboardView>(R.id.smartbar_variant_number_row)
             numberRow.isSmartbarKeyboardView = true
-            val layout = textInputManager.layoutManager.fetchComputedLayoutAsync(KeyboardMode.NUMBER_ROW, Subtype.DEFAULT).await()
+            val layout = textInputManager.layoutManager.fetchComputedLayoutAsync(KeyboardMode.SMARTBAR_NUMBER_ROW, Subtype.DEFAULT).await()
             launch(Dispatchers.Main) {
                 numberRow.computedLayout = layout
+                numberRow.updateVisibility()
             }
         }
         val clipboardSuggestion = smartbarView.findViewById<Button>(R.id.clipboard_suggestion)
         clipboardSuggestion.setOnClickListener(clipboardSuggestionViewOnClickListener)
-        val clipboardCursorRow = smartbarView.findViewById<ViewGroup>(R.id.clipboard_cursor_row)
-        for (clipboardCursorRowButton in clipboardCursorRow.children) {
-            if (clipboardCursorRowButton is ImageButton) {
-                clipboardCursorRowButton.setOnClickListener(keyButtonOnClickListener)
+        launch(Dispatchers.Default) {
+            val ccRow = smartbarView.findViewById<KeyboardView>(R.id.clipboard_cursor_row)
+            ccRow.isSmartbarKeyboardView = true
+            val layout = textInputManager.layoutManager.fetchComputedLayoutAsync(KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW, Subtype.DEFAULT).await()
+            launch(Dispatchers.Main) {
+                ccRow.computedLayout = layout
+                ccRow.updateVisibility()
             }
         }
         val backButton = smartbarView.findViewById<View>(R.id.back_button)
@@ -176,7 +164,6 @@ class SmartbarManager private constructor() : CoroutineScope by MainScope(),
     }
 
     override fun onUpdateSelection() {
-        shouldSuggestClipboardContents = false
         updateSmartbarUI()
     }
 
@@ -195,24 +182,27 @@ class SmartbarManager private constructor() : CoroutineScope by MainScope(),
     }
 
     override fun onPrimaryClipChanged() {
-        shouldSuggestClipboardContents = true
-        updateActiveContainerVisibility()
+        if (prefs.suggestion.enabled && prefs.suggestion.suggestClipboardContent) {
+            shouldSuggestClipboardContents = true
+            updateActiveContainerVisibility()
+        }
+    }
+
+    fun resetClipboardSuggestion() {
+        if (prefs.suggestion.enabled && prefs.suggestion.suggestClipboardContent) {
+            shouldSuggestClipboardContents = false
+            updateActiveContainerVisibility()
+        }
     }
 
     private fun updateSmartbarUI() {
         val ei = activeEditorInstance
-        val isCursorMode = ei.selection.isCursorMode
-        val isSelectionMode = ei.selection.isSelectionMode
-        if (isCursorMode && ei.isComposingEnabled) {
+        if (ei.selection.isCursorMode && ei.isComposingEnabled) {
             generateCandidatesFromComposing(ei.currentWord.text)
         }
         updateActiveContainerVisibility()
-        smartbarView?.findViewById<View>(R.id.cc_select_all)?.isEnabled = !ei.isRawInputEditor
-        smartbarView?.findViewById<View>(R.id.cc_cut)?.isEnabled = isSelectionMode && !ei.isRawInputEditor
-        smartbarView?.findViewById<View>(R.id.cc_copy)?.isEnabled = isSelectionMode && !ei.isRawInputEditor
-        smartbarView?.findViewById<View>(R.id.cc_paste)?.isEnabled =
-            florisboard.clipboardManager?.hasPrimaryClip() ?: false
-        smartbarView?.invalidate()
+        val ccRow = smartbarView?.findViewById<KeyboardView>(R.id.clipboard_cursor_row)
+        ccRow?.updateVisibility()
     }
 
     private fun updateActiveContainerVisibility() {
@@ -224,12 +214,26 @@ class SmartbarManager private constructor() : CoroutineScope by MainScope(),
             smartbarView.findViewById<View>(R.id.quick_action_toggle)?.rotation = -180.0f
         } else {
             when {
+                textInputManager.getActiveKeyboardMode() == KeyboardMode.EDITING -> {
+                    smartbarView.setActiveVariant(R.id.smartbar_variant_back_only)
+                    smartbarView.setActiveContainer(null)
+                }
                 activeEditorInstance.isComposingEnabled -> {
                     smartbarView.setActiveVariant(R.id.smartbar_variant_default)
                     val containerId = if (shouldSuggestClipboardContents && florisboard.clipboardManager?.hasPrimaryClip() == true) {
                         val clipboardSuggestion = smartbarView.findViewById<Button>(R.id.clipboard_suggestion)
                         val item = florisboard.clipboardManager?.primaryClip?.getItemAt(0)
-                        clipboardSuggestion?.text = item?.text ?: "(error while retrieving clipboard data)"
+                        when {
+                            item?.text != null -> {
+                                clipboardSuggestion?.text = item.text
+                            }
+                            item?.uri != null -> {
+                                clipboardSuggestion?.text = "(Image) " + item.uri.toString()
+                            }
+                            else -> {
+                                clipboardSuggestion?.text = item?.text ?: "(Error while retrieving clipboard data)"
+                            }
+                        }
                         R.id.clipboard_suggestion_row
                     } else {
                         R.id.candidates
@@ -237,7 +241,7 @@ class SmartbarManager private constructor() : CoroutineScope by MainScope(),
                     smartbarView.setActiveContainer(containerId)
                 }
                 textInputManager.getActiveKeyboardMode() == KeyboardMode.CHARACTERS -> {
-                    when (florisboard.prefs.suggestion.showInstead) {
+                    when (prefs.suggestion.showInstead) {
                         "number_row" -> {
                             smartbarView.setActiveVariant(R.id.smartbar_variant_number_row)
                             smartbarView.setActiveContainer(null)

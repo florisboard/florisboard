@@ -88,7 +88,7 @@ data class Theme(
          * @param context A reference to the current [Context]. Used to request
          *  asset file.
          * @param path The path to the json theme file in the asset folder.
-         * @returns A parsed [Theme] or null. A null value may indicate that
+         * @return A parsed [Theme] or null. A null value may indicate that
          *  the file does not exist or that an error during the reading
          *  of the file occurred.
          */
@@ -105,7 +105,7 @@ data class Theme(
          * Loads a theme from the given [rawData].
          *
          * @param rawData The raw json theme file as a string.
-         * @returns A parsed [Theme] or null. A null value may indicate that an error
+         * @return A parsed [Theme] or null. A null value may indicate that an error
          * during the reading of the [rawData] occurred.
          */
         fun fromJsonString(rawData: String): Theme? {
@@ -259,7 +259,7 @@ data class ThemeMetaOnly(
          * @param context A reference to the current [Context]. Used to request
          *  asset file.
          * @param path The path to the json theme file in the asset folder.
-         * @returns [ThemeMetaOnly] or null. A null value may indicate that
+         * @return [ThemeMetaOnly] or null. A null value may indicate that
          *  the file does not exist or that an error during the reading
          *  of the file occurred.
          */
@@ -282,7 +282,7 @@ data class ThemeMetaOnly(
          * @param context A reference to the current [Context]. Used to request
          *  asset file.
          * @param path The path to the dir in the asset folder.
-         * @returns [ThemeMetaOnly] or null. A null value may indicate that
+         * @return [ThemeMetaOnly] or null. A null value may indicate that
          *  the file does not exist or that an error during the reading
          *  of the file occurred.
          */

@@ -171,16 +171,23 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
         if (keyboardView is KeyboardView) {
             when (keyboardView.resources.configuration.orientation) {
                 Configuration.ORIENTATION_LANDSCAPE -> {
-                    keyPopupWidth = (keyboardView.desiredKeyWidth * 0.6f).toInt()
-                    keyPopupHeight = (keyboardView.desiredKeyHeight * 3.0f).toInt()
+                    if (keyboardView.isSmartbarKeyboardView) {
+                        keyPopupWidth = (keyView.measuredWidth * 0.6f).toInt()
+                        keyPopupHeight = (keyboardView.desiredKeyHeight * 3.0f * 1.2f).toInt()
+                    } else {
+                        keyPopupWidth = (keyboardView.desiredKeyWidth * 0.6f).toInt()
+                        keyPopupHeight = (keyboardView.desiredKeyHeight * 3.0f).toInt()
+                    }
                 }
                 else -> {
-                    keyPopupWidth = (keyboardView.desiredKeyWidth * 1.1f).toInt()
-                    keyPopupHeight = (keyboardView.desiredKeyHeight * 2.5f).toInt()
+                    if (keyboardView.isSmartbarKeyboardView) {
+                        keyPopupWidth = (keyView.measuredWidth * 1.1f).toInt()
+                        keyPopupHeight = (keyboardView.desiredKeyHeight * 2.5f * 1.2f).toInt()
+                    } else {
+                        keyPopupWidth = (keyboardView.desiredKeyWidth * 1.1f).toInt()
+                        keyPopupHeight = (keyboardView.desiredKeyHeight * 2.5f).toInt()
+                    }
                 }
-            }
-            if (keyboardView.isSmartbarKeyboardView) {
-                keyPopupHeight = (keyPopupHeight * 1.2f).toInt()
             }
         } else if (keyboardView is EmojiKeyboardView) {
             keyPopupWidth = keyView.measuredWidth

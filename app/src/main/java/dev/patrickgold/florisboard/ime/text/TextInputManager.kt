@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.text
 
-import android.content.ClipData
 import android.content.Context
 import android.os.Handler
 import android.util.Log
@@ -145,7 +144,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                 setActiveKeyboardMode(activeKeyboardMode)
             }
             for (mode in KeyboardMode.values()) {
-                if (mode != activeKeyboardMode && mode != KeyboardMode.NUMBER_ROW) {
+                if (mode != activeKeyboardMode && mode != KeyboardMode.SMARTBAR_NUMBER_ROW) {
                     addKeyboardView(mode)
                 }
             }
@@ -210,9 +209,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             KeyboardMode.PHONE,
             KeyboardMode.PHONE2 -> false
             else -> keyVariation != KeyVariation.PASSWORD &&
-                    florisboard.prefs.suggestion.enabled &&
+                    florisboard.prefs.suggestion.enabled// &&
                     //!instance.inputAttributes.flagTextAutoComplete &&
-                    !instance.inputAttributes.flagTextNoSuggestions
+                    //!instance.inputAttributes.flagTextNoSuggestions
         }
         if (!florisboard.prefs.correction.rememberCapsLockState) {
             capsLock = false
@@ -516,40 +515,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     }
 
     /**
-     * Handles a [KeyCode.CLIPBOARD_CUT] event.
-     * TODO: handle other data than text too, e.g. Uri, Intent, ...
-     */
-    private fun handleClipboardCut() {
-        val selectedText = activeEditorInstance.selection.text
-        florisboard.clipboardManager
-            ?.setPrimaryClip(ClipData.newPlainText(selectedText, selectedText))
-        activeEditorInstance.commitText("")
-    }
-
-    /**
-     * Handles a [KeyCode.CLIPBOARD_COPY] event.
-     * TODO: handle other data than text too, e.g. Uri, Intent, ...
-     */
-    private fun handleClipboardCopy() {
-        val selectedText = activeEditorInstance.selection.text
-        florisboard.clipboardManager
-            ?.setPrimaryClip(ClipData.newPlainText(selectedText, selectedText))
-        activeEditorInstance.apply { setSelection(selection.end, selection.end) }
-    }
-
-    /**
-     * Handles a [KeyCode.CLIPBOARD_PASTE] event.
-     * TODO: handle other data than text too, e.g. Uri, Intent, ...
-     */
-    private fun handleClipboardPaste() {
-        val item = florisboard.clipboardManager?.primaryClip?.getItemAt(0)
-        val pasteText = item?.text
-        if (pasteText != null) {
-            activeEditorInstance.commitText(pasteText.toString())
-        }
-    }
-
-    /**
      * Handles a [KeyCode.CLIPBOARD_SELECT] event.
      */
     private fun handleClipboardSelect() = activeEditorInstance.apply {
@@ -589,13 +554,22 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             KeyCode.ARROW_UP,
             KeyCode.MOVE_HOME,
             KeyCode.MOVE_END -> handleArrow(keyData.code)
-            KeyCode.CLIPBOARD_CUT -> handleClipboardCut()
-            KeyCode.CLIPBOARD_COPY -> handleClipboardCopy()
-            KeyCode.CLIPBOARD_PASTE -> handleClipboardPaste()
+            KeyCode.CLIPBOARD_CUT -> activeEditorInstance.performClipboardCut()
+            KeyCode.CLIPBOARD_COPY -> activeEditorInstance.performClipboardCopy()
+            KeyCode.CLIPBOARD_PASTE -> {
+                activeEditorInstance.performClipboardPaste()
+                smartbarManager.resetClipboardSuggestion()
+            }
             KeyCode.CLIPBOARD_SELECT -> handleClipboardSelect()
             KeyCode.CLIPBOARD_SELECT_ALL -> handleClipboardSelectAll()
-            KeyCode.DELETE -> handleDelete()
-            KeyCode.ENTER -> handleEnter()
+            KeyCode.DELETE -> {
+                handleDelete()
+                smartbarManager.resetClipboardSuggestion()
+            }
+            KeyCode.ENTER -> {
+                handleEnter()
+                smartbarManager.resetClipboardSuggestion()
+            }
             KeyCode.LANGUAGE_SWITCH -> florisboard.switchToNextSubtype()
             KeyCode.SETTINGS -> florisboard.launchSettings()
             KeyCode.SHIFT -> handleShift()
@@ -657,6 +631,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                         }
                     }
                 }
+                smartbarManager.resetClipboardSuggestion()
             }
         }
         if (keyData.code != KeyCode.SHIFT && !capsLock) {

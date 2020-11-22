@@ -146,7 +146,7 @@ class DialogSeekBarPreference : Preference {
      * handle. (Android's SeekBar step is fixed at 1 and min at 0)
      *
      * @param actual The actual value.
-     * @returns the internal value which is used to allow different min and step values.
+     * @return the internal value which is used to allow different min and step values.
      */
     private fun actualValueToSeekBarProgress(actual: Int): Int {
         return (actual - min) / step
@@ -156,7 +156,7 @@ class DialogSeekBarPreference : Preference {
      * Converts the Android SeekBar value to the actual value.
      *
      * @param progress The progress value of the SeekBar.
-     * @returns the actual value which is ready to use.
+     * @return the actual value which is ready to use.
      */
     private fun seekBarProgressToActualValue(progress: Int): Int {
         return (progress * step) + min

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/smartbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -50,7 +49,7 @@
 
             <Button
                 android:id="@+id/clipboard_suggestion"
-                android:drawableStart="@drawable/ic_content_paste"
+                android:drawableStart="@drawable/ic_content_paste_with_padding"
                 style="@style/SmartbarQuickAction.ClipboardSuggestion"/>
 
         </LinearLayout>
@@ -88,50 +87,10 @@
 
         </LinearLayout>
 
-        <!-- TODO: integrate a KeyboardView instead of hardcoding these buttons -->
-        <LinearLayout
+        <dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
             android:id="@+id/clipboard_cursor_row"
             style="@style/SmartbarContainer"
-            android:visibility="gone"
-            tools:ignore="HardcodedText">
-
-            <ImageButton
-                android:id="@+id/cc_select_all"
-                style="@style/SmartbarCandidate"
-                android:src="@drawable/ic_select_all"
-                android:tint="@drawable/button_key_enable_color_selector"/>
-
-            <ImageButton
-                android:id="@+id/cc_copy"
-                style="@style/SmartbarCandidate"
-                android:src="@drawable/ic_content_copy"
-                android:tint="@drawable/button_key_enable_color_selector"/>
-
-            <ImageButton
-                android:id="@+id/cc_arrow_left"
-                style="@style/SmartbarCandidate"
-                android:src="@drawable/ic_keyboard_arrow_left"
-                android:tint="@drawable/button_key_enable_color_selector"/>
-
-            <ImageButton
-                android:id="@+id/cc_arrow_right"
-                style="@style/SmartbarCandidate"
-                android:src="@drawable/ic_keyboard_arrow_right"
-                android:tint="@drawable/button_key_enable_color_selector"/>
-
-            <ImageButton
-                android:id="@+id/cc_cut"
-                style="@style/SmartbarCandidate"
-                android:src="@drawable/ic_content_cut"
-                android:tint="@drawable/button_key_enable_color_selector"/>
-
-            <ImageButton
-                android:id="@+id/cc_paste"
-                style="@style/SmartbarCandidate"
-                android:src="@drawable/ic_content_paste"
-                android:tint="@drawable/button_key_enable_color_selector"/>
-
-        </LinearLayout>
+            android:visibility="gone"/>
 
         <!-- Placeholder on the right which reserves the space for a second button -->
         <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton

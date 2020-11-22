@@ -71,7 +71,7 @@ class SubtypeManager(
      * Loads the [FlorisBoard.ImeConfig] from ime/config.json.
      *
      * @param path The path to to IME config file.
-     * @returns The [FlorisBoard.ImeConfig] or a default config.
+     * @return The [FlorisBoard.ImeConfig] or a default config.
      */
     private fun loadImeConfig(path: String): FlorisBoard.ImeConfig {
         val rawJsonData: String = try {
@@ -93,7 +93,7 @@ class SubtypeManager(
      * Adds a given [subtypeToAdd] to the subtype list, if it does not exist.
      *
      * @param subtypeToAdd The subtype which should be added.
-     * @returns True if the subtype was added, false otherwise. A return value of false indicates
+     * @return True if the subtype was added, false otherwise. A return value of false indicates
      *  that the subtype already exists.
      */
     private fun addSubtype(subtypeToAdd: Subtype): Boolean {
@@ -112,7 +112,7 @@ class SubtypeManager(
      *
      * @param locale The locale of the subtype to be added.
      * @param layoutName The layout name of the subtype to be added.
-     * @returns True if the subtype was added, false otherwise. A return value of false indicates
+     * @return True if the subtype was added, false otherwise. A return value of false indicates
      *  that the subtype already exists.
      */
     fun addSubtype(locale: Locale, layoutName: String): Boolean {
@@ -129,7 +129,7 @@ class SubtypeManager(
      * Gets the active subtype and returns it. If the activeSubtypeId points to a non-existent
      * subtype, this method tries to determine a new active subtype.
      *
-     * @returns The active subtype or null, if the subtype list is empty or no new active subtype
+     * @return The active subtype or null, if the subtype list is empty or no new active subtype
      *  could be determined.
      */
     fun getActiveSubtype(): Subtype? {
@@ -152,7 +152,7 @@ class SubtypeManager(
      * Gets a subtype by the given [id].
      *
      * @param id The id of the subtype you want to get.
-     * @returns The subtype or null, if no matching subtype could be found.
+     * @return The subtype or null, if no matching subtype could be found.
      */
     fun getSubtypeById(id: Int): Subtype? {
         for (subtype in subtypes) {
@@ -167,7 +167,7 @@ class SubtypeManager(
      * Gets the default system subtype for a given [locale].
      *
      * @param locale The locale of the default system subtype to get.
-     * @returns The default system locale or null, if no matching default system subtype could be
+     * @return The default system locale or null, if no matching default system subtype could be
      *  found.
      */
     fun getDefaultSubtypeForLocale(locale: Locale): DefaultSubtype? {
@@ -220,7 +220,7 @@ class SubtypeManager(
     /**
      * Switch to the previous subtype in the subtype list if possible.
      *
-     * @returns The new active subtype or null if the determination process failed.
+     * @return The new active subtype or null if the determination process failed.
      */
     fun switchToPrevSubtype(): Subtype? {
         val subtypeList = subtypes
@@ -248,7 +248,7 @@ class SubtypeManager(
     /**
      * Switch to the next subtype in the subtype list if possible.
      *
-     * @returns The new active subtype or null if the determination process failed.
+     * @return The new active subtype or null if the determination process failed.
      */
     fun switchToNextSubtype(): Subtype? {
         val subtypeList = subtypes

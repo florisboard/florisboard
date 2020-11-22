@@ -59,7 +59,7 @@
     </style>
 
     <style name="SmartbarQuickAction.ClipboardSuggestion">
-        <item name="android:layout_width">160dp</item>
+        <item name="android:layout_width">200dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_weight">0</item>
         <item name="android:background">@drawable/shape_rect_rounded_2</item>

@@ -136,6 +136,8 @@
     <string name="pref__suggestion__show_instead__label">What to show instead of suggestions</string>
     <string name="pref__suggestion__show_instead__number_row">Number row</string>
     <string name="pref__suggestion__show_instead__clipboard_cursor_tools">Clipboard cursor tools</string>
+    <string name="pref__suggestion__suggest_clipboard_content__label">Clipboard content suggestions</string>
+    <string name="pref__suggestion__suggest_clipboard_content__summary">Suggest clipboard content to paste if previously copied</string>
     <string name="pref__suggestion__use_pref_words__label">[NYI] Next-word suggestions</string>
     <string name="pref__suggestion__use_pref_words__summary">Use previous words for generating suggestions</string>
     <string name="pref__correction__title">Corrections</string>

@@ -24,7 +24,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
-import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.graphics.BlendModeColorFilterCompat
 import androidx.core.graphics.BlendModeCompat
@@ -32,6 +31,7 @@ import androidx.core.view.children
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.ImeOptions
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
@@ -204,7 +204,7 @@ class KeyView(
      * go look at which child the pointer is actually above.
      */
     fun onFlorisTouchEvent(event: MotionEvent?): Boolean {
-        event ?: return false
+        if (event == null || !isEnabled) return false
         if (swipeGestureDetector.onTouchEvent(event)) {
             isKeyPressed = false
             osHandler?.removeCallbacksAndMessages(null)
@@ -404,13 +404,39 @@ class KeyView(
     }
 
     /**
+     * Updates the enabled state of a key depending on the [data] and its parameters.
+     */
+    private fun updateEnabledState() {
+        isEnabled = when (data.code) {
+            KeyCode.CLIPBOARD_COPY,
+            KeyCode.CLIPBOARD_CUT -> {
+                florisboard?.activeEditorInstance?.selection?.isSelectionMode == true &&
+                        florisboard?.activeEditorInstance?.isRawInputEditor == false
+            }
+            KeyCode.CLIPBOARD_PASTE -> florisboard?.clipboardManager?.hasPrimaryClip() == true
+            KeyCode.CLIPBOARD_SELECT_ALL -> {
+                florisboard?.activeEditorInstance?.isRawInputEditor == false
+            }
+            else -> true
+        }
+        if (!isEnabled) {
+            isKeyPressed = false
+        }
+    }
+
+    /**
      * Updates the background depending on [isKeyPressed] and [data].
      */
     private fun updateKeyPressedBackground() {
         when {
             keyboardView.isSmartbarKeyboardView -> {
-                setBackgroundTintColor2(this, prefs.theme.smartbarBgColor)
                 elevation = 0.0f
+                setBackgroundTintColor2(
+                    this, when {
+                        isKeyPressed && isEnabled -> prefs.theme.smartbarButtonBgColor
+                        else -> prefs.theme.smartbarBgColor
+                    }
+                )
             }
             else -> {
                 elevation = 4.0f
@@ -418,7 +444,7 @@ class KeyView(
                     KeyCode.ENTER -> {
                         setBackgroundTintColor2(
                             this, when {
-                                isKeyPressed -> prefs.theme.keyEnterBgColorPressed
+                                isKeyPressed && isEnabled -> prefs.theme.keyEnterBgColorPressed
                                 else -> prefs.theme.keyEnterBgColor
                             }
                         )
@@ -426,7 +452,7 @@ class KeyView(
                     KeyCode.SHIFT -> {
                         setBackgroundTintColor2(
                             this, when {
-                                isKeyPressed -> prefs.theme.keyShiftBgColorPressed
+                                isKeyPressed && isEnabled -> prefs.theme.keyShiftBgColorPressed
                                 else -> prefs.theme.keyShiftBgColor
                             }
                         )
@@ -434,7 +460,7 @@ class KeyView(
                     else -> {
                         setBackgroundTintColor2(
                             this, when {
-                                isKeyPressed -> prefs.theme.keyBgColorPressed
+                                isKeyPressed && isEnabled -> prefs.theme.keyBgColorPressed
                                 else -> prefs.theme.keyBgColor
                             }
                         )
@@ -476,6 +502,7 @@ class KeyView(
      * TextInputManager.
      */
     fun updateVisibility() {
+        updateEnabledState()
         when (data.code) {
             KeyCode.SWITCH_TO_TEXT_CONTEXT,
             KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
@@ -573,24 +600,48 @@ class KeyView(
 
         } else {
             when (data.code) {
+                KeyCode.ARROW_LEFT -> {
+                    drawable = getDrawable(context, R.drawable.ic_keyboard_arrow_left)
+                    drawableColor = prefs.theme.keyFgColor
+                }
+                KeyCode.ARROW_RIGHT -> {
+                    drawable = getDrawable(context, R.drawable.ic_keyboard_arrow_right)
+                    drawableColor = prefs.theme.keyFgColor
+                }
+                KeyCode.CLIPBOARD_COPY -> {
+                    drawable = getDrawable(context, R.drawable.ic_content_copy)
+                    drawableColor = prefs.theme.keyFgColor
+                }
+                KeyCode.CLIPBOARD_CUT -> {
+                    drawable = getDrawable(context, R.drawable.ic_content_cut)
+                    drawableColor = prefs.theme.keyFgColor
+                }
+                KeyCode.CLIPBOARD_PASTE -> {
+                    drawable = getDrawable(context, R.drawable.ic_content_paste)
+                    drawableColor = prefs.theme.keyFgColor
+                }
+                KeyCode.CLIPBOARD_SELECT_ALL -> {
+                    drawable = getDrawable(context, R.drawable.ic_select_all)
+                    drawableColor = prefs.theme.keyFgColor
+                }
                 KeyCode.DELETE -> {
                     drawable = getDrawable(context, R.drawable.ic_backspace)
                     drawableColor = prefs.theme.keyFgColor
                 }
                 KeyCode.ENTER -> {
-                    val action = florisboard?.currentInputEditorInfo?.imeOptions ?: 0
-                    drawable = getDrawable(context, when (action and EditorInfo.IME_MASK_ACTION) {
-                        EditorInfo.IME_ACTION_DONE -> R.drawable.ic_done
-                        EditorInfo.IME_ACTION_GO -> R.drawable.ic_arrow_right_alt
-                        EditorInfo.IME_ACTION_NEXT -> R.drawable.ic_arrow_right_alt
-                        EditorInfo.IME_ACTION_NONE -> R.drawable.ic_keyboard_return
-                        EditorInfo.IME_ACTION_PREVIOUS -> R.drawable.ic_arrow_right_alt
-                        EditorInfo.IME_ACTION_SEARCH -> R.drawable.ic_search
-                        EditorInfo.IME_ACTION_SEND -> R.drawable.ic_send
-                        else -> R.drawable.ic_arrow_right_alt
+                    val imeOptions = florisboard?.activeEditorInstance?.imeOptions ?: ImeOptions.default()
+                    drawable = getDrawable(context, when (imeOptions.action) {
+                        ImeOptions.Action.DONE -> R.drawable.ic_done
+                        ImeOptions.Action.GO -> R.drawable.ic_arrow_right_alt
+                        ImeOptions.Action.NEXT -> R.drawable.ic_arrow_right_alt
+                        ImeOptions.Action.NONE -> R.drawable.ic_keyboard_return
+                        ImeOptions.Action.PREVIOUS -> R.drawable.ic_arrow_right_alt
+                        ImeOptions.Action.SEARCH -> R.drawable.ic_search
+                        ImeOptions.Action.SEND -> R.drawable.ic_send
+                        ImeOptions.Action.UNSPECIFIED -> R.drawable.ic_keyboard_return
                     })
                     drawableColor = prefs.theme.keyEnterFgColor
-                    if (action and EditorInfo.IME_FLAG_NO_ENTER_ACTION > 0) {
+                    if (imeOptions.flagNoEnterAction) {
                         drawable = getDrawable(context, R.drawable.ic_keyboard_return)
                     }
                 }
@@ -667,6 +718,9 @@ class KeyView(
         // Draw drawable
         val drawable = drawable
         if (drawable != null) {
+            if (keyboardView.isSmartbarKeyboardView && !isEnabled) {
+                drawableColor = prefs.theme.smartbarFgColorAlt
+            }
             var marginV = 0
             var marginH = 0
             if (measuredWidth > measuredHeight) {

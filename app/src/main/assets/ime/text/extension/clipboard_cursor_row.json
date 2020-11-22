@@ -1,0 +1,15 @@
+{
+  "type": "extension",
+  "name": "clipboard_cursor_row",
+  "direction": "ltr",
+  "arrangement": [
+    [
+      { "code": -135, "label": "clipboard_select_all", "type": "enter_editing" },
+      { "code": -130, "label": "clipboard_copy", "type": "enter_editing" },
+      { "code":  -20, "label": "arrow_left", "type": "navigation" },
+      { "code":  -21, "label": "arrow_right", "type": "navigation" },
+      { "code": -131, "label": "clipboard_cut", "type": "enter_editing" },
+      { "code": -132, "label": "clipboard_paste", "type": "enter_editing" }
+    ]
+  ]
+}

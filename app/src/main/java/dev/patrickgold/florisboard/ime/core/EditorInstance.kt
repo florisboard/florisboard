@@ -16,12 +16,18 @@
 
 package dev.patrickgold.florisboard.ime.core
 
+import android.content.ClipData
+import android.content.ClipDescription
+import android.content.ClipboardManager
+import android.content.Context
 import android.inputmethodservice.InputMethodService
+import android.net.Uri
 import android.os.Build
 import android.text.InputType
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedTextRequest
+import android.view.inputmethod.InputContentInfo
 import androidx.annotation.RequiresApi
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 
@@ -57,6 +63,7 @@ private val emojiVariationArray: Array<Int> = arrayOf(
  * object which also holds the state of the currently focused input editor.
  */
 class EditorInstance private constructor(private val ims: InputMethodService?) {
+    var contentMimeTypes: Array<out String?>? = null
     val cursorCapsMode: InputAttributes.CapsMode
         get() {
             val ic = ims?.currentInputConnection ?: return InputAttributes.CapsMode.NONE
@@ -90,6 +97,15 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
         private set
     var cachedText: String = ""
 
+    private var clipboardManager: ClipboardManager? = null
+
+    init {
+        val tmpClipboardManager = ims?.getSystemService(Context.CLIPBOARD_SERVICE)
+        if (tmpClipboardManager != null && tmpClipboardManager is ClipboardManager) {
+            clipboardManager = tmpClipboardManager
+        }
+    }
+
     companion object {
         fun default(): EditorInstance {
             return EditorInstance(null)
@@ -98,6 +114,9 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
         fun from(editorInfo: EditorInfo?, ims: InputMethodService?): EditorInstance {
             return if (editorInfo == null) { default() } else {
                 EditorInstance(ims).apply {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+                        contentMimeTypes = editorInfo.contentMimeTypes
+                    }
                     imeOptions = ImeOptions.fromImeOptionsInt(editorInfo.imeOptions)
                     inputAttributes = InputAttributes.fromInputTypeInt(editorInfo.inputType)
                     packageName = editorInfo.packageName
@@ -146,7 +165,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      *
      * @param text The text to complete in this editor's composing region.
      *
-     * @returns True on success, false if an error occurred or the input connection is invalid.
+     * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun commitCompletion(text: String): Boolean {
         val ic = ims?.currentInputConnection ?: return false
@@ -164,6 +183,39 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
     }
 
     /**
+     * Commits the given [content] to this editor instance and adjusts both the cursor position and
+     * composing region, if any.
+     *
+     * @param content The content to commit.
+     *
+     * @return True on success, false if an error occurred or the input connection is invalid.
+     */
+    fun commitContent(content: Uri, description: ClipDescription): Boolean {
+        val ic = ims?.currentInputConnection ?: return false
+        val contentMimeTypes = contentMimeTypes
+        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N_MR1 || contentMimeTypes == null || contentMimeTypes.isEmpty()) {
+            commitText(content.toString())
+        } else {
+            var mimeTypesDoMatch = false
+            for (contentMimeType in contentMimeTypes) {
+                if (description.hasMimeType(contentMimeType)) {
+                    mimeTypesDoMatch = true
+                    break
+                }
+            }
+            if (mimeTypesDoMatch) {
+                ic.beginBatchEdit()
+                markComposingRegion(null)
+                val ret = ic.commitContent(InputContentInfo(content, description), 0, null)
+                ic.endBatchEdit()
+                ret
+            } else {
+                commitText(content.toString())
+            }
+        }
+    }
+
+    /**
      * Commits the given [text] to this editor instance and adjusts both the cursor position and
      * composing region, if any.
      *
@@ -173,7 +225,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      *
      * @param text The text to commit.
      *
-     * @returns True on success, false if an error occurred or the input connection is invalid.
+     * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun commitText(text: String): Boolean {
         val ic = ims?.currentInputConnection ?: return false
@@ -198,7 +250,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      * characters inside this selection will be removed, else only the left-most character from
      * the cursor's position.
      *
-     * @returns True on success, false if an error occurred or the input connection is invalid.
+     * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun deleteBackwards(): Boolean {
         val ic = ims?.currentInputConnection ?: return false
@@ -231,7 +283,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      * @param n The number of words to delete before the cursor. Must be greater than 0 or this
      *  method will fail.
      *
-     * @returns True on success, false if an error occurred or the input connection is invalid.
+     * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun deleteWordsBeforeCursor(n: Int): Boolean {
         val ic = ims?.currentInputConnection ?: return false
@@ -257,7 +309,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      * @param n The number of characters to get after the cursor. Must be greater than 0 or this
      *  method will fail.
      *
-     * @returns [n] or less characters after the cursor.
+     * @return [n] or less characters after the cursor.
      */
     fun getTextAfterCursor(n: Int): String {
         if (!selection.isValid || n < 1 || isRawInputEditor) {
@@ -275,7 +327,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      * @param n The number of characters to get before the cursor. Must be greater than 0 or this
      *  method will fail.
      *
-     * @returns [n] or less characters after the cursor.
+     * @return [n] or less characters after the cursor.
      */
     fun getTextBeforeCursor(n: Int): String {
         if (!selection.isValid || n < 1 || isRawInputEditor) {
@@ -287,9 +339,65 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
     }
 
     /**
+     * Performs a cut command on this editor instance and adjusts both the cursor position and
+     * composing region, if any.
+     *
+     * @return True on success, false if an error occurred or the input connection is invalid.
+     */
+    fun performClipboardCut(): Boolean {
+        return if (selection.isSelectionMode) {
+            val clipData: ClipData = ClipData.newPlainText(selection.text, selection.text)
+            clipboardManager?.setPrimaryClip(clipData)
+            deleteBackwards()
+            true
+        } else {
+            false
+        }
+    }
+
+    /**
+     * Performs a copy command on this editor instance and adjusts both the cursor position and
+     * composing region, if any.
+     *
+     * @return True on success, false if an error occurred or the input connection is invalid.
+     */
+    fun performClipboardCopy(): Boolean {
+        return if (selection.isSelectionMode) {
+            val clipData: ClipData = ClipData.newPlainText(selection.text, selection.text)
+            clipboardManager?.setPrimaryClip(clipData)
+            setSelection(selection.end, selection.end)
+            true
+        } else {
+            false
+        }
+    }
+
+    /**
+     * Performs a paste command on this editor instance and adjusts both the cursor position and
+     * composing region, if any.
+     *
+     * @return True on success, false if an error occurred or the input connection is invalid.
+     */
+    fun performClipboardPaste(): Boolean {
+        val clipData: ClipData? = clipboardManager?.primaryClip
+        val item: ClipData.Item? = clipData?.getItemAt(0)
+        return when {
+            item?.text != null -> {
+                commitText(item.text.toString())
+            }
+            item?.uri != null -> {
+                commitContent(item.uri, clipData.description)
+            }
+            else -> {
+                false
+            }
+        }
+    }
+
+    /**
      * Performs an enter key press on the current input editor.
      *
-     * @returns True on success, false if an error occurred or the input connection is invalid.
+     * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performEnter(): Boolean {
         return if (isRawInputEditor) {
@@ -304,7 +412,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      *
      * @param action The action to be performed on this editor instance.
      *
-     * @returns True on success, false if an error occurred or the input connection is invalid.
+     * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performEnterAction(action: ImeOptions.Action): Boolean {
         val ic = ims?.currentInputConnection ?: return false
@@ -317,7 +425,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      * @param keyCode The key code to send, use a key code defined in Android's [KeyEvent], not in
      *  [KeyCode] or this call may send a weird character, as this key codes do not match!!
      *
-     * @returns True on success, false if an error occurred or the input connection is invalid.
+     * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun sendSystemKeyEvent(keyCode: Int): Boolean {
         val ic = ims?.currentInputConnection ?: return false
@@ -330,7 +438,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      * @param keyCode The key code to send, use a key code defined in Android's [KeyEvent], not in
      *  [KeyCode] or this call may send a weird character, as this key codes do not match!!
      *
-     * @returns True on success, false if an error occurred or the input connection is invalid.
+     * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun sendSystemKeyEventAlt(keyCode: Int): Boolean {
         val ic = ims?.currentInputConnection ?: return false
@@ -351,7 +459,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      * @param from The start index of the selection in characters (inclusive).
      * @param to The end index of the selection in characters (exclusive).
      *
-     * @returns True on success, false if an error occurred or the input connection is invalid.
+     * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun setSelection(from: Int, to: Int): Boolean {
         val ic = ims?.currentInputConnection ?: return false
@@ -376,7 +484,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      * deleting only half of an emoji...
      * Is used primarily in [deleteBackwards].
      *
-     * @returns The length of the last Unicode character, in Java characters or 0 if the current
+     * @return The length of the last Unicode character, in Java characters or 0 if the current
      *  selection is invalid.
      */
     private fun detectLastUnicodeCharacterLengthBeforeCursor(): Int {
@@ -416,7 +524,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      *
      * @param region The region which should be marked as composing.
      *
-     * @returns True on success, false if an error occurred or the input connection is invalid.
+     * @return True on success, false if an error occurred or the input connection is invalid.
      */
     private fun markComposingRegion(region: Region?): Boolean {
         val ic = ims?.currentInputConnection ?: return false
@@ -437,7 +545,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      * @param regex The delimiter regex which should be used to split up the content text and find
      *  words. May differ from locale to locale.
      *
-     * @returns True on success, false if no current word could be found.
+     * @return True on success, false if no current word could be found.
      */
     private fun reevaluateCurrentWord(regex: Regex): Boolean {
         var foundValidWord = false
@@ -479,7 +587,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
     /**
      * Gets the current text from the app's editor view.
      *
-     * @returns The target editor's content string.
+     * @return The target editor's content string.
      */
     private fun updateEditorState() {
         val ic = ims?.currentInputConnection
@@ -523,6 +631,10 @@ class ImeOptions private constructor(imeOptions: Int) {
     val flagNoPersonalizedLearning: Boolean = imeOptions and EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING > 0
 
     companion object {
+        fun default(): ImeOptions {
+            return fromImeOptionsInt(EditorInfo.IME_NULL)
+        }
+
         fun fromImeOptionsInt(imeOptions: Int): ImeOptions {
             return ImeOptions(imeOptions)
         }

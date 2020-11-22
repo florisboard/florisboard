@@ -63,7 +63,7 @@ abstract class CrashUtility private constructor() {
          *
          * @param context The current package context. If null is supplied, this function does
          *  nothing.
-         * @returns True if the installation was successful, false otherwise.
+         * @return True if the installation was successful, false otherwise.
          */
         fun install(context: Context?): Boolean {
             if (context == null) {
@@ -161,7 +161,7 @@ abstract class CrashUtility private constructor() {
          *
          * @param context The current package context. If null is supplied, this function returns
          *  an empty string.
-         * @returns All unhandled stacktrace files or an empty string.
+         * @return All unhandled stacktrace files or an empty string.
          */
         fun getUnhandledStacktrace(context: Context?): String {
             context ?: return ""
@@ -197,7 +197,7 @@ abstract class CrashUtility private constructor() {
          *
          * @param context The current package context. If null is supplied, this function returns
          *  the default value for the timestamp (0).
-         * @returns The last time crash timestamp or 0.
+         * @return The last time crash timestamp or 0.
          */
         private fun getLastCrashTimestamp(context: Context?): Long {
             context ?: return 0
@@ -227,7 +227,7 @@ abstract class CrashUtility private constructor() {
          * Gets a reference to the current unhandled stacktrace directory.
          *
          * @param context The current package context.
-         * @returns The File object for the directory.
+         * @return The File object for the directory.
          */
         private fun getUstDir(context: Context): File {
             val path = context.filesDir.absolutePath
@@ -239,7 +239,7 @@ abstract class CrashUtility private constructor() {
          *
          * @param context The current package context.
          * @param timestamp The timestamp of the stacktrace file to get.
-         * @returns The File object for the stacktrace file.
+         * @return The File object for the stacktrace file.
          */
         private fun getUstFile(context: Context, timestamp: Long): File {
             val path = context.filesDir.absolutePath
@@ -318,7 +318,7 @@ abstract class CrashUtility private constructor() {
          * Reads a given [file] and returns its content.
          *
          * @param file The file object.
-         * @returns The contents of the file or an empty string, if the file does not exist.
+         * @return The contents of the file or an empty string, if the file does not exist.
          */
         private fun readFile(file: File): String {
             val retText = StringBuilder()
@@ -334,7 +334,7 @@ abstract class CrashUtility private constructor() {
          *
          * @param file The file object.
          * @param text The text to write to the file.
-         * @returns The contents of the file or an empty string, if the file does not exist.
+         * @return The contents of the file or an empty string, if the file does not exist.
          */
         private fun writeToFile(file: File, text: String) {
             try {

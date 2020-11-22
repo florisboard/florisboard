@@ -23,7 +23,6 @@ import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.annotation.IdRes
 import androidx.core.view.children
@@ -33,7 +32,6 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.setBackgroundTintColor2
 import dev.patrickgold.florisboard.util.setDrawableTintColor2
-import dev.patrickgold.florisboard.util.setImageTintColor2
 
 /**
  * View class which keeps the references to important children and informs [SmartbarManager] that
@@ -135,29 +133,11 @@ class SmartbarView : LinearLayout {
         setBackgroundColor(prefs.theme.smartbarBgColor)
         for (container in containers + variants) {
             when (container.id) {
-                R.id.smartbar_variant_number_row -> {
-                    for (button in container.children) {
-                        if (button is Button) {
-                            button.setTextColor(prefs.theme.smartbarFgColor)
-                        }
-                    }
-                }
                 R.id.clipboard_suggestion_row -> {
                     val clipboardSuggestion = findViewById<Button>(R.id.clipboard_suggestion)
                     setBackgroundTintColor2(clipboardSuggestion, prefs.theme.smartbarButtonBgColor)
                     setDrawableTintColor2(clipboardSuggestion, prefs.theme.smartbarButtonFgColor)
                     clipboardSuggestion.setTextColor(prefs.theme.smartbarButtonFgColor)
-                }
-                R.id.clipboard_cursor_row -> {
-                    for (button in container.children) {
-                        if (button is ImageButton) {
-                            if (button.isEnabled) {
-                                setImageTintColor2(button, prefs.theme.smartbarFgColor)
-                            } else {
-                                setImageTintColor2(button, prefs.theme.smartbarFgColorAlt)
-                            }
-                        }
-                    }
                 }
                 R.id.candidates -> {
                     for (view in container.children) {

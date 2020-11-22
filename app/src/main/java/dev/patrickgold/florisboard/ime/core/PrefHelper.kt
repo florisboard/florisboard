@@ -373,20 +373,24 @@ class PrefHelper(
      */
     class Suggestion(private val prefHelper: PrefHelper) {
         companion object {
-            const val ENABLED =                 "suggestion__enabled"
-            const val SHOW_INSTEAD =            "suggestion__show_instead"
-            const val USE_PREV_WORDS =          "suggestion__use_prev_words"
+            const val ENABLED =                     "suggestion__enabled"
+            const val SHOW_INSTEAD =                "suggestion__show_instead"
+            const val SUGGEST_CLIPBOARD_CONTENT =   "suggestion__suggest_clipboard_content"
+            const val USE_PREV_WORDS =              "suggestion__use_prev_words"
         }
 
-        var enabled: Boolean = false
-            get() = prefHelper.getPref(ENABLED, true)
-            private set
-        var showInstead: String = ""
-            get() = prefHelper.getPref(SHOW_INSTEAD, "number_row")
-            private set
-        var usePrevWords: Boolean = false
-            get() = prefHelper.getPref(USE_PREV_WORDS, true)
-            private set
+        var enabled: Boolean
+            get() =  prefHelper.getPref(ENABLED, true)
+            set(v) = prefHelper.setPref(ENABLED, v)
+        var showInstead: String
+            get() =  prefHelper.getPref(SHOW_INSTEAD, "number_row")
+            set(v) = prefHelper.setPref(SHOW_INSTEAD, v)
+        var suggestClipboardContent: Boolean
+            get() =  prefHelper.getPref(SUGGEST_CLIPBOARD_CONTENT, false)
+            set(v) = prefHelper.setPref(SUGGEST_CLIPBOARD_CONTENT, v)
+        var usePrevWords: Boolean
+            get() =  prefHelper.getPref(USE_PREV_WORDS, true)
+            set(v) = prefHelper.setPref(USE_PREV_WORDS, v)
     }
 
     /**
