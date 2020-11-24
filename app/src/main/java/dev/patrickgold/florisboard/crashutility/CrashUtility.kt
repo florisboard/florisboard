@@ -29,12 +29,8 @@ import android.view.inputmethod.InputMethodManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import java.io.File
-import java.io.PrintWriter
-import java.io.StringWriter
-import java.io.Writer
 import java.lang.ref.WeakReference
 import kotlin.system.exitProcess
-
 
 /**
  * Abstract class which holds several static methods used for handling unexpected errors.
@@ -171,10 +167,10 @@ abstract class CrashUtility private constructor() {
                 (ustDir.listFiles { pathname ->
                     pathname.name.endsWith(".$UNHANDLED_STACKTRACE_FILE_EXT")
                 })?.forEach { file ->
+                    val newLine = System.lineSeparator()
                     Log.i(TAG, "Reading unhandled stacktrace: ${file.name}")
-                    retString.append("~~~ ${file.name} ~~~\n\n")
+                    retString.append("~~~ ${file.name} ~~~$newLine$newLine")
                     retString.append(readFile(file))
-                    retString.append("\n\n")
                     file.delete()
                 }
             }
@@ -323,7 +319,11 @@ abstract class CrashUtility private constructor() {
         private fun readFile(file: File): String {
             val retText = StringBuilder()
             if (file.exists()) {
-                file.forEachLine { retText.append(it) }
+                val newLine = System.lineSeparator()
+                file.forEachLine {
+                    retText.append(it)
+                    retText.append(newLine)
+                }
             }
             return retText.toString()
         }
@@ -359,11 +359,7 @@ abstract class CrashUtility private constructor() {
             thread ?: return
             throwable ?: return
             val timestamp = System.currentTimeMillis()
-            val result: Writer = StringWriter()
-            val printWriter = PrintWriter(result)
-            throwable.printStackTrace(printWriter)
-            val stacktrace: String = result.toString()
-            printWriter.close()
+            val stacktrace = Log.getStackTraceString(throwable)
             val ustFile = File("$path/$timestamp.$UNHANDLED_STACKTRACE_FILE_EXT")
             writeToFile(ustFile, stacktrace)
             val application = application.get()
