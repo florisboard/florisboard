@@ -294,7 +294,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         if (!capsLock) {
             caps = florisboard.prefs.correction.autoCapitalization &&
                     activeEditorInstance.cursorCapsMode != InputAttributes.CapsMode.NONE
-            keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
+            launch(Dispatchers.Main) {
+                keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
+            }
         }
     }
 
