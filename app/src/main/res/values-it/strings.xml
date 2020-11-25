@@ -103,8 +103,7 @@
     <string name="setup__ok_button">OK</string>
 
     <string name="setup__welcome__title">Benvenuto!</string>
-    <string name="setup__welcome__intro">Grazie per aver provato FlorisBoard! Prima che possiate iniziare ad usarlo, dobbiamo fare le solite cose e abilitarlo nelle impostazioni di sistema, impostare la vostra lingua/ il layout preferito, ecc... Ma non preoccuparti: segui questa procedura guidata </string>
-    <string name="setup__welcome__privacy">[[ TODO: inserisci quì la descrizione della privacy ]]</string>
+    <string name="setup__welcome__intro">Grazie per aver provato FlorisBoard! Prima che possiate iniziare ad usarlo, dobbiamo fare le solite cose e abilitarlo nelle impostazioni di sistema, impostare la vostra lingua/ il layout preferito, ecc… Ma non preoccuparti: segui questa procedura guidata </string>
     <string name="setup__welcome__trust">Il codice sorgente di FlorisBoard è accessibile pubblicamente a chiunque, quindi puoi facilmente rivedere cosa fa FlorisBoard in background. Controlla il link nel repository in basso.</string>
     <string name="setup__welcome__contribute">Un\'ultima cosa prima di iniziare l\'installazione - se riscontri errori / arresti anomali / problemi con FlorisBoard o hai una richiesta di funzionalità - vai al repository GitHub collegato di seguito e presenta un problema. Questo aiuta a migliorare l\'esperienza per tutti gli utenti!</string>
     <string name="setup__welcome__outro">Per avviare l\'installazione, fai clic su <i>AVANTI</i>.</string>

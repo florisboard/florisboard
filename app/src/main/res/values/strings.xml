@@ -210,7 +210,7 @@
 
     <string name="setup__welcome__title">Welcome!</string>
     <string name="setup__welcome__intro">Thanks for trying out FlorisBoard! Before you can start using it, we have to do the usual stuff and enable it in the system settings, set up your preferred language/layout, etc… But no worries - the setup wizard will guide you through this!</string>
-    <string name="setup__welcome__privacy">[[ TODO: insert privacy description here ]]</string>
+    <string name="setup__welcome__privacy">FlorisBoard does fully respect your privacy and does not collect any user data. For more info see here:</string>
     <string name="setup__welcome__trust">The source code for FlorisBoard is publicly accessible for anyone, so you can easily review what FlorisBoard does in the background. Check out the repository link below.</string>
     <string name="setup__welcome__contribute">One last thing before you start the setup - if you encounter any bugs/crashes/issues with FlorisBoard or you have a feature request - head over to the GitHub repository linked below and file an issue. This helps in improving the experience for all users!</string>
     <string name="setup__welcome__outro">To start the setup, click on <i>NEXT</i>.</string>
