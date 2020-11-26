@@ -1,8 +1,13 @@
-# FlorisBoard
+<img align="left" width="80" height="80"
+src="fastlane/metadata/android/en-US/images/icon.png" alt="App icon">
 
-An open-source keyboard for Android. Currently in alpha stage.
+# FlorisBoard [![Crowdin](https://badges.crowdin.net/florisboard/localized.svg)](https://crowdin.florisboard.patrickgold.dev)
 
-#### Public Alpha Test Programme
+**FlorisBoard** is a free and open-source keyboard for Android 6.0+
+devices. It aims at being modern, user-friendly and customizable while
+fully respecting your privacy. Currently in alpha/early-beta state.
+
+## Public Alpha Test Programme
 Wanna try it out on your device? Use one of the following options:
 
 _A. IzzySoft's repo for F-Droid_:
@@ -28,21 +33,20 @@ tester, follow these steps:
 
 _C. Use the APK provided in the release section of this repo_
 
-##### Giving feedback
+### Giving feedback
 If you want to give feedback to FlorisBoard, there are several ways to
-do so, as listed in the [contribution guidelines](CONTRIBUTING.md).
+do so, as listed [here](CONTRIBUTING.md#giving-general-feedback).
 
-Thank you for contributing to FlorisBoard!
-
-##### Note on F-Droid release
+### Note on F-Droid release
 FlorisBoard is currently available through Google Play and IzzySoft's
-repo for F-Droid, but is currently in the inclusion process for the main
-F-Droid repo. Planned proper F-Droid release is version 0.3.0.
+repo for F-Droid, but is in the inclusion process for the main F-Droid
+repo. Planned proper F-Droid release is version 0.3.0.
 
 ---
 
-<img src="https://patrickgold.dev/media/previews/florisboard.png"
-height="256" alt="Preview Image">
+<img align="right" height="256"
+src="https://patrickgold.dev/media/previews/florisboard-preview-day.png"
+alt="Preview image">
 
 ## Feature roadmap
 
@@ -69,7 +73,7 @@ height="256" alt="Preview Image">
 * [x] Phone number layout
 * [x] Emoji layout (tweaks: 0.3.0)
 * [x] Emoticon layout
-* [ ] Kaomoji layout (0.3.0)
+* [ ] Kaomoji layout (0.5.0)
 
 ### Preferences
 * [x] Setup wizard
@@ -109,6 +113,13 @@ Note:
 (?) = not sure if it will be implemented
 
 (0.x.0) = planned version when feature will be implemented.
+
+## Contributing
+Wanna contribute to FlorisBoard? That's great to hear! There are lots of
+different ways to help out. Bug reporting, making pull requests,
+translating FlorisBoard to make it more accessible, etc. For more
+information see the ![contributing guidelines](CONTRIBUTING.md). Thank
+you for your help!
 
 ## Used libraries, components and icons
 * [Google Flexbox Layout for Android](https://github.com/google/flexbox-layout)
