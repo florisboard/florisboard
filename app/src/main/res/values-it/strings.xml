@@ -54,7 +54,6 @@
     <string name="settings__localization__subtype_error_already_exists">Questo stile di input esiste già !</string>
 
     <string name="settings__theme__title">Tema tastiera</string>
-    <string name="pref__theme__name__label">Tema tastiera</string>
 
     <string name="settings__keyboard__title">Tastiera preferenze</string>
     <string name="pref__keyboard__group_layout__label">Layout</string>
