@@ -111,15 +111,12 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
                 override fun onTabReselected(tab: TabLayout.Tab) {}
             })
 
-            for (tab in Tab.values()) {
-                val tabView = createTabViewFor(tab)
-                tabViews[tab] = tabView
-                withContext(Dispatchers.Main) {
+            withContext(Dispatchers.Main) {
+                for (tab in Tab.values()) {
+                    val tabView = createTabViewFor(tab)
+                    tabViews[tab] = tabView
                     mediaViewFlipper?.addView(tabView)
                 }
-            }
-
-            withContext(Dispatchers.Main) {
                 tabLayout?.selectTab(tabLayout?.getTabAt(0))
             }
         }
