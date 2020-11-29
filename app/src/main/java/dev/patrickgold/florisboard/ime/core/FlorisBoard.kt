@@ -22,6 +22,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Configuration
+import android.graphics.Color
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
 import android.os.*
@@ -293,9 +294,13 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     }
 
     /**
-     * Reapplies the supplies colors and settings from prefs to navigation bar.
+     * Updates the theme of the IME Window, status and navigation bar, as well as the InputView and
+     * some of its components.
      */
     private fun updateTheme() {
+        // Rebuild the UI if the theme has changed from day to night or vice versa to prevent
+        //  theme glitches with scrollbars and hints of buttons in the media UI. If the UI must be
+        //  rebuild, quit this method, as it will be called again by the newly created UI.
         val newThemeIsNightMode =  prefs.internal.themeCurrentIsNight
         if (currentThemeIsNight != newThemeIsNightMode) {
             currentThemeResId = getDayNightBaseThemeId(newThemeIsNightMode)
@@ -303,18 +308,34 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
             setInputView(onCreateInputView())
             return
         }
+
+        // Get Window and the flags of the DecorView
         val w = window?.window ?: return
-        inputView?.setBackgroundColor(prefs.theme.keyboardBgColor)
+        var flags = w.decorView.systemUiVisibility
+
+        // Update navigation bar theme
         w.navigationBarColor = prefs.theme.navBarColor
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            var flags = w.decorView.systemUiVisibility
             flags = if (prefs.theme.navBarIsLight) {
                 flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
             } else {
                 flags and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
             }
-            w.decorView.systemUiVisibility = flags
         }
+
+        // Update status bar to be transparent
+        //  Done as starting with Android 11 the IME Window takes the primaryColorDark value and
+        //  colors the status bar, which isn't the desired behavior. (See issue #43)
+        flags = flags or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        w.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        w.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        w.statusBarColor = Color.TRANSPARENT
+
+        // Apply the new flags to the DecorView
+        w.decorView.systemUiVisibility = flags
+
+        // Update InputView theme
+        inputView?.setBackgroundColor(prefs.theme.keyboardBgColor)
         inputView?.oneHandedCtrlPanelStart?.setBackgroundColor(prefs.theme.oneHandedBgColor)
         inputView?.oneHandedCtrlPanelEnd?.setBackgroundColor(prefs.theme.oneHandedBgColor)
         inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_move_start)
