@@ -1,121 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="key__phone_pause">Pausa</string>
-    <string name="key__phone_wait">Attendi</string>
-    <string name="key_popup__threedots_alt">Icona a tre puntini.Se visibile, indica che è possibile utilizzare più lettere se premuto a lungo.</string>
-
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pausa</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Attendi</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Icona a tre puntini.Se visibile, indica che è possibile utilizzare più lettere se premuto a lungo.</string>
+    <!-- One-handed strings -->
     <!-- Media strings -->
-    <string name="media__tab__emojis">Emojis</string>
-    <string name="media__tab__emoticons">Emoticons</string>
-    <string name="media__tab__kaomoji">Kaomoji</string>
-
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion">Smileys &amp; Emotions</string>
-    <string name="emoji__category__people_body">Persone &amp; Corpo</string>
-    <string name="emoji__category__animals_nature">Animali &amp; Natura</string>
-    <string name="emoji__category__food_drink">Cibo &amp; Bevande</string>
-    <string name="emoji__category__travel_places">Viaggi &amp; Luoghi</string>
-    <string name="emoji__category__activities">Attività</string>
-    <string name="emoji__category__objects">Oggetti</string>
-    <string name="emoji__category__symbols">Simboli</string>
-    <string name="emoji__category__flags">Bandiere</string>
-
+    <string name="emoji__category__people_body" comment="Emoji category name">Persone &amp; Corpo</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Animali &amp; Natura</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Cibo &amp; Bevande</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Viaggi &amp; Luoghi</string>
+    <string name="emoji__category__activities" comment="Emoji category name">Attività</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Oggetti</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">Simboli</string>
+    <string name="emoji__category__flags" comment="Emoji category name">Bandiere</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt">Attiva / disattiva azione rapida. Se premuto, alterna i suggerimenti di parole ed i pulsanti di azione rapida.</string>
-    <string name="smartbar__quick_action__one_handed_mode">Attiva / disattiva la modalità a una mano.</string>
-    <string name="smartbar__quick_action__open_settings">Apri Impostazioni.</string>
-    <string name="smartbar__quick_action__switch_to_media_context">Passa alla visualizzazione dei media.</string>
-
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Attiva / disattiva azione rapida. Se premuto, alterna i suggerimenti di parole ed i pulsanti di azione rapida.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Attiva / disattiva la modalità a una mano.</string>
+    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Apri Impostazioni.</string>
+    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Passa alla visualizzazione dei media.</string>
     <!-- Settings UI strings -->
-    <string name="settings__title">Impostazioni</string>
-    <string name="settings__menu">Altre opzioni</string>
-    <string name="settings__menu_about">Informazioni su</string>
-    <string name="settings__menu_help">Aiuto &amp; feedback</string>
-    <string name="settings__navigation__home">Home</string>
-    <string name="settings__navigation__keyboard">Tastiera</string>
-    <string name="settings__navigation__typing">Digitazione</string>
-    <string name="settings__navigation__theme">Tema</string>
-    <string name="settings__navigation__gestures">Gesti</string>
-
-    <string name="settings__home__title">Benvenuto in %s</string>
-    <string name="settings__home__ime_not_enabled">FlorisBoard non è abilitato nel sistema e quindi non sarà disponibile come metodo di immissione.Clicca quì per risolvere questo problema.</string>
-    <string name="settings__home__ime_not_selected">FlorisBoard non è la tastiera predefinita. Clicca quì per risolvere questo problema.</string>
-    <string name="settings__home__contribute">Grazie per aver provato FlorisBoard! Questo progetto è ancora in fase alfa e quindi manca di alcune funzionalità. Se trovate qualche bug o volete dare un suggerimento, date un\'occhiata al repo su GitHub e segnalate un problema. Questo aiuta a rendere FlorisBoard migliore. Grazie!</string>
-
-    <string name="settings__localization__title">Lingue &amp; Layout della tastiera</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning">Sembra che tu non abbia configurato nessuno stile di input personalizzato. Come ripiego verrà utilizzato lo stile input English/QWERTY!</string>
-    <string name="settings__localization__subtype_add">Aggiungi</string>
-    <string name="settings__localization__subtype_add_title">Aggiungi stile input</string>
-    <string name="settings__localization__subtype_apply">Applica</string>
-    <string name="settings__localization__subtype_cancel">Annulla</string>
-    <string name="settings__localization__subtype_delete">Elimina</string>
-    <string name="settings__localization__subtype_edit_title">Modifica stile di input</string>
-    <string name="settings__localization__subtype_locale">Locale</string>
-    <string name="settings__localization__subtype_layout">Layout della tastiera</string>
-    <string name="settings__localization__subtype_error_already_exists">Questo stile di input esiste già !</string>
-
-    <string name="settings__theme__title">Tema tastiera</string>
-
-    <string name="settings__keyboard__title">Tastiera preferenze</string>
-    <string name="pref__keyboard__group_layout__label">Layout</string>
-    <string name="pref__keyboard__one_handed_mode__label">Modalità ad una mano</string>
-    <string name="pref__keyboard__height_factor__label">Altezza tastiera</string>
-    <string name="pref__keyboard__group_keypress__label">Pressione tasti</string>
-    <string name="pref__keyboard__sound_enabled__label">Suono pressione tasti</string>
-    <string name="pref__keyboard__sound_volume__label">Volume del suono alla pressione dei tasti</string>
-    <string name="pref__keyboard__vibration_enabled__label">Vibrazione alla pressione dei tasti</string>
-    <string name="pref__keyboard__vibration_strength__label">Intensità della vibrazione alla pressione dei tasti</string>
-    <string name="pref__keyboard__popup_visible__label">Visibilità Popup</string>
-    <string name="pref__keyboard__popup_visible__summary">Mostra popup quando si preme un tasto</string>
-    <string name="pref__keyboard__long_press_delay__label">Ritardo lunga pressione tasti</string>
-
-    <string name="settings__typing__title">Esperienza di digitazione</string>
-    <string name="pref__suggestion__title">Suggerimenti</string>
-    <string name="pref__suggestion__enabled__label">Visualizza suggerimenti mentre digiti</string>
-    <string name="pref__suggestion__enabled__summary">Verrà visualizzato nella parte superiore della tastiera</string>
-    <string name="pref__suggestion__use_pref_words__label">Suggerimenti per la parola successiva</string>
-    <string name="pref__suggestion__use_pref_words__summary">Utilizzare le parole precedenti per generare suggerimenti</string>
-    <string name="pref__correction__title">Correzioni</string>
-    <string name="pref__correction__double_space_period__label">Doppio tocco barra spaziatrice</string>
-    <string name="pref__correction__double_space_period__summary">Doppio tocco su barra spaziatrice per mettere il punto (.) seguito da uno spazio</string>
-
-    <string name="settings__gestures__title">Gesti &amp; Digitazione a scorrimento</string>
-
-    <string name="settings__advanced__title">Avanzate</string>
-    <string name="pref__advanced__settings_theme__label">Impostazioni tema</string>
-    <string name="pref__advanced__show_app_icon__label">Mostra icona nel launcher</string>
-
+    <string name="settings__title" comment="Title of Settings">Impostazioni</string>
+    <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Altre opzioni</string>
+    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Aiuto &amp; feedback</string>
+    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Tastiera</string>
+    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Digitazione</string>
+    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Tema</string>
+    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gesti</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">Benvenuto in %s</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard non è abilitato nel sistema e quindi non sarà disponibile come metodo di immissione.Clicca quì per risolvere questo problema.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard non è la tastiera predefinita. Clicca quì per risolvere questo problema.</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Grazie per aver provato FlorisBoard! Questo progetto è ancora in fase alfa e quindi manca di alcune funzionalità. Se trovate qualche bug o volete dare un suggerimento, date un\'occhiata al repo su GitHub e segnalate un problema. Questo aiuta a rendere FlorisBoard migliore. Grazie!</string>
+    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Lingue &amp; Layout della tastiera</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Sembra che tu non abbia configurato nessuno stile di input personalizzato. Come ripiego verrà utilizzato lo stile input English/QWERTY!</string>
+    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Aggiungi</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Aggiungi stile input</string>
+    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Applica</string>
+    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Annulla</string>
+    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Elimina</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Modifica stile di input</string>
+    <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">Layout della tastiera</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Questo stile di input esiste già !</string>
+    <string name="settings__theme__title" comment="Title of the Theme fragment">Tema tastiera</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Tastiera preferenze</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Modalità ad una mano</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">Altezza tastiera</string>
+    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressione tasti</string>
+    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Suono pressione tasti</string>
+    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volume del suono alla pressione dei tasti</string>
+    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibrazione alla pressione dei tasti</string>
+    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Intensità della vibrazione alla pressione dei tasti</string>
+    <string name="pref__keyboard__popup_visible__label" comment="Preference title">Visibilità Popup</string>
+    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Mostra popup quando si preme un tasto</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Ritardo lunga pressione tasti</string>
+    <string name="settings__typing__title" comment="Title of Typing experience fragment">Esperienza di digitazione</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Suggerimenti</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">Visualizza suggerimenti mentre digiti</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Verrà visualizzato nella parte superiore della tastiera</string>
+    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">Suggerimenti per la parola successiva</string>
+    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Utilizzare le parole precedenti per generare suggerimenti</string>
+    <string name="pref__correction__title" comment="Preference group title">Correzioni</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Doppio tocco barra spaziatrice</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Doppio tocco su barra spaziatrice per mettere il punto (.) seguito da uno spazio</string>
+    <string name="settings__gestures__title" comment="Title of Gestures fragment">Gesti &amp; Digitazione a scorrimento</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Avanzate</string>
+    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Impostazioni tema</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostra icona nel launcher</string>
     <!-- About UI strings -->
-    <string name="about__title">Informazioni su</string>
-    <string name="about__app_icon_content_description">Icona dell\'app FlorisBoard</string>
-    <string name="about__view_licenses">Licenze open source</string>
-    <string name="about__view_privacy_policy">Norme sulla privacy</string>
-    <string name="about__view_source_code">Codice sorgente</string>
-
-    <string name="about__license__title">Licenze open source</string>
-
+    <string name="about__title" comment="Title of About activity">Informazioni su</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icona dell\'app FlorisBoard</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">Licenze open source</string>
+    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Norme sulla privacy</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">Codice sorgente</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">Licenze open source</string>
     <!-- Setup UI strings -->
-    <string name="setup__title">Configurazione</string>
-    <string name="setup__prev_button">Precedente</string>
-    <string name="setup__cancel_button">Annulla</string>
-    <string name="setup__next_button">Avanti</string>
-    <string name="setup__finish_button">Fine</string>
-    <string name="setup__ok_button">OK</string>
-
-    <string name="setup__welcome__title">Benvenuto!</string>
-    <string name="setup__welcome__intro">Grazie per aver provato FlorisBoard! Prima che possiate iniziare ad usarlo, dobbiamo fare le solite cose e abilitarlo nelle impostazioni di sistema, impostare la vostra lingua/ il layout preferito, ecc… Ma non preoccuparti: segui questa procedura guidata </string>
-    <string name="setup__welcome__trust">Il codice sorgente di FlorisBoard è accessibile pubblicamente a chiunque, quindi puoi facilmente rivedere cosa fa FlorisBoard in background. Controlla il link nel repository in basso.</string>
-    <string name="setup__welcome__contribute">Un\'ultima cosa prima di iniziare l\'installazione - se riscontri errori / arresti anomali / problemi con FlorisBoard o hai una richiesta di funzionalità - vai al repository GitHub collegato di seguito e presenta un problema. Questo aiuta a migliorare l\'esperienza per tutti gli utenti!</string>
-    <string name="setup__welcome__outro">Per avviare l\'installazione, fai clic su <i>AVANTI</i>.</string>
-
-    <string name="setup__enable_ime__title">Abilita FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled">Android richiede che ogni tastiera personalizzata debba essere abilitata manualmente prima di poterla utilizzare. Fai clic sul pulsante in basso per passare a <i>Lingua &amp; Input</i>impostazioni, quindi assicurati di selezionare\'<i>FlorisBoard</i>\'.</string>
-    <string name="setup__enable_ime__text_button_language_and_input">Apri lingue &amp; Impostazioni di input</string>
-    <string name="setup__enable_ime__text_after_enabled">FlorisBoard è stato abilitato con successo. Per continuare, fai clic su <i>AVANTI</i>!</string>
-
-    <string name="setup__make_default__title">Rendi FlorisBoard predefinita</string>
-    <string name="setup__make_default__text_before_switch">FlorisBoard è ora abilitato nel tuo sistema. Per usarlo attivamente, passa a FlorisBoard selezionandolo nella finestra di dialogo del selettore di input!</string>
-    <string name="setup__make_default__text_switch_button">Cambia tastiera</string>
-    <string name="setup__make_default__text_after_switch">Hai cambiato con successo la tastiera predefinita su FlorisBoard!</string>
-
-    <string name="setup__finish__title">Installazione terminata!</string>
+    <string name="setup__title" comment="Title of Setup">Configurazione</string>
+    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Precedente</string>
+    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Annulla</string>
+    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Avanti</string>
+    <string name="setup__finish_button" comment="Label of Finish button in Setup">Fine</string>
+    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Benvenuto!</string>
+    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Grazie per aver provato FlorisBoard! Prima che possiate iniziare ad usarlo, dobbiamo fare le solite cose e abilitarlo nelle impostazioni di sistema, impostare la vostra lingua/ il layout preferito, ecc… Ma non preoccuparti: segui questa procedura guidata </string>
+    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">Il codice sorgente di FlorisBoard è accessibile pubblicamente a chiunque, quindi puoi facilmente rivedere cosa fa FlorisBoard in background. Controlla il link nel repository in basso.</string>
+    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Un\'ultima cosa prima di iniziare l\'installazione - se riscontri errori / arresti anomali / problemi con FlorisBoard o hai una richiesta di funzionalità - vai al repository GitHub collegato di seguito e presenta un problema. Questo aiuta a migliorare l\'esperienza per tutti gli utenti!</string>
+    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Per avviare l\'installazione, fai clic su <i>AVANTI</i>.</string>
+    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Abilita FlorisBoard</string>
+    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android richiede che ogni tastiera personalizzata debba essere abilitata manualmente prima di poterla utilizzare. Fai clic sul pulsante in basso per passare a <i>Lingua &amp; Input</i>impostazioni, quindi assicurati di selezionare\'<i>FlorisBoard</i>\'.</string>
+    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard è stato abilitato con successo. Per continuare, fai clic su <i>AVANTI</i>!</string>
+    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Apri lingue &amp; Impostazioni di input</string>
+    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Rendi FlorisBoard predefinita</string>
+    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard è ora abilitato nel tuo sistema. Per usarlo attivamente, passa a FlorisBoard selezionandolo nella finestra di dialogo del selettore di input!</string>
+    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Hai cambiato con successo la tastiera predefinita su FlorisBoard!</string>
+    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Cambia tastiera</string>
+    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Installazione terminata!</string>
+    <!-- Crash Dialog strings -->
 </resources>
