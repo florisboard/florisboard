@@ -23,7 +23,9 @@ import java.util.*
  */
 enum class SwipeAction {
     NO_ACTION,
+    DELETE_CHARACTERS_PRECISELY,
     DELETE_WORD,
+    DELETE_WORDS_PRECISELY,
     HIDE_KEYBOARD,
     MOVE_CURSOR_UP,
     MOVE_CURSOR_DOWN,

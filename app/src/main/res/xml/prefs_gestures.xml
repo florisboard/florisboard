@@ -89,9 +89,9 @@
 
         <ListPreference
             app:iconSpaceReserved="false"
-            android:defaultValue="delete_word"
-            app:entries="@array/pref__gestures__swipe_action__entries"
-            app:entryValues="@array/pref__gestures__swipe_action__values"
+            android:defaultValue="delete_characters_precisely"
+            app:entries="@array/pref__gestures__swipe_action_delete__entries"
+            app:entryValues="@array/pref__gestures__swipe_action_delete__values"
             app:key="gestures__delete_key_swipe_left"
             app:title="@string/pref__gestures__delete_key_swipe_left__label"
             app:useSimpleSummaryProvider="true"/>

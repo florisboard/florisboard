@@ -223,7 +223,8 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     override fun onSwipe(direction: SwipeGesture.Direction, type: SwipeGesture.Type): Boolean {
         return when {
             initialKeyCode == KeyCode.DELETE -> {
-                if (type == SwipeGesture.Type.TOUCH_UP && direction == SwipeGesture.Direction.LEFT) {
+                if (type == SwipeGesture.Type.TOUCH_UP && direction == SwipeGesture.Direction.LEFT &&
+                    prefs.gestures.deleteKeySwipeLeft == SwipeAction.DELETE_WORD) {
                     florisboard?.executeSwipeAction(prefs.gestures.deleteKeySwipeLeft)
                     true
                 } else {

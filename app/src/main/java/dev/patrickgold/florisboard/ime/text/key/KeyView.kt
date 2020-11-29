@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.ImeOptions
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
@@ -300,17 +301,57 @@ class KeyView(
      */
     override fun onSwipe(direction: SwipeGesture.Direction, type: SwipeGesture.Type): Boolean {
         return when (data.code) {
+            KeyCode.DELETE -> when (type) {
+                SwipeGesture.Type.TOUCH_MOVE -> when (direction) {
+                    SwipeGesture.Direction.LEFT -> when (prefs.gestures.deleteKeySwipeLeft) {
+                        SwipeAction.DELETE_CHARACTERS_PRECISELY -> {
+                            florisboard?.activeEditorInstance?.apply {
+                                setSelection(
+                                    if (selection.start > 0) { selection.start - 1 } else { selection.start },
+                                    selection.end
+                                )
+                            }
+                            shouldBlockNextKeyCode = true
+                            true
+                        }
+                        else -> false
+                    }
+                    SwipeGesture.Direction.RIGHT -> when (prefs.gestures.deleteKeySwipeLeft) {
+                        SwipeAction.DELETE_CHARACTERS_PRECISELY -> {
+                            florisboard?.activeEditorInstance?.apply {
+                                setSelection(
+                                    if (selection.start < selection.end) { selection.start + 1 } else { selection.start },
+                                    selection.end
+                                )
+                            }
+                            shouldBlockNextKeyCode = true
+                            true
+                        }
+                        else -> false
+                    }
+                    else -> false
+                }
+                SwipeGesture.Type.TOUCH_UP -> when (prefs.gestures.deleteKeySwipeLeft) {
+                    SwipeAction.DELETE_CHARACTERS_PRECISELY -> {
+                        florisboard?.activeEditorInstance?.apply {
+                            if (selection.isSelectionMode) {
+                                deleteBackwards()
+                            }
+                        }
+                        true
+                    }
+                    else -> false
+                }
+            }
             KeyCode.SPACE -> when (type) {
                 SwipeGesture.Type.TOUCH_MOVE -> when (direction) {
                     SwipeGesture.Direction.LEFT -> {
                         florisboard?.executeSwipeAction(prefs.gestures.spaceBarSwipeLeft)
-                        osHandler?.removeCallbacksAndMessages(null)
                         shouldBlockNextKeyCode = true
                         true
                     }
                     SwipeGesture.Direction.RIGHT -> {
                         florisboard?.executeSwipeAction(prefs.gestures.spaceBarSwipeRight)
-                        osHandler?.removeCallbacksAndMessages(null)
                         shouldBlockNextKeyCode = true
                         true
                     }

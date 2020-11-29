@@ -155,7 +155,9 @@
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Will disappear after each word</string>
     <string name="pref__gestures__title" comment="Preference group title">Gestures</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">No action</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Delete word</string>
+    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Delete characters precisely</string>
+    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Delete current word</string>
+    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Delete words precisely</string>
     <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Hide keyboard</string>
     <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Move cursor up</string>
     <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Move cursor down</string>
