@@ -1,0 +1,7 @@
+- Add German translation (Thanks @platypusgit)
+- Add Portuguese translation (thanks @RickyM7)
+- Add precise delete key gesture for characters (#25)
+- Fix status bar incorrectly drawn in Android 11 (#43)
+- Fix EmojiKeyboardView init crash in Android 6.0 (#41)
+- Fix keyboard crashing when long pressing delete key (#40)
+- Fix error log output omitting line separator characters
