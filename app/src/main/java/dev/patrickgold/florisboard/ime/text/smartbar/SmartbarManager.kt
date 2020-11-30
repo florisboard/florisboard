@@ -205,7 +205,7 @@ class SmartbarManager private constructor() : CoroutineScope by MainScope(),
         ccRow?.updateVisibility()
     }
 
-    private fun updateActiveContainerVisibility() {
+    fun updateActiveContainerVisibility() {
         val smartbarView = smartbarView ?: return
 
         if (isQuickActionsVisible) {

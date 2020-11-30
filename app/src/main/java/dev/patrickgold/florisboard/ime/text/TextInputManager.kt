@@ -639,5 +639,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         if (keyData.code != KeyCode.SHIFT && !capsLock) {
             updateCapsState()
         }
+        smartbarManager.updateActiveContainerVisibility()
     }
 }
