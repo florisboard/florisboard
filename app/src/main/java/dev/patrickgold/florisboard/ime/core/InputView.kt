@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.core
 import android.content.Context
 import android.content.res.Configuration
 import android.util.AttributeSet
+import android.util.DisplayMetrics
 import android.util.Log
 import android.widget.LinearLayout
 import android.widget.ViewFlipper
@@ -26,6 +27,7 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import kotlin.math.roundToInt
+
 
 /**
  * Root view of the keyboard. Notifies [FlorisBoard] when it has been attached to a window.
@@ -52,7 +54,11 @@ class InputView : LinearLayout {
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
 
     override fun onAttachedToWindow() {
         if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onAttachedToWindow()")
@@ -68,7 +74,7 @@ class InputView : LinearLayout {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val heightFactor = when (resources.configuration.orientation) {
-            Configuration.ORIENTATION_LANDSCAPE -> 0.85f
+            Configuration.ORIENTATION_LANDSCAPE -> 1.0f
             else -> if (prefs.keyboard.oneHandedMode != "off") {
                 0.9f
             } else {
@@ -84,15 +90,47 @@ class InputView : LinearLayout {
             "extra_tall" -> 1.15f
             else -> 1.00f
         }
-        var height = (resources.getDimension(R.dimen.inputView_baseHeight) * heightFactor).roundToInt()
+        var height = (calcInputViewHeight() * heightFactor).roundToInt()
         desiredInputViewHeight = height
         desiredSmartbarHeight = (0.16129 * height).roundToInt()
         desiredTextKeyboardViewHeight = height - desiredSmartbarHeight
         desiredMediaKeyboardViewHeight = height
         // Add bottom offset for curved screens here. As the desired heights have already been set,
         //  adding a value to the height now will result in a bottom padding (aka offset).
-        height += ViewLayoutUtils.convertDpToPixel(florisboard.prefs.keyboard.bottomOffset.toFloat(), context).toInt()
+        height += ViewLayoutUtils.convertDpToPixel(
+            florisboard.prefs.keyboard.bottomOffset.toFloat(),
+            context
+        ).toInt()
 
         super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY))
     }
+
+    /**
+     * Calculates the input view height based on the current screen dimensions and the auto
+     * selected dimension values.
+     *
+     * This method and the fraction values have been inspired by [OpenBoard](https://github.com/dslul/openboard)
+     * but are not 1:1 the same. This implementation differs from the
+     * [original](https://github.com/dslul/openboard/blob/90ae4c8aec034a8935e1fd02b441be25c7dba6ce/app/src/main/java/org/dslul/openboard/inputmethod/latin/utils/ResourceUtils.java)
+     * by calculating the average of the min and max height values, then taking at least the input
+     * view base height and return this resulting value.
+     */
+    private fun calcInputViewHeight(): Float {
+        val dm: DisplayMetrics = resources.displayMetrics
+        val minBaseSize: Float = when (resources.configuration.orientation) {
+            Configuration.ORIENTATION_LANDSCAPE -> resources.getFraction(
+                R.fraction.inputView_minHeightFraction, dm.heightPixels, dm.heightPixels
+            )
+            else -> resources.getFraction(
+                R.fraction.inputView_minHeightFraction, dm.widthPixels, dm.widthPixels
+            )
+        }
+        val maxBaseSize: Float = resources.getFraction(
+            R.fraction.inputView_maxHeightFraction, dm.heightPixels, dm.heightPixels
+        )
+        return ((minBaseSize + maxBaseSize) / 2.0f).coerceAtLeast(
+            resources.getDimension(R.dimen.inputView_baseHeight)
+        )
+    }
+
 }

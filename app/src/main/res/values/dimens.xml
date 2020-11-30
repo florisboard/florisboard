@@ -5,6 +5,9 @@
     <dimen name="textKeyboardView_baseHeight">208dp</dimen>
     <dimen name="mediaKeyboardView_baseHeight">@dimen/inputView_baseHeight</dimen>
 
+    <fraction name="inputView_minHeightFraction">38.2%p</fraction>
+    <fraction name="inputView_maxHeightFraction">46%p</fraction>
+
     <dimen name="key_width">33dp</dimen>
     <dimen name="key_height">42dp</dimen>
     <dimen name="emoji_key_width">@dimen/key_height</dimen>

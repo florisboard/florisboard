@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <fraction name="inputView_minHeightFraction">40%p</fraction>
+    <fraction name="inputView_maxHeightFraction">46%p</fraction>
+</resources>
