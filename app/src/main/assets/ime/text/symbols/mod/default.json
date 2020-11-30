@@ -12,7 +12,9 @@
       { "code":   44, "label": ",", "popup": [] },
       { "code": -205, "label": "view_numeric_advanced", "type": "system_gui" },
       { "code":   32, "label": " ", "popup": [] },
-      { "code":   46, "label": ".", "popup": [] },
+      { "code":   46, "label": ".", "popup": [
+        { "code": 8230, "label":  "…" }
+      ] },
       { "code":   10, "label": "enter", "type": "enter_editing" }
     ]
   ]
