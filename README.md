@@ -121,6 +121,10 @@ translating FlorisBoard to make it more accessible, etc. For more
 information see the ![contributing guidelines](CONTRIBUTING.md). Thank
 you for your help!
 
+## List of permissions FlorisBoard requests
+Please refer to this [page](https://github.com/florisboard/florisboard/wiki/List-of-permissions-FlorisBoard-requests)
+to get more information on this topic.
+
 ## Used libraries, components and icons
 * [Google Flexbox Layout for Android](https://github.com/google/flexbox-layout)
   by [google](https://github.com/google)
