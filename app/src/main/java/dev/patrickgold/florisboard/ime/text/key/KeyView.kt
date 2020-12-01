@@ -39,7 +39,6 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.util.setBackgroundTintColor2
 import java.util.*
-import kotlin.math.abs
 
 /**
  * View class for managing the rendering and the events of a single keyboard key.
@@ -75,7 +74,7 @@ class KeyView(
         alpha = 255
         color = 0
         isAntiAlias = true
-        isFakeBoldText = true
+        isFakeBoldText = false
         textAlign = Paint.Align.CENTER
         textSize = resources.getDimension(R.dimen.key_textSize)
         typeface = Typeface.DEFAULT
@@ -85,7 +84,7 @@ class KeyView(
         alpha = 120
         color = 0
         isAntiAlias = true
-        isFakeBoldText = true
+        isFakeBoldText = false
         textAlign = Paint.Align.CENTER
         textSize = resources.getDimension(R.dimen.key_textHintSize)
         typeface = Typeface.DEFAULT
@@ -581,8 +580,8 @@ class KeyView(
      * Automatically sets the text size of [boxPaint] for given [text] so it fits within the given
      * bounds.
      *
-     * Implementation based on this SO answer by Michael Scheper, but has been modified to
-     * incorporate the height as well: https://stackoverflow.com/a/21895626/6801193
+     * Implementation based on this blog post by Lucas (SketchingDev), written on Aug 20, 2015
+     *  https://sketchingdev.co.uk/blog/resizing-text-to-fit-into-a-container-on-android.html
      *
      * @param boxPaint The [Paint] object which the text size should be applied to.
      * @param boxWidth The max width for the surrounding box of [text].
@@ -590,28 +589,20 @@ class KeyView(
      * @param text The text for which the size should be calculated.
      */
     private fun setTextSizeFor(boxPaint: Paint, boxWidth: Float, boxHeight: Float, text: String) {
-        var textSize = 64.0f
-        // Must loop twice as there can be bot with and height which are too big, which requires
-        // 2 iterations to adjust
-        for (n in 0..1) {
+        var stage = 1
+        var textSize = 0.0f
+        while (stage < 3) {
+            if (stage == 1) {
+                textSize += 10.0f
+            } else if (stage == 2) {
+                textSize -= 1.0f
+            }
             boxPaint.textSize = textSize
             boxPaint.getTextBounds(text, 0, text.length, tempRect)
-            val diffWidth = tempRect.width() - boxWidth
-            val diffHeight = tempRect.height() - boxHeight
-            val factor = if (diffWidth < 0 && diffHeight < 0) {
-                // Text box is smaller as given box, text size must be increased
-                if (abs(diffWidth) < abs(diffHeight)) {
-                    boxWidth / tempRect.width()
-                } else {
-                    boxHeight / tempRect.height()
-                }
-            } else if (diffWidth > diffHeight) {
-                // Text box is larger on minimum one side than given box, text size must be decreased
-                boxWidth / tempRect.width()
-            } else {
-                boxHeight / tempRect.height()
+            val fits = tempRect.width() < boxWidth && tempRect.height() < boxHeight
+            if (stage == 1 && !fits || stage == 2 && fits) {
+                stage++
             }
-            textSize *= factor
         }
         boxPaint.textSize = textSize
     }
@@ -792,8 +783,8 @@ class KeyView(
                     data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE -> {
                         setTextSizeFor(
                             labelPaint,
-                            desiredWidth - (2.6f * drawablePadding),
-                            desiredHeight - (3.6f * drawablePadding),
+                            desiredWidth - (2.2f * drawablePadding),
+                            desiredHeight - (3.0f * drawablePadding),
                             // Note: taking a "X" here because it is one of the biggest letters and
                             //  the keys must have the same base character for calculation, else
                             //  they will all look different and weird...
