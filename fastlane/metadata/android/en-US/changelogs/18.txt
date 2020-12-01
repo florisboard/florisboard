@@ -1,0 +1,4 @@
+- Add Horizontal Ellipsis (Three-dots) character to symbols (#51)
+- Improve keyboard height calculation (#50)
+- Improve key font sizing (#48)
+- Fix Smartbar number row disappearing incorrectly (#52)
