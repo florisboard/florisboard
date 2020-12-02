@@ -301,22 +301,30 @@ class PrefHelper(
      */
     class Keyboard(private val prefHelper: PrefHelper) {
         companion object {
-            const val BOTTOM_OFFSET =           "keyboard__bottom_offset"
-            const val HEIGHT_FACTOR =           "keyboard__height_factor"
-            const val HINTED_NUMBER_ROW =       "keyboard__hinted_number_row"
-            const val HINTED_SYMBOLS =          "keyboard__hinted_symbols"
-            const val LONG_PRESS_DELAY =        "keyboard__long_press_delay"
-            const val ONE_HANDED_MODE =         "keyboard__one_handed_mode"
-            const val POPUP_ENABLED =           "keyboard__popup_enabled"
-            const val SOUND_ENABLED =           "keyboard__sound_enabled"
-            const val SOUND_VOLUME =            "keyboard__sound_volume"
-            const val VIBRATION_ENABLED =       "keyboard__vibration_enabled"
-            const val VIBRATION_STRENGTH =      "keyboard__vibration_strength"
+            const val BOTTOM_OFFSET =                   "keyboard__bottom_offset"
+            const val FONT_SIZE_MULTIPLIER_PORTRAIT =   "keyboard__font_size_multiplier_portrait"
+            const val FONT_SIZE_MULTIPLIER_LANDSCAPE =  "keyboard__font_size_multiplier_landscape"
+            const val HEIGHT_FACTOR =                   "keyboard__height_factor"
+            const val HINTED_NUMBER_ROW =               "keyboard__hinted_number_row"
+            const val HINTED_SYMBOLS =                  "keyboard__hinted_symbols"
+            const val LONG_PRESS_DELAY =                "keyboard__long_press_delay"
+            const val ONE_HANDED_MODE =                 "keyboard__one_handed_mode"
+            const val POPUP_ENABLED =                   "keyboard__popup_enabled"
+            const val SOUND_ENABLED =                   "keyboard__sound_enabled"
+            const val SOUND_VOLUME =                    "keyboard__sound_volume"
+            const val VIBRATION_ENABLED =               "keyboard__vibration_enabled"
+            const val VIBRATION_STRENGTH =              "keyboard__vibration_strength"
         }
 
         var bottomOffset: Int = 0
             get() = prefHelper.getPref(BOTTOM_OFFSET, 0)
             private set
+        var fontSizeMultiplierPortrait: Int
+            get() =  prefHelper.getPref(FONT_SIZE_MULTIPLIER_PORTRAIT, 100)
+            set(v) = prefHelper.setPref(FONT_SIZE_MULTIPLIER_PORTRAIT, v)
+        var fontSizeMultiplierLandscape: Int
+            get() =  prefHelper.getPref(FONT_SIZE_MULTIPLIER_LANDSCAPE, 100)
+            set(v) = prefHelper.setPref(FONT_SIZE_MULTIPLIER_LANDSCAPE, v)
         var heightFactor: String = ""
             get() = prefHelper.getPref(HEIGHT_FACTOR, "normal")
             private set

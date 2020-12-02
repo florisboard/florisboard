@@ -20,6 +20,28 @@
             app:title="@string/pref__keyboard__hinted_symbols__label"
             app:summary="@string/pref__keyboard__hinted_symbols__summary"/>
 
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="100"
+            app:key="keyboard__font_size_multiplier_portrait"
+            app:min="75"
+            app:max="125"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__font_size_multiplier_portrait__label"
+            app:seekBarIncrement="5"
+            app:unit="%"/>
+
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="100"
+            app:key="keyboard__font_size_multiplier_landscape"
+            app:min="75"
+            app:max="125"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__font_size_multiplier_landscape__label"
+            app:seekBarIncrement="5"
+            app:unit="%"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

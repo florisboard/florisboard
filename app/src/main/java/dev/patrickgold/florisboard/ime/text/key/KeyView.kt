@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.text.key
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.os.Handler
@@ -588,7 +589,7 @@ class KeyView(
      * @param boxHeight The max height for the surrounding box of [text].
      * @param text The text for which the size should be calculated.
      */
-    private fun setTextSizeFor(boxPaint: Paint, boxWidth: Float, boxHeight: Float, text: String) {
+    private fun setTextSizeFor(boxPaint: Paint, boxWidth: Float, boxHeight: Float, text: String, multiplier: Float = 1.0f) {
         var stage = 1
         var textSize = 0.0f
         while (stage < 3) {
@@ -604,7 +605,7 @@ class KeyView(
                 stage++
             }
         }
-        boxPaint.textSize = textSize
+        boxPaint.textSize = textSize * multiplier
     }
 
     /**
@@ -780,15 +781,25 @@ class KeyView(
                     labelPaint.textSize = resources.getDimension(R.dimen.key_numeric_textSize)
                 }
                 else -> when {
-                    data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE -> {
+                    (data.type == KeyType.CHARACTER || data.type == KeyType.NUMERIC) &&
+                            data.code != KeyCode.SPACE -> {
                         setTextSizeFor(
                             labelPaint,
-                            desiredWidth - (2.2f * drawablePadding),
+                            desiredWidth - (2.4f * drawablePadding),
                             desiredHeight - (3.0f * drawablePadding),
                             // Note: taking a "X" here because it is one of the biggest letters and
                             //  the keys must have the same base character for calculation, else
                             //  they will all look different and weird...
-                            "X"
+                            "X",
+                            when (resources.configuration.orientation) {
+                                Configuration.ORIENTATION_PORTRAIT -> {
+                                    prefs.keyboard.fontSizeMultiplierPortrait.toFloat() / 100.0f
+                                }
+                                Configuration.ORIENTATION_LANDSCAPE -> {
+                                    prefs.keyboard.fontSizeMultiplierLandscape.toFloat() / 100.0f
+                                }
+                                else -> 1.0f
+                            }
                         )
                     }
                     else -> {

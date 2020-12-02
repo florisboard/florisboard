@@ -105,6 +105,8 @@
     <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">First row of character layout hints number row</string>
     <string name="pref__keyboard__hinted_symbols__label" comment="Preference title">Symbols</string>
     <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">Second and third row of character layout hint symbols</string>
+    <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Font size multiplier (portrait)</string>
+    <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Font size multiplier (landscape)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">One-handed mode</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Off</string>
