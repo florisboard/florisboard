@@ -88,6 +88,7 @@ class InputView : LinearLayout {
             "mid_tall" -> 1.05f
             "tall" -> 1.10f
             "extra_tall" -> 1.15f
+            "custom" -> prefs.keyboard.heightFactorCustom.toFloat() / 100.0f
             else -> 1.00f
         }
         var height = (calcInputViewHeight() * heightFactor).roundToInt()

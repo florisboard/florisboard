@@ -24,8 +24,8 @@
             app:allowDividerAbove="false"
             android:defaultValue="100"
             app:key="keyboard__font_size_multiplier_portrait"
-            app:min="75"
-            app:max="125"
+            app:min="50"
+            app:max="150"
             app:iconSpaceReserved="false"
             app:title="@string/pref__keyboard__font_size_multiplier_portrait__label"
             app:seekBarIncrement="5"
@@ -35,8 +35,8 @@
             app:allowDividerAbove="false"
             android:defaultValue="100"
             app:key="keyboard__font_size_multiplier_landscape"
-            app:min="75"
-            app:max="125"
+            app:min="50"
+            app:max="150"
             app:iconSpaceReserved="false"
             app:title="@string/pref__keyboard__font_size_multiplier_landscape__label"
             app:seekBarIncrement="5"
@@ -65,6 +65,17 @@
             app:iconSpaceReserved="false"
             app:title="@string/pref__keyboard__height_factor__label"
             app:useSimpleSummaryProvider="true"/>
+
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="100"
+            app:key="keyboard__height_factor_custom"
+            app:min="50"
+            app:max="150"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__height_factor_custom__label"
+            app:seekBarIncrement="5"
+            app:unit="%"/>
 
         <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"

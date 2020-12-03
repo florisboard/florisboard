@@ -23,13 +23,13 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.databinding.KeyPopupViewBinding
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.*
 
 class KeyPopupView : LinearLayout {
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
-    private lateinit var text: TextView
-    private lateinit var threedots: ImageView
+    private lateinit var binding: KeyPopupViewBinding
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -37,14 +37,13 @@ class KeyPopupView : LinearLayout {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        text = findViewById(R.id.key_popup_text)
-        threedots = findViewById(R.id.key_popup_threedots)
+        binding = KeyPopupViewBinding.bind(this)
     }
 
     override fun onDraw(canvas: Canvas?) {
         setBackgroundTintColor2(this, prefs.theme.keyPopupBgColor)
-        text.setTextColor(prefs.theme.keyPopupFgColor)
-        setImageTintColor2(threedots, prefs.theme.keyPopupFgColor)
+        binding.symbol.setTextColor(prefs.theme.keyPopupFgColor)
+        setImageTintColor2(binding.threedots, prefs.theme.keyPopupFgColor)
         super.onDraw(canvas)
     }
 }

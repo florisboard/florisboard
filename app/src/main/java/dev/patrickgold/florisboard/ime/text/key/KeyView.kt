@@ -69,7 +69,8 @@ class KeyView(
     private var desiredHeight: Int = 0
     private var drawable: Drawable? = null
     private var drawableColor: Int = 0
-    private var drawablePadding: Int = 0
+    private var drawablePaddingH: Int = 0
+    private var drawablePaddingV: Int = 0
     private var label: String? = null
     private var labelPaint: Paint = Paint().apply {
         alpha = 255
@@ -428,7 +429,8 @@ class KeyView(
             }
         }
 
-        drawablePadding = (0.2f * height).toInt()
+        drawablePaddingH = (0.2f * width).toInt()
+        drawablePaddingV = (0.2f * height).toInt()
 
         // MUST CALL THIS
         setMeasuredDimension(width, height)
@@ -589,7 +591,7 @@ class KeyView(
      * @param boxHeight The max height for the surrounding box of [text].
      * @param text The text for which the size should be calculated.
      */
-    private fun setTextSizeFor(boxPaint: Paint, boxWidth: Float, boxHeight: Float, text: String, multiplier: Float = 1.0f) {
+    private fun setTextSizeFor(boxPaint: Paint, boxWidth: Float, boxHeight: Float, text: String, multiplier: Float = 1.0f): Float {
         var stage = 1
         var textSize = 0.0f
         while (stage < 3) {
@@ -605,7 +607,9 @@ class KeyView(
                 stage++
             }
         }
-        boxPaint.textSize = textSize * multiplier
+        textSize *= multiplier
+        boxPaint.textSize = textSize
+        return textSize
     }
 
     /**
@@ -761,11 +765,12 @@ class KeyView(
             } else {
                 marginV = (measuredHeight - measuredWidth) / 2
             }
+            // Note: using the vertical padding for horizontal as well on purpose here
             drawable.setBounds(
-                marginH + drawablePadding,
-                marginV + drawablePadding,
-                measuredWidth - marginH - drawablePadding,
-                measuredHeight - marginV - drawablePadding)
+                marginH + drawablePaddingV,
+                marginV + drawablePaddingV,
+                measuredWidth - marginH - drawablePaddingV,
+                measuredHeight - marginV - drawablePaddingV)
             drawable.colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
                 drawableColor,
                 BlendModeCompat.SRC_ATOP
@@ -783,10 +788,10 @@ class KeyView(
                 else -> when {
                     (data.type == KeyType.CHARACTER || data.type == KeyType.NUMERIC) &&
                             data.code != KeyCode.SPACE -> {
-                        setTextSizeFor(
+                        val cachedTextSize = setTextSizeFor(
                             labelPaint,
-                            desiredWidth - (2.4f * drawablePadding),
-                            desiredHeight - (3.0f * drawablePadding),
+                            desiredWidth - (2.6f * drawablePaddingH),
+                            desiredHeight - (3.4f * drawablePaddingV),
                             // Note: taking a "X" here because it is one of the biggest letters and
                             //  the keys must have the same base character for calculation, else
                             //  they will all look different and weird...
@@ -801,12 +806,13 @@ class KeyView(
                                 else -> 1.0f
                             }
                         )
+                        keyboardView.popupManager.keyPopupTextSize = cachedTextSize
                     }
                     else -> {
                         setTextSizeFor(
                             labelPaint,
-                            measuredWidth - (2.6f * drawablePadding),
-                            measuredHeight - (3.6f * drawablePadding),
+                            measuredWidth - (1.2f * drawablePaddingH),
+                            measuredHeight - (3.6f * drawablePaddingV),
                             when (data.code) {
                                 KeyCode.VIEW_CHARACTERS, KeyCode.VIEW_SYMBOLS, KeyCode.VIEW_SYMBOLS2 -> {
                                     resources.getString(R.string.key__view_symbols)

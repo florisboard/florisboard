@@ -8,6 +8,7 @@
         <item>@string/pref__keyboard__height_factor__mid_tall</item>
         <item>@string/pref__keyboard__height_factor__tall</item>
         <item>@string/pref__keyboard__height_factor__extra_tall</item>
+        <item>@string/pref__keyboard__height_factor__custom</item>
     </string-array>
     <string-array name="pref__keyboard__height_factor__values">
         <item>extra_short</item>
@@ -17,6 +18,7 @@
         <item>mid_tall</item>
         <item>tall</item>
         <item>extra_tall</item>
+        <item>custom</item>
     </string-array>
 
     <string-array name="pref__keyboard__one_handed_mode__entries">

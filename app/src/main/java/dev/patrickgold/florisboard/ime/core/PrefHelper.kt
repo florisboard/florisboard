@@ -305,6 +305,7 @@ class PrefHelper(
             const val FONT_SIZE_MULTIPLIER_PORTRAIT =   "keyboard__font_size_multiplier_portrait"
             const val FONT_SIZE_MULTIPLIER_LANDSCAPE =  "keyboard__font_size_multiplier_landscape"
             const val HEIGHT_FACTOR =                   "keyboard__height_factor"
+            const val HEIGHT_FACTOR_CUSTOM =            "keyboard__height_factor_custom"
             const val HINTED_NUMBER_ROW =               "keyboard__hinted_number_row"
             const val HINTED_SYMBOLS =                  "keyboard__hinted_symbols"
             const val LONG_PRESS_DELAY =                "keyboard__long_press_delay"
@@ -328,6 +329,9 @@ class PrefHelper(
         var heightFactor: String = ""
             get() = prefHelper.getPref(HEIGHT_FACTOR, "normal")
             private set
+        var heightFactorCustom: Int
+            get() =  prefHelper.getPref(HEIGHT_FACTOR_CUSTOM, 100)
+            set(v) = prefHelper.setPref(HEIGHT_FACTOR_CUSTOM, v)
         var hintedNumberRow: Boolean
             get() =  prefHelper.getPref(HINTED_NUMBER_ROW, true)
             set(v) = prefHelper.setPref(HINTED_NUMBER_ROW, v)

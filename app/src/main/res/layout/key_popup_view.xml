@@ -9,14 +9,13 @@
     android:backgroundTintMode="multiply">
 
     <TextView
-        android:id="@+id/key_popup_text"
+        android:id="@+id/symbol"
         android:layout_width="match_parent"
         android:layout_height="@dimen/key_height"
-        android:gravity="center"
-        android:textSize="@dimen/key_popup_textSize"/>
+        android:gravity="center"/>
 
     <ImageView
-        android:id="@+id/key_popup_threedots"
+        android:id="@+id/threedots"
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_margin="0dp"
