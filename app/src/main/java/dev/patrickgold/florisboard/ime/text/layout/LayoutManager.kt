@@ -201,8 +201,8 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
                 }
                 if (symbolsComputedArrangement.getOrNull(r) != null) {
                     for ((k, key) in row.withIndex()) {
-                        if (key.type == KeyType.CHARACTER) {
-                            val symbol = symbolsComputedArrangement[r].getOrNull(k)
+                        val symbol = symbolsComputedArrangement[r].getOrNull(k)
+                        if (key.type == KeyType.CHARACTER && symbol?.type == KeyType.CHARACTER) {
                             if (r == 0) {
                                 key.hintedNumber = symbol
                             } else {
