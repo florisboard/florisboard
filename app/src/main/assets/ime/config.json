@@ -12,7 +12,8 @@
     "swiss_german": "Swiss German (QWERTZ)",
     "swiss_french": "Swiss French (QWERTZ)",
     "swiss_italian": "Swiss Italian (QWERTZ)",
-    "persian": "Persian"
+    "persian": "Persian",
+    "arabic": "Arabic"
   },
   "defaultSubtypes": [
     {
@@ -177,9 +178,16 @@
       "isEmojiCapable": true
     },
     {
-      "id": 800,
+      "id": 801,
       "languageTag": "fa-FA",
       "preferredLayout": "persian",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    },
+    {
+      "id": 901,
+      "languageTag": "ar",
+      "preferredLayout": "arabic",
       "isAsciiCapable": true,
       "isEmojiCapable": true
     }

@@ -1,0 +1,97 @@
+{
+  "ض": [
+    { "code": 1633, "label": "١" }
+  ],
+  "ص": [
+    { "code": 1634, "label": "٢" }
+  ],
+  "ث": [
+    { "code": 1635, "label": "٣" }
+  ],
+  "ق": [
+    { "code": 1704, "label": "ڨ"},
+    { "code": 1636, "label": "٤" }
+  ],
+  "ف": [
+    { "code": 1701, "label": "ڥ" },
+    { "code": 1700, "label": "ڤ" },
+    { "code": 1698, "label": "ڢ" },
+    { "code": 1637, "label": "٥" }
+  ],
+  "غ": [
+    { "code": 1638, "label": "٦" }
+  ],
+  "ع": [
+    { "code": 1639, "label": "٧" }
+  ],
+  "ه": [
+    { "code": 1726, "label": "ھ" },
+    { "code": 1640, "label": "٨" }
+  ],
+  "خ": [
+    { "code": 1641, "label": "٩" }
+  ],
+  "ح": [
+    { "code": 1632, "label": "٠" }
+  ],
+  "ج": [
+    { "code": 1670, "label": "چ" }
+  ],
+  "ش": [
+    { "code": 1692, "label": "ڜ" }
+  ],
+  "ي": [
+    { "code": 1574, "label": "ئ" },
+    { "code": 1609, "label": "ى" }
+  ],
+  "ب": [
+    { "code": 1662, "label": "پ" }
+  ],
+  "ل": [
+    { "code": 65275, "label": "لا" },
+    { "code": 65273, "label": "لإ" },
+    { "code": 65271, "label": "لأ" },
+    { "code": 65269, "label": "لآ" }
+  ],
+  "ا": [
+    { "code": 1570, "label": "آ" },
+    { "code": 1569, "label": "ء" },
+    { "code": 1571, "label": "أ" },
+    { "code": 1573, "label": "إ" },
+    { "code": 1649, "label": "ٱ" }
+  ],
+  "ك": [
+    { "code": 1705, "label": "ک"},
+    { "code": 1711, "label": "گ" }
+  ],
+  "ى": [
+    { "code": 1574, "label": "ئ" }
+  ],
+  "ز": [
+    { "code": 1688, "label": "ژ" }
+  ],
+  ".~normal": [
+    { "code": 1611, "label": "ً" },
+    { "code": 1622, "label": "ٖ" },
+    { "code": 1648, "label": "ٰ" },
+    { "code": 1619, "label": "ٓ" },
+    { "code": 1615, "label": "ُ" },
+    { "code": 1616, "label": "ِ" },
+    { "code": 1614, "label": "َ" },
+    { "code": 1600, "label": "ـ" },
+    { "code": 1621, "label": "ٕ" },
+    { "code": 1620, "label": "ٔ" },
+    { "code": 1617, "label": "ّ" },
+    { "code": 1612, "label": "ٌ" },
+    { "code": 1613, "label": "ٍ" },
+    { "code": 1618, "label": "ْ" }
+  ],
+  ".~uri": [
+    { "code": -255, "label": ".ir"},
+    { "code": -255, "label": ".gov" },
+    { "code": -255, "label": ".edu" },
+    { "code": -255, "label": ".org" },
+    { "code": -255, "label": ".com" },
+    { "code": -255, "label": ".net" }
+  ]
+}
