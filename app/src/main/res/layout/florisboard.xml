@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:gravity="bottom"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layoutDirection="ltr">
 
     <dev.patrickgold.florisboard.ime.core.InputView
         android:id="@+id/inner_input_view_container"

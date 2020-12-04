@@ -4,7 +4,8 @@
     android:id="@+id/smartbar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/transparent">
+    android:background="@android:color/transparent"
+    android:layoutDirection="locale">
 
     <LinearLayout
         android:id="@+id/smartbar_variant_default"
@@ -90,7 +91,8 @@
         <dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
             android:id="@+id/clipboard_cursor_row"
             style="@style/SmartbarContainer"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:layoutDirection="ltr"/>
 
         <!-- Placeholder on the right which reserves the space for a second button -->
         <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
@@ -106,7 +108,8 @@
         android:id="@+id/smartbar_variant_number_row"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:layoutDirection="ltr"/>
 
     <LinearLayout
         android:id="@+id/smartbar_variant_back_only"
