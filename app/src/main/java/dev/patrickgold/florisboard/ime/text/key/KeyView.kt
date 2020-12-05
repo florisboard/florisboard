@@ -60,6 +60,7 @@ class KeyView(
             field = value
             updateKeyPressedBackground()
         }
+    private var hasTriggeredGestureMove: Boolean = false
     private var osHandler: Handler? = null
     private var osTimer: Timer? = null
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
@@ -217,6 +218,7 @@ class KeyView(
         }
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
+                hasTriggeredGestureMove = false
                 shouldBlockNextKeyCode = false
                 florisboard?.prefs?.keyboard?.let {
                     if (it.popupEnabled){
@@ -282,13 +284,22 @@ class KeyView(
                 osHandler?.removeCallbacksAndMessages(null)
                 osTimer?.cancel()
                 osTimer = null
-                val retData = keyboardView.popupManager.getActiveKeyData(this)
-                keyboardView.popupManager.hide()
-                if (event.actionMasked != MotionEvent.ACTION_CANCEL && !shouldBlockNextKeyCode && retData != null) {
-                    florisboard?.textInputManager?.sendKeyPress(retData)
-                    performClick()
+                if (hasTriggeredGestureMove && data.code == KeyCode.DELETE) {
+                    hasTriggeredGestureMove = false
+                    florisboard?.activeEditorInstance?.apply {
+                        if (selection.isSelectionMode) {
+                            deleteBackwards()
+                        }
+                    }
                 } else {
-                    shouldBlockNextKeyCode = false
+                    val retData = keyboardView.popupManager.getActiveKeyData(this)
+                    keyboardView.popupManager.hide()
+                    if (event.actionMasked != MotionEvent.ACTION_CANCEL && !shouldBlockNextKeyCode && retData != null) {
+                        florisboard?.textInputManager?.sendKeyPress(retData)
+                        performClick()
+                    } else {
+                        shouldBlockNextKeyCode = false
+                    }
                 }
             }
             else -> return false
@@ -312,6 +323,7 @@ class KeyView(
                                     selection.end
                                 )
                             }
+                            hasTriggeredGestureMove = true
                             shouldBlockNextKeyCode = true
                             true
                         }
@@ -332,17 +344,7 @@ class KeyView(
                     }
                     else -> false
                 }
-                SwipeGesture.Type.TOUCH_UP -> when (prefs.gestures.deleteKeySwipeLeft) {
-                    SwipeAction.DELETE_CHARACTERS_PRECISELY -> {
-                        florisboard?.activeEditorInstance?.apply {
-                            if (selection.isSelectionMode) {
-                                deleteBackwards()
-                            }
-                        }
-                        true
-                    }
-                    else -> false
-                }
+                else -> false
             }
             KeyCode.SPACE -> when (type) {
                 SwipeGesture.Type.TOUCH_MOVE -> when (direction) {

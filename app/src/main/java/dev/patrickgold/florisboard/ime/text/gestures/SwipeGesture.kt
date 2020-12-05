@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.text.gestures
 
 import android.content.Context
-import android.util.DisplayMetrics
 import android.view.MotionEvent
 import dev.patrickgold.florisboard.R
 import java.lang.Exception
@@ -54,7 +53,7 @@ abstract class SwipeGesture {
                         val lastEvent = eventList[indexLastMoveRecognized]
                         val diffX = event.x - lastEvent.x
                         val diffY = event.y - lastEvent.y
-                        val distanceThresholdNV = numericValue(distanceThreshold) / 2.0f
+                        val distanceThresholdNV = numericValue(distanceThreshold) / 4.0f
                         return if (abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV) {
                             indexLastMoveRecognized = eventList.size - 1
                             val direction = detectDirection(diffX.toDouble(), diffY.toDouble())
