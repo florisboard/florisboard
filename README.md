@@ -40,7 +40,7 @@ do so, as listed [here](CONTRIBUTING.md#giving-general-feedback).
 ### Note on F-Droid release
 FlorisBoard is currently available through Google Play and IzzySoft's
 repo for F-Droid, but is in the inclusion process for the main F-Droid
-repo. Planned proper F-Droid release is version 0.3.0.
+repo.
 
 ---
 
