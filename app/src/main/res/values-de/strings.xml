@@ -95,6 +95,8 @@
     <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">Erste Reihe der Tastatur deutet Zahlenreihe im Hintergrund an</string>
     <string name="pref__keyboard__hinted_symbols__label" comment="Preference title">Symbole</string>
     <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">Zweite und dritte Reihe der Tastatur deuten Symbole im Hintergrund an</string>
+    <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Schriftgröße anpassen (Hochformat)</string>
+    <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Schriftgröße anpassen (Querformat)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Einhandmodus</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Aus</string>
@@ -108,6 +110,8 @@
     <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">Etwas größer</string>
     <string name="pref__keyboard__height_factor__tall" comment="Preference value">Groß</string>
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Sehr groß</string>
+    <string name="pref__keyboard__height_factor__custom" comment="Preference value">Benutzerdefiniert</string>
+    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Benutzerdefinierte Tastaturhöhe</string>
     <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Unteres Ende absetzen (für abgerundete Bildschirme)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastendruck</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Ton bei Tastendruck</string>
@@ -143,6 +147,9 @@
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Wird jeweils nach einem Wort ausgeblendet</string>
     <string name="pref__gestures__title" comment="Preference group title">Gesten</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Keine Aktion</string>
+    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Einzelne Zeichen exakt löschen</string>
+    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Aktuelles Wort löschen</string>
+    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Einzelne Wörter exakt löschen</string>
     <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Tastatur verstecken</string>
     <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Cursor nach oben bewegen</string>
     <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Cursor nach unten bewegen</string>

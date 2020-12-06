@@ -1,11 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pauzeren</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Wachten</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Driepunts icoon. Indien zichtbaar, geeft aan dat meer letters kunnen worden gebruikt als langer geperst.</string>
     <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Sluit eenhandige modus.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Toetsenbord naar links verplaatsen.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Toetsenbord naar rechts verplaatsen.</string>
     <!-- Media strings -->
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Smiley</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys &amp; Emoties</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Mensen &amp;; Lichaam</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Dieren &amp; Natuur</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Eten &amp; Drinken</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Reis &amp; plaatsen</string>
+    <string name="emoji__category__activities" comment="Emoji category name">Activiteit</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Object</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">Symbool</string>
+    <string name="emoji__category__flags" comment="Emoji category name">Vlaggen</string>
     <!-- Smartbar strings -->
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Snelle actie aan / uit. Indien ingedrukt, schakelt u tussen de woordsuggesties en de snelle actieknoppen.</string>
+    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Tekstbewerkingspaneel afsluiten.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Schakel de toestand van de eenhandige modus.</string>
+    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Open instellingen.</string>
+    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Schakel over op tekstbewerkingspaneel.</string>
+    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Schakel over op media input view.</string>
     <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">Instelling</string>
+    <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Meer opties</string>
+    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Help &amp; feedback</string>
+    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Huis</string>
+    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Toetsenbord</string>
+    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Type</string>
+    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Thema</string>
+    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gebaar</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">Standaard</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Systeem standaard</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">Welkom to %s</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard is niet ingeschakeld in het systeem en zal dus niet beschikbaar zijn als een invoermethode in de invoer picker. Klik hier om dit probleem op te lossen.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard is niet geselecteerd als de standaard invoermethode. Klik hier om dit probleem op te lossen.</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Bedankt voor het uitproberen van FlorisBoard! Dit project is nog steeds in alfa en daarom missen functies. Als u bugs vindt of een suggestie wilt doen, controleer dan de repo op GitHub en dien een probleem in. Dit helpt om FlorisBoard beter te maken. Dank je!</string>
+    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Languages &amp; toetsenbordlay-outs</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Het lijkt erop dat je geen subtypes hebt geconfigureerd. Als een terugval wordt het subtype Engels / QWERTY gebruikt!</string>
+    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Toevoegen</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Subtype toevoegen</string>
+    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Toepassing</string>
+    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Annuleren</string>
+    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Verwijderen</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Subtype bewerken</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Landinstelling</string>
+    <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">Toetsenbordindeling</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Dit subtype bestaat al!</string>
+    <string name="settings__theme__title" comment="Title of the Theme fragment">Toetsenbord thema</string>
+    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ongedefinieerd</string>
+    <string name="settings__theme__preset_title" comment="Label of the theme preset preference">Thema</string>
+    <string name="settings__theme__preset_summary" comment="Summary of the theme preset preference">Aangepast (gebaseerd op %s)</string>
+    <string name="settings__theme__preset_dialog_selected_theme" comment="Label of the selected themes list">Geselecteerd thema:</string>
+    <string name="settings__theme__preset_dialog_available_themes" comment="Label of the available themes list">Beschikbare thema \' s:</string>
+    <string name="settings__theme__preset_dialog_alt_arrow_right" comment="Content description of the theme selection button in theme dialog">Pijl rechts</string>
+    <string name="settings__theme__background" comment="General label for a background preference">Achtergrondkleur</string>
+    <string name="settings__theme__background_active" comment="General label for an active background preference">Achtergrondkleur indien actief</string>
+    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">Achtergrondkleur wanneer ingedrukt</string>
+    <string name="settings__theme__foreground" comment="General label for a foreground preference">Voorgrondkleur</string>
+    <string name="settings__theme__foreground_alt" comment="General label for an alternate foreground preference">Voorgrondkleur (alternatief)</string>
+    <string name="settings__theme__foreground_capslock" comment="General label for a capslock foreground preference">Voorgrondkleur (CapsLock)</string>
+    <string name="settings__theme__dialog_title" comment="Title of the color selection dialog for a single theme preference">Selecteer een kleur</string>
+    <string name="settings__theme__group_window" comment="Theme group label">Venster &amp; Systeem</string>
+    <string name="settings__theme__group_keyboard" comment="Theme group label">Toetsenbord</string>
+    <string name="settings__theme__group_key" comment="Theme group label">Toets</string>
+    <string name="settings__theme__group_key_enter" comment="Theme group label">Entertoets</string>
+    <string name="settings__theme__group_key_popup" comment="Theme group label">Sleutel popup</string>
+    <string name="settings__theme__group_key_shift" comment="Theme group label">Shift</string>
+    <string name="settings__theme__group_media" comment="Theme group label">Mediacontext</string>
+    <string name="settings__theme__group_one_handed" comment="Theme group label">Met één hand</string>
+    <string name="settings__theme__group_one_handed_button" comment="Theme group label">Knop met één hand</string>
+    <string name="settings__theme__group_smartbar" comment="Theme group label">Smartbar</string>
+    <string name="settings__theme__group_smartbar_button" comment="Theme group label">Smartbar bewerken</string>
+    <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">Hoofdkleur</string>
+    <string name="pref__theme__colorPrimary_summary" comment="Summary of Color primary theme preference">Toegepast op de belangrijkste Media tab ripple en selectiemarkering</string>
+    <string name="pref__theme__colorPrimaryDark_title" comment="Title of Color primary dark theme preference">Primaire kleur (Donker)</string>
+    <string name="pref__theme__colorPrimaryDark_summary" comment="Summary of Color primary dark theme preference">Momenteel niet gebruikt, gereserveerd voor toekomstige implementatie</string>
+    <string name="pref__theme__colorAccent_title" comment="Title of Color accent theme preference">Accentkleur</string>
+    <string name="pref__theme__colorAccent_summary" comment="Summary of Color accent theme preference">Toegepast op emoji tab rimpel</string>
+    <string name="pref__theme__navBarColor_title" comment="Title of Nav bar color theme preference">Navigatie balk kleur</string>
+    <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">De achtergrond van de navigatiebalk.</string>
+    <string name="pref__theme__navBarIsLight_title" comment="Title of Nav bar is light theme preference">Navigatiebalk donkere voorgrond</string>
+    <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Start op voor donker of uit voor lichte voorgrond.</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Toetsenbordvoorkeuren</string>
+    <string name="pref__keyboard__group_keys__label" comment="Preference group title">Toets</string>
+    <string name="pref__keyboard__hinted_number_row__label" comment="Preference title">Aantal rij</string>
+    <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">Eerste rij tekenopmaak geeft nummer rij</string>
+    <string name="pref__keyboard__hinted_symbols__label" comment="Preference title">Symbool</string>
+    <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">Tweede en derde rij tekenopmaak hint symbolen</string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">Lay</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Eenhandige modus</string>
+    <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Van</string>
+    <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Rechtshandige modus</string>
+    <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Linkshandige modus</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">Toetsenbordhoogte</string>
+    <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Extra-kort</string>
+    <string name="pref__keyboard__height_factor__short" comment="Preference value">Kort</string>
+    <string name="pref__keyboard__height_factor__mid_short" comment="Preference value">Midden-kort</string>
+    <string name="pref__keyboard__height_factor__normal" comment="Preference value">Normaal</string>
+    <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">Mid Hoog</string>
+    <string name="pref__keyboard__height_factor__tall" comment="Preference value">Hoog</string>
+    <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Extra Hoog</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Onderste offset (voor gebogen schermen)</string>
+    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Toetsaanslag</string>
+    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Geluid op sleutelpers</string>
+    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Geluidsvolume op sleutelpers</string>
+    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibreren op toetsdruk</string>
+    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Trillingssterkte op toetsdruk</string>
+    <string name="pref__keyboard__popup_visible__label" comment="Preference title">PopUp Zicht</string>
+    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Popup tonen als je op een toets drukt</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Lange toetsvertraging indrukken</string>
+    <string name="settings__typing__title" comment="Title of Typing experience fragment">Type-ervaring</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Suggestie</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] toon suggesties terwijl u typt</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Zal boven op het toetsenbord tonen</string>
+    <string name="pref__suggestion__show_instead__label" comment="Preference title">Wat te laten zien in plaats van suggesties</string>
+    <string name="pref__suggestion__show_instead__number_row" comment="Preference value">Aantal rij</string>
+    <string name="pref__suggestion__show_instead__clipboard_cursor_tools" comment="Preference value">Klembord cursor-Gereedschap</string>
+    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Suggesties voor de inhoud van het klembord</string>
+    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Klembordinhoud suggereren om te plakken als eerder gekopieerd</string>
+    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Volgende woord suggesties</string>
+    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Gebruik vorige woorden voor het genereren van suggesties</string>
+    <string name="pref__correction__title" comment="Preference group title">Correctie</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatische kapitalisatie</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Woorden kapitaliseren op basis van de huidige invoercontext</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Onthoud CapsLock status</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">CapsLock blijft aan bij het verplaatsen naar een ander tekstveld</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Periode met twee spaties</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Twee keer tikken op spatiebar voegt een periode toe gevolgd door een ruimte</string>
+    <string name="settings__gestures__title" comment="Title of Gestures fragment">Gebaren &amp; glijden</string>
+    <string name="pref__glide__title" comment="Preference group title">Glijdend type</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] glijden inschakelen</string>
+    <string name="pref__glide__enabled__summary" comment="Preference summary">Typ een woord door je vinger door zijn letters te schuiven</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Glijpad tonen</string>
+    <string name="pref__glide__show_trail__summary" comment="Preference summary">Zal verdwijnen na elk woord</string>
+    <string name="pref__gestures__title" comment="Preference group title">Gebaar</string>
+    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Geen actie</string>
+    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Tekens precies verwijderen</string>
+    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Huidige woord verwijderen</string>
+    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Woorden juist verwijderen</string>
+    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Toetsenbord verbergen</string>
+    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Cursor naar boven verplaatsen</string>
+    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Cursor naar beneden verplaatsen</string>
+    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Cursor naar links verplaatsen</string>
+    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Cursor rechts verplaatsen</string>
+    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
+    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Overschakelen naar het vorige subtype</string>
+    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Overschakelen naar het volgende subtype</string>
+    <string name="pref__gestures__swipe_up__label" comment="Preference title">Veeg omhoog</string>
+    <string name="pref__gestures__swipe_down__label" comment="Preference title">Haal naar beneden</string>
+    <string name="pref__gestures__swipe_left__label" comment="Preference title">Sla linksaf</string>
+    <string name="pref__gestures__swipe_right__label" comment="Preference title">Naar rechts</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Spatiebalk links</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Spatiebalk rechts</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Verwijder sleutel swipe links</string>
+    <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Snelheidsdrempel</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Zeer langzaam</string>
+    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Langzaam</string>
+    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normaal</string>
+    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Snel</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Heel snel</string>
+    <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Drempelwaarde voor Swipe-afstand</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Zeer kort</string>
+    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Kort</string>
+    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normaal</string>
+    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Lang</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Zeer lang</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Geavanceerd</string>
+    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Thema instellingen</string>
+    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Licht</string>
+    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Donker</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">App-pictogram in starter tonen</string>
     <!-- About UI strings -->
+    <string name="about__title" comment="Title of About activity">Over</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">App-pictogram van FlorisBoard</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">Open source licenties</string>
+    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privacybeleid</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">Broncode</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">Open source licenties</string>
     <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">Setup</string>
+    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Vorige</string>
+    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Annuleren</string>
+    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Volgend</string>
+    <string name="setup__finish_button" comment="Label of Finish button in Setup">Afwerking</string>
+    <string name="setup__ok_button" comment="Label of OK button in Setup">OK</string>
+    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Welkom!</string>
+    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Bedankt voor het uitproberen van FlorisBoard! Voordat u kunt beginnen met het gebruik, moeten we de gebruikelijke dingen te doen en in te schakelen in de systeeminstellingen, het instellen van uw voorkeur taal/lay - out, enz... maar geen zorgen-de setup wizard zal u door dit!</string>
+    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard respecteert uw privacy volledig en verzamelt geen gebruikersgegevens. Voor meer informatie zie hier:</string>
+    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">De broncode voor FlorisBoard is voor iedereen toegankelijk, zodat u gemakkelijk kunt bekijken wat FlorisBoard doet op de achtergrond. Bekijk de repository link hieronder.</string>
+    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Nog één ding voordat u start met de setup - als u bugs/crashes/problemen tegenkomt met FlorisBoard of als u een feature request - head naar de GitHub repository links hieronder en bestand een probleem. Dit helpt bij het verbeteren van de ervaring voor alle gebruikers!</string>
+    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Om de setup te starten, klikt u op <i>VOLGEND</i>.</string>
+    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">FlorisBoard Inschakelen</string>
+    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android vereist dat elk aangepast toetsenbord handmatig moet worden ingeschakeld voordat u het kunt gebruiken. Klik op de onderstaande knop om naar de <i>Language &amp; Input</i> instellingen te gaan en controleer vervolgens \'<i>FlorisBoard</i>\'.</string>
+    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard is succesvol ingeschakeld. Om door te gaan klik op <i>Volgende</i>!</string>
+    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Open Language &amp; invoerinstellingen</string>
+    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Standaard FlorisBoard maken</string>
+    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard is nu ingeschakeld in uw systeem. Om het actief te gebruiken, schakelt u over naar FlorisBoard door het te selecteren in het dialoogvenster in de input-selector!</string>
+    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Met succes het standaard toetsenbord naar FlorisBoard verwisseld!</string>
+    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Toetsenbord wisselen</string>
+    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Klaar!</string>
     <!-- Crash Dialog strings -->
+    <string name="crash_dialog__title" comment="Title of crash dialog">Foutenrapport FlorisBoard</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Sorry voor het ongemak, maar FlorisBoard is gecrasht door een onverwachte fout.\n\nIf als u deze fout wilt melden, klikt u op \"Kopiëren naar klembord\", dan op de \"open bug report\" knop. Vul het foutenrapport in en plak het logboek. Dit helpt bij het maken van FlorisBoard beter en stabieler voor iedereen. Dank je!</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopiëren naar klembord</string>
+    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Bug-rapportformulier openen (github.com)</string>
+    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Sluiten</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Foutenrapporten van FlorisBoard</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard werkt niet meer…</string>
+    <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Tap om foutdetails te bekijken</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard lijkt te stoppen met herhaaldelijk te werken…</string>
+    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Terugvallen op het vorige toetsenbord om oneindige crash loop te stoppen. Tap om foutdetails te bekijken</string>
 </resources>

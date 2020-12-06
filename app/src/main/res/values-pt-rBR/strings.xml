@@ -24,7 +24,7 @@
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Alternar ação rápida. Se pressionado, alterna entre as sugestões de palavra e os botões de ação rápida.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Sair do painel de edição de texto.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Alternar estado do modo de uma mão.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Alternar estado do modo uma mão.</string>
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Abrir configurações.</string>
     <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Mudar para painel de edição de texto.</string>
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Mudar para visualização de entrada de mídia.</string>
@@ -40,9 +40,9 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Padrão</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Padrão do sistema</string>
     <string name="settings__home__title" comment="Title of the Home fragment">Bem-vindo ao %s</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">O FlorisBoard não está ativado no sistema e, portanto, não estará disponível como um método de entrada no alternador de métodos de entrada. Clique aqui para resolver este problema.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">O FlorisBoard não foi selecionado como o método de entrada padrão. Clique aqui para resolver este problema.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Obrigado por experimentar o FlorisBoard! Este projeto ainda está em alpha e, portanto, faltando recursos. Se você encontrar algum bug ou quiser fazer uma sugestão, por favor, confira o repo no GitHub e crie um problema. Isso ajuda a tornar o FlorisBoard melhor. Obrigado!</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">O FlorisBoard não está ativado no sistema e, portanto, não estará disponível para ser selecionado no alternador de teclado. Clique aqui para resolver este problema.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">O FlorisBoard não foi selecionado como o teclado padrão. Clique aqui para resolver este problema.</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Obrigado por experimentar o FlorisBoard! Este projeto ainda está em alpha e, portanto, faltando recursos. Se você encontrar algum bug ou quiser fazer uma sugestão, por favor, confira o repo no GitHub e crie um issue. Isso ajuda a tornar o FlorisBoard melhor. Obrigado!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Idiomas &amp; Formatos do teclado</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Parece que você não configurou nenhum formato de digitação. Como alternativa, será utilizado o formato Inglês/QWERTY!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Adicionar</string>
@@ -75,16 +75,16 @@
     <string name="settings__theme__group_key_popup" comment="Theme group label">Popup da tecla</string>
     <string name="settings__theme__group_key_shift" comment="Theme group label">Tecla Shift</string>
     <string name="settings__theme__group_media" comment="Theme group label">Contexto de mídia</string>
-    <string name="settings__theme__group_one_handed" comment="Theme group label">Uma mão</string>
+    <string name="settings__theme__group_one_handed" comment="Theme group label">Modo uma mão</string>
     <string name="settings__theme__group_one_handed_button" comment="Theme group label">Botões do modo uma mão</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Barra Superior</string>
+    <string name="settings__theme__group_smartbar" comment="Theme group label">Barra superior</string>
     <string name="settings__theme__group_smartbar_button" comment="Theme group label">Botões da barra superior</string>
     <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">Cor primária</string>
-    <string name="pref__theme__colorPrimary_summary" comment="Summary of Color primary theme preference">Aplicado à ondulação da aba principal de mídia e destaque de seleção</string>
+    <string name="pref__theme__colorPrimary_summary" comment="Summary of Color primary theme preference">Aplicado à barra de indicação da aba de mídia principal e destaque de seleção</string>
     <string name="pref__theme__colorPrimaryDark_title" comment="Title of Color primary dark theme preference">Cor primária (escuro)</string>
     <string name="pref__theme__colorPrimaryDark_summary" comment="Summary of Color primary dark theme preference">Atualmente não utilizado, reservado para implementação futura</string>
     <string name="pref__theme__colorAccent_title" comment="Title of Color accent theme preference">Cor de destaque</string>
-    <string name="pref__theme__colorAccent_summary" comment="Summary of Color accent theme preference">Aplicado à ondulação da aba emoji</string>
+    <string name="pref__theme__colorAccent_summary" comment="Summary of Color accent theme preference">Aplicado à barra de indicação da aba emoji</string>
     <string name="pref__theme__navBarColor_title" comment="Title of Nav bar color theme preference">Cor da barra de navegação</string>
     <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">O plano de fundo da barra de navegação.</string>
     <string name="pref__theme__navBarIsLight_title" comment="Title of Nav bar is light theme preference">Barra de navegação escura em primeiro plano</string>
@@ -92,9 +92,11 @@
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Preferências do Teclado</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Teclas</string>
     <string name="pref__keyboard__hinted_number_row__label" comment="Preference title">Linha de números</string>
-    <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">A primeira linha do layout de caracteres sugere uma linha de números</string>
+    <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">A primeira linha de letras sugere números</string>
     <string name="pref__keyboard__hinted_symbols__label" comment="Preference title">Símbolos</string>
-    <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">A segunda e terceira linha do layout de caracteres sugere símbolos</string>
+    <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">As segunda e terceira linhas de letras sugere símbolos</string>
+    <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicador de tamanho da fonte (retrato)</string>
+    <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicador de tamanho da fonte (paisagem)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Modo uma mão</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Desligado</string>
@@ -108,6 +110,8 @@
     <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">Relativamente alto</string>
     <string name="pref__keyboard__height_factor__tall" comment="Preference value">Alto</string>
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Muito alto</string>
+    <string name="pref__keyboard__height_factor__custom" comment="Preference value">Personalizado</string>
+    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Valor da altura do teclado personalizado</string>
     <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Deslocamento inferior (para telas curvas)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressionar tecla</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Som ao pressionar uma tecla</string>
@@ -123,9 +127,9 @@
     <string name="pref__suggestion__enabled__summary" comment="Preference summary">Vai aparecer em cima do teclado</string>
     <string name="pref__suggestion__show_instead__label" comment="Preference title">O que mostrar em vez de sugestões</string>
     <string name="pref__suggestion__show_instead__number_row" comment="Preference value">Linha de números</string>
-    <string name="pref__suggestion__show_instead__clipboard_cursor_tools" comment="Preference value">Ferramentas de cursor da área de transferência</string>
+    <string name="pref__suggestion__show_instead__clipboard_cursor_tools" comment="Preference value">Ferramentas da área de transferência</string>
     <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Sugestões de conteúdo da área de transferência</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Sugerir conteúdo de área de transferência para colar se copiado anteriormente</string>
+    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Sugerir conteúdo da área de transferência para colar se foi copiado anteriormente</string>
     <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Sugestões de próxima palavra</string>
     <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Usar palavras anteriores para gerar sugestões</string>
     <string name="pref__correction__title" comment="Preference group title">Correções</string>
@@ -143,6 +147,9 @@
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Desaparecerá após cada palavra</string>
     <string name="pref__gestures__title" comment="Preference group title">Gestos</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Nenhuma ação</string>
+    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Excluir caracteres com precisão</string>
+    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Excluir palavra atual</string>
+    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Excluir palavras com precisão</string>
     <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Esconder teclado</string>
     <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Mover cursor para cima</string>
     <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Mover cursor para baixo</string>
@@ -177,7 +184,7 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostrar ícone do aplicativo no launcher</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Sobre</string>
-    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ícone de aplicativo do FlorisBoard</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ícone do aplicativo FlorisBoard</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Licenças open source</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Política de privacidade</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Código fonte</string>
@@ -191,18 +198,18 @@
     <string name="setup__ok_button" comment="Label of OK button in Setup">OK</string>
     <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Bem-vindo!</string>
     <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Obrigado por experimentar o FlorisBoard! Antes de começar a usá-lo, temos que fazer as coisas usuais e ativá-lo nas configurações do sistema, configurar seu idioma/formato de digitação preferido, etc… Mas não se preocupe - o assistente de configuração vai guiá-lo através disso!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">O FlorisBoard respeita totalmente sua privacidade e não coleta dados do usuário. Para mais informações, consulte aqui:</string>
+    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">O FlorisBoard respeita totalmente sua privacidade e não coleta dados do usuário. Para mais informações acesse:</string>
     <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">O código-fonte do FlorisBoard é acessível publicamente para qualquer pessoa, para que você possa facilmente rever o que o FlorisBoard faz em segundo plano. Confira o link do repositório abaixo.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Uma última coisa antes de iniciar a configuração - se você encontrar alguns bugs/travamentos/problemas com o FlorisBoard ou tiver uma solicitação de recurso - vá até o repositório do GitHub vinculado abaixo e crie um problema. Isso ajuda na melhoria da experiência de todos os usuários!</string>
+    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Uma última coisa antes de iniciar a configuração - se você encontrar alguns bugs/travamentos/problemas com o FlorisBoard ou quiser fazer alguma solicitação de recurso - vá até o repositório do GitHub vinculado abaixo e crie um issue. Isso ajuda a melhorar a experiência de todos os usuários!</string>
     <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Para iniciar a configuração, clique em <i>PRÓXIMO</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Ativar FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">O Android exige que todo teclado personalizado tenha que ser ativado manualmente antes de usá-lo. Clique no botão abaixo para ir as configurações de <i>Idioma &amp; Entrada</i>, em seguida, certifique-se de verificar \'<i>FlorisBoard</i>\'.</string>
+    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">O Android exige que todo teclado personalizado tenha que ser ativado manualmente antes de usá-lo. Clique no botão abaixo para ir as configurações de <i>Idioma &amp; Entrada</i>, em seguida, certifique-se de ativar o \'<i>FlorisBoard</i>\'.</string>
     <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard foi ativado com sucesso. Para continuar clique em <i>PRÓXIMO</i>!</string>
     <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Abrir configurações de Idioma &amp; Entrada</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Selecione o FlorisBoard como teclado padrão</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">O FlorisBoard agora está ativado em seu sistema. Para usá-lo ativamente, mude para FlorisBoard selecionando-o na caixa de diálogo do seletor de entrada!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Teclado padrão alterado para o FlorisBoard com sucesso!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Mudar teclado</string>
+    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Selecionar FlorisBoard como padrão</string>
+    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">O FlorisBoard agora está ativado em seu sistema. Para usá-lo ativamente, selecione o FlorisBoard como teclado padrão na caixa de seleção de teclado!</string>
+    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">O FlorisBoard foi selecionado como teclado padrão com sucesso!</string>
+    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Selecionar teclado</string>
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Configuração concluída!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Relatório de erro do FlorisBoard</string>
@@ -214,5 +221,5 @@
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard parou de funcionar…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Toque para ver os detalhes do erro</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard parece parar de funcionar repetidamente…</string>
-    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Recuando para o teclado anterior para parar o loop de travamento infinito. Toque para ver os detalhes do erro</string>
+    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Recuando para o teclado anterior para parar o loop infinito de travamento. Toque para ver os detalhes do erro</string>
 </resources>

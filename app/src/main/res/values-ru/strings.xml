@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Пауза</string>
     <!-- One-handed strings -->
     <!-- Media strings -->
     <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Смайлы &amp; Эмоции</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Люди &amp; Тело</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Животные &amp; Природа</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Еда &amp; Напитки</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Путешествия &amp; Места</string>
+    <string name="emoji__category__activities" comment="Emoji category name">Действия</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Объекты</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">Символы</string>
+    <string name="emoji__category__flags" comment="Emoji category name">Флаги</string>
     <!-- Smartbar strings -->
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Переключатель быстрого действия. При нажатии переключает между предложениями слов и кнопками быстрого действия.</string>
+    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Закрыть панель редактирования текста.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Переключить одноручный режим.</string>
     <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">Настройки</string>
+    <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Дополнительные параметры</string>
+    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Помощь &amp; отзыв</string>
+    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Главная</string>
+    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Клавиатура</string>
+    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Тема</string>
+    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Жесты</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">По умолчанию</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">Добро пожаловать в %s</string>
     <!-- About UI strings -->
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->

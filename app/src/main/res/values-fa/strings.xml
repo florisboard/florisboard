@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">مکث</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">صبر‌کنید</string>
+    <!-- One-handed strings -->
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">جابه‌جایی صفحه کلید به سمت چپ.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">جابه‌جایی صفحه کلید به سمت راست.</string>
+    <!-- Media strings -->
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">ایموجی ها</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">لبخندی &amp; احساسات</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">مردم &amp; بدن</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">حیوانات &amp; طبیعت</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">غذا ها &amp; نوشیدنی ها</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">صفر &amp; مکان ها</string>
+    <string name="emoji__category__activities" comment="Emoji category name">فعالیت ها</string>
+    <string name="emoji__category__objects" comment="Emoji category name">اشیاء</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">نشانه ها</string>
+    <string name="emoji__category__flags" comment="Emoji category name">پرچم ها</string>
+    <!-- Smartbar strings -->
+    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">باز کردن تنظیمات.</string>
+    <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">تنظیمات</string>
+    <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">گزینه‌های بیشتر</string>
+    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">کمک &amp; بازخورد</string>
+    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">خانه</string>
+    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">صفحه کلید</string>
+    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">نوشتن</string>
+    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">تم</string>
+    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">اشارات</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">پیشفرض</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">پیشفرض سیستم</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">خوش آمدید به %s</string>
+    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">افزودن</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">افزودن زیر-نوعی</string>
+    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">اعمال</string>
+    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">لغو</string>
+    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">حذف</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">ویرایش زیر-نوعی</string>
+    <string name="pref__keyboard__group_keys__label" comment="Preference group title">کلیدها</string>
+    <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">حالت دست راستی</string>
+    <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">حالت دست چپی</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">ارتفاع صفحه کلید</string>
+    <!-- About UI strings -->
+    <!-- Setup UI strings -->
+    <!-- Crash Dialog strings -->
+</resources>

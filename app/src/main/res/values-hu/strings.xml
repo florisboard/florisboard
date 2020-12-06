@@ -2,10 +2,66 @@
 <resources>
     <!-- One-handed strings -->
     <!-- Media strings -->
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojik</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikonok</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomojik</string>
     <!-- Emoji strings -->
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Állatok &amp; természet</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Étel &amp; ital</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Utazás &amp; helyek</string>
+    <string name="emoji__category__activities" comment="Emoji category name">Tevékenységek</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Tárgyak</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">Szimbólumok</string>
+    <string name="emoji__category__flags" comment="Emoji category name">Zászlók</string>
     <!-- Smartbar strings -->
     <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">Beállítások</string>
+    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Téma</string>
+    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Hozzáadás</string>
+    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Alkamaz</string>
+    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Mégse</string>
+    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Törlés</string>
+    <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">Billentyűzetkiosztás</string>
+    <string name="settings__theme__title" comment="Title of the Theme fragment">Billentyűzet téma</string>
+    <string name="settings__theme__group_smartbar" comment="Theme group label">Okossáv</string>
+    <string name="settings__theme__group_smartbar_button" comment="Theme group label">Okossáv-gomb</string>
+    <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">Elsődleges szín</string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">Elrendezés</string>
+    <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Ki</string>
+    <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Jobbkezes mód</string>
+    <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Balkezes mód</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">Billentyűzet magassága</string>
+    <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Nagyon alacsony</string>
+    <string name="pref__keyboard__height_factor__short" comment="Preference value">Alacsony</string>
+    <string name="pref__keyboard__height_factor__mid_short" comment="Preference value">Közép-alacsony</string>
+    <string name="pref__keyboard__height_factor__normal" comment="Preference value">Normál</string>
+    <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">Közép-magas</string>
+    <string name="pref__keyboard__height_factor__tall" comment="Preference value">Magas</string>
+    <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Nagyon magas</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
+    <string name="pref__suggestion__show_instead__number_row" comment="Preference value">Számsor</string>
+    <string name="pref__gestures__title" comment="Preference group title">Gesztusok</string>
+    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Nincs művelet</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Nagyon lassú</string>
+    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Lassú</string>
+    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normál</string>
+    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Gyors</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Nagyon gyors</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Nagyon rövid</string>
+    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Rövid</string>
+    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normál</string>
+    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Hosszú</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Nagyon hosszú</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Haladó</string>
+    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Világos</string>
+    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Sötét</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Alkalmazás megjelenítése a kezdőképernyőn</string>
     <!-- About UI strings -->
+    <string name="about__title" comment="Title of About activity">Névjegy</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">Forráskód</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">Nyílt forráskódú licencek</string>
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
+    <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard hibajelentés</string>
+    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Bezárás</string>
 </resources>
