@@ -14,7 +14,7 @@ love to hear from you!
 ## Translations
 
 To make FlorisBoard accessible in as many languages as possible, the
-platform ![Crowdin](https://crowdin.florisboard.patrickgold.dev) is used
+platform [Crowdin](https://crowdin.florisboard.patrickgold.dev) is used
 to crowdsource and manage translations. This is the only source of
 translations from now on - **PRs that add/update translations are no
 longer accepted.** The list of languages in Crowdin covers the top 20
