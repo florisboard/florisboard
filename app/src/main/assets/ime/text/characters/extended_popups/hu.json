@@ -1,0 +1,47 @@
+{
+  "a": [
+    { "code":  225, "label": "á" }
+  ],
+  "e": [
+    { "code":  233, "label": "é" }
+  ],
+  "i": [
+    { "code":  237, "label": "í" }
+  ],
+  "o": [
+    { "code":  243, "label": "ó" },
+    { "code":  246, "label": "ö" },
+    { "code":  337, "label": "ő" }
+  ],
+  "u": [
+    { "code":  250, "label": "ú" },
+    { "code":  252, "label": "ü" },
+    { "code":  369, "label": "ű" },
+  ],
+  ".~normal": [
+    { "code":   44, "label": "," },
+    { "code":   38, "label": "&" },
+    { "code":   37, "label": "%" },
+    { "code":   43, "label": "+" },
+    { "code":   34, "label": "\"" },
+    { "code":   45, "label": "-" },
+    { "code":   58, "label": ":" },
+    { "code":   39, "label": "'" },
+    { "code":   64, "label": "@" },
+    { "code":   59, "label": ";" },
+    { "code":   47, "label": "/" },
+    { "code":   40, "label": "(" },
+    { "code":   41, "label": ")" },
+    { "code":   35, "label": "#" },
+    { "code":   33, "label": "!" },
+    { "code":   63, "label": "?" }
+  ],
+  ".~uri": [
+    { "code": -255, "label": ".com" },
+    { "code": -255, "label": ".hu" },
+    { "code": -255, "label": ".gov" },
+    { "code": -255, "label": ".edu" },
+    { "code": -255, "label": ".org" },
+    { "code": -255, "label": ".net" }
+  ]
+}
