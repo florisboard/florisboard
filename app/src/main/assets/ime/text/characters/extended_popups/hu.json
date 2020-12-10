@@ -13,9 +13,15 @@
     { "code":  246, "label": "ö" },
     { "code":  337, "label": "ő" }
   ],
+  "ö": [
+    { "code":  337, "label": "ő" }
+  ],
   "u": [
     { "code":  250, "label": "ú" },
     { "code":  252, "label": "ü" },
+    { "code":  369, "label": "ű" },
+  ],
+   "ü": [
     { "code":  369, "label": "ű" },
   ],
   ".~normal": [
