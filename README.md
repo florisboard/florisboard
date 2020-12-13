@@ -48,7 +48,10 @@ repo.
 src="https://patrickgold.dev/media/previews/florisboard-preview-day.png"
 alt="Preview image">
 
-## Feature roadmap
+## Implemented features
+This list contains all implemented and fully functional features FlorisBoard
+currently has to offer. For planned features and its milestones, please refer
+to the following section.
 
 ### Basics
 * [x] Implementation of the keyboard core (InputMethodService)
@@ -59,7 +62,6 @@ alt="Preview image">
 * [x] Key press sound/vibration
 * [x] Portrait orientation support
 * [x] Landscape orientation support (needs tweaks)
-* [ ] Tablet screen support (0.4.0)
 
 ### Layouts
 * [x] Latin character layouts (QWERTY, QWERTZ, AZERTY, Swiss, Spanish,
@@ -71,9 +73,8 @@ alt="Preview image">
 * [x] Numeric layout
 * [x] Numeric layout (advanced)
 * [x] Phone number layout
-* [x] Emoji layout (tweaks: 0.3.0)
+* [x] Emoji layout
 * [x] Emoticon layout
-* [ ] Kaomoji layout (0.5.0)
 
 ### Preferences
 * [x] Setup wizard
@@ -81,25 +82,15 @@ alt="Preview image">
 * [x] Customize look and behaviour of keyboard
 * [x] Theme presets (currently only day/night theme)
 * [x] Theme customization
-* [ ] Theme import/export (0.4.0 or 0.5.0)
 * [x] Subtype selection (language/layout)
 * [x] Keyboard behaviour preferences
-* [ ] Text suggestion / Auto correct preferences (0.4.0 or 0.5.0)
-* [x] Gesture preferences (0.3.0)
-
-### Composing suggestions (0.4.0 or 0.5.0)
-* [ ] Auto suggest words from precompiled dictionary
-* [ ] Auto suggest words from user dictionary
-* [ ] Auto suggest contacts
-* [ ] Multilingual typing
+* [x] Gesture preferences
 
 ### Other useful features
 * [x] One-handed mode
 * [x] Clipboard/cursor tools
-* [x] Integrated number row / symbols in character layouts (0.3.0)
-* [ ] Floating keyboard (0.4.0)
-* [x] Gesture support (0.3.0)
-* [ ] Glide typing (0.4.0)
+* [x] Integrated number row / symbols in character layouts
+* [x] Gesture support
 * [x] Full integration in IME service list of Android (xml/method)
       (integration is internal-only, because Android's default subtype
       implementation not really allows for dynamic language/layout
@@ -108,11 +99,52 @@ alt="Preview image">
 * [ ] (dev only) Generate well-structured documentation of code
 * [ ] ...
 
-Note:
+## Feature roadmap
+This section describes the features which are planned to be implemented
+in FlorisBoard for the next major versions, modularized into sections.
+Please note that the milestone due dates are only raw estimates and will
+most likely be delayed back, even though I'm eager to stick to these as
+close as possible.
 
-(?) = not sure if it will be implemented
+### [v0.4.0](https://github.com/florisboard/florisboard/milestone/4)
+- Module A: Smartbar rework
+  - Ability to enable/disable Smartbar (features below thus only work if
+    Smartbar is enabled)
+  - Dynamic switching bewteen clipboard tools and word suggestions
+  - Ability to show both the number row and word suggestions at once
+  - Better icons in quick actions
+  - (dev only) Cleanup of Smartbar code base
 
-(0.x.0) = planned version when feature will be implemented.
+- Module B: Composing suggestions
+  - Auto-suggestion of words based of precompiled dictionaries
+  - Management of custom dictionary entries
+  - Opt-in only: Learning of often typed word pais to better predict next
+    words over time. Data collected here is stored locally and never leaves
+    the user's device.
+
+- Module C: Extension packs
+  - Ability to load dictionaries (and later potentionally other cool
+    features too) only if needed to keep the core APK size small
+  - Currently unclear how exactly this will work, but this is definitely
+    a must-have feature
+
+- Module D: Glide typing
+  - Swiping over the characters will automatically convert this to a word
+  - Possibly also add improvements based on the Flow keyboard
+
+### [v0.5.0](https://github.com/florisboard/florisboard/milestone/5)
+There's no exact roadmap yet but it is planned that the media part of
+FlorisBoard (emojis, emoticons, kaomoji) gets a rework. Also as an extension
+(requires v0.4.0/Module C) GIF support is planned.
+
+### > v0.5.0
+This is completely open as of now and will gather planned features as time
+passes...
+
+Backlog (currently not assigned to any milestone):
+
+- Theme import/export
+- Floating keyboard
 
 ## Contributing
 Wanna contribute to FlorisBoard? That's great to hear! There are lots of
