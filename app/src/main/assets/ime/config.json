@@ -14,7 +14,8 @@
     "swiss_italian": "Swiss Italian (QWERTZ)",
     "hungarian": "Hungarian (QWERTZ)",
     "persian": "Persian",
-    "arabic": "Arabic"
+    "arabic": "Arabic",
+    "esperanto": "Esperanto"
   },
   "defaultSubtypes": [
     {
@@ -196,6 +197,13 @@
           "id": 1001,
       "languageTag": "hu",
       "preferredLayout": "hungarian",
+      "isAsciiCapable": true,
+      "isEmojiCapable": true
+    },
+    {
+      "id": 1101,
+      "languageTag": "eo",
+      "preferredLayout": "esperanto",
       "isAsciiCapable": true,
       "isEmojiCapable": true
     }
