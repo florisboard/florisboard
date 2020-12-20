@@ -63,7 +63,7 @@ class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by
             prefs.sync()
             keyboardView.isPreviewMode = true
             val subtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
-            keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, subtype).await()
+            keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, subtype, prefs).await()
             keyboardView.updateVisibility()
             keyboardView.onApplyThemeAttributes()
             withContext(Dispatchers.Main) {

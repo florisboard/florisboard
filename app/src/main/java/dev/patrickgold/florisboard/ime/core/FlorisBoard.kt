@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.util.*
 import java.lang.ref.WeakReference
@@ -78,6 +79,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     lateinit var activeSubtype: Subtype
     private var currentThemeIsNight: Boolean = false
     private var currentThemeResId: Int = 0
+    private var isNumberRowVisible: Boolean = false
 
     val textInputManager: TextInputManager
     val mediaInputManager: MediaInputManager
@@ -162,6 +164,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
 
         currentThemeIsNight = prefs.internal.themeCurrentIsNight
         currentThemeResId = getDayNightBaseThemeId(currentThemeIsNight)
+        isNumberRowVisible = prefs.keyboard.numberRow
         setTheme(currentThemeResId)
         updateTheme()
 
@@ -248,6 +251,11 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         if (BuildConfig.DEBUG) Log.i(TAG, "onWindowShown()")
 
         prefs.sync()
+        val newIsNumberRowVisible = prefs.keyboard.numberRow
+        if (isNumberRowVisible != newIsNumberRowVisible) {
+            textInputManager.layoutManager.clearLayoutCache(KeyboardMode.CHARACTERS)
+            isNumberRowVisible = newIsNumberRowVisible
+        }
         updateTheme()
         updateOneHandedPanelVisibility()
         activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT

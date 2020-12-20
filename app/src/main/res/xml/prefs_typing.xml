@@ -2,13 +2,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        app:key="smartbar__enabled"
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__smartbar__enabled__label"
+        app:summary="@string/pref__smartbar__enabled__summary"/>
+
     <PreferenceCategory
         app:iconSpaceReserved="false"
         app:title="@string/pref__suggestion__title">
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
-            app:enabled="true"
             app:key="suggestion__enabled"
             app:iconSpaceReserved="false"
             app:title="@string/pref__suggestion__enabled__label"

@@ -45,6 +45,7 @@ class PrefHelper(
     val internal = Internal(this)
     val keyboard = Keyboard(this)
     val localization = Localization(this)
+    val smartbar = Smartbar(this)
     val suggestion = Suggestion(this)
     val theme = Theme(this)
 
@@ -309,6 +310,7 @@ class PrefHelper(
             const val HINTED_NUMBER_ROW =               "keyboard__hinted_number_row"
             const val HINTED_SYMBOLS =                  "keyboard__hinted_symbols"
             const val LONG_PRESS_DELAY =                "keyboard__long_press_delay"
+            const val NUMBER_ROW =                      "keyboard__number_row"
             const val ONE_HANDED_MODE =                 "keyboard__one_handed_mode"
             const val POPUP_ENABLED =                   "keyboard__popup_enabled"
             const val SOUND_ENABLED =                   "keyboard__sound_enabled"
@@ -341,6 +343,9 @@ class PrefHelper(
         var longPressDelay: Int = 0
             get() = prefHelper.getPref(LONG_PRESS_DELAY, 300)
             private set
+        var numberRow: Boolean
+            get() =  prefHelper.getPref(NUMBER_ROW, false)
+            set(v) = prefHelper.setPref(NUMBER_ROW, v)
         var oneHandedMode: String
             get() = prefHelper.getPref(ONE_HANDED_MODE, "off")
             set(value) = prefHelper.setPref(ONE_HANDED_MODE, value)
@@ -378,6 +383,19 @@ class PrefHelper(
         var subtypes: String
             get() =  prefHelper.getPref(SUBTYPES, "")
             set(v) = prefHelper.setPref(SUBTYPES, v)
+    }
+
+    /**
+     * Wrapper class for Smartbar preferences.
+     */
+    class Smartbar(private val prefHelper: PrefHelper) {
+        companion object {
+            const val ENABLED =                     "smartbar__enabled"
+        }
+
+        var enabled: Boolean
+            get() =  prefHelper.getPref(ENABLED, true)
+            set(v) = prefHelper.setPref(ENABLED, v)
     }
 
     /**

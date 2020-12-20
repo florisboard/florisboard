@@ -21,6 +21,7 @@ import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
@@ -113,7 +114,8 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
         subtype: Subtype,
         main: LTN? = null,
         modifier: LTN? = null,
-        extension: LTN? = null
+        extension: LTN? = null,
+        prefs: PrefHelper
     ): ComputedLayoutData {
         val computedArrangement: ComputedLayoutDataArrangement = mutableListOf()
 
@@ -194,18 +196,20 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
 
         // Add hints to keys
         if (keyboardMode == KeyboardMode.CHARACTERS) {
-            val symbolsComputedArrangement = fetchComputedLayoutAsync(KeyboardMode.SYMBOLS, subtype).await().arrangement
+            val symbolsComputedArrangement = fetchComputedLayoutAsync(KeyboardMode.SYMBOLS, subtype, prefs).await().arrangement
+            val minRow = if (prefs.keyboard.numberRow) { 1 } else { 0 }
             for ((r, row) in computedArrangement.withIndex()) {
-                if (r >= 3) {
-                    break
+                if (r >= (3 + minRow) || r < minRow) {
+                    continue
                 }
-                if (symbolsComputedArrangement.getOrNull(r) != null) {
+                val symbolRow = symbolsComputedArrangement.getOrNull(r - minRow)
+                if (symbolRow != null) {
                     for ((k, key) in row.withIndex()) {
-                        val symbol = symbolsComputedArrangement[r].getOrNull(k)
+                        val symbol = symbolRow.getOrNull(k)
                         if (key.type == KeyType.CHARACTER && symbol?.type == KeyType.CHARACTER) {
-                            if (r == 0) {
+                            if (r == minRow) {
                                 key.hintedNumber = symbol
-                            } else {
+                            } else if (r > minRow) {
                                 key.hintedSymbol = symbol
                             }
                         }
@@ -232,7 +236,8 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
      */
     private suspend fun computeLayoutFor(
         keyboardMode: KeyboardMode,
-        subtype: Subtype
+        subtype: Subtype,
+        prefs: PrefHelper
     ): ComputedLayoutData {
         var main: LTN? = null
         var modifier: LTN? = null
@@ -240,6 +245,9 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
 
         when (keyboardMode) {
             KeyboardMode.CHARACTERS -> {
+                if (prefs.keyboard.numberRow) {
+                    extension = LTN(LayoutType.EXTENSION, "number_row")
+                }
                 main = LTN(LayoutType.CHARACTERS, subtype.layout)
                 modifier = LTN(LayoutType.CHARACTERS_MOD, "default")
             }
@@ -259,9 +267,9 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
                 main = LTN(LayoutType.PHONE2, "default")
             }
             KeyboardMode.SYMBOLS -> {
+                extension = LTN(LayoutType.EXTENSION, "number_row")
                 main = LTN(LayoutType.SYMBOLS, "western_default")
                 modifier = LTN(LayoutType.SYMBOLS_MOD, "default")
-                extension = LTN(LayoutType.EXTENSION, "number_row")
             }
             KeyboardMode.SYMBOLS2 -> {
                 main = LTN(LayoutType.SYMBOLS2, "western_default")
@@ -275,7 +283,27 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
             }
         }
 
-        return mergeLayoutsAsync(keyboardMode, subtype, main, modifier, extension)
+        return mergeLayoutsAsync(keyboardMode, subtype, main, modifier, extension, prefs)
+    }
+
+    /**
+     * Clears the layout cache for the specified [keyboardMode].
+     *
+     * @param keyboardMode The keyboard mode for which the layout cache should be cleared. If null
+     *  is passed, the entire cache will be cleared. Defaults to null.
+     */
+    fun clearLayoutCache(keyboardMode: KeyboardMode? = null) {
+        if (keyboardMode == null) {
+            computedLayoutCache.clear()
+        } else {
+            val it = computedLayoutCache.iterator()
+            while (it.hasNext()) {
+                val kms = it.next().key
+                if (kms.first == keyboardMode) {
+                    it.remove()
+                }
+            }
+        }
     }
 
     /**
@@ -289,7 +317,8 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
     @Synchronized
     fun fetchComputedLayoutAsync(
         keyboardMode: KeyboardMode,
-        subtype: Subtype
+        subtype: Subtype,
+        prefs: PrefHelper
     ): Deferred<ComputedLayoutData> {
         val kms = KMS(keyboardMode, subtype)
         val cachedComputedLayout = computedLayoutCache[kms]
@@ -297,7 +326,7 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
             cachedComputedLayout
         } else {
             val computedLayout = async(Dispatchers.IO) {
-                computeLayoutFor(keyboardMode, subtype)
+                computeLayoutFor(keyboardMode, subtype, prefs)
             }
             computedLayoutCache[kms] = computedLayout
             computedLayout
@@ -315,12 +344,13 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
     @Synchronized
     fun preloadComputedLayout(
         keyboardMode: KeyboardMode,
-        subtype: Subtype
+        subtype: Subtype,
+        prefs: PrefHelper
     ) {
         val kms = KMS(keyboardMode, subtype)
         if (computedLayoutCache[kms] == null) {
             computedLayoutCache[kms] = async(Dispatchers.IO) {
-                computeLayoutFor(keyboardMode, subtype)
+                computeLayoutFor(keyboardMode, subtype, prefs)
             }
         }
     }

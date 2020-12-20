@@ -39,6 +39,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
+import kotlin.math.roundToInt
 
 /**
  * View class which manages the state and the UI of the Smartbar, a key element in the usefulness
@@ -108,7 +109,8 @@ class SmartbarView : ConstraintLayout {
             florisboard?.let {
                 val layout = florisboard.textInputManager.layoutManager.fetchComputedLayoutAsync(
                     KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW,
-                    Subtype.DEFAULT
+                    Subtype.DEFAULT,
+                    prefs
                 ).await()
                 launch(Dispatchers.Main) {
                     binding.clipboardCursorRow.computedLayout = layout
@@ -122,7 +124,8 @@ class SmartbarView : ConstraintLayout {
             florisboard?.let {
                 val layout = it.textInputManager.layoutManager.fetchComputedLayoutAsync(
                     KeyboardMode.SMARTBAR_NUMBER_ROW,
-                    Subtype.DEFAULT
+                    Subtype.DEFAULT,
+                    prefs
                 ).await()
                 launch(Dispatchers.Main) {
                     binding.numberRow.computedLayout = layout
@@ -266,7 +269,7 @@ class SmartbarView : ConstraintLayout {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
-        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
+        val heightSize = MeasureSpec.getSize(heightMeasureSpec).toFloat()
         val height = when (heightMode) {
             MeasureSpec.EXACTLY -> {
                 // Must be this size
@@ -274,15 +277,15 @@ class SmartbarView : ConstraintLayout {
             }
             MeasureSpec.AT_MOST -> {
                 // Can't be bigger than...
-                (florisboard?.inputView?.desiredSmartbarHeight ?: resources.getDimension(R.dimen.smartbar_baseHeight)).toInt().coerceAtMost(heightSize)
+                (florisboard?.inputView?.desiredSmartbarHeight ?: resources.getDimension(R.dimen.smartbar_baseHeight)).coerceAtMost(heightSize)
             }
             else -> {
                 // Be whatever you want
-                florisboard?.inputView?.desiredSmartbarHeight ?: resources.getDimension(R.dimen.smartbar_baseHeight).toInt()
+                florisboard?.inputView?.desiredSmartbarHeight ?: resources.getDimension(R.dimen.smartbar_baseHeight)
             }
         }
 
-        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY))
+        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height.roundToInt(), MeasureSpec.EXACTLY))
     }
 
     override fun onDraw(canvas: Canvas?) {

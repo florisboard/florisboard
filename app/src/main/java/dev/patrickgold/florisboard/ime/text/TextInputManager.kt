@@ -111,14 +111,14 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         }
         for (subtype in subtypes) {
             for (mode in KeyboardMode.values()) {
-                layoutManager.preloadComputedLayout(mode, subtype)
+                layoutManager.preloadComputedLayout(mode, subtype, florisboard.prefs)
             }
         }
     }
 
     private suspend fun addKeyboardView(mode: KeyboardMode) {
         val keyboardView = KeyboardView(florisboard.context)
-        keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(mode, florisboard.activeSubtype).await()
+        keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(mode, florisboard.activeSubtype, florisboard.prefs).await()
         keyboardViews[mode] = keyboardView
         withContext(Dispatchers.Main) {
             textViewFlipper?.addView(keyboardView)
@@ -266,7 +266,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     override fun onSubtypeChanged(newSubtype: Subtype) {
         launch {
             val keyboardView = keyboardViews[KeyboardMode.CHARACTERS]
-            keyboardView?.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, newSubtype).await()
+            keyboardView?.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, newSubtype, florisboard.prefs).await()
             keyboardView?.updateVisibility()
         }
     }

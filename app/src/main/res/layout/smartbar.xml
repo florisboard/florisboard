@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/smartbar"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/smartbar_baseHeight"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layoutDirection="locale">
 
