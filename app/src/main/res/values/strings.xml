@@ -139,10 +139,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Will show on top of the keyboard</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
     <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] Display suggestions while you type</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Will show on top of the keyboard</string>
-    <string name="pref__suggestion__show_instead__label" comment="Preference title">What to show instead of suggestions</string>
-    <string name="pref__suggestion__show_instead__number_row" comment="Preference value">Number row</string>
-    <string name="pref__suggestion__show_instead__clipboard_cursor_tools" comment="Preference value">Clipboard cursor tools</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Will show in the Smartbar</string>
     <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Clipboard content suggestions</string>
     <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Suggest clipboard content to paste if previously copied</string>
     <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Next-word suggestions</string>

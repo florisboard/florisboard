@@ -15,6 +15,7 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
+            android:dependency="smartbar__enabled"
             app:key="suggestion__enabled"
             app:iconSpaceReserved="false"
             app:title="@string/pref__suggestion__enabled__label"
@@ -35,15 +36,6 @@
             app:iconSpaceReserved="false"
             app:title="@string/pref__suggestion__suggest_clipboard_content__label"
             app:summary="@string/pref__suggestion__suggest_clipboard_content__summary"/>
-
-        <ListPreference
-            android:defaultValue="clipboard_cursor_tools"
-            app:entries="@array/pref__suggestion__show_instead__entries"
-            app:entryValues="@array/pref__suggestion__show_instead__values"
-            app:key="suggestion__show_instead"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__suggestion__show_instead__label"
-            app:useSimpleSummaryProvider="true"/>
 
     </PreferenceCategory>
 

@@ -45,19 +45,22 @@
 
             <Button
                 android:id="@+id/candidate0"
-                style="@style/SmartbarCandidate"/>
+                style="@style/SmartbarCandidate"
+                android:text="suggestions"/>
 
             <View style="@style/SmartbarDivider"/>
 
             <Button
                 android:id="@+id/candidate1"
-                style="@style/SmartbarCandidate"/>
+                style="@style/SmartbarCandidate"
+                android:text="not yet"/>
 
             <View style="@style/SmartbarDivider"/>
 
             <Button
                 android:id="@+id/candidate2"
-                style="@style/SmartbarCandidate"/>
+                style="@style/SmartbarCandidate"
+                android:text="implemented"/>
 
         </LinearLayout>
 
@@ -93,7 +96,7 @@
                 android:id="@+id/quick_action_one_handed_toggle"
                 style="@style/SmartbarQuickAction"
                 android:contentDescription="@string/smartbar__quick_action__one_handed_mode"
-                android:src="@drawable/ic_keyboard_arrow_right"/>
+                android:src="@drawable/ic_smartphone"/>
 
             <!-- TODO: find better icon for editing -->
             <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton

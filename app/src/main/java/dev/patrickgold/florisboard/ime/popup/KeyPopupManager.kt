@@ -119,7 +119,7 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
                 }
                 KeyCode.TOGGLE_ONE_HANDED_MODE -> {
                     textView.iconDrawable = getDrawable(
-                        keyView.context, R.drawable.ic_keyboard_arrow_right
+                        keyView.context, R.drawable.ic_smartphone
                     )
                 }
                 else -> {

@@ -25,9 +25,10 @@ import android.widget.LinearLayout
 import android.widget.ViewFlipper
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.text.key.KeyVariation
+import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import kotlin.math.roundToInt
-
 
 /**
  * Root view of the keyboard. Notifies [FlorisBoard] when it has been attached to a window.
@@ -94,12 +95,22 @@ class InputView : LinearLayout {
         var baseHeight = calcInputViewHeight() * heightFactor
         var baseSmartbarHeight = 0.16129f * baseHeight
         var baseTextInputHeight = baseHeight - baseSmartbarHeight
-        if (prefs.keyboard.numberRow) {
+        val tim = florisboard.textInputManager
+        val shouldGiveAdditionalSpace = prefs.keyboard.numberRow &&
+                !(tim.getActiveKeyboardMode() == KeyboardMode.NUMERIC ||
+                tim.getActiveKeyboardMode() == KeyboardMode.PHONE ||
+                tim.getActiveKeyboardMode() == KeyboardMode.PHONE2)
+        if (shouldGiveAdditionalSpace) {
             val additionalHeight = desiredTextKeyboardViewHeight * 0.18f
             baseHeight += additionalHeight
             baseTextInputHeight += additionalHeight
         }
-        if (!prefs.smartbar.enabled) {
+        val smartbarDisabled = !prefs.smartbar.enabled ||
+                tim.keyVariation == KeyVariation.PASSWORD && prefs.keyboard.numberRow ||
+                tim.getActiveKeyboardMode() == KeyboardMode.NUMERIC ||
+                tim.getActiveKeyboardMode() == KeyboardMode.PHONE ||
+                tim.getActiveKeyboardMode() == KeyboardMode.PHONE2
+        if (smartbarDisabled) {
             baseHeight = baseTextInputHeight
             baseSmartbarHeight = 0.0f
         }
