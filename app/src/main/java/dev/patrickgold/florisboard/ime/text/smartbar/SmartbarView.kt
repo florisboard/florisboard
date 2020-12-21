@@ -63,6 +63,7 @@ class SmartbarView : ConstraintLayout {
             binding.quickActionToggle.rotation = if (v) 180.0f else 0.0f
             field = v
         }
+    private var shouldSuggestClipboardContents: Boolean = false
 
     private lateinit var binding: SmartbarBinding
     private var indexedActionStartArea: MutableList<Int> = mutableListOf()
@@ -117,6 +118,12 @@ class SmartbarView : ConstraintLayout {
                     binding.clipboardCursorRow.updateVisibility()
                 }
             }
+        }
+
+        binding.clipboardSuggestion.setOnClickListener {
+            florisboard?.activeEditorInstance?.performClipboardPaste()
+            shouldSuggestClipboardContents = false
+            updateSmartbarState()
         }
 
         binding.numberRow.isSmartbarKeyboardView = true
@@ -237,7 +244,10 @@ class SmartbarView : ConstraintLayout {
                             KeyboardMode.PHONE2 -> null
                             else -> when {
                                 florisboard.activeEditorInstance.isComposingEnabled &&
-                                florisboard.activeEditorInstance.selection.isCursorMode
+                                        shouldSuggestClipboardContents
+                                -> R.id.clipboard_suggestion_row
+                                florisboard.activeEditorInstance.isComposingEnabled &&
+                                        florisboard.activeEditorInstance.selection.isCursorMode
                                     -> R.id.candidates
                                 else -> R.id.clipboard_cursor_row
                             }
@@ -255,14 +265,26 @@ class SmartbarView : ConstraintLayout {
 
     fun onPrimaryClipChanged() {
         if (prefs.suggestion.enabled && prefs.suggestion.suggestClipboardContent) {
-            //shouldSuggestClipboardContents = true
+            shouldSuggestClipboardContents = true
+            val item = florisboard?.clipboardManager?.primaryClip?.getItemAt(0)
+            when {
+                item?.text != null -> {
+                    binding.clipboardSuggestion.text = item.text
+                }
+                item?.uri != null -> {
+                    binding.clipboardSuggestion.text = "(Image) " + item.uri.toString()
+                }
+                else -> {
+                    binding.clipboardSuggestion.text = item?.text ?: "(Error while retrieving clipboard data)"
+                }
+            }
             updateSmartbarState()
         }
     }
 
     fun resetClipboardSuggestion() {
         if (prefs.suggestion.enabled && prefs.suggestion.suggestClipboardContent) {
-            //shouldSuggestClipboardContents = false
+            shouldSuggestClipboardContents = false
             updateSmartbarState()
         }
     }
