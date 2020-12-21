@@ -66,7 +66,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     var inputView: InputView? = null
         private set
     private var inputWindowView: InputWindowView? = null
-    private var eventListeners: MutableList<WeakReference<EventListener>> = mutableListOf()
+    private var eventListeners: MutableList<WeakReference<EventListener?>?> = mutableListOf()
 
     private var audioManager: AudioManager? = null
     var clipboardManager: ClipboardManager? = null
@@ -186,7 +186,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
 
         super.onCreate()
-        eventListeners.toList().forEach { it.get()?.onCreate() }
+        eventListeners.toList().forEach { it?.get()?.onCreate() }
     }
 
     @SuppressLint("InflateParams")
@@ -197,7 +197,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
 
         inputWindowView = layoutInflater.inflate(R.layout.florisboard, null) as InputWindowView
 
-        eventListeners.toList().forEach { it.get()?.onCreateInputView() }
+        eventListeners.toList().forEach { it?.get()?.onCreateInputView() }
 
         return inputWindowView
     }
@@ -211,7 +211,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         updateSoftInputWindowLayoutParameters()
         updateOneHandedPanelVisibility()
 
-        eventListeners.toList().forEach { it.get()?.onRegisterInputView(inputView) }
+        eventListeners.toList().forEach { it?.get()?.onRegisterInputView(inputView) }
     }
 
     override fun onDestroy() {
@@ -221,7 +221,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         osHandler.removeCallbacksAndMessages(null)
         florisboardInstance = null
 
-        eventListeners.toList().forEach { it.get()?.onDestroy() }
+        eventListeners.toList().forEach { it?.get()?.onDestroy() }
         eventListeners.clear()
         super.onDestroy()
     }
@@ -240,7 +240,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         super.onStartInputView(info, restarting)
         activeEditorInstance = EditorInstance.from(info, this)
         eventListeners.toList().forEach {
-            it.get()?.onStartInputView(activeEditorInstance, restarting)
+            it?.get()?.onStartInputView(activeEditorInstance, restarting)
         }
     }
 
@@ -252,7 +252,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         }
 
         super.onFinishInputView(finishingInput)
-        eventListeners.toList().forEach { it.get()?.onFinishInputView(finishingInput) }
+        eventListeners.toList().forEach { it?.get()?.onFinishInputView(finishingInput) }
     }
 
     override fun onFinishInput() {
@@ -278,14 +278,14 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         setActiveInput(R.id.text_input)
 
         super.onWindowShown()
-        eventListeners.toList().forEach { it.get()?.onWindowShown() }
+        eventListeners.toList().forEach { it?.get()?.onWindowShown() }
     }
 
     override fun onWindowHidden() {
         if (BuildConfig.DEBUG) Log.i(TAG, "onWindowHidden()")
 
         super.onWindowHidden()
-        eventListeners.toList().forEach { it.get()?.onWindowHidden() }
+        eventListeners.toList().forEach { it?.get()?.onWindowHidden() }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -313,7 +313,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
             oldSelStart, oldSelEnd,
             newSelStart, newSelEnd
         )
-        eventListeners.toList().forEach { it.get()?.onUpdateSelection() }
+        eventListeners.toList().forEach { it?.get()?.onUpdateSelection() }
     }
 
     /**
@@ -369,7 +369,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
             ?.imageTintList = ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor)
         inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_close_end)
             ?.imageTintList = ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor)
-        eventListeners.toList().forEach { it.get()?.onApplyThemeAttributes() }
+        eventListeners.toList().forEach { it?.get()?.onApplyThemeAttributes() }
     }
 
     override fun onComputeInsets(outInsets: Insets?) {
@@ -582,7 +582,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     }
 
     override fun onPrimaryClipChanged() {
-        eventListeners.toList().forEach { it.get()?.onPrimaryClipChanged() }
+        eventListeners.toList().forEach { it?.get()?.onPrimaryClipChanged() }
     }
 
     /**
@@ -598,13 +598,15 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     /**
      * Removes a given [listener] from the list which will receive FlorisBoard events.
      *
+     * TODO: implement this function with a proper iterator
+     *
      * @param listener The same listener object which was used in [addEventListener].
      * @return True if the listener has been removed successfully, false otherwise. A false return
      *  value may also indicate that the [listener] was not added previously.
      */
     fun removeEventListener(listener: EventListener): Boolean {
         eventListeners.toList().forEach {
-            if (it.get() == listener) {
+            if (it?.get() == listener) {
                 return eventListeners.remove(it)
             }
         }
