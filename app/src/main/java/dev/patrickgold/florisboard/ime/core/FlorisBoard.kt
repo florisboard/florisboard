@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.util.*
 import java.lang.ref.WeakReference
@@ -78,6 +79,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     lateinit var activeSubtype: Subtype
     private var currentThemeIsNight: Boolean = false
     private var currentThemeResId: Int = 0
+    private var isNumberRowVisible: Boolean = false
 
     val textInputManager: TextInputManager
     val mediaInputManager: MediaInputManager
@@ -91,6 +93,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
 
     companion object {
         private const val IME_ID: String = "dev.patrickgold.florisboard/.ime.core.FlorisBoard"
+        private const val IME_ID_DEBUG: String = "dev.patrickgold.florisboard.debug/dev.patrickgold.florisboard.ime.core.FlorisBoard"
         private val TAG: String? = FlorisBoard::class.simpleName
 
         fun checkIfImeIsEnabled(context: Context): Boolean {
@@ -98,8 +101,15 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
                 context.contentResolver,
                 Settings.Secure.ENABLED_INPUT_METHODS
             )
-            if (BuildConfig.DEBUG) Log.i(FlorisBoard::class.simpleName, "List of active IMEs: $activeImeIds")
-            return activeImeIds.split(":").contains(IME_ID)
+            return when {
+                BuildConfig.DEBUG -> {
+                    Log.i(FlorisBoard::class.simpleName, "List of active IMEs: $activeImeIds")
+                    activeImeIds.split(":").contains(IME_ID_DEBUG)
+                }
+                else -> {
+                    activeImeIds.split(":").contains(IME_ID)
+                }
+            }
         }
 
         fun checkIfImeIsSelected(context: Context): Boolean {
@@ -107,8 +117,15 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
                 context.contentResolver,
                 Settings.Secure.DEFAULT_INPUT_METHOD
             )
-            if (BuildConfig.DEBUG) Log.i(FlorisBoard::class.simpleName, "Selected IME: $selectedImeId")
-            return selectedImeId == IME_ID
+            return when {
+                BuildConfig.DEBUG -> {
+                    Log.i(FlorisBoard::class.simpleName, "Selected IME: $selectedImeId")
+                    selectedImeId == IME_ID_DEBUG
+                }
+                else -> {
+                    selectedImeId == IME_ID
+                }
+            }
         }
 
         @Synchronized
@@ -162,6 +179,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
 
         currentThemeIsNight = prefs.internal.themeCurrentIsNight
         currentThemeResId = getDayNightBaseThemeId(currentThemeIsNight)
+        isNumberRowVisible = prefs.keyboard.numberRow
         setTheme(currentThemeResId)
         updateTheme()
 
@@ -248,6 +266,11 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         if (BuildConfig.DEBUG) Log.i(TAG, "onWindowShown()")
 
         prefs.sync()
+        val newIsNumberRowVisible = prefs.keyboard.numberRow
+        if (isNumberRowVisible != newIsNumberRowVisible) {
+            textInputManager.layoutManager.clearLayoutCache(KeyboardMode.CHARACTERS)
+            isNumberRowVisible = newIsNumberRowVisible
+        }
         updateTheme()
         updateOneHandedPanelVisibility()
         activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT

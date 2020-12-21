@@ -299,13 +299,13 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
             (desiredWidth / 10.0f - 2.0f * keyMarginH).roundToInt()
         }
         val desiredHeight = if (isSmartbarKeyboardView || isPreviewMode) {
-            MeasureSpec.getSize(heightMeasureSpec)
+            MeasureSpec.getSize(heightMeasureSpec).toFloat()
         } else {
-            (florisboard?.inputView?.desiredTextKeyboardViewHeight ?: MeasureSpec.getSize(heightMeasureSpec))
+            (florisboard?.inputView?.desiredTextKeyboardViewHeight ?: MeasureSpec.getSize(heightMeasureSpec).toFloat())
         } * if (isPreviewMode) { 0.90f } else { 1.00f }
         desiredKeyHeight = when {
             isSmartbarKeyboardView -> desiredHeight - 1.5f * keyMarginV
-            else -> desiredHeight / 4.0f - 2.0f * keyMarginV
+            else -> desiredHeight / (computedLayout?.arrangement?.size?.toFloat() ?: 4.0f) - 2.0f * keyMarginV
         }.roundToInt()
 
         super.onMeasure(

@@ -35,7 +35,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
-import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarManager
+import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import kotlinx.coroutines.*
 import java.util.*
 
@@ -47,12 +47,11 @@ import java.util.*
  * are separated from media-related UI. The core [FlorisBoard] will pass any event defined in
  * [FlorisBoard.EventListener] through to this class.
  *
- * TextInputManager also keeps track of the current composing word and syncs this value with the
- * Smartbar, which, depending on the mode and variation, may create candidates.
- * @see SmartbarManager.generateCandidatesFromComposing for more information.
+ * TextInputManager is also the hub in the communication between the system, the active editor
+ * instance and the Smartbar.
  */
 class TextInputManager private constructor() : CoroutineScope by MainScope(),
-    FlorisBoard.EventListener {
+    FlorisBoard.EventListener, SmartbarView.EventListener {
 
     private val florisboard = FlorisBoard.getInstance()
     private val activeEditorInstance: EditorInstance
@@ -67,7 +66,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
 
     var keyVariation: KeyVariation = KeyVariation.NORMAL
     val layoutManager = LayoutManager(florisboard)
-    private lateinit var smartbarManager: SmartbarManager
+    private var smartbarView: SmartbarView? = null
 
     // Caps/Space related properties
     var caps: Boolean = false
@@ -112,15 +111,14 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         }
         for (subtype in subtypes) {
             for (mode in KeyboardMode.values()) {
-                layoutManager.preloadComputedLayout(mode, subtype)
+                layoutManager.preloadComputedLayout(mode, subtype, florisboard.prefs)
             }
         }
-        smartbarManager = SmartbarManager.getInstance()
     }
 
     private suspend fun addKeyboardView(mode: KeyboardMode) {
         val keyboardView = KeyboardView(florisboard.context)
-        keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(mode, florisboard.activeSubtype).await()
+        keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(mode, florisboard.activeSubtype, florisboard.prefs).await()
         keyboardViews[mode] = keyboardView
         withContext(Dispatchers.Main) {
             textViewFlipper?.addView(keyboardView)
@@ -151,6 +149,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         }
     }
 
+    fun registerSmartbarView(view: SmartbarView) {
+        smartbarView = view
+        smartbarView?.setEventListener(this)
+    }
+
     /**
      * Cancels all coroutines and cleans up.
      */
@@ -160,7 +163,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         cancel()
         osHandler.removeCallbacksAndMessages(null)
         layoutManager.onDestroy()
-        smartbarManager.onDestroy()
         instance = null
     }
 
@@ -218,19 +220,19 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         }
         updateCapsState()
         setActiveKeyboardMode(keyboardMode)
-        smartbarManager.onStartInputView(keyboardMode)
+        smartbarView?.updateSmartbarState()
     }
 
     /**
      * Handle stuff when finishing to interact with a input editor.
      */
     override fun onFinishInputView(finishingInput: Boolean) {
-        smartbarManager.onFinishInputView()
+        smartbarView?.updateSmartbarState()
     }
 
     override fun onWindowShown() {
         keyboardViews[KeyboardMode.CHARACTERS]?.updateVisibility()
-        smartbarManager.onWindowShown()
+        smartbarView?.updateSmartbarState()
     }
 
     /**
@@ -243,7 +245,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     }
 
     /**
-     * Sets [activeKeyboardMode] and updates the [SmartbarManager.isQuickActionsVisible].
+     * Sets [activeKeyboardMode] and updates the [SmartbarView.isQuickActionsVisible] state.
      */
     fun setActiveKeyboardMode(mode: KeyboardMode) {
         textViewFlipper?.displayedChild = textViewFlipper?.indexOfChild(when (mode) {
@@ -254,23 +256,24 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         keyboardViews[mode]?.requestLayout()
         keyboardViews[mode]?.requestLayoutAllKeys()
         activeKeyboardMode = mode
-        smartbarManager.isQuickActionsVisible = false
         isManualSelectionMode = false
         isManualSelectionModeLeft = false
         isManualSelectionModeRight = false
+        smartbarView?.isQuickActionsVisible = false
+        smartbarView?.updateSmartbarState()
     }
 
     override fun onSubtypeChanged(newSubtype: Subtype) {
         launch {
             val keyboardView = keyboardViews[KeyboardMode.CHARACTERS]
-            keyboardView?.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, newSubtype).await()
+            keyboardView?.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, newSubtype, florisboard.prefs).await()
             keyboardView?.updateVisibility()
         }
     }
 
     /**
      * Main logic point for processing cursor updates as well as parsing the current composing word
-     * and passing this info on to the [SmartbarManager] to turn it into candidate suggestions.
+     * and passing this info on to the [SmartbarView] to turn it into candidate suggestions.
      */
     override fun onUpdateSelection() {
         if (!activeEditorInstance.isNewSelectionInBoundsOfOld) {
@@ -279,11 +282,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             isManualSelectionModeRight = false
         }
         updateCapsState()
-        smartbarManager.onUpdateSelection()
+        smartbarView?.updateSmartbarState()
     }
 
     override fun onPrimaryClipChanged() {
-        smartbarManager.onPrimaryClipChanged()
+        smartbarView?.onPrimaryClipChanged()
     }
 
     /**
@@ -314,6 +317,27 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             SwipeAction.SHIFT -> handleShift()
             else -> {}
         }
+    }
+
+    override fun onSmartbarBackButtonPressed() {
+        setActiveKeyboardMode(KeyboardMode.CHARACTERS)
+    }
+
+    override fun onSmartbarQuickActionPressed(quickActionId: Int) {
+        when (quickActionId) {
+            R.id.quick_action_switch_to_editing_context -> {
+                if (activeKeyboardMode == KeyboardMode.EDITING) {
+                    setActiveKeyboardMode(KeyboardMode.CHARACTERS)
+                } else {
+                    setActiveKeyboardMode(KeyboardMode.EDITING)
+                }
+            }
+            R.id.quick_action_switch_to_media_context -> florisboard.setActiveInput(R.id.media_input)
+            R.id.quick_action_open_settings -> florisboard.launchSettings()
+            R.id.quick_action_one_handed_toggle -> florisboard.toggleOneHandedMode()
+        }
+        smartbarView?.isQuickActionsVisible = false
+        smartbarView?.updateSmartbarState()
     }
 
     /**
@@ -560,17 +584,17 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             KeyCode.CLIPBOARD_COPY -> activeEditorInstance.performClipboardCopy()
             KeyCode.CLIPBOARD_PASTE -> {
                 activeEditorInstance.performClipboardPaste()
-                smartbarManager.resetClipboardSuggestion()
+                smartbarView?.resetClipboardSuggestion()
             }
             KeyCode.CLIPBOARD_SELECT -> handleClipboardSelect()
             KeyCode.CLIPBOARD_SELECT_ALL -> handleClipboardSelectAll()
             KeyCode.DELETE -> {
                 handleDelete()
-                smartbarManager.resetClipboardSuggestion()
+                smartbarView?.resetClipboardSuggestion()
             }
             KeyCode.ENTER -> {
                 handleEnter()
-                smartbarManager.resetClipboardSuggestion()
+                smartbarView?.resetClipboardSuggestion()
             }
             KeyCode.LANGUAGE_SWITCH -> florisboard.switchToNextSubtype()
             KeyCode.SETTINGS -> florisboard.launchSettings()
@@ -633,12 +657,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                         }
                     }
                 }
-                smartbarManager.resetClipboardSuggestion()
+                smartbarView?.resetClipboardSuggestion()
             }
         }
         if (keyData.code != KeyCode.SHIFT && !capsLock) {
             updateCapsState()
         }
-        smartbarManager.updateActiveContainerVisibility()
+        smartbarView?.updateSmartbarState()
     }
 }

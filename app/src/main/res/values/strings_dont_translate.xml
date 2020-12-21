@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">FlorisBoard</string>
-
     <string name="florisboard__repo_url" translatable="false">https://github.com/florisboard/florisboard</string>
     <string name="florisboard__issue_tracker_url" translatable="false">https://github.com/florisboard/florisboard/issues</string>
     <string name="florisboard__issue_tracker_new_issue_url" translatable="false">https://github.com/florisboard/florisboard/issues/new</string>

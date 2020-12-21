@@ -7,6 +7,13 @@
         app:title="@string/pref__keyboard__group_keys__label">
 
         <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="keyboard__number_row"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__number_row__label"
+            app:summary="@string/pref__keyboard__number_row__summary"/>
+
+        <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="keyboard__hinted_number_row"
             app:iconSpaceReserved="false"

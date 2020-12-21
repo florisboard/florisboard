@@ -33,6 +33,10 @@ class SmartbarQuickActionButton : androidx.appcompat.widget.AppCompatImageButton
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
+    init {
+        updateTheme()
+    }
+
     /**
      * Override onMeasure() to automatically set the height of the button equal to the width of
      * the button. The height is MATCH_PARENT and the exact same calculated pixel size should be
@@ -43,7 +47,11 @@ class SmartbarQuickActionButton : androidx.appcompat.widget.AppCompatImageButton
     }
 
     override fun onDraw(canvas: Canvas?) {
+        updateTheme()
         super.onDraw(canvas)
+    }
+
+    private fun updateTheme() {
         setBackgroundTintColor2(this, prefs.theme.smartbarButtonBgColor)
         setColorFilter(prefs.theme.smartbarButtonFgColor)
     }
