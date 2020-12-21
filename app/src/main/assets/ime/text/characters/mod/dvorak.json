@@ -1,0 +1,30 @@
+{
+  "type": "characters/mod",
+  "name": "dvorak",
+  "direction": "ltr",
+  "arrangement": [
+    [
+      { "code":   -1, "label": "shift", "type": "modifier" },
+      { "code":    0 },
+      { "code":   -5, "label": "delete", "type": "enter_editing" }
+    ], [
+      { "code": -202, "label": "view_symbols", "type": "system_gui" },
+      { "code":  113, "label": "q" },
+      { "code": -210, "label": "language_switch", "type": "system_gui", "popup": [
+        { "code": -213, "label": "switch_to_media_context", "type": "system_gui" },
+        { "code": -100, "label": "settings", "type": "system_gui" }
+      ] },
+      { "code": -213, "label": "switch_to_media_context", "type": "system_gui", "popup": [
+        { "code": -100, "label": "settings", "type": "system_gui" }
+      ] },
+      { "code":   32, "label": " " },
+      { "code":  122, "label": "z", "variation": "email_address" },
+      { "code":  122, "label": "z", "variation": "normal" },
+      { "code":  122, "label": "z", "variation": "uri" },
+      { "code":   10, "label": "enter", "type": "enter_editing", "popup": [
+        { "code": -215, "label": "toggle_one_handed_mode", "type": "system_gui" },
+        { "code": -213, "label": "switch_to_media_context", "type": "system_gui" }
+      ] }
+    ]
+  ]
+}

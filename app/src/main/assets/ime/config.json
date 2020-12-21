@@ -15,7 +15,8 @@
     "hungarian": "Hungarian (QWERTZ)",
     "persian": "Persian",
     "arabic": "Arabic",
-    "colemak": "Colemak"
+    "colemak": "Colemak",
+    "dvorak": "Dvorak"
   },
   "defaultSubtypes": [
     {

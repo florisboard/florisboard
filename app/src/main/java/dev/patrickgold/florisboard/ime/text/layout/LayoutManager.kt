@@ -174,20 +174,23 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
             for (computedRow in computedArrangement) {
                 for (keyData in computedRow) {
                     if (keyData.variation != KeyVariation.ALL) {
-                        if (keyData.variation == KeyVariation.NORMAL ||
-                            keyData.variation == KeyVariation.PASSWORD) {
-                            if (extendedPopups.containsKey(keyData.label + "~normal")) {
-                                keyData.popup.addAll(extendedPopups[keyData.label + "~normal"] ?: listOf())
+                        if (keyData.label == "." && modifierLayout?.name != "dvorak" ||
+                                keyData.label == "z" && modifierLayout?.name == "dvorak") {
+                            val label = "." // keyData.label
+                            if (keyData.variation == KeyVariation.NORMAL ||
+                                keyData.variation == KeyVariation.PASSWORD) {
+                                if (extendedPopups.containsKey("$label~normal")) {
+                                    keyData.popup.addAll(extendedPopups["$label~normal"] ?: listOf())
+                                }
+                            }
+                            if (keyData.variation == KeyVariation.EMAIL_ADDRESS ||
+                                keyData.variation == KeyVariation.URI) {
+                                if (extendedPopups.containsKey("$label~uri")) {
+                                    keyData.popup.addAll(extendedPopups["$label~uri"] ?: listOf())
+                                }
                             }
                         }
-                        if (keyData.variation == KeyVariation.EMAIL_ADDRESS ||
-                            keyData.variation == KeyVariation.URI) {
-                            if (extendedPopups.containsKey(keyData.label + "~uri")) {
-                                keyData.popup.addAll(extendedPopups[keyData.label + "~uri"] ?: listOf())
-                            }
-                        }
-                    }
-                    if (extendedPopups.containsKey(keyData.label)) {
+                    } else if (extendedPopups.containsKey(keyData.label)) {
                         keyData.popup.addAll(extendedPopups[keyData.label] ?: listOf())
                     }
                 }
@@ -202,10 +205,15 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
                 if (r >= (3 + minRow) || r < minRow) {
                     continue
                 }
+                var kOffset = 0
                 val symbolRow = symbolsComputedArrangement.getOrNull(r - minRow)
                 if (symbolRow != null) {
                     for ((k, key) in row.withIndex()) {
-                        val symbol = symbolRow.getOrNull(k)
+                        val lastKey = row.getOrNull(k - 1)
+                        if (key.variation != KeyVariation.ALL && lastKey != null && lastKey.variation != KeyVariation.ALL) {
+                            kOffset++
+                        }
+                        val symbol = symbolRow.getOrNull(k - kOffset)
                         if (key.type == KeyType.CHARACTER && symbol?.type == KeyType.CHARACTER) {
                             if (r == minRow) {
                                 key.hintedNumber = symbol
