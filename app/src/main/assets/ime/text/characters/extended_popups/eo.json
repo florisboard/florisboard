@@ -1,54 +1,33 @@
 {
-  "a": [
-    { "code":  224, "label": "à" },
-    { "code":  230, "label": "æ" },
-    { "code":  227, "label": "ã" },
-    { "code":  229, "label": "å" },
-    { "code":  257, "label": "ā" },
-    { "code":  225, "label": "á" },
-    { "code":  226, "label": "â" },
-    { "code":  228, "label": "ä" }
-  ],
   "c": [
-    { "code":  231, "label": "ç" }
+    { "code":  265, "label": "ĉ" }
   ],
-  "e": [
-    { "code":  233, "label": "é" },
-    { "code":  275, "label": "ē" },
-    { "code":  234, "label": "ê" },
-    { "code":  232, "label": "è" },
-    { "code":  235, "label": "ë" }
+  "g": [
+    { "code":  285, "label": "ĝ" }
   ],
-  "i": [
-    { "code":  237, "label": "í" },
-    { "code":  236, "label": "ì" },
-    { "code":  239, "label": "ï" },
-    { "code":  238, "label": "î" },
-    { "code":  299, "label": "ī" }
+  "h": [
+    { "code":  293, "label": "ĥ" }
   ],
-  "n": [
-    { "code":  241, "label": "ñ" },
-    { "code":  324, "label": "ń" }
-  ],
-  "o": [
-    { "code":  243, "label": "ó" },
-    { "code":  245, "label": "õ" },
-    { "code":  333, "label": "ō" },
-    { "code":  339, "label": "œ" },
-    { "code":  248, "label": "ø" },
-    { "code":  242, "label": "ò" },
-    { "code":  246, "label": "ö" },
-    { "code":  244, "label": "ô" }
+  "j": [
+    { "code":  309, "label": "ĵ" }
   ],
   "s": [
-    { "code":  223, "label": "ß" }
+    { "code":  349, "label": "ŝ" }
   ],
   "u": [
-    { "code":  250, "label": "ú" },
-    { "code":  363, "label": "ū" },
-    { "code":  252, "label": "ü" },
-    { "code":  251, "label": "û" },
-    { "code":  249, "label": "ù" }
+    { "code":  365, "label": "ŭ" }
+  ],
+  "q": [
+    { "code":  349, "label": "ŝ" }
+  ],
+  "w": [
+    { "code":  285, "label": "ĝ" }
+  ],
+  "x": [
+    { "code":  265, "label": "ĉ" }
+  ],
+  "y": [
+    { "code":  365, "label": "ŭ" }
   ],
   ".~normal": [
     { "code":   44, "label": "," },

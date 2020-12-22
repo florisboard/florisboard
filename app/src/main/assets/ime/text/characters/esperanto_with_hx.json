@@ -1,6 +1,6 @@
 {
   "type": "characters",
-  "name": "esperanto",
+  "name": "esperanto_with_hx",
   "direction": "ltr",
   "arrangement": [
     [
@@ -32,7 +32,8 @@
       { "code":  118, "label": "v" },
       { "code":   98, "label": "b" },
       { "code":  110, "label": "n" },
-      { "code":  109, "label": "m" }
+      { "code":  109, "label": "m" },
+      { "code":  293, "label": "ĥ" }
     ]
   ]
 }

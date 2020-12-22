@@ -15,7 +15,8 @@
     "hungarian": "Hungarian (QWERTZ)",
     "persian": "Persian",
     "arabic": "Arabic",
-    "esperanto": "Esperanto"
+    "esperanto": "Esperanto",
+    "esperanto_with_hx": "Esperanto with 'ĥ'"
   },
   "defaultSubtypes": [
     {
