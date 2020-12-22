@@ -49,9 +49,9 @@ src="https://patrickgold.dev/media/previews/florisboard-preview-day.png"
 alt="Preview image">
 
 ## Implemented features
-This list contains all implemented and fully functional features FlorisBoard
-currently has to offer. For planned features and its milestones, please refer
-to the following section.
+This list contains all implemented and fully functional features
+FlorisBoard currently has to offer. For planned features and its
+milestones, please refer to the [Feature roadmap](#feature-roadmap).
 
 ### Basics
 * [x] Implementation of the keyboard core (InputMethodService)
@@ -65,9 +65,9 @@ to the following section.
 
 ### Layouts
 * [x] Latin character layouts (QWERTY, QWERTZ, AZERTY, Swiss, Spanish,
-      Norwegian, Swedish/Finnish, Icelandic, Danish); more coming in
-      future versions
-* [x] Non-latin character layouts (Persian)
+      Norwegian, Swedish/Finnish, Icelandic, Danish, Hungarian); more
+      coming in future versions
+* [x] Non-latin character layouts (Arabic, Persian)
 * [x] Adapt to situation in app (password, url, text, etc. )
 * [x] Special character layout(s)
 * [x] Numeric layout
@@ -107,13 +107,14 @@ most likely be delayed back, even though I'm eager to stick to these as
 close as possible.
 
 ### [v0.4.0](https://github.com/florisboard/florisboard/milestone/4)
-- Module A: Smartbar rework
+- Module A: Smartbar rework (Implemented with #91)
   - Ability to enable/disable Smartbar (features below thus only work if
     Smartbar is enabled)
-  - Dynamic switching bewteen clipboard tools and word suggestions
+  - Dynamic switching between clipboard tools and word suggestions
   - Ability to show both the number row and word suggestions at once
   - Better icons in quick actions
-  - (dev only) Cleanup of Smartbar code base
+  - Complete rework of the Smartbar code base and the Smartbar layout
+    definition in XML
 
 - Module B: Composing suggestions
   - Auto-suggestion of words based of precompiled dictionaries

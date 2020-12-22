@@ -16,7 +16,9 @@
     "persian": "Persian",
     "arabic": "Arabic",
     "esperanto": "Esperanto",
-    "esperanto_with_hx": "Esperanto with 'ĥ'"
+    "esperanto_with_hx": "Esperanto with 'ĥ'",
+    "colemak": "Colemak",
+    "dvorak": "Dvorak"
   },
   "defaultSubtypes": [
     {
@@ -195,7 +197,7 @@
       "isEmojiCapable": true
     },
     {
-          "id": 1001,
+      "id": 1001,
       "languageTag": "hu",
       "preferredLayout": "hungarian",
       "isAsciiCapable": true,

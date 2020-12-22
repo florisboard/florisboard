@@ -19,10 +19,10 @@
   "u": [
     { "code":  250, "label": "ú" },
     { "code":  252, "label": "ü" },
-    { "code":  369, "label": "ű" },
+    { "code":  369, "label": "ű" }
   ],
-   "ü": [
-    { "code":  369, "label": "ű" },
+  "ü": [
+    { "code":  369, "label": "ű" }
   ],
   ".~normal": [
     { "code":   44, "label": "," },

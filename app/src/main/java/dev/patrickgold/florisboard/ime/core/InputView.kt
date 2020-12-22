@@ -25,9 +25,10 @@ import android.widget.LinearLayout
 import android.widget.ViewFlipper
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.text.key.KeyVariation
+import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import kotlin.math.roundToInt
-
 
 /**
  * Root view of the keyboard. Notifies [FlorisBoard] when it has been attached to a window.
@@ -36,13 +37,13 @@ class InputView : LinearLayout {
     private var florisboard: FlorisBoard = FlorisBoard.getInstance()
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
 
-    var desiredInputViewHeight: Int = resources.getDimension(R.dimen.inputView_baseHeight).roundToInt()
+    var desiredInputViewHeight: Float = resources.getDimension(R.dimen.inputView_baseHeight)
         private set
-    var desiredSmartbarHeight: Int = resources.getDimension(R.dimen.smartbar_baseHeight).roundToInt()
+    var desiredSmartbarHeight: Float = resources.getDimension(R.dimen.smartbar_baseHeight)
         private set
-    var desiredTextKeyboardViewHeight: Int = resources.getDimension(R.dimen.textKeyboardView_baseHeight).roundToInt()
+    var desiredTextKeyboardViewHeight: Float = resources.getDimension(R.dimen.textKeyboardView_baseHeight)
         private set
-    var desiredMediaKeyboardViewHeight: Int = resources.getDimension(R.dimen.mediaKeyboardView_baseHeight).roundToInt()
+    var desiredMediaKeyboardViewHeight: Float = resources.getDimension(R.dimen.mediaKeyboardView_baseHeight)
         private set
 
     var mainViewFlipper: ViewFlipper? = null
@@ -91,19 +92,40 @@ class InputView : LinearLayout {
             "custom" -> prefs.keyboard.heightFactorCustom.toFloat() / 100.0f
             else -> 1.00f
         }
-        var height = (calcInputViewHeight() * heightFactor).roundToInt()
-        desiredInputViewHeight = height
-        desiredSmartbarHeight = (0.16129 * height).roundToInt()
-        desiredTextKeyboardViewHeight = height - desiredSmartbarHeight
-        desiredMediaKeyboardViewHeight = height
+        var baseHeight = calcInputViewHeight() * heightFactor
+        var baseSmartbarHeight = 0.16129f * baseHeight
+        var baseTextInputHeight = baseHeight - baseSmartbarHeight
+        val tim = florisboard.textInputManager
+        val shouldGiveAdditionalSpace = prefs.keyboard.numberRow &&
+                !(tim.getActiveKeyboardMode() == KeyboardMode.NUMERIC ||
+                tim.getActiveKeyboardMode() == KeyboardMode.PHONE ||
+                tim.getActiveKeyboardMode() == KeyboardMode.PHONE2)
+        if (shouldGiveAdditionalSpace) {
+            val additionalHeight = desiredTextKeyboardViewHeight * 0.18f
+            baseHeight += additionalHeight
+            baseTextInputHeight += additionalHeight
+        }
+        val smartbarDisabled = !prefs.smartbar.enabled ||
+                tim.keyVariation == KeyVariation.PASSWORD && prefs.keyboard.numberRow ||
+                tim.getActiveKeyboardMode() == KeyboardMode.NUMERIC ||
+                tim.getActiveKeyboardMode() == KeyboardMode.PHONE ||
+                tim.getActiveKeyboardMode() == KeyboardMode.PHONE2
+        if (smartbarDisabled) {
+            baseHeight = baseTextInputHeight
+            baseSmartbarHeight = 0.0f
+        }
+        desiredInputViewHeight = baseHeight
+        desiredSmartbarHeight = baseSmartbarHeight
+        desiredTextKeyboardViewHeight = baseTextInputHeight
+        desiredMediaKeyboardViewHeight = baseHeight
         // Add bottom offset for curved screens here. As the desired heights have already been set,
         //  adding a value to the height now will result in a bottom padding (aka offset).
-        height += ViewLayoutUtils.convertDpToPixel(
+        baseHeight += ViewLayoutUtils.convertDpToPixel(
             florisboard.prefs.keyboard.bottomOffset.toFloat(),
             context
-        ).toInt()
+        )
 
-        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY))
+        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(baseHeight.roundToInt(), MeasureSpec.EXACTLY))
     }
 
     /**

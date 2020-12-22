@@ -25,6 +25,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.setBackgroundTintColor2
+import kotlin.math.roundToInt
 
 /**
  * View class for updating the key views depending on the current selection and clipboard state.
@@ -79,7 +80,7 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
-        val heightSize = MeasureSpec.getSize(heightMeasureSpec)
+        val heightSize = MeasureSpec.getSize(heightMeasureSpec).toFloat()
         val height = when (heightMode) {
             MeasureSpec.EXACTLY -> {
                 // Must be this size
@@ -87,15 +88,15 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener {
             }
             MeasureSpec.AT_MOST -> {
                 // Can't be bigger than...
-                (florisboard?.inputView?.desiredTextKeyboardViewHeight ?: 0).coerceAtMost(heightSize)
+                (florisboard?.inputView?.desiredTextKeyboardViewHeight ?: 0.0f).coerceAtMost(heightSize)
             }
             else -> {
                 // Be whatever you want
-                florisboard?.inputView?.desiredTextKeyboardViewHeight ?: 0
+                florisboard?.inputView?.desiredTextKeyboardViewHeight ?: 0.0f
             }
         }
 
-        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY))
+        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height.roundToInt(), MeasureSpec.EXACTLY))
     }
 
     override fun onDraw(canvas: Canvas?) {

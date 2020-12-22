@@ -1,0 +1,49 @@
+{
+  "type": "characters",
+  "name": "dvorak",
+  "direction": "ltr",
+  "modifier": "dvorak",
+  "arrangement": [
+    [
+      { "code":   64, "label": "@", "variation": "email_address" },
+      { "code":   39, "label": "'", "variation": "normal", "popup": [
+        { "code":   33, "label": "!" },
+        { "code":   34, "label": "\"" }
+      ] },
+      { "code":   47, "label": "/", "variation": "uri" },
+      { "code":   44, "label": ",", "popup": [
+        { "code":   60, "label": "<" },
+        { "code":   63, "label": "?" }
+      ] },
+      { "code":   46, "label": ".", "popup": [
+        { "code":   62, "label": ">" }
+      ] },
+      { "code":  112, "label": "p" },
+      { "code":  121, "label": "y" },
+      { "code":  102, "label": "f" },
+      { "code":  103, "label": "g" },
+      { "code":   99, "label": "c" },
+      { "code":  114, "label": "r" },
+      { "code":  108, "label": "l" }
+    ], [
+      { "code":   97, "label": "a" },
+      { "code":  111, "label": "o" },
+      { "code":  101, "label": "e" },
+      { "code":  117, "label": "u" },
+      { "code":  105, "label": "i" },
+      { "code":  100, "label": "d" },
+      { "code":  104, "label": "h" },
+      { "code":  116, "label": "t" },
+      { "code":  110, "label": "n" },
+      { "code":  115, "label": "s" }
+    ], [
+      { "code":  106, "label": "j" },
+      { "code":  107, "label": "k" },
+      { "code":  120, "label": "x" },
+      { "code":   98, "label": "b" },
+      { "code":  109, "label": "m" },
+      { "code":  119, "label": "w" },
+      { "code":  118, "label": "v" }
+    ]
+  ]
+}

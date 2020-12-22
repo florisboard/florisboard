@@ -26,6 +26,7 @@ import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import kotlin.math.roundToInt
 
 class MediaInputView : LinearLayout, FlorisBoard.EventListener {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
@@ -61,7 +62,7 @@ class MediaInputView : LinearLayout, FlorisBoard.EventListener {
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val height = florisboard?.inputView?.desiredMediaKeyboardViewHeight ?: 0
-        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY))
+        val height = florisboard?.inputView?.desiredMediaKeyboardViewHeight ?: 0.0f
+        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height.roundToInt(), MeasureSpec.EXACTLY))
     }
 }

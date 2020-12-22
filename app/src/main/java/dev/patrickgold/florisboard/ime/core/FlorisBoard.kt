@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.util.*
 import java.lang.ref.WeakReference
@@ -65,7 +66,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     var inputView: InputView? = null
         private set
     private var inputWindowView: InputWindowView? = null
-    private var eventListeners: MutableList<WeakReference<EventListener>> = mutableListOf()
+    private var eventListeners: MutableList<WeakReference<EventListener?>?> = mutableListOf()
 
     private var audioManager: AudioManager? = null
     var clipboardManager: ClipboardManager? = null
@@ -78,6 +79,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     lateinit var activeSubtype: Subtype
     private var currentThemeIsNight: Boolean = false
     private var currentThemeResId: Int = 0
+    private var isNumberRowVisible: Boolean = false
 
     val textInputManager: TextInputManager
     val mediaInputManager: MediaInputManager
@@ -91,6 +93,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
 
     companion object {
         private const val IME_ID: String = "dev.patrickgold.florisboard/.ime.core.FlorisBoard"
+        private const val IME_ID_DEBUG: String = "dev.patrickgold.florisboard.debug/dev.patrickgold.florisboard.ime.core.FlorisBoard"
         private val TAG: String? = FlorisBoard::class.simpleName
 
         fun checkIfImeIsEnabled(context: Context): Boolean {
@@ -98,8 +101,15 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
                 context.contentResolver,
                 Settings.Secure.ENABLED_INPUT_METHODS
             )
-            if (BuildConfig.DEBUG) Log.i(FlorisBoard::class.simpleName, "List of active IMEs: $activeImeIds")
-            return activeImeIds.split(":").contains(IME_ID)
+            return when {
+                BuildConfig.DEBUG -> {
+                    Log.i(FlorisBoard::class.simpleName, "List of active IMEs: $activeImeIds")
+                    activeImeIds.split(":").contains(IME_ID_DEBUG)
+                }
+                else -> {
+                    activeImeIds.split(":").contains(IME_ID)
+                }
+            }
         }
 
         fun checkIfImeIsSelected(context: Context): Boolean {
@@ -107,8 +117,15 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
                 context.contentResolver,
                 Settings.Secure.DEFAULT_INPUT_METHOD
             )
-            if (BuildConfig.DEBUG) Log.i(FlorisBoard::class.simpleName, "Selected IME: $selectedImeId")
-            return selectedImeId == IME_ID
+            return when {
+                BuildConfig.DEBUG -> {
+                    Log.i(FlorisBoard::class.simpleName, "Selected IME: $selectedImeId")
+                    selectedImeId == IME_ID_DEBUG
+                }
+                else -> {
+                    selectedImeId == IME_ID
+                }
+            }
         }
 
         @Synchronized
@@ -162,13 +179,14 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
 
         currentThemeIsNight = prefs.internal.themeCurrentIsNight
         currentThemeResId = getDayNightBaseThemeId(currentThemeIsNight)
+        isNumberRowVisible = prefs.keyboard.numberRow
         setTheme(currentThemeResId)
         updateTheme()
 
         AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
 
         super.onCreate()
-        eventListeners.toList().forEach { it.get()?.onCreate() }
+        eventListeners.toList().forEach { it?.get()?.onCreate() }
     }
 
     @SuppressLint("InflateParams")
@@ -179,7 +197,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
 
         inputWindowView = layoutInflater.inflate(R.layout.florisboard, null) as InputWindowView
 
-        eventListeners.toList().forEach { it.get()?.onCreateInputView() }
+        eventListeners.toList().forEach { it?.get()?.onCreateInputView() }
 
         return inputWindowView
     }
@@ -193,7 +211,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         updateSoftInputWindowLayoutParameters()
         updateOneHandedPanelVisibility()
 
-        eventListeners.toList().forEach { it.get()?.onRegisterInputView(inputView) }
+        eventListeners.toList().forEach { it?.get()?.onRegisterInputView(inputView) }
     }
 
     override fun onDestroy() {
@@ -203,7 +221,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         osHandler.removeCallbacksAndMessages(null)
         florisboardInstance = null
 
-        eventListeners.toList().forEach { it.get()?.onDestroy() }
+        eventListeners.toList().forEach { it?.get()?.onDestroy() }
         eventListeners.clear()
         super.onDestroy()
     }
@@ -222,7 +240,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         super.onStartInputView(info, restarting)
         activeEditorInstance = EditorInstance.from(info, this)
         eventListeners.toList().forEach {
-            it.get()?.onStartInputView(activeEditorInstance, restarting)
+            it?.get()?.onStartInputView(activeEditorInstance, restarting)
         }
     }
 
@@ -234,7 +252,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         }
 
         super.onFinishInputView(finishingInput)
-        eventListeners.toList().forEach { it.get()?.onFinishInputView(finishingInput) }
+        eventListeners.toList().forEach { it?.get()?.onFinishInputView(finishingInput) }
     }
 
     override fun onFinishInput() {
@@ -248,6 +266,11 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         if (BuildConfig.DEBUG) Log.i(TAG, "onWindowShown()")
 
         prefs.sync()
+        val newIsNumberRowVisible = prefs.keyboard.numberRow
+        if (isNumberRowVisible != newIsNumberRowVisible) {
+            textInputManager.layoutManager.clearLayoutCache(KeyboardMode.CHARACTERS)
+            isNumberRowVisible = newIsNumberRowVisible
+        }
         updateTheme()
         updateOneHandedPanelVisibility()
         activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
@@ -255,14 +278,14 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         setActiveInput(R.id.text_input)
 
         super.onWindowShown()
-        eventListeners.toList().forEach { it.get()?.onWindowShown() }
+        eventListeners.toList().forEach { it?.get()?.onWindowShown() }
     }
 
     override fun onWindowHidden() {
         if (BuildConfig.DEBUG) Log.i(TAG, "onWindowHidden()")
 
         super.onWindowHidden()
-        eventListeners.toList().forEach { it.get()?.onWindowHidden() }
+        eventListeners.toList().forEach { it?.get()?.onWindowHidden() }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -290,7 +313,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
             oldSelStart, oldSelEnd,
             newSelStart, newSelEnd
         )
-        eventListeners.toList().forEach { it.get()?.onUpdateSelection() }
+        eventListeners.toList().forEach { it?.get()?.onUpdateSelection() }
     }
 
     /**
@@ -346,7 +369,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
             ?.imageTintList = ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor)
         inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_close_end)
             ?.imageTintList = ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor)
-        eventListeners.toList().forEach { it.get()?.onApplyThemeAttributes() }
+        eventListeners.toList().forEach { it?.get()?.onApplyThemeAttributes() }
     }
 
     override fun onComputeInsets(outInsets: Insets?) {
@@ -559,7 +582,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     }
 
     override fun onPrimaryClipChanged() {
-        eventListeners.toList().forEach { it.get()?.onPrimaryClipChanged() }
+        eventListeners.toList().forEach { it?.get()?.onPrimaryClipChanged() }
     }
 
     /**
@@ -575,13 +598,15 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     /**
      * Removes a given [listener] from the list which will receive FlorisBoard events.
      *
+     * TODO: implement this function with a proper iterator
+     *
      * @param listener The same listener object which was used in [addEventListener].
      * @return True if the listener has been removed successfully, false otherwise. A false return
      *  value may also indicate that the [listener] was not added previously.
      */
     fun removeEventListener(listener: EventListener): Boolean {
         eventListeners.toList().forEach {
-            if (it.get() == listener) {
+            if (it?.get() == listener) {
                 return eventListeners.remove(it)
             }
         }
