@@ -87,16 +87,10 @@ data class Subtype(
  *  Must be a string which also exists in [FlorisBoard.ImeConfig.characterLayouts]. If the value is
  *  not included within this list, no layout will be shown to the user if the user selects the
  *  predefined layout value.
- * @property isAsciiCapable Legacy attribute for Android's InputMethodSubtype. Currently no real
- *  use within this project.
- * @property isEmojiCapable Legacy attribute for Android's InputMethodSubtype. Currently no real
- *  use within this project.
  */
 data class DefaultSubtype(
     var id: Int,
     @Json(name = "languageTag")
     var locale: Locale,
-    var preferredLayout: String,
-    var isAsciiCapable: Boolean,
-    var isEmojiCapable: Boolean
+    var preferredLayout: String
 )

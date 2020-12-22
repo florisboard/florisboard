@@ -24,191 +24,137 @@
     {
       "id": 101,
       "languageTag": "en-US",
-      "preferredLayout": "qwerty",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "qwerty"
     },
     {
       "id": 102,
       "languageTag": "en-UK",
-      "preferredLayout": "qwerty",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "qwerty"
     },
     {
       "id": 103,
       "languageTag": "en-CA",
-      "preferredLayout": "qwerty",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "qwerty"
     },
     {
       "id": 104,
       "languageTag": "en-AU",
-      "preferredLayout": "qwerty",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "qwerty"
     },
     {
       "id": 201,
       "languageTag": "de-DE",
-      "preferredLayout": "qwertz",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "qwertz"
     },
     {
       "id": 202,
       "languageTag": "de-AT",
-      "preferredLayout": "qwertz",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "qwertz"
     },
     {
       "id": 203,
       "languageTag": "de-CH",
-      "preferredLayout": "swiss_german",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "swiss_german"
     },
     {
       "id": 301,
       "languageTag": "fr-FR",
-      "preferredLayout": "azerty",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "azerty"
     },
     {
       "id": 302,
       "languageTag": "fr-CA",
-      "preferredLayout": "qwerty",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "qwerty"
     },
     {
       "id": 303,
       "languageTag": "fr-CH",
-      "preferredLayout": "swiss_french",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "swiss_french"
     },
     {
       "id": 401,
       "languageTag": "it-IT",
-      "preferredLayout": "qwerty",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "qwerty"
     },
     {
       "id": 402,
       "languageTag": "it-CH",
-      "preferredLayout": "swiss_italian",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "swiss_italian"
     },
     {
       "id": 501,
       "languageTag": "es-ES",
-      "preferredLayout": "spanish",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "spanish"
     },
     {
       "id": 502,
       "languageTag": "es-US",
-      "preferredLayout": "spanish",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "spanish"
     },
     {
       "id": 503,
       "languageTag": "es-419",
-      "preferredLayout": "spanish",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "spanish"
     },
     {
       "id": 601,
       "languageTag": "pt-PT",
-      "preferredLayout": "qwerty",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "qwerty"
     },
     {
       "id": 602,
       "languageTag": "pt-BR",
-      "preferredLayout": "qwerty",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "qwerty"
     },
     {
       "id": 701,
       "languageTag": "nb-NO",
-      "preferredLayout": "norwegian",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "norwegian"
     },
     {
       "id": 702,
       "languageTag": "nn-NO",
-      "preferredLayout": "norwegian",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "norwegian"
     },
     {
       "id": 711,
       "languageTag": "sv-SE",
-      "preferredLayout": "swedish_finnish",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "swedish_finnish"
     },
     {
       "id": 721,
       "languageTag": "fi-FI",
-      "preferredLayout": "swedish_finnish",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "swedish_finnish"
     },
     {
       "id": 731,
       "languageTag": "da-DK",
-      "preferredLayout": "danish",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "danish"
     },
     {
       "id": 741,
       "languageTag": "is-IS",
-      "preferredLayout": "icelandic",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "icelandic"
     },
     {
       "id": 801,
       "languageTag": "fa-FA",
-      "preferredLayout": "persian",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "persian"
     },
     {
       "id": 901,
       "languageTag": "ar",
-      "preferredLayout": "arabic",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "arabic"
     },
     {
       "id": 1001,
       "languageTag": "hu",
-      "preferredLayout": "hungarian",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "hungarian"
     },
     {
       "id": 1101,
       "languageTag": "eo",
-      "preferredLayout": "esperanto",
-      "isAsciiCapable": true,
-      "isEmojiCapable": true
+      "preferredLayout": "esperanto"
     }
   ]
 }
