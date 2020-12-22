@@ -50,6 +50,18 @@
     { "code":  251, "label": "û" },
     { "code":  249, "label": "ù" }
   ],
+  "ŝ": [
+    { "code":  113, "label": "q" }
+  ],
+  "ĝ": [
+    { "code":  119, "label": "w" }
+  ],
+  "ĉ": [
+    { "code":  120, "label": "x" }
+  ],
+  "ŭ": [
+    { "code":  121, "label": "y" }
+  ],
   ".~normal": [
     { "code":   44, "label": "," },
     { "code":   38, "label": "&" },
