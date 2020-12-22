@@ -7,5 +7,10 @@
     <!-- Settings UI strings -->
     <!-- About UI strings -->
     <!-- Setup UI strings -->
+    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard er nu aktiveret i dit system. For aktivt at bruge det, skifte til FlorisBoard ved at vælge det i dialogboksen input selector!</string>
+    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Succesfuldt skiftede standardtastaturet til FlorisBoard!</string>
+    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Skift tastatur</string>
+    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Opsætning færdig!</string>
     <!-- Crash Dialog strings -->
+    <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard fejl rapport</string>
 </resources>

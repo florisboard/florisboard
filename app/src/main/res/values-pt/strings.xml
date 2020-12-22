@@ -1,11 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pausa</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Aguarde</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ícone 3 pontos. Se mostrado, indica que pode utilizar mais letras com um toque longo.</string>
     <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Fechar modo de uma mão</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Mover teclado para a esquerda</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Mover teclado para a direita</string>
     <!-- Media strings -->
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Ícones emotivos</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Sorrisos e ícones emotivos</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Pessoas e corpos</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Animais e natureza</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Comida e bebida</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Viagens e locais</string>
+    <string name="emoji__category__activities" comment="Emoji category name">Atividades</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Objetos</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">Símbolos</string>
+    <string name="emoji__category__flags" comment="Emoji category name">Bandeiras</string>
     <!-- Smartbar strings -->
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Alternar ação rápida. Se premida, alterna entre a sugestão de palavras e os botões de ação rápida.</string>
+    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Sair do painel de edição de texto</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Alterna o estado do modo de uma mão</string>
+    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Abrir definições</string>
+    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Trocar para o painel de edição de texto</string>
+    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Mudar para a introdução multimédia</string>
     <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">Definições</string>
+    <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Mais opções</string>
+    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Ajuda e comentários</string>
+    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Início</string>
+    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Teclado</string>
+    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Digitação</string>
+    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings"> Tema</string>
+    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gestos</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">Padrão</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Definição do sistema</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">Bem-vindo a %s</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard não está ativo no sistema e não pode ser utilizado como método de introdução no seletor. Toque aqui para resolver esta situação.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard não está selecionado como método de introdução padrão. Toque aqui para resolver esta situação.</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Obrigado por testar FlorisBoard. Este projeto ainda está em fase Alfa e, obviamente, algumas funcionalidades não estão disponíveis. Se encontrar erros ou se quiser propor sugestões, aceda ao nosso repositório GitHub. A sua ajuda permite melhorar a aplicação. Obrigado!</string>
+    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Idiomas e disposições de teclado</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Parece que ainda não configurou quaisquer subtipos. Como recurso será utilizado o subtipo Inglês/QWERTY!</string>
+    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Adicionar</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Adicionar subtipo</string>
+    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Aplicar</string>
+    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Cancelar</string>
+    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Remover</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Editar subtipo</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Configuração regional</string>
+    <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">Disposição de teclado</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Este subtipo já existe!</string>
+    <string name="settings__theme__title" comment="Title of the Theme fragment">Tema do teclado</string>
+    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Indefinido</string>
+    <string name="settings__theme__preset_title" comment="Label of the theme preset preference"> Tema</string>
+    <string name="settings__theme__preset_summary" comment="Summary of the theme preset preference">Personalizado (baseado em %s)</string>
+    <string name="settings__theme__preset_dialog_selected_theme" comment="Label of the selected themes list">Tema selecionado:</string>
+    <string name="settings__theme__preset_dialog_available_themes" comment="Label of the available themes list">Temas disponíveis:</string>
+    <string name="settings__theme__preset_dialog_alt_arrow_right" comment="Content description of the theme selection button in theme dialog">Seta direita</string>
+    <string name="settings__theme__background" comment="General label for a background preference">Cor de fundo</string>
+    <string name="settings__theme__background_active" comment="General label for an active background preference">Cor de fundo quando ativo</string>
+    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">Cor de fundo quando premida</string>
+    <string name="settings__theme__foreground" comment="General label for a foreground preference">Cor principal</string>
+    <string name="settings__theme__foreground_alt" comment="General label for an alternate foreground preference">Cor principal (alternativa)</string>
+    <string name="settings__theme__foreground_capslock" comment="General label for a capslock foreground preference">Cor principal (CapsLock)</string>
+    <string name="settings__theme__dialog_title" comment="Title of the color selection dialog for a single theme preference">Selecione uma cor</string>
+    <string name="settings__theme__group_window" comment="Theme group label">Janela e sistema</string>
+    <string name="settings__theme__group_keyboard" comment="Theme group label">Teclado</string>
+    <string name="settings__theme__group_key" comment="Theme group label">Tecla</string>
+    <string name="settings__theme__group_key_enter" comment="Theme group label">Tecla Enter</string>
+    <string name="settings__theme__group_key_popup" comment="Theme group label">Ampliação de teclas</string>
+    <string name="settings__theme__group_key_shift" comment="Theme group label">Tecla Shift</string>
+    <string name="settings__theme__group_media" comment="Theme group label">Contexto multimédia</string>
+    <string name="settings__theme__group_one_handed" comment="Theme group label">Uma mão</string>
+    <string name="settings__theme__group_one_handed_button" comment="Theme group label">Botão do modo uma mão</string>
+    <string name="settings__theme__group_smartbar" comment="Theme group label">Barra inteligente</string>
+    <string name="settings__theme__group_smartbar_button" comment="Theme group label">Botão da barra inteligente</string>
+    <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">Cor primária</string>
+    <string name="pref__theme__colorPrimary_summary" comment="Summary of Color primary theme preference">Aplicada ao separador multimédia e ao destaque de seleção</string>
+    <string name="pref__theme__colorPrimaryDark_title" comment="Title of Color primary dark theme preference">Cor primária (escura)</string>
+    <string name="pref__theme__colorPrimaryDark_summary" comment="Summary of Color primary dark theme preference">Opção reservada para implementações futuras</string>
+    <string name="pref__theme__colorAccent_title" comment="Title of Color accent theme preference">Cor de destaque</string>
+    <string name="pref__theme__colorAccent_summary" comment="Summary of Color accent theme preference">Aplicada ao separador de emojis</string>
+    <string name="pref__theme__navBarColor_title" comment="Title of Nav bar color theme preference">Cor da barra de navegação</string>
+    <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">A cor de fundo da barra de navegação</string>
+    <string name="pref__theme__navBarIsLight_title" comment="Title of Nav bar is light theme preference">Botões da barra de navegação escura</string>
+    <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Ative para usar a cor escura ou desative para cor clara.</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Preferências do teclado</string>
+    <string name="pref__keyboard__group_keys__label" comment="Preference group title">Teclas</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">Linha de números</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Mostrar linha de números em cima do teclado</string>
+    <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">Mostrar números na primeira linha do teclado</string>
+    <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">Mostrar símbolos na segunda e na terceira linha do teclado</string>
+    <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicador do tipo de letra (vertical)</string>
+    <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicador do tipo de letra (horizontal)</string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposição</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Modo de uma mão</string>
+    <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Desligado</string>
+    <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Modo destro</string>
+    <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Modo esquerdino</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">Altura do teclado</string>
+    <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Mínima</string>
+    <string name="pref__keyboard__height_factor__short" comment="Preference value">Muito pequena</string>
+    <string name="pref__keyboard__height_factor__mid_short" comment="Preference value">Pequena</string>
+    <string name="pref__keyboard__height_factor__normal" comment="Preference value">Normal</string>
+    <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">Grande</string>
+    <string name="pref__keyboard__height_factor__tall" comment="Preference value">Muito grande</string>
+    <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Enorme</string>
+    <string name="pref__keyboard__height_factor__custom" comment="Preference value">Personalizada</string>
+    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Valor para a altura do teclado</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Distância desde a margem inferior (ecrãs curvos)</string>
+    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressão de teclas</string>
+    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Som ao premir a tecla</string>
+    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volume do som ao premir a tecla</string>
+    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibrar ao premir a tecla</string>
+    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Intensidade de vibração ao premir a tecla</string>
+    <string name="pref__keyboard__popup_visible__label" comment="Preference title">Destaque de teclas</string>
+    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Ampliar caracteres ao premir uma tecla</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Atraso para a pressão longa de teclas</string>
+    <string name="settings__typing__title" comment="Title of Typing experience fragment">Experiência de digitação</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">Ativar barra inteligente</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">Mostrar na parte superior do teclado</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] Mostrar sugestões ao escrever</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Mostrar na barra inteligente</string>
+    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Sugerir conteúdo da área de transferência</string>
+    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Sugerir conteúdo existente na área de transferência</string>
+    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Sugerir palavra seguinte</string>
+    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Recorrer às palavras anteriores para sugerir as seguintes</string>
+    <string name="pref__correction__title" comment="Preference group title">Correções</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Maiúsculas automáticas</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalizar as palavras tendo em conta o seu contexto</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Memorizar estado CapsLock</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Manter CapsLock nas movimentações entre campos de texto</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Duplo espaço insere ponto final</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Ao tocar 2 vezes na barra de espaços, inserir um ponto final e um espaço</string>
+    <string name="settings__gestures__title" comment="Title of Gestures fragment">Gestos e deslize</string>
+    <string name="pref__glide__title" comment="Preference group title">Digitar ao deslizar</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Ativar escrita por deslize</string>
+    <string name="pref__glide__enabled__summary" comment="Preference summary">Digitar uma palavra deslizando o dedo através das teclas</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Mostrar rasto de escrita</string>
+    <string name="pref__glide__show_trail__summary" comment="Preference summary">O rasto desparece no final da palavra</string>
+    <string name="pref__gestures__title" comment="Preference group title">Gestos</string>
+    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Sem ação</string>
+    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Remover caracteres com precisão</string>
+    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Remover palavra atual</string>
+    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Remover palavras com precisão</string>
+    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Ocultar teclado</string>
+    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Mover cursor para cima</string>
+    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Mover cursor para baixo</string>
+    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Mover cursor para a esquerda</string>
+    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Mover cursor para a direita</string>
+    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Tecla Shift</string>
+    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Trocar para o subtipo anterior</string>
+    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Trocar para o subtipo seguinte</string>
+    <string name="pref__gestures__swipe_up__label" comment="Preference title">Deslizar para cima</string>
+    <string name="pref__gestures__swipe_down__label" comment="Preference title">Deslizar para baixo</string>
+    <string name="pref__gestures__swipe_left__label" comment="Preference title">Deslizar para a esquerda</string>
+    <string name="pref__gestures__swipe_right__label" comment="Preference title">Deslizar para a direita</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Deslizar à esquerda na barra de espaços</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Deslizar à direita na barra de espaços</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Deslizar à esquerda na tecla Delete</string>
+    <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Velocidade de deslize</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Muito lenta</string>
+    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Lenta</string>
+    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normal</string>
+    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Rápida</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Muito rápida</string>
+    <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Distância de deslize</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Muito curta</string>
+    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Curta</string>
+    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
+    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Longa</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Muito longa</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Avançado</string>
+    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Tema das definições</string>
+    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Claro</string>
+    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Escuro</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostrar ícone no \'launcher\'</string>
     <!-- About UI strings -->
+    <string name="about__title" comment="Title of About activity">Acerca</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ícone FlorisBoard</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">Licenças Open Source</string>
+    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Política de privacidade</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">Código-fonte</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">Licenças Open Source</string>
     <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">Configuração</string>
+    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Recuar</string>
+    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Cancelar</string>
+    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Avançar</string>
+    <string name="setup__finish_button" comment="Label of Finish button in Setup">Terminar</string>
+    <string name="setup__ok_button" comment="Label of OK button in Setup">OK</string>
+    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Boas vindas!</string>
+    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Obrigado por testar FlorisBoard! Antes de poder utilizar a aplicação, tem que a ativar nas definições do sistema, configurar o seu idioma e a disposição do teclado. Mas não se preocupe porque o assistente vai ajudar nestas tarefas!</string>
+    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard respeita a sua privacidade e não recolhe quaisquer dados pessoais. Para mais informação, consulte:</string>
+    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">O código-fonte de FlorisBoard está disponível publicamente e você tem todo o direito de o analisar e propor correções. Consulte o repositório na ligação abaixo indicada.</string>
+    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Mais uma coisa antes de iniciar a configuração - se encontrar erros ou problemas na aplicação ou ainda caso pretenda sugerir alterações ou funcionalidades, aceda ao GitHub a deixe-nos os seus comentários. Desta forma, ajuda-nos a melhorar a aplicação!</string>
+    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Para iniciar a configuração, toque em <i>Avançar</i>.</string>
+    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Ativar FlorisBoard</string>
+    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">O sistema Android necessita que, antes de ser utilizado, qualquer teclado tem que ser ativado nas definições. Toque no botão abaixo para aceder às definições de <i>Idiomas e introdução</i> e assinale <i>FlorisBoard</i>.</string>
+    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">O teclado FlorisBoard foi ativado com sucesso. Para continuar, toque em <i>Avançar</i>!</string>
+    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Abrir definições de Idioma e introdução</string>
+    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Utilizar FlorisBoard como teclado padrão</string>
+    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">O teclado FloriBoard está agora ativado. Para o utilizar, selecione FlorisBoard na caixa de diálogo!</string>
+    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">FlorisBoard foi definido como o teclado padrão do sistema!</string>
+    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Trocar de teclado</string>
+    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Configuração terminada!</string>
     <!-- Crash Dialog strings -->
+    <string name="crash_dialog__title" comment="Title of crash dialog">Relatório de erros FlorisBoard</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Pedimos desculpa por esta situação mas FlorisBoard encerrou em virtude de um erro inesperado.\n\nSe quiser reportar este erro, toque em \"Copiar para a área de transferência\" e depois no botão \"Abrir relatório de erro\". Preencha o relatório e cole o registo. Desta forma, ajuda a melhorar a aplicação para todos os que a quiserem usar. Obrigado!</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copiar para a área de transferência</string>
+    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Abrir formulário de erros (github.com)</string>
+    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Fechar</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Relatórios de erros FlorisBoard</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard parou de funcionar…</string>
+    <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Toque para ver os detalhes do erro</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Parece que FlorisBoard não está a funcionar muito bem…</string>
+    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Vamos ativar o teclado usado anteriormente para parar este ciclo. Toque para ver os detalhes do erro.</string>
 </resources>

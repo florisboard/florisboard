@@ -39,7 +39,7 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Eleet</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Oletus</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Järjestelmän oletus</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">Welcome %siin</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">Tervetuloa %siin</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoardia ei ole otettu järjestelmäasetuksissa käyttöön eikä sen vuoksi ole valittavissa syöttötavaksi. Klikkaa tästä ratkaistaksesi ongelman.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoardia ei ole valittu oletussyöttötavaksi. Klikkaa tästä ratkaistaksesi ongelman.</string>
     <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Kiitos kun koitat FlorisBoardia! Projekti on yhä alpha-vaiheessa ja sen vuoksi sovelluksesta puuttuu ominaisuuksia. Jos kohtaat bugeja tai haluat ehdottaa parannuksia, suuntaa GitHub-tietovarastoon ja lähetä viesti. Tämä auttaa FlorisBoardin kehittämisessä. Kiitos!</string>
@@ -80,18 +80,18 @@
     <string name="settings__theme__group_smartbar" comment="Theme group label">Älypalkki</string>
     <string name="settings__theme__group_smartbar_button" comment="Theme group label">Älypalkin painike</string>
     <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">Ensisijainen väri</string>
+    <string name="pref__theme__colorPrimary_summary" comment="Summary of Color primary theme preference">Sovelletaan tärkein media välilehti aaltoilu ja valinta korosta</string>
     <string name="pref__theme__colorPrimaryDark_title" comment="Title of Color primary dark theme preference">Ensisijainen väri (tumma teema)</string>
     <string name="pref__theme__colorPrimaryDark_summary" comment="Summary of Color primary dark theme preference">Ei toistaiseksi käytössä, valmiina tulevia toimintoja varten</string>
     <string name="pref__theme__colorAccent_title" comment="Title of Color accent theme preference">Aksenttiväri</string>
+    <string name="pref__theme__colorAccent_summary" comment="Summary of Color accent theme preference">Sovellettu emoji-välilehteen ripple</string>
     <string name="pref__theme__navBarColor_title" comment="Title of Nav bar color theme preference">Navigointipalkin väri</string>
     <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">Navigointipalkin tausta.</string>
     <string name="pref__theme__navBarIsLight_title" comment="Title of Nav bar is light theme preference">Navigointipalkin tummat painikkeet</string>
     <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Aseta päälle tummia tai pois päältä vaaleita painikkeita varten.</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Näppäimistön asetukset</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Painikkeet</string>
-    <string name="pref__keyboard__hinted_number_row__label" comment="Preference title">Numerorivi</string>
     <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">Numerot ensimmäisen näppäinrivin painikkeilla</string>
-    <string name="pref__keyboard__hinted_symbols__label" comment="Preference title">Symbolit</string>
     <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">Symbolit toisen ja kolmannen näppäinrivin painikkeilla</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Fonttikoon kerroin (pystysuunnassa)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Fonttikoon kerroin (vaakasuunnassa)</string>
@@ -108,20 +108,27 @@
     <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">Keskikorkea</string>
     <string name="pref__keyboard__height_factor__tall" comment="Preference value">Korkea</string>
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Erittäin korkea</string>
+    <string name="pref__keyboard__height_factor__custom" comment="Preference value">Mukautettu</string>
+    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Mukautettu näppäimistön korkeus</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Alareunan sijainnin korjaus (kaareville näytöille)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Painallus</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Painikeääni</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Painikeäänen voimakkuus</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Värinä painalluksella</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Värinän voimakkuus painalluksella</string>
+    <string name="pref__keyboard__popup_visible__label" comment="Preference title">Ponnahdusikkunoiden Näkyvyys</string>
+    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Näytä ponnahdusikkuna, kun painat näppäintä</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Pitkän painalluksen viive</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Kirjoituskokemus</string>
     <string name="pref__suggestion__title" comment="Preference group title">Ehdotukset</string>
     <string name="pref__suggestion__enabled__label" comment="Preference title">[EVS] Näytä ehdotukset kirjoittaessa</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Näkyy näppäimistön päällä</string>
-    <string name="pref__suggestion__show_instead__label" comment="Preference title">Mitä näytetään ehdotusten sijaan</string>
-    <string name="pref__suggestion__show_instead__number_row" comment="Preference value">Numerorivi</string>
+    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Leikepöydän sisällön ehdotukset</string>
+    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Ehdota leikepöydän sisältöä liittämään, jos se on aiemmin kopioitu</string>
+    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[EVS] Sanaehdotukset</string>
+    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Käytä edellisiä sanoja ehdotuksiin</string>
     <string name="pref__correction__title" comment="Preference group title">Korjaukset</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automaattiset isot kirjaimet</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Automaattinen iso kirjain syöttökontekstin perusteella</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Muista caps lockin tila</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock pysyy päällä, kun siirrytään seuraavaan tekstikenttään</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Piste tuplavälilyönnillä</string>

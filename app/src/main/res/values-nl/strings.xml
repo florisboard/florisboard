@@ -91,10 +91,10 @@
     <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Start op voor donker of uit voor lichte voorgrond.</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Toetsenbordvoorkeuren</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Toets</string>
-    <string name="pref__keyboard__hinted_number_row__label" comment="Preference title">Aantal rij</string>
     <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">Eerste rij tekenopmaak geeft nummer rij</string>
-    <string name="pref__keyboard__hinted_symbols__label" comment="Preference title">Symbool</string>
     <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">Tweede en derde rij tekenopmaak hint symbolen</string>
+    <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Lettergrootte multiplier (portret)</string>
+    <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Lettergrootte multiplier (landschap)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Lay</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Eenhandige modus</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Van</string>
@@ -108,6 +108,8 @@
     <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">Mid Hoog</string>
     <string name="pref__keyboard__height_factor__tall" comment="Preference value">Hoog</string>
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Extra Hoog</string>
+    <string name="pref__keyboard__height_factor__custom" comment="Preference value">Aangepast</string>
+    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Aangepaste hoogte van toetsenbord</string>
     <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Onderste offset (voor gebogen schermen)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Toetsaanslag</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Geluid op sleutelpers</string>
@@ -120,10 +122,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Type-ervaring</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestie</string>
     <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] toon suggesties terwijl u typt</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Zal boven op het toetsenbord tonen</string>
-    <string name="pref__suggestion__show_instead__label" comment="Preference title">Wat te laten zien in plaats van suggesties</string>
-    <string name="pref__suggestion__show_instead__number_row" comment="Preference value">Aantal rij</string>
-    <string name="pref__suggestion__show_instead__clipboard_cursor_tools" comment="Preference value">Klembord cursor-Gereedschap</string>
     <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Suggesties voor de inhoud van het klembord</string>
     <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Klembordinhoud suggereren om te plakken als eerder gekopieerd</string>
     <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Volgende woord suggesties</string>

@@ -39,11 +39,74 @@
     <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">لغو</string>
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">حذف</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">ویرایش زیر-نوعی</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">تنظیمات صفحه‌کلید</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">کلیدها</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">ردیف عدد</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">ردیف عددی که بالای چیدمان کاراکتر ها نمایش داده می شود</string>
+    <string name="pref__keyboard__hinted_number_row__label" comment="Preference title">ردیف عددی همیار</string>
+    <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">اولین ردیف از چیدمان کاراکتر ها به ردیف عدد اشاره می کند</string>
+    <string name="pref__keyboard__hinted_symbols__label" comment="Preference title">نشانه های همیار</string>
+    <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">دومین و سویم ردیف از کاراکتر ها در چیدمان به نماد ها اشاره می کند</string>
+    <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">اندازه فونت چند برابری(عمودی)</string>
+    <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">اندازه فونت چند برابری(افقی)</string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">چیدمان</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">حالت تک دستی</string>
+    <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">خاموش</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">حالت دست راستی</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">حالت دست چپی</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">ارتفاع صفحه کلید</string>
+    <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">بیشتر-کوتاه</string>
+    <string name="pref__keyboard__height_factor__short" comment="Preference value">کوتاه</string>
+    <string name="pref__keyboard__height_factor__mid_short" comment="Preference value">متوسط-کوتاه</string>
+    <string name="pref__keyboard__height_factor__normal" comment="Preference value">عادی</string>
+    <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">متوسط-بلند</string>
+    <string name="pref__keyboard__height_factor__tall" comment="Preference value">بلند</string>
+    <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">بیشتر-بلند</string>
+    <string name="pref__keyboard__height_factor__custom" comment="Preference value">سفارشی</string>
+    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">مقدار ارتفاع سفارشی صفحه‌کلید</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">فاصله از کف (برای صفحه های منحنی)</string>
+    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">فشردن کلید</string>
+    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">صدای فشردن کلید</string>
+    <string name="pref__keyboard__sound_volume__label" comment="Preference title">میزان صدای فشردن کلید</string>
+    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">لرزش هنگام فشردن کلید</string>
+    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">قدرت لرزش هنگام فشردن کلید</string>
+    <string name="pref__keyboard__popup_visible__label" comment="Preference title">نمایش پاپ‌آپ</string>
+    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">نمایش پاپآپ وقتی کلیدی را می فشارید</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">تاخیر فشردن طولانی کلید</string>
+    <string name="settings__typing__title" comment="Title of Typing experience fragment">تجربه در تایپ کردن</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">فعال سازی نوار هوشمند</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">بالای صفحه‌کلید نمایش داده خواهند شد</string>
+    <string name="pref__suggestion__title" comment="Preference group title">پیشنهادات</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] نمایش پیشنهادات حین تایپ کردن</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">در نوار هوشمند نمایش داده خواهد شد</string>
+    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] پیشنهادات کلمه بعدی</string>
+    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">استفاده از کلمه قبلی برای پیشنهادات</string>
+    <string name="pref__correction__title" comment="Preference group title">تصحیح</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">حرف اول بزرگ به صورت خودکار</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">بزرگ کردن حرف اول بر اساس محتوای ورودی</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">به یاد داشتن حالت caps lock</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock با رفتن به محل نوشتن بعدی همانگونه بماند</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">فاصله زمانی دوبار-فاصله</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">فشردن دو بار فاصله در فاصله زمانی باعث ادامه دادن فاصله گذاشتن شود</string>
+    <string name="settings__gestures__title" comment="Title of Gestures fragment">اشارات &amp; نوشتن گلایدی</string>
+    <string name="pref__glide__title" comment="Preference group title">نوشتن گلایدی</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] فعال سازی نوشتن گلایدی</string>
+    <string name="pref__glide__enabled__summary" comment="Preference summary">نوشتن حروف با حرکت مداوم و نگه داشتن روی حرف مورد نظر</string>
     <!-- About UI strings -->
     <!-- Setup UI strings -->
+    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">لغو</string>
+    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">بعدی</string>
+    <string name="setup__finish_button" comment="Label of Finish button in Setup">پایان</string>
+    <string name="setup__ok_button" comment="Label of OK button in Setup">تأیید</string>
+    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">خوش آمدید!</string>
+    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">ممنون از اینکه FlorisBoard رو امتحان کردین! قبل از اینکه شروع به استفاده کنید، ما هم چیزای همیشگی که باید برای فعال کردنش در تنظیمات انجام بدهید را داریم، تنظیم زبان/چیدمان و… ولی نگران نباشید - تنظیم جادویی شما را در این کار راهنمایی خواد کرد!</string>
+    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard به طور کامل به حریم خصوصی شما احترام می گذارد و هیچ اطلاعاتی از کاربر دریافت نمی کند. برای اطلاعات بیشتر به اینجا مراجعه کنید:</string>
+    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">کد سورس FlorisBoard به طور عمومی در دسترس همگان قرار دارد، پس شما می توانید به راحتی اینکه پشت صحنه FlorisBoard چه اتفاقی می افتد را مرور کنید. لینک مخزن را از زیر مشاهده کنید.</string>
+    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">یک تنظیم پایانی قبل از شروع - اگر شما به ایرادی/خراب شدنی/مشکلی با FlorisBoard برخورد کردید یا درخواست خواصه خود را دارید - به مخزن GitHub که لینکش در زیر واقع شده بروید و مشکل را استناد کنید. این در تجربه به همه کاربران کمک می کند!</string>
+    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">برای شروع راه انداز تنظیمات روی <i>بعدی</i> کلیک کنید.</string>
+    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">فعال سازی FlorisBoard</string>
+    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">در اندروید هر صفحه کلید سفارشی باید به طور دستی قبل از استفاده فعال شود. روی دکمه زیر کلیک کنید تا به تنظیمات <i>زبان &amp; ورودی</i> بروید، بعد مطمعن شوید که <i>FlorisBoard</i> را چک و فعال کرده اید.</string>
+    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard با موفقیت فعال شد. برای ادامه روی <i>بعدی</i> بزنید!</string>
+    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">تنظیم FlorisBoard به پیشفرض</string>
     <!-- Crash Dialog strings -->
 </resources>

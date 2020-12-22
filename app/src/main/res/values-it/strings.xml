@@ -91,9 +91,7 @@
     <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Imposta a ON per un colore di primo piano scuro e OFF per uno chiaro.</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Tastiera preferenze</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Tasti</string>
-    <string name="pref__keyboard__hinted_number_row__label" comment="Preference title">Riga dei numeri</string>
     <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">Prima riga dei tasti contiene suggerimenti per i numeri</string>
-    <string name="pref__keyboard__hinted_symbols__label" comment="Preference title">Simboli</string>
     <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">La seconda e terza riga suggeriscono simboli</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Moltiplicatore della dimensione del testo (ritratto)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Moltiplicatore della dimensione del testo (panorama)</string>
@@ -110,6 +108,8 @@
     <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">Medio-alta</string>
     <string name="pref__keyboard__height_factor__tall" comment="Preference value">Alta</string>
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Altissima</string>
+    <string name="pref__keyboard__height_factor__custom" comment="Preference value">Personalizzato</string>
+    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Valore Altezza tastiera personalizzata</string>
     <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Offset dal basso (per schermi curvi)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressione tasti</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Suono pressione tasti</string>
@@ -122,10 +122,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Esperienza di digitazione</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggerimenti</string>
     <string name="pref__suggestion__enabled__label" comment="Preference title">Visualizza suggerimenti mentre digiti</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Verrà visualizzato nella parte superiore della tastiera</string>
-    <string name="pref__suggestion__show_instead__label" comment="Preference title">Cosa mostrare invece dei suggerimenti</string>
-    <string name="pref__suggestion__show_instead__number_row" comment="Preference value">Riga dei numeri</string>
-    <string name="pref__suggestion__show_instead__clipboard_cursor_tools" comment="Preference value">Strumenti degli appunti</string>
     <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Suggerimenti sui contenuti degli appunti</string>
     <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Suggerisci contenuti degli appunti copiati in precedenza da incollare</string>
     <string name="pref__suggestion__use_pref_words__label" comment="Preference title">Suggerimenti per la parola successiva</string>

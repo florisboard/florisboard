@@ -91,9 +91,7 @@
     <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">EIN für dunklen oder AUS für hellen Vordergrund.</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Tastatur-Einstellungen</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Tasten</string>
-    <string name="pref__keyboard__hinted_number_row__label" comment="Preference title">Zahlenreihe</string>
     <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">Erste Reihe der Tastatur deutet Zahlenreihe im Hintergrund an</string>
-    <string name="pref__keyboard__hinted_symbols__label" comment="Preference title">Symbole</string>
     <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">Zweite und dritte Reihe der Tastatur deuten Symbole im Hintergrund an</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Schriftgröße anpassen (Hochformat)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Schriftgröße anpassen (Querformat)</string>
@@ -124,10 +122,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Tipperlebnis</string>
     <string name="pref__suggestion__title" comment="Preference group title">Vorschläge</string>
     <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] Vorschläge während des Tippens anzeigen</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Wird über der Tastatur angezeigt</string>
-    <string name="pref__suggestion__show_instead__label" comment="Preference title">Anstatt der Vorschläge anzeigen</string>
-    <string name="pref__suggestion__show_instead__number_row" comment="Preference value">Zahlenreihe</string>
-    <string name="pref__suggestion__show_instead__clipboard_cursor_tools" comment="Preference value">Werkzeuge für die Zwischenablage</string>
     <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Inhalt der Zwischenablage</string>
     <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Inhalte der Zwischenablage einfügen, die zuvor kopiert wurden</string>
     <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Vorschläge für nächstes Wort</string>

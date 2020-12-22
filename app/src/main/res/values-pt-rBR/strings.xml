@@ -2,7 +2,7 @@
 <resources>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pausar</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Esperar</string>
-    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ícone de três pontos. Se visível, indica que mais letras podem ser usadas se pressionadas por mais tempo.</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ícone de três pontos. Se mostrado, indica que mais letras podem ser usadas ao apertar e segurar a tecla.</string>
     <!-- One-handed strings -->
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Fechar o modo uma mão.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Mover teclado para a esquerda.</string>
@@ -12,11 +12,11 @@
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Sorrisos &amp; Emoções</string>
-    <string name="emoji__category__people_body" comment="Emoji category name">Pessoas &amp; Corpo</string>
-    <string name="emoji__category__animals_nature" comment="Emoji category name">Animais &amp; Natureza</string>
-    <string name="emoji__category__food_drink" comment="Emoji category name">Comida &amp; Bebida</string>
-    <string name="emoji__category__travel_places" comment="Emoji category name">Viagem &amp; Lugares</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Sorrisos e Emoções</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Pessoas e Corpo</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Animais e Natureza</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Comida e Bebida</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Viagem e Lugares</string>
     <string name="emoji__category__activities" comment="Emoji category name">Atividades</string>
     <string name="emoji__category__objects" comment="Emoji category name">Objetos</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Símbolos</string>
@@ -77,8 +77,8 @@
     <string name="settings__theme__group_media" comment="Theme group label">Contexto de mídia</string>
     <string name="settings__theme__group_one_handed" comment="Theme group label">Modo uma mão</string>
     <string name="settings__theme__group_one_handed_button" comment="Theme group label">Botões do modo uma mão</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Barra superior</string>
-    <string name="settings__theme__group_smartbar_button" comment="Theme group label">Botões da barra superior</string>
+    <string name="settings__theme__group_smartbar" comment="Theme group label">Barra inteligente</string>
+    <string name="settings__theme__group_smartbar_button" comment="Theme group label">Botão da barra inteligente</string>
     <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">Cor primária</string>
     <string name="pref__theme__colorPrimary_summary" comment="Summary of Color primary theme preference">Aplicado à barra de indicação da aba de mídia principal e destaque de seleção</string>
     <string name="pref__theme__colorPrimaryDark_title" comment="Title of Color primary dark theme preference">Cor primária (escuro)</string>
@@ -91,9 +91,11 @@
     <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Ligue para escurecer ou desligue para clarear o primeiro plano.</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Preferências do Teclado</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Teclas</string>
-    <string name="pref__keyboard__hinted_number_row__label" comment="Preference title">Linha de números</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">Linha de números</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Mostrar linha de números em cima do teclado</string>
+    <string name="pref__keyboard__hinted_number_row__label" comment="Preference title">Sugerir linha de números</string>
     <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">A primeira linha de letras sugere números</string>
-    <string name="pref__keyboard__hinted_symbols__label" comment="Preference title">Símbolos</string>
+    <string name="pref__keyboard__hinted_symbols__label" comment="Preference title">Sugerir símbolos</string>
     <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">As segunda e terceira linhas de letras sugere símbolos</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicador de tamanho da fonte (retrato)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicador de tamanho da fonte (paisagem)</string>
@@ -111,7 +113,7 @@
     <string name="pref__keyboard__height_factor__tall" comment="Preference value">Alto</string>
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Muito alto</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Personalizado</string>
-    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Valor da altura do teclado personalizado</string>
+    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Valor personalizado da altura do teclado</string>
     <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Deslocamento inferior (para telas curvas)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressionar tecla</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Som ao pressionar uma tecla</string>
@@ -122,12 +124,11 @@
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Mostrar popup quando pressionar uma tecla</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Atraso ao pressionar e segurar uma tecla</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Experiência de digitação</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">Ativar barra inteligente</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">Mostrar na parte superior do teclado</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>
     <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] Mostrar sugestões enquanto você digita</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Vai aparecer em cima do teclado</string>
-    <string name="pref__suggestion__show_instead__label" comment="Preference title">O que mostrar em vez de sugestões</string>
-    <string name="pref__suggestion__show_instead__number_row" comment="Preference value">Linha de números</string>
-    <string name="pref__suggestion__show_instead__clipboard_cursor_tools" comment="Preference value">Ferramentas da área de transferência</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Mostrar na barra inteligente</string>
     <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Sugestões de conteúdo da área de transferência</string>
     <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Sugerir conteúdo da área de transferência para colar se foi copiado anteriormente</string>
     <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Sugestões de próxima palavra</string>
@@ -185,10 +186,10 @@
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Sobre</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ícone do aplicativo FlorisBoard</string>
-    <string name="about__view_licenses" comment="Label of View licenses button in About">Licenças open source</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">Licenças de código aberto</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Política de privacidade</string>
-    <string name="about__view_source_code" comment="Label of View source code button in About">Código fonte</string>
-    <string name="about__license__title" comment="Title of Open-source licenses dialog">Licenças open source</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">Código-fonte</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">Licenças de código aberto</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Configurar</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Anterior</string>
