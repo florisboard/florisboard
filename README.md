@@ -1,7 +1,7 @@
 <img align="left" width="80" height="80"
 src="fastlane/metadata/android/en-US/images/icon.png" alt="App icon">
 
-# FlorisBoard [![Release](https://img.shields.io/github/v/release/florisboard/florisboard)](https://github.com/florisboard/florisboard/releases) [![Crowdin](https://badges.crowdin.net/florisboard/localized.svg)](https://crowdin.florisboard.patrickgold.dev)
+# FlorisBoard [![Release](https://img.shields.io/github/v/release/florisboard/florisboard)](https://github.com/florisboard/florisboard/releases) [![Crowdin](https://badges.crowdin.net/florisboard/localized.svg)](https://crowdin.florisboard.patrickgold.dev) ![FlorisBoard CI](https://github.com/florisboard/florisboard/workflows/FlorisBoard%20CI/badge.svg?event=push)
 
 **FlorisBoard** is a free and open-source keyboard for Android 6.0+
 devices. It aims at being modern, user-friendly and customizable while
