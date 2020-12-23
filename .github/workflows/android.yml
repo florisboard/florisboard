@@ -1,4 +1,4 @@
-name: Florisboard CI
+name: FlorisBoard CI
 
 on:
   push:
