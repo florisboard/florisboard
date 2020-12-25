@@ -32,7 +32,11 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.concurrent.scheduleAtFixedRate
 
 /**
  * View class for managing and rendering an editing key.
@@ -42,6 +46,7 @@ class EditingKeyView : AppCompatImageButton {
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val data: KeyData
     private var isKeyPressed: Boolean = false
+    private val mainScope = MainScope()
     private var osTimer: Timer? = null
 
     private var label: String? = null
@@ -101,15 +106,15 @@ class EditingKeyView : AppCompatImageButton {
                     KeyCode.ARROW_UP,
                     KeyCode.DELETE -> {
                         osTimer = Timer()
-                        osTimer?.scheduleAtFixedRate(object : TimerTask() {
-                            override fun run() {
+                        osTimer?.scheduleAtFixedRate(500, 50) {
+                            mainScope.launch(Dispatchers.Main) {
                                 florisboard?.textInputManager?.sendKeyPress(data)
-                                if (!isKeyPressed) {
-                                    osTimer?.cancel()
-                                    osTimer = null
-                                }
                             }
-                        }, 500, 50)
+                            if (!isKeyPressed) {
+                                osTimer?.cancel()
+                                osTimer = null
+                            }
+                        }
                     }
                 }
             }

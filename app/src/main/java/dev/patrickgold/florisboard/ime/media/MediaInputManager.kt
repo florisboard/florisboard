@@ -36,6 +36,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import kotlinx.coroutines.*
 import java.util.*
+import kotlin.concurrent.scheduleAtFixedRate
 
 /**
  * MediaInputManager is responsible for managing everything which is related to media input. All of
@@ -152,11 +153,11 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
                 florisboard.keyPressSound(data)
                 if (data?.code == KeyCode.DELETE && data.type == KeyType.ENTER_EDITING) {
                     osTimer = Timer()
-                    osTimer?.scheduleAtFixedRate(object : TimerTask() {
-                        override fun run() {
+                    osTimer?.scheduleAtFixedRate(500, 50) {
+                        launch(Dispatchers.Main) {
                             florisboard.textInputManager.sendKeyPress(data)
                         }
-                    }, 500, 50)
+                    }
                 }
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {

@@ -39,7 +39,11 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.util.setBackgroundTintColor2
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.concurrent.scheduleAtFixedRate
 
 /**
  * View class for managing the rendering and the events of a single keyboard key.
@@ -61,6 +65,7 @@ class KeyView(
             updateKeyPressedBackground()
         }
     private var hasTriggeredGestureMove: Boolean = false
+    private val mainScope = MainScope()
     private var osHandler: Handler? = null
     private var osTimer: Timer? = null
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
@@ -230,15 +235,15 @@ class KeyView(
                 florisboard?.keyPressSound(data)
                 if (data.code == KeyCode.DELETE && data.type == KeyType.ENTER_EDITING) {
                     osTimer = Timer()
-                    osTimer?.scheduleAtFixedRate(object : TimerTask() {
-                        override fun run() {
+                    osTimer?.scheduleAtFixedRate(500, 50) {
+                        mainScope.launch(Dispatchers.Main) {
                             florisboard?.textInputManager?.sendKeyPress(data)
-                            if (!isKeyPressed) {
-                                osTimer?.cancel()
-                                osTimer = null
-                            }
                         }
-                    }, 500, 50)
+                        if (!isKeyPressed) {
+                            osTimer?.cancel()
+                            osTimer = null
+                        }
+                    }
                 }
                 val delayMillis = prefs.keyboard.longPressDelay
                 if (osHandler == null) {
