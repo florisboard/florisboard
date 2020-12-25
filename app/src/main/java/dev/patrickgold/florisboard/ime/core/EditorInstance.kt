@@ -24,6 +24,7 @@ import android.inputmethodservice.InputMethodService
 import android.net.Uri
 import android.os.Build
 import android.text.InputType
+import android.util.Log
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedTextRequest
@@ -287,15 +288,24 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      */
     fun deleteWordsBeforeCursor(n: Int): Boolean {
         val ic = ims?.currentInputConnection ?: return false
-        return if (n < 1 || isRawInputEditor) {
+        return if (n < 1 || isRawInputEditor || !selection.isValid || !selection.isCursorMode) {
             false
         } else {
             ic.beginBatchEdit()
             markComposingRegion(null)
-            if (currentWord.isValid) {
-                ic.setSelection(currentWord.start, currentWord.end)
-                ic.commitText("", 1)
+
+            val wordRegexPattern = "[\\p{L}]+".toRegex()
+            wordRegexPattern.findAll(
+                cachedText.substring(0, selection.start)
+            ).toList().run {
+                get(size-n.coerceAtLeast(0)).range
+            }.run {
+                ic.setSelection(first, selection.start)
             }
+
+            ic.commitText("", 1)
+
+            updateEditorState()
             reevaluateCurrentWord()
             ic.endBatchEdit()
             true
