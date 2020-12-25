@@ -332,6 +332,15 @@ class KeyView(
                             shouldBlockNextKeyCode = true
                             true
                         }
+                        SwipeAction.DELETE_WORDS_PRECISELY -> {
+                            florisboard?.activeEditorInstance?.apply {
+                                leftAppendWordToSelection()
+                            }
+
+                            hasTriggeredGestureMove = true
+                            shouldBlockNextKeyCode = true
+                            true
+                        }
                         else -> false
                     }
                     SwipeGesture.Direction.RIGHT -> when (prefs.gestures.deleteKeySwipeLeft) {
@@ -341,6 +350,14 @@ class KeyView(
                                     if (selection.start < selection.end) { selection.start + 1 } else { selection.start },
                                     selection.end
                                 )
+                            }
+                            shouldBlockNextKeyCode = true
+                            true
+                        }
+
+                        SwipeAction.DELETE_WORDS_PRECISELY -> {
+                            florisboard?.activeEditorInstance?.apply {
+                                leftPopWordFromSelection()
                             }
                             shouldBlockNextKeyCode = true
                             true

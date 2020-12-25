@@ -287,19 +287,39 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      */
     fun deleteWordsBeforeCursor(n: Int): Boolean {
         val ic = ims?.currentInputConnection ?: return false
-        return if (n < 1 || isRawInputEditor) {
+        return if (n < 1 || isRawInputEditor || !selection.isValid || !selection.isCursorMode) {
             false
         } else {
             ic.beginBatchEdit()
             markComposingRegion(null)
-            if (currentWord.isValid) {
-                ic.setSelection(currentWord.start, currentWord.end)
-                ic.commitText("", 1)
+
+            getWordsInString(cachedText.substring(0, selection.start)).run {
+                get(size-n.coerceAtLeast(0)).range
+            }.run {
+                ic.setSelection(first, selection.start)
             }
+
+            ic.commitText("", 1)
+
+            updateEditorState()
             reevaluateCurrentWord()
             ic.endBatchEdit()
             true
         }
+    }
+
+    /**
+     * Finds all words in the given string with the correct regex for current subtype.
+     * TODO: currently only supports en-US
+     *
+     * @param string String to select words from
+     * @return Words in [string] as a List of [MatchResult]
+     */
+    private fun getWordsInString(string: String):List<MatchResult>{
+        val wordRegexPattern = "[\\p{L}]+".toRegex()
+        return wordRegexPattern.findAll(
+            string
+        ).toList()
     }
 
     /**
@@ -476,6 +496,44 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
             }
             ic.setSelection(from, to)
         }
+    }
+
+    /**
+     *Adds one word on the left of selection to it
+     *
+     * @return True on success, false if no new words are selected
+     */
+    fun leftAppendWordToSelection(): Boolean{
+        // no words left to select
+        if (selection.start <= 0)
+            return false
+        val stringBeforeSelection = cachedText.substring(
+            0,
+            selection.start
+        )
+        getWordsInString(stringBeforeSelection).last().range.apply {
+            setSelection(first, selection.end)
+        }
+        return true
+    }
+
+    /**
+     *Removes one word on the left from the selection
+     *
+     * @return True on success, false if no new words are deselected
+     */
+    fun leftPopWordFromSelection(): Boolean{
+        // no words left to pop
+        if (selection.start >= selection.end)
+            return false
+        val stringInsideSelection = cachedText.substring(
+            selection.start,
+            selection.end
+        )
+        getWordsInString(stringInsideSelection).first().range.apply {
+            setSelection(selection.start + last + 1, selection.end)
+        }
+        return true
     }
 
     /**
