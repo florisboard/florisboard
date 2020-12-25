@@ -233,15 +233,21 @@ class KeyView(
                 isKeyPressed = true
                 florisboard?.keyPressVibrate()
                 florisboard?.keyPressSound(data)
-                if (data.code == KeyCode.DELETE && data.type == KeyType.ENTER_EDITING) {
-                    osTimer = Timer()
-                    osTimer?.scheduleAtFixedRate(500, 50) {
-                        mainScope.launch(Dispatchers.Main) {
-                            florisboard?.textInputManager?.sendKeyPress(data)
-                        }
-                        if (!isKeyPressed) {
-                            osTimer?.cancel()
-                            osTimer = null
+                when (data.code) {
+                    KeyCode.ARROW_DOWN,
+                    KeyCode.ARROW_LEFT,
+                    KeyCode.ARROW_RIGHT,
+                    KeyCode.ARROW_UP,
+                    KeyCode.DELETE -> {
+                        osTimer = Timer()
+                        osTimer?.scheduleAtFixedRate(500, 50) {
+                            mainScope.launch(Dispatchers.Main) {
+                                florisboard?.textInputManager?.sendKeyPress(data)
+                            }
+                            if (!isKeyPressed) {
+                                osTimer?.cancel()
+                                osTimer = null
+                            }
                         }
                     }
                 }
