@@ -254,24 +254,19 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      */
     fun deleteBackwards(): Boolean {
         val ic = ims?.currentInputConnection ?: return false
-        if (isRawInputEditor) {
-            return sendSystemKeyEvent(KeyEvent.KEYCODE_DEL)
+        return if (isRawInputEditor) {
+            sendSystemKeyEvent(KeyEvent.KEYCODE_DEL)
         } else {
             ic.beginBatchEdit()
             markComposingRegion(null)
-            if (selection.isCursorMode && selection.start > 0) {
-                val length = detectLastUnicodeCharacterLengthBeforeCursor()
-                ic.deleteSurroundingText(length, 0)
-            } else if (selection.isSelectionMode) {
-                ic.commitText("", 1)
-            }
+            sendSystemKeyEvent(KeyEvent.KEYCODE_DEL)
             updateEditorState()
             reevaluateCurrentWord()
             if (isComposingEnabled) {
                 markComposingRegion(currentWord)
             }
             ic.endBatchEdit()
-            return true
+            true
         }
     }
 
