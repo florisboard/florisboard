@@ -23,10 +23,13 @@ import android.content.Context
 import android.inputmethodservice.InputMethodService
 import android.net.Uri
 import android.os.Build
+import android.os.SystemClock
 import android.text.InputType
+import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedTextRequest
+import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputContentInfo
 import androidx.annotation.RequiresApi
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -289,7 +292,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
             markComposingRegion(null)
 
             getWordsInString(cachedText.substring(0, selection.start)).run {
-                get(size-n.coerceAtLeast(0)).range
+                get(size - n.coerceAtLeast(0)).range
             }.run {
                 ic.setSelection(first, selection.start)
             }
@@ -315,6 +318,54 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
         return wordRegexPattern.findAll(
             string
         ).toList()
+    }
+
+    /**
+     * Undoes the last action
+     *
+     * @return True on success, false if an error occurred or the input connection is invalid.
+     */
+    fun performUndo(): Boolean{
+        val ic = ims?.currentInputConnection ?: return false
+        return if (isRawInputEditor) {
+            sendSystemKeyEventCtrl(KeyEvent.KEYCODE_Z)
+            true
+        } else {
+            ic.beginBatchEdit()
+            markComposingRegion(null)
+            sendSystemKeyEventCtrl(KeyEvent.KEYCODE_Z)
+            updateEditorState()
+            reevaluateCurrentWord()
+            if (isComposingEnabled) {
+                markComposingRegion(currentWord)
+            }
+            ic.endBatchEdit()
+            true
+        }
+    }
+
+    /**
+     * Redoes the last Undo action
+     *
+     * @return True on success, false if an error occurred or the input connection is invalid.
+     */
+    fun performRedo(): Boolean{
+        val ic = ims?.currentInputConnection ?: return false
+        return if (isRawInputEditor) {
+            sendSystemKeyEventCtrlShift(KeyEvent.KEYCODE_Z)
+            true
+        } else {
+            ic.beginBatchEdit()
+            markComposingRegion(null)
+            sendSystemKeyEventCtrlShift(KeyEvent.KEYCODE_Z)
+            updateEditorState()
+            reevaluateCurrentWord()
+            if (isComposingEnabled) {
+                markComposingRegion(currentWord)
+            }
+            ic.endBatchEdit()
+            true
+        }
     }
 
     /**
@@ -394,19 +445,21 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardPaste(): Boolean {
-        val clipData: ClipData? = clipboardManager?.primaryClip
-        val item: ClipData.Item? = clipData?.getItemAt(0)
-        return when {
-            item?.text != null -> {
-                commitText(item.text.toString())
-            }
-            item?.uri != null -> {
-                commitContent(item.uri, clipData.description)
-            }
-            else -> {
-                false
-            }
-        }
+//        val clipData: ClipData? = clipboardManager?.primaryClip
+//        val item: ClipData.Item? = clipData?.getItemAt(0)
+//        return when {
+//            item?.text != null -> {
+//                commitText(item.text.toString())
+//            }
+//            item?.uri != null -> {
+//                commitContent(item.uri, clipData.description)
+//            }
+//            else -> {
+//                false
+//            }
+//        }
+        sendSystemKeyEventCtrl(KeyEvent.KEYCODE_V)
+        return true
     }
 
     /**
@@ -464,6 +517,66 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
                 KeyEvent.ACTION_DOWN, keyCode,
                 0,
                 KeyEvent.META_ALT_LEFT_ON
+            )
+        )
+    }
+
+    /**
+     * Sends a given [keyCode] with Ctrl pressed with [sendDownUpKeyEvents]
+     *
+     * @param keyCode The key code to send, use a key code defined in Android's [KeyEvent], not in
+     *  [KeyCode] or this call may send a weird character, as this key codes do not match!!
+     */
+    fun sendSystemKeyEventCtrl(keyCode: Int) {
+        val ic = ims?.currentInputConnection ?: return
+        sendDownUpKeyEvents(keyCode, KeyEvent.META_CTRL_ON)
+    }
+
+
+    /**
+     * Sends a given [keyCode] with Ctrl and Shift pressed with [sendDownUpKeyEvents]
+     *
+     * @param keyCode The key code to send, use a key code defined in Android's [KeyEvent], not in
+     *  [KeyCode] or this call may send a weird character, as this key codes do not match!!
+     */
+    fun sendSystemKeyEventCtrlShift(keyCode: Int) {
+        val ic = ims?.currentInputConnection ?: return
+        sendDownUpKeyEvents(keyCode, KeyEvent.META_SHIFT_ON or KeyEvent.META_CTRL_ON)
+    }
+
+    /**
+     * Same as [InputMethodService.sendDownUpKeyEvents] but also allows to set metaStae
+     *
+     * @param keyEventCode The key code to send, use a key code defined in Android's [KeyEvent]
+     * @param metaState Flags indicating which meta keys are currently pressed.
+     */
+    fun sendDownUpKeyEvents(keyEventCode: Int, metaState: Int) {
+        val ic = ims?.currentInputConnection ?: return
+        val eventTime = SystemClock.uptimeMillis()
+        ic.sendKeyEvent(
+            KeyEvent(
+                eventTime,
+                eventTime,
+                KeyEvent.ACTION_DOWN,
+                keyEventCode,
+                0,
+                metaState,
+                KeyCharacterMap.VIRTUAL_KEYBOARD,
+                0,
+                KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE
+            )
+        )
+        ic.sendKeyEvent(
+            KeyEvent(
+                eventTime,
+                SystemClock.uptimeMillis(),
+                KeyEvent.ACTION_UP,
+                keyEventCode,
+                0,
+                metaState,
+                KeyCharacterMap.VIRTUAL_KEYBOARD,
+                0,
+                KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE
             )
         )
     }
@@ -728,7 +841,7 @@ class ImeOptions private constructor(imeOptions: Int) {
                 PREVIOUS -> EditorInfo.IME_ACTION_PREVIOUS
                 SEARCH -> EditorInfo.IME_ACTION_SEARCH
                 SEND -> EditorInfo.IME_ACTION_SEND
-                UNSPECIFIED-> EditorInfo.IME_ACTION_UNSPECIFIED
+                UNSPECIFIED -> EditorInfo.IME_ACTION_UNSPECIFIED
             }
         }
     }

@@ -335,9 +335,25 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             R.id.quick_action_switch_to_media_context -> florisboard.setActiveInput(R.id.media_input)
             R.id.quick_action_open_settings -> florisboard.launchSettings()
             R.id.quick_action_one_handed_toggle -> florisboard.toggleOneHandedMode()
+            R.id.quick_action_undo -> {
+                handleUndo()
+                return
+            }
+            R.id.quick_action_redo -> {
+                handleRedo()
+                return
+            }
         }
         smartbarView?.isQuickActionsVisible = false
         smartbarView?.updateSmartbarState()
+    }
+
+    private fun handleUndo(){
+        activeEditorInstance.performUndo()
+    }
+
+    private fun handleRedo(){
+        activeEditorInstance.performRedo()
     }
 
     /**
