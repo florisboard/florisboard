@@ -31,6 +31,8 @@
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Open settings.</string>
     <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Switch to text editing panel.</string>
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Switch to media input view.</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Undo button to reverse the last action</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Redo button to reverse the last Undo</string>
 
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Settings</string>

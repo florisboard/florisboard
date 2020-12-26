@@ -80,6 +80,18 @@
             style="@style/SmartbarContainer">
 
             <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
+                android:id="@+id/quick_action_undo"
+                style="@style/SmartbarQuickAction"
+                android:contentDescription="@string/smartbar__quick_action__undo"
+                android:src="@drawable/ic_undo"/>
+
+            <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
+                android:id="@+id/quick_action_redo"
+                style="@style/SmartbarQuickAction"
+                android:contentDescription="@string/smartbar__quick_action__redo"
+                android:src="@drawable/ic_redo"/>
+
+            <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
                 android:id="@+id/quick_action_switch_to_media_context"
                 style="@style/SmartbarQuickAction"
                 android:contentDescription="@string/smartbar__quick_action__switch_to_media_context"
