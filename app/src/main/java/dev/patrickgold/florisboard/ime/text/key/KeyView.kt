@@ -38,12 +38,11 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
+import dev.patrickgold.florisboard.util.cancelAll
+import dev.patrickgold.florisboard.util.postAtScheduledRate
+import dev.patrickgold.florisboard.util.postDelayed
 import dev.patrickgold.florisboard.util.setBackgroundTintColor2
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.concurrent.scheduleAtFixedRate
 
 /**
  * View class for managing the rendering and the events of a single keyboard key.
@@ -65,9 +64,8 @@ class KeyView(
             updateKeyPressedBackground()
         }
     private var hasTriggeredGestureMove: Boolean = false
-    private val mainScope = MainScope()
-    private var osHandler: Handler? = null
-    private var osTimer: Timer? = null
+    private val longKeyPressHandler: Handler = Handler(context.mainLooper)
+    private val repeatedKeyPressHandler: Handler = Handler(context.mainLooper)
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private var shouldBlockNextKeyCode: Boolean = false
 
@@ -215,14 +213,14 @@ class KeyView(
         if (event == null || !isEnabled) return false
         if (swipeGestureDetector.onTouchEvent(event)) {
             isKeyPressed = false
-            osHandler?.removeCallbacksAndMessages(null)
-            osTimer?.cancel()
-            osTimer = null
+            longKeyPressHandler.cancelAll()
+            repeatedKeyPressHandler.cancelAll()
             keyboardView.popupManager.hide()
             return true
         }
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
+                val delayMillis = prefs.keyboard.longPressDelay.toLong()
                 hasTriggeredGestureMove = false
                 shouldBlockNextKeyCode = false
                 florisboard?.prefs?.keyboard?.let {
@@ -239,23 +237,16 @@ class KeyView(
                     KeyCode.ARROW_RIGHT,
                     KeyCode.ARROW_UP,
                     KeyCode.DELETE -> {
-                        osTimer = Timer()
-                        osTimer?.scheduleAtFixedRate(500, 50) {
-                            mainScope.launch(Dispatchers.Main) {
+                        repeatedKeyPressHandler.postAtScheduledRate(delayMillis, 25) {
+                            if (isKeyPressed) {
                                 florisboard?.textInputManager?.sendKeyPress(data)
-                            }
-                            if (!isKeyPressed) {
-                                osTimer?.cancel()
-                                osTimer = null
+                            } else {
+                                repeatedKeyPressHandler.cancelAll()
                             }
                         }
                     }
                 }
-                val delayMillis = prefs.keyboard.longPressDelay
-                if (osHandler == null) {
-                    osHandler = Handler()
-                }
-                osHandler?.postDelayed({
+                longKeyPressHandler.postDelayed(delayMillis) {
                     if (dataPopupWithHint.isNotEmpty()) {
                         keyboardView.popupManager.extend(this)
                     }
@@ -268,7 +259,7 @@ class KeyView(
                         )
                         shouldBlockNextKeyCode = true
                     }
-                }, delayMillis.toLong())
+                }
             }
             MotionEvent.ACTION_MOVE -> {
                 if (keyboardView.popupManager.isShowingExtendedPopup) {
@@ -292,9 +283,8 @@ class KeyView(
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 isKeyPressed = false
-                osHandler?.removeCallbacksAndMessages(null)
-                osTimer?.cancel()
-                osTimer = null
+                longKeyPressHandler.cancelAll()
+                repeatedKeyPressHandler.cancelAll()
                 if (hasTriggeredGestureMove && data.code == KeyCode.DELETE) {
                     hasTriggeredGestureMove = false
                     florisboard?.activeEditorInstance?.apply {
@@ -307,7 +297,6 @@ class KeyView(
                     keyboardView.popupManager.hide()
                     if (event.actionMasked != MotionEvent.ACTION_CANCEL && !shouldBlockNextKeyCode && retData != null) {
                         florisboard?.textInputManager?.sendKeyPress(retData)
-                        performClick()
                     } else {
                         shouldBlockNextKeyCode = false
                     }

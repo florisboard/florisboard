@@ -23,6 +23,7 @@ import android.content.res.Configuration
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Typeface
+import android.os.Handler
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.Button
@@ -32,11 +33,8 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
-import java.util.*
-import kotlin.concurrent.scheduleAtFixedRate
+import dev.patrickgold.florisboard.util.cancelAll
+import dev.patrickgold.florisboard.util.postAtScheduledRate
 
 /**
  * View class for managing and rendering an editing key.
@@ -46,8 +44,7 @@ class EditingKeyView : AppCompatImageButton {
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val data: KeyData
     private var isKeyPressed: Boolean = false
-    private val mainScope = MainScope()
-    private var osTimer: Timer? = null
+    private val repeatedKeyPressHandler: Handler = Handler(context.mainLooper)
 
     private var label: String? = null
     private var labelPaint: Paint = Paint().apply {
@@ -105,14 +102,12 @@ class EditingKeyView : AppCompatImageButton {
                     KeyCode.ARROW_RIGHT,
                     KeyCode.ARROW_UP,
                     KeyCode.DELETE -> {
-                        osTimer = Timer()
-                        osTimer?.scheduleAtFixedRate(500, 50) {
-                            mainScope.launch(Dispatchers.Main) {
+                        val delayMillis = prefs.keyboard.longPressDelay.toLong()
+                        repeatedKeyPressHandler.postAtScheduledRate(delayMillis, 25) {
+                            if (isKeyPressed) {
                                 florisboard?.textInputManager?.sendKeyPress(data)
-                            }
-                            if (!isKeyPressed) {
-                                osTimer?.cancel()
-                                osTimer = null
+                            } else {
+                                repeatedKeyPressHandler.cancelAll()
                             }
                         }
                     }
@@ -120,8 +115,7 @@ class EditingKeyView : AppCompatImageButton {
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 isKeyPressed = false
-                osTimer?.cancel()
-                osTimer = null
+                repeatedKeyPressHandler.cancelAll()
                 if (event.actionMasked != MotionEvent.ACTION_CANCEL) {
                     florisboard?.textInputManager?.sendKeyPress(data)
                 }
