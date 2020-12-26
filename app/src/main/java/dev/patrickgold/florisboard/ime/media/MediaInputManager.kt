@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.media
 
 import android.annotation.SuppressLint
+import android.os.Handler
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -34,9 +35,10 @@ import dev.patrickgold.florisboard.ime.media.emoticon.EmoticonKeyboardView
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyType
+import dev.patrickgold.florisboard.util.cancelAll
+import dev.patrickgold.florisboard.util.postAtScheduledRate
 import kotlinx.coroutines.*
 import java.util.*
-import kotlin.concurrent.scheduleAtFixedRate
 
 /**
  * MediaInputManager is responsible for managing everything which is related to media input. All of
@@ -57,7 +59,7 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
 
     private var activeTab: Tab? = null
     private var mediaViewFlipper: ViewFlipper? = null
-    private var osTimer: Timer? = null
+    private var repeatedKeyPressHandler: Handler? = null
     private var tabLayout: TabLayout? = null
     private val tabViews = EnumMap<Tab, LinearLayout>(Tab::class.java)
 
@@ -77,6 +79,11 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
 
     init {
         florisboard.addEventListener(this)
+    }
+
+    override fun onCreateInputView() {
+        super.onCreateInputView()
+        repeatedKeyPressHandler = Handler(florisboard.context.mainLooper)
     }
 
     /**
@@ -152,17 +159,14 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
                 florisboard.keyPressVibrate()
                 florisboard.keyPressSound(data)
                 if (data?.code == KeyCode.DELETE && data.type == KeyType.ENTER_EDITING) {
-                    osTimer = Timer()
-                    osTimer?.scheduleAtFixedRate(500, 50) {
-                        launch(Dispatchers.Main) {
-                            florisboard.textInputManager.sendKeyPress(data)
-                        }
+                    val delayMillis = florisboard.prefs.keyboard.longPressDelay.toLong()
+                    repeatedKeyPressHandler?.postAtScheduledRate(delayMillis, 25) {
+                        florisboard.textInputManager.sendKeyPress(data)
                     }
                 }
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                osTimer?.cancel()
-                osTimer = null
+                repeatedKeyPressHandler?.cancelAll()
                 if (event.actionMasked != MotionEvent.ACTION_CANCEL && data != null) {
                     florisboard.textInputManager.sendKeyPress(data)
                 }

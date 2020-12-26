@@ -34,6 +34,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
+import dev.patrickgold.florisboard.util.ViewLayoutUtils
 
 /**
  * Manages the creation and dismissal of key popups as well as the checks if the pointer moved
@@ -146,11 +147,13 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
      * @return A new [PopupWindow] already preconfigured and ready-to-go.
      */
     private fun createPopupWindow(view: View): PopupWindow {
-        return PopupWindow(keyboardView.context).apply {
+        return PopupWindow(view.context).apply {
             animationStyle = 0
             contentView = view
+            elevation = ViewLayoutUtils.convertDpToPixel(2.0f, view.context)
             enterTransition = null
             exitTransition = null
+            isAttachedInDecor = false
             isClippingEnabled = false
             isFocusable = false
             isTouchable = false
