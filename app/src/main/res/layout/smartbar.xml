@@ -140,14 +140,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Placeholder on the right which reserves the space for a second button -->
         <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
-            android:id="@+id/placeholder"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/smartbar_button_margin"
-            android:clickable="false"
-            android:visibility="invisible"/>
+            android:id="@+id/private_mode_button"
+            style="@style/SmartbarQuickAction.PrivateModeButton"
+            android:contentDescription="@string/smartbar__quick_action__private_mode"
+            android:src="@drawable/ic_security"/>
 
     </dev.patrickgold.florisboard.ime.core.FlorisViewFlipper>
 

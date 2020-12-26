@@ -92,6 +92,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
         }
     var isNewSelectionInBoundsOfOld: Boolean = false
         private set
+    var isPrivateMode: Boolean = false
     var isRawInputEditor: Boolean = true
         private set
     var packageName: String = "undefined"

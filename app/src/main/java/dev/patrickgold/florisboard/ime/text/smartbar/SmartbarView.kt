@@ -141,6 +141,10 @@ class SmartbarView : ConstraintLayout {
             }
         }
 
+        binding.privateModeButton.setOnClickListener {
+            eventListener?.get()?.onSmartbarPrivateModeButtonClicked()
+        }
+
         for (quickAction in binding.quickActions.children) {
             if (quickAction is SmartbarQuickActionButton) {
                 quickAction.setOnClickListener { eventListener?.get()?.onSmartbarQuickActionPressed(quickAction.id) }
@@ -258,15 +262,19 @@ class SmartbarView : ConstraintLayout {
                     KeyVariation.PASSWORD -> false
                     else -> true
                 },
-                actionEndAreaId = null
+                actionEndAreaId = when {
+                    florisboard.activeEditorInstance.isPrivateMode -> R.id.private_mode_button
+                    else -> null
+                }
             )
         }
     }
 
     fun onPrimaryClipChanged() {
-        if (prefs.suggestion.enabled && prefs.suggestion.suggestClipboardContent) {
+        if (prefs.suggestion.enabled && prefs.suggestion.suggestClipboardContent &&
+            florisboard?.activeEditorInstance?.isPrivateMode == false) {
             shouldSuggestClipboardContents = true
-            val item = florisboard?.clipboardManager?.primaryClip?.getItemAt(0)
+            val item = florisboard.clipboardManager?.primaryClip?.getItemAt(0)
             when {
                 item?.text != null -> {
                     binding.clipboardSuggestion.text = item.text
@@ -283,10 +291,8 @@ class SmartbarView : ConstraintLayout {
     }
 
     fun resetClipboardSuggestion() {
-        if (prefs.suggestion.enabled && prefs.suggestion.suggestClipboardContent) {
-            shouldSuggestClipboardContents = false
-            updateSmartbarState()
-        }
+        shouldSuggestClipboardContents = false
+        updateSmartbarState()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -333,6 +339,7 @@ class SmartbarView : ConstraintLayout {
         fun onSmartbarBackButtonPressed() {}
         //fun onSmartbarCandidatePressed() {}
         //fun onSmartbarCandidateLongPressed() {}
+        fun onSmartbarPrivateModeButtonClicked() {}
         fun onSmartbarQuickActionPressed(@IdRes quickActionId: Int) {}
     }
 }

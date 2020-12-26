@@ -22,6 +22,7 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.inputmethod.*
 import android.widget.LinearLayout
+import android.widget.Toast
 import android.widget.ViewFlipper
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
@@ -206,14 +207,18 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                 KeyboardMode.CHARACTERS
             }
         }
-        instance.isComposingEnabled = when (keyboardMode) {
-            KeyboardMode.NUMERIC,
-            KeyboardMode.PHONE,
-            KeyboardMode.PHONE2 -> false
-            else -> keyVariation != KeyVariation.PASSWORD &&
-                    florisboard.prefs.suggestion.enabled// &&
-                    //!instance.inputAttributes.flagTextAutoComplete &&
-                    //!instance.inputAttributes.flagTextNoSuggestions
+        instance.apply {
+            isComposingEnabled = when (keyboardMode) {
+                KeyboardMode.NUMERIC,
+                KeyboardMode.PHONE,
+                KeyboardMode.PHONE2 -> false
+                else -> keyVariation != KeyVariation.PASSWORD &&
+                        florisboard.prefs.suggestion.enabled// &&
+                //!instance.inputAttributes.flagTextAutoComplete &&
+                //!instance.inputAttributes.flagTextNoSuggestions
+            }
+            isPrivateMode = florisboard.prefs.advanced.forcePrivateMode ||
+                    imeOptions.flagNoPersonalizedLearning
         }
         if (!florisboard.prefs.correction.rememberCapsLockState) {
             capsLock = false
@@ -321,6 +326,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
 
     override fun onSmartbarBackButtonPressed() {
         setActiveKeyboardMode(KeyboardMode.CHARACTERS)
+    }
+
+    override fun onSmartbarPrivateModeButtonClicked() {
+        Toast.makeText(florisboard.context, R.string.private_mode_dialog__title, Toast.LENGTH_LONG).show()
     }
 
     override fun onSmartbarQuickActionPressed(quickActionId: Int) {
