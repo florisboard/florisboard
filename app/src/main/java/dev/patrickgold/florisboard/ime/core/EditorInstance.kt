@@ -450,19 +450,21 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardPaste(): Boolean {
-        val clipData: ClipData? = clipboardManager?.primaryClip
-        val item: ClipData.Item? = clipData?.getItemAt(0)
-        return when {
-            item?.text != null -> {
-                commitText(item.text.toString())
-            }
-            item?.uri != null -> {
-                commitContent(item.uri, clipData.description)
-            }
-            else -> {
-                false
-            }
-        }
+//        val clipData: ClipData? = clipboardManager?.primaryClip
+//        val item: ClipData.Item? = clipData?.getItemAt(0)
+//        return when {
+//            item?.text != null -> {
+//                commitText(item.text.toString())
+//            }
+//            item?.uri != null -> {
+//                commitContent(item.uri, clipData.description)
+//            }
+//            else -> {
+//                false
+//            }
+//        }
+        sendSystemKeyEventCtrl(KeyEvent.KEYCODE_V)
+        return true
     }
 
     /**
