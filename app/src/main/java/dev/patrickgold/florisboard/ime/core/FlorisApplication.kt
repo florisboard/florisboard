@@ -17,11 +17,15 @@
 package dev.patrickgold.florisboard.ime.core
 
 import android.app.Application
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.crashutility.CrashUtility
+import timber.log.Timber
 
 class FlorisApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         CrashUtility.install(this)
+        if (BuildConfig.DEBUG)
+            Timber.plant(Timber.DebugTree())
     }
 }

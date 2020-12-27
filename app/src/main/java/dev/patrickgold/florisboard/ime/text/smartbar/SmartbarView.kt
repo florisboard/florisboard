@@ -19,13 +19,11 @@ package dev.patrickgold.florisboard.ime.text.smartbar
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.annotation.IdRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
-import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SmartbarBinding
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
@@ -38,6 +36,7 @@ import dev.patrickgold.florisboard.util.setDrawableTintColor2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.lang.ref.WeakReference
 import kotlin.math.roundToInt
 
@@ -83,7 +82,7 @@ class SmartbarView : ConstraintLayout {
      * TextInputManager, which then starts working together with this view.
      */
     override fun onAttachedToWindow() {
-        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onAttachedToWindow()")
+        Timber.i("onAttachedToWindow()")
 
         super.onAttachedToWindow()
 

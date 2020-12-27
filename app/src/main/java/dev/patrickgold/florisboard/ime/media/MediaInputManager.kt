@@ -35,6 +35,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import kotlinx.coroutines.*
+import timber.log.Timber
 import java.util.*
 import kotlin.concurrent.scheduleAtFixedRate
 
@@ -86,7 +87,7 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
      */
     @SuppressLint("ClickableViewAccessibility")
     override fun onRegisterInputView(inputView: InputView) {
-        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onRegisterInputView(inputView)")
+        Timber.i("onRegisterInputView(inputView)")
 
         launch(Dispatchers.Default) {
             mediaViewGroup = inputView.findViewById(R.id.media_input)
@@ -127,7 +128,7 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
      * Clean-up of resources and stopping all coroutines.
      */
     override fun onDestroy() {
-        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onDestroy()")
+        Timber.i("onDestroy()")
 
         cancel()
         instance = null
