@@ -1,0 +1,9 @@
+- Add option to prioritize hints in the extended popups (#39)
+- Add private mode (#106)
+- Add precise word deletion (#25) (thanks @yashx)
+- Add undo/redo for pasting (#70) (thanks @yashx)
+- Add Canadian-French keyboard layout (thanks @The-Quantum-Alpha)
+- Improve delete key behavior (thanks @yashx)
+- Improve input UX and performance
+- Fix delete key crash on holding down
+- Other bug fixes and improvements

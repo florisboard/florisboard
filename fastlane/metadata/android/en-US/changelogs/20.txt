@@ -1,0 +1,7 @@
+- Complete rework of the Smartbar + new features (see PR #91 for more details)
+- Add Colemak keyboard layout (#72)
+- Add Dvorak keyboard layout (#72)
+- Add Esperanto keyboard layout (thanks @jeremiah-miller)
+- Add Hungarian keyboard layout (thanks @zoli111)
+- Fix event listener NullPointerException (#73, #81)
+- Other bug fixes and improvements
