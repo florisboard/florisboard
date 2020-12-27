@@ -72,6 +72,10 @@
         <item name="android:autoMirrored">true</item>
     </style>
 
+    <style name="SmartbarQuickAction.PrivateModeButton">
+        <item name="android:background">@drawable/shape_rect_rounded</item>
+    </style>
+
     <style name="TextEditingButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>

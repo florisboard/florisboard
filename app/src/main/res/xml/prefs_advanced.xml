@@ -18,4 +18,12 @@
         app:title="@string/pref__advanced__show_app_icon__label"
         app:useSimpleSummaryProvider="true"/>
 
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        app:key="advanced__force_private_mode"
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__advanced__force_private_mode__label"
+        app:summary="@string/pref__advanced__force_private_mode__summary"
+        app:useSimpleSummaryProvider="true"/>
+
 </PreferenceScreen>

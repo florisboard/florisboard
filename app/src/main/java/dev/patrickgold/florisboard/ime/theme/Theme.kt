@@ -162,6 +162,9 @@ data class Theme(
 
             prefs.theme.oneHandedButtonFgColor = theme.getAttr("oneHandedButton/fgColor", "#424242")
 
+            prefs.theme.privateModeBgColor = theme.getAttr("privateMode/bgColor", "#A000FF")
+            prefs.theme.privateModeFgColor = theme.getAttr("privateMode/fgColor", "#FFFFFF")
+
             prefs.theme.smartbarBgColor = theme.getAttr("smartbar/bgColor", "#E0E0E0")
             prefs.theme.smartbarFgColor = theme.getAttr("smartbar/fgColor", "#000000")
             prefs.theme.smartbarFgColorAlt = theme.getAttr("smartbar/fgColorAlt", "#4A000000")

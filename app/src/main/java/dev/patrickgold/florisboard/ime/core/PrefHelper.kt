@@ -166,6 +166,7 @@ class PrefHelper(
         companion object {
             const val SETTINGS_THEME =          "advanced__settings_theme"
             const val SHOW_APP_ICON =           "advanced__show_app_icon"
+            const val FORCE_PRIVATE_MODE =      "advanced__force_private_mode"
         }
 
         var settingsTheme: String = ""
@@ -174,6 +175,9 @@ class PrefHelper(
         var showAppIcon: Boolean = false
             get() = prefHelper.getPref(SHOW_APP_ICON, true)
             private set
+        var forcePrivateMode: Boolean
+            get() =  prefHelper.getPref(FORCE_PRIVATE_MODE, false)
+            set(v) = prefHelper.setPref(FORCE_PRIVATE_MODE, v)
     }
 
     /**
@@ -447,6 +451,8 @@ class PrefHelper(
             const val MEDIA_FG_COLOR_ALT =                  "theme__media_fgColorAlt"
             const val ONE_HANDED_BG_COLOR =                 "theme__oneHanded_bgColor"
             const val ONE_HANDED_BUTTON_FG_COLOR =          "theme__oneHandedButton_fgColor"
+            const val PRIVATE_MODE_BG_COLOR =               "theme__privateMode_bgColor"
+            const val PRIVATE_MODE_FG_COLOR =               "theme__privateMode_fgColor"
             const val SMARTBAR_BG_COLOR =                   "theme__smartbar_bgColor"
             const val SMARTBAR_FG_COLOR =                   "theme__smartbar_fgColor"
             const val SMARTBAR_FG_COLOR_ALT =               "theme__smartbar_fgColorAlt"
@@ -523,6 +529,12 @@ class PrefHelper(
         var oneHandedButtonFgColor: Int
             get() =  prefHelper.getPref(ONE_HANDED_BUTTON_FG_COLOR, 0)
             set(v) = prefHelper.setPref(ONE_HANDED_BUTTON_FG_COLOR, v)
+        var privateModeBgColor: Int
+            get() =  prefHelper.getPref(PRIVATE_MODE_BG_COLOR, 0)
+            set(v) = prefHelper.setPref(PRIVATE_MODE_BG_COLOR, v)
+        var privateModeFgColor: Int
+            get() =  prefHelper.getPref(PRIVATE_MODE_FG_COLOR, 0)
+            set(v) = prefHelper.setPref(PRIVATE_MODE_FG_COLOR, v)
         var smartbarBgColor: Int
             get() =  prefHelper.getPref(SMARTBAR_BG_COLOR, 0)
             set(v) = prefHelper.setPref(SMARTBAR_BG_COLOR, v)

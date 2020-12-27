@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.text.smartbar
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.setBackgroundTintColor2
 
@@ -52,7 +53,12 @@ class SmartbarQuickActionButton : androidx.appcompat.widget.AppCompatImageButton
     }
 
     private fun updateTheme() {
-        setBackgroundTintColor2(this, prefs.theme.smartbarButtonBgColor)
-        setColorFilter(prefs.theme.smartbarButtonFgColor)
+        if (id == R.id.private_mode_button) {
+            setBackgroundTintColor2(this, prefs.theme.privateModeBgColor)
+            setColorFilter(prefs.theme.privateModeFgColor)
+        } else {
+            setBackgroundTintColor2(this, prefs.theme.smartbarButtonBgColor)
+            setColorFilter(prefs.theme.smartbarButtonFgColor)
+        }
     }
 }

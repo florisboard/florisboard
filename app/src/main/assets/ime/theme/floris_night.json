@@ -47,6 +47,10 @@
     "oneHandedButton": {
       "fgColor": "#EEEEEE"
     },
+    "privateMode": {
+      "bgColor": "#A000FF",
+      "fgColor": "#FFFFFF"
+    },
     "smartbar": {
       "bgColor": "transparent",
       "fgColor": "@window/textColor",

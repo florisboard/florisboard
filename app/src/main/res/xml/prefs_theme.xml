@@ -183,6 +183,24 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        app:title="@string/settings__theme__group_private_mode"
+        app:iconSpaceReserved="false">
+
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+            android:defaultValue="0xFFA000FF"
+            android:key="theme__privateMode_bgColor"
+            android:title="@string/settings__theme__background"
+            app:iconSpaceReserved="false"/>
+
+        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
+            android:defaultValue="0xFFFFFFFF"
+            android:key="theme__privateMode_fgColor"
+            android:title="@string/settings__theme__foreground"
+            app:iconSpaceReserved="false"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         app:title="@string/settings__theme__group_smartbar"
         app:iconSpaceReserved="false">
 
