@@ -24,6 +24,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.text.gestures.DistanceThreshold
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.VelocityThreshold
+import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.util.VersionName
 import kotlin.collections.HashMap
 
@@ -311,8 +312,8 @@ class PrefHelper(
             const val FONT_SIZE_MULTIPLIER_LANDSCAPE =  "keyboard__font_size_multiplier_landscape"
             const val HEIGHT_FACTOR =                   "keyboard__height_factor"
             const val HEIGHT_FACTOR_CUSTOM =            "keyboard__height_factor_custom"
-            const val HINTED_NUMBER_ROW =               "keyboard__hinted_number_row"
-            const val HINTED_SYMBOLS =                  "keyboard__hinted_symbols"
+            const val HINTED_NUMBER_ROW_MODE =          "keyboard__hinted_number_row_mode"
+            const val HINTED_SYMBOLS_MODE =             "keyboard__hinted_symbols_mode"
             const val LONG_PRESS_DELAY =                "keyboard__long_press_delay"
             const val NUMBER_ROW =                      "keyboard__number_row"
             const val ONE_HANDED_MODE =                 "keyboard__one_handed_mode"
@@ -338,12 +339,12 @@ class PrefHelper(
         var heightFactorCustom: Int
             get() =  prefHelper.getPref(HEIGHT_FACTOR_CUSTOM, 100)
             set(v) = prefHelper.setPref(HEIGHT_FACTOR_CUSTOM, v)
-        var hintedNumberRow: Boolean
-            get() =  prefHelper.getPref(HINTED_NUMBER_ROW, true)
-            set(v) = prefHelper.setPref(HINTED_NUMBER_ROW, v)
-        var hintedSymbols: Boolean
-            get() =  prefHelper.getPref(HINTED_SYMBOLS, true)
-            set(v) = prefHelper.setPref(HINTED_SYMBOLS, v)
+        var hintedNumberRowMode: KeyHintMode
+            get() =  KeyHintMode.fromString(prefHelper.getPref(HINTED_NUMBER_ROW_MODE, KeyHintMode.ENABLED_ACCENT_PRIORITY.toString()))
+            set(v) = prefHelper.setPref(HINTED_NUMBER_ROW_MODE, v)
+        var hintedSymbolsMode: KeyHintMode
+            get() =  KeyHintMode.fromString(prefHelper.getPref(HINTED_SYMBOLS_MODE, KeyHintMode.ENABLED_ACCENT_PRIORITY.toString()))
+            set(v) = prefHelper.setPref(HINTED_SYMBOLS_MODE, v)
         var longPressDelay: Int = 0
             get() = prefHelper.getPref(LONG_PRESS_DELAY, 300)
             private set

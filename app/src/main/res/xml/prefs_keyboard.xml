@@ -13,19 +13,23 @@
             app:title="@string/pref__keyboard__number_row__label"
             app:summary="@string/pref__keyboard__number_row__summary"/>
 
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="keyboard__hinted_number_row"
+        <ListPreference
+            android:defaultValue="enabled_accent_priority"
+            app:entries="@array/pref__keyboard__hint_mode__entries"
+            app:entryValues="@array/pref__keyboard__hint_mode__values"
+            app:key="keyboard__hinted_number_row_mode"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__keyboard__hinted_number_row__label"
-            app:summary="@string/pref__keyboard__hinted_number_row__summary"/>
+            app:title="@string/pref__keyboard__hinted_number_row_mode__label"
+            app:useSimpleSummaryProvider="true"/>
 
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="keyboard__hinted_symbols"
+        <ListPreference
+            android:defaultValue="enabled_accent_priority"
+            app:entries="@array/pref__keyboard__hint_mode__entries"
+            app:entryValues="@array/pref__keyboard__hint_mode__values"
+            app:key="keyboard__hinted_symbols_mode"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__keyboard__hinted_symbols__label"
-            app:summary="@string/pref__keyboard__hinted_symbols__summary"/>
+            app:title="@string/pref__keyboard__hinted_symbols_mode__label"
+            app:useSimpleSummaryProvider="true"/>
 
         <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
