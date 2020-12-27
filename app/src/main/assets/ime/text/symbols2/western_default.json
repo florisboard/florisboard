@@ -54,10 +54,7 @@
       ] },
       { "code":   92, "label": "\\", "popup": [] }
     ], [
-      { "code":   37, "label": "%", "popup": [
-        { "code": 8240, "label": "‰" },
-        { "code": 8453, "label": "℅" }
-      ] },
+      { "code":   95, "label": "_", "popup": [] },
       { "code":  169, "label": "©", "popup": [] },
       { "code":  174, "label": "®", "popup": [] },
       { "code": 8482, "label": "™", "popup": [] },

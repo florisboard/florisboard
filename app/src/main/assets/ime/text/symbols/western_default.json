@@ -15,7 +15,10 @@
         { "code":  163, "label": "£" },
         { "code":  165, "label": "¥" }
       ] },
-      { "code":   95, "label": "_", "popup": [] },
+      { "code":   37, "label": "%", "popup": [
+        { "code": 8240, "label": "‰" },
+        { "code": 8453, "label": "℅" }
+      ] },
       { "code":   38, "label": "&", "popup": [] },
       { "code":   45, "label": "-", "popup": [
         { "code": 8212, "label": "—" },
