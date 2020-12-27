@@ -93,8 +93,6 @@
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Billentyűk</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Számsor</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Számsor megjelenítése a karakterelrendezés felett</string>
-    <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">A karakterelrendezés első sora utal a számsorra</string>
-    <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">Második és harmadik sor karakter elrendezés tipp szimbólumok</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Betűméret szorzó (álló)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Betűméret szorzó (fekvő)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Elrendezés</string>

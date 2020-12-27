@@ -91,8 +91,6 @@
     <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Ορίστε ΕΝΕΡΓΟΠΟΙΗΜΈΝΟ για σκούρο ή ΑΠΕΝΕΡΓΟΠΟΙΗΜΈΝΟ για φωτεινό προσκήνιο.</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Προτιμήσεις Πληκτρολογίου</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Πλήκτρα</string>
-    <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">Η πρώτη σειρά χαρακτήρων υπονοεί τη σειρά αριθμών</string>
-    <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">Η δεύτερη και τρίτη σειρά διάταξης χαρακτήρων υπονοούν σύμβολα</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Πολλαπλασιαστής μεγέθους γραμματοσειράς (πορτραίτο)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Πολλαπλασιαστής μεγέθους γραμματοσειράς (τοπίο)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Διάταξη</string>

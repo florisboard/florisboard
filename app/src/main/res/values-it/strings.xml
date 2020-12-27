@@ -91,8 +91,6 @@
     <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Imposta a ON per un colore di primo piano scuro e OFF per uno chiaro.</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Tastiera preferenze</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Tasti</string>
-    <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">Prima riga dei tasti contiene suggerimenti per i numeri</string>
-    <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">La seconda e terza riga suggeriscono simboli</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Moltiplicatore della dimensione del testo (ritratto)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Moltiplicatore della dimensione del testo (panorama)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
