@@ -91,8 +91,6 @@
     <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Aseta päälle tummia tai pois päältä vaaleita painikkeita varten.</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Näppäimistön asetukset</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Painikkeet</string>
-    <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">Numerot ensimmäisen näppäinrivin painikkeilla</string>
-    <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">Symbolit toisen ja kolmannen näppäinrivin painikkeilla</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Fonttikoon kerroin (pystysuunnassa)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Fonttikoon kerroin (vaakasuunnassa)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Ulkoasu</string>

@@ -93,8 +93,6 @@
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Teclas</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Linha de números</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Mostrar linha de números em cima do teclado</string>
-    <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">Mostrar números na primeira linha do teclado</string>
-    <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">Mostrar símbolos na segunda e na terceira linha do teclado</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicador do tipo de letra (vertical)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicador do tipo de letra (horizontal)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposição</string>

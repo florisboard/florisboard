@@ -146,19 +146,26 @@ class KeyView(
         elevation = 4.0f
 
         var hintKeyData: KeyData? = null
+        var hintKeyMode: KeyHintMode = KeyHintMode.DISABLED
         val hintedNumber = data.hintedNumber
-        if (prefs.keyboard.hintedNumberRow && hintedNumber != null) {
+        if (prefs.keyboard.hintedNumberRowMode != KeyHintMode.DISABLED && hintedNumber != null) {
             hintKeyData = hintedNumber
+            hintKeyMode = prefs.keyboard.hintedNumberRowMode
         }
         val hintedSymbol = data.hintedSymbol
-        if (prefs.keyboard.hintedSymbols && hintedSymbol != null) {
+        if (prefs.keyboard.hintedSymbolsMode != KeyHintMode.DISABLED && hintedSymbol != null) {
             hintKeyData = hintedSymbol
+            hintKeyMode = prefs.keyboard.hintedSymbolsMode
         }
         dataPopupWithHint = if (hintKeyData == null) {
             data.popup.toMutableList()
         } else {
             val popupList = data.popup.toMutableList()
-            popupList.add(hintKeyData)
+            if (hintKeyMode == KeyHintMode.ENABLED_HINT_PRIORITY) {
+                popupList.add(0, hintKeyData)
+            } else {
+                popupList.add(hintKeyData)
+            }
             popupList
         }
 
@@ -646,11 +653,11 @@ class KeyView(
         ) {
             label = getComputedLetter()
             val hintedNumber = data.hintedNumber
-            if (prefs.keyboard.hintedNumberRow && hintedNumber != null) {
+            if (prefs.keyboard.hintedNumberRowMode != KeyHintMode.DISABLED && hintedNumber != null) {
                 hintedLabel = getComputedLetter(hintedNumber)
             }
             val hintedSymbol = data.hintedSymbol
-            if (prefs.keyboard.hintedSymbols && hintedSymbol != null) {
+            if (prefs.keyboard.hintedSymbolsMode != KeyHintMode.DISABLED && hintedSymbol != null) {
                 hintedLabel = getComputedLetter(hintedSymbol)
             }
 

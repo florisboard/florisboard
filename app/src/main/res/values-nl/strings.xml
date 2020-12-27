@@ -91,8 +91,6 @@
     <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Start op voor donker of uit voor lichte voorgrond.</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Toetsenbordvoorkeuren</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Toets</string>
-    <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">Eerste rij tekenopmaak geeft nummer rij</string>
-    <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">Tweede en derde rij tekenopmaak hint symbolen</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Lettergrootte multiplier (portret)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Lettergrootte multiplier (landschap)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Lay</string>

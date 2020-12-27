@@ -91,8 +91,6 @@
     <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Nastavte na Zapnuto pro tmavé nebo vypnuté pro světlé popředí.</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Předvolby Klávesnice</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Šipka</string>
-    <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">První řádek rozvržení znaků naznačuje číslo řádku</string>
-    <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">Druhá a třetí řada znakových symbolů nápovědy</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplikátor velikosti písma (portrét)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplikátor velikosti písma (Krajina)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Rozložení</string>

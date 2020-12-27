@@ -91,8 +91,6 @@
     <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">EIN für dunklen oder AUS für hellen Vordergrund.</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Tastatur-Einstellungen</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Tasten</string>
-    <string name="pref__keyboard__hinted_number_row__summary" comment="Preference summary">Erste Reihe der Tastatur deutet Zahlenreihe im Hintergrund an</string>
-    <string name="pref__keyboard__hinted_symbols__summary" comment="Preference summary">Zweite und dritte Reihe der Tastatur deuten Symbole im Hintergrund an</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Schriftgröße anpassen (Hochformat)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Schriftgröße anpassen (Querformat)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
