@@ -21,6 +21,7 @@ import android.content.res.Configuration
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ViewFlipper
 import dev.patrickgold.florisboard.BuildConfig
@@ -53,6 +54,14 @@ class InputView : LinearLayout {
         private set
     var oneHandedCtrlPanelEnd: LinearLayout? = null
         private set
+    var oneHandedCtrlMoveStart: ImageButton? = null
+        private set
+    var oneHandedCtrlMoveEnd: ImageButton? = null
+        private set
+    var oneHandedCtrlCloseStart: ImageButton? = null
+        private set
+    var oneHandedCtrlCloseEnd: ImageButton? = null
+        private set
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -70,6 +79,10 @@ class InputView : LinearLayout {
         mainViewFlipper = findViewById(R.id.main_view_flipper)
         oneHandedCtrlPanelStart = findViewById(R.id.one_handed_ctrl_panel_start)
         oneHandedCtrlPanelEnd = findViewById(R.id.one_handed_ctrl_panel_end)
+        oneHandedCtrlMoveStart = findViewById(R.id.one_handed_ctrl_move_start)
+        oneHandedCtrlMoveEnd = findViewById(R.id.one_handed_ctrl_move_end)
+        oneHandedCtrlCloseStart = findViewById(R.id.one_handed_ctrl_close_start)
+        oneHandedCtrlCloseEnd = findViewById(R.id.one_handed_ctrl_close_end)
 
         florisboard.registerInputView(this)
     }

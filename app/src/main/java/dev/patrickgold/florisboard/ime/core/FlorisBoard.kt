@@ -361,14 +361,12 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         inputView?.setBackgroundColor(prefs.theme.keyboardBgColor)
         inputView?.oneHandedCtrlPanelStart?.setBackgroundColor(prefs.theme.oneHandedBgColor)
         inputView?.oneHandedCtrlPanelEnd?.setBackgroundColor(prefs.theme.oneHandedBgColor)
-        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_move_start)
-            ?.imageTintList = ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor)
-        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_move_end)
-            ?.imageTintList = ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor)
-        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_close_start)
-            ?.imageTintList = ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor)
-        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_close_end)
-            ?.imageTintList = ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor)
+        ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor).also {
+            inputView?.oneHandedCtrlMoveStart?.imageTintList = it
+            inputView?.oneHandedCtrlMoveEnd?.imageTintList = it
+            inputView?.oneHandedCtrlCloseStart?.imageTintList = it
+            inputView?.oneHandedCtrlCloseEnd?.imageTintList = it
+        }
         eventListeners.toList().forEach { it?.get()?.onApplyThemeAttributes() }
     }
 
@@ -517,14 +515,12 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     }
 
     private fun initializeOneHandedEnvironment() {
-        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_move_start)
-            ?.setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
-        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_move_end)
-            ?.setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
-        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_close_start)
-            ?.setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
-        inputView?.findViewById<ImageButton>(R.id.one_handed_ctrl_close_end)
-            ?.setOnClickListener { v -> onOneHandedPanelButtonClick(v) }
+        { v:View -> onOneHandedPanelButtonClick(v) }.also {
+            inputView?.oneHandedCtrlMoveStart?.setOnClickListener(it)
+            inputView?.oneHandedCtrlMoveEnd?.setOnClickListener(it)
+            inputView?.oneHandedCtrlCloseStart?.setOnClickListener(it)
+            inputView?.oneHandedCtrlCloseEnd?.setOnClickListener(it)
+        }
     }
 
     private fun onOneHandedPanelButtonClick(v: View) {
