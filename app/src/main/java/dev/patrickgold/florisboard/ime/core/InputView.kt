@@ -28,6 +28,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
+import timber.log.Timber
 import kotlin.math.roundToInt
 
 /**
@@ -62,7 +63,7 @@ class InputView : LinearLayout {
     )
 
     override fun onAttachedToWindow() {
-        if (BuildConfig.DEBUG) Log.i(this::class.simpleName, "onAttachedToWindow()")
+        Timber.i("onAttachedToWindow()")
 
         super.onAttachedToWindow()
 

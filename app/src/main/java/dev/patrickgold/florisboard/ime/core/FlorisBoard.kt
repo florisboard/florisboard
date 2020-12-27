@@ -45,6 +45,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.util.*
+import timber.log.Timber
 import java.lang.ref.WeakReference
 
 /**
@@ -94,16 +95,15 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     companion object {
         private const val IME_ID: String = "dev.patrickgold.florisboard/.ime.core.FlorisBoard"
         private const val IME_ID_DEBUG: String = "dev.patrickgold.florisboard.debug/dev.patrickgold.florisboard.ime.core.FlorisBoard"
-        private val TAG: String? = FlorisBoard::class.simpleName
 
         fun checkIfImeIsEnabled(context: Context): Boolean {
             val activeImeIds = Settings.Secure.getString(
                 context.contentResolver,
                 Settings.Secure.ENABLED_INPUT_METHODS
             )
+            Timber.i("List of active IMEs: $activeImeIds")
             return when {
                 BuildConfig.DEBUG -> {
-                    Log.i(FlorisBoard::class.simpleName, "List of active IMEs: $activeImeIds")
                     activeImeIds.split(":").contains(IME_ID_DEBUG)
                 }
                 else -> {
@@ -117,9 +117,9 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
                 context.contentResolver,
                 Settings.Secure.DEFAULT_INPUT_METHOD
             )
+            Timber.i("Selected IME: $selectedImeId")
             return when {
                 BuildConfig.DEBUG -> {
-                    Log.i(FlorisBoard::class.simpleName, "Selected IME: $selectedImeId")
                     selectedImeId == IME_ID_DEBUG
                 }
                 else -> {
@@ -165,7 +165,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
                     .build()
             )
         }
-        if (BuildConfig.DEBUG) Log.i(TAG, "onCreate()")
+        Timber.i("onCreate()")
 
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -191,7 +191,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
 
     @SuppressLint("InflateParams")
     override fun onCreateInputView(): View? {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onCreateInputView()")
+        Timber.i("onCreateInputView()")
 
         baseContext.setTheme(currentThemeResId)
 
@@ -203,7 +203,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     }
 
     fun registerInputView(inputView: InputView) {
-        if (BuildConfig.DEBUG) Log.i(TAG, "registerInputView($inputView)")
+        Timber.i("registerInputView($inputView)")
 
         this.inputView = inputView
         initializeOneHandedEnvironment()
@@ -215,7 +215,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     }
 
     override fun onDestroy() {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onDestroy()")
+        Timber.i("onDestroy()")
 
         clipboardManager?.removePrimaryClipChangedListener(this)
         osHandler.removeCallbacksAndMessages(null)
@@ -227,15 +227,15 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     }
 
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onStartInput($attribute, $restarting)")
+        Timber.i("onStartInput($attribute, $restarting)")
 
         super.onStartInput(attribute, restarting)
         currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onStartInputView($info, $restarting)")
-        Log.i(TAG, "onStartInputView: " + info?.debugSummarize())
+        Timber.i("onStartInputView($info, $restarting)")
+        Timber.i("onStartInputView: ${info?.debugSummarize()}")
 
         super.onStartInputView(info, restarting)
         activeEditorInstance = EditorInstance.from(info, this)
@@ -245,7 +245,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onFinishInputView($finishingInput)")
+        Timber.i( "onFinishInputView($finishingInput)")
 
         if (finishingInput) {
             activeEditorInstance = EditorInstance.default()
@@ -256,14 +256,14 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     }
 
     override fun onFinishInput() {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onFinishInput()")
+        Timber.i("onFinishInput()")
 
         super.onFinishInput()
         currentInputConnection?.requestCursorUpdates(0)
     }
 
     override fun onWindowShown() {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onWindowShown()")
+        Timber.i("onWindowShown()")
 
         prefs.sync()
         val newIsNumberRowVisible = prefs.keyboard.numberRow
@@ -282,14 +282,14 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     }
 
     override fun onWindowHidden() {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onWindowHidden()")
+        Timber.i("onWindowHidden()")
 
         super.onWindowHidden()
         eventListeners.toList().forEach { it?.get()?.onWindowHidden() }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onConfigurationChanged($newConfig)")
+        Timber.i("onConfigurationChanged($newConfig)")
         if (isInputViewShown) {
             updateOneHandedPanelVisibility()
         }
@@ -302,7 +302,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         newSelStart: Int, newSelEnd: Int,
         candidatesStart: Int, candidatesEnd: Int
     ) {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd)")
+        Timber.i("onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd)")
 
         super.onUpdateSelection(
             oldSelStart, oldSelEnd,

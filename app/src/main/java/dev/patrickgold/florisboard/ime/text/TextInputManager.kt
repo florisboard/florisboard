@@ -38,6 +38,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import kotlinx.coroutines.*
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -83,7 +84,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     private var isManualSelectionModeRight: Boolean = false
 
     companion object {
-        private val TAG: String? = TextInputManager::class.simpleName
         private var instance: TextInputManager? = null
 
         @Synchronized
@@ -104,7 +104,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * background).
      */
     override fun onCreate() {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onCreate()")
+        Timber.i("onCreate()")
 
         var subtypes = florisboard.subtypeManager.subtypes
         if (subtypes.isEmpty()) {
@@ -130,7 +130,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * Sets up the newly registered input view.
      */
     override fun onRegisterInputView(inputView: InputView) {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onRegisterInputView(inputView)")
+        Timber.i("onRegisterInputView(inputView)")
 
         launch(Dispatchers.Default) {
             textViewGroup = inputView.findViewById(R.id.text_input)
@@ -159,7 +159,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * Cancels all coroutines and cleans up.
      */
     override fun onDestroy() {
-        if (BuildConfig.DEBUG) Log.i(TAG, "onDestroy()")
+        Timber.i("onDestroy()")
 
         cancel()
         osHandler.removeCallbacksAndMessages(null)
@@ -678,7 +678,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                             }
                         }
                         else -> {
-                            Log.e(TAG,"sendKeyPress(keyData): Received unknown key: $keyData")
+                            Timber.e("sendKeyPress(keyData): Received unknown key: $keyData")
                         }
                     }
                 }

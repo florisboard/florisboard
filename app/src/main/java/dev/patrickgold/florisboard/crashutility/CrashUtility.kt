@@ -28,6 +28,7 @@ import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import timber.log.Timber
 import java.io.File
 import java.lang.ref.WeakReference
 import kotlin.system.exitProcess
@@ -49,7 +50,6 @@ abstract class CrashUtility private constructor() {
         private const val NOTIFICATION_ID = 0xFBAD0100
 
         private const val UNHANDLED_STACKTRACE_FILE_EXT = "stacktrace"
-        private const val TAG = "CrashUtility"
 
         private var lastActivityCreated: WeakReference<Activity?> = WeakReference(null)
 
@@ -63,15 +63,14 @@ abstract class CrashUtility private constructor() {
          */
         fun install(context: Context?): Boolean {
             if (context == null) {
-                Log.e(
-                    TAG,
+                Timber.e(
                     "install($context): Can't install crash handler with a null Context object, doing nothing!"
                 )
                 return false
             }
             val oldHandler = Thread.getDefaultUncaughtExceptionHandler()
             if (oldHandler is UncaughtExceptionHandler) {
-                Log.i(TAG, "install($context): Crash handler is already installed, doing nothing!")
+                Timber.i("install($context): Crash handler is already installed, doing nothing!")
             } else {
                 val application = context.applicationContext
                 if (application != null && application is Application) {
@@ -83,19 +82,16 @@ abstract class CrashUtility private constructor() {
                                 application.filesDir.absolutePath
                             )
                         )
-                        Log.i(
-                            TAG,
+                        Timber.i(
                             "install($context): Successfully installed crash handler for this application!"
                         )
                     } catch (e: SecurityException) {
-                        Log.e(
-                            TAG,
+                        Timber.e(
                             "install($context): Failed to install crash handler, probably due to missing runtime permission 'setDefaultUncaughtExceptionHandler':\n$e"
                         )
                         return false
                     } catch (e: Exception) {
-                        Log.e(
-                            TAG,
+                        Timber.e(
                             "install($context): Failed to install crash handler due to an unspecified error:\n$e"
                         )
                         return false
@@ -130,20 +126,17 @@ abstract class CrashUtility private constructor() {
                                 )
                                 notificationManager.createNotificationChannel(notificationChannel)
                             }
-                            Log.i(
-                                TAG,
+                            Timber.i(
                                 "install($context): Successfully created crash handler notification channel!"
                             )
                         } catch (e: Exception) {
-                            Log.e(
-                                TAG,
+                            Timber.e(
                                 "install($context): Failed to create crash handler notification channel due to an unspecified error:\n$e"
                             )
                         }
                     }
                 } else {
-                    Log.e(
-                        TAG,
+                    Timber.e(
                         "install($context): Can't install crash handler with a null Application object, doing nothing!"
                     )
                     return false
@@ -168,7 +161,7 @@ abstract class CrashUtility private constructor() {
                     pathname.name.endsWith(".$UNHANDLED_STACKTRACE_FILE_EXT")
                 })?.forEach { file ->
                     val newLine = System.lineSeparator()
-                    Log.i(TAG, "Reading unhandled stacktrace: ${file.name}")
+                    Timber.i("Reading unhandled stacktrace: ${file.name}")
                     retString.append("~~~ ${file.name} ~~~$newLine$newLine")
                     retString.append(readFile(file))
                     file.delete()
@@ -355,7 +348,7 @@ abstract class CrashUtility private constructor() {
         private val path: String
     ) : Thread.UncaughtExceptionHandler {
         override fun uncaughtException(thread: Thread?, throwable: Throwable?) {
-            Log.e(TAG, "Detected application crash, executing custom crash handler.")
+            Timber.e("Detected application crash, executing custom crash handler.")
             thread ?: return
             throwable ?: return
             val timestamp = System.currentTimeMillis()
