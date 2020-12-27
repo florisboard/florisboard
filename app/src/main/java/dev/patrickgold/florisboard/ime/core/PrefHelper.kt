@@ -451,6 +451,8 @@ class PrefHelper(
             const val MEDIA_FG_COLOR_ALT =                  "theme__media_fgColorAlt"
             const val ONE_HANDED_BG_COLOR =                 "theme__oneHanded_bgColor"
             const val ONE_HANDED_BUTTON_FG_COLOR =          "theme__oneHandedButton_fgColor"
+            const val PRIVATE_MODE_BG_COLOR =               "theme__privateMode_bgColor"
+            const val PRIVATE_MODE_FG_COLOR =               "theme__privateMode_fgColor"
             const val SMARTBAR_BG_COLOR =                   "theme__smartbar_bgColor"
             const val SMARTBAR_FG_COLOR =                   "theme__smartbar_fgColor"
             const val SMARTBAR_FG_COLOR_ALT =               "theme__smartbar_fgColorAlt"
@@ -527,6 +529,12 @@ class PrefHelper(
         var oneHandedButtonFgColor: Int
             get() =  prefHelper.getPref(ONE_HANDED_BUTTON_FG_COLOR, 0)
             set(v) = prefHelper.setPref(ONE_HANDED_BUTTON_FG_COLOR, v)
+        var privateModeBgColor: Int
+            get() =  prefHelper.getPref(PRIVATE_MODE_BG_COLOR, 0)
+            set(v) = prefHelper.setPref(PRIVATE_MODE_BG_COLOR, v)
+        var privateModeFgColor: Int
+            get() =  prefHelper.getPref(PRIVATE_MODE_FG_COLOR, 0)
+            set(v) = prefHelper.setPref(PRIVATE_MODE_FG_COLOR, v)
         var smartbarBgColor: Int
             get() =  prefHelper.getPref(SMARTBAR_BG_COLOR, 0)
             set(v) = prefHelper.setPref(SMARTBAR_BG_COLOR, v)

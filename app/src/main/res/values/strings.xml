@@ -95,6 +95,7 @@
     <string name="settings__theme__group_media" comment="Theme group label">Media context</string>
     <string name="settings__theme__group_one_handed" comment="Theme group label">One-handed</string>
     <string name="settings__theme__group_one_handed_button" comment="Theme group label">One-handed button</string>
+    <string name="settings__theme__group_private_mode" comment="Theme group label">Private mode</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Smartbar</string>
     <string name="settings__theme__group_smartbar_button" comment="Theme group label">Smartbar button</string>
     <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">Primary color</string>

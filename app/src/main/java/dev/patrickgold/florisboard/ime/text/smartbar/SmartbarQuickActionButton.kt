@@ -53,7 +53,10 @@ class SmartbarQuickActionButton : androidx.appcompat.widget.AppCompatImageButton
     }
 
     private fun updateTheme() {
-        if (id != R.id.private_mode_button) {
+        if (id == R.id.private_mode_button) {
+            setBackgroundTintColor2(this, prefs.theme.privateModeBgColor)
+            setColorFilter(prefs.theme.privateModeFgColor)
+        } else {
             setBackgroundTintColor2(this, prefs.theme.smartbarButtonBgColor)
             setColorFilter(prefs.theme.smartbarButtonFgColor)
         }

@@ -74,8 +74,6 @@
 
     <style name="SmartbarQuickAction.PrivateModeButton">
         <item name="android:background">@drawable/shape_rect_rounded</item>
-        <item name="android:backgroundTint">#a000ff</item>
-        <item name="android:tint">#ffffff</item>
     </style>
 
     <style name="TextEditingButton" parent="Widget.AppCompat.Button.Borderless">
