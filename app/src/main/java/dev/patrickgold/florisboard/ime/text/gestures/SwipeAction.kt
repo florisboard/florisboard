@@ -33,7 +33,8 @@ enum class SwipeAction {
     MOVE_CURSOR_RIGHT,
     SHIFT,
     SWITCH_TO_PREV_SUBTYPE,
-    SWITCH_TO_NEXT_SUBTYPE;
+    SWITCH_TO_NEXT_SUBTYPE,
+    SWITCH_TO_PREV_KEYBOARD;
 
     companion object {
         fun fromString(string: String): SwipeAction {
