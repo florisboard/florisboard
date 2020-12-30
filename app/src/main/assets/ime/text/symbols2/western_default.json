@@ -1,66 +1,79 @@
 {
   "type": "symbols2",
   "name": "western_default",
+  "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [
     [
-      { "code":  126, "label": "~", "popup": [] },
-      { "code":   96, "label": "`", "popup": [] },
-      { "code":  124, "label": "|", "popup": [] },
-      { "code": 8226, "label": "•", "popup": [
-        { "code": 9827, "label": "♣" },
-        { "code": 9824, "label": "♠" },
-        { "code": 9834, "label": "♪" },
-        { "code": 9829, "label": "♥" },
-        { "code": 9830, "label": "♦" }
-      ] },
-      { "code": 8730, "label": "√", "popup": [] },
-      { "code":  960, "label": "π", "popup": [
-        { "code":  937, "label": "Ω" },
-        { "code":  928, "label": "Π" },
-        { "code":  956, "label": "μ" }
-      ] },
-      { "code":  247, "label": "÷", "popup": [] },
-      { "code":  215, "label": "×", "popup": [] },
-      { "code":  182, "label": "¶", "popup": [
-        { "code":  167, "label": "§" }
-      ] },
-      { "code": 8710, "label": "∆", "popup": [] }
-    ], [
-      { "code":  163, "label": "£", "popup": [] },
-      { "code":  162, "label": "¢", "popup": [] },
-      { "code": 8364, "label": "€", "popup": [] },
-      { "code":  165, "label": "¥", "popup": [] },
-      { "code":   94, "label": "^", "popup": [
-        { "code": 8592, "label": "←" },
-        { "code": 8593, "label": "↑" },
-        { "code": 8595, "label": "↓" },
-        { "code": 8594, "label": "→" }
-      ] },
-      { "code":  176, "label": "°", "popup": [
-        { "code": 8242, "label": "′" },
-        { "code": 8243, "label": "″" }
-      ] },
-      { "code":   61, "label": "=", "popup": [
-        { "code": 8734, "label": "∞" },
-        { "code": 8800, "label": "≠" },
-        { "code": 8776, "label": "≈" }
-      ] },
-      { "code":  123, "label": "{", "popup": [
-        { "code":   40, "label": "(" }
-      ] },
-      { "code":  125, "label": "}", "popup": [
-        { "code":   41, "label": ")" }
-      ] },
-      { "code":   92, "label": "\\", "popup": [] }
-    ], [
-      { "code":   95, "label": "_", "popup": [] },
-      { "code":  169, "label": "©", "popup": [] },
-      { "code":  174, "label": "®", "popup": [] },
-      { "code": 8482, "label": "™", "popup": [] },
-      { "code": 10003, "label": "✓", "popup": [] },
-      { "code":   91, "label": "[", "popup": [] },
-      { "code":   93, "label": "]", "popup": [] }
+      { "code":  126, "label": "~" },
+      { "code":   96, "label": "`" },
+      { "code":  124, "label": "|" },
+      { "code": 8226, "label": "•", "popup": {
+        "main": { "code": 9834, "label": "♪" },
+        "relevant": [
+          { "code": 9827, "label": "♣" },
+          { "code": 9824, "label": "♠" },
+          { "code": 9829, "label": "♥" },
+          { "code": 9830, "label": "♦" }
+        ]
+      } },
+      { "code": 8730, "label": "√" },
+      { "code":  960, "label": "π", "popup": {
+        "main": { "code":  928, "label": "Π" },
+        "relevant": [
+          { "code":  937, "label": "Ω" },
+          { "code":  956, "label": "μ" }
+        ]
+      } },
+      { "code":  247, "label": "÷" },
+      { "code":  215, "label": "×" },
+      { "code":  182, "label": "¶", "popup": {
+        "main": { "code":  167, "label": "§" }
+      } },
+      { "code": 8710, "label": "∆" }
+    ],
+    [
+      { "code":  163, "label": "£" },
+      { "code":  162, "label": "¢" },
+      { "code": 8364, "label": "€" },
+      { "code":  165, "label": "¥" },
+      { "code":   94, "label": "^", "popup": {
+        "main": { "code": 8593, "label": "↑" },
+        "relevant": [
+          { "code": 8592, "label": "←" },
+          { "code": 8595, "label": "↓" },
+          { "code": 8594, "label": "→" }
+        ]
+      } },
+      { "code":  176, "label": "°", "popup": {
+        "main": { "code": 8242, "label": "′" },
+        "relevant": [
+          { "code": 8243, "label": "″" }
+        ]
+      } },
+      { "code":   61, "label": "=", "popup": {
+        "main": { "code": 8800, "label": "≠" },
+        "relevant": [
+          { "code": 8734, "label": "∞" },
+          { "code": 8776, "label": "≈" }
+        ]
+      } },
+      { "code":  123, "label": "{", "popup": {
+        "main": { "code":   40, "label": "(" }
+      } },
+      { "code":  125, "label": "}", "popup": {
+        "main": { "code":   41, "label": ")" }
+      } },
+      { "code":   92, "label": "\\" }
+    ],
+    [
+      { "code":   95, "label": "_" },
+      { "code":  169, "label": "©" },
+      { "code":  174, "label": "®" },
+      { "code": 8482, "label": "™" },
+      { "code": 10003, "label": "✓" },
+      { "code":   91, "label": "[" },
+      { "code":   93, "label": "]" }
     ]
   ]
 }

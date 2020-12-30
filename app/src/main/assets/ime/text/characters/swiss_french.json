@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "swiss_french",
+  "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [
     [
@@ -14,10 +15,13 @@
       { "code":  105, "label": "i" },
       { "code":  111, "label": "o" },
       { "code":  112, "label": "p" },
-      { "code":  232, "label": "è", "popup": [
-        { "code":  252, "label": "ü" }
-      ] }
-    ], [
+      { "code":  232, "label": "è", "popup": {
+        "relevant": [
+          { "code":  252, "label": "ü" }
+        ]
+      } }
+    ],
+    [
       { "code":   97, "label": "a" },
       { "code":  115, "label": "s" },
       { "code":  100, "label": "d" },
@@ -27,13 +31,18 @@
       { "code":  106, "label": "j" },
       { "code":  107, "label": "k" },
       { "code":  108, "label": "l" },
-      { "code":  233, "label": "é", "popup": [
-        { "code":  246, "label": "ö" }
-      ] },
-      { "code":  224, "label": "à", "popup": [
-        { "code":  228, "label": "ä" }
-      ] }
-    ], [
+      { "code":  233, "label": "é", "popup": {
+        "relevant": [
+          { "code":  246, "label": "ö" }
+        ]
+      } },
+      { "code":  224, "label": "à", "popup": {
+        "relevant": [
+          { "code":  228, "label": "ä" }
+        ]
+      } }
+    ],
+    [
       { "code":  121, "label": "y" },
       { "code":  120, "label": "x" },
       { "code":   99, "label": "c" },

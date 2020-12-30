@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "arabic",
+  "authors": [ "HeiWiper" ],
   "direction": "rtl",
   "modifier": "arabic",
   "arrangement": [
@@ -33,7 +34,7 @@
     [
       { "code":  1584, "label": "ذ" },
       { "code":  1569, "label": "ء" },
-      { "code":  65157, "label": "ﺅ" },
+      { "code": 65157, "label": "ﺅ" },
       { "code":  1585, "label": "ر" },
       { "code":  1609, "label": "ى" },
       { "code":  1577, "label": "ة" },

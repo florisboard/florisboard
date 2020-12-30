@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "icelandic",
+  "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [
     [
@@ -15,7 +16,8 @@
       { "code":  111, "label": "o" },
       { "code":  112, "label": "p" },
       { "code":  240, "label": "ð" }
-    ], [
+    ],
+    [
       { "code":   97, "label": "a" },
       { "code":  115, "label": "s" },
       { "code":  100, "label": "d" },
@@ -27,7 +29,8 @@
       { "code":  108, "label": "l" },
       { "code":  230, "label": "æ" },
       { "code":  246, "label": "ö" }
-    ], [
+    ],
+    [
       { "code":  122, "label": "z" },
       { "code":  120, "label": "x" },
       { "code":   99, "label": "c" },

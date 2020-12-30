@@ -1,6 +1,7 @@
 {
   "type": "extension",
   "name": "clipboard_cursor_row",
+  "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [
     [
