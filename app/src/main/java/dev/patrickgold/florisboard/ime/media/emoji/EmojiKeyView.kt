@@ -30,6 +30,7 @@ import androidx.core.graphics.BlendModeCompat
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 
 /**
  * View class for managing the rendering and the events of a single emoji keyboard key.
@@ -92,8 +93,8 @@ class EmojiKeyView(
                     (parent.parent as ScrollView)
                         .requestDisallowInterceptTouchEvent(true)
                     emojiKeyboardView.isScrollBlocked = true
-                    emojiKeyboardView.popupManager.show(this)
-                    emojiKeyboardView.popupManager.extend(this)
+                    emojiKeyboardView.popupManager.show(this, KeyHintMode.DISABLED)
+                    emojiKeyboardView.popupManager.extend(this, KeyHintMode.DISABLED)
                     florisboard?.keyPressVibrate()
                     florisboard?.keyPressSound()
                 }, delayMillis.toLong())
@@ -101,7 +102,7 @@ class EmojiKeyView(
             MotionEvent.ACTION_MOVE -> {
                 if (emojiKeyboardView.popupManager.isShowingExtendedPopup) {
                     val isPointerWithinBounds =
-                        emojiKeyboardView.popupManager.propagateMotionEvent(this, event)
+                        emojiKeyboardView.popupManager.propagateMotionEvent(this, event, KeyHintMode.DISABLED)
                     if (!isPointerWithinBounds) {
                         emojiKeyboardView.dismissKeyView(this)
                     }

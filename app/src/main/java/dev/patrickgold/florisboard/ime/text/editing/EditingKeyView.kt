@@ -78,7 +78,7 @@ class EditingKeyView : AppCompatImageButton {
             R.id.select_all -> KeyCode.CLIPBOARD_SELECT_ALL
             else -> 0
         }
-        data = KeyData(code)
+        data = KeyData(code = code)
         context.obtainStyledAttributes(attrs, R.styleable.EditingKeyView).apply {
             label = getString(R.styleable.EditingKeyView_android_text)
             recycle()
