@@ -1,58 +1,90 @@
 {
-  "c": [
-    { "code":  265, "label": "ĉ" }
-  ],
-  "g": [
-    { "code":  285, "label": "ĝ" }
-  ],
-  "h": [
-    { "code":  293, "label": "ĥ" }
-  ],
-  "j": [
-    { "code":  309, "label": "ĵ" }
-  ],
-  "s": [
-    { "code":  349, "label": "ŝ" }
-  ],
-  "u": [
-    { "code":  365, "label": "ŭ" }
-  ],
-  "q": [
-    { "code":  349, "label": "ŝ" }
-  ],
-  "w": [
-    { "code":  285, "label": "ĝ" }
-  ],
-  "x": [
-    { "code":  265, "label": "ĉ" }
-  ],
-  "y": [
-    { "code":  365, "label": "ŭ" }
-  ],
-  ".~normal": [
-    { "code":   44, "label": "," },
-    { "code":   38, "label": "&" },
-    { "code":   37, "label": "%" },
-    { "code":   43, "label": "+" },
-    { "code":   34, "label": "\"" },
-    { "code":   45, "label": "-" },
-    { "code":   58, "label": ":" },
-    { "code":   39, "label": "'" },
-    { "code":   64, "label": "@" },
-    { "code":   59, "label": ";" },
-    { "code":   47, "label": "/" },
-    { "code":   40, "label": "(" },
-    { "code":   41, "label": ")" },
-    { "code":   35, "label": "#" },
-    { "code":   33, "label": "!" },
-    { "code":   63, "label": "?" },
-    { "code":   61, "label": "=" }
-  ],
-  ".~uri": [
-    { "code": -255, "label": ".com" },
-    { "code": -255, "label": ".gov" },
-    { "code": -255, "label": ".edu" },
-    { "code": -255, "label": ".org" },
-    { "code": -255, "label": ".net" }
-  ]
+  "type": "characters/extended_popups",
+  "name": "eo",
+  "authors": [ "jeremiah-miller" ],
+  "mapping":{
+    "all": {
+      "c": {
+        "relevant": [
+          { "code":  265, "label": "ĉ" }
+        ]
+      },
+      "g": {
+        "relevant": [
+          { "code":  285, "label": "ĝ" }
+        ]
+      },
+      "h": {
+        "relevant": [
+          { "code":  293, "label": "ĥ" }
+        ]
+      },
+      "j": {
+        "relevant": [
+          { "code":  309, "label": "ĵ" }
+        ]
+      },
+      "s": {
+        "relevant": [
+          { "code":  349, "label": "ŝ" }
+        ]
+      },
+      "u": {
+        "relevant": [
+          { "code":  365, "label": "ŭ" }
+        ]
+      },
+      "q": {
+        "relevant": [
+          { "code":  349, "label": "ŝ" }
+        ]
+      },
+      "w": {
+        "relevant": [
+          { "code":  285, "label": "ĝ" }
+        ]
+      },
+      "x": {
+        "relevant": [
+          { "code":  265, "label": "ĉ" }
+        ]
+      },
+      "y": {
+        "relevant": [
+          { "code":  365, "label": "ŭ" }
+        ]
+      },
+      "~right": {
+        "main": { "code":   44, "label": "," },
+        "relevant": [
+          { "code":   38, "label": "&" },
+          { "code":   37, "label": "%" },
+          { "code":   43, "label": "+" },
+          { "code":   34, "label": "\"" },
+          { "code":   45, "label": "-" },
+          { "code":   58, "label": ":" },
+          { "code":   39, "label": "'" },
+          { "code":   64, "label": "@" },
+          { "code":   59, "label": ";" },
+          { "code":   47, "label": "/" },
+          { "code":   40, "label": "(" },
+          { "code":   41, "label": ")" },
+          { "code":   35, "label": "#" },
+          { "code":   33, "label": "!" },
+          { "code":   63, "label": "?" }
+        ]
+      }
+    },
+    "uri": {
+      "~right": {
+        "main": { "code": -255, "label": ".com" },
+        "relevant": [
+          { "code": -255, "label": ".gov" },
+          { "code": -255, "label": ".edu" },
+          { "code": -255, "label": ".org" },
+          { "code": -255, "label": ".net" }
+        ]
+      }
+    }
+  }
 }

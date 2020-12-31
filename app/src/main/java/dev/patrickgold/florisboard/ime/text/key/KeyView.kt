@@ -55,15 +55,15 @@ import java.util.*
 @SuppressLint("ViewConstructor")
 class KeyView(
     private val keyboardView: KeyboardView,
-    val data: KeyData
+    val data: FlorisKeyData
 ) : View(keyboardView.context), SwipeGesture.Listener {
-    val dataPopupWithHint: MutableList<KeyData>
     private var isKeyPressed: Boolean = false
         set(value) {
             field = value
             updateKeyPressedBackground()
         }
     private var hasTriggeredGestureMove: Boolean = false
+    private var keyHintMode: KeyHintMode = KeyHintMode.DISABLED
     private val longKeyPressHandler: Handler = Handler(context.mainLooper)
     private val repeatedKeyPressHandler: Handler = Handler(context.mainLooper)
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
@@ -145,7 +145,13 @@ class KeyView(
         background = getDrawable(context, R.drawable.shape_rect_rounded)
         elevation = 4.0f
 
-        var hintKeyData: KeyData? = null
+        if (prefs.keyboard.hintedNumberRowMode != KeyHintMode.DISABLED && data.popup.hint?.type == KeyType.NUMERIC) {
+            keyHintMode = prefs.keyboard.hintedNumberRowMode
+        }
+        if (prefs.keyboard.hintedSymbolsMode != KeyHintMode.DISABLED && data.popup.hint?.type == KeyType.CHARACTER) {
+            keyHintMode = prefs.keyboard.hintedNumberRowMode
+        }
+        /*var hintKeyData: KeyData? = null
         var hintKeyMode: KeyHintMode = KeyHintMode.DISABLED
         val hintedNumber = data.hintedNumber
         if (prefs.keyboard.hintedNumberRowMode != KeyHintMode.DISABLED && hintedNumber != null) {
@@ -167,7 +173,7 @@ class KeyView(
                 popupList.add(hintKeyData)
             }
             popupList
-        }
+        }*/
 
         updateKeyPressedBackground()
     }
@@ -232,7 +238,7 @@ class KeyView(
                 shouldBlockNextKeyCode = false
                 florisboard?.prefs?.keyboard?.let {
                     if (it.popupEnabled){
-                        keyboardView.popupManager.show(this)
+                        keyboardView.popupManager.show(this, keyHintMode)
                     }
                 }
                 isKeyPressed = true
@@ -254,14 +260,14 @@ class KeyView(
                     }
                 }
                 longKeyPressHandler.postDelayed(delayMillis) {
-                    if (dataPopupWithHint.isNotEmpty()) {
-                        keyboardView.popupManager.extend(this)
+                    if (data.popup.isNotEmpty()) {
+                        keyboardView.popupManager.extend(this, keyHintMode)
                     }
                     if (data.code == KeyCode.SPACE) {
                         florisboard?.textInputManager?.sendKeyPress(
                             KeyData(
-                                KeyCode.SHOW_INPUT_METHOD_PICKER,
-                                type = KeyType.FUNCTION
+                                type = KeyType.FUNCTION,
+                                code = KeyCode.SHOW_INPUT_METHOD_PICKER,
                             )
                         )
                         shouldBlockNextKeyCode = true
@@ -271,7 +277,7 @@ class KeyView(
             MotionEvent.ACTION_MOVE -> {
                 if (keyboardView.popupManager.isShowingExtendedPopup) {
                     val isPointerWithinBounds =
-                        keyboardView.popupManager.propagateMotionEvent(this, event)
+                        keyboardView.popupManager.propagateMotionEvent(this, event, keyHintMode)
                     if (!isPointerWithinBounds && !shouldBlockNextKeyCode) {
                         keyboardView.dismissActiveKeyViewReference()
                     }
@@ -590,16 +596,7 @@ class KeyView(
             }
             else -> if (data.variation != KeyVariation.ALL) {
                 val keyVariation = florisboard?.textInputManager?.keyVariation ?: KeyVariation.NORMAL
-                visibility =
-                    if (data.variation == KeyVariation.NORMAL && (keyVariation == KeyVariation.NORMAL
-                                || keyVariation == KeyVariation.PASSWORD)
-                    ) {
-                        VISIBLE
-                    } else if (data.variation == keyVariation) {
-                        VISIBLE
-                    } else {
-                        GONE
-                    }
+                visibility = if (data.variation == keyVariation) { VISIBLE } else { GONE }
                 updateTouchHitBox()
             }
         }
@@ -652,13 +649,12 @@ class KeyView(
             && data.code != KeyCode.HALF_SPACE && data.code != KeyCode.KESHIDA || data.type == KeyType.NUMERIC
         ) {
             label = getComputedLetter()
-            val hintedNumber = data.hintedNumber
-            if (prefs.keyboard.hintedNumberRowMode != KeyHintMode.DISABLED && hintedNumber != null) {
-                hintedLabel = getComputedLetter(hintedNumber)
+            val hint = data.popup.hint
+            if (prefs.keyboard.hintedNumberRowMode != KeyHintMode.DISABLED && hint?.type == KeyType.NUMERIC) {
+                hintedLabel = getComputedLetter(hint)
             }
-            val hintedSymbol = data.hintedSymbol
-            if (prefs.keyboard.hintedSymbolsMode != KeyHintMode.DISABLED && hintedSymbol != null) {
-                hintedLabel = getComputedLetter(hintedSymbol)
+            if (prefs.keyboard.hintedSymbolsMode != KeyHintMode.DISABLED && hint?.type == KeyType.CHARACTER) {
+                hintedLabel = getComputedLetter(hint)
             }
 
         } else {

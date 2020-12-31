@@ -16,33 +16,68 @@
 
 package dev.patrickgold.florisboard.ime.text.key
 
+import dev.patrickgold.florisboard.ime.popup.PopupSet
+
 /**
- * Data class which describes a single key and its variants.
+ * Data class which describes a single key and its attributes.
  *
+ * @property type The type of the key. Some actions require both [code] and [type] to match in order
+ *  to be successfully executed. Defaults to [KeyType.CHARACTER].
  * @property code The UTF-8 encoded code of the character. The code defined here is used as the
- *  data passed to the system.
+ *  data passed to the system. Defaults to 0.
  * @property label The string used to display the key in the UI. Is not used for the actual data
  *  passed to the system. Should normally be the exact same as the [code]. Defaults to an empty
  *  string.
- * @property hintedNumber The hinted number which will be dynamically inserted into the long-press
- * [popup]. Leave null to disable the hinted popup for this key. The visibility of the hinted number
- *  is controlled by the preferences. Defaults to null.
- * @property hintedSymbol The hinted symbol which will be dynamically inserted into the long-press
- * [popup]. Leave null to disable the hinted popup for this key. The visibility of the hinted symbol
- *  is controlled by the preferences. Defaults to null.
- * @property popup List of keys which will be accessible while long pressing the key. Defaults to
- *  an empty list (no extended popup).
- * @property type The type of the key. Some actions require both [code] and [type] to match in order
- *  to be successfully executed. Defaults to [KeyType.CHARACTER].
+ */
+open class KeyData(
+    var type: KeyType = KeyType.CHARACTER,
+    var code: Int = 0,
+    var label: String = ""
+)
+
+/**
+ * Data class which describes a single key and its attributes, while also providing additional
+ * characters via the extended popup menu.
+ *
+ * @property groupId The Id of the group this key belongs to. An valid number between 0 and INT_MAX
+ *  may be used. Custom group Ids can be used, but must not be in the range [0;99], as these group
+ *  Ids are reserved for default and internal usage. Defaults to [GROUP_DEFAULT].
  * @property variation Controls if the key should only be shown in some contexts (e.g.: url input)
  *  or if the key should always be visible. Defaults to [KeyVariation.ALL].
+ * @property popup List of keys which will be accessible while long pressing the key. Defaults to
+ *  an empty set (no extended popup).
  */
-data class KeyData(
-    var code: Int,
-    var label: String = "",
-    var hintedNumber: KeyData? = null,
-    var hintedSymbol: KeyData? = null,
-    var popup: MutableList<KeyData> = mutableListOf(),
-    var type: KeyType = KeyType.CHARACTER,
-    var variation: KeyVariation = KeyVariation.ALL
-)
+class FlorisKeyData(
+    type: KeyType = KeyType.CHARACTER,
+    code: Int = 0,
+    label: String = "",
+    var groupId: Int = GROUP_DEFAULT,
+    var variation: KeyVariation = KeyVariation.ALL,
+    var popup: PopupSet<KeyData> = PopupSet()
+) : KeyData(type, code, label) {
+    companion object {
+        /**
+         * Constant for the default group. If not otherwise specified, any key is automatically
+         * assigned to this group.
+         */
+        const val GROUP_DEFAULT: Int = 0
+
+        /**
+         * Constant for the Left modifier key group. Any key belonging to this group will get the
+         * popups specified for "~left" in the popup mapping.
+         */
+        const val GROUP_LEFT: Int = 1
+
+        /**
+         * Constant for the right modifier key group. Any key belonging to this group will get the
+         * popups specified for "~right" in the popup mapping.
+         */
+        const val GROUP_RIGHT: Int = 2
+
+        /**
+         * Constant for the enter modifier key group. Any key belonging to this group will get the
+         * popups specified for "~enter" in the popup mapping.
+         */
+        const val GROUP_ENTER: Int = 3
+    }
+}

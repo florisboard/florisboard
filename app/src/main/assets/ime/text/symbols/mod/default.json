@@ -1,21 +1,23 @@
 {
   "type": "symbols/mod",
   "name": "default",
+  "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [
     [
       { "code": -203, "label": "view_symbols2", "type": "system_gui" },
-      { "code":    0 },
+      { "code":    0, "type": "placeholder" },
       { "code":   -5, "label": "delete", "type": "enter_editing" }
-    ], [
+    ],
+    [
       { "code": -201, "label": "view_characters", "type": "system_gui" },
-      { "code":   44, "label": ",", "popup": [] },
+      { "code":   44, "label": "," },
       { "code": -205, "label": "view_numeric_advanced", "type": "system_gui" },
-      { "code":   32, "label": " ", "popup": [] },
-      { "code":   46, "label": ".", "popup": [
-        { "code": 8230, "label":  "…" }
-      ] },
-      { "code":   10, "label": "enter", "type": "enter_editing" }
+      { "code":   32, "label": " " },
+      { "code":   46, "label": ".", "popup": {
+        "main": { "code": 8230, "label": "…" }
+      } },
+      { "code":   10, "label": "enter", "groupId": 3, "type": "enter_editing" }
     ]
   ]
 }

@@ -659,7 +659,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                         }
                     }
                     else -> when (keyData.type) {
-                        KeyType.CHARACTER -> when (keyData.code) {
+                        KeyType.CHARACTER, KeyType.NUMERIC -> when (keyData.code) {
                             KeyCode.SPACE -> handleSpace()
                             KeyCode.URI_COMPONENT_TLD -> {
                                 val tld = when (caps) {

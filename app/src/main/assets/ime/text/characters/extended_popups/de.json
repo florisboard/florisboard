@@ -1,80 +1,109 @@
 {
-  "a": [
-    { "code":  228, "label": "ä" },
-    { "code":  230, "label": "æ" },
-    { "code":  227, "label": "ã" },
-    { "code":  229, "label": "å" },
-    { "code":  257, "label": "ā" },
-    { "code":  226, "label": "â" },
-    { "code":  224, "label": "à" },
-    { "code":  225, "label": "á" }
-  ],
-  "c": [
-    { "code":  231, "label": "ç" }
-  ],
-  "e": [
-    { "code":  233, "label": "é" },
-    { "code":  275, "label": "ē" },
-    { "code":  234, "label": "ê" },
-    { "code":  232, "label": "è" },
-    { "code":  235, "label": "ë" }
-  ],
-  "i": [
-    { "code":  237, "label": "í" },
-    { "code":  236, "label": "ì" },
-    { "code":  239, "label": "ï" },
-    { "code":  238, "label": "î" },
-    { "code":  299, "label": "ī" }
-  ],
-  "n": [
-    { "code":  241, "label": "ñ" },
-    { "code":  324, "label": "ń" }
-  ],
-  "o": [
-    { "code":  246, "label": "ö" },
-    { "code":  333, "label": "ō" },
-    { "code":  248, "label": "ø" },
-    { "code":  245, "label": "õ" },
-    { "code":  339, "label": "œ" },
-    { "code":  243, "label": "ó" },
-    { "code":  242, "label": "ò" },
-    { "code":  244, "label": "ô" }
-  ],
-  "s": [
-    { "code":  223, "label": "ß" },
-    { "code":  353, "label": "š" },
-    { "code":  347, "label": "ś" }
-  ],
-  "u": [
-    { "code":  252, "label": "ü" },
-    { "code":  363, "label": "ū" },
-    { "code":  249, "label": "ù" },
-    { "code":  251, "label": "û" },
-    { "code":  250, "label": "ú" }
-  ],
-  ".~normal": [
-    { "code":   44, "label": "," },
-    { "code":   38, "label": "&" },
-    { "code":   37, "label": "%" },
-    { "code":   43, "label": "+" },
-    { "code":   34, "label": "\"" },
-    { "code":   45, "label": "-" },
-    { "code":   58, "label": ":" },
-    { "code":   39, "label": "'" },
-    { "code":   64, "label": "@" },
-    { "code":   59, "label": ";" },
-    { "code":   47, "label": "/" },
-    { "code":   40, "label": "(" },
-    { "code":   41, "label": ")" },
-    { "code":   35, "label": "#" },
-    { "code":   33, "label": "!" },
-    { "code":   63, "label": "?" }
-  ],
-  ".~uri": [
-    { "code": -255, "label": ".com" },
-    { "code": -255, "label": ".gov" },
-    { "code": -255, "label": ".edu" },
-    { "code": -255, "label": ".org" },
-    { "code": -255, "label": ".net" }
-  ]
+  "type": "characters/extended_popups",
+  "name": "de",
+  "authors": [ "patrickgold" ],
+  "mapping": {
+    "all": {
+      "a": {
+        "main": { "code":  228, "label": "ä" },
+        "relevant": [
+          { "code":  230, "label": "æ" },
+          { "code":  227, "label": "ã" },
+          { "code":  229, "label": "å" },
+          { "code":  257, "label": "ā" },
+          { "code":  226, "label": "â" },
+          { "code":  224, "label": "à" },
+          { "code":  225, "label": "á" }
+        ]
+      },
+      "c": {
+        "relevant": [
+          { "code":  231, "label": "ç" }
+        ]
+      },
+      "e": {
+        "relevant": [
+          { "code":  233, "label": "é" },
+          { "code":  275, "label": "ē" },
+          { "code":  234, "label": "ê" },
+          { "code":  232, "label": "è" },
+          { "code":  235, "label": "ë" }
+        ]
+      },
+      "i": {
+        "relevant": [
+          { "code":  237, "label": "í" },
+          { "code":  236, "label": "ì" },
+          { "code":  239, "label": "ï" },
+          { "code":  238, "label": "î" },
+          { "code":  299, "label": "ī" }
+        ]
+      },
+      "n": {
+        "relevant": [
+          { "code":  241, "label": "ñ" },
+          { "code":  324, "label": "ń" }
+        ]
+      },
+      "o": {
+        "main": { "code":  246, "label": "ö" },
+        "relevant": [
+          { "code":  333, "label": "ō" },
+          { "code":  248, "label": "ø" },
+          { "code":  245, "label": "õ" },
+          { "code":  339, "label": "œ" },
+          { "code":  243, "label": "ó" },
+          { "code":  242, "label": "ò" },
+          { "code":  244, "label": "ô" }
+        ]
+      },
+      "s": {
+        "main": { "code":  223, "label": "ß" },
+        "relevant": [
+          { "code":  353, "label": "š" },
+          { "code":  347, "label": "ś" }
+        ]
+      },
+      "u": {
+        "main": { "code":  252, "label": "ü" },
+        "relevant": [
+          { "code":  363, "label": "ū" },
+          { "code":  249, "label": "ù" },
+          { "code":  251, "label": "û" },
+          { "code":  250, "label": "ú" }
+        ]
+      },
+      "~right": {
+        "main": { "code":   44, "label": "," },
+        "relevant": [
+          { "code":   38, "label": "&" },
+          { "code":   37, "label": "%" },
+          { "code":   43, "label": "+" },
+          { "code":   34, "label": "\"" },
+          { "code":   45, "label": "-" },
+          { "code":   58, "label": ":" },
+          { "code":   39, "label": "'" },
+          { "code":   64, "label": "@" },
+          { "code":   59, "label": ";" },
+          { "code":   47, "label": "/" },
+          { "code":   40, "label": "(" },
+          { "code":   41, "label": ")" },
+          { "code":   35, "label": "#" },
+          { "code":   33, "label": "!" },
+          { "code":   63, "label": "?" }
+        ]
+      }
+    },
+    "uri": {
+      "~right": {
+        "main": { "code": -255, "label": ".com" },
+        "relevant": [
+          { "code": -255, "label": ".ch" },
+          { "code": -255, "label": ".de" },
+          { "code": -255, "label": ".at" },
+          { "code": -255, "label": ".net" }
+        ]
+      }
+    }
+  }
 }

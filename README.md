@@ -167,6 +167,10 @@ to get more information on this topic.
   [square](https://github.com/square)
 * [ColorPicker preference](https://github.com/jaredrummler/ColorPicker) by
   [Jared Rummler](https://github.com/jaredrummler)
+* [Timber](https://github.com/JakeWharton/timber) by
+  [JakeWharton](https://github.com/JakeWharton)
+* [kotlin-result](https://github.com/michaelbull/kotlin-result) by
+  [Michael Bull](https://github.com/michaelbull)
 
 ## License
 ```

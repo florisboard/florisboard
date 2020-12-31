@@ -16,10 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.text.layout
 
-import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.ime.text.key.FlorisKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 
-typealias LayoutDataArrangement = List<List<KeyData>>
+typealias LayoutDataArrangement = List<List<FlorisKeyData>>
 data class LayoutData(
     val type: LayoutType,
     val name: String,
@@ -28,9 +28,9 @@ data class LayoutData(
     val arrangement: LayoutDataArrangement = listOf()
 ) {
     private fun getComputedLayoutDataArrangement(): ComputedLayoutDataArrangement {
-        val ret = mutableListOf<MutableList<KeyData>>()
+        val ret = mutableListOf<MutableList<FlorisKeyData>>()
         for (row in arrangement) {
-            val retRow = mutableListOf<KeyData>()
+            val retRow = mutableListOf<FlorisKeyData>()
             for (keyData in row) {
                 retRow.add(keyData)
             }
@@ -46,7 +46,7 @@ data class LayoutData(
     }
 }
 
-typealias ComputedLayoutDataArrangement = MutableList<MutableList<KeyData>>
+typealias ComputedLayoutDataArrangement = MutableList<MutableList<FlorisKeyData>>
 data class ComputedLayoutData(
     val mode: KeyboardMode,
     val name: String,

@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "azerty",
+  "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [
     [
@@ -14,7 +15,8 @@
       { "code":  105, "label": "i" },
       { "code":  111, "label": "o" },
       { "code":  112, "label": "p" }
-    ], [
+    ],
+    [
       { "code":  113, "label": "q" },
       { "code":  115, "label": "s" },
       { "code":  100, "label": "d" },
@@ -25,20 +27,23 @@
       { "code":  107, "label": "k" },
       { "code":  108, "label": "l" },
       { "code":  109, "label": "m" }
-    ], [
+    ],
+    [
       { "code":  119, "label": "w" },
       { "code":  120, "label": "x" },
       { "code":   99, "label": "c" },
       { "code":  118, "label": "v" },
       { "code":   98, "label": "b" },
       { "code":  110, "label": "n" },
-      { "code":   39, "label": "'", "popup": [
-        { "code": 8218, "label": "‚" },
-        { "code": 8216, "label": "‘" },
-        { "code": 8217, "label": "’" },
-        { "code": 8249, "label": "‹" },
-        { "code": 8250, "label": "›" }
-      ] }
+      { "code":   39, "label": "'", "popup": {
+        "relevant": [
+          { "code": 8218, "label": "‚" },
+          { "code": 8216, "label": "‘" },
+          { "code": 8217, "label": "’" },
+          { "code": 8249, "label": "‹" },
+          { "code": 8250, "label": "›" }
+        ]
+      } }
     ]
   ]
 }

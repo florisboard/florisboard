@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.text.key
 
 import android.annotation.SuppressLint
 import com.squareup.moshi.FromJson
+import java.util.*
 
 /**
  * Enum for declaring the type of the key.
@@ -26,18 +27,19 @@ import com.squareup.moshi.FromJson
  */
 enum class KeyType {
     CHARACTER,
-    MODIFIER,
     ENTER_EDITING,
-    SYSTEM_GUI,
-    NAVIGATION,
     FUNCTION,
+    LOCK,
+    MODIFIER,
+    NAVIGATION,
+    SYSTEM_GUI,
     NUMERIC,
-    LOCK;
+    PLACEHOLDER,
+    UNSPECIFIED;
 
     companion object {
-        @SuppressLint("DefaultLocale")
         fun fromString(string: String): KeyType {
-            return valueOf(string.toUpperCase())
+            return valueOf(string.toUpperCase(Locale.ROOT))
         }
     }
 }

@@ -17,12 +17,13 @@
 package dev.patrickgold.florisboard.ime.text.layout
 
 import android.content.Context
-import com.squareup.moshi.JsonAdapter
+import com.github.michaelbull.result.getOr
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.popup.PopupMappingAsset
+import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import kotlinx.coroutines.*
@@ -63,34 +64,10 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
         return layoutAdapter.fromJson(rawJsonData)
     }
 
-    private fun loadExtendedPopups(subtype: Subtype): Map<String, List<KeyData>> {
-        val lang = subtype.locale.language
-        val map = loadExtendedPopupsInternal("ime/text/characters/extended_popups/$lang.json")
-        return map ?: mapOf()
-    }
-
-    private fun loadExtendedPopupsInternal(path: String): Map<String, List<KeyData>>? {
-        val rawJsonData: String = try {
-            context.assets.open(path).bufferedReader().use { it.readText() }
-        } catch (e: Exception) {
-            null
-        } ?: return null
-        val moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .add(KeyTypeAdapter())
-            .build()
-        val mapAdaptor: JsonAdapter<Map<String, List<KeyData>>> =
-            moshi.adapter(
-                Types.newParameterizedType(
-                    Map::class.java,
-                    String::class.java,
-                    Types.newParameterizedType(
-                        List::class.java,
-                        KeyData::class.java
-                    )
-                )
-            )
-        return mapAdaptor.fromJson(rawJsonData)
+    private fun loadExtendedPopups(subtype: Subtype? = null): PopupMappingAsset {
+        val lang = subtype?.locale?.language ?: "\$default"
+        val map = PopupMappingAsset.fromFile(context, "ime/text/characters/extended_popups/$lang.json")
+        return map.getOr(PopupMappingAsset.empty())
     }
 
     /**
@@ -142,7 +119,7 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
                     computedArrangement.add(mainRow.toMutableList())
                 } else {
                     // merge main and mod here
-                    val mergedRow = mutableListOf<KeyData>()
+                    val mergedRow = mutableListOf<FlorisKeyData>()
                     val firstModRow = modifierLayout.arrangement.firstOrNull()
                     for (modKey in (firstModRow ?: listOf())) {
                         if (modKey.code == 0) {
@@ -168,31 +145,54 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
             }
         }
 
-        // TODO: rewrite this part
+        // Add popup to keys
         if (keyboardMode == KeyboardMode.CHARACTERS) {
+            val extendedPopupsDefault = loadExtendedPopups()
             val extendedPopups = loadExtendedPopups(subtype)
-            for (computedRow in computedArrangement) {
-                for (keyData in computedRow) {
-                    if (keyData.variation != KeyVariation.ALL) {
-                        if (keyData.label == "." && modifierLayout?.name != "dvorak" ||
-                                keyData.label == "z" && modifierLayout?.name == "dvorak") {
-                            val label = "." // keyData.label
-                            if (keyData.variation == KeyVariation.NORMAL ||
-                                keyData.variation == KeyVariation.PASSWORD) {
-                                if (extendedPopups.containsKey("$label~normal")) {
-                                    keyData.popup.addAll(extendedPopups["$label~normal"] ?: listOf())
-                                }
-                            }
-                            if (keyData.variation == KeyVariation.EMAIL_ADDRESS ||
-                                keyData.variation == KeyVariation.URI) {
-                                if (extendedPopups.containsKey("$label~uri")) {
-                                    keyData.popup.addAll(extendedPopups["$label~uri"] ?: listOf())
-                                }
-                            }
-                        }
-                    } else if (extendedPopups.containsKey(keyData.label)) {
-                        keyData.popup.addAll(extendedPopups[keyData.label] ?: listOf())
+            for (row in computedArrangement) {
+                var kOffset = 0
+                for ((k, key) in row.withIndex()) {
+                    val lastKey = row.getOrNull(k - 1)
+                    if (lastKey != null && lastKey.groupId == key.groupId && key.groupId != FlorisKeyData.GROUP_DEFAULT) {
+                        kOffset++
                     }
+                    val label = when (key.groupId) {
+                        FlorisKeyData.GROUP_ENTER -> {
+                            "~enter"
+                        }
+                        FlorisKeyData.GROUP_LEFT -> {
+                            "~left"
+                        }
+                        FlorisKeyData.GROUP_RIGHT -> {
+                            "~right"
+                        }
+                        else -> {
+                            key.label
+                        }
+                    }
+                    var popupSet: PopupSet<KeyData>? = null
+                    val kv = key.variation
+                    if (popupSet == null && kv == KeyVariation.PASSWORD) {
+                        popupSet = extendedPopups.mapping[KeyVariation.PASSWORD]?.get(label) ?:
+                                extendedPopupsDefault.mapping[KeyVariation.PASSWORD]?.get(label)
+                    }
+                    if (popupSet == null && (kv == KeyVariation.NORMAL || kv == KeyVariation.PASSWORD)) {
+                        popupSet = extendedPopups.mapping[KeyVariation.NORMAL]?.get(label) ?:
+                                extendedPopupsDefault.mapping[KeyVariation.NORMAL]?.get(label)
+                    }
+                    if (popupSet == null && kv == KeyVariation.EMAIL_ADDRESS) {
+                        popupSet = extendedPopups.mapping[KeyVariation.EMAIL_ADDRESS]?.get(label) ?:
+                                extendedPopupsDefault.mapping[KeyVariation.EMAIL_ADDRESS]?.get(label)
+                    }
+                    if (popupSet == null && (kv == KeyVariation.EMAIL_ADDRESS || kv == KeyVariation.URI)) {
+                        popupSet = extendedPopups.mapping[KeyVariation.URI]?.get(label) ?:
+                                extendedPopupsDefault.mapping[KeyVariation.URI]?.get(label)
+                    }
+                    if (popupSet == null) {
+                        popupSet = extendedPopups.mapping[KeyVariation.ALL]?.get(label) ?:
+                                extendedPopupsDefault.mapping[KeyVariation.ALL]?.get(label)
+                    }
+                    popupSet?.let { key.popup.merge(it) }
                 }
             }
         }
@@ -210,16 +210,14 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
                 if (symbolRow != null) {
                     for ((k, key) in row.withIndex()) {
                         val lastKey = row.getOrNull(k - 1)
-                        if (key.variation != KeyVariation.ALL && lastKey != null && lastKey.variation != KeyVariation.ALL) {
+                        if (lastKey != null && lastKey.groupId == key.groupId && key.groupId != FlorisKeyData.GROUP_DEFAULT) {
                             kOffset++
                         }
                         val symbol = symbolRow.getOrNull(k - kOffset)
-                        if (key.type == KeyType.CHARACTER && symbol?.type == KeyType.CHARACTER) {
-                            if (r == minRow) {
-                                key.hintedNumber = symbol
-                            } else if (r > minRow) {
-                                key.hintedSymbol = symbol
-                            }
+                        if (r == minRow && key.type == KeyType.CHARACTER && symbol?.type == KeyType.NUMERIC) {
+                            key.popup.hint = symbol
+                        } else if (r > minRow && key.type == KeyType.CHARACTER && symbol?.type == KeyType.CHARACTER) {
+                            key.popup.hint = symbol
                         }
                     }
                 }

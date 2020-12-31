@@ -21,18 +21,17 @@
         <item>custom</item>
     </string-array>
 
-    <!-- TODO: implement smart priority -->
     <string-array name="pref__keyboard__hint_mode__entries">
         <item>@string/pref__keyboard__hint_mode__disabled</item>
         <item>@string/pref__keyboard__hint_mode__enabled_hint_priority</item>
         <item>@string/pref__keyboard__hint_mode__enabled_accent_priority</item>
-        <!--<item>@string/pref__keyboard__hint_mode__enabled_smart_priority</item>-->
+        <item>@string/pref__keyboard__hint_mode__enabled_smart_priority</item>
     </string-array>
     <string-array name="pref__keyboard__hint_mode__values">
         <item>disabled</item>
         <item>enabled_hint_priority</item>
         <item>enabled_accent_priority</item>
-        <!--<item>enabled_smart_priority</item>-->
+        <item>enabled_smart_priority</item>
     </string-array>
 
     <string-array name="pref__keyboard__one_handed_mode__entries">

@@ -18,12 +18,10 @@ package dev.patrickgold.florisboard.ime.media
 
 import android.annotation.SuppressLint
 import android.os.Handler
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.*
 import com.google.android.material.tabs.TabLayout
-import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.EditorInstance
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
@@ -148,10 +146,10 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
         event ?: return false
         val data = when (view.id) {
             R.id.media_input_switch_to_text_input_button -> {
-                KeyData(KeyCode.SWITCH_TO_TEXT_CONTEXT)
+                KeyData(code = KeyCode.SWITCH_TO_TEXT_CONTEXT)
             }
             R.id.media_input_backspace_button -> {
-                KeyData(KeyCode.DELETE, type = KeyType.ENTER_EDITING)
+                KeyData(code = KeyCode.DELETE, type = KeyType.ENTER_EDITING)
             }
             else -> null
         }
