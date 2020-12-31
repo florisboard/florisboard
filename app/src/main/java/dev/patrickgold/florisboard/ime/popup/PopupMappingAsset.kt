@@ -17,27 +17,41 @@
 package dev.patrickgold.florisboard.ime.popup
 
 import android.content.Context
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.patrickgold.florisboard.ime.extension.Asset
 import dev.patrickgold.florisboard.ime.text.key.KeyTypeAdapter
 import dev.patrickgold.florisboard.ime.text.key.KeyVariationAdapter
 
+/**
+ * Class which contains an extended popup mapping to use for adding popups subtype based on the
+ * keyboard layout.
+ *
+ * @property mapping The mapping of the base keys to their popups. See [PopupMapping] for more info.
+ */
 class PopupMappingAsset(
-    type: String,
-    name: String,
-    authors: List<String>,
+    override val type: String,
+    override val name: String,
+    override val authors: List<String>,
     val mapping: PopupMapping
-) : Asset(type, name, authors) {
-    companion object {
-        fun empty() = PopupMappingAsset("", "", listOf(), mapOf())
+) : Asset {
+    companion object : Asset.Companion<PopupMappingAsset> {
+        override fun empty() = PopupMappingAsset("", "", listOf(), mapOf())
 
-        fun fromJsonAssetFile(context: Context, path: String): PopupMappingAsset? {
+        override fun fromFile(context: Context, path: String): Result<PopupMappingAsset, Throwable> {
             return try {
                 val raw = context.assets.open(path).bufferedReader().use { it.readText() }
-                fromJsonString(raw)
+                val asset = fromJsonString(raw)
+                if (asset != null) {
+                    Ok(asset)
+                } else {
+                    Err(NullPointerException())
+                }
             } catch (e: Exception) {
-                null
+                Err(e)
             }
         }
 

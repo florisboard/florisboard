@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.text.layout
 
 import android.content.Context
+import com.github.michaelbull.result.getOr
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.patrickgold.florisboard.ime.core.PrefHelper
@@ -63,15 +64,10 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
         return layoutAdapter.fromJson(rawJsonData)
     }
 
-    private fun loadExtendedPopups(): PopupMappingAsset {
-        val map = PopupMappingAsset.fromJsonAssetFile(context, "ime/text/characters/extended_popups/\$default.json")
-        return map ?: PopupMappingAsset.empty()
-    }
-
-    private fun loadExtendedPopups(subtype: Subtype): PopupMappingAsset {
-        val lang = subtype.locale.language
-        val map = PopupMappingAsset.fromJsonAssetFile(context, "ime/text/characters/extended_popups/$lang.json")
-        return map ?: PopupMappingAsset.empty()
+    private fun loadExtendedPopups(subtype: Subtype? = null): PopupMappingAsset {
+        val lang = subtype?.locale?.language ?: "\$default"
+        val map = PopupMappingAsset.fromFile(context, "ime/text/characters/extended_popups/$lang.json")
+        return map.getOr(PopupMappingAsset.empty())
     }
 
     /**

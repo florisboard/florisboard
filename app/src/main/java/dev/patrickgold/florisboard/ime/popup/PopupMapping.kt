@@ -19,4 +19,8 @@ package dev.patrickgold.florisboard.ime.popup
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 
+/**
+ * An object which maps each base key to its extended popups. This can be done for each
+ * key variation. [KeyVariation.ALL] is always the fallback for each key.
+ */
 typealias PopupMapping = Map<KeyVariation, Map<String, PopupSet<KeyData>>>

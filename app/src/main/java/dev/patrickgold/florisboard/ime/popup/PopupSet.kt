@@ -18,6 +18,20 @@ package dev.patrickgold.florisboard.ime.popup
 
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 
+/**
+ * A popup set for a single key. This set describes, if the key has a [hint] character,
+ * a [main] character and other [relevant] popups.
+ *
+ * Note, that a hint character should **never** be set in a json extended popup file, rather it
+ * should only be dynamically set by the LayoutManager.
+ *
+ * The order in which these defined popups will be shown depends on the current [KeyHintMode],
+ * al well as the calculations made by the KeyPopupManager.
+ *
+ * The popup set can be accessed like an array with the addition that negative indexes defined
+ * within this companion object are allowed (as long as the corresponding [hint] or [main]
+ * character is *not* null).
+ */
 class PopupSet<T> (
     var hint: T? = null,
     var main: T? = null,
