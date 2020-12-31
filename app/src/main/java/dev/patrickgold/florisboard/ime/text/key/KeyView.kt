@@ -378,6 +378,11 @@ class KeyView(
             }
             KeyCode.SPACE -> when (type) {
                 SwipeGesture.Type.TOUCH_MOVE -> when (direction) {
+                    SwipeGesture.Direction.UP -> {
+                        florisboard?.executeSwipeAction(prefs.gestures.spaceBarSwipeUp)
+                        shouldBlockNextKeyCode = true
+                        true
+                    }
                     SwipeGesture.Direction.LEFT -> {
                         florisboard?.executeSwipeAction(prefs.gestures.spaceBarSwipeLeft)
                         shouldBlockNextKeyCode = true

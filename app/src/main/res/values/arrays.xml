@@ -66,6 +66,7 @@
         <item>@string/pref__gestures__swipe_action__shift</item>
         <item>@string/pref__gestures__swipe_action__switch_to_prev_subtype</item>
         <item>@string/pref__gestures__swipe_action__switch_to_next_subtype</item>
+        <item>@string/pref__gestures__swipe_action__switch_to_prev_keyboard</item>
     </string-array>
     <string-array name="pref__gestures__swipe_action__values">
         <item>no_action</item>
@@ -77,6 +78,7 @@
         <item>shift</item>
         <item>switch_to_prev_subtype</item>
         <item>switch_to_next_subtype</item>
+        <item>switch_to_prev_keyboard</item>
     </string-array>
 
     <string-array name="pref__gestures__swipe_action_delete__entries">

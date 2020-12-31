@@ -33,6 +33,7 @@ import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
 import com.squareup.moshi.Json
 import dev.patrickgold.florisboard.BuildConfig
@@ -70,6 +71,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     private var eventListeners: MutableList<WeakReference<EventListener?>?> = mutableListOf()
 
     private var audioManager: AudioManager? = null
+    private var imeManager:InputMethodManager? = null
     var clipboardManager: ClipboardManager? = null
     private var vibrator: Vibrator? = null
     private val osHandler = Handler()
@@ -167,6 +169,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         }
         Timber.i("onCreate()")
 
+        imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         clipboardManager?.addPrimaryClipChangedListener(this)
@@ -463,6 +466,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
             SwipeAction.HIDE_KEYBOARD -> requestHideSelf(0)
             SwipeAction.SWITCH_TO_PREV_SUBTYPE -> switchToPrevSubtype()
             SwipeAction.SWITCH_TO_NEXT_SUBTYPE -> switchToNextSubtype()
+            SwipeAction.SWITCH_TO_PREV_KEYBOARD -> switchToPrevKeyboard()
             else -> textInputManager.executeSwipeAction(swipeAction)
         }
     }
@@ -484,6 +488,21 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
      */
     fun shouldShowLanguageSwitch(): Boolean {
         return subtypeManager.subtypes.size > 1
+    }
+
+    fun switchToPrevKeyboard(){
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                switchToPreviousInputMethod()
+            } else {
+                window.window?.let { window ->
+                    imeManager?.switchToLastInputMethod(window.attributes.token)
+                }
+            }
+        } catch (e: Exception) {
+            Timber.e(e,"Unable to switch to the previous IME")
+            imeManager?.showInputMethodPicker()
+        }
     }
 
     fun switchToPrevSubtype() {
