@@ -3,6 +3,7 @@
   "displayName": "Floris Day",
   "author": "patrickgold",
   "isNightTheme": false,
+  "showKeyBorder": true,
   "attributes": {
     "window": {
       "colorPrimary": "#4CAF50",
