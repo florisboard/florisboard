@@ -108,6 +108,8 @@
     <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">The background of the navigation bar.</string>
     <string name="pref__theme__navBarIsLight_title" comment="Title of Nav bar is light theme preference">Navigation bar dark foreground</string>
     <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Set to ON for dark or to OFF for light foreground.</string>
+    <string name="pref__theme__showKeyBorder_title" comment="Title of Show Key Border preference">Key Border</string>
+    <string name="pref__theme__showKeyBorder_summary" comment="Summary of Show Key Border preference">Set to ON to show border or to OFF to hide it</string>
 
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Keyboard Preferences</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Keys</string>

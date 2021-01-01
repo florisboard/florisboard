@@ -143,7 +143,7 @@ class KeyView(
         setPadding(0, 0, 0, 0)
 
         background = getDrawable(context, R.drawable.shape_rect_rounded)
-        elevation = 4.0f
+        elevation = if(prefs.theme.keyShowBorder) 4.0f else 0.0f
 
         if (prefs.keyboard.hintedNumberRowMode != KeyHintMode.DISABLED && data.popup.hint?.type == KeyType.NUMERIC) {
             keyHintMode = prefs.keyboard.hintedNumberRowMode
@@ -519,7 +519,7 @@ class KeyView(
                 )
             }
             else -> {
-                elevation = 4.0f
+                elevation = if(prefs.theme.keyShowBorder) 4.0f else 0.0f
                 when (data.code) {
                     KeyCode.ENTER -> {
                         setBackgroundTintColor2(
@@ -888,7 +888,7 @@ class KeyView(
     /**
      * Custom Outline Provider, needed for the [KeyView] elevation rendering.
      */
-    private class KeyViewOutline(
+    private inner class KeyViewOutline(
         private val width: Int,
         private val height: Int
     ) : ViewOutlineProvider() {

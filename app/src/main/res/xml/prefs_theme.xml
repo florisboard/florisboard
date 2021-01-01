@@ -74,6 +74,13 @@
             android:title="@string/settings__theme__foreground"
             app:iconSpaceReserved="false"/>
 
+        <SwitchPreferenceCompat
+            app:key="theme__key_show_border"
+            android:defaultValue="true"
+            app:title="@string/pref__theme__showKeyBorder_title"
+            app:summary="@string/pref__theme__showKeyBorder_summary"
+            app:iconSpaceReserved="false"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

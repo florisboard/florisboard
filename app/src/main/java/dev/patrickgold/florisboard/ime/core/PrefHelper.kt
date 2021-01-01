@@ -439,6 +439,7 @@ class PrefHelper(
             const val NAV_BAR_COLOR =                       "theme__navBarColor"
             const val NAV_BAR_IS_LIGHT =                    "theme__navBarIsLight"
             const val KEYBOARD_BG_COLOR =                   "theme__keyboard_bgColor"
+            const val KEY_SHOW_BORDER =                     "theme__key_show_border"
             const val KEY_BG_COLOR =                        "theme__key_bgColor"
             const val KEY_BG_COLOR_PRESSED =                "theme__key_bgColorPressed"
             const val KEY_FG_COLOR =                        "theme__key_fgColor"
@@ -483,6 +484,9 @@ class PrefHelper(
         var keyboardBgColor: Int
             get() =  prefHelper.getPref(KEYBOARD_BG_COLOR, 0)
             set(v) = prefHelper.setPref(KEYBOARD_BG_COLOR, v)
+        var keyShowBorder:Boolean
+            get() =  prefHelper.getPref(KEY_SHOW_BORDER, true)
+            set(v) = prefHelper.setPref(KEY_SHOW_BORDER,v)
         var keyBgColor: Int
             get() =  prefHelper.getPref(KEY_BG_COLOR, 0)
             set(v) = prefHelper.setPref(KEY_BG_COLOR, v)

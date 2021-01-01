@@ -73,6 +73,7 @@ data class Theme(
     val displayName: String,
     val author: String,
     val isNightTheme: Boolean = false,
+    val showKeyBorder: Boolean = true,
     @Json(name = "attributes")
     private val rawAttrs: Map<String, Map<String, String>>
 ) {
@@ -138,6 +139,7 @@ data class Theme(
 
             prefs.theme.keyboardBgColor = theme.getAttr("keyboard/bgColor", "#E0E0E0")
 
+            prefs.theme.keyShowBorder = theme.showKeyBorder
             prefs.theme.keyBgColor = theme.getAttr("key/bgColor", "#FFFFFF")
             prefs.theme.keyBgColorPressed = theme.getAttr("key/bgColorPressed", "#F5F5F5")
             prefs.theme.keyFgColor = theme.getAttr("key/fgColor", "#000000")
