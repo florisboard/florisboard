@@ -49,7 +49,7 @@ class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by
         prefs = PrefHelper.getDefaultInstance(requireContext())
         binding = SettingsFragmentThemeBinding.inflate(inflater, container, false)
 
-        launch(Dispatchers.Default) {
+        launch(Dispatchers.Main) {
             val themeContext = ContextThemeWrapper(context, FlorisBoard.getDayNightBaseThemeId(prefs.internal.themeCurrentIsNight))
             val layoutManager = LayoutManager(themeContext)
             keyboardView = KeyboardView(themeContext)

@@ -277,7 +277,7 @@ class KeyView(
             MotionEvent.ACTION_MOVE -> {
                 if (keyboardView.popupManager.isShowingExtendedPopup) {
                     val isPointerWithinBounds =
-                        keyboardView.popupManager.propagateMotionEvent(this, event, keyHintMode)
+                        keyboardView.popupManager.propagateMotionEvent(this, event)
                     if (!isPointerWithinBounds && !shouldBlockNextKeyCode) {
                         keyboardView.dismissActiveKeyViewReference()
                     }

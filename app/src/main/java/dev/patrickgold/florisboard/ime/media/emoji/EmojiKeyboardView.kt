@@ -32,7 +32,7 @@ import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
-import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
+import dev.patrickgold.florisboard.ime.popup.PopupManager
 import kotlinx.coroutines.*
 import java.util.*
 
@@ -57,7 +57,7 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener {
     private val uiLayouts = EnumMap<EmojiCategory, ScrollView>(EmojiCategory::class.java)
 
     var isScrollBlocked: Boolean = false
-    var popupManager = KeyPopupManager<EmojiKeyboardView, EmojiKeyView>(this)
+    var popupManager = PopupManager<EmojiKeyboardView, EmojiKeyView>(this, florisboard?.popupLayerView)
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)

@@ -102,7 +102,7 @@ class EmojiKeyView(
             MotionEvent.ACTION_MOVE -> {
                 if (emojiKeyboardView.popupManager.isShowingExtendedPopup) {
                     val isPointerWithinBounds =
-                        emojiKeyboardView.popupManager.propagateMotionEvent(this, event, KeyHintMode.DISABLED)
+                        emojiKeyboardView.popupManager.propagateMotionEvent(this, event)
                     if (!isPointerWithinBounds) {
                         emojiKeyboardView.dismissKeyView(this)
                     }

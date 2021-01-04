@@ -28,7 +28,7 @@ import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
-import dev.patrickgold.florisboard.ime.popup.KeyPopupManager
+import dev.patrickgold.florisboard.ime.popup.PopupManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
@@ -61,7 +61,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     private var initialKeyCode: Int = 0
     var isPreviewMode: Boolean = false
     var isSmartbarKeyboardView: Boolean = false
-    var popupManager = KeyPopupManager<KeyboardView, KeyView>(this)
+    var popupManager = PopupManager<KeyboardView, KeyView>(this, florisboard?.popupLayerView)
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val swipeGestureDetector = SwipeGesture.Detector(context, this)
 
