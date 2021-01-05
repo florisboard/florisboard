@@ -39,6 +39,7 @@ import com.squareup.moshi.Json
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.media.MediaInputManager
+import dev.patrickgold.florisboard.ime.popup.PopupLayerView
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -66,6 +67,8 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     val context: Context
         get() = inputWindowView?.context ?: this
     var inputView: InputView? = null
+        private set
+    var popupLayerView: PopupLayerView? = null
         private set
     private var inputWindowView: InputWindowView? = null
     private var eventListeners: MutableList<WeakReference<EventListener?>?> = mutableListOf()
@@ -199,6 +202,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         baseContext.setTheme(currentThemeResId)
 
         inputWindowView = layoutInflater.inflate(R.layout.florisboard, null) as InputWindowView
+        popupLayerView = inputWindowView?.findViewById(R.id.popup_layer)
 
         eventListeners.toList().forEach { it?.get()?.onCreateInputView() }
 

@@ -17,16 +17,9 @@
 package dev.patrickgold.florisboard.ime.popup
 
 import android.content.res.Configuration
-import android.util.TypedValue
 import android.view.*
-import android.widget.*
 import androidx.core.content.ContextCompat.getDrawable
-import androidx.core.view.get
-import com.google.android.flexbox.FlexboxLayout
-import com.google.android.flexbox.JustifyContent
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.databinding.KeyPopupExtendedViewBinding
-import dev.patrickgold.florisboard.databinding.KeyPopupViewBinding
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyView
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyboardView
@@ -35,7 +28,6 @@ import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
-import dev.patrickgold.florisboard.util.ViewLayoutUtils
 
 /**
  * Manages the creation and dismissal of key popups as well as the checks if the pointer moved
@@ -43,11 +35,13 @@ import dev.patrickgold.florisboard.util.ViewLayoutUtils
  *
  * @property keyboardView Reference to the keyboard view to which this manager class belongs to.
  */
-class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) {
+class PopupManager<T_KBD: View, T_KV: View>(
+    private val keyboardView: T_KBD,
+    private val popupLayerView: PopupLayerView?
+) {
     private var anchorLeft: Boolean = false
     private var anchorRight: Boolean = false
     private var anchorOffset: Int = 0
-    private var activeExtIndex: Int? = null
     private val exceptionsForKeyCodes = listOf(
         KeyCode.ENTER,
         KeyCode.LANGUAGE_SWITCH,
@@ -58,107 +52,81 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
     private var keyPopupHeight: Int
     var keyPopupTextSize: Float = keyboardView.resources.getDimension(R.dimen.key_popup_textSize)
     private var keyPopupDiffX: Int = 0
-    private val popupView: KeyPopupViewBinding
-    private val popupViewExt: KeyPopupExtendedViewBinding
+    private val popupView: PopupView
+    private val popupViewExt: PopupExtendedView
     private var row0count: Int = 0
     private var row1count: Int = 0
-    private var window: PopupWindow
-    private var windowExt: PopupWindow
 
     /** Is true if the preview popup is visible to the user, else false */
     val isShowingPopup: Boolean
-        get() = popupView.root.visibility == View.VISIBLE
+        get() = popupView.isShowing
     /** Is true if the extended popup is visible to the user, else false */
     val isShowingExtendedPopup: Boolean
-        get() = windowExt.isShowing
+        get() = popupViewExt.isShowing
 
     init {
-        val inflater = LayoutInflater.from(keyboardView.context)
         keyPopupWidth = keyboardView.resources.getDimension(R.dimen.key_width).toInt()
         keyPopupHeight = keyboardView.resources.getDimension(R.dimen.key_height).toInt()
-        popupView = KeyPopupViewBinding.inflate(inflater, null, false)
-        popupView.root.visibility = View.INVISIBLE
-        popupViewExt = KeyPopupExtendedViewBinding.inflate(inflater, null, false)
-        window = createPopupWindow(popupView.root)
-        windowExt = createPopupWindow(popupViewExt.root)
+        popupView = PopupView(keyboardView.context)
+        popupViewExt = PopupExtendedView(keyboardView.context)
+        popupLayerView?.addView(popupView)
+        popupLayerView?.addView(popupViewExt)
     }
 
     /**
-     * Helper function to create a [KeyPopupExtendedSingleView] and preconfigure it.
+     * Helper function to create a element for the extended popup and preconfigure it.
      *
      * @param keyView Reference to the keyView currently controlling the popup.
-     * @param k The index of the key in the key data popup array.
-     * @param isInitActive If it should initially be marked as active.
-     * @param isWrapBefore If the [FlexboxLayout] should wrap before this view.
-     * @return A preconfigured [KeyPopupExtendedSingleView].
+     * @param adjustedIndex The index of the key in the key data popup array.
+     * @return A preconfigured extended popup element.
      */
-    private fun createTextView(
+    private fun createElement(
         keyView: T_KV,
-        k: Int,
-        isInitActive: Boolean = false,
-        isWrapBefore: Boolean = false
-    ): KeyPopupExtendedSingleView? {
-        val textView = KeyPopupExtendedSingleView(keyView.context, k, isInitActive)
-        val lp = FlexboxLayout.LayoutParams(keyPopupWidth, (keyPopupHeight * 0.4f).toInt())
-        lp.isWrapBefore = isWrapBefore
-        textView.layoutParams = lp
-        textView.gravity = Gravity.CENTER
-        val textSize = keyPopupTextSize
-        if (keyView is KeyView) {
-            when (keyView.data.popup[k].code) {
-                KeyCode.SETTINGS -> {
-                    textView.iconDrawable = getDrawable(
-                        keyView.context, R.drawable.ic_settings
-                    )
-                }
-                KeyCode.SWITCH_TO_TEXT_CONTEXT -> {
-                    textView.text = keyView.resources.getString(R.string.key__view_characters)
-                }
-                KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
-                    textView.iconDrawable = getDrawable(
-                        keyView.context, R.drawable.ic_sentiment_satisfied
-                    )
-                }
-                KeyCode.TOGGLE_ONE_HANDED_MODE -> {
-                    textView.iconDrawable = getDrawable(
-                        keyView.context, R.drawable.ic_smartphone
-                    )
-                }
-                else -> {
-                    textView.setTextSize(
-                        TypedValue.COMPLEX_UNIT_PX, when (keyView.data.popup[k].code) {
-                            KeyCode.URI_COMPONENT_TLD,
-                            KeyCode.SWITCH_TO_TEXT_CONTEXT -> textSize * 0.6f
-                            else -> textSize
-                        }
-                    )
-                    textView.text = keyView.getComputedLetter(keyView.data.popup[k])
+        adjustedIndex: Int
+    ): PopupExtendedView.Element {
+        return when (keyView) {
+            is KeyView -> {
+                when (keyView.data.popup[adjustedIndex].code) {
+                    KeyCode.SETTINGS -> {
+                        getDrawable(keyView.context, R.drawable.ic_settings)?.let {
+                            PopupExtendedView.Element.Icon(it, adjustedIndex)
+                        } ?: PopupExtendedView.Element.Undefined
+                    }
+                    KeyCode.SWITCH_TO_TEXT_CONTEXT -> {
+                        PopupExtendedView.Element.Label(
+                            keyView.resources.getString(R.string.key__view_characters), adjustedIndex
+                        )
+                    }
+                    KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
+                        getDrawable(keyView.context, R.drawable.ic_sentiment_satisfied)?.let {
+                            PopupExtendedView.Element.Icon(it, adjustedIndex)
+                        } ?: PopupExtendedView.Element.Undefined
+                    }
+                    KeyCode.URI_COMPONENT_TLD -> {
+                        PopupExtendedView.Element.Tld(
+                            keyView.data.popup[adjustedIndex].label, adjustedIndex
+                        )
+                    }
+                    KeyCode.TOGGLE_ONE_HANDED_MODE -> {
+                        getDrawable(keyView.context, R.drawable.ic_smartphone)?.let {
+                            PopupExtendedView.Element.Icon(it, adjustedIndex)
+                        } ?: PopupExtendedView.Element.Undefined
+                    }
+                    else -> {
+                        PopupExtendedView.Element.Label(
+                            keyView.getComputedLetter(keyView.data.popup[adjustedIndex]), adjustedIndex
+                        )
+                    }
                 }
             }
-        } else if (keyView is EmojiKeyView) {
-            textView.text = keyView.data.popup[k].getCodePointsAsString()
-        }
-        return textView
-    }
-
-    /**
-     * Helper function for a convenient way of creating a [PopupWindow].
-     *
-     * @param view The view to set as content view of the [PopupWindow].
-     * @return A new [PopupWindow] already preconfigured and ready-to-go.
-     */
-    private fun createPopupWindow(view: View): PopupWindow {
-        return PopupWindow(view.context).apply {
-            animationStyle = 0
-            contentView = view
-            elevation = ViewLayoutUtils.convertDpToPixel(2.0f, view.context)
-            enterTransition = null
-            exitTransition = null
-            isAttachedInDecor = false
-            isClippingEnabled = false
-            isFocusable = false
-            isTouchable = false
-            setBackgroundDrawable(null)
+            is EmojiKeyView -> {
+                PopupExtendedView.Element.Label(
+                    keyView.data.popup[adjustedIndex].getCodePointsAsString(), adjustedIndex
+                )
+            }
+            else -> {
+                PopupExtendedView.Element.Undefined
+            }
         }
     }
 
@@ -208,31 +176,25 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
 
         calc(keyView)
 
-        val keyPopupX = keyPopupDiffX
-        val keyPopupY = -keyPopupHeight
-        if (window.isShowing) {
-            window.update(keyView, keyPopupX, keyPopupY, keyPopupWidth, keyPopupHeight)
-        } else {
-            window.width = keyPopupWidth
-            window.height = keyPopupHeight
-            window.showAsDropDown(keyView, keyPopupX, keyPopupY, Gravity.NO_GRAVITY)
-        }
-        if (keyView is KeyView) {
-            popupView.symbol.layoutParams.height = (keyPopupHeight * 0.4f).toInt()
-            popupView.symbol.setTextSize(TypedValue.COMPLEX_UNIT_PX, keyPopupTextSize)
-            popupView.symbol.text = keyView.getComputedLetter()
-            popupView.threedots.visibility = when {
-                keyView.data.popup.size(keyHintMode) == 0 -> View.INVISIBLE
-                else -> View.VISIBLE
+        popupView.properties.apply {
+            width = keyPopupWidth
+            height = keyPopupHeight
+            xOffset = keyPopupDiffX
+            yOffset = -keyPopupHeight
+            innerLabelFactor = 0.4f
+            label = when (keyView) {
+                is KeyView -> keyView.getComputedLetter()
+                is EmojiKeyView -> keyView.data.getCodePointsAsString()
+                else -> ""
             }
-        } else if (keyView is EmojiKeyView) {
-            popupView.symbol.text = keyView.data.getCodePointsAsString()
-            popupView.threedots.visibility = when {
-                keyView.data.popup.isEmpty() -> View.INVISIBLE
-                else -> View.VISIBLE
+            labelTextSize = keyPopupTextSize
+            shouldIndicateExtendedPopups = when (keyView) {
+                is KeyView -> keyView.data.popup.size(keyHintMode) > 0
+                is EmojiKeyView -> keyView.data.popup.isNotEmpty()
+                else -> false
             }
         }
-        popupView.root.visibility = View.VISIBLE
+        popupView.show(keyView)
     }
 
     /**
@@ -277,6 +239,7 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
             else -> 0
         }
         when {
+            n <= 0 -> return
             n <= 5 -> {
                 row1count = 0
                 row0count = n
@@ -319,7 +282,7 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
         }
 
         // Build UI
-        popupViewExt.root.removeAllViews()
+        popupViewExt.properties.elements.clear()
         val initUiIndex = when {
             anchorLeft -> anchorOffset + row1count
             anchorRight -> row0count - 1 - anchorOffset + row1count
@@ -379,20 +342,16 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
         } else {
             popupIndices = IntArray(n) { it }
         }
-        for (uiIndex in uiIndices) {
-            val isInitActive = uiIndex == initUiIndex
-/*                anchorLeft && (uiIndex - row1count == anchorOffset) ||
-                anchorRight && (uiIndex - row1count == row0count - 1 - anchorOffset)*/
-            popupViewExt.root.addView(
-                createTextView(
-                    keyView, popupIndices[uiIndex], isInitActive, (row1count > 0) && (uiIndex - row1count == 0)
-                )
-            )
-            if (isInitActive) {
-                activeExtIndex = uiIndex
-            }
+        if (row1count > 0) {
+            popupViewExt.properties.elements.add(mutableListOf())
         }
-        popupView.threedots.visibility = View.INVISIBLE
+        popupViewExt.properties.elements.add(mutableListOf())
+        for (uiIndex in uiIndices) {
+            val rowIndex = if (uiIndex < row1count && row1count > 0) { 1 } else { 0 }
+            popupViewExt.properties.elements[rowIndex].add(
+                createElement(keyView, popupIndices[uiIndex])
+            )
+        }
 
         // Calculate layout params
         val extWidth = row0count * keyPopupWidth
@@ -400,19 +359,6 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
             row1count > 0 -> keyPopupHeight * 0.4f * 2.0f
             else -> keyPopupHeight * 0.4f
         }.toInt()
-        popupViewExt.root.justifyContent = if (anchorLeft) {
-            JustifyContent.FLEX_START
-        } else {
-            JustifyContent.FLEX_END
-        }
-        if (popupViewExt.root.layoutParams == null) {
-            popupViewExt.root.layoutParams = ViewGroup.LayoutParams(extWidth, extHeight)
-        } else {
-            popupViewExt.root.layoutParams.apply {
-                width = extWidth
-                height = extHeight
-            }
-        }
         val x = ((keyView.measuredWidth - keyPopupWidth) / 2) + when {
             anchorLeft -> -anchorOffset * keyPopupWidth
             anchorRight -> -extWidth + keyPopupWidth + anchorOffset * keyPopupWidth
@@ -423,14 +369,19 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
             else -> 0
         }
 
-        // Position and show popup window
-        if (windowExt.isShowing) {
-            windowExt.update(keyView, x, y, extWidth, extHeight)
-        } else {
-            windowExt.width = extWidth
-            windowExt.height = extHeight
-            windowExt.showAsDropDown(keyView, x, y, Gravity.NO_GRAVITY)
+        popupViewExt.properties.apply {
+            width = extWidth
+            height = extHeight
+            xOffset = x
+            yOffset = y
+            gravity = if (anchorLeft) { Gravity.START } else { Gravity.END }
+            labelTextSize = keyPopupTextSize
+            activeElementIndex = initUiIndex
         }
+        popupViewExt.show(keyView)
+
+        popupView.properties.shouldIndicateExtendedPopups = false
+        popupView.invalidate()
     }
 
     /**
@@ -441,7 +392,7 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
      * @param event The [MotionEvent] passed from the parent keyboard view's onTouch event.
      * @return True if the pointer movement is within the elements bounds, false otherwise.
      */
-    fun propagateMotionEvent(keyView: T_KV, event: MotionEvent, keyHintMode: KeyHintMode): Boolean {
+    fun propagateMotionEvent(keyView: T_KV, event: MotionEvent): Boolean {
         if (!isShowingExtendedPopup) {
             return false
         }
@@ -453,7 +404,7 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
             return false
         }
 
-        activeExtIndex = when {
+        popupViewExt.properties.activeElementIndex = when {
             anchorLeft -> when {
                 // check if out of boundary on x-axis
                 event.x < keyPopupDiffX - (anchorOffset + 1) * keyPopupWidth ||
@@ -499,18 +450,7 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
             }
             else -> -1
         }
-
-        val indices = when (keyView) {
-            is KeyView -> IntRange(0, keyView.data.popup.size(keyHintMode))
-            is EmojiKeyView -> keyView.data.popup.indices
-            else -> IntRange(0, 0)
-        }
-        for (k in indices) {
-            val view = popupViewExt.root.getChildAt(k)
-            if (view != null && view is KeyPopupExtendedSingleView) {
-                view.isActive = k == activeExtIndex
-            }
-        }
+        popupViewExt.invalidate()
 
         return true
     }
@@ -525,14 +465,9 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
      */
     fun getActiveKeyData(keyView: T_KV): KeyData? {
         return if (keyView is KeyView) {
-            val activeExtIndex = activeExtIndex
-            if (activeExtIndex != null) {
-                val singleView = popupViewExt.root[activeExtIndex]
-                if (singleView is KeyPopupExtendedSingleView) {
-                    keyView.data.popup.getOrNull(singleView.adjustedIndex) ?: keyView.data
-                } else {
-                    keyView.data
-                }
+            val element = popupViewExt.properties.getElementOrNull()
+            if (element != null) {
+                keyView.data.popup.getOrNull(element.adjustedIndex) ?: keyView.data
             } else {
                 keyView.data
             }
@@ -551,7 +486,12 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
      */
     fun getActiveEmojiKeyData(keyView: T_KV): EmojiKeyData? {
         return if (keyView is EmojiKeyView) {
-            keyView.data.popup.getOrNull(activeExtIndex ?: -1) ?: keyView.data
+            val element = popupViewExt.properties.getElementOrNull()
+            if (element != null) {
+                keyView.data.popup.getOrNull(element.adjustedIndex) ?: keyView.data
+            } else {
+                keyView.data
+            }
         } else {
             null
         }
@@ -561,12 +501,9 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
      * Hides the key preview popup as well as the extended popup.
      */
     fun hide() {
-        popupView.root.visibility = View.INVISIBLE
-        if (windowExt.isShowing) {
-            windowExt.dismiss()
-        }
-
-        activeExtIndex = null
+        popupView.hide()
+        popupViewExt.hide()
+        popupViewExt.properties.activeElementIndex = -1
     }
 
     /**
@@ -574,13 +511,10 @@ class KeyPopupManager<T_KBD: View, T_KV: View>(private val keyboardView: T_KBD) 
      * is closing.
      */
     fun dismissAllPopups() {
-        if (window.isShowing) {
-            window.dismiss()
-        }
-        if (windowExt.isShowing) {
-            windowExt.dismiss()
-        }
-
-        activeExtIndex = null
+        popupView.hide()
+        popupLayerView?.removeView(popupView)
+        popupViewExt.hide()
+        popupViewExt.properties.activeElementIndex = -1
+        popupLayerView?.removeView(popupViewExt)
     }
 }

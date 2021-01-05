@@ -16,22 +16,32 @@
 
 package dev.patrickgold.florisboard.ime.popup
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Canvas
 import android.util.AttributeSet
-import com.google.android.flexbox.FlexboxLayout
+import android.view.MotionEvent
+import android.widget.FrameLayout
 import dev.patrickgold.florisboard.ime.core.PrefHelper
-import dev.patrickgold.florisboard.util.*
 
-class KeyPopupExtendedView : FlexboxLayout {
+class PopupLayerView : FrameLayout {
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    override fun onDraw(canvas: Canvas?) {
-        setBackgroundTintColor2(this, prefs.theme.keyPopupBgColor)
-        super.onDraw(canvas)
+    init {
+        background = null
+        isClickable = false
+        isFocusable = false
+    }
+
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        return true
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        return false
     }
 }

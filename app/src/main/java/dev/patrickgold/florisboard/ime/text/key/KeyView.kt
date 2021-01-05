@@ -151,29 +151,6 @@ class KeyView(
         if (prefs.keyboard.hintedSymbolsMode != KeyHintMode.DISABLED && data.popup.hint?.type == KeyType.CHARACTER) {
             keyHintMode = prefs.keyboard.hintedNumberRowMode
         }
-        /*var hintKeyData: KeyData? = null
-        var hintKeyMode: KeyHintMode = KeyHintMode.DISABLED
-        val hintedNumber = data.hintedNumber
-        if (prefs.keyboard.hintedNumberRowMode != KeyHintMode.DISABLED && hintedNumber != null) {
-            hintKeyData = hintedNumber
-            hintKeyMode = prefs.keyboard.hintedNumberRowMode
-        }
-        val hintedSymbol = data.hintedSymbol
-        if (prefs.keyboard.hintedSymbolsMode != KeyHintMode.DISABLED && hintedSymbol != null) {
-            hintKeyData = hintedSymbol
-            hintKeyMode = prefs.keyboard.hintedSymbolsMode
-        }
-        dataPopupWithHint = if (hintKeyData == null) {
-            data.popup.toMutableList()
-        } else {
-            val popupList = data.popup.toMutableList()
-            if (hintKeyMode == KeyHintMode.ENABLED_HINT_PRIORITY) {
-                popupList.add(0, hintKeyData)
-            } else {
-                popupList.add(hintKeyData)
-            }
-            popupList
-        }*/
 
         updateKeyPressedBackground()
     }
@@ -277,7 +254,7 @@ class KeyView(
             MotionEvent.ACTION_MOVE -> {
                 if (keyboardView.popupManager.isShowingExtendedPopup) {
                     val isPointerWithinBounds =
-                        keyboardView.popupManager.propagateMotionEvent(this, event, keyHintMode)
+                        keyboardView.popupManager.propagateMotionEvent(this, event)
                     if (!isPointerWithinBounds && !shouldBlockNextKeyCode) {
                         keyboardView.dismissActiveKeyViewReference()
                     }
@@ -295,7 +272,6 @@ class KeyView(
                 }
             }
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                isKeyPressed = false
                 longKeyPressHandler.cancelAll()
                 repeatedKeyPressHandler.cancelAll()
                 if (hasTriggeredGestureMove && data.code == KeyCode.DELETE) {
@@ -307,13 +283,14 @@ class KeyView(
                     }
                 } else {
                     val retData = keyboardView.popupManager.getActiveKeyData(this)
-                    keyboardView.popupManager.hide()
                     if (event.actionMasked != MotionEvent.ACTION_CANCEL && !shouldBlockNextKeyCode && retData != null) {
                         florisboard?.textInputManager?.sendKeyPress(retData)
                     } else {
                         shouldBlockNextKeyCode = false
                     }
+                    keyboardView.popupManager.hide()
                 }
+                isKeyPressed = false
             }
             else -> return false
         }
@@ -648,7 +625,7 @@ class KeyView(
 
         canvas ?: return
 
-        updateKeyPressedBackground()
+        //updateKeyPressedBackground()
 
         if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE
             && data.code != KeyCode.HALF_SPACE && data.code != KeyCode.KESHIDA || data.type == KeyType.NUMERIC

@@ -18,13 +18,11 @@ package dev.patrickgold.florisboard.ime.text
 
 import android.content.Context
 import android.os.Handler
-import android.util.Log
 import android.view.KeyEvent
 import android.view.inputmethod.*
 import android.widget.LinearLayout
 import android.widget.Toast
 import android.widget.ViewFlipper
-import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.text.editing.EditingKeyboardView
@@ -121,9 +119,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         val keyboardView = KeyboardView(florisboard.context)
         keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(mode, florisboard.activeSubtype, florisboard.prefs).await()
         keyboardViews[mode] = keyboardView
-        withContext(Dispatchers.Main) {
-            textViewFlipper?.addView(keyboardView)
-        }
+        textViewFlipper?.addView(keyboardView)
     }
 
     /**
@@ -132,16 +128,14 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     override fun onRegisterInputView(inputView: InputView) {
         Timber.i("onRegisterInputView(inputView)")
 
-        launch(Dispatchers.Default) {
+        launch(Dispatchers.Main) {
             textViewGroup = inputView.findViewById(R.id.text_input)
             textViewFlipper = inputView.findViewById(R.id.text_input_view_flipper)
             editingKeyboardView = inputView.findViewById(R.id.editing)
 
             val activeKeyboardMode = getActiveKeyboardMode()
             addKeyboardView(activeKeyboardMode)
-            withContext(Dispatchers.Main) {
-                setActiveKeyboardMode(activeKeyboardMode)
-            }
+            setActiveKeyboardMode(activeKeyboardMode)
             for (mode in KeyboardMode.values()) {
                 if (mode != activeKeyboardMode && mode != KeyboardMode.SMARTBAR_NUMBER_ROW) {
                     addKeyboardView(mode)
