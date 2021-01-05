@@ -47,11 +47,6 @@ class SmartbarQuickActionButton : androidx.appcompat.widget.AppCompatImageButton
         super.onMeasure(heightMeasureSpec, heightMeasureSpec)
     }
 
-    override fun onDraw(canvas: Canvas?) {
-        updateTheme()
-        super.onDraw(canvas)
-    }
-
     private fun updateTheme() {
         if (id == R.id.private_mode_button) {
             setBackgroundTintColor2(this, prefs.theme.privateModeBgColor)

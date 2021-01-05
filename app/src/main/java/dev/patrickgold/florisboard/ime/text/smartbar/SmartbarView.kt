@@ -163,6 +163,8 @@ class SmartbarView : ConstraintLayout {
             actionEndAreaId = null
         )
 
+        updateTheme()
+
         florisboard?.textInputManager?.registerSmartbarView(this)
     }
 
@@ -315,8 +317,7 @@ class SmartbarView : ConstraintLayout {
         super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height.roundToInt(), MeasureSpec.EXACTLY))
     }
 
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
+    private fun updateTheme() {
         setBackgroundColor(prefs.theme.smartbarBgColor)
         setBackgroundTintColor2(binding.clipboardSuggestion, prefs.theme.smartbarButtonBgColor)
         setDrawableTintColor2(binding.clipboardSuggestion, prefs.theme.smartbarButtonFgColor)
