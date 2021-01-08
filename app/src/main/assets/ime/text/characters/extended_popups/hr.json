@@ -51,7 +51,7 @@
         "main": { "code": -255, "label": ".com" },
         "relevant": [
           { "code": -255, "label": ".eu" },
-          { "code": -255, "label": ".dk" },
+          { "code": -255, "label": ".hr" },
           { "code": -255, "label": ".org" },
           { "code": -255, "label": ".net" }
         ]
