@@ -10,9 +10,9 @@ fully respecting your privacy. Currently in alpha/early-beta state.
 ## Public Alpha Test Programme
 Wanna try it out on your device? Use one of the following options:
 
-_A. IzzySoft's repo for F-Droid_:
+_A. Get it on F-Droid_:
 
-[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="64" alt="IzzySoft repo badge">](https://apt.izzysoft.de/fdroid/index/apk/dev.patrickgold.florisboard)
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="64" alt="F-Droid badge">](https://f-droid.org/packages/dev.patrickgold.florisboard)
 
 _B. Google Play Public Alpha Test_:
 
@@ -31,16 +31,14 @@ tester, follow these steps:
 4. Finished! You will receive future versions of FlorisBoard via Google
    Play.
 
+With the v0.4.0 release FlorisBoard will enter the public beta in GPlay, allowing to directly search
+for and download FlorisBoard without prior joining the alpha group.
+
 _C. Use the APK provided in the release section of this repo_
 
 ### Giving feedback
 If you want to give feedback to FlorisBoard, there are several ways to
 do so, as listed [here](CONTRIBUTING.md#giving-general-feedback).
-
-### Note on F-Droid release
-FlorisBoard is currently available through Google Play and IzzySoft's
-repo for F-Droid, but is in the inclusion process for the main F-Droid
-repo.
 
 ---
 
