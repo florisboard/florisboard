@@ -19,6 +19,7 @@
     "esperanto_with_hx": "Esperanto with 'ĥ'",
     "colemak": "Colemak",
     "dvorak": "Dvorak",
+    "jcuken_russian": "Russian (JCUKEN)",
     "canadian_french": "Canadian French (QWERTY)"
   },
   "defaultSubtypes": [
@@ -156,6 +157,11 @@
       "id": 1101,
       "languageTag": "eo",
       "preferredLayout": "esperanto"
+    },
+    {
+      "id": 1201,
+      "languageTag": "ru",
+      "preferredLayout": "jcuken_russian"
     }
   ]
 }

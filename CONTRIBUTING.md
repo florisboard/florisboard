@@ -39,6 +39,10 @@ change, please do not add this kind of content yet. As FlorisBoard's
 state progresses and its core stabilizes, you will be able to add
 keyboard layouts.
 
+Currently you need to modify `app/src/main/assets/ime/config.json` to add the filename of the language/layout to the `characterLayouts` section and the `defaultSubtypes` section, making sure to include the language's IETF BCP 47 code ([ISO 639-1 language code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) and [ISO 3166-1 region code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements)). For example, Dutch as spoken in Belgium is `nl-be`.
+
+Add the keyboard layout at `app/src/main/assets/ime/text/characters/preferredLayout_name_here.json`, with `code` referring to the characters codepoint and `label` being the respective unicode character.
+
 ## Bug reporting
 
 This kind of contribution is the most important, as it tells where
