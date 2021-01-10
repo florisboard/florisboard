@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.theme
 
 import android.graphics.Color
+import com.squareup.moshi.FromJson
 
 /**
  * Sealed class.

@@ -140,6 +140,8 @@ class PrefHelper(
         PreferenceManager.setDefaultValues(context, R.xml.prefs_keyboard, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_theme, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_typing, true)
+        //theme.dayThemeRef = "assets:ime/theme/floris_day.json"
+        //theme.nightThemeRef = "assets:ime/theme/floris_night.json"
         //setPref(Keyboard.SUBTYPES, "")
         //setPref(Internal.IS_IME_SET_UP, false)
     }
@@ -436,7 +438,9 @@ class PrefHelper(
         companion object {
             const val MODE =                        "theme__mode"
             const val DAY_THEME_REF =               "theme__day_theme_ref"
+            const val DAY_THEME_ADAPT_TO_APP =      "theme__day_theme_adapt_to_app"
             const val NIGHT_THEME_REF =             "theme__night_theme_ref"
+            const val NIGHT_THEME_ADAPT_TO_APP =    "theme__night_theme_adapt_to_app"
             const val SUNRISE_TIME =                "theme__sunrise_time"
             const val SUNSET_TIME =                 "theme__sunset_time"
         }
@@ -447,14 +451,20 @@ class PrefHelper(
         var dayThemeRef: String
             get() =  prefHelper.getPref(DAY_THEME_REF, "assets:ime/theme/floris_day.json")
             set(v) = prefHelper.setPref(DAY_THEME_REF, v)
+        var dayThemeAdaptToApp: Boolean
+            get() =  prefHelper.getPref(DAY_THEME_ADAPT_TO_APP, false)
+            set(v) = prefHelper.setPref(DAY_THEME_ADAPT_TO_APP, v)
         var nightThemeRef: String
             get() =  prefHelper.getPref(NIGHT_THEME_REF, "assets:ime/theme/floris_night.json")
             set(v) = prefHelper.setPref(NIGHT_THEME_REF, v)
+        var nightThemeAdaptToApp: Boolean
+            get() =  prefHelper.getPref(NIGHT_THEME_ADAPT_TO_APP, false)
+            set(v) = prefHelper.setPref(NIGHT_THEME_ADAPT_TO_APP, v)
         var sunriseTime: Int
-            get() =  prefHelper.getPref(SUNRISE_TIME, 6*3600)
+            get() =  prefHelper.getPref(SUNRISE_TIME, 0x600) // 06:00
             set(v) = prefHelper.setPref(SUNRISE_TIME, v)
         var sunsetTime: Int
-            get() =  prefHelper.getPref(SUNSET_TIME, 18*3600)
+            get() =  prefHelper.getPref(SUNSET_TIME, 0x1200) // 18:00
             set(v) = prefHelper.setPref(SUNSET_TIME, v)
     }
 }

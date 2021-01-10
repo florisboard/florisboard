@@ -31,8 +31,8 @@ class FlorisApplication : Application() {
         }
         CrashUtility.install(this)
         val prefHelper = PrefHelper.getDefaultInstance(this)
-        prefHelper.initDefaultPreferences()
         val assetManager = AssetManager.init(this)
         ThemeManager.init(this, assetManager, prefHelper)
+        prefHelper.initDefaultPreferences()
     }
 }

@@ -18,87 +18,67 @@ package dev.patrickgold.florisboard.settings.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.ContextThemeWrapper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
+import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.databinding.SettingsFragmentThemeBinding
-import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
-import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
-import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
-import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
-import dev.patrickgold.florisboard.settings.SettingsMainActivity
-import kotlinx.coroutines.*
-import kotlin.math.roundToInt
 
-class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by MainScope(),
+class ThemeFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener {
-    private lateinit var binding: SettingsFragmentThemeBinding
-    private lateinit var keyboardView: KeyboardView
+    private var dayThemeGroup: PreferenceCategory? = null
+    private var nightThemeGroup: PreferenceCategory? = null
+    private var sunrisePref: Preference? = null
+    private var sunsetPref: Preference? = null
     private lateinit var prefs: PrefHelper
-    private val themeManager: ThemeManager = ThemeManager.default()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        addPreferencesFromResource(R.xml.prefs_theme)
+
         prefs = PrefHelper.getDefaultInstance(requireContext())
-        binding = SettingsFragmentThemeBinding.inflate(inflater, container, false)
+        dayThemeGroup = findPreference("theme__day_group")
+        nightThemeGroup = findPreference("theme__night_group")
+        sunrisePref = findPreference(PrefHelper.Theme.SUNRISE_TIME)
+        sunsetPref = findPreference(PrefHelper.Theme.SUNSET_TIME)
+        onSharedPreferenceChanged(prefs.shared, PrefHelper.Theme.MODE)
+    }
 
-        launch(Dispatchers.Main) {
-            val themeContext = ContextThemeWrapper(context, FlorisBoard.getDayNightBaseThemeId(themeManager.activeTheme.isNightTheme))
-            val layoutManager = LayoutManager(themeContext)
-            keyboardView = KeyboardView(themeContext)
-            keyboardView.layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                resources.getDimension(R.dimen.textKeyboardView_baseHeight).roundToInt()
-            ).apply {
-                val m = resources.getDimension(R.dimen.keyboard_preview_margin).toInt()
-                setMargins(m, m, m, m)
+    private fun refreshUi() {
+        when (prefs.theme.mode) {
+            ThemeMode.ALWAYS_DAY -> {
+                dayThemeGroup?.isEnabled = true
+                nightThemeGroup?.isEnabled = false
+                sunrisePref?.isVisible = false
+                sunsetPref?.isVisible = false
             }
-            prefs.sync()
-            keyboardView.isPreviewMode = true
-            val subtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
-            keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, subtype, prefs).await()
-            keyboardView.updateVisibility()
-            withContext(Dispatchers.Main) {
-                binding.root.addView(keyboardView, 0)
+            ThemeMode.ALWAYS_NIGHT -> {
+                dayThemeGroup?.isEnabled = false
+                nightThemeGroup?.isEnabled = true
+                sunrisePref?.isVisible = false
+                sunsetPref?.isVisible = false
+            }
+            ThemeMode.FOLLOW_SYSTEM -> {
+                dayThemeGroup?.isEnabled = true
+                nightThemeGroup?.isEnabled = true
+                sunrisePref?.isVisible = false
+                sunsetPref?.isVisible = false
+            }
+            ThemeMode.FOLLOW_TIME -> {
+                dayThemeGroup?.isEnabled = true
+                nightThemeGroup?.isEnabled = true
+                sunrisePref?.isVisible = true
+                sunsetPref?.isVisible = true
             }
         }
-
-        loadThemePrefFragment()
-
-        return binding.root
-    }
-
-    private fun loadThemePrefFragment() {
-        childFragmentManager
-            .beginTransaction()
-            .replace(
-                binding.prefsFrame.id,
-                SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_theme)
-            )
-            .commit()
-    }
-
-    private fun setupUi() {
-        /*when (prefs.theme.mode) {
-            ThemeMode.ALWAYS_DAY ->
-        }*/
     }
 
     override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
         prefs.sync()
         key ?: return
         if (key == PrefHelper.Theme.MODE) {
-            setupUi()
+            refreshUi()
         }
     }
 
@@ -110,10 +90,5 @@ class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by
     override fun onPause() {
         prefs.shared.unregisterOnSharedPreferenceChangeListener(this)
         super.onPause()
-    }
-
-    override fun onDestroy() {
-        cancel()
-        super.onDestroy()
     }
 }

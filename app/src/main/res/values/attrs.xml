@@ -10,6 +10,10 @@
         <attr name="unit" format="string"/>
     </declare-styleable>
 
+    <declare-styleable name="TimePickerDialogPreferenceAttrs">
+        <attr name="android:defaultValue" format="integer"/>
+    </declare-styleable>
+
     <declare-styleable name="EditingKeyView">
         <attr name="android:text" format="string|reference"/>
     </declare-styleable>

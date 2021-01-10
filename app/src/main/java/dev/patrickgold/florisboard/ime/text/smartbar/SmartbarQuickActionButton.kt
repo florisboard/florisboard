@@ -17,10 +17,8 @@
 package dev.patrickgold.florisboard.ime.text.smartbar
 
 import android.content.Context
-import android.graphics.Canvas
 import android.util.AttributeSet
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.setBackgroundTintColor2

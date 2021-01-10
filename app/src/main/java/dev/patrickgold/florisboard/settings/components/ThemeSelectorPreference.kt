@@ -23,27 +23,29 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.preference.Preference
 import androidx.preference.PreferenceManager
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.databinding.ThemeSelectorDialogBinding
-import dev.patrickgold.florisboard.databinding.ThemeSelectorListItemBinding
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.theme.Theme
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeMetaOnly
+import timber.log.Timber
 
 /**
  * Custom preference which handles the theme preset selection dialog and shows a summary in the
  * list.
  */
-class ThemePresetSelectorPreference : Preference, SharedPreferences.OnSharedPreferenceChangeListener {
+class ThemeSelectorPreference : Preference, SharedPreferences.OnSharedPreferenceChangeListener {
     private var dialog: AlertDialog? = null
-    private val metaDataCache: MutableMap<String, ThemeMetaOnly> = mutableMapOf()
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+    private val themeManager: ThemeManager = ThemeManager.default()
 
     @Suppress("unused")
     constructor(context: Context) : this(context, null)
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, R.attr.dialogPreferenceStyle)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        layoutResource = R.layout.list_item
         onPreferenceClickListener = OnPreferenceClickListener {
             showThemeSelectorDialog()
             true
@@ -71,33 +73,31 @@ class ThemePresetSelectorPreference : Preference, SharedPreferences.OnSharedPref
     }
 
     /**
-     * Generates the summary text to display and returns it. Based on the prefs.internal.theme*
-     * values and the theme meta cache.
+     * Generates the summary text to display and returns it.
      */
     private fun generateSummaryText(): String {
-        val themeKey = prefs.internal.themeCurrentBasedOn
-        val isModified = prefs.internal.themeCurrentIsModified
-        /*var metaOnly: ThemeMetaOnly? = metaDataCache[themeKey]
-        if (metaOnly == null) {
-            try {
-                metaOnly = ThemeMetaOnly.loadFromJsonFile(context, "ime/theme/$themeKey.json")
-            } catch (e: Exception) {
-                return context.resources.getString(R.string.settings__theme__undefined)
+        when (key) {
+            PrefHelper.Theme.DAY_THEME_REF -> {
+                val metaIndex = themeManager.indexedDayThemeRefs
+                AssetRef.fromString(prefs.theme.dayThemeRef).onSuccess { ref ->
+                    metaIndex[ref]?.label?.let { return it }
+                }
+            }
+            PrefHelper.Theme.NIGHT_THEME_REF -> {
+                val metaIndex = themeManager.indexedNightThemeRefs
+                AssetRef.fromString(prefs.theme.nightThemeRef).onSuccess { ref ->
+                    metaIndex[ref]?.label?.let { return it }
+                }
             }
         }
-        metaOnly ?: return context.resources.getString(R.string.settings__theme__undefined)
-        return if (isModified) {
-            String.format(context.resources.getString(R.string.settings__theme__preset_summary), metaOnly.displayName)
-        } else {
-            metaOnly.displayName
-        }*/
-        return ""
+        return "!! invalid ref !!"
     }
 
     /**
      * Shows the theme selector dialog.
      */
     private fun showThemeSelectorDialog() {
+        //sharedPreferences.edit().putString(key, "assets:ime/theme/floris_day.json").commit()
         /*val inflater =
             context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val dialogView = ThemeSelectorDialogBinding.inflate(inflater)

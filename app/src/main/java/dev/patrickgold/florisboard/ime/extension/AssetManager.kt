@@ -32,10 +32,10 @@ import java.io.File
 class AssetManager private constructor(private val applicationContext: Context) {
     private val moshi: Moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
-        .add(PolymorphicJsonAdapterFactory.of(Asset::class.java, "\$type")
+        /*.add(PolymorphicJsonAdapterFactory.of(Asset::class.java, "\$type")
             .withSubtype(PopupExtension::class.java, PopupExtension::class.qualifiedName)
             .withSubtype(Theme::class.java, Theme::class.qualifiedName)
-        )
+        )*/
         .add(LayoutTypeAdapter())
         .add(KeyTypeAdapter())
         .add(KeyVariationAdapter())

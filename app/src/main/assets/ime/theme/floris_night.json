@@ -21,7 +21,8 @@
       "background": "#424242",
       "backgroundPressed": "#616161",
       "foreground": "@window/textColor",
-      "foregroundPressed": "@window/textColor"
+      "foregroundPressed": "@window/textColor",
+      "showBorder": "true"
     },
     "key:enter": {
       "background": "@window/colorPrimary",
@@ -35,7 +36,7 @@
       "foreground": "@window/textColor",
       "foregroundPressed": "@window/textColor"
     },
-    "key:shift+capslock": {
+    "key:shift:capslock": {
       "background": "@key/background",
       "backgroundPressed": "@key/backgroundPressed",
       "foreground": "@window/colorAccent",

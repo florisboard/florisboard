@@ -24,14 +24,14 @@ import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import timber.log.Timber
+import java.util.concurrent.CopyOnWriteArrayList
 
 class ThemeManager private constructor(
     private val applicationContext: Context,
     private val assetManager: AssetManager,
     private val prefs: PrefHelper
 ) {
-    private val callbackReceivers: MutableList<OnThemeUpdatedListener?> =
-        mutableListOf()
+    private val callbackReceivers: CopyOnWriteArrayList<OnThemeUpdatedListener> = CopyOnWriteArrayList()
     var activeTheme: Theme = Theme.empty()
         private set
     var indexedDayThemeRefs: MutableMap<AssetRef, ThemeMetaOnly> = mutableMapOf()
@@ -78,6 +78,7 @@ class ThemeManager private constructor(
         } else {
             loadTheme(ref).getOr(Theme.BASE_THEME)
         }
+        Timber.i(activeTheme.label)
         notifyCallbackReceivers()
     }
 
@@ -88,45 +89,44 @@ class ThemeManager private constructor(
 
     @Synchronized
     fun registerOnThemeUpdatedListener(onThemeUpdatedListener: OnThemeUpdatedListener): Boolean {
-        return if (!callbackReceivers.contains(onThemeUpdatedListener)) {
-            onThemeUpdatedListener.onThemeUpdated(activeTheme)
-            callbackReceivers.add(onThemeUpdatedListener)
-        } else {
-            false
-        }
+        val ret = callbackReceivers.addIfAbsent(onThemeUpdatedListener)
+        onThemeUpdatedListener.onThemeUpdated(activeTheme)
+        return ret
     }
 
     @Synchronized
     fun unregisterOnThemeUpdatedListener(onThemeUpdatedListener: OnThemeUpdatedListener): Boolean {
-        val iterator = callbackReceivers.iterator()
-        var removed = false
-        while (iterator.hasNext()) {
-            val callbackReceiver = iterator.next()
-            if (callbackReceiver == null) {
-                iterator.remove()
-            } else if (callbackReceiver == onThemeUpdatedListener) {
-                iterator.remove()
-                removed = true
-            }
+        return callbackReceivers.remove(onThemeUpdatedListener)
+    }
+
+    @Synchronized
+    fun notifyCallbackReceivers() {
+        callbackReceivers.forEach {
+            it.onThemeUpdated(activeTheme)
         }
-        return removed
     }
 
     private fun loadTheme(ref: AssetRef): Result<Theme, Throwable> {
         val cached = themeCache[ref]
-        return if (cached != null) {
-            Ok(cached)
+        if (cached != null) {
+           return Ok(cached)
         } else {
-            assetManager.loadAsset(ref, Theme::class.java).onSuccess { theme ->
+            assetManager.loadAsset(ref, ThemeJson::class.java).onSuccess { themeJson ->
+                val theme = themeJson.toTheme()
                 themeCache[ref.copy()] = theme
+                return Ok(theme)
             }.onFailure {
-                Timber.i(it.toString())
+                Timber.e(it.toString())
+                return Err(it)
             }
         }
+        return Err(Exception("Unreachable code"))
     }
 
     private fun evaluateActiveThemeRef(): AssetRef? {
         Timber.i(prefs.theme.mode.toString())
+        Timber.i(prefs.theme.dayThemeRef)
+        Timber.i(prefs.theme.nightThemeRef)
         return AssetRef.fromString(when (prefs.theme.mode) {
             ThemeMode.ALWAYS_DAY -> prefs.theme.dayThemeRef
             ThemeMode.ALWAYS_NIGHT -> prefs.theme.nightThemeRef
@@ -138,7 +138,7 @@ class ThemeManager private constructor(
                 prefs.theme.dayThemeRef
             }
             ThemeMode.FOLLOW_TIME -> "assets:ime/theme/floris_day.json"
-        }).getOr(null)
+        }).onFailure { Timber.e(it) }.getOr(null)
     }
 
     private fun indexThemeRefs() {
@@ -169,12 +169,6 @@ class ThemeManager private constructor(
             }
         }.onFailure {
             Timber.e(it.toString())
-        }
-    }
-
-    private fun notifyCallbackReceivers() {
-        for (callbackReceiver in callbackReceivers) {
-            callbackReceiver?.onThemeUpdated(activeTheme)
         }
     }
 

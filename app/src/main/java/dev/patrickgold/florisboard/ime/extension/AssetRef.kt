@@ -38,7 +38,7 @@ data class AssetRef(
 
         fun fromString(str: String): Result<AssetRef, String> {
             val items = str.split(DELIMITER)
-            if (items.size != 3) {
+            if (items.size != 2) {
                 return Err("Unexpected length of given asset ref. Make sure that the asset ref string contains exactly 2 items separated by '$DELIMITER'!")
             }
             val retSource = AssetSource.fromString(items[0]).getOrElse {

@@ -218,7 +218,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         initializeOneHandedEnvironment()
         updateSoftInputWindowLayoutParameters()
         updateOneHandedPanelVisibility()
-        themeManager.requestThemeUpdate(this)
+        themeManager.notifyCallbackReceivers()
 
         eventListeners.toList().forEach { it?.get()?.onRegisterInputView(inputView) }
     }

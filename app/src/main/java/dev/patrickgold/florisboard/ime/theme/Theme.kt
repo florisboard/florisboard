@@ -17,27 +17,21 @@
 package dev.patrickgold.florisboard.ime.theme
 
 import dev.patrickgold.florisboard.ime.extension.Asset
+import timber.log.Timber
 
 /**
  * Data class which holds a parsed theme json file. Used for loading a theme
  * preset in Settings.
  * Note: this implementation is generic and allows for any group/attr names.
  *       FlorisBoard itself expects certain groups and attrs to be able to
- *       color the controls accordingly. See 'ime/themes/floris_day.json'
+ *       color the controls accordingly. See 'ime/theme/floris_day.json'
  *       for a good example of which attributes FlorisBoard needs!
  *
- * @property name A unique id/name for this theme. Must only contain certain
- *  characters: upper/lower case letters, numbers (not at the beginning!) or
- *  an underline (_).
- * @property displayName The name of this theme when shown to the user. Can
- *  contain any valid Unicode character.
- * @property author The name of the author of this theme. Should be your
- *  username on GitHub/GitLab/BitBucket/... or your full name.
  * @property isNightTheme If this theme is meant for display at day (false)
  *  or night (true). This property is only used to auto-assign this theme to
  *  either the day or night theme list in Settings, which is used when the
  *  user wants to auto-set his theme based on the current time.
- * @property rawAttrs Map which holds the raw attributes of this theme. Note
+ * @property attributes Map which holds the raw attributes of this theme. Note
  *  that the name of this property is 'attributes' within the json file!
  *  Attributes are always grouped together. This ensures a better structure
  *  and easier storage. The group- as well as the attr-name has the same
@@ -129,13 +123,17 @@ class Theme(
 
     fun getAttr(ref: ThemeValue.Reference, specific: String? = null): ThemeValue {
         var loopRef = ref
+        var specificInternal: String? = specific
         var value: ThemeValue
         while (true) {
-            value = getAttrInternal(loopRef, specific)
+            value = getAttrInternal(loopRef, specificInternal)
             if (value !is ThemeValue.Reference) {
                 break
             } else {
                 loopRef = value
+                if (specificInternal != null) {
+                    specificInternal = null
+                }
             }
         }
         return value
@@ -143,16 +141,18 @@ class Theme(
 
     private fun getAttrInternal(ref: ThemeValue.Reference, specific: String? = null): ThemeValue {
         if (specific != null) {
-            getAttrOrNull(ref.copy(attr = ref.attr + ":" + specific))?.let { return it }
+            getAttrOrNull(ref.copy(group = ref.group + ":" + specific))?.let { return it }
         }
         getAttrOrNull(ref)?.let { return it }
         return ThemeValue.SolidColor(0)
     }
 
     private fun getAttrOrNull(ref: ThemeValue.Reference): ThemeValue? {
+        Timber.i(ref.toString())
         return attributes[ref.group]?.get(ref.attr)
     }
 
+    @Suppress("unused")
     abstract class Attr {
         companion object {
             val WINDOW_COLOR_PRIMARY = ThemeValue.Reference("window", "colorPrimary")
@@ -191,6 +191,23 @@ class Theme(
             val SMARTBAR_BUTTON_BACKGROUND = ThemeValue.Reference("smartbarButton", "background")
             val SMARTBAR_BUTTON_FOREGROUND = ThemeValue.Reference("smartbarButton", "foreground")
         }
+    }
+}
+
+/**
+ * Bridge data class so Moshi can handle Theme serialization/deserialization properly.
+ */
+class ThemeJson(
+    override val name: String,
+    override val label: String = name,
+    override val authors: List<String>,
+    private val isNightTheme: Boolean = false,
+    private val attributes: Map<String, Map<String, String>>
+) : Asset {
+    fun toTheme(): Theme {
+        return Theme(name, label, authors, isNightTheme, attributes.mapValues { group ->
+            group.component2().mapValues { entry -> ThemeValue.fromString(entry.component2()) }
+        })
     }
 }
 
