@@ -31,6 +31,8 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import kotlinx.coroutines.*
 import kotlin.math.roundToInt
@@ -40,6 +42,7 @@ class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by
     private lateinit var binding: SettingsFragmentThemeBinding
     private lateinit var keyboardView: KeyboardView
     private lateinit var prefs: PrefHelper
+    private val themeManager: ThemeManager = ThemeManager.default()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,7 +53,7 @@ class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by
         binding = SettingsFragmentThemeBinding.inflate(inflater, container, false)
 
         launch(Dispatchers.Main) {
-            val themeContext = ContextThemeWrapper(context, FlorisBoard.getDayNightBaseThemeId(prefs.internal.themeCurrentIsNight))
+            val themeContext = ContextThemeWrapper(context, FlorisBoard.getDayNightBaseThemeId(themeManager.activeTheme.isNightTheme))
             val layoutManager = LayoutManager(themeContext)
             keyboardView = KeyboardView(themeContext)
             keyboardView.layoutParams = LinearLayout.LayoutParams(
@@ -65,7 +68,6 @@ class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by
             val subtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
             keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, subtype, prefs).await()
             keyboardView.updateVisibility()
-            keyboardView.onApplyThemeAttributes()
             withContext(Dispatchers.Main) {
                 binding.root.addView(keyboardView, 0)
             }
@@ -86,18 +88,17 @@ class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by
             .commit()
     }
 
+    private fun setupUi() {
+        /*when (prefs.theme.mode) {
+            ThemeMode.ALWAYS_DAY ->
+        }*/
+    }
+
     override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
         prefs.sync()
         key ?: return
-        if (key == PrefHelper.Internal.THEME_CURRENT_BASED_ON ||
-            key == PrefHelper.Internal.THEME_CURRENT_IS_MODIFIED && !prefs.internal.themeCurrentIsModified) {
-            loadThemePrefFragment()
-        }
-        if (key.startsWith("theme__")) {
-            prefs.internal.themeCurrentIsModified = true
-            keyboardView.onApplyThemeAttributes()
-            keyboardView.invalidate()
-            keyboardView.invalidateAllKeys()
+        if (key == PrefHelper.Theme.MODE) {
+            setupUi()
         }
     }
 

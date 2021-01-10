@@ -34,6 +34,8 @@ import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.theme.Theme
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import kotlin.math.roundToInt
 
 /**
@@ -44,7 +46,8 @@ import kotlin.math.roundToInt
  *
  * @property florisboard Reference to instance of core class [FlorisBoard].
  */
-class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Listener {
+class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Listener,
+    ThemeManager.OnThemeUpdatedListener {
     private var activeKeyView: KeyView? = null
     private var activePointerId: Int? = null
     private var activeX: Float = 0.0f
@@ -63,6 +66,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     var isSmartbarKeyboardView: Boolean = false
     var popupManager = PopupManager<KeyboardView, KeyView>(this, florisboard?.popupLayerView)
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+    private val themeManager: ThemeManager = ThemeManager.default()
     private val swipeGestureDetector = SwipeGesture.Detector(context, this)
 
     constructor(context: Context) : this(context, null)
@@ -92,6 +96,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
             }
             addView(rowView)
         }
+        themeManager.requestThemeUpdate(this)
     }
 
     /**
@@ -101,12 +106,18 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
         removeAllViews()
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        themeManager.registerOnThemeUpdatedListener(this)
+    }
+
     /**
      * Dismisses all shown key popups when keyboard is detached from window.
      */
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         popupManager.dismissAllPopups()
+        themeManager.unregisterOnThemeUpdatedListener(this)
     }
 
     override fun onWindowShown() {
@@ -314,9 +325,18 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
         )
     }
 
-    override fun onApplyThemeAttributes() {
+    override fun onThemeUpdated(theme: Theme) {
         if (isPreviewMode) {
-            setBackgroundColor(prefs.theme.keyboardBgColor)
+            setBackgroundColor(theme.getAttr(Theme.Attr.KEYBOARD_BACKGROUND).toSolidColor().color)
+        }
+        for (row in children) {
+            if (row is ViewGroup) {
+                for (keyView in row.children) {
+                    if (keyView is ThemeManager.OnThemeUpdatedListener) {
+                        keyView.onThemeUpdated(theme)
+                    }
+                }
+            }
         }
     }
 

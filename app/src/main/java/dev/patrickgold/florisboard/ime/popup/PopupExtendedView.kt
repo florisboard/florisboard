@@ -27,12 +27,13 @@ import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.theme.Theme
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import kotlin.math.min
 
-class PopupExtendedView : View {
-    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+class PopupExtendedView : View, ThemeManager.OnThemeUpdatedListener {
+    private val themeManager: ThemeManager = ThemeManager.default()
 
     private val activeBackgroundDrawable: PaintDrawable = PaintDrawable()
     private var backgroundDrawable: PaintDrawable = PaintDrawable()
@@ -79,21 +80,30 @@ class PopupExtendedView : View {
     init {
         visibility = GONE
         background = backgroundDrawable
-        onApplyThemeAttributes()
     }
 
-    fun onApplyThemeAttributes() {
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        themeManager.registerOnThemeUpdatedListener(this)
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        themeManager.unregisterOnThemeUpdatedListener(this)
+    }
+
+    override fun onThemeUpdated(theme: Theme) {
         activeBackgroundDrawable.apply {
-            setTint(prefs.theme.keyPopupBgColorActive)
+            setTint(theme.getAttr(Theme.Attr.POPUP_BACKGROUND_ACTIVE).toSolidColor().color)
             setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
         }
         backgroundDrawable.apply {
-            setTint(prefs.theme.keyPopupBgColor)
+            setTint(theme.getAttr(Theme.Attr.POPUP_BACKGROUND).toSolidColor().color)
             setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
         }
         elevation = ViewLayoutUtils.convertDpToPixel(4.0f, context)
-        labelPaint.color = prefs.theme.keyPopupFgColor
-        tldPaint.color = prefs.theme.keyPopupFgColor
+        labelPaint.color = theme.getAttr(Theme.Attr.POPUP_FOREGROUND).toSolidColor().color
+        tldPaint.color = theme.getAttr(Theme.Attr.POPUP_FOREGROUND).toSolidColor().color
         if (isShowing) {
             invalidate()
         }

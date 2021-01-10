@@ -77,7 +77,7 @@ class ThemePresetSelectorPreference : Preference, SharedPreferences.OnSharedPref
     private fun generateSummaryText(): String {
         val themeKey = prefs.internal.themeCurrentBasedOn
         val isModified = prefs.internal.themeCurrentIsModified
-        var metaOnly: ThemeMetaOnly? = metaDataCache[themeKey]
+        /*var metaOnly: ThemeMetaOnly? = metaDataCache[themeKey]
         if (metaOnly == null) {
             try {
                 metaOnly = ThemeMetaOnly.loadFromJsonFile(context, "ime/theme/$themeKey.json")
@@ -90,14 +90,15 @@ class ThemePresetSelectorPreference : Preference, SharedPreferences.OnSharedPref
             String.format(context.resources.getString(R.string.settings__theme__preset_summary), metaOnly.displayName)
         } else {
             metaOnly.displayName
-        }
+        }*/
+        return ""
     }
 
     /**
      * Shows the theme selector dialog.
      */
     private fun showThemeSelectorDialog() {
-        val inflater =
+        /*val inflater =
             context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val dialogView = ThemeSelectorDialogBinding.inflate(inflater)
         val selectedThemeView = ThemeSelectorListItemBinding.inflate(inflater)
@@ -134,7 +135,7 @@ class ThemePresetSelectorPreference : Preference, SharedPreferences.OnSharedPref
             create()
             dialog = show()
             dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
-        }
+        }*/
     }
 
     /**
@@ -144,7 +145,7 @@ class ThemePresetSelectorPreference : Preference, SharedPreferences.OnSharedPref
      * @param themeKey The key of the Theme preset to be applied.
      */
     private fun applyThemePreset(themeKey: String) {
-        val theme = Theme.fromJsonFile(context, "ime/theme/$themeKey.json") ?: return
-        Theme.writeThemeToPrefs(prefs, theme)
+        /*val theme = Theme.fromJsonFile(context, "ime/theme/$themeKey.json") ?: return
+        Theme.writeThemeToPrefs(prefs, theme)*/
     }
 }

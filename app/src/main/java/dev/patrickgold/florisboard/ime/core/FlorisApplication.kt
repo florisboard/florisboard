@@ -19,13 +19,20 @@ package dev.patrickgold.florisboard.ime.core
 import android.app.Application
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.crashutility.CrashUtility
+import dev.patrickgold.florisboard.ime.extension.AssetManager
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import timber.log.Timber
 
 class FlorisApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        CrashUtility.install(this)
-        if (BuildConfig.DEBUG)
+        if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
+        }
+        CrashUtility.install(this)
+        val prefHelper = PrefHelper.getDefaultInstance(this)
+        prefHelper.initDefaultPreferences()
+        val assetManager = AssetManager.init(this)
+        ThemeManager.init(this, assetManager, prefHelper)
     }
 }

@@ -27,14 +27,12 @@ import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
 import android.os.*
 import android.provider.Settings
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageButton
 import com.squareup.moshi.Json
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
@@ -45,6 +43,8 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.theme.Theme
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.util.*
 import timber.log.Timber
@@ -60,7 +60,8 @@ private var florisboardInstance: FlorisBoard? = null
  * Core class responsible to link together both the text and media input managers as well as
  * managing the one-handed UI.
  */
-class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedListener {
+class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedListener,
+    ThemeManager.OnThemeUpdatedListener {
     lateinit var prefs: PrefHelper
         private set
 
@@ -76,6 +77,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     private var audioManager: AudioManager? = null
     private var imeManager:InputMethodManager? = null
     var clipboardManager: ClipboardManager? = null
+    private val themeManager: ThemeManager = ThemeManager.default()
     private var vibrator: Vibrator? = null
     private val osHandler = Handler()
 
@@ -183,11 +185,11 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         subtypeManager = SubtypeManager(this, prefs)
         activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
 
-        currentThemeIsNight = prefs.internal.themeCurrentIsNight
+        currentThemeIsNight = themeManager.activeTheme.isNightTheme
         currentThemeResId = getDayNightBaseThemeId(currentThemeIsNight)
         isNumberRowVisible = prefs.keyboard.numberRow
         setTheme(currentThemeResId)
-        updateTheme()
+        themeManager.registerOnThemeUpdatedListener(this)
 
         AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
 
@@ -214,9 +216,9 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
 
         this.inputView = inputView
         initializeOneHandedEnvironment()
-        updateTheme()
         updateSoftInputWindowLayoutParameters()
         updateOneHandedPanelVisibility()
+        themeManager.requestThemeUpdate(this)
 
         eventListeners.toList().forEach { it?.get()?.onRegisterInputView(inputView) }
     }
@@ -224,6 +226,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     override fun onDestroy() {
         Timber.i("onDestroy()")
 
+        themeManager.unregisterOnThemeUpdatedListener(this)
         clipboardManager?.removePrimaryClipChangedListener(this)
         osHandler.removeCallbacksAndMessages(null)
         florisboardInstance = null
@@ -278,7 +281,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
             textInputManager.layoutManager.clearLayoutCache(KeyboardMode.CHARACTERS)
             isNumberRowVisible = newIsNumberRowVisible
         }
-        updateTheme()
+        themeManager.update()
         updateOneHandedPanelVisibility()
         activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
         onSubtypeChanged(activeSubtype)
@@ -323,15 +326,11 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         eventListeners.toList().forEach { it?.get()?.onUpdateSelection() }
     }
 
-    /**
-     * Updates the theme of the IME Window, status and navigation bar, as well as the InputView and
-     * some of its components.
-     */
-    private fun updateTheme() {
+    override fun onThemeUpdated(theme: Theme) {
         // Rebuild the UI if the theme has changed from day to night or vice versa to prevent
         //  theme glitches with scrollbars and hints of buttons in the media UI. If the UI must be
         //  rebuild, quit this method, as it will be called again by the newly created UI.
-        val newThemeIsNightMode =  prefs.internal.themeCurrentIsNight
+        val newThemeIsNightMode =  theme.isNightTheme
         if (currentThemeIsNight != newThemeIsNightMode) {
             currentThemeResId = getDayNightBaseThemeId(newThemeIsNightMode)
             currentThemeIsNight = newThemeIsNightMode
@@ -344,9 +343,9 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         var flags = w.decorView.systemUiVisibility
 
         // Update navigation bar theme
-        w.navigationBarColor = prefs.theme.navBarColor
+        w.navigationBarColor = theme.getAttr(Theme.Attr.WINDOW_NAVIGATION_BAR_COLOR).toSolidColor().color
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-            flags = if (prefs.theme.navBarIsLight) {
+            flags = if (theme.getAttr(Theme.Attr.WINDOW_NAVIGATION_BAR_LIGHT).toOnOff().state) {
                 flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
             } else {
                 flags and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
@@ -365,10 +364,10 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         w.decorView.systemUiVisibility = flags
 
         // Update InputView theme
-        inputView?.setBackgroundColor(prefs.theme.keyboardBgColor)
-        inputView?.oneHandedCtrlPanelStart?.setBackgroundColor(prefs.theme.oneHandedBgColor)
-        inputView?.oneHandedCtrlPanelEnd?.setBackgroundColor(prefs.theme.oneHandedBgColor)
-        ColorStateList.valueOf(prefs.theme.oneHandedButtonFgColor).also {
+        inputView?.setBackgroundColor(theme.getAttr(Theme.Attr.KEYBOARD_BACKGROUND).toSolidColor().color)
+        inputView?.oneHandedCtrlPanelStart?.setBackgroundColor(theme.getAttr(Theme.Attr.ONE_HANDED_BACKGROUND).toSolidColor().color)
+        inputView?.oneHandedCtrlPanelEnd?.setBackgroundColor(theme.getAttr(Theme.Attr.ONE_HANDED_BACKGROUND).toSolidColor().color)
+        ColorStateList.valueOf(theme.getAttr(Theme.Attr.ONE_HANDED_FOREGROUND).toSolidColor().color).also {
             inputView?.oneHandedCtrlMoveStart?.imageTintList = it
             inputView?.oneHandedCtrlMoveEnd?.imageTintList = it
             inputView?.oneHandedCtrlCloseStart?.imageTintList = it

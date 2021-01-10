@@ -1,65 +1,71 @@
 {
+  "$type": "dev.patrickgold.florisboard.ime.theme.Theme",
   "name": "floris_day",
-  "displayName": "Floris Day",
-  "author": "patrickgold",
+  "label": "Floris Day",
+  "authors": [ "patrickgold" ],
   "isNightTheme": false,
-  "showKeyBorder": true,
   "attributes": {
     "window": {
       "colorPrimary": "#4CAF50",
       "colorPrimaryDark": "#388E3C",
       "colorAccent": "#FF9800",
-      "navigationBarColor": "@keyboard/bgColor",
+      "navigationBarColor": "@keyboard/background",
       "navigationBarLight": "true",
       "semiTransparentColor": "#20000000",
       "textColor": "#000000"
     },
     "keyboard": {
-      "bgColor": "#E0E0E0"
+      "background": "#E0E0E0"
     },
     "key": {
-      "bgColor": "#FFFFFF",
-      "bgColorPressed": "#F5F5F5",
-      "fgColor": "@window/textColor"
+      "background": "#FFFFFF",
+      "backgroundPressed": "#F5F5F5",
+      "foreground": "@window/textColor",
+      "foregroundPressed": "@window/textColor"
     },
-    "keyEnter": {
-      "bgColor": "@window/colorPrimary",
-      "bgColorPressed": "@window/colorPrimaryDark",
-      "fgColor": "#FFFFFF"
+    "key:enter": {
+      "background": "@window/colorPrimary",
+      "backgroundPressed": "@window/colorPrimaryDark",
+      "foreground": "#FFFFFF",
+      "foregroundPressed": "#FFFFFF"
     },
-    "keyPopup": {
-      "bgColor": "#EEEEEE",
-      "bgColorActive": "#BDBDBD",
-      "fgColor": "@window/textColor"
+    "key:shift": {
+      "background": "@key/background",
+      "backgroundPressed": "@key/backgroundPressed",
+      "foreground": "@window/textColor",
+      "foregroundPressed": "@window/textColor"
     },
-    "keyShift": {
-      "bgColor": "@key/bgColor",
-      "bgColorPressed": "@key/bgColorPressed",
-      "fgColor": "@window/textColor",
-      "fgColorCapsLock": "@window/colorAccent"
+    "key:shift+capslock": {
+      "background": "@key/background",
+      "backgroundPressed": "@key/backgroundPressed",
+      "foreground": "@window/colorAccent",
+      "foregroundPressed": "@window/colorAccent"
     },
     "media": {
-      "fgColor": "@window/textColor",
-      "fgColorAlt": "#757575"
+      "foreground": "@window/textColor",
+      "foregroundAlt": "#757575"
     },
     "oneHanded": {
-      "bgColor": "#E8F5E9"
+      "background": "#E8F5E9",
+      "foreground": "#424242"
     },
-    "oneHandedButton": {
-      "fgColor": "#424242"
+    "popup": {
+      "background": "#EEEEEE",
+      "backgroundActive": "#BDBDBD",
+      "foreground": "@window/textColor"
     },
     "privateMode": {
-      "bgColor": "#A000FF",
-      "fgColor": "#FFFFFF"
+      "background": "#A000FF",
+      "foreground": "#FFFFFF"
     },
     "smartbar": {
-      "bgColor": "transparent",
-      "fgColor": "@window/textColor",
-      "fgColorAlt": "#8A8A8A"
+      "background": "transparent",
+      "foreground": "@window/textColor",
+      "foregroundAlt": "#8A8A8A"
     },
     "smartbarButton": {
-      "bgColor": "@key/bgColor",
-      "fgColor": "@key/fgColor"
+      "background": "@key/background",
+      "foreground": "@key/foreground"
     }
   }
 }

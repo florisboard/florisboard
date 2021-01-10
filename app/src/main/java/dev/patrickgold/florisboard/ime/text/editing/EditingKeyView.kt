@@ -33,15 +33,19 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.ime.theme.Theme
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import dev.patrickgold.florisboard.util.cancelAll
 import dev.patrickgold.florisboard.util.postAtScheduledRate
 
 /**
  * View class for managing and rendering an editing key.
  */
-class EditingKeyView : AppCompatImageButton {
+class EditingKeyView : AppCompatImageButton, ThemeManager.OnThemeUpdatedListener {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+    private val themeManager: ThemeManager = ThemeManager.default()
     private val data: KeyData
     private var isKeyPressed: Boolean = false
     private val repeatedKeyPressHandler: Handler = Handler(context.mainLooper)
@@ -56,6 +60,10 @@ class EditingKeyView : AppCompatImageButton {
         textSize = Button(context).textSize
         typeface = Typeface.DEFAULT
     }
+
+    private var colorHighlightedEnabled: ThemeValue = ThemeValue.SolidColor(0)
+    private var colorEnabled: ThemeValue = ThemeValue.SolidColor(0)
+    private var colorDefault: ThemeValue = ThemeValue.SolidColor(0)
 
     var isHighlighted: Boolean = false
         set(value) { field = value; invalidate() }
@@ -83,6 +91,16 @@ class EditingKeyView : AppCompatImageButton {
             label = getString(R.styleable.EditingKeyView_android_text)
             recycle()
         }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        themeManager.registerOnThemeUpdatedListener(this)
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        themeManager.unregisterOnThemeUpdatedListener(this)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -125,6 +143,16 @@ class EditingKeyView : AppCompatImageButton {
         return true
     }
 
+    override fun onThemeUpdated(theme: Theme) {
+        imageTintList = ColorStateList.valueOf(when {
+            isEnabled -> theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND).toSolidColor().color
+            else -> theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND_ALT).toSolidColor().color
+        })
+        colorHighlightedEnabled = theme.getAttr(Theme.Attr.WINDOW_COLOR_PRIMARY)
+        colorEnabled = theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND_ALT)
+        colorDefault = theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND)
+    }
+
     /**
      * Draw the key label / drawable.
      */
@@ -133,20 +161,15 @@ class EditingKeyView : AppCompatImageButton {
 
         canvas ?: return
 
-        imageTintList = ColorStateList.valueOf(when {
-            isEnabled -> prefs.theme.smartbarFgColor
-            else -> prefs.theme.smartbarFgColorAlt
-        })
-
         // Draw label
         val label = label
         if (label != null) {
             labelPaint.color = if (isHighlighted && isEnabled) {
-                prefs.theme.colorPrimary
+                colorHighlightedEnabled.toSolidColor().color
             } else if (!isEnabled) {
-                prefs.theme.smartbarFgColorAlt
+                colorEnabled.toSolidColor().color
             } else {
-                prefs.theme.smartbarFgColor
+                colorDefault.toSolidColor().color
             }
             val isPortrait =
                 resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT

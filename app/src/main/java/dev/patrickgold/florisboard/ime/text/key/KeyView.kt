@@ -20,6 +20,7 @@ import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.graphics.*
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.PaintDrawable
 import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
@@ -38,10 +39,10 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
-import dev.patrickgold.florisboard.util.cancelAll
-import dev.patrickgold.florisboard.util.postAtScheduledRate
-import dev.patrickgold.florisboard.util.postDelayed
-import dev.patrickgold.florisboard.util.setBackgroundTintColor2
+import dev.patrickgold.florisboard.ime.theme.Theme
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.ime.theme.ThemeValue
+import dev.patrickgold.florisboard.util.*
 import java.util.*
 
 /**
@@ -56,7 +57,7 @@ import java.util.*
 class KeyView(
     private val keyboardView: KeyboardView,
     val data: FlorisKeyData
-) : View(keyboardView.context), SwipeGesture.Listener {
+) : View(keyboardView.context), SwipeGesture.Listener, ThemeManager.OnThemeUpdatedListener {
     private var isKeyPressed: Boolean = false
         set(value) {
             field = value
@@ -69,6 +70,9 @@ class KeyView(
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private var shouldBlockNextKeyCode: Boolean = false
 
+    private var backgroundDrawable: PaintDrawable = PaintDrawable().apply {
+        setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
+    }
     private var desiredWidth: Int = 0
     private var desiredHeight: Int = 0
     private var drawable: Drawable? = null
@@ -96,6 +100,13 @@ class KeyView(
         typeface = Typeface.DEFAULT
     }
     private val tempRect: Rect = Rect()
+
+    private var keyBackground: ThemeValue = ThemeValue.SolidColor(0)
+    private var keyBackgroundPressed: ThemeValue = ThemeValue.SolidColor(0)
+    private var keyForeground: ThemeValue = ThemeValue.SolidColor(0)
+    private var keyForegroundAlt: ThemeValue = ThemeValue.SolidColor(0)
+    private var keyForegroundPressed: ThemeValue = ThemeValue.SolidColor(0)
+    private var shouldShowBorder: Boolean = true
 
     var florisboard: FlorisBoard? = null
     private val swipeGestureDetector = SwipeGesture.Detector(context, this)
@@ -142,8 +153,8 @@ class KeyView(
         }
         setPadding(0, 0, 0, 0)
 
-        background = getDrawable(context, R.drawable.shape_rect_rounded)
-        elevation = if(prefs.theme.keyShowBorder) 4.0f else 0.0f
+        background = backgroundDrawable
+        elevation = if(shouldShowBorder) 4.0f else 0.0f
 
         if (prefs.keyboard.hintedNumberRowMode != KeyHintMode.DISABLED && data.popup.hint?.type == KeyType.NUMERIC) {
             keyHintMode = prefs.keyboard.hintedNumberRowMode
@@ -481,50 +492,35 @@ class KeyView(
         }
     }
 
+    override fun onThemeUpdated(theme: Theme) {
+        if (keyboardView.isSmartbarKeyboardView) {
+            keyBackground = theme.getAttr(Theme.Attr.SMARTBAR_BACKGROUND)
+            keyBackgroundPressed = theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND)
+            keyForeground = theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND)
+            keyForegroundAlt = theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND_ALT)
+            keyForegroundPressed = theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND)
+            shouldShowBorder = false
+        } else {
+            keyBackground = theme.getAttr(Theme.Attr.KEY_BACKGROUND, data.label)
+            keyBackgroundPressed = theme.getAttr(Theme.Attr.KEY_BACKGROUND_PRESSED, data.label)
+            keyForeground = theme.getAttr(Theme.Attr.KEY_FOREGROUND, data.label)
+            keyForegroundAlt = ThemeValue.SolidColor(0)
+            keyForegroundPressed = theme.getAttr(Theme.Attr.KEY_FOREGROUND_PRESSED, data.label)
+            shouldShowBorder = theme.getAttr(Theme.Attr.KEY_SHOW_BORDER, data.label).toOnOff().state
+        }
+        updateKeyPressedBackground()
+    }
+
     /**
      * Updates the background depending on [isKeyPressed] and [data].
      */
     private fun updateKeyPressedBackground() {
-        when {
-            keyboardView.isSmartbarKeyboardView -> {
-                elevation = 0.0f
-                setBackgroundTintColor2(
-                    this, when {
-                        isKeyPressed && isEnabled -> prefs.theme.smartbarButtonBgColor
-                        else -> prefs.theme.smartbarBgColor
-                    }
-                )
-            }
-            else -> {
-                elevation = if(prefs.theme.keyShowBorder) 4.0f else 0.0f
-                when (data.code) {
-                    KeyCode.ENTER -> {
-                        setBackgroundTintColor2(
-                            this, when {
-                                isKeyPressed && isEnabled -> prefs.theme.keyEnterBgColorPressed
-                                else -> prefs.theme.keyEnterBgColor
-                            }
-                        )
-                    }
-                    KeyCode.SHIFT -> {
-                        setBackgroundTintColor2(
-                            this, when {
-                                isKeyPressed && isEnabled -> prefs.theme.keyShiftBgColorPressed
-                                else -> prefs.theme.keyShiftBgColor
-                            }
-                        )
-                    }
-                    else -> {
-                        setBackgroundTintColor2(
-                            this, when {
-                                isKeyPressed && isEnabled -> prefs.theme.keyBgColorPressed
-                                else -> prefs.theme.keyBgColor
-                            }
-                        )
-                    }
-                }
-            }
-        }
+        elevation = if (shouldShowBorder) 4.0f else 0.0f
+        backgroundDrawable.setTint(when {
+            isKeyPressed && isEnabled -> keyBackgroundPressed.toSolidColor().color
+            else -> keyBackground.toSolidColor().color
+        })
+        invalidate()
     }
 
     /**
@@ -625,8 +621,6 @@ class KeyView(
 
         canvas ?: return
 
-        //updateKeyPressedBackground()
-
         if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE
             && data.code != KeyCode.HALF_SPACE && data.code != KeyCode.KESHIDA || data.type == KeyType.NUMERIC
         ) {
@@ -643,31 +637,31 @@ class KeyView(
             when (data.code) {
                 KeyCode.ARROW_LEFT -> {
                     drawable = getDrawable(context, R.drawable.ic_keyboard_arrow_left)
-                    drawableColor = prefs.theme.keyFgColor
+                    drawableColor = keyForeground.toSolidColor().color
                 }
                 KeyCode.ARROW_RIGHT -> {
                     drawable = getDrawable(context, R.drawable.ic_keyboard_arrow_right)
-                    drawableColor = prefs.theme.keyFgColor
+                    drawableColor = keyForeground.toSolidColor().color
                 }
                 KeyCode.CLIPBOARD_COPY -> {
                     drawable = getDrawable(context, R.drawable.ic_content_copy)
-                    drawableColor = prefs.theme.keyFgColor
+                    drawableColor = keyForeground.toSolidColor().color
                 }
                 KeyCode.CLIPBOARD_CUT -> {
                     drawable = getDrawable(context, R.drawable.ic_content_cut)
-                    drawableColor = prefs.theme.keyFgColor
+                    drawableColor = keyForeground.toSolidColor().color
                 }
                 KeyCode.CLIPBOARD_PASTE -> {
                     drawable = getDrawable(context, R.drawable.ic_content_paste)
-                    drawableColor = prefs.theme.keyFgColor
+                    drawableColor = keyForeground.toSolidColor().color
                 }
                 KeyCode.CLIPBOARD_SELECT_ALL -> {
                     drawable = getDrawable(context, R.drawable.ic_select_all)
-                    drawableColor = prefs.theme.keyFgColor
+                    drawableColor = keyForeground.toSolidColor().color
                 }
                 KeyCode.DELETE -> {
                     drawable = getDrawable(context, R.drawable.ic_backspace)
-                    drawableColor = prefs.theme.keyFgColor
+                    drawableColor = keyForeground.toSolidColor().color
                 }
                 KeyCode.ENTER -> {
                     val imeOptions = florisboard?.activeEditorInstance?.imeOptions ?: ImeOptions.default()
@@ -681,29 +675,29 @@ class KeyView(
                         ImeOptions.Action.SEND -> R.drawable.ic_send
                         ImeOptions.Action.UNSPECIFIED -> R.drawable.ic_keyboard_return
                     })
-                    drawableColor = prefs.theme.keyEnterFgColor
+                    drawableColor = keyForeground.toSolidColor().color
                     if (imeOptions.flagNoEnterAction) {
                         drawable = getDrawable(context, R.drawable.ic_keyboard_return)
                     }
                 }
                 KeyCode.LANGUAGE_SWITCH -> {
                     drawable = getDrawable(context, R.drawable.ic_language)
-                    drawableColor = prefs.theme.keyFgColor
+                    drawableColor = keyForeground.toSolidColor().color
                 }
                 KeyCode.PHONE_PAUSE -> label = resources.getString(R.string.key__phone_pause)
                 KeyCode.PHONE_WAIT -> label = resources.getString(R.string.key__phone_wait)
                 KeyCode.SHIFT -> {
                     drawable = getDrawable(context, when {
                         florisboard?.textInputManager?.caps ?: false && florisboard?.textInputManager?.capsLock ?: false -> {
-                            drawableColor = prefs.theme.keyShiftFgColorCapsLock
+                            drawableColor = keyForeground.toSolidColor().color
                             R.drawable.ic_keyboard_capslock
                         }
                         florisboard?.textInputManager?.caps ?: false && !(florisboard?.textInputManager?.capsLock ?: false) -> {
-                            drawableColor = prefs.theme.keyShiftFgColor
+                            drawableColor = keyForeground.toSolidColor().color
                             R.drawable.ic_keyboard_capslock
                         }
                         else -> {
-                            drawableColor = prefs.theme.keyShiftFgColor
+                            drawableColor = keyForeground.toSolidColor().color
                             R.drawable.ic_keyboard_arrow_up
                         }
                     })
@@ -715,7 +709,7 @@ class KeyView(
                         KeyboardMode.PHONE,
                         KeyboardMode.PHONE2 -> {
                             drawable = getDrawable(context, R.drawable.ic_space_bar)
-                            drawableColor = prefs.theme.keyFgColor
+                            drawableColor = keyForeground.toSolidColor().color
                         }
                         KeyboardMode.CHARACTERS -> {
                             label = florisboard?.activeSubtype?.locale?.displayName
@@ -725,7 +719,7 @@ class KeyView(
                 }
                 KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
                     drawable = getDrawable(context, R.drawable.ic_sentiment_satisfied)
-                    drawableColor = prefs.theme.keyFgColor
+                    drawableColor = keyForeground.toSolidColor().color
                 }
                 KeyCode.SWITCH_TO_TEXT_CONTEXT,
                 KeyCode.VIEW_CHARACTERS -> {
@@ -760,7 +754,7 @@ class KeyView(
         val drawable = drawable
         if (drawable != null) {
             if (keyboardView.isSmartbarKeyboardView && !isEnabled) {
-                drawableColor = prefs.theme.smartbarFgColorAlt
+                drawableColor = keyForegroundAlt.toSolidColor().color
             }
             var marginV = 0
             var marginH = 0
@@ -827,7 +821,7 @@ class KeyView(
                     }
                 }
             }
-            labelPaint.color = prefs.theme.keyFgColor
+            labelPaint.color = keyForeground.toSolidColor().color
             labelPaint.alpha = if (keyboardView.computedLayout?.mode == KeyboardMode.CHARACTERS &&
                 data.code == KeyCode.SPACE) { 120 } else { 255 }
             val centerX = measuredWidth / 2.0f
@@ -854,7 +848,7 @@ class KeyView(
                 //  they will all look different and weird...
                 "X"
             )
-            hintedLabelPaint.color = prefs.theme.keyFgColor
+            hintedLabelPaint.color = keyForeground.toSolidColor().color
             hintedLabelPaint.alpha = 120
             val centerX = measuredWidth * 5.0f / 6.0f
             val centerY = measuredHeight * 1.0f / 6.0f + (hintedLabelPaint.textSize - hintedLabelPaint.descent()) / 2
