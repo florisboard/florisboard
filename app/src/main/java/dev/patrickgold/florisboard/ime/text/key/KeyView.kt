@@ -98,7 +98,6 @@ class KeyView(
         typeface = Typeface.DEFAULT
     }
     private val tempRect: Rect = Rect()
-
     private var themeValueCache: ThemeValueCache = ThemeValueCache()
 
     var florisboard: FlorisBoard? = null

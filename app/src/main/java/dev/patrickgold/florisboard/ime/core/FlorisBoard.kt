@@ -219,6 +219,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         updateSoftInputWindowLayoutParameters()
         updateOneHandedPanelVisibility()
         themeManager.notifyCallbackReceivers()
+        setActiveInput(R.id.text_input)
 
         eventListeners.toList().forEach { it?.get()?.onRegisterInputView(inputView) }
     }
@@ -526,12 +527,10 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     fun setActiveInput(type: Int) {
         when (type) {
             R.id.text_input -> {
-                inputView?.mainViewFlipper?.displayedChild =
-                    inputView?.mainViewFlipper?.indexOfChild(textInputManager.textViewGroup) ?: 0
+                inputView?.mainViewFlipper?.displayedChild = 0
             }
             R.id.media_input -> {
-                inputView?.mainViewFlipper?.displayedChild =
-                    inputView?.mainViewFlipper?.indexOfChild(mediaInputManager.mediaViewGroup) ?: 0
+                inputView?.mainViewFlipper?.displayedChild = 1
             }
         }
     }
