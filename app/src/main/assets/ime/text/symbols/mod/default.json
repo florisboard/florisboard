@@ -15,7 +15,10 @@
       { "code": -205, "label": "view_numeric_advanced", "type": "system_gui" },
       { "code":   32, "label": " " },
       { "code":   46, "label": ".", "popup": {
-        "main": { "code": 8230, "label": "…" }
+        "main": { "code": 8230, "label": "…" },
+        "relevant": [
+          { "code": 58, "label": ":" }
+        ]
       } },
       { "code":   10, "label": "enter", "groupId": 3, "type": "enter_editing" }
     ]
