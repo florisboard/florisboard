@@ -23,6 +23,7 @@ import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
+import dev.patrickgold.florisboard.util.TimeUtil
 import timber.log.Timber
 import java.util.concurrent.CopyOnWriteArrayList
 
@@ -137,7 +138,16 @@ class ThemeManager private constructor(
             } else {
                 prefs.theme.dayThemeRef
             }
-            ThemeMode.FOLLOW_TIME -> "assets:ime/theme/floris_day.json"
+            ThemeMode.FOLLOW_TIME -> {
+                val current = TimeUtil.currentLocalTime()
+                val sunrise = TimeUtil.decode(prefs.theme.sunriseTime)
+                val sunset = TimeUtil.decode(prefs.theme.sunsetTime)
+                if (TimeUtil.isNightTime(sunrise, sunset, current)) {
+                    prefs.theme.nightThemeRef
+                } else {
+                    prefs.theme.dayThemeRef
+                }
+            }
         }).onFailure { Timber.e(it) }.getOr(null)
     }
 

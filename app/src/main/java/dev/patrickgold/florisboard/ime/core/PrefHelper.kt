@@ -26,6 +26,7 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.VelocityThreshold
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
+import dev.patrickgold.florisboard.util.TimeUtil
 import dev.patrickgold.florisboard.util.VersionName
 import kotlin.collections.HashMap
 
@@ -461,10 +462,10 @@ class PrefHelper(
             get() =  prefHelper.getPref(NIGHT_THEME_ADAPT_TO_APP, false)
             set(v) = prefHelper.setPref(NIGHT_THEME_ADAPT_TO_APP, v)
         var sunriseTime: Int
-            get() =  prefHelper.getPref(SUNRISE_TIME, 0x600) // 06:00
+            get() =  prefHelper.getPref(SUNRISE_TIME, TimeUtil.encode(6, 0))
             set(v) = prefHelper.setPref(SUNRISE_TIME, v)
         var sunsetTime: Int
-            get() =  prefHelper.getPref(SUNSET_TIME, 0x1200) // 18:00
+            get() =  prefHelper.getPref(SUNSET_TIME, TimeUtil.encode(18, 0))
             set(v) = prefHelper.setPref(SUNSET_TIME, v)
     }
 }

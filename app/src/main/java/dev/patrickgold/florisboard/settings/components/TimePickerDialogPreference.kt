@@ -22,6 +22,7 @@ import android.util.AttributeSet
 import androidx.preference.Preference
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.util.TimeUtil
 
 /**
  * Custom preference which allows to set a time and save it to a integer preference. Uses the
@@ -65,10 +66,7 @@ class TimePickerDialogPreference : Preference {
         if (value !is Int) {
             return "invalid time"
         }
-        val v = value.toInt()
-        val hour = (v shr 8) and 0xFF
-        val minute = v and 0xFF
-        return String.format("%02d:%02d", hour, minute)
+        return TimeUtil.asString(TimeUtil.decode(value.toInt()))
     }
 
     /**
@@ -76,13 +74,12 @@ class TimePickerDialogPreference : Preference {
      */
     private fun showTimePickerDialog() {
         val v = sharedPreferences.getInt(key, defaultValue)
-        val hour = (v shr 8) and 0xFF
-        val minute = v and 0xFF
+        val time = TimeUtil.decode(v)
         val timePickerDialog = TimePickerDialog(context, { _, newHour, newMinute ->
-            val newValue = ((newHour shl 8) and 0xFF00) + (newMinute and 0xFF)
+            val newValue = TimeUtil.encode(newHour, newMinute)
             sharedPreferences.edit().putInt(key, newValue).apply()
             summary = getTextForValue(newValue)
-        }, hour, minute, true)
+        }, time.hour, time.minute, true)
         timePickerDialog.show()
     }
 }
