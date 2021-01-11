@@ -30,15 +30,7 @@
       "foreground": "#FFFFFF",
       "foregroundPressed": "#FFFFFF"
     },
-    "key:shift": {
-      "background": "@key/background",
-      "backgroundPressed": "@key/backgroundPressed",
-      "foreground": "@window/textColor",
-      "foregroundPressed": "@window/textColor"
-    },
     "key:shift:capslock": {
-      "background": "@key/background",
-      "backgroundPressed": "@key/backgroundPressed",
       "foreground": "@window/colorAccent",
       "foregroundPressed": "@window/colorAccent"
     },

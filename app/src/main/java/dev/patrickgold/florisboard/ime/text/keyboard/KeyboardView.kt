@@ -356,18 +356,11 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     }
 
     /**
-     * Queues a redraw for all keys.
+     * Queues a redraw for all keys. The ThemeManager's event automatically triggers an invalidate
+     * call on the KeyView's, so no need to manually loop through all KeyViews here.
      */
     fun invalidateAllKeys() {
-        for (row in children) {
-            if (row is FlexboxLayout) {
-                for (keyView in row.children) {
-                    if (keyView is KeyView) {
-                        keyView.invalidate()
-                    }
-                }
-            }
-        }
+        themeManager.requestThemeUpdate(this)
     }
 
     /**

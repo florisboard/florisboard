@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.theme
 
 import dev.patrickgold.florisboard.ime.extension.Asset
-import timber.log.Timber
 
 /**
  * Data class which holds a parsed theme json file. Used for loading a theme
@@ -121,35 +120,47 @@ class Theme(
         }
     }
 
-    fun getAttr(ref: ThemeValue.Reference, specific: String? = null): ThemeValue {
+    fun getAttr(ref: ThemeValue.Reference, s1: String? = null, s2: String? = null): ThemeValue {
         var loopRef = ref
-        var specificInternal: String? = specific
+        var firstLoop = true
         var value: ThemeValue
         while (true) {
-            value = getAttrInternal(loopRef, specificInternal)
+            value = when {
+                firstLoop -> getAttrInternal(loopRef, s1, s2)
+                else -> getAttrInternal(loopRef)
+            }
             if (value !is ThemeValue.Reference) {
                 break
             } else {
                 loopRef = value
-                if (specificInternal != null) {
-                    specificInternal = null
-                }
+                firstLoop = false
             }
         }
         return value
     }
 
-    private fun getAttrInternal(ref: ThemeValue.Reference, specific: String? = null): ThemeValue {
-        if (specific != null) {
-            getAttrOrNull(ref.copy(group = ref.group + ":" + specific))?.let { return it }
+    private fun getAttrInternal(ref: ThemeValue.Reference, s1: String? = null, s2: String? = null): ThemeValue {
+        if (s1 != null && s2 != null) {
+            getAttrOrNull(ref.copy(group = "${ref.group}:$s1:$s2"))?.let { return it }
+            getAttrOrNull(ref.copy(group = "${ref.group}::$s2"))?.let { return it }
+            getAttrOrNull(ref.copy(group = "${ref.group}:$s1"))?.let { return it }
+        } else if (s1 != null && s2 == null) {
+            getAttrOrNull(ref.copy(group = "${ref.group}:$s1"))?.let { return it }
+        } else if (s1 == null && s2 != null) {
+            getAttrOrNull(ref.copy(group = "${ref.group}::$s2"))?.let { return it }
         }
         getAttrOrNull(ref)?.let { return it }
         return ThemeValue.SolidColor(0)
     }
 
     private fun getAttrOrNull(ref: ThemeValue.Reference): ThemeValue? {
-        Timber.i(ref.toString())
-        return attributes[ref.group]?.get(ref.attr)
+        if (attributes.containsKey(ref.group)) {
+            val group = attributes[ref.group] ?: return null
+            if (group.containsKey(ref.attr)) {
+                return group[ref.attr]
+            }
+        }
+        return null
     }
 
     @Suppress("unused")
