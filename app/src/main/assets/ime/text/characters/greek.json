@@ -1,0 +1,40 @@
+{
+  "type": "characters",
+  "name": "greek",
+  "authors": [ "tsiflimagas" ],
+  "direction": "ltr",
+  "arrangement": [
+    [
+      { "code":  894, "label": ";" },
+      { "code":  962, "label": "ς" },
+      { "code":  949, "label": "ε" },
+      { "code":  961, "label": "ρ" },
+      { "code":  964, "label": "τ" },
+      { "code":  965, "label": "υ" },
+      { "code":  952, "label": "θ" },
+      { "code":  953, "label": "ι" },
+      { "code":  959, "label": "ο" },
+      { "code":  960, "label": "π" }
+    ],
+    [
+      { "code":  945, "label": "α" },
+      { "code":  963, "label": "σ" },
+      { "code":  948, "label": "δ" },
+      { "code":  966, "label": "φ" },
+      { "code":  947, "label": "γ" },
+      { "code":  951, "label": "η" },
+      { "code":  958, "label": "ξ" },
+      { "code":  954, "label": "κ" },
+      { "code":  955, "label": "λ" }
+    ],
+    [
+      { "code":  950, "label": "ζ" },
+      { "code":  967, "label": "χ" },
+      { "code":  968, "label": "ψ" },
+      { "code":  969, "label": "ω" },
+      { "code":  946, "label": "β" },
+      { "code":  957, "label": "ν" },
+      { "code":  956, "label": "μ" }
+    ]
+  ]
+}

@@ -19,7 +19,8 @@
     "esperanto_with_hx": "Esperanto with 'ĥ'",
     "colemak": "Colemak",
     "dvorak": "Dvorak",
-    "canadian_french": "Canadian French (QWERTY)"
+    "canadian_french": "Canadian French (QWERTY)",
+    "greek": "Ελληνικά"
   },
   "defaultSubtypes": [
     {
@@ -156,6 +157,11 @@
       "id": 1101,
       "languageTag": "eo",
       "preferredLayout": "esperanto"
-    }
+    },
+    {
+      "id": 1401,
+      "languageTag": "el",
+      "preferredLayout": "greek"
+    }  
   ]
 }
