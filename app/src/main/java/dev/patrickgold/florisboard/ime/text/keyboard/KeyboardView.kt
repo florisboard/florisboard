@@ -62,8 +62,8 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     var desiredKeyHeight: Int = resources.getDimension(R.dimen.key_height).toInt()
     var florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
     private var initialKeyCode: Int = 0
-    var isPreviewMode: Boolean = false
-    var isSmartbarKeyboardView: Boolean = false
+    private val isPreviewMode: Boolean
+    val isSmartbarKeyboardView: Boolean
     var popupManager = PopupManager<KeyboardView, KeyView>(this, florisboard?.popupLayerView)
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val themeManager: ThemeManager = ThemeManager.default()
@@ -72,6 +72,11 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        context.obtainStyledAttributes(attrs, R.styleable.KeyboardView).apply {
+            isPreviewMode = getBoolean(R.styleable.KeyboardView_isPreviewKeyboard, false)
+            isSmartbarKeyboardView = getBoolean(R.styleable.KeyboardView_isSmartbarKeyboard, false)
+            recycle()
+        }
         orientation = VERTICAL
         layoutParams = layoutParams ?: FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
@@ -96,7 +101,11 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
             }
             addView(rowView)
         }
-        themeManager.requestThemeUpdate(this)
+        if (!isPreviewMode) {
+            themeManager.requestThemeUpdate(this)
+        } else {
+            updateVisibility()
+        }
     }
 
     /**
@@ -108,7 +117,9 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        themeManager.registerOnThemeUpdatedListener(this)
+        if (!isPreviewMode) {
+            themeManager.registerOnThemeUpdatedListener(this)
+        }
     }
 
     /**
@@ -117,7 +128,9 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         popupManager.dismissAllPopups()
-        themeManager.unregisterOnThemeUpdatedListener(this)
+        if (!isPreviewMode) {
+            themeManager.unregisterOnThemeUpdatedListener(this)
+        }
     }
 
     override fun onWindowShown() {

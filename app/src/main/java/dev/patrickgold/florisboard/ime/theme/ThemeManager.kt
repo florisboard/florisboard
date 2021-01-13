@@ -107,7 +107,7 @@ class ThemeManager private constructor(
         }
     }
 
-    private fun loadTheme(ref: AssetRef): Result<Theme, Throwable> {
+    fun loadTheme(ref: AssetRef): Result<Theme, Throwable> {
         val cached = themeCache[ref]
         if (cached != null) {
            return Ok(cached)

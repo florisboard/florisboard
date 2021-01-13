@@ -18,26 +18,28 @@ package dev.patrickgold.florisboard.settings.components
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.util.AttributeSet
-import android.view.LayoutInflater
 import androidx.preference.Preference
 import androidx.preference.PreferenceManager
-import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.extension.AssetRef
-import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.ime.theme.ThemeMetaOnly
-import timber.log.Timber
+import dev.patrickgold.florisboard.settings.ThemeManagerActivity
 
 /**
  * Custom preference which handles the theme preset selection dialog and shows a summary in the
  * list.
  */
 class ThemeSelectorPreference : Preference, SharedPreferences.OnSharedPreferenceChangeListener {
+    private var defaultValue: String = when (key) {
+        PrefHelper.Theme.DAY_THEME_REF -> "assets:ime/theme/floris_day.json"
+        PrefHelper.Theme.NIGHT_THEME_REF -> "assets:ime/theme/floris_night.json"
+        else -> ""
+    }
     private var dialog: AlertDialog? = null
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val themeManager: ThemeManager = ThemeManager.default()
@@ -66,8 +68,8 @@ class ThemeSelectorPreference : Preference, SharedPreferences.OnSharedPreference
         super.onDetached()
     }
 
-    override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
-        if (key == PrefHelper.Internal.THEME_CURRENT_IS_MODIFIED) {
+    override fun onSharedPreferenceChanged(sp: SharedPreferences?, keyChanged: String?) {
+        if (keyChanged == key) {
             summary = generateSummaryText()
         }
     }
@@ -97,55 +99,9 @@ class ThemeSelectorPreference : Preference, SharedPreferences.OnSharedPreference
      * Shows the theme selector dialog.
      */
     private fun showThemeSelectorDialog() {
-        //sharedPreferences.edit().putString(key, "assets:ime/theme/floris_day.json").commit()
-        /*val inflater =
-            context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val dialogView = ThemeSelectorDialogBinding.inflate(inflater)
-        val selectedThemeView = ThemeSelectorListItemBinding.inflate(inflater)
-        selectedThemeView.title.text = generateSummaryText()
-        dialogView.content.addView(selectedThemeView.root, 1)
-        metaDataCache.clear()
-        ThemeMetaOnly.loadAllFromDir(context, "ime/theme").forEach { metaData ->
-            metaDataCache[metaData.name] = metaData
-        }
-        for ((themeKey, metaData) in metaDataCache) {
-            if (themeKey == prefs.internal.themeCurrentBasedOn && !prefs.internal.themeCurrentIsModified) {
-                continue
-            }
-            val availableThemeView = ThemeSelectorListItemBinding.inflate(inflater)
-            availableThemeView.title.text = metaData.displayName
-            availableThemeView.root.setOnClickListener {
-                applyThemePreset(metaData.name)
-                dialog?.dismiss()
-            }
-            dialogView.content.addView(availableThemeView.root)
-        }
-        AlertDialog.Builder(context).apply {
-            setTitle(this@ThemePresetSelectorPreference.title)
-            setCancelable(true)
-            setView(dialogView.root)
-            setPositiveButton(android.R.string.ok) { _, _ ->
-                //
-            }
-            setNeutralButton(R.string.settings__default) { _, _ ->
-                //
-            }
-            setNegativeButton(android.R.string.cancel, null)
-            setOnDismissListener { summary = generateSummaryText() }
-            create()
-            dialog = show()
-            dialog?.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = false
-        }*/
-    }
-
-    /**
-     * Applies the Theme for given [themeKey] to the preferences. Overrides any custom user-defined
-     * theme in the shared prefs, if existent.
-     *
-     * @param themeKey The key of the Theme preset to be applied.
-     */
-    private fun applyThemePreset(themeKey: String) {
-        /*val theme = Theme.fromJsonFile(context, "ime/theme/$themeKey.json") ?: return
-        Theme.writeThemeToPrefs(prefs, theme)*/
+        val i = Intent(context, ThemeManagerActivity::class.java)
+        i.putExtra(ThemeManagerActivity.EXTRA_KEY, key)
+        i.putExtra(ThemeManagerActivity.EXTRA_DEFAULT_VALUE, defaultValue)
+        context.startActivity(i)
     }
 }

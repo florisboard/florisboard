@@ -106,7 +106,6 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
 
         binding.backButton.setOnClickListener { eventListener?.get()?.onSmartbarBackButtonPressed() }
 
-        binding.clipboardCursorRow.isSmartbarKeyboardView = true
         mainScope.launch(Dispatchers.Default) {
             florisboard?.let {
                 val layout = florisboard.textInputManager.layoutManager.fetchComputedLayoutAsync(
@@ -127,7 +126,6 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
             updateSmartbarState()
         }
 
-        binding.numberRow.isSmartbarKeyboardView = true
         mainScope.launch(Dispatchers.Default) {
             florisboard?.let {
                 val layout = it.textInputManager.layoutManager.fetchComputedLayoutAsync(
