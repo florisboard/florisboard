@@ -14,7 +14,7 @@
       { "code":   78, "label": "N" },
       { "code":   44, "label": "pause", "type": "system_gui" },
       { "code":   44, "label": "," },
-      { "code":   32, "label": " " }
+      { "code":   32, "label": "space" }
     ],
     [
       { "code":   42, "label": "*" },
