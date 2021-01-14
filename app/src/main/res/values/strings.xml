@@ -89,8 +89,9 @@
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Theme Manager (Day)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Theme Manager (Night)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Create empty theme</string>
-    <string name="settings__theme_manager__create_from_template" comment="Label of the Create from template FAB action">Create from template</string>
-    <string name="settings__theme_manager__theme_summary" comment="Summary template, 1st value is the theme name, 2nd value is the author list">%s - by %s</string>
+    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Create from selected theme</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Custom (based on %s)</string>
+    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Edit theme</string>
 
     <string name="settings__theme__preset_title" comment="Label of the theme preset preference">Theme</string>
     <string name="settings__theme__preset_summary" comment="Summary of the theme preset preference">Custom (based on %s)</string>
@@ -250,10 +251,18 @@
     <string name="assets__file__name">Name</string>
     <string name="assets__file__source">Source</string>
     <string name="assets__action__add">Add</string>
+    <string name="assets__action__cancel">Cancel</string>
+    <string name="assets__action__cancel_confirm_title">Confirm cancel</string>
+    <string name="assets__action__cancel_confirm_message">Are you sure you want to discard any unsaved changes? This action can not be undone once executed.</string>
     <string name="assets__action__delete">Delete</string>
+    <string name="assets__action__delete_confirm_title">Confirm delete</string>
+    <string name="assets__action__delete_confirm_message">Are you sure you want to delete \"%s\"? This action can not be undone once executed.</string>
     <string name="assets__action__edit">Edit</string>
     <string name="assets__action__export">Export</string>
     <string name="assets__action__import">Import</string>
+    <string name="assets__action__no">No</string>
+    <string name="assets__action__save">Save</string>
+    <string name="assets__action__yes">Yes</string>
     <string name="assets__error__invalid">Invalid</string>
 
     <!-- Setup UI strings -->

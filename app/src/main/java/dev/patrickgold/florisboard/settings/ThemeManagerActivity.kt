@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -23,9 +24,12 @@ import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.annotation.IdRes
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.forEach
+import com.github.michaelbull.result.getOr
+import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ThemeManagerActivityBinding
@@ -41,6 +45,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeMetaOnly
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class ThemeManagerActivity : AppCompatActivity() {
     private lateinit var binding: ThemeManagerActivityBinding
@@ -52,9 +57,11 @@ class ThemeManagerActivity : AppCompatActivity() {
     private var key: String = ""
     private var defaultValue: String = ""
     private var selectedTheme: Theme = Theme.empty()
-    private var selectedRef: String = ""
+    private var selectedRef: AssetRef? = null
 
     companion object {
+        private const val EDITOR_REQ_CODE: Int = 0xFB01
+
         const val EXTRA_KEY: String = "key"
         const val EXTRA_DEFAULT_VALUE: String = "default_value"
     }
@@ -68,20 +75,18 @@ class ThemeManagerActivity : AppCompatActivity() {
 
         key = intent.getStringExtra(EXTRA_KEY) ?: ""
         defaultValue = intent.getStringExtra(EXTRA_DEFAULT_VALUE) ?: ""
-        selectedRef = when (key) {
-            PrefHelper.Theme.DAY_THEME_REF -> prefs.theme.dayThemeRef
-            PrefHelper.Theme.NIGHT_THEME_REF -> prefs.theme.nightThemeRef
-            else -> ""
-        }
+        selectedRef = evaluateSelectedRef()
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        supportActionBar?.setTitle(when (key) {
-            PrefHelper.Theme.DAY_THEME_REF -> R.string.settings__theme_manager__title_day
-            PrefHelper.Theme.NIGHT_THEME_REF -> R.string.settings__theme_manager__title_night
-            else -> R.string.settings__title
-        })
+        supportActionBar?.setTitle(
+            when (key) {
+                PrefHelper.Theme.DAY_THEME_REF -> R.string.settings__theme_manager__title_day
+                PrefHelper.Theme.NIGHT_THEME_REF -> R.string.settings__theme_manager__title_night
+                else -> R.string.settings__title
+            }
+        )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         layoutManager = LayoutManager(this).apply {
@@ -102,49 +107,157 @@ class ThemeManagerActivity : AppCompatActivity() {
     }
 
     override fun finish() {
-        when (key) {
-            PrefHelper.Theme.DAY_THEME_REF -> prefs.theme.dayThemeRef = selectedRef
-            PrefHelper.Theme.NIGHT_THEME_REF -> prefs.theme.nightThemeRef = selectedRef
-        }
+        // Normally the selection should already be applied to the prefs, but just to make sure we
+        // apply it here again.
+        setThemeRefInPrefs(selectedRef)
         super.finish()
+    }
+
+    private fun evaluateSelectedRef(ignorePrefs: Boolean = false): AssetRef? {
+        return if (ignorePrefs) {
+            when (key) {
+                PrefHelper.Theme.DAY_THEME_REF -> themeManager.indexedDayThemeRefs.keys.firstOrNull()
+                PrefHelper.Theme.NIGHT_THEME_REF -> themeManager.indexedNightThemeRefs.keys.firstOrNull()
+                else -> null
+            }
+        } else {
+            AssetRef.fromString(
+                when (key) {
+                    PrefHelper.Theme.DAY_THEME_REF -> prefs.theme.dayThemeRef
+                    PrefHelper.Theme.NIGHT_THEME_REF -> prefs.theme.nightThemeRef
+                    else -> ""
+                }
+            ).getOr(null)
+        }
+    }
+
+    private fun setThemeRefInPrefs(ref: AssetRef?) {
+        when (key) {
+            PrefHelper.Theme.DAY_THEME_REF -> prefs.theme.dayThemeRef = ref.toString()
+            PrefHelper.Theme.NIGHT_THEME_REF -> prefs.theme.nightThemeRef = ref.toString()
+        }
     }
 
     private fun selectNullTheme() {
         val invalidString = resources.getString(R.string.assets__error__invalid)
         binding.themeNameValue.text = invalidString
         binding.themeSourceValue.text = invalidString
-        binding.themeAuthorsLabel.text = resources.getQuantityText(R.plurals.assets__file__authors, 1)
+        binding.themeAuthorsLabel.text =
+            resources.getQuantityText(R.plurals.assets__file__authors, 1)
         binding.themeAuthorsValue.text = invalidString
         binding.themeDeleteBtn.isEnabled = false
         binding.themeEditBtn.isEnabled = false
-        selectedRef = "invalid:null"
+        selectedRef = null
+        setThemeRefInPrefs(selectedRef)
         selectedTheme = Theme.empty()
     }
 
     private fun selectTheme(assetRef: AssetRef, themeMetaOnly: ThemeMetaOnly) {
         binding.themeNameValue.text = themeMetaOnly.label
         binding.themeSourceValue.text = assetRef.source.toString()
-        binding.themeAuthorsLabel.text = resources.getQuantityText(R.plurals.assets__file__authors, themeMetaOnly.authors.size)
+        binding.themeAuthorsLabel.text =
+            resources.getQuantityText(R.plurals.assets__file__authors, themeMetaOnly.authors.size)
         binding.themeAuthorsValue.text = themeMetaOnly.authors.joinToString(", ")
         binding.themeDeleteBtn.isEnabled = assetRef.source == AssetSource.Internal
         binding.themeEditBtn.isEnabled = assetRef.source == AssetSource.Internal
-        selectedRef = assetRef.toString()
+        selectedRef = assetRef.copy()
+        setThemeRefInPrefs(selectedRef)
         themeManager.loadTheme(assetRef).onSuccess {
             selectedTheme = it
             binding.keyboardPreview.onThemeUpdated(it)
         }
     }
 
-    fun onFabActionClicked(view: View) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == EDITOR_REQ_CODE) {
+            themeManager.update()
+            buildUi()
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    fun onActionClicked(view: View) {
         when (view.id) {
             R.id.fab_option_create_empty -> {
                 Toast.makeText(this, "Create empty not yet implemented", Toast.LENGTH_SHORT).show()
             }
-            R.id.fab_option_create_from_template -> {
-                Toast.makeText(this, "Create from template not yet implemented", Toast.LENGTH_SHORT).show()
+            R.id.fab_option_create_from_selected -> {
+                val timestamp = System.currentTimeMillis()
+                val authorsMut = selectedTheme.authors.toMutableList()
+                authorsMut.add("@me")
+                val themeCopy = selectedTheme.copy(
+                    name = "theme-$timestamp",
+                    label = String.format(
+                        resources.getString(R.string.settings__theme_manager__theme_custom_title),
+                        selectedTheme.label
+                    ),
+                    authors = authorsMut.toList()
+                )
+                val newAssetRef =
+                    AssetRef(
+                        AssetSource.Internal,
+                        ThemeManager.THEME_PATH_REL + "/" + themeCopy.name + ".json"
+                    )
+                themeManager.writeTheme(newAssetRef, themeCopy).onFailure {
+                    Timber.e(it.toString())
+                }
+                startActivityForResult(Intent(this, ThemeEditorActivity::class.java).apply {
+                    putExtra(ThemeEditorActivity.EXTRA_THEME_REF, newAssetRef.toString())
+                }, EDITOR_REQ_CODE)
             }
             R.id.fab_option_import -> {
                 Toast.makeText(this, "Import not yet implemented", Toast.LENGTH_SHORT).show()
+            }
+            R.id.theme_delete_btn -> {
+                val deleteRef = selectedRef?.copy()
+                if (deleteRef?.source == AssetSource.Internal) {
+                    val msg = String.format(
+                        resources.getString(R.string.assets__action__delete_confirm_message),
+                        selectedTheme.label
+                    )
+                    AlertDialog.Builder(this).apply {
+                        setTitle(R.string.assets__action__delete_confirm_title)
+                        setCancelable(true)
+                        setMessage(msg)
+                        setPositiveButton(android.R.string.ok) { _, _ ->
+                            themeManager.deleteTheme(deleteRef)
+                            selectedRef = evaluateSelectedRef(ignorePrefs = true)
+                            setThemeRefInPrefs(selectedRef)
+                            themeManager.update()
+                            buildUi()
+                        }
+                        setNegativeButton(android.R.string.cancel, null)
+                        create()
+                        show()
+                    }
+                } else {
+                    // This toast normally should never show, though if the edit button is enabled
+                    // even if it shouldn't, just show a toast so the user knows the app is
+                    // responding.
+                    Toast.makeText(
+                        this,
+                        "Cannot delete themes included with this app or provided by external sources",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            R.id.theme_edit_btn -> {
+                val editRef = selectedRef
+                if (editRef?.source == AssetSource.Internal) {
+                    startActivityForResult(Intent(this, ThemeEditorActivity::class.java).apply {
+                        putExtra(ThemeEditorActivity.EXTRA_THEME_REF, editRef.toString())
+                    }, EDITOR_REQ_CODE)
+                } else {
+                    // This toast normally should never show, though if the edit button is enabled
+                    // even if it shouldn't, just show a toast so the user knows the app is
+                    // responding.
+                    Toast.makeText(
+                        this,
+                        "Cannot edit themes included with this app or provided by external sources",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
@@ -177,15 +290,12 @@ class ThemeManagerActivity : AppCompatActivity() {
                     setPadding(marginV, 0, 0, 0)
                 }
                 id = View.generateViewId()
-                text = String.format(
-                    resources.getString(R.string.settings__theme_manager__theme_summary),
-                    themeMetaOnly.label, themeMetaOnly.authors.joinToString(", ")
-                )
+                text = themeMetaOnly.label
                 setOnClickListener { view ->
                     selectTheme(assetRef, themeMetaOnly)
                     setCheckedRadioButton(view.id)
                 }
-                if (selectedRef == assetRef.toString()) {
+                if (selectedRef == assetRef) {
                     selectId = id
                     selectTheme(assetRef, themeMetaOnly)
                 }
@@ -199,7 +309,8 @@ class ThemeManagerActivity : AppCompatActivity() {
         }
         mainScope.launch {
             binding.keyboardPreview.computedLayout = layoutManager.fetchComputedLayoutAsync(
-                KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs).await()
+                KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs
+            ).await()
             binding.keyboardPreview.onThemeUpdated(selectedTheme)
         }
     }

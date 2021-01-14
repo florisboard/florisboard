@@ -62,6 +62,44 @@ class AssetManager private constructor(private val applicationContext: Context) 
         }
     }
 
+    fun deleteAsset(ref: AssetRef): Result<Nothing?, Throwable> {
+        return when (ref.source) {
+            AssetSource.Internal -> {
+                val file = File(applicationContext.filesDir.absolutePath + "/" + ref.path)
+                if (file.isFile) {
+                    val success = file.delete()
+                    if (success) {
+                        Ok(null)
+                    } else {
+                        Err(Exception("Could not delete file."))
+                    }
+                } else {
+                    Err(Exception("Provided reference is not a file."))
+                }
+            }
+            else -> Err(Exception("Can not delete an asset in source '${ref.source}'"))
+        }
+    }
+
+    fun hasAsset(ref: AssetRef): Boolean {
+        return when (ref.source) {
+            AssetSource.Assets -> {
+                try {
+                    val file = File(ref.path)
+                    val list = applicationContext.assets.list(file.parent?.toString() ?: "")
+                    list?.contains(file.name) == true
+                } catch (e: Exception) {
+                    false
+                }
+            }
+            AssetSource.Internal -> {
+                val file = File(applicationContext.filesDir.absolutePath + "/" + ref.path)
+                file.exists() && file.isFile
+            }
+            else -> false
+        }
+    }
+
     fun <T: Asset> listAssets(ref: AssetRef, assetClass: Class<T>): Result<Map<AssetRef, T>, Throwable> {
         val retMap = mutableMapOf<AssetRef, T>()
         return when (ref.source) {
@@ -140,6 +178,19 @@ class AssetManager private constructor(private val applicationContext: Context) 
         }
     }
 
+    fun <T: Asset> writeAsset(ref: AssetRef, assetClass: Class<T>, asset: T): Result<Boolean, Throwable> {
+        return when (ref.source) {
+            AssetSource.Internal -> {
+                val adapter = moshi.adapter(assetClass)
+                val rawJson = adapter.toJson(asset)
+                val file = File(applicationContext.filesDir.absolutePath + "/" + ref.path)
+                writeToFile(file, rawJson)
+                Ok(true)
+            }
+            else -> Err(Exception("Can not write an asset in source '${ref.source}'"))
+        }
+    }
+
     /**
      * Reads a given [file] and returns its content.
      *
@@ -156,5 +207,27 @@ class AssetManager private constructor(private val applicationContext: Context) 
             }
         }
         return retText.toString()
+    }
+
+    /**
+     * Writes given [text] to given [file]. If the file already exists, its current content
+     * will be overwritten.
+     *
+     * @param file The file object.
+     * @param text The text to write to the file.
+     * @return The contents of the file or an empty string, if the file does not exist.
+     */
+    private fun writeToFile(file: File, text: String) {
+        try {
+            file.parent?.let {
+                val dir = File(it)
+                if (!dir.exists()) {
+                    dir.mkdirs()
+                }
+            }
+            file.writeText(text)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

@@ -37,10 +37,9 @@ class ThemeManager private constructor(
         private set
     var indexedDayThemeRefs: MutableMap<AssetRef, ThemeMetaOnly> = mutableMapOf()
     var indexedNightThemeRefs: MutableMap<AssetRef, ThemeMetaOnly> = mutableMapOf()
-    private var themeCache: MutableMap<AssetRef, Theme> = mutableMapOf()
 
     companion object {
-        private const val THEME_PATH_REL: String = "ime/theme"
+        const val THEME_PATH_REL: String = "ime/theme"
 
         private var defaultInstance: ThemeManager? = null
 
@@ -107,21 +106,23 @@ class ThemeManager private constructor(
         }
     }
 
+    fun deleteTheme(ref: AssetRef): Result<Nothing?, Throwable> {
+        return assetManager.deleteAsset(ref)
+    }
+
     fun loadTheme(ref: AssetRef): Result<Theme, Throwable> {
-        val cached = themeCache[ref]
-        if (cached != null) {
-           return Ok(cached)
-        } else {
-            assetManager.loadAsset(ref, ThemeJson::class.java).onSuccess { themeJson ->
-                val theme = themeJson.toTheme()
-                themeCache[ref.copy()] = theme
-                return Ok(theme)
-            }.onFailure {
-                Timber.e(it.toString())
-                return Err(it)
-            }
+        assetManager.loadAsset(ref, ThemeJson::class.java).onSuccess { themeJson ->
+            val theme = themeJson.toTheme()
+            return Ok(theme)
+        }.onFailure {
+            Timber.e(it.toString())
+            return Err(it)
         }
         return Err(Exception("Unreachable code"))
+    }
+
+    fun writeTheme(ref: AssetRef, theme: Theme): Result<Boolean, Throwable> {
+        return assetManager.writeAsset(ref, ThemeJson::class.java, ThemeJson.fromTheme(theme))
     }
 
     private fun evaluateActiveThemeRef(): AssetRef? {
@@ -152,6 +153,8 @@ class ThemeManager private constructor(
     }
 
     private fun indexThemeRefs() {
+        indexedDayThemeRefs.clear()
+        indexedNightThemeRefs.clear()
         assetManager.listAssets(
             AssetRef(AssetSource.Assets, THEME_PATH_REL),
             ThemeMetaOnly::class.java

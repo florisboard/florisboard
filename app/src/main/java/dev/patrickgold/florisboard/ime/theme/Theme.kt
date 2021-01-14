@@ -53,7 +53,7 @@ class Theme(
     override val label: String = name,
     override val authors: List<String>,
     val isNightTheme: Boolean = false,
-    private val attributes: Map<String, Map<String, ThemeValue>>
+    val attributes: Map<String, Map<String, ThemeValue>>
 ) : Asset {
     companion object : Asset.Companion<Theme> {
         val BASE_THEME: Theme = Theme(
@@ -119,6 +119,14 @@ class Theme(
             )
         }
     }
+
+    fun copy(
+        name: String = this.name,
+        label: String = this.label,
+        authors: List<String> = this.authors.toList(),
+        isNightTheme: Boolean = this.isNightTheme,
+        attributes: Map<String, Map<String, ThemeValue>> = this.attributes.toMap()
+    ): Theme = Theme(name, label, authors, isNightTheme, attributes)
 
     fun getAttr(ref: ThemeValue.Reference, s1: String? = null, s2: String? = null): ThemeValue {
         var loopRef = ref
@@ -215,6 +223,15 @@ class ThemeJson(
     private val isNightTheme: Boolean = false,
     private val attributes: Map<String, Map<String, String>>
 ) : Asset {
+    companion object {
+        fun fromTheme(theme: Theme): ThemeJson {
+            return with(theme) {
+                ThemeJson(name, label, authors, isNightTheme, attributes.mapValues { group ->
+                    group.component2().mapValues { entry -> entry.component2().toString() }
+                })
+            }
+        }
+    }
     fun toTheme(): Theme {
         return Theme(name, label, authors, isNightTheme, attributes.mapValues { group ->
             group.component2().mapValues { entry -> ThemeValue.fromString(entry.component2()) }

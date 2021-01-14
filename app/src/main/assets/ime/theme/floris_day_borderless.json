@@ -1,7 +1,7 @@
 {
   "$type": "dev.patrickgold.florisboard.ime.theme.Theme",
   "name": "floris_day_borderless",
-  "label": "Floris Day (Borderless)",
+  "label": "Floris Day Borderless",
   "authors": [ "patrickgold" ],
   "isNightTheme": false,
   "attributes": {
