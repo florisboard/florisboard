@@ -19,8 +19,8 @@
       "c": {
         "relevant": [
           { "code":  269, "label": "č" },
-          { "code":  263, "label": "ć" },
-          { "code":  231, "label": "ç" }
+          { "code":  231, "label": "ç" },
+          { "code":  263, "label": "ć" }
         ]
       },
       "e": {
@@ -39,9 +39,9 @@
           { "code":  299, "label": "ī" },
           { "code":  239, "label": "ï" },
           { "code":  303, "label": "į" },
+          { "code":  236, "label": "ì" },
           { "code":  238, "label": "î" },
-          { "code":  237, "label": "í" },
-          { "code":  236, "label": "ì" }
+          { "code":  237, "label": "í" }
         ]
       },
       "n": {
@@ -55,8 +55,8 @@
           { "code":  186, "label": "º" },
           { "code":  333, "label": "ō" },
           { "code":  248, "label": "ø" },
-          { "code":  246, "label": "ö" },
           { "code":  339, "label": "œ" },
+          { "code":  246, "label": "ö" },
           { "code":  242, "label": "ò" },
           { "code":  244, "label": "ô" },
           { "code":  245, "label": "õ" },
