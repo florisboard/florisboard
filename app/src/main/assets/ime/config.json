@@ -156,6 +156,11 @@
       "id": 1101,
       "languageTag": "eo",
       "preferredLayout": "esperanto"
+    },
+    {
+      "id": 1501,
+      "languageTag": "ro",
+      "preferredLayout": "qwerty"
     }
   ]
 }
