@@ -16,8 +16,9 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
+import android.content.Context
 import android.graphics.Color
-import com.squareup.moshi.FromJson
+import dev.patrickgold.florisboard.R
 
 /**
  * Sealed class.
@@ -55,9 +56,18 @@ sealed class ThemeValue {
     }
 
     companion object {
-        private val REFERENCE_REGEX = """^(@[a-zA-Z]+\/[a-zA-Z]+)${'$'}""".toRegex()
+        private val REFERENCE_REGEX = """^(@[a-zA-Z]+/[a-zA-Z]+)${'$'}""".toRegex()
         private val SOLID_COLOR_REGEX = """^#([a-fA-F0-9]{6}|[a-fA-F0-9]{8})${'$'}""".toRegex()
         private val ON_OFF_REGEX = """^((true)|(false))${'$'}""".toRegex()
+
+        val UI_STRING_MAP: Map<String, Int> = mapOf(
+            Pair(Reference::class.simpleName!!, R.string.settings__theme_editor__value_type_reference),
+            Pair(SolidColor::class.simpleName!!, R.string.settings__theme_editor__value_type_solid_color),
+            //Pair(LinearGradient::class.simpleName!!, R.string.settings__theme_editor__value_type_lin_grad),
+            //Pair(RadialGradient::class.simpleName!!, R.string.settings__theme_editor__value_type_rad_grad),
+            Pair(OnOff::class.simpleName!!, R.string.settings__theme_editor__value_type_on_off),
+            Pair(Other::class.simpleName!!, R.string.settings__theme_editor__value_type_other)
+        )
 
         fun fromString(str: String): ThemeValue {
             return when {
@@ -121,5 +131,12 @@ sealed class ThemeValue {
                 rawValue
             }
         }
+    }
+
+    fun toSummaryString(context: Context): String {
+        val themeTypeStr = UI_STRING_MAP[this::class.simpleName!!]?.let {
+            context.resources.getString(it)
+        }
+        return "$themeTypeStr | $this"
     }
 }

@@ -15,6 +15,7 @@
         android:layout_height="match_parent"
         android:background="?android:windowBackground"
         android:layout_marginTop="?actionBarSize"
+        android:layout_marginBottom="?actionBarSize"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -84,21 +85,36 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:layout_gravity="bottom|fill_horizontal"
-        android:gravity="center_vertical|end"
+        android:layout_gravity="bottom"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="8dp"
-        android:elevation="4dp">
+        android:elevation="4dp"
+        android:background="?colorPrimary">
+
+        <Button
+            android:id="@+id/add_group_btn"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="true"
+            android:text="@string/settings__theme_editor__add_group_dialog_title"
+            android:textColor="@android:color/white"
+            android:onClick="onActionClicked"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"/>
 
         <Button
             android:id="@+id/theme_cancel_btn"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
             android:textAllCaps="true"
             android:text="@string/assets__action__cancel"
-            android:textColor="?android:colorAccent"
+            android:textColor="@android:color/white"
             android:onClick="onActionClicked"/>
 
         <Button
@@ -106,10 +122,9 @@
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
             android:textAllCaps="true"
             android:text="@string/assets__action__save"
-            android:textColor="?android:colorAccent"
+            android:textColor="@android:color/white"
             android:onClick="onActionClicked"/>
 
     </LinearLayout>

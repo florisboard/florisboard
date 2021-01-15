@@ -1,12 +1,15 @@
 package dev.patrickgold.florisboard.util
 
+import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.res.ColorStateList
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 
 fun getColorFromAttr(
@@ -68,4 +71,16 @@ fun refreshLayoutOf(view: View?) {
         view?.invalidate()
         view?.requestLayout()
     }
+}
+
+/**
+ * Context extension function to get the Activity from the Context. Originally written by Vlad as
+ * an SO answer. Modified to return an AppCompatActivity, as FlorisBoard relies on some compat
+ * stuff.
+ *
+ * Original source: https://stackoverflow.com/a/58249983/6801193
+ */
+tailrec fun Context?.getActivity(): AppCompatActivity? = when (this) {
+    is AppCompatActivity -> this
+    else -> (this as? ContextWrapper)?.baseContext?.getActivity()
 }

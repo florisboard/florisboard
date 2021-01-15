@@ -19,12 +19,15 @@ package dev.patrickgold.florisboard.settings
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.IdRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.children
 import com.github.michaelbull.result.onSuccess
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ThemeEditorActivityBinding
+import dev.patrickgold.florisboard.databinding.ThemeEditorGroupViewBinding
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.AssetRef
@@ -32,6 +35,9 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.ime.theme.ThemeValue
+import dev.patrickgold.florisboard.settings.components.ThemeAttrGroupView
+import dev.patrickgold.florisboard.settings.components.ThemeAttrView
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -92,6 +98,7 @@ class ThemeEditorActivity : AppCompatActivity() {
 
     fun onActionClicked(view: View) {
         when (view.id) {
+            R.id.add_group_btn -> addGroup()
             R.id.theme_cancel_btn -> onBackPressed()
             R.id.theme_save_btn -> {
                 val ref = editedThemeRef
@@ -129,8 +136,53 @@ class ThemeEditorActivity : AppCompatActivity() {
         super.finish()
     }
 
+    private fun addGroup(name: String? = null): ThemeEditorGroupViewBinding {
+        val groupView = ThemeEditorGroupViewBinding.inflate(layoutInflater)
+        groupView.root.themeEditorActivity = this
+        binding.themeAttributes.addView(groupView.root)
+        if (name == null) {
+            groupView.root.showGroupAddDialog()
+        } else {
+            groupView.root.groupName = name
+        }
+        return groupView
+    }
+
+    fun deleteGroup(@IdRes id: Int) {
+        binding.themeAttributes.findViewById<View>(id)?.let {
+            binding.themeAttributes.removeView(it)
+        }
+        refreshTheme()
+    }
+
+    fun refreshTheme() {
+        val tempMap = mutableMapOf<String, Map<String, ThemeValue>>()
+        for (groupView in binding.themeAttributes.children) {
+            if (groupView is ThemeAttrGroupView) {
+                val groupAttrs = mutableMapOf<String, ThemeValue>()
+                for (attrView in groupView.children) {
+                    if (attrView is ThemeAttrView) {
+                        groupAttrs[attrView.attrName] = attrView.attrValue
+                    }
+                }
+                tempMap[groupView.groupName] = groupAttrs.toMap()
+            }
+        }
+        editedTheme = editedTheme.copy(
+            label = binding.themeNameValue.text.toString(),
+            attributes = tempMap.toMap()
+        )
+        binding.keyboardPreview.onThemeUpdated(editedTheme)
+    }
+
     private fun buildUi() {
         binding.themeNameValue.setText(editedTheme.label)
+        for ((groupName, groupAttrs) in editedTheme.attributes) {
+            val groupView = addGroup(groupName).root
+            for ((attrName, attrValue) in groupAttrs) {
+                groupView.addAttr(attrName, attrValue)
+            }
+        }
         mainScope.launch {
             binding.keyboardPreview.computedLayout = layoutManager.fetchComputedLayoutAsync(
                 KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs).await()
