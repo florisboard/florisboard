@@ -171,6 +171,8 @@ to get more information on this topic.
   [JakeWharton](https://github.com/JakeWharton)
 * [kotlin-result](https://github.com/michaelbull/kotlin-result) by
   [Michael Bull](https://github.com/michaelbull)
+* [expandable-fab](https://github.com/nambicompany/expandable-fab) by
+  [Nambi](https://github.com/nambicompany)
 
 ## License
 ```
