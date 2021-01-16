@@ -21,7 +21,6 @@ import android.util.AttributeSet
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.util.setBackgroundTintColor2
 
 /**
  * Basically the same as an ImageButton.
@@ -56,11 +55,12 @@ class SmartbarQuickActionButton : androidx.appcompat.widget.AppCompatImageButton
 
     override fun onThemeUpdated(theme: Theme) {
         if (id == R.id.private_mode_button) {
-            setBackgroundTintColor2(this, theme.getAttr(Theme.Attr.PRIVATE_MODE_BACKGROUND).toSolidColor().color)
+            background.setTint(theme.getAttr(Theme.Attr.PRIVATE_MODE_BACKGROUND).toSolidColor().color)
             setColorFilter(theme.getAttr(Theme.Attr.PRIVATE_MODE_FOREGROUND).toSolidColor().color)
         } else {
-            setBackgroundTintColor2(this, theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND).toSolidColor().color)
+            background.setTint(theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND).toSolidColor().color)
             setColorFilter(theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_FOREGROUND).toSolidColor().color)
         }
+        invalidate()
     }
 }

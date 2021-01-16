@@ -33,6 +33,15 @@ sealed class ThemeValue {
         override fun toString(): String {
             return super.toString()
         }
+
+        fun complimentaryTextColor(): SolidColor {
+            return if (Color.red(color) * 0.299 + Color.green(color) * 0.587 +
+                Color.blue(color) * 0.114 > 186) {
+                SolidColor(Color.BLACK)
+            } else {
+                SolidColor(Color.WHITE)
+            }
+        }
     }
     data class LinearGradient(val dummy: Int) : ThemeValue() {
         override fun toString(): String {

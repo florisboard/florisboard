@@ -250,6 +250,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
 
         super.onStartInputView(info, restarting)
         activeEditorInstance = EditorInstance.from(info, this)
+        themeManager.updateRemoteColorValues(activeEditorInstance.packageName)
         eventListeners.toList().forEach {
             it?.get()?.onStartInputView(activeEditorInstance, restarting)
         }

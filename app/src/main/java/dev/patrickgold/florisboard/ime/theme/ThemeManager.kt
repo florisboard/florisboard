@@ -16,8 +16,11 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.graphics.Color
 import com.github.michaelbull.result.*
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.extension.AssetManager
@@ -33,10 +36,18 @@ class ThemeManager private constructor(
     private val prefs: PrefHelper
 ) {
     private val callbackReceivers: CopyOnWriteArrayList<OnThemeUpdatedListener> = CopyOnWriteArrayList()
+    private val packageManager: PackageManager? = applicationContext.packageManager
+
     var activeTheme: Theme = Theme.empty()
         private set
     var indexedDayThemeRefs: MutableMap<AssetRef, ThemeMetaOnly> = mutableMapOf()
     var indexedNightThemeRefs: MutableMap<AssetRef, ThemeMetaOnly> = mutableMapOf()
+    var isAdaptiveThemeEnabled: Boolean = false
+
+    var remoteColorPrimary: ThemeValue.SolidColor? = null
+        private set
+    var remoteColorPrimaryVariant: ThemeValue.SolidColor? = null
+        private set
 
     companion object {
         const val THEME_PATH_REL: String = "ime/theme"
@@ -59,7 +70,7 @@ class ThemeManager private constructor(
                 return instance
             } else {
                 throw UninitializedPropertyAccessException(
-                    "${this::class.simpleName} has not been initialized previously. Make sure to call init(prefs) before using default()."
+                    "${ThemeManager::class.simpleName} has not been initialized previously. Make sure to call init(prefs) before using default()."
                 )
             }
         }
@@ -73,13 +84,76 @@ class ThemeManager private constructor(
         indexThemeRefs()
         val ref = evaluateActiveThemeRef()
         Timber.i(ref.toString())
-        activeTheme = if (ref == null) {
+        activeTheme = AdaptiveThemeOverlay(this, if (ref == null) {
             Theme.BASE_THEME
         } else {
             loadTheme(ref).getOr(Theme.BASE_THEME)
-        }
+        })
         Timber.i(activeTheme.label)
         notifyCallbackReceivers()
+    }
+
+    /**
+     * Gets the primary and ark variants of the app with given [packageName].
+     * Based on a Stock Overflow answer by adneal.
+     * Source: https://stackoverflow.com/a/27138913/6801193
+     *
+     * @param packageName The package name from which the colors should be extracted.
+     */
+    @SuppressLint("ResourceType")
+    fun updateRemoteColorValues(packageName: String) {
+        try {
+            val pm = packageManager ?: return
+            val res = pm.getResourcesForApplication(packageName)
+            val attrs = listOf(
+                res.getIdentifier("colorPrimary", "attr", packageName),
+                android.R.attr.colorPrimary,
+                res.getIdentifier("colorPrimaryDark", "attr", packageName),
+                android.R.attr.colorPrimaryDark,
+                res.getIdentifier("colorPrimaryVariant", "attr", packageName)
+            )
+            val androidTheme = res.newTheme()
+            val defColor = if (activeTheme.isNightTheme) {
+                Color.BLACK
+            } else {
+                Color.WHITE
+            }
+            val cn = pm.getLaunchIntentForPackage(packageName)?.component
+            if (cn != null) {
+                androidTheme.applyStyle(pm.getActivityInfo(cn, 0).theme, false)
+                @Suppress("UNNECESSARY_SAFE_CALL")
+                androidTheme.obtainStyledAttributes(attrs.toIntArray())?.let { a ->
+                    remoteColorPrimary = when {
+                        a.hasValue(0) -> {
+                            ThemeValue.SolidColor(a.getColor(0, defColor))
+                        }
+                        a.hasValue(1) -> {
+                            ThemeValue.SolidColor(a.getColor(1, defColor))
+                        }
+                        else -> {
+                            null
+                        }
+                    }
+                    remoteColorPrimaryVariant = when {
+                        a.hasValue(2) -> {
+                            ThemeValue.SolidColor(a.getColor(2, defColor))
+                        }
+                        a.hasValue(3) -> {
+                            ThemeValue.SolidColor(a.getColor(3, defColor))
+                        }
+                        a.hasValue(4) -> {
+                            ThemeValue.SolidColor(a.getColor(4, defColor))
+                        }
+                        else -> {
+                            null
+                        }
+                    }
+                    a.recycle()
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     fun requestThemeUpdate(onThemeUpdatedListener: OnThemeUpdatedListener): Boolean {
@@ -130,13 +204,21 @@ class ThemeManager private constructor(
         Timber.i(prefs.theme.dayThemeRef)
         Timber.i(prefs.theme.nightThemeRef)
         return AssetRef.fromString(when (prefs.theme.mode) {
-            ThemeMode.ALWAYS_DAY -> prefs.theme.dayThemeRef
-            ThemeMode.ALWAYS_NIGHT -> prefs.theme.nightThemeRef
+            ThemeMode.ALWAYS_DAY -> {
+                isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp
+                prefs.theme.dayThemeRef
+            }
+            ThemeMode.ALWAYS_NIGHT -> {
+                isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp
+                prefs.theme.nightThemeRef
+            }
             ThemeMode.FOLLOW_SYSTEM -> if (applicationContext.resources.configuration.uiMode and
                 Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
             ) {
+                isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp
                 prefs.theme.nightThemeRef
             } else {
+                isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp
                 prefs.theme.dayThemeRef
             }
             ThemeMode.FOLLOW_TIME -> {
@@ -144,8 +226,10 @@ class ThemeManager private constructor(
                 val sunrise = TimeUtil.decode(prefs.theme.sunriseTime)
                 val sunset = TimeUtil.decode(prefs.theme.sunsetTime)
                 if (TimeUtil.isNightTime(sunrise, sunset, current)) {
+                    isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp
                     prefs.theme.nightThemeRef
                 } else {
+                    isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp
                     prefs.theme.dayThemeRef
                 }
             }

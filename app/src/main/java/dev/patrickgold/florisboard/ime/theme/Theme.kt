@@ -48,7 +48,7 @@ import dev.patrickgold.florisboard.ime.extension.Asset
  *     a. Recursive references will cause an exception.
  *  4. If the value is of any other format, an exception will be thrown.
  */
-class Theme(
+open class Theme(
     override val name: String,
     override val label: String = name,
     override val authors: List<String>,
@@ -128,7 +128,7 @@ class Theme(
         attributes: Map<String, Map<String, ThemeValue>> = this.attributes.toMap()
     ): Theme = Theme(name, label, authors, isNightTheme, attributes)
 
-    fun getAttr(ref: ThemeValue.Reference, s1: String? = null, s2: String? = null): ThemeValue {
+    open fun getAttr(ref: ThemeValue.Reference, s1: String? = null, s2: String? = null): ThemeValue {
         var loopRef = ref
         var firstLoop = true
         var value: ThemeValue

@@ -85,7 +85,7 @@
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Night theme</string>
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Selected theme</string>
     <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Adapt colors to app</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Key colors adapt to those in the current app, will override some configured colors</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Theme colors adapt to those in the current app, if the target app supports this.</string>
 
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Theme Manager (Day)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Theme Manager (Night)</string>
