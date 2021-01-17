@@ -17,25 +17,31 @@
 package dev.patrickgold.florisboard.ime.text.smartbar
 
 import android.content.Context
-import android.graphics.Canvas
 import android.util.AttributeSet
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.core.PrefHelper
-import dev.patrickgold.florisboard.util.setBackgroundTintColor2
+import dev.patrickgold.florisboard.ime.theme.Theme
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
 
 /**
  * Basically the same as an ImageButton.
  * @see [onMeasure] why this view class exists.
  */
-class SmartbarQuickActionButton : androidx.appcompat.widget.AppCompatImageButton {
-    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+class SmartbarQuickActionButton : androidx.appcompat.widget.AppCompatImageButton,
+    ThemeManager.OnThemeUpdatedListener {
+    private val themeManager = ThemeManager.default()
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    init {
-        updateTheme()
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        themeManager.registerOnThemeUpdatedListener(this)
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        themeManager.unregisterOnThemeUpdatedListener(this)
     }
 
     /**
@@ -47,13 +53,14 @@ class SmartbarQuickActionButton : androidx.appcompat.widget.AppCompatImageButton
         super.onMeasure(heightMeasureSpec, heightMeasureSpec)
     }
 
-    private fun updateTheme() {
+    override fun onThemeUpdated(theme: Theme) {
         if (id == R.id.private_mode_button) {
-            setBackgroundTintColor2(this, prefs.theme.privateModeBgColor)
-            setColorFilter(prefs.theme.privateModeFgColor)
+            background.setTint(theme.getAttr(Theme.Attr.PRIVATE_MODE_BACKGROUND).toSolidColor().color)
+            setColorFilter(theme.getAttr(Theme.Attr.PRIVATE_MODE_FOREGROUND).toSolidColor().color)
         } else {
-            setBackgroundTintColor2(this, prefs.theme.smartbarButtonBgColor)
-            setColorFilter(prefs.theme.smartbarButtonFgColor)
+            background.setTint(theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND).toSolidColor().color)
+            setColorFilter(theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_FOREGROUND).toSolidColor().color)
         }
+        invalidate()
     }
 }

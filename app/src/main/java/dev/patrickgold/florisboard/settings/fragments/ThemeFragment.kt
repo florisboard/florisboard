@@ -18,101 +18,88 @@ package dev.patrickgold.florisboard.settings.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.ContextThemeWrapper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
+import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
+import androidx.preference.PreferenceFragmentCompat
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.databinding.SettingsFragmentThemeBinding
-import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
-import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
-import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
-import dev.patrickgold.florisboard.settings.SettingsMainActivity
-import kotlinx.coroutines.*
-import kotlin.math.roundToInt
+import dev.patrickgold.florisboard.ime.theme.ThemeMode
+import dev.patrickgold.florisboard.settings.components.ThemeSelectorPreference
 
-class ThemeFragment : SettingsMainActivity.SettingsFragment(), CoroutineScope by MainScope(),
+class ThemeFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener {
-    private lateinit var binding: SettingsFragmentThemeBinding
-    private lateinit var keyboardView: KeyboardView
+    private var dayThemeGroup: PreferenceCategory? = null
+    private var nightThemeGroup: PreferenceCategory? = null
+    private var dayThemeRef: ThemeSelectorPreference? = null
+    private var nightThemeRef: ThemeSelectorPreference? = null
+    private var sunrisePref: Preference? = null
+    private var sunsetPref: Preference? = null
     private lateinit var prefs: PrefHelper
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        addPreferencesFromResource(R.xml.prefs_theme)
+
         prefs = PrefHelper.getDefaultInstance(requireContext())
-        binding = SettingsFragmentThemeBinding.inflate(inflater, container, false)
-
-        launch(Dispatchers.Main) {
-            val themeContext = ContextThemeWrapper(context, FlorisBoard.getDayNightBaseThemeId(prefs.internal.themeCurrentIsNight))
-            val layoutManager = LayoutManager(themeContext)
-            keyboardView = KeyboardView(themeContext)
-            keyboardView.layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                resources.getDimension(R.dimen.textKeyboardView_baseHeight).roundToInt()
-            ).apply {
-                val m = resources.getDimension(R.dimen.keyboard_preview_margin).toInt()
-                setMargins(m, m, m, m)
-            }
-            prefs.sync()
-            keyboardView.isPreviewMode = true
-            val subtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
-            keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, subtype, prefs).await()
-            keyboardView.updateVisibility()
-            keyboardView.onApplyThemeAttributes()
-            withContext(Dispatchers.Main) {
-                binding.root.addView(keyboardView, 0)
-            }
-        }
-
-        loadThemePrefFragment()
-
-        return binding.root
+        dayThemeGroup = findPreference("theme__day_group")
+        nightThemeGroup = findPreference("theme__night_group")
+        dayThemeRef = findPreference(PrefHelper.Theme.DAY_THEME_REF)
+        nightThemeRef = findPreference(PrefHelper.Theme.NIGHT_THEME_REF)
+        sunrisePref = findPreference(PrefHelper.Theme.SUNRISE_TIME)
+        sunsetPref = findPreference(PrefHelper.Theme.SUNSET_TIME)
+        onSharedPreferenceChanged(prefs.shared, PrefHelper.Theme.MODE)
     }
 
-    private fun loadThemePrefFragment() {
-        childFragmentManager
-            .beginTransaction()
-            .replace(
-                binding.prefsFrame.id,
-                SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_theme)
-            )
-            .commit()
+    private fun refreshUi() {
+        when (prefs.theme.mode) {
+            ThemeMode.ALWAYS_DAY -> {
+                dayThemeGroup?.isEnabled = true
+                nightThemeGroup?.isEnabled = false
+                sunrisePref?.isVisible = false
+                sunsetPref?.isVisible = false
+            }
+            ThemeMode.ALWAYS_NIGHT -> {
+                dayThemeGroup?.isEnabled = false
+                nightThemeGroup?.isEnabled = true
+                sunrisePref?.isVisible = false
+                sunsetPref?.isVisible = false
+            }
+            ThemeMode.FOLLOW_SYSTEM -> {
+                dayThemeGroup?.isEnabled = true
+                nightThemeGroup?.isEnabled = true
+                sunrisePref?.isVisible = false
+                sunsetPref?.isVisible = false
+            }
+            ThemeMode.FOLLOW_TIME -> {
+                dayThemeGroup?.isEnabled = true
+                nightThemeGroup?.isEnabled = true
+                sunrisePref?.isVisible = true
+                sunsetPref?.isVisible = true
+            }
+        }
+        refreshThemeSelectors()
+    }
+
+    private fun refreshThemeSelectors() {
+        dayThemeRef?.onSharedPreferenceChanged(null, dayThemeRef?.key)
+        nightThemeRef?.onSharedPreferenceChanged(null, nightThemeRef?.key)
     }
 
     override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
         prefs.sync()
         key ?: return
-        if (key == PrefHelper.Internal.THEME_CURRENT_BASED_ON ||
-            key == PrefHelper.Internal.THEME_CURRENT_IS_MODIFIED && !prefs.internal.themeCurrentIsModified) {
-            loadThemePrefFragment()
-        }
-        if (key.startsWith("theme__")) {
-            prefs.internal.themeCurrentIsModified = true
-            keyboardView.onApplyThemeAttributes()
-            keyboardView.invalidate()
-            keyboardView.invalidateAllKeys()
+        if (key == PrefHelper.Theme.MODE) {
+            refreshUi()
         }
     }
 
     override fun onResume() {
         prefs.shared.registerOnSharedPreferenceChangeListener(this)
+        refreshThemeSelectors()
         super.onResume()
     }
 
     override fun onPause() {
         prefs.shared.unregisterOnSharedPreferenceChangeListener(this)
         super.onPause()
-    }
-
-    override fun onDestroy() {
-        cancel()
-        super.onDestroy()
     }
 }

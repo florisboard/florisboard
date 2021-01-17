@@ -2,5 +2,5 @@
     android:width="24dp" android:height="24dp"
     android:viewportWidth="24" android:viewportHeight="24"
     android:autoMirrored="true">
-    <path android:fillColor="@android:color/black" android:pathData="M0 24 L24 24 L24 0z"/>
+    <path android:fillColor="?android:attr/textColorPrimary" android:pathData="M0 24 L24 24 L24 0z"/>
 </vector>

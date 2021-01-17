@@ -78,7 +78,9 @@
           { "code": 8250, "label": "›" }
         ]
       } },
-      { "code":   58, "label": ":" },
+      { "code":   58, "label": ":", "popup": {
+        "main": { "code":  8942, "label": "⋮" }
+      } },
       { "code":   59, "label": ";" },
       { "code":   33, "label": "!", "popup": {
         "main": { "code":  161, "label": "¡" }

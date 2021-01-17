@@ -25,12 +25,14 @@ import android.widget.LinearLayout
 import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.theme.Theme
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import kotlin.math.roundToInt
 
-class MediaInputView : LinearLayout, FlorisBoard.EventListener {
+class MediaInputView : LinearLayout, FlorisBoard.EventListener,
+    ThemeManager.OnThemeUpdatedListener {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
-    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+    private val themeManager: ThemeManager = ThemeManager.default()
 
     var tabLayout: TabLayout? = null
         private set
@@ -47,18 +49,26 @@ class MediaInputView : LinearLayout, FlorisBoard.EventListener {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        themeManager.registerOnThemeUpdatedListener(this)
         tabLayout = findViewById(R.id.media_input_tabs)
         switchToTextInputButton = findViewById(R.id.media_input_switch_to_text_input_button)
         backspaceButton = findViewById(R.id.media_input_backspace_button)
         onApplyThemeAttributes()
     }
 
-    override fun onApplyThemeAttributes() {
-        tabLayout?.setTabTextColors(prefs.theme.mediaFgColor, prefs.theme.mediaFgColor)
-        tabLayout?.tabIconTint = ColorStateList.valueOf(prefs.theme.mediaFgColor)
-        tabLayout?.setSelectedTabIndicatorColor(prefs.theme.colorPrimary)
-        switchToTextInputButton?.setTextColor(prefs.theme.mediaFgColor)
-        backspaceButton?.imageTintList = ColorStateList.valueOf(prefs.theme.mediaFgColor)
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        themeManager.unregisterOnThemeUpdatedListener(this)
+    }
+
+    override fun onThemeUpdated(theme: Theme) {
+        val fgColor = theme.getAttr(Theme.Attr.MEDIA_FOREGROUND).toSolidColor().color
+        val colorPrimary = theme.getAttr(Theme.Attr.WINDOW_COLOR_PRIMARY).toSolidColor().color
+        tabLayout?.setTabTextColors(fgColor, fgColor)
+        tabLayout?.tabIconTint = ColorStateList.valueOf(fgColor)
+        tabLayout?.setSelectedTabIndicatorColor(colorPrimary)
+        switchToTextInputButton?.setTextColor(fgColor)
+        backspaceButton?.imageTintList = ColorStateList.valueOf(fgColor)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

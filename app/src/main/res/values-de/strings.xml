@@ -56,11 +56,6 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Dieser Eingabestil ist bereits vorhanden!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tastaturdesign</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nicht definiert</string>
-    <string name="settings__theme__preset_title" comment="Label of the theme preset preference">Design</string>
-    <string name="settings__theme__preset_summary" comment="Summary of the theme preset preference">Benutzerdefiniert (basierend auf %s)</string>
-    <string name="settings__theme__preset_dialog_selected_theme" comment="Label of the selected themes list">Ausgewähltes Design:</string>
-    <string name="settings__theme__preset_dialog_available_themes" comment="Label of the available themes list">Verfügbare Designs:</string>
-    <string name="settings__theme__preset_dialog_alt_arrow_right" comment="Content description of the theme selection button in theme dialog">Pfeil rechts</string>
     <string name="settings__theme__background" comment="General label for a background preference">Hintergrundfarbe</string>
     <string name="settings__theme__background_active" comment="General label for an active background preference">Hintergrundfarbe wenn aktiv</string>
     <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">Hintergrundfarbe wenn gedrückt</string>

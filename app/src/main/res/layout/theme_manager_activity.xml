@@ -1,0 +1,207 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:theme="@style/SettingsTheme"
+    tools:context=".settings.ThemeManagerActivity">
+
+    <include layout="@layout/toolbar"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?android:windowBackground"
+        android:layout_marginTop="?actionBarSize"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                style="@style/SettingsCardView"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:theme="@style/PreferenceThemeOverlay">
+
+                    <dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
+                        android:id="@+id/keyboard_preview"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/textKeyboardView_baseHeight"
+                        android:layout_margin="8dp"
+                        app:isPreviewKeyboard="true"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/assets__file__name"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/theme_name_value"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:gravity="end"
+                            tools:text="Test Theme"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/assets__file__source"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/theme_source_value"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:gravity="end"
+                            tools:text="APK Assets"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/theme_authors_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/assets__file__name"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/theme_authors_value"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:gravity="end"
+                            tools:text="author1, author2"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="end">
+
+                        <Button
+                            android:id="@+id/theme_delete_btn"
+                            style="?android:attr/buttonBarButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:textAllCaps="false"
+                            android:text="@string/assets__action__delete"
+                            android:textColor="?android:textColorPrimary"
+                            android:drawableStart="@drawable/ic_delete"
+                            android:drawablePadding="8dp"
+                            android:drawableTint="?colorAccent"
+                            android:onClick="onActionClicked"/>
+
+                        <Button
+                            android:id="@+id/theme_edit_btn"
+                            style="?android:attr/buttonBarButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end"
+                            android:textAllCaps="false"
+                            android:text="@string/assets__action__edit"
+                            android:textColor="?android:textColorPrimary"
+                            android:drawableStart="@drawable/ic_edit"
+                            android:drawablePadding="8dp"
+                            android:drawableTint="?colorAccent"
+                            android:onClick="onActionClicked"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/theme_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.nambimobile.widgets.efab.ExpandableFabLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.nambimobile.widgets.efab.Overlay
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:overlay_color="?android:windowBackground"/>
+        <com.nambimobile.widgets.efab.ExpandableFab
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/fab_margin"
+            app:efab_color="?colorPrimary"
+            app:efab_icon="@drawable/ic_add"
+            app:efab_closingAnimationDurationMs="250"/>
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/fab_option_create_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_color="?colorPrimaryDark"
+            app:fab_icon="@drawable/ic_file_blank"
+            app:label_text="@string/settings__theme_manager__create_empty"
+            android:onClick="onActionClicked"/>
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/fab_option_create_from_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_color="?colorPrimaryDark"
+            app:fab_icon="@drawable/ic_file"
+            app:label_text="@string/settings__theme_manager__create_from_selected"
+            android:onClick="onActionClicked"/>
+        <!--<com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/fab_option_import"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_color="?colorPrimaryDark"
+            app:fab_icon="@drawable/ic_input"
+            app:label_text="@string/assets__action__import"
+            android:onClick="onActionClicked"/>-->
+
+    </com.nambimobile.widgets.efab.ExpandableFabLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

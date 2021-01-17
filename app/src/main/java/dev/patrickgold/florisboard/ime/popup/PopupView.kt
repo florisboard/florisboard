@@ -27,11 +27,12 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.theme.Theme
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 
-class PopupView : View {
-    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+class PopupView : View, ThemeManager.OnThemeUpdatedListener {
+    private val themeManager: ThemeManager = ThemeManager.default()
 
     private var backgroundDrawable: PaintDrawable = PaintDrawable()
     private val labelPaint: Paint = Paint().apply {
@@ -70,19 +71,28 @@ class PopupView : View {
     init {
         visibility = GONE
         background = backgroundDrawable
-        onApplyThemeAttributes()
     }
 
-    fun onApplyThemeAttributes() {
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        themeManager.registerOnThemeUpdatedListener(this)
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        themeManager.unregisterOnThemeUpdatedListener(this)
+    }
+
+    override fun onThemeUpdated(theme: Theme) {
         backgroundDrawable.apply {
-            setTint(prefs.theme.keyPopupBgColor)
+            setTint(theme.getAttr(Theme.Attr.POPUP_BACKGROUND).toSolidColor().color)
             setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
         }
         elevation = ViewLayoutUtils.convertDpToPixel(4.0f, context)
         threeDotsDrawable?.apply {
-            setTint(prefs.theme.keyPopupFgColor)
+            setTint(theme.getAttr(Theme.Attr.POPUP_FOREGROUND).toSolidColor().color)
         }
-        labelPaint.color = prefs.theme.keyPopupFgColor
+        labelPaint.color = theme.getAttr(Theme.Attr.POPUP_FOREGROUND).toSolidColor().color
         if (isShowing) {
             invalidate()
         }

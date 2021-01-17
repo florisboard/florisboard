@@ -1,0 +1,57 @@
+<dev.patrickgold.florisboard.settings.components.ThemeAttrView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:listPreferredItemHeightSmall"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:paddingStart="?android:listPreferredItemPaddingStart"
+    android:paddingEnd="?android:listPreferredItemPaddingEnd"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@android:id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceListItem"
+            android:textColor="?android:attr/textColorPrimary"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            tools:text="Title"/>
+
+        <TextView
+            android:id="@android:id/summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceListItemSecondary"
+            android:textColor="?android:attr/textColorSecondary"
+            android:maxLines="4"
+            tools:text="Summary"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1.0"/>
+
+    <ImageView
+        android:id="@+id/attr_value_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        tools:src="@drawable/ic_link"
+        android:contentDescription="@string/settings__theme_editor__value_preview_content_description"/>
+
+</dev.patrickgold.florisboard.settings.components.ThemeAttrView>

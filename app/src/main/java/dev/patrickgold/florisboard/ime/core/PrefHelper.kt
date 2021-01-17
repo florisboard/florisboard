@@ -25,6 +25,8 @@ import dev.patrickgold.florisboard.ime.text.gestures.DistanceThreshold
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.VelocityThreshold
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
+import dev.patrickgold.florisboard.ime.theme.ThemeMode
+import dev.patrickgold.florisboard.util.TimeUtil
 import dev.patrickgold.florisboard.util.VersionName
 import kotlin.collections.HashMap
 
@@ -139,6 +141,8 @@ class PrefHelper(
         PreferenceManager.setDefaultValues(context, R.xml.prefs_keyboard, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_theme, true)
         PreferenceManager.setDefaultValues(context, R.xml.prefs_typing, true)
+        //theme.dayThemeRef = "assets:ime/theme/floris_day.json"
+        //theme.nightThemeRef = "assets:ime/theme/floris_night.json"
         //setPref(Keyboard.SUBTYPES, "")
         //setPref(Internal.IS_IME_SET_UP, false)
     }
@@ -275,9 +279,6 @@ class PrefHelper(
     class Internal(private val prefHelper: PrefHelper) {
         companion object {
             const val IS_IME_SET_UP =               "internal__is_ime_set_up"
-            const val THEME_CURRENT_BASED_ON =      "internal__theme_current_based_on"
-            const val THEME_CURRENT_IS_MODIFIED =   "internal__theme_current_is_modified"
-            const val THEME_CURRENT_IS_NIGHT =      "internal__theme_current_is_night"
             const val VERSION_ON_INSTALL =          "internal__version_on_install"
             const val VERSION_LAST_USE =            "internal__version_last_use"
             const val VERSION_LAST_CHANGELOG =      "internal__version_last_changelog"
@@ -286,15 +287,6 @@ class PrefHelper(
         var isImeSetUp: Boolean
             get() =  prefHelper.getPref(IS_IME_SET_UP, false)
             set(v) = prefHelper.setPref(IS_IME_SET_UP, v)
-        var themeCurrentBasedOn: String
-            get() =  prefHelper.getPref(THEME_CURRENT_BASED_ON, "undefined")
-            set(v) = prefHelper.setPref(THEME_CURRENT_BASED_ON, v)
-        var themeCurrentIsModified: Boolean
-            get() =  prefHelper.getPref(THEME_CURRENT_IS_MODIFIED, false)
-            set(v) = prefHelper.setPref(THEME_CURRENT_IS_MODIFIED, v)
-        var themeCurrentIsNight: Boolean
-            get() =  prefHelper.getPref(THEME_CURRENT_IS_NIGHT, false)
-            set(v) = prefHelper.setPref(THEME_CURRENT_IS_NIGHT, v)
         var versionOnInstall: String
             get() =  prefHelper.getPref(VERSION_ON_INSTALL, VersionName.DEFAULT_RAW)
             set(v) = prefHelper.setPref(VERSION_ON_INSTALL, v)
@@ -433,131 +425,35 @@ class PrefHelper(
      */
     class Theme(private val prefHelper: PrefHelper) {
         companion object {
-            const val COLOR_PRIMARY =                       "theme__colorPrimary"
-            const val COLOR_PRIMARY_DARK =                  "theme__colorPrimaryDark"
-            const val COLOR_ACCENT =                        "theme__colorAccent"
-            const val NAV_BAR_COLOR =                       "theme__navBarColor"
-            const val NAV_BAR_IS_LIGHT =                    "theme__navBarIsLight"
-            const val KEYBOARD_BG_COLOR =                   "theme__keyboard_bgColor"
-            const val KEY_SHOW_BORDER =                     "theme__key_show_border"
-            const val KEY_BG_COLOR =                        "theme__key_bgColor"
-            const val KEY_BG_COLOR_PRESSED =                "theme__key_bgColorPressed"
-            const val KEY_FG_COLOR =                        "theme__key_fgColor"
-            const val KEY_ENTER_BG_COLOR =                  "theme__keyEnter_bgColor"
-            const val KEY_ENTER_BG_COLOR_PRESSED =          "theme__keyEnter_bgColorPressed"
-            const val KEY_ENTER_FG_COLOR =                  "theme__keyEnter_fgColor"
-            const val KEY_SHIFT_BG_COLOR =                  "theme__keyShift_bgColor"
-            const val KEY_SHIFT_BG_COLOR_PRESSED =          "theme__keyShift_bgColorPressed"
-            const val KEY_SHIFT_FG_COLOR =                  "theme__keyShift_fgColor"
-            const val KEY_SHIFT_FG_COLOR_CAPSLOCK =         "theme__keyShift_fgColorCapsLock"
-            const val KEY_POPUP_BG_COLOR =                  "theme__keyPopup_bgColor"
-            const val KEY_POPUP_BG_COLOR_ACTIVE =           "theme__keyPopup_bgColorActive"
-            const val KEY_POPUP_FG_COLOR =                  "theme__keyPopup_fgColor"
-            const val MEDIA_FG_COLOR =                      "theme__media_fgColor"
-            const val MEDIA_FG_COLOR_ALT =                  "theme__media_fgColorAlt"
-            const val ONE_HANDED_BG_COLOR =                 "theme__oneHanded_bgColor"
-            const val ONE_HANDED_BUTTON_FG_COLOR =          "theme__oneHandedButton_fgColor"
-            const val PRIVATE_MODE_BG_COLOR =               "theme__privateMode_bgColor"
-            const val PRIVATE_MODE_FG_COLOR =               "theme__privateMode_fgColor"
-            const val SMARTBAR_BG_COLOR =                   "theme__smartbar_bgColor"
-            const val SMARTBAR_FG_COLOR =                   "theme__smartbar_fgColor"
-            const val SMARTBAR_FG_COLOR_ALT =               "theme__smartbar_fgColorAlt"
-            const val SMARTBAR_BUTTON_BG_COLOR =            "theme__smartbarButton_bgColor"
-            const val SMARTBAR_BUTTON_FG_COLOR =            "theme__smartbarButton_fgColor"
+            const val MODE =                        "theme__mode"
+            const val DAY_THEME_REF =               "theme__day_theme_ref"
+            const val DAY_THEME_ADAPT_TO_APP =      "theme__day_theme_adapt_to_app"
+            const val NIGHT_THEME_REF =             "theme__night_theme_ref"
+            const val NIGHT_THEME_ADAPT_TO_APP =    "theme__night_theme_adapt_to_app"
+            const val SUNRISE_TIME =                "theme__sunrise_time"
+            const val SUNSET_TIME =                 "theme__sunset_time"
         }
 
-        var colorPrimary: Int
-            get() =  prefHelper.getPref(COLOR_PRIMARY, 0)
-            set(v) = prefHelper.setPref(COLOR_PRIMARY, v)
-        var colorPrimaryDark: Int
-            get() =  prefHelper.getPref(COLOR_PRIMARY_DARK, 0)
-            set(v) = prefHelper.setPref(COLOR_PRIMARY_DARK, v)
-        var colorAccent: Int
-            get() =  prefHelper.getPref(COLOR_ACCENT, 0)
-            set(v) = prefHelper.setPref(COLOR_ACCENT, v)
-        var navBarColor: Int
-            get() =  prefHelper.getPref(NAV_BAR_COLOR, 0)
-            set(v) = prefHelper.setPref(NAV_BAR_COLOR, v)
-        var navBarIsLight: Boolean
-            get() =  prefHelper.getPref(NAV_BAR_IS_LIGHT, false)
-            set(v) = prefHelper.setPref(NAV_BAR_IS_LIGHT, v)
-        var keyboardBgColor: Int
-            get() =  prefHelper.getPref(KEYBOARD_BG_COLOR, 0)
-            set(v) = prefHelper.setPref(KEYBOARD_BG_COLOR, v)
-        var keyShowBorder:Boolean
-            get() =  prefHelper.getPref(KEY_SHOW_BORDER, true)
-            set(v) = prefHelper.setPref(KEY_SHOW_BORDER,v)
-        var keyBgColor: Int
-            get() =  prefHelper.getPref(KEY_BG_COLOR, 0)
-            set(v) = prefHelper.setPref(KEY_BG_COLOR, v)
-        var keyBgColorPressed: Int
-            get() =  prefHelper.getPref(KEY_BG_COLOR_PRESSED, 0)
-            set(v) = prefHelper.setPref(KEY_BG_COLOR_PRESSED, v)
-        var keyFgColor: Int
-            get() =  prefHelper.getPref(KEY_FG_COLOR, 0)
-            set(v) = prefHelper.setPref(KEY_FG_COLOR, v)
-        var keyEnterBgColor: Int
-            get() =  prefHelper.getPref(KEY_ENTER_BG_COLOR, 0)
-            set(v) = prefHelper.setPref(KEY_ENTER_BG_COLOR, v)
-        var keyEnterBgColorPressed: Int
-            get() =  prefHelper.getPref(KEY_ENTER_BG_COLOR_PRESSED, 0)
-            set(v) = prefHelper.setPref(KEY_ENTER_BG_COLOR_PRESSED, v)
-        var keyEnterFgColor: Int
-            get() =  prefHelper.getPref(KEY_ENTER_FG_COLOR, 0)
-            set(v) = prefHelper.setPref(KEY_ENTER_FG_COLOR, v)
-        var keyShiftBgColor: Int
-            get() =  prefHelper.getPref(KEY_SHIFT_BG_COLOR, 0)
-            set(v) = prefHelper.setPref(KEY_SHIFT_BG_COLOR, v)
-        var keyShiftBgColorPressed: Int
-            get() =  prefHelper.getPref(KEY_SHIFT_BG_COLOR_PRESSED, 0)
-            set(v) = prefHelper.setPref(KEY_SHIFT_BG_COLOR_PRESSED, v)
-        var keyShiftFgColor: Int
-            get() =  prefHelper.getPref(KEY_SHIFT_FG_COLOR, 0)
-            set(v) = prefHelper.setPref(KEY_SHIFT_FG_COLOR, v)
-        var keyShiftFgColorCapsLock: Int
-            get() =  prefHelper.getPref(KEY_SHIFT_FG_COLOR_CAPSLOCK, 0)
-            set(v) = prefHelper.setPref(KEY_SHIFT_FG_COLOR_CAPSLOCK, v)
-        var keyPopupBgColor: Int
-            get() =  prefHelper.getPref(KEY_POPUP_BG_COLOR, 0)
-            set(v) = prefHelper.setPref(KEY_POPUP_BG_COLOR, v)
-        var keyPopupBgColorActive: Int
-            get() =  prefHelper.getPref(KEY_POPUP_BG_COLOR_ACTIVE, 0)
-            set(v) = prefHelper.setPref(KEY_POPUP_BG_COLOR_ACTIVE, v)
-        var keyPopupFgColor: Int
-            get() =  prefHelper.getPref(KEY_POPUP_FG_COLOR, 0)
-            set(v) = prefHelper.setPref(KEY_POPUP_FG_COLOR, v)
-        var mediaFgColor: Int
-            get() =  prefHelper.getPref(MEDIA_FG_COLOR, 0)
-            set(v) = prefHelper.setPref(MEDIA_FG_COLOR, v)
-        var mediaFgColorAlt: Int
-            get() =  prefHelper.getPref(MEDIA_FG_COLOR_ALT, 0)
-            set(v) = prefHelper.setPref(MEDIA_FG_COLOR_ALT, v)
-        var oneHandedBgColor: Int
-            get() =  prefHelper.getPref(ONE_HANDED_BG_COLOR, 0)
-            set(v) = prefHelper.setPref(ONE_HANDED_BG_COLOR, v)
-        var oneHandedButtonFgColor: Int
-            get() =  prefHelper.getPref(ONE_HANDED_BUTTON_FG_COLOR, 0)
-            set(v) = prefHelper.setPref(ONE_HANDED_BUTTON_FG_COLOR, v)
-        var privateModeBgColor: Int
-            get() =  prefHelper.getPref(PRIVATE_MODE_BG_COLOR, 0)
-            set(v) = prefHelper.setPref(PRIVATE_MODE_BG_COLOR, v)
-        var privateModeFgColor: Int
-            get() =  prefHelper.getPref(PRIVATE_MODE_FG_COLOR, 0)
-            set(v) = prefHelper.setPref(PRIVATE_MODE_FG_COLOR, v)
-        var smartbarBgColor: Int
-            get() =  prefHelper.getPref(SMARTBAR_BG_COLOR, 0)
-            set(v) = prefHelper.setPref(SMARTBAR_BG_COLOR, v)
-        var smartbarFgColor: Int
-            get() =  prefHelper.getPref(SMARTBAR_FG_COLOR, 0)
-            set(v) = prefHelper.setPref(SMARTBAR_FG_COLOR, v)
-        var smartbarFgColorAlt: Int
-            get() =  prefHelper.getPref(SMARTBAR_FG_COLOR_ALT, 0)
-            set(v) = prefHelper.setPref(SMARTBAR_FG_COLOR_ALT, v)
-        var smartbarButtonBgColor: Int
-            get() =  prefHelper.getPref(SMARTBAR_BUTTON_BG_COLOR, 0)
-            set(v) = prefHelper.setPref(SMARTBAR_BUTTON_BG_COLOR, v)
-        var smartbarButtonFgColor: Int
-            get() =  prefHelper.getPref(SMARTBAR_BUTTON_FG_COLOR, 0)
-            set(v) = prefHelper.setPref(SMARTBAR_BUTTON_FG_COLOR, v)
+        var mode: ThemeMode
+            get() =  ThemeMode.fromString(prefHelper.getPref(MODE, ThemeMode.FOLLOW_SYSTEM.toString()))
+            set(v) = prefHelper.setPref(MODE, v)
+        var dayThemeRef: String
+            get() =  prefHelper.getPref(DAY_THEME_REF, "assets:ime/theme/floris_day.json")
+            set(v) = prefHelper.setPref(DAY_THEME_REF, v)
+        var dayThemeAdaptToApp: Boolean
+            get() =  prefHelper.getPref(DAY_THEME_ADAPT_TO_APP, false)
+            set(v) = prefHelper.setPref(DAY_THEME_ADAPT_TO_APP, v)
+        var nightThemeRef: String
+            get() =  prefHelper.getPref(NIGHT_THEME_REF, "assets:ime/theme/floris_night.json")
+            set(v) = prefHelper.setPref(NIGHT_THEME_REF, v)
+        var nightThemeAdaptToApp: Boolean
+            get() =  prefHelper.getPref(NIGHT_THEME_ADAPT_TO_APP, false)
+            set(v) = prefHelper.setPref(NIGHT_THEME_ADAPT_TO_APP, v)
+        var sunriseTime: Int
+            get() =  prefHelper.getPref(SUNRISE_TIME, TimeUtil.encode(6, 0))
+            set(v) = prefHelper.setPref(SUNRISE_TIME, v)
+        var sunsetTime: Int
+            get() =  prefHelper.getPref(SUNSET_TIME, TimeUtil.encode(18, 0))
+            set(v) = prefHelper.setPref(SUNSET_TIME, v)
     }
 }

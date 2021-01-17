@@ -123,4 +123,17 @@
         <item>long</item>
         <item>very_long</item>
     </string-array>
+
+    <string-array name="pref__theme__mode__entries">
+        <item>@string/pref__theme__mode__always_day</item>
+        <item>@string/pref__theme__mode__always_night</item>
+        <item>@string/pref__theme__mode__follow_system</item>
+        <item>@string/pref__theme__mode__follow_time</item>
+    </string-array>
+    <string-array name="pref__theme__mode__values">
+        <item>always_day</item>
+        <item>always_night</item>
+        <item>follow_system</item>
+        <item>follow_time</item>
+    </string-array>
 </resources>
