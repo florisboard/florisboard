@@ -7,31 +7,39 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Egykezes mód bezárása.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Billentyűzet balra helyezése.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Billentyűzet jobbra helyezése.</string>
+    <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Privát mód</string>
+    <!--
+    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
+-->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojik</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikonok</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Mosolyok &amp; érzelmek</string>
-    <string name="emoji__category__people_body" comment="Emoji category name">Emberek &amp; test</string>
-    <string name="emoji__category__animals_nature" comment="Emoji category name">Állatok &amp; természet</string>
-    <string name="emoji__category__food_drink" comment="Emoji category name">Étel &amp; ital</string>
-    <string name="emoji__category__travel_places" comment="Emoji category name">Utazás &amp; helyek</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Emberek és test</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Állatok és természet</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Étel és ital</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Utazás és helyek</string>
     <string name="emoji__category__activities" comment="Emoji category name">Tevékenységek</string>
     <string name="emoji__category__objects" comment="Emoji category name">Tárgyak</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Szimbólumok</string>
     <string name="emoji__category__flags" comment="Emoji category name">Zászlók</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Gyors művelet váltás. Ha megnyomja a gombot, váltson a szójavaslatok és a gyors művelet gombok között.</string>
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Gyors műveletváltás. Ha meg van nyomva, vált a szójavaslatok és a gyors műveletgombok között.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Kilépés a szövegszerkesztő panelből.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Kapcsolja be az egykezes mód állapotát.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Bekapcsolja az egykezes módot.</string>
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Beállítások megnyitása.</string>
     <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Váltás szövegszerkesztő panelre.</string>
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Váltás média bemeneti nézetre.</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Visszavonás gomb visszavonja az előző műveletet</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Mégis gomb újra megteszi a visszavont műveletet</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Ha látható, megjeleníti, hogy a privát mód aktív. Ha rá van kattintva, információt jelenít meg a privát módról.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Beállítások</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">További beállítások</string>
-    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Segítség &amp; visszajelzés</string>
+    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Segítség és visszajelzés</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Kezdés</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Billentyűzet</string>
     <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Gépelés</string>
@@ -40,14 +48,14 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Alapértelmezett</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Rendszer alapértelmezett</string>
     <string name="settings__home__title" comment="Title of the Home fragment">A %s üdvözli</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nincs engedélyezve a rendszerben, így nem lesz elérhető, mint egy beviteli módszer a bemenetválasztóban. A probléma megoldásához kattintson ide.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">A FlorisBoard nincs kiválasztva alapértelmezett beviteli módként. A probléma megoldásához kattintson ide.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Köszönjük, hogy kipróbálta FlorisBoard-ot! Ez a projekt még mindig alfa állapotban van, ezért vannak hiánízó funkciók. Ha bármilyen hibát talál, vagy javaslatot szeretne tenni, kérjük, nézze meg a GitHub repo-ját, majd tegyen egy kérdést. Ez segít abban, hogy a FlorisBoard jobb legyen. Köszönöm!</string>
-    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Nyelvek &amp; billentyűzetkiosztások</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nincs engedélyezve a rendszerben, így nem lesz elérhető, beviteli módszerként a bevitelválasztóban. A probléma megoldásához kattintson ide.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">A FlorisBoard nincs kiválasztva alapértelmezett beviteli módszerként. A probléma megoldásához kattintson ide.</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Köszönjük, hogy kipróbálta FlorisBoard-ot! Ez a projekt még mindig alfa állapotban van, ezért vannak hiányzó funkciók. Ha bármilyen hibát talál, vagy javaslatot szeretne tenni, nézze meg a GitHub repo-ját, és küldjön egy hibajelentést. Ez segít abban, hogy a FlorisBoard jobb legyen. Köszönöm!</string>
+    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Nyelvek és billentyűzetkiosztások</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Úgy tűnik, hogy nem állított be altípusokat. Tartalékként az angol/QWERTY lesz használva!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Hozzáadás</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Altípus hozzáadása</string>
-    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Alkamaz</string>
+    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Alkalmaz</string>
     <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Mégse</string>
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Törlés</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Altípus szerkesztése</string>
@@ -58,12 +66,12 @@
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nem meghatározott</string>
     <string name="settings__theme__background" comment="General label for a background preference">Háttérszín</string>
     <string name="settings__theme__background_active" comment="General label for an active background preference">Aktív háttérszín</string>
-    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">Megnyomott háttérszín</string>
+    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">Lenyomott háttérszín</string>
     <string name="settings__theme__foreground" comment="General label for a foreground preference">Előtérszín</string>
     <string name="settings__theme__foreground_alt" comment="General label for an alternate foreground preference">Előtérszín (alternatív)</string>
     <string name="settings__theme__foreground_capslock" comment="General label for a capslock foreground preference">Előtérszín (caps lock)</string>
     <string name="settings__theme__dialog_title" comment="Title of the color selection dialog for a single theme preference">Szín kiválasztása</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Ablak &amp; rendszer</string>
+    <string name="settings__theme__group_window" comment="Theme group label">Ablak és rendszer</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Billentyűzet</string>
     <string name="settings__theme__group_key" comment="Theme group label">Billentyű</string>
     <string name="settings__theme__group_key_enter" comment="Theme group label">Enter billentyű</string>
@@ -72,22 +80,26 @@
     <string name="settings__theme__group_media" comment="Theme group label">Média kontextus</string>
     <string name="settings__theme__group_one_handed" comment="Theme group label">Egykezes</string>
     <string name="settings__theme__group_one_handed_button" comment="Theme group label">Egykezes gomb</string>
+    <string name="settings__theme__group_private_mode" comment="Theme group label">Privát mód</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Okossáv</string>
-    <string name="settings__theme__group_smartbar_button" comment="Theme group label">Okossáv-gomb</string>
+    <string name="settings__theme__group_smartbar_button" comment="Theme group label">Okossáv gomb</string>
     <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">Elsődleges szín</string>
-    <string name="pref__theme__colorPrimary_summary" comment="Summary of Color primary theme preference">Alkalmazás a fő média lapon ripple and selection highlight</string>
+    <string name="pref__theme__colorPrimary_summary" comment="Summary of Color primary theme preference">Alkalmazva a fő média lapokra és a kiemelés színének</string>
     <string name="pref__theme__colorPrimaryDark_title" comment="Title of Color primary dark theme preference">Elsődleges szín (sötét)</string>
-    <string name="pref__theme__colorPrimaryDark_summary" comment="Summary of Color primary dark theme preference">Jelenleg nem használt, a jövőbeli megvalósításra fenntartva</string>
+    <string name="pref__theme__colorPrimaryDark_summary" comment="Summary of Color primary dark theme preference">Jelenleg nincs használva, fenntartva jövőbeli megvalósításra</string>
     <string name="pref__theme__colorAccent_title" comment="Title of Color accent theme preference">Kiemelés színe</string>
-    <string name="pref__theme__colorAccent_summary" comment="Summary of Color accent theme preference">Alkalmazott emoji tab ripple</string>
+    <string name="pref__theme__colorAccent_summary" comment="Summary of Color accent theme preference">Alkalmazva az emoji lapokra</string>
     <string name="pref__theme__navBarColor_title" comment="Title of Nav bar color theme preference">Navigációs sáv színe</string>
     <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">A navigációs sáv háttere.</string>
     <string name="pref__theme__navBarIsLight_title" comment="Title of Nav bar is light theme preference">Navigációs sáv sötét előtér</string>
-    <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Állítsa BE-re sötét, KI-re pedig világos előtérnél.</string>
+    <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Kapcsolja BE sötét, KI világos előtérszínhez.</string>
+    <string name="pref__theme__showKeyBorder_title" comment="Title of Show Key Border preference">Billentyű szegélye</string>
+    <string name="pref__theme__showKeyBorder_summary" comment="Summary of Show Key Border preference">Kapcsolja BE a szegély megjelenítéséhez vagy KI az elrejtéséhez</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Billentyűzet beállítások</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Billentyűk</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Számsor</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Számsor megjelenítése a karakterelrendezés felett</string>
+    <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">Letiltva</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Betűméret szorzó (álló)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Betűméret szorzó (fekvő)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Elrendezés</string>
@@ -104,14 +116,14 @@
     <string name="pref__keyboard__height_factor__tall" comment="Preference value">Magas</string>
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Nagyon magas</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Egyéni</string>
-    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Egyedi billentyűzet magasság értéke</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Alsó eltolás (ívelt képernyőkhöz)</string>
+    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Egyéni billentyűzetmagasság értéke</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Alsó eltolás (ívelt kijelzőkhöz)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Gombnyomás</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Hang gombnyomáskor</string>
+    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Hang gombnyomásra</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Gombnyomás hangereje</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Rezgés gombnyomásra</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Rezgés erőssége gombnyomásra</string>
-    <string name="pref__keyboard__popup_visible__label" comment="Preference title">Felugró láthatósága</string>
+    <string name="pref__keyboard__popup_visible__label" comment="Preference title">Felugró megjelenítése</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Felugró megjelenítése gombnyomáskor</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Hosszú gombnyomás késleltetése</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Gépelési élmény</string>
@@ -119,13 +131,13 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">A billentyűzet tetején fog megjelenni</string>
     <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
     <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] A javaslatok megjelenítése gépelés közben</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">A számsorban fog megjelenni</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Az okossávban fog megjelenni</string>
     <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Vágólap tartalom javaslatok</string>
     <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">A vágólap tartalmának beillesztése, ha korábban ki lett másolva</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Javaslatok következő szóra</string>
+    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Javaslatok a következő szóra</string>
     <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Használja az előző szavakat a javaslatok generálásához</string>
     <string name="pref__correction__title" comment="Preference group title">Javítások</string>
-    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatikus nagybetű</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatikusan nagy kezdőbetű</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kezdje nagybetűvel a szavakat a bemeneti környezet alapján</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Caps lock állapot megjegyzése</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock marad, ha mozog egy másik szövegmezőbe</string>
@@ -134,7 +146,7 @@
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gesztusok &amp; csúsztatott gépelés</string>
     <string name="pref__glide__title" comment="Preference group title">Csúsztatott gépelés</string>
     <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Csúsztatott gépelés engedélyezése</string>
-    <string name="pref__glide__enabled__summary" comment="Preference summary">Írjon be egy szót úgy, hogy ujját a betűin keresztül csúsztatja</string>
+    <string name="pref__glide__enabled__summary" comment="Preference summary">Írjon be egy szót úgy, hogy ujját a betűin keresztülcsúsztatja</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Nyomvonal megjelenítése</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Minden szó után eltűnik</string>
     <string name="pref__gestures__title" comment="Preference group title">Gesztusok</string>
@@ -143,17 +155,19 @@
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">A jelenlegi szó törlése</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Szavak pontos törlése</string>
     <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Billentyűzet elrejtése</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Kurzor felfelé mozgatása</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Kurzor lefelé mozgatása</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Kurzor balra mozgatása</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Kurzor jobbra mozgatása</string>
+    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Kurzor mozgatása felfelé</string>
+    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Kurzor mozgatása lefelé</string>
+    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Kurzor mozgatása balra</string>
+    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Kurzor mozgatása jobbra</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
+    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Váltás az előző billentyűzetre</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Váltás az előző altípusra</string>
     <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Váltás a következő altípusra</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Felhúzás</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Lehúzás</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Balra húzás</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Jobbra húzás</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Szóköz felhúzás</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Szóköz balra húzás</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Szóköz jobbra húzás</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Törlés gomb balra húzás</string>
@@ -170,17 +184,20 @@
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Hosszú</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Nagyon hosszú</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings activity">Haladó</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Beállítások Téma</string>
+    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Beállítások témája</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Világos</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Sötét</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Alkalmazás megjelenítése a kezdőképernyőn</string>
+    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Privát mód kényszerítése</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Minden funkciót ki fog kapcsolni ideiglenesen, amely a bemeneti adatokkal dolgozik</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Névjegy</string>
-    <string name="about__app_icon_content_description" comment="Content description of app icon in About">A FlorisBoard alkalmazás ikonja</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">A FlorisBoard alkalmazásikonja</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Nyílt forráskódú licencek</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Adatvédelmi Irányelvek</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Forráskód</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Nyílt forráskódú licencek</string>
+    <!-- Assets strings -->
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Beállítás</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Előző</string>
@@ -189,18 +206,18 @@
     <string name="setup__finish_button" comment="Label of Finish button in Setup">Befejezés</string>
     <string name="setup__ok_button" comment="Label of OK button in Setup">OK</string>
     <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Üdvözöljük!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Köszönjük, hogy kipróbálta FlorisBoard-ot! Mielőtt elkezdené használni, meg kell tennünk a szokásos dolgokat, engedélyeznünk kell a rendszerbeállításokban, be kell állítanunk a kívánt nyelvet/elrendezést stb.... de ne aggódjon a telepítő varázsló végigvezeti önt ezen!</string>
+    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Köszönjük, hogy kipróbálta FlorisBoard-ot! Mielőtt elkezdené használni, meg kell csinálnunk a szokásos dolgokat, engedélyeznünk kell a rendszerbeállításokban, be kell állítanunk a kívánt nyelvet/elrendezést stb.... de ne aggódjon a telepítő varázsló végigvezeti önt ezen!</string>
     <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">A FlorisBoard teljes mértékben tiszteletben tartja az Ön személyes adatait, és nem gyűjt felhasználói adatokat. További információkért látogassa meg:</string>
     <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">A FlorisBoard forráskódja bárki számára nyilvánosan elérhető, így könnyen áttekintheti, hogy mit csinál a FlorisBoard a háttérben. Nézze meg a tároló linkjét lejjebb.</string>
     <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Még egy utolsó dolog a beállítás megkezdése előtt - ha bármilyen hibával/összeomlással/problémával találkozik a FlorisBoard alkalmazásban, vagy ha egy funkciót szeretne kérni - menjen át az alább linkelt GitHub tárolóba, és nyújtson be egy hibajelentést. Ez segít javítani a felhasználói élményt!</string>
     <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">A beállítás megkezdéséhez kattintson a <i>Következő</i> gombra.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">FlorisBoard engedélyezése</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Az Android megköveteli, hogy minden egyéni billentyűzetet manuálisan engedélyezzen, mielőtt használná. Kattintson az alábbi gombra a <i>Nyelv &amp; bemenet</i> beállításokhoz, majd jelölje be a \'<i>FlorisBoard</i> \'-ot.</string>
+    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Az Android megköveteli, hogy minden egyéni billentyűzetet manuálisan engedélyezzen, mielőtt használná. Kattintson az alábbi gombra a <i>Nyelv és bemenet</i> beállításokhoz, majd jelölje be a \'<i>FlorisBoard</i> \'-ot.</string>
     <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">A FlorisBoard sikeresen engedélyezve lett. A folytatáshoz kattintson a <i>Következő</i> gombra!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Nyelv &amp; bemenet beállítások megnyitása</string>
+    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Nyelv és bemenet beállítások megnyitása</string>
     <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">FlorisBoard alapértelmezetté tétele</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard most már engedélyezve van a rendszerben. Ahhoz, hogy aktívan használja, váltson a FlorisBoard-ra annak kiválasztásával azt a bemenet választó párbeszédablakban!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Sikeresen átváltotta az alapértelmezett billentyűzetet a Florisboardra!</string>
+    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard most már engedélyezve van a rendszerben. Ahhoz, hogy aktívan használja, váltson a FlorisBoard-ra annak kiválasztásával azt a bevitel választó párbeszédablakban!</string>
+    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Sikeresen átváltotta az alapértelmezett billentyűzetet Florisboardra!</string>
     <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Billentyűzet váltása</string>
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">A beállítás kész!</string>
     <!-- Crash Dialog strings -->
@@ -213,5 +230,5 @@
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">A FlorisBoard leállt…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Érintse meg a hiba részleteinek megtekintéséhez</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Úgy tűnik, hogy a FlorisBoard többször leállt…</string>
-    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Visszalépés az előző billentyűzethez, hogy megakadályozza a végtelen összeomlást. Érintse meg a hiba részleteinek megtekintéséhez</string>
+    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Visszalépés az előző billentyűzetre, a végtelen összeomlás megakadályozásához. Érintse meg a hiba részleteinek megtekintéséhez</string>
 </resources>

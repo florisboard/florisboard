@@ -7,6 +7,11 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Chiudi modalità mano singola.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Muovi tastiera a sinistra.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Muovi tastiera a destra.</string>
+    <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Modalità Privata</string>
+    <!--
+    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
+-->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
@@ -28,6 +33,9 @@
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Apri Impostazioni.</string>
     <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Vai a pannello di modifica del testo.</string>
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Passa alla visualizzazione dei media.</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Pulsante annulla per cancellare l\'ultima azione</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Pulsante ripeti per invertire l\'ultimo Annulla</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Se visibile, indica che la modalità privata è attiva. Se cliccato mostra le informazioni sulla modalità privata.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Impostazioni</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Altre opzioni</string>
@@ -72,6 +80,7 @@
     <string name="settings__theme__group_media" comment="Theme group label">Contesto multimediale</string>
     <string name="settings__theme__group_one_handed" comment="Theme group label">Una mano</string>
     <string name="settings__theme__group_one_handed_button" comment="Theme group label">Pulsante una mano</string>
+    <string name="settings__theme__group_private_mode" comment="Theme group label">Modalità Privata</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Smartbar</string>
     <string name="settings__theme__group_smartbar_button" comment="Theme group label">Pulsante smartbar</string>
     <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">Colore primario</string>
@@ -84,8 +93,18 @@
     <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">Il colore di sfondo della barra di navigazione.</string>
     <string name="pref__theme__navBarIsLight_title" comment="Title of Nav bar is light theme preference">Colore scuro di primo piano della barra di navigazione</string>
     <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Imposta a ON per un colore di primo piano scuro e OFF per uno chiaro.</string>
+    <string name="pref__theme__showKeyBorder_title" comment="Title of Show Key Border preference">Bordo dei tasti</string>
+    <string name="pref__theme__showKeyBorder_summary" comment="Summary of Show Key Border preference">Imposta a ON per mostrare il bordo e ad OFF per nasconderlo</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Tastiera preferenze</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Tasti</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">Barra numerica</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Mostra barra numerica in cima alla disposizione dei caratteri</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Barra numerica con suggerimenti</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Simboli suggeriti</string>
+    <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">Disabilitato</string>
+    <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">Abilitato (Priorità ai suggerimenti)</string>
+    <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">Abilitato (Priorità agli accenti)</string>
+    <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">Abilitato (Priorità intelligente)</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Moltiplicatore della dimensione del testo (ritratto)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Moltiplicatore della dimensione del testo (panorama)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
@@ -113,8 +132,11 @@
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Mostra popup quando si preme un tasto</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Ritardo lunga pressione tasti</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Esperienza di digitazione</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">Abilità Smartbar</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">Verrà mostrato in cima alla tastiera</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggerimenti</string>
     <string name="pref__suggestion__enabled__label" comment="Preference title">Visualizza suggerimenti mentre digiti</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Verrà mostrato nella Smartbar</string>
     <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Suggerimenti sui contenuti degli appunti</string>
     <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Suggerisci contenuti degli appunti copiati in precedenza da incollare</string>
     <string name="pref__suggestion__use_pref_words__label" comment="Preference title">Suggerimenti per la parola successiva</string>
@@ -143,6 +165,7 @@
     <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Muovi cursore a sinistra</string>
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Muovi cursore a destra</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
+    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Passa alla tastiera precedente</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Vai allo stile di input precedente</string>
     <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Vai allo stile di input successivo</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Swipe su</string>
@@ -176,6 +199,7 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Norme sulla privacy</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Codice sorgente</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licenze open source</string>
+    <!-- Assets strings -->
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Configurazione</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Precedente</string>

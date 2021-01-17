@@ -5,6 +5,11 @@
     <!-- One-handed strings -->
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">جابه‌جایی صفحه کلید به سمت چپ.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">جابه‌جایی صفحه کلید به سمت راست.</string>
+    <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">حالت خصوصی</string>
+    <!--
+    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
+-->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">ایموجی ها</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
@@ -21,6 +26,9 @@
     <string name="emoji__category__flags" comment="Emoji category name">پرچم ها</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">باز کردن تنظیمات.</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">دکمه برگرداندن برای برگشتن به انجام آخرین عمل</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">دکمه بازگردانی برای بازگشت به آخرین عمل برگشت داده شده</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">اگر معلوم باشد، نشان می دهد که حالت خصوصی فعال است. وقتی روی آن کلیک شود، اطلاعاتی درباره حالت خصوصی نشان می دهد.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">تنظیمات</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">گزینه‌های بیشتر</string>
@@ -39,10 +47,36 @@
     <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">لغو</string>
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">حذف</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">ویرایش زیر-نوعی</string>
+    <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">چیدمان صفحه کلید</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">این زیرنوع درحال حاضر وجود دارد!</string>
+    <string name="settings__theme__title" comment="Title of the Theme fragment">طرح زمینه صفحه کلید</string>
+    <string name="settings__theme__undefined" comment="General string for an undefined preference value">تعریف نشده</string>
+    <string name="settings__theme__background" comment="General label for a background preference">رنگ پس‌زمینه</string>
+    <string name="settings__theme__background_active" comment="General label for an active background preference">رنگ پس‌زمینه هنگامی که فعال است</string>
+    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">رنگ پس‌زمینه هنگامی که انتخاب شود</string>
+    <string name="settings__theme__foreground" comment="General label for a foreground preference">رنگ روی‌زمینه</string>
+    <string name="settings__theme__foreground_alt" comment="General label for an alternate foreground preference">رنگ روی‌زمینه (جایگزین)</string>
+    <string name="settings__theme__foreground_capslock" comment="General label for a capslock foreground preference">رنگ روی‌زمینه (caps lock)</string>
+    <string name="settings__theme__dialog_title" comment="Title of the color selection dialog for a single theme preference">انتخاب یک رنگ</string>
+    <string name="settings__theme__group_window" comment="Theme group label">پنجره &amp; سیستم</string>
+    <string name="settings__theme__group_keyboard" comment="Theme group label">صفحه‌کلید</string>
+    <string name="settings__theme__group_key" comment="Theme group label">کلید</string>
+    <string name="settings__theme__group_key_enter" comment="Theme group label">کلید را وارد کنید</string>
+    <string name="settings__theme__group_key_popup" comment="Theme group label">پاپ‌آپ کلید</string>
+    <string name="settings__theme__group_key_shift" comment="Theme group label">کلید Shift</string>
+    <string name="settings__theme__group_private_mode" comment="Theme group label">حالت خصوصی</string>
+    <string name="pref__theme__showKeyBorder_title" comment="Title of Show Key Border preference">حاشیه کلید</string>
+    <string name="pref__theme__showKeyBorder_summary" comment="Summary of Show Key Border preference">روی روشن بزارید تا حاشیه را نمایش دهد یا روی خاموش بزنید تا مخفی‌اش کند</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">تنظیمات صفحه‌کلید</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">کلیدها</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">ردیف عدد</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">ردیف عددی که بالای چیدمان کاراکتر ها نمایش داده می شود</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">ردیف عددی همیار</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">نشانه های همیار</string>
+    <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">غیرفعال شد</string>
+    <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">فعال شد(راهنما در اولویت)</string>
+    <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">فعال شد(راهنما اولویت بندی شده)</string>
+    <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">فعال شد(اولولیت بندی هوشمند)</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">اندازه فونت چند برابری(عمودی)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">اندازه فونت چند برابری(افقی)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">چیدمان</string>
@@ -88,7 +122,12 @@
     <string name="pref__glide__title" comment="Preference group title">نوشتن گلایدی</string>
     <string name="pref__glide__enabled__label" comment="Preference title">[NYI] فعال سازی نوشتن گلایدی</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">نوشتن حروف با حرکت مداوم و نگه داشتن روی حرف مورد نظر</string>
+    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">تعویض به صفحه کلید قبلی</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">کشیدن فاصله</string>
+    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">حالت خصوصی اجباری</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">هر ویژگی که که باید با ورودی شما کار کنند را موقتا غیرفعال می کند</string>
     <!-- About UI strings -->
+    <!-- Assets strings -->
     <!-- Setup UI strings -->
     <string name="setup__cancel_button" comment="Label of Cancel button in Setup">لغو</string>
     <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">بعدی</string>

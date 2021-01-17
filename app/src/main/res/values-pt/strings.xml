@@ -7,6 +7,11 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Fechar modo de uma mão</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Mover teclado para a esquerda</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Mover teclado para a direita</string>
+    <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Modo privado</string>
+    <!--
+    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
+-->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Ícones emotivos</string>
@@ -28,6 +33,9 @@
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Abrir definições</string>
     <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Trocar para o painel de edição de texto</string>
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Mudar para a introdução multimédia</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Botão para reverter a última ação</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Botão para reverter a última anulação</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Se visível, indica que o modo privado está ativo. Ao ser clicado, mostra as informações acerca deste modo.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Definições</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Mais opções</string>
@@ -72,6 +80,7 @@
     <string name="settings__theme__group_media" comment="Theme group label">Contexto multimédia</string>
     <string name="settings__theme__group_one_handed" comment="Theme group label">Uma mão</string>
     <string name="settings__theme__group_one_handed_button" comment="Theme group label">Botão do modo uma mão</string>
+    <string name="settings__theme__group_private_mode" comment="Theme group label">Modo privado</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Barra inteligente</string>
     <string name="settings__theme__group_smartbar_button" comment="Theme group label">Botão da barra inteligente</string>
     <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">Cor primária</string>
@@ -84,10 +93,18 @@
     <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">A cor de fundo da barra de navegação</string>
     <string name="pref__theme__navBarIsLight_title" comment="Title of Nav bar is light theme preference">Botões da barra de navegação escura</string>
     <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Ative para usar a cor escura ou desative para cor clara.</string>
+    <string name="pref__theme__showKeyBorder_title" comment="Title of Show Key Border preference">Contorno de teclas</string>
+    <string name="pref__theme__showKeyBorder_summary" comment="Summary of Show Key Border preference">Defina como Ligado para mostrar ou Desligado para ocultar</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Preferências do teclado</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Teclas</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Linha de números</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Mostrar linha de números em cima do teclado</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Indicador de números</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Indicador de símbolos</string>
+    <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">Desativado</string>
+    <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">Ativado (prioridade a números e símbolos)</string>
+    <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">Ativado (prioridade a letras com acento)</string>
+    <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">Ativado (prioridade inteligente)</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicador do tipo de letra (vertical)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicador do tipo de letra (horizontal)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposição</string>
@@ -148,12 +165,14 @@
     <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Mover cursor para a esquerda</string>
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Mover cursor para a direita</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Tecla Shift</string>
+    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Trocar para o teclado anterior</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Trocar para o subtipo anterior</string>
     <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Trocar para o subtipo seguinte</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Deslizar para cima</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Deslizar para baixo</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Deslizar para a esquerda</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Deslizar para a direita</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Deslize acima na barra de espaços</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Deslizar à esquerda na barra de espaços</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Deslizar à direita na barra de espaços</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Deslizar à esquerda na tecla Delete</string>
@@ -174,6 +193,8 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Claro</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Escuro</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostrar ícone no \'launcher\'</string>
+    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Impor modo privado</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Desativa todas as funcionalidades que necessitam de de aceder ao dados introduzidos</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Acerca</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ícone FlorisBoard</string>
@@ -181,6 +202,7 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Política de privacidade</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Código-fonte</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licenças Open Source</string>
+    <!-- Assets strings -->
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Configuração</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Recuar</string>

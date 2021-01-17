@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- One-handed strings -->
+    <!-- Private mode info dialog strings -->
+    <!--
+    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
+-->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">ⵉⵎⵓⵊⵉⵜⵏ</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">ⵜⵉⵙⵢⴰⴼⴽⵓⵏⵉⵏ</string>
@@ -29,6 +33,7 @@
     <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] ⵉⵙⵓⵎⵔⵏ ⵏ ⵜⴳⵓⵔⵉ ⵜⵓⴹⴼⵉⵕⵜ</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">ⵅⴼ</string>
+    <!-- Assets strings -->
     <!-- Setup UI strings -->
     <string name="setup__cancel_button" comment="Label of Cancel button in Setup">ⵙⵔ</string>
     <string name="setup__finish_button" comment="Label of Finish button in Setup">ⵙⵎⴷ</string>

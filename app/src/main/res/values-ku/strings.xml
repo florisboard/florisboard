@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">ڕاگرتن</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">چاوەڕوانبە</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">ئایکۆنی سی نوقتە، ئەگەر چالاک بێت پیت و هێما لاوەکیەکانی خانەی دووەم پیشان ئەدرێن لەکاتی دەست ڕاگرتن</string>
+    <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">داخستنی دۆخی بەکارهێنانی یەک دەست</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">بردنی تەختەکلیل بۆ لای چەپ</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">بردنی تەختەکلیل بۆ لای ڕاست</string>
+    <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">دۆخی تایبەت</string>
+    <!--
+    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
+-->
+    <!-- Media strings -->
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">خەندەکان</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">هێمای دەربڕینی هەستەکان</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">کامۆجی</string>
+    <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">خەندەکان </string>
+    <string name="emoji__category__people_body" comment="Emoji category name">خەڵک</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">ئاژەڵ</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">خواردن</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">گواستنەوە</string>
+    <string name="emoji__category__activities" comment="Emoji category name">چالاکی</string>
+    <string name="emoji__category__objects" comment="Emoji category name">ئامانجەکان</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">هێماکان</string>
+    <string name="emoji__category__flags" comment="Emoji category name">ئاڵاکان</string>
+    <!-- Smartbar strings -->
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">گۆڕینی خێرای کردار. ئەگەر فشارکرا، لە نێوان پێشنیارەکانی ووشە و دوگمەکانی کاری خێرا دا دەگۆڕێت.</string>
+    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">داخستنی بەشی دەستکاریکردنی نووسین</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">شێوازی دۆخی بەکارهێنان بە یەک دەست.</string>
+    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">کردنەوەی ڕێکخستنەکان</string>
+    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">گۆڕین بۆ ئامرازەکانی دەستکاریکردنی نووسین</string>
+    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">گۆڕین بۆ دیمەنی دانانی میدیا</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">دوگمە بکەوە بۆ پێچەوانەکردنەوەی دوایین کردار</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">دوگمە دووبارە بکەوە بۆ پێچەوانەکردنەوەی دوایین کردار</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">ئەگەر بینراو بێت، ئەوە نیشان دەدات کە مۆدی تایبەت چالاکە. کاتێک کرتە کرا، زانیاری دەربارەی دۆخی تایبەت پیشان بدە.</string>
+    <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">ڕێکخستنەکان</string>
+    <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">هەڵبژاردنی زیاتر</string>
+    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">یارمەتی و فێرکاری</string>
+    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">سەرەتا</string>
+    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">تەختەکلیل</string>
+    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">نووسین</string>
+    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">ڕووکار</string>
+    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">ئاماژەکان</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">بنەڕەتی</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">بەپێی سیستەم</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">بەخێربێی بۆ %s</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">تەختەکلیلی FlorisBoard هێشتا چالاک نەکراوە لە ڕێکخستنەکانی سیستەمدا، پێویستە چالاکی بکەیت بۆ بەکارهێنان پەنجەبنێ بێرەدا.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">تەختەکلیلی FlorisBoard چالاککراوە لە ڕێکخستنەکانی سیستەمدا بەڵام هەڵنەبژێردراوە بۆ بەکارهێنان وەک تەختەکلیلی سەرەکی، پێویستە دیاریبکەیت بۆ بەکارهێنان پەنجەبنێ بێرەدا بۆ هەڵبژاردن.</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">سپاس بۆ بەکارهێنانی تەختەکلیلی FlorisBoard! ئەم تەختەکلیلە هێشتا لە باری کارکردندایەوە وەشانی سەرەتاییە لەوانەیە سەرجەم تایبەتمەندییەکانی بەردەست نەبن، لەکاتی بوونی هەر کێشە و گرفتێکدا یان بۆ ناردنی سەرنج و پێشبینیەکانتان تکایە سەردانی بەشی تایبەتی پرۆژەکە بکە لە GitHub ، ئەمە ئەبێتە هۆی زیاتر بەرەوپێشبردنی تەختەکلیلەکە... سوپاس!</string>
+    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">تەختەکلیل و زمانەکان</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">وا دیارە کە هیچ زمانێکی زیادە دانەنراوە بۆ نووسین، لەبەر ئەوەزمانی  زمانی ئینگلیزی(قوەرتی) بەبنەڕەتی بەکاردێت بۆ نووسین!</string>
+    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">زیادکردن</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">زیادکردنی زمان</string>
+    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">جێبەجێکردن</string>
+    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">پاشگەزبونەوە</string>
+    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">سڕینەوە</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">دەستکاریکردن تەختەکلیل</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">زمان</string>
+    <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">شێوازەکانی تەختەکلیل</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">ئەم زمانە پێشتر زیادکراوە لە لیستەکەدا هەیە!</string>
+    <string name="settings__theme__title" comment="Title of the Theme fragment">ڕووکارەکانی تەختەکلیل</string>
+    <string name="settings__theme__undefined" comment="General string for an undefined preference value">بێ ناو</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">دۆخی ڕووکار</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">هەمیشە ڕووناک</string>
+    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">هەمیشە تاریک</string>
+    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">بەپێی سیستەم</string>
+    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">بەپێی کات</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">کاتی خۆرهەڵاتن</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">کاتی خۆر ئاوابوون</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">ڕووناک</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">تاریک</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">ڕووکاری هەڵبژێردراو</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">گۆڕینی ڕەنگی ڕووکار بەپێی بەرنامەکان</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">ڕەنگی ڕووکار بەخۆکاری دەگۆڕێت لەگەڵ ڕەنگی بەرنامەکان ئەگەر بەرنامەکە پستگیری هەمەڕەنگ بێت.</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">ڕەنگی بنەڕەتی بەرنامەکە</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">بیرگەی ناخۆیی</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">بیرگەی دەرەکی</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">ڕێکخستنی ڕووکار (ڕووناک)</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">ڕێکخستنی ڕووکار (تاریک)</string>
+    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">دروستکردنی ڕووکار</string>
+    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">دروستکردن لە ڕووکارە بەردەستەکان</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">تایبەت (سەرچاوەکراوە لە %s)</string>
+    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">ڕووکاری نوێ</string>
+    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">ده‌ستکاریکردنی ڕووکار</string>
+    <string name="settings__theme_editor__name_label" comment="Label of name input">ناو</string>
+    <string name="settings__theme_editor__type_label" comment="Label of type input">جۆر</string>
+    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">زیادکردنی گرووپ</string>
+    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">دەستکاریکردنی گرووپ</string>
+    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">زیادکردنی تایبەتمەندی</string>
+    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">دەستکاریکردنی تایبەتمەندی</string>
+    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">سەرچاوە</string>
+    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">گرووپ</string>
+    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">تایبەتمەندی</string>
+    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">تاک ڕەنگ</string>
+    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">هەمەڕەنگ</string>
+    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">ڕەنگی بریقەدار</string>
+    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">گۆڕین</string>
+    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">دۆخ</string>
+    <string name="settings__theme_editor__value_type_other" comment="Theme value type">جۆری تر</string>
+    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">نوسین</string>
+    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">ڕێژەی پیشاندانی ڕووکار</string>
+    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">تکایە ناوی ڕووکار بنوسە</string>
+    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">تکایە ناوی گروپ بنووسە کە تەنها پیتەکانی a-z و/یان A-Z ی تێدا بێت.</string>
+    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">تکایە ناوی گرووپ بنوسە</string>
+    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">تکایە ناوی تایبەتمەندی بنووسە کە تەنها پیتەکانی a-z و/یان A-Z ی تێدا بێت.</string>
+    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">تکایە ناوی تایبەتمەندی بنوسە</string>
+    <string name="settings__theme__background" comment="General label for a background preference">ڕەنگی پشتتەوە</string>
+    <string name="settings__theme__background_active" comment="General label for an active background preference">ڕەنگی پشت شاشە لەکاتی چالاکبوندا</string>
+    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">ڕەنگی پشت شاشە لەکاتی دەستلێدان</string>
+    <string name="settings__theme__foreground" comment="General label for a foreground preference">ڕەنگی پێشەوە</string>
+    <string name="settings__theme__foreground_alt" comment="General label for an alternate foreground preference">ڕەنگی پێشەوە (جێگرەوە)</string>
+    <string name="settings__theme__foreground_capslock" comment="General label for a capslock foreground preference">ڕەنگی پێشەوە (قوفڵی caps)</string>
+    <string name="settings__theme__dialog_title" comment="Title of the color selection dialog for a single theme preference">ڕەنگێک هەڵبژێرە</string>
+    <string name="settings__theme__group_window" comment="Theme group label">ڕووکەش</string>
+    <string name="settings__theme__group_keyboard" comment="Theme group label">تەختەکلیل</string>
+    <string name="settings__theme__group_key" comment="Theme group label">دوگمە</string>
+    <string name="settings__theme__group_key_enter" comment="Theme group label">دوگمەی ئینتەر</string>
+    <string name="settings__theme__group_key_popup" comment="Theme group label">دوگمەی بچوککراوە</string>
+    <string name="settings__theme__group_key_shift" comment="Theme group label">دوگمەی شێفت</string>
+    <string name="settings__theme__group_media" comment="Theme group label">لیستی میدیا</string>
+    <string name="settings__theme__group_one_handed" comment="Theme group label">بەکارهێنان بە یەک دەست</string>
+    <string name="settings__theme__group_one_handed_button" comment="Theme group label">دوگمەی بەکارهێنانی یەک دەست</string>
+    <string name="settings__theme__group_private_mode" comment="Theme group label">دۆخی تایبەت</string>
+    <string name="settings__theme__group_smartbar" comment="Theme group label">ڕەنگی بەشی سەرەوە</string>
+    <string name="settings__theme__group_smartbar_button" comment="Theme group label">ڕەنگی دوگمەکانی بەشی سەرەوە</string>
+    <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">ڕەنگی بنەڕەتی</string>
+    <string name="pref__theme__colorPrimary_summary" comment="Summary of Color primary theme preference">جێبەجێ کراوە بۆ بەشی میدیای سەرەکی شەپۆل و تیشکخستنەسەر هەڵبژاردنەکان</string>
+    <string name="pref__theme__colorPrimaryDark_title" comment="Title of Color primary dark theme preference">ڕەنگی بنەڕەتی (تاریک)</string>
+    <string name="pref__theme__colorPrimaryDark_summary" comment="Summary of Color primary dark theme preference">لە ئێستادا بەردەست نییە، دنراوە بۆ جێبەجێکردنی داهاتوو</string>
+    <string name="pref__theme__colorAccent_title" comment="Title of Color accent theme preference">ڕەنگی دووەم</string>
+    <string name="pref__theme__colorAccent_summary" comment="Summary of Color accent theme preference">جێبەجێ کراوە بۆ بەشی خەندەکان</string>
+    <string name="pref__theme__navBarColor_title" comment="Title of Nav bar color theme preference">ڕەنگی بەشی خوارەوە</string>
+    <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">پشت شاشەی بەشی خوارەوە</string>
+    <string name="pref__theme__navBarIsLight_title" comment="Title of Nav bar is light theme preference">پشت شاشەی تاریکی بەشی خوارەوە</string>
+    <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">بۆ تاریک کردن یان بۆ کوژاندنەوەی بۆ ڕووناککردنی پێشگرەکە</string>
+    <string name="pref__theme__showKeyBorder_title" comment="Title of Show Key Border preference">لێواری دوگمەکان</string>
+    <string name="pref__theme__showKeyBorder_summary" comment="Summary of Show Key Border preference">چالاککردن واتە پیشاندانی لێوار یان نا چالاک نۆ شاردنەوە</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">ڕێکخستنی تەختەکلیل</string>
+    <string name="pref__keyboard__group_keys__label" comment="Preference group title">دوگمەکان</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">لیستی ژمارەکان</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">پیشاندانی لیستی ژمارەکان لەبەشی سەرەوەی تەختەکلیل</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">ژمارەکانی خانەی دووەم</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">هێماکانی خانەی دووەم</string>
+    <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">نا چالاک</string>
+    <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">پیشاندان (هێماکان)</string>
+    <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">پیشاندان (پیتەکان)</string>
+    <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">پیشاندان (هەڵبژاردنی زیرەک)</string>
+    <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">قەبارەی نووسین (ستوونی)</string>
+    <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">قەبارەی نووسین (ئاسۆیی) </string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">شێوازەکان</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">بەکارهێنان بە یەک دەست</string>
+    <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">نا چالاک</string>
+    <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">بەکارهێنان بۆ دەستی ڕاست</string>
+    <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">بەکارهێنان بۆ دەستی چەپ</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">بەرزی تەختەکلیل</string>
+    <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">بچووکترین</string>
+    <string name="pref__keyboard__height_factor__short" comment="Preference value">بچووک</string>
+    <string name="pref__keyboard__height_factor__mid_short" comment="Preference value">بچووکتر</string>
+    <string name="pref__keyboard__height_factor__normal" comment="Preference value">بنەڕەتی</string>
+    <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">گەورە</string>
+    <string name="pref__keyboard__height_factor__tall" comment="Preference value">گەورەتر</string>
+    <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">گەورەترین</string>
+    <string name="pref__keyboard__height_factor__custom" comment="Preference value">تایبەت</string>
+    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">ڕێژەی ئاستی قیاسی تەختەکلیل</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">قەبارەی بەشی خوارەوە (بۆ شاشە تەنیشت چەماوەکان)</string>
+    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">کاریگەرییەکان</string>
+    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">دەنگ لەکاتی نووسین</string>
+    <string name="pref__keyboard__sound_volume__label" comment="Preference title">ئاستی دەنگ</string>
+    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">لەرزین لەکاتی نووسین</string>
+    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">ئاستی لەرزین</string>
+    <string name="pref__keyboard__popup_visible__label" comment="Preference title">بچووککراوە پیت</string>
+    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">پیشاندانی بچووککراوەی پیت لەکاتی نووسین</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">ماوەی دەست راگرتن بۆ پیتە لاوەکییەکان</string>
+    <string name="settings__typing__title" comment="Title of Typing experience fragment">ڕێکخستنەکانی تەختەکلیل</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">پیشاندانی بەشی سەرەوە (SmartBar)</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">پیشاندانی ئامرازەکانی دەستکاریکردنی نووسین لەبەشی سەرەوەی تەختەکلیل</string>
+    <string name="pref__suggestion__title" comment="Preference group title">پێشنیارکردنی ووشە</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] پیشاندانی ووشە پێشنیارکراوەکان لەکاتی نووسین</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">پیشان دەدرێت لەبەشی سەرەوە</string>
+    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">پێشنیارکردنی شتە کۆپیکراوەکان</string>
+    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">پێشنیارکردنی ئەو شتانەی کە کۆپیکراون لەبەشی سەرەوەی تەختەکلیل</string>
+    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] پێشنیارکردنی ووشەی دواتر</string>
+    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">بەکارهێنانی ووشەی پێشتر بۆ پێشنیارکردن</string>
+    <string name="pref__correction__title" comment="Preference group title">ڕاستکردنەوە</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">گەورەکردنی خۆکاری</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">گەورەکردنی پیتەکان بە خۆکاری تەنها بۆ زمانە لاتینییەکان</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">گەورەکردنی هەمیشەیی</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">سەرجەم پیتەکان هەمیشە بە گەورەیی(کاپیتاڵ) دەمێننەوە تەنها بۆ ئینگلیزی و زمانە لاتینییەکان</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">دانانی خاڵ بە دوگمەی بۆشایی</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">دووجار دەست بنێیت بە دوگمەی بۆشاییدا خاڵ یان هێمای کۆتایی ڕستە دەنوسێت</string>
+    <string name="settings__gestures__title" comment="Title of Gestures fragment">ئاماژەکان و نووسین بەسەریەکەوە</string>
+    <string name="pref__glide__title" comment="Preference group title">نووسین بەسەریەکەوە</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] نووسین بەسەریەکەوە</string>
+    <string name="pref__glide__enabled__summary" comment="Preference summary">نووسین بەسەریەکەوە بەشێوەی دەسخشاندن بەسەر پیتەکاندا</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] پیشاندانی هێڵی نووسین</string>
+    <string name="pref__glide__show_trail__summary" comment="Preference summary">لەدوای هەر ووشەیەک دەردەکەوێ</string>
+    <string name="pref__gestures__title" comment="Preference group title">ئاماژەکان</string>
+    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">هیچ فرمانێک</string>
+    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">سڕینەوەی پیتەکان یەک بە یەک</string>
+    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">سڕینەوەی ووشەی ئێستا</string>
+    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">سڕینەوەی ووشەکان یەک بە یەک</string>
+    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">شاردنەوەی تەختەکلیل</string>
+    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">بردن بۆ سەرەوە</string>
+    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">بردن بۆ خوارەوە</string>
+    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">بردن بۆ لای چەپ</string>
+    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">بردن بۆ لای ڕاست</string>
+    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">گەورەکردن (Shift) </string>
+    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">گۆڕین بۆ تەختەکلیلی پێشوو</string>
+    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">گۆڕین بۆ زمانی پێشوو</string>
+    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">گۆڕین بۆ زمانی دواتر</string>
+    <string name="pref__gestures__swipe_up__label" comment="Preference title">ڕاکێشان بۆ سەرەوە</string>
+    <string name="pref__gestures__swipe_down__label" comment="Preference title">ڕاکێشان بۆ خوارەوە</string>
+    <string name="pref__gestures__swipe_left__label" comment="Preference title">ڕاکێشان بۆ لای چەپ</string>
+    <string name="pref__gestures__swipe_right__label" comment="Preference title">ڕاکێشان بۆ لای ڕاست</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">دوگمەی بۆشایی بۆ سەرەوە</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">دوگمەی بۆشایی بۆ لای چەپ</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">دوگمەی بۆشایی بۆ لای ڕاست</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">دوگمەی سڕینەوە بۆ لای چەپ</string>
+    <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">ئاستی خێرایی ڕاکێشان</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">خاوترین</string>
+    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">خاو</string>
+    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">بنەڕەتی</string>
+    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">خێرا</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">خێراترین</string>
+    <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">ماوەی ڕاکێشان</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">کورتترین</string>
+    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">کورت</string>
+    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">بنەڕەتی</string>
+    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">درێژ</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">درێژترین</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings activity">ڕێکخستنی زیاتر</string>
+    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">ڕووکاری بەرنامەکە</string>
+    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">ڕووناک</string>
+    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">تاریک</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">پیشاندانی ئایکۆنی بەرنامەکە</string>
+    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">چالاککردنی دۆخی تایبەت</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">هەر تایبەتمەندیەک لە کاردەکات کە دەبێت بە شێوەیەکی کاتی کار بکات لەگەڵ داتای تێکردنەکەت</string>
+    <!-- About UI strings -->
+    <string name="about__title" comment="Title of About activity">دەربارە</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">پیشاندانی ئایکۆنی بەرنامەکە</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">مەرج و مۆڵەتی سەرچاوەکان</string>
+    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">تایبەتمەندێتی ڕامیاری</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">کۆدی سەرچاوەکراوە</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">مەرج و مۆڵەتی سەرچاوەکان</string>
+    <!-- Assets strings -->
+    <plurals name="assets__file__authors">
+        <item quantity="one">دارێژەر</item>
+        <item quantity="other">دارێژەر</item>
+    </plurals>
+    <string name="assets__file__name">ناو</string>
+    <string name="assets__file__source">سەرچاوە</string>
+    <string name="assets__action__add">زیادکردن</string>
+    <string name="assets__action__cancel">پاشگەزبونەوە</string>
+    <string name="assets__action__cancel_confirm_title">دڵنیاکردنەوە</string>
+    <string name="assets__action__cancel_confirm_message">ئایا دڵنیایت لەوەی دەتەوێت گۆڕانکاریە هەڵنەگیراوەکان پشتگوێ بخەیت؟ ئەم کارە ناکرێت یەکجار جێبەجێکرا ناتوانرێ بگەڕێتەوە.</string>
+    <string name="assets__action__delete">سڕینەوە</string>
+    <string name="assets__action__delete_confirm_title">دڵنیاکردنەوە</string>
+    <string name="assets__action__delete_confirm_message">ئایا دڵنیایت لە سڕینەوەی \"%s\"؟ ئەم فرمانە ناتوانرێ بگەرێندرێتەوە کە یەکجار جێبەجێکرا.</string>
+    <string name="assets__action__edit">دەستکاریکردن</string>
+    <string name="assets__action__export">هەڵگرتن</string>
+    <string name="assets__action__import">هێنان</string>
+    <string name="assets__action__no">نەخێر</string>
+    <string name="assets__action__save">پاراستن</string>
+    <string name="assets__action__yes">بەڵێ</string>
+    <string name="assets__error__invalid">نا درووستە</string>
+    <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">دامەزراندن</string>
+    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">پێشتر</string>
+    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">پاشگەزبونەوە</string>
+    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">دواتر</string>
+    <string name="setup__finish_button" comment="Label of Finish button in Setup">تەواو</string>
+    <string name="setup__ok_button" comment="Label of OK button in Setup">باشە</string>
+    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">بەخێربێیت!</string>
+    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">سوپاس بۆ بەکارهێنانی تەختەکلیلی FlorisBoard! بۆ بەکارهێنانی تەختەکلیلەکەو نووسین پێی سەرەتا پێویستە دایمەزرێنت لەسەر ئامێرەکەت، بۆ چالاککردن و هەڵبژاردن بە بنەڕەتی - هەنگاو بە هەنگاو ڕێنمونی دەکرێیت!</string>
+    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">تەختەکلیلی FlorisBoard بەتەواوی پارێزراوە و ڕێز لە زانیاری و داتای بەکارهێنەرانی دەگرێت، بۆ زانیاری زیاتر سەردانی ئێرە بکە:</string>
+    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">کۆدی سەرچاوەکراوەی تەختەکلیلی FlorisBoard بەردەستە بۆ هەمووان بەگشتی، کە دەتوانرێ بزانرێت سەرچاوەکانی چیەو چۆن بەرهەم هاتووە، لەڕێی ئەو لینکەی خوارەوە ئەتوانی سەردانی بکەیت.</string>
+    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">پێش ئەوەی دەست بە دامەزراندنەکە بکەیت - ئەگەر تووشی هەر کێشەیەکی وەک جامبوون/تێکچون/وەستان  لەگەڵ FlorisBorad دا هەبوو یان داواکارییەکی تایبەتت هەیە - سەردانی GitHub تایبەتی ئێمە بکە کە لە خوارەوە لینک دانراوە ، ئەمە یارمەتی دەدات لە باشترکردنی ئەزموون بۆ هەموو بەکارهێنەران!</string>
+    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">بۆ دەستپێکردنی دامەزراندن پەنجە بنێ بە <i>دواتر</i>.</string>
+    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">چالاککردنی تەختەکلیل</string>
+    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">سیستەمی ئەندرۆید داوا دەکات کە هەموو تەختەکلیلێکی تایبەت بە دەستی چالاک بکرێت پێش ئەوەی بتوانیت بەکاری بهێنیت.
+کرتە لەسەر دوگمەی خوارەوە بکە بۆ ئەوەی بچیتە سەر <i> زمان و تەختەکلیل </i>، پاشان تەختەکلیلی \'<i>FlorisBoard</i>\'. چالاک بکە.</string>
+    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">تەختەکلیلەکە بە سەرکەوتوویی چالاککرا، بۆ بەردەوامبوون پەنجەبنێ بە <i>دواتر</i>!</string>
+    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">ڕێکخستنی تەختەکلیل و زمان</string>
+    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">دانان وەک تەختەکلیلی بنەڕەتی</string>
+    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard ئێستا چالاککراوە لە سیستەمەکەتدا. بۆ بەکارهێنانی بنەڕەتی، بیگۆڕە بۆ FlorisBoard بە دیاریکردنی لە بەشی تەختەکلیلەکاندا.</string>
+    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">تەختەکلیلی FlorisBoard بە سەرکەوتوویی هەڵبژێردا!</string>
+    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">گۆڕینی تەختەکلیل</string>
+    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">دامەزراندن کۆتایی هات!</string>
+    <!-- Crash Dialog strings -->
+    <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBorad ڕاپۆرتی هەڵەی</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">بەداخەوە تەختەکلیلی FlorisBoard بەهۆی هەڵەیەکی چاوەڕوان نەکراوەوە لەکارکەوت، \n\n ئەگەر دەتەوێت ئەم هەڵەیە ڕاپۆڕت بکەیت، کرتە بکە لەسەر \"کۆپی کردن بۆ کلیپ بۆرد\"، پاشان لەسەر دوگمەی \"کردنەوەی ڕاپۆرتی هەڵە\" پڕکردنەوەی ڕاپۆرتی هەڵە  و لکاندنی تۆماربکە،  ئەمە یارمەتی دەدات لە باشترکردنی FlorisBoard  و سەقامگیرتر بۆ هەموو کەسێک سوپاس بۆ تۆ!</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">لەبەرگرتنەوە</string>
+    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">ڕاپۆرتی هەڵە بکەرەوە لەڕێی (github.com) ـەوە</string>
+    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">داخستن</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBorad ڕاپۆرتی هەڵەی</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">تەختەکلیلی FlorisBoard لە کارکەوت…</string>
+    <string name="crash_once_notification__body" comment="Body of the notification for a single crash">بینینی زانیاری ڕاپۆرتی هەڵە</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">تەختەکلیلی FlorisBoard لەوانەیە زوو زوو لەکارکردن بوەستێت…</string>
+    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">گۆڕین بۆ تەختەکلیلی پێشوو لەکاتی بوونی هەڵە و وەستانی لەناکاو، بینینی زانیاری هەڵەکان</string>
+</resources>

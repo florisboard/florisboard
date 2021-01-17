@@ -2,24 +2,44 @@
 <resources>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">הפסק</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">חכה</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">אייקון של 3 נקודות. אם נראה, הוא מצביע על כך שניתן להשתמש ביותר אותיות אם לוחצים עליו למשך יותר זמן.</string>
     <!-- One-handed strings -->
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">סגור מצב שימוש ביד אחת.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">הזז את המקלדת לשמאל.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">הזז את המקלדת לימין.</string>
+    <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">מצב פרטיות</string>
+    <!--
+    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
+-->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">אמוג\'י</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">אמוטיקונים</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">קמוג\'י</string>
     <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">סמיילים ורגשות</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">אנשים וחלקי גוף</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">חיות וטבע</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">מזון ומשקאות</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">נסיעות ומקומות</string>
     <string name="emoji__category__activities" comment="Emoji category name">פעילויות</string>
     <string name="emoji__category__objects" comment="Emoji category name">אובייקטים</string>
     <string name="emoji__category__symbols" comment="Emoji category name">סמלים</string>
     <string name="emoji__category__flags" comment="Emoji category name">דגלים</string>
     <!-- Smartbar strings -->
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">החלפת פעולה מהירה. אם לוחצים עליו, הוא מחליף בין הצעת מילים לבין כפתורי פעולה מהירה.</string>
+    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">צא מהפנל לעריכת טקסט.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">החלף את המצב של מצב ביד אחת.</string>
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">פתח הגדרות.</string>
+    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">שנה לפנל עריכת טקסט.</string>
+    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">עבור לתצוגת קלט מדיה.</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">כפתור Undo כדי לבטל את השינוי האחרון</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">כפתור Redo כדי לחזור לשינוי הקודם שבוטל</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">אם גלוי, סימן שמצב פרטיות פעיל. בעת לחיצה, מציג מידע אודות מצב פרטיות.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">הגדרות</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">אפשרויות נוספות</string>
+    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">עזרה ומשוב</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">מסך הבית</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">מקלדת</string>
     <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">הקלדה</string>
@@ -28,6 +48,11 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">ברירת מחדל</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">ברירת המחדל של המערכת</string>
     <string name="settings__home__title" comment="Title of the Home fragment">ברוכים הבאים ל%s</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard אינו מופעל במערכת ולכן לא יהיה זמין כשיטת קלט בעת בחירת סוג המלקדת. לחץ כאן כדי לפתור תקלה זו.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard אינו הוגדר כמקלדת ברירת המחדל. לחץ כאן כדי לפתור תקלה זו.</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">תודה שניסיתם את FlorisBoard! פרויקט זה עדיין נמצא בגרסאת אלפא ולכן חסרות בו תכולות. אם מצאתם באגים או ברצונכם להציע הצעה, אנא בדקו את ה- repo ב- GitHub והגישו דיווח. זה עוזר לשפר את FlorisBoard. תודה!</string>
+    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">שפות &amp; ותצורת מקלדת</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">נראה שלא הגדרת שום תת-סוג. לכן יהיה שימוש בתת-סוג אנגלית/QWERTY!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">הוסף</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">הוסף תת-סוג</string>
     <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">החל</string>
@@ -41,24 +66,47 @@
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">לא מוגדר</string>
     <string name="settings__theme__background" comment="General label for a background preference">צבע רקע</string>
     <string name="settings__theme__background_active" comment="General label for an active background preference">צבע הרקע כאשר מופעל</string>
-    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">צבע הרקע כאשר נלחץ</string>
+    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">צבע הרקע כאשר מקש נלחץ</string>
     <string name="settings__theme__foreground" comment="General label for a foreground preference">צבע רקע קדמי</string>
     <string name="settings__theme__foreground_alt" comment="General label for an alternate foreground preference">צבע רקע קדמי (אלטרנטיבי)</string>
+    <string name="settings__theme__foreground_capslock" comment="General label for a capslock foreground preference">צבע קדמי (Caps lock)</string>
     <string name="settings__theme__dialog_title" comment="Title of the color selection dialog for a single theme preference">בחר צבע</string>
+    <string name="settings__theme__group_window" comment="Theme group label">חלון ומערכת</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">מקלדת</string>
     <string name="settings__theme__group_key" comment="Theme group label">מקש</string>
-    <string name="settings__theme__group_key_enter" comment="Theme group label">מקש enter</string>
-    <string name="settings__theme__group_key_shift" comment="Theme group label">מקש shift</string>
+    <string name="settings__theme__group_key_enter" comment="Theme group label">מקש Enter</string>
+    <string name="settings__theme__group_key_popup" comment="Theme group label">חלונית מקש</string>
+    <string name="settings__theme__group_key_shift" comment="Theme group label">מקש Shift</string>
+    <string name="settings__theme__group_media" comment="Theme group label">אזור המֶדְיָה</string>
     <string name="settings__theme__group_one_handed" comment="Theme group label">ביד אחת</string>
     <string name="settings__theme__group_one_handed_button" comment="Theme group label">כפתור יד אחת</string>
+    <string name="settings__theme__group_private_mode" comment="Theme group label">מצב פרטיות</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">שורה חכמה</string>
     <string name="settings__theme__group_smartbar_button" comment="Theme group label">כפתור שורה חכמה</string>
     <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">צבע ראשי</string>
+    <string name="pref__theme__colorPrimary_summary" comment="Summary of Color primary theme preference">מיושם על לשונית המדיה העיקרית ועל סממן הבחירה</string>
     <string name="pref__theme__colorPrimaryDark_title" comment="Title of Color primary dark theme preference">צבע ראשי (כהה)</string>
+    <string name="pref__theme__colorPrimaryDark_summary" comment="Summary of Color primary dark theme preference">כרגע לא בשימוש, עם זאת שמור עבור מימוש עתידי</string>
     <string name="pref__theme__colorAccent_title" comment="Title of Color accent theme preference">צבע הדגשה</string>
+    <string name="pref__theme__colorAccent_summary" comment="Summary of Color accent theme preference">מיושם על לשונית האימוג\'י</string>
+    <string name="pref__theme__navBarColor_title" comment="Title of Nav bar color theme preference">צבע סרגל הניווט</string>
+    <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">צבע הרקע של סרגל הניווט.</string>
+    <string name="pref__theme__navBarIsLight_title" comment="Title of Nav bar is light theme preference">סרגל ניווט בעל רקע קדמי כהה</string>
+    <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">הגדר דלוק עבור כהה או לחילופין כבוי עבור רקע קדמי בהיר.</string>
+    <string name="pref__theme__showKeyBorder_title" comment="Title of Show Key Border preference">גבולות מקשים</string>
+    <string name="pref__theme__showKeyBorder_summary" comment="Summary of Show Key Border preference">הגדר דלוק כדי להציג גבולות מקשים או לחילופין כבוי כדי להחביא אותם</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">העדפות מקלדת</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">מקשים</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">שורת המספרים</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">הצד את שורת המספרים מעל לשורת התווים העליונה</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">שורת מספרים מרומזת</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">סמלים מרומזים</string>
+    <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">כבוי</string>
+    <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">פעיל (עדיפות לסמלים)</string>
+    <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">פעיל (עדיפות למבטא)</string>
+    <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">פעיל (עדיפות בצורה חכמה)</string>
+    <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">מכפלת גודל גופן (אנכי)</string>
+    <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">מכפלת גודל גופן (אופקי)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">אופן תצוגה</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">מצב יד אחת</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">כבה</string>
@@ -67,40 +115,74 @@
     <string name="pref__keyboard__height_factor__label" comment="Preference title">גובה המקלדת</string>
     <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">קצר במיוחד</string>
     <string name="pref__keyboard__height_factor__short" comment="Preference value">קצר</string>
+    <string name="pref__keyboard__height_factor__mid_short" comment="Preference value">בינוני-קצר</string>
     <string name="pref__keyboard__height_factor__normal" comment="Preference value">רגיל</string>
+    <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">בינוני-גבוה</string>
     <string name="pref__keyboard__height_factor__tall" comment="Preference value">גבוה</string>
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">גבוה במיוחד</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">מותאם אישית</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">גובה מקלדת מותאם אישית</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">היסט מהתחתית (למסכים מעוקלים)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">לחיצת מקש</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">שמע בעת לחיצה על מקש</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">השמע צליל בעת לחיצה על מקש</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">הפעל רטט בעת לחיצה על מקש</string>
+    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">עוצמת רטט בעת לחיצה על מקש</string>
+    <string name="pref__keyboard__popup_visible__label" comment="Preference title">תצוגת חלונית</string>
+    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">הצד חלונית בעת לחיצה על מקש</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">השהיית לחיצה מקש ארוכה</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">חווית הקלדה</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">הפעל שורה חכמה</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">יהיה ממוקם מעל המקלדת</string>
     <string name="pref__suggestion__title" comment="Preference group title">הצעות</string>
     <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] הצג הצעות בעת הקלדה</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">יציג את השורה החכמה</string>
+    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">הצעות תוכן לוח העריכה</string>
+    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">הצעה להדביק את תוכן לוח העריכה אם הועתק לשם מידע לפני כן</string>
+    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] הצעות עבור המילה הבאה</string>
+    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">השתמש במילים קודמות כדי לייצר הצעות</string>
     <string name="pref__correction__title" comment="Preference group title">תיקונים</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">שימוש אוטומטי באותיות גדולות</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">הפוך אותיות לגדולות בהתחשב בהקשר של הקלט הנכוחי</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">זכור את מצב ה-Caps lock</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock ישאר פעיל גם כאשר תעבור לשדה טקסט אחר</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">רווח-כפול סוף משפט</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">לחיצה על מקש הרווח פעמים תכניס נקודה ואחריה רווח</string>
+    <string name="settings__gestures__title" comment="Title of Gestures fragment">מחוות &amp; הקלדה גולשת</string>
+    <string name="pref__glide__title" comment="Preference group title">הקלדה גולשת</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] הפעל הקלדה גולשת</string>
+    <string name="pref__glide__enabled__summary" comment="Preference summary">הקלד מילה באמצעות החלקה של האצבע בין האותיות</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] הצד את שביל הגלישה</string>
+    <string name="pref__glide__show_trail__summary" comment="Preference summary">יעלם אחרי כל מילה</string>
     <string name="pref__gestures__title" comment="Preference group title">מחוות</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">ללא פעולה</string>
+    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">מחיקת תווים בקפדנות</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">מחק מילה נוכחית</string>
+    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">מחיקת מילים בקפדנות</string>
     <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">הסתר מקשים</string>
     <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">הזז סמן למעלה</string>
     <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">הזז סמן למטה</string>
     <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">הזז סמן שמאלה</string>
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">הזז סמן ימינה</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
+    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">החלפה למקלדת הקודמת</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">החלף לתת-סוג הקודם</string>
     <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">החלף לתת-סוג הבא</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">החלק למעלה</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">החלק למטה</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">החלק שמאלה</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">החלק ימינה</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">החלקה למעלה על מקש הרווח</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">החלקה שמאלה על מקש הרווח</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">החלקה ימינה על מקש הרווח</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">החלקה שמאלה על מקש ה-Delete</string>
+    <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">סף מהירות החלקה</string>
     <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">איטי מאוד</string>
     <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">איטי</string>
     <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">רגיל</string>
     <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">מהיר</string>
     <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">מהיר מאוד</string>
+    <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">סף מרחק החלקה</string>
     <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">קצר מאוד</string>
     <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">קצר</string>
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">רגיל</string>
@@ -110,12 +192,17 @@
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">הגדרות ערכת נושא</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">בהיר</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">כהה</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">הצד את סמל האפליקציה בLauncher</string>
+    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">כפה מצב פרטיות</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">יבטל כל תכולה אשר חייבת להשתמש בצורה זמנית בקלט שלך</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">אודות</string>
-    <string name="about__view_licenses" comment="Label of View licenses button in About">רשיונות קוד פתוח</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">סמל האפליקציה של FlorisBoard</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">רישיונות קוד פתוח</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">מדיניות פרטיות</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">קוד מקור</string>
-    <string name="about__license__title" comment="Title of Open-source licenses dialog">רשיונות קוד פתוח</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">רישיונות קוד פתוח</string>
+    <!-- Assets strings -->
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">הגדרות</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">הקודם</string>
@@ -124,14 +211,29 @@
     <string name="setup__finish_button" comment="Label of Finish button in Setup">סיים</string>
     <string name="setup__ok_button" comment="Label of OK button in Setup">אישור</string>
     <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">ברוכים הבאים!</string>
+    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">תודה שניסיתם את FlorisBoard! לפני שנתחיל להשתמש בו, יש לנו כמה דברים להגדיר במערכת, לבחור שפה מועדפת, תצורת מקשים וכו… אבל אל חשש - אנחנו נדריך אתכם לאורך כל ההתקנה!</string>
+    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard מכבד את פרטיותך ואינו אוסף מידע כלל על המשתמשים. למידע נוסף ראו כאן:</string>
+    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">קוד המקור של FlorisBoard נגיש עבור כולם, כך שאתם יכולים לבחון בקלות מה FlorisBoard עושה מאוחרי הקלעים. בדקו את הקישור ל-repo המצורף מטה.</string>
+    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">דבר אחד אחרון לפני שמתחילים - אם אתם נתקלים בבאגים/קריסות/תקלות עם FlorisBoard או שיש להם בקשות לתכולות - פנו אל ה-repo ב-GitHub דרך הקישור שמצורף מטה והגישו דיווח. זה עוזר לשפר את החוויה עבור כל המשתמשים שלנו!</string>
     <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">כדי להתחיל את ההתקנה, לחץ על <i>הבא</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">אפשר את FlorisBoard</string>
+    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">אנדרואיד דורש הפעלה ידנית של כל מקלדת המותאמת אישית על מנת שיהיה ניתן להשתמש בה. לחצו על הכפתור למטה כדי ללכת להגדות <i>שפה &amp; וקלט </i>, לאחר מכן בחרו את \'<i>FlorisBoard</i>\'.</string>
+    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard הופעל בהצלחה. להמשך לחץ על <i>הבא</i>!</string>
+    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">פתח שפה &amp; והגדרות קלט</string>
     <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">הפוך את FlorisBoard לברירת המחדל</string>
+    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard פעיל כעת במערכת. על מנת להשתמש בו בצורה אקטיבית, עברו לFlorisBoard על ידי בחירתו בדיאלוג בחירת הקלט!</string>
+    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">מקלדת ברירת המחדל הוחלפה בהצחלה למקלדת של FlorisBoard!</string>
     <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">החלף מקלדת</string>
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">ההתקנה הושלמה!</string>
     <!-- Crash Dialog strings -->
+    <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard דוח שגיאה</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">מצטערים על אי הנוחות, אבל FlorisBoard קרס בגלל שגיאה לא צפויה.\n\n אם אתם מעוניינים לדווח על כך, לחצו על \"העתקה ללוח העריכה\" ואז על כפתור \"פתיחת טופס דיווח על באג\". מלאו את פרטי התקלה והדביקו את הלוג. הדיווח שלכם עוזר להפוך את FlorisBoard יותר טוב ויציב עבור כולם. תודה רבה!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">העתקה ללוח העריכה</string>
+    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">פתיחת טופס דיווח על באג (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">סגור</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard דוח שגיאה</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard הפסיק לעבוד…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">לחץ להצגת פרטי השגיאה</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">נראה שFlorisBoard מפסיק לעבוד שוב שוב…</string>
+    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">המקדלת הקומדת הוחזרה כדי למנוע לולאת קריסה אינסופית. לחץ כדי לראות את פרטי השגיאה</string>
 </resources>

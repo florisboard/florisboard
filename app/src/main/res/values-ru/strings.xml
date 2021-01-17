@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Пауза</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Подождите</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Иконка троеточия. Если отображается, показывает, что можно использовать больше знаков при долгом нажатии.</string>
     <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Закрыть режим для одной руки.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Переместить клавиатуру влево.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Переместить клавиатуру вправо.</string>
+    <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Приватный режим</string>
+    <!--
+    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
+-->
     <!-- Media strings -->
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Эмодзи</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Смайлики</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Каомодзи</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Смайлы &amp; Эмоции</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Люди &amp; Тело</string>
@@ -16,18 +29,106 @@
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Переключатель быстрого действия. При нажатии переключает между предложениями слов и кнопками быстрого действия.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Закрыть панель редактирования текста.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Переключить одноручный режим.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Переключить режим одной руки.</string>
+    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Открыть настройки.</string>
+    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Переключить на панель редактирования текста.</string>
+    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Переключение в режим просмотра ввода информации.</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Кнопка Назад для отмены последнего действия</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Кнопка Вперёд для отмены последнего Назад</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Если используется, показывает, что приватный режим активен. Когда нажато, показывает информацию о приватном режиме.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Настройки</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Дополнительные параметры</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Помощь &amp; отзыв</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Главная</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Клавиатура</string>
+    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Набор текста</string>
     <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Тема</string>
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Жесты</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">По умолчанию</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Системный по умолчанию</string>
     <string name="settings__home__title" comment="Title of the Home fragment">Добро пожаловать в %s</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard не включен в системе, а потому не будет доступен как метод ввода в меню выбора ввода. Нажмите здесь, чтобы исправить это.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard не выбран в качестве метода ввода по умолчанию. Нажмите здесь, чтобы решить эту проблему.</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Сообщение об участии, отображаемое в домашнем фрагменте!</string>
+    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Поле названия языков и раскладки во фрагменте набора текста</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Похоже, вы не настроили ни однин подтип. В качестве запасного варианта будет использован подтип English / QWERTY!</string>
+    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Добавить</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавить подтип</string>
+    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Применить</string>
+    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Отмена</string>
+    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Удалить</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Редактировать подтип</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Локализация</string>
+    <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">Раскладка клавиатуры</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Этот подтип уже существует!</string>
+    <string name="settings__theme__title" comment="Title of the Theme fragment">Тема клавиатуры</string>
+    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Не определено</string>
+    <string name="settings__theme__background" comment="General label for a background preference">Цвет фона</string>
+    <string name="settings__theme__background_active" comment="General label for an active background preference">Цвет фона когда активно</string>
+    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">Фоновой цвет при нажатии</string>
+    <string name="settings__theme__foreground" comment="General label for a foreground preference">Цвет переднего плана</string>
+    <string name="settings__theme__foreground_alt" comment="General label for an alternate foreground preference">Цвет переднего плана (другое)</string>
+    <string name="settings__theme__foreground_capslock" comment="General label for a capslock foreground preference">Цвет переднего плана (caps lock)</string>
+    <string name="settings__theme__dialog_title" comment="Title of the color selection dialog for a single theme preference">Выберите цвет</string>
+    <string name="settings__theme__group_window" comment="Theme group label">Окно &amp; Система</string>
+    <string name="settings__theme__group_keyboard" comment="Theme group label">Клавиатура</string>
+    <string name="settings__theme__group_key" comment="Theme group label">Кнопки</string>
+    <string name="settings__theme__group_key_enter" comment="Theme group label">Введите текст сюда</string>
+    <string name="settings__theme__group_key_popup" comment="Theme group label">Открыть поп-ап</string>
+    <string name="settings__theme__group_key_shift" comment="Theme group label">Клавиша регистра</string>
+    <string name="settings__theme__group_media" comment="Theme group label">Медиа контекст</string>
+    <string name="settings__theme__group_one_handed" comment="Theme group label">Одноручный ввод</string>
+    <string name="settings__theme__group_one_handed_button" comment="Theme group label">Кнопка одноручного ввода</string>
+    <string name="settings__theme__group_private_mode" comment="Theme group label">Приватный режим</string>
+    <string name="settings__theme__group_smartbar" comment="Theme group label">Умная панель</string>
+    <string name="settings__theme__group_smartbar_button" comment="Theme group label">Настройки Умной панели</string>
+    <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">Основной цвет</string>
+    <string name="pref__theme__colorPrimaryDark_title" comment="Title of Color primary dark theme preference">Основной цвет (темный)</string>
+    <string name="pref__theme__colorPrimaryDark_summary" comment="Summary of Color primary dark theme preference">В настоящее время не используется, зарезервировано для будущей реализации</string>
+    <string name="pref__theme__colorAccent_title" comment="Title of Color accent theme preference">Цветовой акцент</string>
+    <string name="pref__theme__navBarColor_title" comment="Title of Nav bar color theme preference">Цвет панели навигации</string>
+    <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">Фон панели навигации.</string>
+    <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Установите ON для темного или OFF для светлого режима.</string>
+    <string name="pref__theme__showKeyBorder_title" comment="Title of Show Key Border preference">Граница клавиш</string>
+    <string name="pref__theme__showKeyBorder_summary" comment="Summary of Show Key Border preference">Чтобы показать границы установите ON или OFF чтобы скрыть их</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Настройки клавиатуры</string>
+    <string name="pref__keyboard__group_keys__label" comment="Preference group title">Клавиши</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">Строка цифр</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Показать строку цифр сверху</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Подсказка в строке цифр</string>
+    <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">Выкл</string>
+    <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">Вкл (подсказки приоритезированы)</string>
+    <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">Вкл (акцент приоритезирован)</string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">Разметка</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Управление одной рукой</string>
+    <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Выкл</string>
+    <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Режим правши</string>
+    <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Режим левши</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">Высота клавиатуры</string>
+    <string name="pref__keyboard__height_factor__short" comment="Preference value">Низкий</string>
+    <string name="pref__keyboard__height_factor__mid_short" comment="Preference value">Ниже среднего</string>
+    <string name="pref__keyboard__height_factor__normal" comment="Preference value">Нормальный</string>
+    <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">Выше среднего</string>
+    <string name="pref__keyboard__height_factor__tall" comment="Preference value">Высокий</string>
+    <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Очень высоко</string>
+    <string name="pref__keyboard__height_factor__custom" comment="Preference value">Пользовательский</string>
+    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Значение высоты клавиатуры</string>
+    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Звук при нажатии</string>
+    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Громкость звука при нажатии</string>
+    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Вибрация при нажатии</string>
+    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Сила вибрации при нажатии</string>
+    <string name="pref__keyboard__popup_visible__label" comment="Preference title">Видимость попап</string>
+    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Показывать попап при нажатии клавиши</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Задержка при нажатии</string>
+    <string name="settings__typing__title" comment="Title of Typing experience fragment">Настройки ввода текста</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">Активировать Умнуя панель</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
+    <string name="settings__gestures__title" comment="Title of Gestures fragment">Жесты и непрерывный ввод</string>
+    <string name="pref__glide__title" comment="Preference group title">Непрерывный ввод</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Включить непрерывный ввод</string>
     <!-- About UI strings -->
+    <!-- Assets strings -->
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
 </resources>

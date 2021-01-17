@@ -7,6 +7,11 @@
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Fermer le mode à une main.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Déplacez le clavier vers la gauche.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Déplacez le clavier vers la droite.</string>
+    <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Mode privé</string>
+    <!--
+    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
+-->
     <!-- Media strings -->
     <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Émojis</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Émoticônes</string>
@@ -28,6 +33,9 @@
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Ouvrir les paramètres.</string>
     <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Passez au panneau d\'édition de texte.</string>
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Passez à la vue d\'entrée multimédia.</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Bouton pour annuler la dernière action</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Bouton \"Refaire\" pour annuler la dernière annulation</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Si visible, indique que le mode privé est actif. Lorsqu\'on clique dessus, affiche des informations à propos du mode privé.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Paramètres</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Plus d\'options</string>
@@ -72,6 +80,7 @@
     <string name="settings__theme__group_media" comment="Theme group label">Contexte médiatique</string>
     <string name="settings__theme__group_one_handed" comment="Theme group label">À une main</string>
     <string name="settings__theme__group_one_handed_button" comment="Theme group label">Bouton à une main</string>
+    <string name="settings__theme__group_private_mode" comment="Theme group label">Mode privé</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Barre intelligente</string>
     <string name="settings__theme__group_smartbar_button" comment="Theme group label">Bouton de la barre intelligente</string>
     <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">Couleur primaire</string>
@@ -84,10 +93,18 @@
     <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">L\'arrière-plan de la barre de navigation.</string>
     <string name="pref__theme__navBarIsLight_title" comment="Title of Nav bar is light theme preference">Avant-plan sombre de la barre de navigation</string>
     <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Réglez sur ON pour sombre ou sur OFF pour clair en avant-plan.</string>
+    <string name="pref__theme__showKeyBorder_title" comment="Title of Show Key Border preference">Bordure des touches</string>
+    <string name="pref__theme__showKeyBorder_summary" comment="Summary of Show Key Border preference">Réglez sur ON pour montrer la bordure ou sur OFF pour la cacher</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Préférences de clavier</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Touches</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Rangée de numéros</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Afficher la rangée de numéros au dessus de la disposition des caractères</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Rangée de numéros subtile</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Symboles subtiles</string>
+    <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">Désactivé</string>
+    <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">Activé (priorité à l\'indice)</string>
+    <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">Activé (priorité à l\'accent)</string>
+    <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">Activé (priorité intelligente)</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicateur de la taille de la police (portrait)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicateur de la taille de la police (paysage)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposition</string>
@@ -148,12 +165,14 @@
     <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Déplacer le curseur vers la gauche</string>
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Déplacer le curseur vers la droite</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Maj</string>
+    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Passer à la disposition précédente</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Passer à la disposition précédente</string>
     <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Passer à la disposition suivante</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Glisser vers le haut</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Glisser vers le bas</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Glisser vers la gauche</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Glisser vers la droite</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Glisser de la barre d\'espace vers le haut</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Glisser de la barre d\'espace vers la gauche</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Glisser de la barre d\'espace vers la droite</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Glisser de la touche de suppression vers la gauche</string>
@@ -174,6 +193,8 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Clair</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Sombre</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Afficher l\'icône de l\'application dans le lanceur</string>
+    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forcer le mode privé</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Désactivera toutes les fonctions qui doivent fonctionner temporairement avec vos données dactylographique</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">À propos</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icône de l\'application FlorisBoard</string>
@@ -181,6 +202,7 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Politique de confidentialité</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Code source</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licences de logiciels libres</string>
+    <!-- Assets strings -->
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Configuration</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Préc</string>
@@ -189,10 +211,10 @@
     <string name="setup__finish_button" comment="Label of Finish button in Setup">Terminer</string>
     <string name="setup__ok_button" comment="Label of OK button in Setup">OK</string>
     <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Bienvenue !</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Merci d\'essayé FlorisBoard ! Avant que vous puissiez commencer à l\'utiliser, nous devons faire les choses habituelles et l\'activer dans les paramètres du système, configurer votre langue/configuration préférée, etc… Mais ne vous inquiétez pas - l\'assistant de configuration vous guidera à travers tout cela !</string>
+    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Merci d\'essayer FlorisBoard ! Avant que vous puissiez commencer à l\'utiliser, nous devons faire les choses habituelles et l\'activer dans les paramètres du système, configurer votre langue/configuration préférée, etc… Mais ne vous inquiétez pas - l\'assistant de configuration vous guidera à travers tout cela !</string>
     <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard respecte pleinement votre vie privée et ne collecte aucune donnée sur les utilisateurs. Pour plus d\'informations, voir ici :</string>
     <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">Le code source de FlorisBoard est accessible à tous, ce qui vous permet de voir facilement ce que fait FlorisBoard en arrière-plan. Consultez le lien du répertoire ci-dessous.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Une dernière chose avant de commencer l\'installation - si vous rencontrez des bugs/plantages/problèmes avec FlorisBoard ou si vous avez une demande de fonctionnalité - allez dans le répertoire GitHub ci-dessous et posez un problème. Cela permet d\'améliorer l\'expérience pour tous les utilisateurs !</string>
+    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Une dernière chose avant de commencer l\'installation - si vous rencontrez des bugs/plantages/problèmes avec FlorisBoard ou si vous avez une demande de fonctionnalité - allez dans le répertoire GitHub ci-dessous et répertoriez cela dans « Issues ». Cela permet d\'améliorer l\'expérience pour tous les utilisateurs !</string>
     <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Pour démarrer la configuration, cliquez sur <i>SUIVANT</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Activer FlorisBoard</string>
     <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android exige que chaque clavier personnalisé soit activé manuellement avant que vous puissiez l\'utiliser. Cliquez sur le bouton ci-dessous pour accéder au paramètres de <i>Langue &amp; Saisie</i>, ensuite assurez-vous de de cocher \'<i>FlorisBoard</i>\'.</string>
