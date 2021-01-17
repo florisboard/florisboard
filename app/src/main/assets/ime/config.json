@@ -173,6 +173,11 @@
       "id": 1401,
       "languageTag": "el",
       "preferredLayout": "greek"
+    },
+    {
+      "id": 1501,
+      "languageTag": "ro",
+      "preferredLayout": "qwerty"
     }
   ]
 }
