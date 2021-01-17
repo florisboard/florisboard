@@ -32,18 +32,29 @@ free to ask for help at any time!
 
 ## Adding a new keyboard layout / dictionary for locale
 
-As FlorisBoard is currently in alpha stage, things might change
-drastically. This also includes the config scheme of keyboard layouts.
-To prevent incompatible configs because some features and structures may
-change, please do not add this kind of content yet. As FlorisBoard's
-state progresses and its core stabilizes, you will be able to add
-keyboard layouts.
+You can now oficially add layouts to FlorisBoard as described below.
+FlorisBoard's core has stabilized enough that adding new content is
+safe, although there will be some changes in the future.
 
-Currently you need to modify `app/src/main/assets/ime/config.json` to add the filename of the language/layout to the `characterLayouts` section and the `defaultSubtypes` section, making sure to include the language's IETF BCP 47 code ([ISO 639-1 language code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) and [ISO 3166-1 region code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements)). For example, Dutch as spoken in Belgium is `nl-be`. Use a unique value for `id` to avoid crahses caused by duplicate ids.
+Currently you need to modify `app/src/main/assets/ime/config.json` to
+add the filename of the language/layout to the `characterLayouts`
+section and the `defaultSubtypes` section, making sure to include
+the language's IETF BCP 47 code ([ISO 639-1 language code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+and [ISO 3166-1 region code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements)).
+For example, Dutch as spoken in Belgium is `nl-be`. Use a unique value
+for `id` to avoid possible crahses caused by duplicate ids.
 
-Add the keyboard layout at `app/src/main/assets/ime/text/characters/preferredLayout_name_here.json`, with `code` referring to the characters codepoint and `label` being the respective unicode character.
+Add the keyboard layout at `app/src/main/assets/ime/text/characters/<preferredLayout_name_here>.json`,
+with `code` referring to the characters codepoint and `label` being the
+respective unicode character.
 
-Any accents or diacritics that should be exposed via long press can be added at `assets/ime/text/characters/extended_popups/languageTag_name_here.json`.
+Any accents or diacritics that should be exposed via long press can be
+added at `assets/ime/text/characters/extended_popups/<languageTag_name_here>.json`.
+For each key, you can add 1 main and several relevant accents. The main
+accent should be used for accents which are important for the language
+you add. The main field is used for determining if a hint or an accent
+should take priority, so please make sure to leave main empty and just
+use relevant for accents which are not-so important.
 
 ## Bug reporting
 
