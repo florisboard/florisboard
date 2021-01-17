@@ -38,11 +38,11 @@ enum class SwipeAction {
 
     companion object {
         fun fromString(string: String): SwipeAction {
-            return valueOf(string.toUpperCase(Locale.ROOT))
+            return valueOf(string.toUpperCase(Locale.ENGLISH))
         }
     }
 
     override fun toString(): String {
-        return super.toString().toLowerCase(Locale.ROOT)
+        return super.toString().toLowerCase(Locale.ENGLISH)
     }
 }

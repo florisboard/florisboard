@@ -16,232 +16,317 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
-import android.content.Context
 import android.graphics.Color
-import com.squareup.moshi.Json
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.extension.Asset
 
 /**
- * Data class which holds a parsed theme json file. Used for loading a theme
- * preset in Settings.
- * Note: this implementation is generic and allows for any group/attr names.
- *       FlorisBoard itself expects certain groups and attrs to be able to
- *       color the controls accordingly. See 'ime/themes/floris_day.json'
- *       for a good example of which attributes FlorisBoard needs!
+ * Data class which holds a parsed theme json file. Used for loading a theme preset in Settings.
+ * Note: this implementation is generic and allows for any group/attr names. FlorisBoard itself
+ *       expects certain groups and attrs to be able to color the controls accordingly. See
+ *       'ime/theme/floris_day.json' for a good example of which attributes FlorisBoard needs!
  *
- * @property name A unique id/name for this theme. Must only contain certain
- *  characters: upper/lower case letters, numbers (not at the beginning!) or
- *  an underline (_).
- * @property displayName The name of this theme when shown to the user. Can
- *  contain any valid Unicode character.
- * @property author The name of the author of this theme. Should be your
- *  username on GitHub/GitLab/BitBucket/... or your full name.
- * @property isNightTheme If this theme is meant for display at day (false)
- *  or night (true). This property is only used to auto-assign this theme to
- *  either the day or night theme list in Settings, which is used when the
- *  user wants to auto-set his theme based on the current time.
- * @property rawAttrs Map which holds the raw attributes of this theme. Note
- *  that the name of this property is 'attributes' within the json file!
- *  Attributes are always grouped together. This ensures a better structure
- *  and easier storage. The group- as well as the attr-name has the same
- *  limitations as the theme [name].
+ * @property isNightTheme If this theme is meant for display at day (false) or night (true). This
+ *  property is used to auto-assign this theme to either the day or night theme list in Settings,
+ *  which is used when the user wants to auto-set his theme based on the current time.
+ * @property attributes Map which holds the raw attributes of this theme. Attributes are always
+ *  grouped together. This ensures a better structure and easier storage. The group- as well as the
+ *  attr-name must only consist of lowercase or uppercase Latin letters (a-z and/or A-Z).
  *  Attribute values can be of different format:
  *  1. A color
  *     Either #RRGGBB or #AARRGGBB (case-insensitive) -> e.g. #A034FF23
  *  2. A static word
- *     - transparent (=0x00000000)
- *     - true (=0x1)
- *     - false (=0x0)
+ *     - transparent
+ *     - true
+ *     - false
  *  3. A reference to another attribute within the SAME theme, as follows:
  *     @group/attrName -> e.g. @window/textColor
  *     Note that referencing attributes has its limitations:
- *     a. Recursive references will cause an exception.
- *     b. Referencing an previously defined attribute is fine.
- *     c. Referencing an attribute not-yet defined is also ok, as long as
- *        the reference can be resolved at the next iteration.
- *     d. If the next iteration cannot resolve a value, an exception is
- *        thrown.
- *  4. If the value is of any other format, an exception will be thrown.
- *
- * @throws IllegalArgumentException either at an invalid value or when a
- *  reference cannot be resolved.
+ *     a. Recursive references will cause an infinite loop and FlorisBoard will then not react.
+ *  4. If the value is of any other format, it is treated as an Other value with a raw string.
  */
-data class Theme(
-    val name: String,
-    val displayName: String,
-    val author: String,
+open class Theme(
+    override val name: String,
+    override val label: String = name,
+    override val authors: List<String>,
     val isNightTheme: Boolean = false,
-    val showKeyBorder: Boolean = true,
-    @Json(name = "attributes")
-    private val rawAttrs: Map<String, Map<String, String>>
-) {
-    /**
-     * Holds the parsed attributes after init.
-     */
-    val parsedAttrs: MutableMap<String, MutableMap<String, Int>> = mutableMapOf()
-
-    companion object {
-        /**
-         * Loads a theme from the specified [path].
-         *
-         * @param context A reference to the current [Context]. Used to request
-         *  asset file.
-         * @param path The path to the json theme file in the asset folder.
-         * @return A parsed [Theme] or null. A null value may indicate that
-         *  the file does not exist or that an error during the reading
-         *  of the file occurred.
-         */
-        fun fromJsonFile(context: Context, path: String): Theme? {
-            val rawJsonData: String = try {
-                context.assets.open(path).bufferedReader().use { it.readText() }
-            } catch (e: Exception) {
-                null
-            } ?: return null
-            return fromJsonString(rawJsonData)
-        }
+    val attributes: Map<String, Map<String, ThemeValue>>
+) : Asset {
+    companion object : Asset.Companion<Theme> {
+        private val VALIDATION_REGEX_THEME_LABEL = """^.+${'$'}""".toRegex()
+        private val VALIDATION_REGEX_GROUP_NAME = """^[a-zA-Z]+${'$'}""".toRegex()
+        private val VALIDATION_REGEX_ATTR_NAME = """^[a-zA-Z]+${'$'}""".toRegex()
 
         /**
-         * Loads a theme from the given [rawData].
-         *
-         * @param rawData The raw json theme file as a string.
-         * @return A parsed [Theme] or null. A null value may indicate that an error
-         * during the reading of the [rawData] occurred.
+         * A static base theme for fallback when a theme is absolutely needed but no theme can be
+         * loaded from the AssetManager, etc.
          */
-        fun fromJsonString(rawData: String): Theme? {
-            val moshi = Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .build()
-            val layoutAdapter = moshi.adapter(Theme::class.java)
-            return layoutAdapter.fromJson(rawData)
-        }
+        val BASE_THEME: Theme = baseTheme(
+            name = "__base__",
+            label = "Base Theme",
+            authors = listOf("patrickgold"),
+            isNightTheme = true
+        )
 
         /**
-         * Writes a given [theme] to the [prefs]. The default color values are based off the
-         * Floris Day theme and are not intended to be modified. Instead, themes should be defined
-         * in assets/ime/theme/<theme_id>.json
+         * Generate a base theme with the given meta data. For the argument info see [Theme].
          *
-         * @param theme The theme data.
-         * @param prefs The preference object to write the theme to.
+         * @return A generated base theme which has its colors set according to [isNightTheme].
          */
-        fun writeThemeToPrefs(prefs: PrefHelper, theme: Theme) {
-            // Internal prefs part I
-            prefs.internal.themeCurrentBasedOn = theme.name
-            prefs.internal.themeCurrentIsNight = theme.isNightTheme
-
-            // Theme attributes
-            prefs.theme.colorPrimary = theme.getAttr("window/colorPrimary", "#4CAF50")
-            prefs.theme.colorPrimaryDark = theme.getAttr("window/colorPrimaryDark", "#388E3C")
-            prefs.theme.colorAccent = theme.getAttr("window/colorAccent", "#FF9800")
-            prefs.theme.navBarColor = theme.getAttr("window/navigationBarColor", "#E0E0E0")
-            prefs.theme.navBarIsLight = (theme.getAttrOrNull("window/navigationBarLight") ?: 0) > 0
-
-            prefs.theme.keyboardBgColor = theme.getAttr("keyboard/bgColor", "#E0E0E0")
-
-            prefs.theme.keyShowBorder = theme.showKeyBorder
-            prefs.theme.keyBgColor = theme.getAttr("key/bgColor", "#FFFFFF")
-            prefs.theme.keyBgColorPressed = theme.getAttr("key/bgColorPressed", "#F5F5F5")
-            prefs.theme.keyFgColor = theme.getAttr("key/fgColor", "#000000")
-
-            prefs.theme.keyEnterBgColor = theme.getAttr("keyEnter/bgColor", "#4CAF50")
-            prefs.theme.keyEnterBgColorPressed = theme.getAttr("keyEnter/bgColorPressed", "#388E3C")
-            prefs.theme.keyEnterFgColor = theme.getAttr("keyEnter/fgColor", "#FFFFFF")
-
-            prefs.theme.keyPopupBgColor = theme.getAttr("keyPopup/bgColor", "#EEEEEE")
-            prefs.theme.keyPopupBgColorActive = theme.getAttr("keyPopup/bgColorActive", "#BDBDBD")
-            prefs.theme.keyPopupFgColor = theme.getAttr("keyPopup/fgColor", "#000000")
-
-            prefs.theme.keyShiftBgColor = theme.getAttr("keyShift/bgColor", "#FFFFFF")
-            prefs.theme.keyShiftBgColorPressed = theme.getAttr("keyShift/bgColorPressed", "#F5F5F5")
-            prefs.theme.keyShiftFgColor = theme.getAttr("keyShift/fgColor", "#000000")
-            prefs.theme.keyShiftFgColorCapsLock = theme.getAttr("keyShift/fgColorCapsLock", "#FF9800")
-
-            prefs.theme.mediaFgColor = theme.getAttr("media/fgColor", "#000000")
-            prefs.theme.mediaFgColorAlt = theme.getAttr("media/fgColorAlt", "#757575")
-
-            prefs.theme.oneHandedBgColor = theme.getAttr("oneHanded/bgColor", "#E8F5E9")
-
-            prefs.theme.oneHandedButtonFgColor = theme.getAttr("oneHandedButton/fgColor", "#424242")
-
-            prefs.theme.privateModeBgColor = theme.getAttr("privateMode/bgColor", "#A000FF")
-            prefs.theme.privateModeFgColor = theme.getAttr("privateMode/fgColor", "#FFFFFF")
-
-            prefs.theme.smartbarBgColor = theme.getAttr("smartbar/bgColor", "#E0E0E0")
-            prefs.theme.smartbarFgColor = theme.getAttr("smartbar/fgColor", "#000000")
-            prefs.theme.smartbarFgColorAlt = theme.getAttr("smartbar/fgColorAlt", "#4A000000")
-
-            prefs.theme.smartbarButtonBgColor = theme.getAttr("smartbarButton/bgColor", "#FFFFFF")
-            prefs.theme.smartbarButtonFgColor = theme.getAttr("smartbarButton/fgColor", "#000000")
-
-            // Internal prefs part II (must be written at the end!!)
-            prefs.internal.themeCurrentIsModified = false
-        }
-    }
-
-    init {
-        val listOfAttrsToReevaluate = mutableListOf<Triple<String, String, String>>()
-        for (group in rawAttrs) {
-            val groupMap = mutableMapOf<String, Int>()
-            parsedAttrs[group.key] = groupMap
-            for (attr in group.value) {
-                val colorRegex = """[#]([0-9a-fA-F]{8}|[0-9a-fA-F]{6})""".toRegex()
-                val refRegex = """[@]([a-zA-Z_][a-zA-Z0-9_]*)[/]([a-zA-Z_][a-zA-Z0-9_]*)""".toRegex()
-                when {
-                    attr.value.matches(colorRegex) -> {
-                        groupMap[attr.key] = Color.parseColor(attr.value)
-                    }
-                    attr.value == "transparent" -> {
-                        groupMap[attr.key] = Color.TRANSPARENT
-                    }
-                    attr.value == "true" -> {
-                        groupMap[attr.key] = 0x1
-                    }
-                    attr.value == "false" -> {
-                        groupMap[attr.key] = 0x0
-                    }
-                    attr.value.matches(refRegex) -> {
-                        val attrValue = getAttrOrNull(attr.value.substring(1))
-                        if (attrValue != null) {
-                            groupMap[attr.key] = attrValue
-                        } else {
-                            listOfAttrsToReevaluate.add(Triple(group.key, attr.key, attr.value))
-                        }
-                    }
-                    else -> {
-                        throw IllegalArgumentException("The specified attr '${attr.key}' = '${attr.value}' is not valid!")
-                    }
-                }
-            }
-        }
-        for (attrToReevaluate in listOfAttrsToReevaluate) {
-            val attrValue = getAttrOrNull(attrToReevaluate.third.substring(1))
-            if (attrValue != null) {
-                parsedAttrs[attrToReevaluate.first]?.put(attrToReevaluate.second, attrValue)
+        fun baseTheme(name: String, label: String, authors: List<String>, isNightTheme: Boolean): Theme {
+            val bgColor: ThemeValue.SolidColor
+            val fgColor: ThemeValue.SolidColor
+            if (isNightTheme) {
+                bgColor = ThemeValue.SolidColor(Color.BLACK)
+                fgColor = ThemeValue.SolidColor(Color.WHITE)
             } else {
-                throw IllegalArgumentException("The specified attr '${attrToReevaluate.second}' = '${attrToReevaluate.third}' is not valid!")
+                bgColor = ThemeValue.SolidColor(Color.WHITE)
+                fgColor = ThemeValue.SolidColor(Color.BLACK)
+            }
+            return Theme(
+                name = name,
+                label = label,
+                authors = authors,
+                isNightTheme = isNightTheme,
+                attributes = mapOf(
+                    Pair("window", mapOf(
+                        Pair("colorPrimary",            ThemeValue.fromString("#4CAF50")),
+                        Pair("colorPrimaryDark",        ThemeValue.fromString("#388E3C")),
+                        Pair("colorAccent",             ThemeValue.fromString("#FF9800")),
+                        Pair("navigationBarColor",      ThemeValue.fromString("@keyboard/background")),
+                        Pair("navigationBarLight",      ThemeValue.OnOff(!isNightTheme)),
+                        Pair("semiTransparentColor",    ThemeValue.fromString("#20FFFFFF")),
+                        Pair("textColor",               fgColor),
+                    )),
+                    Pair("keyboard", mapOf(
+                        Pair("background",              bgColor),
+                    )),
+                    Pair("key", mapOf(
+                        Pair("background",              bgColor),
+                        Pair("backgroundPressed",       ThemeValue.fromString("@window/semiTransparentColor")),
+                        Pair("foreground",              ThemeValue.fromString("@window/textColor")),
+                        Pair("foregroundPressed",       ThemeValue.fromString("@window/textColor")),
+                        Pair("showBorder",              ThemeValue.OnOff(false)),
+                    )),
+                    Pair("media", mapOf(
+                        Pair("background",              bgColor),
+                        Pair("foreground",              ThemeValue.fromString("@window/textColor")),
+                        Pair("foregroundAlt",           fgColor),
+                    )),
+                    Pair("oneHanded", mapOf(
+                        Pair("background",              ThemeValue.fromString("#1B5E20")),
+                        Pair("foreground",              ThemeValue.fromString("#EEEEEE")),
+                    )),
+                    Pair("popup", mapOf(
+                        Pair("background",              ThemeValue.fromString("#757575")),
+                        Pair("backgroundActive",        ThemeValue.fromString("#BDBDBD")),
+                        Pair("foreground",              ThemeValue.fromString("@window/textColor")),
+                        Pair("showBorder",              ThemeValue.OnOff(true)),
+                    )),
+                    Pair("privateMode", mapOf(
+                        Pair("background",              ThemeValue.fromString("#A000FF")),
+                        Pair("foreground",              ThemeValue.fromString("#FFFFFF")),
+                    )),
+                    Pair("smartbar", mapOf(
+                        Pair("background",              bgColor),
+                        Pair("foreground",              ThemeValue.fromString("@window/textColor")),
+                        Pair("foregroundAlt",           ThemeValue.fromString("#73FFFFFF")),
+                    )),
+                    Pair("smartbarButton", mapOf(
+                        Pair("background",              ThemeValue.fromString("@key/background")),
+                        Pair("foreground",              ThemeValue.fromString("@key/foreground")),
+                    ))
+                )
+            )
+        }
+
+        /**
+         * Generates an empty theme and returns it.
+         *
+         * @return The generated empty theme.
+         */
+        override fun empty(): Theme {
+            return Theme("", "", listOf(),
+                isNightTheme = true,
+                attributes = mapOf()
+            )
+        }
+
+        /**
+         * Validates a given [value] if it meets the [field] requirements. Useful for validation of
+         * input in the Settings.
+         *
+         * @param field Which type of field's requirements the [value] should match.
+         * @param value The value the user inputted.
+         * @return True if the value meets the requirements, false otherwise.
+         */
+        fun validateField(field: ValidationField, value: String): Boolean {
+            return when (field) {
+                ValidationField.THEME_LABEL -> value.matches(VALIDATION_REGEX_THEME_LABEL)
+                ValidationField.GROUP_NAME -> value.matches(VALIDATION_REGEX_GROUP_NAME)
+                ValidationField.ATTR_NAME -> value.matches(VALIDATION_REGEX_ATTR_NAME)
             }
         }
     }
 
-    fun getAttr(key: String, defaultColor: String): Int {
-        return getAttrOrNull(key) ?: Color.parseColor(defaultColor)
-    }
-    fun getAttr(group: String, attr: String, defaultColor: String): Int {
-        return getAttrOrNull(group, attr) ?: Color.parseColor(defaultColor)
+    /**
+     * Copies this theme to a new one while giving the option to modify some properties. For the
+     * argument info see [Theme].
+     *
+     * @return The copied theme.
+     */
+    fun copy(
+        name: String = this.name,
+        label: String = this.label,
+        authors: List<String> = this.authors.toList(),
+        isNightTheme: Boolean = this.isNightTheme,
+        attributes: Map<String, Map<String, ThemeValue>> = this.attributes.toMap()
+    ): Theme = Theme(name, label, authors, isNightTheme, attributes)
+
+    /**
+     * Gets an attribute from this theme. Allows to specify "specifics" ([s1] and [s2]).
+     *
+     * @param ref The `group/attrName` pair which is a reference to the attribute which should be
+     *  resolved.
+     * @param s1 "Specific 1": This only properly works for the `key` group and can be filled with
+     *  the label of a key. If the specific has no matches, a default resolve without the specific
+     *  will be made.
+     * @param s2 "Specific 2": Allows for the values `caps` and `capslock`. This is useful top have
+     *  specific themes for a key (or all keys) when caps/caps lock is activated. If the specific
+     *  has no matches, a default resolve without the specific will be made.
+     * @return The theme value for specified [ref]. If no value can be found within this theme, the
+     *  default value of type [ThemeValue.SolidColor] with a transparent color set will be returned.
+     */
+    open fun getAttr(ref: ThemeValue.Reference, s1: String? = null, s2: String? = null): ThemeValue {
+        var loopRef = ref
+        var firstLoop = true
+        var value: ThemeValue
+        while (true) {
+            value = when {
+                firstLoop -> getAttrInternal(loopRef, s1, s2)
+                else -> getAttrInternal(loopRef)
+            }
+            if (value !is ThemeValue.Reference) {
+                break
+            } else {
+                loopRef = value
+                firstLoop = false
+            }
+        }
+        return value
     }
 
-    fun getAttrOrNull(key: String): Int? {
-        val regex = """([a-zA-Z_][a-zA-Z0-9_]*)[/]([a-zA-Z_][a-zA-Z0-9_]*)""".toRegex()
-        return if (key.matches(regex)) {
-            val split = key.split("/")
-            getAttrOrNull(split[0], split[1])
-        } else {
-            null
+    /**
+     * Internal processing of the [getAttr] method. See [getAttr] for detailed info about the
+     * method's input arguments.
+     */
+    private fun getAttrInternal(ref: ThemeValue.Reference, s1: String? = null, s2: String? = null): ThemeValue {
+        if (s1 != null && s2 != null) {
+            getAttrOrNull(ref.copy(group = "${ref.group}:$s1:$s2"))?.let { return it }
+            getAttrOrNull(ref.copy(group = "${ref.group}::$s2"))?.let { return it }
+            getAttrOrNull(ref.copy(group = "${ref.group}:$s1"))?.let { return it }
+        } else if (s1 != null && s2 == null) {
+            getAttrOrNull(ref.copy(group = "${ref.group}:$s1"))?.let { return it }
+        } else if (s1 == null && s2 != null) {
+            getAttrOrNull(ref.copy(group = "${ref.group}::$s2"))?.let { return it }
+        }
+        getAttrOrNull(ref)?.let { return it }
+        return ThemeValue.SolidColor(0)
+    }
+
+    /**
+     * Internal processing of the [getAttr] method. See [getAttr] for detailed info about the
+     * method's input arguments.
+     */
+    private fun getAttrOrNull(ref: ThemeValue.Reference): ThemeValue? {
+        if (attributes.containsKey(ref.group)) {
+            val group = attributes[ref.group] ?: return null
+            if (group.containsKey(ref.attr)) {
+                return group[ref.attr]
+            }
+        }
+        return null
+    }
+
+    /**
+     * Detailed list of all attributes FlorisBoard needs to properly display a theme. Is used
+     * within the project to fetch an attribute from the current theme.
+     * Note: Suppressing some warnings as Kotlin cannot properly identify if an attribute is only
+     *       used via [ThemeValue.Reference] or directly.
+     */
+    @Suppress("unused")
+    abstract class Attr {
+        companion object {
+            val WINDOW_COLOR_PRIMARY = ThemeValue.Reference("window", "colorPrimary")
+            val WINDOW_COLOR_PRIMARY_DARK = ThemeValue.Reference("window", "colorPrimaryDark")
+            val WINDOW_COLOR_ACCENT = ThemeValue.Reference("window", "colorAccent")
+            val WINDOW_NAVIGATION_BAR_COLOR = ThemeValue.Reference("window", "navigationBarColor")
+            val WINDOW_NAVIGATION_BAR_LIGHT = ThemeValue.Reference("window", "navigationBarLight")
+            val WINDOW_SEMI_TRANSPARENT_COLOR = ThemeValue.Reference("window", "semiTransparentColor")
+            val WINDOW_TEXT_COLOR = ThemeValue.Reference("window", "textColor")
+
+            val KEYBOARD_BACKGROUND = ThemeValue.Reference("keyboard", "background")
+
+            val KEY_BACKGROUND = ThemeValue.Reference("key", "background")
+            val KEY_BACKGROUND_PRESSED = ThemeValue.Reference("key", "backgroundPressed")
+            val KEY_FOREGROUND = ThemeValue.Reference("key", "foreground")
+            val KEY_FOREGROUND_PRESSED = ThemeValue.Reference("key", "foregroundPressed")
+            val KEY_SHOW_BORDER = ThemeValue.Reference("key", "showBorder")
+
+            val MEDIA_FOREGROUND = ThemeValue.Reference("media", "foreground")
+            val MEDIA_FOREGROUND_ALT = ThemeValue.Reference("media", "foregroundAlt")
+
+            val ONE_HANDED_BACKGROUND = ThemeValue.Reference("oneHanded", "background")
+            val ONE_HANDED_FOREGROUND = ThemeValue.Reference("oneHanded", "foreground")
+
+            val POPUP_BACKGROUND = ThemeValue.Reference("popup", "background")
+            val POPUP_BACKGROUND_ACTIVE = ThemeValue.Reference("popup", "backgroundActive")
+            val POPUP_FOREGROUND = ThemeValue.Reference("popup", "foreground")
+
+            val PRIVATE_MODE_BACKGROUND = ThemeValue.Reference("privateMode", "background")
+            val PRIVATE_MODE_FOREGROUND = ThemeValue.Reference("privateMode", "foreground")
+
+            val SMARTBAR_BACKGROUND = ThemeValue.Reference("smartbar", "background")
+            val SMARTBAR_FOREGROUND = ThemeValue.Reference("smartbar", "foreground")
+            val SMARTBAR_FOREGROUND_ALT = ThemeValue.Reference("smartbar", "foregroundAlt")
+
+            val SMARTBAR_BUTTON_BACKGROUND = ThemeValue.Reference("smartbarButton", "background")
+            val SMARTBAR_BUTTON_FOREGROUND = ThemeValue.Reference("smartbarButton", "foreground")
         }
     }
-    fun getAttrOrNull(group: String, attr: String): Int? {
-        return parsedAttrs[group]?.get(attr)
+
+    /**
+     * Enum class for all validation fields [validateField] accepts.
+     */
+    enum class ValidationField {
+        THEME_LABEL,
+        GROUP_NAME,
+        ATTR_NAME
+    }
+}
+
+/**
+ * Bridge data class so Moshi can handle Theme serialization/deserialization properly.
+ */
+class ThemeJson(
+    override val name: String,
+    override val label: String = name,
+    override val authors: List<String>,
+    private val isNightTheme: Boolean = false,
+    private val attributes: Map<String, Map<String, String>>
+) : Asset {
+    companion object {
+        fun fromTheme(theme: Theme): ThemeJson {
+            return with(theme) {
+                ThemeJson(name, label, authors, isNightTheme, attributes.mapValues { group ->
+                    group.component2().mapValues { entry -> entry.component2().toString() }
+                })
+            }
+        }
+    }
+    fun toTheme(): Theme {
+        return Theme(name, label, authors, isNightTheme, attributes.mapValues { group ->
+            group.component2().mapValues { entry -> ThemeValue.fromString(entry.component2()) }
+        })
     }
 }
 
@@ -252,64 +337,8 @@ data class Theme(
  * @see [Theme] for details regarding the attributes and the theme structure.
  */
 data class ThemeMetaOnly(
-    val name: String,
-    val displayName: String,
-    val author: String,
+    override val name: String,
+    override val label: String,
+    override val authors: List<String>,
     val isNightTheme: Boolean = false
-) {
-    companion object {
-        /**
-         * Loads the theme meta data from the specified [path].
-         *
-         * @param context A reference to the current [Context]. Used to request
-         *  asset file.
-         * @param path The path to the json theme file in the asset folder.
-         * @return [ThemeMetaOnly] or null. A null value may indicate that
-         *  the file does not exist or that an error during the reading
-         *  of the file occurred.
-         */
-        fun loadFromJsonFile(context: Context, path: String): ThemeMetaOnly? {
-            val rawJsonData: String = try {
-                context.assets.open(path).bufferedReader().use { it.readText() }
-            } catch (e: Exception) {
-                null
-            } ?: return null
-            val moshi = Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .build()
-            val layoutAdapter = moshi.adapter(ThemeMetaOnly::class.java)
-            return layoutAdapter.fromJson(rawJsonData)
-        }
-
-        /**
-         * Loads all theme meta data from the specified [path].
-         *
-         * @param context A reference to the current [Context]. Used to request
-         *  asset file.
-         * @param path The path to the dir in the asset folder.
-         * @return [ThemeMetaOnly] or null. A null value may indicate that
-         *  the file does not exist or that an error during the reading
-         *  of the file occurred.
-         */
-        fun loadAllFromDir(context: Context, path: String): List<ThemeMetaOnly> {
-            val ret = mutableListOf<ThemeMetaOnly>()
-            try {
-                val list = context.assets.list(path)
-                if (list != null && list.isNotEmpty()) {
-                    // Is a folder
-                    for (file in list) {
-                        val subList = context.assets.list("$path/$file")
-                        if (subList?.isEmpty() == true) {
-                            // Is file
-                            val metaData = loadFromJsonFile(context, "$path/$file")
-                            if (metaData != null) {
-                                ret.add(metaData)
-                            }
-                        }
-                    }
-                }
-            } catch (e: java.lang.Exception) {}
-            return ret
-        }
-    }
-}
+) : Asset

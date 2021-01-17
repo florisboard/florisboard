@@ -19,7 +19,9 @@
     "esperanto_with_hx": "Esperanto with 'ĥ'",
     "colemak": "Colemak",
     "dvorak": "Dvorak",
-    "canadian_french": "Canadian French (QWERTY)"
+    "jcuken_russian": "Russian (JCUKEN)",
+    "canadian_french": "Canadian French (QWERTY)",
+    "greek": "Ελληνικά"
   },
   "defaultSubtypes": [
     {
@@ -156,6 +158,26 @@
       "id": 1101,
       "languageTag": "eo",
       "preferredLayout": "esperanto"
+    },
+    {
+      "id": 1201,
+      "languageTag": "hr",
+      "preferredLayout": "qwertz"
+    },
+    {
+      "id": 1301,
+      "languageTag": "ru",
+      "preferredLayout": "jcuken_russian"
+    },
+    {
+      "id": 1401,
+      "languageTag": "el",
+      "preferredLayout": "greek"
+    },
+    {
+      "id": 1501,
+      "languageTag": "ro",
+      "preferredLayout": "qwerty"
     },
     {
       "id": 1601,

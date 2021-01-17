@@ -74,11 +74,53 @@
 
     <string name="settings__theme__title" comment="Title of the Theme fragment">Keyboard theme</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Undefined</string>
-    <string name="settings__theme__preset_title" comment="Label of the theme preset preference">Theme</string>
-    <string name="settings__theme__preset_summary" comment="Summary of the theme preset preference">Custom (based on %s)</string>
-    <string name="settings__theme__preset_dialog_selected_theme" comment="Label of the selected themes list">Selected theme:</string>
-    <string name="settings__theme__preset_dialog_available_themes" comment="Label of the available themes list">Available themes:</string>
-    <string name="settings__theme__preset_dialog_alt_arrow_right" comment="Content description of the theme selection button in theme dialog">Arrow right</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Theme mode</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Always day</string>
+    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Always night</string>
+    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Follow system</string>
+    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Follow time</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Sunrise time</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Sunset time</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Day theme</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Night theme</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Selected theme</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Adapt colors to app</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Theme colors adapt to those in the current app, if the target app supports this.</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard App Assets</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">Internal Storage</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">External Provider</string>
+
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Theme Manager (Day)</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Theme Manager (Night)</string>
+    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Create empty theme</string>
+    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Create from selected theme</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Custom (based on %s)</string>
+    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">New theme</string>
+
+    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Edit theme</string>
+    <string name="settings__theme_editor__name_label" comment="Label of name input">Name</string>
+    <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>
+    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Add group</string>
+    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Edit group</string>
+    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Add attribute</string>
+    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Edit attribute</string>
+    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Reference</string>
+    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Group</string>
+    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Attribute</string>
+    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Solid color</string>
+    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Linear gradient</string>
+    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Radial gradient</string>
+    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Switch</string>
+    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">State</string>
+    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Other</string>
+    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Text</string>
+    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Preview of the theme value</string>
+    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Please enter a theme name.</string>
+    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Please enter a group name which only contain the letters a-z and/or A-Z.</string>
+    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Please enter a group name.</string>
+    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Please enter an attribute name which only contain the letters a-z and/or A-Z.</string>
+    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Please enter an attribute name.</string>
+
     <string name="settings__theme__background" comment="General label for a background preference">Background color</string>
     <string name="settings__theme__background_active" comment="General label for an active background preference">Background color when active</string>
     <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">Background color when pressed</string>
@@ -223,6 +265,28 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">Source code</string>
 
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open-source licenses</string>
+
+    <!-- Assets strings -->
+    <plurals name="assets__file__authors">
+        <item quantity="one">Author</item>
+        <item quantity="other">Authors</item>
+    </plurals>
+    <string name="assets__file__name">Name</string>
+    <string name="assets__file__source">Source</string>
+    <string name="assets__action__add">Add</string>
+    <string name="assets__action__cancel">Cancel</string>
+    <string name="assets__action__cancel_confirm_title">Confirm cancel</string>
+    <string name="assets__action__cancel_confirm_message">Are you sure you want to discard any unsaved changes? This action can not be undone once executed.</string>
+    <string name="assets__action__delete">Delete</string>
+    <string name="assets__action__delete_confirm_title">Confirm delete</string>
+    <string name="assets__action__delete_confirm_message">Are you sure you want to delete \"%s\"? This action can not be undone once executed.</string>
+    <string name="assets__action__edit">Edit</string>
+    <string name="assets__action__export">Export</string>
+    <string name="assets__action__import">Import</string>
+    <string name="assets__action__no">No</string>
+    <string name="assets__action__save">Save</string>
+    <string name="assets__action__yes">Yes</string>
+    <string name="assets__error__invalid">Invalid</string>
 
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Setup</string>
