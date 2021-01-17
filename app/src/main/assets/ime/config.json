@@ -20,7 +20,8 @@
     "colemak": "Colemak",
     "dvorak": "Dvorak",
     "jcuken_russian": "Russian (JCUKEN)",
-    "canadian_french": "Canadian French (QWERTY)"
+    "canadian_french": "Canadian French (QWERTY)",
+    "greek": "Ελληνικά"
   },
   "defaultSubtypes": [
     {
@@ -167,6 +168,11 @@
       "id": 1301,
       "languageTag": "ru",
       "preferredLayout": "jcuken_russian"
+    },
+    {
+      "id": 1401,
+      "languageTag": "el",
+      "preferredLayout": "greek"
     }
   ]
 }
