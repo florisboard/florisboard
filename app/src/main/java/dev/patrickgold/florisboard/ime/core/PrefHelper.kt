@@ -279,9 +279,6 @@ class PrefHelper(
     class Internal(private val prefHelper: PrefHelper) {
         companion object {
             const val IS_IME_SET_UP =               "internal__is_ime_set_up"
-            const val THEME_CURRENT_BASED_ON =      "internal__theme_current_based_on"
-            const val THEME_CURRENT_IS_MODIFIED =   "internal__theme_current_is_modified"
-            const val THEME_CURRENT_IS_NIGHT =      "internal__theme_current_is_night"
             const val VERSION_ON_INSTALL =          "internal__version_on_install"
             const val VERSION_LAST_USE =            "internal__version_last_use"
             const val VERSION_LAST_CHANGELOG =      "internal__version_last_changelog"
@@ -290,15 +287,6 @@ class PrefHelper(
         var isImeSetUp: Boolean
             get() =  prefHelper.getPref(IS_IME_SET_UP, false)
             set(v) = prefHelper.setPref(IS_IME_SET_UP, v)
-        var themeCurrentBasedOn: String
-            get() =  prefHelper.getPref(THEME_CURRENT_BASED_ON, "undefined")
-            set(v) = prefHelper.setPref(THEME_CURRENT_BASED_ON, v)
-        var themeCurrentIsModified: Boolean
-            get() =  prefHelper.getPref(THEME_CURRENT_IS_MODIFIED, false)
-            set(v) = prefHelper.setPref(THEME_CURRENT_IS_MODIFIED, v)
-        var themeCurrentIsNight: Boolean
-            get() =  prefHelper.getPref(THEME_CURRENT_IS_NIGHT, false)
-            set(v) = prefHelper.setPref(THEME_CURRENT_IS_NIGHT, v)
         var versionOnInstall: String
             get() =  prefHelper.getPref(VERSION_ON_INSTALL, VersionName.DEFAULT_RAW)
             set(v) = prefHelper.setPref(VERSION_ON_INSTALL, v)

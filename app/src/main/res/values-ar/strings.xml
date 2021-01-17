@@ -56,11 +56,6 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">هذا النوع الفرعي موجود مسبقا!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">مظهر لوحة المفاتيح</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">غير محدد</string>
-    <string name="settings__theme__preset_title" comment="Label of the theme preset preference">المظهر</string>
-    <string name="settings__theme__preset_summary" comment="Summary of the theme preset preference">مخصص (بناء على %s)</string>
-    <string name="settings__theme__preset_dialog_selected_theme" comment="Label of the selected themes list">المظهر المحدد:</string>
-    <string name="settings__theme__preset_dialog_available_themes" comment="Label of the available themes list">المظاهر المتاحة:</string>
-    <string name="settings__theme__preset_dialog_alt_arrow_right" comment="Content description of the theme selection button in theme dialog">سهم لليمين</string>
     <string name="settings__theme__background" comment="General label for a background preference">لون الخلفية</string>
     <string name="settings__theme__background_active" comment="General label for an active background preference">لون الخلفية عند التنشيط</string>
     <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">لون الخلفية عند الضغط</string>
