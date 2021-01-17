@@ -21,14 +21,24 @@ import android.graphics.Color
 import dev.patrickgold.florisboard.R
 
 /**
- * Sealed class.
+ * Sealed class which allows for a field to have dynamic types, dependent on the configuration.
+ * This class is a key component in providing a way to dynamically change the type of an attribute
+ * while sealing this process within one class. Allows for easy addition of new theme types in the
+ * future.
  */
 sealed class ThemeValue {
+    /**
+     * This holds a reference to another [ThemeValue] by specifying a group and attribute name.
+     */
     data class Reference(val group: String, val attr: String) : ThemeValue() {
         override fun toString(): String {
             return super.toString()
         }
     }
+
+    /**
+     * This holds a solid color as a color int.
+     */
     data class SolidColor(val color: Int) : ThemeValue() {
         override fun toString(): String {
             return super.toString()
@@ -43,21 +53,38 @@ sealed class ThemeValue {
             }
         }
     }
+
+    /**
+     * This holds a linear gradient. Currently NYI.
+     */
     data class LinearGradient(val dummy: Int) : ThemeValue() {
         override fun toString(): String {
             return super.toString()
         }
     }
+
+    /**
+     * This holds a radial gradient. Currently NYI.
+     */
     data class RadialGradient(val dummy: Int) : ThemeValue() {
         override fun toString(): String {
             return super.toString()
         }
     }
+
+    /**
+     * This holds a boolean state variable.
+     */
     data class OnOff(val state: Boolean) : ThemeValue() {
         override fun toString(): String {
             return super.toString()
         }
     }
+
+    /**
+     * This holds a value as a string. Often used as a fallback when the input text does not match
+     * any other theme value type.
+     */
     data class Other(val rawValue: String) : ThemeValue() {
         override fun toString(): String {
             return super.toString()
@@ -69,6 +96,9 @@ sealed class ThemeValue {
         private val SOLID_COLOR_REGEX = """^#([a-fA-F0-9]{6}|[a-fA-F0-9]{8})${'$'}""".toRegex()
         private val ON_OFF_REGEX = """^((true)|(false))${'$'}""".toRegex()
 
+        /**
+         * A map of the theme value type names and their corresponding UI strings.
+         */
         val UI_STRING_MAP: Map<String, Int> = mapOf(
             Pair(Reference::class.simpleName!!, R.string.settings__theme_editor__value_type_reference),
             Pair(SolidColor::class.simpleName!!, R.string.settings__theme_editor__value_type_solid_color),
@@ -78,6 +108,9 @@ sealed class ThemeValue {
             Pair(Other::class.simpleName!!, R.string.settings__theme_editor__value_type_other)
         )
 
+        /**
+         * Generates a [ThemeValue] from a given [str]. Returns [Other] if no matches are found.
+         */
         fun fromString(str: String): ThemeValue {
             return when {
                 str.matches(REFERENCE_REGEX) -> {
@@ -97,6 +130,10 @@ sealed class ThemeValue {
         }
     }
 
+    /**
+     * Converts this theme value to a [SolidColor], regardless of this value's type. If the
+     * conversion fails, a [SolidColor] with full transparency will be returned.
+     */
     fun toSolidColor(): SolidColor {
         return when (this) {
             is SolidColor -> {
@@ -108,6 +145,10 @@ sealed class ThemeValue {
         }
     }
 
+    /**
+     * Converts this theme value to [OnOff], regardless of this value's type. If the
+     * conversion fails, a [OnOff] with state false will be returned.
+     */
     fun toOnOff(): OnOff {
         return when (this) {
             is OnOff -> {
@@ -119,6 +160,9 @@ sealed class ThemeValue {
         }
     }
 
+    /**
+     * Converts this theme value to a string representation.
+     */
     override fun toString(): String {
         return when (this) {
             is Reference -> {
@@ -142,6 +186,9 @@ sealed class ThemeValue {
         }
     }
 
+    /**
+     * Converts this theme value to a string representation which can be shown to the user.
+     */
     fun toSummaryString(context: Context): String {
         val themeTypeStr = UI_STRING_MAP[this::class.simpleName!!]?.let {
             context.resources.getString(it)

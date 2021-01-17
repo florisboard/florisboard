@@ -30,6 +30,10 @@ import dev.patrickgold.florisboard.util.TimeUtil
 import timber.log.Timber
 import java.util.concurrent.CopyOnWriteArrayList
 
+/**
+ * Core class which manages the keyboard theme. Note, that this does not affect the UI theme of the
+ * Settings Activities.
+ */
 class ThemeManager private constructor(
     private val applicationContext: Context,
     private val assetManager: AssetManager,
@@ -43,6 +47,7 @@ class ThemeManager private constructor(
     var indexedDayThemeRefs: MutableMap<AssetRef, ThemeMetaOnly> = mutableMapOf()
     var indexedNightThemeRefs: MutableMap<AssetRef, ThemeMetaOnly> = mutableMapOf()
     var isAdaptiveThemeEnabled: Boolean = false
+        private set
 
     var remoteColorPrimary: ThemeValue.SolidColor? = null
         private set
@@ -50,6 +55,9 @@ class ThemeManager private constructor(
         private set
 
     companion object {
+        /**
+         * The static relative path where a theme is located, regardless of the [AssetSource].
+         */
         const val THEME_PATH_REL: String = "ime/theme"
 
         private var defaultInstance: ThemeManager? = null
@@ -80,6 +88,10 @@ class ThemeManager private constructor(
         update()
     }
 
+    /**
+     * Updates the current theme ref and loads the corresponding theme, as well as notfies all
+     * callback receivers about the new theme.
+     */
     fun update() {
         indexThemeRefs()
         val ref = evaluateActiveThemeRef()
@@ -156,6 +168,10 @@ class ThemeManager private constructor(
         }
     }
 
+    /**
+     * Sends a theme update to the given [onThemeUpdatedListener], regardless if it is currently
+     * registered or not.
+     */
     fun requestThemeUpdate(onThemeUpdatedListener: OnThemeUpdatedListener): Boolean {
         onThemeUpdatedListener.onThemeUpdated(activeTheme)
         return true
@@ -269,6 +285,10 @@ class ThemeManager private constructor(
         }
     }
 
+    /**
+     * Functional interface which should be implemented by event listeners to be able to receive
+     * theme updates.
+     */
     fun interface OnThemeUpdatedListener {
         fun onThemeUpdated(theme: Theme)
     }

@@ -20,34 +20,29 @@ import android.graphics.Color
 import dev.patrickgold.florisboard.ime.extension.Asset
 
 /**
- * Data class which holds a parsed theme json file. Used for loading a theme
- * preset in Settings.
- * Note: this implementation is generic and allows for any group/attr names.
- *       FlorisBoard itself expects certain groups and attrs to be able to
- *       color the controls accordingly. See 'ime/theme/floris_day.json'
- *       for a good example of which attributes FlorisBoard needs!
+ * Data class which holds a parsed theme json file. Used for loading a theme preset in Settings.
+ * Note: this implementation is generic and allows for any group/attr names. FlorisBoard itself
+ *       expects certain groups and attrs to be able to color the controls accordingly. See
+ *       'ime/theme/floris_day.json' for a good example of which attributes FlorisBoard needs!
  *
- * @property isNightTheme If this theme is meant for display at day (false)
- *  or night (true). This property is only used to auto-assign this theme to
- *  either the day or night theme list in Settings, which is used when the
- *  user wants to auto-set his theme based on the current time.
- * @property attributes Map which holds the raw attributes of this theme. Note
- *  that the name of this property is 'attributes' within the json file!
- *  Attributes are always grouped together. This ensures a better structure
- *  and easier storage. The group- as well as the attr-name has the same
- *  limitations as the theme [name].
+ * @property isNightTheme If this theme is meant for display at day (false) or night (true). This
+ *  property is used to auto-assign this theme to either the day or night theme list in Settings,
+ *  which is used when the user wants to auto-set his theme based on the current time.
+ * @property attributes Map which holds the raw attributes of this theme. Attributes are always
+ *  grouped together. This ensures a better structure and easier storage. The group- as well as the
+ *  attr-name must only consist of lowercase or uppercase Latin letters (a-z and/or A-Z).
  *  Attribute values can be of different format:
  *  1. A color
  *     Either #RRGGBB or #AARRGGBB (case-insensitive) -> e.g. #A034FF23
  *  2. A static word
- *     - transparent (=0x00000000)
- *     - true (=0x1)
- *     - false (=0x0)
+ *     - transparent
+ *     - true
+ *     - false
  *  3. A reference to another attribute within the SAME theme, as follows:
  *     @group/attrName -> e.g. @window/textColor
  *     Note that referencing attributes has its limitations:
- *     a. Recursive references will cause an exception.
- *  4. If the value is of any other format, an exception will be thrown.
+ *     a. Recursive references will cause an infinite loop and FlorisBoard will then not react.
+ *  4. If the value is of any other format, it is treated as an Other value with a raw string.
  */
 open class Theme(
     override val name: String,
@@ -61,6 +56,10 @@ open class Theme(
         private val VALIDATION_REGEX_GROUP_NAME = """^[a-zA-Z]+${'$'}""".toRegex()
         private val VALIDATION_REGEX_ATTR_NAME = """^[a-zA-Z]+${'$'}""".toRegex()
 
+        /**
+         * A static base theme for fallback when a theme is absolutely needed but no theme can be
+         * loaded from the AssetManager, etc.
+         */
         val BASE_THEME: Theme = baseTheme(
             name = "__base__",
             label = "Base Theme",
@@ -68,6 +67,11 @@ open class Theme(
             isNightTheme = true
         )
 
+        /**
+         * Generate a base theme with the given meta data. For the argument info see [Theme].
+         *
+         * @return A generated base theme which has its colors set according to [isNightTheme].
+         */
         fun baseTheme(name: String, label: String, authors: List<String>, isNightTheme: Boolean): Theme {
             val bgColor: ThemeValue.SolidColor
             val fgColor: ThemeValue.SolidColor
@@ -135,6 +139,11 @@ open class Theme(
             )
         }
 
+        /**
+         * Generates an empty theme and returns it.
+         *
+         * @return The generated empty theme.
+         */
         override fun empty(): Theme {
             return Theme("", "", listOf(),
                 isNightTheme = true,
@@ -142,6 +151,14 @@ open class Theme(
             )
         }
 
+        /**
+         * Validates a given [value] if it meets the [field] requirements. Useful for validation of
+         * input in the Settings.
+         *
+         * @param field Which type of field's requirements the [value] should match.
+         * @param value The value the user inputted.
+         * @return True if the value meets the requirements, false otherwise.
+         */
         fun validateField(field: ValidationField, value: String): Boolean {
             return when (field) {
                 ValidationField.THEME_LABEL -> value.matches(VALIDATION_REGEX_THEME_LABEL)
@@ -151,6 +168,12 @@ open class Theme(
         }
     }
 
+    /**
+     * Copies this theme to a new one while giving the option to modify some properties. For the
+     * argument info see [Theme].
+     *
+     * @return The copied theme.
+     */
     fun copy(
         name: String = this.name,
         label: String = this.label,
@@ -159,6 +182,20 @@ open class Theme(
         attributes: Map<String, Map<String, ThemeValue>> = this.attributes.toMap()
     ): Theme = Theme(name, label, authors, isNightTheme, attributes)
 
+    /**
+     * Gets an attribute from this theme. Allows to specify "specifics" ([s1] and [s2]).
+     *
+     * @param ref The `group/attrName` pair which is a reference to the attribute which should be
+     *  resolved.
+     * @param s1 "Specific 1": This only properly works for the `key` group and can be filled with
+     *  the label of a key. If the specific has no matches, a default resolve without the specific
+     *  will be made.
+     * @param s2 "Specific 2": Allows for the values `caps` and `capslock`. This is useful top have
+     *  specific themes for a key (or all keys) when caps/caps lock is activated. If the specific
+     *  has no matches, a default resolve without the specific will be made.
+     * @return The theme value for specified [ref]. If no value can be found within this theme, the
+     *  default value of type [ThemeValue.SolidColor] with a transparent color set will be returned.
+     */
     open fun getAttr(ref: ThemeValue.Reference, s1: String? = null, s2: String? = null): ThemeValue {
         var loopRef = ref
         var firstLoop = true
@@ -178,6 +215,10 @@ open class Theme(
         return value
     }
 
+    /**
+     * Internal processing of the [getAttr] method. See [getAttr] for detailed info about the
+     * method's input arguments.
+     */
     private fun getAttrInternal(ref: ThemeValue.Reference, s1: String? = null, s2: String? = null): ThemeValue {
         if (s1 != null && s2 != null) {
             getAttrOrNull(ref.copy(group = "${ref.group}:$s1:$s2"))?.let { return it }
@@ -192,6 +233,10 @@ open class Theme(
         return ThemeValue.SolidColor(0)
     }
 
+    /**
+     * Internal processing of the [getAttr] method. See [getAttr] for detailed info about the
+     * method's input arguments.
+     */
     private fun getAttrOrNull(ref: ThemeValue.Reference): ThemeValue? {
         if (attributes.containsKey(ref.group)) {
             val group = attributes[ref.group] ?: return null
@@ -202,6 +247,12 @@ open class Theme(
         return null
     }
 
+    /**
+     * Detailed list of all attributes FlorisBoard needs to properly display a theme. Is used
+     * within the project to fetch an attribute from the current theme.
+     * Note: Suppressing some warnings as Kotlin cannot properly identify if an attribute is only
+     *       used via [ThemeValue.Reference] or directly.
+     */
     @Suppress("unused")
     abstract class Attr {
         companion object {
@@ -243,6 +294,9 @@ open class Theme(
         }
     }
 
+    /**
+     * Enum class for all validation fields [validateField] accepts.
+     */
     enum class ValidationField {
         THEME_LABEL,
         GROUP_NAME,

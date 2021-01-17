@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.ime.theme
 /**
  * Theme overlay class which, if enabled, changes some requested attributes in a Theme and returns
  * the corresponding adaptive color. The adaptive colors itself are determined by the ThemeManager
- * and this overlay class only takes them if the feature is enabled in the prefs.
+ * and this overlay class only uses them if the feature is enabled in the prefs.
  */
 class AdaptiveThemeOverlay(
     private val themeManager: ThemeManager,
