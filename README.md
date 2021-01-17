@@ -63,9 +63,10 @@ milestones, please refer to the [Feature roadmap](#feature-roadmap).
 
 ### Layouts
 * [x] Latin character layouts (QWERTY, QWERTZ, AZERTY, Swiss, Spanish,
-      Norwegian, Swedish/Finnish, Icelandic, Danish, Hungarian); more
-      coming in future versions
-* [x] Non-latin character layouts (Arabic, Persian)
+      Norwegian, Swedish/Finnish, Icelandic, Danish, Hungarian,
+      Croatian, Polish, Romanian); more coming in future versions
+* [x] Non-latin character layouts (Arabic, Persian, Greek, Russian
+      (JCUKEN))
 * [x] Adapt to situation in app (password, url, text, etc. )
 * [x] Special character layout(s)
 * [x] Numeric layout
@@ -78,7 +79,7 @@ milestones, please refer to the [Feature roadmap](#feature-roadmap).
 * [x] Setup wizard
 * [x] Preferences screen
 * [x] Customize look and behaviour of keyboard
-* [x] Theme presets (currently only day/night theme)
+* [x] Theme presets (currently only day/night theme + borderless)
 * [x] Theme customization
 * [x] Subtype selection (language/layout)
 * [x] Keyboard behaviour preferences
@@ -121,8 +122,8 @@ close as possible.
     words over time. Data collected here is stored locally and never leaves
     the user's device.
 
-- Module C: Extension packs
-  - Ability to load dictionaries (and later potentionally other cool
+- Module C: Extension packs (base implementation with #162)
+  - Ability to load dictionaries (and later potentially other cool
     features too) only if needed to keep the core APK size small
   - Currently unclear how exactly this will work, but this is definitely
     a must-have feature
@@ -130,6 +131,14 @@ close as possible.
 - Module D: Glide typing
   - Swiping over the characters will automatically convert this to a word
   - Possibly also add improvements based on the Flow keyboard
+
+- Module E: Theme rework (Implemented with #162)
+  - Themes are now based on the Asset schema
+  - Dynamic theme creation
+  - Different theme modes (`Always day`, `Always dark`, `Follow system`
+    and `Follow time`)
+  - Define a separate theme both for day and night theme
+  - Adapt to app theme if possible
 
 ### [v0.5.0](https://github.com/florisboard/florisboard/milestone/5)
 There's no exact roadmap yet but it is planned that the media part of

@@ -1,0 +1,11 @@
+- Complete theme rework (#162)
+- Rework how popups are implemented (#122)
+- Smart hint popup prioritization (#119)
+- Add Polish layout (#198) (thanks @klausweiss)
+- Add Romanian layout (#184) (thanks @bertin0)
+- Add Greek layout (#171) (thanks @tsiflimagas)
+- Add Russian layout (#137) (thanks @williamtheaker)
+- Add Croatian layout (#133) (thanks @HeDidNothingWrong)
+- Add gesture option to quick switch to previous keyboard (#117) (thanks @yashx)
+- Fix a lot of theme related bugs
+- Fix high CPU load issues
