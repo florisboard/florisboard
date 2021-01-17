@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.extension
 
 import android.content.Context
+import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Result
 
 /**
@@ -30,17 +31,21 @@ import com.github.michaelbull.result.Result
  */
 interface Asset {
     /**
-     * The type of the Asset. Currently a string, but will probably be a sealed class in the future.
-     */
-    val type: String
-
-    /**
-     * The name of the Asset.
+     * The name of the Asset, must be unique throughout all Assets. Is used to internally identify
+     * and sort the Asset. This name is non-translatable and thus is a static string.
      */
     val name: String
 
     /**
-     * A list of authors who actively worked on the content of this Asset.
+     * The display name of the Asset. This is the label which will be shown to the user in the
+     * Settings UI. Currently also a static string.
+     * TODO: make this string localize-able
+     */
+    val label: String
+
+    /**
+     * A list of authors who actively worked on the content of this Asset. Any content of string is
+     * valid, but the best practice is to use the GitHub username.
      */
     val authors: List<String>
 
@@ -49,13 +54,13 @@ interface Asset {
      */
     interface Companion<T> {
         /**
-         * Creates an empty Asset.
+         * Creates an empty Asset of type [T].
          */
         fun empty(): T
 
         /**
-         * Loads an Asset from the specified path.
+         * Loads an Asset of type [T] from the specified path.
          */
-        fun fromFile(context: Context, path: String): Result<T, Throwable>
+        fun fromFile(context: Context, path: String): Result<T, Throwable> = Err(NotImplementedError())
     }
 }

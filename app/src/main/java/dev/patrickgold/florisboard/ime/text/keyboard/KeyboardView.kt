@@ -34,6 +34,8 @@ import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.theme.Theme
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import kotlin.math.roundToInt
 
 /**
@@ -44,7 +46,8 @@ import kotlin.math.roundToInt
  *
  * @property florisboard Reference to instance of core class [FlorisBoard].
  */
-class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Listener {
+class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Listener,
+    ThemeManager.OnThemeUpdatedListener {
     private var activeKeyView: KeyView? = null
     private var activePointerId: Int? = null
     private var activeX: Float = 0.0f
@@ -59,15 +62,21 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     var desiredKeyHeight: Int = resources.getDimension(R.dimen.key_height).toInt()
     var florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
     private var initialKeyCode: Int = 0
-    var isPreviewMode: Boolean = false
-    var isSmartbarKeyboardView: Boolean = false
+    private val isPreviewMode: Boolean
+    val isSmartbarKeyboardView: Boolean
     var popupManager = PopupManager<KeyboardView, KeyView>(this, florisboard?.popupLayerView)
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+    private val themeManager: ThemeManager = ThemeManager.default()
     private val swipeGestureDetector = SwipeGesture.Detector(context, this)
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        context.obtainStyledAttributes(attrs, R.styleable.KeyboardView).apply {
+            isPreviewMode = getBoolean(R.styleable.KeyboardView_isPreviewKeyboard, false)
+            isSmartbarKeyboardView = getBoolean(R.styleable.KeyboardView_isSmartbarKeyboard, false)
+            recycle()
+        }
         orientation = VERTICAL
         layoutParams = layoutParams ?: FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
@@ -92,6 +101,11 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
             }
             addView(rowView)
         }
+        if (!isPreviewMode) {
+            themeManager.requestThemeUpdate(this)
+        } else {
+            updateVisibility()
+        }
     }
 
     /**
@@ -101,12 +115,22 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
         removeAllViews()
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        if (!isPreviewMode) {
+            themeManager.registerOnThemeUpdatedListener(this)
+        }
+    }
+
     /**
      * Dismisses all shown key popups when keyboard is detached from window.
      */
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         popupManager.dismissAllPopups()
+        if (!isPreviewMode) {
+            themeManager.unregisterOnThemeUpdatedListener(this)
+        }
     }
 
     override fun onWindowShown() {
@@ -314,9 +338,18 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
         )
     }
 
-    override fun onApplyThemeAttributes() {
+    override fun onThemeUpdated(theme: Theme) {
         if (isPreviewMode) {
-            setBackgroundColor(prefs.theme.keyboardBgColor)
+            setBackgroundColor(theme.getAttr(Theme.Attr.KEYBOARD_BACKGROUND).toSolidColor().color)
+        }
+        for (row in children) {
+            if (row is ViewGroup) {
+                for (keyView in row.children) {
+                    if (keyView is ThemeManager.OnThemeUpdatedListener) {
+                        keyView.onThemeUpdated(theme)
+                    }
+                }
+            }
         }
     }
 
@@ -336,18 +369,11 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     }
 
     /**
-     * Queues a redraw for all keys.
+     * Queues a redraw for all keys. The ThemeManager's event automatically triggers an invalidate
+     * call on the KeyView's, so no need to manually loop through all KeyViews here.
      */
     fun invalidateAllKeys() {
-        for (row in children) {
-            if (row is FlexboxLayout) {
-                for (keyView in row.children) {
-                    if (keyView is KeyView) {
-                        keyView.invalidate()
-                    }
-                }
-            }
-        }
+        themeManager.requestThemeUpdate(this)
     }
 
     /**

@@ -1,0 +1,47 @@
+<dev.patrickgold.florisboard.settings.components.ThemeAttrGroupView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:id="@+id/group_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:textColor="?colorAccent"
+            tools:text="GroupName"/>
+
+        <ImageButton
+            android:id="@+id/add_attr_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_add"
+            android:tint="?colorAccent"
+            android:contentDescription="@string/settings__theme_editor__add_attr_dialog_title"/>
+
+        <ImageButton
+            android:id="@+id/edit_group_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_edit"
+            android:tint="?colorAccent"
+            android:contentDescription="@string/settings__theme_editor__edit_group_dialog_title"/>
+
+    </LinearLayout>
+
+</dev.patrickgold.florisboard.settings.components.ThemeAttrGroupView>

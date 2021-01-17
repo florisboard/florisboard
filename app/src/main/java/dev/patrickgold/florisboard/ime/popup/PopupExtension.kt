@@ -23,8 +23,16 @@ import com.github.michaelbull.result.Result
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.patrickgold.florisboard.ime.extension.Asset
+import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyTypeAdapter
+import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.key.KeyVariationAdapter
+
+/**
+ * An object which maps each base key to its extended popups. This can be done for each
+ * key variation. [KeyVariation.ALL] is always the fallback for each key.
+ */
+typealias PopupMapping = Map<KeyVariation, Map<String, PopupSet<KeyData>>>
 
 /**
  * Class which contains an extended popup mapping to use for adding popups subtype based on the
@@ -32,16 +40,16 @@ import dev.patrickgold.florisboard.ime.text.key.KeyVariationAdapter
  *
  * @property mapping The mapping of the base keys to their popups. See [PopupMapping] for more info.
  */
-class PopupMappingAsset(
-    override val type: String,
+class PopupExtension(
     override val name: String,
+    override val label: String = name,
     override val authors: List<String>,
     val mapping: PopupMapping
 ) : Asset {
-    companion object : Asset.Companion<PopupMappingAsset> {
-        override fun empty() = PopupMappingAsset("", "", listOf(), mapOf())
+    companion object : Asset.Companion<PopupExtension> {
+        override fun empty() = PopupExtension("", "", listOf(), mapOf())
 
-        override fun fromFile(context: Context, path: String): Result<PopupMappingAsset, Throwable> {
+        override fun fromFile(context: Context, path: String): Result<PopupExtension, Throwable> {
             return try {
                 val raw = context.assets.open(path).bufferedReader().use { it.readText() }
                 val asset = fromJsonString(raw)
@@ -55,13 +63,13 @@ class PopupMappingAsset(
             }
         }
 
-        fun fromJsonString(json: String): PopupMappingAsset? {
+        fun fromJsonString(json: String): PopupExtension? {
             val moshi = Moshi.Builder()
                 .add(KotlinJsonAdapterFactory())
                 .add(KeyTypeAdapter())
                 .add(KeyVariationAdapter())
                 .build()
-            val layoutAdapter = moshi.adapter(PopupMappingAsset::class.java)
+            val layoutAdapter = moshi.adapter(PopupExtension::class.java)
             return layoutAdapter.fromJson(json)
         }
     }

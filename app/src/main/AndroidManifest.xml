@@ -67,6 +67,20 @@
             </intent-filter>
         </activity-alias>
 
+        <!-- Theme Selector Activity -->
+        <activity
+            android:name="dev.patrickgold.florisboard.settings.ThemeManagerActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/settings__title"
+            android:theme="@style/SettingsTheme"/>
+
+        <!-- Theme Editor Activity -->
+        <activity
+            android:name="dev.patrickgold.florisboard.settings.ThemeEditorActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/settings__theme_editor__title"
+            android:theme="@style/SettingsTheme"/>
+
         <!-- About Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.settings.AboutActivity"

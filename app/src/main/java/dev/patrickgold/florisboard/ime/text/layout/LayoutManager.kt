@@ -22,7 +22,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.popup.PopupMappingAsset
+import dev.patrickgold.florisboard.ime.popup.PopupExtension
 import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
@@ -64,10 +64,10 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
         return layoutAdapter.fromJson(rawJsonData)
     }
 
-    private fun loadExtendedPopups(subtype: Subtype? = null): PopupMappingAsset {
+    private fun loadExtendedPopups(subtype: Subtype? = null): PopupExtension {
         val lang = subtype?.locale?.language ?: "\$default"
-        val map = PopupMappingAsset.fromFile(context, "ime/text/characters/extended_popups/$lang.json")
-        return map.getOr(PopupMappingAsset.empty())
+        val map = PopupExtension.fromFile(context, "ime/text/characters/extended_popups/$lang.json")
+        return map.getOr(PopupExtension.empty())
     }
 
     /**
