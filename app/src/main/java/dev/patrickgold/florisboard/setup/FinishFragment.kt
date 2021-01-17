@@ -35,10 +35,10 @@ class FinishFragment : Fragment() {
         binding = SetupFragmentFinishBinding.inflate(inflater, container, false)
 
         // Set theme to floris_day
-        Theme.writeThemeToPrefs(
+        /*Theme.writeThemeToPrefs(
             (activity as SetupActivity).prefs,
             Theme.fromJsonFile(requireContext(), "ime/theme/floris_day.json")!!
-        )
+        )*/
 
         return binding.root
     }

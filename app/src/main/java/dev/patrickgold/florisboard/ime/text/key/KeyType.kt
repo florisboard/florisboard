@@ -39,7 +39,7 @@ enum class KeyType {
 
     companion object {
         fun fromString(string: String): KeyType {
-            return valueOf(string.toUpperCase(Locale.ROOT))
+            return valueOf(string.toUpperCase(Locale.ENGLISH))
         }
     }
 }

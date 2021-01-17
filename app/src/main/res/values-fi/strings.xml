@@ -56,11 +56,6 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Tämä asettelu on jo lisätty!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Näppäimistön teema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ei määritelty</string>
-    <string name="settings__theme__preset_title" comment="Label of the theme preset preference">Teema</string>
-    <string name="settings__theme__preset_summary" comment="Summary of the theme preset preference">Muokattu (perustuu teemaan %s)</string>
-    <string name="settings__theme__preset_dialog_selected_theme" comment="Label of the selected themes list">Valittu teema:</string>
-    <string name="settings__theme__preset_dialog_available_themes" comment="Label of the available themes list">Käytettävissä olevat teemat:</string>
-    <string name="settings__theme__preset_dialog_alt_arrow_right" comment="Content description of the theme selection button in theme dialog">Nuoli oikealle</string>
     <string name="settings__theme__background" comment="General label for a background preference">Taustaväri</string>
     <string name="settings__theme__background_active" comment="General label for an active background preference">Taustaväri aktiivisena</string>
     <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">Taustaväri painettuna</string>

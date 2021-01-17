@@ -159,6 +159,11 @@
       "preferredLayout": "esperanto"
     },
     {
+      "id": 1201,
+      "languageTag": "hr",
+      "preferredLayout": "qwertz"
+    },
+    {
       "id": 1301,
       "languageTag": "ru",
       "preferredLayout": "jcuken_russian"

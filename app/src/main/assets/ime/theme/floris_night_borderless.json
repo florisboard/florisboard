@@ -1,0 +1,68 @@
+{
+  "$type": "dev.patrickgold.florisboard.ime.theme.Theme",
+  "name": "floris_night_borderless",
+  "label": "Floris Night Borderless",
+  "authors": [ "patrickgold" ],
+  "isNightTheme": true,
+  "attributes": {
+    "window": {
+      "colorPrimary": "#4CAF50",
+      "colorPrimaryDark": "#388E3C",
+      "colorAccent": "#FF9800",
+      "navigationBarColor": "@keyboard/background",
+      "navigationBarLight": "false",
+      "semiTransparentColor": "#20FFFFFF",
+      "textColor": "#FFFFFF"
+    },
+    "keyboard": {
+      "background": "#212121"
+    },
+    "key": {
+      "background": "transparent",
+      "backgroundPressed": "#7F616161",
+      "foreground": "@window/textColor",
+      "foregroundPressed": "@window/textColor",
+      "showBorder": "false"
+    },
+    "key:enter": {
+      "background": "@window/colorPrimary",
+      "backgroundPressed": "@window/colorPrimaryDark",
+      "foreground": "#FFFFFF",
+      "foregroundPressed": "#FFFFFF"
+    },
+    "key:shift:capslock": {
+      "foreground": "@window/colorAccent",
+      "foregroundPressed": "@window/colorAccent"
+    },
+    "key:space": {
+      "background": "#2F616161",
+      "backgroundPressed": "#7F616161"
+    },
+    "media": {
+      "foreground": "@window/textColor",
+      "foregroundAlt": "#BDBDBD"
+    },
+    "oneHanded": {
+      "background": "#1B5E20",
+      "foreground": "#EEEEEE"
+    },
+    "popup": {
+      "background": "#757575",
+      "backgroundActive": "#BDBDBD",
+      "foreground": "@window/textColor"
+    },
+    "privateMode": {
+      "background": "#A000FF",
+      "foreground": "#FFFFFF"
+    },
+    "smartbar": {
+      "background": "transparent",
+      "foreground": "@window/textColor",
+      "foregroundAlt": "#73FFFFFF"
+    },
+    "smartbarButton": {
+      "background": "#424242",
+      "foreground": "@window/textColor"
+    }
+  }
+}
