@@ -31,6 +31,8 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
+import dev.patrickgold.florisboard.ime.theme.Theme
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
 
 /**
  * View class for managing the rendering and the events of a single emoji keyboard key.
@@ -45,7 +47,7 @@ class EmojiKeyView(
     private val emojiKeyboardView: EmojiKeyboardView,
     val data: EmojiKeyData
 ) : androidx.appcompat.widget.AppCompatTextView(emojiKeyboardView.context),
-    FlorisBoard.EventListener {
+    FlorisBoard.EventListener, ThemeManager.OnThemeUpdatedListener {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
 
@@ -147,10 +149,10 @@ class EmojiKeyView(
         )
     }
 
-    override fun onApplyThemeAttributes() {
+    override fun onThemeUpdated(theme: Theme) {
         triangleDrawable?.colorFilter =
             BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
-                prefs.theme.mediaFgColorAlt, BlendModeCompat.SRC_ATOP
+                theme.getAttr(Theme.Attr.MEDIA_FOREGROUND_ALT).toSolidColor().color, BlendModeCompat.SRC_ATOP
             )
     }
 

@@ -17,22 +17,23 @@
 package dev.patrickgold.florisboard.ime.text.editing
 
 import android.content.Context
-import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.theme.Theme
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.setBackgroundTintColor2
 import kotlin.math.roundToInt
 
 /**
  * View class for updating the key views depending on the current selection and clipboard state.
  */
-class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener {
+class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener,
+    ThemeManager.OnThemeUpdatedListener {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
-    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+    private val themeManager: ThemeManager = ThemeManager.default()
 
     private var arrowUpKey: EditingKeyView? = null
     private var arrowDownKey: EditingKeyView? = null
@@ -50,6 +51,7 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        themeManager.registerOnThemeUpdatedListener(this)
 
         arrowUpKey = findViewById(R.id.arrow_up)
         arrowDownKey = findViewById(R.id.arrow_down)
@@ -58,6 +60,15 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener {
         cutKey = findViewById(R.id.clipboard_cut)
         copyKey = findViewById(R.id.clipboard_copy)
         pasteKey = findViewById(R.id.clipboard_paste)
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        themeManager.unregisterOnThemeUpdatedListener(this)
+    }
+
+    override fun onThemeUpdated(theme: Theme) {
+        setBackgroundTintColor2(this, theme.getAttr(Theme.Attr.SMARTBAR_BACKGROUND).toSolidColor().color)
     }
 
     override fun onUpdateSelection() {
@@ -97,10 +108,5 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener {
         }
 
         super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height.roundToInt(), MeasureSpec.EXACTLY))
-    }
-
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-        setBackgroundTintColor2(this, prefs.theme.smartbarBgColor)
     }
 }

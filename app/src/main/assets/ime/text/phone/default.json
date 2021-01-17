@@ -14,7 +14,7 @@
       { "code":   52, "label": "4", "type": "numeric" },
       { "code":   53, "label": "5", "type": "numeric" },
       { "code":   54, "label": "6", "type": "numeric" },
-      { "code":   32, "label": " " }
+      { "code":   32, "label": "space" }
     ],
     [
       { "code":   55, "label": "7", "type": "numeric" },

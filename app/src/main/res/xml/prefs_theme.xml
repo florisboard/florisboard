@@ -3,247 +3,62 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <dev.patrickgold.florisboard.settings.components.ThemePresetSelectorPreference
-        app:key="theme__preset"
-        app:title="@string/settings__theme__preset_title"
-        app:iconSpaceReserved="false"/>
+    <ListPreference
+        android:defaultValue="follow_system"
+        app:entries="@array/pref__theme__mode__entries"
+        app:entryValues="@array/pref__theme__mode__values"
+        app:key="theme__mode"
+        app:icon="@drawable/ic_brightness_auto"
+        app:title="@string/pref__theme__mode__label"
+        app:useSimpleSummaryProvider="true"/>
 
     <PreferenceCategory
-        app:title="@string/settings__theme__group_window"
-        app:iconSpaceReserved="false">
+        app:key="theme__day_group"
+        app:title="@string/pref__theme__day">
 
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            app:key="theme__colorPrimary"
-            app:title="@string/pref__theme__colorPrimary_title"
-            app:summary="@string/pref__theme__colorPrimary_summary"
-            app:iconSpaceReserved="false"/>
+        <dev.patrickgold.florisboard.settings.components.ThemeSelectorPreference
+            android:defaultValue="assets:ime/theme/floris_day.json"
+            app:key="theme__day_theme_ref"
+            app:icon="@drawable/ic_light_mode"
+            app:title="@string/pref__theme__any_theme__label"/>
 
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            app:key="theme__colorPrimaryDark"
-            app:title="@string/pref__theme__colorPrimaryDark_title"
-            app:summary="@string/pref__theme__colorPrimaryDark_summary"
-            app:iconSpaceReserved="false"/>
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            app:key="theme__colorAccent"
-            app:title="@string/pref__theme__colorAccent_title"
-            app:summary="@string/pref__theme__colorAccent_summary"
-            app:iconSpaceReserved="false"/>
+        <dev.patrickgold.florisboard.settings.components.TimePickerDialogPreference
+            android:defaultValue="1536"
+            app:key="theme__sunrise_time"
+            app:icon="@drawable/ic_schedule"
+            app:title="@string/pref__theme__sunrise_time__label"/>
 
         <SwitchPreferenceCompat
-            app:key="theme__navBarIsLight"
-            app:title="@string/pref__theme__navBarIsLight_title"
-            app:summary="@string/pref__theme__navBarIsLight_summary"
-            app:iconSpaceReserved="false"/>
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__navBarColor"
-            android:title="@string/pref__theme__navBarColor_title"
-            android:summary="@string/pref__theme__navBarColor_summary"
-            app:iconSpaceReserved="false"/>
+            android:defaultValue="false"
+            app:key="theme__day_theme_adapt_to_app"
+            app:icon="@drawable/ic_format_paint"
+            app:title="@string/pref__theme__any_theme_adapt_to_app__label"
+            app:summary="@string/pref__theme__any_theme_adapt_to_app__summary"/>
 
     </PreferenceCategory>
 
     <PreferenceCategory
-        app:title="@string/settings__theme__group_keyboard"
-        app:iconSpaceReserved="false">
+        app:key="theme__night_group"
+        app:title="@string/pref__theme__night">
 
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__keyboard_bgColor"
-            android:title="@string/settings__theme__background"
-            app:iconSpaceReserved="false"/>
+        <dev.patrickgold.florisboard.settings.components.ThemeSelectorPreference
+            android:defaultValue="assets:ime/theme/floris_night.json"
+            app:key="theme__night_theme_ref"
+            app:icon="@drawable/ic_dark_mode"
+            app:title="@string/pref__theme__any_theme__label"/>
 
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:title="@string/settings__theme__group_key"
-        app:iconSpaceReserved="false">
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__key_bgColor"
-            android:title="@string/settings__theme__background"
-            app:iconSpaceReserved="false"/>
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__key_bgColorPressed"
-            android:title="@string/settings__theme__background_pressed"
-            app:iconSpaceReserved="false"/>
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__key_fgColor"
-            android:title="@string/settings__theme__foreground"
-            app:iconSpaceReserved="false"/>
+        <dev.patrickgold.florisboard.settings.components.TimePickerDialogPreference
+            android:defaultValue="4608"
+            app:key="theme__sunset_time"
+            app:icon="@drawable/ic_schedule"
+            app:title="@string/pref__theme__sunset_time__label"/>
 
         <SwitchPreferenceCompat
-            app:key="theme__key_show_border"
-            android:defaultValue="true"
-            app:title="@string/pref__theme__showKeyBorder_title"
-            app:summary="@string/pref__theme__showKeyBorder_summary"
-            app:iconSpaceReserved="false"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:title="@string/settings__theme__group_key_enter"
-        app:iconSpaceReserved="false">
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__keyEnter_bgColor"
-            android:title="@string/settings__theme__background"
-            app:iconSpaceReserved="false"/>
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__keyEnter_bgColorPressed"
-            android:title="@string/settings__theme__background_pressed"
-            app:iconSpaceReserved="false"/>
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__keyEnter_fgColor"
-            android:title="@string/settings__theme__foreground"
-            app:iconSpaceReserved="false"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:title="@string/settings__theme__group_key_shift"
-        app:iconSpaceReserved="false">
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__keyShift_bgColor"
-            android:title="@string/settings__theme__background"
-            app:iconSpaceReserved="false"/>
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__keyShift_bgColorPressed"
-            android:title="@string/settings__theme__background_pressed"
-            app:iconSpaceReserved="false"/>
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__keyShift_fgColor"
-            android:title="@string/settings__theme__foreground"
-            app:iconSpaceReserved="false"/>
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__keyShift_fgColorCapsLock"
-            android:title="@string/settings__theme__foreground_capslock"
-            app:iconSpaceReserved="false"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:title="@string/settings__theme__group_key_popup"
-        app:iconSpaceReserved="false">
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__keyPopup_bgColor"
-            android:title="@string/settings__theme__background"
-            app:iconSpaceReserved="false"/>
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__keyPopup_bgColorActive"
-            android:title="@string/settings__theme__background_active"
-            app:iconSpaceReserved="false"/>
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__keyPopup_fgColor"
-            android:title="@string/settings__theme__foreground"
-            app:iconSpaceReserved="false"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:title="@string/settings__theme__group_media"
-        app:iconSpaceReserved="false">
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__media_fgColor"
-            android:title="@string/settings__theme__foreground"
-            app:iconSpaceReserved="false"/>
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__media_fgColorAlt"
-            android:title="@string/settings__theme__foreground_alt"
-            app:iconSpaceReserved="false"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:title="@string/settings__theme__group_one_handed"
-        app:iconSpaceReserved="false">
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__oneHanded_bgColor"
-            android:title="@string/settings__theme__background"
-            app:iconSpaceReserved="false"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:title="@string/settings__theme__group_one_handed_button"
-        app:iconSpaceReserved="false">
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__oneHandedButton_fgColor"
-            android:title="@string/settings__theme__foreground"
-            app:iconSpaceReserved="false"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:title="@string/settings__theme__group_private_mode"
-        app:iconSpaceReserved="false">
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:defaultValue="0xFFA000FF"
-            android:key="theme__privateMode_bgColor"
-            android:title="@string/settings__theme__background"
-            app:iconSpaceReserved="false"/>
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:defaultValue="0xFFFFFFFF"
-            android:key="theme__privateMode_fgColor"
-            android:title="@string/settings__theme__foreground"
-            app:iconSpaceReserved="false"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:title="@string/settings__theme__group_smartbar"
-        app:iconSpaceReserved="false">
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__smartbar_bgColor"
-            android:title="@string/settings__theme__background"
-            app:iconSpaceReserved="false"
-            app:cpv_showAlphaSlider="true"/>
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__smartbar_fgColor"
-            android:title="@string/settings__theme__foreground"
-            app:iconSpaceReserved="false"
-            app:cpv_showAlphaSlider="true"/>
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__smartbar_fgColorAlt"
-            android:title="@string/settings__theme__foreground_alt"
-            app:iconSpaceReserved="false"
-            app:cpv_showAlphaSlider="true"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:title="@string/settings__theme__group_smartbar_button"
-        app:iconSpaceReserved="false">
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__smartbarButton_bgColor"
-            android:title="@string/settings__theme__background"
-            app:iconSpaceReserved="false"/>
-
-        <com.jaredrummler.android.colorpicker.ColorPreferenceCompat
-            android:key="theme__smartbarButton_fgColor"
-            android:title="@string/settings__theme__foreground"
-            app:iconSpaceReserved="false"/>
+            android:defaultValue="false"
+            app:key="theme__night_theme_adapt_to_app"
+            app:icon="@drawable/ic_format_paint"
+            app:title="@string/pref__theme__any_theme_adapt_to_app__label"
+            app:summary="@string/pref__theme__any_theme_adapt_to_app__summary"/>
 
     </PreferenceCategory>
 

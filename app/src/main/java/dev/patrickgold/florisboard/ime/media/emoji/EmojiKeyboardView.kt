@@ -31,8 +31,9 @@ import com.google.android.flexbox.JustifyContent
 import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.popup.PopupManager
+import dev.patrickgold.florisboard.ime.theme.Theme
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import kotlinx.coroutines.*
 import java.util.*
 
@@ -43,9 +44,10 @@ import java.util.*
  *
  * @property florisboard Reference to instance of core class [FlorisBoard].
  */
-class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener {
+class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener,
+    ThemeManager.OnThemeUpdatedListener {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
-    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+    private val themeManager: ThemeManager = ThemeManager.default()
 
     private var activeCategory: EmojiCategory = EmojiCategory.SMILEYS_EMOTION
     private var emojiViewFlipper: ViewFlipper
@@ -104,12 +106,18 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        themeManager.registerOnThemeUpdatedListener(this)
         mainScope.launch {
             layouts.await()
             buildLayout()
             setActiveCategory(EmojiCategory.SMILEYS_EMOTION)
+            themeManager.requestThemeUpdate(this@EmojiKeyboardView)
         }
-        onApplyThemeAttributes()
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        themeManager.unregisterOnThemeUpdatedListener(this)
     }
 
     /**
@@ -216,8 +224,10 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener {
         isScrollBlocked = true
     }
 
-    override fun onApplyThemeAttributes() {
-        tabLayout.tabIconTint = ColorStateList.valueOf(prefs.theme.mediaFgColor)
-        tabLayout.setSelectedTabIndicatorColor(prefs.theme.colorAccent)
+    override fun onThemeUpdated(theme: Theme) {
+        val fgColor = theme.getAttr(Theme.Attr.MEDIA_FOREGROUND).toSolidColor().color
+        val colorAccent = theme.getAttr(Theme.Attr.WINDOW_COLOR_ACCENT).toSolidColor().color
+        tabLayout.tabIconTint = ColorStateList.valueOf(fgColor)
+        tabLayout.setSelectedTabIndicatorColor(colorAccent)
     }
 }
