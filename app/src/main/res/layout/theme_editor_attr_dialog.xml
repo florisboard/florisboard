@@ -9,6 +9,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/attr_name_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/settings__theme_editor__name_label"

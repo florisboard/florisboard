@@ -57,6 +57,10 @@ open class Theme(
     val attributes: Map<String, Map<String, ThemeValue>>
 ) : Asset {
     companion object : Asset.Companion<Theme> {
+        private val VALIDATION_REGEX_THEME_LABEL = """^.+${'$'}""".toRegex()
+        private val VALIDATION_REGEX_GROUP_NAME = """^[a-zA-Z]+${'$'}""".toRegex()
+        private val VALIDATION_REGEX_ATTR_NAME = """^[a-zA-Z]+${'$'}""".toRegex()
+
         val BASE_THEME: Theme = baseTheme(
             name = "__base__",
             label = "Base Theme",
@@ -136,6 +140,14 @@ open class Theme(
                 isNightTheme = true,
                 attributes = mapOf()
             )
+        }
+
+        fun validateField(field: ValidationField, value: String): Boolean {
+            return when (field) {
+                ValidationField.THEME_LABEL -> value.matches(VALIDATION_REGEX_THEME_LABEL)
+                ValidationField.GROUP_NAME -> value.matches(VALIDATION_REGEX_GROUP_NAME)
+                ValidationField.ATTR_NAME -> value.matches(VALIDATION_REGEX_ATTR_NAME)
+            }
         }
     }
 
@@ -229,6 +241,12 @@ open class Theme(
             val SMARTBAR_BUTTON_BACKGROUND = ThemeValue.Reference("smartbarButton", "background")
             val SMARTBAR_BUTTON_FOREGROUND = ThemeValue.Reference("smartbarButton", "foreground")
         }
+    }
+
+    enum class ValidationField {
+        THEME_LABEL,
+        GROUP_NAME,
+        ATTR_NAME
     }
 }
 

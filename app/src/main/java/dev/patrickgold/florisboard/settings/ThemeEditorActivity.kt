@@ -101,13 +101,19 @@ class ThemeEditorActivity : AppCompatActivity() {
             R.id.add_group_btn -> addGroup()
             R.id.theme_cancel_btn -> onBackPressed()
             R.id.theme_save_btn -> {
-                val ref = editedThemeRef
-                if (ref != null) {
-                    themeManager.writeTheme(ref, editedTheme.copy(
-                        label = binding.themeNameValue.text.toString()
-                    ))
-                    isSaved = true
-                    finish()
+                val themeName = binding.themeNameValue.text.toString().trim()
+                if (Theme.validateField(Theme.ValidationField.THEME_LABEL, themeName)) {
+                    val ref = editedThemeRef
+                    if (ref != null) {
+                        themeManager.writeTheme(ref, editedTheme.copy(
+                            label = themeName
+                        ))
+                        isSaved = true
+                        finish()
+                    }
+                } else {
+                    binding.themeNameLabel.error = resources.getString(R.string.settings__theme_editor__error_theme_label_empty)
+                    binding.themeNameLabel.isErrorEnabled = true
                 }
             }
         }

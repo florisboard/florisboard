@@ -27,6 +27,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ThemeEditorAttrViewBinding
 import dev.patrickgold.florisboard.databinding.ThemeEditorGroupDialogBinding
 import dev.patrickgold.florisboard.databinding.ThemeEditorGroupViewBinding
+import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import dev.patrickgold.florisboard.settings.ThemeEditorActivity
 
@@ -86,6 +87,7 @@ class ThemeAttrGroupView : LinearLayout {
     private fun showGroupDialog(isEditDialog: Boolean) {
         val dialogView = ThemeEditorGroupDialogBinding.inflate(layoutInflater)
         dialogView.groupName.setText(groupName)
+        val dialog: AlertDialog
         AlertDialog.Builder(context).apply {
             setTitle(resources.getString(if (isEditDialog) {
                 R.string.settings__theme_editor__edit_group_dialog_title
@@ -94,9 +96,7 @@ class ThemeAttrGroupView : LinearLayout {
             }))
             setCancelable(true)
             setView(dialogView.root)
-            setPositiveButton(android.R.string.ok) { _, _ ->
-                groupName = dialogView.groupName.text.toString()
-            }
+            setPositiveButton(android.R.string.ok, null)
             if (isEditDialog) {
                 setNegativeButton(android.R.string.cancel, null)
                 setNeutralButton(R.string.assets__action__delete) { _, _ ->
@@ -111,7 +111,21 @@ class ThemeAttrGroupView : LinearLayout {
                 }
             }
             create()
-            show()
+            dialog = show()
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
+                val tempGroupName = dialogView.groupName.text.toString().trim()
+                if (Theme.validateField(Theme.ValidationField.GROUP_NAME, tempGroupName)) {
+                    groupName = tempGroupName
+                    dialog.dismiss()
+                } else {
+
+                    dialogView.groupNameLabel.error = resources.getString(when {
+                        tempGroupName.isEmpty() -> R.string.settings__theme_editor__error_group_name_empty
+                        else -> R.string.settings__theme_editor__error_group_name
+                    })
+                    dialogView.groupNameLabel.isErrorEnabled = true
+                }
+            }
         }
     }
 }

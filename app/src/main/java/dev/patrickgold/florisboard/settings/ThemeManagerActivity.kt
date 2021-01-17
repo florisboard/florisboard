@@ -154,7 +154,11 @@ class ThemeManagerActivity : AppCompatActivity() {
 
     private fun selectTheme(assetRef: AssetRef, themeMetaOnly: ThemeMetaOnly) {
         binding.themeNameValue.text = themeMetaOnly.label
-        binding.themeSourceValue.text = assetRef.source.toString()
+        binding.themeSourceValue.text = resources.getString(when (assetRef.source) {
+            is AssetSource.Assets -> R.string.pref__theme__source_assets
+            is AssetSource.Internal -> R.string.pref__theme__source_internal
+            is AssetSource.External -> R.string.pref__theme__source_external
+        })
         binding.themeAuthorsLabel.text =
             resources.getQuantityText(R.plurals.assets__file__authors, themeMetaOnly.authors.size)
         binding.themeAuthorsValue.text = themeMetaOnly.authors.joinToString(", ")

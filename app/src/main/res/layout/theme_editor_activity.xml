@@ -42,30 +42,25 @@
                         android:layout_margin="8dp"
                         app:isPreviewKeyboard="true"/>
 
-                    <LinearLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/theme_name_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
                         android:layout_marginHorizontal="8dp"
-                        android:orientation="horizontal">
+                        android:hint="@string/settings__theme_editor__name_label"
+                        app:boxBackgroundMode="outline"
+                        app:boxBackgroundColor="?android:windowBackground"
+                        app:boxStrokeColor="?colorAccent"
+                        app:boxStrokeErrorColor="?colorError"
+                        app:boxStrokeWidth="1dp">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/assets__file__name"
-                            android:textStyle="bold"
-                            android:labelFor="@+id/theme_name_value"/>
-
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/theme_name_value"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.0"
-                            android:gravity="end"
-                            android:inputType="textNoSuggestions"
-                            android:importantForAutofill="no"
-                            tools:text="Test Theme"/>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
 
-                    </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 

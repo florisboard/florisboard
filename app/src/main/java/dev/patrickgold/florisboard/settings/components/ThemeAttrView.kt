@@ -33,10 +33,10 @@ import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ThemeEditorAttrDialogBinding
 import dev.patrickgold.florisboard.databinding.ThemeEditorAttrViewBinding
+import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import dev.patrickgold.florisboard.util.getActivity
-import timber.log.Timber
 
 class ThemeAttrView : LinearLayout {
     private val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -139,7 +139,7 @@ class ThemeAttrView : LinearLayout {
             )
             configureDialogUi(dialogView, ThemeValue.SolidColor(0))
         }
-        var userTouched: Boolean = false
+        var userTouched = false
         dialogView.attrType.setOnTouchListener { _, _ ->
             userTouched = true
             false
@@ -153,7 +153,6 @@ class ThemeAttrView : LinearLayout {
             ) {
                 if (!userTouched) return
                 userTouched = false
-                Timber.e("NOOOOOOOOOOOOOOOOO")
                 ThemeValue.UI_STRING_MAP.keys.toList().getOrNull(position)?.let { attrType ->
                     configureDialogUi(dialogView, when (attrType) {
                         ThemeValue.Reference::class.simpleName -> {
@@ -182,6 +181,7 @@ class ThemeAttrView : LinearLayout {
                 // Auto-generated stub method.
             }
         }
+        val dialog: AlertDialog
         AlertDialog.Builder(context).apply {
             setTitle(resources.getString(if (isEditDialog) {
                 R.string.settings__theme_editor__edit_attr_dialog_title
@@ -190,10 +190,7 @@ class ThemeAttrView : LinearLayout {
             }))
             setCancelable(true)
             setView(dialogView.root)
-            setPositiveButton(android.R.string.ok) { _, _ ->
-                attrName = dialogView.attrName.text.toString()
-                attrValue = getThemeValueFromDialogUi(dialogView)
-            }
+            setPositiveButton(android.R.string.ok, null)
             if (isEditDialog) {
                 setNegativeButton(android.R.string.cancel, null)
                 setNeutralButton(R.string.assets__action__delete) { _, _ ->
@@ -208,7 +205,21 @@ class ThemeAttrView : LinearLayout {
                 }
             }
             create()
-            show()
+            dialog = show()
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
+                val tempAttrName = dialogView.attrName.text.toString().trim()
+                if (Theme.validateField(Theme.ValidationField.ATTR_NAME, tempAttrName)) {
+                    attrName = tempAttrName
+                    attrValue = getThemeValueFromDialogUi(dialogView)
+                    dialog.dismiss()
+                } else {
+                    dialogView.attrNameLabel.error = resources.getString(when {
+                        tempAttrName.isEmpty() -> R.string.settings__theme_editor__error_attr_name_empty
+                        else -> R.string.settings__theme_editor__error_attr_name
+                    })
+                    dialogView.attrNameLabel.isErrorEnabled = true
+                }
+            }
         }
     }
 
@@ -272,7 +283,7 @@ class ThemeAttrView : LinearLayout {
                 ThemeValue.Reference::class.simpleName -> {
                     ThemeValue.Reference(
                         dialogView.attrValueReferenceGroup.text.toString(),
-                        dialogView.attrValueReferenceGroup.text.toString()
+                        dialogView.attrValueReferenceAttr.text.toString()
                     )
                 }
                 ThemeValue.SolidColor::class.simpleName -> {
