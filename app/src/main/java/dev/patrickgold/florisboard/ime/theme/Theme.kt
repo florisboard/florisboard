@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
+import android.graphics.Color
 import dev.patrickgold.florisboard.ime.extension.Asset
 
 /**
@@ -56,61 +57,79 @@ open class Theme(
     val attributes: Map<String, Map<String, ThemeValue>>
 ) : Asset {
     companion object : Asset.Companion<Theme> {
-        val BASE_THEME: Theme = Theme(
+        val BASE_THEME: Theme = baseTheme(
             name = "__base__",
             label = "Base Theme",
             authors = listOf("patrickgold"),
-            isNightTheme = true,
-            attributes = mapOf(
-                Pair("window", mapOf(
-                    Pair("colorPrimary",            ThemeValue.fromString("#4CAF50")),
-                    Pair("colorPrimaryDark",        ThemeValue.fromString("#388E3C")),
-                    Pair("colorAccent",             ThemeValue.fromString("#FF9800")),
-                    Pair("navigationBarColor",      ThemeValue.fromString("@keyboard/background")),
-                    Pair("navigationBarLight",      ThemeValue.fromString("false")),
-                    Pair("semiTransparentColor",    ThemeValue.fromString("#20FFFFFF")),
-                    Pair("textColor",               ThemeValue.fromString("#FFFFFF")),
-                )),
-                Pair("keyboard", mapOf(
-                    Pair("background",              ThemeValue.fromString("#212121")),
-                )),
-                Pair("key", mapOf(
-                    Pair("background",              ThemeValue.fromString("#424242")),
-                    Pair("backgroundPressed",       ThemeValue.fromString("#616161")),
-                    Pair("foreground",              ThemeValue.fromString("@window/textColor")),
-                    Pair("foregroundPressed",       ThemeValue.fromString("@window/textColor")),
-                    Pair("showBorder",              ThemeValue.fromString("true")),
-                )),
-                Pair("media", mapOf(
-                    Pair("background",              ThemeValue.fromString("#00000000")),
-                    Pair("foreground",              ThemeValue.fromString("@window/textColor")),
-                    Pair("foregroundAlt",           ThemeValue.fromString("#BDBDBD")),
-                )),
-                Pair("oneHanded", mapOf(
-                    Pair("background",              ThemeValue.fromString("#1B5E20")),
-                    Pair("foreground",              ThemeValue.fromString("#EEEEEE")),
-                )),
-                Pair("popup", mapOf(
-                    Pair("background",              ThemeValue.fromString("#757575")),
-                    Pair("backgroundActive",        ThemeValue.fromString("#BDBDBD")),
-                    Pair("foreground",              ThemeValue.fromString("@window/textColor")),
-                    Pair("showBorder",              ThemeValue.fromString("true")),
-                )),
-                Pair("privateMode", mapOf(
-                    Pair("background",              ThemeValue.fromString("#A000FF")),
-                    Pair("foreground",              ThemeValue.fromString("#FFFFFF")),
-                )),
-                Pair("smartbar", mapOf(
-                    Pair("background",              ThemeValue.fromString("#00000000")),
-                    Pair("foreground",              ThemeValue.fromString("@window/textColor")),
-                    Pair("foregroundAlt",           ThemeValue.fromString("#73FFFFFF")),
-                )),
-                Pair("smartbarButton", mapOf(
-                    Pair("background",              ThemeValue.fromString("@key/background")),
-                    Pair("foreground",              ThemeValue.fromString("@key/foreground")),
-                ))
-            )
+            isNightTheme = true
         )
+
+        fun baseTheme(name: String, label: String, authors: List<String>, isNightTheme: Boolean): Theme {
+            val bgColor: ThemeValue.SolidColor
+            val fgColor: ThemeValue.SolidColor
+            if (isNightTheme) {
+                bgColor = ThemeValue.SolidColor(Color.BLACK)
+                fgColor = ThemeValue.SolidColor(Color.WHITE)
+            } else {
+                bgColor = ThemeValue.SolidColor(Color.WHITE)
+                fgColor = ThemeValue.SolidColor(Color.BLACK)
+            }
+            return Theme(
+                name = name,
+                label = label,
+                authors = authors,
+                isNightTheme = isNightTheme,
+                attributes = mapOf(
+                    Pair("window", mapOf(
+                        Pair("colorPrimary",            ThemeValue.fromString("#4CAF50")),
+                        Pair("colorPrimaryDark",        ThemeValue.fromString("#388E3C")),
+                        Pair("colorAccent",             ThemeValue.fromString("#FF9800")),
+                        Pair("navigationBarColor",      ThemeValue.fromString("@keyboard/background")),
+                        Pair("navigationBarLight",      ThemeValue.OnOff(!isNightTheme)),
+                        Pair("semiTransparentColor",    ThemeValue.fromString("#20FFFFFF")),
+                        Pair("textColor",               fgColor),
+                    )),
+                    Pair("keyboard", mapOf(
+                        Pair("background",              bgColor),
+                    )),
+                    Pair("key", mapOf(
+                        Pair("background",              bgColor),
+                        Pair("backgroundPressed",       ThemeValue.fromString("@window/semiTransparentColor")),
+                        Pair("foreground",              ThemeValue.fromString("@window/textColor")),
+                        Pair("foregroundPressed",       ThemeValue.fromString("@window/textColor")),
+                        Pair("showBorder",              ThemeValue.OnOff(false)),
+                    )),
+                    Pair("media", mapOf(
+                        Pair("background",              bgColor),
+                        Pair("foreground",              ThemeValue.fromString("@window/textColor")),
+                        Pair("foregroundAlt",           fgColor),
+                    )),
+                    Pair("oneHanded", mapOf(
+                        Pair("background",              ThemeValue.fromString("#1B5E20")),
+                        Pair("foreground",              ThemeValue.fromString("#EEEEEE")),
+                    )),
+                    Pair("popup", mapOf(
+                        Pair("background",              ThemeValue.fromString("#757575")),
+                        Pair("backgroundActive",        ThemeValue.fromString("#BDBDBD")),
+                        Pair("foreground",              ThemeValue.fromString("@window/textColor")),
+                        Pair("showBorder",              ThemeValue.OnOff(true)),
+                    )),
+                    Pair("privateMode", mapOf(
+                        Pair("background",              ThemeValue.fromString("#A000FF")),
+                        Pair("foreground",              ThemeValue.fromString("#FFFFFF")),
+                    )),
+                    Pair("smartbar", mapOf(
+                        Pair("background",              bgColor),
+                        Pair("foreground",              ThemeValue.fromString("@window/textColor")),
+                        Pair("foregroundAlt",           ThemeValue.fromString("#73FFFFFF")),
+                    )),
+                    Pair("smartbarButton", mapOf(
+                        Pair("background",              ThemeValue.fromString("@key/background")),
+                        Pair("foreground",              ThemeValue.fromString("@key/foreground")),
+                    ))
+                )
+            )
+        }
 
         override fun empty(): Theme {
             return Theme("", "", listOf(),

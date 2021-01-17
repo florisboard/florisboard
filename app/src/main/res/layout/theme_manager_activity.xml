@@ -193,14 +193,14 @@
             app:fab_icon="@drawable/ic_file"
             app:label_text="@string/settings__theme_manager__create_from_selected"
             android:onClick="onActionClicked"/>
-        <com.nambimobile.widgets.efab.FabOption
+        <!--<com.nambimobile.widgets.efab.FabOption
             android:id="@+id/fab_option_import"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_color="?colorPrimaryDark"
             app:fab_icon="@drawable/ic_input"
             app:label_text="@string/assets__action__import"
-            android:onClick="onActionClicked"/>
+            android:onClick="onActionClicked"/>-->
 
     </com.nambimobile.widgets.efab.ExpandableFabLayout>
 

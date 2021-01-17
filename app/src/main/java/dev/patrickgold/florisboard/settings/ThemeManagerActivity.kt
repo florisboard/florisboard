@@ -180,7 +180,25 @@ class ThemeManagerActivity : AppCompatActivity() {
     fun onActionClicked(view: View) {
         when (view.id) {
             R.id.fab_option_create_empty -> {
-                Toast.makeText(this, "Create empty not yet implemented", Toast.LENGTH_SHORT).show()
+                val timestamp = System.currentTimeMillis()
+                val newTheme = Theme.baseTheme(
+                    name = "theme-$timestamp",
+                    label = resources.getString(R.string.settings__theme_manager__theme_new_title),
+                    authors = listOf("@me"),
+                    isNightTheme = key == PrefHelper.Theme.NIGHT_THEME_REF
+                )
+                val newAssetRef =
+                    AssetRef(
+                        AssetSource.Internal,
+                        ThemeManager.THEME_PATH_REL + "/" + newTheme.name + ".json"
+                    )
+                themeManager.writeTheme(newAssetRef, newTheme).onSuccess {
+                    startActivityForResult(Intent(this, ThemeEditorActivity::class.java).apply {
+                        putExtra(ThemeEditorActivity.EXTRA_THEME_REF, newAssetRef.toString())
+                    }, EDITOR_REQ_CODE)
+                }.onFailure {
+                    Timber.e(it.toString())
+                }
             }
             R.id.fab_option_create_from_selected -> {
                 val timestamp = System.currentTimeMillis()
@@ -199,16 +217,17 @@ class ThemeManagerActivity : AppCompatActivity() {
                         AssetSource.Internal,
                         ThemeManager.THEME_PATH_REL + "/" + themeCopy.name + ".json"
                     )
-                themeManager.writeTheme(newAssetRef, themeCopy).onFailure {
+                themeManager.writeTheme(newAssetRef, themeCopy).onSuccess {
+                    startActivityForResult(Intent(this, ThemeEditorActivity::class.java).apply {
+                        putExtra(ThemeEditorActivity.EXTRA_THEME_REF, newAssetRef.toString())
+                    }, EDITOR_REQ_CODE)
+                }.onFailure {
                     Timber.e(it.toString())
                 }
-                startActivityForResult(Intent(this, ThemeEditorActivity::class.java).apply {
-                    putExtra(ThemeEditorActivity.EXTRA_THEME_REF, newAssetRef.toString())
-                }, EDITOR_REQ_CODE)
             }
-            R.id.fab_option_import -> {
+            /*R.id.fab_option_import -> {
                 Toast.makeText(this, "Import not yet implemented", Toast.LENGTH_SHORT).show()
-            }
+            }*/
             R.id.theme_delete_btn -> {
                 val deleteRef = selectedRef?.copy()
                 if (deleteRef?.source == AssetSource.Internal) {
