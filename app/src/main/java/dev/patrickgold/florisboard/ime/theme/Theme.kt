@@ -53,7 +53,7 @@ open class Theme(
 ) : Asset {
     companion object : Asset.Companion<Theme> {
         private val VALIDATION_REGEX_THEME_LABEL = """^.+${'$'}""".toRegex()
-        private val VALIDATION_REGEX_GROUP_NAME = """^[a-zA-Z]+${'$'}""".toRegex()
+        private val VALIDATION_REGEX_GROUP_NAME = """^[a-zA-Z]+((:[a-zA-Z]+)|(::[a-zA-Z]+)|(:[a-zA-Z]+:[a-zA-Z]+))?${'$'}""".toRegex()
         private val VALIDATION_REGEX_ATTR_NAME = """^[a-zA-Z]+${'$'}""".toRegex()
 
         /**

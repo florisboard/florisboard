@@ -116,7 +116,7 @@
     <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Text</string>
     <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Preview of the theme value</string>
     <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Please enter a theme name.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Please enter a group name which only contain the letters a-z and/or A-Z.</string>
+    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Please enter a group name which only contain letters (a-z and/or A-Z) or colons (:) for sub-grouping.</string>
     <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Please enter a group name.</string>
     <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Please enter an attribute name which only contain the letters a-z and/or A-Z.</string>
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Please enter an attribute name.</string>
