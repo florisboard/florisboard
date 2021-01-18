@@ -397,25 +397,30 @@ class KeyView(
      *  by Devunwired
      */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        desiredWidth = when (keyboardView.computedLayout?.mode) {
+        desiredWidth = (keyboardView.desiredKeyWidth * when (keyboardView.computedLayout?.mode) {
             KeyboardMode.NUMERIC,
             KeyboardMode.PHONE,
-            KeyboardMode.PHONE2 -> (keyboardView.desiredKeyWidth * 2.68f).toInt()
+            KeyboardMode.PHONE2 -> 2.68f
             KeyboardMode.NUMERIC_ADVANCED -> when (data.code) {
-                44, 46 -> keyboardView.desiredKeyWidth
-                KeyCode.VIEW_SYMBOLS, 61 -> (keyboardView.desiredKeyWidth * 1.34f).toInt()
-                else -> (keyboardView.desiredKeyWidth * 1.56f).toInt()
+                44, 46 -> 1.00f
+                KeyCode.VIEW_SYMBOLS, 61 -> 1.34f
+                else -> 1.56f
             }
             else -> when (data.code) {
                 KeyCode.SHIFT,
+                KeyCode.DELETE ->
+                        if ((keyboardView.computedLayout?.arrangement?.get(2)?.size ?: 0) > 10) {
+                            1.12f
+                        } else {
+                            1.56f
+                        }
                 KeyCode.VIEW_CHARACTERS,
                 KeyCode.VIEW_SYMBOLS,
                 KeyCode.VIEW_SYMBOLS2,
-                KeyCode.DELETE,
-                KeyCode.ENTER -> (keyboardView.desiredKeyWidth * 1.56f).toInt()
-                else -> keyboardView.desiredKeyWidth
+                KeyCode.ENTER -> 1.56f
+                else -> 1.00f
             }
-        }
+        }).toInt()
         desiredHeight = keyboardView.desiredKeyHeight
 
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
