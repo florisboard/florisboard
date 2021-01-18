@@ -31,6 +31,8 @@
         { "code":  231, "label": "ç" }
       ],
       [
+        { "code":  234, "label": "ê" },
+        { "code":  224, "label": "à" },
         { "code":  121, "label": "y" },
         { "code":  120, "label": "x" },
         { "code":  107, "label": "k" },
