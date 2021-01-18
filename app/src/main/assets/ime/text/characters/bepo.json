@@ -1,0 +1,51 @@
+{
+    "type": "characters",
+    "name": "bepo",
+    "authors": [ "salamandar" ],
+    "direction": "ltr",
+    "arrangement": [
+      [
+        { "code":   98, "label": "b" },
+        { "code":  233, "label": "é" },
+        { "code":  112, "label": "p" },
+        { "code":  111, "label": "o" },
+        { "code":  232, "label": "è" },
+        { "code":  118, "label": "v" },
+        { "code":  100, "label": "d" },
+        { "code":  108, "label": "l" },
+        { "code":  106, "label": "j" },
+        { "code":  122, "label": "z" },
+        { "code":  119, "label": "w" }
+      ],
+      [
+        { "code":   97, "label": "a" },
+        { "code":  117, "label": "u" },
+        { "code":  105, "label": "i" },
+        { "code":  101, "label": "e" },
+        { "code":   99, "label": "c" },
+        { "code":  116, "label": "t" },
+        { "code":  115, "label": "s" },
+        { "code":  114, "label": "r" },
+        { "code":  110, "label": "n" },
+        { "code":  109, "label": "m" },
+        { "code":  231, "label": "ç" }
+      ],
+      [
+        { "code":  121, "label": "y" },
+        { "code":  120, "label": "x" },
+        { "code":  107, "label": "k" },
+        { "code":  113, "label": "q", "popup": {
+          "relevant": [
+            { "code": 8218, "label": "‚" },
+            { "code": 8216, "label": "‘" },
+            { "code": 8217, "label": "’" },
+            { "code": 8249, "label": "‹" },
+            { "code": 8250, "label": "›" }
+          ]
+        } },
+        { "code":  103, "label": "g" },
+        { "code":  104, "label": "h" },
+        { "code":  102, "label": "f" }
+      ]
+    ]
+  }
