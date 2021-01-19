@@ -154,7 +154,7 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">أكتب كلمة بتمرير إصبعك عبر حروفها</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] إظهار آثار التمرير</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">سوف يختفي بعد كل كلمة</string>
-    <string name="pref__gestures__title" comment="Preference group title">الإيماءات</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">الإيماءات</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">بدون إجراء</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">حذف الحروف بدقة</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">حذف الكلمة الحالية</string>

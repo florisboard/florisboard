@@ -154,7 +154,7 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Πληκτρολογήστε μία λέξη με ολίσθηση του δαχτύλου μέσα από τα γράμματά της</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Εμφάνιση διαδρομής ολίσθησης</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Θα εξαφανίζεται μετά από κάθε λέξη</string>
-    <string name="pref__gestures__title" comment="Preference group title">Κινήσεις</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Κινήσεις</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Καμία ενέργεια</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Διαγραφή χαρακτήρων με ακρίβεια</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Διαγραφή της τρέχουσας λέξης</string>

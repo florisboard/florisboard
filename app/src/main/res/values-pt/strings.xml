@@ -154,7 +154,7 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Digitar uma palavra deslizando o dedo através das teclas</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Mostrar rasto de escrita</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">O rasto desparece no final da palavra</string>
-    <string name="pref__gestures__title" comment="Preference group title">Gestos</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Gestos</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Sem ação</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Remover caracteres com precisão</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Remover palavra atual</string>

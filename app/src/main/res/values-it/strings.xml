@@ -154,7 +154,7 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Scrivi una parola facendo scivolare il dito sulle lettere che la compongono</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Mostra scia dello swype</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Scomparirà dopo ogni parola</string>
-    <string name="pref__gestures__title" comment="Preference group title">Gesti</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Gesti</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Nessuna azione</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Cancella lettere con precisione</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Cancella la parola attuale</string>

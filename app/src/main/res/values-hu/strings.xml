@@ -149,7 +149,7 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Írjon be egy szót úgy, hogy ujját a betűin keresztülcsúsztatja</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Nyomvonal megjelenítése</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Minden szó után eltűnik</string>
-    <string name="pref__gestures__title" comment="Preference group title">Gesztusok</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Gesztusok</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Nincs művelet</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Karakterek pontos törlése</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">A jelenlegi szó törlése</string>

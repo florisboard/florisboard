@@ -65,7 +65,7 @@
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Laŭmenda</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Laŭmenda klavaro alteca valora</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Klavaĵo ekdepremi</string>
-    <string name="pref__gestures__title" comment="Preference group title">Gestoj</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Gestoj</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Neniu ago</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Ŝovumi supre</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Ŝovumi sube</string>

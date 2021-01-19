@@ -27,7 +27,7 @@
     <PreferenceCategory
         app:iconSpaceReserved="false"
         app:key="gestures"
-        app:title="@string/pref__gestures__title">
+        app:title="@string/pref__gestures__general_title">
 
         <ListPreference
             app:iconSpaceReserved="false"
@@ -69,6 +69,13 @@
             app:title="@string/pref__gestures__swipe_right__label"
             app:useSimpleSummaryProvider="true"/>
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:key="gestures"
+        app:title="@string/pref__gestures__space_bar_title">
+
         <ListPreference
             app:iconSpaceReserved="false"
             android:defaultValue="switch_to_prev_keyboard"
@@ -95,6 +102,22 @@
             app:key="gestures__space_bar_swipe_right"
             app:title="@string/pref__gestures__space_bar_swipe_right__label"
             app:useSimpleSummaryProvider="true"/>
+
+        <ListPreference
+            app:iconSpaceReserved="false"
+            android:defaultValue="show_input_method_picker"
+            app:entries="@array/pref__gestures__swipe_action__entries"
+            app:entryValues="@array/pref__gestures__swipe_action__values"
+            app:key="gestures__space_bar_long_press"
+            app:title="@string/pref__gestures__space_bar_long_press__label"
+            app:useSimpleSummaryProvider="true"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:key="gestures"
+        app:title="@string/pref__gestures__other_title">
 
         <ListPreference
             app:iconSpaceReserved="false"

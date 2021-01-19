@@ -154,7 +154,7 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Durch Gleiten über die Buchstaben Wort eingeben</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Bewegungsspur anzeigen</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Wird jeweils nach einem Wort ausgeblendet</string>
-    <string name="pref__gestures__title" comment="Preference group title">Gesten</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Gesten</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Keine Aktion</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Einzelne Zeichen exakt löschen</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Aktuelles Wort löschen</string>

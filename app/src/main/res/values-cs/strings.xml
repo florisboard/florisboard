@@ -136,7 +136,7 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Zadejte slovo posunutím prstu jeho písmeny</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Zobrazit sestupovou stopu</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Zmizí po každém slově</string>
-    <string name="pref__gestures__title" comment="Preference group title">Gesto</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Gesto</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Žádná akce</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Smazat znaky přesně</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Smazat aktuální slovo</string>

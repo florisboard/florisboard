@@ -38,6 +38,7 @@ import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.util.*
+import kotlin.reflect.typeOf
 
 /**
  * TextInputManager is responsible for managing everything which is related to text input. All of
@@ -309,11 +310,17 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     fun executeSwipeAction(swipeAction: SwipeAction) {
         when (swipeAction) {
             SwipeAction.DELETE_WORD -> handleDeleteWord()
+            SwipeAction.INSERT_SPACE -> handleSpace()
             SwipeAction.MOVE_CURSOR_DOWN -> handleArrow(KeyCode.ARROW_DOWN)
             SwipeAction.MOVE_CURSOR_UP -> handleArrow(KeyCode.ARROW_UP)
             SwipeAction.MOVE_CURSOR_LEFT -> handleArrow(KeyCode.ARROW_LEFT)
             SwipeAction.MOVE_CURSOR_RIGHT -> handleArrow(KeyCode.ARROW_RIGHT)
+            SwipeAction.MOVE_CURSOR_START_OF_LINE -> handleArrow(KeyCode.MOVE_HOME)
+            SwipeAction.MOVE_CURSOR_END_OF_LINE -> handleArrow(KeyCode.MOVE_END)
             SwipeAction.SHIFT -> handleShift()
+            SwipeAction.SHOW_INPUT_METHOD_PICKER -> sendKeyPress(
+                KeyData(type = KeyType.FUNCTION, code = KeyCode.SHOW_INPUT_METHOD_PICKER)
+            )
             else -> {}
         }
     }
