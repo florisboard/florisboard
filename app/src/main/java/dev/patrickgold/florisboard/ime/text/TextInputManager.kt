@@ -38,7 +38,6 @@ import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.util.*
-import kotlin.reflect.typeOf
 
 /**
  * TextInputManager is responsible for managing everything which is related to text input. All of
@@ -370,6 +369,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * Handles a [KeyCode.DELETE] event.
      */
     private fun handleDelete() {
+        hasCapsRecentlyChanged = false
+        hasSpaceRecentlyPressed = false
         isManualSelectionMode = false
         isManualSelectionModeLeft = false
         isManualSelectionModeRight = false
@@ -380,6 +381,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * Handles a [KeyCode.DELETE_WORD] event.
      */
     private fun handleDeleteWord() {
+        hasCapsRecentlyChanged = false
+        hasSpaceRecentlyPressed = false
         isManualSelectionMode = false
         isManualSelectionModeLeft = false
         isManualSelectionModeRight = false
@@ -390,6 +393,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * Handles a [KeyCode.ENTER] event.
      */
     private fun handleEnter() {
+        hasCapsRecentlyChanged = false
+        hasSpaceRecentlyPressed = false
         if (activeEditorInstance.imeOptions.flagNoEnterAction) {
             activeEditorInstance.performEnter()
         } else {
@@ -670,6 +675,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                                 activeEditorInstance.commitText(tld)
                             }
                             else -> {
+                                hasCapsRecentlyChanged = false
+                                hasSpaceRecentlyPressed = false
                                 var text = keyData.code.toChar().toString()
                                 text = when (caps) {
                                     true -> text.toUpperCase(Locale.getDefault())
