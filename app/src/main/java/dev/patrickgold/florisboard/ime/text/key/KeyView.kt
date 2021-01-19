@@ -152,7 +152,7 @@ class KeyView(
             keyHintMode = prefs.keyboard.hintedNumberRowMode
         }
         if (prefs.keyboard.hintedSymbolsMode != KeyHintMode.DISABLED && data.popup.hint?.type == KeyType.CHARACTER) {
-            keyHintMode = prefs.keyboard.hintedNumberRowMode
+            keyHintMode = prefs.keyboard.hintedSymbolsMode
         }
 
         updateKeyPressedBackground()
