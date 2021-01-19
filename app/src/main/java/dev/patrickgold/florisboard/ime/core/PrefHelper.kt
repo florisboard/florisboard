@@ -215,6 +215,7 @@ class PrefHelper(
             const val SWIPE_DOWN =                  "gestures__swipe_down"
             const val SWIPE_LEFT =                  "gestures__swipe_left"
             const val SWIPE_RIGHT =                 "gestures__swipe_right"
+            const val SPACE_BAR_LONG_PRESS =        "gestures__space_bar_long_press"
             const val SPACE_BAR_SWIPE_LEFT =        "gestures__space_bar_swipe_left"
             const val SPACE_BAR_SWIPE_RIGHT =       "gestures__space_bar_swipe_right"
             const val SPACE_BAR_SWIPE_UP =          "gestures__space_bar_swipe_up"
@@ -235,6 +236,9 @@ class PrefHelper(
         var swipeRight: SwipeAction
             get() =  SwipeAction.fromString(prefHelper.getPref(SWIPE_RIGHT, "no_action"))
             set(v) = prefHelper.setPref(SWIPE_RIGHT, v)
+        var spaceBarLongPress: SwipeAction
+            get() =  SwipeAction.fromString(prefHelper.getPref(SPACE_BAR_LONG_PRESS, "no_action"))
+            set(v) = prefHelper.setPref(SPACE_BAR_LONG_PRESS, v)
         var spaceBarSwipeUp: SwipeAction
             get() =  SwipeAction.fromString(prefHelper.getPref(SPACE_BAR_SWIPE_UP, "no_action"))
             set(v) = prefHelper.setPref(SPACE_BAR_SWIPE_UP, v)

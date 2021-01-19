@@ -250,12 +250,7 @@ class KeyView(
                             keyboardView.popupManager.extend(this, keyHintMode)
                         }
                         if (data.code == KeyCode.SPACE) {
-                            florisboard?.textInputManager?.sendKeyPress(
-                                KeyData(
-                                    type = KeyType.FUNCTION,
-                                    code = KeyCode.SHOW_INPUT_METHOD_PICKER,
-                                )
-                            )
+                            florisboard?.executeSwipeAction(prefs.gestures.spaceBarLongPress)
                             shouldBlockNextKeyCode = true
                         }
                     }

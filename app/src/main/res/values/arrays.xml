@@ -58,24 +58,34 @@
 
     <string-array name="pref__gestures__swipe_action__entries">
         <item>@string/pref__gestures__swipe_action__no_action</item>
+        <item>@string/pref__gestures__swipe_action__delete_word</item>
         <item>@string/pref__gestures__swipe_action__hide_keyboard</item>
+        <item>@string/pref__gestures__swipe_action__insert_space</item>
         <item>@string/pref__gestures__swipe_action__move_cursor_up</item>
         <item>@string/pref__gestures__swipe_action__move_cursor_down</item>
         <item>@string/pref__gestures__swipe_action__move_cursor_left</item>
         <item>@string/pref__gestures__swipe_action__move_cursor_right</item>
+        <item>@string/pref__gestures__swipe_action__move_cursor_start_of_line</item>
+        <item>@string/pref__gestures__swipe_action__move_cursor_end_of_line</item>
         <item>@string/pref__gestures__swipe_action__shift</item>
+        <item>@string/pref__gestures__swipe_action__show_input_method_picker</item>
         <item>@string/pref__gestures__swipe_action__switch_to_prev_subtype</item>
         <item>@string/pref__gestures__swipe_action__switch_to_next_subtype</item>
         <item>@string/pref__gestures__swipe_action__switch_to_prev_keyboard</item>
     </string-array>
     <string-array name="pref__gestures__swipe_action__values">
         <item>no_action</item>
+        <item>delete_word</item>
         <item>hide_keyboard</item>
+        <item>insert_space</item>
         <item>move_cursor_up</item>
         <item>move_cursor_down</item>
         <item>move_cursor_left</item>
         <item>move_cursor_right</item>
+        <item>move_cursor_start_of_line</item>
+        <item>move_cursor_end_of_line</item>
         <item>shift</item>
+        <item>show_input_method_picker</item>
         <item>switch_to_prev_subtype</item>
         <item>switch_to_next_subtype</item>
         <item>switch_to_prev_keyboard</item>

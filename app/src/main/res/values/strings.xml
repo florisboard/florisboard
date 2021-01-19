@@ -214,17 +214,23 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Type in a word by sliding your finger through its letters</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Show glide trail</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Will disappear after each word</string>
-    <string name="pref__gestures__title" comment="Preference group title">Gestures</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">General gestures</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">Space bar gestures</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">Other gestures / Gesture thresholds</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">No action</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Delete characters precisely</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Delete current word</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Delete words precisely</string>
     <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Hide keyboard</string>
+    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Insert space</string>
     <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Move cursor up</string>
     <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Move cursor down</string>
     <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Move cursor left</string>
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Move cursor right</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Move cursor to start of line</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Move cursor to end of line</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
+    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Show input method picker</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Switch to previous keyboard</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Switch to previous subtype</string>
     <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Switch to next subtype</string>
@@ -235,6 +241,7 @@
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Space bar swipe up</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Space bar swipe left</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Space bar swipe right</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Space bar long press</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Delete key swipe left</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Swipe velocity threshold</string>
     <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Very slow</string>

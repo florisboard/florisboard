@@ -154,7 +154,7 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Tapez un mot en faisant glisser votre doigt entre ses lettres</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Montrer la piste de glissement</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Disparaîtra après chaque mot</string>
-    <string name="pref__gestures__title" comment="Preference group title">Gestes</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Gestes</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Aucune action</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Effacer les caractères avec précision</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Supprimer le mot courant</string>
