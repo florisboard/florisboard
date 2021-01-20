@@ -1,0 +1,109 @@
+{
+  "type": "characters/extended_popups",
+  "name": "pt-BR",
+  "authors": [ "rickym7" ],
+  "mapping": {
+    "all": {
+      "a": {
+        "relevant": [
+          { "code":  228, "label": "ä" },
+          { "code":  229, "label": "å" },
+          { "code":  230, "label": "æ" },
+          { "code":  170, "label": "ª" },
+          { "code":  225, "label": "á" },
+          { "code":  227, "label": "ã" },
+          { "code":  224, "label": "à" },
+          { "code":  226, "label": "â" }
+        ]
+      },
+      "c": {
+        "relevant": [
+          { "code":  269, "label": "č" },
+          { "code":  231, "label": "ç" },
+          { "code":  263, "label": "ć" }
+        ]
+      },
+      "e": {
+        "relevant": [
+          { "code":  275, "label": "ē" },
+          { "code":  281, "label": "ę" },
+          { "code":  279, "label": "ė" },
+          { "code":  235, "label": "ë" },
+          { "code":  234, "label": "ê" },
+          { "code":  233, "label": "é" },
+          { "code":  232, "label": "è" }
+        ]
+      },
+      "i": {
+        "relevant": [
+          { "code":  299, "label": "ī" },
+          { "code":  239, "label": "ï" },
+          { "code":  303, "label": "į" },
+          { "code":  236, "label": "ì" },
+          { "code":  238, "label": "î" },
+          { "code":  237, "label": "í" }
+        ]
+      },
+      "n": {
+        "relevant": [
+          { "code":  241, "label": "ñ" },
+          { "code":  324, "label": "ń" }
+        ]
+      },
+      "o": {
+        "relevant": [
+          { "code":  186, "label": "º" },
+          { "code":  333, "label": "ō" },
+          { "code":  248, "label": "ø" },
+          { "code":  339, "label": "œ" },
+          { "code":  246, "label": "ö" },
+          { "code":  242, "label": "ò" },
+          { "code":  244, "label": "ô" },
+          { "code":  245, "label": "õ" },
+          { "code":  243, "label": "ó" }
+        ]
+      },
+      "u": {
+        "relevant": [
+          { "code":  363, "label": "ū" },
+          { "code":  249, "label": "ù" },
+          { "code":  251, "label": "û" },
+          { "code":  252, "label": "ü" },
+          { "code":  250, "label": "ú" }
+        ]
+      },
+      "~right": {
+        "main": { "code":   44, "label": "," },
+        "relevant": [
+          { "code":   38, "label": "&" },
+          { "code":   37, "label": "%" },
+          { "code":   43, "label": "+" },
+          { "code":   34, "label": "\"" },
+          { "code":   45, "label": "-" },
+          { "code":   58, "label": ":" },
+          { "code":   39, "label": "'" },
+          { "code":   64, "label": "@" },
+          { "code":   59, "label": ";" },
+          { "code":   47, "label": "/" },
+          { "code":   40, "label": "(" },
+          { "code":   41, "label": ")" },
+          { "code":   35, "label": "#" },
+          { "code":   33, "label": "!" },
+          { "code":   63, "label": "?" }
+        ]
+      }
+    },
+    "uri": {
+      "~right": {
+        "main": { "code": -255, "label": ".com" },
+        "relevant": [
+          { "code": -255, "label": ".gov" },
+          { "code": -255, "label": ".edu" },
+          { "code": -255, "label": ".br" },
+          { "code": -255, "label": ".org" },
+          { "code": -255, "label": ".net" }
+        ]
+      }
+    }
+  }
+}
