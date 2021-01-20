@@ -64,6 +64,10 @@ class PopupManager<T_KBD: View, T_KV: View>(
     val isShowingExtendedPopup: Boolean
         get() = popupViewExt.isShowing
 
+    companion object {
+        const val POPUP_EXTENSION_PATH_REL: String = "ime/text/characters/extended_popups"
+    }
+
     init {
         keyPopupWidth = keyboardView.resources.getDimension(R.dimen.key_width).toInt()
         keyPopupHeight = keyboardView.resources.getDimension(R.dimen.key_height).toInt()

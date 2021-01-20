@@ -16,17 +16,9 @@
 
 package dev.patrickgold.florisboard.ime.popup
 
-import android.content.Context
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.Result
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.patrickgold.florisboard.ime.extension.Asset
 import dev.patrickgold.florisboard.ime.text.key.KeyData
-import dev.patrickgold.florisboard.ime.text.key.KeyTypeAdapter
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
-import dev.patrickgold.florisboard.ime.text.key.KeyVariationAdapter
 
 /**
  * An object which maps each base key to its extended popups. This can be done for each
@@ -48,29 +40,5 @@ class PopupExtension(
 ) : Asset {
     companion object : Asset.Companion<PopupExtension> {
         override fun empty() = PopupExtension("", "", listOf(), mapOf())
-
-        override fun fromFile(context: Context, path: String): Result<PopupExtension, Throwable> {
-            return try {
-                val raw = context.assets.open(path).bufferedReader().use { it.readText() }
-                val asset = fromJsonString(raw)
-                if (asset != null) {
-                    Ok(asset)
-                } else {
-                    Err(NullPointerException())
-                }
-            } catch (e: Exception) {
-                Err(e)
-            }
-        }
-
-        fun fromJsonString(json: String): PopupExtension? {
-            val moshi = Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .add(KeyTypeAdapter())
-                .add(KeyVariationAdapter())
-                .build()
-            val layoutAdapter = moshi.adapter(PopupExtension::class.java)
-            return layoutAdapter.fromJson(json)
-        }
     }
 }

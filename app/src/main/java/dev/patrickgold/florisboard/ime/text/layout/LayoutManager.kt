@@ -18,11 +18,16 @@ package dev.patrickgold.florisboard.ime.text.layout
 
 import android.content.Context
 import com.github.michaelbull.result.getOr
+import com.github.michaelbull.result.onSuccess
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.extension.AssetManager
+import dev.patrickgold.florisboard.ime.extension.AssetRef
+import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.popup.PopupExtension
+import dev.patrickgold.florisboard.ime.popup.PopupManager
 import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
@@ -36,6 +41,7 @@ private typealias KMS = Pair<KeyboardMode, Subtype>
  * Class which manages layout loading and caching.
  */
 class LayoutManager(private val context: Context) : CoroutineScope by MainScope() {
+    private val assetManager: AssetManager = AssetManager.default()
     private val computedLayoutCache: HashMap<KMS, Deferred<ComputedLayoutData>> = hashMapOf()
 
     /**
@@ -65,9 +71,21 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
     }
 
     private fun loadExtendedPopups(subtype: Subtype? = null): PopupExtension {
-        val lang = subtype?.locale?.language ?: "\$default"
-        val map = PopupExtension.fromFile(context, "ime/text/characters/extended_popups/$lang.json")
-        return map.getOr(PopupExtension.empty())
+        val langTagRef = AssetRef(
+            source = AssetSource.Assets,
+            path = PopupManager.POPUP_EXTENSION_PATH_REL + "/" + (subtype?.locale?.toLanguageTag() ?: "\$default") + ".json"
+        )
+        val langRef = AssetRef(
+            source = AssetSource.Assets,
+            path = PopupManager.POPUP_EXTENSION_PATH_REL + "/" + (subtype?.locale?.language ?: "\$default") + ".json"
+        )
+        assetManager.loadAsset(langTagRef, PopupExtension::class.java).onSuccess {
+            return it
+        }
+        assetManager.loadAsset(langRef, PopupExtension::class.java).onSuccess {
+            return it
+        }
+        return PopupExtension.empty()
     }
 
     /**
