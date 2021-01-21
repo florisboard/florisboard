@@ -1,0 +1,9 @@
+- Add new swipe actions / Improve gesture pref structure (#212)
+- Add Bépo french keyboard layout (#202) (thanks @Salamandar)
+- Add Portuguese (Brazil) specific extended popups (#187) (thanks @RickyM7)
+- Fix precise character deletion behaviour (#218)
+- Fix double key press bugs for space and shift (#170)
+- Fix key hint bug (#211)
+- Extended popups now respect country code (#188)
+- Fix group name input not accepting colons
+- Fix delete and shift key width for 9+ char rows
