@@ -26,7 +26,7 @@
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:key="gestures"
+        app:key="general_gestures"
         app:title="@string/pref__gestures__general_title">
 
         <ListPreference
@@ -73,7 +73,7 @@
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:key="gestures"
+        app:key="space_bar_gestures"
         app:title="@string/pref__gestures__space_bar_title">
 
         <ListPreference
@@ -116,7 +116,7 @@
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:key="gestures"
+        app:key="other_gestures"
         app:title="@string/pref__gestures__other_title">
 
         <ListPreference

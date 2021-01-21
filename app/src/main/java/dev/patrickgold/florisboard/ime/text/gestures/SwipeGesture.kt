@@ -26,6 +26,36 @@ import kotlin.math.*
  * Wrapper class which holds all enums, interfaces and classes for detecting a swipe gesture.
  */
 abstract class SwipeGesture {
+    companion object {
+        /**
+         * Returns a numeric value for a given [DistanceThreshold], based on the values defined in
+         * the resources dimens.xml file.
+         */
+        fun numericValue(context: Context, of: DistanceThreshold): Double {
+            return when (of) {
+                DistanceThreshold.VERY_SHORT -> context.resources.getDimension(R.dimen.gesture_distance_threshold_very_short)
+                DistanceThreshold.SHORT -> context.resources.getDimension(R.dimen.gesture_distance_threshold_short)
+                DistanceThreshold.NORMAL -> context.resources.getDimension(R.dimen.gesture_distance_threshold_normal)
+                DistanceThreshold.LONG -> context.resources.getDimension(R.dimen.gesture_distance_threshold_long)
+                DistanceThreshold.VERY_LONG -> context.resources.getDimension(R.dimen.gesture_distance_threshold_very_long)
+            }.toDouble()
+        }
+
+        /**
+         * Returns a numeric value for a given [VelocityThreshold], based on the values defined in
+         * the resources dimens.xml file.
+         */
+        fun numericValue(context: Context, of: VelocityThreshold): Double {
+            return when (of) {
+                VelocityThreshold.VERY_SLOW -> context.resources.getInteger(R.integer.gesture_velocity_threshold_very_slow)
+                VelocityThreshold.SLOW -> context.resources.getInteger(R.integer.gesture_velocity_threshold_slow)
+                VelocityThreshold.NORMAL -> context.resources.getInteger(R.integer.gesture_velocity_threshold_normal)
+                VelocityThreshold.FAST -> context.resources.getInteger(R.integer.gesture_velocity_threshold_fast)
+                VelocityThreshold.VERY_FAST -> context.resources.getInteger(R.integer.gesture_velocity_threshold_very_fast)
+            }.toDouble()
+        }
+    }
+
     /**
      * Class which detects swipes based on given [MotionEvent]s. Only supports single-finger swipes
      * and ignores additional pointers provided, if any.
@@ -50,14 +80,20 @@ abstract class SwipeGesture {
                     }
                     MotionEvent.ACTION_MOVE -> {
                         eventList.add(MotionEvent.obtainNoHistory(event))
+                        val firstEvent = eventList[indexFirst]
                         val lastEvent = eventList[indexLastMoveRecognized]
                         val diffX = event.x - lastEvent.x
                         val diffY = event.y - lastEvent.y
-                        val distanceThresholdNV = numericValue(distanceThreshold) / 4.0f
+                        val distanceThresholdNV = numericValue(context, distanceThreshold) / 4.0f
                         return if (abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV) {
                             indexLastMoveRecognized = eventList.size - 1
                             val direction = detectDirection(diffX.toDouble(), diffY.toDouble())
-                            listener.onSwipe(direction, Type.TOUCH_MOVE)
+                            listener.onSwipe(Event(
+                                direction = direction,
+                                type = Type.TOUCH_MOVE,
+                                diffX = event.x - firstEvent.x,
+                                diffY = event.y - firstEvent.y
+                            ))
                         } else {
                             false
                         }
@@ -67,7 +103,7 @@ abstract class SwipeGesture {
                         val firstEvent = eventList[indexFirst]
                         val diffX = event.x - firstEvent.x
                         val diffY = event.y - firstEvent.y
-                        val distanceThresholdNV = numericValue(distanceThreshold)
+                        val distanceThresholdNV = numericValue(context, distanceThreshold)
                         /*val velocityThresholdNV = numericValue(velocityThreshold)
                         val velocity =
                             ((convertPixelsToDp(
@@ -78,7 +114,12 @@ abstract class SwipeGesture {
                         // return if ((abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV) && velocity >= velocityThresholdNV) {
                         return if ((abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV)) {
                             val direction = detectDirection(diffX.toDouble(), diffY.toDouble())
-                            listener.onSwipe(direction, Type.TOUCH_UP)
+                            listener.onSwipe(Event(
+                                direction = direction,
+                                type = Type.TOUCH_UP,
+                                diffX = diffX,
+                                diffY = diffY
+                            ))
                         } else {
                             false
                         }
@@ -144,38 +185,10 @@ abstract class SwipeGesture {
             indexFirst = 0
             indexLastMoveRecognized = 0
         }
-
-        /**
-         * Returns a numeric value for a given [DistanceThreshold], based on the values defined in
-         * the resources dimens.xml file.
-         */
-        private fun numericValue(of: DistanceThreshold): Double {
-            return when (of) {
-                DistanceThreshold.VERY_SHORT -> context.resources.getDimension(R.dimen.gesture_distance_threshold_very_short)
-                DistanceThreshold.SHORT -> context.resources.getDimension(R.dimen.gesture_distance_threshold_short)
-                DistanceThreshold.NORMAL -> context.resources.getDimension(R.dimen.gesture_distance_threshold_normal)
-                DistanceThreshold.LONG -> context.resources.getDimension(R.dimen.gesture_distance_threshold_long)
-                DistanceThreshold.VERY_LONG -> context.resources.getDimension(R.dimen.gesture_distance_threshold_very_long)
-            }.toDouble()
-        }
-
-        /**
-         * Returns a numeric value for a given [VelocityThreshold], based on the values defined in
-         * the resources dimens.xml file.
-         */
-        private fun numericValue(of: VelocityThreshold): Double {
-            return when (of) {
-                VelocityThreshold.VERY_SLOW -> context.resources.getInteger(R.integer.gesture_velocity_threshold_very_slow)
-                VelocityThreshold.SLOW -> context.resources.getInteger(R.integer.gesture_velocity_threshold_slow)
-                VelocityThreshold.NORMAL -> context.resources.getInteger(R.integer.gesture_velocity_threshold_normal)
-                VelocityThreshold.FAST -> context.resources.getInteger(R.integer.gesture_velocity_threshold_fast)
-                VelocityThreshold.VERY_FAST -> context.resources.getInteger(R.integer.gesture_velocity_threshold_very_fast)
-            }.toDouble()
-        }
     }
 
     interface Listener {
-        fun onSwipe(direction: Direction, type: Type): Boolean
+        fun onSwipe(event: Event): Boolean
     }
 
     enum class Direction {
@@ -188,6 +201,13 @@ abstract class SwipeGesture {
         DOWN_LEFT,
         LEFT,
     }
+
+    data class Event(
+        val direction: Direction,
+        val type: Type,
+        val diffX: Float,
+        val diffY: Float
+    )
 
     enum class Type {
         TOUCH_UP,

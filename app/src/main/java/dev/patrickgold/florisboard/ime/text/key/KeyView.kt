@@ -101,7 +101,7 @@ class KeyView(
     private var themeValueCache: ThemeValueCache = ThemeValueCache()
 
     var florisboard: FlorisBoard? = null
-    private val swipeGestureDetector = SwipeGesture.Detector(context, this)
+    val swipeGestureDetector = SwipeGesture.Detector(context, this)
     var touchHitBox: Rect = Rect(-1, -1, -1, -1)
 
     init {
@@ -308,46 +308,32 @@ class KeyView(
      * Swipe event handler. Listens to touch_move left/right swipes and triggers the swipe action
      * defined in the prefs.
      */
-    override fun onSwipe(direction: SwipeGesture.Direction, type: SwipeGesture.Type): Boolean {
+    override fun onSwipe(event: SwipeGesture.Event): Boolean {
         return when (data.code) {
-            KeyCode.DELETE -> when (type) {
-                SwipeGesture.Type.TOUCH_MOVE -> when (direction) {
-                    SwipeGesture.Direction.LEFT -> when (prefs.gestures.deleteKeySwipeLeft) {
-                        SwipeAction.DELETE_CHARACTERS_PRECISELY -> {
-                            florisboard?.activeEditorInstance?.apply {
-                                setSelection(
-                                    if (selection.start > 0) { selection.start - 1 } else { selection.start },
-                                    selection.end
-                                )
-                            }
-                            hasTriggeredGestureMove = true
-                            shouldBlockNextKeyCode = true
-                            true
+            KeyCode.DELETE -> when (event.type) {
+                SwipeGesture.Type.TOUCH_MOVE -> when (prefs.gestures.deleteKeySwipeLeft) {
+                    SwipeAction.DELETE_CHARACTERS_PRECISELY -> {
+                        val charWidth = SwipeGesture.numericValue(context, swipeGestureDetector.distanceThreshold) / 4.0f
+                        florisboard?.activeEditorInstance?.apply {
+                            setSelection(
+                                (selection.end - (event.diffX.times(-1) / charWidth).toInt()).coerceIn(0, selection.end),
+                                selection.end
+                            )
                         }
-                        SwipeAction.DELETE_WORDS_PRECISELY -> {
+                        hasTriggeredGestureMove = true
+                        shouldBlockNextKeyCode = true
+                        true
+                    }
+                    SwipeAction.DELETE_WORDS_PRECISELY -> when (event.direction) {
+                        SwipeGesture.Direction.LEFT -> {
                             florisboard?.activeEditorInstance?.apply {
                                 leftAppendWordToSelection()
                             }
-
                             hasTriggeredGestureMove = true
                             shouldBlockNextKeyCode = true
                             true
                         }
-                        else -> false
-                    }
-                    SwipeGesture.Direction.RIGHT -> when (prefs.gestures.deleteKeySwipeLeft) {
-                        SwipeAction.DELETE_CHARACTERS_PRECISELY -> {
-                            florisboard?.activeEditorInstance?.apply {
-                                setSelection(
-                                    if (selection.start < selection.end) { selection.start + 1 } else { selection.start },
-                                    selection.end
-                                )
-                            }
-                            shouldBlockNextKeyCode = true
-                            true
-                        }
-
-                        SwipeAction.DELETE_WORDS_PRECISELY -> {
+                        SwipeGesture.Direction.RIGHT -> {
                             florisboard?.activeEditorInstance?.apply {
                                 leftPopWordFromSelection()
                             }
@@ -360,8 +346,8 @@ class KeyView(
                 }
                 else -> false
             }
-            KeyCode.SPACE -> when (type) {
-                SwipeGesture.Type.TOUCH_MOVE -> when (direction) {
+            KeyCode.SPACE -> when (event.type) {
+                SwipeGesture.Type.TOUCH_MOVE -> when (event.direction) {
                     SwipeGesture.Direction.UP -> {
                         florisboard?.executeSwipeAction(prefs.gestures.spaceBarSwipeUp)
                         shouldBlockNextKeyCode = true

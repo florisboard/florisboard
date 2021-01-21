@@ -103,6 +103,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
         }
         if (!isPreviewMode) {
             themeManager.requestThemeUpdate(this)
+            onWindowShown()
         } else {
             updateVisibility()
         }
@@ -137,6 +138,18 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
         swipeGestureDetector.apply {
             distanceThreshold = prefs.gestures.swipeDistanceThreshold
             velocityThreshold = prefs.gestures.swipeVelocityThreshold
+        }
+        for (row in children) {
+            if (row is ViewGroup) {
+                for (keyView in row.children) {
+                    if (keyView is KeyView) {
+                        keyView.swipeGestureDetector.apply {
+                            distanceThreshold = prefs.gestures.swipeDistanceThreshold
+                            velocityThreshold = prefs.gestures.swipeVelocityThreshold
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -244,10 +257,10 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
      * Swipe event handler. Listens to touch_up swipes and executes the swipe action defined for it
      * in the prefs.
      */
-    override fun onSwipe(direction: SwipeGesture.Direction, type: SwipeGesture.Type): Boolean {
+    override fun onSwipe(event: SwipeGesture.Event): Boolean {
         return when {
             initialKeyCode == KeyCode.DELETE -> {
-                if (type == SwipeGesture.Type.TOUCH_UP && direction == SwipeGesture.Direction.LEFT &&
+                if (event.type == SwipeGesture.Type.TOUCH_UP && event.direction == SwipeGesture.Direction.LEFT &&
                     prefs.gestures.deleteKeySwipeLeft == SwipeAction.DELETE_WORD) {
                     florisboard?.executeSwipeAction(prefs.gestures.deleteKeySwipeLeft)
                     true
@@ -256,9 +269,9 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
                 }
             }
             initialKeyCode > KeyCode.SPACE && !popupManager.isShowingExtendedPopup -> when {
-                !prefs.glide.enabled -> when (type) {
+                !prefs.glide.enabled -> when (event.type) {
                     SwipeGesture.Type.TOUCH_UP -> {
-                        val swipeAction = when (direction) {
+                        val swipeAction = when (event.direction) {
                             SwipeGesture.Direction.UP -> prefs.gestures.swipeUp
                             SwipeGesture.Direction.DOWN -> prefs.gestures.swipeDown
                             SwipeGesture.Direction.LEFT -> prefs.gestures.swipeLeft
