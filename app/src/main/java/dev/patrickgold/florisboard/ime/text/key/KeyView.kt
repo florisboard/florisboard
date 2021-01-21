@@ -480,35 +480,53 @@ class KeyView(
     }
 
     override fun onThemeUpdated(theme: Theme) {
-        if (keyboardView.isSmartbarKeyboardView) {
-            themeValueCache.apply {
-                keyBackground = theme.getAttr(Theme.Attr.SMARTBAR_BACKGROUND)
-                keyBackgroundPressed = theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND)
-                keyForeground = theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND)
-                keyForegroundAlt = theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND_ALT)
-                keyForegroundPressed = theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND)
-                shouldShowBorder = false
-            }
-        } else {
-            val label = data.label
-            val capsSpecific = when {
-                florisboard?.textInputManager?.capsLock == true -> {
-                    "capslock"
-                }
-                florisboard?.textInputManager?.caps == true -> {
-                    "caps"
-                }
-                else -> {
-                    null
+        when {
+            keyboardView.isLoadingPlaceholderKeyboard -> {
+                val label = data.label
+                themeValueCache.apply {
+                    shouldShowBorder = theme.getAttr(Theme.Attr.KEY_SHOW_BORDER, label).toOnOff().state
+                    keyBackground = if (shouldShowBorder) {
+                        theme.getAttr(Theme.Attr.KEY_BACKGROUND, label)
+                    } else {
+                        theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND, label)
+                    }
+                    keyBackgroundPressed = theme.getAttr(Theme.Attr.KEY_BACKGROUND_PRESSED, label)
+                    keyForeground = keyBackground
+                    keyForegroundAlt = ThemeValue.SolidColor(0)
+                    keyForegroundPressed = keyBackgroundPressed
                 }
             }
-            themeValueCache.apply {
-                keyBackground = theme.getAttr(Theme.Attr.KEY_BACKGROUND, label, capsSpecific)
-                keyBackgroundPressed = theme.getAttr(Theme.Attr.KEY_BACKGROUND_PRESSED, label, capsSpecific)
-                keyForeground = theme.getAttr(Theme.Attr.KEY_FOREGROUND, label, capsSpecific)
-                keyForegroundAlt = ThemeValue.SolidColor(0)
-                keyForegroundPressed = theme.getAttr(Theme.Attr.KEY_FOREGROUND_PRESSED, label, capsSpecific)
-                shouldShowBorder = theme.getAttr(Theme.Attr.KEY_SHOW_BORDER, label, capsSpecific).toOnOff().state
+            keyboardView.isSmartbarKeyboardView -> {
+                themeValueCache.apply {
+                    keyBackground = theme.getAttr(Theme.Attr.SMARTBAR_BACKGROUND)
+                    keyBackgroundPressed = theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND)
+                    keyForeground = theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND)
+                    keyForegroundAlt = theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND_ALT)
+                    keyForegroundPressed = theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND)
+                    shouldShowBorder = false
+                }
+            }
+            else -> {
+                val label = data.label
+                val capsSpecific = when {
+                    florisboard?.textInputManager?.capsLock == true -> {
+                        "capslock"
+                    }
+                    florisboard?.textInputManager?.caps == true -> {
+                        "caps"
+                    }
+                    else -> {
+                        null
+                    }
+                }
+                themeValueCache.apply {
+                    keyBackground = theme.getAttr(Theme.Attr.KEY_BACKGROUND, label, capsSpecific)
+                    keyBackgroundPressed = theme.getAttr(Theme.Attr.KEY_BACKGROUND_PRESSED, label, capsSpecific)
+                    keyForeground = theme.getAttr(Theme.Attr.KEY_FOREGROUND, label, capsSpecific)
+                    keyForegroundAlt = ThemeValue.SolidColor(0)
+                    keyForegroundPressed = theme.getAttr(Theme.Attr.KEY_FOREGROUND_PRESSED, label, capsSpecific)
+                    shouldShowBorder = theme.getAttr(Theme.Attr.KEY_SHOW_BORDER, label, capsSpecific).toOnOff().state
+                }
             }
         }
         updateKeyPressedBackground()

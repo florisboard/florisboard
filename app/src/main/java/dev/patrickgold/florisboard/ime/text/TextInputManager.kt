@@ -60,6 +60,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     private var activeKeyboardMode: KeyboardMode? = null
     private val keyboardViews = EnumMap<KeyboardMode, KeyboardView>(KeyboardMode::class.java)
     private var editingKeyboardView: EditingKeyboardView? = null
+    private var loadingPlaceholderKeyboard: KeyboardView? = null
     private val osHandler = Handler()
     private var textViewFlipper: ViewFlipper? = null
     var textViewGroup: LinearLayout? = null
@@ -132,10 +133,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             textViewGroup = inputView.findViewById(R.id.text_input)
             textViewFlipper = inputView.findViewById(R.id.text_input_view_flipper)
             editingKeyboardView = inputView.findViewById(R.id.editing)
+            loadingPlaceholderKeyboard = inputView.findViewById(R.id.keyboard_preview)
 
             val activeKeyboardMode = getActiveKeyboardMode()
             addKeyboardView(activeKeyboardMode)
             setActiveKeyboardMode(activeKeyboardMode)
+            loadingPlaceholderKeyboard?.animator?.end()
             for (mode in KeyboardMode.values()) {
                 if (mode != activeKeyboardMode && mode != KeyboardMode.SMARTBAR_NUMBER_ROW) {
                     addKeyboardView(mode)

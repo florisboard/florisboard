@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
@@ -53,6 +55,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     private var activeX: Float = 0.0f
     private var activeY: Float = 0.0f
 
+    var animator: ObjectAnimator? = null
     var computedLayout: ComputedLayoutData? = null
         set(v) {
             field = v
@@ -64,6 +67,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     private var initialKeyCode: Int = 0
     private val isPreviewMode: Boolean
     val isSmartbarKeyboardView: Boolean
+    val isLoadingPlaceholderKeyboard: Boolean
     var popupManager = PopupManager<KeyboardView, KeyView>(this, florisboard?.popupLayerView)
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val themeManager: ThemeManager = ThemeManager.default()
@@ -75,6 +79,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
         context.obtainStyledAttributes(attrs, R.styleable.KeyboardView).apply {
             isPreviewMode = getBoolean(R.styleable.KeyboardView_isPreviewKeyboard, false)
             isSmartbarKeyboardView = getBoolean(R.styleable.KeyboardView_isSmartbarKeyboard, false)
+            isLoadingPlaceholderKeyboard = getBoolean(R.styleable.KeyboardView_isLoadingPlaceholderKeyboard, false)
             recycle()
         }
         orientation = VERTICAL
@@ -84,6 +89,15 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
         )
         florisboard?.addEventListener(this)
         onWindowShown()
+        if (isLoadingPlaceholderKeyboard) {
+            computedLayout = ComputedLayoutData.PREGENERATED_LOADING_KEYBOARD
+            animator = ObjectAnimator.ofFloat(this, "alpha", 0.4f, 1.0f).apply {
+                duration = 650
+                repeatCount = ValueAnimator.INFINITE
+                repeatMode = ValueAnimator.REVERSE
+                start()
+            }
+        }
     }
 
     /**
@@ -166,7 +180,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
-        if (isPreviewMode) {
+        if (isPreviewMode || isLoadingPlaceholderKeyboard) {
             return false
         }
         val eventFloris = MotionEvent.obtainNoHistory(event)
