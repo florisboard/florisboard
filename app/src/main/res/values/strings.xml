@@ -47,6 +47,7 @@
     <string name="settings__menu_about" translatable="false" comment="Three-dot menu entry for About activity">@string/about__title</string>
     <string name="settings__menu_advanced" translatable="false" comment="Three-dot menu entry for Advanced activity">@string/settings__advanced__title</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Help &amp; feedback</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Help</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Home</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Keyboard</string>
     <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Typing</string>

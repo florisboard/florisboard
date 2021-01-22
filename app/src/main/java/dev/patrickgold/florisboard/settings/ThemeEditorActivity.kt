@@ -16,7 +16,10 @@
 
 package dev.patrickgold.florisboard.settings
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.annotation.IdRes
@@ -86,10 +89,23 @@ class ThemeEditorActivity : AppCompatActivity() {
         buildUi()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.theme_editor_menu, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
+                true
+            }
+            R.id.settings__help -> {
+                val browserIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(resources.getString(R.string.florisboard__theme_editor_wiki_url))
+                )
+                startActivity(browserIntent)
                 true
             }
             else -> super.onOptionsItemSelected(item)
