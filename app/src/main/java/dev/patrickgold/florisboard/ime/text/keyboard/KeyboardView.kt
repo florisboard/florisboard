@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
@@ -55,7 +53,6 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     private var activeX: Float = 0.0f
     private var activeY: Float = 0.0f
 
-    var animator: ObjectAnimator? = null
     var computedLayout: ComputedLayoutData? = null
         set(v) {
             field = v
@@ -90,13 +87,10 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
         florisboard?.addEventListener(this)
         onWindowShown()
         if (isLoadingPlaceholderKeyboard) {
-            computedLayout = ComputedLayoutData.PREGENERATED_LOADING_KEYBOARD
-            animator = ObjectAnimator.ofFloat(this, "alpha", 0.4f, 1.0f).apply {
-                duration = 650
-                repeatCount = ValueAnimator.INFINITE
-                repeatMode = ValueAnimator.REVERSE
-                start()
-            }
+            computedLayout = ComputedLayoutData.PRE_GENERATED_LOADING_KEYBOARD
+            /*for ((i, row) in children.withIndex()) {
+                row.alpha = (i + 1) * 0.25f
+            }*/
         }
     }
 

@@ -57,7 +57,7 @@ data class ComputedLayoutData(
     val arrangement: ComputedLayoutDataArrangement = mutableListOf()
 ) {
     companion object {
-        val PREGENERATED_LOADING_KEYBOARD = ComputedLayoutData(
+        val PRE_GENERATED_LOADING_KEYBOARD = ComputedLayoutData(
             mode = KeyboardMode.CHARACTERS,
             name = "__loading_keyboard__",
             direction = "ltr",

@@ -5,7 +5,8 @@
     android:id="@+id/text_input"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:alpha="0.9">
 
     <include layout="@layout/smartbar"/>
 
