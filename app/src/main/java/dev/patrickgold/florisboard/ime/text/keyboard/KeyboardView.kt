@@ -64,6 +64,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     private var initialKeyCode: Int = 0
     private val isPreviewMode: Boolean
     val isSmartbarKeyboardView: Boolean
+    val isLoadingPlaceholderKeyboard: Boolean
     var popupManager = PopupManager<KeyboardView, KeyView>(this, florisboard?.popupLayerView)
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val themeManager: ThemeManager = ThemeManager.default()
@@ -75,6 +76,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
         context.obtainStyledAttributes(attrs, R.styleable.KeyboardView).apply {
             isPreviewMode = getBoolean(R.styleable.KeyboardView_isPreviewKeyboard, false)
             isSmartbarKeyboardView = getBoolean(R.styleable.KeyboardView_isSmartbarKeyboard, false)
+            isLoadingPlaceholderKeyboard = getBoolean(R.styleable.KeyboardView_isLoadingPlaceholderKeyboard, false)
             recycle()
         }
         orientation = VERTICAL
@@ -84,6 +86,12 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
         )
         florisboard?.addEventListener(this)
         onWindowShown()
+        if (isLoadingPlaceholderKeyboard) {
+            computedLayout = ComputedLayoutData.PRE_GENERATED_LOADING_KEYBOARD
+            /*for ((i, row) in children.withIndex()) {
+                row.alpha = (i + 1) * 0.25f
+            }*/
+        }
     }
 
     /**
@@ -166,7 +174,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
-        if (isPreviewMode) {
+        if (isPreviewMode || isLoadingPlaceholderKeyboard) {
             return false
         }
         val eventFloris = MotionEvent.obtainNoHistory(event)

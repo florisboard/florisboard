@@ -16,9 +16,12 @@
 
 package dev.patrickgold.florisboard.ime.text
 
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Handler
 import android.view.KeyEvent
+import android.view.View
 import android.view.inputmethod.*
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -38,6 +41,7 @@ import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.util.*
+import kotlin.math.roundToLong
 
 /**
  * TextInputManager is responsible for managing everything which is related to text input. All of
@@ -58,11 +62,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         get() = florisboard.activeEditorInstance
 
     private var activeKeyboardMode: KeyboardMode? = null
+    private var animator: ObjectAnimator? = null
     private val keyboardViews = EnumMap<KeyboardMode, KeyboardView>(KeyboardMode::class.java)
     private var editingKeyboardView: EditingKeyboardView? = null
+    private var loadingPlaceholderKeyboard: KeyboardView? = null
     private val osHandler = Handler()
     private var textViewFlipper: ViewFlipper? = null
-    var textViewGroup: LinearLayout? = null
+    private var textViewGroup: LinearLayout? = null
 
     var keyVariation: KeyVariation = KeyVariation.NORMAL
     val layoutManager = LayoutManager(florisboard)
@@ -115,8 +121,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         }
     }
 
+    override fun onCreateInputView() {
+        keyboardViews.clear()
+    }
+
     private suspend fun addKeyboardView(mode: KeyboardMode) {
         val keyboardView = KeyboardView(florisboard.context)
+        keyboardView.id = View.generateViewId()
         keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(mode, florisboard.activeSubtype, florisboard.prefs).await()
         keyboardViews[mode] = keyboardView
         textViewFlipper?.addView(keyboardView)
@@ -128,14 +139,38 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     override fun onRegisterInputView(inputView: InputView) {
         Timber.i("onRegisterInputView(inputView)")
 
-        launch(Dispatchers.Main) {
-            textViewGroup = inputView.findViewById(R.id.text_input)
-            textViewFlipper = inputView.findViewById(R.id.text_input_view_flipper)
-            editingKeyboardView = inputView.findViewById(R.id.editing)
+        textViewGroup = inputView.findViewById(R.id.text_input)
+        textViewFlipper = inputView.findViewById(R.id.text_input_view_flipper)
+        editingKeyboardView = inputView.findViewById(R.id.editing)
+        loadingPlaceholderKeyboard = inputView.findViewById(R.id.keyboard_preview)
 
+        launch(Dispatchers.Main) {
+            textViewGroup?.let {
+                animator = ObjectAnimator.ofFloat(it, "alpha", 0.9f, 1.0f).apply {
+                    duration = 125
+                    repeatCount = ValueAnimator.INFINITE
+                    repeatMode = ValueAnimator.REVERSE
+                    start()
+                    launch {
+                        delay(duration)
+                        try {
+                            duration = 500
+                            setFloatValues(1.0f, 0.4f)
+                        } catch (_: Exception) {}
+                    }
+                }
+            }
             val activeKeyboardMode = getActiveKeyboardMode()
             addKeyboardView(activeKeyboardMode)
             setActiveKeyboardMode(activeKeyboardMode)
+            animator?.cancel()
+            textViewGroup?.let {
+                animator = ObjectAnimator.ofFloat(it, "alpha", it.alpha, 1.0f).apply {
+                    duration = (((1.0f - it.alpha) / 0.6f) * 125f).roundToLong()
+                    repeatCount = 0
+                    start()
+                }
+            }
             for (mode in KeyboardMode.values()) {
                 if (mode != activeKeyboardMode && mode != KeyboardMode.SMARTBAR_NUMBER_ROW) {
                     addKeyboardView(mode)
@@ -246,11 +281,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     /**
      * Sets [activeKeyboardMode] and updates the [SmartbarView.isQuickActionsVisible] state.
      */
-    fun setActiveKeyboardMode(mode: KeyboardMode) {
+    private fun setActiveKeyboardMode(mode: KeyboardMode) {
         textViewFlipper?.displayedChild = textViewFlipper?.indexOfChild(when (mode) {
             KeyboardMode.EDITING -> editingKeyboardView
             else -> keyboardViews[mode]
-        }) ?: 0
+        })?.coerceAtLeast(0) ?: 0
         keyboardViews[mode]?.updateVisibility()
         keyboardViews[mode]?.requestLayout()
         keyboardViews[mode]?.requestLayoutAllKeys()

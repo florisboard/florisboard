@@ -17,6 +17,7 @@
     <declare-styleable name="KeyboardView">
         <attr name="isPreviewKeyboard" format="boolean"/>
         <attr name="isSmartbarKeyboard" format="boolean"/>
+        <attr name="isLoadingPlaceholderKeyboard" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="EditingKeyView">

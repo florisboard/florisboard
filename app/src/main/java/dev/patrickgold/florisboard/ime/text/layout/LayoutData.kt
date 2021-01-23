@@ -17,6 +17,9 @@
 package dev.patrickgold.florisboard.ime.text.layout
 
 import dev.patrickgold.florisboard.ime.text.key.FlorisKeyData
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 
 typealias LayoutDataArrangement = List<List<FlorisKeyData>>
@@ -52,4 +55,56 @@ data class ComputedLayoutData(
     val name: String,
     val direction: String,
     val arrangement: ComputedLayoutDataArrangement = mutableListOf()
-)
+) {
+    companion object {
+        val PRE_GENERATED_LOADING_KEYBOARD = ComputedLayoutData(
+            mode = KeyboardMode.CHARACTERS,
+            name = "__loading_keyboard__",
+            direction = "ltr",
+            arrangement = mutableListOf(
+                mutableListOf(
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0)
+                ),
+                mutableListOf(
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0)
+                ),
+                mutableListOf(
+                    FlorisKeyData(code = KeyCode.SHIFT, type = KeyType.MODIFIER, label = "shift"),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = KeyCode.DELETE, type = KeyType.ENTER_EDITING, label = "delete")
+                ),
+                mutableListOf(
+                    FlorisKeyData(code = KeyCode.VIEW_SYMBOLS, type = KeyType.SYSTEM_GUI, label = "view_symbols"),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = KeyCode.SPACE, label = "space"),
+                    FlorisKeyData(code = 0),
+                    FlorisKeyData(code = KeyCode.ENTER, type = KeyType.ENTER_EDITING, label = "enter")
+                )
+            )
+        )
+    }
+}
