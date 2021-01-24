@@ -64,34 +64,24 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Этот подтип уже существует!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Тема клавиатуры</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Не определено</string>
-    <string name="settings__theme__background" comment="General label for a background preference">Цвет фона</string>
-    <string name="settings__theme__background_active" comment="General label for an active background preference">Цвет фона когда активно</string>
-    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">Фоновой цвет при нажатии</string>
-    <string name="settings__theme__foreground" comment="General label for a foreground preference">Цвет переднего плана</string>
-    <string name="settings__theme__foreground_alt" comment="General label for an alternate foreground preference">Цвет переднего плана (другое)</string>
-    <string name="settings__theme__foreground_capslock" comment="General label for a capslock foreground preference">Цвет переднего плана (caps lock)</string>
-    <string name="settings__theme__dialog_title" comment="Title of the color selection dialog for a single theme preference">Выберите цвет</string>
+    <string name="settings__theme__attr_background" comment="General label for a background preference">Цвет фона</string>
+    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">Цвет фона когда активно</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">Фоновой цвет при нажатии</string>
+    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">Цвет переднего плана</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">Цвет переднего плана (другое)</string>
     <string name="settings__theme__group_window" comment="Theme group label">Окно &amp; Система</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Клавиатура</string>
     <string name="settings__theme__group_key" comment="Theme group label">Кнопки</string>
-    <string name="settings__theme__group_key_enter" comment="Theme group label">Введите текст сюда</string>
-    <string name="settings__theme__group_key_popup" comment="Theme group label">Открыть поп-ап</string>
-    <string name="settings__theme__group_key_shift" comment="Theme group label">Клавиша регистра</string>
     <string name="settings__theme__group_media" comment="Theme group label">Медиа контекст</string>
-    <string name="settings__theme__group_one_handed" comment="Theme group label">Одноручный ввод</string>
-    <string name="settings__theme__group_one_handed_button" comment="Theme group label">Кнопка одноручного ввода</string>
-    <string name="settings__theme__group_private_mode" comment="Theme group label">Приватный режим</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">Одноручный ввод</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">Приватный режим</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Умная панель</string>
-    <string name="settings__theme__group_smartbar_button" comment="Theme group label">Настройки Умной панели</string>
-    <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">Основной цвет</string>
-    <string name="pref__theme__colorPrimaryDark_title" comment="Title of Color primary dark theme preference">Основной цвет (темный)</string>
-    <string name="pref__theme__colorPrimaryDark_summary" comment="Summary of Color primary dark theme preference">В настоящее время не используется, зарезервировано для будущей реализации</string>
-    <string name="pref__theme__colorAccent_title" comment="Title of Color accent theme preference">Цветовой акцент</string>
-    <string name="pref__theme__navBarColor_title" comment="Title of Nav bar color theme preference">Цвет панели навигации</string>
-    <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">Фон панели навигации.</string>
-    <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Установите ON для темного или OFF для светлого режима.</string>
-    <string name="pref__theme__showKeyBorder_title" comment="Title of Show Key Border preference">Граница клавиш</string>
-    <string name="pref__theme__showKeyBorder_summary" comment="Summary of Show Key Border preference">Чтобы показать границы установите ON или OFF чтобы скрыть их</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Настройки Умной панели</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">Основной цвет</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Title of Color primary dark theme preference">Основной цвет (темный)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Title of Color accent theme preference">Цветовой акцент</string>
+    <string name="settings__theme__attr_navBarColor" comment="Title of Nav bar color theme preference">Цвет панели навигации</string>
+    <string name="settings__theme__attr_showBorder" comment="Title of Show Key Border preference">Граница клавиш</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Настройки клавиатуры</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Клавиши</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Строка цифр</string>

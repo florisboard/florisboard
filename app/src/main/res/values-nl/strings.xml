@@ -64,37 +64,25 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Deze indeling bestaat al!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Toetsenbordthema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ongedefinieerd</string>
-    <string name="settings__theme__background" comment="General label for a background preference">Achtergrondkleur</string>
-    <string name="settings__theme__background_active" comment="General label for an active background preference">Achtergrondkleur wanneer actief</string>
-    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">Achtergrondkleur wanneer ingedrukt</string>
-    <string name="settings__theme__foreground" comment="General label for a foreground preference">Voorgrondkleur</string>
-    <string name="settings__theme__foreground_alt" comment="General label for an alternate foreground preference">Voorgrondkleur (alternatief)</string>
-    <string name="settings__theme__foreground_capslock" comment="General label for a capslock foreground preference">Voorgrondkleur (CapsLock)</string>
-    <string name="settings__theme__dialog_title" comment="Title of the color selection dialog for a single theme preference">Selecteer een kleur</string>
+    <string name="settings__theme__attr_background" comment="General label for a background preference">Achtergrondkleur</string>
+    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">Achtergrondkleur wanneer actief</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">Achtergrondkleur wanneer ingedrukt</string>
+    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">Voorgrondkleur</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">Voorgrondkleur (alternatief)</string>
     <string name="settings__theme__group_window" comment="Theme group label">Venster &amp; Systeem</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Toetsenbord</string>
     <string name="settings__theme__group_key" comment="Theme group label">Toets</string>
-    <string name="settings__theme__group_key_enter" comment="Theme group label">Entertoets</string>
-    <string name="settings__theme__group_key_popup" comment="Theme group label">Sleutel pop-up</string>
-    <string name="settings__theme__group_key_shift" comment="Theme group label">Shift</string>
     <string name="settings__theme__group_media" comment="Theme group label">Mediacontext</string>
-    <string name="settings__theme__group_one_handed" comment="Theme group label">Met één hand</string>
-    <string name="settings__theme__group_one_handed_button" comment="Theme group label">Knop met één hand</string>
-    <string name="settings__theme__group_private_mode" comment="Theme group label">Privémodus</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">Met één hand</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">Privémodus</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Slimme Balk</string>
-    <string name="settings__theme__group_smartbar_button" comment="Theme group label">Slimme Balk bewerken</string>
-    <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">Hoofdkleur</string>
-    <string name="pref__theme__colorPrimary_summary" comment="Summary of Color primary theme preference">Toegepast op de hoofd Media tab-aanduiding en selectiemarkering</string>
-    <string name="pref__theme__colorPrimaryDark_title" comment="Title of Color primary dark theme preference">Primaire kleur (Donker)</string>
-    <string name="pref__theme__colorPrimaryDark_summary" comment="Summary of Color primary dark theme preference">Momenteel niet gebruikt, gereserveerd voor toekomstige implementatie</string>
-    <string name="pref__theme__colorAccent_title" comment="Title of Color accent theme preference">Accentkleur</string>
-    <string name="pref__theme__colorAccent_summary" comment="Summary of Color accent theme preference">Toegepast op emoji tab-aanduiding</string>
-    <string name="pref__theme__navBarColor_title" comment="Title of Nav bar color theme preference">Kleur navigatiebalk</string>
-    <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">De achtergrondkleur van de navigatiebalk.</string>
-    <string name="pref__theme__navBarIsLight_title" comment="Title of Nav bar is light theme preference">Navigatiebalk donkere voorgrond</string>
-    <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Zet AAN voor donkere of UIT voor lichte voorgrond.</string>
-    <string name="pref__theme__showKeyBorder_title" comment="Title of Show Key Border preference">Knoprand</string>
-    <string name="pref__theme__showKeyBorder_summary" comment="Summary of Show Key Border preference">Zet AAN om de knoprand te tonen of UIT om te verbergen</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Slimme Balk bewerken</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">Hoofdkleur</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Title of Color primary dark theme preference">Primaire kleur (Donker)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Title of Color accent theme preference">Accentkleur</string>
+    <string name="settings__theme__attr_navBarColor" comment="Title of Nav bar color theme preference">Kleur navigatiebalk</string>
+    <string name="settings__theme__attr_navBarLight" comment="Title of Nav bar is light theme preference">Navigatiebalk donkere voorgrond</string>
+    <string name="settings__theme__attr_showBorder" comment="Title of Show Key Border preference">Knoprand</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Toetsenbordvoorkeuren</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Toetsen</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Nummerrij</string>

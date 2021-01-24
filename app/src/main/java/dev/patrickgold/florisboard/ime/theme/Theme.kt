@@ -16,7 +16,9 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
+import android.content.Context
 import android.graphics.Color
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.extension.Asset
 
 /**
@@ -66,6 +68,80 @@ open class Theme(
             authors = listOf("patrickgold"),
             isNightTheme = true
         )
+
+        /**
+         * Gets the Ui string for a given [attrName]. Used in the theme editor to properly display
+         * attributes for non-advanced users.
+         *
+         * @param context The current activity context, used for retrieving the Ui string.
+         * @param attrName The attribute name, which is used to determine which Ui string should be
+         *  fetched.
+         * @return The Ui string representation, which is localized and can be shown to the user.
+         */
+        fun getUiAttrNameString(context: Context, attrName: String): String {
+            val strId = when (attrName) {
+                "background" ->             R.string.settings__theme__attr_background
+                "backgroundActive" ->       R.string.settings__theme__attr_backgroundActive
+                "backgroundPressed" ->      R.string.settings__theme__attr_backgroundPressed
+                "foreground" ->             R.string.settings__theme__attr_foreground
+                "foregroundAlt" ->          R.string.settings__theme__attr_foregroundAlt
+                "foregroundPressed" ->      R.string.settings__theme__attr_foregroundPressed
+                "showBorder" ->             R.string.settings__theme__attr_showBorder
+                "colorPrimary" ->           R.string.settings__theme__attr_colorPrimary
+                "colorPrimaryDark" ->       R.string.settings__theme__attr_colorPrimaryDark
+                "colorAccent" ->            R.string.settings__theme__attr_colorAccent
+                "navigationBarColor" ->     R.string.settings__theme__attr_navBarColor
+                "navigationBarLight" ->     R.string.settings__theme__attr_navBarLight
+                "semiTransparentColor" ->   R.string.settings__theme__attr_semiTransparentColor
+                "textColor" ->              R.string.settings__theme__attr_textColor
+                else -> null
+            }
+            return if (strId != null) {
+                context.resources.getString(strId)
+            } else {
+                context.resources.getString(
+                    R.string.settings__theme__attr_custom, attrName
+                )
+            }
+        }
+
+        /**
+         * Gets the Ui string for a given [groupName]. Used in the theme editor to properly display
+         * group names for non-advanced users.
+         *
+         * @param context The current activity context, used for retrieving the Ui string.
+         * @param groupName The group name, which is used to determine which Ui string should be
+         *  fetched.
+         * @return The Ui string representation, which is localized and can be shown to the user.
+         */
+        fun getUiGroupNameString(context: Context, groupName: String): String {
+            return when {
+                groupName.startsWith("key:") -> context.resources.getString(
+                    R.string.settings__theme__group_key_specific, groupName.substring(4)
+                )
+                else -> {
+                    val strId = when (groupName) {
+                        "window" ->         R.string.settings__theme__group_window
+                        "keyboard" ->       R.string.settings__theme__group_keyboard
+                        "key" ->            R.string.settings__theme__group_key
+                        "media" ->          R.string.settings__theme__group_media
+                        "oneHanded" ->      R.string.settings__theme__group_oneHanded
+                        "popup" ->          R.string.settings__theme__group_popup
+                        "privateMode" ->    R.string.settings__theme__group_privateMode
+                        "smartbar" ->       R.string.settings__theme__group_smartbar
+                        "smartbarButton" -> R.string.settings__theme__group_smartbarButton
+                        else -> null
+                    }
+                    if (strId != null) {
+                        context.resources.getString(strId)
+                    } else {
+                        context.resources.getString(
+                            R.string.settings__theme__group_custom, groupName
+                        )
+                    }
+                }
+            }
+        }
 
         /**
          * Generate a base theme with the given meta data. For the argument info see [Theme].

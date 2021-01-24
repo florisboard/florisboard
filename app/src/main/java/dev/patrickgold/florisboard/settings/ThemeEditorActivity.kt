@@ -27,6 +27,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.children
+import androidx.core.view.forEach
 import com.github.michaelbull.result.onSuccess
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ThemeEditorActivityBinding
@@ -44,6 +45,10 @@ import dev.patrickgold.florisboard.settings.components.ThemeAttrView
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
+/**
+ * This class is the main Ui activity for directly editing a theme used by FlorisBoard. It provides
+ * a base for group and attr views to operate in and also shows a preview of the current changes.
+ */
 class ThemeEditorActivity : AppCompatActivity() {
     private lateinit var binding: ThemeEditorActivityBinding
     private lateinit var layoutManager: LayoutManager
@@ -56,9 +61,13 @@ class ThemeEditorActivity : AppCompatActivity() {
     private var isSaved: Boolean = false
 
     companion object {
-        const val RESULT_CODE_THEME_EDIT_SAVED: Int =       0xFBADC1
-        const val RESULT_CODE_THEME_EDIT_CANCELLED: Int =   0xFBADC2
+        /** Constant code for a theme saved activity result. */
+        const val RESULT_CODE_THEME_EDIT_SAVED: Int = 0xFBADC1
 
+        /** Constant code for a theme cancelled activity result. */
+        const val RESULT_CODE_THEME_EDIT_CANCELLED: Int = 0xFBADC2
+
+        /** Constant key for passing the reference to the theme to edit. */
         const val EXTRA_THEME_REF: String = "theme_ref"
     }
 
@@ -112,6 +121,9 @@ class ThemeEditorActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Callback function to handle clicks on the buttons in the bottom bar of this activity.
+     */
     fun onActionClicked(view: View) {
         when (view.id) {
             R.id.add_group_btn -> addGroup()
@@ -121,20 +133,26 @@ class ThemeEditorActivity : AppCompatActivity() {
                 if (Theme.validateField(Theme.ValidationField.THEME_LABEL, themeName)) {
                     val ref = editedThemeRef
                     if (ref != null) {
-                        themeManager.writeTheme(ref, editedTheme.copy(
-                            label = themeName
-                        ))
+                        themeManager.writeTheme(
+                            ref, editedTheme.copy(
+                                label = themeName
+                            )
+                        )
                         isSaved = true
                         finish()
                     }
                 } else {
-                    binding.themeNameLabel.error = resources.getString(R.string.settings__theme_editor__error_theme_label_empty)
+                    binding.themeNameLabel.error =
+                        resources.getString(R.string.settings__theme_editor__error_theme_label_empty)
                     binding.themeNameLabel.isErrorEnabled = true
                 }
             }
         }
     }
 
+    /**
+     * Shows a cancel confirmation dialog when the back key is pressed.
+     */
     override fun onBackPressed() {
         AlertDialog.Builder(this).apply {
             setTitle(R.string.assets__action__cancel_confirm_title)
@@ -149,15 +167,28 @@ class ThemeEditorActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Set the result just before this activity finishes according to [isSaved].
+     */
     override fun finish() {
-        setResult(if (isSaved) {
-            RESULT_CODE_THEME_EDIT_SAVED
-        } else {
-            RESULT_CODE_THEME_EDIT_CANCELLED
-        })
+        setResult(
+            if (isSaved) {
+                RESULT_CODE_THEME_EDIT_SAVED
+            } else {
+                RESULT_CODE_THEME_EDIT_CANCELLED
+            }
+        )
         super.finish()
     }
 
+    /**
+     * Add a new group view to the Ui with the specified group [name]. Returns a binding to the
+     * created view class. If [name] is null, this method assumes that a new group should be
+     * instantiated and will show an add group dialog.
+     *
+     * @param name The group name or null for a new group.
+     * @return The binding to the created group view.
+     */
     private fun addGroup(name: String? = null): ThemeEditorGroupViewBinding {
         val groupView = ThemeEditorGroupViewBinding.inflate(layoutInflater)
         groupView.root.themeEditorActivity = this
@@ -170,6 +201,11 @@ class ThemeEditorActivity : AppCompatActivity() {
         return groupView
     }
 
+    /**
+     * Deletes a view from the current Ui stack. Refreshes the theme preview afterwards.
+     *
+     * @param id The id of the group view to remove.
+     */
     fun deleteGroup(@IdRes id: Int) {
         binding.themeAttributes.findViewById<View>(id)?.let {
             binding.themeAttributes.removeView(it)
@@ -177,6 +213,79 @@ class ThemeEditorActivity : AppCompatActivity() {
         refreshTheme()
     }
 
+    /**
+     * This method tries to focus the specified group view (causes the nested scroll view to jump
+     * to the specified group view).
+     *
+     * @param id The id of the group view to focus.
+     */
+    fun focusGroup(@IdRes id: Int) {
+        binding.themeAttributes.findViewById<View>(id)?.let {
+            binding.themeAttributes.requestChildFocus(it, it)
+        }
+    }
+
+    /**
+     * Checks if the current Ui stack has a group view with [name], excluding the group view
+     * specified by [id] to prevent the check on the view that initiated the request.
+     *
+     * @param id The group view to exclude from the check.
+     * @param name The group name to check for.
+     * @return True if the group name exists (except in the group view with [id]), false otherwise.
+     */
+    fun hasGroup(@IdRes id: Int, name: String): Boolean {
+        if (name.isEmpty()) {
+            return false
+        }
+        binding.themeAttributes.forEach { groupView ->
+            if (groupView is ThemeAttrGroupView) {
+                if (groupView.groupName == name && groupView.id != id) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    /**
+     * Sorts the group views alphabetically by the group, with the exception that "window" and
+     * "keyboard" are always on first and second position if they exist in the current stack.
+     */
+    fun sortGroups() {
+        val baseMap = mutableMapOf<Int, String>()
+        for (groupView in binding.themeAttributes.children) {
+            if (groupView is ThemeAttrGroupView) {
+                baseMap[groupView.id] = groupView.groupName
+            }
+        }
+        val sortedMap = baseMap.toList().sortedBy { (_, v) -> v }.toMap().toMutableMap()
+        val groupIds = sortedMap.keys.toMutableList()
+        val groupNames = sortedMap.values.toMutableList()
+        if (groupNames.contains("keyboard")) {
+            val windowGroupId = groupIds[groupNames.indexOf("keyboard")]
+            groupIds.remove(windowGroupId)
+            groupNames.remove("keyboard")
+            groupIds.add(0, windowGroupId)
+            groupNames.add(0, "keyboard")
+        }
+        if (groupNames.contains("window")) {
+            val windowGroupId = groupIds[groupNames.indexOf("window")]
+            groupIds.remove(windowGroupId)
+            groupNames.remove("window")
+            groupIds.add(0, windowGroupId)
+            groupNames.add(0, "window")
+        }
+        for ((n, groupId) in groupIds.withIndex()) {
+            binding.themeAttributes.findViewById<ThemeAttrGroupView>(groupId)?.let { groupView ->
+                binding.themeAttributes.removeView(groupView)
+                binding.themeAttributes.addView(groupView, n)
+            }
+        }
+    }
+
+    /**
+     * Refreshes the cached theme object and applies it to the preview keyboard view.
+     */
     fun refreshTheme() {
         val tempMap = mutableMapOf<String, Map<String, ThemeValue>>()
         for (groupView in binding.themeAttributes.children) {
@@ -197,6 +306,9 @@ class ThemeEditorActivity : AppCompatActivity() {
         binding.keyboardPreview.onThemeUpdated(editedTheme)
     }
 
+    /**
+     * Builds the Ui for the current [editedTheme]. Also sorts the groups afterwards.
+     */
     private fun buildUi() {
         binding.themeNameValue.setText(editedTheme.label)
         for ((groupName, groupAttrs) in editedTheme.attributes) {
@@ -207,8 +319,10 @@ class ThemeEditorActivity : AppCompatActivity() {
         }
         mainScope.launch {
             binding.keyboardPreview.computedLayout = layoutManager.fetchComputedLayoutAsync(
-                KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs).await()
+                KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs
+            ).await()
             binding.keyboardPreview.onThemeUpdated(editedTheme)
         }
+        sortGroups()
     }
 }

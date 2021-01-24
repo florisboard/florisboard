@@ -23,6 +23,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import androidx.annotation.IdRes
+import androidx.core.view.forEach
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ThemeEditorAttrViewBinding
 import dev.patrickgold.florisboard.databinding.ThemeEditorGroupDialogBinding
@@ -39,7 +40,7 @@ class ThemeAttrGroupView : LinearLayout {
     var groupName: String = ""
         set(v) {
             field = v
-            binding.groupName.text = v
+            binding.groupName.text = Theme.getUiGroupNameString(context, v)
             refreshTheme()
         }
 
@@ -78,6 +79,20 @@ class ThemeAttrGroupView : LinearLayout {
         refreshTheme()
     }
 
+    fun hasAttr(@IdRes id: Int, name: String): Boolean {
+        if (name.isEmpty()) {
+            return false
+        }
+        binding.root.forEach { attrView ->
+            if (attrView is ThemeAttrView) {
+                if (attrView.attrName == name && attrView.id != id) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
     fun refreshTheme() {
         themeEditorActivity?.refreshTheme()
     }
@@ -114,17 +129,20 @@ class ThemeAttrGroupView : LinearLayout {
             dialog = show()
             dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
                 val tempGroupName = dialogView.groupName.text.toString().trim()
-                if (Theme.validateField(Theme.ValidationField.GROUP_NAME, tempGroupName)) {
+                val groupUnique = themeEditorActivity?.hasGroup(id, tempGroupName) != true
+                if (Theme.validateField(Theme.ValidationField.GROUP_NAME, tempGroupName) && groupUnique) {
                     groupName = tempGroupName
                     dialog.dismiss()
                 } else {
-
                     dialogView.groupNameLabel.error = resources.getString(when {
+                        !groupUnique -> R.string.settings__theme_editor__error_group_name_already_exists
                         tempGroupName.isEmpty() -> R.string.settings__theme_editor__error_group_name_empty
                         else -> R.string.settings__theme_editor__error_group_name
                     })
                     dialogView.groupNameLabel.isErrorEnabled = true
                 }
+                themeEditorActivity?.sortGroups()
+                themeEditorActivity?.focusGroup(id)
             }
         }
     }

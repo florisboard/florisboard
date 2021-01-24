@@ -64,37 +64,25 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Αυτός ο υποτύπος υπάρχει ήδη!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Θέμα πληκτρολογίου</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Μη ορισμένο</string>
-    <string name="settings__theme__background" comment="General label for a background preference">Χρώμα φόντου</string>
-    <string name="settings__theme__background_active" comment="General label for an active background preference">Χρώμα φόντου όταν είναι ενεργό</string>
-    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">Χρώμα φόντου όταν πατηθεί</string>
-    <string name="settings__theme__foreground" comment="General label for a foreground preference">Χρώμα προσκηνίου</string>
-    <string name="settings__theme__foreground_alt" comment="General label for an alternate foreground preference">Χρώμα προσκηνίου (εναλλακτικό)</string>
-    <string name="settings__theme__foreground_capslock" comment="General label for a capslock foreground preference">Χρώμα προσκηνίου (κεφαλαία)</string>
-    <string name="settings__theme__dialog_title" comment="Title of the color selection dialog for a single theme preference">Επιλέξτε ένα χρώμα</string>
+    <string name="settings__theme__attr_background" comment="General label for a background preference">Χρώμα φόντου</string>
+    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">Χρώμα φόντου όταν είναι ενεργό</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">Χρώμα φόντου όταν πατηθεί</string>
+    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">Χρώμα προσκηνίου</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">Χρώμα προσκηνίου (εναλλακτικό)</string>
     <string name="settings__theme__group_window" comment="Theme group label">Παράθυρο &amp; Σύστημα</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Πληκτρολόγιο</string>
     <string name="settings__theme__group_key" comment="Theme group label">Πλήκτρο</string>
-    <string name="settings__theme__group_key_enter" comment="Theme group label">Πλήκτρο εισαγωγής</string>
-    <string name="settings__theme__group_key_popup" comment="Theme group label">Εμφάνιση πλήκτρων</string>
-    <string name="settings__theme__group_key_shift" comment="Theme group label">Πλήκτρο κεφαλαίων</string>
     <string name="settings__theme__group_media" comment="Theme group label">Περιεχόμενο μέσων</string>
-    <string name="settings__theme__group_one_handed" comment="Theme group label">Με το ένα χέρι</string>
-    <string name="settings__theme__group_one_handed_button" comment="Theme group label">Πλήκτρο λειτουργίας ενός-χεριού</string>
-    <string name="settings__theme__group_private_mode" comment="Theme group label">Ιδιωτική λειτουργία</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">Με το ένα χέρι</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">Ιδιωτική λειτουργία</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Έξυπνη Μπάρα</string>
-    <string name="settings__theme__group_smartbar_button" comment="Theme group label">Πλήκτρο έξυπνης μπάρας</string>
-    <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">Κυρίως χρώμα</string>
-    <string name="pref__theme__colorPrimary_summary" comment="Summary of Color primary theme preference">Εφαρμόζεται στην μπάρα κυματισμού των κυρίως μέσων και στην επισήμανση επιλογής</string>
-    <string name="pref__theme__colorPrimaryDark_title" comment="Title of Color primary dark theme preference">Κυρίως χρώμα (σκούρο)</string>
-    <string name="pref__theme__colorPrimaryDark_summary" comment="Summary of Color primary dark theme preference">Δεν χρησιμοποιείται προς το παρόν, δεσμευμένο για μελλοντική εφαρμογή</string>
-    <string name="pref__theme__colorAccent_title" comment="Title of Color accent theme preference">Χρώμα έμφασης</string>
-    <string name="pref__theme__colorAccent_summary" comment="Summary of Color accent theme preference">Εφαρμόζεται στον κυματισμό μπάρας των emoji</string>
-    <string name="pref__theme__navBarColor_title" comment="Title of Nav bar color theme preference">Χρώμα μπάρας πλοήγησης</string>
-    <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">To φόντο της μπάρας πλοήγησης.</string>
-    <string name="pref__theme__navBarIsLight_title" comment="Title of Nav bar is light theme preference">Σκούρο προσκήνιο μπάρας πλοήγησης</string>
-    <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Ορίστε ΕΝΕΡΓΟΠΟΙΗΜΈΝΟ για σκούρο ή ΑΠΕΝΕΡΓΟΠΟΙΗΜΈΝΟ για φωτεινό προσκήνιο.</string>
-    <string name="pref__theme__showKeyBorder_title" comment="Title of Show Key Border preference">Περίγραμμα Πλήκτρου</string>
-    <string name="pref__theme__showKeyBorder_summary" comment="Summary of Show Key Border preference">Ενεργοποιείστε για εμφάνιση των περιγραμμάτων ή απενεργοποιείστε για απόκρυψη</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Πλήκτρο έξυπνης μπάρας</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">Κυρίως χρώμα</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Title of Color primary dark theme preference">Κυρίως χρώμα (σκούρο)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Title of Color accent theme preference">Χρώμα έμφασης</string>
+    <string name="settings__theme__attr_navBarColor" comment="Title of Nav bar color theme preference">Χρώμα μπάρας πλοήγησης</string>
+    <string name="settings__theme__attr_navBarLight" comment="Title of Nav bar is light theme preference">Σκούρο προσκήνιο μπάρας πλοήγησης</string>
+    <string name="settings__theme__attr_showBorder" comment="Title of Show Key Border preference">Περίγραμμα Πλήκτρου</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Προτιμήσεις Πληκτρολογίου</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Πλήκτρα</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Σειρά αριθμών</string>
