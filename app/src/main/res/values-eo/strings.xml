@@ -44,12 +44,11 @@
     <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">Klavaro</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Klavaro etoso</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nedifinita</string>
-    <string name="settings__theme__background" comment="General label for a background preference">Fona koloro</string>
-    <string name="settings__theme__background_active" comment="General label for an active background preference">Fona koloro kiam aktiva</string>
-    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">Fona koloro kiam depremos</string>
-    <string name="settings__theme__foreground" comment="General label for a foreground preference">Malfona koloro</string>
-    <string name="settings__theme__foreground_alt" comment="General label for an alternate foreground preference">Malfona koloro (alternativo)</string>
-    <string name="settings__theme__foreground_capslock" comment="General label for a capslock foreground preference">Malfona koloro (fiksiĝema ĉeflitera registrumo)</string>
+    <string name="settings__theme__attr_background" comment="General label for a background preference">Fona koloro</string>
+    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">Fona koloro kiam aktiva</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">Fona koloro kiam depremos</string>
+    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">Malfona koloro</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">Malfona koloro (alternativo)</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Klavaro</string>
     <string name="settings__theme__group_key" comment="Theme group label">Klavo</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Klavaro agordoj</string>

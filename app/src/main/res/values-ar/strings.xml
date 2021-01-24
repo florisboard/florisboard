@@ -64,37 +64,25 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">هذا النوع الفرعي موجود مسبقا!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">مظهر لوحة المفاتيح</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">غير محدد</string>
-    <string name="settings__theme__background" comment="General label for a background preference">لون الخلفية</string>
-    <string name="settings__theme__background_active" comment="General label for an active background preference">لون الخلفية عند التنشيط</string>
-    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">لون الخلفية عند الضغط</string>
-    <string name="settings__theme__foreground" comment="General label for a foreground preference">لون الواجهة</string>
-    <string name="settings__theme__foreground_alt" comment="General label for an alternate foreground preference">لون الواجهة (البديل)</string>
-    <string name="settings__theme__foreground_capslock" comment="General label for a capslock foreground preference">لون الواجهة (وضع الحروف الكبيرة)</string>
-    <string name="settings__theme__dialog_title" comment="Title of the color selection dialog for a single theme preference">اختر اللون</string>
+    <string name="settings__theme__attr_background" comment="General label for a background preference">لون الخلفية</string>
+    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">لون الخلفية عند التنشيط</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">لون الخلفية عند الضغط</string>
+    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">لون الواجهة</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">لون الواجهة (البديل)</string>
     <string name="settings__theme__group_window" comment="Theme group label">النافذة والنظام</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">لوحة المفاتيح</string>
     <string name="settings__theme__group_key" comment="Theme group label">المفتاح</string>
-    <string name="settings__theme__group_key_enter" comment="Theme group label">مفتاح الإدخال</string>
-    <string name="settings__theme__group_key_popup" comment="Theme group label">نافذة المفتاح المنبثقة</string>
-    <string name="settings__theme__group_key_shift" comment="Theme group label">مفتاح التحويل</string>
     <string name="settings__theme__group_media" comment="Theme group label">سياق الوسائط</string>
-    <string name="settings__theme__group_one_handed" comment="Theme group label">اليد الواحدة</string>
-    <string name="settings__theme__group_one_handed_button" comment="Theme group label">زر اليد الواحدة</string>
-    <string name="settings__theme__group_private_mode" comment="Theme group label">الوضع الخاص</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">اليد الواحدة</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">الوضع الخاص</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">الشريط الذكـي</string>
-    <string name="settings__theme__group_smartbar_button" comment="Theme group label">زر الشريط الذكي</string>
-    <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">اللون الأساسي</string>
-    <string name="pref__theme__colorPrimary_summary" comment="Summary of Color primary theme preference">يتم تطبيقه على تموج علامة تبويب الوسائط الرئيسية وإبراز الاختيار</string>
-    <string name="pref__theme__colorPrimaryDark_title" comment="Title of Color primary dark theme preference">اللون الأساسي (داكن)</string>
-    <string name="pref__theme__colorPrimaryDark_summary" comment="Summary of Color primary dark theme preference">غير مستخدم حاليا ، محجوز للتنفيذ المستقبلي</string>
-    <string name="pref__theme__colorAccent_title" comment="Title of Color accent theme preference">لون التمييز</string>
-    <string name="pref__theme__colorAccent_summary" comment="Summary of Color accent theme preference">يتم تطبيقه على علامة تبويب الإيموجي</string>
-    <string name="pref__theme__navBarColor_title" comment="Title of Nav bar color theme preference">لون شريط التصفّح</string>
-    <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">خلفية شريط التصفّح.</string>
-    <string name="pref__theme__navBarIsLight_title" comment="Title of Nav bar is light theme preference">واجهة شريط التصفّح</string>
-    <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">ضبط على التشغيل للواجهة الداكنة أو على إيقاف التشغيل للواجهة الفاتحة.</string>
-    <string name="pref__theme__showKeyBorder_title" comment="Title of Show Key Border preference">إطار المفتاح</string>
-    <string name="pref__theme__showKeyBorder_summary" comment="Summary of Show Key Border preference">اضبط على التفعيل لإظهار الإطار أو على الإيقاف لإخفائه</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">زر الشريط الذكي</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">اللون الأساسي</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Title of Color primary dark theme preference">اللون الأساسي (داكن)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Title of Color accent theme preference">لون التمييز</string>
+    <string name="settings__theme__attr_navBarColor" comment="Title of Nav bar color theme preference">لون شريط التصفّح</string>
+    <string name="settings__theme__attr_navBarLight" comment="Title of Nav bar is light theme preference">واجهة شريط التصفّح</string>
+    <string name="settings__theme__attr_showBorder" comment="Title of Show Key Border preference">إطار المفتاح</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">تفضيلات لوحة المفاتيح</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">المفاتيح</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">صف الأعداد</string>

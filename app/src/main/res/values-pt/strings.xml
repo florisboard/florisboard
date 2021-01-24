@@ -64,37 +64,25 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Este subtipo já existe!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tema do teclado</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Indefinido</string>
-    <string name="settings__theme__background" comment="General label for a background preference">Cor de fundo</string>
-    <string name="settings__theme__background_active" comment="General label for an active background preference">Cor de fundo quando ativo</string>
-    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">Cor de fundo quando premida</string>
-    <string name="settings__theme__foreground" comment="General label for a foreground preference">Cor principal</string>
-    <string name="settings__theme__foreground_alt" comment="General label for an alternate foreground preference">Cor principal (alternativa)</string>
-    <string name="settings__theme__foreground_capslock" comment="General label for a capslock foreground preference">Cor principal (CapsLock)</string>
-    <string name="settings__theme__dialog_title" comment="Title of the color selection dialog for a single theme preference">Selecione uma cor</string>
+    <string name="settings__theme__attr_background" comment="General label for a background preference">Cor de fundo</string>
+    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">Cor de fundo quando ativo</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">Cor de fundo quando premida</string>
+    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">Cor principal</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">Cor principal (alternativa)</string>
     <string name="settings__theme__group_window" comment="Theme group label">Janela e sistema</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Teclado</string>
     <string name="settings__theme__group_key" comment="Theme group label">Tecla</string>
-    <string name="settings__theme__group_key_enter" comment="Theme group label">Tecla Enter</string>
-    <string name="settings__theme__group_key_popup" comment="Theme group label">Ampliação de teclas</string>
-    <string name="settings__theme__group_key_shift" comment="Theme group label">Tecla Shift</string>
     <string name="settings__theme__group_media" comment="Theme group label">Contexto multimédia</string>
-    <string name="settings__theme__group_one_handed" comment="Theme group label">Uma mão</string>
-    <string name="settings__theme__group_one_handed_button" comment="Theme group label">Botão do modo uma mão</string>
-    <string name="settings__theme__group_private_mode" comment="Theme group label">Modo privado</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">Uma mão</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">Modo privado</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Barra inteligente</string>
-    <string name="settings__theme__group_smartbar_button" comment="Theme group label">Botão da barra inteligente</string>
-    <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">Cor primária</string>
-    <string name="pref__theme__colorPrimary_summary" comment="Summary of Color primary theme preference">Aplicada ao separador multimédia e ao destaque de seleção</string>
-    <string name="pref__theme__colorPrimaryDark_title" comment="Title of Color primary dark theme preference">Cor primária (escura)</string>
-    <string name="pref__theme__colorPrimaryDark_summary" comment="Summary of Color primary dark theme preference">Opção reservada para implementações futuras</string>
-    <string name="pref__theme__colorAccent_title" comment="Title of Color accent theme preference">Cor de destaque</string>
-    <string name="pref__theme__colorAccent_summary" comment="Summary of Color accent theme preference">Aplicada ao separador de emojis</string>
-    <string name="pref__theme__navBarColor_title" comment="Title of Nav bar color theme preference">Cor da barra de navegação</string>
-    <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">A cor de fundo da barra de navegação</string>
-    <string name="pref__theme__navBarIsLight_title" comment="Title of Nav bar is light theme preference">Botões da barra de navegação escura</string>
-    <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Ative para usar a cor escura ou desative para cor clara.</string>
-    <string name="pref__theme__showKeyBorder_title" comment="Title of Show Key Border preference">Contorno de teclas</string>
-    <string name="pref__theme__showKeyBorder_summary" comment="Summary of Show Key Border preference">Defina como Ligado para mostrar ou Desligado para ocultar</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Botão da barra inteligente</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">Cor primária</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Title of Color primary dark theme preference">Cor primária (escura)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Title of Color accent theme preference">Cor de destaque</string>
+    <string name="settings__theme__attr_navBarColor" comment="Title of Nav bar color theme preference">Cor da barra de navegação</string>
+    <string name="settings__theme__attr_navBarLight" comment="Title of Nav bar is light theme preference">Botões da barra de navegação escura</string>
+    <string name="settings__theme__attr_showBorder" comment="Title of Show Key Border preference">Contorno de teclas</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Preferências do teclado</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Teclas</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Linha de números</string>

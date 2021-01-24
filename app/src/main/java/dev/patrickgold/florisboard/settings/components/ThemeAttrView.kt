@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.settings.components
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -52,7 +53,7 @@ class ThemeAttrView : LinearLayout {
     var attrName: String = ""
         set(v) {
             field = v
-            binding.title.text = v
+            binding.title.text = Theme.getUiAttrNameString(context, v)
             themeAttrGroupView?.refreshTheme()
         }
     var attrValue: ThemeValue = ThemeValue.Other("")
@@ -137,7 +138,7 @@ class ThemeAttrView : LinearLayout {
                 ThemeValue.UI_STRING_MAP.keys.indexOf(ThemeValue.SolidColor::class.simpleName!!)
                     .coerceAtLeast(0)
             )
-            configureDialogUi(dialogView, ThemeValue.SolidColor(0))
+            configureDialogUi(dialogView, ThemeValue.SolidColor(Color.BLACK))
         }
         var userTouched = false
         dialogView.attrType.setOnTouchListener { _, _ ->
@@ -208,12 +209,14 @@ class ThemeAttrView : LinearLayout {
             dialog = show()
             dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
                 val tempAttrName = dialogView.attrName.text.toString().trim()
-                if (Theme.validateField(Theme.ValidationField.ATTR_NAME, tempAttrName)) {
+                val attrUnique = themeAttrGroupView?.hasAttr(id, tempAttrName) != true
+                if (Theme.validateField(Theme.ValidationField.ATTR_NAME, tempAttrName) && attrUnique) {
                     attrName = tempAttrName
                     attrValue = getThemeValueFromDialogUi(dialogView)
                     dialog.dismiss()
                 } else {
                     dialogView.attrNameLabel.error = resources.getString(when {
+                        !attrUnique -> R.string.settings__theme_editor__error_attr_name_already_exists
                         tempAttrName.isEmpty() -> R.string.settings__theme_editor__error_attr_name_empty
                         else -> R.string.settings__theme_editor__error_attr_name
                     })

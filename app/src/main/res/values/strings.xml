@@ -119,40 +119,38 @@
     <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Please enter a theme name.</string>
     <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Please enter a group name which only contain letters (a–z and/or A–Z), colons (:) for sub–grouping or additionally numbers (0–9), tilde (~) and underlines (_) for the key label.</string>
     <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Please enter a group name.</string>
+    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">This group name already exists within this theme. Please choose another one.</string>
     <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Please enter an attribute name which only contain the letters a-z and/or A-Z.</string>
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Please enter an attribute name.</string>
+    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">This attribute name already exists within this group. Please specify another one.</string>
 
-    <string name="settings__theme__background" comment="General label for a background preference">Background color</string>
-    <string name="settings__theme__background_active" comment="General label for an active background preference">Background color when active</string>
-    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">Background color when pressed</string>
-    <string name="settings__theme__foreground" comment="General label for a foreground preference">Foreground color</string>
-    <string name="settings__theme__foreground_alt" comment="General label for an alternate foreground preference">Foreground color (alternative)</string>
-    <string name="settings__theme__foreground_capslock" comment="General label for a capslock foreground preference">Foreground color (caps lock)</string>
-    <string name="settings__theme__dialog_title" comment="Title of the color selection dialog for a single theme preference">Select a color</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Window &amp; System</string>
-    <string name="settings__theme__group_keyboard" comment="Theme group label">Keyboard</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Key</string>
-    <string name="settings__theme__group_key_enter" comment="Theme group label">Enter key</string>
-    <string name="settings__theme__group_key_popup" comment="Theme group label">Key popup</string>
-    <string name="settings__theme__group_key_shift" comment="Theme group label">Shift key</string>
-    <string name="settings__theme__group_media" comment="Theme group label">Media context</string>
-    <string name="settings__theme__group_one_handed" comment="Theme group label">One-handed</string>
-    <string name="settings__theme__group_one_handed_button" comment="Theme group label">One-handed button</string>
-    <string name="settings__theme__group_private_mode" comment="Theme group label">Private mode</string>
-    <string name="settings__theme__group_smartbar" comment="Theme group label">Smartbar</string>
-    <string name="settings__theme__group_smartbar_button" comment="Theme group label">Smartbar button</string>
-    <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">Primary color</string>
-    <string name="pref__theme__colorPrimary_summary" comment="Summary of Color primary theme preference">Applied to main media tab ripple and selection highlight</string>
-    <string name="pref__theme__colorPrimaryDark_title" comment="Title of Color primary dark theme preference">Primary color (dark)</string>
-    <string name="pref__theme__colorPrimaryDark_summary" comment="Summary of Color primary dark theme preference">Currently not used, reserved for future implementation</string>
-    <string name="pref__theme__colorAccent_title" comment="Title of Color accent theme preference">Accent color</string>
-    <string name="pref__theme__colorAccent_summary" comment="Summary of Color accent theme preference">Applied to emoji tab ripple</string>
-    <string name="pref__theme__navBarColor_title" comment="Title of Nav bar color theme preference">Navigation bar color</string>
-    <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">The background of the navigation bar.</string>
-    <string name="pref__theme__navBarIsLight_title" comment="Title of Nav bar is light theme preference">Navigation bar dark foreground</string>
-    <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">Set to ON for dark or to OFF for light foreground.</string>
-    <string name="pref__theme__showKeyBorder_title" comment="Title of Show Key Border preference">Key Border</string>
-    <string name="pref__theme__showKeyBorder_summary" comment="Summary of Show Key Border preference">Set to ON to show border or to OFF to hide it</string>
+    <string name="settings__theme__group_window"                comment="Theme group label">Window &amp; System</string>
+    <string name="settings__theme__group_keyboard"              comment="Theme group label">Keyboard</string>
+    <string name="settings__theme__group_key"                   comment="Theme group label">Key</string>
+    <string name="settings__theme__group_key_specific"          comment="Theme group label (%s is specific modifier)">Key (%s)</string>
+    <string name="settings__theme__group_media"                 comment="Theme group label">Media context</string>
+    <string name="settings__theme__group_oneHanded"             comment="Theme group label">One-handed</string>
+    <string name="settings__theme__group_popup"                 comment="Theme group label">Popup</string>
+    <string name="settings__theme__group_privateMode"           comment="Theme group label">Private mode</string>
+    <string name="settings__theme__group_smartbar"              comment="Theme group label">Smartbar</string>
+    <string name="settings__theme__group_smartbarButton"        comment="Theme group label">Smartbar button</string>
+    <string name="settings__theme__group_custom"                comment="Theme group label (%s is custom group name)">Custom group (%s)</string>
+
+    <string name="settings__theme__attr_background"             comment="Theme attribute label">Background color</string>
+    <string name="settings__theme__attr_backgroundActive"       comment="Theme attribute label">Background color (active)</string>
+    <string name="settings__theme__attr_backgroundPressed"      comment="Theme attribute label">Background color (pressed)</string>
+    <string name="settings__theme__attr_foreground"             comment="Theme attribute label">Foreground color</string>
+    <string name="settings__theme__attr_foregroundAlt"          comment="Theme attribute label">Foreground color (alternative)</string>
+    <string name="settings__theme__attr_foregroundPressed"      comment="Theme attribute label">Foreground color (pressed)</string>
+    <string name="settings__theme__attr_showBorder"             comment="Theme attribute label">Show border</string>
+    <string name="settings__theme__attr_colorPrimary"           comment="Theme attribute label">Primary color</string>
+    <string name="settings__theme__attr_colorPrimaryDark"       comment="Theme attribute label">Primary color (dark)</string>
+    <string name="settings__theme__attr_colorAccent"            comment="Theme attribute label">Accent color</string>
+    <string name="settings__theme__attr_navBarColor"            comment="Theme attribute label">Navigation bar color</string>
+    <string name="settings__theme__attr_navBarLight"            comment="Theme attribute label">Navigation bar dark foreground</string>
+    <string name="settings__theme__attr_semiTransparentColor"   comment="Theme attribute label">Semi transparent color</string>
+    <string name="settings__theme__attr_textColor"              comment="Theme attribute label">Text color</string>
+    <string name="settings__theme__attr_custom"                 comment="Theme attribute label (%s is custom attribute name)">Custom attribute (%s)</string>
 
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Keyboard Preferences</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Keys</string>

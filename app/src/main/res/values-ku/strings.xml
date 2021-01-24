@@ -108,37 +108,25 @@
     <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">تکایە ناوی گرووپ بنوسە</string>
     <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">تکایە ناوی تایبەتمەندی بنووسە کە تەنها پیتەکانی a-z و/یان A-Z ی تێدا بێت.</string>
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">تکایە ناوی تایبەتمەندی بنوسە</string>
-    <string name="settings__theme__background" comment="General label for a background preference">ڕەنگی پشتتەوە</string>
-    <string name="settings__theme__background_active" comment="General label for an active background preference">ڕەنگی پشت شاشە لەکاتی چالاکبوندا</string>
-    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">ڕەنگی پشت شاشە لەکاتی دەستلێدان</string>
-    <string name="settings__theme__foreground" comment="General label for a foreground preference">ڕەنگی پێشەوە</string>
-    <string name="settings__theme__foreground_alt" comment="General label for an alternate foreground preference">ڕەنگی پێشەوە (جێگرەوە)</string>
-    <string name="settings__theme__foreground_capslock" comment="General label for a capslock foreground preference">ڕەنگی پێشەوە (قوفڵی caps)</string>
-    <string name="settings__theme__dialog_title" comment="Title of the color selection dialog for a single theme preference">ڕەنگێک هەڵبژێرە</string>
+    <string name="settings__theme__attr_background" comment="General label for a background preference">ڕەنگی پشتتەوە</string>
+    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">ڕەنگی پشت شاشە لەکاتی چالاکبوندا</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">ڕەنگی پشت شاشە لەکاتی دەستلێدان</string>
+    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">ڕەنگی پێشەوە</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">ڕەنگی پێشەوە (جێگرەوە)</string>
     <string name="settings__theme__group_window" comment="Theme group label">ڕووکەش</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">تەختەکلیل</string>
     <string name="settings__theme__group_key" comment="Theme group label">دوگمە</string>
-    <string name="settings__theme__group_key_enter" comment="Theme group label">دوگمەی ئینتەر</string>
-    <string name="settings__theme__group_key_popup" comment="Theme group label">دوگمەی بچوککراوە</string>
-    <string name="settings__theme__group_key_shift" comment="Theme group label">دوگمەی شێفت</string>
     <string name="settings__theme__group_media" comment="Theme group label">لیستی میدیا</string>
-    <string name="settings__theme__group_one_handed" comment="Theme group label">بەکارهێنان بە یەک دەست</string>
-    <string name="settings__theme__group_one_handed_button" comment="Theme group label">دوگمەی بەکارهێنانی یەک دەست</string>
-    <string name="settings__theme__group_private_mode" comment="Theme group label">دۆخی تایبەت</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">بەکارهێنان بە یەک دەست</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">دۆخی تایبەت</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">ڕەنگی بەشی سەرەوە</string>
-    <string name="settings__theme__group_smartbar_button" comment="Theme group label">ڕەنگی دوگمەکانی بەشی سەرەوە</string>
-    <string name="pref__theme__colorPrimary_title" comment="Title of Color primary theme preference">ڕەنگی بنەڕەتی</string>
-    <string name="pref__theme__colorPrimary_summary" comment="Summary of Color primary theme preference">جێبەجێ کراوە بۆ بەشی میدیای سەرەکی شەپۆل و تیشکخستنەسەر هەڵبژاردنەکان</string>
-    <string name="pref__theme__colorPrimaryDark_title" comment="Title of Color primary dark theme preference">ڕەنگی بنەڕەتی (تاریک)</string>
-    <string name="pref__theme__colorPrimaryDark_summary" comment="Summary of Color primary dark theme preference">لە ئێستادا بەردەست نییە، دنراوە بۆ جێبەجێکردنی داهاتوو</string>
-    <string name="pref__theme__colorAccent_title" comment="Title of Color accent theme preference">ڕەنگی دووەم</string>
-    <string name="pref__theme__colorAccent_summary" comment="Summary of Color accent theme preference">جێبەجێ کراوە بۆ بەشی خەندەکان</string>
-    <string name="pref__theme__navBarColor_title" comment="Title of Nav bar color theme preference">ڕەنگی بەشی خوارەوە</string>
-    <string name="pref__theme__navBarColor_summary" comment="Summary of Nav bar color theme preference">پشت شاشەی بەشی خوارەوە</string>
-    <string name="pref__theme__navBarIsLight_title" comment="Title of Nav bar is light theme preference">پشت شاشەی تاریکی بەشی خوارەوە</string>
-    <string name="pref__theme__navBarIsLight_summary" comment="Summary of Nav bar is light theme preference">بۆ تاریک کردن یان بۆ کوژاندنەوەی بۆ ڕووناککردنی پێشگرەکە</string>
-    <string name="pref__theme__showKeyBorder_title" comment="Title of Show Key Border preference">لێواری دوگمەکان</string>
-    <string name="pref__theme__showKeyBorder_summary" comment="Summary of Show Key Border preference">چالاککردن واتە پیشاندانی لێوار یان نا چالاک نۆ شاردنەوە</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">ڕەنگی دوگمەکانی بەشی سەرەوە</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">ڕەنگی بنەڕەتی</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Title of Color primary dark theme preference">ڕەنگی بنەڕەتی (تاریک)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Title of Color accent theme preference">ڕەنگی دووەم</string>
+    <string name="settings__theme__attr_navBarColor" comment="Title of Nav bar color theme preference">ڕەنگی بەشی خوارەوە</string>
+    <string name="settings__theme__attr_navBarLight" comment="Title of Nav bar is light theme preference">پشت شاشەی تاریکی بەشی خوارەوە</string>
+    <string name="settings__theme__attr_showBorder" comment="Title of Show Key Border preference">لێواری دوگمەکان</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">ڕێکخستنی تەختەکلیل</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">دوگمەکان</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">لیستی ژمارەکان</string>

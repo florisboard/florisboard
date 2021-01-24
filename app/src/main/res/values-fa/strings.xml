@@ -51,22 +51,16 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">این زیرنوع درحال حاضر وجود دارد!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">طرح زمینه صفحه کلید</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">تعریف نشده</string>
-    <string name="settings__theme__background" comment="General label for a background preference">رنگ پس‌زمینه</string>
-    <string name="settings__theme__background_active" comment="General label for an active background preference">رنگ پس‌زمینه هنگامی که فعال است</string>
-    <string name="settings__theme__background_pressed" comment="General label for a pressed background preference">رنگ پس‌زمینه هنگامی که انتخاب شود</string>
-    <string name="settings__theme__foreground" comment="General label for a foreground preference">رنگ روی‌زمینه</string>
-    <string name="settings__theme__foreground_alt" comment="General label for an alternate foreground preference">رنگ روی‌زمینه (جایگزین)</string>
-    <string name="settings__theme__foreground_capslock" comment="General label for a capslock foreground preference">رنگ روی‌زمینه (caps lock)</string>
-    <string name="settings__theme__dialog_title" comment="Title of the color selection dialog for a single theme preference">انتخاب یک رنگ</string>
+    <string name="settings__theme__attr_background" comment="General label for a background preference">رنگ پس‌زمینه</string>
+    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">رنگ پس‌زمینه هنگامی که فعال است</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">رنگ پس‌زمینه هنگامی که انتخاب شود</string>
+    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">رنگ روی‌زمینه</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">رنگ روی‌زمینه (جایگزین)</string>
     <string name="settings__theme__group_window" comment="Theme group label">پنجره &amp; سیستم</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">صفحه‌کلید</string>
     <string name="settings__theme__group_key" comment="Theme group label">کلید</string>
-    <string name="settings__theme__group_key_enter" comment="Theme group label">کلید را وارد کنید</string>
-    <string name="settings__theme__group_key_popup" comment="Theme group label">پاپ‌آپ کلید</string>
-    <string name="settings__theme__group_key_shift" comment="Theme group label">کلید Shift</string>
-    <string name="settings__theme__group_private_mode" comment="Theme group label">حالت خصوصی</string>
-    <string name="pref__theme__showKeyBorder_title" comment="Title of Show Key Border preference">حاشیه کلید</string>
-    <string name="pref__theme__showKeyBorder_summary" comment="Summary of Show Key Border preference">روی روشن بزارید تا حاشیه را نمایش دهد یا روی خاموش بزنید تا مخفی‌اش کند</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">حالت خصوصی</string>
+    <string name="settings__theme__attr_showBorder" comment="Title of Show Key Border preference">حاشیه کلید</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">تنظیمات صفحه‌کلید</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">کلیدها</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">ردیف عدد</string>
