@@ -64,20 +64,11 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Dette undertastatur findes allerede!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tastaturtema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ikke defineret</string>
-    <string name="settings__theme__attr_background" comment="General label for a background preference">Baggrundsfarve</string>
-    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">Baggrundsfarve når aktiv</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">Baggrundsfarve ved tryk</string>
-    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">Forgrundsfarve</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">Forgrundsfarve (alternativ)</string>
     <string name="settings__theme__group_window" comment="Theme group label">Vindue &amp; System</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Tastatur</string>
     <string name="settings__theme__group_key" comment="Theme group label">Tast</string>
     <string name="settings__theme__group_media" comment="Theme group label">Mediekontekst</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">En-håndstilstand</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Privattilstand</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">SmartBjælke</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Smartbjælke knap</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">Primær farve</string>
     <string name="pref__keyboard__height_factor__normal" comment="Preference value">Normal</string>
     <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">Middel-høj</string>
     <string name="pref__keyboard__height_factor__tall" comment="Preference value">Høj</string>
@@ -116,7 +107,6 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Skriv ord ved at stryge fingeren igennem bogstaver</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Vis glidespor</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Vil forsvinde efter hvert ord</string>
-    <string name="pref__gestures__general_title" comment="Preference group title">Bevægelser</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Ingen handling</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Slet tegn præcist</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Slet nuværende ord</string>

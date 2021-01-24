@@ -64,25 +64,48 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Αυτός ο υποτύπος υπάρχει ήδη!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Θέμα πληκτρολογίου</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Μη ορισμένο</string>
-    <string name="settings__theme__attr_background" comment="General label for a background preference">Χρώμα φόντου</string>
-    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">Χρώμα φόντου όταν είναι ενεργό</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">Χρώμα φόντου όταν πατηθεί</string>
-    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">Χρώμα προσκηνίου</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">Χρώμα προσκηνίου (εναλλακτικό)</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Λειτουργία θέματος</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Πάντα μέρα</string>
+    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Πάντα νύχτα</string>
+    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Σύμφωνα με το σύστημα</string>
+    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Σύμφωνα με την ώρα</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Ώρα ανατολής</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Ώρα δύσης</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Θέμα ημέρας</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Θέμα νύχτας</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Επιλεγμένο θέμα</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Προσαρμογή χρωμάτων στην εφαρμογή</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Τα χρώματα του θέματος προσαρμόζονται σε αυτά της τρέχουσας εφαρμογής, εάν αυτή η εφαρμογή το υποστηρίζει.</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">Εσωτερικός αποθηκευτικός χώρος</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Διαχειριστής Θέματος (Μέρα)</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Διαχειριστής Θέματος (Νύχτα)</string>
+    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Δημιουργία κενού θέματος</string>
+    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Δημιουργία από επιλεγμένο θέμα</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Ειδικό (βασισμένο σε %s)</string>
+    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Νέο θέμα</string>
+    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Επεξεργασία θέματος</string>
+    <string name="settings__theme_editor__name_label" comment="Label of name input">Όνομα</string>
+    <string name="settings__theme_editor__type_label" comment="Label of type input">Τύπος</string>
+    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Προσθήκη ομάδας</string>
+    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Επεξεργασία ομάδας</string>
+    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Προσθήκη χαρακτηριστικού</string>
+    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Επεξεργασία χαρακτηριστικού</string>
+    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Αναφορά</string>
+    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Ομάδα</string>
+    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Χαρακτηριστικό</string>
+    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Συμπαγές χρώμα</string>
+    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Εναλλαγή</string>
+    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Κατάσταση</string>
+    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Άλλο</string>
+    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Κείμενο</string>
+    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Προεπισκόπηση της τιμής του θέματος</string>
+    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Παρακαλώ εισάγετε ένα όνομα για το θέμα.</string>
+    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Παρακαλώ εισάγετε ένα όνομα για την ομάδα.</string>
     <string name="settings__theme__group_window" comment="Theme group label">Παράθυρο &amp; Σύστημα</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Πληκτρολόγιο</string>
     <string name="settings__theme__group_key" comment="Theme group label">Πλήκτρο</string>
     <string name="settings__theme__group_media" comment="Theme group label">Περιεχόμενο μέσων</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Με το ένα χέρι</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Ιδιωτική λειτουργία</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Έξυπνη Μπάρα</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Πλήκτρο έξυπνης μπάρας</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">Κυρίως χρώμα</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Title of Color primary dark theme preference">Κυρίως χρώμα (σκούρο)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Title of Color accent theme preference">Χρώμα έμφασης</string>
-    <string name="settings__theme__attr_navBarColor" comment="Title of Nav bar color theme preference">Χρώμα μπάρας πλοήγησης</string>
-    <string name="settings__theme__attr_navBarLight" comment="Title of Nav bar is light theme preference">Σκούρο προσκήνιο μπάρας πλοήγησης</string>
-    <string name="settings__theme__attr_showBorder" comment="Title of Show Key Border preference">Περίγραμμα Πλήκτρου</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Προτιμήσεις Πληκτρολογίου</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Πλήκτρα</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Σειρά αριθμών</string>
@@ -142,7 +165,6 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Πληκτρολογήστε μία λέξη με ολίσθηση του δαχτύλου μέσα από τα γράμματά της</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Εμφάνιση διαδρομής ολίσθησης</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Θα εξαφανίζεται μετά από κάθε λέξη</string>
-    <string name="pref__gestures__general_title" comment="Preference group title">Κινήσεις</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Καμία ενέργεια</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Διαγραφή χαρακτήρων με ακρίβεια</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Διαγραφή της τρέχουσας λέξης</string>
@@ -191,6 +213,21 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">Πηγαίος κώδικας</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Άδειες λογισμικού ανοικτού κώδικα</string>
     <!-- Assets strings -->
+    <string name="assets__file__name">Όνομα</string>
+    <string name="assets__file__source">Πηγή</string>
+    <string name="assets__action__add">Προσθήκη</string>
+    <string name="assets__action__cancel">Ακύρωση</string>
+    <string name="assets__action__cancel_confirm_title">Επιβεβαίωση ακύρωσης</string>
+    <string name="assets__action__delete">Διαγραφή</string>
+    <string name="assets__action__delete_confirm_title">Επιβεβαίωση διαγραφής</string>
+    <string name="assets__action__delete_confirm_message">Είστε βέβαιοι ότι θέλετε να διαγράψετε \"%s\"; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.</string>
+    <string name="assets__action__edit">Επεξεργασία</string>
+    <string name="assets__action__export">Εξαγωγή</string>
+    <string name="assets__action__import">Εισαγωγή</string>
+    <string name="assets__action__no">Όχι</string>
+    <string name="assets__action__save">Αποθήκευση</string>
+    <string name="assets__action__yes">Ναι</string>
+    <string name="assets__error__invalid">Μη έγκυρο</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Ρύθμιση</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Προηγ</string>

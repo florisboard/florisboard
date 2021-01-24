@@ -60,23 +60,11 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Tämä asettelu on jo lisätty!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Näppäimistön teema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ei määritelty</string>
-    <string name="settings__theme__attr_background" comment="General label for a background preference">Taustaväri</string>
-    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">Taustaväri aktiivisena</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">Taustaväri painettuna</string>
-    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">Merkin väri</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">Merkin väri (vaihtoehtoinen)</string>
     <string name="settings__theme__group_window" comment="Theme group label">Ikkuna &amp; järjestelmä</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Näppäimistö</string>
     <string name="settings__theme__group_key" comment="Theme group label">Painike</string>
     <string name="settings__theme__group_media" comment="Theme group label">Mediakonteksti</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Yksikätinen</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Älypalkki</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Älypalkin painike</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">Ensisijainen väri</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Title of Color primary dark theme preference">Ensisijainen väri (tumma teema)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Title of Color accent theme preference">Aksenttiväri</string>
-    <string name="settings__theme__attr_navBarColor" comment="Title of Nav bar color theme preference">Navigointipalkin väri</string>
-    <string name="settings__theme__attr_navBarLight" comment="Title of Nav bar is light theme preference">Navigointipalkin tummat painikkeet</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Näppäimistön asetukset</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Painikkeet</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Fonttikoon kerroin (pystysuunnassa)</string>
@@ -125,7 +113,6 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Syötä sana liu\'uttamalla sormea sen kirjaimilla</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[EVS] Näytä liu\'un jälki</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Häviää joka sanan jälkeen</string>
-    <string name="pref__gestures__general_title" comment="Preference group title">Eleet</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Ei toimintoa</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Tarkka merkkien poisto</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Poista nykyinen sana</string>

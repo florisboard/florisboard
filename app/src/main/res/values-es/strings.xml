@@ -64,25 +64,11 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">¡Este subtipo ya existe!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tema de teclado</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Sin definir</string>
-    <string name="settings__theme__attr_background" comment="General label for a background preference">Color de fondo</string>
-    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">Color de fondo cuando está activo</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">Color de fondo cuando está pulsado</string>
-    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">Color principal</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">Color principal (alternativo)</string>
     <string name="settings__theme__group_window" comment="Theme group label">Ventana y sistema</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Teclado</string>
     <string name="settings__theme__group_key" comment="Theme group label">Tecla</string>
     <string name="settings__theme__group_media" comment="Theme group label">Contexto de multimedia</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">A una mano</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Modo privado</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Barra inteligente</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Bóton de barra inteligente</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">Color principal</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Title of Color primary dark theme preference">Color principal (oscuro)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Title of Color accent theme preference">Color de acento</string>
-    <string name="settings__theme__attr_navBarColor" comment="Title of Nav bar color theme preference">Color de la barra de navegación</string>
-    <string name="settings__theme__attr_navBarLight" comment="Title of Nav bar is light theme preference">Color principal oscuro de la barra de navegación</string>
-    <string name="settings__theme__attr_showBorder" comment="Title of Show Key Border preference">Borde de la tecla</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Preferencias de teclado</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Teclas</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Número de filas</string>
@@ -142,7 +128,6 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Escriba una palabra deslizando su dedo a través de sus letras</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Mostrar recorrido del deslizamiento</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Desaparecerá después de cada palabra</string>
-    <string name="pref__gestures__general_title" comment="Preference group title">Gestos</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Sin acción</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Eliminar caracteres con precisión</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Eliminar palabra actual</string>

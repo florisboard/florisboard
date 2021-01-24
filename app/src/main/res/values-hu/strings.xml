@@ -40,6 +40,7 @@
     <string name="settings__title" comment="Title of Settings">Beállítások</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">További beállítások</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Segítség és visszajelzés</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Súgó</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Kezdés</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Billentyűzet</string>
     <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Gépelés</string>
@@ -64,30 +65,64 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ez az altípus már létezik!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Billentyűzet téma</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nem meghatározott</string>
-    <string name="settings__theme__attr_background" comment="General label for a background preference">Háttérszín</string>
-    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">Aktív háttérszín</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">Lenyomott háttérszín</string>
-    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">Előtérszín</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">Előtérszín (alternatív)</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Téma mód</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Mindig nappali</string>
+    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Mindig éjszakai</string>
+    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Rendszertéma követése</string>
+    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Idő követése</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Napkelte ideje</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Napnyugta ideje</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Nappali téma</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Éjszakai téma</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Kiválasztott téma</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Színek módosítása az alkalmazáshoz</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Színek módosítása az alkalmazáshoz, ha a célalkalmazás támogatja.</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard alkalmazás eszközök</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">Belső tárhely</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">Külső szolgáltató</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Témakezelő (nappali)</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Témakezelő (éjszakai)</string>
+    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Üres téma létrehozása</string>
+    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Létrehozás a kiválasztott témából</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Egyéni (ezen alapul: %s)</string>
+    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Új téma</string>
+    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Téma szerkesztése</string>
+    <string name="settings__theme_editor__name_label" comment="Label of name input">Név</string>
+    <string name="settings__theme_editor__type_label" comment="Label of type input">Típus</string>
+    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Csoport hozzáadása</string>
+    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Csoport szerkesztése</string>
+    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Tulajdonság hozzáadása</string>
+    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Tulajdonság szerkesztése</string>
+    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Hivatkozás</string>
+    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Csoport</string>
+    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Tulajdonság</string>
+    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Egyszínű</string>
+    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Lineáris átmenet</string>
+    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Sugaras átmenet</string>
+    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Kapcsoló</string>
+    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Állapot</string>
+    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Egyéb</string>
+    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Szöveg</string>
+    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">A téma értékének előnézete</string>
+    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Adjon meg egy témanevet.</string>
+    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Adjon meg egy csoportnevet.</string>
+    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Adjon meg egy tulajdonságnevet, amely csak a-z és/vagy A-Z betűket tartalmaz.</string>
+    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Adjon meg egy tulajdonságnevet.</string>
     <string name="settings__theme__group_window" comment="Theme group label">Ablak és rendszer</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Billentyűzet</string>
     <string name="settings__theme__group_key" comment="Theme group label">Billentyű</string>
     <string name="settings__theme__group_media" comment="Theme group label">Média kontextus</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Egykezes</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Privát mód</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Okossáv</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Okossáv gomb</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">Elsődleges szín</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Title of Color primary dark theme preference">Elsődleges szín (sötét)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Title of Color accent theme preference">Kiemelés színe</string>
-    <string name="settings__theme__attr_navBarColor" comment="Title of Nav bar color theme preference">Navigációs sáv színe</string>
-    <string name="settings__theme__attr_navBarLight" comment="Title of Nav bar is light theme preference">Navigációs sáv sötét előtér</string>
-    <string name="settings__theme__attr_showBorder" comment="Title of Show Key Border preference">Billentyű szegélye</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Billentyűzet beállítások</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Billentyűk</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Számsor</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Számsor megjelenítése a karakterelrendezés felett</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Másodlagos számsor</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Másodlagos szimbólumok</string>
     <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">Letiltva</string>
+    <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">Engedélyezve (a másodlagos szimbólumok először)</string>
+    <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">Engedélyezve (az ékezetes szimbólumok először)</string>
+    <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">Engedélyezve (intelligens eldöntés)</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Betűméret szorzó (álló)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Betűméret szorzó (fekvő)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Elrendezés</string>
@@ -137,17 +172,23 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Írjon be egy szót úgy, hogy ujját a betűin keresztülcsúsztatja</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Nyomvonal megjelenítése</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Minden szó után eltűnik</string>
-    <string name="pref__gestures__general_title" comment="Preference group title">Gesztusok</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Általános gesztusok</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">Szóköz gesztusok</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">Egyéb gesztusok / gesztusküszöb</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Nincs művelet</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Karakterek pontos törlése</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">A jelenlegi szó törlése</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Szavak pontos törlése</string>
     <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Billentyűzet elrejtése</string>
+    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Szóköz beszúrása</string>
     <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Kurzor mozgatása felfelé</string>
     <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Kurzor mozgatása lefelé</string>
     <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Kurzor mozgatása balra</string>
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Kurzor mozgatása jobbra</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Kurzor sor elejére helyezése</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Kurzor sor végére helyezése</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
+    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Bevitelválasztó megnyitása</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Váltás az előző billentyűzetre</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Váltás az előző altípusra</string>
     <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Váltás a következő altípusra</string>
@@ -158,6 +199,7 @@
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Szóköz felhúzás</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Szóköz balra húzás</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Szóköz jobbra húzás</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Szóköz hosszú lenyomása</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Törlés gomb balra húzás</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Húzás sebesség küszöb</string>
     <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Nagyon lassú</string>
@@ -186,6 +228,22 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">Forráskód</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Nyílt forráskódú licencek</string>
     <!-- Assets strings -->
+    <string name="assets__file__name">Név</string>
+    <string name="assets__file__source">Forrás</string>
+    <string name="assets__action__add">Hozzáadás</string>
+    <string name="assets__action__cancel">Mégse</string>
+    <string name="assets__action__cancel_confirm_title">Kilépés megerősítése</string>
+    <string name="assets__action__cancel_confirm_message">Biztosan törölni szeretne vetni minden mentetlen változtatást? Ezt a műveletet nem lehet visszavonni.</string>
+    <string name="assets__action__delete">Törlés</string>
+    <string name="assets__action__delete_confirm_title">Törlés megerősítése</string>
+    <string name="assets__action__delete_confirm_message">Biztosan törölni szeretné ezt \"%s\"? Ezt a műveletet nem lehet visszavonni.</string>
+    <string name="assets__action__edit">Szerkesztés</string>
+    <string name="assets__action__export">Exportálás</string>
+    <string name="assets__action__import">Importálás</string>
+    <string name="assets__action__no">Nem</string>
+    <string name="assets__action__save">Mentés</string>
+    <string name="assets__action__yes">Igen</string>
+    <string name="assets__error__invalid">Érvénytelen</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Beállítás</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Előző</string>

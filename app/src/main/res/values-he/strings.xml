@@ -64,25 +64,13 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">תת הסוג הזה כבר קיים!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">ערכת נושא של המקלדת</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">לא מוגדר</string>
-    <string name="settings__theme__attr_background" comment="General label for a background preference">צבע רקע</string>
-    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">צבע הרקע כאשר מופעל</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">צבע הרקע כאשר מקש נלחץ</string>
-    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">צבע רקע קדמי</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">צבע רקע קדמי (אלטרנטיבי)</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">תמיד בהיר</string>
+    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">תמיד כהה</string>
     <string name="settings__theme__group_window" comment="Theme group label">חלון ומערכת</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">מקלדת</string>
     <string name="settings__theme__group_key" comment="Theme group label">מקש</string>
     <string name="settings__theme__group_media" comment="Theme group label">אזור המֶדְיָה</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">ביד אחת</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">מצב פרטיות</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">שורה חכמה</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">כפתור שורה חכמה</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">צבע ראשי</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Title of Color primary dark theme preference">צבע ראשי (כהה)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Title of Color accent theme preference">צבע הדגשה</string>
-    <string name="settings__theme__attr_navBarColor" comment="Title of Nav bar color theme preference">צבע סרגל הניווט</string>
-    <string name="settings__theme__attr_navBarLight" comment="Title of Nav bar is light theme preference">סרגל ניווט בעל רקע קדמי כהה</string>
-    <string name="settings__theme__attr_showBorder" comment="Title of Show Key Border preference">גבולות מקשים</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">העדפות מקלדת</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">מקשים</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">שורת המספרים</string>
@@ -142,7 +130,6 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">הקלד מילה באמצעות החלקה של האצבע בין האותיות</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] הצד את שביל הגלישה</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">יעלם אחרי כל מילה</string>
-    <string name="pref__gestures__general_title" comment="Preference group title">מחוות</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">ללא פעולה</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">מחיקת תווים בקפדנות</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">מחק מילה נוכחית</string>
@@ -191,6 +178,13 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">קוד מקור</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">רישיונות קוד פתוח</string>
     <!-- Assets strings -->
+    <string name="assets__action__delete">מחק</string>
+    <string name="assets__action__delete_confirm_title">אישור מחיקה</string>
+    <string name="assets__action__edit">ערוך</string>
+    <string name="assets__action__no">לא</string>
+    <string name="assets__action__save">שמור</string>
+    <string name="assets__action__yes">כן</string>
+    <string name="assets__error__invalid">לא תקין</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">הגדרות</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">הקודם</string>

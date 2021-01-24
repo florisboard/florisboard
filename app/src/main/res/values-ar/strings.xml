@@ -64,25 +64,11 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">هذا النوع الفرعي موجود مسبقا!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">مظهر لوحة المفاتيح</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">غير محدد</string>
-    <string name="settings__theme__attr_background" comment="General label for a background preference">لون الخلفية</string>
-    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">لون الخلفية عند التنشيط</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">لون الخلفية عند الضغط</string>
-    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">لون الواجهة</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">لون الواجهة (البديل)</string>
     <string name="settings__theme__group_window" comment="Theme group label">النافذة والنظام</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">لوحة المفاتيح</string>
     <string name="settings__theme__group_key" comment="Theme group label">المفتاح</string>
     <string name="settings__theme__group_media" comment="Theme group label">سياق الوسائط</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">اليد الواحدة</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">الوضع الخاص</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">الشريط الذكـي</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">زر الشريط الذكي</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">اللون الأساسي</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Title of Color primary dark theme preference">اللون الأساسي (داكن)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Title of Color accent theme preference">لون التمييز</string>
-    <string name="settings__theme__attr_navBarColor" comment="Title of Nav bar color theme preference">لون شريط التصفّح</string>
-    <string name="settings__theme__attr_navBarLight" comment="Title of Nav bar is light theme preference">واجهة شريط التصفّح</string>
-    <string name="settings__theme__attr_showBorder" comment="Title of Show Key Border preference">إطار المفتاح</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">تفضيلات لوحة المفاتيح</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">المفاتيح</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">صف الأعداد</string>
@@ -142,7 +128,6 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">أكتب كلمة بتمرير إصبعك عبر حروفها</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] إظهار آثار التمرير</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">سوف يختفي بعد كل كلمة</string>
-    <string name="pref__gestures__general_title" comment="Preference group title">الإيماءات</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">بدون إجراء</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">حذف الحروف بدقة</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">حذف الكلمة الحالية</string>

@@ -64,25 +64,11 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Questo stile di input esiste già !</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tema tastiera</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Sconosciuto</string>
-    <string name="settings__theme__attr_background" comment="General label for a background preference">Colore di sfondo</string>
-    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">Colore di sfondo quando attivo</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">Colore di sfondo quando premuto</string>
-    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">Colore di primo piano</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">Colore di primo piano (alternativo)</string>
     <string name="settings__theme__group_window" comment="Theme group label">Finestra &amp; Sistema</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Tastiera</string>
     <string name="settings__theme__group_key" comment="Theme group label">Tasto</string>
     <string name="settings__theme__group_media" comment="Theme group label">Contesto multimediale</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Una mano</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Modalità Privata</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Smartbar</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Pulsante smartbar</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">Colore primario</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Title of Color primary dark theme preference">Colore primario (scuro)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Title of Color accent theme preference">Colore di accento</string>
-    <string name="settings__theme__attr_navBarColor" comment="Title of Nav bar color theme preference">Colore della barra di navigazione</string>
-    <string name="settings__theme__attr_navBarLight" comment="Title of Nav bar is light theme preference">Colore scuro di primo piano della barra di navigazione</string>
-    <string name="settings__theme__attr_showBorder" comment="Title of Show Key Border preference">Bordo dei tasti</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Tastiera preferenze</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Tasti</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Barra numerica</string>
@@ -142,7 +128,6 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Scrivi una parola facendo scivolare il dito sulle lettere che la compongono</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Mostra scia dello swype</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Scomparirà dopo ogni parola</string>
-    <string name="pref__gestures__general_title" comment="Preference group title">Gesti</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Nessuna azione</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Cancella lettere con precisione</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Cancella la parola attuale</string>

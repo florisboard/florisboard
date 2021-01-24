@@ -40,6 +40,7 @@
     <string name="settings__title" comment="Title of Settings">ڕێکخستنەکان</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">هەڵبژاردنی زیاتر</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">یارمەتی و فێرکاری</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">یارمەتی</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">سەرەتا</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">تەختەکلیل</string>
     <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">نووسین</string>
@@ -104,29 +105,14 @@
     <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">نوسین</string>
     <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">ڕێژەی پیشاندانی ڕووکار</string>
     <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">تکایە ناوی ڕووکار بنوسە</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">تکایە ناوی گروپ بنووسە کە تەنها پیتەکانی a-z و/یان A-Z ی تێدا بێت.</string>
     <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">تکایە ناوی گرووپ بنوسە</string>
     <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">تکایە ناوی تایبەتمەندی بنووسە کە تەنها پیتەکانی a-z و/یان A-Z ی تێدا بێت.</string>
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">تکایە ناوی تایبەتمەندی بنوسە</string>
-    <string name="settings__theme__attr_background" comment="General label for a background preference">ڕەنگی پشتتەوە</string>
-    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">ڕەنگی پشت شاشە لەکاتی چالاکبوندا</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">ڕەنگی پشت شاشە لەکاتی دەستلێدان</string>
-    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">ڕەنگی پێشەوە</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">ڕەنگی پێشەوە (جێگرەوە)</string>
     <string name="settings__theme__group_window" comment="Theme group label">ڕووکەش</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">تەختەکلیل</string>
     <string name="settings__theme__group_key" comment="Theme group label">دوگمە</string>
     <string name="settings__theme__group_media" comment="Theme group label">لیستی میدیا</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">بەکارهێنان بە یەک دەست</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">دۆخی تایبەت</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">ڕەنگی بەشی سەرەوە</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">ڕەنگی دوگمەکانی بەشی سەرەوە</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">ڕەنگی بنەڕەتی</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Title of Color primary dark theme preference">ڕەنگی بنەڕەتی (تاریک)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Title of Color accent theme preference">ڕەنگی دووەم</string>
-    <string name="settings__theme__attr_navBarColor" comment="Title of Nav bar color theme preference">ڕەنگی بەشی خوارەوە</string>
-    <string name="settings__theme__attr_navBarLight" comment="Title of Nav bar is light theme preference">پشت شاشەی تاریکی بەشی خوارەوە</string>
-    <string name="settings__theme__attr_showBorder" comment="Title of Show Key Border preference">لێواری دوگمەکان</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">ڕێکخستنی تەختەکلیل</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">دوگمەکان</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">لیستی ژمارەکان</string>
@@ -186,17 +172,23 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">نووسین بەسەریەکەوە بەشێوەی دەسخشاندن بەسەر پیتەکاندا</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] پیشاندانی هێڵی نووسین</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">لەدوای هەر ووشەیەک دەردەکەوێ</string>
-    <string name="pref__gestures__general_title" comment="Preference group title">ئاماژەکان</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">ئاماژژە گشتییەکان</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">ئاماژەی دوگمەی بۆشایی</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">ئاماژەکانی/فرمانەکانی تر</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">هیچ فرمانێک</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">سڕینەوەی پیتەکان یەک بە یەک</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">سڕینەوەی ووشەی ئێستا</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">سڕینەوەی ووشەکان یەک بە یەک</string>
     <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">شاردنەوەی تەختەکلیل</string>
+    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">زیادکردنی ماوە</string>
     <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">بردن بۆ سەرەوە</string>
     <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">بردن بۆ خوارەوە</string>
     <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">بردن بۆ لای چەپ</string>
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">بردن بۆ لای ڕاست</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">چوون بۆ سەرەتای ڕستە</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">چوون بۆ کۆتایی ڕستە</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">گەورەکردن (Shift) </string>
+    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">گۆڕینی تەختەکلیل</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">گۆڕین بۆ تەختەکلیلی پێشوو</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">گۆڕین بۆ زمانی پێشوو</string>
     <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">گۆڕین بۆ زمانی دواتر</string>
@@ -207,6 +199,7 @@
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">دوگمەی بۆشایی بۆ سەرەوە</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">دوگمەی بۆشایی بۆ لای چەپ</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">دوگمەی بۆشایی بۆ لای ڕاست</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">دوگمەی بۆشایی لەکاتی دەستڕاگرتن</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">دوگمەی سڕینەوە بۆ لای چەپ</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">ئاستی خێرایی ڕاکێشان</string>
     <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">خاوترین</string>

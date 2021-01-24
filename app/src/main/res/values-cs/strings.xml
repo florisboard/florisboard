@@ -60,23 +60,11 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Tento podtyp již existuje!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Motiv klávesnice</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Definován</string>
-    <string name="settings__theme__attr_background" comment="General label for a background preference">Pozadí</string>
-    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">Barva pozadí při aktivní</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">Barva pozadí při stisknutí</string>
-    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">Barva popředí</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">Barva popředí (alternativní)</string>
     <string name="settings__theme__group_window" comment="Theme group label">Okno &amp; systém</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Klávesnice</string>
     <string name="settings__theme__group_key" comment="Theme group label">Klíč</string>
     <string name="settings__theme__group_media" comment="Theme group label">Mediální kontext</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Jednoruční</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Smartbar</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Tlačítko Smartbar</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">Primární barva</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Title of Color primary dark theme preference">Primární barva (tmavá)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Title of Color accent theme preference">Barva přízvuku</string>
-    <string name="settings__theme__attr_navBarColor" comment="Title of Nav bar color theme preference">Barva navigačního panelu</string>
-    <string name="settings__theme__attr_navBarLight" comment="Title of Nav bar is light theme preference">Navigační lišta tmavé popředí</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Předvolby Klávesnice</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Šipka</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplikátor velikosti písma (portrét)</string>
@@ -125,7 +113,6 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Zadejte slovo posunutím prstu jeho písmeny</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Zobrazit sestupovou stopu</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Zmizí po každém slově</string>
-    <string name="pref__gestures__general_title" comment="Preference group title">Gesto</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Žádná akce</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Smazat znaky přesně</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Smazat aktuální slovo</string>

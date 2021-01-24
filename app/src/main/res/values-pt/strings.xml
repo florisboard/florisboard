@@ -40,6 +40,7 @@
     <string name="settings__title" comment="Title of Settings">Definições</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Mais opções</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Ajuda e comentários</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Ajuda</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Início</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Teclado</string>
     <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Digitação</string>
@@ -64,25 +65,55 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Este subtipo já existe!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tema do teclado</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Indefinido</string>
-    <string name="settings__theme__attr_background" comment="General label for a background preference">Cor de fundo</string>
-    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">Cor de fundo quando ativo</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">Cor de fundo quando premida</string>
-    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">Cor principal</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">Cor principal (alternativa)</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Modo do tema</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Sempre de dia</string>
+    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Sempre noite</string>
+    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Acompanhar sistema</string>
+    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Acompanhar hora</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Hora do nascer do sol</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Hora do pôr do sol</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tema diurno</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tema noturno</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Tema selecionado</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Ajustar cores às aplicações</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">As cores do tema ajustam-se às da aplicação, se a aplicação de destino assim o permitir.</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">Dados da aplicação FlorisBoard</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">Armazenamento interno</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">Fornecedor externo</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Gestor de temas (dia)</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Gestor de temas (noite)</string>
+    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Criar tema vazio</string>
+    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Criar tendo por base o tema atual</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Personalizado (baseado em %s)</string>
+    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Novo tema</string>
+    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Editar tema</string>
+    <string name="settings__theme_editor__name_label" comment="Label of name input">Nome</string>
+    <string name="settings__theme_editor__type_label" comment="Label of type input">Tipo</string>
+    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Adicionar grupo</string>
+    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Editar grupo</string>
+    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Adicionar atributo</string>
+    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Editar atributo</string>
+    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referência</string>
+    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Grupo</string>
+    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Atributo</string>
+    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Cor sólida</string>
+    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Gradiente linear</string>
+    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Gradiente radial</string>
+    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Comutador</string>
+    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Estado</string>
+    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Outro</string>
+    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Texto</string>
+    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Antevisão do tema</string>
+    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Introduza o nome para o tema.</string>
+    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">O nome do grupo apenas pode conter letras (a–z e/ou A–Z), dois pontos(:) para subgrupos e, adicionalmente, números (0–9), til (~) e sublinhado (_) para etiquetas de teclas.</string>
+    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Introduza o nome para o grupo.</string>
+    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">O nome do atributo apenas pode conter letras (a-z e/ou A-Z).</string>
+    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Introduza o nome para o atributo.</string>
     <string name="settings__theme__group_window" comment="Theme group label">Janela e sistema</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Teclado</string>
     <string name="settings__theme__group_key" comment="Theme group label">Tecla</string>
     <string name="settings__theme__group_media" comment="Theme group label">Contexto multimédia</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Uma mão</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Modo privado</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Barra inteligente</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Botão da barra inteligente</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">Cor primária</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Title of Color primary dark theme preference">Cor primária (escura)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Title of Color accent theme preference">Cor de destaque</string>
-    <string name="settings__theme__attr_navBarColor" comment="Title of Nav bar color theme preference">Cor da barra de navegação</string>
-    <string name="settings__theme__attr_navBarLight" comment="Title of Nav bar is light theme preference">Botões da barra de navegação escura</string>
-    <string name="settings__theme__attr_showBorder" comment="Title of Show Key Border preference">Contorno de teclas</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Preferências do teclado</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Teclas</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Linha de números</string>
@@ -142,17 +173,23 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Digitar uma palavra deslizando o dedo através das teclas</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Mostrar rasto de escrita</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">O rasto desparece no final da palavra</string>
-    <string name="pref__gestures__general_title" comment="Preference group title">Gestos</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Gestos genéricos</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestos na barra de espaço</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">Outros gestos/Limitação de gestos</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Sem ação</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Remover caracteres com precisão</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Remover palavra atual</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Remover palavras com precisão</string>
     <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Ocultar teclado</string>
+    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Inserir espaço</string>
     <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Mover cursor para cima</string>
     <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Mover cursor para baixo</string>
     <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Mover cursor para a esquerda</string>
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Mover cursor para a direita</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Mover cursor para o início da linha</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Mover cursor para o fim da linha</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Tecla Shift</string>
+    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Mostrar seletor do método de introdução</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Trocar para o teclado anterior</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Trocar para o subtipo anterior</string>
     <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Trocar para o subtipo seguinte</string>
@@ -163,6 +200,7 @@
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Deslize acima na barra de espaços</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Deslizar à esquerda na barra de espaços</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Deslizar à direita na barra de espaços</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Toque longo na barra de espaço</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Deslizar à esquerda na tecla Delete</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Velocidade de deslize</string>
     <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Muito lenta</string>
@@ -191,6 +229,26 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">Código-fonte</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licenças Open Source</string>
     <!-- Assets strings -->
+    <plurals name="assets__file__authors">
+        <item quantity="one">Autor</item>
+        <item quantity="other">Autores</item>
+    </plurals>
+    <string name="assets__file__name">Nome</string>
+    <string name="assets__file__source">Fonte</string>
+    <string name="assets__action__add">Adicionar</string>
+    <string name="assets__action__cancel">Cancelar</string>
+    <string name="assets__action__cancel_confirm_title">Confirmação</string>
+    <string name="assets__action__cancel_confirm_message">Tem a certeza de que deseja descartar as alterações? Esta ação não pode ser revertida.</string>
+    <string name="assets__action__delete">Apagar</string>
+    <string name="assets__action__delete_confirm_title">Confirmar eliminação</string>
+    <string name="assets__action__delete_confirm_message">Tem a certeza de que deseja apagar \"%s\"? Esta ação não pode ser revertida.</string>
+    <string name="assets__action__edit">Editar</string>
+    <string name="assets__action__export">Exportar</string>
+    <string name="assets__action__import">Importar</string>
+    <string name="assets__action__no">Não</string>
+    <string name="assets__action__save">Guardar</string>
+    <string name="assets__action__yes">Sim</string>
+    <string name="assets__error__invalid">Inválido</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Configuração</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Recuar</string>

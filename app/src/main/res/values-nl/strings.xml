@@ -40,6 +40,7 @@
     <string name="settings__title" comment="Title of Settings">Instellingen</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Meer opties</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Help &amp; feedback</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Help</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Startscherm</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Toetsenbord</string>
     <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Typen</string>
@@ -64,25 +65,55 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Deze indeling bestaat al!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Toetsenbordthema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ongedefinieerd</string>
-    <string name="settings__theme__attr_background" comment="General label for a background preference">Achtergrondkleur</string>
-    <string name="settings__theme__attr_backgroundActive" comment="General label for an active background preference">Achtergrondkleur wanneer actief</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="General label for a pressed background preference">Achtergrondkleur wanneer ingedrukt</string>
-    <string name="settings__theme__attr_foreground" comment="General label for a foreground preference">Voorgrondkleur</string>
-    <string name="settings__theme__attr_foregroundAlt" comment="General label for an alternate foreground preference">Voorgrondkleur (alternatief)</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Thema modus</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Altijd dag</string>
+    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Altijd nacht</string>
+    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Volg systeeminstelling</string>
+    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Volg tijd</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Zonsopgang</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Zonsondergang</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Dagthema</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nachtthema</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Geselecteerd thema</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Pas kleuren aan naar app</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Themakleuren aanpassen naar die van de actieve app, als de doelapp dit ondersteunt.</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">Florisboard Apponderdelen</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">Interne opslag</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">Gebruik externe provider</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Themamanager (Dag)</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Themamanager (Nacht)</string>
+    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Nieuw thema maken</string>
+    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Maak op basis van gekozen thema</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Aangepast (gebaseerd op %s)</string>
+    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nieuw thema</string>
+    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Thema bewerken</string>
+    <string name="settings__theme_editor__name_label" comment="Label of name input">Naam</string>
+    <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>
+    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Groep toevoegen</string>
+    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Bewerk groep</string>
+    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Kenmerk toevoegen</string>
+    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Kenmerken bewerken</string>
+    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referentie</string>
+    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Groep</string>
+    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Kenmerk</string>
+    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Effen kleur</string>
+    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Lineair kleurverloop</string>
+    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Radiaal kleurverloop</string>
+    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Wissel</string>
+    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Status</string>
+    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Overige</string>
+    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Tekst</string>
+    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Voorbeeld van de themawaarde</string>
+    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Voer een naam voor het thema in.</string>
+    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Voer een groepsnaam in die enkel letters (a-z en/of A-Z), dubbelpunt (:) voor ondergroepering of bijkomend nummers (0-9), tilde (~) of underscores (_) voor het sleutellabel bevat.</string>
+    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Vul een groepsnaam in.</string>
+    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Vul een kenmerknaam in die enkel de letters a-z en/of A-Z bevat.</string>
+    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Vul de naam van het kenmerk in.</string>
     <string name="settings__theme__group_window" comment="Theme group label">Venster &amp; Systeem</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Toetsenbord</string>
     <string name="settings__theme__group_key" comment="Theme group label">Toets</string>
     <string name="settings__theme__group_media" comment="Theme group label">Mediacontext</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">Met één hand</string>
-    <string name="settings__theme__group_privateMode" comment="Theme group label">Privémodus</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Slimme Balk</string>
-    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Slimme Balk bewerken</string>
-    <string name="settings__theme__attr_colorPrimary" comment="Title of Color primary theme preference">Hoofdkleur</string>
-    <string name="settings__theme__attr_colorPrimaryDark" comment="Title of Color primary dark theme preference">Primaire kleur (Donker)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Title of Color accent theme preference">Accentkleur</string>
-    <string name="settings__theme__attr_navBarColor" comment="Title of Nav bar color theme preference">Kleur navigatiebalk</string>
-    <string name="settings__theme__attr_navBarLight" comment="Title of Nav bar is light theme preference">Navigatiebalk donkere voorgrond</string>
-    <string name="settings__theme__attr_showBorder" comment="Title of Show Key Border preference">Knoprand</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Toetsenbordvoorkeuren</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Toetsen</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Nummerrij</string>
@@ -142,17 +173,23 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Typ een woord door je vinger over de letters te vegen</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Veegspoor tonen</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Verdwijnt na elk woord</string>
-    <string name="pref__gestures__general_title" comment="Preference group title">Gebaren</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Algemene gebaren</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">Spatiebalkgebaren</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">Andere gebaren / Drempelwaardes voor gebaren</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Geen actie</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Tekens nauwkeurig verwijderen</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Huidige woord verwijderen</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Woorden nauwkeurig verwijderen</string>
     <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Toetsenbord verbergen</string>
+    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Spatie invoegen</string>
     <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Cursor naar boven verplaatsen</string>
     <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Cursor naar beneden verplaatsen</string>
     <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Cursor naar links verplaatsen</string>
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Cursor naar rechts verplaatsen</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Cursor aan het begin van de regel plaatsen</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Cursor aan het einde van de regel plaatsen</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
+    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Invoermethodekiezer weergeven</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Overschakelen naar het vorige toetsenbord</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Overschakelen naar de vorige indeling</string>
     <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Overschakelen naar de volgende indeling</string>
@@ -163,6 +200,7 @@
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Swipe omhoog vanop de spatiebalk</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Swipe naar links vanop de spatiebalk</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Swipe naar rechts vanop de spatiebalk</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Spatiebalk lang indrukken</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Swipe naar links vanop de Delete-toets</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Drempelwaarde voor swipe-snelheid</string>
     <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Heel langzaam</string>
@@ -191,6 +229,26 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">Broncode</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open-source licenties</string>
     <!-- Assets strings -->
+    <plurals name="assets__file__authors">
+        <item quantity="one">Auteur</item>
+        <item quantity="other">Auteurs</item>
+    </plurals>
+    <string name="assets__file__name">Naam</string>
+    <string name="assets__file__source">Bron</string>
+    <string name="assets__action__add">Toevoegen</string>
+    <string name="assets__action__cancel">Annuleren</string>
+    <string name="assets__action__cancel_confirm_title">Annuleren bevestigen</string>
+    <string name="assets__action__cancel_confirm_message">Weet je zeker dat je onopgeslagen wijzigingen wil verwerpen? Deze actie kan niet ongedaan gemaakt worden.</string>
+    <string name="assets__action__delete">Verwijderen</string>
+    <string name="assets__action__delete_confirm_title">Verwijderen bevestigen</string>
+    <string name="assets__action__delete_confirm_message">Weet je zeker dat je %s wil verwijderen? Deze actie kan niet ongedaan gemaakt worden.</string>
+    <string name="assets__action__edit">Bewerken</string>
+    <string name="assets__action__export">Exporteren</string>
+    <string name="assets__action__import">Importeren</string>
+    <string name="assets__action__no">Nee</string>
+    <string name="assets__action__save">Opslaan</string>
+    <string name="assets__action__yes">Ja</string>
+    <string name="assets__error__invalid">Ongeldig</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Setup</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Vorige</string>
