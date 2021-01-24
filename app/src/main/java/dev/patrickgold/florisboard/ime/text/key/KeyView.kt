@@ -245,13 +245,22 @@ class KeyView(
                             }
                         }
                     }
-                    longKeyPressHandler.postDelayed(delayMillis) {
-                        if (data.popup.isNotEmpty()) {
-                            keyboardView.popupManager.extend(this, keyHintMode)
+                    if (data.code == KeyCode.SPACE) {
+                        longKeyPressHandler.postDelayed((delayMillis * 2.5f).toLong()) {
+                            when (prefs.gestures.spaceBarLongPress) {
+                                SwipeAction.NO_ACTION,
+                                SwipeAction.INSERT_SPACE -> {}
+                                else -> {
+                                    florisboard?.executeSwipeAction(prefs.gestures.spaceBarLongPress)
+                                    shouldBlockNextKeyCode = true
+                                }
+                            }
                         }
-                        if (data.code == KeyCode.SPACE) {
-                            florisboard?.executeSwipeAction(prefs.gestures.spaceBarLongPress)
-                            shouldBlockNextKeyCode = true
+                    } else {
+                        longKeyPressHandler.postDelayed(delayMillis) {
+                            if (data.popup.isNotEmpty()) {
+                                keyboardView.popupManager.extend(this, keyHintMode)
+                            }
                         }
                     }
                 }
