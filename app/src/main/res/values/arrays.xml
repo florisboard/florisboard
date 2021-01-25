@@ -45,6 +45,21 @@
         <item>start</item>
     </string-array>
 
+    <string-array name="pref__keyboard__switch_key_mode__entries">
+        <item>@string/pref__keyboard__switch_key_mode__never_show</item>
+        <item>@string/pref__keyboard__switch_key_mode__always_emoji</item>
+        <item>@string/pref__keyboard__switch_key_mode__always_language_internal</item>
+        <item>@string/pref__keyboard__switch_key_mode__always_language_system</item>
+        <item>@string/pref__keyboard__switch_key_mode__dynamic_language_emoji</item>
+    </string-array>
+    <string-array name="pref__keyboard__switch_key_mode__values">
+        <item>never_show</item>
+        <item>always_emoji</item>
+        <item>always_language_internal</item>
+        <item>always_language_system</item>
+        <item>dynamic_language_emoji</item>
+    </string-array>
+
     <string-array name="pref__advanced__settings_theme__entries">
         <item>@string/settings__system_default</item>
         <item>@string/pref__advanced__settings_theme__light</item>

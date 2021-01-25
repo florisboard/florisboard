@@ -25,6 +25,7 @@ import dev.patrickgold.florisboard.ime.text.gestures.DistanceThreshold
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.VelocityThreshold
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
+import dev.patrickgold.florisboard.ime.text.key.SwitchKeyMode
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.util.TimeUtil
 import dev.patrickgold.florisboard.util.VersionName
@@ -320,6 +321,7 @@ class PrefHelper(
             const val POPUP_ENABLED =                   "keyboard__popup_enabled"
             const val SOUND_ENABLED =                   "keyboard__sound_enabled"
             const val SOUND_VOLUME =                    "keyboard__sound_volume"
+            const val SWITCH_KEY_MODE =                 "keyboard__switch_key_mode"
             const val VIBRATION_ENABLED =               "keyboard__vibration_enabled"
             const val VIBRATION_STRENGTH =              "keyboard__vibration_strength"
         }
@@ -364,6 +366,9 @@ class PrefHelper(
         var soundVolume: Int = 0
             get() = prefHelper.getPref(SOUND_VOLUME, -1)
             private set
+        var switchKeyMode: SwitchKeyMode
+            get() =  SwitchKeyMode.fromString(prefHelper.getPref(SWITCH_KEY_MODE, SwitchKeyMode.DYNAMIC_LANGUAGE_EMOJI.toString()))
+            set(v) = prefHelper.setPref(SWITCH_KEY_MODE, v)
         var vibrationEnabled: Boolean = false
             get() = prefHelper.getPref(VIBRATION_ENABLED, true)
             private set

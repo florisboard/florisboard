@@ -589,17 +589,31 @@ class KeyView(
         when (data.code) {
             KeyCode.SWITCH_TO_TEXT_CONTEXT,
             KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
-                visibility = if (florisboard?.shouldShowLanguageSwitch() == true) {
-                    GONE
-                } else {
-                    VISIBLE
+                visibility = when (prefs.keyboard.switchKeyMode) {
+                    SwitchKeyMode.ALWAYS_LANGUAGE_INTERNAL,
+                    SwitchKeyMode.ALWAYS_LANGUAGE_SYSTEM,
+                    SwitchKeyMode.NEVER_SHOW -> GONE
+                    SwitchKeyMode.ALWAYS_EMOJI -> VISIBLE
+                    SwitchKeyMode.DYNAMIC_LANGUAGE_EMOJI ->
+                        if (florisboard?.shouldShowLanguageSwitch() == true) {
+                            GONE
+                        } else {
+                            VISIBLE
+                        }
                 }
             }
             KeyCode.LANGUAGE_SWITCH -> {
-                visibility = if (florisboard?.shouldShowLanguageSwitch() == true) {
-                    VISIBLE
-                } else {
-                    GONE
+                visibility = when (prefs.keyboard.switchKeyMode) {
+                    SwitchKeyMode.ALWAYS_EMOJI,
+                    SwitchKeyMode.NEVER_SHOW -> GONE
+                    SwitchKeyMode.ALWAYS_LANGUAGE_INTERNAL,
+                    SwitchKeyMode.ALWAYS_LANGUAGE_SYSTEM -> VISIBLE
+                    SwitchKeyMode.DYNAMIC_LANGUAGE_EMOJI ->
+                        if (florisboard?.shouldShowLanguageSwitch() == true) {
+                            VISIBLE
+                        } else {
+                            GONE
+                        }
                 }
             }
             else -> if (data.variation != KeyVariation.ALL) {
