@@ -30,10 +30,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.text.editing.EditingKeyboardView
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.key.KeyData
-import dev.patrickgold.florisboard.ime.text.key.KeyType
-import dev.patrickgold.florisboard.ime.text.key.KeyVariation
+import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
@@ -448,6 +445,18 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     }
 
     /**
+     * Handles a [KeyCode.LANGUAGE_SWITCH] event. Also handles if the language switch should cycle
+     * FlorisBoard internal or system-wide.
+     */
+    private fun handleLanguageSwitch() {
+        when (florisboard.prefs.keyboard.switchKeyMode) {
+            SwitchKeyMode.DYNAMIC_LANGUAGE_EMOJI,
+            SwitchKeyMode.ALWAYS_LANGUAGE_INTERNAL -> florisboard.switchToNextSubtype()
+            else -> florisboard.switchToNextKeyboard()
+        }
+    }
+
+    /**
      * Handles a [KeyCode.SHIFT] event.
      */
     private fun handleShift() {
@@ -662,7 +671,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                 handleEnter()
                 smartbarView?.resetClipboardSuggestion()
             }
-            KeyCode.LANGUAGE_SWITCH -> florisboard.switchToNextSubtype()
+            KeyCode.LANGUAGE_SWITCH -> handleLanguageSwitch()
             KeyCode.SETTINGS -> florisboard.launchSettings()
             KeyCode.SHIFT -> handleShift()
             KeyCode.SHOW_INPUT_METHOD_PICKER -> {

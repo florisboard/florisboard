@@ -501,11 +501,28 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
                 switchToPreviousInputMethod()
             } else {
                 window.window?.let { window ->
+                    @Suppress("DEPRECATION")
                     imeManager?.switchToLastInputMethod(window.attributes.token)
                 }
             }
         } catch (e: Exception) {
             Timber.e(e,"Unable to switch to the previous IME")
+            imeManager?.showInputMethodPicker()
+        }
+    }
+
+    fun switchToNextKeyboard(){
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                switchToNextInputMethod(false)
+            } else {
+                window.window?.let { window ->
+                    @Suppress("DEPRECATION")
+                    imeManager?.switchToNextInputMethod(window.attributes.token, false)
+                }
+            }
+        } catch (e: Exception) {
+            Timber.e(e,"Unable to switch to the next IME")
             imeManager?.showInputMethodPicker()
         }
     }

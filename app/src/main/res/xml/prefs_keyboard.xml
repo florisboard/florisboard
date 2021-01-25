@@ -31,6 +31,15 @@
             app:title="@string/pref__keyboard__hinted_symbols_mode__label"
             app:useSimpleSummaryProvider="true"/>
 
+        <ListPreference
+            android:defaultValue="dynamic_language_emoji"
+            app:entries="@array/pref__keyboard__switch_key_mode__entries"
+            app:entryValues="@array/pref__keyboard__switch_key_mode__values"
+            app:key="keyboard__switch_key_mode"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__switch_key_mode__label"
+            app:useSimpleSummaryProvider="true"/>
+
         <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="100"
