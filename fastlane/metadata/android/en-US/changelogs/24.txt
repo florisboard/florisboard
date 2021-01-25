@@ -1,0 +1,9 @@
+- Add ability to customize switch key (emoji, language) (#79)
+- Add ext popups for less-than and greater-than symbols (#219)
+- Add wiki page reference in Theme Editor
+- Improve adaptive theme coloring (#226)
+- Improve startup loading animation
+- Improve theme editor UI and UX
+- Fix color dialog cache problem in theme editor (#237)
+- Fix space bar long press
+- Fix theme group name input validation (again)
