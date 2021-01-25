@@ -118,8 +118,9 @@
 
         <ImageButton
             android:id="@+id/attr_value_solid_color_edit_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/shape_rect_rounded"
             android:src="@drawable/ic_edit"
             android:contentDescription="@string/assets__action__edit"/>
 

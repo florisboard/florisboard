@@ -160,7 +160,7 @@ class ThemeAttrView : LinearLayout {
                             ThemeValue.Reference("", "")
                         }
                         ThemeValue.SolidColor::class.simpleName -> {
-                            ThemeValue.SolidColor(0)
+                            ThemeValue.SolidColor(Color.BLACK)
                         }
                         ThemeValue.LinearGradient::class.simpleName -> {
                             ThemeValue.LinearGradient(0)
@@ -242,6 +242,8 @@ class ThemeAttrView : LinearLayout {
             is ThemeValue.SolidColor -> {
                 dialogView.attrValueSolidColor.isVisible = true
                 dialogView.attrValueSolidColorInt.text = value.toString()
+                dialogView.attrValueSolidColorEditBtn.background.setTint(value.color)
+                dialogView.attrValueSolidColorEditBtn.drawable.setTint(value.complimentaryTextColor().color)
                 dialogView.attrValueSolidColorEditBtn.setOnClickListener {
                     // Method on how to create a dialog which does not have a listener in the
                     // Activity taken from the original source code for the PreferenceCompat class.
@@ -252,7 +254,9 @@ class ThemeAttrView : LinearLayout {
                     }.create()
                     colorPickerDialog.setColorPickerDialogListener(object : ColorPickerDialogListener {
                         override fun onColorSelected(dialogId: Int, color: Int) {
-                            dialogView.attrValueSolidColorInt.text = ThemeValue.SolidColor(color).toString()
+                            val tempSolidColor = ThemeValue.SolidColor(color)
+                            dialogView.attrValueSolidColorInt.text = tempSolidColor.toString()
+                            configureDialogUi(dialogView, tempSolidColor)
                         }
 
                         override fun onDialogDismissed(dialogId: Int) {

@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
+import android.graphics.Color
+
 /**
  * Theme overlay class which, if enabled, changes some requested attributes in a Theme and returns
  * the corresponding adaptive color. The adaptive colors itself are determined by the ThemeManager
@@ -29,12 +31,17 @@ class AdaptiveThemeOverlay(
         return when {
             themeManager.isAdaptiveThemeEnabled -> when (ref) {
                 Attr.KEYBOARD_BACKGROUND,
+                Attr.KEY_BACKGROUND_PRESSED,
                 Attr.SMARTBAR_BACKGROUND,
                 Attr.WINDOW_NAVIGATION_BAR_COLOR -> {
                     themeManager.remoteColorPrimaryVariant ?: super.getAttr(ref, s1, s2)
                 }
+                Attr.KEY_FOREGROUND_PRESSED,
                 Attr.SMARTBAR_FOREGROUND -> {
                     themeManager.remoteColorPrimaryVariant?.complimentaryTextColor() ?: super.getAttr(ref, s1, s2)
+                }
+                Attr.SMARTBAR_FOREGROUND_ALT -> {
+                    themeManager.remoteColorPrimaryVariant?.complimentaryTextColor(true) ?: super.getAttr(ref, s1, s2)
                 }
                 Attr.KEY_BACKGROUND,
                 Attr.SMARTBAR_BUTTON_BACKGROUND -> {
@@ -50,6 +57,22 @@ class AdaptiveThemeOverlay(
                     } else {
                         super.getAttr(ref, s1, s2)
                     }
+                }
+                Attr.WINDOW_NAVIGATION_BAR_LIGHT -> {
+                    if (themeManager.remoteColorPrimaryVariant != null) {
+                        ThemeValue.OnOff(themeManager.remoteColorPrimaryVariant?.complimentaryTextColor()?.color == Color.BLACK)
+                    } else {
+                        super.getAttr(ref, s1, s2)
+                    }
+                }
+                Attr.POPUP_BACKGROUND -> {
+                    themeManager.remoteColorSecondary ?: super.getAttr(ref, s1, s2)
+                }
+                Attr.POPUP_BACKGROUND_ACTIVE -> {
+                    themeManager.remoteColorSecondary?.complimentaryTextColor(true) ?: super.getAttr(ref, s1, s2)
+                }
+                Attr.POPUP_FOREGROUND -> {
+                    themeManager.remoteColorSecondary?.complimentaryTextColor() ?: super.getAttr(ref, s1, s2)
                 }
                 else -> super.getAttr(ref, s1, s2)
             }

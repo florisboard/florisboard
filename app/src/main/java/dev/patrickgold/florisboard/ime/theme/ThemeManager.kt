@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.theme
 
 import android.annotation.SuppressLint
+import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Configuration
@@ -52,6 +53,8 @@ class ThemeManager private constructor(
     var remoteColorPrimary: ThemeValue.SolidColor? = null
         private set
     var remoteColorPrimaryVariant: ThemeValue.SolidColor? = null
+        private set
+    var remoteColorSecondary: ThemeValue.SolidColor? = null
         private set
 
     companion object {
@@ -113,6 +116,7 @@ class ThemeManager private constructor(
      * @param packageName The package name from which the colors should be extracted.
      */
     @SuppressLint("ResourceType")
+    @Suppress("UNNECESSARY_SAFE_CALL")
     fun updateRemoteColorValues(packageName: String) {
         try {
             val pm = packageManager ?: return
@@ -122,7 +126,10 @@ class ThemeManager private constructor(
                 android.R.attr.colorPrimary,
                 res.getIdentifier("colorPrimaryDark", "attr", packageName),
                 android.R.attr.colorPrimaryDark,
-                res.getIdentifier("colorPrimaryVariant", "attr", packageName)
+                res.getIdentifier("colorPrimaryVariant", "attr", packageName),
+                res.getIdentifier("colorAccent", "attr", packageName),
+                android.R.attr.colorAccent,
+                res.getIdentifier("colorSecondary", "attr", packageName)
             )
             val androidTheme = res.newTheme()
             val defColor = if (activeTheme.isNightTheme) {
@@ -130,11 +137,31 @@ class ThemeManager private constructor(
             } else {
                 Color.WHITE
             }
-            val cn = pm.getLaunchIntentForPackage(packageName)?.component
-            if (cn != null) {
-                androidTheme.applyStyle(pm.getActivityInfo(cn, 0).theme, false)
-                @Suppress("UNNECESSARY_SAFE_CALL")
-                androidTheme.obtainStyledAttributes(attrs.toIntArray())?.let { a ->
+            val themeIds = mutableListOf<Int>()
+            pm.getLaunchIntentForPackage(packageName)?.component?.let { cn ->
+                pm.getActivityInfo(cn, 0)?.let { launchActivity ->
+                    if (launchActivity.targetActivity != null) {
+                        pm.getActivityInfo(ComponentName(packageName, launchActivity.targetActivity), 0)?.let {
+                            themeIds.add(it.theme)
+                        }
+                    } else {
+                        themeIds.add(launchActivity.theme)
+                    }
+                }
+            }
+            pm.getApplicationInfo(packageName, 0)?.let { applicationInfo ->
+                themeIds.add(applicationInfo.theme)
+            }
+            remoteColorPrimary = null
+            remoteColorPrimaryVariant = null
+            remoteColorSecondary = null
+            for (themeId in themeIds) {
+                if (remoteColorPrimary != null && remoteColorPrimaryVariant != null &&
+                        remoteColorSecondary != null) {
+                    break
+                }
+                androidTheme.applyStyle(themeId, false)
+                androidTheme.obtainStyledAttributes(attrs.toIntArray()).let { a ->
                     remoteColorPrimary = when {
                         a.hasValue(0) -> {
                             ThemeValue.SolidColor(a.getColor(0, defColor))
@@ -160,11 +187,34 @@ class ThemeManager private constructor(
                             null
                         }
                     }
+                    remoteColorSecondary = when {
+                        a.hasValue(5) -> {
+                            ThemeValue.SolidColor(a.getColor(5, defColor))
+                        }
+                        a.hasValue(6) -> {
+                            ThemeValue.SolidColor(a.getColor(6, defColor))
+                        }
+                        a.hasValue(7) -> {
+                            ThemeValue.SolidColor(a.getColor(7, defColor))
+                        }
+                        else -> {
+                            null
+                        }
+                    }
                     a.recycle()
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+        remoteColorPrimary?.let {
+            remoteColorPrimary = ThemeValue.SolidColor(it.color or Color.BLACK)
+        }
+        remoteColorPrimaryVariant?.let {
+            remoteColorPrimaryVariant = ThemeValue.SolidColor(it.color or Color.BLACK)
+        }
+        remoteColorSecondary?.let {
+            remoteColorSecondary = ThemeValue.SolidColor(it.color or Color.BLACK)
         }
     }
 

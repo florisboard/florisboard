@@ -44,13 +44,25 @@ sealed class ThemeValue {
             return super.toString()
         }
 
-        fun complimentaryTextColor(): SolidColor {
-            return if (Color.red(color) * 0.299 + Color.green(color) * 0.587 +
+        fun complimentaryTextColor(isAlt: Boolean = false): SolidColor {
+            val ret = if (Color.red(color) * 0.299 + Color.green(color) * 0.587 +
                 Color.blue(color) * 0.114 > 186) {
-                SolidColor(Color.BLACK)
+                Color.BLACK
             } else {
-                SolidColor(Color.WHITE)
+                Color.WHITE
             }
+            return SolidColor(
+                if (isAlt) {
+                    Color.argb(
+                        0x60,
+                        Color.red(ret),
+                        Color.green(ret),
+                        Color.blue(ret)
+                    )
+                } else {
+                    ret
+                }
+            )
         }
     }
 

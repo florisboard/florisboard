@@ -829,7 +829,11 @@ class KeyView(
                     }
                 }
             }
-            labelPaint.color = themeValueCache.keyForeground.toSolidColor().color
+            labelPaint.color = if (isKeyPressed && isEnabled) {
+                themeValueCache.keyForegroundPressed.toSolidColor().color
+            } else {
+                themeValueCache.keyForeground.toSolidColor().color
+            }
             labelPaint.alpha = if (keyboardView.computedLayout?.mode == KeyboardMode.CHARACTERS &&
                 data.code == KeyCode.SPACE) { 120 } else { 255 }
             val centerX = measuredWidth / 2.0f
