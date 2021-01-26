@@ -5,6 +5,7 @@
     "qwertz": "QWERTZ",
     "azerty": "AZERTY",
     "bepo": "BÉPO",
+    "bulgarian_phonetic": "Bulgarian (Phonetic)",
     "spanish": "Spanish (QWERTY)",
     "norwegian": "Norwegian (QWERTY)",
     "swedish_finnish": "Swedish/Finnish (QWERTY)",
@@ -184,6 +185,11 @@
       "id": 1601,
       "languageTag": "pl",
       "preferredLayout": "qwerty"
+    },
+    {
+      "id": 1701,
+      "languageTag": "bg-bg",
+      "preferredLayout": "bulgarian_phonetic"
     }
   ]
 }
