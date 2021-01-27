@@ -184,6 +184,11 @@
       "id": 1601,
       "languageTag": "pl",
       "preferredLayout": "qwerty"
+    },
+    {
+      "id": 1801,
+      "languageTag": "tr",
+      "preferredLayout": "qwerty"
     }
   ]
 }
