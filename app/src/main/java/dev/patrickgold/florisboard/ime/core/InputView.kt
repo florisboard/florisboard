@@ -113,9 +113,11 @@ class InputView : LinearLayout {
         val shouldGiveAdditionalSpace = prefs.keyboard.numberRow &&
                 !(tim.getActiveKeyboardMode() == KeyboardMode.NUMERIC ||
                 tim.getActiveKeyboardMode() == KeyboardMode.PHONE ||
-                tim.getActiveKeyboardMode() == KeyboardMode.PHONE2)
+                tim.getActiveKeyboardMode() == KeyboardMode.PHONE2 ||
+                tim.getActiveKeyboardMode() == KeyboardMode.SYMBOLS ||
+                tim.getActiveKeyboardMode() == KeyboardMode.SYMBOLS2)
         if (shouldGiveAdditionalSpace) {
-            val additionalHeight = desiredTextKeyboardViewHeight * 0.18f
+            val additionalHeight = resources.getDimension(R.dimen.textKeyboardView_baseHeight) * 0.18f
             baseHeight += additionalHeight
             baseTextInputHeight += additionalHeight
         }
