@@ -5,9 +5,9 @@
   "mapping": {
     "all": {
       "~enter": {
-        "main": { "code": -215, "label": "toggle_one_handed_mode", "type": "system_gui" },
+        "main": { "code": -213, "label": "switch_to_media_context", "type": "system_gui" },
         "relevant": [
-          { "code": -213, "label": "switch_to_media_context", "type": "system_gui" }
+          { "code": -215, "label": "toggle_one_handed_mode", "type": "system_gui" }
         ]
       },
       "~left": {
@@ -20,3 +20,4 @@
     }
   }
 }
+
