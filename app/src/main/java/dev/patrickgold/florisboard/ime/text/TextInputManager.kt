@@ -449,9 +449,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * FlorisBoard internal or system-wide.
      */
     private fun handleLanguageSwitch() {
-        when (florisboard.prefs.keyboard.switchKeyMode) {
-            SwitchKeyMode.DYNAMIC_LANGUAGE_EMOJI,
-            SwitchKeyMode.ALWAYS_LANGUAGE_INTERNAL -> florisboard.switchToNextSubtype()
+        when (florisboard.prefs.keyboard.utilityKeyAction) {
+            UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
+            UtilityKeyAction.SWITCH_LANGUAGE -> florisboard.switchToNextSubtype()
             else -> florisboard.switchToNextKeyboard()
         }
     }
