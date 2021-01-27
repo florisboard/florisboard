@@ -191,6 +191,11 @@
       "id": 1701,
       "languageTag": "bg-bg",
       "preferredLayout": "bulgarian_phonetic"
+    },
+    {
+      "id": 1801,
+      "languageTag": "tr",
+      "preferredLayout": "qwerty"
     }
   ]
 }
