@@ -45,19 +45,17 @@
         <item>start</item>
     </string-array>
 
-    <string-array name="pref__keyboard__switch_key_mode__entries">
-        <item>@string/pref__keyboard__switch_key_mode__never_show</item>
-        <item>@string/pref__keyboard__switch_key_mode__always_emoji</item>
-        <item>@string/pref__keyboard__switch_key_mode__always_language_internal</item>
-        <item>@string/pref__keyboard__switch_key_mode__always_language_system</item>
-        <item>@string/pref__keyboard__switch_key_mode__dynamic_language_emoji</item>
+    <string-array name="pref__keyboard__utility_key_action__entries">
+        <item>@string/pref__keyboard__utility_key_action__switch_to_emojis</item>
+        <item>@string/pref__keyboard__utility_key_action__switch_language</item>
+        <item>@string/pref__keyboard__utility_key_action__switch_keyboard_app</item>
+        <item>@string/pref__keyboard__utility_key_action__dynamic_switch_language_emojis</item>
     </string-array>
-    <string-array name="pref__keyboard__switch_key_mode__values">
-        <item>never_show</item>
-        <item>always_emoji</item>
-        <item>always_language_internal</item>
-        <item>always_language_system</item>
-        <item>dynamic_language_emoji</item>
+    <string-array name="pref__keyboard__utility_key_action__values">
+        <item>switch_to_emojis</item>
+        <item>switch_language</item>
+        <item>switch_keyboard_app</item>
+        <item>dynamic_switch_language_emojis</item>
     </string-array>
 
     <string-array name="pref__advanced__settings_theme__entries">
