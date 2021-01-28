@@ -3,10 +3,9 @@
   "name": "hebrew",
   "authors": [ "Antony" ],
   "direction": "rtl",
+  "modifier": "hebrew",
   "arrangement": [
     [
-      { "code":  39, "label": "'" },
-      { "code":  45, "label": "-" },
       { "code":  1511, "label": "ק" },
       { "code":  1512, "label": "ר" },
       { "code":  1488, "label": "א" },
