@@ -126,8 +126,7 @@
                             android:textColor="?android:textColorPrimary"
                             android:drawableStart="@drawable/ic_delete"
                             android:drawablePadding="8dp"
-                            android:drawableTint="?colorAccent"
-                            android:onClick="onActionClicked"/>
+                            android:drawableTint="?colorAccent"/>
 
                         <Button
                             android:id="@+id/theme_edit_btn"
@@ -140,8 +139,7 @@
                             android:textColor="?android:textColorPrimary"
                             android:drawableStart="@drawable/ic_edit"
                             android:drawablePadding="8dp"
-                            android:drawableTint="?colorAccent"
-                            android:onClick="onActionClicked"/>
+                            android:drawableTint="?colorAccent"/>
 
                     </LinearLayout>
 
@@ -183,24 +181,21 @@
             android:layout_height="wrap_content"
             app:fab_color="?colorPrimaryDark"
             app:fab_icon="@drawable/ic_file_blank"
-            app:label_text="@string/settings__theme_manager__create_empty"
-            android:onClick="onActionClicked"/>
+            app:label_text="@string/settings__theme_manager__create_empty"/>
         <com.nambimobile.widgets.efab.FabOption
             android:id="@+id/fab_option_create_from_selected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_color="?colorPrimaryDark"
             app:fab_icon="@drawable/ic_file"
-            app:label_text="@string/settings__theme_manager__create_from_selected"
-            android:onClick="onActionClicked"/>
+            app:label_text="@string/settings__theme_manager__create_from_selected"/>
         <!--<com.nambimobile.widgets.efab.FabOption
             android:id="@+id/fab_option_import"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_color="?colorPrimaryDark"
             app:fab_icon="@drawable/ic_input"
-            app:label_text="@string/assets__action__import"
-            android:onClick="onActionClicked"/>-->
+            app:label_text="@string/assets__action__import"/>-->
 
     </com.nambimobile.widgets.efab.ExpandableFabLayout>
 

@@ -89,6 +89,11 @@ class ThemeManagerActivity : AppCompatActivity() {
         )
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        binding.fabOptionCreateEmpty.setOnClickListener { onActionClicked(it) }
+        binding.fabOptionCreateFromSelected.setOnClickListener { onActionClicked(it) }
+        binding.themeDeleteBtn.setOnClickListener { onActionClicked(it) }
+        binding.themeEditBtn.setOnClickListener { onActionClicked(it) }
+
         layoutManager = LayoutManager(this).apply {
             preloadComputedLayout(KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs)
         }
