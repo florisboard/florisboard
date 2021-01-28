@@ -4,17 +4,6 @@
   "authors": [ "Antony" ],
   "mapping": {
     "all": {
-      "'": {
-        "relevant": [
-          { "code":   34, "label": "\"" },
-          { "code":   96, "label": "`" }
-        ]
-      },
-      "-": {
-        "relevant": [
-          { "code":   95, "label": "_" }
-        ]
-      },
       "~right": {
         "main": { "code":   44, "label": "," },
         "relevant": [
