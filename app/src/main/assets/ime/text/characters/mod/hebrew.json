@@ -5,10 +5,6 @@
   "direction": "rtl",
   "arrangement": [
     [
-      { "code":  39, "label": "'" },
-      { "code":  45, "label": "-" }
-    ],
-    [
       { "code":   -5, "label": "delete", "type": "enter_editing" }
     ],
     [
