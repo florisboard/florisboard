@@ -1,14 +1,8 @@
 {
   "$type": "dev.patrickgold.florisboard.ime.theme.Theme",
-<<<<<<< HEAD
   "name": "gboard_day",
   "label": "Gboard Day",
   "authors": [ "patrickgold", "itskareem" ],
-=======
-  "name": "floris_day",
-  "label": "Floris Day",
-  "authors": [ "patrickgold" ],
->>>>>>> fa6ecd6b134a3cd7961647e5c91c1d1b75a0c5f7
   "isNightTheme": false,
   "attributes": {
     "window": {
