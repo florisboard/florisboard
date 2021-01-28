@@ -9,7 +9,7 @@
       { "code":   39, "label": "'", "popup": {
         "relevant": [
           { "code":   34, "label": "\"" },
-          { "code":   96, "label": "`" }
+		  { "code":   96, "label": "`" }
         ]}
       },
       { "code":   45, "label": "-", "popup": {
@@ -17,6 +17,7 @@
           { "code":   95, "label": "_" }
         ]}
       },
+      { "code":  1511, "label": "ק" }
       { "code":  1512, "label": "ר" },
       { "code":  1488, "label": "א" },
       { "code":  1496, "label": "ט" },
