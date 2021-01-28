@@ -32,7 +32,7 @@ free to ask for help at any time!
 
 ## Adding a new keyboard layout / dictionary for locale
 
-You can now oficially add layouts to FlorisBoard as described below.
+You can now officially add layouts to FlorisBoard as described below.
 FlorisBoard's core has stabilized enough that adding new content is
 safe, although there will be some changes in the future.
 
