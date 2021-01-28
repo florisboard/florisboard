@@ -5,6 +5,7 @@
   "direction": "rtl",
   "arrangement": [
     [
+      { "code":    0, "type": "placeholder" },
       { "code":   -5, "label": "delete", "type": "enter_editing" }
     ],
     [
