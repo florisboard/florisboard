@@ -1,0 +1,53 @@
+{
+  "type": "characters",
+  "name": "hebrew",
+  "authors": [ "Antony" ],
+  "direction": "rtl",
+  "modifier": "hebrew",
+  "arrangement": [
+    [
+      { "code":   39, "label": "'", "popup": {
+        "relevant": [
+          { "code":   34, "label": "\"" },
+          { "code":   96, "label": "`" }
+        ]
+      } },
+      { "code":   45, "label": "-", "popup": {
+        "relevant": [
+          { "code":   95, "label": "_" }
+        ]
+      } },
+      { "code":  1511, "label": "ק" },
+      { "code":  1512, "label": "ר" },
+      { "code":  1488, "label": "א" },
+      { "code":  1496, "label": "ט" },
+      { "code":  1493, "label": "ו" },
+      { "code":  1503, "label": "ן" },
+      { "code":  1501, "label": "ם" },
+      { "code":  1508, "label": "פ" }
+    ],
+    [
+      { "code":  1513, "label": "ף" },
+      { "code":  1491, "label": "ך" },
+      { "code":  1490, "label": "ל" },
+      { "code":  1499, "label": "ח" },
+      { "code":  1506, "label": "י" },
+      { "code":  1497, "label": "ע" },
+      { "code":  1495, "label": "כ" },
+      { "code":  1500, "label": "ג" },
+      { "code":  1498, "label": "ד" },
+      { "code":  1507, "label": "ש" }
+    ],
+    [
+      { "code":  1494, "label": "ץ" },
+      { "code":  1505, "label": "ת" },
+      { "code":  1489, "label": "צ" },
+      { "code":  1492, "label": "מ" },
+      { "code":  1504, "label": "נ" },
+      { "code":  1502, "label": "ה" },
+      { "code":  1510, "label": "ב" },
+      { "code":  1514, "label": "ס" },
+      { "code":  1509, "label": "ז" }
+    ]
+  ]
+}

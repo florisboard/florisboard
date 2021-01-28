@@ -24,7 +24,8 @@
     "dvorak": "Dvorak",
     "jcuken_russian": "Russian (JCUKEN)",
     "canadian_french": "Canadian French (QWERTY)",
-    "greek": "Ελληνικά"
+    "greek": "Ελληνικά",
+    "hebrew": "עברית"
   },
   "defaultSubtypes": [
     {
@@ -196,6 +197,11 @@
       "id": 1801,
       "languageTag": "tr",
       "preferredLayout": "qwerty"
+    },
+    {
+      "id": 1901,
+      "languageTag": "iw-IL",
+      "preferredLayout": "hebrew"
     }
   ]
 }

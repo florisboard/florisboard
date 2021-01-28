@@ -1,0 +1,27 @@
+{
+  "type": "characters/mod",
+  "name": "hebrew",
+  "authors": [ "Antony" ],
+  "direction": "rtl",
+  "arrangement": [
+    [
+      { "code":    0, "type": "placeholder" },
+      { "code":   -5, "label": "delete", "type": "enter_editing" }
+    ],
+    [
+      { "code": -202, "label": "view_symbols", "type": "system_gui" },
+      { "code":   64, "label": "@", "groupId": 1, "variation": "email_address" },
+      { "code":   44, "label": ",", "groupId": 1, "variation": "normal" },
+      { "code":   44, "label": ",", "groupId": 1, "variation": "password" },
+      { "code":   47, "label": "/", "groupId": 1, "variation": "uri" },
+      { "code": -210, "label": "language_switch", "type": "system_gui" },
+      { "code": -213, "label": "switch_to_media_context", "type": "system_gui" },
+      { "code":   32, "label": "space" },
+      { "code":   46, "label": ".", "groupId": 2, "variation": "email_address" },
+      { "code":   46, "label": ".", "groupId": 2, "variation": "normal" },
+      { "code":   46, "label": ".", "groupId": 2, "variation": "password" },
+      { "code":   46, "label": ".", "groupId": 2, "variation": "uri" },
+      { "code":   10, "label": "enter", "groupId": 3, "type": "enter_editing" }
+    ]
+  ]
+}
