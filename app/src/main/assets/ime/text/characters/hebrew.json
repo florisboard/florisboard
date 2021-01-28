@@ -9,7 +9,7 @@
       { "code":   39, "label": "'", "popup": {
         "relevant": [
           { "code":   34, "label": "\"" },
-		  { "code":   96, "label": "`" }
+          { "code":   96, "label": "`" }
         ]}
       },
       { "code":   45, "label": "-", "popup": {
