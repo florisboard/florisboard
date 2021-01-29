@@ -107,13 +107,36 @@
     <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Introduza o nome para o tema.</string>
     <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">O nome do grupo apenas pode conter letras (a–z e/ou A–Z), dois pontos(:) para subgrupos e, adicionalmente, números (0–9), til (~) e sublinhado (_) para etiquetas de teclas.</string>
     <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Introduza o nome para o grupo.</string>
+    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Já existe este nome de grupo no tema. Por favor escolha outro.</string>
     <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">O nome do atributo apenas pode conter letras (a-z e/ou A-Z).</string>
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Introduza o nome para o atributo.</string>
+    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Já existe este nome de atributo neste grupo. Por favor escolha outro.</string>
     <string name="settings__theme__group_window" comment="Theme group label">Janela e sistema</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Teclado</string>
     <string name="settings__theme__group_key" comment="Theme group label">Tecla</string>
+    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Tecla (%s)</string>
     <string name="settings__theme__group_media" comment="Theme group label">Contexto multimédia</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">Uma mão</string>
+    <string name="settings__theme__group_popup" comment="Theme group label">Popup</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">Modo privado</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Barra inteligente</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Botão da barra inteligente</string>
+    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Grupo personalizado (%s)</string>
+    <string name="settings__theme__attr_background" comment="Theme attribute label">Cor de fundo</string>
+    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Cor de fundo (ativo)</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Cor de fundo (premida)</string>
+    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Cor principal</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Cor principal (alternativa)</string>
+    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Cor principal (premida)</string>
+    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Mostrar contorno</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Cor primária</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Cor primária (escura)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Cor de destaque</string>
+    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Cor da barra de navegação</string>
+    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Barra de navegação com cor principal escura</string>
+    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Semi-transparente</string>
+    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Cor do texto</string>
+    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Atributo personalizado (%s)</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Preferências do teclado</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Teclas</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Linha de números</string>
