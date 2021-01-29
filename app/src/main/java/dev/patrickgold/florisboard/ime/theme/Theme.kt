@@ -80,20 +80,20 @@ open class Theme(
          */
         fun getUiAttrNameString(context: Context, attrName: String): String {
             val strId = when (attrName) {
-                "background" ->             R.string.settings__theme__attr_background
-                "backgroundActive" ->       R.string.settings__theme__attr_backgroundActive
-                "backgroundPressed" ->      R.string.settings__theme__attr_backgroundPressed
-                "foreground" ->             R.string.settings__theme__attr_foreground
-                "foregroundAlt" ->          R.string.settings__theme__attr_foregroundAlt
-                "foregroundPressed" ->      R.string.settings__theme__attr_foregroundPressed
-                "showBorder" ->             R.string.settings__theme__attr_showBorder
-                "colorPrimary" ->           R.string.settings__theme__attr_colorPrimary
-                "colorPrimaryDark" ->       R.string.settings__theme__attr_colorPrimaryDark
-                "colorAccent" ->            R.string.settings__theme__attr_colorAccent
-                "navigationBarColor" ->     R.string.settings__theme__attr_navBarColor
-                "navigationBarLight" ->     R.string.settings__theme__attr_navBarLight
-                "semiTransparentColor" ->   R.string.settings__theme__attr_semiTransparentColor
-                "textColor" ->              R.string.settings__theme__attr_textColor
+                "background" ->                     R.string.settings__theme__attr_background
+                "backgroundActive" ->               R.string.settings__theme__attr_backgroundActive
+                "backgroundPressed" ->              R.string.settings__theme__attr_backgroundPressed
+                "foreground" ->                     R.string.settings__theme__attr_foreground
+                "foregroundAlt" ->                  R.string.settings__theme__attr_foregroundAlt
+                "foregroundPressed" ->              R.string.settings__theme__attr_foregroundPressed
+                "showBorder" ->                     R.string.settings__theme__attr_showBorder
+                "colorPrimary" ->                   R.string.settings__theme__attr_colorPrimary
+                "colorPrimaryDark" ->               R.string.settings__theme__attr_colorPrimaryDark
+                "colorAccent" ->                    R.string.settings__theme__attr_colorAccent
+                "navigationBarColor" ->             R.string.settings__theme__attr_navBarColor
+                "navigationBarLight" ->             R.string.settings__theme__attr_navBarLight
+                "semiTransparentColor" ->           R.string.settings__theme__attr_semiTransparentColor
+                "textColor" ->                      R.string.settings__theme__attr_textColor
                 else -> null
             }
             return if (strId != null) {
@@ -121,15 +121,17 @@ open class Theme(
                 )
                 else -> {
                     val strId = when (groupName) {
-                        "window" ->         R.string.settings__theme__group_window
-                        "keyboard" ->       R.string.settings__theme__group_keyboard
-                        "key" ->            R.string.settings__theme__group_key
-                        "media" ->          R.string.settings__theme__group_media
-                        "oneHanded" ->      R.string.settings__theme__group_oneHanded
-                        "popup" ->          R.string.settings__theme__group_popup
-                        "privateMode" ->    R.string.settings__theme__group_privateMode
-                        "smartbar" ->       R.string.settings__theme__group_smartbar
-                        "smartbarButton" -> R.string.settings__theme__group_smartbarButton
+                        "window" ->                 R.string.settings__theme__group_window
+                        "keyboard" ->               R.string.settings__theme__group_keyboard
+                        "key" ->                    R.string.settings__theme__group_key
+                        "media" ->                  R.string.settings__theme__group_media
+                        "oneHanded" ->              R.string.settings__theme__group_oneHanded
+                        "popup" ->                  R.string.settings__theme__group_popup
+                        "privateMode" ->            R.string.settings__theme__group_privateMode
+                        "smartbar" ->               R.string.settings__theme__group_smartbar
+                        "smartbarButton" ->         R.string.settings__theme__group_smartbarButton
+                        "extractEditLayout" ->      R.string.settings__theme__group_extractEditLayout
+                        "extractActionButton" ->    R.string.settings__theme__group_extractActionButton
                         else -> null
                     }
                     if (strId != null) {
@@ -210,6 +212,15 @@ open class Theme(
                     Pair("smartbarButton", mapOf(
                         Pair("background",              ThemeValue.fromString("@key/background")),
                         Pair("foreground",              ThemeValue.fromString("@key/foreground")),
+                    )),
+                    Pair("extractEditLayout", mapOf(
+                        Pair("background",              bgColor),
+                        Pair("foreground",              ThemeValue.fromString("@window/textColor")),
+                        Pair("foregroundAlt",           ThemeValue.fromString("#73FFFFFF")),
+                    )),
+                    Pair("extractActionButton", mapOf(
+                        Pair("background",              ThemeValue.fromString("@smartbarButton/background")),
+                        Pair("foreground",              ThemeValue.fromString("@smartbarButton/foreground")),
                     ))
                 )
             )
@@ -306,7 +317,7 @@ open class Theme(
             getAttrOrNull(ref.copy(group = "${ref.group}::$s2"))?.let { return it }
         }
         getAttrOrNull(ref)?.let { return it }
-        return ThemeValue.SolidColor(0)
+        return BASE_THEME.getAttrOrNull(ref) ?: ThemeValue.SolidColor(0)
     }
 
     /**
@@ -367,6 +378,13 @@ open class Theme(
 
             val SMARTBAR_BUTTON_BACKGROUND = ThemeValue.Reference("smartbarButton", "background")
             val SMARTBAR_BUTTON_FOREGROUND = ThemeValue.Reference("smartbarButton", "foreground")
+
+            val EXTRACT_EDIT_LAYOUT_BACKGROUND = ThemeValue.Reference("extractEditLayout", "background")
+            val EXTRACT_EDIT_LAYOUT_FOREGROUND = ThemeValue.Reference("extractEditLayout", "foreground")
+            val EXTRACT_EDIT_LAYOUT_FOREGROUND_ALT = ThemeValue.Reference("extractEditLayout", "foregroundAlt")
+
+            val EXTRACT_ACTION_BUTTON_BACKGROUND = ThemeValue.Reference("extractActionButton", "background")
+            val EXTRACT_ACTION_BUTTON_FOREGROUND = ThemeValue.Reference("extractActionButton", "foreground")
         }
     }
 

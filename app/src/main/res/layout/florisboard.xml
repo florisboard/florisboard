@@ -81,9 +81,4 @@
 
     </dev.patrickgold.florisboard.ime.core.InputView>
 
-    <dev.patrickgold.florisboard.ime.popup.PopupLayerView
-        android:id="@+id/popup_layer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
 </dev.patrickgold.florisboard.ime.core.InputWindowView>

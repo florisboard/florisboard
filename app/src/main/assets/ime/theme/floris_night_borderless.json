@@ -63,6 +63,15 @@
     "smartbarButton": {
       "background": "#424242",
       "foreground": "@window/textColor"
+    },
+    "extractEditLayout": {
+      "background": "#282828",
+      "foreground": "@window/textColor",
+      "foregroundAlt": "#73FFFFFF"
+    },
+    "extractActionButton": {
+      "background": "@smartbarButton/background",
+      "foreground": "@smartbarButton/foreground"
     }
   }
 }
