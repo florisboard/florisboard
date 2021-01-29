@@ -12,7 +12,6 @@
     "swedish_finnish": "Swedish/Finnish (QWERTY)",
     "danish": "Danish (QWERTY)",
     "icelandic": "Icelandic (QWERTY)",
-    "kurdish": "کوردی",
     "swiss_german": "Swiss German (QWERTZ)",
     "swiss_french": "Swiss French (QWERTZ)",
     "swiss_italian": "Swiss Italian (QWERTZ)",
@@ -26,7 +25,8 @@
     "jcuken_russian": "Russian (JCUKEN)",
     "canadian_french": "Canadian French (QWERTY)",
     "greek": "Ελληνικά",
-    "hebrew": "עברית"
+    "hebrew": "עברית",
+    "kurdish": "کوردی"
   },
   "defaultSubtypes": [
     {
@@ -140,11 +140,6 @@
       "preferredLayout": "danish"
     },
     {
-      "id": 2001,
-      "languageTag": "ckb",
-      "preferredLayout": "کوردی"
-    },
-    {
       "id": 741,
       "languageTag": "is-IS",
       "preferredLayout": "icelandic"
@@ -208,6 +203,11 @@
       "id": 1901,
       "languageTag": "iw-IL",
       "preferredLayout": "hebrew"
+    },
+    {
+      "id": 2001,
+      "languageTag": "ckb",
+      "preferredLayout": "kurdish"
     }
   ]
 }

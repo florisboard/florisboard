@@ -34,7 +34,6 @@
           { "code": 1697, "label": "ڡ" }
         ]
       },
-
       "": {
         "relevant": [
           { "code": 65163, "label": "ﺋ" },
@@ -42,8 +41,6 @@
           { "code": 65139, "label": "ﹳ" }
         ]
       },
-
-
       "ع": {
         "relevant": [
           { "code": 1551, "label": "؏" },
@@ -121,7 +118,6 @@
           { "code": 1741, "label": "ۍ" },
           { "code": 1742, "label": "ێ" },
           { "code": 1597, "label": "ؽ" }
-
         ]
       },
       "ۆ": {
@@ -157,13 +153,13 @@
       "~right": {
         "main": { "code": -255, "label": ".krd"},
         "relevant": [
-          { "code": -255, "label": ".iq" },
-          { "code": -255, "label": ".tv" },
           { "code": -255, "label": ".gov" },
           { "code": -255, "label": ".edu" },
           { "code": -255, "label": ".com" },
           { "code": -255, "label": ".org" },
-          { "code": -255, "label": ".net" }
+          { "code": -255, "label": ".net" },
+          { "code": -255, "label": ".iq" },
+          { "code": -255, "label": ".tv" }
         ]
       }
     }
