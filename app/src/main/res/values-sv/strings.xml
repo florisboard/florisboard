@@ -26,12 +26,19 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Symboler</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flaggor</string>
     <!-- Smartbar strings -->
+    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Avsluta textredigerings panel.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Växla tillståndet för enhandsläget.</string>
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Öppna inställningar.</string>
+    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Byt till textredigerings panelen.</string>
+    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Byt till media inmatning.</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Ångraknapp för att återställa föregående handling</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Göra om knapp för att återställa föregående ångrahandling</string>
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Om synlig, indikerar att privatläge är aktivt. När du klickar på, visas information om privatläget.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Inställningar</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Fler alternativ</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Hjälp &amp; återkoppling</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Hjälp</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Hem</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Tangentbord</string>
     <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Tema</string>
@@ -100,11 +107,30 @@
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Vänligen ange ett egenskapsnamn.</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Tangentbord</string>
     <string name="settings__theme__group_key" comment="Theme group label">Tangent</string>
+    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Tangent (%s)</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">Enhandad</string>
+    <string name="settings__theme__group_popup" comment="Theme group label">Popup</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">Privatläge</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Smartremsa</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Smartremsa knapp</string>
+    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Anpassad grupp (%s)</string>
+    <string name="settings__theme__attr_background" comment="Theme attribute label">Bakgrundsfärg</string>
+    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Bakgrundsfärg (aktiv)</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Bakgrundsfärg (intryckt)</string>
+    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Förgrundsfärg</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Förgrundsfärg (alternativt)</string>
+    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Förgrundsfärg (intryckt)</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Primärfärg</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Primärfärg (mörk)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Accentfärg</string>
+    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Navigeringsremsans färg</string>
+    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Mörk förgrund för navigeringsremsan</string>
+    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Textfärg</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Tangentbordsinställningar</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Tangenter</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Sifferrad</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Visa sifferraden ovanför tecken layouten</string>
+    <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">Inaktiverad</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Enhandsläge</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Av</string>
@@ -125,7 +151,12 @@
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volym vid tangenttryck</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibrera vid tangenttryck</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Vibrationsstyrka vid tangentryck</string>
+    <string name="pref__keyboard__popup_visible__label" comment="Preference title">Popup synlighet</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Visa popup vid tangenttryck</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Fördröjning vid långt tryck</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">Aktivera smartremsa</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Förslag</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Visas i smartremsa</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Skift</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Byt till föregående tangentbord</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Byt till föregående undertyp</string>
@@ -144,6 +175,7 @@
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Mörkt</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Visa appikonen i startprogrammet</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Tvinga privatläge</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Kommer inaktivera alla funktioner som tillfälligt måste fungera med din inmatad data</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Om</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard appikon</string>
@@ -161,6 +193,7 @@
     <string name="assets__action__add">Lägg till</string>
     <string name="assets__action__cancel">Avbryt</string>
     <string name="assets__action__cancel_confirm_title">Bekräfta avbryt</string>
+    <string name="assets__action__cancel_confirm_message">Är du säker på att du vill ta bort alla icke sparade ändringar? Denna åtgärden kan inte ångras efter den har utförts.</string>
     <string name="assets__action__delete">Radera</string>
     <string name="assets__action__delete_confirm_title">Bekräfta radering</string>
     <string name="assets__action__delete_confirm_message">Är du säker på att du vill radera \"%s\"? Denna åtgärden kan inte ångras efter den har utförts.</string>
