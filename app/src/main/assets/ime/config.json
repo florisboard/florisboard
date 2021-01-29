@@ -10,6 +10,7 @@
     "swedish_finnish": "Swedish/Finnish (QWERTY)",
     "danish": "Danish (QWERTY)",
     "icelandic": "Icelandic (QWERTY)",
+    "kurdish": "کوردی",
     "swiss_german": "Swiss German (QWERTZ)",
     "swiss_french": "Swiss French (QWERTZ)",
     "swiss_italian": "Swiss Italian (QWERTZ)",
@@ -134,6 +135,11 @@
       "id": 731,
       "languageTag": "da-DK",
       "preferredLayout": "danish"
+    },
+    {
+      "id": 2001,
+      "languageTag": "ckb",
+      "preferredLayout": "کوردی"
     },
     {
       "id": 741,
