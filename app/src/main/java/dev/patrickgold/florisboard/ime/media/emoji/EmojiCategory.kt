@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.media.emoji
 
-import android.annotation.SuppressLint
+import java.util.*
 
 /**
  * Enum for emoji category.
@@ -38,9 +38,8 @@ enum class EmojiCategory {
     }
 
     companion object {
-        @SuppressLint("DefaultLocale")
         fun fromString(string: String): EmojiCategory {
-            return valueOf(string.replace(" & ", "_").toUpperCase())
+            return valueOf(string.replace(" & ", "_").toUpperCase(Locale.ENGLISH))
         }
     }
 }
