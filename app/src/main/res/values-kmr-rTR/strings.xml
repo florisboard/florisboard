@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Rawesandin</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Wendeman</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Îkona sê-dot. Eger xuya be, nîşan dide ku eger zêdetir pêl bê kirin, zêdetir tîp dikarin bên bikaranîn.</string>
+    <!-- One-handed strings -->
+    <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Moda taybet</string>
+    <!--
+    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
+-->
+    <!-- Media strings -->
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Xende</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Hestnîşan</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <!-- Emoji strings -->
+    <string name="emoji__category__activities" comment="Emoji category name">Çalakî</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Amanc</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">Sembol</string>
+    <string name="emoji__category__flags" comment="Emoji category name">Alayen</string>
+    <!-- Smartbar strings -->
+    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Mîhengan veke.</string>
+    <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">Mîhengan</string>
+    <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Vebijêrkên zêdetir</string>
+    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Alîkarî &amp; Dazanînên paş</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Alîkarî</string>
+    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Mal</string>
+    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Klavye</string>
+    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Nivîsin</string>
+    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Tema</string>
+    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Jed</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">Rawêj</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Jixwebera Sîstemê</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">Bi xêr hatî %s</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard di pergalê de ne çalak e û ji ber vê yekê dê wekî rêbazek têketê di hilbijarka têketê de tune be. Ji bo çareserkirina vê pirsgirêkê li vir bitikin.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard wekî metoda têketê ya pêşdarazî nayê hilbijartin. Ji bo çareserkirina vê pirsgirêkê li vir bitikin.</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Spas ji bo ceribandina FlorisBoard! Ev proje hîn di alfayê de ye û ji ber vê yekê taybetmendiyên winda Heke tu çewtiyekê dibînî an jî dixwazî pêşniyarekê bikî, ji kerema xwe repo ya li GitHub vekolin û pirsgirêkê pel bikin. Ev dibe alîkar ku FlorisBoard baştir bibe. Sax bî!</string>
+    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Ziman û klavye</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Wusa dixuye ku te tu cureyên jêr ava nekirine. Wekî paşvekê wê subtype English/QWERTY were bikaranîn!</string>
+    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Zêdekirin</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Zêdekirina Ziman</string>
+    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Pêkanîn</string>
+    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Betal kirin</string>
+    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Jêbirin</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Guherîne ziman</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Ziman</string>
+    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nenas</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Moda tema</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Her dem roj</string>
+    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Her dem şev</string>
+    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Pergalê bişopîne</string>
+    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Demê bişopîne</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Dema rojbûnê</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">dema berava rojê</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Rûkara Rojê</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Rûkara şevê</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Rûkara Hilbijartî</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Rengan li gorî pêvekan adapte bike</string>
+    <string name="settings__theme_editor__name_label" comment="Label of name input">Nav</string>
+    <string name="settings__theme_editor__type_label" comment="Label of type input">Cure</string>
+    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referans</string>
+    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Kom</string>
+    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Taybetî</string>
+    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Rengê tarî</string>
+    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Gradyana xêzî</string>
+    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Gradyana Gloverî</string>
+    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Biguherîne</string>
+    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Dox</string>
+    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Din</string>
+    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Nivîs</string>
+    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Pêşdîtin ji bo nirxa tema</string>
+    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Ji kerema xwe re navekî dirbê têkeve.</string>
+    <string name="settings__theme__group_keyboard" comment="Theme group label">Klavye</string>
+    <string name="settings__theme__group_key" comment="Theme group label">Kilîd</string>
+    <string name="settings__theme__attr_background" comment="Theme attribute label">Rengê Paşrûyê</string>
+    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Rengê rûerdê</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Rengê rûerdê (Altêrnatîf)</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Rengê sereke</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Rengê sereke (Tarî)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Rengê devkî</string>
+    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Rengê darka navîgasyonê</string>
+    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Rengê nivîsarê</string>
+    <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">Hat neçalakkirin</string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">Raxistin</string>
+    <string name="pref__keyboard__height_factor__normal" comment="Preference value">Normal</string>
+    <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">Nîv-dirêj</string>
+    <string name="pref__keyboard__height_factor__tall" comment="Preference value">Dirêj</string>
+    <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Dirêjahiya zêde</string>
+    <string name="pref__keyboard__height_factor__custom" comment="Preference value">Edeba</string>
+    <string name="settings__typing__title" comment="Title of Typing experience fragment">Serpêhatiya nivîsandinê</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Pêşniyar</string>
+    <string name="pref__correction__title" comment="Preference group title">Rastkirin</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Bixweber-kapîtalîzasyon</string>
+    <string name="pref__glide__title" comment="Preference group title">Glide typing</string>
+    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Bê çalakî</string>
+    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Klavyeyê veşêre</string>
+    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
+    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Hêdî</string>
+    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normal</string>
+    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Lez</string>
+    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
+    <!-- About UI strings -->
+    <string name="about__title" comment="Title of About activity">Derbar</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">Lîsansên çavkaniya vekirî</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">Koda çavkanî</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">Lîsansên çavkaniya vekirî</string>
+    <!-- Assets strings -->
+    <string name="assets__file__name">Nav</string>
+    <string name="assets__action__add">Zêdekirin</string>
+    <string name="assets__action__cancel">Betal kirin</string>
+    <string name="assets__action__delete">Jêbirin</string>
+    <string name="assets__action__edit">Destkarî</string>
+    <string name="assets__action__export">Hinardin</string>
+    <!-- Setup UI strings -->
+    <!-- Crash Dialog strings -->
+</resources>
