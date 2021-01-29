@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- One-handed strings -->
+    <!-- Private mode info dialog strings -->
+    <!--
+    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
+-->
+    <!-- Media strings -->
+    <!-- Emoji strings -->
+    <!-- Smartbar strings -->
+    <!-- Settings UI strings -->
+    <!-- About UI strings -->
+    <!-- Assets strings -->
+    <!-- Setup UI strings -->
+    <!-- Crash Dialog strings -->
+</resources>
