@@ -261,19 +261,24 @@ class ThemeEditorActivity : AppCompatActivity() {
         val sortedMap = baseMap.toList().sortedBy { (_, v) -> v }.toMap().toMutableMap()
         val groupIds = sortedMap.keys.toMutableList()
         val groupNames = sortedMap.values.toMutableList()
-        if (groupNames.contains("keyboard")) {
-            val windowGroupId = groupIds[groupNames.indexOf("keyboard")]
-            groupIds.remove(windowGroupId)
-            groupNames.remove("keyboard")
-            groupIds.add(0, windowGroupId)
-            groupNames.add(0, "keyboard")
-        }
-        if (groupNames.contains("window")) {
-            val windowGroupId = groupIds[groupNames.indexOf("window")]
-            groupIds.remove(windowGroupId)
-            groupNames.remove("window")
-            groupIds.add(0, windowGroupId)
-            groupNames.add(0, "window")
+        listOf(
+            Pair("keyboard", true),
+            Pair("window", true),
+            Pair("extractEditLayout", false),
+            Pair("extractActionButton", false),
+        ).forEach { (groupName, addFirst) ->
+            if (groupNames.contains(groupName)) {
+                val groupId = groupIds[groupNames.indexOf(groupName)]
+                groupIds.remove(groupId)
+                groupNames.remove(groupName)
+                if (addFirst) {
+                    groupIds.add(0, groupId)
+                    groupNames.add(0, groupName)
+                } else {
+                    groupIds.add(groupId)
+                    groupNames.add(groupName)
+                }
+            }
         }
         for ((n, groupId) in groupIds.withIndex()) {
             binding.themeAttributes.findViewById<ThemeAttrGroupView>(groupId)?.let { groupView ->

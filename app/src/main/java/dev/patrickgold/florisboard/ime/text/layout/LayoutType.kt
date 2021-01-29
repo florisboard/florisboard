@@ -1,7 +1,7 @@
 package dev.patrickgold.florisboard.ime.text.layout
 
-import android.annotation.SuppressLint
 import com.squareup.moshi.FromJson
+import java.util.*
 
 /**
  * Defines the type of the layout.
@@ -19,15 +19,13 @@ enum class LayoutType {
     SYMBOLS2,
     SYMBOLS2_MOD;
 
-    @SuppressLint("DefaultLocale")
     override fun toString(): String {
-        return super.toString().replace("_", "/").toLowerCase()
+        return super.toString().replace("_", "/").toLowerCase(Locale.ENGLISH)
     }
 
     companion object {
-        @SuppressLint("DefaultLocale")
         fun fromString(string: String): LayoutType {
-            return valueOf(string.replace("/", "_").toUpperCase())
+            return valueOf(string.replace("/", "_").toUpperCase(Locale.ENGLISH))
         }
     }
 }

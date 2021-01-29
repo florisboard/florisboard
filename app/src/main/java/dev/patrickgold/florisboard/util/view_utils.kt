@@ -1,6 +1,5 @@
 package dev.patrickgold.florisboard.util
 
-import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.res.ColorStateList
@@ -11,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
+import kotlin.reflect.KClass
 
 fun getColorFromAttr(
     context: Context,
@@ -71,6 +71,18 @@ fun refreshLayoutOf(view: View?) {
         view?.invalidate()
         view?.requestLayout()
     }
+}
+
+@Suppress("UNCHECKED_CAST")
+fun <T : View> ViewGroup.findViewWithType(type: KClass<T>): T? {
+    for (child in this.children) {
+        if (type.isInstance(child)) {
+            return child as T
+        } else if (child is ViewGroup) {
+            child.findViewWithType(type)?.let { return it }
+        }
+    }
+    return null
 }
 
 /**

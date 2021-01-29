@@ -16,8 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.text.key
 
-import android.annotation.SuppressLint
 import com.squareup.moshi.FromJson
+import java.util.*
 
 enum class KeyVariation {
     ALL,
@@ -27,9 +27,8 @@ enum class KeyVariation {
     URI;
 
     companion object {
-        @SuppressLint("DefaultLocale")
         fun fromString(string: String): KeyVariation {
-            return valueOf(string.toUpperCase())
+            return valueOf(string.toUpperCase(Locale.ENGLISH))
         }
     }
 }
