@@ -208,11 +208,6 @@
     {
       "id": 2001,
       "languageTag": "sr-RS",
-      "preferredLayout": "serbian_latin"
-    },
-    {
-      "id": 2002,
-      "languageTag": "sr-RS",
       "preferredLayout": "serbian_cyrillic"
     }
   ]
