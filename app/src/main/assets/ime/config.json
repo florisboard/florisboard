@@ -25,7 +25,9 @@
     "jcuken_russian": "Russian (JCUKEN)",
     "canadian_french": "Canadian French (QWERTY)",
     "greek": "Ελληνικά",
-    "hebrew": "עברית"
+    "hebrew": "עברית",
+    "serbian_latin": "Serbian (QWERTZ)",
+    "serbian_cyrillic": "Serbian (ЉЊЕРТЗ)"
   },
   "defaultSubtypes": [
     {
@@ -202,6 +204,16 @@
       "id": 1901,
       "languageTag": "iw-IL",
       "preferredLayout": "hebrew"
+    },
+    {
+      "id": 2001,
+      "languageTag": "sr-RS",
+      "preferredLayout": "serbian_latin"
+    },
+    {
+      "id": 2002,
+      "languageTag": "sr-RS",
+      "preferredLayout": "serbian_cyrillic"
     }
   ]
 }
