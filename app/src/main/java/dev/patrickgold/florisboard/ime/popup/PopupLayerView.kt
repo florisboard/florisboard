@@ -20,12 +20,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.ViewGroup
 import android.widget.FrameLayout
-import dev.patrickgold.florisboard.ime.core.PrefHelper
 
+/**
+ * Basic helper view class which acts as a non-interactive layer view, which sits above the whole
+ * input UI. Automatically rejects any touch events and passes it through to the View below.
+ */
 class PopupLayerView : FrameLayout {
-    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
-
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
@@ -34,6 +36,9 @@ class PopupLayerView : FrameLayout {
         background = null
         isClickable = false
         isFocusable = false
+        layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+        )
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
