@@ -3,14 +3,60 @@
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Паузирај</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Сачекајте</string>
     <!-- One-handed strings -->
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Помери тастатуру улево.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Помери тастатуру удесно.</string>
     <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Приватни мод</string>
     <!--
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
     <!-- Media strings -->
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Емоџији</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Емотикони</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Каомоџи</string>
     <!-- Emoji strings -->
+    <string name="emoji__category__activities" comment="Emoji category name">Активности</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Објекти</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">Симболи</string>
+    <string name="emoji__category__flags" comment="Emoji category name">Заставе</string>
     <!-- Smartbar strings -->
+    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Отвори подешавања.</string>
     <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">Подешавања</string>
+    <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Више опција</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Помоћ</string>
+    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Почетна</string>
+    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Тастатура</string>
+    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Тема</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">Подразумевано</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Подразумевано</string>
+    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Додај</string>
+    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Примени</string>
+    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Откажи</string>
+    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Избриши</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Локал</string>
+    <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">Распоред тастатуре</string>
+    <string name="settings__theme__title" comment="Title of the Theme fragment">Тема тастатуре</string>
+    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Недефинисано</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Мод теме</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Изабрана тема</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">Интерна Меморија</string>
+    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Направи нову тему</string>
+    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Нова тема</string>
+    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Измени тему</string>
+    <string name="settings__theme_editor__name_label" comment="Label of name input">Име</string>
+    <string name="settings__theme_editor__type_label" comment="Label of type input">Тип</string>
+    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Додај групу</string>
+    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Измени групу</string>
+    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Додај особину</string>
+    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Измени особину</string>
+    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Референца</string>
+    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Група</string>
+    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Особина</string>
+    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Стање</string>
+    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Друго</string>
+    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Текст</string>
+    <string name="settings__theme__group_key" comment="Theme group label">Кључ</string>
     <!-- About UI strings -->
     <!-- Assets strings -->
     <!-- Setup UI strings -->
