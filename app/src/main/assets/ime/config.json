@@ -25,7 +25,8 @@
     "jcuken_russian": "Russian (JCUKEN)",
     "canadian_french": "Canadian French (QWERTY)",
     "greek": "Ελληνικά",
-    "hebrew": "עברית"
+    "hebrew": "עברית",
+    "kurdish": "کوردی"
   },
   "defaultSubtypes": [
     {
@@ -202,6 +203,11 @@
       "id": 1901,
       "languageTag": "iw-IL",
       "preferredLayout": "hebrew"
+    },
+    {
+      "id": 2001,
+      "languageTag": "ckb",
+      "preferredLayout": "kurdish"
     }
   ]
 }
