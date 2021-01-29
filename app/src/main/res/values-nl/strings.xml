@@ -107,13 +107,36 @@
     <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Voer een naam voor het thema in.</string>
     <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Voer een groepsnaam in die enkel letters (a-z en/of A-Z), dubbelpunt (:) voor ondergroepering of bijkomend nummers (0-9), tilde (~) of underscores (_) voor het sleutellabel bevat.</string>
     <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Vul een groepsnaam in.</string>
+    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Deze groepsnaam bestaat al binnen dit thema. Kies een andere naam.</string>
     <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Vul een kenmerknaam in die enkel de letters a-z en/of A-Z bevat.</string>
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Vul de naam van het kenmerk in.</string>
+    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Deze kenmerknaam bestaat al binnen deze groep. Kies een andere naam.</string>
     <string name="settings__theme__group_window" comment="Theme group label">Venster &amp; Systeem</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Toetsenbord</string>
     <string name="settings__theme__group_key" comment="Theme group label">Toets</string>
+    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Sleutel (%s)</string>
     <string name="settings__theme__group_media" comment="Theme group label">Mediacontext</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">Met één hand</string>
+    <string name="settings__theme__group_popup" comment="Theme group label">Pop-up</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">Privémodus</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Slimme Balk</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Knop voor Slimme Balk</string>
+    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Aangepaste groep (%s)</string>
+    <string name="settings__theme__attr_background" comment="Theme attribute label">Achtergrondkleur</string>
+    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Achtergrondkleur (wanneer actief)</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Achtergrondkleur (wanneer ingedrukt)</string>
+    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Voorgrondkleur</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Voorgrondkleur (alternatief)</string>
+    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Voorgrondkleur (wanneer ingedrukt)</string>
+    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Rand weergeven</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Primaire kleur</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Primaire kleur (Donker)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Accentkleur</string>
+    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Kleur navigatiebalk</string>
+    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Navigatiebalk donkere voorgrond</string>
+    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Semi-transparante kleur</string>
+    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Tekstkleur</string>
+    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Aangepast kenmerk (%s)</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Toetsenbordvoorkeuren</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Toetsen</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Nummerrij</string>
