@@ -1,0 +1,44 @@
+{
+  "type": "characters",
+  "name": "serbian_cyrillic",
+  "authors": ["GrbavaCigla"],
+  "direction": "ltr",
+  "arrangement": [
+    [
+      { "code": 1113, "label": "љ" },
+      { "code": 1114, "label": "њ" },
+      { "code": 1077, "label": "е" },
+      { "code": 1088, "label": "р" },
+      { "code": 1090, "label": "т" },
+      { "code": 1079, "label": "з" },
+      { "code": 1091, "label": "у" },
+      { "code": 1080, "label": "и" },
+      { "code": 1086, "label": "о" },
+      { "code": 1087, "label": "п" },
+      { "code": 1096, "label": "ш" }
+    ],
+    [
+      { "code": 1072, "label": "а" },
+      { "code": 1089, "label": "с" },
+      { "code": 1076, "label": "д" },
+      { "code": 1092, "label": "ф" },
+      { "code": 1075, "label": "г" },
+      { "code": 1093, "label": "х" },
+      { "code": 1112, "label": "ј" },
+      { "code": 1082, "label": "к" },
+      { "code": 1083, "label": "л" },
+      { "code": 1095, "label": "ч" },
+      { "code": 1115, "label": "ћ" }
+    ],
+    [
+      { "code": 1119, "label": "џ" },
+      { "code": 1094, "label": "ц" },
+      { "code": 1074, "label": "в" },
+      { "code": 1073, "label": "б" },
+      { "code": 1085, "label": "н" },
+      { "code": 1084, "label": "м" },
+      { "code": 1106, "label": "ђ" },
+      { "code": 1078, "label": "ж" }
+    ]
+  ]
+}
