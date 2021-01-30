@@ -1,0 +1,45 @@
+{
+  "type": "characters",
+  "name": "serbian_latin",
+  "authors": ["GrbavaCigla"],
+  "direction": "ltr",
+  "arrangement": [
+    [
+      { "code": 113, "label": "q" },
+      { "code": 119, "label": "w" },
+      { "code": 101, "label": "e" },
+      { "code": 114, "label": "r" },
+      { "code": 116, "label": "t" },
+      { "code": 122, "label": "z" },
+      { "code": 117, "label": "u" },
+      { "code": 105, "label": "i" },
+      { "code": 111, "label": "o" },
+      { "code": 112, "label": "p" },
+      { "code": 353, "label": "š" }
+    ],
+    [
+      { "code":  97, "label": "a" },
+      { "code": 115, "label": "s" },
+      { "code": 100, "label": "d" },
+      { "code": 102, "label": "f" },
+      { "code": 103, "label": "g" },
+      { "code": 104, "label": "h" },
+      { "code": 106, "label": "j" },
+      { "code": 107, "label": "k" },
+      { "code": 108, "label": "l" },
+      { "code": 269, "label": "č" },
+      { "code": 263, "label": "ć" }
+    ],
+    [
+      { "code": 121, "label": "y" },
+      { "code": 120, "label": "x" },
+      { "code":  99, "label": "c" },
+      { "code": 118, "label": "v" },
+      { "code":  98, "label": "b" },
+      { "code": 110, "label": "n" },
+      { "code": 109, "label": "m" },
+      { "code": 273, "label": "đ" },
+      { "code": 382, "label": "ž" }
+    ]
+  ]
+}

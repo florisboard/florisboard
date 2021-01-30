@@ -26,6 +26,8 @@
     "canadian_french": "Canadian French (QWERTY)",
     "greek": "Ελληνικά",
     "hebrew": "עברית",
+    "serbian_latin": "Serbian (QWERTZ)",
+    "serbian_cyrillic": "Serbian (ЉЊЕРТЗ)",
     "kurdish": "کوردی"
   },
   "defaultSubtypes": [
@@ -208,6 +210,11 @@
       "id": 2001,
       "languageTag": "ckb",
       "preferredLayout": "kurdish"
+    },
+    {
+      "id": 2101,
+      "languageTag": "sr-RS",
+      "preferredLayout": "serbian_cyrillic"
     }
   ]
 }
