@@ -63,36 +63,59 @@ abstract class SwipeGesture {
      * @property listener The listener to report detected swipes to.
      */
     class Detector(private val context: Context, private val listener: Listener) {
-        private val eventList: MutableList<MotionEvent> = mutableListOf()
-        private var indexFirst: Int = 0
-        private var indexLastMoveRecognized: Int = 0
+        private var firstMotionEvent: MotionEvent? = null
+        private var lastMotionEvent: MotionEvent? = null
+        private var absUnitCountX: Int = 0
+        private var absUnitCountY: Int = 0
+        private var unitWidth: Double = numericValue(context, DistanceThreshold.NORMAL) / 4.0
 
         var distanceThreshold: DistanceThreshold = DistanceThreshold.NORMAL
+            set(value) {
+                field = value
+                unitWidth = numericValue(context, value) / 4.0
+            }
         var velocityThreshold: VelocityThreshold = VelocityThreshold.NORMAL
 
-        fun onTouchEvent(event: MotionEvent): Boolean {
+        /**
+         * Method which evaluates if a given [event] is a gesture.
+         *
+         * @param event The MotionEvent which should be checked for a gesture.
+         * @param alwaysTriggerOnMove Set to true if the moving detection algorithm should always
+         *  trigger, regardless of the distance from the previous event. Defaults to false.
+         * @return True if the given [event] is a gesture, false otherwise.
+         */
+        fun onTouchEvent(event: MotionEvent, alwaysTriggerOnMove: Boolean = false): Boolean {
             try {
                 when (event.actionMasked) {
                     MotionEvent.ACTION_DOWN,
                     MotionEvent.ACTION_POINTER_DOWN -> {
-                        clearEventList()
-                        eventList.add(MotionEvent.obtainNoHistory(event))
+                        resetState()
+                        firstMotionEvent = MotionEvent.obtainNoHistory(event)
+                        lastMotionEvent = firstMotionEvent
                     }
                     MotionEvent.ACTION_MOVE -> {
-                        eventList.add(MotionEvent.obtainNoHistory(event))
-                        val firstEvent = eventList[indexFirst]
-                        val lastEvent = eventList[indexLastMoveRecognized]
-                        val diffX = event.x - lastEvent.x
-                        val diffY = event.y - lastEvent.y
-                        val distanceThresholdNV = numericValue(context, distanceThreshold) / 4.0f
-                        return if (abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV) {
-                            indexLastMoveRecognized = eventList.size - 1
-                            val direction = detectDirection(diffX.toDouble(), diffY.toDouble())
+                        val firstEvent = firstMotionEvent ?: return false
+                        val absDiffX = event.x - firstEvent.x
+                        val absDiffY = event.y - firstEvent.y
+                        val lastEvent = lastMotionEvent ?: return false
+                        val relDiffX = event.x - lastEvent.x
+                        val relDiffY = event.y - lastEvent.y
+                        return if (alwaysTriggerOnMove || abs(relDiffX) > unitWidth || abs(relDiffY) > unitWidth) {
+                            lastMotionEvent = MotionEvent.obtainNoHistory(event)
+                            val direction = detectDirection(relDiffX.toDouble(), relDiffY.toDouble())
+                            val newAbsUnitCountX = (absDiffX / unitWidth).toInt()
+                            val newAbsUnitCountY = (absDiffY / unitWidth).toInt()
+                            val relUnitCountX = newAbsUnitCountX - absUnitCountX
+                            val relUnitCountY = newAbsUnitCountY - absUnitCountY
+                            absUnitCountX = newAbsUnitCountX
+                            absUnitCountY = newAbsUnitCountY
                             listener.onSwipe(Event(
                                 direction = direction,
                                 type = Type.TOUCH_MOVE,
-                                diffX = event.x - firstEvent.x,
-                                diffY = event.y - firstEvent.y
+                                absUnitCountX,
+                                absUnitCountY,
+                                relUnitCountX,
+                                relUnitCountY
                             ))
                         } else {
                             false
@@ -100,32 +123,36 @@ abstract class SwipeGesture {
                     }
                     MotionEvent.ACTION_UP,
                     MotionEvent.ACTION_POINTER_UP -> {
-                        val firstEvent = eventList[indexFirst]
-                        val diffX = event.x - firstEvent.x
-                        val diffY = event.y - firstEvent.y
-                        val distanceThresholdNV = numericValue(context, distanceThreshold)
+                        val firstEvent = firstMotionEvent ?: return false
+                        val absDiffX = event.x - firstEvent.x
+                        val absDiffY = event.y - firstEvent.y
                         /*val velocityThresholdNV = numericValue(velocityThreshold)
                         val velocity =
                             ((convertPixelsToDp(
                                 sqrt(diffX.pow(2) + diffY.pow(2)),
                                 context
                             ) / event.downTime) * 10.0f.pow(8)).toInt()*/
-                        clearEventList()
                         // return if ((abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV) && velocity >= velocityThresholdNV) {
-                        return if ((abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV)) {
-                            val direction = detectDirection(diffX.toDouble(), diffY.toDouble())
+                        val ret = if ((abs(absDiffX) > (unitWidth * 4.0) || abs(absDiffY) > (unitWidth * 4.0))) {
+                            val direction = detectDirection(absDiffX.toDouble(), absDiffY.toDouble())
+                            absUnitCountX = (absDiffX / unitWidth).toInt()
+                            absUnitCountY = (absDiffY / unitWidth).toInt()
                             listener.onSwipe(Event(
                                 direction = direction,
                                 type = Type.TOUCH_UP,
-                                diffX = diffX,
-                                diffY = diffY
+                                absUnitCountX,
+                                absUnitCountY,
+                                absUnitCountX,
+                                absUnitCountY
                             ))
                         } else {
                             false
                         }
+                        resetState()
+                        return ret
                     }
                     MotionEvent.ACTION_CANCEL -> {
-                        clearEventList()
+                        resetState()
                     }
                     else -> return false
                 }
@@ -175,22 +202,45 @@ abstract class SwipeGesture {
         }
 
         /**
-         * Cleans up and clears the event list.
+         * Resets the state.
          */
-        private fun clearEventList() {
-            for (event in eventList) {
-                event.recycle()
-            }
-            eventList.clear()
-            indexFirst = 0
-            indexLastMoveRecognized = 0
+        private fun resetState() {
+            firstMotionEvent = null
+            lastMotionEvent = null
+            absUnitCountX = 0
+            absUnitCountY = 0
         }
     }
 
-    interface Listener {
+    /**
+     * An interface which provides an abstract callback function, which will be called for any
+     * detected swipe event.
+     */
+    fun interface Listener {
         fun onSwipe(event: Event): Boolean
     }
 
+    /**
+     * Data class which describes a single gesture event.
+     */
+    data class Event(
+        /** The direction of the swipe. */
+        val direction: Direction,
+        /** The type of the swipe. */
+        val type: Type,
+        /** The unit count on the x-axis, measured from the first event (ACTION_DOWN). */
+        val absUnitCountX: Int,
+        /** The unit count on the y-axis, measured from the first event (ACTION_DOWN). */
+        val absUnitCountY: Int,
+        /** The unit count on the x-axis, measured from the last event (ACTION_MOVE). */
+        val relUnitCountX: Int,
+        /** The unit count on the y-axis, measured from the last event (ACTION_MOVE). */
+        val relUnitCountY: Int
+    )
+
+    /**
+     * ENum which defines the direction of the detected swipe.
+     */
     enum class Direction {
         UP_LEFT,
         UP,
@@ -202,13 +252,9 @@ abstract class SwipeGesture {
         LEFT,
     }
 
-    data class Event(
-        val direction: Direction,
-        val type: Type,
-        val diffX: Float,
-        val diffY: Float
-    )
-
+    /**
+     * Enum which defines the type of the gesture.
+     */
     enum class Type {
         TOUCH_UP,
         TOUCH_MOVE;

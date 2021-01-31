@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import dev.patrickgold.florisboard.util.*
 import java.util.*
+import kotlin.math.abs
 
 /**
  * View class for managing the rendering and the events of a single keyboard key.
@@ -61,6 +62,8 @@ class KeyView(
             field = value
             updateKeyPressedBackground()
         }
+    private var initSelectionStart: Int = 0
+    private var initSelectionEnd: Int = 0
     private var hasTriggeredGestureMove: Boolean = false
     private var keyHintMode: KeyHintMode = KeyHintMode.DISABLED
     private val longKeyPressHandler: Handler = Handler(context.mainLooper)
@@ -204,7 +207,11 @@ class KeyView(
      */
     fun onFlorisTouchEvent(event: MotionEvent?): Boolean {
         if (event == null || !isEnabled) return false
-        if (swipeGestureDetector.onTouchEvent(event)) {
+        val alwaysTriggerOnMove = (hasTriggeredGestureMove
+                && florisboard?.activeEditorInstance?.isRawInputEditor == false
+                && (data.code == KeyCode.DELETE && prefs.gestures.deleteKeySwipeLeft == SwipeAction.DELETE_CHARACTERS_PRECISELY
+                || data.code == KeyCode.SPACE))
+        if (swipeGestureDetector.onTouchEvent(event, alwaysTriggerOnMove)) {
             isKeyPressed = false
             longKeyPressHandler.cancelAll()
             repeatedKeyPressHandler.cancelAll()
@@ -246,6 +253,8 @@ class KeyView(
                         }
                     }
                     if (data.code == KeyCode.SPACE) {
+                        initSelectionStart = florisboard?.activeEditorInstance?.selection?.start ?: 0
+                        initSelectionEnd = florisboard?.activeEditorInstance?.selection?.end ?: 0
                         longKeyPressHandler.postDelayed((delayMillis * 2.5f).toLong()) {
                             when (prefs.gestures.spaceBarLongPress) {
                                 SwipeAction.NO_ACTION,
@@ -290,7 +299,6 @@ class KeyView(
                 repeatedKeyPressHandler.cancelAll()
                 if (data.code != KeyCode.SHIFT) {
                     if (hasTriggeredGestureMove && data.code == KeyCode.DELETE) {
-                        hasTriggeredGestureMove = false
                         florisboard?.activeEditorInstance?.apply {
                             if (selection.isSelectionMode) {
                                 deleteBackwards()
@@ -306,6 +314,7 @@ class KeyView(
                         keyboardView.popupManager.hide()
                     }
                 }
+                hasTriggeredGestureMove = false
                 isKeyPressed = false
             }
             else -> return false
@@ -318,14 +327,14 @@ class KeyView(
      * defined in the prefs.
      */
     override fun onSwipe(event: SwipeGesture.Event): Boolean {
+        val florisboard = florisboard ?: return false
         return when (data.code) {
             KeyCode.DELETE -> when (event.type) {
                 SwipeGesture.Type.TOUCH_MOVE -> when (prefs.gestures.deleteKeySwipeLeft) {
                     SwipeAction.DELETE_CHARACTERS_PRECISELY -> {
-                        val charWidth = SwipeGesture.numericValue(context, swipeGestureDetector.distanceThreshold) / 4.0f
-                        florisboard?.activeEditorInstance?.apply {
+                        florisboard.activeEditorInstance.apply {
                             setSelection(
-                                (selection.end - (event.diffX.times(-1) / charWidth).toInt()).coerceIn(0, selection.end),
+                                (selection.end + event.absUnitCountX).coerceIn(0, selection.end),
                                 selection.end
                             )
                         }
@@ -335,7 +344,7 @@ class KeyView(
                     }
                     SwipeAction.DELETE_WORDS_PRECISELY -> when (event.direction) {
                         SwipeGesture.Direction.LEFT -> {
-                            florisboard?.activeEditorInstance?.apply {
+                            florisboard.activeEditorInstance.apply {
                                 leftAppendWordToSelection()
                             }
                             hasTriggeredGestureMove = true
@@ -343,7 +352,7 @@ class KeyView(
                             true
                         }
                         SwipeGesture.Direction.RIGHT -> {
-                            florisboard?.activeEditorInstance?.apply {
+                            florisboard.activeEditorInstance.apply {
                                 leftPopWordFromSelection()
                             }
                             shouldBlockNextKeyCode = true
@@ -358,17 +367,46 @@ class KeyView(
             KeyCode.SPACE -> when (event.type) {
                 SwipeGesture.Type.TOUCH_MOVE -> when (event.direction) {
                     SwipeGesture.Direction.UP -> {
-                        florisboard?.executeSwipeAction(prefs.gestures.spaceBarSwipeUp)
-                        shouldBlockNextKeyCode = true
-                        true
+                        if (event.absUnitCountY.times(-1) >= 6) {
+                            florisboard.executeSwipeAction(prefs.gestures.spaceBarSwipeUp)
+                            hasTriggeredGestureMove = true
+                            shouldBlockNextKeyCode = true
+                            true
+                        } else {
+                            false
+                        }
                     }
                     SwipeGesture.Direction.LEFT -> {
-                        florisboard?.executeSwipeAction(prefs.gestures.spaceBarSwipeLeft)
+                        if (prefs.gestures.spaceBarSwipeLeft == SwipeAction.MOVE_CURSOR_LEFT) {
+                            if (!florisboard.activeEditorInstance.isRawInputEditor) {
+                                val s = (initSelectionEnd + event.absUnitCountX).coerceIn(0, florisboard.activeEditorInstance.cachedText.length)
+                                florisboard.activeEditorInstance.setSelection(s, s)
+                            } else {
+                                for (n in 0 until abs(event.relUnitCountX)) {
+                                    florisboard.executeSwipeAction(prefs.gestures.spaceBarSwipeLeft)
+                                }
+                            }
+                        } else {
+                            florisboard.executeSwipeAction(prefs.gestures.spaceBarSwipeLeft)
+                        }
+                        hasTriggeredGestureMove = true
                         shouldBlockNextKeyCode = true
                         true
                     }
                     SwipeGesture.Direction.RIGHT -> {
-                        florisboard?.executeSwipeAction(prefs.gestures.spaceBarSwipeRight)
+                        if (prefs.gestures.spaceBarSwipeRight == SwipeAction.MOVE_CURSOR_RIGHT) {
+                            if (!florisboard.activeEditorInstance.isRawInputEditor) {
+                                val s = (initSelectionEnd + event.absUnitCountX).coerceIn(0, florisboard.activeEditorInstance.cachedText.length)
+                                florisboard.activeEditorInstance.setSelection(s, s)
+                            } else {
+                                for (n in 0 until abs(event.relUnitCountX)) {
+                                    florisboard.executeSwipeAction(prefs.gestures.spaceBarSwipeRight)
+                                }
+                            }
+                        } else {
+                            florisboard.executeSwipeAction(prefs.gestures.spaceBarSwipeRight)
+                        }
+                        hasTriggeredGestureMove = true
                         shouldBlockNextKeyCode = true
                         true
                     }
