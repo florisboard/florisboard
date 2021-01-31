@@ -98,7 +98,7 @@ class KeyView(
         isFakeBoldText = false
         textAlign = Paint.Align.CENTER
         textSize = resources.getDimension(R.dimen.key_textHintSize)
-        typeface = Typeface.DEFAULT
+        typeface = Typeface.MONOSPACE
     }
     private val tempRect: Rect = Rect()
     private var themeValueCache: ThemeValueCache = ThemeValueCache()
@@ -913,15 +913,15 @@ class KeyView(
         if (hintedLabel != null) {
             setTextSizeFor(
                 hintedLabelPaint,
-                desiredWidth * 1.0f / 6.0f,
-                desiredHeight * 1.0f / 6.0f,
+                desiredWidth * 1.0f / 5.0f,
+                desiredHeight * 1.0f / 5.0f,
                 // Note: taking a "X" here because it is one of the biggest letters and
                 //  the keys must have the same base character for calculation, else
                 //  they will all look different and weird...
                 "X"
             )
             hintedLabelPaint.color = labelPaint.color
-            hintedLabelPaint.alpha = 120
+            hintedLabelPaint.alpha = 170
             val centerX = measuredWidth * 5.0f / 6.0f
             val centerY = measuredHeight * 1.0f / 6.0f + (hintedLabelPaint.textSize - hintedLabelPaint.descent()) / 2
             canvas.drawText(hintedLabel, centerX, centerY, hintedLabelPaint)
