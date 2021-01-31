@@ -1,0 +1,64 @@
+{
+  "$type": "dev.patrickgold.florisboard.ime.theme.Theme",
+  "name": "gboard_day",
+  "label": "Gboard Day",
+  "authors": [ "patrickgold", "itskareem" ],
+  "isNightTheme": false,
+  "attributes": {
+    "window": {
+      "colorPrimary": "#0479ed",
+      "colorPrimaryDark": "#0467c9",
+      "colorAccent": "#FF9800",
+      "navigationBarColor": "@keyboard/background",
+      "navigationBarLight": "true",
+      "semiTransparentColor": "#20000000",
+      "textColor": "#000000"
+    },
+    "keyboard": {
+      "background": "#D1D6DC"
+    },
+    "key": {
+      "background": "#FCFFFF",
+      "backgroundPressed": "#F5F5F5",
+      "foreground": "@window/textColor",
+      "foregroundPressed": "@window/textColor",
+      "showBorder": "true"
+    },
+    "key:enter": {
+      "background": "@window/colorPrimary",
+      "backgroundPressed": "@window/colorPrimaryDark",
+      "foreground": "#FFFFFF",
+      "foregroundPressed": "#FFFFFF"
+    },
+    "key:shift:capslock": {
+      "foreground": "@window/colorAccent",
+      "foregroundPressed": "@window/colorAccent"
+    },
+    "media": {
+      "foreground": "@window/textColor",
+      "foregroundAlt": "#757575"
+    },
+    "oneHanded": {
+      "background": "@keyboard/background",
+      "foreground": "#424242"
+    },
+    "popup": {
+      "background": "#EEEEEE",
+      "backgroundActive": "#BDBDBD",
+      "foreground": "@window/textColor"
+    },
+    "privateMode": {
+      "background": "#A000FF",
+      "foreground": "#FFFFFF"
+    },
+    "smartbar": {
+      "background": "@keyboard/background",
+      "foreground": "@window/textColor",
+      "foregroundAlt": "#8A8A8A"
+    },
+    "smartbarButton": {
+      "background": "@key/background",
+      "foreground": "@key/foreground"
+    }
+  }
+}
