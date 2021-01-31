@@ -141,7 +141,6 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Extra Hoog</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Aangepast</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Aangepaste hoogte van toetsenbord</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Offset onderaan (voor gebogen schermen)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Toetsdruk</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Geluid bij toetsdruk</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Geluidsvolume bij toetsdruk</string>

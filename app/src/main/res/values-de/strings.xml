@@ -164,7 +164,6 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Sehr groß</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Benutzerdefiniert</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Benutzerdefinierte Tastaturhöhe</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Unteres Ende absetzen (für abgerundete Bildschirme)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastendruck</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Ton bei Tastendruck</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Lautstärke der Tastendrucktöne</string>

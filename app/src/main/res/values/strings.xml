@@ -190,7 +190,8 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Extra-tall</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Custom</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Custom keyboard height value</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Bottom offset (for curved screens)</string>
+    <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Bottom offset (portrait)</string>
+    <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Bottom offset (landscape)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Key press</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Sound on key press</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Sound volume on key press</string>

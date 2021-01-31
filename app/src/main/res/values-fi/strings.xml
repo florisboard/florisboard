@@ -84,7 +84,6 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Erittäin korkea</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Mukautettu</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Mukautettu näppäimistön korkeus</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Alareunan sijainnin korjaus (kaareville näytöille)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Painallus</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Painikeääni</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Painikeäänen voimakkuus</string>

@@ -308,7 +308,8 @@ class PrefHelper(
      */
     class Keyboard(private val prefHelper: PrefHelper) {
         companion object {
-            const val BOTTOM_OFFSET =                   "keyboard__bottom_offset"
+            const val BOTTOM_OFFSET_PORTRAIT =          "keyboard__bottom_offset_portrait"
+            const val BOTTOM_OFFSET_LANDSCAPE =         "keyboard__bottom_offset_landscape"
             const val FONT_SIZE_MULTIPLIER_PORTRAIT =   "keyboard__font_size_multiplier_portrait"
             const val FONT_SIZE_MULTIPLIER_LANDSCAPE =  "keyboard__font_size_multiplier_landscape"
             const val HEIGHT_FACTOR =                   "keyboard__height_factor"
@@ -327,8 +328,11 @@ class PrefHelper(
             const val VIBRATION_STRENGTH =              "keyboard__vibration_strength"
         }
 
-        var bottomOffset: Int = 0
-            get() = prefHelper.getPref(BOTTOM_OFFSET, 0)
+        var bottomOffsetPortrait: Int = 0
+            get() = prefHelper.getPref(BOTTOM_OFFSET_PORTRAIT, 0)
+            private set
+        var bottomOffsetLandscape: Int = 0
+            get() = prefHelper.getPref(BOTTOM_OFFSET_LANDSCAPE, 0)
             private set
         var fontSizeMultiplierPortrait: Int
             get() =  prefHelper.getPref(FONT_SIZE_MULTIPLIER_PORTRAIT, 100)

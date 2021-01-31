@@ -124,7 +124,6 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">بیشتر-بلند</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">سفارشی</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">مقدار ارتفاع سفارشی صفحه‌کلید</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">فاصله از کف (برای صفحه های منحنی)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">فشردن کلید</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">صدای فشردن کلید</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">میزان صدای فشردن کلید</string>

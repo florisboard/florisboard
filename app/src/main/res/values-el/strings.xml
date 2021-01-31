@@ -133,7 +133,6 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Πολύ-ψηλό</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Προσαρμοσμένο</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Προσαρμοσμένη τιμή ύψους πληκτρολογίου</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Αντιστάθμιση βάσης (για κυρτές οθόνες)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Πάτημα πλήκτρου</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Ήχος κατά το πάτημα πλήκτρου</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Ένταση ήχου κατά το πάτημα πλήκτρου</string>

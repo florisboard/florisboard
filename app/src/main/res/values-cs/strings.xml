@@ -84,7 +84,6 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Extra vysoká</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Vlastní</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Vlastní hodnota výšky klávesnice</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Odstup zdola (pro zahnuté displeje)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Stisk klávesy</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Zvuk při stisku klávesy</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Hlasitost zvuku při stisku klávesy</string>

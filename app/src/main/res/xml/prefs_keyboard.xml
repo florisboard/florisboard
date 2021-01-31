@@ -107,11 +107,22 @@
         <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="0"
-            app:key="keyboard__bottom_offset"
+            app:key="keyboard__bottom_offset_portrait"
             app:min="0"
-            app:max="24"
+            app:max="60"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__keyboard__bottom_offset__label"
+            app:title="@string/pref__keyboard__bottom_offset_portrait__label"
+            app:seekBarIncrement="1"
+            app:unit=" dp"/>
+
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="0"
+            app:key="keyboard__bottom_offset_landscape"
+            app:min="0"
+            app:max="60"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__bottom_offset_landscape__label"
             app:seekBarIncrement="1"
             app:unit=" dp"/>
 

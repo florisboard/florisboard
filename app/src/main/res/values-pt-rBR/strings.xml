@@ -164,7 +164,6 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Muito alto</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Personalizado</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Valor personalizado da altura do teclado</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Deslocamento inferior (para telas curvas)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressionar tecla</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Som ao pressionar uma tecla</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volume do som ao pressionar uma tecla</string>

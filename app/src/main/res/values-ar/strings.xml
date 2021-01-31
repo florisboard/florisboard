@@ -96,7 +96,6 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">طويل جدا</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">مخصص</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">قيمة ارتفاع لوحة المفاتيح المخصصة</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">الإزاحة السفلية (للشاشات المقوسة)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">ضغط المفتاح</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">الصوت عند ضغط المفتاح</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">حجم الصوت عند ضغط المفتاح</string>

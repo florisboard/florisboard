@@ -96,7 +96,6 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Altissima</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Personalizzato</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Valore Altezza tastiera personalizzata</string>
-    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Offset dal basso (per schermi curvi)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressione tasti</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Suono pressione tasti</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volume del suono alla pressione dei tasti</string>
