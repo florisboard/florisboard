@@ -52,6 +52,7 @@ import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.util.*
 import timber.log.Timber
 import java.lang.ref.WeakReference
+import java.util.concurrent.CopyOnWriteArrayList
 
 /**
  * Variable which holds the current [FlorisBoard] instance. To get this instance from another
@@ -76,7 +77,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     private var inputWindowView: InputWindowView? = null
     var popupLayerView: PopupLayerView? = null
         private set
-    private var eventListeners: MutableList<WeakReference<EventListener?>?> = mutableListOf()
+    private var eventListeners: CopyOnWriteArrayList<EventListener> = CopyOnWriteArrayList()
 
     private var audioManager: AudioManager? = null
     private var imeManager:InputMethodManager? = null
@@ -198,7 +199,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
 
         super.onCreate()
-        eventListeners.toList().forEach { it?.get()?.onCreate() }
+        eventListeners.toList().forEach { it?.onCreate() }
     }
 
     @SuppressLint("InflateParams")
@@ -208,7 +209,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         baseContext.setTheme(currentThemeResId)
 
         inputWindowView = layoutInflater.inflate(R.layout.florisboard, null) as InputWindowView
-        eventListeners.toList().forEach { it?.get()?.onCreateInputView() }
+        eventListeners.toList().forEach { it?.onCreateInputView() }
 
         return inputWindowView
     }
@@ -243,7 +244,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         themeManager.notifyCallbackReceivers()
         setActiveInput(R.id.text_input)
 
-        eventListeners.toList().forEach { it?.get()?.onRegisterInputView(inputView) }
+        eventListeners.toList().forEach { it?.onRegisterInputView(inputView) }
     }
 
     override fun onDestroy() {
@@ -254,7 +255,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         osHandler.removeCallbacksAndMessages(null)
         florisboardInstance = null
 
-        eventListeners.toList().forEach { it?.get()?.onDestroy() }
+        eventListeners.toList().forEach { it?.onDestroy() }
         eventListeners.clear()
         super.onDestroy()
     }
@@ -274,7 +275,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         activeEditorInstance = EditorInstance.from(info, this)
         themeManager.updateRemoteColorValues(activeEditorInstance.packageName)
         eventListeners.toList().forEach {
-            it?.get()?.onStartInputView(activeEditorInstance, restarting)
+            it?.onStartInputView(activeEditorInstance, restarting)
         }
     }
 
@@ -286,7 +287,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         }
 
         super.onFinishInputView(finishingInput)
-        eventListeners.toList().forEach { it?.get()?.onFinishInputView(finishingInput) }
+        eventListeners.toList().forEach { it?.onFinishInputView(finishingInput) }
     }
 
     override fun onFinishInput() {
@@ -312,14 +313,14 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         setActiveInput(R.id.text_input)
 
         super.onWindowShown()
-        eventListeners.toList().forEach { it?.get()?.onWindowShown() }
+        eventListeners.toList().forEach { it?.onWindowShown() }
     }
 
     override fun onWindowHidden() {
         Timber.i("onWindowHidden()")
 
         super.onWindowHidden()
-        eventListeners.toList().forEach { it?.get()?.onWindowHidden() }
+        eventListeners.toList().forEach { it?.onWindowHidden() }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -347,7 +348,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
             oldSelStart, oldSelEnd,
             newSelStart, newSelEnd
         )
-        eventListeners.toList().forEach { it?.get()?.onUpdateSelection() }
+        eventListeners.toList().forEach { it?.onUpdateSelection() }
     }
 
     override fun onThemeUpdated(theme: Theme) {
@@ -416,7 +417,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
             }
         }
 
-        eventListeners.toList().forEach { it?.get()?.onApplyThemeAttributes() }
+        eventListeners.toList().forEach { it?.onApplyThemeAttributes() }
     }
 
     override fun onComputeInsets(outInsets: Insets?) {
@@ -658,7 +659,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     }
 
     override fun onPrimaryClipChanged() {
-        eventListeners.toList().forEach { it?.get()?.onPrimaryClipChanged() }
+        eventListeners.toList().forEach { it?.onPrimaryClipChanged() }
     }
 
     /**
@@ -668,7 +669,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
      * @return True if the listener has been added successfully, false otherwise.
      */
     fun addEventListener(listener: EventListener): Boolean {
-        return eventListeners.add(WeakReference(listener))
+        return eventListeners.add(listener)
     }
 
     /**
@@ -681,12 +682,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
      *  value may also indicate that the [listener] was not added previously.
      */
     fun removeEventListener(listener: EventListener): Boolean {
-        eventListeners.toList().forEach {
-            if (it?.get() == listener) {
-                return eventListeners.remove(it)
-            }
-        }
-        return false
+        return eventListeners.remove(listener)
     }
 
     interface EventListener {

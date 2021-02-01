@@ -34,7 +34,9 @@ import dev.patrickgold.florisboard.util.ViewLayoutUtils
 class PopupView : View, ThemeManager.OnThemeUpdatedListener {
     private val themeManager: ThemeManager = ThemeManager.default()
 
-    private var backgroundDrawable: PaintDrawable = PaintDrawable()
+    private var backgroundDrawable: PaintDrawable = PaintDrawable().apply {
+        setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
+    }
     private val labelPaint: Paint = Paint().apply {
         alpha = 255
         color = 0
@@ -86,7 +88,6 @@ class PopupView : View, ThemeManager.OnThemeUpdatedListener {
     override fun onThemeUpdated(theme: Theme) {
         backgroundDrawable.apply {
             setTint(theme.getAttr(Theme.Attr.POPUP_BACKGROUND).toSolidColor().color)
-            setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
         }
         elevation = ViewLayoutUtils.convertDpToPixel(4.0f, context)
         threeDotsDrawable?.apply {

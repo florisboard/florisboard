@@ -35,8 +35,12 @@ import kotlin.math.min
 class PopupExtendedView : View, ThemeManager.OnThemeUpdatedListener {
     private val themeManager: ThemeManager = ThemeManager.default()
 
-    private val activeBackgroundDrawable: PaintDrawable = PaintDrawable()
-    private var backgroundDrawable: PaintDrawable = PaintDrawable()
+    private val activeBackgroundDrawable: PaintDrawable = PaintDrawable().apply {
+        setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
+    }
+    private var backgroundDrawable: PaintDrawable = PaintDrawable().apply {
+        setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
+    }
     private val labelPaint: Paint = Paint().apply {
         alpha = 255
         color = 0
@@ -80,6 +84,7 @@ class PopupExtendedView : View, ThemeManager.OnThemeUpdatedListener {
     init {
         visibility = GONE
         background = backgroundDrawable
+        elevation = ViewLayoutUtils.convertDpToPixel(4.0f, context)
     }
 
     override fun onAttachedToWindow() {
@@ -88,20 +93,17 @@ class PopupExtendedView : View, ThemeManager.OnThemeUpdatedListener {
     }
 
     override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
         themeManager.unregisterOnThemeUpdatedListener(this)
+        super.onDetachedFromWindow()
     }
 
     override fun onThemeUpdated(theme: Theme) {
         activeBackgroundDrawable.apply {
             setTint(theme.getAttr(Theme.Attr.POPUP_BACKGROUND_ACTIVE).toSolidColor().color)
-            setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
         }
         backgroundDrawable.apply {
             setTint(theme.getAttr(Theme.Attr.POPUP_BACKGROUND).toSolidColor().color)
-            setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
         }
-        elevation = ViewLayoutUtils.convertDpToPixel(4.0f, context)
         labelPaint.color = theme.getAttr(Theme.Attr.POPUP_FOREGROUND).toSolidColor().color
         tldPaint.color = theme.getAttr(Theme.Attr.POPUP_FOREGROUND).toSolidColor().color
         if (isShowing) {

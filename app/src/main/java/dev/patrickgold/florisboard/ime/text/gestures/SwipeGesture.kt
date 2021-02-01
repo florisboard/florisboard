@@ -67,12 +67,14 @@ abstract class SwipeGesture {
         private var lastMotionEvent: MotionEvent? = null
         private var absUnitCountX: Int = 0
         private var absUnitCountY: Int = 0
-        private var unitWidth: Double = numericValue(context, DistanceThreshold.NORMAL) / 4.0
+        private var thresholdWidth: Double = numericValue(context, DistanceThreshold.NORMAL)
+        private var unitWidth: Double = thresholdWidth / 4.0
 
         var distanceThreshold: DistanceThreshold = DistanceThreshold.NORMAL
             set(value) {
                 field = value
-                unitWidth = numericValue(context, value) / 4.0
+                thresholdWidth = numericValue(context, value)
+                unitWidth = thresholdWidth / 4.0
             }
         var velocityThreshold: VelocityThreshold = VelocityThreshold.NORMAL
 
@@ -100,7 +102,7 @@ abstract class SwipeGesture {
                         val lastEvent = lastMotionEvent ?: return false
                         val relDiffX = event.x - lastEvent.x
                         val relDiffY = event.y - lastEvent.y
-                        return if (alwaysTriggerOnMove || abs(relDiffX) > unitWidth || abs(relDiffY) > unitWidth) {
+                        return if (alwaysTriggerOnMove || abs(relDiffX) > (thresholdWidth / 2.0) || abs(relDiffY) > (thresholdWidth / 2.0)) {
                             lastMotionEvent = MotionEvent.obtainNoHistory(event)
                             val direction = detectDirection(relDiffX.toDouble(), relDiffY.toDouble())
                             val newAbsUnitCountX = (absDiffX / unitWidth).toInt()
@@ -133,7 +135,7 @@ abstract class SwipeGesture {
                                 context
                             ) / event.downTime) * 10.0f.pow(8)).toInt()*/
                         // return if ((abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV) && velocity >= velocityThresholdNV) {
-                        val ret = if ((abs(absDiffX) > (unitWidth * 4.0) || abs(absDiffY) > (unitWidth * 4.0))) {
+                        val ret = if ((abs(absDiffX) > thresholdWidth || abs(absDiffY) > thresholdWidth)) {
                             val direction = detectDirection(absDiffX.toDouble(), absDiffY.toDouble())
                             absUnitCountX = (absDiffX / unitWidth).toInt()
                             absUnitCountY = (absDiffY / unitWidth).toInt()

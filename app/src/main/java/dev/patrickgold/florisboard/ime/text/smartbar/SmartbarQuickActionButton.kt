@@ -40,8 +40,8 @@ class SmartbarQuickActionButton : androidx.appcompat.widget.AppCompatImageButton
     }
 
     override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
         themeManager.unregisterOnThemeUpdatedListener(this)
+        super.onDetachedFromWindow()
     }
 
     /**

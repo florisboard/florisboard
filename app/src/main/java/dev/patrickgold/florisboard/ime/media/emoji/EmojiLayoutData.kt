@@ -71,6 +71,8 @@ private fun listStringToListInt(list: List<String>): List<Int> {
     return ret.toList()
 }
 
+private var cachedEmojiLayoutMap: EmojiLayoutDataMap? = null
+
 /**
  * Reads the emoji list at the given [path] and returns an parsed [EmojiLayoutDataMap]. If the
  * given file path does not exist, an empty [EmojiLayoutDataMap] is returned.
@@ -84,6 +86,7 @@ private fun listStringToListInt(list: List<String>): List<Int> {
 fun parseRawEmojiSpecsFile(
     context: Context, path: String
 ): EmojiLayoutDataMap {
+    cachedEmojiLayoutMap?.let { return it }
     val layouts = EmojiLayoutDataMap(EmojiCategory::class.java)
     for (category in EmojiCategory.values()) {
         layouts[category] = mutableListOf()
@@ -182,5 +185,6 @@ fun parseRawEmojiSpecsFile(
             }
         }
     }
+    cachedEmojiLayoutMap = layouts
     return layouts
 }

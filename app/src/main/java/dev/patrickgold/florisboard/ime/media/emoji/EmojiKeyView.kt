@@ -64,13 +64,16 @@ class EmojiKeyView(
         triangleDrawable = ContextCompat.getDrawable(context, R.drawable.triangle_bottom_right)
 
         text = data.getCodePointsAsString()
-
-        florisboard?.addEventListener(this)
     }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        onApplyThemeAttributes()
+        florisboard?.addEventListener(this)
+    }
+
+    override fun onDetachedFromWindow() {
+        florisboard?.removeEventListener(this)
+        super.onDetachedFromWindow()
     }
 
     /**

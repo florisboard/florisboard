@@ -101,11 +101,11 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener,
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
         })
         addView(tabLayout)
-        florisboard?.addEventListener(this)
     }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        florisboard?.addEventListener(this)
         themeManager.registerOnThemeUpdatedListener(this)
         mainScope.launch {
             layouts.await()
@@ -116,8 +116,9 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener,
     }
 
     override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
         themeManager.unregisterOnThemeUpdatedListener(this)
+        florisboard?.removeEventListener(this)
+        super.onDetachedFromWindow()
     }
 
     /**

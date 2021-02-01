@@ -45,12 +45,11 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener,
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        florisboard?.addEventListener(this)
-    }
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        florisboard?.addEventListener(this)
         themeManager.registerOnThemeUpdatedListener(this)
 
         arrowUpKey = findViewById(R.id.arrow_up)
@@ -63,8 +62,9 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener,
     }
 
     override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
         themeManager.unregisterOnThemeUpdatedListener(this)
+        florisboard?.removeEventListener(this)
+        super.onDetachedFromWindow()
     }
 
     override fun onThemeUpdated(theme: Theme) {

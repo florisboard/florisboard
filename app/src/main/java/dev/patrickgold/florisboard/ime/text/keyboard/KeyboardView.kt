@@ -84,13 +84,9 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
         )
-        florisboard?.addEventListener(this)
         onWindowShown()
         if (isLoadingPlaceholderKeyboard) {
             computedLayout = ComputedLayoutData.PRE_GENERATED_LOADING_KEYBOARD
-            /*for ((i, row) in children.withIndex()) {
-                row.alpha = (i + 1) * 0.25f
-            }*/
         }
     }
 
@@ -103,8 +99,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
         for (row in computedLayout.arrangement) {
             val rowView = KeyboardRowView(context)
             for (key in row) {
-                val keyView = KeyView(this, key)
-                keyView.florisboard = florisboard
+                val keyView = KeyView(this, key, florisboard)
                 rowView.addView(keyView)
             }
             addView(rowView)
@@ -126,6 +121,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        florisboard?.addEventListener(this)
         if (!isPreviewMode) {
             themeManager.registerOnThemeUpdatedListener(this)
         }
@@ -135,11 +131,12 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
      * Dismisses all shown key popups when keyboard is detached from window.
      */
     override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
         popupManager.dismissAllPopups()
         if (!isPreviewMode) {
             themeManager.unregisterOnThemeUpdatedListener(this)
         }
+        florisboard?.removeEventListener(this)
+        super.onDetachedFromWindow()
     }
 
     override fun onWindowShown() {

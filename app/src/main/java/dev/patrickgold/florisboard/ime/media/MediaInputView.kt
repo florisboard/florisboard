@@ -43,12 +43,11 @@ class MediaInputView : LinearLayout, FlorisBoard.EventListener,
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        florisboard?.addEventListener(this)
-    }
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        florisboard?.addEventListener(this)
         themeManager.registerOnThemeUpdatedListener(this)
         tabLayout = findViewById(R.id.media_input_tabs)
         switchToTextInputButton = findViewById(R.id.media_input_switch_to_text_input_button)
@@ -57,8 +56,9 @@ class MediaInputView : LinearLayout, FlorisBoard.EventListener,
     }
 
     override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
         themeManager.unregisterOnThemeUpdatedListener(this)
+        florisboard?.removeEventListener(this)
+        super.onDetachedFromWindow()
     }
 
     override fun onThemeUpdated(theme: Theme) {

@@ -181,6 +181,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         smartbarView?.setEventListener(this)
     }
 
+    fun unregisterSmartbarView(view: SmartbarView) {
+        if (smartbarView == view) {
+            smartbarView = null
+        }
+    }
+
     /**
      * Cancels all coroutines and cleans up.
      */
@@ -712,10 +718,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                         KeyType.CHARACTER, KeyType.NUMERIC -> when (keyData.code) {
                             KeyCode.SPACE -> handleSpace()
                             KeyCode.URI_COMPONENT_TLD -> {
-                                val tld = when (caps) {
-                                    true -> keyData.label.toUpperCase(Locale.getDefault())
-                                    false -> keyData.label.toLowerCase(Locale.getDefault())
-                                }
+                                val tld = keyData.label.toLowerCase(Locale.ENGLISH)
                                 activeEditorInstance.commitText(tld)
                             }
                             else -> {
@@ -723,8 +726,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                                 hasSpaceRecentlyPressed = false
                                 var text = keyData.code.toChar().toString()
                                 text = when (caps) {
-                                    true -> text.toUpperCase(Locale.getDefault())
-                                    false -> text.toLowerCase(Locale.getDefault())
+                                    true -> text.toUpperCase(florisboard.activeSubtype.locale)
+                                    false -> text.toLowerCase(florisboard.activeSubtype.locale)
                                 }
                                 activeEditorInstance.commitText(text)
                             }

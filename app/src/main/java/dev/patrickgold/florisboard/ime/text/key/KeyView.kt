@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.ImeOptions
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
@@ -55,7 +56,8 @@ import kotlin.math.abs
 @SuppressLint("ViewConstructor")
 class KeyView(
     private val keyboardView: KeyboardView,
-    val data: FlorisKeyData
+    val data: FlorisKeyData,
+    private val florisboard: FlorisBoard?
 ) : View(keyboardView.context), SwipeGesture.Listener, ThemeManager.OnThemeUpdatedListener {
     private var isKeyPressed: Boolean = false
         set(value) {
@@ -103,7 +105,6 @@ class KeyView(
     private val tempRect: Rect = Rect()
     private var themeValueCache: ThemeValueCache = ThemeValueCache()
 
-    var florisboard: FlorisBoard? = null
     val swipeGestureDetector = SwipeGesture.Detector(context, this)
     var touchHitBox: Rect = Rect(-1, -1, -1, -1)
 
@@ -165,19 +166,28 @@ class KeyView(
      * Creates a label text from the given [keyData].
      *
      * @param keyData Optional. The key data to generate the label from. Defaults to [data].
-     * @return The generated label.
+     * @param caps If the generated text should be uppercase (true) or in lowercase (false).
+     *  Defaults to FlorisBoard's TextInputManager's caps state or false. Ignored when the passed
+     *  [keyData] is a TLD, in which case always the lower case variant is returned.
+     * @param subtype The subtype for which this label should be created. Defaults to
+     *  [Subtype.DEFAULT]. Ignored when the passed [keyData] is a TLD.
+     * @return The generated label ready for usage in the front-end UI.
      */
-    fun getComputedLetter(keyData: KeyData = data): String {
-        if (keyData.code == KeyCode.URI_COMPONENT_TLD) {
-            return when (florisboard?.textInputManager?.caps) {
-                true -> keyData.label.toUpperCase(Locale.getDefault())
-                else -> keyData.label.toLowerCase(Locale.getDefault())
+    fun getComputedLetter(
+        keyData: KeyData = data,
+        caps: Boolean = florisboard?.textInputManager?.caps ?: false,
+        subtype: Subtype = florisboard?.activeSubtype ?: Subtype.DEFAULT
+    ): String {
+        return when (data.code) {
+            KeyCode.URI_COMPONENT_TLD -> keyData.label.toLowerCase(Locale.ENGLISH)
+            else -> {
+                val labelText = (keyData.code.toChar()).toString()
+                if (caps) {
+                    labelText.toUpperCase(subtype.locale)
+                } else {
+                    labelText.toLowerCase(subtype.locale)
+                }
             }
-        }
-        val label = (keyData.code.toChar()).toString()
-        return when {
-            florisboard?.textInputManager?.caps ?: false -> label.toUpperCase(Locale.getDefault())
-            else -> label
         }
     }
 
@@ -243,7 +253,7 @@ class KeyView(
                         KeyCode.ARROW_RIGHT,
                         KeyCode.ARROW_UP,
                         KeyCode.DELETE -> {
-                            repeatedKeyPressHandler.postAtScheduledRate(delayMillis, 25) {
+                            repeatedKeyPressHandler.postAtScheduledRate((delayMillis * 2.0f).toLong(), 25) {
                                 if (isKeyPressed) {
                                     florisboard?.textInputManager?.sendKeyPress(data)
                                 } else {
@@ -511,10 +521,9 @@ class KeyView(
     private fun updateEnabledState() {
         isEnabled = when (data.code) {
             KeyCode.CLIPBOARD_COPY,
-            KeyCode.CLIPBOARD_CUT -> {
-                florisboard?.activeEditorInstance?.selection?.isSelectionMode == true &&
-                        florisboard?.activeEditorInstance?.isRawInputEditor == false
-            }
+            KeyCode.CLIPBOARD_CUT -> (florisboard != null
+                    && florisboard.activeEditorInstance.selection.isSelectionMode
+                    && florisboard.activeEditorInstance.isRawInputEditor)
             KeyCode.CLIPBOARD_PASTE -> florisboard?.clipboardManager?.hasPrimaryClip() == true
             KeyCode.CLIPBOARD_SELECT_ALL -> {
                 florisboard?.activeEditorInstance?.isRawInputEditor == false
@@ -704,13 +713,9 @@ class KeyView(
     }
 
     /**
-     * Draw the key label / drawable.
+     * Computes the labels and drawables needed to draw the key.
      */
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-
-        canvas ?: return
-
+    private fun computeLabelsAndDrawables() {
         if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE
             && data.code != KeyCode.HALF_SPACE && data.code != KeyCode.KESHIDA || data.type == KeyType.NUMERIC
         ) {
@@ -818,6 +823,17 @@ class KeyView(
                 }
             }
         }
+    }
+
+    /**
+     * Draw the key label / drawable.
+     */
+    override fun onDraw(canvas: Canvas?) {
+        super.onDraw(canvas)
+
+        canvas ?: return
+
+        computeLabelsAndDrawables()
 
         // Draw drawable
         val drawable = drawable

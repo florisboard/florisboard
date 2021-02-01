@@ -37,6 +37,7 @@ import dev.patrickgold.florisboard.util.setDrawableTintColor2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import kotlin.math.roundToInt
@@ -113,7 +114,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                     Subtype.DEFAULT,
                     prefs
                 ).await()
-                launch(Dispatchers.Main) {
+                withContext(Dispatchers.Main) {
                     binding.clipboardCursorRow.computedLayout = layout
                     binding.clipboardCursorRow.updateVisibility()
                 }
@@ -133,7 +134,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                     Subtype.DEFAULT,
                     prefs
                 ).await()
-                launch(Dispatchers.Main) {
+                withContext(Dispatchers.Main) {
                     binding.numberRow.computedLayout = layout
                     binding.numberRow.updateVisibility()
                 }
@@ -146,7 +147,9 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
 
         for (quickAction in binding.quickActions.children) {
             if (quickAction is SmartbarQuickActionButton) {
-                quickAction.setOnClickListener { eventListener?.get()?.onSmartbarQuickActionPressed(quickAction.id) }
+                quickAction.id.let { quickActionId ->
+                    quickAction.setOnClickListener { eventListener?.get()?.onSmartbarQuickActionPressed(quickActionId) }
+                }
             }
         }
 
@@ -169,8 +172,10 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
     }
 
     override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
+        eventListener = null
+        florisboard?.textInputManager?.unregisterSmartbarView(this)
         themeManager.unregisterOnThemeUpdatedListener(this)
+        super.onDetachedFromWindow()
     }
 
     /**
@@ -330,6 +335,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
         for (view in candidateViewList) {
             view.setTextColor(theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND).toSolidColor().color)
         }
+        invalidate()
     }
 
     fun setEventListener(listener: EventListener) {
