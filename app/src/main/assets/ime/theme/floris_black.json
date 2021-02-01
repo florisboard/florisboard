@@ -1,0 +1,73 @@
+{
+  "$type": "dev.patrickgold.florisboard.ime.theme.Theme",
+  "name": "floris_black",
+  "label": "Floris Black",
+  "authors": [ "serebit" ],
+  "isNightTheme": true,
+  "attributes": {
+    "window": {
+      "colorPrimary": "#388E3C",
+      "colorPrimaryDark": "#306D32",
+      "colorAccent": "#FF9800",
+      "navigationBarColor": "@keyboard/background",
+      "navigationBarLight": "false",
+      "semiTransparentColor": "#20FFFFFF",
+      "textColor": "#EEEEEE"
+    },
+    "keyboard": {
+      "background": "#000000"
+    },
+    "key": {
+      "background": "#212121",
+      "backgroundPressed": "#3D3D3D",
+      "foreground": "@window/textColor",
+      "foregroundPressed": "@window/textColor",
+      "showBorder": "true"
+    },
+    "key:enter": {
+      "background": "@window/colorPrimary",
+      "backgroundPressed": "@window/colorPrimaryDark",
+      "foreground": "@window/textColor",
+      "foregroundPressed": "@window/textColor"
+    },
+    "key:shift:capslock": {
+      "foreground": "@window/colorAccent",
+      "foregroundPressed": "@window/colorAccent"
+    },
+    "media": {
+      "foreground": "@window/textColor",
+      "foregroundAlt": "#BDBDBD"
+    },
+    "oneHanded": {
+      "background": "#000000",
+      "foreground": "@window/textColor"
+    },
+    "popup": {
+      "background": "#424242",
+      "backgroundActive": "#707070",
+      "foreground": "@window/textColor"
+    },
+    "privateMode": {
+      "background": "#7800BF",
+      "foreground": "@window/textColor"
+    },
+    "smartbar": {
+      "background": "transparent",
+      "foreground": "@window/textColor",
+      "foregroundAlt": "#73FFFFFF"
+    },
+    "smartbarButton": {
+      "background": "@key/background",
+      "foreground": "@key/foreground"
+    },
+    "extractEditLayout": {
+      "background": "#282828",
+      "foreground": "@window/textColor",
+      "foregroundAlt": "#73FFFFFF"
+    },
+    "extractActionButton": {
+      "background": "@smartbarButton/background",
+      "foreground": "@smartbarButton/foreground"
+    }
+  }
+}
