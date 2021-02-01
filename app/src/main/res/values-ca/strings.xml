@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FlorisBoard</string>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pausa</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Esperar</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Icona de tres punts. Si és visible, indica que es poden utilitzar més lletres si es prem més temps.</string>
+    <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Tanca el mode d\'una mà.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Mou el teclat a l\'esquerra.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Mou el teclat a la dreta.</string>
+    <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Mode privat</string>
+    <!--
+    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
+-->
+    <!-- Media strings -->
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emojis</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticones</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Emocions &amp; Emoticones</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Persones &amp; Cos</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Animals &amp; Natura</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Mejar &amp; Beure</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Viatges &amp; Llocs</string>
+    <string name="emoji__category__activities" comment="Emoji category name">Activitats</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Objectes</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">Símbols</string>
+    <string name="emoji__category__flags" comment="Emoji category name">Banderes</string>
+    <!-- Smartbar strings -->
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Commutació d\'acció ràpida. Si es prem, commuta entre els suggeriments de paraula i els botons d\'acció ràpida.</string>
+    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Surt del quadre d\'edició de text.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Commuta l\'estat del mode d\'una sola mà.</string>
+    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Obre la configuració.</string>
+    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Canvia al plafó d\'edició de text.</string>
+    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Canvia a la vista d\'entrada de suports.</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Botó de desfer per invertir l\'última acció</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Botó de refer per revertir l\'últim desfer</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Si visible, indica que el mode privat està actiu. Quan es fa clic, es mostra informació sobre el mode privat.</string>
+    <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">Preferències</string>
+    <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Més opcions</string>
+    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Ajuda &amp; suggeriments</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Ajuda</string>
+    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Inici</string>
+    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Teclat</string>
+    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Escritura</string>
+    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Tema</string>
+    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gestos</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">Predeterminat</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Per defecte del sistema</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">Benvingut a %s</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard no està habilitat en el sistema i per tant no estarà disponible com a mètode d\'entrada en el selector d\'entrada. Feu clic aquí per resoldre aquest problema.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard no està seleccionat com a mètode d\'entrada per defecte. Feu clic aquí per resoldre aquest problema.</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Gràcies per provar FlorisBoard! Aquest projecte encara està en alfa i, per tant, manquen les opcions. Si trobeu algun error o voleu fer un suggeriment, comproveu el dipòsit a GitHub i obriu un tiquet. Això ajuda a millorar FlorisBoard. Gràcies!</string>
+    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Idiomes &amp; Disposicions de teclat</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Sembla que no heu configurat cap subtipus. Com a alternativa s\'utilitzarà el subtipus anglès/QWERTY!</string>
+    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Afegir</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Afegeix un subtipus</string>
+    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Aplicar</string>
+    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Cancel·lar</string>
+    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Eliminar</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Editar el subtipus</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Local</string>
+    <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">Disposició de teclat</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Aquest subtipus ja existeix!</string>
+    <string name="settings__theme__title" comment="Title of the Theme fragment">Tema del teclat</string>
+    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Indefinit</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Mode del tema</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Sempre de dia</string>
+    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Sempre de nit</string>
+    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Segueix el sistema</string>
+    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Segueix l\'hora</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Hora de trenc d\'alba</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Hora de posta de sol</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tema diürn</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tema nocturn</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Selecció del tema</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Adapta els colors a l\'aplicació</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Els colors del tema s\'adapten als de l\'aplicació actual, si l\'aplicació de destinació ho admet.</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">Actius d\'aplicacions FlorisBoard</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">Emmagatzematge intern</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">Proveïdor extern</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Gestor de temes (diürn)</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Gestor de temes (nocturn)</string>
+    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Crear un nou tema</string>
+    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Crear a partir del tema seleccionat</string>
+    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Introduïu un nom d\'atribut.</string>
+    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Aquest nom d\'atribut ja existeix dins d\'aquest grup. Si us plau, especifiqueu-ne un altre.</string>
+    <string name="settings__theme__group_window" comment="Theme group label">Finestra &amp; Sistema</string>
+    <string name="settings__theme__group_keyboard" comment="Theme group label">Teclat</string>
+    <string name="settings__theme__group_key" comment="Theme group label">Clau</string>
+    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Clau (%s)</string>
+    <string name="settings__theme__group_media" comment="Theme group label">Context multimèdia</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">Una sola mà</string>
+    <string name="settings__theme__group_popup" comment="Theme group label">Finestra emergent</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">Mode privat</string>
+    <string name="settings__theme__group_smartbar" comment="Theme group label">Barra intel·ligent</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Botó de barra intel·ligent</string>
+    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Grup personalitzat (%s)</string>
+    <string name="settings__theme__attr_background" comment="Theme attribute label">Color de fons</string>
+    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Color de fons (actiu)</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Color de fons (pressat)</string>
+    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Color de primer pla</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Color de primer pla (alternativa)</string>
+    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Color de primer pla (pressat)</string>
+    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Mostra les vores</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Color principal</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Color principal (fosc)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Color d\'accent</string>
+    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Color de la barra de navegació</string>
+    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Color fosc de la barra de navegació</string>
+    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Color semitransparent</string>
+    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Color del text</string>
+    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Atribut personalitzat (%s)</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Preferències del teclat</string>
+    <string name="pref__keyboard__group_keys__label" comment="Preference group title">Claus</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">Número de fila</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Mostra el nombre de fila a la part superior de la disposició de caràcters</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Número d\'indicació de fila</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Symbols marcats</string>
+    <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">Desactivat</string>
+    <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">Activat (es prioritza el consell)</string>
+    <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">Activat (es prioritza l\'accent)</string>
+    <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">Activat (priorització intel·ligent)</string>
+    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Mostra la clau d\'utilitat</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Mostra una clau d\'utilitat configurable al costat de la barra d\'espai</string>
+    <string name="pref__keyboard__utility_key_action__switch_to_emojis" comment="Preference value">Canvia als emojis</string>
+    <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Canviar l\'idioma</string>
+    <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Canviar l\'aplicació de teclat</string>
+    <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Dinàmic: Canvia a emojis / Canvia d\'idioma</string>
+    <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicador de la mida del tipus de lletra (vertical)</string>
+    <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicador de la mida de la lletra (horitzontal)</string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposició</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Mode d\'una sola mà</string>
+    <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Desactivat</string>
+    <!-- About UI strings -->
+    <!-- Assets strings -->
+    <!-- Setup UI strings -->
+    <!-- Crash Dialog strings -->
+</resources>

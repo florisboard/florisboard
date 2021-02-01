@@ -40,6 +40,7 @@
     <string name="settings__title" comment="Title of Settings">الاعدادات</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">المزيد من الخيارات</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">المساعدة والملاحظات</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">مساعدة</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">الصفحة الرئيسية</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">لوحة المفاتيح</string>
     <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">الكتابة</string>
@@ -64,11 +65,51 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">هذا النوع الفرعي موجود مسبقا!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">مظهر لوحة المفاتيح</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">غير محدد</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">وضع النسق</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">دائما يومي</string>
+    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">دائما ليلي</string>
+    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">اتبّاع النظام</string>
+    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">اتبّاع الوقت</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">وقت الشروق</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">وقت الغروب</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">نسق يومي</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">نسق ليلي</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">النسق المحدد</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">تكييف الألوان مع التطبيق</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">تتكيف ألوان النسق مع تلك الموجودة في التطبيق الحالي ، إذا كان التطبيق المستهدف يدعم ذلك.</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">أصول تطبيق FlorisBoard</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">الذاكرة الداخلية</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">مزود خارجي</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">مدير النسق (يومي)</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">مدير النسق (ليلي)</string>
+    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">إنشاء نسق فارغ جديد</string>
+    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">إنشاء من النسق المحدد</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">مخصص (على أساس %s)</string>
+    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">نسق جديد</string>
+    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">تحرير النسق</string>
+    <string name="settings__theme_editor__name_label" comment="Label of name input">اسم</string>
+    <string name="settings__theme_editor__type_label" comment="Label of type input">نوع</string>
+    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">إضافة مجموعة</string>
+    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">تحرير المجموعة</string>
+    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">اضافة الخاصيه</string>
+    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">مجموعة</string>
+    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">تبديل</string>
+    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">الحالة</string>
+    <string name="settings__theme_editor__value_type_other" comment="Theme value type">أخرى</string>
+    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">النص</string>
     <string name="settings__theme__group_window" comment="Theme group label">النافذة والنظام</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">لوحة المفاتيح</string>
     <string name="settings__theme__group_key" comment="Theme group label">المفتاح</string>
     <string name="settings__theme__group_media" comment="Theme group label">سياق الوسائط</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">اليد الواحدة</string>
+    <string name="settings__theme__group_popup" comment="Theme group label">نافذة منبثقة</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">الوضع الخاص</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">الشريط الذكـي</string>
+    <string name="settings__theme__attr_background" comment="Theme attribute label">لون الخلفية</string>
+    <string name="settings__theme__attr_foreground" comment="Theme attribute label">لون الواجهة</string>
+    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">عرض الحدود</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">اللون الأساسي (داكن)</string>
+    <string name="settings__theme__attr_textColor" comment="Theme attribute label">لون النص</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">تفضيلات لوحة المفاتيح</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">المفاتيح</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">صف الأعداد</string>
@@ -79,6 +120,8 @@
     <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">مفعّل (الأولوية للتلميح)</string>
     <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">مفعّل (الأولوية للحروف الإضافية)</string>
     <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">مفعّل (تحديد الأولويات الذكي)</string>
+    <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">تغيير اللغة</string>
+    <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">تبديل تطبيق لوحة المفاتيح</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">مضاعف حجم الخط (عمودي)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">مضاعف حجم الخط (أفقي)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">نظام التخطيط</string>
@@ -132,6 +175,7 @@
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">حذف الكلمة الحالية</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">حذف الكلمات بدقة</string>
     <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">إخفاء لوحة المفاتيح</string>
+    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">إدراج مسافة</string>
     <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">تحريك المؤشر إلى الأعلى</string>
     <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">تحريك المؤشر إلى الأسفل</string>
     <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">تحريك المؤشر إلى اليسار</string>
@@ -175,6 +219,21 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">مصدر التعليمات البرمجية</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">تراخيص البرامج مفتوحة المصدر</string>
     <!-- Assets strings -->
+    <string name="assets__file__name">الاسم</string>
+    <string name="assets__file__source">المصدر</string>
+    <string name="assets__action__add">إضافة</string>
+    <string name="assets__action__cancel">إلغاء</string>
+    <string name="assets__action__cancel_confirm_title">تأكيد الإلغاء</string>
+    <string name="assets__action__delete">حذف</string>
+    <string name="assets__action__delete_confirm_title">تأكيد الحذف</string>
+    <string name="assets__action__delete_confirm_message">هل أنت متأكد من حذف \"%s\"؟ لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="assets__action__edit">تعديل</string>
+    <string name="assets__action__export">تصدير</string>
+    <string name="assets__action__import">إستيراد</string>
+    <string name="assets__action__no">كلا</string>
+    <string name="assets__action__save">حفظ</string>
+    <string name="assets__action__yes">موافق</string>
+    <string name="assets__error__invalid">غير صحيح</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">الإعداد</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">السابق</string>

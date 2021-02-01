@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FlorisBoard</string>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Пауза</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Изчакване</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Икона с три точки. Ако е видима, означава, че при по-продължително натискане могат да се използват повече букви.</string>
+    <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Затваряне на режим с една ръка.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Преместване на клавиатурата вляво.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Преместване на клавиатурата вдясно.</string>
+    <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Поверителен режим</string>
+    <!--
+    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
+-->
+    <!-- Media strings -->
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Емоджита</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Емотикони</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Каомоджи</string>
+    <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Смайлита &amp; Емоции</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Хора &amp; Тяло</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Животни &amp; Природа</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Храна &amp; Питиета</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Пътуване &amp; Места</string>
+    <string name="emoji__category__activities" comment="Emoji category name">Дейности</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Обекти</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">Символи</string>
+    <string name="emoji__category__flags" comment="Emoji category name">Знамена</string>
+    <!-- Smartbar strings -->
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Превключване на бързо действие. При натискане, превключва между предложенията за думи и бутоните за бързо действие.</string>
+    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Изход от панела за редактиране на текст.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Превключване на състоянието на режима с една ръка.</string>
+    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Отваряне на настройките.</string>
+    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Преминаване към панела за редактиране на текст.</string>
+    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Преминаване към изглед за въвеждане на мултимедия.</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Бутон за отмяна, който връща последното действие</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Бутон за повтаряне, който връща последната отмяна</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Ако се вижда, означава, че е активен поверителен режим. При щракване показва информация за поверителния режим.</string>
+    <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">Настройки</string>
+    <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Още опции</string>
+    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Помощ &amp; обратна връзка</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Помощ</string>
+    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Начало</string>
+    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Клавиатура</string>
+    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Писане</string>
+    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Тема</string>
+    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Жестове</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">По подразбиране</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">По подразбиране от системата</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">Добре дошли във %s</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard не е активен в системата и по този начин не може да бъде достъпен като метод за въвеждане. Щракнете тук, за да разрешите този проблем.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard не е избран като метод за въвеждане по подразбиране. Щракнете тук, за да разрешите този проблем.</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Благодарим Ви, че изпробвахте FlorisBoard! Този проект все още е в алфа версия и поради това липсват функции. Ако откриете някакви грешки или искате да направите предложение, моля, проверете репото в GitHub и подайте сигнал за проблем. Това помага да подобрим FlorisBoard. Благодарни сме!</string>
+    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Езици &amp; Клавиатурни подредби</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Изглежда, че не сте конфигурирали подтипове. Като резервен вариант ще се използва подтипът English/QWERTY!</string>
+    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Добавяне</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Добавяне на подтип</string>
+    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Прилагане</string>
+    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Отказ</string>
+    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Изтриване</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Редактиране на подтип</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Локално</string>
+    <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">Клавиатурна подредба</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Този подтип вече съществува!</string>
+    <string name="settings__theme__title" comment="Title of the Theme fragment">Тема на клавиатурата</string>
+    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Недефинирано</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Режим на тема</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Винаги е ден</string>
+    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Винаги е нощ</string>
+    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Според системата</string>
+    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Според времето</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Време на изгрев</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Време на залез</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Дневна тема</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Нощна тема</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Избрана тема</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Адаптиране на цветовете спрямо приложението</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Цветовете на темата се адаптират спрямо тези на текущото приложение, ако целевото приложение поддържа това.</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">Активи от приложения на FlorisBoard</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">Вътрешно хранилище</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">Външен доставчик</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Мениджър на теми (Ден)</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Мениджър на теми (Нощ)</string>
+    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Създаване на празна тема</string>
+    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Създаване от избрана тема</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Персонализирано (базирано на %s)</string>
+    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Нова тема</string>
+    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Редактиране на тема</string>
+    <string name="settings__theme_editor__name_label" comment="Label of name input">Име</string>
+    <string name="settings__theme_editor__type_label" comment="Label of type input">Тип</string>
+    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Добавяне на група</string>
+    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Редактиране на група</string>
+    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Добавяне на атрибут</string>
+    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Редактиране на атрибут</string>
+    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Референция</string>
+    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Група</string>
+    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Атрибут</string>
+    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Плътен цвят</string>
+    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Линеен градиент</string>
+    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Радиален градиент</string>
+    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Превключване</string>
+    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Състояние</string>
+    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Други</string>
+    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Текст</string>
+    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Преглед на стойността на темата</string>
+    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Моля, въведете име на темата.</string>
+    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Моля, въведете име на група, която съдържа само букви (a–я и/или A–Я), двоеточия (:) за подгрупиране или допълнително числа (0–9), тилда (~) и подчертаване (_) за етикета на клавиша.</string>
+    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Моля, въведете име на група.</string>
+    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Това име на група вече съществува в тази тема. Моля, посочете друго.</string>
+    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Моля, въведете име на атрибут, което съдържа само буквите a-я и/или A-Я.</string>
+    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Моля, въведете име на атрибут.</string>
+    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Това име на атрибут вече съществува в тази група. Моля, посочете друго.</string>
+    <string name="settings__theme__group_window" comment="Theme group label">Прозорец &amp; Система</string>
+    <string name="settings__theme__group_keyboard" comment="Theme group label">Клавиатура</string>
+    <string name="settings__theme__group_key" comment="Theme group label">Клавиш</string>
+    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Клавиш (%s)</string>
+    <string name="settings__theme__group_media" comment="Theme group label">Медиен контекст</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">За една ръка</string>
+    <string name="settings__theme__group_popup" comment="Theme group label">Изскачащ прозорец</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">Поверителен режим</string>
+    <string name="settings__theme__group_smartbar" comment="Theme group label">Умна лента</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Бутон за Умна лента</string>
+    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Персонализирана група (%s)</string>
+    <string name="settings__theme__attr_background" comment="Theme attribute label">Цвят на фона</string>
+    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Цвят на фона (активен)</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Цвят на фона (натиснат)</string>
+    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Цвят на предния план</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Цвят на предния план (алтернативен)</string>
+    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Цвят на предния план (натиснат)</string>
+    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Показване на рамка</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Основен цвят</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Основен цвят (тъмен)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Акцентиращ цвят</string>
+    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Цвят на лентата за навигация</string>
+    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Лента за навигация с тъмен преден план</string>
+    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Полупрозрачен цвят</string>
+    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Цвят на текста</string>
+    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Персонализиран атрибут (%s)</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Предпочитания за клавиатурата</string>
+    <string name="pref__keyboard__group_keys__label" comment="Preference group title">Клавиши</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">Ред с цифри</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Показване на ред с цифри отгоре на символното оформление</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Подсказан ред с цифри</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Подсказани символи</string>
+    <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">Изключено</string>
+    <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">Включено (Подсказката е с приоритет)</string>
+    <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">Включено (Акцентът е с приоритет)</string>
+    <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">Включено (Умна приоритизация)</string>
+    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Показване на помощния ключ</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Показва конфигурируем помощен клавиш до бутона за интервал</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Действие на помощния клавиш</string>
+    <string name="pref__keyboard__utility_key_action__switch_to_emojis" comment="Preference value">Преминаване към емоджита</string>
+    <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Промяна на език</string>
+    <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Промяна на приложението за клавитура</string>
+    <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Динамично: Преминаване към емоджита/Промяна на език</string>
+    <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Множител на размера на шрифта (портрет)</string>
+    <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Множител на размера на шрифта (пейзаж)</string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">Оформление</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Режим за работа с една ръка</string>
+    <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Изкл.</string>
+    <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Режим за дясна ръка</string>
+    <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Режим за лява ръка</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">Височина на клавиатурата</string>
+    <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Много ниска</string>
+    <string name="pref__keyboard__height_factor__short" comment="Preference value">Ниска</string>
+    <string name="pref__keyboard__height_factor__mid_short" comment="Preference value">Среднониска</string>
+    <string name="pref__keyboard__height_factor__normal" comment="Preference value">Нормална</string>
+    <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">Средновисока</string>
+    <string name="pref__keyboard__height_factor__tall" comment="Preference value">Висока</string>
+    <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Много висока</string>
+    <string name="pref__keyboard__height_factor__custom" comment="Preference value">Персонализирана</string>
+    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Персонализирана стойност за височината на клавиатурата</string>
+    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Натискане на клавиш</string>
+    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Звук при натискане на клавиш</string>
+    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Сила на звук при натискане на клавиш</string>
+    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Вибрация при натискане на клавиш</string>
+    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Сила на вибрация при натискане на клавиш</string>
+    <string name="pref__keyboard__popup_visible__label" comment="Preference title">Видимост на изскачащ прозорец</string>
+    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Показване на изскачащ прозорец при натискане на клавиш</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Закъснение при продължително натискане на клавиш</string>
+    <string name="settings__typing__title" comment="Title of Typing experience fragment">Изживяване от писане</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">Включване на Умна лента</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">Ще се покаже отгоре на клавиатурата</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
+    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] Показване на предложения, при писане</string>
+    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Ще се покаже в Умната лента</string>
+    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Предложения на база на клипборда</string>
+    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Предлагане да се постави съдържанието на клипборда, ако е копирано преди това</string>
+    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Предложения за следваща дума</string>
+    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Използване на предишните думи за генериране на предложения</string>
+    <string name="pref__correction__title" comment="Preference group title">Корекции</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Автоматични главни букви</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Думите се изписват с главни букви въз основа на текущия контекст на въвеждане</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Запомняне на състоянието на Caps Lock клавиша</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps Lock клавиша ще остане включен при преместване в друго текстово поле</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Точка при двоен интервал</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Двукратното докосване на интервала вмъква точка, последвана от интервал</string>
+    <string name="settings__gestures__title" comment="Title of Gestures fragment">Жестове &amp; Писане чрез плъзгане</string>
+    <string name="pref__glide__title" comment="Preference group title">Писане чрез плъзгане</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Включване на въвеждане чрез плъзгане</string>
+    <string name="pref__glide__enabled__summary" comment="Preference summary">Въвеждане на дума чрез плъзгане на пръст през буквите ѝ</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Показване на следа от плъзгането</string>
+    <string name="pref__glide__show_trail__summary" comment="Preference summary">Ще изчезва след всяка дума</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Основни жестове</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">Жестове с клавиша за интервал</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">Други жестове / Прагове на жестове</string>
+    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Без действие</string>
+    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Точно изтриване на символи</string>
+    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Изтриване на текущата дума</string>
+    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Точно изтриване на думи</string>
+    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Скриване на клавиатура</string>
+    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Вмъкване на интервал</string>
+    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Преместване на курсора нагоре</string>
+    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Преместване на курсора надолу</string>
+    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Преместване на курсора наляво</string>
+    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Преместване на курсора надясно</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Преместване на курсора в началото на реда</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Преместване на курсора в края на реда</string>
+    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
+    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Показване на варианти от методи за въвеждане</string>
+    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Преминаване към предишна клавиатура</string>
+    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Преминаване към предишен подтип</string>
+    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Преминаване към следващ подтип</string>
+    <string name="pref__gestures__swipe_up__label" comment="Preference title">Плъзгане нагоре</string>
+    <string name="pref__gestures__swipe_down__label" comment="Preference title">Плъзгане надолу</string>
+    <string name="pref__gestures__swipe_left__label" comment="Preference title">Плъзгане наляво</string>
+    <string name="pref__gestures__swipe_right__label" comment="Preference title">Плъзгане надясно</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Плъзгане на клавиша за интервал нагоре</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Плъзгане на клавиша за интервал наляво</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Плъзгане на клавиша за интервал надясно</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Продължително натискане на клавиша за интервал</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Плъзгане на клавиша за изтриване наляво</string>
+    <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Праг за скоростта на плъзгане</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Много бавно</string>
+    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Бавно</string>
+    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Нормално</string>
+    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Бързо</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Много бързо</string>
+    <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Минимално разстояние на плъзгане</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Много кратко</string>
+    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Кратко</string>
+    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Нормално</string>
+    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Дълго</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Много дълго</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Разширени</string>
+    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Тема на настройките</string>
+    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Светла</string>
+    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Тъмна</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Показване на иконата на приложението в стартовия панел</string>
+    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Принуждаване на поверителен режим</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Ще изключи всички функции, които трябва временно да работят с вашите входящи данни</string>
+    <!-- About UI strings -->
+    <string name="about__title" comment="Title of About activity">Относно</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Икона на приложението FlorisBoard</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">Лицензи с отворен код</string>
+    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Политика за поверителност</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">Изходен код</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">Лицензи с отворен код</string>
+    <!-- Assets strings -->
+    <plurals name="assets__file__authors">
+        <item quantity="one">Автор</item>
+        <item quantity="other">Автори</item>
+    </plurals>
+    <string name="assets__file__name">Име</string>
+    <string name="assets__file__source">Източник</string>
+    <string name="assets__action__add">Добавяне</string>
+    <string name="assets__action__cancel">Отказ</string>
+    <string name="assets__action__cancel_confirm_title">Потвърждаване на отказването</string>
+    <string name="assets__action__cancel_confirm_message">Наистина ли искате да отхвърлите всички незапазени промени? Това действие не може да бъде отменено, след като бъде изпълнено.</string>
+    <string name="assets__action__delete">Изтриване</string>
+    <string name="assets__action__delete_confirm_title">Потвърждаване на изтриването</string>
+    <string name="assets__action__delete_confirm_message">Наистина ли искате да изтриете „%s“? Това действие не може да бъде отменено, след като бъде изпълнено.</string>
+    <string name="assets__action__edit">Редактиране</string>
+    <string name="assets__action__export">Изнасяне</string>
+    <string name="assets__action__import">Внасяне</string>
+    <string name="assets__action__no">Не</string>
+    <string name="assets__action__save">Запазване</string>
+    <string name="assets__action__yes">Да</string>
+    <string name="assets__error__invalid">Невалидно</string>
+    <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">Настройка</string>
+    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Пред.</string>
+    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Отказ</string>
+    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Напред</string>
+    <string name="setup__finish_button" comment="Label of Finish button in Setup">Край</string>
+    <string name="setup__ok_button" comment="Label of OK button in Setup">Добре</string>
+    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Добре дошли!</string>
+    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Благодарим Ви, че изпробвахте FlorisBoard! Преди да можете да започнете да го използвате, трябва да направим обичайните неща и да го активираме в системните настройки, да настроим предпочитания език/оформление и т.н… Но без притеснения - съветникът за настройка ще ви преведе през това!</string>
+    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard зачита изцяло вашата поверителност и не събира никакви потребителски данни. За повече информация вижте тук:</string>
+    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">Изходният код на FlorisBoard е публично достъпен за всеки, така че можете лесно да прегледате това, което FlorisBoard прави зад кулисите. Вижте връзката към хранилището по-долу.</string>
+    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Едно последно нещо, преди да започнете настройката - ако срещнете грешки/сривове/проблеми с FlorisBoard или имате заявка за функция - преминете към хранилището на GitHub, свързано по-долу, и подайте проблем. Това помага за подобряване на практическата работа за всички потребители!</string>
+    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">За да стартирате настройката, щракнете върху <i>НАПРЕД</i>.</string>
+    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Включете FlorisBoard</string>
+    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android изисква всяка персонализирана клавиатура да бъде активирана ръчно, преди да можете да я използвате. Щракнете върху бутона по-долу, за да отидете при настройките за <i>Език &amp; Въвеждане</i>, след това не забравяйте да поставите отметка на <i>FlorisBoard</i> \'.</string>
+    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard е успешно активиран. За да продължите, щракнете върху <i>НАПРЕД</i>!</string>
+    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Отваряне на настройките за Език &amp; Въвеждане</string>
+    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Направете FlorisBoard по подразбиране</string>
+    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard вече е активиран във Вашата система. За да го използвате активно, превключете на FlorisBoard, като го изберете в диалоговия прозорец с методи за въвеждане!</string>
+    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Успешно сменихте клавиатурата си по подразбиране на FlorisBoard!</string>
+    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Смяна на клавиатура</string>
+    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Настройването завърши!</string>
+    <!-- Crash Dialog strings -->
+    <string name="crash_dialog__title" comment="Title of crash dialog">Отчет за грешка на FlorisBoard</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Извинете за неудобството, но FlorisBoard се срина поради неочаквана грешка.\n\nАко искате да съобщите за тази грешка, кликнете върху „Копиране в клипборда“, след това върху бутона „Отваряне на доклад за грешка“. Попълнете отчета за грешки и го поставете. Това помага да направим FlorisBoard по-добър и по-стабилен за всички. Благодарни сме!</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Копиране в клипборда</string>
+    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Отваряне на формуляр за доклад за грешка (github.com)</string>
+    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Затваряне</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Отчети за грешки на FlorisBoard</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard спря да работи…</string>
+    <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Докоснете, за да видите подробности за грешката</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard изглежда спира да работи многократно…</string>
+    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Връщане към предишна клавиатура, за да се спре безкрайния цикъл от сривове. Докоснете, за да видите подробности за грешката</string>
+</resources>

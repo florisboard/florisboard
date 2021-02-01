@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">فلوریس بورد</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">مکث</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">صبر‌کنید</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">نماد سه نقطه. در صورت مشاهده ، نشان می دهد که در صورت فشار بیشتر می توان از حروف بیشتری استفاده کرد.</string>
     <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">بستن حالت یک دستی.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">جابه‌جایی صفحه کلید به سمت چپ.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">جابه‌جایی صفحه کلید به سمت راست.</string>
     <!-- Private mode info dialog strings -->
@@ -11,7 +14,7 @@
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
     <!-- Media strings -->
-    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">ایموجی ها</string>
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">شکلک‌ها</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <!-- Emoji strings -->
@@ -22,13 +25,18 @@
     <string name="emoji__category__travel_places" comment="Emoji category name">صفر &amp; مکان ها</string>
     <string name="emoji__category__activities" comment="Emoji category name">فعالیت ها</string>
     <string name="emoji__category__objects" comment="Emoji category name">اشیاء</string>
-    <string name="emoji__category__symbols" comment="Emoji category name">نشانه ها</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">نمادها</string>
     <string name="emoji__category__flags" comment="Emoji category name">پرچم ها</string>
     <!-- Smartbar strings -->
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">ضامن اقدام سریع. در صورت فشار ، بین پیشنهادات کلمه و دکمه های اقدام سریع جابجا می شود.</string>
+    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">خروج از صفحه ویرایش متن.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">ضامن تغییر حالت یک دستی.</string>
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">باز کردن تنظیمات.</string>
+    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">تغییر به صفحه ویرایش متن.</string>
+    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">تغییر به حالت ورودی رسانه.</string>
     <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">دکمه برگرداندن برای برگشتن به انجام آخرین عمل</string>
     <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">دکمه بازگردانی برای بازگشت به آخرین عمل برگشت داده شده</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">اگر معلوم باشد، نشان می دهد که حالت خصوصی فعال است. وقتی روی آن کلیک شود، اطلاعاتی درباره حالت خصوصی نشان می دهد.</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">در ضورت قابل مشاهده بودن، نشان میـدهد که حالت خصوصی فعال است. در صورت ضربه روی ان، اطلاعاتی درباره حالت خصوصی نشان می‌دهد.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">تنظیمات</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">گزینه‌های بیشتر</string>
@@ -42,12 +50,18 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">پیشفرض</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">پیشفرض سیستم</string>
     <string name="settings__home__title" comment="Title of the Home fragment">خوش آمدید به %s</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">فلوریس بورد در سیستم به عنوان روش ورودی فعلا نیست و به این علت به عنوان روش ورودی قابل انتخاب نیست. برای حل این مشکل اینجا کلیک کنید.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">فلوریس بود به عنوان روش ورودی پیش فرض انتخاب نشده. برای حل این مشکل اینجا کلیک کنید.</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">با تشکر از شما برای امتحان فلوریس بورد! به علت قرار داشت در مراحل آلفا بود برای همین فاقد یک سری از ویژگی های اصلی است. اگر مشکلی پیدا کردید یا می خواهید پیشنهادی ارائه دهید ، لطفاً برنامه را در GitHub مشاهده و برای مشکل issue طراحی کنید. این کار به بهتر کردن فلوریس بورد کمک می کند. با تشکر!</string>
+    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">زبان ها &amp; چیدمان های صفحه کلید</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">به نظر میرسد که هیچگونه زیرگروه دیگری را انتخاب نکرده اید. به همین علت زیرگروه English/QWERTY استفاده خواهد شد!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">افزودن</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">افزودن زیر-نوعی</string>
     <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">اعمال</string>
     <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">لغو</string>
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">حذف</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">ویرایش زیر-نوعی</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">منطقه</string>
     <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">چیدمان صفحه کلید</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">این زیرنوع درحال حاضر وجود دارد!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">طرح زمینه صفحه کلید</string>
@@ -64,7 +78,7 @@
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">طرح زمینه انتخاب شده</string>
     <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">تطبیق دادن رنگ ها به برنامه</string>
     <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">رنگ های طرح زمینه بر اساس برنامه های فعلی تطبیق داده شوند، اگر برنامه مورد نظر از این پشتیبانی کند.</string>
-    <string name="pref__theme__source_assets" comment="Label for the theme source field">ابزار های برنامه FlorisBoard</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">ابزار های برنامه فلوریس بورد</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">حافظه داخلی</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">ارائه دهنده خارجی</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">مدیریت طرح‌ضمینه (روز)</string>
@@ -92,11 +106,38 @@
     <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">لطفا نام طرح زمینه را وارد کنید.</string>
     <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">لطفا نام گروهی را وارد کنید که فقط حاوی حروف (a-z و/یا A-Z) باشد، دونقطه (:) برای زیرگروه ها و یا اعداد (0-9)، آکولاد (~) و زیرخط (_) برای عنوان هر کلید می باشد.</string>
     <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">لطفا یک نام گروه وارد کنید.</string>
+    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">گروهی با این نام در طراحی زمینه وجود دارد. لطفا نام دیگری انتخاب کنید.</string>
     <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">لطفا نام یک ویژگی را وارد کنید که فقط حاوی حروف a-z و/یا A-Z باشد.</string>
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">لطفا نام ویژگی را وارد کنید.</string>
+    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">خصوصیتی با این نام در طراحی زمینه وجود دارد. لطفا مورد دیگری را مشخص کنید.</string>
     <string name="settings__theme__group_window" comment="Theme group label">پنجره &amp; سیستم</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">صفحه‌کلید</string>
     <string name="settings__theme__group_key" comment="Theme group label">کلید</string>
+    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">کلید (%s)</string>
+    <string name="settings__theme__group_media" comment="Theme group label">متن رسانه</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">یک دستی</string>
+    <string name="settings__theme__group_popup" comment="Theme group label">پنجره</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">حالت خصوصی</string>
+    <string name="settings__theme__group_smartbar" comment="Theme group label">نوار هوشمند</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">دکمه نوار نوشمند</string>
+    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">استخراج طرح ویرایش</string>
+    <string name="settings__theme__group_extractActionButton" comment="Theme group label">استخراج دکمه عملیات</string>
+    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">گروه سفارشی (%s)</string>
+    <string name="settings__theme__attr_background" comment="Theme attribute label">رنگ پس‌زمینه</string>
+    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">رنگ پس زمینه (هنگام فعال بودن)</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">رنگ پس زمینه (در صورت فشار)</string>
+    <string name="settings__theme__attr_foreground" comment="Theme attribute label">رنگ روی‌زمینه</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">رنگ روی‌زمینه (جایگزین)</string>
+    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">رنگ پس زمینه (در صورت فشار)</string>
+    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">نمایش مرزها</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">رنگ اصلی</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">رنگ اصلی (تاریک)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">رنگ ثانویه</string>
+    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">رنگ نوار پیمایش</string>
+    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">پیش زمینه تاریک نوار پیمایش</string>
+    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">رنگ نیمه شفاف</string>
+    <string name="settings__theme__attr_textColor" comment="Theme attribute label">رنگ متن</string>
+    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">مشخصات سفارشی (%s)</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">تنظیمات صفحه‌کلید</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">کلیدها</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">ردیف عدد</string>
@@ -107,6 +148,13 @@
     <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">فعال شد(راهنما در اولویت)</string>
     <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">فعال شد(راهنما اولویت بندی شده)</string>
     <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">فعال شد(اولولیت بندی هوشمند)</string>
+    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">نشان دادن کلید ابزار</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">یک کلید ابزار قابل تنظیم در کنار نوار فاصله نشان می دهد</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">عملکرد کلید ابزار</string>
+    <string name="pref__keyboard__utility_key_action__switch_to_emojis" comment="Preference value">تغییر به شکلک‌ها</string>
+    <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">تغییر زبان</string>
+    <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">تغییر برنامه کیبورد</string>
+    <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">متغیر: تغییر به شکلک‌ها / تغییر زبان</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">اندازه فونت چند برابری(عمودی)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">اندازه فونت چند برابری(افقی)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">چیدمان</string>
@@ -124,6 +172,8 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">بیشتر-بلند</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">سفارشی</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">مقدار ارتفاع سفارشی صفحه‌کلید</string>
+    <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">فاصله از پایین (افقی)</string>
+    <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">فاصله از پایین (عمودی)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">فشردن کلید</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">صدای فشردن کلید</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">میزان صدای فشردن کلید</string>
@@ -138,6 +188,8 @@
     <string name="pref__suggestion__title" comment="Preference group title">پیشنهادات</string>
     <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] نمایش پیشنهادات حین تایپ کردن</string>
     <string name="pref__suggestion__enabled__summary" comment="Preference summary">در نوار هوشمند نمایش داده خواهد شد</string>
+    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">پیشنهادات محتوای کلیپ بورد</string>
+    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">محتوای کلیپ بورد را پیشنهاد کنید تا اگر قبلاً کپی شده است ، جای گذاری شود</string>
     <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] پیشنهادات کلمه بعدی</string>
     <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">استفاده از کلمه قبلی برای پیشنهادات</string>
     <string name="pref__correction__title" comment="Preference group title">تصحیح</string>
@@ -151,19 +203,63 @@
     <string name="pref__glide__title" comment="Preference group title">نوشتن گلایدی</string>
     <string name="pref__glide__enabled__label" comment="Preference title">[NYI] فعال سازی نوشتن گلایدی</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">نوشتن حروف با حرکت مداوم و نگه داشتن روی حرف مورد نظر</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] نشان دادن دنباله سر خوردن</string>
+    <string name="pref__glide__show_trail__summary" comment="Preference summary">بعد از هر کلمه ناپدید خواهد شد</string>
     <string name="pref__gestures__general_title" comment="Preference group title">اشارات کلی</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">دکمه space اشارات</string>
     <string name="pref__gestures__other_title" comment="Preference group title">دیگر اشارات/ آشارات آستانه</string>
+    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">بدون عمل</string>
+    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">حذف کردن دقیق حروف</string>
+    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">حذف کلمه کنونی</string>
+    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">حذف دقیق‌ کلمات</string>
+    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">مخفی کردن کیبورد</string>
     <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">وارد کردن فاصله</string>
+    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">حرکت مکان نما به بالا</string>
+    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">حرکت مکان نما به پایین</string>
+    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">حرکت مکان نما به چپ</string>
+    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">حرکت مکان نما به راست</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">انتقال اشاره به شروع خط</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">انتقال اشاره به پایان خط</string>
+    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">شیفت</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">نمایش حالت انتخاب کننده</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">تعویض به صفحه کلید قبلی</string>
-    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">کشیدن فاصله</string>
-    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">نگه داشتن دکمه Space</string>
+    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">تغییر به زیر گروه قبلی</string>
+    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">تغییر به زیرگروه بعدی</string>
+    <string name="pref__gestures__swipe_up__label" comment="Preference title">به بالا کشیدن</string>
+    <string name="pref__gestures__swipe_down__label" comment="Preference title">به پایین بکشید</string>
+    <string name="pref__gestures__swipe_left__label" comment="Preference title">به چپ بکشید</string>
+    <string name="pref__gestures__swipe_right__label" comment="Preference title">به راست بکشید</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">کشیدن نوار فاصله به بالا</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">کشیدن نوار فاصله به چپ</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">کشیدن نوار فاصله به راست</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">نگه داشتن نوار فاصله</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">کشیدن دکمه پاک کردن به چپ</string>
+    <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">آستانه سرعت کشیدن</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">بسیار کند</string>
+    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">کند</string>
+    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">متوسط</string>
+    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">تند</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">بسیار تند</string>
+    <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">آستانه مسافت کشیدن</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">بسیار کوتاه</string>
+    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">کوتاه</string>
+    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">متوسط</string>
+    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">طولانی</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">بسیار طولانی</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings activity">پیشرفته</string>
+    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">تنظیمات زمینه</string>
+    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">روشن</string>
+    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">تاریک</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">قرار دادن آیکون برنامه در لانچر</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">حالت خصوصی اجباری</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">هر ویژگی که که باید با ورودی شما کار کنند را موقتا غیرفعال می کند</string>
     <!-- About UI strings -->
+    <string name="about__title" comment="Title of About activity">درباره</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">آیکون برنامه فلوریس بورد</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">مجوزهای منبع باز</string>
+    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">سیاست حفظ حریم خصوصی</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">کد منبع</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">مجوزهای متن باز</string>
     <!-- Assets strings -->
     <plurals name="assets__file__authors">
         <item quantity="one">سازنده</item>
@@ -186,19 +282,36 @@
     <string name="assets__action__yes">بله</string>
     <string name="assets__error__invalid">نامعتبر</string>
     <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">راه‌اندازی</string>
+    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">قبلی</string>
     <string name="setup__cancel_button" comment="Label of Cancel button in Setup">لغو</string>
     <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">بعدی</string>
     <string name="setup__finish_button" comment="Label of Finish button in Setup">پایان</string>
     <string name="setup__ok_button" comment="Label of OK button in Setup">تأیید</string>
     <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">خوش آمدید!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">ممنون از اینکه FlorisBoard رو امتحان کردین! قبل از اینکه شروع به استفاده کنید، ما هم چیزای همیشگی که باید برای فعال کردنش در تنظیمات انجام بدهید را داریم، تنظیم زبان/چیدمان و… ولی نگران نباشید - تنظیم جادویی شما را در این کار راهنمایی خواد کرد!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard به طور کامل به حریم خصوصی شما احترام می گذارد و هیچ اطلاعاتی از کاربر دریافت نمی کند. برای اطلاعات بیشتر به اینجا مراجعه کنید:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">کد سورس FlorisBoard به طور عمومی در دسترس همگان قرار دارد، پس شما می توانید به راحتی اینکه پشت صحنه FlorisBoard چه اتفاقی می افتد را مرور کنید. لینک مخزن را از زیر مشاهده کنید.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">یک تنظیم پایانی قبل از شروع - اگر شما به ایرادی/خراب شدنی/مشکلی با FlorisBoard برخورد کردید یا درخواست خواصه خود را دارید - به مخزن GitHub که لینکش در زیر واقع شده بروید و مشکل را استناد کنید. این در تجربه به همه کاربران کمک می کند!</string>
+    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">ممنون از اینکه فلوریس بورد را امتحان کردین! قبل از اینکه شروع به استفاده کنید، ما باید یک سری کار های همیشگی را انجام داده و برنامه را در تنظیمات دستگاه فعال کنیم، تنظیم زبان/چیدمان و… ولی نگران نباشید - تنظیم جادویی شما را در این کار راهنمایی خواد کرد!</string>
+    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">فلوریس بورد به طور کامل به حریم خصوصی شما احترام می گذارد و هیچ اطلاعاتی از کاربر دریافت نمی کند. برای اطلاعات بیشتر به اینجا مراجعه کنید:</string>
+    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">کد منبع فلوریس بورد به طور عمومی در دسترس همگان قرار دارد، پس شما می توانید به راحتی اینکه پشت صحنه فلوریس چه اتفاقی می‌افتد را مرور کنید. لینک مخزن را از زیر مشاهده کنید.</string>
+    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">یک تنظیم پایانی قبل از شروع - اگر شما به خطا/خراب شدنی/مشکلی با فلوریس بورد برخورد کردید یا درخواست ویژگی خاصی را دارید - به مخزن GitHub که لینکش در زیر واقع شده بروید و مشکل را استناد کنید. این به تجربه همه کاربران کمک می کند!</string>
     <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">برای شروع راه انداز تنظیمات روی <i>بعدی</i> کلیک کنید.</string>
-    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">فعال سازی FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">در اندروید هر صفحه کلید سفارشی باید به طور دستی قبل از استفاده فعال شود. روی دکمه زیر کلیک کنید تا به تنظیمات <i>زبان &amp; ورودی</i> بروید، بعد مطمعن شوید که <i>FlorisBoard</i> را چک و فعال کرده اید.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard با موفقیت فعال شد. برای ادامه روی <i>بعدی</i> بزنید!</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">تنظیم FlorisBoard به پیشفرض</string>
+    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">فعال سازی فبوریس بورد</string>
+    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">در اندروید برنامه های کیبورد سفارشی باید به طور دستی قبل از استفاده فعال شوند. روی دکمه زیر کلیک کنید تا به تنظیمات <i>زبان &amp; ورودی</i> بروید، بعد مطمئن شوید که <i>فلوریس بورد</i> را چک و فعال کرده‌اید.</string>
+    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">فلوریس بورد با موفقیت فعال شد. برای ادامه روی <i>بعدی</i> بزنید!</string>
+    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">باز کردن زبان &amp; تنظیمات ورودی</string>
+    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">تنظیم فلوریس بورد به پیش فرض</string>
+    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">هم اکنون فلوریس بورد در سیستم شما فعال شده است. برای استفاده از آن، فلوریس بورد را در بخش انتخاب روش ورودی، انتخاب کنید!</string>
+    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">با موفقیت کیبورد پیش فرض را به فلوریس بورد تغییر داده شد!</string>
+    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">تغییر صفحه‌کلید</string>
+    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">نصب تمام شد!</string>
     <!-- Crash Dialog strings -->
+    <string name="crash_dialog__title" comment="Title of crash dialog">گزارش خطای فلوریس بورد</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">با عرض پوزش برای این مشکل ، اما فلوریس بورد به دلیلی غیرمنتظره ای متوفق شده است.\n\n اگر می خواهید این خطا را گزارش کنید ، روی \"کپی در کلیپ بورد\" کلیک کنید ، سپس بر روی دکمه \"باز کردن گزارش اشکال\" کلیک کنید. گزارش اشکال را پر کرده و گزارش را وارد کنید. این امر به بهتر و پایدارتر شدن فلوریس بورد برای همه کمک می کند. متشکرم!</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">در کلیپ بورد کپی شد</string>
+    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">باز کردن گزارش خطا توسط (github.com)</string>
+    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">بستن</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">گزارش های خطای فلوریس بورد</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">فلوریس بورد کار خود را متوقف کرده است…</string>
+    <string name="crash_once_notification__body" comment="Body of the notification for a single crash">برای دیدن جزئیات خطا ضربه بزنید</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">به نظر می رسد فلوریس بورد کار خود را مکرر متوقف می کند…</string>
+    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">در خال بازگشت به کیبورد قبلی برای جلو گیری از بروز خطای دوباره. برای مشاهده جزئیات خطا ، ضربه بزنید</string>
 </resources>

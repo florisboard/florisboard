@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pause</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Attendre</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Icône avec trois points. Si elle est visible, elle indique qu\'il est possible d\'utiliser plus de lettres si l\'on appuie plus longtemps.</string>
@@ -40,6 +41,7 @@
     <string name="settings__title" comment="Title of Settings">Paramètres</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Plus d\'options</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Aide &amp; commentaires</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Aide</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Accueil</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Clavier</string>
     <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Dactylographie</string>
@@ -104,14 +106,39 @@
     <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Texte</string>
     <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Aperçu de la valeur du thème</string>
     <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Veuillez entrer un nom de thème.</string>
+    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Veuillez saisir un nom de groupe qui ne contient que des lettres (a-z et/ou A-Z), des deux-points ( : ) pour le sous-groupe ou des chiffres supplémentaires (0-9), un tilde (~) et des traits de soulignement (_) pour l\'étiquette clé.</string>
     <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Veuillez entrer un nom de groupe.</string>
+    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Ce nom de groupe existe déjà au sein de ce thème. Veuillez en choisir un autre.</string>
     <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Veuillez entrer un nom d\'attribut ne contenant que les lettres a-z et/ou A-Z.</string>
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Veuillez entrer un nom d\'attribut.</string>
+    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Ce nom d\'attribut existe déjà dans ce groupe. Veuillez en spécifier un autre.</string>
     <string name="settings__theme__group_window" comment="Theme group label">Fenêtre &amp; Système</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Clavier</string>
     <string name="settings__theme__group_key" comment="Theme group label">Touche</string>
+    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Clé (%s)</string>
     <string name="settings__theme__group_media" comment="Theme group label">Contexte médiatique</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">À une main</string>
+    <string name="settings__theme__group_popup" comment="Theme group label">Fenêtre contextuelle</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">Mode privé</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Barre intelligente</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Bouton de la barre intelligente</string>
+    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Extraire la disposition d\'édition</string>
+    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Groupe personnalisé (%s)</string>
+    <string name="settings__theme__attr_background" comment="Theme attribute label">Couleur d\'arrière-plan</string>
+    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Couleur d\'arrière-plan (lorsque actif)</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Couleur d\'arrière-plan (lorsqu\'on appuie sur une touche)</string>
+    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Couleur de premier plan</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Couleur d\'avant-plan (alternative)</string>
+    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Couleur de premier plan (lorsqu\'on appuie sur une touche)</string>
+    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Afficher les bordures</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Couleur primaire</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Couleur primaire (sombre)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Couleur d\'accentuation</string>
+    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Couleur de la barre de navigation</string>
+    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Barre de navigation avant-plan sombre</string>
+    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Couleur semi-transparente</string>
+    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Couleur du texte</string>
+    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Attributs personnalisés (%s)</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Préférences de clavier</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Touches</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Rangée de numéros</string>
@@ -122,6 +149,13 @@
     <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">Activé (priorité à l\'indice)</string>
     <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">Activé (priorité à l\'accent)</string>
     <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">Activé (priorité intelligente)</string>
+    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Afficher la touche d\'outils</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Affiche une touche d\'outils configurable à côté de la barre d\'espace</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Action de la touche d\'outils</string>
+    <string name="pref__keyboard__utility_key_action__switch_to_emojis" comment="Preference value">Passer en emojis</string>
+    <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Changer de langue</string>
+    <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Changer d\'application de clavier</string>
+    <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Dynamique : Changer vers emojis / Changer de langue</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicateur de la taille de la police (portrait)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicateur de la taille de la police (paysage)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposition</string>

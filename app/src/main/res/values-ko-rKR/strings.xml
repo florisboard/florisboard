@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">일시 정지</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">기다리기</string>
+    <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">한 손 조작 모드 닫기.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">키보드를 왼쪽으로 이동</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">키보드를 오른쪽으로 이동</string>
+    <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">사생활 모드</string>
+    <!--
+    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
+-->
+    <!-- Media strings -->
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">이모지들</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">이모티콘들</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">카우모지</string>
+    <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">웃음 &amp; 이모티콘</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">사람 &amp; 사람들</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">동물들 &amp; 자연</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">음식 &amp; 음료</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">여행 &amp; 장소들</string>
+    <string name="emoji__category__activities" comment="Emoji category name">활동들</string>
+    <string name="emoji__category__objects" comment="Emoji category name">사물들</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">기호</string>
+    <string name="emoji__category__flags" comment="Emoji category name">깃발</string>
+    <!-- Smartbar strings -->
+    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">텍스트 수정판 나가기.</string>
+    <!-- Settings UI strings -->
+    <!-- About UI strings -->
+    <!-- Assets strings -->
+    <!-- Setup UI strings -->
+    <!-- Crash Dialog strings -->
+</resources>
