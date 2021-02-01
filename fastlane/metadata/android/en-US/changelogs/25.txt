@@ -1,0 +1,14 @@
+- Add landscape full screen text edit support
+- Add Bulgarian phonetic layout (#244) (thanks @lorvethe)
+- Add Hebrew layout (#264) (thanks @antonygggg)
+- Add Kurdish layout (#271) (thanks @kurdikeyboard)
+- Add Serbian layouts (#275) (thanks @GrbavaCigla)
+- Add Trukish extended popups for QWERTY (#247) (thanks @kisekinopureya)
+- Add Floris Black and Floris Black Borderless themes (#297) (thanks @serebit)
+- Improve moving gestures detection and UX
+- Improve key hint label style (#213)
+- Improve bottom offset feature (#58)
+- Fix utility key naming (#246)
+- Fix theme creation crash (#266)
+- Fix memory leaks and reset failures (#267)
+- Fix machine-keyword Locale issue (#135)
