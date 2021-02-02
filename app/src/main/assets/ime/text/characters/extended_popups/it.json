@@ -5,8 +5,8 @@
   "mapping": {
     "all": {
       "a": {
+        "main": { "code":  224, "label": "à" },
         "relevant": [
-          { "code":  224, "label": "à" },
           { "code":  227, "label": "ã" },
           { "code":  229, "label": "å" },
           { "code":  257, "label": "ā" },
@@ -18,8 +18,8 @@
         ]
       },
       "e": {
+        "main": { "code":  232, "label": "è" },
         "relevant": [
-          { "code":  232, "label": "è" },
           { "code":  275, "label": "ē" },
           { "code":  281, "label": "ę" },
           { "code":  279, "label": "ė" },
@@ -29,8 +29,8 @@
         ]
       },
       "i": {
+        "main": { "code":  236, "label": "ì" },
         "relevant": [
-          { "code":  236, "label": "ì" },
           { "code":  299, "label": "ī" },
           { "code":  239, "label": "ï" },
           { "code":  303, "label": "į" },
@@ -45,8 +45,8 @@
         ]
       },
       "o": {
+        "main": { "code":  242, "label": "ò" },
         "relevant": [
-          { "code":  242, "label": "ò" },
           { "code":  186, "label": "º" },
           { "code":  333, "label": "ō" },
           { "code":  339, "label": "œ" },
@@ -58,8 +58,8 @@
         ]
       },
       "u": {
+        "main": { "code":  249, "label": "ù" },
         "relevant": [
-          { "code":  249, "label": "ù" },
           { "code":  363, "label": "ū" },
           { "code":  251, "label": "û" },
           { "code":  250, "label": "ú" },
@@ -91,10 +91,10 @@
       "~right": {
         "main": { "code": -255, "label": ".com" },
         "relevant": [
-          { "code": -255, "label": ".gov" },
-          { "code": -255, "label": ".edu" },
-          { "code": -255, "label": ".it" },
+          { "code": -255, "label": ".gov.it" },
+          { "code": -255, "label": ".edu.it" },
           { "code": -255, "label": ".org" },
+          { "code": -255, "label": ".it" },
           { "code": -255, "label": ".net" }
         ]
       }
