@@ -726,9 +726,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                                 hasCapsRecentlyChanged = false
                                 hasSpaceRecentlyPressed = false
                                 var text = keyData.code.toChar().toString()
-                                text = when (caps) {
+                                text = when (caps && activeKeyboardMode == KeyboardMode.CHARACTERS) {
                                     true -> text.toUpperCase(florisboard.activeSubtype.locale)
-                                    false -> text.toLowerCase(florisboard.activeSubtype.locale)
+                                    false -> text
                                 }
                                 activeEditorInstance.commitText(text)
                             }

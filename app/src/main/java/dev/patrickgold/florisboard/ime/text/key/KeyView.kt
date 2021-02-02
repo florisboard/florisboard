@@ -175,7 +175,7 @@ class KeyView(
      */
     fun getComputedLetter(
         keyData: KeyData = data,
-        caps: Boolean = florisboard?.textInputManager?.caps ?: false,
+        caps: Boolean = florisboard?.textInputManager?.caps ?: false && florisboard?.textInputManager?.getActiveKeyboardMode() == KeyboardMode.CHARACTERS,
         subtype: Subtype = florisboard?.activeSubtype ?: Subtype.DEFAULT
     ): String {
         return when (data.code) {
@@ -185,7 +185,7 @@ class KeyView(
                 if (caps) {
                     labelText.toUpperCase(subtype.locale)
                 } else {
-                    labelText.toLowerCase(subtype.locale)
+                    labelText
                 }
             }
         }

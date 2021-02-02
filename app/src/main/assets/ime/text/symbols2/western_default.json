@@ -21,6 +21,9 @@
       { "code":  960, "label": "π", "popup": {
         "main": { "code":  928, "label": "Π" },
         "relevant": [
+          { "code":  969, "label": "ω" },
+          { "code":  945, "label": "α" },
+          { "code":  946, "label": "β" },
           { "code":  937, "label": "Ω" },
           { "code":  956, "label": "μ" }
         ]
