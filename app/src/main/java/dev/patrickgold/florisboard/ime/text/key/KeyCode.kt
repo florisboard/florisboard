@@ -83,7 +83,8 @@ object KeyCode {
     const val SWITCH_TO_TEXT_CONTEXT =      -212
     const val SWITCH_TO_MEDIA_CONTEXT =     -213
     const val SWITCH_TO_CLIPBOARD_CONTEXT = -214
-    const val TOGGLE_ONE_HANDED_MODE =      -215
+    const val TOGGLE_ONE_HANDED_MODE_LEFT = -215
+    const val TOGGLE_ONE_HANDED_MODE_RIGHT =-216
     const val URI_COMPONENT_TLD =           -255
 
     const val KESHIDA =                     1600

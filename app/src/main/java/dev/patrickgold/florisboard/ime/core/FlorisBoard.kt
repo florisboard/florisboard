@@ -620,10 +620,10 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         updateOneHandedPanelVisibility()
     }
 
-    fun toggleOneHandedMode() {
+    fun toggleOneHandedMode(isRight: Boolean) {
         when (prefs.keyboard.oneHandedMode) {
             "off" -> {
-                prefs.keyboard.oneHandedMode = "end"
+                prefs.keyboard.oneHandedMode = if (isRight) { "end" } else { "start" }
             }
             else -> {
                 prefs.keyboard.oneHandedMode = "off"

@@ -111,7 +111,8 @@ class PopupManager<T_KBD: View, T_KV: View>(
                             keyView.data.popup[adjustedIndex].label, adjustedIndex
                         )
                     }
-                    KeyCode.TOGGLE_ONE_HANDED_MODE -> {
+                    KeyCode.TOGGLE_ONE_HANDED_MODE_LEFT,
+                    KeyCode.TOGGLE_ONE_HANDED_MODE_RIGHT -> {
                         getDrawable(keyView.context, R.drawable.ic_smartphone)?.let {
                             PopupExtendedView.Element.Icon(it, adjustedIndex)
                         } ?: PopupExtendedView.Element.Undefined

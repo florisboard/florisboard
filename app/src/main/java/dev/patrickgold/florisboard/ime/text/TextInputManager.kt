@@ -381,7 +381,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             }
             R.id.quick_action_switch_to_media_context -> florisboard.setActiveInput(R.id.media_input)
             R.id.quick_action_open_settings -> florisboard.launchSettings()
-            R.id.quick_action_one_handed_toggle -> florisboard.toggleOneHandedMode()
+            R.id.quick_action_one_handed_toggle -> florisboard.toggleOneHandedMode(isRight = true)
             R.id.quick_action_undo -> {
                 handleUndo()
                 return
@@ -687,7 +687,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             }
             KeyCode.SWITCH_TO_MEDIA_CONTEXT -> florisboard.setActiveInput(R.id.media_input)
             KeyCode.SWITCH_TO_TEXT_CONTEXT -> florisboard.setActiveInput(R.id.text_input)
-            KeyCode.TOGGLE_ONE_HANDED_MODE -> florisboard.toggleOneHandedMode()
+            KeyCode.TOGGLE_ONE_HANDED_MODE_LEFT -> florisboard.toggleOneHandedMode(isRight = false)
+            KeyCode.TOGGLE_ONE_HANDED_MODE_RIGHT -> florisboard.toggleOneHandedMode(isRight = true)
             KeyCode.VIEW_CHARACTERS -> setActiveKeyboardMode(KeyboardMode.CHARACTERS)
             KeyCode.VIEW_NUMERIC -> setActiveKeyboardMode(KeyboardMode.NUMERIC)
             KeyCode.VIEW_NUMERIC_ADVANCED -> setActiveKeyboardMode(KeyboardMode.NUMERIC_ADVANCED)

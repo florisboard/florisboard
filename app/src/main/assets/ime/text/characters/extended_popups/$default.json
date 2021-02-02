@@ -7,13 +7,13 @@
       "~enter": {
         "main": { "code": -213, "label": "switch_to_media_context", "type": "system_gui" },
         "relevant": [
-          { "code": -215, "label": "toggle_one_handed_mode", "type": "system_gui" }
+          { "code": -216, "label": "toggle_one_handed_mode_right", "type": "system_gui" }
         ]
       },
       "~left": {
         "main": { "code": -213, "label": "switch_to_media_context", "type": "system_gui" },
         "relevant": [
-          { "code": -215, "label": "toggle_one_handed_mode", "type": "system_gui" },
+          { "code": -215, "label": "toggle_one_handed_mode_left", "type": "system_gui" },
           { "code": -100, "label": "settings", "type": "system_gui" }
         ]
       }
