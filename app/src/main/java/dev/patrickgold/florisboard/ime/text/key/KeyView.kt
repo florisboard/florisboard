@@ -523,7 +523,7 @@ class KeyView(
             KeyCode.CLIPBOARD_COPY,
             KeyCode.CLIPBOARD_CUT -> (florisboard != null
                     && florisboard.activeEditorInstance.selection.isSelectionMode
-                    && florisboard.activeEditorInstance.isRawInputEditor)
+                    && !florisboard.activeEditorInstance.isRawInputEditor)
             KeyCode.CLIPBOARD_PASTE -> florisboard?.clipboardManager?.hasPrimaryClip() == true
             KeyCode.CLIPBOARD_SELECT_ALL -> {
                 florisboard?.activeEditorInstance?.isRawInputEditor == false
