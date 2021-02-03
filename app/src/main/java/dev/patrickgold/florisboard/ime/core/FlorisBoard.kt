@@ -48,7 +48,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.settings.SettingsMainActivity
+import dev.patrickgold.florisboard.setup.SetupActivity
 import dev.patrickgold.florisboard.util.*
 import timber.log.Timber
 import java.lang.ref.WeakReference
@@ -519,11 +519,11 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     }
 
     /**
-     * Hides the IME and launches [SettingsMainActivity].
+     * Hides the IME and launches [SetupActivity].
      */
     fun launchSettings() {
         requestHideSelf(0)
-        val i = Intent(this, SettingsMainActivity::class.java)
+        val i = Intent(this, SetupActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                   Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
                   Intent.FLAG_ACTIVITY_CLEAR_TOP
