@@ -15,17 +15,20 @@ assignees: ''
 - Thank you for your help in making FlorisBoard better!
 -->
 
-**Environment information**
-- FlorisBoard Version: <!-- e.g. 0.1.0 -->
-- Install Source: <!-- Google PlayStore/F-Droid/GitHub/? -->
-- Device: <!-- e.g. OnePlus 7T -->
-- Android version, ROM: <!-- e.g. 10, Stock -->
+#### Short description
+Describe the bug in a short but concise way.
 
-**Steps to reproduce**
+#### Steps to reproduce
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
 4. See error
+
+#### Environment information
+- FlorisBoard Version: <!-- e.g. 0.3.6 -->
+- Install Source: <!-- Google PlayStore/F-Droid/GitHub/? -->
+- Device: <!-- e.g. OnePlus 7T -->
+- Android version, ROM: <!-- e.g. 10, Stock -->
 
 <!-- (remove this line if you paste a log)
 ```
