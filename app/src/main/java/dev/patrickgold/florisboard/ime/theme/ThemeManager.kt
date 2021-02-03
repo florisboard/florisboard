@@ -170,7 +170,7 @@ class ThemeManager private constructor(
                             ThemeValue.SolidColor(a.getColor(1, defColor))
                         }
                         else -> {
-                            null
+                            remoteColorPrimary
                         }
                     }
                     remoteColorPrimaryVariant = when {
@@ -184,7 +184,7 @@ class ThemeManager private constructor(
                             ThemeValue.SolidColor(a.getColor(4, defColor))
                         }
                         else -> {
-                            null
+                            remoteColorPrimaryVariant
                         }
                     }
                     remoteColorSecondary = when {
@@ -198,7 +198,7 @@ class ThemeManager private constructor(
                             ThemeValue.SolidColor(a.getColor(7, defColor))
                         }
                         else -> {
-                            null
+                            remoteColorSecondary
                         }
                     }
                     a.recycle()
@@ -216,6 +216,7 @@ class ThemeManager private constructor(
         remoteColorSecondary?.let {
             remoteColorSecondary = ThemeValue.SolidColor(it.color or Color.BLACK)
         }
+        notifyCallbackReceivers()
     }
 
     /**
