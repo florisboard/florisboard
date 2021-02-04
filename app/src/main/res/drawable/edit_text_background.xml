@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle" android:tintMode="multiply">
+    <solid android:color="@android:color/transparent"/>
+    <corners android:radius="@dimen/landscapeInputUi_editText_cornerRadius"/>
+    <stroke android:width="@dimen/landscapeInputUi_editText_borderWidth" android:color="@android:color/white"/>
+</shape>

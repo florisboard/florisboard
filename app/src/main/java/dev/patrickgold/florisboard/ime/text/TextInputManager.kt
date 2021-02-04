@@ -21,7 +21,6 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Handler
 import android.view.KeyEvent
-import android.view.View
 import android.view.inputmethod.*
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -124,7 +123,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
 
     private suspend fun addKeyboardView(mode: KeyboardMode) {
         val keyboardView = KeyboardView(florisboard.context)
-        keyboardView.id = View.generateViewId()
         keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(mode, florisboard.activeSubtype, florisboard.prefs).await()
         keyboardViews[mode] = keyboardView
         textViewFlipper?.addView(keyboardView)

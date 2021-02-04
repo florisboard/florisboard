@@ -21,6 +21,7 @@ import android.content.SharedPreferences
 import android.provider.Settings
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.text.gestures.DistanceThreshold
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.VelocityThreshold
@@ -316,6 +317,7 @@ class PrefHelper(
             const val HEIGHT_FACTOR_CUSTOM =            "keyboard__height_factor_custom"
             const val HINTED_NUMBER_ROW_MODE =          "keyboard__hinted_number_row_mode"
             const val HINTED_SYMBOLS_MODE =             "keyboard__hinted_symbols_mode"
+            const val LANDSCAPE_INPUT_UI_MODE =         "keyboard__landscape_input_ui_mode"
             const val LONG_PRESS_DELAY =                "keyboard__long_press_delay"
             const val NUMBER_ROW =                      "keyboard__number_row"
             const val ONE_HANDED_MODE =                 "keyboard__one_handed_mode"
@@ -352,6 +354,9 @@ class PrefHelper(
         var hintedSymbolsMode: KeyHintMode
             get() =  KeyHintMode.fromString(prefHelper.getPref(HINTED_SYMBOLS_MODE, KeyHintMode.ENABLED_ACCENT_PRIORITY.toString()))
             set(v) = prefHelper.setPref(HINTED_SYMBOLS_MODE, v)
+        var landscapeInputUiMode: LandscapeInputUiMode
+            get() =  LandscapeInputUiMode.fromString(prefHelper.getPref(LANDSCAPE_INPUT_UI_MODE, LandscapeInputUiMode.DYNAMICALLY_SHOW.toString()))
+            set(v) = prefHelper.setPref(LANDSCAPE_INPUT_UI_MODE, v)
         var longPressDelay: Int = 0
             get() = prefHelper.getPref(LONG_PRESS_DELAY, 300)
             private set

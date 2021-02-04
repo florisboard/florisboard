@@ -90,7 +90,7 @@ class SettingsMainActivity : AppCompatActivity(),
             R.id.settings__navigation__home -> {
                 supportActionBar?.title = String.format(
                     resources.getString(R.string.settings__home__title),
-                    resources.getString(R.string.app_name)
+                    resources.getString(R.string.floris_app_name)
                 )
                 loadFragment(HomeFragment())
                 true
