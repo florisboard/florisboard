@@ -16,7 +16,8 @@
       },
       "e": {
         "relevant": [
-          { "code":  275, "label": "ē" }
+          { "code":  275, "label": "ē" },
+          { "code":  8364, "label": "€" }
         ]
       },
       "g": {
