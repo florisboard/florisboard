@@ -110,12 +110,11 @@
                 android:contentDescription="@string/smartbar__quick_action__one_handed_mode"
                 android:src="@drawable/ic_smartphone"/>
 
-            <!-- TODO: find better icon for editing -->
             <dev.patrickgold.florisboard.ime.text.smartbar.SmartbarQuickActionButton
                 android:id="@+id/quick_action_switch_to_editing_context"
                 style="@style/SmartbarQuickAction"
                 android:contentDescription="@string/smartbar__quick_action__switch_to_editing_context"
-                android:src="@drawable/ic_format_italic"/>
+                android:src="@drawable/ic_open_with"/>
 
         </LinearLayout>
 
