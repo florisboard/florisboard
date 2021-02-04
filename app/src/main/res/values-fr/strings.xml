@@ -122,7 +122,6 @@
     <string name="settings__theme__group_privateMode" comment="Theme group label">Mode privé</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Barre intelligente</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Bouton de la barre intelligente</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Extraire la disposition d\'édition</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Groupe personnalisé (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Couleur d\'arrière-plan</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Couleur d\'arrière-plan (lorsque actif)</string>

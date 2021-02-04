@@ -122,8 +122,6 @@
     <string name="settings__theme__group_privateMode" comment="Theme group label">Privát mód</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Okossáv</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Okossáv gomb</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Szerkesztőelrendezés kibontása</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Kibontás akciógomb</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Egyéni csoport (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Háttérszín</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Háttérszín (aktív)</string>

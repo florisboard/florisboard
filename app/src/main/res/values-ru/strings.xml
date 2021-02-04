@@ -122,8 +122,8 @@
     <string name="settings__theme__group_privateMode" comment="Theme group label">Приватный режим</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Умная панель</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Кнопка умной панели</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Вытянуть редактирование разметки</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Вытянуть кнопку действия</string>
+    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Альбомный полноэкранный режим</string>
+    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Кнопка действия в альбомном полноэкранном режиме</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Пользовательская группа (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Цвет фона</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Цвет фона (активный)</string>

@@ -122,8 +122,8 @@
     <string name="settings__theme__group_privateMode" comment="Theme group label">Privémodus</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Slimme Balk</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Knop voor Slimme Balk</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Bewerklayout uitpakken</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Actieknop uitpakken</string>
+    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Landschapsmodus volledig scherm indeling</string>
+    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Landschapsmodus volledig scherm functieknop</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Aangepaste groep (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Achtergrondkleur</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Achtergrondkleur (wanneer actief)</string>
@@ -174,6 +174,8 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Extra Hoog</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Aangepast</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Aangepaste hoogte van toetsenbord</string>
+    <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Bodem offset (portet)</string>
+    <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Bodem offset (landschap)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Toetsdruk</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Geluid bij toetsdruk</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Geluidsvolume bij toetsdruk</string>

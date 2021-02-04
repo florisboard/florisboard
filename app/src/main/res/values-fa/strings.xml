@@ -120,8 +120,8 @@
     <string name="settings__theme__group_privateMode" comment="Theme group label">حالت خصوصی</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">نوار هوشمند</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">دکمه نوار نوشمند</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">استخراج طرح ویرایش</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">استخراج دکمه عملیات</string>
+    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">حالت چیدمان تمام صفحه افقی</string>
+    <string name="settings__theme__group_extractActionButton" comment="Theme group label">دکمه عملیات در حالت تمام صفحه افقی</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">گروه سفارشی (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">رنگ پس‌زمینه</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">رنگ پس زمینه (هنگام فعال بودن)</string>
@@ -162,6 +162,10 @@
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">خاموش</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">حالت دست راستی</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">حالت دست چپی</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">ورودی تمام صفحه افقی</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">هرگز نشان نده</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">همیشه نشان بده</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">به صورت پویا نشان بده</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">ارتفاع صفحه کلید</string>
     <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">بیشتر-کوتاه</string>
     <string name="pref__keyboard__height_factor__short" comment="Preference value">کوتاه</string>
@@ -270,10 +274,10 @@
     <string name="assets__action__add">اضافه کردن</string>
     <string name="assets__action__cancel">لغو</string>
     <string name="assets__action__cancel_confirm_title">تائید لغو</string>
-    <string name="assets__action__cancel_confirm_message">آیا مطمعنید که می خواهید هر یک از تغییرات ذخیره نشده را لغو کنید؟ این عمل غیرقابل بازگشت خواهد بود در صورت اجرا.</string>
+    <string name="assets__action__cancel_confirm_message">آیا مطمئنید که می خواهید هر یک از تغییرات ذخیره نشده را لغو کنید؟ این عمل در صورت اجرا غیرقابل بازگشت خواهد بود.</string>
     <string name="assets__action__delete">حذف</string>
     <string name="assets__action__delete_confirm_title">تائید حذف</string>
-    <string name="assets__action__delete_confirm_message">آیا مطمعنید که می خواهید \"%s\" را حذف کنید؟ این عمل غیرقابل بازگشت خواهد بود در صورت اجرا.</string>
+    <string name="assets__action__delete_confirm_message">آیا مطمعنید که می خواهید \"%s\" را حذف کنید؟ این عمل دز صورت اجرا، غیرقابل بازگشت خواهد بود.</string>
     <string name="assets__action__edit">ویرایش</string>
     <string name="assets__action__export">استخراج</string>
     <string name="assets__action__import">واردکردن</string>

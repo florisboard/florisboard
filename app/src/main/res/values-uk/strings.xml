@@ -122,8 +122,8 @@
     <string name="settings__theme__group_privateMode" comment="Theme group label">Приватний режим</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Розумна панель</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Кнопка розумної панелі</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Витягнути редагування розмітки</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Витягнути кнопку дії</string>
+    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Клавіатура на цілий екран (пейзаж)</string>
+    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Кнопка дії клавіатури на цілий екран (пейзаж)</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Користувацька група (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Колір фону</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Колір фону (активний)</string>
@@ -164,6 +164,10 @@
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Вимк</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Режим правші</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Режим лівші</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Ввід на цілий екран (пейзаж)</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Ніколи не відображати</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Завжди відображати</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">Динамічно показувати</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Висота клавіатури</string>
     <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Дуже-дуже коротко</string>
     <string name="pref__keyboard__height_factor__short" comment="Preference value">Коротко</string>

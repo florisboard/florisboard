@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Wstrzymaj</string>
+    <string name="app_name">FlorisBoard</string>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pauza</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Czekaj</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ikona trzech kropek. Jeśli jest widoczna, to oznacza, że po dłuższym naciśnięciu można użyć więcej liter.</string>
     <!-- One-handed strings -->
@@ -13,78 +14,78 @@
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
     <!-- Media strings -->
-    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emotikony</string>
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikony</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Uśmieszki &amp; Emocje</string>
-    <string name="emoji__category__people_body" comment="Emoji category name">Osoby i opcje</string>
-    <string name="emoji__category__animals_nature" comment="Emoji category name">Zwierzęta &amp; Natura</string>
-    <string name="emoji__category__food_drink" comment="Emoji category name">Żywność &amp; Napoje</string>
-    <string name="emoji__category__travel_places" comment="Emoji category name">Podróże &amp; Miejsca</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Buźki i emocje</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Osoby i części ciała</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Zwierzęta i natura</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Jedzenie i napoje</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Podróże i miejsca</string>
     <string name="emoji__category__activities" comment="Emoji category name">Aktywności</string>
-    <string name="emoji__category__objects" comment="Emoji category name">Obiekty</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Przedmioty</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symbole</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flagi</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Przełącznik szybkiej akcji. Jeśli zostanie naciśnięty, przełącza między sugestiami słów a przyciskami szybkiej akcji.</string>
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Przełącznik szybkich skrótów. Po naciśnięciu przełącza między podpowiedziami słów a przyciskami szybkich skrótów.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Wyjście z panelu edycji tekstu.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Przełącza stan trybu jednoręcznego.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Przełącznik trybu jednoręcznego.</string>
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Otwórz ustawienia.</string>
     <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Przejdź do panelu edycji tekstu.</string>
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Przełącz na widok wprowadzania multimediów.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Przycisk Cofnij, aby cofnąć ostatnią akcję</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Przycisk Cofnij, aby cofnąć ostatnią akcję</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Cofnij ostatnią akcję</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Ponów ostatnio cofniętą akcję</string>
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Jeśli jest widoczny, wskazuje, że tryb prywatny jest aktywny. Po kliknięciu pokazuje informacje o trybie prywatnym.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Ustawienia</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Więcej opcji</string>
-    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Pomoc &amp; opinie</string>
+    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Pomoc i opinie</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Pomoc</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Strona główna</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Klawiatura</string>
-    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Pisze</string>
+    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Wpisywanie</string>
     <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Motyw</string>
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gesty</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Domyślne</string>
-    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Domyślnie systemu</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Domyślne systemowe</string>
     <string name="settings__home__title" comment="Title of the Home fragment">Witaj w %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nie jest włączony w systemie i dlatego nie będzie dostępny jako metoda wprowadzania danych w oknie wyboru. Kliknij tutaj, aby rozwiązać ten problem.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard nie jest wybrany jako domyślna metoda wprowadzania danych. Kliknij tutaj, aby rozwiązać ten problem.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Dziękujemy za wypróbowanie FlorisBoard! Ten projekt jest wciąż w fazie alfa i dlatego brakuje w nim pewnych funkcji. Jeśli znajdziesz jakieś błędy lub chcesz coś zasugerować, sprawdź repo na GitHubie i zgłoś problem. To pomoże ulepszyć FlorisBoard. Dziękujemy!</string>
-    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Języki &amp; Układy klawiatury</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Wygląda na to, że nie skonfigurowałeś żadnych podtypów. Jako rozwiązanie awaryjne zostanie użyty podtyp English/QWERTY!</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Dziękujemy za wypróbowanie FlorisBoard! Ten projekt jest wciąż w fazie alfa i dlatego brakuje w nim pewnych funkcji. Jeśli znajdziesz jakieś błędy lub chcesz coś zaproponować, sprawdź repozytorium na GitHubie i zgłoś problem. To pomoże ulepszyć FlorisBoard. Dziękujemy!</string>
+    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Języki i układy klawiatury</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Wygląda na to, że nie skonfigurowałeś żadnego układu. Jako alternatywa zostanie użyty układ Angielski/QWERTY!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Dodaj</string>
-    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Dodaj podtyp</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Dodaj układ</string>
     <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Zastosuj</string>
     <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Anuluj</string>
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Usuń</string>
-    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Edytuj podtyp</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Edytuj układ</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Ustawienia regionalne</string>
     <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">Układ klawiatury</string>
-    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ten podtyp już istnieje!</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ten układ już istnieje!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Motyw klawiatury</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Niezdefiniowany</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Tryb motywu</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Zawsze Dzień</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Zawsze Noc</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Zawsze dzienny</string>
+    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Zawsze nocny</string>
     <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Zgodnie z systemem</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Zgodnie z czasem</string>
+    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Zgodnie z porą dnia</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Czas wschodu słońca</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Czas zachodu słońca</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tryb dzienny</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tryb nocny</string>
-    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Wybrany Motyw</string>
-    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Dostosuj kolory do aplikacji</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Kolory motywu dostosowują się do tych w bieżącej aplikacji, jeśli aplikacja docelowa to obsługuje.</string>
-    <string name="pref__theme__source_assets" comment="Label for the theme source field">Zasoby aplikacji FlorisBoard</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Wybrany motyw</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Dopasuj kolory do aplikacji</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Kolory motywu dostosowują się do tych w bieżącej aplikacji, jeśli dana aplikacja to obsługuje.</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">Wbudowane w aplikację FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Pamięć wewnętrzna</string>
-    <string name="pref__theme__source_external" comment="Label for the theme source field">Dostawca zewnętrzny</string>
-    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Menedżer motywu (dzień)</string>
-    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Menedżer motywu (noc)</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">Zewnętrzny dostawca</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Menedżer motywu (tryb dzienny)</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Menedżer motywu (tryb nocny)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Utwórz pusty motyw</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Tworzenie na podstawie wybranego motywu</string>
-    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Niestandardowe (w oparciu o %s)</string>
+    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Utwórz na podstawie wybranego motywu</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Niestandardowy (w oparciu o %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nowy motyw</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Edytuj motyw</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Nazwa</string>
@@ -99,13 +100,13 @@
     <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Jednolity kolor</string>
     <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Gradient liniowy</string>
     <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Gradient radialny</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Przełącz</string>
+    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Przełącznik</string>
     <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Stan</string>
-    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Inne</string>
+    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Inny</string>
     <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Tekst</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Podgląd wartości tematu</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Wprowadź nazwę szablonu.</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Proszę wprowadzić nazwę grupy, która zawiera tylko litery (a-z i/lub A-Z), dwukropki (:) dla podgrup lub dodatkowo cyfry (0-9), tyldę (~) i podkreślenia (_) dla etykiety klucza.</string>
+    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Podgląd wartości motywu</string>
+    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Wprowadź nazwę motywu.</string>
+    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Proszę wprowadzić nazwę grupy, która zawiera tylko litery (a-z i/lub A-Z), dwukropki (:) dla podgrup lub dodatkowo cyfry (0-9), tyldę (~) i podkreślenia (_) dla etykiety klawisza.</string>
     <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Wpisz nazwę grupy.</string>
     <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Ta nazwa grupy już istnieje w tym motywie. Proszę wybrać inną.</string>
     <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Proszę wpisać nazwę atrybutu, która zawiera tylko litery a-z i/lub A-Z.</string>
@@ -121,8 +122,6 @@
     <string name="settings__theme__group_privateMode" comment="Theme group label">Tryb prywatny</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">SmartBar</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Przycisk Smartbar</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Wyciągnij, zmień układ</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Przycisk wyciągnięcia akcji</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Grupa niestandardowa (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Kolor tła</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Kolor tła (aktywny)</string>
@@ -173,6 +172,8 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Bardzo wysoki</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Niestandardowe</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Niestandardowa wartość wysokości klawiatury</string>
+    <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Dolny odstęp (układ pionowy)</string>
+    <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Dolny odstęp (układ poziomy)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Naciśnięcie klawisza</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Dźwięk po naciśnięciu klawisza</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Głośność dźwięku po naciśnięciu klawisza</string>

@@ -122,8 +122,8 @@
     <string name="settings__theme__group_privateMode" comment="Theme group label">Modo privado</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Barra inteligente</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Botão da barra inteligente</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Extrair layout de edição</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Extrair botão de ação</string>
+    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Layout do modo paisagem em tela cheia</string>
+    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Botão de ação do modo paisagem em tela cheia</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Grupo personalizado (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Cor do plano de fundo</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Cor do plano de fundo (ativa)</string>

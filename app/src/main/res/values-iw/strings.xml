@@ -121,8 +121,6 @@
     <string name="settings__theme__group_privateMode" comment="Theme group label">מצב פרטיות</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">שורה חכמה</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">כפתור שורה חכמה</string>
-    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">חלץ ערכת פריסה</string>
-    <string name="settings__theme__group_extractActionButton" comment="Theme group label">חצן לחצן פעולה</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">קבוצה מותאמת אישית (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">צבע רקע</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">צבע רקע (מופעל)</string>
