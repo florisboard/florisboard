@@ -1,0 +1,112 @@
+{
+  "type": "characters/extended_popups",
+  "name": "lv",
+  "authors": [ "patrickgold", "eandersons" ],
+  "mapping": {
+    "all": {
+      "a": {
+        "relevant": [
+          { "code":  257, "label": "ā" }
+        ]
+      },
+      "c": {
+        "relevant": [
+          { "code":  269, "label": "č" }
+        ]
+      },
+      "e": {
+        "relevant": [
+          { "code":  275, "label": "ē" },
+          { "code":  8364, "label": "€" }
+        ]
+      },
+      "g": {
+        "relevant": [
+          { "code":  291, "label": "ģ" }
+        ]
+      },
+      "i": {
+        "relevant": [
+          { "code":  299, "label": "ī" }
+        ]
+      },
+      "k": {
+        "relevant": [
+          { "code":  311, "label": "ķ" }
+        ]
+      },
+      "l": {
+        "relevant": [
+          { "code":  316, "label": "ļ" }
+        ]
+      },
+      "n": {
+        "relevant": [
+          { "code":  326, "label": "ņ" }
+        ]
+      },
+      "o": {
+        "relevant": [
+          { "code":  333, "label": "ō" }
+        ]
+      },
+      "r": {
+        "relevant": [
+          { "code":  343, "label": "ŗ" }
+        ]
+      },
+      "s": {
+        "relevant": [
+          { "code":  353, "label": "š" }
+        ]
+      },
+      "u": {
+        "relevant": [
+          { "code":  363, "label": "ū" }
+        ]
+      },
+      "z": {
+        "relevant": [
+          { "code":  382, "label": "ž" }
+        ]
+      },
+      "~right": {
+        "main": { "code":   44, "label": "," },
+        "relevant": [
+          { "code":   38, "label": "&" },
+          { "code":   37, "label": "%" },
+          { "code":   43, "label": "+" },
+          { "code":   34, "label": "\"" },
+          { "code":   45, "label": "-" },
+          { "code":   8212, "label": "—" },
+          { "code":   58, "label": ":" },
+          { "code":   39, "label": "'" },
+          { "code":   64, "label": "@" },
+          { "code":   59, "label": ";" },
+          { "code":   47, "label": "/" },
+          { "code":   40, "label": "(" },
+          { "code":   41, "label": ")" },
+          { "code":   35, "label": "#" },
+          { "code":   33, "label": "!" },
+          { "code":   63, "label": "?" }
+        ]
+      }
+    },
+    "uri": {
+      "~right": {
+        "main": { "code": -255, "label": ".lv" },
+        "relevant": [
+          { "code": -255, "label": ".eu" },
+          { "code": -255, "label": ".com" },
+          { "code": -255, "label": ".gov.lv" },
+          { "code": -255, "label": ".edu.lv" },
+          { "code": -255, "label": ".org.lv" },
+          { "code": -255, "label": ".gov" },
+          { "code": -255, "label": ".edu" },
+          { "code": -255, "label": ".org" },
+          { "code": -255, "label": ".net" }
+        ]
+      }
+    }
+  }
+}
