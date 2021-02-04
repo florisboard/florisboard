@@ -28,20 +28,21 @@ import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
 import android.os.*
 import android.provider.Settings
-import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import com.squareup.moshi.Json
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.media.MediaInputManager
 import dev.patrickgold.florisboard.ime.popup.PopupLayerView
 import dev.patrickgold.florisboard.ime.text.TextInputManager
+import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
@@ -71,7 +72,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
 
     val context: Context
         get() = inputWindowView?.context ?: this
-    private var extractEditLayout: WeakReference<View?> = WeakReference(null)
+    private var extractEditLayout: WeakReference<ViewGroup?> = WeakReference(null)
     var inputView: InputView? = null
         private set
     private var inputWindowView: InputWindowView? = null
@@ -159,7 +160,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     }
 
     override fun onCreate() {
-        if (BuildConfig.DEBUG) {
+        /*if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(
                 StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()
@@ -176,7 +177,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
                     .penaltyDeath()
                     .build()
             )
-        }
+        }*/
         Timber.i("onCreate()")
 
         imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -224,8 +225,50 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     @SuppressLint("InflateParams")
     override fun onCreateExtractTextView(): View? {
         val eel = super.onCreateExtractTextView()
+        if (eel !is ViewGroup) {
+            return null
+        }
         extractEditLayout = WeakReference(eel)
+        eel.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                extractEditLayout.get()?.let { eel ->
+                    eel.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    eel.layoutParams = FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT
+                    ).also {
+                        it.setMargins(0, 0, 0, 0)
+                    }
+                }
+            }
+        })
         return eel
+    }
+
+    override fun onEvaluateFullscreenMode(): Boolean {
+        return resources?.configuration?.let { config ->
+            if (config.orientation != Configuration.ORIENTATION_LANDSCAPE) {
+                false
+            } else {
+                when (prefs.keyboard.landscapeInputUiMode) {
+                    LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeEditorInstance.imeOptions.flagNoFullscreen && !activeEditorInstance.imeOptions.flagNoExtractUi
+                    LandscapeInputUiMode.NEVER_SHOW -> false
+                    LandscapeInputUiMode.ALWAYS_SHOW -> true
+                }
+            }
+        } ?: false
+    }
+
+    override fun updateFullscreenMode() {
+        super.updateFullscreenMode()
+        updateSoftInputWindowLayoutParameters()
+    }
+
+    override fun onUpdateExtractingVisibility(ei: EditorInfo?) {
+        isExtractViewShown = !activeEditorInstance.isRawInputEditor && when (prefs.keyboard.landscapeInputUiMode) {
+            LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeEditorInstance.imeOptions.flagNoExtractUi
+            LandscapeInputUiMode.NEVER_SHOW -> false
+            LandscapeInputUiMode.ALWAYS_SHOW -> true
+        }
     }
 
     fun registerInputView(inputView: InputView) {
@@ -400,21 +443,31 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         }
         inputView?.invalidate()
 
-        // Update ExtractTextView theme
+        // Update ExtractTextView theme and attributes
         extractEditLayout.get()?.let { eel ->
-            if (eel is ViewGroup) {
-                eel.setBackgroundColor(theme.getAttr(Theme.Attr.EXTRACT_EDIT_LAYOUT_BACKGROUND).toSolidColor().color)
-                eel.findViewById<ExtractEditText>(android.R.id.inputExtractEditText)?.let { textView ->
-                    textView.background?.setTint(theme.getAttr(Theme.Attr.WINDOW_COLOR_PRIMARY).toSolidColor().color)
-                    textView.setTextColor(theme.getAttr(Theme.Attr.EXTRACT_EDIT_LAYOUT_FOREGROUND).toSolidColor().color)
-                    textView.setHintTextColor(theme.getAttr(Theme.Attr.EXTRACT_EDIT_LAYOUT_FOREGROUND_ALT).toSolidColor().color)
-                    textView.highlightColor = theme.getAttr(Theme.Attr.WINDOW_COLOR_PRIMARY).toSolidColor().color
+            val p = resources.getDimension(R.dimen.landscapeInputUi_padding).toInt()
+            eel.setPadding(p, p, 0, p)
+            eel.setBackgroundColor(theme.getAttr(Theme.Attr.EXTRACT_EDIT_LAYOUT_BACKGROUND).toSolidColor().color)
+            eel.findViewById<ExtractEditText>(android.R.id.inputExtractEditText)?.let { eet ->
+                val p2 = resources.getDimension(R.dimen.landscapeInputUi_editText_padding).toInt()
+                eet.setPadding(p2, p2, p2, p2)
+                eet.background = ContextCompat.getDrawable(this, R.drawable.edit_text_background)?.also { d ->
+                    DrawableCompat.setTint(d, theme.getAttr(Theme.Attr.WINDOW_COLOR_PRIMARY).toSolidColor().color)
                 }
-                eel.findViewWithType(Button::class)?.let { actionButton ->
-                    actionButton.setBackgroundColor(theme.getAttr(Theme.Attr.EXTRACT_ACTION_BUTTON_BACKGROUND).toSolidColor().color)
-                    actionButton.setTextColor(theme.getAttr(Theme.Attr.EXTRACT_ACTION_BUTTON_FOREGROUND).toSolidColor().color)
-                }
+                eet.setTextColor(theme.getAttr(Theme.Attr.EXTRACT_EDIT_LAYOUT_FOREGROUND).toSolidColor().color)
+                eet.setHintTextColor(theme.getAttr(Theme.Attr.EXTRACT_EDIT_LAYOUT_FOREGROUND_ALT).toSolidColor().color)
+                eet.highlightColor = theme.getAttr(Theme.Attr.WINDOW_COLOR_PRIMARY).toSolidColor().color
             }
+            eel.findViewWithType(FrameLayout::class)?.let { fra ->
+                fra.background = null
+            }
+            eel.findViewWithType(Button::class)?.let { btn ->
+                btn.background = ContextCompat.getDrawable(this, R.drawable.shape_rect_rounded)?.also { d ->
+                    DrawableCompat.setTint(d, theme.getAttr(Theme.Attr.EXTRACT_ACTION_BUTTON_BACKGROUND).toSolidColor().color)
+                }
+                btn.setTextColor(theme.getAttr(Theme.Attr.EXTRACT_ACTION_BUTTON_FOREGROUND).toSolidColor().color)
+            }
+            eel.invalidate()
         }
 
         eventListeners.toList().forEach { it?.onApplyThemeAttributes() }
@@ -433,11 +486,6 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         val visibleTopY = inputWindowView.height - inputView.measuredHeight
         outInsets?.contentTopInsets = visibleTopY
         outInsets?.visibleTopInsets = visibleTopY
-    }
-
-    override fun updateFullscreenMode() {
-        super.updateFullscreenMode()
-        updateSoftInputWindowLayoutParameters()
     }
 
     /**

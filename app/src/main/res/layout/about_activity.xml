@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
+                android:text="@string/floris_app_name"
                 android:textSize="24sp"
                 android:textStyle="bold"/>
 

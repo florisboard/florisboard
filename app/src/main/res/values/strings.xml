@@ -180,6 +180,10 @@
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Off</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Right-handed mode</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Left-handed mode</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Landscape fullscreen input</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Never show</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Always show</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">Dynamically show</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Keyboard height</string>
     <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Extra-short</string>
     <string name="pref__keyboard__height_factor__short" comment="Preference value">Short</string>

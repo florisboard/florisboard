@@ -85,6 +85,15 @@
             app:useSimpleSummaryProvider="true"/>
 
         <ListPreference
+            android:defaultValue="dynamically_show"
+            app:entries="@array/pref__keyboard__landscape_input_ui_mode__entries"
+            app:entryValues="@array/pref__keyboard__landscape_input_ui_mode__values"
+            app:key="keyboard__landscape_input_ui_mode"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__landscape_input_ui_mode__label"
+            app:useSimpleSummaryProvider="true"/>
+
+        <ListPreference
             android:defaultValue="normal"
             app:entries="@array/pref__keyboard__height_factor__entries"
             app:entryValues="@array/pref__keyboard__height_factor__values"

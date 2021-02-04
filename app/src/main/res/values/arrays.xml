@@ -34,6 +34,17 @@
         <item>enabled_smart_priority</item>
     </string-array>
 
+    <string-array name="pref__keyboard__landscape_input_ui_mode__entries">
+        <item>@string/pref__keyboard__landscape_input_ui_mode__never_show</item>
+        <item>@string/pref__keyboard__landscape_input_ui_mode__always_show</item>
+        <item>@string/pref__keyboard__landscape_input_ui_mode__dynamically_show</item>
+    </string-array>
+    <string-array name="pref__keyboard__landscape_input_ui_mode__values">
+        <item>never_show</item>
+        <item>always_show</item>
+        <item>dynamically_show</item>
+    </string-array>
+
     <string-array name="pref__keyboard__one_handed_mode__entries">
         <item>@string/pref__keyboard__one_handed_mode__off</item>
         <item>@string/pref__keyboard__one_handed_mode__right</item>

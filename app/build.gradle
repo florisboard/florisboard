@@ -32,10 +32,12 @@ android {
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
+            resValue 'string', 'floris_app_name', 'FlorisBoard Debug'
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue 'string', 'floris_app_name', '@string/app_name'
         }
     }
 
