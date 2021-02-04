@@ -215,6 +215,11 @@
       "id": 2101,
       "languageTag": "sr-RS",
       "preferredLayout": "serbian_cyrillic"
+    },
+    {
+      "id": 2201,
+      "languageTag": "lv-LV",
+      "preferredLayout": "qwerty"
     }
   ]
 }
