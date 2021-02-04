@@ -1,0 +1,8 @@
+- Add QWERTY based extended popups for Latvian (thanks @eandersons)
+- Improve Landscape Input UI
+- Improve one-handed toggle UX (#303)
+- Fix symbols layouts applying the caps state (#298)
+- Fix welcome screen not appearing in rare cases (#310)
+- Fix cut/copy button not working in Smartbar (#308)
+- Fix Italian extended popups (#299)
+- Fix Spanish extended popups (#251)
