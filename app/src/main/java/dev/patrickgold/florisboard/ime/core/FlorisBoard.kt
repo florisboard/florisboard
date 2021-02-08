@@ -210,6 +210,8 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         baseContext.setTheme(currentThemeResId)
 
         inputWindowView = layoutInflater.inflate(R.layout.florisboard, null) as InputWindowView
+        inputWindowView?.isHapticFeedbackEnabled = true
+
         eventListeners.toList().forEach { it?.onCreateInputView() }
 
         return inputWindowView
@@ -515,7 +517,12 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         if (prefs.keyboard.vibrationEnabled) {
             var vibrationStrength = prefs.keyboard.vibrationStrength
             if (vibrationStrength == -1 && prefs.keyboard.vibrationEnabledSystem) {
-                vibrationStrength = 36
+                val hapticsPerformed =
+                    inputWindowView?.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
+
+                if (hapticsPerformed == false) {
+                    vibrationStrength = 36
+                }
             }
             if (vibrationStrength > 0) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
