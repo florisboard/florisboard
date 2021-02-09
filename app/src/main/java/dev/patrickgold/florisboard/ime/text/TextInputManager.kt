@@ -362,6 +362,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         setActiveKeyboardMode(KeyboardMode.CHARACTERS)
     }
 
+    override fun onSmartbarCandidatePressed(word: String) {
+        activeEditorInstance.commitCompletion(word)
+    }
+
     override fun onSmartbarPrivateModeButtonClicked() {
         Toast.makeText(florisboard.context, R.string.private_mode_dialog__title, Toast.LENGTH_LONG).show()
     }

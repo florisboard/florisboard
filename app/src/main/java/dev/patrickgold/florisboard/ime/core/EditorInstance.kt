@@ -65,6 +65,8 @@ class EditorInstance private constructor(
         get() = inputAttributes.type == InputAttributes.Type.NULL
     var selection: Selection = Selection(this)
         private set
+    private var isPhantomSpaceActive: Boolean = false
+    private var wasPhantomSpaceActiveLastUpdate: Boolean = false
 
     companion object {
         fun default(): EditorInstance {
@@ -111,7 +113,12 @@ class EditorInstance private constructor(
             newSelEnd <= (oldSelEnd + 1)
         selection.update(newSelStart, newSelEnd)
         cachedInput.update()
-        if (selection.isCursorMode && isComposingEnabled && !isRawInputEditor) {
+        if (isPhantomSpaceActive && wasPhantomSpaceActiveLastUpdate) {
+            isPhantomSpaceActive = false
+        } else if (isPhantomSpaceActive && !wasPhantomSpaceActiveLastUpdate) {
+            wasPhantomSpaceActiveLastUpdate = true
+        }
+        if (selection.isCursorMode && isComposingEnabled && !isRawInputEditor && !isPhantomSpaceActive) {
             markComposingRegion(cachedInput.currentWord)
         } else {
             markComposingRegion(null)
@@ -131,9 +138,13 @@ class EditorInstance private constructor(
             false
         } else {
             ic.beginBatchEdit()
+            if (isPhantomSpaceActive && selection.start > 0 && getTextBeforeCursor(1) != " ") {
+                ic.commitText(" ", 1)
+            }
             ic.setComposingText(text, 1)
+            isPhantomSpaceActive = true
+            wasPhantomSpaceActiveLastUpdate = false
             markComposingRegion(null)
-            cachedInput.update()
             ic.endBatchEdit()
             true
         }
@@ -157,11 +168,12 @@ class EditorInstance private constructor(
         } else {
             ic.beginBatchEdit()
             markComposingRegion(null)
-            ic.commitText(text, 1)
-            cachedInput.update()
-            if (isComposingEnabled) {
-                markComposingRegion(cachedInput.currentWord)
+            if (isPhantomSpaceActive && selection.start > 0 && getTextBeforeCursor(1) != " " && text != " ") {
+                ic.commitText(" ", 1)
             }
+            isPhantomSpaceActive = false
+            wasPhantomSpaceActiveLastUpdate = false
+            ic.commitText(text, 1)
             ic.endBatchEdit()
             true
         }
@@ -176,6 +188,8 @@ class EditorInstance private constructor(
      */
     fun deleteBackwards(): Boolean {
         val ic = inputConnection ?: return false
+        isPhantomSpaceActive = false
+        wasPhantomSpaceActiveLastUpdate = false
         return if (isRawInputEditor) {
             sendSystemKeyEvent(KeyEvent.KEYCODE_DEL)
         } else {
@@ -202,6 +216,8 @@ class EditorInstance private constructor(
      */
     fun deleteWordsBeforeCursor(n: Int): Boolean {
         val ic = inputConnection ?: return false
+        isPhantomSpaceActive = false
+        wasPhantomSpaceActiveLastUpdate = false
         return if (n < 1 || isRawInputEditor || !selection.isValid || !selection.isCursorMode) {
             false
         } else {
@@ -275,6 +291,8 @@ class EditorInstance private constructor(
      * @return True on success, false if no new words are selected.
      */
     fun leftAppendWordToSelection(): Boolean{
+        isPhantomSpaceActive = false
+        wasPhantomSpaceActiveLastUpdate = false
         // no words left to select
         if (selection.start <= 0) {
             return false
@@ -292,6 +310,8 @@ class EditorInstance private constructor(
      * @return True on success, false if no new words are deselected.
      */
     fun leftPopWordFromSelection(): Boolean{
+        isPhantomSpaceActive = false
+        wasPhantomSpaceActiveLastUpdate = false
         // no words left to pop
         if (selection.start >= selection.end) {
             return false
@@ -329,6 +349,8 @@ class EditorInstance private constructor(
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardCut(): Boolean {
+        isPhantomSpaceActive = false
+        wasPhantomSpaceActiveLastUpdate = false
         return sendSystemKeyEventCtrl(KeyEvent.KEYCODE_X)
     }
 
@@ -339,6 +361,8 @@ class EditorInstance private constructor(
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardCopy(): Boolean {
+        isPhantomSpaceActive = false
+        wasPhantomSpaceActiveLastUpdate = false
         return sendSystemKeyEventCtrl(KeyEvent.KEYCODE_C) &&
                 selection.updateAndNotify(selection.end, selection.end)
     }
@@ -350,6 +374,8 @@ class EditorInstance private constructor(
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardPaste(): Boolean {
+        isPhantomSpaceActive = false
+        wasPhantomSpaceActiveLastUpdate = false
         return sendSystemKeyEventCtrl(KeyEvent.KEYCODE_V)
     }
 
@@ -360,6 +386,8 @@ class EditorInstance private constructor(
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardSelectAll(): Boolean {
+        isPhantomSpaceActive = false
+        wasPhantomSpaceActiveLastUpdate = false
         return sendSystemKeyEventCtrl(KeyEvent.KEYCODE_A)
     }
 
@@ -369,6 +397,8 @@ class EditorInstance private constructor(
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performEnter(): Boolean {
+        isPhantomSpaceActive = false
+        wasPhantomSpaceActiveLastUpdate = false
         return if (isRawInputEditor) {
             sendSystemKeyEvent(KeyEvent.KEYCODE_ENTER)
         } else {
@@ -384,6 +414,8 @@ class EditorInstance private constructor(
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performEnterAction(action: ImeOptions.Action): Boolean {
+        isPhantomSpaceActive = false
+        wasPhantomSpaceActiveLastUpdate = false
         val ic = inputConnection ?: return false
         return ic.performEditorAction(action.toInt())
     }
@@ -393,7 +425,9 @@ class EditorInstance private constructor(
      *
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
-    fun performUndo(): Boolean{
+    fun performUndo(): Boolean {
+        isPhantomSpaceActive = false
+        wasPhantomSpaceActiveLastUpdate = false
         val ic = inputConnection ?: return false
         return if (isRawInputEditor) {
             sendSystemKeyEventCtrl(KeyEvent.KEYCODE_Z)
@@ -416,7 +450,9 @@ class EditorInstance private constructor(
      *
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
-    fun performRedo(): Boolean{
+    fun performRedo(): Boolean {
+        isPhantomSpaceActive = false
+        wasPhantomSpaceActiveLastUpdate = false
         val ic = inputConnection ?: return false
         return if (isRawInputEditor) {
             sendSystemKeyEventCtrlShift(KeyEvent.KEYCODE_Z)
@@ -832,10 +868,25 @@ class CachedInput(private val editorInstance: EditorInstance) {
     val currentWord: Region = Region(editorInstance)
     private val wordsAfterCurrent: MutableList<Region> = mutableListOf()
 
+    /**
+     * The expected maximum length of the input text in the target app's editor. This is only the
+     * safe-to-assume value, the actual maximum value may be higher.
+     */
     var expectedMaxLength: Int = 0
         private set
+
+    /**
+     * The offset of the [rawText] from the selection root (index 0). This value is especially
+     * relevant if the text before the cursor is longer than [CACHED_TEXT_N_CHARS_BEFORE_CURSOR].
+     */
     var offset: Int = 0
         private set
+
+    /**
+     * The raw cached input text of the target app's editor. This cached value may be incomplete if
+     * the target app's editor text is bigger than [CACHED_TEXT_N_CHARS_BEFORE_CURSOR] and
+     * [CACHED_TEXT_N_CHARS_AFTER_CURSOR], but always caches the relevant text around the cursor.
+     */
     var rawText: String = ""
         private set
 

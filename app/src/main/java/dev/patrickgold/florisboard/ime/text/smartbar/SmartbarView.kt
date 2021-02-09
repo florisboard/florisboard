@@ -121,6 +121,22 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
             }
         }
 
+        binding.candidate0.setOnClickListener {
+            if (it is Button) {
+                eventListener?.get()?.onSmartbarCandidatePressed(it.text.toString())
+            }
+        }
+        binding.candidate1.setOnClickListener {
+            if (it is Button) {
+                eventListener?.get()?.onSmartbarCandidatePressed(it.text.toString())
+            }
+        }
+        binding.candidate2.setOnClickListener {
+            if (it is Button) {
+                eventListener?.get()?.onSmartbarCandidatePressed(it.text.toString())
+            }
+        }
+
         binding.clipboardSuggestion.setOnClickListener {
             florisboard?.activeEditorInstance?.performClipboardPaste()
             shouldSuggestClipboardContents = false
@@ -348,7 +364,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
      */
     interface EventListener {
         fun onSmartbarBackButtonPressed() {}
-        //fun onSmartbarCandidatePressed() {}
+        fun onSmartbarCandidatePressed(word: String) {}
         //fun onSmartbarCandidateLongPressed() {}
         fun onSmartbarPrivateModeButtonClicked() {}
         fun onSmartbarQuickActionPressed(@IdRes quickActionId: Int) {}
