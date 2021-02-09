@@ -18,10 +18,8 @@ package dev.patrickgold.florisboard.ime.text
 
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
-import android.content.Context
 import android.os.Handler
 import android.view.KeyEvent
-import android.view.inputmethod.*
 import android.widget.LinearLayout
 import android.widget.Toast
 import android.widget.ViewFlipper
@@ -507,9 +505,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     /**
      * Handles [KeyCode] arrow and move events, behaves differently depending on text selection.
      */
-    private fun handleArrow(code: Int) = activeEditorInstance.apply {
+    private fun handleArrow(code: Int) = activeEditorInstance.run {
         val selectionStartMin = 0
-        val selectionEndMax = cachedText.length
+        val selectionEndMax = cachedInput.expectedMaxLength
         if (selection.isSelectionMode && isManualSelectionMode) {
             // Text is selected and it is manual selection -> Expand selection depending on started
             //  direction.
@@ -517,37 +515,37 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                 KeyCode.ARROW_DOWN -> {}
                 KeyCode.ARROW_LEFT -> {
                     if (isManualSelectionModeLeft) {
-                        setSelection(
+                        selection.updateAndNotify(
                             (selection.start - 1).coerceAtLeast(selectionStartMin),
                             selection.end
                         )
                     } else {
-                        setSelection(selection.start, selection.end - 1)
+                        selection.updateAndNotify(selection.start, selection.end - 1)
                     }
                 }
                 KeyCode.ARROW_RIGHT -> {
                     if (isManualSelectionModeRight) {
-                        setSelection(
+                        selection.updateAndNotify(
                             selection.start,
                             (selection.end + 1).coerceAtMost(selectionEndMax)
                         )
                     } else {
-                        setSelection(selection.start + 1, selection.end)
+                        selection.updateAndNotify(selection.start + 1, selection.end)
                     }
                 }
                 KeyCode.ARROW_UP -> {}
                 KeyCode.MOVE_HOME -> {
                     if (isManualSelectionModeLeft) {
-                        setSelection(selectionStartMin, selection.end)
+                        selection.updateAndNotify(selectionStartMin, selection.end)
                     } else {
-                        setSelection(selectionStartMin, selection.start)
+                        selection.updateAndNotify(selectionStartMin, selection.start)
                     }
                 }
                 KeyCode.MOVE_END -> {
                     if (isManualSelectionModeRight) {
-                        setSelection(selection.start, selectionEndMax)
+                        selection.updateAndNotify(selection.start, selectionEndMax)
                     } else {
-                        setSelection(selection.end, selectionEndMax)
+                        selection.updateAndNotify(selection.end, selectionEndMax)
                     }
                 }
             }
@@ -557,20 +555,20 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             when (code) {
                 KeyCode.ARROW_DOWN -> {}
                 KeyCode.ARROW_LEFT -> {
-                    setSelection(selection.start, selection.end - 1)
+                    selection.updateAndNotify(selection.start, selection.end - 1)
                 }
                 KeyCode.ARROW_RIGHT -> {
-                    setSelection(
+                    selection.updateAndNotify(
                         selection.start,
                         (selection.end + 1).coerceAtMost(selectionEndMax)
                     )
                 }
                 KeyCode.ARROW_UP -> {}
                 KeyCode.MOVE_HOME -> {
-                    setSelection(selectionStartMin, selection.start)
+                    selection.updateAndNotify(selectionStartMin, selection.start)
                 }
                 KeyCode.MOVE_END -> {
-                    setSelection(selection.start, selectionEndMax)
+                    selection.updateAndNotify(selection.start, selectionEndMax)
                 }
             }
         } else if (!selection.isSelectionMode && isManualSelectionMode) {
@@ -579,7 +577,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             when (code) {
                 KeyCode.ARROW_DOWN -> {}
                 KeyCode.ARROW_LEFT -> {
-                    setSelection(
+                    selection.updateAndNotify(
                         (selection.start - 1).coerceAtLeast(selectionStartMin),
                         selection.start
                     )
@@ -587,7 +585,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                     isManualSelectionModeRight = false
                 }
                 KeyCode.ARROW_RIGHT -> {
-                    setSelection(
+                    selection.updateAndNotify(
                         selection.end,
                         (selection.end + 1).coerceAtMost(selectionEndMax)
                     )
@@ -596,12 +594,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                 }
                 KeyCode.ARROW_UP -> {}
                 KeyCode.MOVE_HOME -> {
-                    setSelection(selectionStartMin, selection.start)
+                    selection.updateAndNotify(selectionStartMin, selection.start)
                     isManualSelectionModeLeft = true
                     isManualSelectionModeRight = false
                 }
                 KeyCode.MOVE_END -> {
-                    setSelection(selection.end, selectionEndMax)
+                    selection.updateAndNotify(selection.end, selectionEndMax)
                     isManualSelectionModeLeft = false
                     isManualSelectionModeRight = true
                 }
@@ -617,6 +615,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                 KeyCode.MOVE_END -> activeEditorInstance.sendSystemKeyEventAlt(KeyEvent.KEYCODE_DPAD_DOWN)
             }
         }
+        Unit
     }
 
     /**
@@ -625,9 +624,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     private fun handleClipboardSelect() = activeEditorInstance.apply {
         if (selection.isSelectionMode) {
             if (isManualSelectionMode && isManualSelectionModeLeft) {
-                setSelection(selection.start, selection.start)
+                selection.updateAndNotify(selection.start, selection.start)
             } else {
-                setSelection(selection.end, selection.end)
+                selection.updateAndNotify(selection.end, selection.end)
             }
             isManualSelectionMode = false
         } else {
@@ -635,13 +634,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             // Must call to update UI properly
             editingKeyboardView?.onUpdateSelection()
         }
-    }
-
-    /**
-     * Handles a [KeyCode.CLIPBOARD_SELECT_ALL] event.
-     */
-    private fun handleClipboardSelectAll() {
-        activeEditorInstance.setSelection(0, activeEditorInstance.cachedText.length)
     }
 
     /**
@@ -666,7 +658,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                 smartbarView?.resetClipboardSuggestion()
             }
             KeyCode.CLIPBOARD_SELECT -> handleClipboardSelect()
-            KeyCode.CLIPBOARD_SELECT_ALL -> handleClipboardSelectAll()
+            KeyCode.CLIPBOARD_SELECT_ALL -> activeEditorInstance.performClipboardSelectAll()
             KeyCode.DELETE -> {
                 handleDelete()
                 smartbarView?.resetClipboardSuggestion()
@@ -678,11 +670,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             KeyCode.LANGUAGE_SWITCH -> handleLanguageSwitch()
             KeyCode.SETTINGS -> florisboard.launchSettings()
             KeyCode.SHIFT -> handleShift()
-            KeyCode.SHOW_INPUT_METHOD_PICKER -> {
-                val im =
-                    florisboard.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                im.showInputMethodPicker()
-            }
+            KeyCode.SHOW_INPUT_METHOD_PICKER -> florisboard.imeManager?.showInputMethodPicker()
             KeyCode.SWITCH_TO_MEDIA_CONTEXT -> florisboard.setActiveInput(R.id.media_input)
             KeyCode.SWITCH_TO_TEXT_CONTEXT -> florisboard.setActiveInput(R.id.text_input)
             KeyCode.TOGGLE_ONE_HANDED_MODE_LEFT -> florisboard.toggleOneHandedMode(isRight = false)
