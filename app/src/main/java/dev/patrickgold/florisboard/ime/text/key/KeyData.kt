@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.text.key
 
 import dev.patrickgold.florisboard.ime.popup.PopupSet
+import dev.patrickgold.florisboard.ime.text.key.FlorisKeyData.Companion.GROUP_DEFAULT
 
 /**
  * Data class which describes a single key and its attributes.

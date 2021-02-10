@@ -21,7 +21,7 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Handler
 import android.view.KeyEvent
-import android.view.inputmethod.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.Toast
 import android.widget.ViewFlipper

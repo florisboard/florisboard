@@ -19,8 +19,9 @@ package dev.patrickgold.florisboard.ime.text.gestures
 import android.content.Context
 import android.view.MotionEvent
 import dev.patrickgold.florisboard.R
-import java.lang.Exception
-import kotlin.math.*
+import kotlin.math.PI
+import kotlin.math.abs
+import kotlin.math.atan
 
 /**
  * Wrapper class which holds all enums, interfaces and classes for detecting a swipe gesture.

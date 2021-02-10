@@ -30,7 +30,6 @@ import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.util.TimeUtil
 import dev.patrickgold.florisboard.util.VersionName
-import kotlin.collections.HashMap
 
 /**
  * Helper class for an organized access to the shared preferences.

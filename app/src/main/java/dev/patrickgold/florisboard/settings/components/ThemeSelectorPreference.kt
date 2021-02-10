@@ -22,6 +22,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.util.AttributeSet
 import androidx.preference.Preference
+import androidx.preference.Preference.OnPreferenceClickListener
 import androidx.preference.PreferenceManager
 import com.github.michaelbull.result.onSuccess
 import dev.patrickgold.florisboard.R

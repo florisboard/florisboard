@@ -17,7 +17,9 @@
 package dev.patrickgold.florisboard.ime.popup
 
 import android.content.res.Configuration
-import android.view.*
+import android.view.Gravity
+import android.view.MotionEvent
+import android.view.View
 import androidx.core.content.ContextCompat.getDrawable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData

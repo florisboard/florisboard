@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.ime.core
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.ViewFlipper
-import java.lang.IllegalArgumentException
 
 /**
  * Custom ViewFlipper class used to prevent an unnecessary exception to be thrown when it is

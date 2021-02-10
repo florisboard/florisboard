@@ -29,7 +29,6 @@ import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.ExtractedTextRequest
-import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputContentInfo
 import androidx.annotation.RequiresApi
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -529,7 +528,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      *  [KeyCode] or this call may send a weird character, as this key codes do not match!!
      */
     fun sendSystemKeyEventCtrl(keyCode: Int) {
-        val ic = ims?.currentInputConnection ?: return
+        ims?.currentInputConnection ?: return
         sendDownUpKeyEvents(keyCode, KeyEvent.META_CTRL_ON)
     }
 
@@ -541,7 +540,7 @@ class EditorInstance private constructor(private val ims: InputMethodService?) {
      *  [KeyCode] or this call may send a weird character, as this key codes do not match!!
      */
     fun sendSystemKeyEventCtrlShift(keyCode: Int) {
-        val ic = ims?.currentInputConnection ?: return
+        ims?.currentInputConnection ?: return
         sendDownUpKeyEvents(keyCode, KeyEvent.META_SHIFT_ON or KeyEvent.META_CTRL_ON)
     }
 

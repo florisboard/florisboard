@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.util
 
 import android.content.Context
 import dev.patrickgold.florisboard.ime.core.PrefHelper
-import java.lang.Exception
 
 object AppVersionUtils {
     fun getRawVersionName(context: Context): String {

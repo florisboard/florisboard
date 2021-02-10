@@ -26,7 +26,10 @@ import android.graphics.Color
 import android.inputmethodservice.ExtractEditText
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
-import android.os.*
+import android.os.Build
+import android.os.Handler
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.provider.Settings
 import android.view.*
 import android.view.inputmethod.EditorInfo
@@ -39,10 +42,10 @@ import androidx.core.graphics.drawable.DrawableCompat
 import com.squareup.moshi.Json
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.MediaInputManager
 import dev.patrickgold.florisboard.ime.popup.PopupLayerView
 import dev.patrickgold.florisboard.ime.text.TextInputManager
-import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData

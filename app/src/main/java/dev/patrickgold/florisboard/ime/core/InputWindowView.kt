@@ -18,12 +18,7 @@ package dev.patrickgold.florisboard.ime.core
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.widget.FrameLayout
-import android.widget.LinearLayout
-import android.widget.ViewFlipper
-import dev.patrickgold.florisboard.BuildConfig
-import dev.patrickgold.florisboard.R
 
 /**
  * Root view of the keyboard.
