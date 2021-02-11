@@ -22,6 +22,8 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.SeekBar
 import androidx.preference.Preference
+import androidx.preference.Preference.OnPreferenceChangeListener
+import androidx.preference.Preference.OnPreferenceClickListener
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SeekBarDialogBinding

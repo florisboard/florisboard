@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.text.layout
 
 import android.content.Context
-import com.github.michaelbull.result.getOr
 import com.github.michaelbull.result.onSuccess
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

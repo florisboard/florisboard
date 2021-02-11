@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.ime.text.layout
 
 import dev.patrickgold.florisboard.ime.text.key.FlorisKeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 

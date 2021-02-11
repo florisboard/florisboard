@@ -22,7 +22,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import dev.patrickgold.florisboard.databinding.SetupFragmentFinishBinding
-import dev.patrickgold.florisboard.ime.theme.Theme
 
 class FinishFragment : Fragment() {
     private lateinit var binding: SetupFragmentFinishBinding

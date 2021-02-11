@@ -19,13 +19,11 @@ package dev.patrickgold.florisboard.ime.media.emoji
 import android.content.Context
 import android.graphics.Paint
 import android.graphics.Typeface
-import android.util.Log
 import androidx.core.graphics.PaintCompat
 import timber.log.Timber
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
-import java.lang.Exception
 import java.util.*
 
 private const val GROUP_IDENTIFIER          = "# group: "
