@@ -22,7 +22,8 @@ import android.view.MotionEvent
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.flexbox.JustifyContent
-import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.util.ViewLayoutUtils
 
 /**
  * This class' sole purpose is to manage the layout within a row of [KeyboardView]. No logic is
@@ -30,10 +31,12 @@ import dev.patrickgold.florisboard.R
  */
 class KeyboardRowView(context: Context) : FlexboxLayout(context) {
     init {
+        val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+        val keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
             setMargins(
-                resources.getDimension(R.dimen.keyboard_row_marginH).toInt(), 0,
-                resources.getDimension(R.dimen.keyboard_row_marginH).toInt(), 0
+                keyMarginH, 0,
+                keyMarginH, 0
             )
         }
         flexDirection = FlexDirection.ROW

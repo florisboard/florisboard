@@ -300,9 +300,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
 
     override fun onSubtypeChanged(newSubtype: Subtype) {
         launch {
-            val keyboardView = keyboardViews[KeyboardMode.CHARACTERS]
-            keyboardView?.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, newSubtype, florisboard.prefs).await()
-            keyboardView?.updateVisibility()
+            // Seems like because the key spacing can change, all layouts need to be refreshed
+            for ((keyboardMode, keyboardView) in keyboardViews) {
+                keyboardView?.computedLayout = layoutManager.fetchComputedLayoutAsync(keyboardMode, newSubtype, florisboard.prefs).await()
+                keyboardView?.updateVisibility()
+            }
         }
     }
 

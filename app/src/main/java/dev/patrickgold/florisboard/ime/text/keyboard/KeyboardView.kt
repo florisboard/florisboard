@@ -36,6 +36,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import kotlin.math.roundToInt
 
 /**
@@ -331,8 +332,8 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
      * The desired key heights/widths are being calculated here.
      */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
-        val keyMarginV = resources.getDimension((R.dimen.key_marginV)).toInt()
+        val keyMarginV = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingVertical, context).toInt()
+        val keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
 
         val desiredWidth = MeasureSpec.getSize(widthMeasureSpec).toFloat()
         desiredKeyWidth = if (isSmartbarKeyboardView) {

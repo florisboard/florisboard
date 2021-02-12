@@ -112,11 +112,14 @@ class KeyView(
         layoutParams = FlexboxLayout.LayoutParams(
             FlexboxLayout.LayoutParams.WRAP_CONTENT, FlexboxLayout.LayoutParams.WRAP_CONTENT
         ).apply {
+
+            val keyMarginV = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingVertical, context).toInt()
+            val keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
             setMargins(
-                resources.getDimension((R.dimen.key_marginH)).toInt(),
-                resources.getDimension(R.dimen.key_marginV).toInt(),
-                resources.getDimension((R.dimen.key_marginH)).toInt(),
-                resources.getDimension(R.dimen.key_marginV).toInt()
+                keyMarginH,
+                keyMarginV,
+                keyMarginH,
+                keyMarginV
             )
             flexShrink = when (keyboardView.computedLayout?.mode) {
                 KeyboardMode.NUMERIC,
@@ -609,8 +612,9 @@ class KeyView(
             touchHitBox.set(-1, -1, -1, -1)
         } else {
             val parent = parent as ViewGroup
-            val keyMarginH = resources.getDimension((R.dimen.key_marginH)).toInt()
-            val keyMarginV = resources.getDimension((R.dimen.key_marginV)).toInt()
+
+            val keyMarginV = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingVertical, context).toInt()
+            val keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
 
             touchHitBox.apply {
                 left = when (this@KeyView) {

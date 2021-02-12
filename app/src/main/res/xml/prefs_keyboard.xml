@@ -135,6 +135,28 @@
             app:seekBarIncrement="1"
             app:unit=" dp"/>
 
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="10"
+            app:key="keyboard__key_spacing_vertical"
+            app:min="0"
+            app:max="20"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__key_spacing_vertical__label"
+            app:seekBarIncrement="1"
+            app:unit=" half dp"/>
+
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="4"
+            app:key="keyboard__key_spacing_horizontal"
+            app:min="0"
+            app:max="20"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__key_spacing_horizontal__label"
+            app:seekBarIncrement="1"
+            app:unit=" half dp"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

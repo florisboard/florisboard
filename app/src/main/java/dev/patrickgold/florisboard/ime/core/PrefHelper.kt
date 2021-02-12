@@ -316,6 +316,8 @@ class PrefHelper(
             const val HEIGHT_FACTOR_CUSTOM =            "keyboard__height_factor_custom"
             const val HINTED_NUMBER_ROW_MODE =          "keyboard__hinted_number_row_mode"
             const val HINTED_SYMBOLS_MODE =             "keyboard__hinted_symbols_mode"
+            const val KEY_SPACING_HORIZONTAL =          "keyboard__key_spacing_horizontal"
+            const val KEY_SPACING_VERTICAL =            "keyboard__key_spacing_vertical"
             const val LANDSCAPE_INPUT_UI_MODE =         "keyboard__landscape_input_ui_mode"
             const val LONG_PRESS_DELAY =                "keyboard__long_press_delay"
             const val NUMBER_ROW =                      "keyboard__number_row"
@@ -353,6 +355,12 @@ class PrefHelper(
         var hintedSymbolsMode: KeyHintMode
             get() =  KeyHintMode.fromString(prefHelper.getPref(HINTED_SYMBOLS_MODE, KeyHintMode.ENABLED_ACCENT_PRIORITY.toString()))
             set(v) = prefHelper.setPref(HINTED_SYMBOLS_MODE, v)
+        var keySpacingHorizontal: Float = 2f
+            get() = prefHelper.getPref(KEY_SPACING_HORIZONTAL, 4) / 2f
+            private set
+        var keySpacingVertical: Float = 5f
+            get() = prefHelper.getPref(KEY_SPACING_VERTICAL, 10) / 2f
+            private set
         var landscapeInputUiMode: LandscapeInputUiMode
             get() =  LandscapeInputUiMode.fromString(prefHelper.getPref(LANDSCAPE_INPUT_UI_MODE, LandscapeInputUiMode.DYNAMICALLY_SHOW.toString()))
             set(v) = prefHelper.setPref(LANDSCAPE_INPUT_UI_MODE, v)
