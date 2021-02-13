@@ -52,4 +52,16 @@ class KeyboardRowView(context: Context) : FlexboxLayout(context) {
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         return false
     }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+        val keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
+
+        (layoutParams as MarginLayoutParams).setMargins(
+            keyMarginH, 0,
+            keyMarginH, 0
+        )
+
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+    }
 }
