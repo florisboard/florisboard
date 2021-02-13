@@ -887,8 +887,8 @@ class KeyView(
                             data.code != KeyCode.SPACE -> {
                         val cachedTextSize = setTextSizeFor(
                             labelPaint,
-                            desiredWidth - (2.6f * drawablePaddingH),
-                            desiredHeight - (3.4f * drawablePaddingV),
+                            measuredWidth - (2.6f * drawablePaddingH),
+                            measuredHeight - (3.4f * drawablePaddingV),
                             // Note: taking a "X" here because it is one of the biggest letters and
                             //  the keys must have the same base character for calculation, else
                             //  they will all look different and weird...
