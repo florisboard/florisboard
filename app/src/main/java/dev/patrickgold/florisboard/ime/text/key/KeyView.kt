@@ -438,6 +438,17 @@ class KeyView(
      *  by Devunwired
      */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+
+        val keyMarginV = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingVertical, context).toInt()
+        val keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
+
+        (layoutParams as ViewGroup.MarginLayoutParams).setMargins(
+            keyMarginH,
+            keyMarginV,
+            keyMarginH,
+            keyMarginV
+        )
+
         desiredWidth = (keyboardView.desiredKeyWidth * when (keyboardView.computedLayout?.mode) {
             KeyboardMode.NUMERIC,
             KeyboardMode.PHONE,
