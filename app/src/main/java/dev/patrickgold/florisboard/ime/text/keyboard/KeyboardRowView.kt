@@ -22,6 +22,7 @@ import android.view.MotionEvent
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.flexbox.JustifyContent
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 
@@ -29,10 +30,14 @@ import dev.patrickgold.florisboard.util.ViewLayoutUtils
  * This class' sole purpose is to manage the layout within a row of [KeyboardView]. No logic is
  * handled in this class.
  */
-class KeyboardRowView(context: Context) : FlexboxLayout(context) {
+class KeyboardRowView(context: Context, val keyboardView: KeyboardView) : FlexboxLayout(context) {
     init {
         val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
-        val keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
+        val keyMarginH = if (keyboardView.isSmartbarKeyboardView){
+            resources.getDimension(R.dimen.key_marginH).toInt()
+        }else{
+            ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
+        }
         layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).apply {
             setMargins(
                 keyMarginH, 0,
@@ -55,8 +60,11 @@ class KeyboardRowView(context: Context) : FlexboxLayout(context) {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
-        val keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
-
+        val keyMarginH = if (keyboardView.isSmartbarKeyboardView){
+            resources.getDimension(R.dimen.key_marginH).toInt()
+        }else{
+            ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
+        }
         (layoutParams as MarginLayoutParams).setMargins(
             keyMarginH, 0,
             keyMarginH, 0

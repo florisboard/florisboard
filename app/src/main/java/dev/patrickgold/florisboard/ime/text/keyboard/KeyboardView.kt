@@ -98,7 +98,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
         destroyLayout()
         val computedLayout = computedLayout ?: return
         for (row in computedLayout.arrangement) {
-            val rowView = KeyboardRowView(context)
+            val rowView = KeyboardRowView(context, this)
             for (key in row) {
                 val keyView = KeyView(this, key, florisboard)
                 rowView.addView(keyView)
@@ -332,8 +332,16 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
      * The desired key heights/widths are being calculated here.
      */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val keyMarginV = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingVertical, context).toInt()
-        val keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
+        val keyMarginH: Int
+        val keyMarginV: Int
+
+        if (isSmartbarKeyboardView){
+            keyMarginH = resources.getDimension(R.dimen.key_marginH).toInt()
+            keyMarginV = resources.getDimension(R.dimen.key_marginV).toInt()
+        }else {
+            keyMarginV = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingVertical, context).toInt()
+            keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
+        }
 
         val desiredWidth = MeasureSpec.getSize(widthMeasureSpec).toFloat()
         desiredKeyWidth = if (isSmartbarKeyboardView) {

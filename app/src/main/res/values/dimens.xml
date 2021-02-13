@@ -13,6 +13,10 @@
     <dimen name="emoji_key_width">@dimen/key_height</dimen>
     <dimen name="emoji_key_height">@dimen/key_height</dimen>
 
+    <dimen name="key_marginH">2dp</dimen>
+    <dimen name="key_marginV">5dp</dimen>
+    <dimen name="keyboard_row_marginH">@dimen/key_marginH</dimen>
+
     <dimen name="keyboard_preview_margin">16dp</dimen>
 
     <dimen name="key_borderRadius">6dp</dimen>

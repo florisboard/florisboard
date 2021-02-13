@@ -112,9 +112,17 @@ class KeyView(
         layoutParams = FlexboxLayout.LayoutParams(
             FlexboxLayout.LayoutParams.WRAP_CONTENT, FlexboxLayout.LayoutParams.WRAP_CONTENT
         ).apply {
+            val keyMarginH: Int
+            val keyMarginV: Int
 
-            val keyMarginV = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingVertical, context).toInt()
-            val keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
+            if (keyboardView.isSmartbarKeyboardView){
+                keyMarginH = resources.getDimension(R.dimen.key_marginH).toInt()
+                keyMarginV = resources.getDimension(R.dimen.key_marginV).toInt()
+            }else {
+                keyMarginV = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingVertical, context).toInt()
+                keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
+            }
+
             setMargins(
                 keyMarginH,
                 keyMarginV,
@@ -439,8 +447,16 @@ class KeyView(
      */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
 
-        val keyMarginV = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingVertical, context).toInt()
-        val keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
+        val keyMarginH: Int
+        val keyMarginV: Int
+
+        if (keyboardView.isSmartbarKeyboardView){
+            keyMarginH = resources.getDimension(R.dimen.key_marginH).toInt()
+            keyMarginV = resources.getDimension(R.dimen.key_marginV).toInt()
+        }else {
+            keyMarginV = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingVertical, context).toInt()
+            keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
+        }
 
         (layoutParams as ViewGroup.MarginLayoutParams).setMargins(
             keyMarginH,
@@ -624,8 +640,16 @@ class KeyView(
         } else {
             val parent = parent as ViewGroup
 
-            val keyMarginV = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingVertical, context).toInt()
-            val keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
+            val keyMarginH: Int
+            val keyMarginV: Int
+
+            if (keyboardView.isSmartbarKeyboardView){
+                keyMarginH = resources.getDimension(R.dimen.key_marginH).toInt()
+                keyMarginV = resources.getDimension(R.dimen.key_marginV).toInt()
+            }else {
+                keyMarginV = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingVertical, context).toInt()
+                keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
+            }
 
             touchHitBox.apply {
                 left = when (this@KeyView) {
