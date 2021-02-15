@@ -589,12 +589,16 @@ class KeyView(
         when (data.code) {
             KeyCode.SWITCH_TO_TEXT_CONTEXT,
             KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
-                visibility = when (prefs.keyboard.switchKeyMode) {
-                    SwitchKeyMode.ALWAYS_LANGUAGE_INTERNAL,
-                    SwitchKeyMode.ALWAYS_LANGUAGE_SYSTEM,
-                    SwitchKeyMode.NEVER_SHOW -> GONE
-                    SwitchKeyMode.ALWAYS_EMOJI -> VISIBLE
-                    SwitchKeyMode.DYNAMIC_LANGUAGE_EMOJI ->
+                val tempUtilityKeyAction = when {
+                    prefs.keyboard.utilityKeyEnabled -> prefs.keyboard.utilityKeyAction
+                    else -> UtilityKeyAction.DISABLED
+                }
+                visibility = when (tempUtilityKeyAction) {
+                    UtilityKeyAction.DISABLED,
+                    UtilityKeyAction.SWITCH_LANGUAGE,
+                    UtilityKeyAction.SWITCH_KEYBOARD_APP -> GONE
+                    UtilityKeyAction.SWITCH_TO_EMOJIS -> VISIBLE
+                    UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS ->
                         if (florisboard?.shouldShowLanguageSwitch() == true) {
                             GONE
                         } else {
@@ -603,12 +607,16 @@ class KeyView(
                 }
             }
             KeyCode.LANGUAGE_SWITCH -> {
-                visibility = when (prefs.keyboard.switchKeyMode) {
-                    SwitchKeyMode.ALWAYS_EMOJI,
-                    SwitchKeyMode.NEVER_SHOW -> GONE
-                    SwitchKeyMode.ALWAYS_LANGUAGE_INTERNAL,
-                    SwitchKeyMode.ALWAYS_LANGUAGE_SYSTEM -> VISIBLE
-                    SwitchKeyMode.DYNAMIC_LANGUAGE_EMOJI ->
+                val tempUtilityKeyAction = when {
+                    prefs.keyboard.utilityKeyEnabled -> prefs.keyboard.utilityKeyAction
+                    else -> UtilityKeyAction.DISABLED
+                }
+                visibility = when (tempUtilityKeyAction) {
+                    UtilityKeyAction.DISABLED,
+                    UtilityKeyAction.SWITCH_TO_EMOJIS -> GONE
+                    UtilityKeyAction.SWITCH_LANGUAGE,
+                    UtilityKeyAction.SWITCH_KEYBOARD_APP -> VISIBLE
+                    UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS ->
                         if (florisboard?.shouldShowLanguageSwitch() == true) {
                             VISIBLE
                         } else {

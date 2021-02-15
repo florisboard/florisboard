@@ -31,13 +31,20 @@
             app:title="@string/pref__keyboard__hinted_symbols_mode__label"
             app:useSimpleSummaryProvider="true"/>
 
-        <ListPreference
-            android:defaultValue="dynamic_language_emoji"
-            app:entries="@array/pref__keyboard__switch_key_mode__entries"
-            app:entryValues="@array/pref__keyboard__switch_key_mode__values"
-            app:key="keyboard__switch_key_mode"
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="keyboard__utility_key_enabled"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__keyboard__switch_key_mode__label"
+            app:title="@string/pref__keyboard__utility_key_enabled__label"
+            android:summary="@string/pref__keyboard__utility_key_enabled__summary"/>
+
+        <ListPreference
+            android:defaultValue="dynamic_switch_language_emojis"
+            app:entries="@array/pref__keyboard__utility_key_action__entries"
+            app:entryValues="@array/pref__keyboard__utility_key_action__values"
+            app:key="keyboard__utility_key_action"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__utility_key_action__label"
             app:useSimpleSummaryProvider="true"/>
 
         <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference

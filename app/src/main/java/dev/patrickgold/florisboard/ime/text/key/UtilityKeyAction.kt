@@ -19,17 +19,17 @@ package dev.patrickgold.florisboard.ime.text.key
 import java.util.*
 
 /**
- * Enum for declaring the switch key modes.
+ * Enum for declaring the utility key actions.
  */
-enum class SwitchKeyMode {
-    ALWAYS_EMOJI,
-    ALWAYS_LANGUAGE_INTERNAL,
-    ALWAYS_LANGUAGE_SYSTEM,
-    DYNAMIC_LANGUAGE_EMOJI,
-    NEVER_SHOW;
+enum class UtilityKeyAction {
+    SWITCH_TO_EMOJIS,
+    SWITCH_LANGUAGE,
+    SWITCH_KEYBOARD_APP,
+    DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
+    DISABLED;
 
     companion object {
-        fun fromString(string: String): SwitchKeyMode {
+        fun fromString(string: String): UtilityKeyAction {
             return valueOf(string.toUpperCase(Locale.ENGLISH))
         }
     }

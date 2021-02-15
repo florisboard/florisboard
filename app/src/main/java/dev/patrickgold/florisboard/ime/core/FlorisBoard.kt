@@ -23,16 +23,19 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.graphics.Color
+import android.inputmethodservice.ExtractEditText
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
 import android.os.*
 import android.provider.Settings
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import com.squareup.moshi.Json
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
@@ -67,11 +70,12 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
 
     val context: Context
         get() = inputWindowView?.context ?: this
+    private var extractEditLayout: WeakReference<View?> = WeakReference(null)
     var inputView: InputView? = null
         private set
+    private var inputWindowView: InputWindowView? = null
     var popupLayerView: PopupLayerView? = null
         private set
-    private var inputWindowView: InputWindowView? = null
     private var eventListeners: MutableList<WeakReference<EventListener?>?> = mutableListOf()
 
     private var audioManager: AudioManager? = null
@@ -204,16 +208,34 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         baseContext.setTheme(currentThemeResId)
 
         inputWindowView = layoutInflater.inflate(R.layout.florisboard, null) as InputWindowView
-        popupLayerView = inputWindowView?.findViewById(R.id.popup_layer)
-
         eventListeners.toList().forEach { it?.get()?.onCreateInputView() }
 
         return inputWindowView
     }
 
+    /**
+     * Disable the default candidates view.
+     */
+    override fun onCreateCandidatesView(): View? {
+        return null
+    }
+
+    @SuppressLint("InflateParams")
+    override fun onCreateExtractTextView(): View? {
+        val eel = super.onCreateExtractTextView()
+        extractEditLayout = WeakReference(eel)
+        return eel
+    }
+
     fun registerInputView(inputView: InputView) {
         Timber.i("registerInputView($inputView)")
 
+        window?.window?.findViewById<View>(android.R.id.content)?.let { content ->
+            popupLayerView = PopupLayerView(content.context)
+            if (content is ViewGroup) {
+                content.addView(popupLayerView)
+            }
+        }
         this.inputView = inputView
         initializeOneHandedEnvironment()
         updateSoftInputWindowLayoutParameters()
@@ -375,6 +397,25 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
             inputView?.oneHandedCtrlCloseStart?.imageTintList = it
             inputView?.oneHandedCtrlCloseEnd?.imageTintList = it
         }
+        inputView?.invalidate()
+
+        // Update ExtractTextView theme
+        extractEditLayout.get()?.let { eel ->
+            if (eel is ViewGroup) {
+                eel.setBackgroundColor(theme.getAttr(Theme.Attr.EXTRACT_EDIT_LAYOUT_BACKGROUND).toSolidColor().color)
+                eel.findViewById<ExtractEditText>(android.R.id.inputExtractEditText)?.let { textView ->
+                    textView.background?.setTint(theme.getAttr(Theme.Attr.WINDOW_COLOR_PRIMARY).toSolidColor().color)
+                    textView.setTextColor(theme.getAttr(Theme.Attr.EXTRACT_EDIT_LAYOUT_FOREGROUND).toSolidColor().color)
+                    textView.setHintTextColor(theme.getAttr(Theme.Attr.EXTRACT_EDIT_LAYOUT_FOREGROUND_ALT).toSolidColor().color)
+                    textView.highlightColor = theme.getAttr(Theme.Attr.WINDOW_COLOR_PRIMARY).toSolidColor().color
+                }
+                eel.findViewWithType(Button::class)?.let { actionButton ->
+                    actionButton.setBackgroundColor(theme.getAttr(Theme.Attr.EXTRACT_ACTION_BUTTON_BACKGROUND).toSolidColor().color)
+                    actionButton.setTextColor(theme.getAttr(Theme.Attr.EXTRACT_ACTION_BUTTON_FOREGROUND).toSolidColor().color)
+                }
+            }
+        }
+
         eventListeners.toList().forEach { it?.get()?.onApplyThemeAttributes() }
     }
 
