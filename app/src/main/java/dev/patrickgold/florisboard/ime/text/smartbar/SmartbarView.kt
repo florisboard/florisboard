@@ -322,6 +322,12 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
         updateSmartbarState()
     }
 
+    fun setCandidateSuggestionWords(suggestions: List<String>) {
+        binding.candidate1.text = suggestions.getOrNull(0) ?: ""
+        binding.candidate0.text = suggestions.getOrNull(1) ?: ""
+        binding.candidate2.text = suggestions.getOrNull(2) ?: ""
+    }
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
         val heightSize = MeasureSpec.getSize(heightMeasureSpec).toFloat()

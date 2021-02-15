@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Patrick Goldinger
+ * Copyright (C) 2021 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,12 +20,13 @@ import android.content.Context
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import dev.patrickgold.florisboard.ime.extension.Asset
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
+import dev.patrickgold.florisboard.ime.nlp.FlorisWeightedToken
+import dev.patrickgold.florisboard.ime.nlp.LanguageModel
+import dev.patrickgold.florisboard.ime.nlp.Token
+import dev.patrickgold.florisboard.ime.nlp.WeightedToken
 import java.lang.StringBuilder
-
-typealias WordMap = LinkedHashMap<String, Int>
 
 /**
  * Class Flictionary which takes care of loading the binary asset as well as providing words for
@@ -38,9 +39,12 @@ class Flictionary private constructor(
     override val name: String,
     override val label: String,
     override val authors: List<String>,
-    val headerStr: String,
-    val words: WordMap
-) : Dictionary, Asset {
+    private val headerStr: String,
+    private val words: List<WeightedToken<String, Int>>
+) : Dictionary<String, Int> {
+    override val languageModel: LanguageModel<String, Int>?
+        get() = TODO("Not yet implemented")
+
     companion object {
         private const val FLICT_BEGIN_SECTION_128 =     0x00
         private const val FLICT_BEGIN_SECTION_16384 =   0x80
@@ -54,7 +58,7 @@ class Flictionary private constructor(
          */
         fun load(context: Context, assetRef: AssetRef): Result<Flictionary, Exception> {
             var headerStr: String? = null
-            val words: WordMap = WordMap()
+            val words: MutableList<WeightedToken<String, Int>> = mutableListOf()
             if (assetRef.source == AssetSource.Assets) {
                 val inputStream = context.assets.open(assetRef.path)
                 val rawData = inputStream.readBytes()
@@ -78,7 +82,7 @@ class Flictionary private constructor(
                                 val word = ByteArray(size) { i -> rawData[pos + 2 + i] }
                                 sectionWord.add(String(word))
                                 if (freq > 0) {
-                                    words[sectionWord.joinToString("")] = freq
+                                    words.add(FlorisWeightedToken(sectionWord.joinToString(""), freq))
                                 }
                                 sectionDepth++
                                 pos += (2 + size)
@@ -103,7 +107,7 @@ class Flictionary private constructor(
                                     val word = ByteArray(size) { i -> rawData[pos + 3 + i] }
                                     sectionWord.add(String(word))
                                     if (freq > 0) {
-                                        words[sectionWord.joinToString("")] = freq
+                                        words.add(FlorisWeightedToken(sectionWord.joinToString(""), freq))
                                     }
                                     sectionDepth++
                                     pos += (3 + size)
@@ -165,7 +169,7 @@ class Flictionary private constructor(
                                 } else {
                                     return Err(ParseException(
                                         errorType = ParseException.ErrorType.UNEXPECTED_SECTION_DEPTH_DECREASE_BELOW_ZERO,
-                                        address = pos, cmdByte = cmd.toByte(), sectionDepth = sectionDepth
+                                        address = pos, cmdByte = cmd.toByte(), sectionDepth = sectionDepth - n
                                     ))
                                 }
                             } else {
@@ -188,13 +192,40 @@ class Flictionary private constructor(
                         address = pos, cmdByte = 0x00.toByte(), sectionDepth = sectionDepth
                     ))
                 }
+                words.sortByDescending { weightedToken -> weightedToken.getFreq() }
                 return Ok(Flictionary("flict", "flict", listOf(), headerStr ?: "", words))
             }
             return Err(Exception("Only AssetSource.Assets is currently supported!"))
         }
     }
 
-    override fun getFreqForWord(word: String): Int {
+    // Bad implementation, I know but as a simple test it works
+    override fun getSuggestions(input: Token<String>, maxResultCount: Int): List<Token<String>> {
+        return if (input.getData().isEmpty()) {
+            val retList = mutableListOf<Token<String>>()
+            for (entry in words) {
+                if (entry.getData().startsWith(input.getData())) {
+                    retList.add(entry)
+                    if (retList.size >= maxResultCount) {
+                        break
+                    }
+                }
+            }
+            retList
+        } else {
+            listOf()
+        }
+    }
+
+    override fun getWeightedToken(token: Token<String>): WeightedToken<String, Int> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getWeightedTokenOrNull(token: Token<String>): WeightedToken<String, Int>? {
+        TODO("Not yet implemented")
+    }
+
+    override fun hasToken(token: Token<String>): Boolean {
         TODO("Not yet implemented")
     }
 

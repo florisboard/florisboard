@@ -23,8 +23,15 @@ import android.view.KeyEvent
 import android.widget.LinearLayout
 import android.widget.Toast
 import android.widget.ViewFlipper
+import com.github.michaelbull.result.getOr
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.*
+import dev.patrickgold.florisboard.ime.dictionary.Dictionary
+import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.extension.AssetRef
+import dev.patrickgold.florisboard.ime.extension.AssetSource
+import dev.patrickgold.florisboard.ime.nlp.FlorisToken
+import dev.patrickgold.florisboard.ime.nlp.toStringList
 import dev.patrickgold.florisboard.ime.text.editing.EditingKeyboardView
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.*
@@ -63,6 +70,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     private val osHandler = Handler()
     private var textViewFlipper: ViewFlipper? = null
     private var textViewGroup: LinearLayout? = null
+    private val dictionaryManager: DictionaryManager = DictionaryManager.default()
+    private var activeDictionary: Dictionary<String, Int>? = null
 
     var keyVariation: KeyVariation = KeyVariation.NORMAL
     val layoutManager = LayoutManager(florisboard)
@@ -301,6 +310,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             val keyboardView = keyboardViews[KeyboardMode.CHARACTERS]
             keyboardView?.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, newSubtype, florisboard.prefs).await()
             keyboardView?.updateVisibility()
+            dictionaryManager.loadDictionary(AssetRef(AssetSource.Assets,"ime/dict/en.flict")).let {
+                activeDictionary = it.getOr(null)
+            }
         }
     }
 
@@ -316,6 +328,15 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         }
         updateCapsState()
         smartbarView?.updateSmartbarState()
+        if (activeEditorInstance.isComposingEnabled) {
+            activeDictionary?.let {
+                val startTime = System.nanoTime()
+                val slist = it.getSuggestions(FlorisToken(activeEditorInstance.cachedInput.currentWord.text), 3)
+                val elapsed = (System.nanoTime() - startTime) / 1000.0
+                Timber.i("sugg fetch time: $elapsed us")
+                smartbarView?.setCandidateSuggestionWords(slist.toStringList())
+            }
+        }
     }
 
     override fun onPrimaryClipChanged() {

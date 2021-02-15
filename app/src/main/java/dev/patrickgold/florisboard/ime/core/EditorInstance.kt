@@ -65,7 +65,8 @@ class EditorInstance private constructor(
         get() = inputAttributes.type == InputAttributes.Type.NULL
     var selection: Selection = Selection(this)
         private set
-    private var isPhantomSpaceActive: Boolean = false
+    var isPhantomSpaceActive: Boolean = false
+        private set
     private var wasPhantomSpaceActiveLastUpdate: Boolean = false
 
     companion object {
@@ -926,6 +927,17 @@ class CachedInput(private val editorInstance: EditorInstance) {
         }
     }
 
+    fun getWordHistory(maxCount: Int): List<String> {
+        val retList = mutableListOf<String>()
+        for ((n, region) in wordsBeforeCurrent.reversed().withIndex()) {
+            if (n == maxCount) {
+                break
+            }
+            retList.add(region.text)
+        }
+        return retList.toList()
+    }
+
     /**
      * Updates the [rawText] and the [offset].
      */
@@ -971,7 +983,11 @@ class CachedInput(private val editorInstance: EditorInstance) {
             for (word in words) {
                 if (word.isNotEmpty() && !word.matches(regex)) {
                     if (selStart >= pos && selStart <= (pos + word.length)) {
-                        currentWord.update(pos, pos + word.length)
+                        if (!editorInstance.isPhantomSpaceActive) {
+                            currentWord.update(pos, pos + word.length)
+                        } else {
+                            wordsBeforeCurrent.add(Region(editorInstance, pos, pos + word.length))
+                        }
                     } else if (pos < selStart) {
                         wordsBeforeCurrent.add(Region(editorInstance, pos, pos + word.length))
                     } else {
