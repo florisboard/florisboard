@@ -22,11 +22,9 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
-import dev.patrickgold.florisboard.ime.nlp.FlorisWeightedToken
-import dev.patrickgold.florisboard.ime.nlp.LanguageModel
-import dev.patrickgold.florisboard.ime.nlp.Token
-import dev.patrickgold.florisboard.ime.nlp.WeightedToken
+import dev.patrickgold.florisboard.ime.nlp.*
 import java.lang.StringBuilder
+import java.util.regex.Pattern
 
 /**
  * Class Flictionary which takes care of loading the binary asset as well as providing words for
@@ -40,16 +38,31 @@ class Flictionary private constructor(
     override val label: String,
     override val authors: List<String>,
     private val headerStr: String,
-    private val words: List<WeightedToken<String, Int>>
+    private val words: NgramNode
 ) : Dictionary<String, Int> {
-    override val languageModel: LanguageModel<String, Int>?
-        get() = TODO("Not yet implemented")
-
     companion object {
-        private const val FLICT_BEGIN_SECTION_128 =     0x00
-        private const val FLICT_BEGIN_SECTION_16384 =   0x80
-        private const val FLICT_BEGIN_HEADER =          0xC0
-        private const val FLICT_END =                   0xF0
+        private const val VERSION_0 =                           0x0
+
+        private const val MASK_BEGIN_PTREE_NODE =               0x80
+        private const val CMDB_BEGIN_PTREE_NODE =               0x00
+        private const val ATTR_PTREE_NODE_ORDER =               0x70
+        private const val ATTR_PTREE_NODE_TYPE =                0x0C
+        private const val ATTR_PTREE_NODE_TYPE_CHAR =           0
+        private const val ATTR_PTREE_NODE_TYPE_WORD_FILLER =    1
+        private const val ATTR_PTREE_NODE_TYPE_WORD =           2
+        private const val ATTR_PTREE_NODE_TYPE_SHORTCUT =       3
+        private const val ATTR_PTREE_NODE_SIZE =                0x03
+
+        private const val MASK_END =                            0xC0
+        private const val CMDB_END =                            0x80
+        private const val ATTR_END_COUNT =                      0x3F
+
+        private const val MASK_BEGIN_HEADER =                   0xE0
+        private const val CMDB_BEGIN_HEADER =                   0xC0
+        private const val ATTR_HEADER_VERSION =                 0x1F
+
+        private const val MASK_DEFINE_SHORTCUT =                0xF0
+        private const val CMDB_DEFINE_SHORTCUT =                0xE0
 
         /**
          * Loads a Flictionary binary asset from given [assetRef] and returns a result containing
@@ -58,34 +71,63 @@ class Flictionary private constructor(
          */
         fun load(context: Context, assetRef: AssetRef): Result<Flictionary, Exception> {
             var headerStr: String? = null
-            val words: MutableList<WeightedToken<String, Int>> = mutableListOf()
+            val words = NgramNode(0, "", -1, mutableListOf())
             if (assetRef.source == AssetSource.Assets) {
                 val inputStream = context.assets.open(assetRef.path)
                 val rawData = inputStream.readBytes()
                 inputStream.close()
                 var pos = 0
                 var sectionDepth = 0
-                val sectionWord = mutableListOf<String>()
+                val sectionWord = mutableListOf<MutableList<String>>(
+                    mutableListOf(),
+                    mutableListOf(),
+                    mutableListOf(),
+                    mutableListOf(),
+                    mutableListOf(),
+                    mutableListOf(),
+                    mutableListOf(),
+                    mutableListOf()
+                )
+                val currentNode = mutableMapOf(Pair(0, words))
                 while (pos < rawData.size) {
-                    val cmd = rawData[pos].toInt()
+                    val cmd = rawData[pos].toInt() and 0xFF
                     when {
-                        (cmd and 0x80) == FLICT_BEGIN_SECTION_128 -> {
+                        (cmd and MASK_BEGIN_PTREE_NODE) == CMDB_BEGIN_PTREE_NODE -> {
                             if (pos == 0) {
                                 return Err(ParseException(
-                                    errorType = ParseException.ErrorType.UNEXPECTED_CMD_BEGIN_SECTION,
+                                    errorType = ParseException.ErrorType.UNEXPECTED_CMD_BEGIN_PTREE_NODE,
                                     address = pos, cmdByte = cmd.toByte(), sectionDepth = sectionDepth
                                 ))
                             }
-                            val size = cmd and 0x7F
+                            val order = ((cmd and ATTR_PTREE_NODE_ORDER) shr 4) + 1
+                            val type = ((cmd and ATTR_PTREE_NODE_TYPE) shr 2)
+                            val size = (cmd and ATTR_PTREE_NODE_SIZE) + 1
                             if (pos + 1 + size < rawData.size) {
-                                val freq = rawData[pos + 1].toInt() and 0xFF
-                                val word = ByteArray(size) { i -> rawData[pos + 2 + i] }
-                                sectionWord.add(String(word))
-                                if (freq > 0) {
-                                    words.add(FlorisWeightedToken(sectionWord.joinToString(""), freq))
+                                when (type) {
+                                    ATTR_PTREE_NODE_TYPE_CHAR -> {
+                                        val word = ByteArray(size) { i -> rawData[pos + 1 + i] }
+                                        sectionWord[order-1].add(String(word, Charsets.UTF_8))
+                                        pos += (1 + size)
+                                    }
+                                    ATTR_PTREE_NODE_TYPE_WORD_FILLER -> {
+                                        val word = ByteArray(size) { i -> rawData[pos + 1 + i] }
+                                        sectionWord[order-1].add(String(word, Charsets.UTF_8))
+                                        val node = NgramNode(order, sectionWord[order-1].joinToString(""), -1)
+                                        currentNode[order-1]!!.children.add(node)
+                                        currentNode[order] = node
+                                        pos += (2 + size)
+                                    }
+                                    ATTR_PTREE_NODE_TYPE_WORD -> {
+                                        val freq = rawData[pos + 1].toInt() and 0xFF
+                                        val word = ByteArray(size) { i -> rawData[pos + 2 + i] }
+                                        sectionWord[order-1].add(String(word, Charsets.UTF_8))
+                                        val node = NgramNode(order, sectionWord[order-1].joinToString(""), freq)
+                                        currentNode[order-1]!!.children.add(node)
+                                        currentNode[order] = node
+                                        pos += (2 + size)
+                                    }
                                 }
                                 sectionDepth++
-                                pos += (2 + size)
                             } else {
                                 return Err(ParseException(
                                     errorType = ParseException.ErrorType.UNEXPECTED_EOF,
@@ -93,52 +135,31 @@ class Flictionary private constructor(
                                 ))
                             }
                         }
-                        (cmd and 0xC0) == FLICT_BEGIN_SECTION_16384 -> {
-                            if (pos == 0) {
-                                return Err(ParseException(
-                                    errorType = ParseException.ErrorType.UNEXPECTED_CMD_BEGIN_SECTION,
-                                    address = pos, cmdByte = cmd.toByte(), sectionDepth = sectionDepth
-                                ))
-                            }
-                            if (pos + 1 < rawData.size) {
-                                val size = ((cmd and 0x3F) shl 8) or (rawData[pos + 1].toInt() and 0xFF)
-                                if (pos + 2 + size < rawData.size) {
-                                    val freq = rawData[pos + 2].toInt() and 0xFF
-                                    val word = ByteArray(size) { i -> rawData[pos + 3 + i] }
-                                    sectionWord.add(String(word))
-                                    if (freq > 0) {
-                                        words.add(FlorisWeightedToken(sectionWord.joinToString(""), freq))
-                                    }
-                                    sectionDepth++
-                                    pos += (3 + size)
-                                } else {
-                                    return Err(ParseException(
-                                        errorType = ParseException.ErrorType.UNEXPECTED_EOF,
-                                        address = pos, cmdByte = cmd.toByte(), sectionDepth = sectionDepth
-                                    ))
-                                }
-                            } else {
-                                return Err(ParseException(
-                                    errorType = ParseException.ErrorType.UNEXPECTED_EOF,
-                                    address = pos, cmdByte = cmd.toByte(), sectionDepth = sectionDepth
-                                ))
-                            }
-                        }
-                        (cmd and 0xE0) == FLICT_BEGIN_HEADER -> {
+                        (cmd and MASK_BEGIN_HEADER) == CMDB_BEGIN_HEADER -> {
                             if (pos != 0) {
                                 return Err(ParseException(
                                     errorType = ParseException.ErrorType.UNEXPECTED_CMD_BEGIN_HEADER,
                                     address = pos, cmdByte = cmd.toByte(), sectionDepth = sectionDepth
                                 ))
                             }
-                            if (pos + 1 < rawData.size) {
-                                val size = ((cmd and 0x3F) shl 8) + (rawData[pos + 1].toInt() and 0xFF)
-                                if (pos + 1 + size < rawData.size) {
-                                    val headerBytes = ByteArray(size) { i -> rawData[pos + 2 + i] }
-                                    headerStr = String(headerBytes)
-                                    sectionWord.add(headerStr)
+                            val version = cmd and ATTR_HEADER_VERSION
+                            if (pos + 9 < rawData.size) {
+                                val size = (rawData[pos + 1].toInt() and 0xFF)
+                                val date: Long =
+                                    ((rawData[pos + 2].toInt() and 0xFF).toLong() shl 56) +
+                                    ((rawData[pos + 3].toInt() and 0xFF).toLong() shl 48) +
+                                    ((rawData[pos + 4].toInt() and 0xFF).toLong() shl 40) +
+                                    ((rawData[pos + 5].toInt() and 0xFF).toLong() shl 32) +
+                                    ((rawData[pos + 6].toInt() and 0xFF).toLong() shl 24) +
+                                    ((rawData[pos + 7].toInt() and 0xFF).toLong() shl 16) +
+                                    ((rawData[pos + 8].toInt() and 0xFF).toLong() shl 8) +
+                                    ((rawData[pos + 9].toInt() and 0xFF).toLong() shl 0)
+                                if (pos + 9 + size < rawData.size) {
+                                    val headerBytes = ByteArray(size) { i -> rawData[pos + 10 + i] }
+                                    headerStr = String(headerBytes, Charsets.UTF_8)
+                                    sectionWord[0].add(headerStr)
                                     sectionDepth++
-                                    pos += (2 + size)
+                                    pos += (10 + size)
                                 } else {
                                     return Err(ParseException(
                                         errorType = ParseException.ErrorType.UNEXPECTED_EOF,
@@ -152,20 +173,29 @@ class Flictionary private constructor(
                                 ))
                             }
                         }
-                        (cmd and 0xF0) == FLICT_END -> {
+                        (cmd and MASK_END) == CMDB_END -> {
                             if (pos == 0) {
                                 return Err(ParseException(
                                     errorType = ParseException.ErrorType.UNEXPECTED_CMD_END,
                                     address = pos, cmdByte = cmd.toByte(), sectionDepth = sectionDepth
                                 ))
                             }
-                            val n = (cmd and 0x0F)
+                            val n = (cmd and ATTR_END_COUNT)
                             if (n > 0) {
                                 if (n <= sectionDepth) {
-                                    sectionDepth -= n
-                                    for (i in 0 until n) {
-                                        sectionWord.removeLast()
+                                    var nDesired = n
+                                    sectionLoop@ for (i in (0..7).reversed()) {
+                                        if (sectionWord[i].size >= nDesired) {
+                                            for (j in 0 until nDesired) {
+                                                sectionWord[i].removeLast()
+                                            }
+                                            break@sectionLoop
+                                        } else {
+                                            nDesired -= sectionWord[i].size
+                                            sectionWord[i].clear()
+                                        }
                                     }
+                                    sectionDepth -= n
                                 } else {
                                     return Err(ParseException(
                                         errorType = ParseException.ErrorType.UNEXPECTED_SECTION_DEPTH_DECREASE_BELOW_ZERO,
@@ -192,42 +222,73 @@ class Flictionary private constructor(
                         address = pos, cmdByte = 0x00.toByte(), sectionDepth = sectionDepth
                     ))
                 }
-                words.sortByDescending { weightedToken -> weightedToken.getFreq() }
+                //words.sortByDescending { weightedToken -> weightedToken.freq }
                 return Ok(Flictionary("flict", "flict", listOf(), headerStr ?: "", words))
             }
             return Err(Exception("Only AssetSource.Assets is currently supported!"))
         }
     }
 
-    // Bad implementation, I know but as a simple test it works
-    override fun getSuggestions(input: Token<String>, maxResultCount: Int): List<Token<String>> {
-        return if (input.getData().isEmpty()) {
-            val retList = mutableListOf<Token<String>>()
-            for (entry in words) {
-                if (entry.getData().startsWith(input.getData())) {
-                    retList.add(entry)
-                    if (retList.size >= maxResultCount) {
-                        break
+    override fun getDate(): Long {
+        TODO("Not yet implemented")
+    }
+
+    override fun getVersion(): Int {
+        TODO("Not yet implemented")
+    }
+
+    override fun getTokenPredictions(
+        precedingTokens: List<Token<String>>,
+        currentToken: Token<String>?,
+        maxSuggestionCount: Int
+    ): List<WeightedToken<String, Int>> {
+        currentToken ?: return listOf()
+        val idata = currentToken.data
+        val pattern = Pattern.compile("$idata\\p{L}*")
+        return if (idata.isNotEmpty()) {
+            val retList = mutableListOf<WeightedToken<String, Int>>()
+            for (entry in words.children) {
+                if (pattern.matcher(entry.word).matches()){// || NlpUtils.editDistance(entry.getData(), idata) <= 1) {
+                    if (entry.freq > 0) {
+                        retList.add(WeightedToken(entry.word, entry.freq))
+                        if (retList.size >= maxSuggestionCount) {
+                            break
+                        }
                     }
                 }
             }
+            retList.sortByDescending { it.freq }
             retList
         } else {
             listOf()
         }
     }
 
-    override fun getWeightedToken(token: Token<String>): WeightedToken<String, Int> {
+    override fun getNgram(ngram: Ngram<String, Int>): Ngram<String, Int> {
         TODO("Not yet implemented")
     }
 
-    override fun getWeightedTokenOrNull(token: Token<String>): WeightedToken<String, Int>? {
+    override fun getNgram(vararg tokens: String): Ngram<String, Int> {
         TODO("Not yet implemented")
     }
 
-    override fun hasToken(token: Token<String>): Boolean {
+    override fun getNgramOrNull(ngram: Ngram<String, Int>): Ngram<String, Int>? {
         TODO("Not yet implemented")
     }
+
+    override fun getNgramOrNull(vararg tokens: String): Ngram<String, Int>? {
+        TODO("Not yet implemented")
+    }
+
+    override fun hasNgram(ngram: Ngram<String, Int>, doMatchFreq: Boolean): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun matchAllNgrams(ngram: Ngram<String, Int>): List<Ngram<String, Int>> {
+        TODO("Not yet implemented")
+    }
+
+    private class NgramNode(val order: Int, val word: String, val freq: Int, val children: MutableList<NgramNode> = mutableListOf())
 
     /**
      * A parse exception to be used by [Flictionary] to indicate where the parsing of a binary file
@@ -241,7 +302,8 @@ class Flictionary private constructor(
     ) : Exception() {
         enum class ErrorType {
             UNEXPECTED_CMD_BEGIN_HEADER,
-            UNEXPECTED_CMD_BEGIN_SECTION,
+            UNEXPECTED_CMD_BEGIN_PTREE_NODE,
+            UNEXPECTED_CMD_DEFINE_SHORTCUT,
             UNEXPECTED_CMD_END,
             UNEXPECTED_CMD_END_ZERO_VALUE,
             UNEXPECTED_SECTION_DEPTH_DECREASE_BELOW_ZERO,
@@ -250,7 +312,7 @@ class Flictionary private constructor(
             INVALID_CMD_BYTE_PROVIDED,
         }
 
-        override val message: String?
+        override val message: String
             get() = toString()
         override fun toString(): String {
             return StringBuilder().run {
@@ -258,8 +320,11 @@ class Flictionary private constructor(
                     ErrorType.UNEXPECTED_CMD_BEGIN_HEADER -> {
                         "Unexpected command: BEGIN_HEADER"
                     }
-                    ErrorType.UNEXPECTED_CMD_BEGIN_SECTION -> {
-                        "Unexpected command: BEGIN_SECTION"
+                    ErrorType.UNEXPECTED_CMD_BEGIN_PTREE_NODE -> {
+                        "Unexpected command: BEGIN_PTREE_NODE"
+                    }
+                    ErrorType.UNEXPECTED_CMD_DEFINE_SHORTCUT -> {
+                        "Unexpected command: DEFINE_SHORTCUT"
                     }
                     ErrorType.UNEXPECTED_CMD_END -> {
                         "Unexpected command: END"

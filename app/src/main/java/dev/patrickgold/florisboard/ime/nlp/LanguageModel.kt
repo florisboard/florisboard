@@ -17,16 +17,17 @@
 package dev.patrickgold.florisboard.ime.nlp
 
 /**
- * Abstract interface for a language model. Can house any n-grams with a minimum order of two.
+ * Abstract interface for a language model. Can house any n-grams with a minimum order of one.
  */
 interface LanguageModel<T : Any, F : Number> {
     /**
-     * Gets next word predictions based on the given [precedingTokens]. The length of the returned
-     * list is limited to [maxSuggestionCount]. Note that the returned list may at any time give
-     * back less items than [maxSuggestionCount] indicates.
+     * Gets token predictions based on the given [precedingTokens] and the [currentToken]. The
+     * length of the returned list is limited to [maxSuggestionCount]. Note that the returned list
+     * may at any time give back less items than [maxSuggestionCount] indicates.
      */
-    fun getNextTokenPredictions(
+    fun getTokenPredictions(
         precedingTokens: List<Token<T>>,
+        currentToken: Token<T>?,
         maxSuggestionCount: Int
     ): List<WeightedToken<T, F>>
 
@@ -70,7 +71,7 @@ interface LanguageModel<T : Any, F : Number> {
  * Mutable version of [LanguageModel].
  */
 interface MutableLanguageModel<T : Any, F : Number> : LanguageModel<T, F> {
-    fun trainNextWordPredictions(
+    fun trainTokenPredictions(
         precedingTokens: List<Token<T>>,
         lastToken: Token<T>
     )

@@ -20,7 +20,7 @@ package dev.patrickgold.florisboard.ime.nlp
  * Abstract interface representing a n-gram of tokens. Each n-gram instance can be assigned a
  * unique frequency [freq].
  */
-interface Ngram<T : Any, F : Number> {
+open class Ngram<T : Any, F : Number>(_tokens: List<Token<T>>, _freq: F) {
     companion object {
         /** Constant order value for unigrams. */
         const val ORDER_UNIGRAM: Int = 1
@@ -36,12 +36,12 @@ interface Ngram<T : Any, F : Number> {
      * A list of tokens for this n-gram. The length of this list is guaranteed to be matching
      * [order].
      */
-    val tokens: List<Token<T>>
+    val tokens: List<Token<T>> = _tokens
 
     /**
      * The frequency value of this n-gram.
      */
-    val freq: F
+    val freq: F = _freq
 
     /**
      * The order of this n-gram (1, 2, 3, ...).
@@ -54,49 +54,39 @@ interface Ngram<T : Any, F : Number> {
  * Abstract interface representing a token used in [Ngram]. Can also be set to a wildcard token for
  * fuzzy searching.
  */
-interface Token<T : Any> {
+open class Token<T : Any>(_data: T, _isWildcardToken: Boolean = false) {
     /**
-     * Retrieves the data of this token and returns it. The data is only valid if [isWildcardToken]
-     * returns true, else the data has to be considered invalid.
+     * The data of this token, which is only valid if [isWildcardToken] is false, else the data has
+     * to be considered invalid.
      */
-    fun getData(): T
+    val data: T = _data
 
     /**
-     * Returns true if this token represents a wildcard, false otherwise.
+     * True if this token represents a wildcard, false otherwise.
      */
-    fun isWildcardToken(): Boolean
+    val isWildcardToken: Boolean = _isWildcardToken
 }
 
 /**
- * Same as [Token] but allows to add a frequency value and retrieve it via [getFreq].
+ * Same as [Token] but allows to add a frequency value [freq].
  */
-interface WeightedToken<T : Any, F : Number> : Token<T> {
+open class WeightedToken<T : Any, F : Number>(_data: T, _freq: F) : Token<T>(_data) {
     /**
-     * Returns the frequency of this weighed token.
+     * The frequency of this weighed token.
      */
-    fun getFreq(): F
-}
-
-/**
- * Same as [Token] but can be modified by calling [setData].
- */
-interface MutableToken<T : Any> : Token<T> {
-    /**
-     * Allows to set the data of this token.
-     */
-    fun setData(data: T)
+    val freq: F = _freq
 }
 
 /**
  * Converts a list of tokens carrying [CharSequence] data to a list of [CharSequence].
  */
 fun List<Token<CharSequence>>.toCharSequenceList(): List<CharSequence> {
-    return this.map { it.getData() }
+    return this.map { it.data }
 }
 
 /**
  * Converts a list of tokens carrying [String] data to a list of [String].
  */
 fun List<Token<String>>.toStringList(): List<String> {
-    return this.map { it.getData() }
+    return this.map { it.data }
 }

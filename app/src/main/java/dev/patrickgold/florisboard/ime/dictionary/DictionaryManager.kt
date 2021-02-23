@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.dictionary
 import android.content.Context
 import com.github.michaelbull.result.*
 import dev.patrickgold.florisboard.ime.extension.AssetRef
+import timber.log.Timber
 
 /**
  * TODO: document
@@ -57,6 +58,7 @@ class DictionaryManager private constructor(private val applicationContext: Cont
                 dictionaryCache[ref.toString()] = flict
                 return Ok(flict)
             }.onFailure { err ->
+                Timber.i(err)
                 return Err(err)
             }
         } else {

@@ -30,7 +30,7 @@ import dev.patrickgold.florisboard.ime.dictionary.Dictionary
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
-import dev.patrickgold.florisboard.ime.nlp.FlorisToken
+import dev.patrickgold.florisboard.ime.nlp.Token
 import dev.patrickgold.florisboard.ime.nlp.toStringList
 import dev.patrickgold.florisboard.ime.text.editing.EditingKeyboardView
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
@@ -316,6 +316,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         }
     }
 
+    var scope: Job? = null
     /**
      * Main logic point for processing cursor updates as well as parsing the current composing word
      * and passing this info on to the [SmartbarView] to turn it into candidate suggestions.
@@ -328,13 +329,19 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         }
         updateCapsState()
         smartbarView?.updateSmartbarState()
+        Timber.i("current word: ${activeEditorInstance.cachedInput.currentWord.text}")
         if (activeEditorInstance.isComposingEnabled) {
             activeDictionary?.let {
-                val startTime = System.nanoTime()
-                val slist = it.getSuggestions(FlorisToken(activeEditorInstance.cachedInput.currentWord.text), 3)
-                val elapsed = (System.nanoTime() - startTime) / 1000.0
-                Timber.i("sugg fetch time: $elapsed us")
-                smartbarView?.setCandidateSuggestionWords(slist.toStringList())
+                scope?.cancel()
+                scope = launch(Dispatchers.Default) {
+                    val startTime = System.nanoTime()
+                    val slist = it.getTokenPredictions(listOf(), Token(activeEditorInstance.cachedInput.currentWord.text), 3)
+                    val elapsed = (System.nanoTime() - startTime) / 1000.0
+                    Timber.i("sugg fetch time: $elapsed us")
+                    withContext(Dispatchers.Main) {
+                        smartbarView?.setCandidateSuggestionWords(slist.toStringList())
+                    }
+                }
             }
         }
     }

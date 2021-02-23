@@ -18,40 +18,21 @@ package dev.patrickgold.florisboard.ime.dictionary
 
 import dev.patrickgold.florisboard.ime.extension.Asset
 import dev.patrickgold.florisboard.ime.nlp.LanguageModel
+import dev.patrickgold.florisboard.ime.nlp.MutableLanguageModel
 import dev.patrickgold.florisboard.ime.nlp.Token
 import dev.patrickgold.florisboard.ime.nlp.WeightedToken
 
 /**
  * Standardized dictionary interface for interacting with dictionaries.
  */
-interface Dictionary<T: Any, F: Number> : Asset {
-    /**
-     * Can contain a language model which is associated with this dictionary. May return null if no
-     * language model is attached to this dictionary.
-     */
-    val languageModel: LanguageModel<T, F>?
+interface Dictionary<T : Any, F : Number> : LanguageModel<T, F>, Asset {
+    fun getDate(): Long
 
-    @Throws(NullPointerException::class)
-    fun getWeightedToken(token: Token<T>): WeightedToken<T, F>
-
-    fun getWeightedTokenOrNull(token: Token<T>): WeightedToken<T, F>?
-
-    /**
-     * Returns a list of words which are relevant to the given [input] with maximum length of
-     * [maxResultCount]. Note that the actual size of the list may me smaller or even zero, if the
-     * query input does not provide good results.
-     */
-    fun getSuggestions(input: Token<T>, maxResultCount: Int): List<Token<T>>
-
-    fun hasToken(token: Token<T>): Boolean
+    fun getVersion(): Int
 }
 
-interface MutableDictionary<T: Any, F: Number> : Dictionary<T, F> {
-    fun trainSuggestions(input: Token<T>)
+interface MutableDictionary<T : Any, F : Number> : MutableLanguageModel<T, F>, Dictionary<T, F> {
+    fun setDate(date: Int)
 
-    fun deleteToken(token: Token<T>)
-
-    fun insertToken(token: Token<T>)
-
-    fun updateToken(token: Token<T>)
+    fun setVersion(version: Int)
 }
