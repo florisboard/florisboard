@@ -32,6 +32,12 @@ open class Ngram<T : Any, F : Number>(_tokens: List<Token<T>>, _freq: F) {
         const val ORDER_TRIGRAM: Int = 3
     }
 
+    init {
+        if (_tokens.size < ORDER_UNIGRAM) {
+            throw Exception("A n-gram must contain at least 1 token!")
+        }
+    }
+
     /**
      * A list of tokens for this n-gram. The length of this list is guaranteed to be matching
      * [order].
@@ -51,20 +57,32 @@ open class Ngram<T : Any, F : Number>(_tokens: List<Token<T>>, _freq: F) {
 }
 
 /**
- * Abstract interface representing a token used in [Ngram]. Can also be set to a wildcard token for
- * fuzzy searching.
+ * Abstract interface representing a token used in [Ngram].
  */
-open class Token<T : Any>(_data: T, _isWildcardToken: Boolean = false) {
+open class Token<T : Any>(_data: T) {
     /**
-     * The data of this token, which is only valid if [isWildcardToken] is false, else the data has
-     * to be considered invalid.
+     * The data of this token.
      */
     val data: T = _data
 
-    /**
-     * True if this token represents a wildcard, false otherwise.
-     */
-    val isWildcardToken: Boolean = _isWildcardToken
+    override fun toString(): String {
+        return "Token(\"$data\")"
+    }
+
+    override fun hashCode(): Int {
+        return data.hashCode()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Token<*>
+
+        if (data != other.data) return false
+
+        return true
+    }
 }
 
 /**
@@ -75,6 +93,25 @@ open class WeightedToken<T : Any, F : Number>(_data: T, _freq: F) : Token<T>(_da
      * The frequency of this weighed token.
      */
     val freq: F = _freq
+
+    override fun toString(): String {
+        return "WeightedToken(\"$data\", $freq)"
+    }
+
+    override fun hashCode(): Int {
+        return data.hashCode() + 31 * freq.hashCode()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as WeightedToken<*, *>
+
+        if (data != other.data || freq != other.freq) return false
+
+        return true
+    }
 }
 
 /**

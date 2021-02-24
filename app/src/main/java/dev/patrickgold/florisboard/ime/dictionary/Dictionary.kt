@@ -25,13 +25,33 @@ import dev.patrickgold.florisboard.ime.nlp.WeightedToken
 /**
  * Standardized dictionary interface for interacting with dictionaries.
  */
-interface Dictionary<T : Any, F : Number> : LanguageModel<T, F>, Asset {
+interface Dictionary<T : Any, F : Number> : Asset {
+    val languageModel: LanguageModel<T, F>
+
+    /**
+     * Gets token predictions based on the given [precedingTokens] and the [currentToken]. The
+     * length of the returned list is limited to [maxSuggestionCount]. Note that the returned list
+     * may at any time give back less items than [maxSuggestionCount] indicates.
+     */
+    fun getTokenPredictions(
+        precedingTokens: List<Token<T>>,
+        currentToken: Token<T>?,
+        maxSuggestionCount: Int
+    ): List<WeightedToken<T, F>>
+
     fun getDate(): Long
 
     fun getVersion(): Int
 }
 
-interface MutableDictionary<T : Any, F : Number> : MutableLanguageModel<T, F>, Dictionary<T, F> {
+interface MutableDictionary<T : Any, F : Number> : Dictionary<T, F> {
+    override val languageModel: MutableLanguageModel<T, F>
+
+    fun trainTokenPredictions(
+        precedingTokens: List<Token<T>>,
+        lastToken: Token<T>
+    )
+
     fun setDate(date: Int)
 
     fun setVersion(version: Int)

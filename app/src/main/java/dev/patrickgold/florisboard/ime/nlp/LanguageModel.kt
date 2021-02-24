@@ -21,17 +21,6 @@ package dev.patrickgold.florisboard.ime.nlp
  */
 interface LanguageModel<T : Any, F : Number> {
     /**
-     * Gets token predictions based on the given [precedingTokens] and the [currentToken]. The
-     * length of the returned list is limited to [maxSuggestionCount]. Note that the returned list
-     * may at any time give back less items than [maxSuggestionCount] indicates.
-     */
-    fun getTokenPredictions(
-        precedingTokens: List<Token<T>>,
-        currentToken: Token<T>?,
-        maxSuggestionCount: Int
-    ): List<WeightedToken<T, F>>
-
-    /**
      * Tries to get the n-gram for the passed [tokens]. Throws a NPE if no match could be found.
      */
     @Throws(NullPointerException::class)
@@ -64,18 +53,13 @@ interface LanguageModel<T : Any, F : Number> {
     /**
      * Matches all n-grams which match the given [ngram] with a wildcard token in it.
      */
-    fun matchAllNgrams(ngram: Ngram<T, F>): List<Ngram<T, F>>
+    fun matchAllNgrams(ngram: Ngram<T, F>): List<WeightedToken<T, F>>
 }
 
 /**
  * Mutable version of [LanguageModel].
  */
 interface MutableLanguageModel<T : Any, F : Number> : LanguageModel<T, F> {
-    fun trainTokenPredictions(
-        precedingTokens: List<Token<T>>,
-        lastToken: Token<T>
-    )
-
     fun deleteNgram(ngram: Ngram<T, F>)
 
     fun insertNgram(ngram: Ngram<T, F>)
