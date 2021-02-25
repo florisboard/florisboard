@@ -989,14 +989,14 @@ class CachedInput(private val editorInstance: EditorInstance) {
                 if (word.isNotEmpty() && !word.matches(regex)) {
                     if (selStart >= pos && selStart <= (pos + word.length)) {
                         if (!editorInstance.isPhantomSpaceActive) {
-                            currentWord.update(pos, pos + word.length)
+                            currentWord.update(pos + offset, pos + offset + word.length)
                         } else {
-                            wordsBeforeCurrent.add(Region(editorInstance, pos, pos + word.length))
+                            wordsBeforeCurrent.add(Region(editorInstance, pos + offset, pos + offset + word.length))
                         }
                     } else if (pos < selStart) {
-                        wordsBeforeCurrent.add(Region(editorInstance, pos, pos + word.length))
+                        wordsBeforeCurrent.add(Region(editorInstance, pos + offset, pos + offset + word.length))
                     } else {
-                        wordsAfterCurrent.add(Region(editorInstance, pos, pos + word.length))
+                        wordsAfterCurrent.add(Region(editorInstance, pos + offset, pos + offset + word.length))
                     }
                 }
                 pos += word.length
