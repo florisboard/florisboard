@@ -19,11 +19,12 @@ package dev.patrickgold.florisboard.ime.nlp
 open class NgramTree(
     sameOrderChildren: MutableMap<Char, NgramNode> = mutableMapOf(),
     higherOrderChildren: MutableMap<Char, NgramNode> = mutableMapOf()
-) : NgramNode(-1, '?', -1, sameOrderChildren, higherOrderChildren)
+) : NgramNode(0, '?', "", -1, sameOrderChildren, higherOrderChildren)
 
 open class NgramNode(
     val order: Int,
     val char: Char,
+    val word: String,
     val freq: Int,
     val sameOrderChildren: MutableMap<Char, NgramNode> = mutableMapOf(),
     val higherOrderChildren: MutableMap<Char, NgramNode> = mutableMapOf()
@@ -69,12 +70,78 @@ open class NgramNode(
         }
     }
 
-    fun listAllSameOrderWords(list: MutableList<WeightedToken<String, Int>>, prefix: String) {
-        if (isWord) {
-            list.add(WeightedToken(prefix, freq))
+    /**
+     * This function allows to search for a given [input] word and adds all matches in the trie
+     * with a [maxEditDistance] to the [list].
+     */
+    fun listSimilarWords(
+        input: String,
+        list: MutableList<WeightedToken<String, Int>>,
+        allowPossiblyOffensive: Boolean,
+        maxEditDistance: Int,
+        deletionCost: Int = 0,
+        insertionCost: Int = 0,
+        substitutionCost: Int = 0,
+        pos: Int = -1
+    ) {
+        val costSum = deletionCost + insertionCost + substitutionCost
+        if (pos > -1 && (pos + 1 == input.length) && isWord && ((isPossiblyOffensive && allowPossiblyOffensive)
+                    || !isPossiblyOffensive)) {
+            // Using shift right instead of divide by 2^(costSum) as it is mathematically the
+            // same but faster.
+            list.add(WeightedToken(word, freq shr costSum))
         }
-        for ((char, childNode) in sameOrderChildren) {
-            childNode.listAllSameOrderWords(list, prefix + char)
+        if (pos <= -1) {
+            for (childNode in higherOrderChildren.values) {
+                childNode.listSimilarWords(
+                    input, list, allowPossiblyOffensive, maxEditDistance, 0, 0, 0, 0
+                )
+            }
+        } else if (maxEditDistance == costSum) {
+            if (pos + 1 < input.length) {
+                sameOrderChildren[input[pos + 1]]?.listSimilarWords(
+                    input, list, allowPossiblyOffensive, maxEditDistance,
+                    deletionCost, insertionCost, substitutionCost, pos + 1
+                )
+            }
+        } else {
+            // Delete
+            if (pos + 2 < input.length) {
+                sameOrderChildren[input[pos + 2]]?.listSimilarWords(
+                    input, list, allowPossiblyOffensive, maxEditDistance,
+                    deletionCost + 1, insertionCost, substitutionCost, pos + 2
+                )
+            }
+            for (child in sameOrderChildren.values) {
+                if (pos + 1 < input.length && child.char == input[pos + 1]) {
+                    child.listSimilarWords(
+                        input, list, allowPossiblyOffensive, maxEditDistance,
+                        deletionCost, insertionCost, substitutionCost, pos + 1
+                    )
+                } else  {
+                    // Insert
+                    child.listSimilarWords(
+                        input, list, allowPossiblyOffensive, maxEditDistance,
+                        deletionCost, insertionCost + 1, substitutionCost, pos
+                    )
+                    if (pos + 1 < input.length) {
+                        // Substitute
+                        child.listSimilarWords(
+                            input, list, allowPossiblyOffensive, maxEditDistance,
+                            deletionCost, insertionCost, substitutionCost + 1, pos + 1
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    fun listAllSameOrderWords(list: MutableList<WeightedToken<String, Int>>, allowPossiblyOffensive: Boolean) {
+        if (isWord && ((isPossiblyOffensive && allowPossiblyOffensive) || !isPossiblyOffensive)) {
+            list.add(WeightedToken(word, freq))
+        }
+        for (childNode in sameOrderChildren.values) {
+            childNode.listAllSameOrderWords(list, allowPossiblyOffensive)
         }
     }
 }
@@ -123,38 +190,55 @@ open class FlorisLanguageModel(
         }
     }
 
-    override fun matchAllNgrams(ngram: Ngram<String, Int>): List<WeightedToken<String, Int>> {
+    override fun matchAllNgrams(
+        ngram: Ngram<String, Int>,
+        maxEditDistance: Int,
+        maxNgramCount: Int,
+        allowPossiblyOffensive: Boolean
+    ): List<WeightedToken<String, Int>> {
         val ngramList = mutableListOf<WeightedToken<String, Int>>()
         var currentNode: NgramNode = ngramTree
         for ((t, token) in ngram.tokens.withIndex()) {
             val word = token.data
             if (t + 1 >= ngram.tokens.size) {
-                // The last word is not complete, so find all possible words and sort
-                val splitWord = mutableListOf<Char>()
-                var splitNode: NgramNode? = currentNode
-                for ((pos, char) in word.withIndex()) {
-                    val node = if (pos == 0) {
-                        splitNode?.higherOrderChildren?.get(char)
-                    } else {
-                        splitNode?.sameOrderChildren?.get(char)
+                if (word.isNotEmpty()) {
+                    // The last word is not complete, so find all possible words and sort
+                    val splitWord = mutableListOf<Char>()
+                    var splitNode: NgramNode? = currentNode
+                    for ((pos, char) in word.withIndex()) {
+                        val node = if (pos == 0) {
+                            splitNode?.higherOrderChildren?.get(char)
+                        } else {
+                            splitNode?.sameOrderChildren?.get(char)
+                        }
+                        splitWord.add(char)
+                        splitNode = node
+                        if (node == null) {
+                            break
+                        }
                     }
-                    splitWord.add(char)
-                    splitNode = node
-                    if (node == null) {
-                        break
+                    if (splitNode != null) {
+                        // Input thus far is valid
+                        val wordNodes = mutableListOf<WeightedToken<String, Int>>()
+                        splitNode.listAllSameOrderWords(wordNodes, allowPossiblyOffensive)
+                        wordNodes.sortByDescending { it.freq }
+                        wordNodes.subList(0, maxNgramCount.coerceAtMost(wordNodes.size)).let {
+                            ngramList.addAll(it)
+                        }
                     }
-                }
-                if (splitNode != null) {
-                    // Input thus far is valid
-                    val words = mutableListOf<WeightedToken<String, Int>>()
-                    splitNode.listAllSameOrderWords(words, splitWord.joinToString(""))
-                    words.sortByDescending { it.freq }
-                    ngramList.addAll(words)
+                    if (ngramList.size < maxNgramCount) {
+                        val wordNodes = mutableListOf<WeightedToken<String, Int>>()
+                        currentNode.listSimilarWords(word, wordNodes, allowPossiblyOffensive, maxEditDistance)
+                        wordNodes.sortByDescending { it.freq }
+                        wordNodes.subList(0, (maxNgramCount - ngramList.size).coerceAtMost(wordNodes.size)).let {
+                            ngramList.addAll(it)
+                        }
+                    }
                 }
             } else {
                 val node = currentNode.findWord(word)
                 if (node == null) {
-                    return listOf()
+                    return ngramList
                 } else {
                     currentNode = node
                 }

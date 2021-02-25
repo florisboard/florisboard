@@ -58,6 +58,7 @@ class EditorInstance private constructor(
                 markComposingRegion(null)
             }
         }
+    var shouldReevaluateComposingSuggestions: Boolean = false
     var isNewSelectionInBoundsOfOld: Boolean = false
         private set
     var isPrivateMode: Boolean = false
@@ -105,7 +106,8 @@ class EditorInstance private constructor(
      */
     fun onUpdateSelection(
         oldSelStart: Int, oldSelEnd: Int,
-        newSelStart: Int, newSelEnd: Int
+        newSelStart: Int, newSelEnd: Int,
+        candidatesStart: Int, candidatesEnd: Int
     ) {
         isNewSelectionInBoundsOfOld =
             newSelStart >= (oldSelStart - 1) &&
@@ -118,6 +120,9 @@ class EditorInstance private constructor(
             isPhantomSpaceActive = false
         } else if (isPhantomSpaceActive && !wasPhantomSpaceActiveLastUpdate) {
             wasPhantomSpaceActiveLastUpdate = true
+        }
+        if (isComposingEnabled && candidatesStart >= 0 && candidatesEnd >= 0) {
+            shouldReevaluateComposingSuggestions = true
         }
         if (selection.isCursorMode && isComposingEnabled && !isRawInputEditor && !isPhantomSpaceActive) {
             markComposingRegion(cachedInput.currentWord)

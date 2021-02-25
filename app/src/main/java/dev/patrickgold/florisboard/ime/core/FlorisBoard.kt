@@ -389,7 +389,8 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         )
         activeEditorInstance.onUpdateSelection(
             oldSelStart, oldSelEnd,
-            newSelStart, newSelEnd
+            newSelStart, newSelEnd,
+            candidatesStart, candidatesEnd
         )
         eventListeners.toList().forEach { it?.onUpdateSelection() }
     }

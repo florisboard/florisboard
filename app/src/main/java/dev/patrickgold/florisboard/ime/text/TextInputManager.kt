@@ -316,7 +316,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         }
     }
 
-    var scope: Job? = null
     /**
      * Main logic point for processing cursor updates as well as parsing the current composing word
      * and passing this info on to the [SmartbarView] to turn it into candidate suggestions.
@@ -331,17 +330,26 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         smartbarView?.updateSmartbarState()
         Timber.i("current word: ${activeEditorInstance.cachedInput.currentWord.text}")
         if (activeEditorInstance.isComposingEnabled) {
-            activeDictionary?.let {
-                scope?.cancel()
-                scope = launch(Dispatchers.Default) {
-                    val startTime = System.nanoTime()
-                    val slist = it.getTokenPredictions(listOf(), Token(activeEditorInstance.cachedInput.currentWord.text), 3)
-                    val elapsed = (System.nanoTime() - startTime) / 1000.0
-                    Timber.i("sugg fetch time: $elapsed us")
-                    withContext(Dispatchers.Main) {
-                        smartbarView?.setCandidateSuggestionWords(slist.toStringList())
+            if (activeEditorInstance.shouldReevaluateComposingSuggestions) {
+                activeEditorInstance.shouldReevaluateComposingSuggestions = false
+                activeDictionary?.let {
+                    launch(Dispatchers.Default) {
+                        val startTime = System.nanoTime()
+                        val suggestions = it.getTokenPredictions(
+                            precedingTokens = listOf(),
+                            currentToken = Token(activeEditorInstance.cachedInput.currentWord.text),
+                            maxSuggestionCount = 3,
+                            allowPossiblyOffensive = false
+                        )
+                        val elapsed = (System.nanoTime() - startTime) / 1000.0
+                        Timber.i("sugg fetch time: $elapsed us")
+                        withContext(Dispatchers.Main) {
+                            smartbarView?.setCandidateSuggestionWords(suggestions.toStringList())
+                        }
                     }
                 }
+            } else {
+                smartbarView?.setCandidateSuggestionWords(listOf())
             }
         }
     }

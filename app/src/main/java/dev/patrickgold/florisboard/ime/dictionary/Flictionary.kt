@@ -23,7 +23,8 @@ import com.github.michaelbull.result.Result
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.nlp.*
-import java.lang.StringBuilder
+import java.util.*
+import kotlin.text.StringBuilder
 
 /**
  * Class Flictionary which takes care of loading the binary asset as well as providing words for
@@ -122,7 +123,15 @@ class Flictionary private constructor(
                             }
                             val bytes = ByteArray(size) { i -> rawData[pos + offset + i] }
                             val char = String(bytes, Charsets.UTF_8)[0]
-                            val node = NgramNode(order, char, freq)
+                            val precomputedWord = StringBuilder()
+                            val firstNodeIndex = ngramOrderStack.indexOfFirst { it == order }
+                            if (firstNodeIndex >= 0) {
+                                for (n in firstNodeIndex until ngramOrderStack.size) {
+                                    precomputedWord.append(ngramTreeStack[n].char)
+                                }
+                            }
+                            precomputedWord.append(char)
+                            val node = NgramNode(order, char, precomputedWord.toString(), freq)
                             if (ngramOrderStack.last() == order) {
                                 ngramTreeStack.last().sameOrderChildren[char] = node
                             } else {
@@ -246,15 +255,25 @@ class Flictionary private constructor(
 
     override fun getVersion(): Int = version
 
+    // TODO: preceding tokens are currently ignored
     override fun getTokenPredictions(
         precedingTokens: List<Token<String>>,
         currentToken: Token<String>?,
-        maxSuggestionCount: Int
+        maxSuggestionCount: Int,
+        allowPossiblyOffensive: Boolean
     ): List<WeightedToken<String, Int>> {
         currentToken ?: return listOf()
 
         return if (currentToken.data.isNotEmpty()) {
-            val retList = languageModel.matchAllNgrams(Ngram(listOf(Token(currentToken.data.toLowerCase())), -1))
+            val retList = languageModel.matchAllNgrams(
+                ngram = Ngram(
+                    _tokens = listOf(Token(currentToken.data.toLowerCase(Locale.ENGLISH))),
+                    _freq = -1
+                ),
+                maxEditDistance = 3,
+                maxNgramCount = maxSuggestionCount,
+                allowPossiblyOffensive = allowPossiblyOffensive
+            )
             retList
         } else {
             listOf()

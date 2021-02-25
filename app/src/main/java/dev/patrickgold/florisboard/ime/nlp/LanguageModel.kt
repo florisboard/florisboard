@@ -51,9 +51,15 @@ interface LanguageModel<T : Any, F : Number> {
     fun hasNgram(ngram: Ngram<T, F>, doMatchFreq: Boolean = false): Boolean
 
     /**
-     * Matches all n-grams which match the given [ngram] with a wildcard token in it.
+     * Matches all n-grams which match the given [ngram], whereas the last item in the n-gram is
+     * is used to search for predictions.
      */
-    fun matchAllNgrams(ngram: Ngram<T, F>): List<WeightedToken<T, F>>
+    fun matchAllNgrams(
+        ngram: Ngram<T, F>,
+        maxEditDistance: Int,
+        maxNgramCount: Int,
+        allowPossiblyOffensive: Boolean
+    ): List<WeightedToken<T, F>>
 }
 
 /**

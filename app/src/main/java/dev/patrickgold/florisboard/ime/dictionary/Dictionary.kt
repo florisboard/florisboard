@@ -36,7 +36,8 @@ interface Dictionary<T : Any, F : Number> : Asset {
     fun getTokenPredictions(
         precedingTokens: List<Token<T>>,
         currentToken: Token<T>?,
-        maxSuggestionCount: Int
+        maxSuggestionCount: Int,
+        allowPossiblyOffensive: Boolean
     ): List<WeightedToken<T, F>>
 
     fun getDate(): Long
