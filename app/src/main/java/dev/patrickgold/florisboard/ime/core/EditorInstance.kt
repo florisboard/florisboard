@@ -899,14 +899,9 @@ class CachedInput(private val editorInstance: EditorInstance) {
     companion object {
         private const val CACHED_TEXT_N_CHARS_BEFORE_CURSOR: Int = 192
         private const val CACHED_TEXT_N_CHARS_AFTER_CURSOR: Int = 64
-    }
 
-    /**
-     * Selects and returns the correct word delimiter regex based on the current subtype.
-     * TODO: implement auto-choosing and define regex-es for different subtypes.
-     */
-    private fun getWordSplitRegex(): Regex {
-        return "[^\\p{L}]".toRegex()
+        private val WORD_EVAL_REGEX = """[^\p{L}]""".toRegex()
+        private val WORD_SPLIT_REGEX_EN = """((?<=$WORD_EVAL_REGEX)|(?=$WORD_EVAL_REGEX))""".toRegex()
     }
 
     /**
@@ -970,23 +965,25 @@ class CachedInput(private val editorInstance: EditorInstance) {
 
     /**
      * Evaluates the current word as well as the words before&after the cursor in the linked editor
-     * instance based on the current cursor position and given delimiter [regex].
+     * instance based on the current cursor position and given [splitRegex] and [wordRegex].
      *
-     * @param regex The delimiter regex which should be used to split up the content text and find
-     *  words. May differ from locale to locale.
+     * @param splitRegex The delimiter regex which should be used to split up the content text and
+     *  find words. May differ from locale to locale.
+     * @param wordRegex The word validation regex used to verify that a given substring is really a
+     *  word. May differ from locale to locale.
      * @return True on success, false otherwise.
      */
-    private fun reevaluate(regex: Regex): Boolean = editorInstance.run {
+    private fun reevaluate(splitRegex: Regex, wordRegex: Regex): Boolean = editorInstance.run {
         wordsBeforeCurrent.clear()
         currentWord.update(-1, -1)
         wordsAfterCurrent.clear()
 
         if (selection.isValid && selection.isCursorMode) {
             val selStart = (selection.start - offset).coerceAtLeast(0)
-            val words = rawText.split("((?<=$regex)|(?=$regex))".toRegex())
+            val words = rawText.split(splitRegex)
             var pos = 0
             for (word in words) {
-                if (word.isNotEmpty() && !word.matches(regex)) {
+                if (word.isNotEmpty() && !word.matches(wordRegex)) {
                     if (selStart >= pos && selStart <= (pos + word.length)) {
                         if (!editorInstance.isPhantomSpaceActive) {
                             currentWord.update(pos + offset, pos + offset + word.length)
@@ -1013,8 +1010,7 @@ class CachedInput(private val editorInstance: EditorInstance) {
      * TODO: currently only supports en-US
      */
     fun reevaluate() {
-        val regex = getWordSplitRegex()
-        reevaluate(regex)
+        reevaluate(WORD_SPLIT_REGEX_EN, WORD_EVAL_REGEX)
     }
 
     @Suppress("unused")

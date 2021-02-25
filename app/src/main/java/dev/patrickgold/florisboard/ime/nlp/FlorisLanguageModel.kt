@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.nlp
 
+import timber.log.Timber
+
 /**
  * Represents the root node to a n-gram tree.
  */
@@ -84,7 +86,7 @@ open class NgramNode(
      */
     fun listSimilarWords(
         input: String,
-        list: MutableList<WeightedToken<String, Int>>,
+        list: StagedSuggestionList<String, Int>,
         allowPossiblyOffensive: Boolean,
         maxEditDistance: Int,
         deletionCost: Int = 0,
@@ -97,7 +99,7 @@ open class NgramNode(
                     || !isPossiblyOffensive)) {
             // Using shift right instead of divide by 2^(costSum) as it is mathematically the
             // same but faster.
-            list.add(WeightedToken(word, freq shr costSum))
+            list.add(word, freq shr costSum)
         }
         if (pos <= -1) {
             for (childNode in higherOrderChildren.values) {
@@ -144,9 +146,9 @@ open class NgramNode(
         }
     }
 
-    fun listAllSameOrderWords(list: MutableList<WeightedToken<String, Int>>, allowPossiblyOffensive: Boolean) {
+    fun listAllSameOrderWords(list: StagedSuggestionList<String, Int>, allowPossiblyOffensive: Boolean) {
         if (isWord && ((isPossiblyOffensive && allowPossiblyOffensive) || !isPossiblyOffensive)) {
-            list.add(WeightedToken(word, freq))
+            list.add(word, freq)
         }
         for (childNode in sameOrderChildren.values) {
             childNode.listAllSameOrderWords(list, allowPossiblyOffensive)
@@ -236,20 +238,16 @@ open class FlorisLanguageModel(
                     }
                     if (splitNode != null) {
                         // Input thus far is valid
-                        val wordNodes = mutableListOf<WeightedToken<String, Int>>()
+                        val wordNodes = StagedSuggestionList<String, Int>(maxTokenCount)
                         splitNode.listAllSameOrderWords(wordNodes, allowPossiblyOffensive)
-                        wordNodes.sortByDescending { it.freq }
-                        wordNodes.subList(0, maxTokenCount.coerceAtMost(wordNodes.size)).let {
-                            ngramList.addAll(it)
-                        }
+                        Timber.i("1. list length: ${wordNodes.size}")
+                        ngramList.addAll(wordNodes)
                     }
                     if (ngramList.size < maxTokenCount) {
-                        val wordNodes = mutableListOf<WeightedToken<String, Int>>()
+                        val wordNodes = StagedSuggestionList<String, Int>(maxTokenCount)
                         currentNode.listSimilarWords(word, wordNodes, allowPossiblyOffensive, maxEditDistance)
-                        wordNodes.sortByDescending { it.freq }
-                        wordNodes.subList(0, (maxTokenCount - ngramList.size).coerceAtMost(wordNodes.size)).let {
-                            ngramList.addAll(it)
-                        }
+                        Timber.i("2. list length: ${wordNodes.size}")
+                        ngramList.addAll(wordNodes)
                     }
                 }
             } else {

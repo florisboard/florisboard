@@ -25,7 +25,7 @@ import dev.patrickgold.florisboard.ime.nlp.WeightedToken
 /**
  * Standardized dictionary interface for interacting with dictionaries.
  */
-interface Dictionary<T : Any, F : Number> : Asset {
+interface Dictionary<T : Any, F : Comparable<F>> : Asset {
     val languageModel: LanguageModel<T, F>
 
     /**
@@ -45,7 +45,7 @@ interface Dictionary<T : Any, F : Number> : Asset {
     fun getVersion(): Int
 }
 
-interface MutableDictionary<T : Any, F : Number> : Dictionary<T, F> {
+interface MutableDictionary<T : Any, F : Comparable<F>> : Dictionary<T, F> {
     override val languageModel: MutableLanguageModel<T, F>
 
     fun trainTokenPredictions(

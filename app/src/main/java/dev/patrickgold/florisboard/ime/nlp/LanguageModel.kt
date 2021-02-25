@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.ime.nlp
 /**
  * Abstract interface for a language model. Can house any n-grams with a minimum order of one.
  */
-interface LanguageModel<T : Any, F : Number> {
+interface LanguageModel<T : Any, F : Comparable<F>> {
     /**
      * Tries to get the n-gram for the passed [tokens]. Throws a NPE if no match could be found.
      */
@@ -65,7 +65,7 @@ interface LanguageModel<T : Any, F : Number> {
 /**
  * Mutable version of [LanguageModel].
  */
-interface MutableLanguageModel<T : Any, F : Number> : LanguageModel<T, F> {
+interface MutableLanguageModel<T : Any, F : Comparable<F>> : LanguageModel<T, F> {
     fun deleteNgram(ngram: Ngram<T, F>)
 
     fun insertNgram(ngram: Ngram<T, F>)

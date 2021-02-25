@@ -20,7 +20,7 @@ package dev.patrickgold.florisboard.ime.nlp
  * Abstract interface representing a n-gram of tokens. Each n-gram instance can be assigned a
  * unique frequency [freq].
  */
-open class Ngram<T : Any, F : Number>(_tokens: List<Token<T>>, _freq: F) {
+open class Ngram<T : Any, F : Comparable<F>>(_tokens: List<Token<T>>, _freq: F) {
     companion object {
         /** Constant order value for unigrams. */
         const val ORDER_UNIGRAM: Int = 1
@@ -88,7 +88,7 @@ open class Token<T : Any>(_data: T) {
 /**
  * Same as [Token] but allows to add a frequency value [freq].
  */
-open class WeightedToken<T : Any, F : Number>(_data: T, _freq: F) : Token<T>(_data) {
+open class WeightedToken<T : Any, F : Comparable<F>>(_data: T, _freq: F) : Token<T>(_data) {
     /**
      * The frequency of this weighed token.
      */
