@@ -271,7 +271,7 @@ class Flictionary private constructor(
                     _freq = -1
                 ),
                 maxEditDistance = 3,
-                maxNgramCount = maxSuggestionCount,
+                maxTokenCount = maxSuggestionCount,
                 allowPossiblyOffensive = allowPossiblyOffensive
             )
             retList

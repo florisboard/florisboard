@@ -340,11 +340,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                             currentToken = Token(activeEditorInstance.cachedInput.currentWord.text),
                             maxSuggestionCount = 3,
                             allowPossiblyOffensive = false
-                        )
+                        ).toStringList()
                         val elapsed = (System.nanoTime() - startTime) / 1000.0
                         Timber.i("sugg fetch time: $elapsed us")
                         withContext(Dispatchers.Main) {
-                            smartbarView?.setCandidateSuggestionWords(suggestions.toStringList())
+                            smartbarView?.setCandidateSuggestionWords(suggestions)
                         }
                     }
                 }

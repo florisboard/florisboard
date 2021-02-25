@@ -57,7 +57,7 @@ interface LanguageModel<T : Any, F : Number> {
     fun matchAllNgrams(
         ngram: Ngram<T, F>,
         maxEditDistance: Int,
-        maxNgramCount: Int,
+        maxTokenCount: Int,
         allowPossiblyOffensive: Boolean
     ): List<WeightedToken<T, F>>
 }

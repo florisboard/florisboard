@@ -16,11 +16,19 @@
 
 package dev.patrickgold.florisboard.ime.nlp
 
+/**
+ * Represents the root node to a n-gram tree.
+ */
 open class NgramTree(
     sameOrderChildren: MutableMap<Char, NgramNode> = mutableMapOf(),
     higherOrderChildren: MutableMap<Char, NgramNode> = mutableMapOf()
 ) : NgramNode(0, '?', "", -1, sameOrderChildren, higherOrderChildren)
 
+/**
+ * A node of a n-gram tree, which holds the character it represents, the corresponding frequency,
+ * a pre-computed string representing all parent characters and the current one as well as child
+ * nodes, one for the same order n-gram nodes and one for the higher order n-gram nodes.
+ */
 open class NgramNode(
     val order: Int,
     val char: Char,
@@ -71,8 +79,8 @@ open class NgramNode(
     }
 
     /**
-     * This function allows to search for a given [input] word and adds all matches in the trie
-     * with a [maxEditDistance] to the [list].
+     * This function allows to search for a given [input] word with a given [maxEditDistance] and
+     * adds all matches in the trie to the [list].
      */
     fun listSimilarWords(
         input: String,
@@ -152,25 +160,34 @@ open class FlorisLanguageModel(
     protected val ngramTree: NgramTree = initTreeObj ?: NgramTree()
 
     override fun getNgram(vararg tokens: String): Ngram<String, Int> {
-        val ngram = getNgramOrNull(*tokens)
-        if (ngram != null) {
-            return ngram
+        val ngramOut = getNgramOrNull(*tokens)
+        if (ngramOut != null) {
+            return ngramOut
         } else {
             throw NullPointerException("No n-gram found matching the given tokens: $tokens")
         }
     }
 
     override fun getNgram(ngram: Ngram<String, Int>): Ngram<String, Int> {
-        val ngram = getNgramOrNull(ngram)
-        if (ngram != null) {
-            return ngram
+        val ngramOut = getNgramOrNull(ngram)
+        if (ngramOut != null) {
+            return ngramOut
         } else {
             throw NullPointerException("No n-gram found matching the given ngram: $ngram")
         }
     }
 
     override fun getNgramOrNull(vararg tokens: String): Ngram<String, Int>? {
-        TODO("Not yet implemented")
+        var currentNode: NgramNode = ngramTree
+        for (token in tokens) {
+            val childNode = currentNode.findWord(token)
+            if (childNode != null) {
+                currentNode = childNode
+            } else {
+                return null
+            }
+        }
+        return Ngram(tokens.toList().map { Token(it) }, currentNode.freq)
     }
 
     override fun getNgramOrNull(ngram: Ngram<String, Int>): Ngram<String, Int>? {
@@ -193,7 +210,7 @@ open class FlorisLanguageModel(
     override fun matchAllNgrams(
         ngram: Ngram<String, Int>,
         maxEditDistance: Int,
-        maxNgramCount: Int,
+        maxTokenCount: Int,
         allowPossiblyOffensive: Boolean
     ): List<WeightedToken<String, Int>> {
         val ngramList = mutableListOf<WeightedToken<String, Int>>()
@@ -222,15 +239,15 @@ open class FlorisLanguageModel(
                         val wordNodes = mutableListOf<WeightedToken<String, Int>>()
                         splitNode.listAllSameOrderWords(wordNodes, allowPossiblyOffensive)
                         wordNodes.sortByDescending { it.freq }
-                        wordNodes.subList(0, maxNgramCount.coerceAtMost(wordNodes.size)).let {
+                        wordNodes.subList(0, maxTokenCount.coerceAtMost(wordNodes.size)).let {
                             ngramList.addAll(it)
                         }
                     }
-                    if (ngramList.size < maxNgramCount) {
+                    if (ngramList.size < maxTokenCount) {
                         val wordNodes = mutableListOf<WeightedToken<String, Int>>()
                         currentNode.listSimilarWords(word, wordNodes, allowPossiblyOffensive, maxEditDistance)
                         wordNodes.sortByDescending { it.freq }
-                        wordNodes.subList(0, (maxNgramCount - ngramList.size).coerceAtMost(wordNodes.size)).let {
+                        wordNodes.subList(0, (maxTokenCount - ngramList.size).coerceAtMost(wordNodes.size)).let {
                             ngramList.addAll(it)
                         }
                     }
