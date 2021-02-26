@@ -53,6 +53,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
     private val themeManager = ThemeManager.default()
     private var eventListener: WeakReference<EventListener?>? = null
     private val mainScope = MainScope()
+    private var lastSuggestionInitDate: Long = 0
 
     private var cachedActionStartAreaVisible: Boolean = false
     @IdRes private var cachedActionStartAreaId: Int? = null
@@ -322,10 +323,26 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
         updateSmartbarState()
     }
 
-    fun setCandidateSuggestionWords(suggestions: List<String>) {
-        binding.candidate1.text = suggestions.getOrNull(0) ?: ""
-        binding.candidate0.text = suggestions.getOrNull(1) ?: ""
-        binding.candidate2.text = suggestions.getOrNull(2) ?: ""
+    fun setCandidateSuggestionWords(suggestionInitDate: Long, suggestions: List<String>) {
+        if (suggestionInitDate > lastSuggestionInitDate) {
+            lastSuggestionInitDate = suggestionInitDate
+            binding.candidate1.text = suggestions.getOrNull(0) ?: ""
+            binding.candidate0.text = suggestions.getOrNull(1) ?: ""
+            binding.candidate2.text = suggestions.getOrNull(2) ?: ""
+        }
+    }
+
+    fun updateCandidateSuggestionCapsState() {
+        val tim = florisboard?.textInputManager ?: return
+        if (tim.capsLock) {
+            binding.candidate0.text = binding.candidate0.text.toString().toUpperCase(florisboard.activeSubtype.locale)
+            binding.candidate1.text = binding.candidate1.text.toString().toUpperCase(florisboard.activeSubtype.locale)
+            binding.candidate2.text = binding.candidate2.text.toString().toUpperCase(florisboard.activeSubtype.locale)
+        } else {
+            binding.candidate0.text = binding.candidate0.text.toString().toLowerCase(florisboard.activeSubtype.locale)
+            binding.candidate1.text = binding.candidate1.text.toString().toLowerCase(florisboard.activeSubtype.locale)
+            binding.candidate2.text = binding.candidate2.text.toString().toLowerCase(florisboard.activeSubtype.locale)
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

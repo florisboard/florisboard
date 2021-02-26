@@ -24,6 +24,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import android.widget.ViewFlipper
 import com.github.michaelbull.result.getOr
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.dictionary.Dictionary
@@ -328,7 +329,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         }
         updateCapsState()
         smartbarView?.updateSmartbarState()
-        Timber.i("current word: ${activeEditorInstance.cachedInput.currentWord.text}")
+        if (BuildConfig.DEBUG) {
+            Timber.i("current word: ${activeEditorInstance.cachedInput.currentWord.text}")
+        }
         if (activeEditorInstance.isComposingEnabled) {
             if (activeEditorInstance.shouldReevaluateComposingSuggestions) {
                 activeEditorInstance.shouldReevaluateComposingSuggestions = false
@@ -341,15 +344,18 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                             maxSuggestionCount = 3,
                             allowPossiblyOffensive = !florisboard.prefs.suggestion.blockPossiblyOffensive
                         ).toStringList()
-                        val elapsed = (System.nanoTime() - startTime) / 1000.0
-                        Timber.i("sugg fetch time: $elapsed us")
+                        if (BuildConfig.DEBUG) {
+                            val elapsed = (System.nanoTime() - startTime) / 1000.0
+                            Timber.i("sugg fetch time: $elapsed us")
+                        }
                         withContext(Dispatchers.Main) {
-                            smartbarView?.setCandidateSuggestionWords(suggestions)
+                            smartbarView?.setCandidateSuggestionWords(startTime, suggestions)
+                            smartbarView?.updateCandidateSuggestionCapsState()
                         }
                     }
                 }
             } else {
-                smartbarView?.setCandidateSuggestionWords(listOf())
+                smartbarView?.setCandidateSuggestionWords(System.nanoTime(), listOf())
             }
         }
     }
@@ -516,6 +522,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             }, 300)
         }
         keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
+        smartbarView?.updateCandidateSuggestionCapsState()
     }
 
     /**
