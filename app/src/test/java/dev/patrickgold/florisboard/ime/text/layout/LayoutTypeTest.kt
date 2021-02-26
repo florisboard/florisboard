@@ -1,6 +1,6 @@
 package dev.patrickgold.florisboard.ime.text.layout
 
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 

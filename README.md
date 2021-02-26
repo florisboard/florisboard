@@ -106,7 +106,7 @@ most likely be delayed back, even though I'm eager to stick to these as
 close as possible.
 
 ### [v0.4.0](https://github.com/florisboard/florisboard/milestone/4)
-- Module A: Smartbar rework (Implemented with #91)
+- Module A: Smartbar rework (Implemented with [#91])
   - Ability to enable/disable Smartbar (features below thus only work if
     Smartbar is enabled)
   - Dynamic switching between clipboard tools and word suggestions
@@ -122,7 +122,7 @@ close as possible.
     words over time. Data collected here is stored locally and never leaves
     the user's device.
 
-- Module C: Extension packs (base implementation with #162)
+- Module C: Extension packs (base implementation with [#162])
   - Ability to load dictionaries (and later potentially other cool
     features too) only if needed to keep the core APK size small
   - Currently unclear how exactly this will work, but this is definitely
@@ -132,7 +132,7 @@ close as possible.
   - Swiping over the characters will automatically convert this to a word
   - Possibly also add improvements based on the Flow keyboard
 
-- Module E: Theme rework (Implemented with #162)
+- Module E: Theme rework (Implemented with [#162])
   - Themes are now based on the Asset schema
   - Dynamic theme creation
   - Different theme modes (`Always day`, `Always dark`, `Follow system`
@@ -153,6 +153,9 @@ Backlog (currently not assigned to any milestone):
 
 - Theme import/export
 - Floating keyboard
+
+[#91]: https://github.com/florisboard/florisboard/pull/91
+[#162]: https://github.com/florisboard/florisboard/pull/162
 
 ## Contributing
 Wanna contribute to FlorisBoard? That's great to hear! There are lots of

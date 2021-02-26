@@ -2,7 +2,8 @@ package dev.patrickgold.florisboard.ime.core
 
 import android.content.Context
 import android.content.SharedPreferences
-import org.mockito.Mockito.*
+import org.mockito.Mockito.doReturn
+import org.mockito.Mockito.mock
 
 /**
  * Helper class which automatically sets up all mocks for the different pref categories.

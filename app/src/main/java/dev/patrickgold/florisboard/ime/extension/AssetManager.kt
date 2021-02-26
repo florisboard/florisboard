@@ -19,13 +19,10 @@ package dev.patrickgold.florisboard.ime.extension
 import android.content.Context
 import com.github.michaelbull.result.*
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import dev.patrickgold.florisboard.ime.popup.PopupExtension
 import dev.patrickgold.florisboard.ime.text.key.KeyTypeAdapter
 import dev.patrickgold.florisboard.ime.text.key.KeyVariationAdapter
 import dev.patrickgold.florisboard.ime.text.layout.LayoutTypeAdapter
-import dev.patrickgold.florisboard.ime.theme.Theme
 import timber.log.Timber
 import java.io.File
 

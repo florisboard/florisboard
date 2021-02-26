@@ -30,10 +30,10 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.popup.PopupManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.key.KeyView
-import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyView
+import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import kotlin.math.roundToInt
