@@ -339,7 +339,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                             precedingTokens = listOf(),
                             currentToken = Token(activeEditorInstance.cachedInput.currentWord.text),
                             maxSuggestionCount = 3,
-                            allowPossiblyOffensive = false
+                            allowPossiblyOffensive = !florisboard.prefs.suggestion.blockPossiblyOffensive
                         ).toStringList()
                         val elapsed = (System.nanoTime() - startTime) / 1000.0
                         Timber.i("sugg fetch time: $elapsed us")

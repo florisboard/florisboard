@@ -107,13 +107,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Esperienza di digitazione</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Abilità Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Verrà mostrato in cima alla tastiera</string>
-    <string name="pref__suggestion__title" comment="Preference group title">Suggerimenti</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">Visualizza suggerimenti mentre digiti</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Verrà mostrato nella Smartbar</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Suggerimenti sui contenuti degli appunti</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Suggerisci contenuti degli appunti copiati in precedenza da incollare</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">Suggerimenti per la parola successiva</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Utilizzare le parole precedenti per generare suggerimenti</string>
     <string name="pref__correction__title" comment="Preference group title">Correzioni</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-maiuscolo</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Rendi maiuscole le parole in base al contesto attuale</string>

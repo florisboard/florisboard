@@ -176,13 +176,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Experiencia de escritura</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Habilitar barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Se mostrará en la parte superior del teclado</string>
-    <string name="pref__suggestion__title" comment="Preference group title">Sugerencias</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] Mostrar sugerencias mientras se escribe</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Se mostrará en la barra inteligente</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Sugerencias sobre el contenido del portapapeles</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Sugerir el contenido del portapapeles para pegar si se ha copiado previamente</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Sugerencias de la siguiente palabra</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Usar palabras anteriores para mejorar las sugerencias</string>
     <string name="pref__correction__title" comment="Preference group title">Correcciones</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Mayúsculas automáticas</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Poner en mayúsculas las palabras según el contexto de entrada actual</string>

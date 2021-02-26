@@ -23,6 +23,7 @@ import com.github.michaelbull.result.Result
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.nlp.*
+import timber.log.Timber
 import java.util.*
 import kotlin.text.StringBuilder
 
@@ -263,6 +264,7 @@ class Flictionary private constructor(
         allowPossiblyOffensive: Boolean
     ): List<WeightedToken<String, Int>> {
         currentToken ?: return listOf()
+        Timber.i("apo: $allowPossiblyOffensive")
 
         return if (currentToken.data.isNotEmpty()) {
             val retList = languageModel.matchAllNgrams(

@@ -182,13 +182,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">ڕێکخستنەکانی تەختەکلیل</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">پیشاندانی بەشی سەرەوە (SmartBar)</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">پیشاندانی ئامرازەکانی دەستکاریکردنی نووسین لەبەشی سەرەوەی تەختەکلیل</string>
-    <string name="pref__suggestion__title" comment="Preference group title">پێشنیارکردنی ووشە</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] پیشاندانی ووشە پێشنیارکراوەکان لەکاتی نووسین</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">پیشان دەدرێت لەبەشی سەرەوە</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">پێشنیارکردنی شتە کۆپیکراوەکان</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">پێشنیارکردنی ئەو شتانەی کە کۆپیکراون لەبەشی سەرەوەی تەختەکلیل</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] پێشنیارکردنی ووشەی دواتر</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">بەکارهێنانی ووشەی پێشتر بۆ پێشنیارکردن</string>
     <string name="pref__correction__title" comment="Preference group title">ڕاستکردنەوە</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">گەورەکردنی خۆکاری</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">گەورەکردنی پیتەکان بە خۆکاری تەنها بۆ زمانە لاتینییەکان</string>

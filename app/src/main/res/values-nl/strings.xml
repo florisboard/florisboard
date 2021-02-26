@@ -187,13 +187,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Typervaring</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schakel Slimme Balk in</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Word getoond boven het toetsenbord</string>
-    <string name="pref__suggestion__title" comment="Preference group title">Suggesties</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] Toon suggesties terwijl u typt</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Wordt getoond in de Slimme Balk</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Suggesties voor de klembordinhoud</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Klembordinhoud suggereren om eerder gekopieerde inhoud te plakken</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Volgende-woordsuggesties</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Gebruik vorige woorden voor het genereren van suggesties</string>
     <string name="pref__correction__title" comment="Preference group title">Verbeteringen</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-kapitalisatie</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Woorden kapitaliseren op basis van de huidige invoercontext</string>

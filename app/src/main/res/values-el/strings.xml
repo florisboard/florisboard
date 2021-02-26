@@ -144,13 +144,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Εμπειρία πληκτρολόγησης</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ενεργοποίηση Έξυπνης Μπάρας</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Εμφάνιση στην κορυφή του πληκτρολογίου</string>
-    <string name="pref__suggestion__title" comment="Preference group title">Προτάσεις</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] Εμφάνιση προτάσεων κατά την πληκτρολόγηση</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Εμφάνιση στην Έξυπνη Μπάρα</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Προτάσεις περιεχομένου προχείρου</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Πρόταση περιεχομένου προχείρου για επικόλληση εάν έχει αντιγραφεί προηγουμένως</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Προτάσεις επόμενων-λέξεων</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Χρήση προηγούμενων λέξεων για τη βελτίωση των πρότασεων</string>
     <string name="pref__correction__title" comment="Preference group title">Διορθώσεις</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Αυτόματη χρήση κεφαλαίων</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Κεφαλαιοποίηση λέξεων βάσει του παρόντος περιεχομένου εισαγωγής</string>
