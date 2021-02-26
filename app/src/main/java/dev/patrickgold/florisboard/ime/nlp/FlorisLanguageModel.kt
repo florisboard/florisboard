@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.nlp
 
-import timber.log.Timber
-
 /**
  * Represents the root node to a n-gram tree.
  */
@@ -240,13 +238,11 @@ open class FlorisLanguageModel(
                         // Input thus far is valid
                         val wordNodes = StagedSuggestionList<String, Int>(maxTokenCount)
                         splitNode.listAllSameOrderWords(wordNodes, allowPossiblyOffensive)
-                        Timber.i("1. list length: ${wordNodes.size}")
                         ngramList.addAll(wordNodes)
                     }
                     if (ngramList.size < maxTokenCount) {
                         val wordNodes = StagedSuggestionList<String, Int>(maxTokenCount)
                         currentNode.listSimilarWords(word, wordNodes, allowPossiblyOffensive, maxEditDistance)
-                        Timber.i("2. list length: ${wordNodes.size}")
                         ngramList.addAll(wordNodes)
                     }
                 }
