@@ -308,12 +308,16 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
 
     override fun onSubtypeChanged(newSubtype: Subtype) {
         launch {
+            if (activeEditorInstance.isComposingEnabled) {
+                withContext(Dispatchers.IO) {
+                    dictionaryManager.loadDictionary(AssetRef(AssetSource.Assets,"ime/dict/en.flict")).let {
+                        activeDictionary = it.getOr(null)
+                    }
+                }
+            }
             val keyboardView = keyboardViews[KeyboardMode.CHARACTERS]
             keyboardView?.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, newSubtype, florisboard.prefs).await()
             keyboardView?.updateVisibility()
-            dictionaryManager.loadDictionary(AssetRef(AssetSource.Assets,"ime/dict/en.flict")).let {
-                activeDictionary = it.getOr(null)
-            }
         }
     }
 
