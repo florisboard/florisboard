@@ -425,11 +425,15 @@ class PrefHelper(
      */
     class Suggestion(private val prefHelper: PrefHelper) {
         companion object {
+            const val BLOCK_POSSIBLY_OFFENSIVE =    "suggestion__block_possibly_offensive"
             const val ENABLED =                     "suggestion__enabled"
             const val SUGGEST_CLIPBOARD_CONTENT =   "suggestion__suggest_clipboard_content"
             const val USE_PREV_WORDS =              "suggestion__use_prev_words"
         }
 
+        var blockPossiblyOffensive: Boolean
+            get() =  prefHelper.getPref(BLOCK_POSSIBLY_OFFENSIVE, true)
+            set(v) = prefHelper.setPref(BLOCK_POSSIBLY_OFFENSIVE, v)
         var enabled: Boolean
             get() =  prefHelper.getPref(ENABLED, true)
             set(v) = prefHelper.setPref(ENABLED, v)

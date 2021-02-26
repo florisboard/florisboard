@@ -150,13 +150,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">تجربة الكتابة</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">تفعيل الشريط الذكي</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">سوف يظهر أعلى لوحة المفاتيح</string>
-    <string name="pref__suggestion__title" comment="Preference group title">الإقتراحات</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] إظهار الإقتراحات عند الكتابة</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">سوف يظهر الشريط الذكي</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">إقتراحات محتوى الحافظة</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">إقتراح لصق محتوى الحافظة إذا تم نسخه مسبقًا</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] إقتراحات الكلمة التالية</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">إستخدام الكلمات السابقة لتحسين الاقتراحات</string>
     <string name="pref__correction__title" comment="Preference group title">الإصلاحات</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">استخدام الأحرف الكبيرة تلقائيًا</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">استخدام الأحرف الكبيرة في الكلمات على حسب سياق نص الإدخال الحالي</string>

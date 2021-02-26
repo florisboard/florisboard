@@ -93,12 +93,6 @@
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Zobrazit vyskakovací okno, když stisknete klávesu</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Dlouhé zpoždění stisknutí tlačítka</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Psaní zkušenosti</string>
-    <string name="pref__suggestion__title" comment="Preference group title">Návrh</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] zobrazit návrhy při psaní</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Návrhy obsahu schránky</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Navrhněte obsah schránky, který chcete vložit, pokud byl dříve zkopírován</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] návrhy dalšího slova</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Použijte předchozí slova pro generování návrhů</string>
     <string name="pref__correction__title" comment="Preference group title">Oprava</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatická kapitalizace</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Vydělávejte slova na základě aktuálního vstupního kontextu</string>

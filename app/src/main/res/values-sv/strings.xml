@@ -155,8 +155,6 @@
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Visa popup vid tangenttryck</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Fördröjning vid långt tryck</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Aktivera smartremsa</string>
-    <string name="pref__suggestion__title" comment="Preference group title">Förslag</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Visas i smartremsa</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Skift</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Byt till föregående tangentbord</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Byt till föregående undertyp</string>

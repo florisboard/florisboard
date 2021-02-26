@@ -32,6 +32,14 @@
         <SwitchPreferenceCompat
             android:defaultValue="true"
             app:dependency="suggestion__enabled"
+            app:key="suggestion__block_possibly_offensive"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__suggestion__block_possibly_offensive__label"
+            app:summary="@string/pref__suggestion__block_possibly_offensive__summary"/>
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            app:dependency="suggestion__enabled"
             app:key="suggestion__suggest_clipboard_content"
             app:iconSpaceReserved="false"
             app:title="@string/pref__suggestion__suggest_clipboard_content__label"

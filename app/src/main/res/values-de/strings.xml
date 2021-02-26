@@ -185,13 +185,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Tipperlebnis</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schnellzugriffsleiste einschalten</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wird über der Tastatur angezeigt</string>
-    <string name="pref__suggestion__title" comment="Preference group title">Vorschläge</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] Vorschläge während des Tippens anzeigen</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Wird die Schnellzugriffsleiste anzeigen</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Inhalt der Zwischenablage</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Inhalte der Zwischenablage einfügen, die zuvor kopiert wurden</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Vorschläge für nächstes Wort</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Vorschläge anhand der vorherigen Wörter machen</string>
     <string name="pref__correction__title" comment="Preference group title">Korrekturen</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Autom. Groß-/Kleinschreibung</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Automatisches Großschreiben je nach aktuellem Kontext</string>

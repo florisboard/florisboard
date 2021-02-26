@@ -191,13 +191,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Изживяване от писане</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Показване на умна лента</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Ще се покаже отгоре на клавиатурата</string>
-    <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] Показване на предложения, при писане</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Ще се покаже в умната лента</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Предложения от съдържанието на буфера</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Предлагане да се постави съдържанието на клипборда, ако е копирано преди това</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Предложения за следваща дума</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Използване на предишните думи за генериране на предложения</string>
     <string name="pref__correction__title" comment="Preference group title">Корекции</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Автоматични главни букви</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Думите се изписват с главни букви въз основа на текущия контекст на въвеждане</string>

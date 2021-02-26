@@ -218,7 +218,6 @@ class KeyView(
     fun onFlorisTouchEvent(event: MotionEvent?): Boolean {
         if (event == null || !isEnabled) return false
         val alwaysTriggerOnMove = (hasTriggeredGestureMove
-                && florisboard?.activeEditorInstance?.isRawInputEditor == false
                 && (data.code == KeyCode.DELETE && prefs.gestures.deleteKeySwipeLeft == SwipeAction.DELETE_CHARACTERS_PRECISELY
                 || data.code == KeyCode.SPACE))
         if (swipeGestureDetector.onTouchEvent(event, alwaysTriggerOnMove)) {
@@ -343,7 +342,7 @@ class KeyView(
                 SwipeGesture.Type.TOUCH_MOVE -> when (prefs.gestures.deleteKeySwipeLeft) {
                     SwipeAction.DELETE_CHARACTERS_PRECISELY -> {
                         florisboard.activeEditorInstance.apply {
-                            setSelection(
+                            selection.updateAndNotify(
                                 (selection.end + event.absUnitCountX).coerceIn(0, selection.end),
                                 selection.end
                             )
@@ -389,8 +388,8 @@ class KeyView(
                     SwipeGesture.Direction.LEFT -> {
                         if (prefs.gestures.spaceBarSwipeLeft == SwipeAction.MOVE_CURSOR_LEFT) {
                             if (!florisboard.activeEditorInstance.isRawInputEditor) {
-                                val s = (initSelectionEnd + event.absUnitCountX).coerceIn(0, florisboard.activeEditorInstance.cachedText.length)
-                                florisboard.activeEditorInstance.setSelection(s, s)
+                                val s = (initSelectionEnd + event.absUnitCountX).coerceIn(0, florisboard.activeEditorInstance.cachedInput.expectedMaxLength)
+                                florisboard.activeEditorInstance.selection.updateAndNotify(s, s)
                             } else {
                                 for (n in 0 until abs(event.relUnitCountX)) {
                                     florisboard.executeSwipeAction(prefs.gestures.spaceBarSwipeLeft)
@@ -406,8 +405,8 @@ class KeyView(
                     SwipeGesture.Direction.RIGHT -> {
                         if (prefs.gestures.spaceBarSwipeRight == SwipeAction.MOVE_CURSOR_RIGHT) {
                             if (!florisboard.activeEditorInstance.isRawInputEditor) {
-                                val s = (initSelectionEnd + event.absUnitCountX).coerceIn(0, florisboard.activeEditorInstance.cachedText.length)
-                                florisboard.activeEditorInstance.setSelection(s, s)
+                                val s = (initSelectionEnd + event.absUnitCountX).coerceIn(0, florisboard.activeEditorInstance.cachedInput.expectedMaxLength)
+                                florisboard.activeEditorInstance.selection.updateAndNotify(s, s)
                             } else {
                                 for (n in 0 until abs(event.relUnitCountX)) {
                                     florisboard.executeSwipeAction(prefs.gestures.spaceBarSwipeRight)

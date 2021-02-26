@@ -185,13 +185,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Doświadczenie w pisaniu</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Włącz inteligentny pasek</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Pojawi się na górze klawiatury</string>
-    <string name="pref__suggestion__title" comment="Preference group title">Sugestie</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] Wyświetlanie sugestii podczas pisania</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Pojawi się w Smartbarze</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Sugestie dotyczące zawartości schowka</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Sugeruj zawartość schowka do wklejenia, jeśli została wcześniej skopiowana</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Propozycje następnych słów</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Używaj poprzedniego wyrazu, aby polepszyć sugestię</string>
     <string name="pref__correction__title" comment="Preference group title">Korekty</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatyczne wstawianie wielkich liter</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Pisz wielkie litery w słowach na podstawie bieżącego kontekstu</string>

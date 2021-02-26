@@ -45,6 +45,16 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="This version includes experimental support for composing suggestions, currently regardless of your selected subtype the language is English (US). Note that currently only suggestions are displayed if at least one character of a word is typed in. Next-word suggestions are planned for the next version. If you want to give feedback on this feature, you can do so on the GitHub repository, feedback is always highly appreciated :)"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        style="@style/SettingsCardView">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Note: Preferences tagged with [NYI] are not yet implemented and thus won\'t do anything or do some basic placeholder stuff only. Please do not file a bug report for these."/>
 
     </androidx.cardview.widget.CardView>

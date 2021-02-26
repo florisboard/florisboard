@@ -191,13 +191,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Налаштування вводу тексту</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Увімкнути Розумну панель</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Буде показано над клавіатурою</string>
-    <string name="pref__suggestion__title" comment="Preference group title">Пропозиції</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] Показувати підказки коли ви друкуєте</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Буде показано в Розумній панелі</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Пропозиції вмісту буферу обміну</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Пропонувати вставити контент з буферу обміну, якщо він був скопіюваним</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Пропозиції наступного слова</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Використовувати попередні слова для генерації пропозицій</string>
     <string name="pref__correction__title" comment="Preference group title">Корекції</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Великі літери автоматично</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Використовувати великі літери на основі поточного контексту введення</string>

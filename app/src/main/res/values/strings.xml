@@ -209,12 +209,14 @@
     <string name="pref__smartbar__enabled__label" comment="Preference title">Enable Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Will show on top of the keyboard</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] Display suggestions while you type</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Will show in the Smartbar</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Clipboard content suggestions</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Suggest clipboard content to paste if previously copied</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Next-word suggestions</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Use previous words for generating suggestions</string>
+    <string translatable="false" name="pref__suggestion__enabled__label" comment="Preference title">[EXPERIMENTAL] Display suggestions while you type</string>
+    <string translatable="false" name="pref__suggestion__enabled__summary" comment="Preference summary">Will show in the Smartbar, currently regardless of the selected subtype the dictionary language is English (US)</string>
+    <string translatable="false" name="pref__suggestion__use_pref_words__label" comment="Preference title">[NOT YET INCLUDED] Next-word suggestions</string>
+    <string translatable="false" name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Use previous words for generating suggestions</string>
+    <string translatable="false" name="pref__suggestion__block_possibly_offensive__label" comment="Preference title">[EXPERIMENTAL] Block possibly offensive words</string>
+    <string translatable="false" name="pref__suggestion__block_possibly_offensive__summary" comment="Preference summary">Prevents possibly offensive words from being suggested while you type</string>
+    <string translatable="false" name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">[EXPERIMENTAL] Clipboard content suggestions</string>
+    <string translatable="false" name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Suggest clipboard content to paste if previously copied</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalization</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalize words based on the current input context</string>

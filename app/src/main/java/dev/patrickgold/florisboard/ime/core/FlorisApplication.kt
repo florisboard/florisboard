@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.core
 import android.app.Application
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.crashutility.CrashUtility
+import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import timber.log.Timber
@@ -32,6 +33,7 @@ class FlorisApplication : Application() {
         CrashUtility.install(this)
         val prefHelper = PrefHelper.getDefaultInstance(this)
         val assetManager = AssetManager.init(this)
+        DictionaryManager.init(this)
         ThemeManager.init(this, assetManager, prefHelper)
         prefHelper.initDefaultPreferences()
     }

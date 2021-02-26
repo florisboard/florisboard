@@ -187,13 +187,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Настройки ввода текста</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Активировать Умную панель</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Будет показано над клавиатурой</string>
-    <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] Показывать подсказки пока вы печатаете</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Будет показано в Умной панели</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Предложения содержимого буфера обмена</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Предлагать вставить контент из буфера обмена, если он был скопирован</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Предложения следующего слова</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Использовать предыдущие слова для генерации предложений</string>
     <string name="pref__correction__title" comment="Preference group title">Коррекции</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Заглавные автоматически</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Использовать заглавные буквы в зависимости от текущего контекста ввода</string>

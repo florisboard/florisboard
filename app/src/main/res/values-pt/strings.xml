@@ -183,13 +183,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Experiência de digitação</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ativar barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Mostrar na parte superior do teclado</string>
-    <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] Mostrar sugestões ao escrever</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Mostrar na barra inteligente</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Sugerir conteúdo da área de transferência</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Sugerir conteúdo existente na área de transferência</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Sugerir palavra seguinte</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Recorrer às palavras anteriores para sugerir as seguintes</string>
     <string name="pref__correction__title" comment="Preference group title">Correções</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Maiúsculas automáticas</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Colocar letras maiúsculas tendo em conta o contexto das palavras</string>

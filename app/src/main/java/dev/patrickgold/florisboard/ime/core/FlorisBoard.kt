@@ -84,7 +84,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     private var eventListeners: CopyOnWriteArrayList<EventListener> = CopyOnWriteArrayList()
 
     private var audioManager: AudioManager? = null
-    private var imeManager:InputMethodManager? = null
+    var imeManager:InputMethodManager? = null
     var clipboardManager: ClipboardManager? = null
     private val themeManager: ThemeManager = ThemeManager.default()
     private var vibrator: Vibrator? = null
@@ -183,11 +183,11 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         }*/
         Timber.i("onCreate()")
 
-        imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        audioManager = getSystemService(Context.AUDIO_SERVICE) as? AudioManager
+        clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
         clipboardManager?.addPrimaryClipChangedListener(this)
-        vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
         prefs = PrefHelper.getDefaultInstance(this)
         prefs.initDefaultPreferences()
         prefs.sync()
@@ -212,7 +212,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
 
         baseContext.setTheme(currentThemeResId)
 
-        inputWindowView = layoutInflater.inflate(R.layout.florisboard, null) as InputWindowView
+        inputWindowView = layoutInflater.inflate(R.layout.florisboard, null) as? InputWindowView
         inputWindowView?.isHapticFeedbackEnabled = true
 
         eventListeners.toList().forEach { it?.onCreateInputView() }
@@ -394,7 +394,8 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         )
         activeEditorInstance.onUpdateSelection(
             oldSelStart, oldSelEnd,
-            newSelStart, newSelEnd
+            newSelStart, newSelEnd,
+            candidatesStart, candidatesEnd
         )
         eventListeners.toList().forEach { it?.onUpdateSelection() }
     }

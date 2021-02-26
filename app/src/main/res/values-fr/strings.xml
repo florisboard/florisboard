@@ -183,13 +183,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Expérience de la dactylographie</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Activer la Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">S\'affichera en haut du clavier</string>
-    <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] Afficher les suggestions lorsque que vous tapez</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Sera affiché dans la Smartbar</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Suggestions pour le contenu du presse-papiers</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Suggérer le contenu du presse-papiers à coller s\'il a déjà été copié</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Suggestions de mots suivants</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Utilisez les mots précédents pour faire des suggestions</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalisation</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitaliser les mots en fonction du contexte de saisie actuel</string>

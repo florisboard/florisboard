@@ -189,13 +189,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">تجربه در تایپ کردن</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">فعال سازی نوار هوشمند</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">بالای صفحه‌کلید نمایش داده خواهند شد</string>
-    <string name="pref__suggestion__title" comment="Preference group title">پیشنهادات</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] نمایش پیشنهادات حین تایپ کردن</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">در نوار هوشمند نمایش داده خواهد شد</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">پیشنهادات محتوای کلیپ بورد</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">محتوای کلیپ بورد را پیشنهاد کنید تا اگر قبلاً کپی شده است ، جای گذاری شود</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] پیشنهادات کلمه بعدی</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">استفاده از کلمه قبلی برای پیشنهادات</string>
     <string name="pref__correction__title" comment="Preference group title">تصحیح</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">حرف اول بزرگ به صورت خودکار</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">بزرگ کردن حرف اول بر اساس محتوای ورودی</string>

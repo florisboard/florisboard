@@ -93,12 +93,6 @@
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Näytä ponnahdusikkuna, kun painat näppäintä</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Pitkän painalluksen viive</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Kirjoituskokemus</string>
-    <string name="pref__suggestion__title" comment="Preference group title">Ehdotukset</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">[EVS] Näytä ehdotukset kirjoittaessa</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Leikepöydän sisällön ehdotukset</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">Ehdota leikepöydän sisältöä liittämään, jos se on aiemmin kopioitu</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[EVS] Sanaehdotukset</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Käytä edellisiä sanoja ehdotuksiin</string>
     <string name="pref__correction__title" comment="Preference group title">Korjaukset</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automaattiset isot kirjaimet</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Automaattinen iso kirjain syöttökontekstin perusteella</string>

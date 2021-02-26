@@ -185,13 +185,6 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Gépelési élmény</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Okossáv engedélyezése</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">A billentyűzet tetején fog megjelenni</string>
-    <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
-    <string name="pref__suggestion__enabled__label" comment="Preference title">[NYI] A javaslatok megjelenítése gépelés közben</string>
-    <string name="pref__suggestion__enabled__summary" comment="Preference summary">Az okossávban fog megjelenni</string>
-    <string name="pref__suggestion__suggest_clipboard_content__label" comment="Preference title">Vágólap tartalom javaslatok</string>
-    <string name="pref__suggestion__suggest_clipboard_content__summary" comment="Preference summary">A vágólap tartalmának beillesztése, ha korábban ki lett másolva</string>
-    <string name="pref__suggestion__use_pref_words__label" comment="Preference title">[NYI] Javaslatok a következő szóra</string>
-    <string name="pref__suggestion__use_pref_words__summary" comment="Preference summary">Használja az előző szavakat a javaslatok generálásához</string>
     <string name="pref__correction__title" comment="Preference group title">Javítások</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatikusan nagy kezdőbetű</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kezdje nagybetűvel a szavakat a bemeneti környezet alapján</string>
