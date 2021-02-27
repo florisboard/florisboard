@@ -786,14 +786,21 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         val defaultSubtypesLanguageNames: List<String>
 
         init {
-            val tmpCodes = mutableListOf<String>()
-            val tmpNames = mutableListOf<String>()
+            val tmpList = mutableListOf<Pair<String, String>>()
             for (defaultSubtype in defaultSubtypes) {
-                tmpCodes.add(defaultSubtype.locale.toString())
-                tmpNames.add(defaultSubtype.locale.displayName)
+                tmpList.add(Pair(defaultSubtype.locale.toString(), defaultSubtype.locale.displayName))
             }
-            defaultSubtypesLanguageCodes = tmpCodes.toList()
-            defaultSubtypesLanguageNames = tmpNames.toList()
+            // Sort language list alphabetically by the display name of a language
+            tmpList.sortBy { it.second }
+            // Move selected English variants to the top of the list
+            for (languageCode in listOf("en_CA", "en_AU", "en_UK", "en_US")) {
+                val index: Int = tmpList.indexOfFirst { it.first == languageCode }
+                if (index > 0) {
+                    tmpList.add(0, tmpList.removeAt(index))
+                }
+            }
+            defaultSubtypesLanguageCodes = tmpList.map { it.first }.toList()
+            defaultSubtypesLanguageNames = tmpList.map { it.second }.toList()
         }
     }
 }
