@@ -48,7 +48,7 @@
       { "code":   48, "label": "0", "type": "numeric" },
       { "code":   61, "label": "=" },
       { "code":   46, "label": "." },
-      { "code":   10, "label": "enter", "type": "enter_editing" }
+      { "code":   10, "label": "enter", "groupId": 3, "type": "enter_editing" }
     ]
   ]
 }

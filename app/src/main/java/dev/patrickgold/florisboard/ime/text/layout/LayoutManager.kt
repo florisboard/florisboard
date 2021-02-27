@@ -163,7 +163,8 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
         }
 
         // Add popup to keys
-        if (keyboardMode == KeyboardMode.CHARACTERS) {
+        if (keyboardMode == KeyboardMode.CHARACTERS || keyboardMode == KeyboardMode.NUMERIC_ADVANCED ||
+            keyboardMode == KeyboardMode.SYMBOLS || keyboardMode == KeyboardMode.SYMBOLS2) {
             val extendedPopupsDefault = loadExtendedPopups()
             val extendedPopups = loadExtendedPopups(subtype)
             for (row in computedArrangement) {
