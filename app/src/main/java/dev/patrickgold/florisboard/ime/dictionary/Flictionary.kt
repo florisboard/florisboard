@@ -87,8 +87,8 @@ class Flictionary private constructor(
             val ngramTree = NgramTree()
 
             var pos = 0
-            val ngramOrderStack = mutableListOf(-1)
-            val ngramTreeStack = mutableListOf<NgramNode>(ngramTree)
+            val ngramOrderStack = mutableListOf<Int>()
+            val ngramTreeStack = mutableListOf<NgramNode>()
 
             while (pos < rawData.size) {
                 val cmd = rawData[pos].toInt() and 0xFF
@@ -97,7 +97,7 @@ class Flictionary private constructor(
                         if (pos == 0) {
                             return Err(ParseException(
                                 errorType = ParseException.ErrorType.UNEXPECTED_CMD_BEGIN_PTREE_NODE,
-                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size - 1
+                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
                             ))
                         }
                         val order = ((cmd and ATTR_PTREE_NODE_ORDER) shr 4) + 1
@@ -132,10 +132,15 @@ class Flictionary private constructor(
                             }
                             precomputedWord.append(char)
                             val node = NgramNode(order, char, precomputedWord.toString(), freq)
-                            if (ngramOrderStack.last() == order) {
-                                ngramTreeStack.last().sameOrderChildren[char] = node
+                            val lastOrder = ngramOrderStack.lastOrNull()
+                            if (lastOrder == null) {
+                                ngramTree.higherOrderChildren[char] = node
                             } else {
-                                ngramTreeStack.last().higherOrderChildren[char] = node
+                                if (lastOrder == order) {
+                                    ngramTreeStack.last().sameOrderChildren[char] = node
+                                } else {
+                                    ngramTreeStack.last().higherOrderChildren[char] = node
+                                }
                             }
                             ngramOrderStack.add(order)
                             ngramTreeStack.add(node)
@@ -143,7 +148,7 @@ class Flictionary private constructor(
                         } else {
                             return Err(ParseException(
                                 errorType = ParseException.ErrorType.UNEXPECTED_EOF,
-                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size - 1
+                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
                             ))
                         }
                     }
@@ -152,7 +157,7 @@ class Flictionary private constructor(
                         if (pos != 0) {
                             return Err(ParseException(
                                 errorType = ParseException.ErrorType.UNEXPECTED_CMD_BEGIN_HEADER,
-                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size - 1
+                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
                             ))
                         }
                         version = cmd and ATTR_HEADER_VERSION
@@ -184,13 +189,13 @@ class Flictionary private constructor(
                             } else {
                                 return Err(ParseException(
                                     errorType = ParseException.ErrorType.UNEXPECTED_EOF,
-                                    address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size - 1
+                                    address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
                                 ))
                             }
                         } else {
                             return Err(ParseException(
                                 errorType = ParseException.ErrorType.UNEXPECTED_EOF,
-                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size - 1
+                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
                             ))
                         }
                     }
@@ -199,12 +204,12 @@ class Flictionary private constructor(
                         if (pos == 0) {
                             return Err(ParseException(
                                 errorType = ParseException.ErrorType.UNEXPECTED_CMD_END,
-                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size - 1
+                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
                             ))
                         }
                         val n = (cmd and ATTR_END_COUNT)
                         if (n > 0) {
-                            if (n <= (ngramTreeStack.size - 1)) {
+                            if (n <= ngramTreeStack.size) {
                                 for (c in 0 until n) {
                                     ngramOrderStack.removeLast()
                                     ngramTreeStack.removeLast()
@@ -212,28 +217,28 @@ class Flictionary private constructor(
                             } else {
                                 return Err(ParseException(
                                     errorType = ParseException.ErrorType.UNEXPECTED_ABSOLUTE_DEPTH_DECREASE_BELOW_ZERO,
-                                    address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size - 1 - n
+                                    address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size - n
                                 ))
                             }
                         } else {
                             return Err(ParseException(
                                 errorType = ParseException.ErrorType.UNEXPECTED_CMD_END_ZERO_VALUE,
-                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size - 1
+                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
                             ))
                         }
                         pos += 1
                     }
                     else -> return Err(ParseException(
                         errorType = ParseException.ErrorType.INVALID_CMD_BYTE_PROVIDED,
-                        address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size - 1
+                        address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
                     ))
                 }
             }
 
-            if ((ngramTreeStack.size - 1) != 0) {
+            if (ngramTreeStack.size != 0) {
                 return Err(ParseException(
                     errorType = ParseException.ErrorType.UNEXPECTED_ABSOLUTE_DEPTH_NOT_ZERO_AT_EOF,
-                    address = pos, cmdByte = 0x00.toByte(), absoluteDepth = ngramTreeStack.size - 1
+                    address = pos, cmdByte = 0x00.toByte(), absoluteDepth = ngramTreeStack.size
                 ))
             }
 
