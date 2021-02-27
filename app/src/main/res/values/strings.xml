@@ -248,6 +248,8 @@
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Move cursor right</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Move cursor to start of line</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Move cursor to end of line</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Move cursor to start of page</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Move cursor to end of page</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Show input method picker</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Switch to previous keyboard</string>

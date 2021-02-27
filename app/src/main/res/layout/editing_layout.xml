@@ -15,7 +15,7 @@
         app:layout_constraintHeight_percent="0.75"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/move_home"
+        app:layout_constraintBottom_toTopOf="@+id/move_start_of_line"
         android:src="@drawable/ic_keyboard_arrow_left"/>
 
     <dev.patrickgold.florisboard.ime.text.editing.EditingKeyView
@@ -51,12 +51,12 @@
         app:layout_constraintWidth_percent="0.2"
         app:layout_constraintHeight_percent="0.75"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/move_end"
+        app:layout_constraintBottom_toTopOf="@+id/move_end_of_line"
         app:layout_constraintLeft_toRightOf="@+id/select"
         android:src="@drawable/ic_keyboard_arrow_right"/>
 
     <dev.patrickgold.florisboard.ime.text.editing.EditingKeyView
-        android:id="@+id/move_home"
+        android:id="@+id/move_start_of_line"
         style="@style/TextEditingButton"
         app:layout_constraintWidth_percent="0.35"
         app:layout_constraintHeight_percent="0.25"
@@ -65,11 +65,11 @@
         android:src="@drawable/ic_first_page"/>
 
     <dev.patrickgold.florisboard.ime.text.editing.EditingKeyView
-        android:id="@+id/move_end"
+        android:id="@+id/move_end_of_line"
         style="@style/TextEditingButton"
         app:layout_constraintWidth_percent="0.35"
         app:layout_constraintHeight_percent="0.25"
-        app:layout_constraintLeft_toRightOf="@+id/move_home"
+        app:layout_constraintLeft_toRightOf="@+id/move_start_of_line"
         app:layout_constraintBottom_toBottomOf="parent"
         android:src="@drawable/ic_last_page"/>
 
@@ -131,7 +131,7 @@
         app:layout_constraintHeight_percent="0.25"
         app:layout_constraintTop_toBottomOf="@+id/clipboard_paste"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/move_end"
+        app:layout_constraintLeft_toRightOf="@+id/move_end_of_line"
         app:layout_constraintRight_toRightOf="parent"
         android:src="@drawable/ic_backspace"/>
 

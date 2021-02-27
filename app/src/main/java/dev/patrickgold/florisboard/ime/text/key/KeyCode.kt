@@ -40,8 +40,10 @@ object KeyCode {
     const val ARROW_RIGHT =                  -21
     const val ARROW_UP =                     -22
     const val ARROW_DOWN =                   -23
-    const val MOVE_HOME =                    -24
-    const val MOVE_END =                     -25
+    const val MOVE_START_OF_PAGE =           -24
+    const val MOVE_END_OF_PAGE =             -25
+    const val MOVE_START_OF_LINE =           -26
+    const val MOVE_END_OF_LINE =             -27
 
     const val SETTINGS =                    -100
     const val CANCEL =                        -3

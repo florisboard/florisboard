@@ -80,8 +80,8 @@ class EditingKeyView : AppCompatImageButton, ThemeManager.OnThemeUpdatedListener
             R.id.clipboard_copy -> KeyCode.CLIPBOARD_COPY
             R.id.clipboard_cut -> KeyCode.CLIPBOARD_CUT
             R.id.clipboard_paste -> KeyCode.CLIPBOARD_PASTE
-            R.id.move_home -> KeyCode.MOVE_HOME
-            R.id.move_end -> KeyCode.MOVE_END
+            R.id.move_start_of_line -> KeyCode.MOVE_START_OF_LINE
+            R.id.move_end_of_line -> KeyCode.MOVE_END_OF_LINE
             R.id.select -> KeyCode.CLIPBOARD_SELECT
             R.id.select_all -> KeyCode.CLIPBOARD_SELECT_ALL
             else -> 0

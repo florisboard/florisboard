@@ -20,7 +20,6 @@ import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.os.Handler
 import android.view.KeyEvent
-import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.Toast
 import android.widget.ViewFlipper
@@ -395,8 +394,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             SwipeAction.MOVE_CURSOR_UP -> handleArrow(KeyCode.ARROW_UP)
             SwipeAction.MOVE_CURSOR_LEFT -> handleArrow(KeyCode.ARROW_LEFT)
             SwipeAction.MOVE_CURSOR_RIGHT -> handleArrow(KeyCode.ARROW_RIGHT)
-            SwipeAction.MOVE_CURSOR_START_OF_LINE -> handleArrow(KeyCode.MOVE_HOME)
-            SwipeAction.MOVE_CURSOR_END_OF_LINE -> handleArrow(KeyCode.MOVE_END)
+            SwipeAction.MOVE_CURSOR_START_OF_LINE -> handleArrow(KeyCode.MOVE_START_OF_LINE)
+            SwipeAction.MOVE_CURSOR_END_OF_LINE -> handleArrow(KeyCode.MOVE_END_OF_LINE)
+            SwipeAction.MOVE_CURSOR_START_OF_PAGE -> handleArrow(KeyCode.MOVE_START_OF_PAGE)
+            SwipeAction.MOVE_CURSOR_END_OF_PAGE -> handleArrow(KeyCode.MOVE_END_OF_PAGE)
             SwipeAction.SHIFT -> handleShift()
             SwipeAction.SHOW_INPUT_METHOD_PICKER -> sendKeyPress(
                 KeyData(type = KeyType.FUNCTION, code = KeyCode.SHOW_INPUT_METHOD_PICKER)
@@ -586,14 +587,14 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                     }
                 }
                 KeyCode.ARROW_UP -> {}
-                KeyCode.MOVE_HOME -> {
+                KeyCode.MOVE_START_OF_LINE -> {
                     if (isManualSelectionModeLeft) {
                         selection.updateAndNotify(selectionStartMin, selection.end)
                     } else {
                         selection.updateAndNotify(selectionStartMin, selection.start)
                     }
                 }
-                KeyCode.MOVE_END -> {
+                KeyCode.MOVE_END_OF_LINE -> {
                     if (isManualSelectionModeRight) {
                         selection.updateAndNotify(selection.start, selectionEndMax)
                     } else {
@@ -616,10 +617,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                     )
                 }
                 KeyCode.ARROW_UP -> {}
-                KeyCode.MOVE_HOME -> {
+                KeyCode.MOVE_START_OF_LINE -> {
                     selection.updateAndNotify(selectionStartMin, selection.start)
                 }
-                KeyCode.MOVE_END -> {
+                KeyCode.MOVE_END_OF_LINE -> {
                     selection.updateAndNotify(selection.start, selectionEndMax)
                 }
             }
@@ -645,12 +646,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                     isManualSelectionModeRight = true
                 }
                 KeyCode.ARROW_UP -> {}
-                KeyCode.MOVE_HOME -> {
+                KeyCode.MOVE_START_OF_LINE -> {
                     selection.updateAndNotify(selectionStartMin, selection.start)
                     isManualSelectionModeLeft = true
                     isManualSelectionModeRight = false
                 }
-                KeyCode.MOVE_END -> {
+                KeyCode.MOVE_END_OF_LINE -> {
                     selection.updateAndNotify(selection.end, selectionEndMax)
                     isManualSelectionModeLeft = false
                     isManualSelectionModeRight = true
@@ -663,8 +664,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                 KeyCode.ARROW_LEFT -> activeEditorInstance.sendSystemKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT)
                 KeyCode.ARROW_RIGHT -> activeEditorInstance.sendSystemKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT)
                 KeyCode.ARROW_UP -> activeEditorInstance.sendSystemKeyEvent(KeyEvent.KEYCODE_DPAD_UP)
-                KeyCode.MOVE_HOME -> activeEditorInstance.sendSystemKeyEventAlt(KeyEvent.KEYCODE_DPAD_UP)
-                KeyCode.MOVE_END -> activeEditorInstance.sendSystemKeyEventAlt(KeyEvent.KEYCODE_DPAD_DOWN)
+                KeyCode.MOVE_START_OF_PAGE -> activeEditorInstance.sendSystemKeyEventAlt(KeyEvent.KEYCODE_DPAD_UP)
+                KeyCode.MOVE_END_OF_PAGE -> activeEditorInstance.sendSystemKeyEventAlt(KeyEvent.KEYCODE_DPAD_DOWN)
+                KeyCode.MOVE_START_OF_LINE -> activeEditorInstance.sendSystemKeyEventAlt(KeyEvent.KEYCODE_DPAD_LEFT)
+                KeyCode.MOVE_END_OF_LINE -> activeEditorInstance.sendSystemKeyEventAlt(KeyEvent.KEYCODE_DPAD_RIGHT)
             }
         }
         Unit
@@ -701,8 +704,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
             KeyCode.ARROW_LEFT,
             KeyCode.ARROW_RIGHT,
             KeyCode.ARROW_UP,
-            KeyCode.MOVE_HOME,
-            KeyCode.MOVE_END -> handleArrow(keyData.code)
+            KeyCode.MOVE_START_OF_PAGE,
+            KeyCode.MOVE_END_OF_PAGE,
+            KeyCode.MOVE_START_OF_LINE,
+            KeyCode.MOVE_END_OF_LINE -> handleArrow(keyData.code)
             KeyCode.CLIPBOARD_CUT -> activeEditorInstance.performClipboardCut()
             KeyCode.CLIPBOARD_COPY -> activeEditorInstance.performClipboardCopy()
             KeyCode.CLIPBOARD_PASTE -> {

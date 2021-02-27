@@ -91,6 +91,8 @@
         <item>@string/pref__gestures__swipe_action__move_cursor_right</item>
         <item>@string/pref__gestures__swipe_action__move_cursor_start_of_line</item>
         <item>@string/pref__gestures__swipe_action__move_cursor_end_of_line</item>
+        <item>@string/pref__gestures__swipe_action__move_cursor_start_of_page</item>
+        <item>@string/pref__gestures__swipe_action__move_cursor_end_of_page</item>
         <item>@string/pref__gestures__swipe_action__shift</item>
         <item>@string/pref__gestures__swipe_action__show_input_method_picker</item>
         <item>@string/pref__gestures__swipe_action__switch_to_prev_subtype</item>
@@ -108,6 +110,8 @@
         <item>move_cursor_right</item>
         <item>move_cursor_start_of_line</item>
         <item>move_cursor_end_of_line</item>
+        <item>move_cursor_start_of_page</item>
+        <item>move_cursor_end_of_page</item>
         <item>shift</item>
         <item>show_input_method_picker</item>
         <item>switch_to_prev_subtype</item>
