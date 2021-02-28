@@ -40,6 +40,10 @@ class StagedSuggestionList<T : Any, F : Comparable<F>>(
         }
     }
 
+    fun canAdd(freq: F): Boolean {
+        return internalSize < maxSize || internalArray.last()!!.freq < freq
+    }
+
     fun clear() {
         for (n in internalArray.indices) {
             internalArray[n] = null

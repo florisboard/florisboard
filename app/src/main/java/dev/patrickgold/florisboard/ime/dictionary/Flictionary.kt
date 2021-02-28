@@ -23,8 +23,9 @@ import com.github.michaelbull.result.Result
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.nlp.*
+import java.io.InputStream
 import java.util.*
-import kotlin.text.StringBuilder
+import kotlin.jvm.Throws
 
 /**
  * Class Flictionary which takes care of loading the binary asset as well as providing words for
@@ -72,11 +73,10 @@ class Flictionary private constructor(
          * occurred.
          */
         fun load(context: Context, assetRef: AssetRef): Result<Flictionary, Exception> {
-            val rawData: ByteArray
+            val buffer = ByteArray(5000) { 0 }
+            val inputStream: InputStream
             if (assetRef.source == AssetSource.Assets) {
-                val inputStream = context.assets.open(assetRef.path)
-                rawData = inputStream.readBytes()
-                inputStream.close()
+                inputStream = context.assets.open(assetRef.path)
             } else {
                 return Err(Exception("Only AssetSource.Assets is currently supported!"))
             }
@@ -90,122 +90,146 @@ class Flictionary private constructor(
             val ngramOrderStack = mutableListOf<Int>()
             val ngramTreeStack = mutableListOf<NgramNode>()
 
-            while (pos < rawData.size) {
-                val cmd = rawData[pos].toInt() and 0xFF
+            while (true) {
+                if (inputStream.readNext(buffer, 0, 1) <= 0) {
+                    break
+                }
+                val cmd = buffer[0].toInt() and 0xFF
                 when {
                     (cmd and MASK_BEGIN_PTREE_NODE) == CMDB_BEGIN_PTREE_NODE -> {
                         if (pos == 0) {
-                            return Err(ParseException(
-                                errorType = ParseException.ErrorType.UNEXPECTED_CMD_BEGIN_PTREE_NODE,
-                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
-                            ))
+                            inputStream.close()
+                            return Err(
+                                ParseException(
+                                    errorType = ParseException.ErrorType.UNEXPECTED_CMD_BEGIN_PTREE_NODE,
+                                    address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
+                                )
+                            )
                         }
                         val order = ((cmd and ATTR_PTREE_NODE_ORDER) shr 4) + 1
                         val type = ((cmd and ATTR_PTREE_NODE_TYPE) shr 2)
                         val size = (cmd and ATTR_PTREE_NODE_SIZE) + 1
-                        if (pos + 1 + size < rawData.size) {
-                            val freq: Int
-                            val offset: Int
-                            when (type) {
-                                ATTR_PTREE_NODE_TYPE_CHAR -> {
-                                    freq = NgramNode.FREQ_CHARACTER
-                                    offset = 1
-                                }
-                                ATTR_PTREE_NODE_TYPE_WORD_FILLER -> {
-                                    freq = NgramNode.FREQ_WORD_FILLER
-                                    offset = 1
-                                }
-                                ATTR_PTREE_NODE_TYPE_WORD -> {
-                                    freq = rawData[pos + 1].toInt() and 0xFF
-                                    offset = 2
-                                }
-                                else -> return Err(Exception("TODO: shortcut not supported"))
+                        val freq: Int
+                        val freqSize: Int
+                        when (type) {
+                            ATTR_PTREE_NODE_TYPE_CHAR -> {
+                                freq = NgramNode.FREQ_CHARACTER
+                                freqSize = 0
                             }
-                            val bytes = ByteArray(size) { i -> rawData[pos + offset + i] }
-                            val char = String(bytes, Charsets.UTF_8)[0]
-                            val precomputedWord = StringBuilder()
-                            val firstNodeIndex = ngramOrderStack.indexOfFirst { it == order }
-                            if (firstNodeIndex >= 0) {
-                                for (n in firstNodeIndex until ngramOrderStack.size) {
-                                    precomputedWord.append(ngramTreeStack[n].char)
-                                }
+                            ATTR_PTREE_NODE_TYPE_WORD_FILLER -> {
+                                freq = NgramNode.FREQ_WORD_FILLER
+                                freqSize = 0
                             }
-                            precomputedWord.append(char)
-                            val node = NgramNode(order, char, precomputedWord.toString(), freq)
+                            ATTR_PTREE_NODE_TYPE_WORD -> {
+                                if (inputStream.readNext(buffer, 1, 1) > 0) {
+                                    freq = buffer[1].toInt() and 0xFF
+                                } else {
+                                    inputStream.close()
+                                    return Err(
+                                        ParseException(
+                                            errorType = ParseException.ErrorType.UNEXPECTED_EOF,
+                                            address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
+                                        )
+                                    )
+                                }
+                                freqSize = 1
+                            }
+                            else -> return Err(Exception("TODO: shortcut not supported"))
+                        }
+                        if (inputStream.readNext(buffer, freqSize + 1, size) > 0) {
+                            val char = String(buffer, freqSize + 1, size, Charsets.UTF_8)[0]
+                            val node = NgramNode(order, char, freq)
                             val lastOrder = ngramOrderStack.lastOrNull()
                             if (lastOrder == null) {
-                                ngramTree.higherOrderChildren[char] = node
+                                ngramTree.higherOrderChildren.add(node)
                             } else {
                                 if (lastOrder == order) {
-                                    ngramTreeStack.last().sameOrderChildren[char] = node
+                                    ngramTreeStack.last().sameOrderChildren.add(node)
                                 } else {
-                                    ngramTreeStack.last().higherOrderChildren[char] = node
+                                    ngramTreeStack.last().higherOrderChildren.add(node)
                                 }
                             }
                             ngramOrderStack.add(order)
                             ngramTreeStack.add(node)
-                            pos += (offset + size)
+                            pos += (freqSize + 1 + size)
                         } else {
-                            return Err(ParseException(
-                                errorType = ParseException.ErrorType.UNEXPECTED_EOF,
-                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
-                            ))
+                            inputStream.close()
+                            return Err(
+                                ParseException(
+                                    errorType = ParseException.ErrorType.UNEXPECTED_EOF,
+                                    address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
+                                )
+                            )
                         }
                     }
 
                     (cmd and MASK_BEGIN_HEADER) == CMDB_BEGIN_HEADER -> {
                         if (pos != 0) {
-                            return Err(ParseException(
-                                errorType = ParseException.ErrorType.UNEXPECTED_CMD_BEGIN_HEADER,
-                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
-                            ))
+                            inputStream.close()
+                            return Err(
+                                ParseException(
+                                    errorType = ParseException.ErrorType.UNEXPECTED_CMD_BEGIN_HEADER,
+                                    address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
+                                )
+                            )
                         }
                         version = cmd and ATTR_HEADER_VERSION
                         if (version != VERSION_0) {
-                            return Err(ParseException(
-                                errorType = ParseException.ErrorType.UNSUPPORTED_FLICTIONARY_VERSION,
-                                address = pos,
-                                cmdByte = cmd.toByte(),
-                                absoluteDepth = ngramTreeStack.size - 1
-                            ))
+                            inputStream.close()
+                            return Err(
+                                ParseException(
+                                    errorType = ParseException.ErrorType.UNSUPPORTED_FLICTIONARY_VERSION,
+                                    address = pos,
+                                    cmdByte = cmd.toByte(),
+                                    absoluteDepth = ngramTreeStack.size
+                                )
+                            )
                         }
-                        if (pos + 9 < rawData.size) {
-                            val size = (rawData[pos + 1].toInt() and 0xFF)
+                        if (inputStream.readNext(buffer, 1, 9) > 0) {
+                            val size = (buffer[1].toInt() and 0xFF)
                             date =
-                                ((rawData[pos + 2].toInt() and 0xFF).toLong() shl 56) +
-                                ((rawData[pos + 3].toInt() and 0xFF).toLong() shl 48) +
-                                ((rawData[pos + 4].toInt() and 0xFF).toLong() shl 40) +
-                                ((rawData[pos + 5].toInt() and 0xFF).toLong() shl 32) +
-                                ((rawData[pos + 6].toInt() and 0xFF).toLong() shl 24) +
-                                ((rawData[pos + 7].toInt() and 0xFF).toLong() shl 16) +
-                                ((rawData[pos + 8].toInt() and 0xFF).toLong() shl 8) +
-                                ((rawData[pos + 9].toInt() and 0xFF).toLong() shl 0)
-                            if (pos + 9 + size < rawData.size) {
-                                val headerBytes = ByteArray(size) { i -> rawData[pos + 10 + i] }
-                                headerStr = String(headerBytes, Charsets.UTF_8)
+                                ((buffer[2].toInt() and 0xFF).toLong() shl 56) +
+                                ((buffer[3].toInt() and 0xFF).toLong() shl 48) +
+                                ((buffer[4].toInt() and 0xFF).toLong() shl 40) +
+                                ((buffer[5].toInt() and 0xFF).toLong() shl 32) +
+                                ((buffer[6].toInt() and 0xFF).toLong() shl 24) +
+                                ((buffer[7].toInt() and 0xFF).toLong() shl 16) +
+                                ((buffer[8].toInt() and 0xFF).toLong() shl 8) +
+                                ((buffer[9].toInt() and 0xFF).toLong() shl 0)
+                            if (inputStream.readNext(buffer, 10, size) > 0) {
+                                headerStr = String(buffer, 10, size, Charsets.UTF_8)
                                 ngramOrderStack.add(-1)
                                 ngramTreeStack.add(NgramTree())
                                 pos += (10 + size)
                             } else {
-                                return Err(ParseException(
-                                    errorType = ParseException.ErrorType.UNEXPECTED_EOF,
-                                    address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
-                                ))
+                                inputStream.close()
+                                return Err(
+                                    ParseException(
+                                        errorType = ParseException.ErrorType.UNEXPECTED_EOF,
+                                        address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
+                                    )
+                                )
                             }
                         } else {
-                            return Err(ParseException(
-                                errorType = ParseException.ErrorType.UNEXPECTED_EOF,
-                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
-                            ))
+                            inputStream.close()
+                            return Err(
+                                ParseException(
+                                    errorType = ParseException.ErrorType.UNEXPECTED_EOF,
+                                    address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
+                                )
+                            )
                         }
                     }
 
                     (cmd and MASK_END) == CMDB_END -> {
                         if (pos == 0) {
-                            return Err(ParseException(
-                                errorType = ParseException.ErrorType.UNEXPECTED_CMD_END,
-                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
-                            ))
+                            inputStream.close()
+                            return Err(
+                                ParseException(
+                                    errorType = ParseException.ErrorType.UNEXPECTED_CMD_END,
+                                    address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
+                                )
+                            )
                         }
                         val n = (cmd and ATTR_END_COUNT)
                         if (n > 0) {
@@ -215,31 +239,45 @@ class Flictionary private constructor(
                                     ngramTreeStack.removeLast()
                                 }
                             } else {
-                                return Err(ParseException(
-                                    errorType = ParseException.ErrorType.UNEXPECTED_ABSOLUTE_DEPTH_DECREASE_BELOW_ZERO,
-                                    address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size - n
-                                ))
+                                inputStream.close()
+                                return Err(
+                                    ParseException(
+                                        errorType = ParseException.ErrorType.UNEXPECTED_ABSOLUTE_DEPTH_DECREASE_BELOW_ZERO,
+                                        address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size - n
+                                    )
+                                )
                             }
                         } else {
-                            return Err(ParseException(
-                                errorType = ParseException.ErrorType.UNEXPECTED_CMD_END_ZERO_VALUE,
-                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
-                            ))
+                            inputStream.close()
+                            return Err(
+                                ParseException(
+                                    errorType = ParseException.ErrorType.UNEXPECTED_CMD_END_ZERO_VALUE,
+                                    address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
+                                )
+                            )
                         }
                         pos += 1
                     }
-                    else -> return Err(ParseException(
-                        errorType = ParseException.ErrorType.INVALID_CMD_BYTE_PROVIDED,
-                        address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
-                    ))
+                    else -> {
+                        inputStream.close()
+                        return Err(
+                            ParseException(
+                                errorType = ParseException.ErrorType.INVALID_CMD_BYTE_PROVIDED,
+                                address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
+                            )
+                        )
+                    }
                 }
             }
+            inputStream.close()
 
             if (ngramTreeStack.size != 0) {
-                return Err(ParseException(
-                    errorType = ParseException.ErrorType.UNEXPECTED_ABSOLUTE_DEPTH_NOT_ZERO_AT_EOF,
-                    address = pos, cmdByte = 0x00.toByte(), absoluteDepth = ngramTreeStack.size
-                ))
+                return Err(
+                    ParseException(
+                        errorType = ParseException.ErrorType.UNEXPECTED_ABSOLUTE_DEPTH_NOT_ZERO_AT_EOF,
+                        address = pos, cmdByte = 0x00.toByte(), absoluteDepth = ngramTreeStack.size
+                    )
+                )
             }
 
             return Ok(
@@ -312,41 +350,84 @@ class Flictionary private constructor(
             get() = toString()
         override fun toString(): String {
             return StringBuilder().run {
-                append(when (errorType) {
-                    ErrorType.UNSUPPORTED_FLICTIONARY_VERSION -> {
-                        "Unexpected Flictionary version: ${(cmdByte.toInt() and 0xFF) and ATTR_HEADER_VERSION}"
+                append(
+                    when (errorType) {
+                        ErrorType.UNSUPPORTED_FLICTIONARY_VERSION -> {
+                            "Unexpected Flictionary version: ${(cmdByte.toInt() and 0xFF) and ATTR_HEADER_VERSION}"
+                        }
+                        ErrorType.UNEXPECTED_CMD_BEGIN_HEADER -> {
+                            "Unexpected command: BEGIN_HEADER"
+                        }
+                        ErrorType.UNEXPECTED_CMD_BEGIN_PTREE_NODE -> {
+                            "Unexpected command: BEGIN_PTREE_NODE"
+                        }
+                        ErrorType.UNEXPECTED_CMD_DEFINE_SHORTCUT -> {
+                            "Unexpected command: DEFINE_SHORTCUT"
+                        }
+                        ErrorType.UNEXPECTED_CMD_END -> {
+                            "Unexpected command: END"
+                        }
+                        ErrorType.UNEXPECTED_CMD_END_ZERO_VALUE -> {
+                            "Unexpected zero value provided for command END"
+                        }
+                        ErrorType.UNEXPECTED_ABSOLUTE_DEPTH_DECREASE_BELOW_ZERO -> {
+                            "Unexpected decrease in absolute depth: cannot go below zero"
+                        }
+                        ErrorType.UNEXPECTED_ABSOLUTE_DEPTH_NOT_ZERO_AT_EOF -> {
+                            "Unexpected non-zero value in absolute depth at end of file"
+                        }
+                        ErrorType.UNEXPECTED_EOF -> {
+                            "Unexpected end of file while try to do look-ahead"
+                        }
+                        ErrorType.INVALID_CMD_BYTE_PROVIDED -> {
+                            "Invalid command byte provided"
+                        }
                     }
-                    ErrorType.UNEXPECTED_CMD_BEGIN_HEADER -> {
-                        "Unexpected command: BEGIN_HEADER"
-                    }
-                    ErrorType.UNEXPECTED_CMD_BEGIN_PTREE_NODE -> {
-                        "Unexpected command: BEGIN_PTREE_NODE"
-                    }
-                    ErrorType.UNEXPECTED_CMD_DEFINE_SHORTCUT -> {
-                        "Unexpected command: DEFINE_SHORTCUT"
-                    }
-                    ErrorType.UNEXPECTED_CMD_END -> {
-                        "Unexpected command: END"
-                    }
-                    ErrorType.UNEXPECTED_CMD_END_ZERO_VALUE -> {
-                        "Unexpected zero value provided for command END"
-                    }
-                    ErrorType.UNEXPECTED_ABSOLUTE_DEPTH_DECREASE_BELOW_ZERO -> {
-                        "Unexpected decrease in absolute depth: cannot go below zero"
-                    }
-                    ErrorType.UNEXPECTED_ABSOLUTE_DEPTH_NOT_ZERO_AT_EOF -> {
-                        "Unexpected non-zero value in absolute depth at end of file"
-                    }
-                    ErrorType.UNEXPECTED_EOF -> {
-                        "Unexpected end of file while try to do look-ahead"
-                    }
-                    ErrorType.INVALID_CMD_BYTE_PROVIDED -> {
-                        "Invalid command byte provided"
-                    }
-                })
-                append(String.format("\n at address 0x%08X where cmd_byte=0x%02X and section_depth=%d", address, cmdByte, absoluteDepth))
+                )
+                append(
+                    String.format(
+                        "\n at address 0x%08X where cmd_byte=0x%02X and section_depth=%d",
+                        address,
+                        cmdByte,
+                        absoluteDepth
+                    )
+                )
                 toString()
             }
         }
     }
+}
+
+/**
+ * Reads the next [len] bytes from the input stream into the given byte array [b]. This method guarantees to either
+ * read the full length requested or if an EOF file is encountered, -1 is returned. The first byte written is at
+ * `b[off]`, the second byte at `b[off+1]` and so on.
+ *
+ * @param b The byte array to read the next [len] bytes into.
+ * @param off The offset of the first byte written in the byte array [b]. Must be non-negative.
+ * @param len The number of bytes to read. Must be non-negative.
+ *
+ * @return The number of bytes read, always matching [len] or -1 if EOF was encountered.
+ *
+ * @throws IndexOutOfBoundsException if either [off] or [len] is negative or the byte array has insufficient space to
+ *  write the request [len] bytes into it.
+ */
+@Throws(IndexOutOfBoundsException::class)
+fun InputStream.readNext(b: ByteArray, off: Int, len: Int): Int {
+    if (off < 0 || len < 0 || len > b.size - off) {
+        throw IndexOutOfBoundsException()
+    } else if (len == 0) {
+        return 0
+    }
+
+    var lenRead = 0
+    while (lenRead < len) {
+        val c = read()
+        if (c == -1) {
+            return -1
+        } else {
+            b[off + lenRead++] = c.toByte()
+        }
+    }
+    return lenRead
 }
