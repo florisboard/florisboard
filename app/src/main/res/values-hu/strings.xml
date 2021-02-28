@@ -122,6 +122,8 @@
     <string name="settings__theme__group_privateMode" comment="Theme group label">Privát mód</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Okossáv</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Okossáv gomb</string>
+    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Teljes képernyős fekvő elrendezés</string>
+    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Teljes képernyős fekvő elrendezés gombja</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Egyéni csoport (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Háttérszín</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Háttérszín (aktív)</string>
@@ -162,6 +164,10 @@
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Ki</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Jobbkezes mód</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Balkezes mód</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Teljes képernyős fekvő elrendezés bemenet</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Soha ne jelenjen meg</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Mindig jelenjen meg</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">Dinamikus megjelenítés</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Billentyűzet magassága</string>
     <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Nagyon alacsony</string>
     <string name="pref__keyboard__height_factor__short" comment="Preference value">Alacsony</string>
@@ -185,6 +191,7 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Gépelési élmény</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Okossáv engedélyezése</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">A billentyűzet tetején fog megjelenni</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
     <string name="pref__correction__title" comment="Preference group title">Javítások</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatikusan nagy kezdőbetű</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kezdje nagybetűvel a szavakat a bemeneti környezet alapján</string>

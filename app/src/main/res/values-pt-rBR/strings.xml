@@ -35,7 +35,7 @@
     <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Mudar para painel de edição de texto.</string>
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Mudar para visualização de entrada de mídia.</string>
     <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Botão de desfazer para reverter a última ação</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Botão de refazer para reverter a ultima ação desfeita</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Botão de refazer para reverter a última ação desfeita</string>
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Se visível, indica que o modo privado está ativo. Quando clicado, mostra informações sobre o modo privado.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Configurações</string>
@@ -164,6 +164,10 @@
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Desligado</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Modo destro</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Modo canhoto</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrada do modo paisagem em tela cheia</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Nunca mostrar</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Sempre mostrar</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">Mostrar dinamicamente</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Altura do teclado</string>
     <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Muito baixo</string>
     <string name="pref__keyboard__height_factor__short" comment="Preference value">Baixo</string>
@@ -176,6 +180,8 @@
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Valor personalizado da altura do teclado</string>
     <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Deslocamento inferior (retrato)</string>
     <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Deslocamento inferior (paisagem)</string>
+    <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Espaçamento das teclas (vertical)</string>
+    <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Espaçamento das teclas (horizontal)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressionar tecla</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Som ao pressionar uma tecla</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volume do som ao pressionar uma tecla</string>
@@ -187,6 +193,7 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Experiência de digitação</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ativar barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Mostrar na parte superior do teclado</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>
     <string name="pref__correction__title" comment="Preference group title">Correções</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Capitalização automática</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Deixar palavras em maiúsculo com base no contexto de entrada atual</string>
@@ -215,6 +222,8 @@
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Mover cursor para direita</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Mover cursor para o início da linha</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Mover cursor para o fim da linha</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Mover cursor para o início da página</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Mover cursor para o fim da página</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Mostrar alternador de teclado</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Mudar para teclado anterior</string>

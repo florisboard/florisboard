@@ -98,6 +98,8 @@
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">گروه</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">ویژگی</string>
     <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">رنگ ثابت</string>
+    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">گراد خطی</string>
+    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">گراد شعاعی</string>
     <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">تعویض</string>
     <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">حالت</string>
     <string name="settings__theme_editor__value_type_other" comment="Theme value type">ديگر</string>
@@ -178,6 +180,8 @@
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">مقدار ارتفاع سفارشی صفحه‌کلید</string>
     <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">فاصله از پایین (افقی)</string>
     <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">فاصله از پایین (عمودی)</string>
+    <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">فاصله گذاری کلید (عمودی)</string>
+    <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">فاصله گذاری کلید (افقی)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">فشردن کلید</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">صدای فشردن کلید</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">میزان صدای فشردن کلید</string>
@@ -189,6 +193,7 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">تجربه در تایپ کردن</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">فعال سازی نوار هوشمند</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">بالای صفحه‌کلید نمایش داده خواهند شد</string>
+    <string name="pref__suggestion__title" comment="Preference group title">پیشنهادات</string>
     <string name="pref__correction__title" comment="Preference group title">تصحیح</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">حرف اول بزرگ به صورت خودکار</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">بزرگ کردن حرف اول بر اساس محتوای ورودی</string>
@@ -217,6 +222,8 @@
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">حرکت مکان نما به راست</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">انتقال اشاره به شروع خط</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">انتقال اشاره به پایان خط</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">انتقال اشاره‌گر به اول صفحه</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">انتقال اشاره‌گر به پایان صفحه</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">شیفت</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">نمایش حالت انتخاب کننده</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">تعویض به صفحه کلید قبلی</string>

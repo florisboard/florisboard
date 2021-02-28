@@ -44,7 +44,7 @@
     <string name="settings__help" comment="General label for help buttons in Settings">Aide</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Accueil</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Clavier</string>
-    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Dactylographie</string>
+    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Saisie</string>
     <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Thème</string>
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gestes</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Par défaut</string>
@@ -122,6 +122,8 @@
     <string name="settings__theme__group_privateMode" comment="Theme group label">Mode privé</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Barre intelligente</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Bouton de la barre intelligente</string>
+    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Disposition horizontale plein écran</string>
+    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Bouton d\'action horizontal plein écran</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Groupe personnalisé (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Couleur d\'arrière-plan</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Couleur d\'arrière-plan (lorsque actif)</string>
@@ -140,9 +142,9 @@
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Attributs personnalisés (%s)</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Préférences de clavier</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Touches</string>
-    <string name="pref__keyboard__number_row__label" comment="Preference title">Rangée de numéros</string>
-    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Afficher la rangée de numéros au dessus de la disposition des caractères</string>
-    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Rangée de numéros subtile</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">Rangée de chiffres</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Afficher la rangée de chiffres au dessus de la disposition des caractères</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Rangée de chiffres subtile</string>
     <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Symboles subtiles</string>
     <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">Désactivé</string>
     <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">Activé (priorité à l\'indice)</string>
@@ -162,6 +164,10 @@
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Désactivé</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Mode droitier</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Mode gaucher</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Insertion horizontale en plein écran</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Ne jamais afficher</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Toujours afficher</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">Affichage dynamique</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Hauteur du clavier</string>
     <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Très court</string>
     <string name="pref__keyboard__height_factor__short" comment="Preference value">Court</string>
@@ -172,6 +178,8 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Très haut</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Personnalisée</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Valeur personnalisée de la hauteur du clavier</string>
+    <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Écart en bas (portrait)</string>
+    <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Écart en bas (paysage)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Touche pressée</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Tonalité des touches</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volume sonore des touches</string>
@@ -183,6 +191,7 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Expérience de la dactylographie</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Activer la Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">S\'affichera en haut du clavier</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalisation</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitaliser les mots en fonction du contexte de saisie actuel</string>

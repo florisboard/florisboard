@@ -19,7 +19,7 @@
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys &amp; Emotionen</string>
-    <string name="emoji__category__people_body" comment="Emoji category name">Menschen</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Personen &amp; Körper</string>
     <string name="emoji__category__animals_nature" comment="Emoji category name">Tiere &amp; Natur</string>
     <string name="emoji__category__food_drink" comment="Emoji category name">Essen &amp; Trinken</string>
     <string name="emoji__category__travel_places" comment="Emoji category name">Reisen &amp; Orte</string>
@@ -122,6 +122,8 @@
     <string name="settings__theme__group_privateMode" comment="Theme group label">Privater Modus</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Schnellzugriffsleiste</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Schnellzugriffsleiste Schalter</string>
+    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Querformat Vollbild Aussehen</string>
+    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Querformat Vollbild Aktionsschaltfläche</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Benutzerdefinierte Gruppe (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Hintergrundfarbe</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Hintergrundfarbe (aktiv)</string>
@@ -162,6 +164,10 @@
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Aus</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Rechtshändermodus</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Linkshändermodus</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Querformat Vollbild Eingabe</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Nie zeigen</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Immer zeigen</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">Dynamisch zeigen</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Tastaturhöhe</string>
     <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Sehr klein</string>
     <string name="pref__keyboard__height_factor__short" comment="Preference value">Klein</string>
@@ -185,6 +191,7 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Tipperlebnis</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schnellzugriffsleiste einschalten</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wird über der Tastatur angezeigt</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Vorschläge</string>
     <string name="pref__correction__title" comment="Preference group title">Korrekturen</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Autom. Groß-/Kleinschreibung</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Automatisches Großschreiben je nach aktuellem Kontext</string>

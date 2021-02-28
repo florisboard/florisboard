@@ -8,6 +8,7 @@
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Posunout klávesnici doleva.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Posunout klávesnici doprava.</string>
     <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Soukromý režim</string>
     <!--
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
@@ -32,10 +33,13 @@
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Otevřít nastavení.</string>
     <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Přepnout na editor textu.</string>
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Přepnout na vkládaní médií.</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Undo tlačítko pro vrácení poslední akce</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Redo tlačítko pro obnovení poslední akce</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Nastavení</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Více možností</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Pomoc &amp; odezva</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Nápověda</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Domov</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Klávesnice</string>
     <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Psaní</string>
@@ -93,6 +97,7 @@
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Zobrazit vyskakovací okno, když stisknete klávesu</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Dlouhé zpoždění stisknutí tlačítka</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Psaní zkušenosti</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Návrh</string>
     <string name="pref__correction__title" comment="Preference group title">Oprava</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatická kapitalizace</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Vydělávejte slova na základě aktuálního vstupního kontextu</string>
@@ -181,6 +186,6 @@
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard chybové hlášení</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard přestal fungovat…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Klepnutím zobrazíte podrobnosti o chybě</string>
-    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Zdá se, že FlorisBoard přestane pracovat opakovaně…</string>
-    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Klesající zpět na předchozí klávesnici zastavit nekonečné crash loop. Klepnutím zobrazíte podrobnosti o chybě</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Zdá se, že FlorisBoard přestal opakovaně pracovat…</string>
+    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Vrácení zpět na předchozí klávesnici pro zastavení nekonečného crash loopu. Klepnutím zobrazíte podrobnosti o chybě</string>
 </resources>

@@ -122,6 +122,8 @@
     <string name="settings__theme__group_privateMode" comment="Theme group label">Tryb prywatny</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">SmartBar</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Przycisk Smartbar</string>
+    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Układ pełnoekranowy w trybie poziomym</string>
+    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Przycisk akcji w trybie pełnoekranowym poziomym</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Grupa niestandardowa (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Kolor tła</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Kolor tła (aktywny)</string>
@@ -162,6 +164,10 @@
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Wyłącz</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Tryb praworęczny</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Tryb leworęczny</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Wprowadzanie pełnoekranowe w poziomie</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Nigdy nie pokazuj</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Zawsze pokazuj</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">Pokazuj dynamicznie</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Wysokość klawiatury</string>
     <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Bardzo krótki</string>
     <string name="pref__keyboard__height_factor__short" comment="Preference value">Krótki</string>
@@ -185,6 +191,7 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Doświadczenie w pisaniu</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Włącz inteligentny pasek</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Pojawi się na górze klawiatury</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Sugestie</string>
     <string name="pref__correction__title" comment="Preference group title">Korekty</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatyczne wstawianie wielkich liter</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Pisz wielkie litery w słowach na podstawie bieżącego kontekstu</string>

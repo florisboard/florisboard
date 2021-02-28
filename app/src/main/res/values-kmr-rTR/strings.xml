@@ -89,6 +89,7 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Dirêjahiya zêde</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Edeba</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Serpêhatiya nivîsandinê</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Pêşniyar</string>
     <string name="pref__correction__title" comment="Preference group title">Rastkirin</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Bixweber-kapîtalîzasyon</string>
     <string name="pref__glide__title" comment="Preference group title">Glide typing</string>

@@ -182,6 +182,7 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">חווית הקלדה</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">הפעל שורה חכמה</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">יהיה ממוקם מעל המקלדת</string>
+    <string name="pref__suggestion__title" comment="Preference group title">הצעות</string>
     <string name="pref__correction__title" comment="Preference group title">תיקונים</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">שימוש אוטומטי באותיות גדולות</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">הפוך אותיות לגדולות בהתחשב בהקשר של הקלט הנכוחי</string>

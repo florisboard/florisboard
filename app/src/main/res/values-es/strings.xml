@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Detener</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Espere</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Icono de tres puntos. Si está visible, indica que se pueden utilizar más letras si se pulsa durante más tiempo.</string>
@@ -17,11 +18,11 @@
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticonos</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Emoticonos y emociones</string>
-    <string name="emoji__category__people_body" comment="Emoji category name">Personas y cuerpo</string>
-    <string name="emoji__category__animals_nature" comment="Emoji category name">Animales y naturaleza</string>
-    <string name="emoji__category__food_drink" comment="Emoji category name">Comida y bebida</string>
-    <string name="emoji__category__travel_places" comment="Emoji category name">Viajes y lugares</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Emojis &amp; Emociones</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Personas &amp; Cuerpo</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Animales &amp; Naturaleza</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Comida &amp; Bebida</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Viajar &amp; Lugares</string>
     <string name="emoji__category__activities" comment="Emoji category name">Actividades</string>
     <string name="emoji__category__objects" comment="Emoji category name">Objetos</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Símbolos</string>
@@ -34,12 +35,12 @@
     <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Cambiar al panel de edición de texto.</string>
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Cambiar a la vista de entrada de multimedia.</string>
     <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Botón de deshacer para revertir la última acción</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Botón de rehacer para revertir el último deshacer</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Botón de rehacer para revertir la último acción</string>
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Si está visible, indica que el modo privado está activo. Cuando se hace clic, muestra información sobre el modo privado.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Ajustes</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Más opciones</string>
-    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Ayuda y comentarios</string>
+    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Ayuda &amp; comentarios</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Ayuda</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Inicio</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Teclado</string>
@@ -66,10 +67,11 @@
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tema de teclado</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Sin definir</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Tema</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Siempre</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Siempre</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Siempre claro</string>
+    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Siempre oscuro</string>
     <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Predeterminado del sistema</string>
     <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">De acuerdo al tiempo</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Amanecer</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Hora de puesta de sol</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tema claro</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tema oscuro</string>
@@ -77,7 +79,7 @@
     <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Adaptar colores a la aplicación</string>
     <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Los colores del tema se adaptan a los de la aplicación actual, si la aplicación de destino lo admite.</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Almacenamiento interno</string>
-    <string name="pref__theme__source_external" comment="Label for the theme source field">Proveedor externo</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">Almacenamiento externo</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Administrador de tema (claro)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Administrador de tema (Oscuro)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Crear un tema nuevo</string>
@@ -129,6 +131,7 @@
     <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Ver borde</string>
     <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Color principal</string>
     <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Color principal (oscuro)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Color principal</string>
     <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Color de la barra de navegación</string>
     <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Color principal de la barra de navegación en modo oscuro</string>
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Color semitransparente</string>
@@ -136,14 +139,17 @@
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Atributo personalizado (%s)</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Preferencias de teclado</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Teclas</string>
-    <string name="pref__keyboard__number_row__label" comment="Preference title">Número de filas</string>
-    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Mostrar el número de filas sobre la distribución de los caracteres</string>
-    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Número de filas sugeridos</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">Fila de números</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Mostrar fila de números sobre la distribución de los caracteres</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Fila de números sugeridos</string>
     <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Símbolos sugeridos</string>
     <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">Deshabilitado</string>
     <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">Habilitado (Prioridad en la sugerencia)</string>
     <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">Habilitado (Prioridad en el acento)</string>
     <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">Habilitado (Priorización inteligente)</string>
+    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Mostrar teclas de utilidad</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Muestra una tecla de utilidad configurable junto a la barra espaciadora</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Acción de tecla de utilidad</string>
     <string name="pref__keyboard__utility_key_action__switch_to_emojis" comment="Preference value">Cambiar a emojis</string>
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Cambiar idioma</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Cambiar aplicación de teclado</string>
@@ -155,6 +161,9 @@
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Apagado</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Modo para diestros</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Modo para zurdos</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">No mostrar nunca</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Mostrar siempre</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">Mostrar dinámicamente</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Altura del teclado</string>
     <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Muy bajo</string>
     <string name="pref__keyboard__height_factor__short" comment="Preference value">Bajo</string>
@@ -165,6 +174,7 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Muy alto</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Personalizado</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Valor de altura del teclado personalizada</string>
+    <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Desplazamiento inferior</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pulsación de tecla</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Sonido al pulsar la tecla</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volumen del sonido al pulsar la tecla</string>
@@ -176,6 +186,7 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Experiencia de escritura</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Habilitar barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Se mostrará en la parte superior del teclado</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Sugerencias</string>
     <string name="pref__correction__title" comment="Preference group title">Correcciones</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Mayúsculas automáticas</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Poner en mayúsculas las palabras según el contexto de entrada actual</string>
@@ -190,7 +201,7 @@
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Mostrar recorrido del deslizamiento</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Desaparecerá después de cada palabra</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Gestos generales</string>
-    <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestos en la barra de espacio</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestos en la barra espaciadora</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Otros gestos / umbrales de gestos</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Sin acción</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Eliminar caracteres con precisión</string>
@@ -200,11 +211,12 @@
     <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Insertar espacio</string>
     <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Mover cursor hacia arriba</string>
     <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Mover cursor hacia abajo</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Mover curso hacia la izquierda</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Mover curso hacia la derecha</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Mover el cursor al principio de la línea</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Mover el cursor al final de la línea</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
+    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Mover cursor hacia la izquierda</string>
+    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Mover cursor hacia la derecha</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Mover cursor al inicio de la línea</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Mover cursor al final de la línea</string>
+    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Mayúsculas</string>
+    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Mostrar selector de método de entrada</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Cambiar al teclado anterior</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Cambiar al subtipo anterior</string>
     <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Cambiar al subtipo siguiente</string>
@@ -233,7 +245,7 @@
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Tema de los ajustes</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Claro</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Oscuro</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostrar aplicación en el launcher</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostrar icono de la aplicación en el launcher</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forzar el modo privado</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Desactivará cualquier característica que tenga que trabajar temporalmente con sus datos de entrada</string>
     <!-- About UI strings -->

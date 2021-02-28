@@ -122,6 +122,8 @@
     <string name="settings__theme__group_privateMode" comment="Theme group label">Modo privado</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Barra inteligente</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Botão da barra inteligente</string>
+    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Disposição em ecrã completo (horizontal)</string>
+    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Botão de ação na introdução em ecrã completo (horizontal)</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Grupo personalizado (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Cor de fundo</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Cor de fundo (ativo)</string>
@@ -162,6 +164,10 @@
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Desligado</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Modo destro</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Modo esquerdino</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Introdução em ecrã completo (horizontal)</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Nunca mostrar</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Mostrar sempre</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">Mostrar dinamicamente</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Altura do teclado</string>
     <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Mínima</string>
     <string name="pref__keyboard__height_factor__short" comment="Preference value">Muito pequena</string>
@@ -172,6 +178,10 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Enorme</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Personalizada</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Valor para a altura do teclado</string>
+    <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Distância inferior (modo vertical)</string>
+    <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Distância inferior (modo horizontal)</string>
+    <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Espaçamento de tecla (vertical)</string>
+    <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Espaçamento de tecla (horizontal)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressão de teclas</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Som ao premir teclas</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volume do som ao premir teclas</string>
@@ -183,6 +193,7 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Experiência de digitação</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ativar barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Mostrar na parte superior do teclado</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>
     <string name="pref__correction__title" comment="Preference group title">Correções</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Maiúsculas automáticas</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Colocar letras maiúsculas tendo em conta o contexto das palavras</string>
@@ -211,6 +222,8 @@
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Mover cursor para a direita</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Mover cursor para o início da linha</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Mover cursor para o fim da linha</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Mover cursor para o início da página</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Mover cursor para o final da página</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Premir a tecla Shift</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Mostrar seletor do método de introdução</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Trocar para o teclado anterior</string>

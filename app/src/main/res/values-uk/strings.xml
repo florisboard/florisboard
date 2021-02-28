@@ -180,6 +180,8 @@
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Значення висоти клавіатури</string>
     <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Нижнє зміщення (портрет)</string>
     <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Нижнє зміщення (ландшафт)</string>
+    <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Відстань між клавішами (вертикально)</string>
+    <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Відстань між клавішами (горизонтально)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Натискання клавіші</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Звук при натисканні</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Гучність звуку при натисканні</string>
@@ -191,6 +193,7 @@
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Налаштування вводу тексту</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Увімкнути Розумну панель</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Буде показано над клавіатурою</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Пропозиції</string>
     <string name="pref__correction__title" comment="Preference group title">Корекції</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Великі літери автоматично</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Використовувати великі літери на основі поточного контексту введення</string>

@@ -85,6 +85,22 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Gestor de temes (nocturn)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Crear un nou tema</string>
     <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Crear a partir del tema seleccionat</string>
+    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nou tema</string>
+    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Editar tema</string>
+    <string name="settings__theme_editor__name_label" comment="Label of name input">Nom</string>
+    <string name="settings__theme_editor__type_label" comment="Label of type input">Tipus</string>
+    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Afegir grup</string>
+    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Editar grup</string>
+    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Afegir un atribut</string>
+    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Editar atribut</string>
+    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referència</string>
+    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Grup</string>
+    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Atribut</string>
+    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Color sòlid</string>
+    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Canvia</string>
+    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Estat</string>
+    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Altres</string>
+    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Text</string>
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Introduïu un nom d\'atribut.</string>
     <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Aquest nom d\'atribut ja existeix dins d\'aquest grup. Si us plau, especifiqueu-ne un altre.</string>
     <string name="settings__theme__group_window" comment="Theme group label">Finestra &amp; Sistema</string>
@@ -134,6 +150,7 @@
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposició</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Mode d\'una sola mà</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Desactivat</string>
+    <string name="pref__keyboard__height_factor__custom" comment="Preference value">Personalitzat</string>
     <!-- About UI strings -->
     <!-- Assets strings -->
     <!-- Setup UI strings -->

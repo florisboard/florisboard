@@ -48,7 +48,7 @@
     <string name="settings__home__title" comment="Title of the Home fragment">Välkommen till %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard är inte aktiverad och kommer därför inte vara tillgänglig som inmatningsmetod i inmatningsväljaren. Tryck här för att lösa problemet.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard är inte vald som standard inmatningsmetod. Tryck här för att lösa problemet.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Tack för att du testar FlorisBoard! Detta projekt är fortfarande i alfa och saknar därför vissa funktioner. Om du hittar buggar eller vill lämna några förslag, kolla in arkivet på GitHub och rapportera ett problem. Tack för att du hjälper FlorisBoard bli bättre. Tack!</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Tack för att du testar FlorisBoard! Detta projekt är fortfarande i alfa och saknar därför vissa funktioner. Om du hittar buggar eller vill lämna några förslag, kolla in arkivet på GitHub och rapportera ett problem. Detta hjälper FlorisBoard bli bättre. Tack!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Språk &amp; Tangentbordslayouter</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Det verkar som du inte har konfigurerat några undertyper. Undertyp Engelska/QWERTY kommer då användas!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Lägg till</string>
@@ -147,7 +147,7 @@
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Anpassat</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Anpassad tangentbordshöjd värde</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tangenttryck</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Ljud vis tangenttryck</string>
+    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Ljud vid tangenttryck</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volym vid tangenttryck</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibrera vid tangenttryck</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Vibrationsstyrka vid tangentryck</string>
@@ -155,6 +155,7 @@
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Visa popup vid tangenttryck</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Fördröjning vid långt tryck</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Aktivera smartremsa</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Förslag</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Skift</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Byt till föregående tangentbord</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Byt till föregående undertyp</string>
