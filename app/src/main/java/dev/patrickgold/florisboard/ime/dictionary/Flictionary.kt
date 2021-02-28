@@ -138,28 +138,15 @@ class Flictionary private constructor(
                         }
                         if (inputStream.readNext(buffer, freqSize + 1, size) > 0) {
                             val char = String(buffer, freqSize + 1, size, Charsets.UTF_8)[0]
-
-                            val node = if (freq == NgramNode.FREQ_CHARACTER) {
-                                NgramNode(order, char, null, freq)
-                            } else {
-                                val precomputedWord = StringBuilder()
-                                val firstNodeIndex = ngramOrderStack.indexOfFirst { it == order }
-                                if (firstNodeIndex >= 0) {
-                                    for (n in firstNodeIndex until ngramOrderStack.size) {
-                                        precomputedWord.append(ngramTreeStack[n].char)
-                                    }
-                                }
-                                precomputedWord.append(char)
-                                NgramNode(order, char, precomputedWord.toString(), freq)
-                            }
+                            val node = NgramNode(order, char, freq)
                             val lastOrder = ngramOrderStack.lastOrNull()
                             if (lastOrder == null) {
-                                ngramTree.higherOrderChildren[char] = node
+                                ngramTree.higherOrderChildren.add(node)
                             } else {
                                 if (lastOrder == order) {
-                                    ngramTreeStack.last().sameOrderChildren[char] = node
+                                    ngramTreeStack.last().sameOrderChildren.add(node)
                                 } else {
-                                    ngramTreeStack.last().higherOrderChildren[char] = node
+                                    ngramTreeStack.last().higherOrderChildren.add(node)
                                 }
                             }
                             ngramOrderStack.add(order)
