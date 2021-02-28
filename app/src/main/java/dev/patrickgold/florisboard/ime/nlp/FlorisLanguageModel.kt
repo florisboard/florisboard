@@ -22,7 +22,7 @@ package dev.patrickgold.florisboard.ime.nlp
 open class NgramTree(
     sameOrderChildren: MutableMap<Char, NgramNode> = mutableMapOf(),
     higherOrderChildren: MutableMap<Char, NgramNode> = mutableMapOf()
-) : NgramNode(0, '?', "", -1, sameOrderChildren, higherOrderChildren)
+) : NgramNode(0, '?', null, -1, sameOrderChildren, higherOrderChildren)
 
 /**
  * A node of a n-gram tree, which holds the character it represents, the corresponding frequency,
@@ -32,7 +32,7 @@ open class NgramTree(
 open class NgramNode(
     val order: Int,
     val char: Char,
-    val word: String,
+    val word: String?,
     val freq: Int,
     val sameOrderChildren: MutableMap<Char, NgramNode> = mutableMapOf(),
     val higherOrderChildren: MutableMap<Char, NgramNode> = mutableMapOf()
@@ -97,7 +97,9 @@ open class NgramNode(
                     || !isPossiblyOffensive)) {
             // Using shift right instead of divide by 2^(costSum) as it is mathematically the
             // same but faster.
-            list.add(word, freq shr costSum)
+            if (word != null) {
+                list.add(word, freq shr costSum)
+            }
         }
         if (pos <= -1) {
             for (childNode in higherOrderChildren.values) {
@@ -146,7 +148,9 @@ open class NgramNode(
 
     fun listAllSameOrderWords(list: StagedSuggestionList<String, Int>, allowPossiblyOffensive: Boolean) {
         if (isWord && ((isPossiblyOffensive && allowPossiblyOffensive) || !isPossiblyOffensive)) {
-            list.add(word, freq)
+            if (word != null) {
+                list.add(word, freq)
+            }
         }
         for (childNode in sameOrderChildren.values) {
             childNode.listAllSameOrderWords(list, allowPossiblyOffensive)
