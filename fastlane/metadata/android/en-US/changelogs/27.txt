@@ -1,0 +1,10 @@
+- Add experimental support for suggestions (phase 1)
+  - Currently only for English (US)
+  - Only current word suggestions in this phase
+  - FlorisBoard might crash due to OutOfMemory errors
+- Add options for key spacing (#67, thanks @x-yl)
+- Fix move to start/end of line behavior (#340)
+- Fix numpad font size (#354, thanks @x-yl)
+- Fix bépo layout (thanks @Salamandar)
+- Clean up codebase (thanks @serebit)
+- Use haptic feedback by default if available (thanks @serebit)

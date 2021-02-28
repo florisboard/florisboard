@@ -64,7 +64,7 @@ milestones, please refer to the [Feature roadmap](#feature-roadmap).
 ### Layouts
 * [x] Latin character layouts (QWERTY, QWERTZ, AZERTY, Swiss, Spanish,
       Norwegian, Swedish/Finnish, Icelandic, Danish, Hungarian,
-      Croatian, Polish, Romanian); more coming in future versions
+      Croatian, Polish, Romanian, Colemak, Dvorak); more coming in future versions
 * [x] Non-latin character layouts (Arabic, Persian, Greek, Russian
       (JCUKEN))
 * [x] Adapt to situation in app (password, url, text, etc. )
@@ -115,11 +115,10 @@ close as possible.
   - Complete rework of the Smartbar code base and the Smartbar layout
     definition in XML
 
-- Module B: Composing suggestions
+- Module B: Composing suggestions (Phase 1: [#329])
   - Auto-suggestion of words based of precompiled dictionaries
   - Management of custom dictionary entries
-  - Opt-in only: Learning of often typed word pais to better predict next
-    words over time. Data collected here is stored locally and never leaves
+  - Next-word suggestions by training language models. Data collected here is stored locally and never leaves
     the user's device.
 
 - Module C: Extension packs (base implementation with [#162])
@@ -135,7 +134,7 @@ close as possible.
 - Module E: Theme rework (Implemented with [#162])
   - Themes are now based on the Asset schema
   - Dynamic theme creation
-  - Different theme modes (`Always day`, `Always dark`, `Follow system`
+  - Different theme modes (`Always day`, `Always night`, `Follow system`
     and `Follow time`)
   - Define a separate theme both for day and night theme
   - Adapt to app theme if possible
@@ -156,6 +155,7 @@ Backlog (currently not assigned to any milestone):
 
 [#91]: https://github.com/florisboard/florisboard/pull/91
 [#162]: https://github.com/florisboard/florisboard/pull/162
+[#329]: https://github.com/florisboard/florisboard/pull/329
 
 ## Contributing
 Wanna contribute to FlorisBoard? That's great to hear! There are lots of
