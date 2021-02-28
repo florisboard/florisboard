@@ -92,7 +92,9 @@ open class NgramNode(
         substitutionCost: Int = 0,
         pos: Int = -1
     ) {
-        word.append(char)
+        if (pos > -1) {
+            word.append(char)
+        }
         val costSum = deletionCost + insertionCost + substitutionCost
         if (pos > -1 && (pos + 1 == input.length) && isWord && ((isPossiblyOffensive && allowPossiblyOffensive)
             || !isPossiblyOffensive)) {
@@ -145,7 +147,9 @@ open class NgramNode(
                 }
             }
         }
-        word.deleteAt(word.lastIndex)
+        if (pos > -1) {
+            word.deleteAt(word.lastIndex)
+        }
     }
 
     fun listAllSameOrderWords(list: StagedSuggestionList<String, Int>, word: StringBuilder, allowPossiblyOffensive: Boolean) {

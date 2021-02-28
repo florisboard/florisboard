@@ -900,7 +900,7 @@ class CachedInput(private val editorInstance: EditorInstance) {
         private const val CACHED_TEXT_N_CHARS_BEFORE_CURSOR: Int = 192
         private const val CACHED_TEXT_N_CHARS_AFTER_CURSOR: Int = 64
 
-        private val WORD_EVAL_REGEX = """[^\p{L}]""".toRegex()
+        private val WORD_EVAL_REGEX = """[^\p{L}\']""".toRegex()
         private val WORD_SPLIT_REGEX_EN = """((?<=$WORD_EVAL_REGEX)|(?=$WORD_EVAL_REGEX))""".toRegex()
     }
 

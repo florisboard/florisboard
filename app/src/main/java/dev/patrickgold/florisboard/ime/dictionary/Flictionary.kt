@@ -188,14 +188,14 @@ class Flictionary private constructor(
                         if (inputStream.readNext(buffer, 1, 9) > 0) {
                             val size = (buffer[1].toInt() and 0xFF)
                             date =
-                                ((buffer[pos + 2].toInt() and 0xFF).toLong() shl 56) +
-                                ((buffer[pos + 3].toInt() and 0xFF).toLong() shl 48) +
-                                ((buffer[pos + 4].toInt() and 0xFF).toLong() shl 40) +
-                                ((buffer[pos + 5].toInt() and 0xFF).toLong() shl 32) +
-                                ((buffer[pos + 6].toInt() and 0xFF).toLong() shl 24) +
-                                ((buffer[pos + 7].toInt() and 0xFF).toLong() shl 16) +
-                                ((buffer[pos + 8].toInt() and 0xFF).toLong() shl 8) +
-                                ((buffer[pos + 9].toInt() and 0xFF).toLong() shl 0)
+                                ((buffer[2].toInt() and 0xFF).toLong() shl 56) +
+                                ((buffer[3].toInt() and 0xFF).toLong() shl 48) +
+                                ((buffer[4].toInt() and 0xFF).toLong() shl 40) +
+                                ((buffer[5].toInt() and 0xFF).toLong() shl 32) +
+                                ((buffer[6].toInt() and 0xFF).toLong() shl 24) +
+                                ((buffer[7].toInt() and 0xFF).toLong() shl 16) +
+                                ((buffer[8].toInt() and 0xFF).toLong() shl 8) +
+                                ((buffer[9].toInt() and 0xFF).toLong() shl 0)
                             if (inputStream.readNext(buffer, 10, size) > 0) {
                                 headerStr = String(buffer, 10, size, Charsets.UTF_8)
                                 ngramOrderStack.add(-1)
