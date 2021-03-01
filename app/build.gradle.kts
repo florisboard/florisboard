@@ -4,8 +4,8 @@ plugins {
 }
 
 android {
-    compileSdkVersion(29)
-    buildToolsVersion("29.0.2")
+    compileSdkVersion(30)
+    buildToolsVersion("30.0.3")
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -20,7 +20,7 @@ android {
     defaultConfig {
         applicationId = "dev.patrickgold.florisboard"
         minSdkVersion(23)
-        targetSdkVersion(29)
+        targetSdkVersion(30)
         versionCode(27)
         versionName("0.3.8")
 
