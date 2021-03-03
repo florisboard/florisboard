@@ -35,8 +35,6 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener,
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
     private val themeManager: ThemeManager = ThemeManager.default()
 
-    private var arrowUpKey: EditingKeyView? = null
-    private var arrowDownKey: EditingKeyView? = null
     private var selectKey: EditingKeyView? = null
     private var selectAllKey: EditingKeyView? = null
     private var cutKey: EditingKeyView? = null
@@ -52,8 +50,6 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener,
         florisboard?.addEventListener(this)
         themeManager.registerOnThemeUpdatedListener(this)
 
-        arrowUpKey = findViewById(R.id.arrow_up)
-        arrowDownKey = findViewById(R.id.arrow_down)
         selectKey = findViewById(R.id.select)
         selectAllKey = findViewById(R.id.select_all)
         cutKey = findViewById(R.id.clipboard_cut)
@@ -74,8 +70,6 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener,
     override fun onUpdateSelection() {
         val isSelectionActive = florisboard?.activeEditorInstance?.selection?.isSelectionMode ?: false
         val isSelectionMode = florisboard?.textInputManager?.isManualSelectionMode ?: false
-        arrowUpKey?.isEnabled = !(isSelectionActive || isSelectionMode)
-        arrowDownKey?.isEnabled = !(isSelectionActive || isSelectionMode)
         selectKey?.isHighlighted = isSelectionActive || isSelectionMode
         selectAllKey?.visibility = when {
             isSelectionActive -> View.GONE

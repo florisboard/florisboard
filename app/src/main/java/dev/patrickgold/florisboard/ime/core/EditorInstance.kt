@@ -20,6 +20,7 @@ import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.SystemClock
 import android.text.InputType
+import android.view.InputDevice
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
@@ -114,7 +115,11 @@ class EditorInstance private constructor(
             newSelStart <= (oldSelStart + 1) &&
             newSelEnd >= (oldSelEnd - 1) &&
             newSelEnd <= (oldSelEnd + 1)
-        selection.update(newSelStart, newSelEnd)
+        if (newSelEnd < newSelStart) {
+            selection.update(newSelEnd, newSelStart)
+        } else {
+            selection.update(newSelStart, newSelEnd)
+        }
         cachedInput.update()
         if (isPhantomSpaceActive && wasPhantomSpaceActiveLastUpdate) {
             isPhantomSpaceActive = false
@@ -197,11 +202,11 @@ class EditorInstance private constructor(
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
         return if (isRawInputEditor) {
-            sendSystemKeyEvent(KeyEvent.KEYCODE_DEL)
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
         } else {
             ic.beginBatchEdit()
             markComposingRegion(null)
-            sendSystemKeyEvent(KeyEvent.KEYCODE_DEL)
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
             cachedInput.update()
             if (isComposingEnabled) {
                 markComposingRegion(cachedInput.currentWord)
@@ -357,7 +362,7 @@ class EditorInstance private constructor(
     fun performClipboardCut(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return sendSystemKeyEventCtrl(KeyEvent.KEYCODE_X)
+        return sendDownUpKeyEvent(KeyEvent.KEYCODE_X, meta(ctrl = true))
     }
 
     /**
@@ -369,7 +374,7 @@ class EditorInstance private constructor(
     fun performClipboardCopy(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return sendSystemKeyEventCtrl(KeyEvent.KEYCODE_C) &&
+        return sendDownUpKeyEvent(KeyEvent.KEYCODE_C, meta(ctrl = true)) &&
                 selection.updateAndNotify(selection.end, selection.end)
     }
 
@@ -382,7 +387,7 @@ class EditorInstance private constructor(
     fun performClipboardPaste(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return sendSystemKeyEventCtrl(KeyEvent.KEYCODE_V)
+        return sendDownUpKeyEvent(KeyEvent.KEYCODE_V, meta(ctrl = true))
     }
 
     /**
@@ -394,7 +399,7 @@ class EditorInstance private constructor(
     fun performClipboardSelectAll(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return sendSystemKeyEventCtrl(KeyEvent.KEYCODE_A)
+        return sendDownUpKeyEvent(KeyEvent.KEYCODE_A, meta(ctrl = true))
     }
 
     /**
@@ -406,7 +411,7 @@ class EditorInstance private constructor(
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
         return if (isRawInputEditor) {
-            sendSystemKeyEvent(KeyEvent.KEYCODE_ENTER)
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_ENTER)
         } else {
             commitText("\n")
         }
@@ -436,12 +441,12 @@ class EditorInstance private constructor(
         wasPhantomSpaceActiveLastUpdate = false
         val ic = inputConnection ?: return false
         return if (isRawInputEditor) {
-            sendSystemKeyEventCtrl(KeyEvent.KEYCODE_Z)
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true))
             true
         } else {
             ic.beginBatchEdit()
             markComposingRegion(null)
-            sendSystemKeyEventCtrl(KeyEvent.KEYCODE_Z)
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true))
             cachedInput.update()
             if (isComposingEnabled) {
                 markComposingRegion(cachedInput.currentWord)
@@ -461,12 +466,12 @@ class EditorInstance private constructor(
         wasPhantomSpaceActiveLastUpdate = false
         val ic = inputConnection ?: return false
         return if (isRawInputEditor) {
-            sendSystemKeyEventCtrlShift(KeyEvent.KEYCODE_Z)
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true, shift = true))
             true
         } else {
             ic.beginBatchEdit()
             markComposingRegion(null)
-            sendSystemKeyEventCtrlShift(KeyEvent.KEYCODE_Z)
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true, shift = true))
             cachedInput.update()
             if (isComposingEnabled) {
                 markComposingRegion(cachedInput.currentWord)
@@ -477,55 +482,36 @@ class EditorInstance private constructor(
     }
 
     /**
-     * Sends a given [keyEventCode] with [sendDownUpKeyEvent].
+     * Constructs a meta state integer flag which can be used for setting the `metaState` field when sending a KeyEvent
+     * to the input connection. If this method is called without a meta modifier set to true, the default value `0` is
+     * returned.
      *
-     * @param keyEventCode The key code to send, use a key code defined in Android's [KeyEvent].
-     * @return True on success, false if an error occurred or the input connection is invalid.
+     * @param ctrl Set to true to enable the CTRL meta modifier. Defaults to false.
+     * @param alt Set to true to enable the ALT meta modifier. Defaults to false.
+     * @param shift Set to true to enable the SHIFT meta modifier. Defaults to false.
+     *
+     * @return An integer containing all meta flags passed and formatted for use in a [KeyEvent].
      */
-    fun sendSystemKeyEvent(keyEventCode: Int): Boolean {
-        return sendDownUpKeyEvent(keyEventCode, 0)
+    fun meta(
+        ctrl: Boolean = false,
+        alt: Boolean = false,
+        shift: Boolean = false
+    ): Int {
+        var metaState = 0
+        if (ctrl) {
+            metaState = metaState or KeyEvent.META_CTRL_ON or KeyEvent.META_CTRL_LEFT_ON
+        }
+        if (alt) {
+            metaState = metaState or KeyEvent.META_ALT_ON or KeyEvent.META_ALT_LEFT_ON
+        }
+        if (shift) {
+            metaState = metaState or KeyEvent.META_SHIFT_ON or KeyEvent.META_SHIFT_LEFT_ON
+        }
+        return metaState
     }
 
-    /**
-     * Sends a given [keyEventCode] with Ctrl pressed with [sendDownUpKeyEvent].
-     *
-     * @param keyEventCode The key code to send, use a key code defined in Android's [KeyEvent].
-     * @return True on success, false if an error occurred or the input connection is invalid.
-     */
-    private fun sendSystemKeyEventCtrl(keyEventCode: Int): Boolean {
-        return sendDownUpKeyEvent(keyEventCode, KeyEvent.META_CTRL_ON)
-    }
-
-    /**
-     * Sends a given [keyEventCode] with Ctrl and Shift pressed with [sendDownUpKeyEvent].
-     *
-     * @param keyEventCode The key code to send, use a key code defined in Android's [KeyEvent].
-     * @return True on success, false if an error occurred or the input connection is invalid.
-     */
-    private fun sendSystemKeyEventCtrlShift(keyEventCode: Int): Boolean {
-        return sendDownUpKeyEvent(keyEventCode, KeyEvent.META_CTRL_ON or KeyEvent.META_SHIFT_ON)
-    }
-
-    /**
-     * Sends a given [keyEventCode] with Alt pressed with [sendDownUpKeyEvent].
-     *
-     * @param keyEventCode The key code to send, use a key code defined in Android's [KeyEvent].
-     * @return True on success, false if an error occurred or the input connection is invalid.
-     */
-    fun sendSystemKeyEventAlt(keyEventCode: Int): Boolean {
-        return sendDownUpKeyEvent(keyEventCode, KeyEvent.META_ALT_LEFT_ON)
-    }
-
-    /**
-     * Same as [InputMethodService.sendDownUpKeyEvents] but also allows to set meta state.
-     *
-     * @param keyEventCode The key code to send, use a key code defined in Android's [KeyEvent].
-     * @param metaState Flags indicating which meta keys are currently pressed.
-     * @return True on success, false if an error occurred or the input connection is invalid.
-     */
-    private fun sendDownUpKeyEvent(keyEventCode: Int, metaState: Int): Boolean {
+    private fun sendDownKeyEvent(eventTime: Long, keyEventCode: Int, metaState: Int): Boolean {
         val ic = inputConnection ?: return false
-        val eventTime = SystemClock.uptimeMillis()
         return ic.sendKeyEvent(
             KeyEvent(
                 eventTime,
@@ -536,9 +522,15 @@ class EditorInstance private constructor(
                 metaState,
                 KeyCharacterMap.VIRTUAL_KEYBOARD,
                 0,
-                KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE
+                KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE,
+                InputDevice.SOURCE_KEYBOARD
             )
-        ) && ic.sendKeyEvent(
+        )
+    }
+
+    private fun sendUpKeyEvent(eventTime: Long, keyEventCode: Int, metaState: Int): Boolean {
+        val ic = inputConnection ?: return false
+        return ic.sendKeyEvent(
             KeyEvent(
                 eventTime,
                 SystemClock.uptimeMillis(),
@@ -548,9 +540,42 @@ class EditorInstance private constructor(
                 metaState,
                 KeyCharacterMap.VIRTUAL_KEYBOARD,
                 0,
-                KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE
+                KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE,
+                InputDevice.SOURCE_KEYBOARD
             )
         )
+    }
+
+    /**
+     * Same as [InputMethodService.sendDownUpKeyEvents] but also allows to set meta state.
+     *
+     * @param keyEventCode The key code to send, use a key code defined in Android's [KeyEvent].
+     * @param metaState Flags indicating which meta keys are currently pressed.
+     * @return True on success, false if an error occurred or the input connection is invalid.
+     */
+    fun sendDownUpKeyEvent(keyEventCode: Int, metaState: Int = meta()): Boolean {
+        val eventTime = SystemClock.uptimeMillis()
+        if (metaState and KeyEvent.META_CTRL_ON > 0) {
+            sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
+        }
+        if (metaState and KeyEvent.META_ALT_ON > 0) {
+            sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_ALT_LEFT, 0)
+        }
+        if (metaState and KeyEvent.META_SHIFT_ON > 0) {
+            sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_SHIFT_LEFT, 0)
+        }
+        sendDownKeyEvent(eventTime, keyEventCode, metaState)
+        sendUpKeyEvent(eventTime, keyEventCode, metaState)
+        if (metaState and KeyEvent.META_SHIFT_ON > 0) {
+            sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_SHIFT_LEFT, 0)
+        }
+        if (metaState and KeyEvent.META_ALT_ON > 0) {
+            sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_ALT_LEFT, 0)
+        }
+        if (metaState and KeyEvent.META_CTRL_ON > 0) {
+            sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
+        }
+        return true
     }
 }
 

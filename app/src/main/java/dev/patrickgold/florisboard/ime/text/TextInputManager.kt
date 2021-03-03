@@ -88,8 +88,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
 
     // Composing text related properties
     var isManualSelectionMode: Boolean = false
-    private var isManualSelectionModeLeft: Boolean = false
-    private var isManualSelectionModeRight: Boolean = false
+    private var isManualSelectionModeStart: Boolean = false
+    private var isManualSelectionModeEnd: Boolean = false
 
     companion object {
         private var instance: TextInputManager? = null
@@ -300,8 +300,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         keyboardViews[mode]?.requestLayoutAllKeys()
         activeKeyboardMode = mode
         isManualSelectionMode = false
-        isManualSelectionModeLeft = false
-        isManualSelectionModeRight = false
+        isManualSelectionModeStart = false
+        isManualSelectionModeEnd = false
         smartbarView?.isQuickActionsVisible = false
         smartbarView?.updateSmartbarState()
     }
@@ -326,11 +326,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      * and passing this info on to the [SmartbarView] to turn it into candidate suggestions.
      */
     override fun onUpdateSelection() {
-        if (!activeEditorInstance.isNewSelectionInBoundsOfOld) {
-            isManualSelectionMode = false
-            isManualSelectionModeLeft = false
-            isManualSelectionModeRight = false
-        }
         updateCapsState()
         smartbarView?.updateSmartbarState()
         if (BuildConfig.DEBUG) {
@@ -458,8 +453,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         hasCapsRecentlyChanged = false
         hasSpaceRecentlyPressed = false
         isManualSelectionMode = false
-        isManualSelectionModeLeft = false
-        isManualSelectionModeRight = false
+        isManualSelectionModeStart = false
+        isManualSelectionModeEnd = false
         activeEditorInstance.deleteBackwards()
     }
 
@@ -470,8 +465,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         hasCapsRecentlyChanged = false
         hasSpaceRecentlyPressed = false
         isManualSelectionMode = false
-        isManualSelectionModeLeft = false
-        isManualSelectionModeRight = false
+        isManualSelectionModeStart = false
+        isManualSelectionModeEnd = false
         activeEditorInstance.deleteWordsBeforeCursor(1)
     }
 
@@ -558,119 +553,65 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
     /**
      * Handles [KeyCode] arrow and move events, behaves differently depending on text selection.
      */
-    private fun handleArrow(code: Int) = activeEditorInstance.run {
-        val selectionStartMin = 0
-        val selectionEndMax = cachedInput.expectedMaxLength
-        if (selection.isSelectionMode && isManualSelectionMode) {
-            // Text is selected and it is manual selection -> Expand selection depending on started
-            //  direction.
-            when (code) {
-                KeyCode.ARROW_DOWN -> {}
-                KeyCode.ARROW_LEFT -> {
-                    if (isManualSelectionModeLeft) {
-                        selection.updateAndNotify(
-                            (selection.start - 1).coerceAtLeast(selectionStartMin),
-                            selection.end
-                        )
-                    } else {
-                        selection.updateAndNotify(selection.start, selection.end - 1)
-                    }
+    private fun handleArrow(code: Int) = activeEditorInstance.apply {
+        when (code) {
+            KeyCode.ARROW_DOWN -> {
+                if (!selection.isSelectionMode && isManualSelectionMode) {
+                    isManualSelectionModeStart = false
+                    isManualSelectionModeEnd = true
                 }
-                KeyCode.ARROW_RIGHT -> {
-                    if (isManualSelectionModeRight) {
-                        selection.updateAndNotify(
-                            selection.start,
-                            (selection.end + 1).coerceAtMost(selectionEndMax)
-                        )
-                    } else {
-                        selection.updateAndNotify(selection.start + 1, selection.end)
-                    }
-                }
-                KeyCode.ARROW_UP -> {}
-                KeyCode.MOVE_START_OF_LINE -> {
-                    if (isManualSelectionModeLeft) {
-                        selection.updateAndNotify(selectionStartMin, selection.end)
-                    } else {
-                        selection.updateAndNotify(selectionStartMin, selection.start)
-                    }
-                }
-                KeyCode.MOVE_END_OF_LINE -> {
-                    if (isManualSelectionModeRight) {
-                        selection.updateAndNotify(selection.start, selectionEndMax)
-                    } else {
-                        selection.updateAndNotify(selection.end, selectionEndMax)
-                    }
-                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN, meta(shift = isManualSelectionMode))
             }
-        } else if (selection.isSelectionMode && !isManualSelectionMode) {
-            // Text is selected but no manual selection mode -> arrows behave as if selection was
-            //  started in manual left mode
-            when (code) {
-                KeyCode.ARROW_DOWN -> {}
-                KeyCode.ARROW_LEFT -> {
-                    selection.updateAndNotify(selection.start, selection.end - 1)
+            KeyCode.ARROW_LEFT -> {
+                if (!selection.isSelectionMode && isManualSelectionMode) {
+                    isManualSelectionModeStart = true
+                    isManualSelectionModeEnd = false
                 }
-                KeyCode.ARROW_RIGHT -> {
-                    selection.updateAndNotify(
-                        selection.start,
-                        (selection.end + 1).coerceAtMost(selectionEndMax)
-                    )
-                }
-                KeyCode.ARROW_UP -> {}
-                KeyCode.MOVE_START_OF_LINE -> {
-                    selection.updateAndNotify(selectionStartMin, selection.start)
-                }
-                KeyCode.MOVE_END_OF_LINE -> {
-                    selection.updateAndNotify(selection.start, selectionEndMax)
-                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT, meta(shift = isManualSelectionMode))
             }
-        } else if (!selection.isSelectionMode && isManualSelectionMode) {
-            // No text is selected but manual selection mode is active, user wants to start a new
-            //  selection. Must set manual selection direction.
-            when (code) {
-                KeyCode.ARROW_DOWN -> {}
-                KeyCode.ARROW_LEFT -> {
-                    selection.updateAndNotify(
-                        (selection.start - 1).coerceAtLeast(selectionStartMin),
-                        selection.start
-                    )
-                    isManualSelectionModeLeft = true
-                    isManualSelectionModeRight = false
+            KeyCode.ARROW_RIGHT -> {
+                if (!selection.isSelectionMode && isManualSelectionMode) {
+                    isManualSelectionModeStart = false
+                    isManualSelectionModeEnd = true
                 }
-                KeyCode.ARROW_RIGHT -> {
-                    selection.updateAndNotify(
-                        selection.end,
-                        (selection.end + 1).coerceAtMost(selectionEndMax)
-                    )
-                    isManualSelectionModeLeft = false
-                    isManualSelectionModeRight = true
-                }
-                KeyCode.ARROW_UP -> {}
-                KeyCode.MOVE_START_OF_LINE -> {
-                    selection.updateAndNotify(selectionStartMin, selection.start)
-                    isManualSelectionModeLeft = true
-                    isManualSelectionModeRight = false
-                }
-                KeyCode.MOVE_END_OF_LINE -> {
-                    selection.updateAndNotify(selection.end, selectionEndMax)
-                    isManualSelectionModeLeft = false
-                    isManualSelectionModeRight = true
-                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, meta(shift = isManualSelectionMode))
             }
-        } else {
-            // No selection and no manual selection mode -> move cursor around
-            when (code) {
-                KeyCode.ARROW_DOWN -> activeEditorInstance.sendSystemKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN)
-                KeyCode.ARROW_LEFT -> activeEditorInstance.sendSystemKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT)
-                KeyCode.ARROW_RIGHT -> activeEditorInstance.sendSystemKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT)
-                KeyCode.ARROW_UP -> activeEditorInstance.sendSystemKeyEvent(KeyEvent.KEYCODE_DPAD_UP)
-                KeyCode.MOVE_START_OF_PAGE -> activeEditorInstance.sendSystemKeyEventAlt(KeyEvent.KEYCODE_DPAD_UP)
-                KeyCode.MOVE_END_OF_PAGE -> activeEditorInstance.sendSystemKeyEventAlt(KeyEvent.KEYCODE_DPAD_DOWN)
-                KeyCode.MOVE_START_OF_LINE -> activeEditorInstance.sendSystemKeyEventAlt(KeyEvent.KEYCODE_DPAD_LEFT)
-                KeyCode.MOVE_END_OF_LINE -> activeEditorInstance.sendSystemKeyEventAlt(KeyEvent.KEYCODE_DPAD_RIGHT)
+            KeyCode.ARROW_UP -> {
+                if (!selection.isSelectionMode && isManualSelectionMode) {
+                    isManualSelectionModeStart = true
+                    isManualSelectionModeEnd = false
+                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP, meta(shift = isManualSelectionMode))
+            }
+            KeyCode.MOVE_START_OF_PAGE -> {
+                if (!selection.isSelectionMode && isManualSelectionMode) {
+                    isManualSelectionModeStart = true
+                    isManualSelectionModeEnd = false
+                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP, meta(alt = true, shift = isManualSelectionMode))
+            }
+            KeyCode.MOVE_END_OF_PAGE -> {
+                if (!selection.isSelectionMode && isManualSelectionMode) {
+                    isManualSelectionModeStart = false
+                    isManualSelectionModeEnd = true
+                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN, meta(alt = true, shift = isManualSelectionMode))
+            }
+            KeyCode.MOVE_START_OF_LINE -> {
+                if (!selection.isSelectionMode && isManualSelectionMode) {
+                    isManualSelectionModeStart = true
+                    isManualSelectionModeEnd = false
+                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT, meta(alt = true, shift = isManualSelectionMode))
+            }
+            KeyCode.MOVE_END_OF_LINE -> {
+                if (!selection.isSelectionMode && isManualSelectionMode) {
+                    isManualSelectionModeStart = false
+                    isManualSelectionModeEnd = true
+                }
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, meta(alt = true, shift = isManualSelectionMode))
             }
         }
-        Unit
     }
 
     /**
@@ -678,7 +619,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
      */
     private fun handleClipboardSelect() = activeEditorInstance.apply {
         if (selection.isSelectionMode) {
-            if (isManualSelectionMode && isManualSelectionModeLeft) {
+            if (isManualSelectionMode && isManualSelectionModeStart) {
                 selection.updateAndNotify(selection.start, selection.start)
             } else {
                 selection.updateAndNotify(selection.end, selection.end)
