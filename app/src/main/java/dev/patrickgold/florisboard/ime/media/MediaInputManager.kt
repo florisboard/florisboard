@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.media
 
 import android.annotation.SuppressLint
-import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
 import android.widget.*
@@ -30,11 +29,8 @@ import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyboardView
 import dev.patrickgold.florisboard.ime.media.emoticon.EmoticonKeyData
 import dev.patrickgold.florisboard.ime.media.emoticon.EmoticonKeyboardView
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.FlorisKeyEvent
 import dev.patrickgold.florisboard.ime.text.key.KeyData
-import dev.patrickgold.florisboard.ime.text.key.KeyType
-import dev.patrickgold.florisboard.util.cancelAll
-import dev.patrickgold.florisboard.util.postAtScheduledRate
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.util.*
@@ -58,11 +54,10 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
 
     private var activeTab: Tab? = null
     private var mediaViewFlipper: ViewFlipper? = null
-    private var repeatedKeyPressHandler: Handler? = null
     private var tabLayout: TabLayout? = null
     private val tabViews = EnumMap<Tab, LinearLayout>(Tab::class.java)
 
-    var mediaViewGroup: LinearLayout? = null
+    private var mediaViewGroup: LinearLayout? = null
 
     companion object {
         private var instance: MediaInputManager? = null
@@ -78,11 +73,6 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
 
     init {
         florisboard.addEventListener(this)
-    }
-
-    override fun onCreateInputView() {
-        super.onCreateInputView()
-        repeatedKeyPressHandler = Handler(florisboard.context.mainLooper)
     }
 
     /**
@@ -145,29 +135,28 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
     private fun onBottomButtonEvent(view: View, event: MotionEvent?): Boolean {
         event ?: return false
         val data = when (view.id) {
-            R.id.media_input_switch_to_text_input_button -> {
-                KeyData(code = KeyCode.SWITCH_TO_TEXT_CONTEXT)
-            }
-            R.id.media_input_backspace_button -> {
-                KeyData(code = KeyCode.DELETE, type = KeyType.ENTER_EDITING)
-            }
-            else -> null
+            R.id.media_input_switch_to_text_input_button -> KeyData.SWITCH_TO_TEXT_CONTEXT
+            R.id.media_input_backspace_button -> KeyData.DELETE
+            else -> return false
         }
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 florisboard.keyPressVibrate()
                 florisboard.keyPressSound(data)
-                if (data?.code == KeyCode.DELETE && data.type == KeyType.ENTER_EDITING) {
-                    val delayMillis = florisboard.prefs.keyboard.longPressDelay.toLong()
-                    repeatedKeyPressHandler?.postAtScheduledRate(delayMillis, 25) {
-                        florisboard.textInputManager.sendKeyPress(data)
-                    }
+                if (FlorisKeyEvent.requireSeparateDownUp(data.code)) {
+                    florisboard.textInputManager.sendKeyEvent(FlorisKeyEvent.down(data))
                 }
             }
-            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                repeatedKeyPressHandler?.cancelAll()
-                if (event.actionMasked != MotionEvent.ACTION_CANCEL && data != null) {
-                    florisboard.textInputManager.sendKeyPress(data)
+            MotionEvent.ACTION_UP -> {
+                if (FlorisKeyEvent.requireSeparateDownUp(data.code)) {
+                    florisboard.textInputManager.sendKeyEvent(FlorisKeyEvent.up(data))
+                } else {
+                    florisboard.textInputManager.sendKeyEvent(FlorisKeyEvent.downUp(data))
+                }
+            }
+            MotionEvent.ACTION_CANCEL -> {
+                if (FlorisKeyEvent.requireSeparateDownUp(data.code)) {
+                    florisboard.textInputManager.sendKeyEvent(FlorisKeyEvent.cancel(data))
                 }
             }
         }

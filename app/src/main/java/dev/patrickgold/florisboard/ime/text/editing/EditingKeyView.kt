@@ -31,6 +31,7 @@ import androidx.appcompat.widget.AppCompatImageButton
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.text.FlorisKeyEvent
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.theme.Theme
@@ -123,7 +124,7 @@ class EditingKeyView : AppCompatImageButton, ThemeManager.OnThemeUpdatedListener
                         val delayMillis = prefs.keyboard.longPressDelay.toLong()
                         repeatedKeyPressHandler.postAtScheduledRate(delayMillis, 25) {
                             if (isKeyPressed) {
-                                florisboard?.textInputManager?.sendKeyPress(data)
+                                florisboard?.textInputManager?.sendKeyEvent(FlorisKeyEvent.downUp(data))
                             } else {
                                 repeatedKeyPressHandler.cancelAll()
                             }
@@ -135,7 +136,7 @@ class EditingKeyView : AppCompatImageButton, ThemeManager.OnThemeUpdatedListener
                 isKeyPressed = false
                 repeatedKeyPressHandler.cancelAll()
                 if (event.actionMasked != MotionEvent.ACTION_CANCEL) {
-                    florisboard?.textInputManager?.sendKeyPress(data)
+                    florisboard?.textInputManager?.sendKeyEvent(FlorisKeyEvent.downUp(data))
                 }
             }
             else -> return false

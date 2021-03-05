@@ -59,6 +59,7 @@ dependencies {
     implementation("androidx.core", "core-ktx", "1.3.2")
     implementation("androidx.preference", "preference-ktx", "1.1.1")
     implementation("androidx.constraintlayout", "constraintlayout", "2.0.4")
+    implementation("androidx.lifecycle", "lifecycle-service", "2.2.0")
     implementation("com.google.android", "flexbox", "2.0.1") // requires jcenter as of version 2.0.1
     implementation("com.squareup.moshi", "moshi-kotlin", "1.11.0")
     implementation("com.squareup.moshi", "moshi-adapters", "1.11.0")

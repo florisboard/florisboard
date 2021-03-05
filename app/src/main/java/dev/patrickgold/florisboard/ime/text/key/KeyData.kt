@@ -34,7 +34,55 @@ open class KeyData(
     var type: KeyType = KeyType.CHARACTER,
     var code: Int = 0,
     var label: String = ""
-)
+) {
+    companion object {
+        /** Predefined key data for [KeyCode.ARROW_DOWN] */
+        val ARROW_DOWN = KeyData(code = KeyCode.ARROW_DOWN, type = KeyType.NAVIGATION)
+
+        /** Predefined key data for [KeyCode.ARROW_LEFT] */
+        val ARROW_LEFT = KeyData(code = KeyCode.ARROW_LEFT, type = KeyType.NAVIGATION)
+
+        /** Predefined key data for [KeyCode.ARROW_RIGHT] */
+        val ARROW_RIGHT = KeyData(code = KeyCode.ARROW_RIGHT, type = KeyType.NAVIGATION)
+
+        /** Predefined key data for [KeyCode.ARROW_UP] */
+        val ARROW_UP = KeyData(code = KeyCode.ARROW_UP, type = KeyType.NAVIGATION)
+
+        /** Predefined key data for [KeyCode.DELETE] */
+        val DELETE = KeyData(code = KeyCode.DELETE, type = KeyType.ENTER_EDITING)
+
+        /** Predefined key data for [KeyCode.DELETE_WORD] */
+        val DELETE_WORD = KeyData(code = KeyCode.DELETE_WORD, type = KeyType.ENTER_EDITING)
+
+        /** Predefined key data for [KeyCode.MOVE_START_OF_LINE] */
+        val MOVE_START_OF_LINE = KeyData(code = KeyCode.MOVE_START_OF_LINE, type = KeyType.NAVIGATION)
+
+        /** Predefined key data for [KeyCode.MOVE_END_OF_LINE] */
+        val MOVE_END_OF_LINE = KeyData(code = KeyCode.MOVE_END_OF_LINE, type = KeyType.NAVIGATION)
+
+        /** Predefined key data for [KeyCode.MOVE_START_OF_PAGE] */
+        val MOVE_START_OF_PAGE = KeyData(code = KeyCode.MOVE_START_OF_PAGE, type = KeyType.NAVIGATION)
+
+        /** Predefined key data for [KeyCode.MOVE_END_OF_PAGE] */
+        val MOVE_END_OF_PAGE = KeyData(code = KeyCode.MOVE_END_OF_PAGE, type = KeyType.NAVIGATION)
+
+        /** Predefined key data for [KeyCode.SHOW_INPUT_METHOD_PICKER] */
+        val SHOW_INPUT_METHOD_PICKER = KeyData(code = KeyCode.SHOW_INPUT_METHOD_PICKER, type = KeyType.FUNCTION)
+
+        /** Predefined key data for [KeyCode.SWITCH_TO_TEXT_CONTEXT] */
+        val SWITCH_TO_TEXT_CONTEXT = KeyData(code = KeyCode.SWITCH_TO_TEXT_CONTEXT, type = KeyType.SYSTEM_GUI)
+
+        /** Predefined key data for [KeyCode.SHIFT] */
+        val SHIFT = KeyData(code = KeyCode.SHIFT, type = KeyType.MODIFIER)
+
+        /** Predefined key data for [KeyCode.SPACE] */
+        val SPACE = KeyData(code = KeyCode.SPACE, type = KeyType.CHARACTER)
+    }
+
+    override fun toString(): String {
+        return "KeyData { type=$type code=$code label=\"$label\" }"
+    }
+}
 
 /**
  * Data class which describes a single key and its attributes, while also providing additional

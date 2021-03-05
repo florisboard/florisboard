@@ -39,6 +39,7 @@ import android.widget.Button
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.lifecycle.*
 import com.squareup.moshi.Json
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
@@ -68,13 +69,16 @@ private var florisboardInstance: FlorisBoard? = null
  * Core class responsible to link together both the text and media input managers as well as
  * managing the one-handed UI.
  */
-class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedListener,
+class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPrimaryClipChangedListener,
     ThemeManager.OnThemeUpdatedListener {
+
     lateinit var prefs: PrefHelper
         private set
 
     val context: Context
         get() = inputWindowView?.context ?: this
+    private val serviceLifecycleDispatcher: ServiceLifecycleDispatcher = ServiceLifecycleDispatcher(this)
+
     private var extractEditLayout: WeakReference<ViewGroup?> = WeakReference(null)
     var inputView: InputView? = null
         private set
@@ -162,6 +166,10 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         }
     }
 
+    override fun getLifecycle(): Lifecycle {
+        return serviceLifecycleDispatcher.lifecycle
+    }
+
     override fun onCreate() {
         /*if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(
@@ -182,6 +190,8 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
             )
         }*/
         Timber.i("onCreate()")
+
+        serviceLifecycleDispatcher.onServicePreSuperOnCreate()
 
         imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         audioManager = getSystemService(Context.AUDIO_SERVICE) as? AudioManager
@@ -249,6 +259,21 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         return eel
     }
 
+    override fun onDestroy() {
+        Timber.i("onDestroy()")
+
+        themeManager.unregisterOnThemeUpdatedListener(this)
+        clipboardManager?.removePrimaryClipChangedListener(this)
+        osHandler.removeCallbacksAndMessages(null)
+        florisboardInstance = null
+
+        serviceLifecycleDispatcher.onServicePreSuperOnDestroy()
+
+        eventListeners.toList().forEach { it?.onDestroy() }
+        eventListeners.clear()
+        super.onDestroy()
+    }
+
     override fun onEvaluateFullscreenMode(): Boolean {
         return resources?.configuration?.let { config ->
             if (config.orientation != Configuration.ORIENTATION_LANDSCAPE) {
@@ -293,19 +318,6 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         setActiveInput(R.id.text_input)
 
         eventListeners.toList().forEach { it?.onRegisterInputView(inputView) }
-    }
-
-    override fun onDestroy() {
-        Timber.i("onDestroy()")
-
-        themeManager.unregisterOnThemeUpdatedListener(this)
-        clipboardManager?.removePrimaryClipChangedListener(this)
-        osHandler.removeCallbacksAndMessages(null)
-        florisboardInstance = null
-
-        eventListeners.toList().forEach { it?.onDestroy() }
-        eventListeners.clear()
-        super.onDestroy()
     }
 
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
