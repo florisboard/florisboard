@@ -50,6 +50,7 @@ import kotlin.math.roundToInt
 class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Listener,
     ThemeManager.OnThemeUpdatedListener {
     private var activeKeyViews: MutableMap<Int, KeyView> = mutableMapOf()
+    private var initialKeyCodes: MutableMap<Int, Int> = mutableMapOf()
 
     var computedLayout: ComputedLayoutData? = null
         set(v) {
@@ -59,7 +60,6 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     var desiredKeyWidth: Int = resources.getDimension(R.dimen.key_width).toInt()
     var desiredKeyHeight: Int = resources.getDimension(R.dimen.key_height).toInt()
     var florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
-    private var initialKeyCode: Int = 0
     private val isPreviewMode: Boolean
     val isSmartbarKeyboardView: Boolean
     val isLoadingPlaceholderKeyboard: Boolean
@@ -184,7 +184,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
                 val pointerIndex = event.actionIndex
                 val pointerId = event.getPointerId(pointerIndex)
                 searchForActiveKeyView(event, pointerIndex, pointerId)
-                initialKeyCode = activeKeyViews[pointerId]?.data?.code ?: 0
+                initialKeyCodes[pointerId] = activeKeyViews[pointerId]?.data?.code ?: 0
                 sendFlorisTouchEvent(eventFloris, pointerIndex, pointerId, MotionEvent.ACTION_DOWN)
             }
             MotionEvent.ACTION_MOVE -> {
@@ -247,7 +247,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
      */
     override fun onSwipe(event: SwipeGesture.Event): Boolean {
         return when {
-            initialKeyCode == KeyCode.DELETE -> {
+            initialKeyCodes[event.pointerId] == KeyCode.DELETE -> {
                 if (event.type == SwipeGesture.Type.TOUCH_UP && event.direction == SwipeGesture.Direction.LEFT &&
                     prefs.gestures.deleteKeySwipeLeft == SwipeAction.DELETE_WORD) {
                     florisboard?.executeSwipeAction(prefs.gestures.deleteKeySwipeLeft)
@@ -256,7 +256,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
                     false
                 }
             }
-            initialKeyCode > KeyCode.SPACE -> when {
+            initialKeyCodes[event.pointerId] ?: 0 > KeyCode.SPACE -> when {
                 !prefs.glide.enabled -> when (event.type) {
                     SwipeGesture.Type.TOUCH_UP -> {
                         val swipeAction = when (event.direction) {

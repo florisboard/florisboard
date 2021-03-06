@@ -366,7 +366,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
         if (BuildConfig.DEBUG) {
             Timber.i("current word: ${activeEditorInstance.cachedInput.currentWord.text}")
         }
-        if (activeEditorInstance.isComposingEnabled) {
+        if (activeEditorInstance.isComposingEnabled && !keyEventJobs.containsKey(KeyCode.DELETE)) {
             if (activeEditorInstance.shouldReevaluateComposingSuggestions) {
                 activeEditorInstance.shouldReevaluateComposingSuggestions = false
                 activeDictionary?.let {
