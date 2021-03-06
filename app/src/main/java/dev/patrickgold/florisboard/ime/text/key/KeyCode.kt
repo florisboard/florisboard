@@ -50,7 +50,7 @@ object KeyCode {
     const val CLEAR_INPUT =                  -13
     const val VOICE_INPUT =                   -4
 
-    const val DISABLED =                       0
+    const val UNSPECIFIED =                    0
 
     const val SPLIT_LAYOUT =                -110
     const val MERGE_LAYOUT =                -111

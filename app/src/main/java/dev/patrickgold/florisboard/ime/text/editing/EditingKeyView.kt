@@ -72,22 +72,21 @@ class EditingKeyView : AppCompatImageButton, ThemeManager.OnThemeUpdatedListener
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, R.style.TextEditingButton)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        val code = when (id) {
-            R.id.arrow_down -> KeyCode.ARROW_DOWN
-            R.id.arrow_left -> KeyCode.ARROW_LEFT
-            R.id.arrow_right -> KeyCode.ARROW_RIGHT
-            R.id.arrow_up -> KeyCode.ARROW_UP
-            R.id.backspace -> KeyCode.DELETE
-            R.id.clipboard_copy -> KeyCode.CLIPBOARD_COPY
-            R.id.clipboard_cut -> KeyCode.CLIPBOARD_CUT
-            R.id.clipboard_paste -> KeyCode.CLIPBOARD_PASTE
-            R.id.move_start_of_line -> KeyCode.MOVE_START_OF_LINE
-            R.id.move_end_of_line -> KeyCode.MOVE_END_OF_LINE
-            R.id.select -> KeyCode.CLIPBOARD_SELECT
-            R.id.select_all -> KeyCode.CLIPBOARD_SELECT_ALL
-            else -> 0
+        data = when (id) {
+            R.id.arrow_down -> KeyData.ARROW_DOWN
+            R.id.arrow_left -> KeyData.ARROW_LEFT
+            R.id.arrow_right -> KeyData.ARROW_RIGHT
+            R.id.arrow_up -> KeyData.ARROW_UP
+            R.id.backspace -> KeyData.DELETE
+            R.id.clipboard_copy -> KeyData.CLIPBOARD_COPY
+            R.id.clipboard_cut -> KeyData.CLIPBOARD_CUT
+            R.id.clipboard_paste -> KeyData.CLIPBOARD_PASTE
+            R.id.move_start_of_line -> KeyData.MOVE_START_OF_LINE
+            R.id.move_end_of_line -> KeyData.MOVE_END_OF_LINE
+            R.id.select -> KeyData.CLIPBOARD_SELECT
+            R.id.select_all -> KeyData.CLIPBOARD_SELECT_ALL
+            else -> KeyData.UNSPECIFIED
         }
-        data = KeyData(code = code)
         context.obtainStyledAttributes(attrs, R.styleable.EditingKeyView).apply {
             label = getString(R.styleable.EditingKeyView_android_text)
             recycle()

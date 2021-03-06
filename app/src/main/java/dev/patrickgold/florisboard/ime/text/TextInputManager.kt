@@ -124,7 +124,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(),
                             }
                         }
                     }
-                    FlorisKeyEvent.Action.DOWN_UP,
+                    FlorisKeyEvent.Action.DOWN_UP -> {
+                        handleKeyEvent(ev)
+                        lastKeyEvent = ev
+                    }
                     FlorisKeyEvent.Action.UP -> {
                         keyEventJobs.remove(ev.data.code)?.cancel()
                         handleKeyEvent(ev)
