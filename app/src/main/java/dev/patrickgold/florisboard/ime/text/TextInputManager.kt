@@ -73,7 +73,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private var activeDictionary: Dictionary<String, Int>? = null
     val inputEventDispatcher: InputEventDispatcher = InputEventDispatcher.new(
         parentScope = this,
-        requiredDownUpKeyCodes = listOf(
+        requiredDownUpKeyCodes = intArrayOf(
             KeyCode.ARROW_DOWN,
             KeyCode.ARROW_LEFT,
             KeyCode.ARROW_RIGHT,
@@ -543,7 +543,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     /**
      * Handles [KeyCode] arrow and move events, behaves differently depending on text selection.
      */
-    private fun handleArrow(code: Int, repeatCount: Int) = activeEditorInstance.apply {
+    private fun handleArrow(code: Int, count: Int) = activeEditorInstance.apply {
         val isShiftPressed = isManualSelectionMode || inputEventDispatcher.isPressed(KeyCode.SHIFT)
         when (code) {
             KeyCode.ARROW_DOWN -> {
@@ -551,56 +551,56 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     isManualSelectionModeStart = false
                     isManualSelectionModeEnd = true
                 }
-                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN, meta(shift = isShiftPressed), repeatCount)
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN, meta(shift = isShiftPressed), count)
             }
             KeyCode.ARROW_LEFT -> {
                 if (!selection.isSelectionMode && isManualSelectionMode) {
                     isManualSelectionModeStart = true
                     isManualSelectionModeEnd = false
                 }
-                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT, meta(shift = isShiftPressed), repeatCount)
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT, meta(shift = isShiftPressed), count)
             }
             KeyCode.ARROW_RIGHT -> {
                 if (!selection.isSelectionMode && isManualSelectionMode) {
                     isManualSelectionModeStart = false
                     isManualSelectionModeEnd = true
                 }
-                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, meta(shift = isShiftPressed), repeatCount)
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, meta(shift = isShiftPressed), count)
             }
             KeyCode.ARROW_UP -> {
                 if (!selection.isSelectionMode && isManualSelectionMode) {
                     isManualSelectionModeStart = true
                     isManualSelectionModeEnd = false
                 }
-                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP, meta(shift = isShiftPressed), repeatCount)
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP, meta(shift = isShiftPressed), count)
             }
             KeyCode.MOVE_START_OF_PAGE -> {
                 if (!selection.isSelectionMode && isManualSelectionMode) {
                     isManualSelectionModeStart = true
                     isManualSelectionModeEnd = false
                 }
-                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP, meta(alt = true, shift = isShiftPressed), repeatCount)
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP, meta(alt = true, shift = isShiftPressed), count)
             }
             KeyCode.MOVE_END_OF_PAGE -> {
                 if (!selection.isSelectionMode && isManualSelectionMode) {
                     isManualSelectionModeStart = false
                     isManualSelectionModeEnd = true
                 }
-                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN, meta(alt = true, shift = isShiftPressed), repeatCount)
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN, meta(alt = true, shift = isShiftPressed), count)
             }
             KeyCode.MOVE_START_OF_LINE -> {
                 if (!selection.isSelectionMode && isManualSelectionMode) {
                     isManualSelectionModeStart = true
                     isManualSelectionModeEnd = false
                 }
-                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT, meta(alt = true, shift = isShiftPressed), repeatCount)
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT, meta(alt = true, shift = isShiftPressed), count)
             }
             KeyCode.MOVE_END_OF_LINE -> {
                 if (!selection.isSelectionMode && isManualSelectionMode) {
                     isManualSelectionModeStart = false
                     isManualSelectionModeEnd = true
                 }
-                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, meta(alt = true, shift = isShiftPressed), repeatCount)
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, meta(alt = true, shift = isShiftPressed), count)
             }
         }
     }

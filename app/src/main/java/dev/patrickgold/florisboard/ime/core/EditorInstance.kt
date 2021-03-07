@@ -551,10 +551,13 @@ class EditorInstance private constructor(
      *
      * @param keyEventCode The key code to send, use a key code defined in Android's [KeyEvent].
      * @param metaState Flags indicating which meta keys are currently pressed.
+     * @param count How often the key is pressed while the meta keys passed are down. Must be greater than or equal to
+     *  `1`, else this method will immediately return false.
+     *
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
-    fun sendDownUpKeyEvent(keyEventCode: Int, metaState: Int = meta(), repeatCount: Int = 1): Boolean {
-        if (repeatCount < 1) return false
+    fun sendDownUpKeyEvent(keyEventCode: Int, metaState: Int = meta(), count: Int = 1): Boolean {
+        if (count < 1) return false
         val eventTime = SystemClock.uptimeMillis()
         if (metaState and KeyEvent.META_CTRL_ON > 0) {
             sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
@@ -565,7 +568,7 @@ class EditorInstance private constructor(
         if (metaState and KeyEvent.META_SHIFT_ON > 0) {
             sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_SHIFT_LEFT, 0)
         }
-        for (n in 0 until repeatCount) {
+        for (n in 0 until count) {
             sendDownKeyEvent(eventTime, keyEventCode, metaState)
             sendUpKeyEvent(eventTime, keyEventCode, metaState)
         }
