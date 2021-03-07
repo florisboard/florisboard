@@ -30,8 +30,8 @@ import android.widget.Button
 import androidx.appcompat.widget.AppCompatImageButton
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.PrefHelper
-import dev.patrickgold.florisboard.ime.text.FlorisKeyEvent
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.theme.Theme
@@ -47,7 +47,21 @@ class EditingKeyView : AppCompatImageButton, ThemeManager.OnThemeUpdatedListener
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val themeManager: ThemeManager = ThemeManager.default()
-    private val data: KeyData
+    private val data: KeyData = when (id) {
+        R.id.arrow_down -> KeyData.ARROW_DOWN
+        R.id.arrow_left -> KeyData.ARROW_LEFT
+        R.id.arrow_right -> KeyData.ARROW_RIGHT
+        R.id.arrow_up -> KeyData.ARROW_UP
+        R.id.backspace -> KeyData.DELETE
+        R.id.clipboard_copy -> KeyData.CLIPBOARD_COPY
+        R.id.clipboard_cut -> KeyData.CLIPBOARD_CUT
+        R.id.clipboard_paste -> KeyData.CLIPBOARD_PASTE
+        R.id.move_start_of_line -> KeyData.MOVE_START_OF_LINE
+        R.id.move_end_of_line -> KeyData.MOVE_END_OF_LINE
+        R.id.select -> KeyData.CLIPBOARD_SELECT
+        R.id.select_all -> KeyData.CLIPBOARD_SELECT_ALL
+        else -> KeyData.UNSPECIFIED
+    }
     private var isKeyPressed: Boolean = false
     private val repeatedKeyPressHandler: Handler = Handler(context.mainLooper)
 
@@ -72,21 +86,6 @@ class EditingKeyView : AppCompatImageButton, ThemeManager.OnThemeUpdatedListener
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, R.style.TextEditingButton)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        data = when (id) {
-            R.id.arrow_down -> KeyData.ARROW_DOWN
-            R.id.arrow_left -> KeyData.ARROW_LEFT
-            R.id.arrow_right -> KeyData.ARROW_RIGHT
-            R.id.arrow_up -> KeyData.ARROW_UP
-            R.id.backspace -> KeyData.DELETE
-            R.id.clipboard_copy -> KeyData.CLIPBOARD_COPY
-            R.id.clipboard_cut -> KeyData.CLIPBOARD_CUT
-            R.id.clipboard_paste -> KeyData.CLIPBOARD_PASTE
-            R.id.move_start_of_line -> KeyData.MOVE_START_OF_LINE
-            R.id.move_end_of_line -> KeyData.MOVE_END_OF_LINE
-            R.id.select -> KeyData.CLIPBOARD_SELECT
-            R.id.select_all -> KeyData.CLIPBOARD_SELECT_ALL
-            else -> KeyData.UNSPECIFIED
-        }
         context.obtainStyledAttributes(attrs, R.styleable.EditingKeyView).apply {
             label = getString(R.styleable.EditingKeyView_android_text)
             recycle()
@@ -123,7 +122,7 @@ class EditingKeyView : AppCompatImageButton, ThemeManager.OnThemeUpdatedListener
                         val delayMillis = prefs.keyboard.longPressDelay.toLong()
                         repeatedKeyPressHandler.postAtScheduledRate(delayMillis, 25) {
                             if (isKeyPressed) {
-                                florisboard?.textInputManager?.sendKeyEvent(FlorisKeyEvent.downUp(data))
+                                florisboard?.textInputManager?.inputEventDispatcher?.send(InputKeyEvent.downUp(data))
                             } else {
                                 repeatedKeyPressHandler.cancelAll()
                             }
@@ -135,7 +134,7 @@ class EditingKeyView : AppCompatImageButton, ThemeManager.OnThemeUpdatedListener
                 isKeyPressed = false
                 repeatedKeyPressHandler.cancelAll()
                 if (event.actionMasked != MotionEvent.ACTION_CANCEL) {
-                    florisboard?.textInputManager?.sendKeyEvent(FlorisKeyEvent.downUp(data))
+                    florisboard?.textInputManager?.inputEventDispatcher?.send(InputKeyEvent.downUp(data))
                 }
             }
             else -> return false

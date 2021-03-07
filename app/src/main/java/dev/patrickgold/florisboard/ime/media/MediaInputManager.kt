@@ -24,12 +24,12 @@ import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.EditorInstance
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.InputView
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyboardView
 import dev.patrickgold.florisboard.ime.media.emoticon.EmoticonKeyData
 import dev.patrickgold.florisboard.ime.media.emoticon.EmoticonKeyboardView
-import dev.patrickgold.florisboard.ime.text.FlorisKeyEvent
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import kotlinx.coroutines.*
 import timber.log.Timber
@@ -143,20 +143,20 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
             MotionEvent.ACTION_DOWN -> {
                 florisboard.keyPressVibrate()
                 florisboard.keyPressSound(data)
-                if (FlorisKeyEvent.requireSeparateDownUp(data.code)) {
-                    florisboard.textInputManager.sendKeyEvent(FlorisKeyEvent.down(data))
+                if (florisboard.textInputManager.inputEventDispatcher.requireSeparateDownUp(data.code)) {
+                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.down(data))
                 }
             }
             MotionEvent.ACTION_UP -> {
-                if (FlorisKeyEvent.requireSeparateDownUp(data.code)) {
-                    florisboard.textInputManager.sendKeyEvent(FlorisKeyEvent.up(data))
+                if (florisboard.textInputManager.inputEventDispatcher.requireSeparateDownUp(data.code)) {
+                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.up(data))
                 } else {
-                    florisboard.textInputManager.sendKeyEvent(FlorisKeyEvent.downUp(data))
+                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(data))
                 }
             }
             MotionEvent.ACTION_CANCEL -> {
-                if (FlorisKeyEvent.requireSeparateDownUp(data.code)) {
-                    florisboard.textInputManager.sendKeyEvent(FlorisKeyEvent.cancel(data))
+                if (florisboard.textInputManager.inputEventDispatcher.requireSeparateDownUp(data.code)) {
+                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(data))
                 }
             }
         }

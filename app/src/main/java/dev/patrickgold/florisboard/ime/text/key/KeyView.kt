@@ -36,10 +36,10 @@ import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.ImeOptions
+import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.popup.PopupManager
-import dev.patrickgold.florisboard.ime.text.FlorisKeyEvent
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
@@ -237,6 +237,7 @@ class KeyView(
      */
     fun onFlorisTouchEvent(event: MotionEvent?): Boolean {
         if (event == null || !isEnabled) return false
+        val florisboard = florisboard ?: return false
 
         val pointerIndex = event.actionIndex
         val pointerId = event.getPointerId(pointerIndex)
@@ -245,7 +246,10 @@ class KeyView(
             && (data.code == KeyCode.DELETE && prefs.gestures.deleteKeySwipeLeft == SwipeAction.DELETE_CHARACTERS_PRECISELY
             || data.code == KeyCode.SPACE))
         if (swipeGestureDetector.onTouchEvent(event, alwaysTriggerOnMove)) {
-            florisboard?.textInputManager?.sendKeyEvent(FlorisKeyEvent.cancel(data))
+            if (florisboard.textInputManager.inputEventDispatcher.requireSeparateDownUp(data.code) && !shouldBlockNextKeyCode) {
+                florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(data))
+            }
+            shouldBlockNextKeyCode = true
             isKeyPressed = false
             longKeyPressHandler.cancelAll()
             popupManager.hide()
@@ -254,32 +258,30 @@ class KeyView(
 
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
-                if (FlorisKeyEvent.requireSeparateDownUp(data.code)) {
-                    florisboard?.textInputManager?.sendKeyEvent(FlorisKeyEvent.down(data))
+                if (florisboard.textInputManager.inputEventDispatcher.requireSeparateDownUp(data.code)) {
+                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.down(data))
                 }
                 isKeyPressed = true
                 val delayMillis = prefs.keyboard.longPressDelay.toLong()
                 hasTriggeredGestureMove = false
                 shouldBlockNextKeyCode = false
-                florisboard?.prefs?.keyboard?.let {
-                    if (it.popupEnabled) {
-                        popupManager.show(this, keyHintMode)
-                    }
+                if (florisboard.prefs.keyboard.popupEnabled) {
+                    popupManager.show(this, keyHintMode)
                 }
                 isKeyPressed = true
-                florisboard?.keyPressVibrate()
-                florisboard?.keyPressSound(data)
+                florisboard.keyPressVibrate()
+                florisboard.keyPressSound(data)
 
                 if (data.code == KeyCode.SPACE) {
-                    initSelectionStart = florisboard?.activeEditorInstance?.selection?.start ?: 0
-                    initSelectionEnd = florisboard?.activeEditorInstance?.selection?.end ?: 0
+                    initSelectionStart = florisboard.activeEditorInstance.selection.start
+                    initSelectionEnd = florisboard.activeEditorInstance.selection.end
                     longKeyPressHandler.postDelayed((delayMillis * 2.5f).toLong()) {
                         when (prefs.gestures.spaceBarLongPress) {
                             SwipeAction.NO_ACTION,
                             SwipeAction.INSERT_SPACE -> {
                             }
                             else -> {
-                                florisboard?.executeSwipeAction(prefs.gestures.spaceBarLongPress)
+                                this@KeyView.florisboard.executeSwipeAction(prefs.gestures.spaceBarLongPress)
                                 shouldBlockNextKeyCode = true
                             }
                         }
@@ -315,8 +317,8 @@ class KeyView(
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 longKeyPressHandler.cancelAll()
                 if (hasTriggeredGestureMove && data.code == KeyCode.DELETE) {
-                    florisboard?.textInputManager?.sendKeyEvent(FlorisKeyEvent.cancel(data))
-                    florisboard?.activeEditorInstance?.apply {
+                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(data))
+                    florisboard.activeEditorInstance.apply {
                         if (selection.isSelectionMode) {
                             deleteBackwards()
                         }
@@ -325,14 +327,14 @@ class KeyView(
                     val retData = popupManager.getActiveKeyData(this)
                     Timber.i(retData.toString())
                     if (event.actionMasked != MotionEvent.ACTION_CANCEL && !shouldBlockNextKeyCode && retData != null) {
-                        if (FlorisKeyEvent.requireSeparateDownUp(retData.code)) {
-                            florisboard?.textInputManager?.sendKeyEvent(FlorisKeyEvent.up(retData))
+                        if (florisboard.textInputManager.inputEventDispatcher.requireSeparateDownUp(retData.code)) {
+                            florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.up(retData))
                         } else {
-                            florisboard?.textInputManager?.sendKeyEvent(FlorisKeyEvent.downUp(retData))
+                            florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(retData))
                         }
                     } else {
-                        if (FlorisKeyEvent.requireSeparateDownUp(data.code)) {
-                            florisboard?.textInputManager?.sendKeyEvent(FlorisKeyEvent.cancel(data))
+                        if (florisboard.textInputManager.inputEventDispatcher.requireSeparateDownUp(data.code)) {
+                            florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(data))
                         }
                         shouldBlockNextKeyCode = false
                     }
@@ -402,8 +404,10 @@ class KeyView(
                     }
                     SwipeGesture.Direction.LEFT -> {
                         if (prefs.gestures.spaceBarSwipeLeft == SwipeAction.MOVE_CURSOR_LEFT) {
-                            for (n in 0 until abs(event.relUnitCountX)) {
-                                florisboard.executeSwipeAction(prefs.gestures.spaceBarSwipeLeft)
+                            abs(event.relUnitCountX).let {
+                                if (it > 0) {
+                                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.ARROW_LEFT, it))
+                                }
                             }
                         } else {
                             florisboard.executeSwipeAction(prefs.gestures.spaceBarSwipeLeft)
@@ -414,8 +418,10 @@ class KeyView(
                     }
                     SwipeGesture.Direction.RIGHT -> {
                         if (prefs.gestures.spaceBarSwipeRight == SwipeAction.MOVE_CURSOR_RIGHT) {
-                            for (n in 0 until abs(event.relUnitCountX)) {
-                                florisboard.executeSwipeAction(prefs.gestures.spaceBarSwipeRight)
+                            abs(event.relUnitCountX).let {
+                                if (it > 0) {
+                                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.ARROW_RIGHT, it))
+                                }
                             }
                         } else {
                             florisboard.executeSwipeAction(prefs.gestures.spaceBarSwipeRight)

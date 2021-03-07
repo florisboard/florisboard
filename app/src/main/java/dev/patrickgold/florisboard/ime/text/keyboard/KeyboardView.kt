@@ -28,7 +28,6 @@ import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
-import dev.patrickgold.florisboard.ime.popup.PopupManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -203,7 +202,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
             MotionEvent.ACTION_POINTER_UP -> {
                 val pointerIndex = event.actionIndex
                 val pointerId = event.getPointerId(pointerIndex)
-                sendFlorisTouchEvent(eventFloris, pointerIndex, pointerId, MotionEvent.ACTION_UP)
+                sendFlorisTouchEvent(eventFloris, pointerIndex, pointerId, event.actionMasked)
                 activeKeyViews.remove(pointerId)
             }
             else -> return false

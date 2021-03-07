@@ -553,7 +553,8 @@ class EditorInstance private constructor(
      * @param metaState Flags indicating which meta keys are currently pressed.
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
-    fun sendDownUpKeyEvent(keyEventCode: Int, metaState: Int = meta()): Boolean {
+    fun sendDownUpKeyEvent(keyEventCode: Int, metaState: Int = meta(), repeatCount: Int = 1): Boolean {
+        if (repeatCount < 1) return false
         val eventTime = SystemClock.uptimeMillis()
         if (metaState and KeyEvent.META_CTRL_ON > 0) {
             sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
@@ -564,8 +565,10 @@ class EditorInstance private constructor(
         if (metaState and KeyEvent.META_SHIFT_ON > 0) {
             sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_SHIFT_LEFT, 0)
         }
-        sendDownKeyEvent(eventTime, keyEventCode, metaState)
-        sendUpKeyEvent(eventTime, keyEventCode, metaState)
+        for (n in 0 until repeatCount) {
+            sendDownKeyEvent(eventTime, keyEventCode, metaState)
+            sendUpKeyEvent(eventTime, keyEventCode, metaState)
+        }
         if (metaState and KeyEvent.META_SHIFT_ON > 0) {
             sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_SHIFT_LEFT, 0)
         }
