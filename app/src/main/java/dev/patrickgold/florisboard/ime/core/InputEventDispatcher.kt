@@ -46,7 +46,7 @@ class InputEventDispatcher private constructor(
 ) : InputKeyEventSender {
     private val channel: Channel<InputKeyEvent> = Channel(channelCapacity)
     private val scope: CoroutineScope = CoroutineScope(parentScope.coroutineContext)
-    private val jobs: MutableMap<Int, Job> = mutableMapOf()
+    private val jobs: HashMap<Int, Job> = hashMapOf()
     private var lastKeyEvent: InputKeyEvent? = null
 
     /**
@@ -104,7 +104,7 @@ class InputEventDispatcher private constructor(
                                 if (ev.data.code != KeyCode.SHIFT) {
                                     channel.send(InputKeyEvent.repeat(ev.data))
                                 }
-                                delay(25)
+                                delay(50)
                             }
                         }
                         withContext(mainDispatcher) {
@@ -120,13 +120,11 @@ class InputEventDispatcher private constructor(
                         lastKeyEvent = ev
                     }
                     InputKeyEvent.Action.UP -> {
-                        if (jobs.containsKey(ev.data.code)) {
-                            jobs.remove(ev.data.code)?.cancel()
-                            withContext(mainDispatcher) {
-                                keyEventReceiver?.onInputKeyUp(ev)
-                            }
-                            lastKeyEvent = ev
+                        jobs.remove(ev.data.code)?.cancel()
+                        withContext(mainDispatcher) {
+                            keyEventReceiver?.onInputKeyUp(ev)
                         }
+                        lastKeyEvent = ev
                     }
                     InputKeyEvent.Action.REPEAT -> {
                         if (jobs.containsKey(ev.data.code)) {
@@ -136,10 +134,9 @@ class InputEventDispatcher private constructor(
                         }
                     }
                     InputKeyEvent.Action.CANCEL -> {
-                        if (jobs.containsKey(ev.data.code)) {
-                            withContext(mainDispatcher) {
-                                keyEventReceiver?.onInputKeyCancel(ev)
-                            }
+                        jobs.remove(ev.data.code)?.cancel()
+                        withContext(mainDispatcher) {
+                            keyEventReceiver?.onInputKeyCancel(ev)
                         }
                     }
                 }
@@ -156,7 +153,10 @@ class InputEventDispatcher private constructor(
     }
 
     override fun send(ev: InputKeyEvent) {
-        scope.launch(defaultDispatcher) {
+        scope.launch(mainDispatcher) {
+            if (ev.action == InputKeyEvent.Action.UP) {
+                jobs.remove(ev.data.code)?.cancel()
+            }
             channel.send(ev)
         }
     }

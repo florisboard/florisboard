@@ -60,8 +60,6 @@ class EditorInstance private constructor(
             }
         }
     var shouldReevaluateComposingSuggestions: Boolean = false
-    var isNewSelectionInBoundsOfOld: Boolean = false
-        private set
     var isPrivateMode: Boolean = false
     val isRawInputEditor: Boolean
         get() = inputAttributes.type == InputAttributes.Type.NULL
@@ -110,11 +108,6 @@ class EditorInstance private constructor(
         newSelStart: Int, newSelEnd: Int,
         candidatesStart: Int, candidatesEnd: Int
     ) {
-        isNewSelectionInBoundsOfOld =
-            newSelStart >= (oldSelStart - 1) &&
-            newSelStart <= (oldSelStart + 1) &&
-            newSelEnd >= (oldSelEnd - 1) &&
-            newSelEnd <= (oldSelEnd + 1)
         if (newSelEnd < newSelStart) {
             selection.update(newSelEnd, newSelStart)
         } else {
@@ -131,7 +124,7 @@ class EditorInstance private constructor(
         }
         if (selection.isCursorMode && isComposingEnabled && !isRawInputEditor && !isPhantomSpaceActive) {
             markComposingRegion(cachedInput.currentWord)
-        } else {
+        } else if (candidatesStart >= 0 || candidatesEnd >= 0) {
             markComposingRegion(null)
         }
     }
@@ -198,22 +191,9 @@ class EditorInstance private constructor(
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun deleteBackwards(): Boolean {
-        val ic = inputConnection ?: return false
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return if (isRawInputEditor) {
-            sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
-        } else {
-            ic.beginBatchEdit()
-            markComposingRegion(null)
-            sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
-            cachedInput.update()
-            if (isComposingEnabled) {
-                markComposingRegion(cachedInput.currentWord)
-            }
-            ic.endBatchEdit()
-            true
-        }
+        return sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
     }
 
     /**
@@ -374,8 +354,7 @@ class EditorInstance private constructor(
     fun performClipboardCopy(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return sendDownUpKeyEvent(KeyEvent.KEYCODE_C, meta(ctrl = true)) &&
-                selection.updateAndNotify(selection.end, selection.end)
+        return sendDownUpKeyEvent(KeyEvent.KEYCODE_C, meta(ctrl = true))
     }
 
     /**

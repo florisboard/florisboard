@@ -50,7 +50,6 @@ import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import dev.patrickgold.florisboard.util.cancelAll
 import dev.patrickgold.florisboard.util.postDelayed
-import timber.log.Timber
 import java.util.*
 import kotlin.math.abs
 
@@ -246,10 +245,9 @@ class KeyView(
             && (data.code == KeyCode.DELETE && prefs.gestures.deleteKeySwipeLeft == SwipeAction.DELETE_CHARACTERS_PRECISELY
             || data.code == KeyCode.SPACE))
         if (swipeGestureDetector.onTouchEvent(event, alwaysTriggerOnMove)) {
-            if (florisboard.textInputManager.inputEventDispatcher.requireSeparateDownUp(data.code) && !shouldBlockNextKeyCode) {
+            if (florisboard.textInputManager.inputEventDispatcher.requireSeparateDownUp(data.code) && florisboard.textInputManager.inputEventDispatcher.isPressed(data.code)) {
                 florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(data))
             }
-            shouldBlockNextKeyCode = true
             isKeyPressed = false
             longKeyPressHandler.cancelAll()
             popupManager.hide()
@@ -325,15 +323,17 @@ class KeyView(
                     }
                 } else {
                     val retData = popupManager.getActiveKeyData(this)
-                    Timber.i(retData.toString())
                     if (event.actionMasked != MotionEvent.ACTION_CANCEL && !shouldBlockNextKeyCode && retData != null) {
                         if (florisboard.textInputManager.inputEventDispatcher.requireSeparateDownUp(retData.code)) {
                             florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.up(retData))
                         } else {
                             florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(retData))
                         }
+                        if (event.actionMasked == MotionEvent.ACTION_UP && florisboard.textInputManager.inputEventDispatcher.isPressed(KeyCode.SHIFT) && data.code != KeyCode.SHIFT) {
+                            florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(KeyData.SHIFT))
+                        }
                     } else {
-                        if (florisboard.textInputManager.inputEventDispatcher.requireSeparateDownUp(data.code)) {
+                        if (florisboard.textInputManager.inputEventDispatcher.requireSeparateDownUp(data.code) && data.code != KeyCode.SHIFT) {
                             florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(data))
                         }
                         shouldBlockNextKeyCode = false

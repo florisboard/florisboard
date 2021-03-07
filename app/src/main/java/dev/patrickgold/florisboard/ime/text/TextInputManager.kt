@@ -88,11 +88,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     val layoutManager = LayoutManager(florisboard)
     private var smartbarView: SmartbarView? = null
 
-    // Caps/Space related properties
+    // Caps/Shift related properties
     var caps: Boolean = false
         private set
     var capsLock: Boolean = false
         private set
+    private var newCapsState: Boolean = false
 
     // Composing text related properties
     var isManualSelectionMode: Boolean = false
@@ -336,7 +337,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * and passing this info on to the [SmartbarView] to turn it into candidate suggestions.
      */
     override fun onUpdateSelection() {
-        updateCapsState()
+        if (!inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
+            updateCapsState()
+        }
         smartbarView?.updateSmartbarState()
         if (BuildConfig.DEBUG) {
             Timber.i("current word: ${activeEditorInstance.cachedInput.currentWord.text}")
@@ -509,16 +512,37 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     /**
-     * Handles a [KeyCode.SHIFT] event.
+     * Handles a [KeyCode.SHIFT] down event.
      */
-    private fun handleShift(ev: InputKeyEvent) {
+    private fun handleShiftDown(ev: InputKeyEvent) {
         if (inputEventDispatcher.isConsecutiveOfLastEvent(ev, florisboard.prefs.keyboard.longPressDelay.toLong())) {
+            newCapsState = true
             caps = true
             capsLock = true
         } else {
-            caps = !caps
+            newCapsState = !caps
+            caps = true
             capsLock = false
         }
+        keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
+        smartbarView?.updateCandidateSuggestionCapsState()
+    }
+
+    /**
+     * Handles a [KeyCode.SHIFT] up event.
+     */
+    private fun handleShiftUp() {
+        caps = newCapsState
+        keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
+        smartbarView?.updateCandidateSuggestionCapsState()
+    }
+
+    /**
+     * Handles a [KeyCode.SHIFT] cancel event.
+     */
+    private fun handleShiftCancel() {
+        caps = false
+        capsLock = false
         keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
         smartbarView?.updateCandidateSuggestionCapsState()
     }
@@ -624,7 +648,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onInputKeyDown(ev: InputKeyEvent) {
-        // Intentionally empty
+        when (ev.data.code) {
+            KeyCode.SHIFT -> {
+                handleShiftDown(ev)
+            }
+        }
     }
 
     override fun onInputKeyUp(ev: InputKeyEvent) {
@@ -667,7 +695,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             }
             KeyCode.LANGUAGE_SWITCH -> handleLanguageSwitch()
             KeyCode.SETTINGS -> florisboard.launchSettings()
-            KeyCode.SHIFT -> handleShift(ev)
+            KeyCode.SHIFT -> handleShiftUp()
             KeyCode.SHOW_INPUT_METHOD_PICKER -> florisboard.imeManager?.showInputMethodPicker()
             KeyCode.SWITCH_TO_MEDIA_CONTEXT -> florisboard.setActiveInput(R.id.media_input)
             KeyCode.SWITCH_TO_TEXT_CONTEXT -> florisboard.setActiveInput(R.id.text_input)
@@ -723,7 +751,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 smartbarView?.resetClipboardSuggestion()
             }
         }
-        if (ev.data.code != KeyCode.SHIFT && !capsLock) {
+        if (ev.data.code != KeyCode.SHIFT && !capsLock && !inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
             updateCapsState()
         }
         smartbarView?.updateSmartbarState()
@@ -734,6 +762,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onInputKeyCancel(ev: InputKeyEvent) {
-        // Intentionally empty
+        when (ev.data.code) {
+            KeyCode.SHIFT -> handleShiftCancel()
+        }
     }
 }

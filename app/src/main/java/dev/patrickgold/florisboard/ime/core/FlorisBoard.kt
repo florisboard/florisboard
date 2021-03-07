@@ -101,6 +101,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
     private var currentThemeIsNight: Boolean = false
     private var currentThemeResId: Int = 0
     private var isNumberRowVisible: Boolean = false
+    private var isWindowShown: Boolean = false
 
     val textInputManager: TextInputManager
     val mediaInputManager: MediaInputManager
@@ -358,7 +359,13 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
     }
 
     override fun onWindowShown() {
-        Timber.i("onWindowShown()")
+        if (isWindowShown) {
+            Timber.i("Ignoring onWindowShown()")
+            return
+        } else {
+            Timber.i("onWindowShown()")
+        }
+        isWindowShown = true
 
         prefs.sync()
         val newIsNumberRowVisible = prefs.keyboard.numberRow
@@ -377,7 +384,13 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
     }
 
     override fun onWindowHidden() {
-        Timber.i("onWindowHidden()")
+        if (!isWindowShown) {
+            Timber.i("Ignoring onWindowHidden()")
+            return
+        } else {
+            Timber.i("onWindowHidden()")
+        }
+        isWindowShown = false
 
         super.onWindowHidden()
         eventListeners.toList().forEach { it?.onWindowHidden() }
