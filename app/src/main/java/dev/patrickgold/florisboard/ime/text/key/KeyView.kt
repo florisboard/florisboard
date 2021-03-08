@@ -270,24 +270,38 @@ class KeyView(
                 florisboard.keyPressVibrate()
                 florisboard.keyPressSound(data)
 
-                if (data.code == KeyCode.SPACE) {
-                    initSelectionStart = florisboard.activeEditorInstance.selection.start
-                    initSelectionEnd = florisboard.activeEditorInstance.selection.end
-                    longKeyPressHandler.postDelayed((delayMillis * 2.5f).toLong()) {
-                        when (prefs.gestures.spaceBarLongPress) {
-                            SwipeAction.NO_ACTION,
-                            SwipeAction.INSERT_SPACE -> {
-                            }
-                            else -> {
-                                this@KeyView.florisboard.executeSwipeAction(prefs.gestures.spaceBarLongPress)
-                                shouldBlockNextKeyCode = true
+                when (data.code) {
+                    KeyCode.SPACE -> {
+                        initSelectionStart = florisboard.activeEditorInstance.selection.start
+                        initSelectionEnd = florisboard.activeEditorInstance.selection.end
+                        longKeyPressHandler.postDelayed((delayMillis * 2.5f).toLong()) {
+                            when (prefs.gestures.spaceBarLongPress) {
+                                SwipeAction.NO_ACTION,
+                                SwipeAction.INSERT_SPACE -> {
+                                }
+                                else -> {
+                                    this.florisboard.executeSwipeAction(prefs.gestures.spaceBarLongPress)
+                                    shouldBlockNextKeyCode = true
+                                }
                             }
                         }
                     }
-                } else {
-                    longKeyPressHandler.postDelayed(delayMillis) {
-                        if (data.popup.isNotEmpty()) {
-                            popupManager.extend(this@KeyView, keyHintMode)
+                    KeyCode.SHIFT -> {
+                        longKeyPressHandler.postDelayed((delayMillis * 2.5).toLong()) {
+                            this.florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.SHIFT_LOCK))
+                        }
+                    }
+                    KeyCode.LANGUAGE_SWITCH -> {
+                        longKeyPressHandler.postDelayed((delayMillis * 2.0).toLong()) {
+                            shouldBlockNextKeyCode = true
+                            this.florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.SHOW_INPUT_METHOD_PICKER))
+                        }
+                    }
+                    else -> {
+                        longKeyPressHandler.postDelayed(delayMillis) {
+                            if (data.popup.isNotEmpty()) {
+                                popupManager.extend(this@KeyView, keyHintMode)
+                            }
                         }
                     }
                 }
@@ -328,9 +342,9 @@ class KeyView(
                             florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.up(retData))
                         } else {
                             florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(retData))
-                        }
-                        if (event.actionMasked == MotionEvent.ACTION_UP && florisboard.textInputManager.inputEventDispatcher.isPressed(KeyCode.SHIFT) && data.code != KeyCode.SHIFT) {
-                            florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(KeyData.SHIFT))
+                            if (event.actionMasked == MotionEvent.ACTION_UP && florisboard.textInputManager.inputEventDispatcher.isPressed(KeyCode.SHIFT) && data.code != KeyCode.SHIFT) {
+                                florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(KeyData.SHIFT))
+                            }
                         }
                     } else {
                         if (florisboard.textInputManager.inputEventDispatcher.requireSeparateDownUp(data.code) && data.code != KeyCode.SHIFT) {

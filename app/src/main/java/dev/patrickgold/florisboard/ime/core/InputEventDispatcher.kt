@@ -47,7 +47,10 @@ class InputEventDispatcher private constructor(
     private val channel: Channel<InputKeyEvent> = Channel(channelCapacity)
     private val scope: CoroutineScope = CoroutineScope(parentScope.coroutineContext)
     private val jobs: HashMap<Int, Job> = hashMapOf()
-    private var lastKeyEvent: InputKeyEvent? = null
+    var lastKeyEventDown: InputKeyEvent? = null
+        private set
+    var lastKeyEventUp: InputKeyEvent? = null
+        private set
 
     /**
      * The input key event register. If null, the dispatcher will still process input, but won't dispatch them to an
@@ -110,6 +113,7 @@ class InputEventDispatcher private constructor(
                         withContext(mainDispatcher) {
                             keyEventReceiver?.onInputKeyDown(ev)
                         }
+                        lastKeyEventDown = ev
                     }
                     InputKeyEvent.Action.DOWN_UP -> {
                         jobs.remove(ev.data.code)?.cancel()
@@ -117,14 +121,15 @@ class InputEventDispatcher private constructor(
                             keyEventReceiver?.onInputKeyDown(ev)
                             keyEventReceiver?.onInputKeyUp(ev)
                         }
-                        lastKeyEvent = ev
+                        lastKeyEventDown = ev
+                        lastKeyEventUp = ev
                     }
                     InputKeyEvent.Action.UP -> {
                         jobs.remove(ev.data.code)?.cancel()
                         withContext(mainDispatcher) {
                             keyEventReceiver?.onInputKeyUp(ev)
                         }
-                        lastKeyEvent = ev
+                        lastKeyEventUp = ev
                     }
                     InputKeyEvent.Action.REPEAT -> {
                         if (jobs.containsKey(ev.data.code)) {
@@ -179,7 +184,7 @@ class InputEventDispatcher private constructor(
      * @param maxEventTimeDiff The maximum event time diff between [ev] and the last event, in milliseconds.
      */
     fun isConsecutiveOfLastEvent(ev: InputKeyEvent, maxEventTimeDiff: Long): Boolean {
-        return ev.isConsecutiveEventOf(lastKeyEvent, maxEventTimeDiff)
+        return ev.isConsecutiveEventOf(lastKeyEventUp, maxEventTimeDiff)
     }
 
     /**

@@ -162,6 +162,13 @@ open class KeyData(
             label = "shift"
         )
 
+        /** Predefined key data for [KeyCode.SHIFT_LOCK] */
+        val SHIFT_LOCK = KeyData(
+            type = KeyType.MODIFIER,
+            code = KeyCode.SHIFT_LOCK,
+            label = "shift_lock"
+        )
+
         /** Predefined key data for [KeyCode.SPACE] */
         val SPACE = KeyData(
             type = KeyType.CHARACTER,

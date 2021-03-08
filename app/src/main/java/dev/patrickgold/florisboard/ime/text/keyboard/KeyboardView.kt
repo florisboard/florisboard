@@ -167,47 +167,58 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (event == null || isPreviewMode || isLoadingPlaceholderKeyboard) return false
 
-        val eventFloris = MotionEvent.obtainNoHistory(event)
         if (!isSmartbarKeyboardView && swipeGestureDetector.onTouchEvent(event)) {
             for (pointerIndex in 0 until event.pointerCount) {
                 val pointerId = event.getPointerId(pointerIndex)
-                sendFlorisTouchEvent(eventFloris, pointerIndex, pointerId, MotionEvent.ACTION_CANCEL)
+                sendFlorisTouchEvent(event, pointerIndex, pointerId, MotionEvent.ACTION_CANCEL)
                 activeKeyViews.remove(pointerId)
             }
             return true
         }
 
         when (event.actionMasked) {
-            MotionEvent.ACTION_DOWN,
+            MotionEvent.ACTION_DOWN -> {
+                florisboard?.activeEditorInstance?.inputConnection?.beginBatchEdit()
+                val pointerIndex = event.actionIndex
+                val pointerId = event.getPointerId(pointerIndex)
+                searchForActiveKeyView(event, pointerIndex, pointerId)
+                initialKeyCodes[pointerId] = activeKeyViews[pointerId]?.data?.code ?: 0
+                sendFlorisTouchEvent(event, pointerIndex, pointerId, MotionEvent.ACTION_DOWN)
+            }
             MotionEvent.ACTION_POINTER_DOWN -> {
                 val pointerIndex = event.actionIndex
                 val pointerId = event.getPointerId(pointerIndex)
                 searchForActiveKeyView(event, pointerIndex, pointerId)
                 initialKeyCodes[pointerId] = activeKeyViews[pointerId]?.data?.code ?: 0
-                sendFlorisTouchEvent(eventFloris, pointerIndex, pointerId, MotionEvent.ACTION_DOWN)
+                sendFlorisTouchEvent(event, pointerIndex, pointerId, MotionEvent.ACTION_DOWN)
             }
             MotionEvent.ACTION_MOVE -> {
                 for (pointerIndex in 0 until event.pointerCount) {
                     val pointerId = event.getPointerId(pointerIndex)
                     if (!activeKeyViews.containsKey(pointerId)) {
                         searchForActiveKeyView(event, pointerIndex, pointerId)
-                        sendFlorisTouchEvent(eventFloris, pointerIndex, pointerId, MotionEvent.ACTION_DOWN)
+                        sendFlorisTouchEvent(event, pointerIndex, pointerId, MotionEvent.ACTION_DOWN)
                     } else {
-                        sendFlorisTouchEvent(eventFloris, pointerIndex, pointerId, MotionEvent.ACTION_MOVE)
+                        sendFlorisTouchEvent(event, pointerIndex, pointerId, MotionEvent.ACTION_MOVE)
                     }
                 }
             }
-            MotionEvent.ACTION_UP,
-            MotionEvent.ACTION_CANCEL,
             MotionEvent.ACTION_POINTER_UP -> {
                 val pointerIndex = event.actionIndex
                 val pointerId = event.getPointerId(pointerIndex)
-                sendFlorisTouchEvent(eventFloris, pointerIndex, pointerId, event.actionMasked)
+                sendFlorisTouchEvent(event, pointerIndex, pointerId, event.actionMasked)
                 activeKeyViews.remove(pointerId)
+            }
+            MotionEvent.ACTION_UP,
+            MotionEvent.ACTION_CANCEL -> {
+                val pointerIndex = event.actionIndex
+                val pointerId = event.getPointerId(pointerIndex)
+                sendFlorisTouchEvent(event, pointerIndex, pointerId, event.actionMasked)
+                activeKeyViews.remove(pointerId)
+                florisboard?.activeEditorInstance?.inputConnection?.endBatchEdit()
             }
             else -> return false
         }
-        eventFloris.recycle()
         return true
     }
 

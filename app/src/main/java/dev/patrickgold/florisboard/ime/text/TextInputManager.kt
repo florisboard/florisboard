@@ -548,6 +548,21 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     /**
+     * Handles a [KeyCode.SHIFT] up event.
+     */
+    private fun handleShiftLock() {
+        val lastKeyEvent = inputEventDispatcher.lastKeyEventDown ?: return
+        Timber.d(lastKeyEvent.toString())
+        if (lastKeyEvent.data.code == KeyCode.SHIFT && lastKeyEvent.action == InputKeyEvent.Action.DOWN) {
+            newCapsState = true
+            caps = true
+            capsLock = true
+            keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
+            smartbarView?.updateCandidateSuggestionCapsState()
+        }
+    }
+
+    /**
      * Handles a [KeyCode.SPACE] event. Also handles the auto-correction of two space taps if
      * enabled by the user.
      */
@@ -696,6 +711,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyCode.LANGUAGE_SWITCH -> handleLanguageSwitch()
             KeyCode.SETTINGS -> florisboard.launchSettings()
             KeyCode.SHIFT -> handleShiftUp()
+            KeyCode.SHIFT_LOCK -> handleShiftLock()
             KeyCode.SHOW_INPUT_METHOD_PICKER -> florisboard.imeManager?.showInputMethodPicker()
             KeyCode.SWITCH_TO_MEDIA_CONTEXT -> florisboard.setActiveInput(R.id.media_input)
             KeyCode.SWITCH_TO_TEXT_CONTEXT -> florisboard.setActiveInput(R.id.text_input)
