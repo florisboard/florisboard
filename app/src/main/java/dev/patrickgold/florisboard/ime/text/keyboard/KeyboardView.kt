@@ -266,7 +266,8 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
                     false
                 }
             }
-            initialKeyCodes[event.pointerId] ?: 0 > KeyCode.SPACE -> when {
+            initialKeyCodes[event.pointerId] ?: 0 > KeyCode.SPACE &&
+                activeKeyViews[event.pointerId]?.popupManager?.isShowingExtendedPopup == false -> when {
                 !prefs.glide.enabled -> when (event.type) {
                     SwipeGesture.Type.TOUCH_UP -> {
                         val swipeAction = when (event.direction) {

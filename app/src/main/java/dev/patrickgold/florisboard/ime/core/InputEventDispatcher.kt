@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.ime.core
 
 import android.os.SystemClock
 import dev.patrickgold.florisboard.BuildConfig
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -42,11 +41,11 @@ class InputEventDispatcher private constructor(
     channelCapacity: Int,
     private val mainDispatcher: CoroutineDispatcher,
     private val defaultDispatcher: CoroutineDispatcher,
-    private val requiredDownUpKeyCodes: IntArray
+    private val repeatableKeyCodes: IntArray
 ) : InputKeyEventSender {
     private val channel: Channel<InputKeyEvent> = Channel(channelCapacity)
     private val scope: CoroutineScope = CoroutineScope(parentScope.coroutineContext)
-    private val jobs: HashMap<Int, Job> = hashMapOf()
+    private val pressedKeys: HashMap<Int, PressedKeyInfo> = hashMapOf()
     var lastKeyEventDown: InputKeyEvent? = null
         private set
     var lastKeyEventUp: InputKeyEvent? = null
@@ -73,9 +72,7 @@ class InputEventDispatcher private constructor(
          *  Defaults to [Dispatchers.Main].
          * @param defaultDispatcher The default dispatcher used to switch the context to call the receiver callbacks.
          *  Defaults to [Dispatchers.Default].
-         * @param requiredDownUpKeyCodes An int array of all key codes which require separate down/up events. This does
-         *  nothing in this dispatcher, but is used by [requireSeparateDownUp] to return a boolean result. Defaults to
-         *  an empty array.
+         * @param repeatableKeyCodes An int array of all key codes which are repeatable while being pressed down.
          *
          * @return A new [InputEventDispatcher] instance initialized with given arguments.
          */
@@ -84,9 +81,9 @@ class InputEventDispatcher private constructor(
             channelCapacity: Int = DEFAULT_CHANNEL_CAPACITY,
             mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
             defaultDispatcher: CoroutineDispatcher = Dispatchers.Default,
-            requiredDownUpKeyCodes: IntArray = intArrayOf()
+            repeatableKeyCodes: IntArray = intArrayOf()
         ): InputEventDispatcher = InputEventDispatcher(
-            parentScope, channelCapacity, mainDispatcher, defaultDispatcher, requiredDownUpKeyCodes.clone()
+            parentScope, channelCapacity, mainDispatcher, defaultDispatcher, repeatableKeyCodes.clone()
         )
     }
 
@@ -100,23 +97,26 @@ class InputEventDispatcher private constructor(
                 }
                 when (ev.action) {
                     InputKeyEvent.Action.DOWN -> {
-                        if (jobs.containsKey(ev.data.code)) continue
-                        jobs[ev.data.code] = scope.launch(defaultDispatcher) {
-                            delay(600)
-                            while (isActive) {
-                                if (ev.data.code != KeyCode.SHIFT) {
-                                    channel.send(InputKeyEvent.repeat(ev.data))
+                        if (pressedKeys.containsKey(ev.data.code)) continue
+                        pressedKeys[ev.data.code] = PressedKeyInfo(
+                            eventTimeDown = ev.eventTime,
+                            repeatKeyPressJob = if (!repeatableKeyCodes.contains(ev.data.code)) { null } else {
+                                scope.launch(defaultDispatcher) {
+                                    delay(600)
+                                    while (isActive) {
+                                        channel.send(InputKeyEvent.repeat(ev.data))
+                                        delay(50)
+                                    }
                                 }
-                                delay(50)
                             }
-                        }
+                        )
                         withContext(mainDispatcher) {
                             keyEventReceiver?.onInputKeyDown(ev)
                         }
                         lastKeyEventDown = ev
                     }
                     InputKeyEvent.Action.DOWN_UP -> {
-                        jobs.remove(ev.data.code)?.cancel()
+                        pressedKeys.remove(ev.data.code)?.repeatKeyPressJob?.cancel()
                         withContext(mainDispatcher) {
                             keyEventReceiver?.onInputKeyDown(ev)
                             keyEventReceiver?.onInputKeyUp(ev)
@@ -125,21 +125,21 @@ class InputEventDispatcher private constructor(
                         lastKeyEventUp = ev
                     }
                     InputKeyEvent.Action.UP -> {
-                        jobs.remove(ev.data.code)?.cancel()
+                        pressedKeys.remove(ev.data.code)?.repeatKeyPressJob?.cancel()
                         withContext(mainDispatcher) {
                             keyEventReceiver?.onInputKeyUp(ev)
                         }
                         lastKeyEventUp = ev
                     }
                     InputKeyEvent.Action.REPEAT -> {
-                        if (jobs.containsKey(ev.data.code)) {
+                        if (pressedKeys.containsKey(ev.data.code)) {
                             withContext(mainDispatcher) {
                                 keyEventReceiver?.onInputKeyRepeat(ev)
                             }
                         }
                     }
                     InputKeyEvent.Action.CANCEL -> {
-                        jobs.remove(ev.data.code)?.cancel()
+                        pressedKeys.remove(ev.data.code)?.repeatKeyPressJob?.cancel()
                         withContext(mainDispatcher) {
                             keyEventReceiver?.onInputKeyCancel(ev)
                         }
@@ -149,10 +149,10 @@ class InputEventDispatcher private constructor(
                     Timber.d("Time elapsed: ${(System.nanoTime() - startTime) / 1_000_000}")
                 }
             }
-            val jobIterator = jobs.iterator()
-            while (jobIterator.hasNext()) {
-                jobIterator.next().value.cancel()
-                jobIterator.remove()
+            val pressedKeysIterator = pressedKeys.iterator()
+            while (pressedKeysIterator.hasNext()) {
+                pressedKeysIterator.next().value.repeatKeyPressJob?.cancel()
+                pressedKeysIterator.remove()
             }
         }
     }
@@ -160,7 +160,7 @@ class InputEventDispatcher private constructor(
     override fun send(ev: InputKeyEvent) {
         scope.launch(mainDispatcher) {
             if (ev.action == InputKeyEvent.Action.UP) {
-                jobs.remove(ev.data.code)?.cancel()
+                pressedKeys.remove(ev.data.code)?.repeatKeyPressJob?.cancel()
             }
             channel.send(ev)
         }
@@ -174,7 +174,7 @@ class InputEventDispatcher private constructor(
      * @return True if the given [code] is currently down, false otherwise.
      */
     fun isPressed(code: Int): Boolean {
-        return jobs.containsKey(code)
+        return pressedKeys.containsKey(code)
     }
 
     /**
@@ -188,23 +188,17 @@ class InputEventDispatcher private constructor(
     }
 
     /**
-     * Checks if given [code] requires a separate down/up.
-     *
-     * @param code The key code to check for.
-     *
-     * @return True if the given [code] requires a separate down/up, false otherwise.
-     */
-    fun requireSeparateDownUp(code: Int): Boolean {
-        return requiredDownUpKeyCodes.contains(code)
-    }
-
-    /**
      * Closes this dispatcher and cancels the local coroutine scope.
      */
     fun close() {
         keyEventReceiver = null
         scope.cancel()
     }
+
+    data class PressedKeyInfo(
+        val eventTimeDown: Long,
+        val repeatKeyPressJob: Job?
+    )
 }
 
 /**

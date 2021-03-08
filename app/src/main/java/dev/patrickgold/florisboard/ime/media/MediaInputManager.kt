@@ -143,21 +143,13 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
             MotionEvent.ACTION_DOWN -> {
                 florisboard.keyPressVibrate()
                 florisboard.keyPressSound(data)
-                if (florisboard.textInputManager.inputEventDispatcher.requireSeparateDownUp(data.code)) {
-                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.down(data))
-                }
+                florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.down(data))
             }
             MotionEvent.ACTION_UP -> {
-                if (florisboard.textInputManager.inputEventDispatcher.requireSeparateDownUp(data.code)) {
-                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.up(data))
-                } else {
-                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(data))
-                }
+                florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.up(data))
             }
             MotionEvent.ACTION_CANCEL -> {
-                if (florisboard.textInputManager.inputEventDispatcher.requireSeparateDownUp(data.code)) {
-                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(data))
-                }
+                florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(data))
             }
         }
         // MUST return false here so the background selector for showing a transparent bg works

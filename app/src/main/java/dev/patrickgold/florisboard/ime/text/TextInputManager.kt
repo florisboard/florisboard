@@ -73,14 +73,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private var activeDictionary: Dictionary<String, Int>? = null
     val inputEventDispatcher: InputEventDispatcher = InputEventDispatcher.new(
         parentScope = this,
-        requiredDownUpKeyCodes = intArrayOf(
+        repeatableKeyCodes = intArrayOf(
             KeyCode.ARROW_DOWN,
             KeyCode.ARROW_LEFT,
             KeyCode.ARROW_RIGHT,
             KeyCode.ARROW_UP,
             KeyCode.DELETE,
-            KeyCode.FORWARD_DELETE,
-            KeyCode.SHIFT
+            KeyCode.FORWARD_DELETE
         )
     )
 
