@@ -5,16 +5,14 @@ import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
 import android.widget.*
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.core.EditorInstance
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.InputView
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
-import dev.patrickgold.florisboard.ime.text.key.KeyType
-import dev.patrickgold.florisboard.util.cancelAll
-import dev.patrickgold.florisboard.util.postAtScheduledRate
 import kotlinx.coroutines.*
 import timber.log.Timber
 
@@ -24,11 +22,14 @@ import timber.log.Timber
 class ClipboardInputManager private constructor() : CoroutineScope by MainScope(),
     FlorisBoard.EventListener{
 
+    private var dataSet: ArrayDeque<FlorisClipboardManager.TimedClipData>? = null
     private val florisboard = FlorisBoard.getInstance()
-    private val activeEditorInstance: EditorInstance
-        get() = florisboard.activeEditorInstance
 
     private var repeatedKeyPressHandler: Handler? = null
+
+    private var recyclerView: RecyclerView? = null
+
+    private var adapter: ClipboardHistoryItemAdapter? = null
 
     companion object {
         private var instance: ClipboardInputManager? = null
@@ -62,7 +63,15 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
         launch(Dispatchers.Default) {
 
             inputView.findViewById<Button>(R.id.back_to_keyboard_button)
-                .setOnTouchListener { view, event -> onBackToKeyboardEvent(view, event) }
+                .setOnTouchListener { view, event -> onButtonPressEvent(view, event) }
+
+            inputView.findViewById<Button>(R.id.clear_clipboard_history)
+                .setOnTouchListener { view, event -> onButtonPressEvent(view, event) }
+
+            recyclerView = inputView.findViewById(R.id.clipboard_history_items)
+            recyclerView!!.adapter = adapter
+            val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            recyclerView!!.layoutManager = manager
         }
     }
 
@@ -79,11 +88,15 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
     /**
      * Handles clicks on the back to keyboard button.
      */
-    private fun onBackToKeyboardEvent(view: View, event: MotionEvent?): Boolean {
+    private fun onButtonPressEvent(view: View, event: MotionEvent?): Boolean {
         Timber.d("onBottomButtonEvent")
 
         event ?: return false
-        val data = KeyData(code = KeyCode.SWITCH_TO_TEXT_CONTEXT)
+        val data = when (view.id) {
+            R.id.back_to_keyboard_button -> KeyData(code = KeyCode.SWITCH_TO_TEXT_CONTEXT)
+            R.id.clear_clipboard_history -> KeyData(code = KeyCode.CLEAR_CLIPBOARD_HISTORY)
+            else -> null
+        }!!
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 florisboard.keyPressVibrate()
@@ -107,5 +120,15 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
         }
         // MUST return false here so the background selector for showing a transparent bg works
         return false
+    }
+
+    fun initClipboard(dataSet: ArrayDeque<FlorisClipboardManager.TimedClipData>) {
+        this.adapter =  ClipboardHistoryItemAdapter(dataSet = dataSet)
+        this.dataSet = dataSet
+    }
+
+    fun notifyClipboardDataChanged() {
+        this.recyclerView?.adapter?.notifyDataSetChanged()
+        Timber.d("NOTIFY CHANGED ${dataSet?.size}")
     }
 }

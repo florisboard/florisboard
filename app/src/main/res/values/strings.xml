@@ -354,4 +354,5 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Tap to view error details</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard seems to stop working repeatedly…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Falling back to previous keyboard to stop infinite crash loop. Tap to view error details</string>
+    <string name="pin">pin</string>
 </resources>

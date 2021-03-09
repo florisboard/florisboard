@@ -6,6 +6,8 @@ import android.util.AttributeSet
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.theme.Theme
@@ -14,7 +16,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import timber.log.Timber
 import kotlin.math.roundToInt
 
-class ClipboardView : LinearLayout, FlorisBoard.EventListener,
+class ClipboardHistoryView : LinearLayout, FlorisBoard.EventListener,
     ThemeManager.OnThemeUpdatedListener {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
     private val themeManager: ThemeManager = ThemeManager.default()
@@ -28,6 +30,9 @@ class ClipboardView : LinearLayout, FlorisBoard.EventListener,
     var clipboardBar: LinearLayout? = null
         private set
 
+    var clipboardHistory: RecyclerView? = null
+        private set
+
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
@@ -39,9 +44,11 @@ class ClipboardView : LinearLayout, FlorisBoard.EventListener,
         backButton = findViewById(R.id.back_to_keyboard_button)
         clipText = findViewById(R.id.clipboard_text)
         clipboardBar = findViewById(R.id.clipboard_bar)
+        clipboardHistory = findViewById(R.id.clipboard_history_items)
 
-        Timber.i("Did we find anything $clipText")
-
+       // val layoutManager = StaggeredGridLayoutManager(2, VERTICAL)
+       // clipboardHistory!!.layoutManager = layoutManager
+        Timber.d("help me pls")
         onApplyThemeAttributes()
     }
 

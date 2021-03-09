@@ -212,12 +212,16 @@ class EditorInstance private constructor(
 
 
     /**
-     * Depending on what the
+     * Commits the given [ClipData]. If the clip data is text (incl. HTML), it delegates to [commitText].
+     * If the item has a content URI (and the EditText supports it), the item is committed as rich data.
+     * This allows for committing (e.g) images.
+     *
+     * @param data The ClipData to commit
+     * @return True on success, false if something went wrong.
      */
     fun commitClipData(data: ClipData): Boolean {
         val item = data.getItemAt(0) ?: return false
         val mimeTypes = (0 until data.description.mimeTypeCount).map { data.description.getMimeType(it) }
-        Timber.d("item in data: ${data.getItemAt(0)}, mimetype $mimeTypes")
         return when {
             item.uri != null -> {
                 val inputContentInfo = InputContentInfoCompat(
@@ -231,7 +235,6 @@ class EditorInstance private constructor(
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
                     flags = flags or InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
                 }
-                Timber.d("got this far just before commitContent() $inputContentInfo")
                 InputConnectionCompat.commitContent(ic, editorInfo, inputContentInfo, flags, null)
             }
             item.htmlText != null -> {
