@@ -89,6 +89,8 @@ object KeyCode {
     const val TOGGLE_ONE_HANDED_MODE_RIGHT =-216
     const val URI_COMPONENT_TLD =           -255
 
+    const val INTERNAL_BATCH_EDIT =         -901
+
     const val KESHIDA =                     1600
     const val HALF_SPACE =                  8204
 }

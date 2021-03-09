@@ -23,7 +23,6 @@ import android.text.InputType
 import android.view.InputDevice
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
-import android.view.inputmethod.CursorAnchorInfo
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import androidx.annotation.RequiresApi
@@ -40,8 +39,6 @@ class EditorInstance private constructor(
     val packageName: String
 ) {
     val cachedInput: CachedInput = CachedInput(this)
-    private val cachedComposingText: StringBuilder = StringBuilder()
-    private var cachedComposingTextStart: Int = -1
     var contentMimeTypes: Array<out String?>? = null
     val cursorCapsMode: InputAttributes.CapsMode
         get() {
@@ -106,33 +103,31 @@ class EditorInstance private constructor(
     /**
      * Event handler which reacts to selection updates coming from the target app's editor.
      */
-    fun onUpdateSelection(cursorAnchorInfo: CursorAnchorInfo?) {
-        val cai = cursorAnchorInfo ?: return
-        if (cai.selectionEnd < cai.selectionStart) {
-            selection.update(cai.selectionEnd, cai.selectionStart)
+    fun onUpdateSelection(
+        oldSelStart: Int, oldSelEnd: Int,
+        newSelStart: Int, newSelEnd: Int,
+        candidatesStart: Int, candidatesEnd: Int
+    ) {
+        // The Android Framework allows that start can be greater than end in some cases. To prevent bugs in the Floris
+        // input logic, we swap start and end here if this should really be the case.
+        if (newSelEnd < newSelStart) {
+            selection.update(newSelEnd, newSelStart)
         } else {
-            selection.update(cai.selectionStart, cai.selectionEnd)
+            selection.update(newSelStart, newSelEnd)
         }
-        cachedComposingText.clear()
-        cai.composingText?.let { cachedComposingText.append(it) }
-        cachedComposingTextStart = cai.composingTextStart
-        cachedInput.update()
         if (isPhantomSpaceActive && wasPhantomSpaceActiveLastUpdate) {
             isPhantomSpaceActive = false
         } else if (isPhantomSpaceActive && !wasPhantomSpaceActiveLastUpdate) {
             wasPhantomSpaceActiveLastUpdate = true
         }
-        if (isComposingEnabled && cai.composingTextStart >= 0) {
+        cachedInput.update()
+        if (isComposingEnabled && candidatesStart >= 0 && candidatesEnd >= 0) {
             shouldReevaluateComposingSuggestions = true
         }
-        if (selection.isSelectionMode) {
+        if (selection.isCursorMode && isComposingEnabled && !isRawInputEditor && !isPhantomSpaceActive) {
+            markComposingRegion(cachedInput.currentWord)
+        } else if (newSelStart >= 0) {
             markComposingRegion(null)
-        } else if (selection.start < cai.composingTextStart || selection.end > cai.composingTextStart + cachedComposingText.length) {
-            if (selection.isCursorMode && isComposingEnabled && !isRawInputEditor && !isPhantomSpaceActive) {
-                markComposingRegion(cachedInput.currentWord)
-            } else if (cai.selectionStart >= 0) {
-                markComposingRegion(null)
-            }
         }
     }
 
@@ -175,7 +170,6 @@ class EditorInstance private constructor(
     fun commitText(text: String): Boolean {
         val ic = inputConnection ?: return false
         return if (isRawInputEditor || selection.isSelectionMode || !isComposingEnabled) {
-            markComposingRegion(null)
             ic.commitText(text, 1)
         } else {
             ic.beginBatchEdit()
@@ -183,23 +177,17 @@ class EditorInstance private constructor(
             val isPhantomSpace = isPhantomSpaceActive && selection.start > 0 && getTextBeforeCursor(1) != " "
             when {
                 isPhantomSpace && isWordComponent -> {
-                    cachedComposingText.clear()
-                    cachedComposingText.append(text)
-                    markComposingRegion(null)
+                    ic.finishComposingText()
                     ic.commitText(" ", 1)
                     ic.setComposingText(text, 1)
                 }
                 !isPhantomSpace && isWordComponent -> {
-                    cachedComposingText.insert(
-                        (selection.start - cachedComposingTextStart).coerceIn(0, cachedComposingText.length), text
-                    )
                     ic.finishComposingText()
                     ic.commitText(text, 1)
-                    ic.setComposingRegion(cachedComposingTextStart, cachedComposingTextStart + cachedComposingText.length)
+                    ic.setComposingRegion(cachedInput.currentWord.start, cachedInput.currentWord.end + text.length)
                 }
                 else -> {
-                    cachedComposingText.clear()
-                    markComposingRegion(null)
+                    ic.finishComposingText()
                     ic.commitText(text, 1)
                 }
             }
@@ -369,7 +357,13 @@ class EditorInstance private constructor(
     fun performClipboardCut(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return sendDownUpKeyEvent(KeyEvent.KEYCODE_X, meta(ctrl = true))
+        val ic = inputConnection ?: return false
+        if (isRawInputEditor) {
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_X, meta(ctrl = true))
+        } else {
+            ic.performContextMenuAction(android.R.id.cut)
+        }
+        return true
     }
 
     /**
@@ -381,8 +375,15 @@ class EditorInstance private constructor(
     fun performClipboardCopy(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return sendDownUpKeyEvent(KeyEvent.KEYCODE_C, meta(ctrl = true)) &&
-            sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT)
+        val ic = inputConnection ?: return false
+        if (isRawInputEditor) {
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_C, meta(ctrl = true)) &&
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT)
+        } else {
+            ic.performContextMenuAction(android.R.id.copy)
+            selection.updateAndNotify(selection.end, selection.end)
+        }
+        return true
     }
 
     /**
@@ -394,7 +395,13 @@ class EditorInstance private constructor(
     fun performClipboardPaste(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return sendDownUpKeyEvent(KeyEvent.KEYCODE_V, meta(ctrl = true))
+        val ic = inputConnection ?: return false
+        if (isRawInputEditor) {
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_V, meta(ctrl = true))
+        } else {
+            ic.performContextMenuAction(android.R.id.paste)
+        }
+        return true
     }
 
     /**
@@ -407,7 +414,13 @@ class EditorInstance private constructor(
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
         markComposingRegion(null)
-        return sendDownUpKeyEvent(KeyEvent.KEYCODE_A, meta(ctrl = true))
+        val ic = inputConnection ?: return false
+        if (isRawInputEditor) {
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_A, meta(ctrl = true))
+        } else {
+            ic.performContextMenuAction(android.R.id.selectAll)
+        }
+        return true
     }
 
     /**
@@ -907,7 +920,7 @@ class CachedInput(private val editorInstance: EditorInstance) {
      * the target app's editor text is bigger than [CACHED_TEXT_N_CHARS_BEFORE_CURSOR] and
      * [CACHED_TEXT_N_CHARS_AFTER_CURSOR], but always caches the relevant text around the cursor.
      */
-    var rawText: String = ""
+    var rawText: StringBuilder = StringBuilder()
         private set
 
     companion object {
@@ -963,18 +976,18 @@ class CachedInput(private val editorInstance: EditorInstance) {
         val ic = inputConnection
         if (ic == null) {
             offset = 0
-            rawText = ""
+            rawText.clear()
             expectedMaxLength = 0
         } else {
             val textBefore = getTextBeforeCursor(CACHED_TEXT_N_CHARS_BEFORE_CURSOR)
             val textSelected = ic.getSelectedText(0) ?: ""
             val textAfter = getTextAfterCursor(CACHED_TEXT_N_CHARS_AFTER_CURSOR)
             offset = (selection.start - textBefore.length).coerceAtLeast(0)
-            rawText = StringBuilder().run {
+            rawText.apply {
+                clear()
                 append(textBefore)
                 append(textSelected)
                 append(textAfter)
-                toString()
             }
             expectedMaxLength = offset + rawText.length
         }

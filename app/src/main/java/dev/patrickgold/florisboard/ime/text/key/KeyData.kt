@@ -113,6 +113,13 @@ open class KeyData(
             label = "delete_word"
         )
 
+        /** Predefined key data for [KeyCode.INTERNAL_BATCH_EDIT] */
+        val INTERNAL_BATCH_EDIT = KeyData(
+            type = KeyType.FUNCTION,
+            code = KeyCode.INTERNAL_BATCH_EDIT,
+            label = "internal_batch_edit"
+        )
+
         /** Predefined key data for [KeyCode.MOVE_START_OF_LINE] */
         val MOVE_START_OF_LINE = KeyData(
             type = KeyType.NAVIGATION,

@@ -95,6 +95,17 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
     private var vibrator: Vibrator? = null
     private val osHandler = Handler()
 
+    private var internalBatchNestingLevel: Int = 0
+    private val internalSelectionCache = object {
+        var selectionCatchCount: Int = 0
+        var oldSelStart: Int = -1
+        var oldSelEnd: Int = -1
+        var newSelStart: Int = -1
+        var newSelEnd: Int = -1
+        var candidatesStart: Int = -1
+        var candidatesEnd: Int = -1
+    }
+
     var activeEditorInstance: EditorInstance = EditorInstance.default()
 
     lateinit var subtypeManager: SubtypeManager
@@ -326,7 +337,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
         Timber.i("onStartInput($attribute, $restarting)")
 
         super.onStartInput(attribute, restarting)
-        currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR or InputConnection.CURSOR_UPDATE_IMMEDIATE)
+        currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
@@ -406,12 +417,74 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
         super.onConfigurationChanged(newConfig)
     }
 
-    override fun onUpdateCursorAnchorInfo(cursorAnchorInfo: CursorAnchorInfo?) {
-        Timber.i("onUpdateCursorAnchorInfo()")
-        super.onUpdateCursorAnchorInfo(cursorAnchorInfo)
+    /**
+     * Begins a FlorisBoard internal batch edit. This enables the application to continue sending selection updates
+     * (some apps need to to this else they absolutely refuse to give visual feedback on cursor movement etc.). The
+     * selection update is then caught if [internalBatchNestingLevel] is greater than 0, thus not delegating the
+     * update to the editor instance. This is needed because else the UI stutters when too many updates arrive in a
+     * row.
+     */
+    fun beginInternalBatchEdit() {
+        internalBatchNestingLevel++
+    }
 
-        activeEditorInstance.onUpdateSelection(cursorAnchorInfo)
-        eventListeners.toList().forEach { it?.onUpdateSelection() }
+    /**
+     * Ends an internal batch edit, if [internalBatchNestingLevel] is <= 1 and calls [onUpdateSelection] with the
+     * corresponding reported selection values. This call is not caught and the editor instance and other classes are
+     * able to update the UI. Resets the internal selection cache and is ready for the next batch edit.
+     */
+    fun endInternalBatchEdit() {
+        internalBatchNestingLevel = (internalBatchNestingLevel - 1).coerceAtLeast(0)
+        if (internalBatchNestingLevel == 0) {
+            internalSelectionCache.apply {
+                if (selectionCatchCount > 0) {
+                    onUpdateSelection(
+                        oldSelStart, oldSelEnd,
+                        newSelStart, newSelEnd,
+                        candidatesStart, candidatesEnd
+                    )
+                    selectionCatchCount = 0
+                    oldSelStart = -1
+                    oldSelEnd = -1
+                    newSelStart = -1
+                    newSelEnd = -1
+                    candidatesStart = -1
+                    candidatesEnd = -1
+                }
+            }
+        }
+    }
+
+    override fun onUpdateSelection(
+        oldSelStart: Int, oldSelEnd: Int,
+        newSelStart: Int, newSelEnd: Int,
+        candidatesStart: Int, candidatesEnd: Int
+    ) {
+        super.onUpdateSelection(
+            oldSelStart, oldSelEnd,
+            newSelStart, newSelEnd,
+            candidatesStart, candidatesEnd
+        )
+
+        if (internalBatchNestingLevel == 0) {
+            Timber.i("onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd)")
+            activeEditorInstance.onUpdateSelection(
+                oldSelStart, oldSelEnd,
+                newSelStart, newSelEnd,
+                candidatesStart, candidatesEnd
+            )
+            eventListeners.toList().forEach { it?.onUpdateSelection() }
+        } else {
+            Timber.i("onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd): caught due to internal batch level of $internalBatchNestingLevel!")
+            if (internalSelectionCache.selectionCatchCount++ == 0) {
+                internalSelectionCache.oldSelStart = oldSelStart
+                internalSelectionCache.oldSelEnd = oldSelEnd
+            }
+            internalSelectionCache.newSelStart = newSelStart
+            internalSelectionCache.newSelEnd = newSelEnd
+            internalSelectionCache.candidatesStart = candidatesStart
+            internalSelectionCache.candidatesEnd = candidatesEnd
+        }
     }
 
     override fun onThemeUpdated(theme: Theme) {

@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.core
 
 import android.os.SystemClock
 import dev.patrickgold.florisboard.BuildConfig
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -113,7 +114,9 @@ class InputEventDispatcher private constructor(
                         withContext(mainDispatcher) {
                             keyEventReceiver?.onInputKeyDown(ev)
                         }
-                        lastKeyEventDown = ev
+                        if (ev.data.code != KeyCode.INTERNAL_BATCH_EDIT) {
+                            lastKeyEventDown = ev
+                        }
                     }
                     InputKeyEvent.Action.DOWN_UP -> {
                         pressedKeys.remove(ev.data.code)?.repeatKeyPressJob?.cancel()
@@ -121,15 +124,19 @@ class InputEventDispatcher private constructor(
                             keyEventReceiver?.onInputKeyDown(ev)
                             keyEventReceiver?.onInputKeyUp(ev)
                         }
-                        lastKeyEventDown = ev
-                        lastKeyEventUp = ev
+                        if (ev.data.code != KeyCode.INTERNAL_BATCH_EDIT) {
+                            lastKeyEventDown = ev
+                            lastKeyEventUp = ev
+                        }
                     }
                     InputKeyEvent.Action.UP -> {
                         pressedKeys.remove(ev.data.code)?.repeatKeyPressJob?.cancel()
                         withContext(mainDispatcher) {
                             keyEventReceiver?.onInputKeyUp(ev)
                         }
-                        lastKeyEventUp = ev
+                        if (ev.data.code != KeyCode.INTERNAL_BATCH_EDIT) {
+                            lastKeyEventUp = ev
+                        }
                     }
                     InputKeyEvent.Action.REPEAT -> {
                         if (pressedKeys.containsKey(ev.data.code)) {
@@ -197,7 +204,7 @@ class InputEventDispatcher private constructor(
  * @property action The action of this event.
  * @property data The data of this event.
  * @property count The count how often this event occurred. Is only respected by other methods if the [action] of this
- *  event is [Action.DOWN_UP], else always 1 is assumed.
+ *  event is [Action.DOWN_UP] or [Action.REPEAT], else always 1 is assumed.
  */
 data class InputKeyEvent(
     val eventTime: Long,
@@ -259,15 +266,16 @@ data class InputKeyEvent(
          * Creates a new input key event with given [keyData] and sets the action to [Action.REPEAT].
          *
          * @param keyData The key data of the input key event event to create.
+         * @param count How often this event occurred. Must be grater or equal to 1, defaults to 1.
          *
          * @return The created input key event.
          */
-        fun repeat(keyData: KeyData): InputKeyEvent {
+        fun repeat(keyData: KeyData, count: Int = 1): InputKeyEvent {
             return InputKeyEvent(
                 eventTime = SystemClock.uptimeMillis(),
                 action = Action.REPEAT,
                 data = keyData,
-                count = 1
+                count = count
             )
         }
 

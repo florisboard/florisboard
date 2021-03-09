@@ -175,11 +175,15 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
                 sendFlorisTouchEvent(event, pointerIndex, pointerId, MotionEvent.ACTION_CANCEL)
                 activeKeyViews.remove(pointerId)
             }
+            if (event.actionMasked == MotionEvent.ACTION_UP || event.actionMasked == MotionEvent.ACTION_CANCEL) {
+                florisboard?.textInputManager?.inputEventDispatcher?.send(InputKeyEvent.up(KeyData.INTERNAL_BATCH_EDIT))
+            }
             return true
         }
 
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
+                florisboard?.textInputManager?.inputEventDispatcher?.send(InputKeyEvent.down(KeyData.INTERNAL_BATCH_EDIT))
                 val pointerIndex = event.actionIndex
                 val pointerId = event.getPointerId(pointerIndex)
                 searchForActiveKeyView(event, pointerIndex, pointerId)
@@ -216,6 +220,7 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
                 val pointerId = event.getPointerId(pointerIndex)
                 sendFlorisTouchEvent(event, pointerIndex, pointerId, event.actionMasked)
                 activeKeyViews.remove(pointerId)
+                florisboard?.textInputManager?.inputEventDispatcher?.send(InputKeyEvent.up(KeyData.INTERNAL_BATCH_EDIT))
             }
             else -> return false
         }

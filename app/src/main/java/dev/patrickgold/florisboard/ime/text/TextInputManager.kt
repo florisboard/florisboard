@@ -654,6 +654,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     override fun onInputKeyDown(ev: InputKeyEvent) {
         when (ev.data.code) {
+            KeyCode.INTERNAL_BATCH_EDIT -> {
+                florisboard.beginInternalBatchEdit()
+                return
+            }
             KeyCode.SHIFT -> {
                 handleShiftDown(ev)
             }
@@ -669,7 +673,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyCode.MOVE_START_OF_PAGE,
             KeyCode.MOVE_END_OF_PAGE,
             KeyCode.MOVE_START_OF_LINE,
-            KeyCode.MOVE_END_OF_LINE -> if (ev.action == InputKeyEvent.Action.DOWN_UP) {
+            KeyCode.MOVE_END_OF_LINE -> if (ev.action == InputKeyEvent.Action.DOWN_UP || ev.action == InputKeyEvent.Action.REPEAT) {
                 handleArrow(ev.data.code, ev.count)
             } else {
                 handleArrow(ev.data.code, 1)
@@ -697,6 +701,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyCode.ENTER -> {
                 handleEnter()
                 smartbarView?.resetClipboardSuggestion()
+            }
+            KeyCode.INTERNAL_BATCH_EDIT -> {
+                florisboard.endInternalBatchEdit()
+                return
             }
             KeyCode.LANGUAGE_SWITCH -> handleLanguageSwitch()
             KeyCode.SETTINGS -> florisboard.launchSettings()
