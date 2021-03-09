@@ -27,10 +27,12 @@ import androidx.core.view.children
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import dev.patrickgold.florisboard.ime.theme.Theme
@@ -178,7 +180,6 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
 
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
-                florisboard?.activeEditorInstance?.inputConnection?.beginBatchEdit()
                 val pointerIndex = event.actionIndex
                 val pointerId = event.getPointerId(pointerIndex)
                 searchForActiveKeyView(event, pointerIndex, pointerId)
@@ -215,7 +216,6 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
                 val pointerId = event.getPointerId(pointerIndex)
                 sendFlorisTouchEvent(event, pointerIndex, pointerId, event.actionMasked)
                 activeKeyViews.remove(pointerId)
-                florisboard?.activeEditorInstance?.inputConnection?.endBatchEdit()
             }
             else -> return false
         }
@@ -265,6 +265,14 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
                 } else {
                     false
                 }
+            }
+            initialKeyCodes[event.pointerId] == KeyCode.SHIFT && activeKeyViews[event.pointerId]?.data?.code != KeyCode.SHIFT &&
+                event.type == SwipeGesture.Type.TOUCH_UP -> {
+                activeKeyViews[event.pointerId]?.let {
+                    florisboard?.textInputManager?.inputEventDispatcher?.send(InputKeyEvent.up(it.popupManager.getActiveKeyData(it) ?: it.data))
+                    florisboard?.textInputManager?.inputEventDispatcher?.send(InputKeyEvent.cancel(KeyData.SHIFT))
+                }
+                true
             }
             initialKeyCodes[event.pointerId] ?: 0 > KeyCode.SPACE &&
                 activeKeyViews[event.pointerId]?.popupManager?.isShowingExtendedPopup == false -> when {

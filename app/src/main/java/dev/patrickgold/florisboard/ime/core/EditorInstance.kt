@@ -23,6 +23,7 @@ import android.text.InputType
 import android.view.InputDevice
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
+import android.view.inputmethod.CursorAnchorInfo
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import androidx.annotation.RequiresApi
@@ -39,6 +40,8 @@ class EditorInstance private constructor(
     val packageName: String
 ) {
     val cachedInput: CachedInput = CachedInput(this)
+    private val cachedComposingText: StringBuilder = StringBuilder()
+    private var cachedComposingTextStart: Int = -1
     var contentMimeTypes: Array<out String?>? = null
     val cursorCapsMode: InputAttributes.CapsMode
         get() {
@@ -103,29 +106,33 @@ class EditorInstance private constructor(
     /**
      * Event handler which reacts to selection updates coming from the target app's editor.
      */
-    fun onUpdateSelection(
-        oldSelStart: Int, oldSelEnd: Int,
-        newSelStart: Int, newSelEnd: Int,
-        candidatesStart: Int, candidatesEnd: Int
-    ) {
-        if (newSelEnd < newSelStart) {
-            selection.update(newSelEnd, newSelStart)
+    fun onUpdateSelection(cursorAnchorInfo: CursorAnchorInfo?) {
+        val cai = cursorAnchorInfo ?: return
+        if (cai.selectionEnd < cai.selectionStart) {
+            selection.update(cai.selectionEnd, cai.selectionStart)
         } else {
-            selection.update(newSelStart, newSelEnd)
+            selection.update(cai.selectionStart, cai.selectionEnd)
         }
+        cachedComposingText.clear()
+        cai.composingText?.let { cachedComposingText.append(it) }
+        cachedComposingTextStart = cai.composingTextStart
         cachedInput.update()
         if (isPhantomSpaceActive && wasPhantomSpaceActiveLastUpdate) {
             isPhantomSpaceActive = false
         } else if (isPhantomSpaceActive && !wasPhantomSpaceActiveLastUpdate) {
             wasPhantomSpaceActiveLastUpdate = true
         }
-        if (isComposingEnabled && candidatesStart >= 0 && candidatesEnd >= 0) {
+        if (isComposingEnabled && cai.composingTextStart >= 0) {
             shouldReevaluateComposingSuggestions = true
         }
-        if (selection.isCursorMode && isComposingEnabled && !isRawInputEditor && !isPhantomSpaceActive) {
-            markComposingRegion(cachedInput.currentWord)
-        } else if (candidatesStart >= 0 || candidatesEnd >= 0) {
+        if (selection.isSelectionMode) {
             markComposingRegion(null)
+        } else if (selection.start < cai.composingTextStart || selection.end > cai.composingTextStart + cachedComposingText.length) {
+            if (selection.isCursorMode && isComposingEnabled && !isRawInputEditor && !isPhantomSpaceActive) {
+                markComposingRegion(cachedInput.currentWord)
+            } else if (cai.selectionStart >= 0) {
+                markComposingRegion(null)
+            }
         }
     }
 
@@ -167,17 +174,37 @@ class EditorInstance private constructor(
      */
     fun commitText(text: String): Boolean {
         val ic = inputConnection ?: return false
-        return if (isRawInputEditor) {
+        return if (isRawInputEditor || selection.isSelectionMode || !isComposingEnabled) {
+            markComposingRegion(null)
             ic.commitText(text, 1)
         } else {
             ic.beginBatchEdit()
-            markComposingRegion(null)
-            if (isPhantomSpaceActive && selection.start > 0 && getTextBeforeCursor(1) != " " && text != " ") {
-                ic.commitText(" ", 1)
+            val isWordComponent = CachedInput.isWordComponent(text)
+            val isPhantomSpace = isPhantomSpaceActive && selection.start > 0 && getTextBeforeCursor(1) != " "
+            when {
+                isPhantomSpace && isWordComponent -> {
+                    cachedComposingText.clear()
+                    cachedComposingText.append(text)
+                    markComposingRegion(null)
+                    ic.commitText(" ", 1)
+                    ic.setComposingText(text, 1)
+                }
+                !isPhantomSpace && isWordComponent -> {
+                    cachedComposingText.insert(
+                        (selection.start - cachedComposingTextStart).coerceIn(0, cachedComposingText.length), text
+                    )
+                    ic.finishComposingText()
+                    ic.commitText(text, 1)
+                    ic.setComposingRegion(cachedComposingTextStart, cachedComposingTextStart + cachedComposingText.length)
+                }
+                else -> {
+                    cachedComposingText.clear()
+                    markComposingRegion(null)
+                    ic.commitText(text, 1)
+                }
             }
             isPhantomSpaceActive = false
             wasPhantomSpaceActiveLastUpdate = false
-            ic.commitText(text, 1)
             ic.endBatchEdit()
             true
         }
@@ -354,7 +381,8 @@ class EditorInstance private constructor(
     fun performClipboardCopy(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return sendDownUpKeyEvent(KeyEvent.KEYCODE_C, meta(ctrl = true))
+        return sendDownUpKeyEvent(KeyEvent.KEYCODE_C, meta(ctrl = true)) &&
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT)
     }
 
     /**
@@ -378,6 +406,7 @@ class EditorInstance private constructor(
     fun performClipboardSelectAll(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
+        markComposingRegion(null)
         return sendDownUpKeyEvent(KeyEvent.KEYCODE_A, meta(ctrl = true))
     }
 
@@ -418,21 +447,7 @@ class EditorInstance private constructor(
     fun performUndo(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        val ic = inputConnection ?: return false
-        return if (isRawInputEditor) {
-            sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true))
-            true
-        } else {
-            ic.beginBatchEdit()
-            markComposingRegion(null)
-            sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true))
-            cachedInput.update()
-            if (isComposingEnabled) {
-                markComposingRegion(cachedInput.currentWord)
-            }
-            ic.endBatchEdit()
-            true
-        }
+        return sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true))
     }
 
     /**
@@ -443,21 +458,7 @@ class EditorInstance private constructor(
     fun performRedo(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        val ic = inputConnection ?: return false
-        return if (isRawInputEditor) {
-            sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true, shift = true))
-            true
-        } else {
-            ic.beginBatchEdit()
-            markComposingRegion(null)
-            sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true, shift = true))
-            cachedInput.update()
-            if (isComposingEnabled) {
-                markComposingRegion(cachedInput.currentWord)
-            }
-            ic.endBatchEdit()
-            true
-        }
+        return sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true, shift = true))
     }
 
     /**
@@ -537,6 +538,8 @@ class EditorInstance private constructor(
      */
     fun sendDownUpKeyEvent(keyEventCode: Int, metaState: Int = meta(), count: Int = 1): Boolean {
         if (count < 1) return false
+        val ic = inputConnection ?: return false
+        ic.beginBatchEdit()
         val eventTime = SystemClock.uptimeMillis()
         if (metaState and KeyEvent.META_CTRL_ON > 0) {
             sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
@@ -560,6 +563,7 @@ class EditorInstance private constructor(
         if (metaState and KeyEvent.META_CTRL_ON > 0) {
             sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
         }
+        ic.endBatchEdit()
         return true
     }
 }
@@ -912,6 +916,10 @@ class CachedInput(private val editorInstance: EditorInstance) {
 
         private val WORD_EVAL_REGEX = """[^\p{L}\']""".toRegex()
         private val WORD_SPLIT_REGEX_EN = """((?<=$WORD_EVAL_REGEX)|(?=$WORD_EVAL_REGEX))""".toRegex()
+
+        fun isWordComponent(string: String): Boolean {
+            return !WORD_EVAL_REGEX.matches(string)
+        }
     }
 
     /**

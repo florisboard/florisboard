@@ -437,24 +437,16 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             R.id.quick_action_open_settings -> florisboard.launchSettings()
             R.id.quick_action_one_handed_toggle -> florisboard.toggleOneHandedMode(isRight = true)
             R.id.quick_action_undo -> {
-                handleUndo()
+                activeEditorInstance.performUndo()
                 return
             }
             R.id.quick_action_redo -> {
-                handleRedo()
+                activeEditorInstance.performRedo()
                 return
             }
         }
         smartbarView?.isQuickActionsVisible = false
         smartbarView?.updateSmartbarState()
-    }
-
-    private fun handleUndo(){
-        activeEditorInstance.performUndo()
-    }
-
-    private fun handleRedo(){
-        activeEditorInstance.performRedo()
     }
 
     /**
@@ -514,7 +506,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Handles a [KeyCode.SHIFT] down event.
      */
     private fun handleShiftDown(ev: InputKeyEvent) {
-        if (inputEventDispatcher.isConsecutiveOfLastEvent(ev, florisboard.prefs.keyboard.longPressDelay.toLong())) {
+        if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventDown, florisboard.prefs.keyboard.longPressDelay.toLong())) {
             newCapsState = true
             caps = true
             capsLock = true
@@ -551,7 +543,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     private fun handleShiftLock() {
         val lastKeyEvent = inputEventDispatcher.lastKeyEventDown ?: return
-        Timber.d(lastKeyEvent.toString())
         if (lastKeyEvent.data.code == KeyCode.SHIFT && lastKeyEvent.action == InputKeyEvent.Action.DOWN) {
             newCapsState = true
             caps = true
@@ -567,7 +558,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     private fun handleSpace(ev: InputKeyEvent) {
         if (florisboard.prefs.correction.doubleSpacePeriod) {
-            if (inputEventDispatcher.isConsecutiveOfLastEvent(ev, florisboard.prefs.keyboard.longPressDelay.toLong())) {
+            if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventUp, florisboard.prefs.keyboard.longPressDelay.toLong())) {
                 val text = activeEditorInstance.getTextBeforeCursor(2)
                 if (text.length == 2 && !text.matches("""[.!?‽\s][\s]""".toRegex())) {
                     activeEditorInstance.deleteBackwards()

@@ -349,9 +349,6 @@ class KeyView(
                             florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(data))
                         }
                     }
-                    if (florisboard.textInputManager.inputEventDispatcher.isPressed(KeyCode.SHIFT) && data.code != KeyCode.SHIFT) {
-                        florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(KeyData.SHIFT))
-                    }
                     popupManager.hide()
                 }
                 shouldBlockNextKeyCode = false

@@ -159,9 +159,6 @@ class InputEventDispatcher private constructor(
 
     override fun send(ev: InputKeyEvent) {
         scope.launch(mainDispatcher) {
-            if (ev.action == InputKeyEvent.Action.UP) {
-                pressedKeys.remove(ev.data.code)?.repeatKeyPressJob?.cancel()
-            }
             channel.send(ev)
         }
     }
@@ -175,16 +172,6 @@ class InputEventDispatcher private constructor(
      */
     fun isPressed(code: Int): Boolean {
         return pressedKeys.containsKey(code)
-    }
-
-    /**
-     * Checks if a given event [ev] is a consecutive event of the last event.
-     *
-     * @param ev The event to check for.
-     * @param maxEventTimeDiff The maximum event time diff between [ev] and the last event, in milliseconds.
-     */
-    fun isConsecutiveOfLastEvent(ev: InputKeyEvent, maxEventTimeDiff: Long): Boolean {
-        return ev.isConsecutiveEventOf(lastKeyEventUp, maxEventTimeDiff)
     }
 
     /**

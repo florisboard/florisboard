@@ -276,7 +276,8 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                             KeyboardMode.PHONE2 -> null
                             else -> when {
                                 florisboard.activeEditorInstance.isComposingEnabled &&
-                                        shouldSuggestClipboardContents
+                                    shouldSuggestClipboardContents &&
+                                    florisboard.activeEditorInstance.selection.isCursorMode
                                 -> R.id.clipboard_suggestion_row
                                 florisboard.activeEditorInstance.isComposingEnabled &&
                                         florisboard.activeEditorInstance.selection.isCursorMode
