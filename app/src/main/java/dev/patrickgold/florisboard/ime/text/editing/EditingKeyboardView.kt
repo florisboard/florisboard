@@ -80,7 +80,7 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener,
             else -> View.GONE
         }
         copyKey?.isEnabled = isSelectionActive
-        pasteKey?.isEnabled = florisboard?.clipboardManager?.hasPrimaryClip() ?: false
+        pasteKey?.isEnabled = florisboard?.florisClipboardManager?.hasPrimaryClip() ?: false
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

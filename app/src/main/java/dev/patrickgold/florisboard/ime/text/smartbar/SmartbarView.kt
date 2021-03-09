@@ -303,7 +303,8 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
         if (prefs.suggestion.enabled && prefs.suggestion.suggestClipboardContent &&
             florisboard?.activeEditorInstance?.isPrivateMode == false) {
             shouldSuggestClipboardContents = true
-            val item = florisboard.clipboardManager?.primaryClip?.getItemAt(0)
+
+            val item = florisboard.florisClipboardManager?.getPrimaryClip()?.getItemAt(0)
             when {
                 item?.text != null -> {
                     binding.clipboardSuggestion.text = item.text

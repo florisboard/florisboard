@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.core
 
 import android.annotation.SuppressLint
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -44,6 +43,8 @@ import androidx.lifecycle.*
 import com.squareup.moshi.Json
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.clip.ClipboardInputManager
+import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.MediaInputManager
 import dev.patrickgold.florisboard.ime.popup.PopupLayerView
@@ -70,7 +71,7 @@ private var florisboardInstance: FlorisBoard? = null
  * Core class responsible to link together both the text and media input managers as well as
  * managing the one-handed UI.
  */
-class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPrimaryClipChangedListener,
+class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager.OnPrimaryClipChangedListener,
     ThemeManager.OnThemeUpdatedListener {
 
     lateinit var prefs: PrefHelper
@@ -90,7 +91,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
 
     private var audioManager: AudioManager? = null
     var imeManager:InputMethodManager? = null
-    var clipboardManager: ClipboardManager? = null
+    var florisClipboardManager: FlorisClipboardManager? = null
     private val themeManager: ThemeManager = ThemeManager.default()
     private var vibrator: Vibrator? = null
     private val osHandler = Handler()
@@ -117,12 +118,14 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
 
     val textInputManager: TextInputManager
     val mediaInputManager: MediaInputManager
+    val clipInputManager: ClipboardInputManager
 
     init {
         florisboardInstance = this
 
         textInputManager = TextInputManager.getInstance()
         mediaInputManager = MediaInputManager.getInstance()
+        clipInputManager = ClipboardInputManager.getInstance()
     }
 
     companion object {
@@ -208,8 +211,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
 
         imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         audioManager = getSystemService(Context.AUDIO_SERVICE) as? AudioManager
-        clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
-        clipboardManager?.addPrimaryClipChangedListener(this)
         vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
         prefs = PrefHelper.getDefaultInstance(this)
         prefs.initDefaultPreferences()
@@ -224,6 +225,10 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
         themeManager.registerOnThemeUpdatedListener(this)
 
         AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
+
+        florisClipboardManager = FlorisClipboardManager.getInstance()
+        florisClipboardManager!!.initialize(context)
+        florisClipboardManager?.addPrimaryClipChangedListener(this)
 
         super.onCreate()
         eventListeners.toList().forEach { it?.onCreate() }
@@ -276,8 +281,9 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
         Timber.i("onDestroy()")
 
         themeManager.unregisterOnThemeUpdatedListener(this)
-        clipboardManager?.removePrimaryClipChangedListener(this)
+        florisClipboardManager!!.removePrimaryClipChangedListener(this)
         osHandler.removeCallbacksAndMessages(null)
+        florisClipboardManager?.removePrimaryClipChangedListener(this)
         florisboardInstance = null
 
         serviceLifecycleDispatcher.onServicePreSuperOnDestroy()
@@ -335,7 +341,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
 
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
         Timber.i("onStartInput($attribute, $restarting)")
-
         super.onStartInput(attribute, restarting)
         currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
     }
@@ -728,6 +733,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
     private fun onSubtypeChanged(newSubtype: Subtype) {
         textInputManager.onSubtypeChanged(newSubtype)
         mediaInputManager.onSubtypeChanged(newSubtype)
+        clipInputManager.onSubtypeChanged(newSubtype)
     }
 
     fun setActiveInput(type: Int) {
@@ -737,6 +743,9 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
             }
             R.id.media_input -> {
                 inputView?.mainViewFlipper?.displayedChild = 1
+            }
+            R.id.clip_input -> {
+                inputView?.mainViewFlipper?.displayedChild = 2
             }
         }
     }

@@ -50,6 +50,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import dev.patrickgold.florisboard.util.cancelAll
 import dev.patrickgold.florisboard.util.postDelayed
+import timber.log.Timber
 import java.util.*
 import kotlin.math.abs
 
@@ -575,14 +576,24 @@ class KeyView(
         isEnabled = when (data.code) {
             KeyCode.CLIPBOARD_COPY,
             KeyCode.CLIPBOARD_CUT -> (florisboard != null
-                && florisboard.activeEditorInstance.selection.isSelectionMode
-                && !florisboard.activeEditorInstance.isRawInputEditor)
-            KeyCode.CLIPBOARD_PASTE -> florisboard?.clipboardManager?.hasPrimaryClip() == true
+                    && florisboard.activeEditorInstance.selection.isSelectionMode
+                    && !florisboard.activeEditorInstance.isRawInputEditor)
+            KeyCode.CLIPBOARD_PASTE -> {
+                // such gore. checks
+                // 1. has a clipboard item
+                // 2. the clipboard item has any of the supported mime types of the editor OR is plain text.
+                florisboard?.florisClipboardManager?.hasPrimaryClip() == true &&
+                    florisboard.activeEditorInstance.contentMimeTypes?.any{
+                        florisboard.florisClipboardManager!!.getPrimaryClip()?.description?.hasMimeType(it) ?: false
+                    } == true ||
+                        florisboard?.florisClipboardManager!!.getPrimaryClip()?.description?.hasMimeType("text/plain") == true
+            }
             KeyCode.CLIPBOARD_SELECT_ALL -> {
                 florisboard?.activeEditorInstance?.isRawInputEditor == false
             }
             else -> true
         }
+        if (data.code == KeyCode.CLIPBOARD_PASTE)
         if (!isEnabled) {
             isKeyPressed = false
         }
@@ -697,7 +708,8 @@ class KeyView(
         updateEnabledState()
         when (data.code) {
             KeyCode.SWITCH_TO_TEXT_CONTEXT,
-            KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
+            KeyCode.SWITCH_TO_MEDIA_CONTEXT,
+            KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT-> {
                 val tempUtilityKeyAction = when {
                     prefs.keyboard.utilityKeyEnabled -> prefs.keyboard.utilityKeyAction
                     else -> UtilityKeyAction.DISABLED
@@ -861,6 +873,9 @@ class KeyView(
                 }
                 KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
                     drawable = getDrawable(context, R.drawable.ic_sentiment_satisfied)
+                }
+                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
+                    drawable = getDrawable(context, R.drawable.ic_assignment)
                 }
                 KeyCode.SWITCH_TO_TEXT_CONTEXT,
                 KeyCode.VIEW_CHARACTERS -> {
