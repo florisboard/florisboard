@@ -65,6 +65,7 @@ class EditingKeyView : AppCompatImageButton, ThemeManager.OnThemeUpdatedListener
     private var isKeyPressed: Boolean = false
     private val repeatedKeyPressHandler: Handler = Handler(context.mainLooper)
 
+    private val defaultTextSize: Float = Button(context).textSize
     private var label: String? = null
     private var labelPaint: Paint = Paint().apply {
         alpha = 255
@@ -72,7 +73,7 @@ class EditingKeyView : AppCompatImageButton, ThemeManager.OnThemeUpdatedListener
         isAntiAlias = true
         isFakeBoldText = false
         textAlign = Paint.Align.CENTER
-        textSize = Button(context).textSize
+        textSize = defaultTextSize
         typeface = Typeface.DEFAULT
     }
 
@@ -172,8 +173,10 @@ class EditingKeyView : AppCompatImageButton, ThemeManager.OnThemeUpdatedListener
             }
             val isPortrait =
                 resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
-            if (!isPortrait) {
-                labelPaint.textSize *= 0.9f
+            labelPaint.textSize = if (isPortrait) {
+                defaultTextSize
+            } else {
+                defaultTextSize * 0.9f
             }
             val centerX = measuredWidth / 2.0f
             val centerY = measuredHeight / 2.0f + (labelPaint.textSize - labelPaint.descent()) / 2
