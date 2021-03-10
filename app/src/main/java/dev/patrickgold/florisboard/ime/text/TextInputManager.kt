@@ -652,8 +652,16 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
     }
 
+    /**
+     * Adjusts a given key data for caps state and returns the correct reference.
+     */
+    private fun getAdjustedKeyData(keyData: KeyData): KeyData {
+        return if (caps && keyData is FlorisKeyData && keyData.shift != null) { keyData.shift!! } else { keyData }
+    }
+
     override fun onInputKeyDown(ev: InputKeyEvent) {
-        when (ev.data.code) {
+        val data = getAdjustedKeyData(ev.data)
+        when (data.code) {
             KeyCode.INTERNAL_BATCH_EDIT -> {
                 florisboard.beginInternalBatchEdit()
                 return
@@ -665,7 +673,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onInputKeyUp(ev: InputKeyEvent) {
-        when (ev.data.code) {
+        val data = getAdjustedKeyData(ev.data)
+        when (data.code) {
             KeyCode.ARROW_DOWN,
             KeyCode.ARROW_LEFT,
             KeyCode.ARROW_RIGHT,
@@ -674,9 +683,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyCode.MOVE_END_OF_PAGE,
             KeyCode.MOVE_START_OF_LINE,
             KeyCode.MOVE_END_OF_LINE -> if (ev.action == InputKeyEvent.Action.DOWN_UP || ev.action == InputKeyEvent.Action.REPEAT) {
-                handleArrow(ev.data.code, ev.count)
+                handleArrow(data.code, ev.count)
             } else {
-                handleArrow(ev.data.code, 1)
+                handleArrow(data.code, 1)
             }
             KeyCode.CLIPBOARD_CUT -> activeEditorInstance.performClipboardCut()
             KeyCode.CLIPBOARD_COPY -> activeEditorInstance.performClipboardCopy()
@@ -727,29 +736,29 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     KeyboardMode.NUMERIC,
                     KeyboardMode.NUMERIC_ADVANCED,
                     KeyboardMode.PHONE,
-                    KeyboardMode.PHONE2 -> when (ev.data.type) {
+                    KeyboardMode.PHONE2 -> when (data.type) {
                         KeyType.CHARACTER,
                         KeyType.NUMERIC -> {
-                            val text = ev.data.code.toChar().toString()
+                            val text = data.code.toChar().toString()
                             activeEditorInstance.commitText(text)
                         }
-                        else -> when (ev.data.code) {
+                        else -> when (data.code) {
                             KeyCode.PHONE_PAUSE,
                             KeyCode.PHONE_WAIT -> {
-                                val text = ev.data.code.toChar().toString()
+                                val text = data.code.toChar().toString()
                                 activeEditorInstance.commitText(text)
                             }
                         }
                     }
-                    else -> when (ev.data.type) {
-                        KeyType.CHARACTER, KeyType.NUMERIC -> when (ev.data.code) {
+                    else -> when (data.type) {
+                        KeyType.CHARACTER, KeyType.NUMERIC -> when (data.code) {
                             KeyCode.SPACE -> handleSpace(ev)
                             KeyCode.URI_COMPONENT_TLD -> {
-                                val tld = ev.data.label.toLowerCase(Locale.ENGLISH)
+                                val tld = data.label.toLowerCase(Locale.ENGLISH)
                                 activeEditorInstance.commitText(tld)
                             }
                             else -> {
-                                var text = ev.data.code.toChar().toString()
+                                var text = data.code.toChar().toString()
                                 text = when (caps && activeKeyboardMode == KeyboardMode.CHARACTERS) {
                                     true -> text.toUpperCase(florisboard.activeSubtype.locale)
                                     false -> text
@@ -758,14 +767,14 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                             }
                         }
                         else -> {
-                            Timber.e("sendKeyPress(keyData): Received unknown key: ${ev.data}")
+                            Timber.e("sendKeyPress(keyData): Received unknown key: $data")
                         }
                     }
                 }
                 smartbarView?.resetClipboardSuggestion()
             }
         }
-        if (ev.data.code != KeyCode.SHIFT && !capsLock && !inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
+        if (data.code != KeyCode.SHIFT && !capsLock && !inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
             updateCapsState()
         }
         smartbarView?.updateSmartbarState()
@@ -776,7 +785,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onInputKeyCancel(ev: InputKeyEvent) {
-        when (ev.data.code) {
+        val data = getAdjustedKeyData(ev.data)
+        when (data.code) {
             KeyCode.SHIFT -> handleShiftCancel()
         }
     }
