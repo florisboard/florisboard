@@ -18,7 +18,7 @@
         "relevant": [
           { "code":   58, "label": ":" }
         ]
-      } }
+      }, "shift": { "code":   58, "label": ":" } }
     ],
     [
       { "code":   97, "label": "a" },

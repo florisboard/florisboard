@@ -12,25 +12,25 @@
           { "code":   33, "label": "!" },
           { "code":   34, "label": "\"" }
         ]
-      } },
+      }, "shift": { "code":   34, "label": "\"" } },
       { "code":   39, "label": "'", "groupId": 101, "variation": "password", "popup": {
         "relevant": [
           { "code":   33, "label": "!" },
           { "code":   34, "label": "\"" }
         ]
-      } },
+      }, "shift": { "code":   34, "label": "\"" } },
       { "code":   47, "label": "/", "groupId": 101, "variation": "uri" },
       { "code":   44, "label": ",", "popup": {
         "relevant": [
           { "code":   60, "label": "<" },
           { "code":   63, "label": "?" }
         ]
-      } },
+      }, "shift": { "code":   60, "label": "<" } },
       { "code":   46, "label": ".", "popup": {
         "relevant": [
           { "code":   62, "label": ">" }
         ]
-      } },
+      }, "shift": { "code":   62, "label": ">" } },
       { "code":  112, "label": "p" },
       { "code":  121, "label": "y" },
       { "code":  102, "label": "f" },

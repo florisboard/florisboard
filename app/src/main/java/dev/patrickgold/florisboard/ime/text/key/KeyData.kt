@@ -207,6 +207,10 @@ open class KeyData(
  *  or if the key should always be visible. Defaults to [KeyVariation.ALL].
  * @property popup List of keys which will be accessible while long pressing the key. Defaults to
  *  an empty set (no extended popup).
+ * @property shift An alternative key to use when the keyboard caps state is true. Useful for layouts
+ *  such as Colemak and Dvorak. Defaults to null (don't override base uppercase key). This override
+ *  property should only be used to provide an uppercase variant of two else not related variants, but
+ *  should not be used for providing an uppercase letter (e.g. 'a' -> 'A').
  */
 class FlorisKeyData(
     type: KeyType = KeyType.CHARACTER,
@@ -214,7 +218,8 @@ class FlorisKeyData(
     label: String = "",
     var groupId: Int = GROUP_DEFAULT,
     var variation: KeyVariation = KeyVariation.ALL,
-    var popup: PopupSet<KeyData> = PopupSet()
+    var popup: PopupSet<KeyData> = PopupSet(),
+    var shift: KeyData? = null
 ) : KeyData(type, code, label) {
     companion object {
         /**

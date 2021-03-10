@@ -194,17 +194,21 @@ class KeyView(
      */
     fun getComputedLetter(
         keyData: KeyData = data,
-        caps: Boolean = florisboard?.textInputManager?.caps ?: false && florisboard?.textInputManager?.getActiveKeyboardMode() == KeyboardMode.CHARACTERS,
+        caps: Boolean = florisboard?.textInputManager?.caps ?: false,
         subtype: Subtype = florisboard?.activeSubtype ?: Subtype.DEFAULT
     ): String {
-        return when (data.code) {
-            KeyCode.URI_COMPONENT_TLD -> keyData.label.toLowerCase(Locale.ENGLISH)
-            else -> {
-                val labelText = (keyData.code.toChar()).toString()
-                if (caps) {
-                    labelText.toUpperCase(subtype.locale)
-                } else {
-                    labelText
+        return if (caps && keyData is FlorisKeyData && keyData.shift != null) {
+            (keyData.shift!!.code.toChar()).toString()
+        } else {
+            when (data.code) {
+                KeyCode.URI_COMPONENT_TLD -> keyData.label.toLowerCase(Locale.ENGLISH)
+                else -> {
+                    val labelText = (keyData.code.toChar()).toString()
+                    if (caps) {
+                        labelText.toUpperCase(subtype.locale)
+                    } else {
+                        labelText
+                    }
                 }
             }
         }
