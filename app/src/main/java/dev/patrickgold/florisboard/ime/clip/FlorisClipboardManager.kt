@@ -24,6 +24,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     // Using ArrayDeque because it's "technically" the correct data structure (I think).
     // Newest stored first, oldest stored last.
     private var history: ArrayDeque<TimedClipData> = ArrayDeque(maxHistorySize)
+    private var current: ClipData? = null
     private var systemClipboardManager: ClipboardManager? = null
     private var onPrimaryClipChangedListeners: ArrayList<OnPrimaryClipChangedListener> = arrayListOf()
     private var handler: Handler? = null
@@ -49,27 +50,36 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     }
 
     /**
-     * Change the current text on clipboard, update history.
+     * changes current
      */
     fun changeCurrent(newData: ClipData) {
+        current = newData
+    }
+
+
+    /**
+     * Change the current text on clipboard, update history.
+     */
+    fun addNewClip(newData: ClipData) {
         if (history.size == maxHistorySize) {
             history.removeLast()
         }
-        history.addFirst(TimedClipData(newData, System.currentTimeMillis()))
-        Timber.d("changing selection to $newData")
+        val timed = TimedClipData(newData, System.currentTimeMillis())
+        history.addFirst(timed)
+        changeCurrent(newData)
         FlorisBoard.getInstance().clipInputManager.adapter?.notifyItemInserted(0)
     }
 
     /**
-     * Wraps some plaintext in a ClipData and calls [changeCurrent]
+     * Wraps some plaintext in a ClipData and calls [addNewClip]
      */
-    fun changeCurrentText(newText: String) {
+    fun addNewPlaintext(newText: String) {
         val newData = ClipData.newPlainText(newText, newText)
-        changeCurrent(newData)
+        addNewClip(newData)
     }
 
     fun getPrimaryClip(): ClipData? {
-        return history.getOrNull(0)?.data
+        return current
 
     }
 
@@ -87,12 +97,12 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
 
     override fun onPrimaryClipChanged() {
         Timber.d("System clipboard changed")
-        systemClipboardManager?.primaryClip?.let { changeCurrent(it) }
+        systemClipboardManager?.primaryClip?.let { addNewClip(it) }
         onPrimaryClipChangedListeners.forEach { it.onPrimaryClipChanged() }
     }
 
     fun hasPrimaryClip(): Boolean {
-        return this.history.size > 0
+        return this.current != null
     }
 
     /**

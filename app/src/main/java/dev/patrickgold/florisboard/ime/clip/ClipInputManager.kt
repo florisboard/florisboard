@@ -65,7 +65,7 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
             inputView.findViewById<Button>(R.id.back_to_keyboard_button)
                 .setOnTouchListener { view, event -> onButtonPressEvent(view, event) }
 
-            inputView.findViewById<Button>(R.id.clear_clipboard_history)
+            inputView.findViewById<ImageButton>(R.id.clear_clipboard_history)
                 .setOnTouchListener { view, event -> onButtonPressEvent(view, event) }
 
             recyclerView = inputView.findViewById(R.id.clipboard_history_items)

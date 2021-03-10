@@ -24,9 +24,9 @@
                 android:layout_width="@dimen/media_bottom_button_width"
                 android:layout_height="@dimen/media_bottom_button_height"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0"
                 android:background="@drawable/button_transparent_bg_on_press"
                 android:hapticFeedbackEnabled="false"
+                android:layout_weight="0"
                 android:soundEffectsEnabled="false"
                 android:text="←" />
 
@@ -39,7 +39,7 @@
                 android:text="Clipboard"
                 android:textSize="15sp" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/clear_clipboard_history"
                 android:layout_width="@dimen/media_bottom_button_width"
                 android:layout_height="@dimen/media_bottom_button_height"
@@ -48,7 +48,7 @@
                 android:background="@drawable/button_transparent_bg_on_press"
                 android:hapticFeedbackEnabled="false"
                 android:soundEffectsEnabled="false"
-                android:text="TODO" />
+                android:src="@drawable/ic_clear_all" />
 
         </LinearLayout>
 

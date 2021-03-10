@@ -2,10 +2,15 @@ package dev.patrickgold.florisboard.ime.clip
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.PorterDuff
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import dev.patrickgold.florisboard.R
@@ -30,8 +35,9 @@ class ClipboardHistoryView : LinearLayout, FlorisBoard.EventListener,
     var clipboardBar: LinearLayout? = null
         private set
 
-    var clipboardHistory: RecyclerView? = null
-        private set
+    private var clipboardHistory: RecyclerView? = null
+
+    private var clearAll: ImageButton? = null
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -45,10 +51,10 @@ class ClipboardHistoryView : LinearLayout, FlorisBoard.EventListener,
         clipText = findViewById(R.id.clipboard_text)
         clipboardBar = findViewById(R.id.clipboard_bar)
         clipboardHistory = findViewById(R.id.clipboard_history_items)
+        clearAll = findViewById(R.id.clear_clipboard_history)
 
-       // val layoutManager = StaggeredGridLayoutManager(2, VERTICAL)
-       // clipboardHistory!!.layoutManager = layoutManager
-        Timber.d("help me pls")
+        Timber.d("called")
+
         onApplyThemeAttributes()
     }
 
@@ -62,6 +68,7 @@ class ClipboardHistoryView : LinearLayout, FlorisBoard.EventListener,
         val fgColor = theme.getAttr(Theme.Attr.MEDIA_FOREGROUND).toSolidColor().color
         clipText?.setTextColor(fgColor)
         backButton?.setTextColor(fgColor)
+        clearAll?.setColorFilter(fgColor)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

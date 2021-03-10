@@ -15,7 +15,7 @@
 
         <shape  android:shape="rectangle">
 
-            <solid android:color="@color/cardViewBackgroundColor" />
+            <solid android:color="?colorAccent" />
             <corners android:radius="7dp" />
 
         </shape>

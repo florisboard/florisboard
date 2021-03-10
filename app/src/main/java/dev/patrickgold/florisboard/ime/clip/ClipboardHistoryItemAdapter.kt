@@ -1,15 +1,21 @@
 package dev.patrickgold.florisboard.ime.clip
 
-import android.content.ClipData
+import android.graphics.ColorFilter
+import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.theme.Theme
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import timber.log.Timber
 
 class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboardManager.TimedClipData>) :
@@ -24,11 +30,11 @@ class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboar
     }
 
     companion object {
-        private val IMAGE: Int = 1
-        private val TEXT: Int = 2
+        private const val IMAGE: Int = 1
+        private const val TEXT: Int = 2
         // TODO: add HTML
 
-        private val MAX_SIZE: Int = 256
+        private const val MAX_SIZE: Int = 256
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -36,18 +42,24 @@ class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboar
             dataSet[position].data.getItemAt(0).uri != null -> IMAGE
             dataSet[position].data.getItemAt(0).text != null -> TEXT
             dataSet[position].data.getItemAt(0).htmlText != null -> TEXT
-            else -> null // should be unreachable.
+            else -> null
         }!!
     }
+
+    private fun onClickItem(view: View){
+        val position = FlorisBoard.getInstance().clipInputManager.recyclerView?.getChildLayoutPosition(view)
+        FlorisBoard.getInstance().florisClipboardManager!!.changeCurrent(dataSet[position!!].data)
+    }
+
 
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         // Create a new view, which defines the UI of the list item
-
-        return when (viewType) {
+        val vh = when (viewType) {
             IMAGE -> {
                 val view = LayoutInflater.from(viewGroup.context)
                     .inflate(R.layout.clipboard_history_item_image, viewGroup, false)
+                view.background.setVisible(false, false)
 
                 ClipboardHistoryImageViewHolder(view)
             }
@@ -55,15 +67,25 @@ class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboar
                 val view = LayoutInflater.from(viewGroup.context)
                     .inflate(R.layout.clipboard_history_item_text, viewGroup, false)
 
+                val themeManager = ThemeManager.default()
+                themeManager.registerOnThemeUpdatedListener{
+                    view.background.setColorFilter(it.getAttr(Theme.Attr.KEY_BACKGROUND).toSolidColor().color, PorterDuff.Mode.SRC_ATOP)
+                }
                 ClipboardHistoryTextViewHolder(view)
             }
             else -> null
         }!!
+
+        vh.itemView.setOnClickListener{
+            onClickItem(it)
+        }
+        (vh.itemView.findViewById(R.id.clipboard_pin) as ImageView).visibility = INVISIBLE
+
+        return vh
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
-        Timber.d("onBindViewHolder $position")
         when (viewHolder) {
             is ClipboardHistoryTextViewHolder -> {
                 var text = dataSet[position].data.getItemAt(0).text

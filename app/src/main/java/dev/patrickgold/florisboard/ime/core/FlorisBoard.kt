@@ -282,8 +282,8 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
 
         themeManager.unregisterOnThemeUpdatedListener(this)
         florisClipboardManager!!.removePrimaryClipChangedListener(this)
+        florisClipboardManager!!.close()
         osHandler.removeCallbacksAndMessages(null)
-        florisClipboardManager?.removePrimaryClipChangedListener(this)
         florisboardInstance = null
 
         serviceLifecycleDispatcher.onServicePreSuperOnDestroy()

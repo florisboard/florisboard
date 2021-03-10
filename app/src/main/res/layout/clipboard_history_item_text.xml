@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:padding="5dp"
+    android:foreground="?selectableItemBackground"
     android:background="@drawable/shape_rect_rounded_3"
     >
 
@@ -13,7 +14,7 @@
         android:id="@+id/clipboard_history_item_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="25dp"
         android:padding="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -22,8 +23,9 @@
         tools:text="A clipboard item would go here." />
 
     <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:id="@+id/clipboard_pin"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_marginEnd="5dp"
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.ime.core
 import android.content.ClipData
 import android.content.ClipDescription
 import android.inputmethodservice.InputMethodService
-import android.net.Uri
 import android.os.Build
 import android.os.SystemClock
 import android.text.InputType
@@ -29,7 +28,6 @@ import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import androidx.annotation.RequiresApi
-import androidx.core.view.inputmethod.EditorInfoCompat
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
@@ -413,9 +411,8 @@ class EditorInstance private constructor(
         Timber.d("performClipboardCut")
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        florisClipboardManager.changeCurrentText(selection.text)
-        sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
-        return true
+        florisClipboardManager.addNewPlaintext(selection.text)
+        return sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
     }
 
     /**
@@ -428,7 +425,7 @@ class EditorInstance private constructor(
         Timber.d("performClipboardCopy")
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        florisClipboardManager.changeCurrentText(selection.text)
+        florisClipboardManager.addNewPlaintext(selection.text)
         return selection.updateAndNotify(selection.end, selection.end)
     }
 
