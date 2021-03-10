@@ -382,7 +382,7 @@ class KeyView(
                     SwipeAction.DELETE_CHARACTERS_PRECISELY -> {
                         florisboard.activeEditorInstance.apply {
                             selection.updateAndNotify(
-                                (selection.end + event.absUnitCountX).coerceIn(0, selection.end),
+                                (selection.end + event.absUnitCountX + 1).coerceIn(0, selection.end),
                                 selection.end
                             )
                         }
