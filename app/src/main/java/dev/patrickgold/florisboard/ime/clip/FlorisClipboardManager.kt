@@ -4,12 +4,13 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
+import android.os.Handler
+import android.os.Looper
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.util.cancelAll
+import dev.patrickgold.florisboard.util.postAtScheduledRate
 import timber.log.Timber
 import java.io.Closeable
-import java.util.concurrent.Executors
-import java.util.concurrent.ScheduledFuture
-import java.util.concurrent.TimeUnit
 
 /**
  * [FlorisClipboardManager] manages the clipboard and clipboard history
@@ -25,7 +26,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     private var history: ArrayDeque<TimedClipData> = ArrayDeque(maxHistorySize)
     private var systemClipboardManager: ClipboardManager? = null
     private var onPrimaryClipChangedListeners: ArrayList<OnPrimaryClipChangedListener> = arrayListOf()
-    private var cleanUpHandle: ScheduledFuture<*>? = null
+    private var handler: Handler? = null
 
     data class TimedClipData(val data: ClipData, val timeUTC: Long)
 
@@ -33,11 +34,10 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         fun onPrimaryClipChanged()
     }
 
-
     companion object {
         private var instance: FlorisClipboardManager? = null
         // 1 minute
-        private val INTERVAL =  60L
+        private const val INTERVAL =  60 * 1000L
 
         @Synchronized
         fun getInstance(): FlorisClipboardManager {
@@ -57,8 +57,12 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         }
         history.addFirst(TimedClipData(newData, System.currentTimeMillis()))
         Timber.d("changing selection to $newData")
+        FlorisBoard.getInstance().clipInputManager.adapter?.notifyItemInserted(0)
     }
 
+    /**
+     * Wraps some plaintext in a ClipData and calls [changeCurrent]
+     */
     fun changeCurrentText(newText: String) {
         val newData = ClipData.newPlainText(newText, newText)
         changeCurrent(newData)
@@ -85,22 +89,34 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         Timber.d("System clipboard changed")
         systemClipboardManager?.primaryClip?.let { changeCurrent(it) }
         onPrimaryClipChangedListeners.forEach { it.onPrimaryClipChanged() }
-        FlorisBoard.getInstance().clipInputManager.notifyClipboardDataChanged()
     }
 
     fun hasPrimaryClip(): Boolean {
         return this.history.size > 0
     }
 
+    /**
+     * Cleans up.
+     *
+     * Sets [instance] to null for GC. Unregisters the system clipboard listener, cancels clipboard clean ups.
+     */
     override fun close() {
-        cleanUpHandle?.cancel(false)
+        systemClipboardManager?.removePrimaryClipChangedListener(this)
+        handler?.cancelAll()
+        instance = null
     }
 
+    /**
+     * Initialize the floris clipboard manager. Exists to avoid dependency loop due to reference
+     * to [FlorisBoard.context]
+     *
+     * Sets up the clipboard cleanup task, links the recycler view in clipInputManager to [history].
+     *
+     * @param context Required to register as an onPrimaryClipChangedListener of ClipboardManager
+     */
     fun initialize(context: Context) {
         this.systemClipboardManager = (context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager)
         systemClipboardManager!!.addPrimaryClipChangedListener(this)
-
-        val scheduler = Executors.newScheduledThreadPool(1)
 
         val cleanUpClipboard = Runnable {
             if (history.size > 1) {
@@ -117,20 +133,28 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
                 }
                 for (i in 0 until numToPop) {
                     history.removeLast()
-                }
-                if (numToPop > 0) {
-                    FlorisBoard.getInstance().clipInputManager.notifyClipboardDataChanged()
+                    FlorisBoard.getInstance().clipInputManager.adapter?.notifyItemRemoved(history.size - 1)
                 }
             }
+            Timber.d("Clearing up clipboard")
         }
-        val floris = FlorisBoard.getInstance()
-        floris.clipInputManager.initClipboard(this.history)
-        cleanUpHandle = scheduler.scheduleAtFixedRate(cleanUpClipboard, 0, INTERVAL, TimeUnit.SECONDS)
+        FlorisBoard.getInstance().clipInputManager.initClipboard(this.history)
+        handler = Handler(Looper.getMainLooper())
+        handler?.postAtScheduledRate(0, INTERVAL, cleanUpClipboard)
     }
 
-    fun clearHistory() {
-        this.history.clear()
-        FlorisBoard.getInstance().clipInputManager.notifyClipboardDataChanged()
+
+    /**
+     * Clears the history with an animation.
+     */
+    fun clearHistoryWithAnimation() {
+        val clipInputManager = FlorisBoard.getInstance().clipInputManager
+        val delay = clipInputManager.clearClipboardWithAnimation(history.size)
+
+        handler?.postDelayed({
+            history.clear()
+            clipInputManager.adapter?.notifyDataSetChanged()
+        }, delay)
     }
 
 }

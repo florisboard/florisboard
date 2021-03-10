@@ -1,12 +1,15 @@
 package dev.patrickgold.florisboard.ime.clip
 
 import android.content.ClipData
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import timber.log.Timber
 
 class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboardManager.TimedClipData>) :
@@ -14,6 +17,10 @@ class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboar
 
     class ClipboardHistoryTextViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.findViewById(R.id.clipboard_history_item_text)
+    }
+
+    class ClipboardHistoryImageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val imgView: ImageView = view.findViewById(R.id.clipboard_history_item_img)
     }
 
     companion object {
@@ -36,10 +43,22 @@ class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboar
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         // Create a new view, which defines the UI of the list item
-        val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.clipboard_history_item_text, viewGroup, false)
 
-        return ClipboardHistoryTextViewHolder(view)
+        return when (viewType) {
+            IMAGE -> {
+                val view = LayoutInflater.from(viewGroup.context)
+                    .inflate(R.layout.clipboard_history_item_image, viewGroup, false)
+
+                ClipboardHistoryImageViewHolder(view)
+            }
+            TEXT -> {
+                val view = LayoutInflater.from(viewGroup.context)
+                    .inflate(R.layout.clipboard_history_item_text, viewGroup, false)
+
+                ClipboardHistoryTextViewHolder(view)
+            }
+            else -> null
+        }!!
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -53,9 +72,16 @@ class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboar
                 }
                 viewHolder.textView.text = text
             }
+
+            is ClipboardHistoryImageViewHolder -> {
+                viewHolder.imgView.clipToOutline = true
+                val resolver = FlorisBoard.getInstance().context.contentResolver
+                val inputStream = resolver.openInputStream(dataSet[position].data.getItemAt(0).uri)
+                val drawable = Drawable.createFromStream(inputStream, "clipboard URI")
+                viewHolder.imgView.setImageDrawable(drawable)
+            }
         }
     }
-
     override fun getItemCount() = dataSet.size
 
 }
