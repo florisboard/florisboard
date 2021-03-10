@@ -32,6 +32,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.provider.Settings
 import android.view.*
+import android.view.inputmethod.CursorAnchorInfo
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
@@ -39,6 +40,7 @@ import android.widget.Button
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.lifecycle.*
 import com.squareup.moshi.Json
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
@@ -68,13 +70,16 @@ private var florisboardInstance: FlorisBoard? = null
  * Core class responsible to link together both the text and media input managers as well as
  * managing the one-handed UI.
  */
-class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedListener,
+class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPrimaryClipChangedListener,
     ThemeManager.OnThemeUpdatedListener {
+
     lateinit var prefs: PrefHelper
         private set
 
     val context: Context
         get() = inputWindowView?.context ?: this
+    private val serviceLifecycleDispatcher: ServiceLifecycleDispatcher = ServiceLifecycleDispatcher(this)
+
     private var extractEditLayout: WeakReference<ViewGroup?> = WeakReference(null)
     var inputView: InputView? = null
         private set
@@ -90,6 +95,17 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     private var vibrator: Vibrator? = null
     private val osHandler = Handler()
 
+    private var internalBatchNestingLevel: Int = 0
+    private val internalSelectionCache = object {
+        var selectionCatchCount: Int = 0
+        var oldSelStart: Int = -1
+        var oldSelEnd: Int = -1
+        var newSelStart: Int = -1
+        var newSelEnd: Int = -1
+        var candidatesStart: Int = -1
+        var candidatesEnd: Int = -1
+    }
+
     var activeEditorInstance: EditorInstance = EditorInstance.default()
 
     lateinit var subtypeManager: SubtypeManager
@@ -97,6 +113,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     private var currentThemeIsNight: Boolean = false
     private var currentThemeResId: Int = 0
     private var isNumberRowVisible: Boolean = false
+    private var isWindowShown: Boolean = false
 
     val textInputManager: TextInputManager
     val mediaInputManager: MediaInputManager
@@ -162,6 +179,10 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         }
     }
 
+    override fun getLifecycle(): Lifecycle {
+        return serviceLifecycleDispatcher.lifecycle
+    }
+
     override fun onCreate() {
         /*if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(
@@ -182,6 +203,8 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
             )
         }*/
         Timber.i("onCreate()")
+
+        serviceLifecycleDispatcher.onServicePreSuperOnCreate()
 
         imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         audioManager = getSystemService(Context.AUDIO_SERVICE) as? AudioManager
@@ -249,6 +272,21 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         return eel
     }
 
+    override fun onDestroy() {
+        Timber.i("onDestroy()")
+
+        themeManager.unregisterOnThemeUpdatedListener(this)
+        clipboardManager?.removePrimaryClipChangedListener(this)
+        osHandler.removeCallbacksAndMessages(null)
+        florisboardInstance = null
+
+        serviceLifecycleDispatcher.onServicePreSuperOnDestroy()
+
+        eventListeners.toList().forEach { it?.onDestroy() }
+        eventListeners.clear()
+        super.onDestroy()
+    }
+
     override fun onEvaluateFullscreenMode(): Boolean {
         return resources?.configuration?.let { config ->
             if (config.orientation != Configuration.ORIENTATION_LANDSCAPE) {
@@ -295,24 +333,11 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         eventListeners.toList().forEach { it?.onRegisterInputView(inputView) }
     }
 
-    override fun onDestroy() {
-        Timber.i("onDestroy()")
-
-        themeManager.unregisterOnThemeUpdatedListener(this)
-        clipboardManager?.removePrimaryClipChangedListener(this)
-        osHandler.removeCallbacksAndMessages(null)
-        florisboardInstance = null
-
-        eventListeners.toList().forEach { it?.onDestroy() }
-        eventListeners.clear()
-        super.onDestroy()
-    }
-
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
         Timber.i("onStartInput($attribute, $restarting)")
 
         super.onStartInput(attribute, restarting)
-        currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_IMMEDIATE)
+        currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
@@ -346,7 +371,13 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     }
 
     override fun onWindowShown() {
-        Timber.i("onWindowShown()")
+        if (isWindowShown) {
+            Timber.i("Ignoring onWindowShown()")
+            return
+        } else {
+            Timber.i("onWindowShown()")
+        }
+        isWindowShown = true
 
         prefs.sync()
         val newIsNumberRowVisible = prefs.keyboard.numberRow
@@ -365,7 +396,13 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
     }
 
     override fun onWindowHidden() {
-        Timber.i("onWindowHidden()")
+        if (!isWindowShown) {
+            Timber.i("Ignoring onWindowHidden()")
+            return
+        } else {
+            Timber.i("onWindowHidden()")
+        }
+        isWindowShown = false
 
         super.onWindowHidden()
         eventListeners.toList().forEach { it?.onWindowHidden() }
@@ -380,24 +417,74 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         super.onConfigurationChanged(newConfig)
     }
 
+    /**
+     * Begins a FlorisBoard internal batch edit. This enables the application to continue sending selection updates
+     * (some apps need to to this else they absolutely refuse to give visual feedback on cursor movement etc.). The
+     * selection update is then caught if [internalBatchNestingLevel] is greater than 0, thus not delegating the
+     * update to the editor instance. This is needed because else the UI stutters when too many updates arrive in a
+     * row.
+     */
+    fun beginInternalBatchEdit() {
+        internalBatchNestingLevel++
+    }
+
+    /**
+     * Ends an internal batch edit, if [internalBatchNestingLevel] is <= 1 and calls [onUpdateSelection] with the
+     * corresponding reported selection values. This call is not caught and the editor instance and other classes are
+     * able to update the UI. Resets the internal selection cache and is ready for the next batch edit.
+     */
+    fun endInternalBatchEdit() {
+        internalBatchNestingLevel = (internalBatchNestingLevel - 1).coerceAtLeast(0)
+        if (internalBatchNestingLevel == 0) {
+            internalSelectionCache.apply {
+                if (selectionCatchCount > 0) {
+                    onUpdateSelection(
+                        oldSelStart, oldSelEnd,
+                        newSelStart, newSelEnd,
+                        candidatesStart, candidatesEnd
+                    )
+                    selectionCatchCount = 0
+                    oldSelStart = -1
+                    oldSelEnd = -1
+                    newSelStart = -1
+                    newSelEnd = -1
+                    candidatesStart = -1
+                    candidatesEnd = -1
+                }
+            }
+        }
+    }
+
     override fun onUpdateSelection(
         oldSelStart: Int, oldSelEnd: Int,
         newSelStart: Int, newSelEnd: Int,
         candidatesStart: Int, candidatesEnd: Int
     ) {
-        Timber.i("onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd)")
-
         super.onUpdateSelection(
             oldSelStart, oldSelEnd,
             newSelStart, newSelEnd,
             candidatesStart, candidatesEnd
         )
-        activeEditorInstance.onUpdateSelection(
-            oldSelStart, oldSelEnd,
-            newSelStart, newSelEnd,
-            candidatesStart, candidatesEnd
-        )
-        eventListeners.toList().forEach { it?.onUpdateSelection() }
+
+        if (internalBatchNestingLevel == 0) {
+            Timber.i("onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd)")
+            activeEditorInstance.onUpdateSelection(
+                oldSelStart, oldSelEnd,
+                newSelStart, newSelEnd,
+                candidatesStart, candidatesEnd
+            )
+            eventListeners.toList().forEach { it?.onUpdateSelection() }
+        } else {
+            Timber.i("onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd): caught due to internal batch level of $internalBatchNestingLevel!")
+            if (internalSelectionCache.selectionCatchCount++ == 0) {
+                internalSelectionCache.oldSelStart = oldSelStart
+                internalSelectionCache.oldSelEnd = oldSelEnd
+            }
+            internalSelectionCache.newSelStart = newSelStart
+            internalSelectionCache.newSelEnd = newSelEnd
+            internalSelectionCache.candidatesStart = candidatesStart
+            internalSelectionCache.candidatesEnd = candidatesEnd
+        }
     }
 
     override fun onThemeUpdated(theme: Theme) {
@@ -586,7 +673,7 @@ class FlorisBoard : InputMethodService(), ClipboardManager.OnPrimaryClipChangedL
         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                   Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
                   Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(i)
+        applicationContext.startActivity(i)
     }
 
     /**

@@ -33,6 +33,8 @@ import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
 
 /**
  * View class for managing the rendering and the events of a single emoji keyboard key.
@@ -46,7 +48,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeManager
 class EmojiKeyView(
     private val emojiKeyboardView: EmojiKeyboardView,
     val data: EmojiKeyData
-) : androidx.appcompat.widget.AppCompatTextView(emojiKeyboardView.context),
+) : androidx.appcompat.widget.AppCompatTextView(emojiKeyboardView.context), CoroutineScope by MainScope(),
     FlorisBoard.EventListener, ThemeManager.OnThemeUpdatedListener {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)

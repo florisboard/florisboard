@@ -20,6 +20,7 @@ import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.SystemClock
 import android.text.InputType
+import android.view.InputDevice
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
@@ -59,8 +60,6 @@ class EditorInstance private constructor(
             }
         }
     var shouldReevaluateComposingSuggestions: Boolean = false
-    var isNewSelectionInBoundsOfOld: Boolean = false
-        private set
     var isPrivateMode: Boolean = false
     val isRawInputEditor: Boolean
         get() = inputAttributes.type == InputAttributes.Type.NULL
@@ -109,24 +108,25 @@ class EditorInstance private constructor(
         newSelStart: Int, newSelEnd: Int,
         candidatesStart: Int, candidatesEnd: Int
     ) {
-        isNewSelectionInBoundsOfOld =
-            newSelStart >= (oldSelStart - 1) &&
-            newSelStart <= (oldSelStart + 1) &&
-            newSelEnd >= (oldSelEnd - 1) &&
-            newSelEnd <= (oldSelEnd + 1)
-        selection.update(newSelStart, newSelEnd)
-        cachedInput.update()
+        // The Android Framework allows that start can be greater than end in some cases. To prevent bugs in the Floris
+        // input logic, we swap start and end here if this should really be the case.
+        if (newSelEnd < newSelStart) {
+            selection.update(newSelEnd, newSelStart)
+        } else {
+            selection.update(newSelStart, newSelEnd)
+        }
         if (isPhantomSpaceActive && wasPhantomSpaceActiveLastUpdate) {
             isPhantomSpaceActive = false
         } else if (isPhantomSpaceActive && !wasPhantomSpaceActiveLastUpdate) {
             wasPhantomSpaceActiveLastUpdate = true
         }
+        cachedInput.update()
         if (isComposingEnabled && candidatesStart >= 0 && candidatesEnd >= 0) {
             shouldReevaluateComposingSuggestions = true
         }
         if (selection.isCursorMode && isComposingEnabled && !isRawInputEditor && !isPhantomSpaceActive) {
             markComposingRegion(cachedInput.currentWord)
-        } else {
+        } else if (newSelStart >= 0) {
             markComposingRegion(null)
         }
     }
@@ -169,17 +169,30 @@ class EditorInstance private constructor(
      */
     fun commitText(text: String): Boolean {
         val ic = inputConnection ?: return false
-        return if (isRawInputEditor) {
+        return if (isRawInputEditor || selection.isSelectionMode || !isComposingEnabled) {
             ic.commitText(text, 1)
         } else {
             ic.beginBatchEdit()
-            markComposingRegion(null)
-            if (isPhantomSpaceActive && selection.start > 0 && getTextBeforeCursor(1) != " " && text != " ") {
-                ic.commitText(" ", 1)
+            val isWordComponent = CachedInput.isWordComponent(text)
+            val isPhantomSpace = isPhantomSpaceActive && selection.start > 0 && getTextBeforeCursor(1) != " "
+            when {
+                isPhantomSpace && isWordComponent -> {
+                    ic.finishComposingText()
+                    ic.commitText(" ", 1)
+                    ic.setComposingText(text, 1)
+                }
+                !isPhantomSpace && isWordComponent -> {
+                    ic.finishComposingText()
+                    ic.commitText(text, 1)
+                    ic.setComposingRegion(cachedInput.currentWord.start, cachedInput.currentWord.end + text.length)
+                }
+                else -> {
+                    ic.finishComposingText()
+                    ic.commitText(text, 1)
+                }
             }
             isPhantomSpaceActive = false
             wasPhantomSpaceActiveLastUpdate = false
-            ic.commitText(text, 1)
             ic.endBatchEdit()
             true
         }
@@ -193,22 +206,9 @@ class EditorInstance private constructor(
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun deleteBackwards(): Boolean {
-        val ic = inputConnection ?: return false
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return if (isRawInputEditor) {
-            sendSystemKeyEvent(KeyEvent.KEYCODE_DEL)
-        } else {
-            ic.beginBatchEdit()
-            markComposingRegion(null)
-            sendSystemKeyEvent(KeyEvent.KEYCODE_DEL)
-            cachedInput.update()
-            if (isComposingEnabled) {
-                markComposingRegion(cachedInput.currentWord)
-            }
-            ic.endBatchEdit()
-            true
-        }
+        return sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
     }
 
     /**
@@ -357,7 +357,13 @@ class EditorInstance private constructor(
     fun performClipboardCut(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return sendSystemKeyEventCtrl(KeyEvent.KEYCODE_X)
+        val ic = inputConnection ?: return false
+        if (isRawInputEditor) {
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_X, meta(ctrl = true))
+        } else {
+            ic.performContextMenuAction(android.R.id.cut)
+        }
+        return true
     }
 
     /**
@@ -369,8 +375,15 @@ class EditorInstance private constructor(
     fun performClipboardCopy(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return sendSystemKeyEventCtrl(KeyEvent.KEYCODE_C) &&
-                selection.updateAndNotify(selection.end, selection.end)
+        val ic = inputConnection ?: return false
+        if (isRawInputEditor) {
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_C, meta(ctrl = true)) &&
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT)
+        } else {
+            ic.performContextMenuAction(android.R.id.copy)
+            selection.updateAndNotify(selection.end, selection.end)
+        }
+        return true
     }
 
     /**
@@ -382,7 +395,13 @@ class EditorInstance private constructor(
     fun performClipboardPaste(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return sendSystemKeyEventCtrl(KeyEvent.KEYCODE_V)
+        val ic = inputConnection ?: return false
+        if (isRawInputEditor) {
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_V, meta(ctrl = true))
+        } else {
+            ic.performContextMenuAction(android.R.id.paste)
+        }
+        return true
     }
 
     /**
@@ -394,7 +413,14 @@ class EditorInstance private constructor(
     fun performClipboardSelectAll(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return sendSystemKeyEventCtrl(KeyEvent.KEYCODE_A)
+        markComposingRegion(null)
+        val ic = inputConnection ?: return false
+        if (isRawInputEditor) {
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_A, meta(ctrl = true))
+        } else {
+            ic.performContextMenuAction(android.R.id.selectAll)
+        }
+        return true
     }
 
     /**
@@ -406,7 +432,7 @@ class EditorInstance private constructor(
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
         return if (isRawInputEditor) {
-            sendSystemKeyEvent(KeyEvent.KEYCODE_ENTER)
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_ENTER)
         } else {
             commitText("\n")
         }
@@ -434,21 +460,7 @@ class EditorInstance private constructor(
     fun performUndo(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        val ic = inputConnection ?: return false
-        return if (isRawInputEditor) {
-            sendSystemKeyEventCtrl(KeyEvent.KEYCODE_Z)
-            true
-        } else {
-            ic.beginBatchEdit()
-            markComposingRegion(null)
-            sendSystemKeyEventCtrl(KeyEvent.KEYCODE_Z)
-            cachedInput.update()
-            if (isComposingEnabled) {
-                markComposingRegion(cachedInput.currentWord)
-            }
-            ic.endBatchEdit()
-            true
-        }
+        return sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true))
     }
 
     /**
@@ -459,73 +471,40 @@ class EditorInstance private constructor(
     fun performRedo(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        val ic = inputConnection ?: return false
-        return if (isRawInputEditor) {
-            sendSystemKeyEventCtrlShift(KeyEvent.KEYCODE_Z)
-            true
-        } else {
-            ic.beginBatchEdit()
-            markComposingRegion(null)
-            sendSystemKeyEventCtrlShift(KeyEvent.KEYCODE_Z)
-            cachedInput.update()
-            if (isComposingEnabled) {
-                markComposingRegion(cachedInput.currentWord)
-            }
-            ic.endBatchEdit()
-            true
+        return sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true, shift = true))
+    }
+
+    /**
+     * Constructs a meta state integer flag which can be used for setting the `metaState` field when sending a KeyEvent
+     * to the input connection. If this method is called without a meta modifier set to true, the default value `0` is
+     * returned.
+     *
+     * @param ctrl Set to true to enable the CTRL meta modifier. Defaults to false.
+     * @param alt Set to true to enable the ALT meta modifier. Defaults to false.
+     * @param shift Set to true to enable the SHIFT meta modifier. Defaults to false.
+     *
+     * @return An integer containing all meta flags passed and formatted for use in a [KeyEvent].
+     */
+    fun meta(
+        ctrl: Boolean = false,
+        alt: Boolean = false,
+        shift: Boolean = false
+    ): Int {
+        var metaState = 0
+        if (ctrl) {
+            metaState = metaState or KeyEvent.META_CTRL_ON or KeyEvent.META_CTRL_LEFT_ON
         }
+        if (alt) {
+            metaState = metaState or KeyEvent.META_ALT_ON or KeyEvent.META_ALT_LEFT_ON
+        }
+        if (shift) {
+            metaState = metaState or KeyEvent.META_SHIFT_ON or KeyEvent.META_SHIFT_LEFT_ON
+        }
+        return metaState
     }
 
-    /**
-     * Sends a given [keyEventCode] with [sendDownUpKeyEvent].
-     *
-     * @param keyEventCode The key code to send, use a key code defined in Android's [KeyEvent].
-     * @return True on success, false if an error occurred or the input connection is invalid.
-     */
-    fun sendSystemKeyEvent(keyEventCode: Int): Boolean {
-        return sendDownUpKeyEvent(keyEventCode, 0)
-    }
-
-    /**
-     * Sends a given [keyEventCode] with Ctrl pressed with [sendDownUpKeyEvent].
-     *
-     * @param keyEventCode The key code to send, use a key code defined in Android's [KeyEvent].
-     * @return True on success, false if an error occurred or the input connection is invalid.
-     */
-    private fun sendSystemKeyEventCtrl(keyEventCode: Int): Boolean {
-        return sendDownUpKeyEvent(keyEventCode, KeyEvent.META_CTRL_ON)
-    }
-
-    /**
-     * Sends a given [keyEventCode] with Ctrl and Shift pressed with [sendDownUpKeyEvent].
-     *
-     * @param keyEventCode The key code to send, use a key code defined in Android's [KeyEvent].
-     * @return True on success, false if an error occurred or the input connection is invalid.
-     */
-    private fun sendSystemKeyEventCtrlShift(keyEventCode: Int): Boolean {
-        return sendDownUpKeyEvent(keyEventCode, KeyEvent.META_CTRL_ON or KeyEvent.META_SHIFT_ON)
-    }
-
-    /**
-     * Sends a given [keyEventCode] with Alt pressed with [sendDownUpKeyEvent].
-     *
-     * @param keyEventCode The key code to send, use a key code defined in Android's [KeyEvent].
-     * @return True on success, false if an error occurred or the input connection is invalid.
-     */
-    fun sendSystemKeyEventAlt(keyEventCode: Int): Boolean {
-        return sendDownUpKeyEvent(keyEventCode, KeyEvent.META_ALT_LEFT_ON)
-    }
-
-    /**
-     * Same as [InputMethodService.sendDownUpKeyEvents] but also allows to set meta state.
-     *
-     * @param keyEventCode The key code to send, use a key code defined in Android's [KeyEvent].
-     * @param metaState Flags indicating which meta keys are currently pressed.
-     * @return True on success, false if an error occurred or the input connection is invalid.
-     */
-    private fun sendDownUpKeyEvent(keyEventCode: Int, metaState: Int): Boolean {
+    private fun sendDownKeyEvent(eventTime: Long, keyEventCode: Int, metaState: Int): Boolean {
         val ic = inputConnection ?: return false
-        val eventTime = SystemClock.uptimeMillis()
         return ic.sendKeyEvent(
             KeyEvent(
                 eventTime,
@@ -536,9 +515,15 @@ class EditorInstance private constructor(
                 metaState,
                 KeyCharacterMap.VIRTUAL_KEYBOARD,
                 0,
-                KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE
+                KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE,
+                InputDevice.SOURCE_KEYBOARD
             )
-        ) && ic.sendKeyEvent(
+        )
+    }
+
+    private fun sendUpKeyEvent(eventTime: Long, keyEventCode: Int, metaState: Int): Boolean {
+        val ic = inputConnection ?: return false
+        return ic.sendKeyEvent(
             KeyEvent(
                 eventTime,
                 SystemClock.uptimeMillis(),
@@ -548,9 +533,51 @@ class EditorInstance private constructor(
                 metaState,
                 KeyCharacterMap.VIRTUAL_KEYBOARD,
                 0,
-                KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE
+                KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE,
+                InputDevice.SOURCE_KEYBOARD
             )
         )
+    }
+
+    /**
+     * Same as [InputMethodService.sendDownUpKeyEvents] but also allows to set meta state.
+     *
+     * @param keyEventCode The key code to send, use a key code defined in Android's [KeyEvent].
+     * @param metaState Flags indicating which meta keys are currently pressed.
+     * @param count How often the key is pressed while the meta keys passed are down. Must be greater than or equal to
+     *  `1`, else this method will immediately return false.
+     *
+     * @return True on success, false if an error occurred or the input connection is invalid.
+     */
+    fun sendDownUpKeyEvent(keyEventCode: Int, metaState: Int = meta(), count: Int = 1): Boolean {
+        if (count < 1) return false
+        val ic = inputConnection ?: return false
+        ic.beginBatchEdit()
+        val eventTime = SystemClock.uptimeMillis()
+        if (metaState and KeyEvent.META_CTRL_ON > 0) {
+            sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
+        }
+        if (metaState and KeyEvent.META_ALT_ON > 0) {
+            sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_ALT_LEFT, 0)
+        }
+        if (metaState and KeyEvent.META_SHIFT_ON > 0) {
+            sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_SHIFT_LEFT, 0)
+        }
+        for (n in 0 until count) {
+            sendDownKeyEvent(eventTime, keyEventCode, metaState)
+            sendUpKeyEvent(eventTime, keyEventCode, metaState)
+        }
+        if (metaState and KeyEvent.META_SHIFT_ON > 0) {
+            sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_SHIFT_LEFT, 0)
+        }
+        if (metaState and KeyEvent.META_ALT_ON > 0) {
+            sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_ALT_LEFT, 0)
+        }
+        if (metaState and KeyEvent.META_CTRL_ON > 0) {
+            sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
+        }
+        ic.endBatchEdit()
+        return true
     }
 }
 
@@ -893,7 +920,7 @@ class CachedInput(private val editorInstance: EditorInstance) {
      * the target app's editor text is bigger than [CACHED_TEXT_N_CHARS_BEFORE_CURSOR] and
      * [CACHED_TEXT_N_CHARS_AFTER_CURSOR], but always caches the relevant text around the cursor.
      */
-    var rawText: String = ""
+    var rawText: StringBuilder = StringBuilder()
         private set
 
     companion object {
@@ -902,6 +929,10 @@ class CachedInput(private val editorInstance: EditorInstance) {
 
         private val WORD_EVAL_REGEX = """[^\p{L}\']""".toRegex()
         private val WORD_SPLIT_REGEX_EN = """((?<=$WORD_EVAL_REGEX)|(?=$WORD_EVAL_REGEX))""".toRegex()
+
+        fun isWordComponent(string: String): Boolean {
+            return !WORD_EVAL_REGEX.matches(string)
+        }
     }
 
     /**
@@ -945,18 +976,18 @@ class CachedInput(private val editorInstance: EditorInstance) {
         val ic = inputConnection
         if (ic == null) {
             offset = 0
-            rawText = ""
+            rawText.clear()
             expectedMaxLength = 0
         } else {
             val textBefore = getTextBeforeCursor(CACHED_TEXT_N_CHARS_BEFORE_CURSOR)
             val textSelected = ic.getSelectedText(0) ?: ""
             val textAfter = getTextAfterCursor(CACHED_TEXT_N_CHARS_AFTER_CURSOR)
             offset = (selection.start - textBefore.length).coerceAtLeast(0)
-            rawText = StringBuilder().run {
+            rawText.apply {
+                clear()
                 append(textBefore)
                 append(textSelected)
                 append(textAfter)
-                toString()
             }
             expectedMaxLength = offset + rawText.length
         }
