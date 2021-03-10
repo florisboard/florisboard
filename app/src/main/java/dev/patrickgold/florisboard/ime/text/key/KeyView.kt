@@ -427,8 +427,9 @@ class KeyView(
                     SwipeGesture.Direction.LEFT -> {
                         if (prefs.gestures.spaceBarSwipeLeft == SwipeAction.MOVE_CURSOR_LEFT) {
                             abs(event.relUnitCountX).let {
-                                if (it > 0) {
-                                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.ARROW_LEFT, it))
+                                val count = if (!hasTriggeredGestureMove) { it - 1 } else { it }
+                                if (count > 0) {
+                                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.ARROW_LEFT, count))
                                 }
                             }
                         } else {
@@ -441,8 +442,9 @@ class KeyView(
                     SwipeGesture.Direction.RIGHT -> {
                         if (prefs.gestures.spaceBarSwipeRight == SwipeAction.MOVE_CURSOR_RIGHT) {
                             abs(event.relUnitCountX).let {
-                                if (it > 0) {
-                                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.ARROW_RIGHT, it))
+                                val count = if (!hasTriggeredGestureMove) { it - 1 } else { it }
+                                if (count > 0) {
+                                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.ARROW_RIGHT, count))
                                 }
                             }
                         } else {
