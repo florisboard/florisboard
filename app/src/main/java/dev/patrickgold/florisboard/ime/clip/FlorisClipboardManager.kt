@@ -17,9 +17,6 @@ import java.io.Closeable
  * [FlorisClipboardManager] manages the clipboard and clipboard history
  */
 class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryClipChangedListener, Closeable {
-    // TODO: use preferences
-    // 10 seconds
-    private val expiryTime: Long = 5 * 60 * 1000
 
     // Using ArrayDeque because it's "technically" the correct data structure (I think).
     // Newest stored first, oldest stored last.
@@ -145,27 +142,27 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         prefHelper = PrefHelper.getDefaultInstance(context)
 
         val cleanUpClipboard = Runnable {
-            if (history.size > 1) {
-
-                val currentTime = System.currentTimeMillis()
-                var numToPop = 0
-                for (item in history.subList(1, history.size).asReversed()) {
-                    Timber.d("${item.timeUTC + expiryTime - currentTime}")
-                    if (item.timeUTC + expiryTime < currentTime) {
-                        numToPop += 1
-                    } else {
-                        break
-                    }
-                }
-                for (i in 0 until numToPop) {
-                    history.removeLast()
-                    FlorisBoard.getInstance().clipInputManager.adapter?.notifyItemRemoved(history.size - 1)
+            val currentTime = System.currentTimeMillis()
+            var numToPop = 0
+            val expiryTime = prefHelper!!.clipboard.cleanUpAfter * 60 * 1000
+            for (item in history.asReversed()) {
+                Timber.d("${item.timeUTC + expiryTime - currentTime}")
+                if (item.timeUTC + expiryTime < currentTime) {
+                    numToPop += 1
+                } else {
+                    break
                 }
             }
+            for (i in 0 until numToPop) {
+                history.removeLast()
+                Timber.d("Popped item.")
+            }
+            FlorisBoard.getInstance().clipInputManager.adapter?.notifyItemRangeRemoved(history.size, numToPop)
             Timber.d("Clearing up clipboard")
         }
         FlorisBoard.getInstance().clipInputManager.initClipboard(this.history)
         handler = Handler(Looper.getMainLooper())
+        prefHelper
         handler?.postAtScheduledRate(0, INTERVAL, cleanUpClipboard)
     }
 

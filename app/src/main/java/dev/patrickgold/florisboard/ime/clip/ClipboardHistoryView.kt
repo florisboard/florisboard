@@ -53,9 +53,9 @@ class ClipboardHistoryView : LinearLayout, FlorisBoard.EventListener,
         clipboardHistory = findViewById(R.id.clipboard_history_items)
         clearAll = findViewById(R.id.clear_clipboard_history)
 
-        Timber.d("called")
-
         onApplyThemeAttributes()
+        // lord alone knows why it doesn't work without this..
+        onThemeUpdated(themeManager.activeTheme)
     }
 
     override fun onDetachedFromWindow() {
