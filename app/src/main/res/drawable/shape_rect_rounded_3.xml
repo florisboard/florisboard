@@ -14,8 +14,6 @@
     <item android:right="3px" android:bottom="5px">
 
         <shape  android:shape="rectangle">
-
-            <solid android:color="?colorAccent" />
             <corners android:radius="7dp" />
 
         </shape>

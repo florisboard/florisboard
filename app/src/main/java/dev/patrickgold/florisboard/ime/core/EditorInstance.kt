@@ -438,7 +438,8 @@ class EditorInstance private constructor(
     fun performClipboardPaste(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return commitClipData(florisClipboardManager.getPrimaryClip()!!)
+        Timber.d("Before commit clip data")
+        return commitClipData(florisClipboardManager.primaryClip!!)
     }
 
     /**

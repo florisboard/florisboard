@@ -9,7 +9,10 @@ import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.RecyclerView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
@@ -59,7 +62,6 @@ class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboar
             IMAGE -> {
                 val view = LayoutInflater.from(viewGroup.context)
                     .inflate(R.layout.clipboard_history_item_image, viewGroup, false)
-                view.background.setVisible(false, false)
 
                 ClipboardHistoryImageViewHolder(view)
             }
@@ -79,8 +81,16 @@ class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboar
         vh.itemView.setOnClickListener{
             onClickItem(it)
         }
-        (vh.itemView.findViewById(R.id.clipboard_pin) as ImageView).visibility = INVISIBLE
 
+        if (true) {
+            (vh.itemView.findViewById(R.id.clipboard_pin) as ImageView).visibility = INVISIBLE
+            val view = vh.itemView.findViewById<TextView>(R.id.clipboard_history_item_text)
+            view?.let {
+                val params = it.layoutParams as ConstraintLayout.LayoutParams
+                params.marginEnd = 0
+                it.layoutParams = params
+            }
+        }
         return vh
     }
 
