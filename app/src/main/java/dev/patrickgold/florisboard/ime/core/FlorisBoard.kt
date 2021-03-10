@@ -133,7 +133,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
             val activeImeIds = Settings.Secure.getString(
                 context.contentResolver,
                 Settings.Secure.ENABLED_INPUT_METHODS
-            )
+            ) ?: "(none)"
             Timber.i("List of active IMEs: $activeImeIds")
             return when {
                 BuildConfig.DEBUG -> {
@@ -149,7 +149,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
             val selectedImeId = Settings.Secure.getString(
                 context.contentResolver,
                 Settings.Secure.DEFAULT_INPUT_METHOD
-            )
+            ) ?: "(none)"
             Timber.i("Selected IME: $selectedImeId")
             return when {
                 BuildConfig.DEBUG -> {
