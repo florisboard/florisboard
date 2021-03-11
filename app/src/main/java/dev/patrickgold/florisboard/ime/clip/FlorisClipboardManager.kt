@@ -22,10 +22,10 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     // Newest stored first, oldest stored last.
     private var history: ArrayDeque<TimedClipData> = ArrayDeque()
     private var current: ClipData? = null
-    private var systemClipboardManager: ClipboardManager? = null
     private var onPrimaryClipChangedListeners: ArrayList<OnPrimaryClipChangedListener> = arrayListOf()
-    private var handler: Handler? = null
-    private var prefHelper: PrefHelper? = null
+    private lateinit var systemClipboardManager: ClipboardManager
+    private lateinit var handler: Handler
+    private lateinit var prefHelper: PrefHelper
 
     data class TimedClipData(val data: ClipData, val timeUTC: Long)
 
@@ -51,12 +51,12 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      * Changes current clipboard item.
      */
     fun changeCurrent(newData: ClipData) {
-        if (prefHelper!!.clipboard.enableInternal) {
+        if (prefHelper.clipboard.enableInternal) {
             current = newData
-            if (prefHelper!!.clipboard.syncToSystem)
-                systemClipboardManager!!.setPrimaryClip(newData)
+            if (prefHelper.clipboard.syncToSystem)
+                systemClipboardManager.setPrimaryClip(newData)
         }else {
-            systemClipboardManager!!.setPrimaryClip(newData)
+            systemClipboardManager.setPrimaryClip(newData)
         }
     }
 
@@ -65,7 +65,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      * Change the current text on clipboard, update history (if enabled).
      */
     fun addNewClip(newData: ClipData) {
-        val clipboardPrefs = prefHelper!!.clipboard
+        val clipboardPrefs = prefHelper.clipboard
 
         if (clipboardPrefs.enableHistory) {
             if (clipboardPrefs.limitHistorySize) {
@@ -105,9 +105,9 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     }
 
     override fun onPrimaryClipChanged() {
-        if(prefHelper!!.clipboard.enableInternal && prefHelper!!.clipboard.syncToFloris &&
-            systemClipboardManager?.primaryClip  != primaryClip) {
-            systemClipboardManager?.primaryClip?.let { addNewClip(it) }
+        if(prefHelper.clipboard.enableInternal && prefHelper.clipboard.syncToFloris &&
+            systemClipboardManager.primaryClip != primaryClip) {
+            systemClipboardManager.primaryClip?.let { addNewClip(it) }
             onPrimaryClipChangedListeners.forEach { it.onPrimaryClipChanged() }
         }
     }
@@ -122,8 +122,8 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      * Sets [instance] to null for GC. Unregisters the system clipboard listener, cancels clipboard clean ups.
      */
     override fun close() {
-        systemClipboardManager?.removePrimaryClipChangedListener(this)
-        handler?.cancelAll()
+        systemClipboardManager.removePrimaryClipChangedListener(this)
+        handler.cancelAll()
         instance = null
     }
 
@@ -137,14 +137,19 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      */
     fun initialize(context: Context) {
         this.systemClipboardManager = (context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager)
-        systemClipboardManager!!.addPrimaryClipChangedListener(this)
+        systemClipboardManager.addPrimaryClipChangedListener(this)
 
         prefHelper = PrefHelper.getDefaultInstance(context)
 
         val cleanUpClipboard = Runnable {
+
+            if (prefHelper.clipboard.cleanUpOld != true) {
+                return@Runnable
+            }
+
             val currentTime = System.currentTimeMillis()
             var numToPop = 0
-            val expiryTime = prefHelper!!.clipboard.cleanUpAfter * 60 * 1000
+            val expiryTime = prefHelper.clipboard.cleanUpAfter * 60 * 1000
             for (item in history.asReversed()) {
                 Timber.d("${item.timeUTC + expiryTime - currentTime}")
                 if (item.timeUTC + expiryTime < currentTime) {
@@ -163,7 +168,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         FlorisBoard.getInstance().clipInputManager.initClipboard(this.history)
         handler = Handler(Looper.getMainLooper())
         prefHelper
-        handler?.postAtScheduledRate(0, INTERVAL, cleanUpClipboard)
+        handler.postAtScheduledRate(0, INTERVAL, cleanUpClipboard)
     }
 
 
@@ -174,7 +179,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         val clipInputManager = FlorisBoard.getInstance().clipInputManager
         val delay = clipInputManager.clearClipboardWithAnimation(history.size)
 
-        handler?.postDelayed({
+        handler.postDelayed({
             history.clear()
             clipInputManager.adapter?.notifyDataSetChanged()
         }, delay)

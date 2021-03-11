@@ -33,8 +33,8 @@ class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboar
     }
 
     companion object {
-        private const val IMAGE: Int = 1
-        private const val TEXT: Int = 2
+        const val IMAGE: Int = 1
+        const val TEXT: Int = 2
         // TODO: add HTML
 
         private const val MAX_SIZE: Int = 256
@@ -49,10 +49,6 @@ class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboar
         }!!
     }
 
-    private fun onClickItem(view: View){
-        val position = FlorisBoard.getInstance().clipInputManager.recyclerView?.getChildLayoutPosition(view)
-        FlorisBoard.getInstance().florisClipboardManager!!.changeCurrent(dataSet[position!!].data)
-    }
 
 
 
@@ -62,35 +58,22 @@ class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboar
             IMAGE -> {
                 val view = LayoutInflater.from(viewGroup.context)
                     .inflate(R.layout.clipboard_history_item_image, viewGroup, false)
+                (view as ClipboardHistoryItemView).type = IMAGE
 
                 ClipboardHistoryImageViewHolder(view)
             }
             TEXT -> {
                 val view = LayoutInflater.from(viewGroup.context)
                     .inflate(R.layout.clipboard_history_item_text, viewGroup, false)
+                (view as ClipboardHistoryItemView).type = TEXT
 
-                val themeManager = ThemeManager.default()
-                themeManager.registerOnThemeUpdatedListener{
-                    view.background.setColorFilter(it.getAttr(Theme.Attr.KEY_BACKGROUND).toSolidColor().color, PorterDuff.Mode.SRC_ATOP)
-                }
                 ClipboardHistoryTextViewHolder(view)
             }
             else -> null
         }!!
-
-        vh.itemView.setOnClickListener{
-            onClickItem(it)
-        }
-
-        if (true) {
-            (vh.itemView.findViewById(R.id.clipboard_pin) as ImageView).visibility = INVISIBLE
-            val view = vh.itemView.findViewById<TextView>(R.id.clipboard_history_item_text)
-            view?.let {
-                val params = it.layoutParams as ConstraintLayout.LayoutParams
-                params.marginEnd = 0
-                it.layoutParams = params
-            }
-        }
+        Timber.d("AQWXS ${viewGroup.rootView}")
+        (vh.itemView as ClipboardHistoryItemView).keyboardView =
+            ClipboardInputManager.getInstance().recyclerView!!.parent.parent as ClipboardHistoryView
         return vh
     }
 

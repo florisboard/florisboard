@@ -32,6 +32,8 @@ class PopupLayerView : FrameLayout {
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
+    var interceptTouch = true
+
     init {
         background = null
         isClickable = false
@@ -42,7 +44,7 @@ class PopupLayerView : FrameLayout {
     }
 
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
-        return true
+        return interceptTouch
     }
 
     @SuppressLint("ClickableViewAccessibility")

@@ -1,25 +1,23 @@
 package dev.patrickgold.florisboard.ime.clip
 
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
+import android.graphics.Rect
 import android.util.AttributeSet
+import android.view.MotionEvent
+import android.view.MotionEvent.ACTION_DOWN
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.content.res.AppCompatResources.getDrawable
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import timber.log.Timber
 import kotlin.math.roundToInt
+
 
 class ClipboardHistoryView : LinearLayout, FlorisBoard.EventListener,
     ThemeManager.OnThemeUpdatedListener {
@@ -75,5 +73,26 @@ class ClipboardHistoryView : LinearLayout, FlorisBoard.EventListener,
         val height = florisboard?.inputView?.desiredMediaKeyboardViewHeight ?: 0.0f
         super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height.roundToInt(), MeasureSpec.EXACTLY))
     }
+
+    var intercept: View? = null
+    var clipboardPopupManager: ClipboardPopupManager? = null
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        when (ev.actionMasked) {
+            MotionEvent.ACTION_DOWN -> {
+                intercept?.run {
+                    val viewRect = Rect()
+                    getGlobalVisibleRect(viewRect)
+                    if (!viewRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
+                        Timber.d("Closing view")
+                        clipboardPopupManager?.hide()
+                    }
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev)
+    }
+
+
 
 }

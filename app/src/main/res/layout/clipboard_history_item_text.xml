@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<dev.patrickgold.florisboard.ime.clip.ClipboardHistoryItemView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -33,4 +33,4 @@
         android:src="@drawable/ic_pin"
         android:contentDescription="@string/pin"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</dev.patrickgold.florisboard.ime.clip.ClipboardHistoryItemView>

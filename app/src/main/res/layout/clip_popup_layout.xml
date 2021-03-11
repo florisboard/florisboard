@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dev.patrickgold.florisboard.ime.clip.ClipPopupView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:id="@+id/pin_clip_item"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/pin_clip_item_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_pin"/>
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="0dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pin item"
+            android:id="@+id/pin_clip_item_text"
+            tools:layout_editor_absoluteY="3dp" />
+
+
+    </LinearLayout>
+
+
+</dev.patrickgold.florisboard.ime.clip.ClipPopupView>

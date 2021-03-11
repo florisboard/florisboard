@@ -115,6 +115,7 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
                 florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(data))
             }
         }
+
         // MUST return false here so the background selector for showing a transparent bg works
         return false
     }
