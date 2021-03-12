@@ -14,13 +14,32 @@ import timber.log.Timber
 import java.io.Closeable
 
 /**
- * [FlorisClipboardManager] manages the clipboard and clipboard history
+ * [FlorisClipboardManager] manages the clipboard and clipboard history.
+ *
+ * Also just going to document how all the classes here work.
+ *
+ * [FlorisClipboardManager] handles storage and retrieval of clipboard items. All manipulation of the
+ * clipboard goes through here.
+ *
+ * [ClipboardInputManager] handles the input view and allows for communication between UI and logic
+ *
+ * [ClipboardHistoryView] is the view representing the clipboard context. Only does some theme stuff.
+ *
+ * [ClipboardHistoryItemView] is the view representing an item in the clipboard history (either image or text). Only
+ * does UI stuff.
+ *
+ * [ClipboardHistoryItemAdapter] is the recyclerview adapter that backs the clipboard history.
+ *
+ * [ClipboardPopupManager] handles the popups for each [ClipboardHistoryItemView] (each item has its own popup manager)
+ *
+ * [ClipboardPopupView] is the view representing a popup displayed when long pressing on a clipboard history item.
  */
 class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryClipChangedListener, Closeable {
 
     // Using ArrayDeque because it's "technically" the correct data structure (I think).
     // Newest stored first, oldest stored last.
     private var history: ArrayDeque<TimedClipData> = ArrayDeque()
+    private var pins: ArrayDeque<ClipData> = ArrayDeque()
     private var current: ClipData? = null
     private var onPrimaryClipChangedListeners: ArrayList<OnPrimaryClipChangedListener> = arrayListOf()
     private lateinit var systemClipboardManager: ClipboardManager
@@ -77,7 +96,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
             val timed = TimedClipData(newData, System.currentTimeMillis())
             history.addFirst(timed)
             changeCurrent(newData)
-            FlorisBoard.getInstance().clipInputManager.adapter?.notifyItemInserted(0)
+            ClipboardInputManager.getInstance().notifyItemInserted(pins.size)
         }
     }
 
@@ -143,7 +162,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
 
         val cleanUpClipboard = Runnable {
 
-            if (prefHelper.clipboard.cleanUpOld != true) {
+            if (!prefHelper.clipboard.cleanUpOld) {
                 return@Runnable
             }
 
@@ -162,10 +181,10 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
                 history.removeLast()
                 Timber.d("Popped item.")
             }
-            FlorisBoard.getInstance().clipInputManager.adapter?.notifyItemRangeRemoved(history.size, numToPop)
+            ClipboardInputManager.getInstance().notifyItemRangeRemoved(history.size, numToPop)
             Timber.d("Clearing up clipboard")
         }
-        FlorisBoard.getInstance().clipInputManager.initClipboard(this.history)
+        FlorisBoard.getInstance().clipInputManager.initClipboard(this.history, this.pins)
         handler = Handler(Looper.getMainLooper())
         prefHelper
         handler.postAtScheduledRate(0, INTERVAL, cleanUpClipboard)
@@ -177,12 +196,28 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      */
     fun clearHistoryWithAnimation() {
         val clipInputManager = FlorisBoard.getInstance().clipInputManager
-        val delay = clipInputManager.clearClipboardWithAnimation(history.size)
+        val delay = clipInputManager.clearClipboardWithAnimation(pins.size, history.size)
 
         handler.postDelayed({
+            clipInputManager.notifyItemRangeRemoved(pins.size, history.size)
             history.clear()
-            clipInputManager.adapter?.notifyDataSetChanged()
         }, delay)
+    }
+
+    fun pinClip(adapterPos: Int){
+        Timber.d("pinning $adapterPos ${pins.size}")
+        val clipInputManager = FlorisBoard.getInstance().clipInputManager
+        val pin = history.removeAt(adapterPos - pins.size)
+        pins.addFirst(pin.data)
+        clipInputManager.notifyItemMoved(adapterPos, 0)
+        clipInputManager.notifyItemChanged(0)
+    }
+
+    fun peekHistoryOrPin(position: Int): ClipData {
+        return when {
+            position < pins.size -> pins[position]
+            else                 -> history[position - pins.size].data
+        }
     }
 
 }

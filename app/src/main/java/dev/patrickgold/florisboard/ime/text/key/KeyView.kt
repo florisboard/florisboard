@@ -25,6 +25,7 @@ import android.graphics.Rect
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.PaintDrawable
+import android.opengl.Visibility
 import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
@@ -50,6 +51,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import dev.patrickgold.florisboard.util.cancelAll
 import dev.patrickgold.florisboard.util.postDelayed
+import timber.log.Timber
 import java.util.*
 import kotlin.math.abs
 
@@ -590,6 +592,13 @@ class KeyView(
             KeyCode.CLIPBOARD_SELECT_ALL -> {
                 florisboard?.activeEditorInstance?.isRawInputEditor == false
             }
+            KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
+                visibility = when (prefs.clipboard.enableHistory ) {
+                    true -> VISIBLE
+                    false -> GONE
+                }
+                prefs.clipboard.enableHistory
+            }
             else -> true
         }
         if (data.code == KeyCode.CLIPBOARD_PASTE)
@@ -707,8 +716,7 @@ class KeyView(
         updateEnabledState()
         when (data.code) {
             KeyCode.SWITCH_TO_TEXT_CONTEXT,
-            KeyCode.SWITCH_TO_MEDIA_CONTEXT,
-            KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT-> {
+            KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
                 val tempUtilityKeyAction = when {
                     prefs.keyboard.utilityKeyEnabled -> prefs.keyboard.utilityKeyAction
                     else -> UtilityKeyAction.DISABLED
@@ -724,6 +732,12 @@ class KeyView(
                         } else {
                             VISIBLE
                         }
+                }
+            }
+            KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
+                when (prefs.clipboard.enableHistory) {
+                    true -> VISIBLE
+                    false -> GONE
                 }
             }
             KeyCode.LANGUAGE_SWITCH -> {
@@ -824,6 +838,9 @@ class KeyView(
                 }
                 KeyCode.CLIPBOARD_SELECT_ALL -> {
                     drawable = getDrawable(context, R.drawable.ic_select_all)
+                }
+                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
+                    drawable = getDrawable(context, R.drawable.ic_assignment)
                 }
                 KeyCode.DELETE -> {
                     drawable = getDrawable(context, R.drawable.ic_backspace)

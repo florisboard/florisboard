@@ -120,6 +120,8 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     val mediaInputManager: MediaInputManager
     val clipInputManager: ClipboardInputManager
 
+    var isClipboardContextMenuShown = false
+
     init {
         florisboardInstance = this
 
@@ -576,6 +578,14 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         val inputView = this.inputView ?: return
         val inputWindowView = this.inputWindowView ?: return
         // TODO: Check also if the keyboard is currently suppressed by a hardware keyboard
+
+        if (isClipboardContextMenuShown) {
+            outInsets?.contentTopInsets = 0
+            outInsets?.visibleTopInsets = 0
+            return
+        }
+
+
         if (!isInputViewShown) {
             outInsets?.contentTopInsets = inputWindowView.height
             outInsets?.visibleTopInsets = inputWindowView.height

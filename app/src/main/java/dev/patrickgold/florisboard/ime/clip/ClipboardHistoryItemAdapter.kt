@@ -1,5 +1,6 @@
 package dev.patrickgold.florisboard.ime.clip
 
+import android.content.ClipData
 import android.graphics.ColorFilter
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
@@ -21,10 +22,12 @@ import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import timber.log.Timber
 
-class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboardManager.TimedClipData>) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ClipboardHistoryItemAdapter(
+        private val dataSet: ArrayDeque<FlorisClipboardManager.TimedClipData>,
+        private val pins: ArrayDeque<ClipData>
+    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    class ClipboardHistoryTextViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ClipboardHistoryTextViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.findViewById(R.id.clipboard_history_item_text)
     }
 
@@ -41,11 +44,22 @@ class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboar
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when {
-            dataSet[position].data.getItemAt(0).uri != null -> IMAGE
-            dataSet[position].data.getItemAt(0).text != null -> TEXT
-            dataSet[position].data.getItemAt(0).htmlText != null -> TEXT
-            else -> null
+        return if (position < pins.size) {
+            // is a pin
+            when {
+                pins[position].getItemAt(0).uri != null -> IMAGE
+                pins[position].getItemAt(0).text != null -> TEXT
+                pins[position].getItemAt(0).htmlText != null -> TEXT
+                else -> null
+            }
+        }else {
+            // regular history item
+            when {
+                dataSet[position - pins.size].data.getItemAt(0).uri != null -> IMAGE
+                dataSet[position - pins.size].data.getItemAt(0).text != null -> TEXT
+                dataSet[position - pins.size].data.getItemAt(0).htmlText != null -> TEXT
+                else -> null
+            }
         }!!
     }
 
@@ -58,22 +72,20 @@ class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboar
             IMAGE -> {
                 val view = LayoutInflater.from(viewGroup.context)
                     .inflate(R.layout.clipboard_history_item_image, viewGroup, false)
-                (view as ClipboardHistoryItemView).type = IMAGE
 
                 ClipboardHistoryImageViewHolder(view)
             }
             TEXT -> {
                 val view = LayoutInflater.from(viewGroup.context)
                     .inflate(R.layout.clipboard_history_item_text, viewGroup, false)
-                (view as ClipboardHistoryItemView).type = TEXT
 
                 ClipboardHistoryTextViewHolder(view)
             }
             else -> null
         }!!
         Timber.d("AQWXS ${viewGroup.rootView}")
-        (vh.itemView as ClipboardHistoryItemView).keyboardView =
-            ClipboardInputManager.getInstance().recyclerView!!.parent.parent as ClipboardHistoryView
+        val clipboardInputManager = ClipboardInputManager.getInstance()
+        (vh.itemView as ClipboardHistoryItemView).keyboardView = clipboardInputManager.getClipboardHistoryView()
         return vh
     }
 
@@ -81,7 +93,13 @@ class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboar
     override fun onBindViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
         when (viewHolder) {
             is ClipboardHistoryTextViewHolder -> {
-                var text = dataSet[position].data.getItemAt(0).text
+                var text = if (position < pins.size) {
+                    (viewHolder.itemView as ClipboardHistoryItemView).setPinned()
+                    pins[position].getItemAt(0).text
+                }else {
+                    (viewHolder.itemView as ClipboardHistoryItemView).setUnpinned()
+                    dataSet[position - pins.size].data.getItemAt(0).text
+                }
                 if (text.length > MAX_SIZE) {
                     text = text.subSequence(0 until MAX_SIZE).toString() + "..."
                 }
@@ -89,14 +107,24 @@ class ClipboardHistoryItemAdapter(private val dataSet: ArrayDeque<FlorisClipboar
             }
 
             is ClipboardHistoryImageViewHolder -> {
+                val uri = if (position < pins.size) {
+                    (viewHolder.itemView as ClipboardHistoryItemView).setPinned()
+                    pins[position].getItemAt(0).uri
+                }else {
+                    (viewHolder.itemView as ClipboardHistoryItemView).setUnpinned()
+                    dataSet[position - pins.size].data.getItemAt(0).uri
+                }
+
+
                 viewHolder.imgView.clipToOutline = true
                 val resolver = FlorisBoard.getInstance().context.contentResolver
-                val inputStream = resolver.openInputStream(dataSet[position].data.getItemAt(0).uri)
+                val inputStream = resolver.openInputStream(uri)
+
                 val drawable = Drawable.createFromStream(inputStream, "clipboard URI")
                 viewHolder.imgView.setImageDrawable(drawable)
             }
         }
     }
-    override fun getItemCount() = dataSet.size
+    override fun getItemCount() = pins.size + dataSet.size
 
 }

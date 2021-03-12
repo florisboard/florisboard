@@ -40,6 +40,7 @@ enum class SwipeAction {
     SHOW_INPUT_METHOD_PICKER,
     SWITCH_TO_PREV_SUBTYPE,
     SWITCH_TO_NEXT_SUBTYPE,
+    SWITCH_TO_CLIPBOARD_CONTEXT,
     SWITCH_TO_PREV_KEYBOARD;
 
     companion object {

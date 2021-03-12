@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.MotionEvent.ACTION_DOWN
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
@@ -77,22 +76,10 @@ class ClipboardHistoryView : LinearLayout, FlorisBoard.EventListener,
     var intercept: View? = null
     var clipboardPopupManager: ClipboardPopupManager? = null
 
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        when (ev.actionMasked) {
-            MotionEvent.ACTION_DOWN -> {
-                intercept?.run {
-                    val viewRect = Rect()
-                    getGlobalVisibleRect(viewRect)
-                    if (!viewRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
-                        Timber.d("Closing view")
-                        clipboardPopupManager?.hide()
-                    }
-                }
-            }
-        }
-        return super.dispatchTouchEvent(ev)
-    }
 
+    override fun onTouchEvent(ev: MotionEvent?): Boolean {
+        return super.onTouchEvent(ev)
+    }
 
 
 }

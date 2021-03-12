@@ -404,6 +404,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             SwipeAction.MOVE_CURSOR_START_OF_PAGE -> KeyData.MOVE_START_OF_PAGE
             SwipeAction.MOVE_CURSOR_END_OF_PAGE -> KeyData.MOVE_END_OF_PAGE
             SwipeAction.SHIFT -> KeyData.SHIFT
+            SwipeAction.SWITCH_TO_CLIPBOARD_CONTEXT -> KeyData.SWITCH_TO_CLIPBOARD_CONTEXT
             SwipeAction.SHOW_INPUT_METHOD_PICKER -> KeyData.SHOW_INPUT_METHOD_PICKER
             else -> null
         }

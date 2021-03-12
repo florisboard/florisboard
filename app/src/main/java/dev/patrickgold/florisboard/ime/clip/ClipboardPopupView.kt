@@ -14,7 +14,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import timber.log.Timber
 
-class ClipPopupView: LinearLayout, ThemeManager.OnThemeUpdatedListener {
+class ClipboardPopupView: LinearLayout, ThemeManager.OnThemeUpdatedListener {
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)

@@ -355,4 +355,5 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard seems to stop working repeatedly…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Falling back to previous keyboard to stop infinite crash loop. Tap to view error details</string>
     <string name="pin">pin</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Switch to clipboard history</string>
 </resources>

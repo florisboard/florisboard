@@ -98,6 +98,7 @@
         <item>@string/pref__gestures__swipe_action__switch_to_prev_subtype</item>
         <item>@string/pref__gestures__swipe_action__switch_to_next_subtype</item>
         <item>@string/pref__gestures__swipe_action__switch_to_prev_keyboard</item>
+        <item>@string/pref__gestures__swipe_action__switch_to_clipboard_context</item>
     </string-array>
     <string-array name="pref__gestures__swipe_action__values">
         <item>no_action</item>
@@ -117,6 +118,7 @@
         <item>switch_to_prev_subtype</item>
         <item>switch_to_next_subtype</item>
         <item>switch_to_prev_keyboard</item>
+        <item>switch_to_clipboard_context</item>
     </string-array>
 
     <string-array name="pref__gestures__swipe_action_delete__entries">

@@ -5,14 +5,16 @@ import android.view.View
 import android.view.View.GONE
 import android.widget.LinearLayout
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.popup.PopupLayerView
 import timber.log.Timber
 import kotlin.math.max
 
 class ClipboardPopupManager (private val keyboardView: ClipboardHistoryView,
-                             private val popupLayerView: PopupLayerView?) {
+                             private val popupLayerView: PopupLayerView?,
+                             private val clipboardHistoryItem: ClipboardHistoryItemView) {
 
-    private val popupView: ClipPopupView = LayoutInflater.from(keyboardView.context).inflate(R.layout.clip_popup_layout, null) as ClipPopupView
+    private val popupView: ClipboardPopupView = LayoutInflater.from(keyboardView.context).inflate(R.layout.clip_popup_layout, null) as ClipboardPopupView
     private var width = 0
     private var height = 0
     private var xOffset = 0
@@ -24,8 +26,6 @@ class ClipboardPopupManager (private val keyboardView: ClipboardHistoryView,
     }
 
     fun show(view: ClipboardHistoryItemView) {
-        Timber.d("show!")
-
         calc(view)
 
         popupView.properties.let {
@@ -38,14 +38,14 @@ class ClipboardPopupManager (private val keyboardView: ClipboardHistoryView,
 
 
         popupView.findViewById<LinearLayout>(R.id.pin_clip_item).setOnClickListener{
-            Timber.d("Hello, world")
+            val pos = ClipboardInputManager.getInstance().getPositionOfView(clipboardHistoryItem)
+            FlorisClipboardManager.getInstance().pinClip(pos)
             hide()
         }
 
-        keyboardView.clipboardPopupManager = this
-        keyboardView.intercept = popupView
-
-        popupLayerView?.interceptTouch = false
+        FlorisBoard.getInstance().isClipboardContextMenuShown = true
+        popupLayerView?.clipboardPopupManager = this
+        popupLayerView?.intercept = popupView
     }
 
     private fun calc(view: ClipboardHistoryItemView) {
@@ -67,12 +67,13 @@ class ClipboardPopupManager (private val keyboardView: ClipboardHistoryView,
 
     fun hide() {
         popupView.hide()
-        keyboardView.intercept = null
-        keyboardView.clipboardPopupManager = null
+        popupLayerView?.intercept = null
+        popupLayerView?.clipboardPopupManager = null
+        FlorisBoard.getInstance().isClipboardContextMenuShown = true
+
         popupView.apply {
             visibility = GONE
         }
 
-        popupLayerView?.interceptTouch = true
     }
 }
