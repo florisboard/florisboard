@@ -67,7 +67,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     }
 
     /**
-     * Changes current clipboard item.
+     * Changes current clipboard item. WITHOUT updating the history.
      */
     fun changeCurrent(newData: ClipData) {
         if (prefHelper.clipboard.enableInternal) {
@@ -218,6 +218,32 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
             position < pins.size -> pins[position]
             else                 -> history[position - pins.size].data
         }
+    }
+
+
+    fun isPinned(position: Int): Boolean {
+        return when {
+            position < pins.size -> true
+            else -> false
+        }
+    }
+
+    fun unpinClip(adapterPos: Int) {
+        val clipInputManager = FlorisBoard.getInstance().clipInputManager
+        val item = pins.removeAt(adapterPos)
+
+        val clipboardPrefs = prefHelper.clipboard
+        if (clipboardPrefs.limitHistorySize) {
+            if (history.size == clipboardPrefs.maxHistorySize) {
+                history.removeLast()
+            }
+        }
+
+        val timed = TimedClipData(item, System.currentTimeMillis())
+        history.addFirst(timed)
+
+        clipInputManager.notifyItemMoved(adapterPos, pins.size)
+        clipInputManager.notifyItemChanged(pins.size)
     }
 
 }

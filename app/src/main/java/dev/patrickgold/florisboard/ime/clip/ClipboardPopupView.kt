@@ -6,8 +6,10 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.graphics.drawable.DrawableCompat.setTint
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
@@ -57,7 +59,12 @@ class ClipboardPopupView: LinearLayout, ThemeManager.OnThemeUpdatedListener {
         backgroundDrawable.apply {
             setTint(theme.getAttr(Theme.Attr.POPUP_BACKGROUND).toSolidColor().color)
         }
-        elevation = ViewLayoutUtils.convertDpToPixel(4.0f, context)
+
+        this.findViewById<ImageView>(R.id.pin_clip_item_icon).drawable.apply {
+            setTint(theme.getAttr(Theme.Attr.WINDOW_TEXT_COLOR).toSolidColor().color)
+        }
+
+
         if (isShowing) {
             invalidate()
         }

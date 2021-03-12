@@ -177,7 +177,7 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
             for (view in views) {
                 view.translationX = 0f
             }
-        }, 300 + delay)
+        }, 320 + delay)
 
         return 300 + delay
     }

@@ -3,7 +3,9 @@ package dev.patrickgold.florisboard.ime.clip
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.popup.PopupLayerView
@@ -25,6 +27,19 @@ class ClipboardPopupManager (private val keyboardView: ClipboardHistoryView,
         popupLayerView?.addView(popupView)
     }
 
+
+    private fun pinButtonListener(){
+        val pos = ClipboardInputManager.getInstance().getPositionOfView(clipboardHistoryItem)
+        val pinned = FlorisClipboardManager.getInstance().isPinned(pos)
+        if (pinned) {
+            FlorisClipboardManager.getInstance().unpinClip(pos)
+            hide()
+        }else {
+            FlorisClipboardManager.getInstance().pinClip(pos)
+            hide()
+        }
+    }
+
     fun show(view: ClipboardHistoryItemView) {
         calc(view)
 
@@ -35,12 +50,16 @@ class ClipboardPopupManager (private val keyboardView: ClipboardHistoryView,
             it.yOffset = this.yOffset
         }
         popupView.show(keyboardView)
+        val pinButton = popupView.findViewById<LinearLayout>(R.id.pin_clip_item)
+        pinButton.setOnClickListener{
+            pinButtonListener()
+        }
 
+        val pos = ClipboardInputManager.getInstance().getPositionOfView(clipboardHistoryItem)
+        val pinned = FlorisClipboardManager.getInstance().isPinned(pos)
 
-        popupView.findViewById<LinearLayout>(R.id.pin_clip_item).setOnClickListener{
-            val pos = ClipboardInputManager.getInstance().getPositionOfView(clipboardHistoryItem)
-            FlorisClipboardManager.getInstance().pinClip(pos)
-            hide()
+        if (pinned) {
+            pinButton.findViewById<TextView>(R.id.pin_clip_item_text).text = "Unpin item"
         }
 
         FlorisBoard.getInstance().isClipboardContextMenuShown = true
@@ -49,7 +68,6 @@ class ClipboardPopupManager (private val keyboardView: ClipboardHistoryView,
     }
 
     private fun calc(view: ClipboardHistoryItemView) {
-
         if (popupView.width == 0){
             val widthMeasureSpec: Int = View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.AT_MOST)
             val heightMeasureSpec: Int = View.MeasureSpec.makeMeasureSpec(100000, View.MeasureSpec.AT_MOST)
@@ -61,8 +79,6 @@ class ClipboardPopupManager (private val keyboardView: ClipboardHistoryView,
         height = popupView.measuredHeight
         xOffset = view.x.toInt() + (view.width - popupView.measuredWidth)/2
         yOffset = max(view.y.toInt() - keyboardView.height - height/2 - 20, keyboardView.y.toInt()  - keyboardView.height - height/2 - 20)
-
-        Timber.d("$width $height $xOffset $yOffset")
     }
 
     fun hide() {

@@ -48,10 +48,6 @@ class ClipboardHistoryItemView: ConstraintLayout, ThemeManager.OnThemeUpdatedLis
         pin?.setTint(theme.getAttr(Theme.Attr.WINDOW_TEXT_COLOR).toSolidColor().color)
     }
 
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-    }
-
 
     private fun onLongClickItem() : Boolean {
         popupManager?.show(this)
