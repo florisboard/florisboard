@@ -65,6 +65,14 @@ class ClipboardPopupView: LinearLayout, ThemeManager.OnThemeUpdatedListener {
         }
 
 
+        this.findViewById<ImageView>(R.id.remove_from_history_icon).drawable.apply {
+            setTint(theme.getAttr(Theme.Attr.WINDOW_TEXT_COLOR).toSolidColor().color)
+        }
+
+        this.findViewById<ImageView>(R.id.paste_clip_item_icon).drawable.apply {
+            setTint(theme.getAttr(Theme.Attr.WINDOW_TEXT_COLOR).toSolidColor().color)
+        }
+
         if (isShowing) {
             invalidate()
         }

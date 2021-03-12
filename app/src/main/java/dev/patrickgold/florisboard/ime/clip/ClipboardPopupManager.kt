@@ -62,22 +62,35 @@ class ClipboardPopupManager (private val keyboardView: ClipboardHistoryView,
             pinButton.findViewById<TextView>(R.id.pin_clip_item_text).text = "Unpin item"
         }
 
+        val delete = popupView.findViewById<LinearLayout>(R.id.remove_from_history)
+        delete.setOnClickListener{
+            val pos = ClipboardInputManager.getInstance().getPositionOfView(clipboardHistoryItem)
+            FlorisClipboardManager.getInstance().removeClip(pos)
+            hide()
+        }
+
+        val paste = popupView.findViewById<LinearLayout>(R.id.paste_clip_item)
+        paste.setOnClickListener{
+            val pos = ClipboardInputManager.getInstance().getPositionOfView(clipboardHistoryItem)
+            FlorisClipboardManager.getInstance().pasteItem(pos)
+            hide()
+        }
+
         FlorisBoard.getInstance().isClipboardContextMenuShown = true
         popupLayerView?.clipboardPopupManager = this
         popupLayerView?.intercept = popupView
     }
 
     private fun calc(view: ClipboardHistoryItemView) {
-        if (popupView.width == 0){
-            val widthMeasureSpec: Int = View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.AT_MOST)
-            val heightMeasureSpec: Int = View.MeasureSpec.makeMeasureSpec(100000, View.MeasureSpec.AT_MOST)
-            popupView.measure(widthMeasureSpec, heightMeasureSpec)
-        }
+        val widthMeasureSpec: Int = View.MeasureSpec.makeMeasureSpec(view.width, View.MeasureSpec.AT_MOST)
+        val heightMeasureSpec: Int = View.MeasureSpec.makeMeasureSpec(100000, View.MeasureSpec.AT_MOST)
+        popupView.invalidate()
+        popupView.measure(widthMeasureSpec, heightMeasureSpec)
 
         // TODO: extract to [dimens.xml]
-        width =  popupView.measuredWidth
+        width =  view.width * 4/5
         height = popupView.measuredHeight
-        xOffset = view.x.toInt() + (view.width - popupView.measuredWidth)/2
+        xOffset = view.x.toInt() + (view.width - width)/2
         yOffset = max(view.y.toInt() - keyboardView.height - height/2 - 20, keyboardView.y.toInt()  - keyboardView.height - height/2 - 20)
     }
 
@@ -85,7 +98,7 @@ class ClipboardPopupManager (private val keyboardView: ClipboardHistoryView,
         popupView.hide()
         popupLayerView?.intercept = null
         popupLayerView?.clipboardPopupManager = null
-        FlorisBoard.getInstance().isClipboardContextMenuShown = true
+        FlorisBoard.getInstance().isClipboardContextMenuShown = false
 
         popupView.apply {
             visibility = GONE

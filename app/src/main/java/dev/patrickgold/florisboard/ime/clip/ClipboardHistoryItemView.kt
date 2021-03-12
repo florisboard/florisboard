@@ -44,7 +44,7 @@ class ClipboardHistoryItemView: ConstraintLayout, ThemeManager.OnThemeUpdatedLis
 
     override fun onThemeUpdated(theme: Theme) {
         background.setTint(theme.getAttr(Theme.Attr.KEY_BACKGROUND).toSolidColor().color)
-        val pin = findViewById<ImageView>(R.id.clipboard_pin).drawable
+        val pin = ContextCompat.getDrawable(context, R.drawable.ic_pin)
         pin?.setTint(theme.getAttr(Theme.Attr.WINDOW_TEXT_COLOR).toSolidColor().color)
     }
 
@@ -62,7 +62,6 @@ class ClipboardHistoryItemView: ConstraintLayout, ThemeManager.OnThemeUpdatedLis
     }
 
     fun setPinned() {
-        Timber.d("PIN")
         val view = findViewById<TextView>(R.id.clipboard_history_item_text)
         view?.run {
             val params = layoutParams as LayoutParams
@@ -72,10 +71,11 @@ class ClipboardHistoryItemView: ConstraintLayout, ThemeManager.OnThemeUpdatedLis
         }
         findViewById<ImageView>(R.id.clipboard_pin).visibility = VISIBLE
         invalidate()
+        val themeManager = ThemeManager.default()
+        onThemeUpdated(themeManager.activeTheme)
     }
 
     fun setUnpinned(){
-        Timber.d("Unpin")
         val view = findViewById<TextView>(R.id.clipboard_history_item_text)
         // if text view, also update margin.
         view?.run {

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Handler
 import android.os.Looper
+import dev.patrickgold.florisboard.ime.core.EditorInstance
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.cancelAll
@@ -199,8 +200,9 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         val delay = clipInputManager.clearClipboardWithAnimation(pins.size, history.size)
 
         handler.postDelayed({
-            clipInputManager.notifyItemRangeRemoved(pins.size, history.size)
+            val size = history.size
             history.clear()
+            clipInputManager.notifyItemRangeRemoved(pins.size, size)
         }, delay)
     }
 
@@ -244,6 +246,25 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
 
         clipInputManager.notifyItemMoved(adapterPos, pins.size)
         clipInputManager.notifyItemChanged(pins.size)
+    }
+
+    fun removeClip(pos: Int) {
+        when {
+            pos < pins.size -> {
+                pins.removeAt(pos)
+            }
+            else -> {
+                history.removeAt(pos - pins.size)
+            }
+        }
+        val clipboardInputManager = ClipboardInputManager.getInstance()
+        clipboardInputManager.notifyItemRemoved(pos)
+    }
+
+
+    fun pasteItem(pos: Int){
+        val item = peekHistoryOrPin(pos)
+        FlorisBoard.getInstance().activeEditorInstance.commitClipData(item)
     }
 
 }

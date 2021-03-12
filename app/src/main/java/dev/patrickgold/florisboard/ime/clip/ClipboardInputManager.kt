@@ -168,18 +168,19 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
         var delay = 1L
         for (view in views) {
             delay += (10 * delay.toDouble().pow(0.1)).toLong()
-            val an = view.animate().translationX(-1500f)
+            val an = view.animate().translationX(1500f)
             an.startDelay = delay
             an.duration = 250
         }
 
+        // a little while later we reset the views so they can be reused.
         Handler(Looper.getMainLooper()).postDelayed({
             for (view in views) {
                 view.translationX = 0f
             }
-        }, 320 + delay)
+        }, 450 + delay)
 
-        return 300 + delay
+        return 280 + delay
     }
 
     fun notifyItemChanged(i: Int) = adapter?.notifyItemChanged(i)
