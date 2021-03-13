@@ -579,13 +579,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         val inputWindowView = this.inputWindowView ?: return
         // TODO: Check also if the keyboard is currently suppressed by a hardware keyboard
 
-        if (isClipboardContextMenuShown) {
-            outInsets?.contentTopInsets = 0
-            outInsets?.visibleTopInsets = 0
-            return
-        }
-
-
         if (!isInputViewShown) {
             outInsets?.contentTopInsets = inputWindowView.height
             outInsets?.visibleTopInsets = inputWindowView.height
@@ -594,6 +587,11 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         val visibleTopY = inputWindowView.height - inputView.measuredHeight
         outInsets?.contentTopInsets = visibleTopY
         outInsets?.visibleTopInsets = visibleTopY
+
+        if (isClipboardContextMenuShown) {
+            outInsets?.touchableInsets = Insets.TOUCHABLE_INSETS_FRAME
+            outInsets?.touchableRegion?.setEmpty()
+        }
     }
 
     /**

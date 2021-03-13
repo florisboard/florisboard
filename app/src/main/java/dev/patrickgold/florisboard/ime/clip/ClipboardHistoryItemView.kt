@@ -39,7 +39,7 @@ class ClipboardHistoryItemView: ConstraintLayout, ThemeManager.OnThemeUpdatedLis
 
     override fun onThemeUpdated(theme: Theme) {
         background.setTint(theme.getAttr(Theme.Attr.KEY_BACKGROUND).toSolidColor().color)
-        val pin = ContextCompat.getDrawable(context, R.drawable.ic_pin)
+        val pin = findViewById<ImageView>(R.id.clipboard_pin).drawable
         pin?.setTint(theme.getAttr(Theme.Attr.KEY_FOREGROUND).toSolidColor().color)
     }
 

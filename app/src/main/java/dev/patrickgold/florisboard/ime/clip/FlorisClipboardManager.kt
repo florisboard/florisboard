@@ -89,6 +89,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         if (clipboardPrefs.enableHistory) {
             if (clipboardPrefs.limitHistorySize) {
                 if (history.size == clipboardPrefs.maxHistorySize) {
+                    ClipboardInputManager.getInstance().notifyItemRemoved(history.size-1)
                     history.removeLast()
                 }
             }
@@ -179,10 +180,8 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
             }
             for (i in 0 until numToPop) {
                 history.removeLast()
-                Timber.d("Popped item.")
             }
-            ClipboardInputManager.getInstance().notifyItemRangeRemoved(history.size, numToPop)
-            Timber.d("Clearing up clipboard")
+            ClipboardInputManager.getInstance().notifyItemRangeRemoved(pins.size + history.size, numToPop)
         }
         FlorisBoard.getInstance().clipInputManager.initClipboard(this.history, this.pins)
         handler = Handler(Looper.getMainLooper())
@@ -239,6 +238,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         val clipboardPrefs = prefHelper.clipboard
         if (clipboardPrefs.limitHistorySize) {
             if (history.size == clipboardPrefs.maxHistorySize) {
+                ClipboardInputManager.getInstance().notifyItemRemoved(history.size-1)
                 history.removeLast()
             }
         }
