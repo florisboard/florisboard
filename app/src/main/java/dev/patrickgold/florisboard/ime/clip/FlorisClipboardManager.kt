@@ -70,13 +70,19 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      * Changes current clipboard item. WITHOUT updating the history.
      */
     fun changeCurrent(newData: ClipData) {
+        Timber.d("changeCurrent ${systemClipboardManager.primaryClip} ${primaryClip}")
         if (prefHelper.clipboard.enableInternal) {
             current = newData
-            if (prefHelper.clipboard.syncToSystem)
+            val isNotEqual = when (newData.getItemAt(0).uri) {
+                null -> newData.getItemAt(0).text != systemClipboardManager.primaryClip?.getItemAt(0)?.text
+                else -> newData.getItemAt(0).uri != systemClipboardManager.primaryClip?.getItemAt(0)?.uri
+            }
+            if (prefHelper.clipboard.syncToSystem && isNotEqual)
                 systemClipboardManager.setPrimaryClip(newData)
         }else {
             systemClipboardManager.setPrimaryClip(newData)
         }
+        onPrimaryClipChangedListeners.forEach { it.onPrimaryClipChanged() }
     }
 
 
@@ -125,10 +131,13 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     }
 
     override fun onPrimaryClipChanged() {
-        if(prefHelper.clipboard.enableInternal && prefHelper.clipboard.syncToFloris &&
-            systemClipboardManager.primaryClip != primaryClip) {
+        Timber.d("onPrimaryClipChanged ${systemClipboardManager.primaryClip} ${primaryClip}")
+        val isNotEqual = when (primaryClip?.getItemAt(0)?.uri) {
+            null -> primaryClip?.getItemAt(0)?.text != systemClipboardManager.primaryClip?.getItemAt(0)?.text
+            else -> primaryClip?.getItemAt(0)?.uri != systemClipboardManager.primaryClip?.getItemAt(0)?.uri
+        }
+        if(prefHelper.clipboard.enableInternal && prefHelper.clipboard.syncToFloris && isNotEqual) {
             systemClipboardManager.primaryClip?.let { addNewClip(it) }
-            onPrimaryClipChangedListeners.forEach { it.onPrimaryClipChanged() }
         }
     }
 
