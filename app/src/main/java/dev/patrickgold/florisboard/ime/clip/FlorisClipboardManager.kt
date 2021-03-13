@@ -10,7 +10,6 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.cancelAll
 import dev.patrickgold.florisboard.util.postAtScheduledRate
-import timber.log.Timber
 import java.io.Closeable
 
 /**
@@ -70,7 +69,6 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      * Changes current clipboard item. WITHOUT updating the history.
      */
     fun changeCurrent(newData: ClipData) {
-        Timber.d("changeCurrent ${systemClipboardManager.primaryClip} ${primaryClip}")
         if (prefHelper.clipboard.enableInternal) {
             current = newData
             val isNotEqual = when (newData.getItemAt(0).uri) {
@@ -131,7 +129,6 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     }
 
     override fun onPrimaryClipChanged() {
-        Timber.d("onPrimaryClipChanged ${systemClipboardManager.primaryClip} ${primaryClip}")
         val isNotEqual = when (primaryClip?.getItemAt(0)?.uri) {
             null -> primaryClip?.getItemAt(0)?.text != systemClipboardManager.primaryClip?.getItemAt(0)?.text
             else -> primaryClip?.getItemAt(0)?.uri != systemClipboardManager.primaryClip?.getItemAt(0)?.uri
@@ -180,7 +177,6 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
             var numToPop = 0
             val expiryTime = prefHelper.clipboard.cleanUpAfter * 60 * 1000
             for (item in history.asReversed()) {
-                Timber.d("${item.timeUTC + expiryTime - currentTime}")
                 if (item.timeUTC + expiryTime < currentTime) {
                     numToPop += 1
                 } else {
@@ -214,7 +210,6 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     }
 
     fun pinClip(adapterPos: Int){
-        Timber.d("pinning $adapterPos ${pins.size}")
         val clipInputManager = FlorisBoard.getInstance().clipInputManager
         val pin = history.removeAt(adapterPos - pins.size)
         pins.addFirst(pin.data)
