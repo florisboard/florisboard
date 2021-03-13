@@ -19,7 +19,7 @@ class ClipboardHistoryView : LinearLayout, FlorisBoard.EventListener,
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
     private val themeManager: ThemeManager = ThemeManager.default()
 
-    var backButton: Button? = null
+    var backButton: ImageButton? = null
         private set
 
     var clipText: TextView? = null
@@ -60,7 +60,7 @@ class ClipboardHistoryView : LinearLayout, FlorisBoard.EventListener,
     override fun onThemeUpdated(theme: Theme) {
         val fgColor = theme.getAttr(Theme.Attr.KEY_FOREGROUND).toSolidColor().color
         clipText?.setTextColor(fgColor)
-        backButton?.setTextColor(fgColor)
+        backButton?.drawable?.setTint(fgColor)
         clearAll?.setColorFilter(fgColor)
     }
 

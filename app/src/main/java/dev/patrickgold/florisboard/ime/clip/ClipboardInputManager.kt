@@ -17,7 +17,6 @@ import dev.patrickgold.florisboard.ime.core.InputView
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import kotlinx.coroutines.*
-import timber.log.Timber
 import kotlin.math.pow
 
 /**
@@ -58,11 +57,10 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
      */
     @SuppressLint("ClickableViewAccessibility")
     override fun onRegisterInputView(inputView: InputView) {
-        Timber.i("onRegisterInputView(inputView)")
 
         launch(Dispatchers.Default) {
 
-            inputView.findViewById<Button>(R.id.back_to_keyboard_button)
+            inputView.findViewById<ImageButton>(R.id.back_to_keyboard_button)
                 .setOnTouchListener { view, event -> onButtonPressEvent(view, event) }
 
             inputView.findViewById<ImageButton>(R.id.clear_clipboard_history)
@@ -84,7 +82,6 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
      * Clean-up of resources and stopping all coroutines.
      */
     override fun onDestroy() {
-        Timber.i("onDestroy()")
 
         cancel()
         instance = null
@@ -147,7 +144,6 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
      * Handles clicks on the back to keyboard button.
      */
     private fun onButtonPressEvent(view: View, event: MotionEvent?): Boolean {
-        Timber.d("onBottomButtonEvent")
 
         event ?: return false
         val data = when (view.id) {

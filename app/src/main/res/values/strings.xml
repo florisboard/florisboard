@@ -362,4 +362,5 @@
     <string name="clip_pin_item">Pin item</string>
     <string name="clip_delete_item">Delete</string>
     <string name="clip_paste_item">Paste</string>
+    <string name="back_to_text_input">Back to text input</string>
 </resources>

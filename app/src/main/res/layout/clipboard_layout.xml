@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/back_to_keyboard_button"
                 android:layout_width="@dimen/clipboard_button_width"
                 android:layout_height="@dimen/clipboard_button_height"
@@ -25,7 +25,8 @@
                 android:hapticFeedbackEnabled="false"
                 android:soundEffectsEnabled="false"
                 android:layout_weight="0"
-                android:text="@string/back_arrow_Text" />
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="@string/back_to_text_input" />
 
             <TextView
                 android:id="@+id/clipboard_text"
