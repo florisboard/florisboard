@@ -38,6 +38,9 @@
     <dimen name="media_tab_indicator_height">4dp</dimen>
     <dimen name="media_tab_paddingH">0dp</dimen>
 
+    <dimen name="clipboard_button_width">60dp</dimen>
+    <dimen name="clipboard_button_height">@dimen/key_height</dimen>
+
     <dimen name="one_handed_width">50dp</dimen>
     <dimen name="one_handed_button_width">@dimen/one_handed_width</dimen>
     <dimen name="one_handed_button_height">@dimen/one_handed_width</dimen>
@@ -54,6 +57,7 @@
     <dimen name="gesture_distance_threshold_normal">32dp</dimen>
     <dimen name="gesture_distance_threshold_long">36dp</dimen>
     <dimen name="gesture_distance_threshold_very_long">40dp</dimen>
+    <dimen name="clipboard_text_item_pin_margin" >25dp</dimen>
 
     <integer name="gesture_velocity_threshold_very_slow">50</integer>
     <integer name="gesture_velocity_threshold_slow">60</integer>

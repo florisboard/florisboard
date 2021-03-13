@@ -1,33 +1,22 @@
 package dev.patrickgold.florisboard.ime.clip
 
 import android.content.ClipData
-import android.graphics.ColorFilter
-import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.INVISIBLE
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.marginEnd
 import androidx.recyclerview.widget.RecyclerView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.theme.Theme
-import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.ime.theme.ThemeValue
-import timber.log.Timber
 
 class ClipboardHistoryItemAdapter(
         private val dataSet: ArrayDeque<FlorisClipboardManager.TimedClipData>,
         private val pins: ArrayDeque<ClipData>
     ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    class ClipboardHistoryTextViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    class ClipboardHistoryTextViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textView: TextView = view.findViewById(R.id.clipboard_history_item_text)
     }
 
@@ -38,7 +27,6 @@ class ClipboardHistoryItemAdapter(
     companion object {
         const val IMAGE: Int = 1
         const val TEXT: Int = 2
-        // TODO: add HTML
 
         private const val MAX_SIZE: Int = 256
     }
@@ -83,7 +71,6 @@ class ClipboardHistoryItemAdapter(
             }
             else -> null
         }!!
-        Timber.d("AQWXS ${viewGroup.rootView}")
         val clipboardInputManager = ClipboardInputManager.getInstance()
         (vh.itemView as ClipboardHistoryItemView).keyboardView = clipboardInputManager.getClipboardHistoryView()
         return vh

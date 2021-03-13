@@ -1,21 +1,16 @@
 package dev.patrickgold.florisboard.ime.clip
 
-import android.content.ClipboardManager
 import android.content.Context
-import android.graphics.Color
-import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.TypedArrayUtils.getAttr
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import timber.log.Timber
 
 class ClipboardHistoryItemView: ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
 
@@ -24,7 +19,7 @@ class ClipboardHistoryItemView: ConstraintLayout, ThemeManager.OnThemeUpdatedLis
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    var popupManager: ClipboardPopupManager? = null
+    private var popupManager: ClipboardPopupManager? = null
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -45,7 +40,7 @@ class ClipboardHistoryItemView: ConstraintLayout, ThemeManager.OnThemeUpdatedLis
     override fun onThemeUpdated(theme: Theme) {
         background.setTint(theme.getAttr(Theme.Attr.KEY_BACKGROUND).toSolidColor().color)
         val pin = ContextCompat.getDrawable(context, R.drawable.ic_pin)
-        pin?.setTint(theme.getAttr(Theme.Attr.WINDOW_TEXT_COLOR).toSolidColor().color)
+        pin?.setTint(theme.getAttr(Theme.Attr.KEY_FOREGROUND).toSolidColor().color)
     }
 
 
@@ -65,8 +60,7 @@ class ClipboardHistoryItemView: ConstraintLayout, ThemeManager.OnThemeUpdatedLis
         val view = findViewById<TextView>(R.id.clipboard_history_item_text)
         view?.run {
             val params = layoutParams as LayoutParams
-            // TODO: make proper dimen
-            params.marginEnd = resources.getDimensionPixelSize(R.dimen.key_marginV) *5
+            params.marginEnd = resources.getDimensionPixelSize(R.dimen.clipboard_text_item_pin_margin)
             layoutParams = params
         }
         findViewById<ImageView>(R.id.clipboard_pin).visibility = VISIBLE

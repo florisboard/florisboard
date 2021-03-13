@@ -26,7 +26,6 @@ import kotlin.math.pow
 class ClipboardInputManager private constructor() : CoroutineScope by MainScope(),
     FlorisBoard.EventListener{
 
-    private var dataSet: ArrayDeque<FlorisClipboardManager.TimedClipData>? = null
     private val florisboard = FlorisBoard.getInstance()
     private var repeatedKeyPressHandler: Handler? = null
     private var recyclerView: RecyclerView? = null
@@ -92,21 +91,57 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
     }
 
 
+    /**
+     * Returns a reference to the [ClipboardHistoryView]
+     */
     fun getClipboardHistoryView() : ClipboardHistoryView{
         return FlorisBoard.getInstance().inputView?.mainViewFlipper?.getChildAt(2) as ClipboardHistoryView
     }
 
+    /**
+     * Returns the adapter position of the view, i.e the position that the item is displayed at (including pins and
+     * history items).
+     *
+     * @param view The ClipboardHistoryItemView whose position is to be determined.
+     * @return The adapter position of the view
+     */
     fun getPositionOfView(view: View): Int {
         return recyclerView?.getChildLayoutPosition(view)!!
     }
 
+    /**
+     * Notify adapter that an item was inserted.
+     *
+     * @param position The position the item was inserted at
+     */
     fun notifyItemInserted(position: Int) = adapter?.notifyItemInserted(position)
 
+    /**
+     * Notify adapter that an item was removed
+     * @param position The position the item was removed from
+     */
     fun notifyItemRemoved(position: Int) = adapter?.notifyItemRemoved(position)
 
+    /**
+     * Notify adapter that an item range was removed.
+     * @param start The index the range starts at (inclusive)
+     * @param numberOfItems The number of items removed
+     */
     fun notifyItemRangeRemoved(start: Int, numberOfItems: Int) = adapter?.notifyItemRangeRemoved(start, numberOfItems)
 
+    /**
+     * Notify adapter that an item was moved
+     * @param from The original position
+     * @param to The final position
+     */
     fun notifyItemMoved(from: Int, to: Int) = adapter?.notifyItemMoved(from, to)
+
+    /**
+     * Notify adapter that an item was changed.
+     *
+     * @param i The position of the item
+     */
+    fun notifyItemChanged(i: Int) = adapter?.notifyItemChanged(i)
 
     /**
      * Handles clicks on the back to keyboard button.
@@ -139,13 +174,13 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
     }
 
     /**
-     * [recyclerView] will be linked to [dataSet] when initialized.
+     * [recyclerView] will be linked to [dataSet] and [pins] when initialized.
      *
      * @param dataSet the data set to link to
+     * @param pins The pins to link to
      */
     fun initClipboard(dataSet: ArrayDeque<FlorisClipboardManager.TimedClipData>, pins: ArrayDeque<ClipData>) {
         this.adapter =  ClipboardHistoryItemAdapter(dataSet = dataSet, pins= pins)
-        this.dataSet = dataSet
     }
 
     /**
@@ -183,6 +218,5 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
         return 280 + delay
     }
 
-    fun notifyItemChanged(i: Int) = adapter?.notifyItemChanged(i)
 
 }

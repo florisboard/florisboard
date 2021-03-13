@@ -21,7 +21,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/shape_rect_rounded_3"/>
+        android:background="@drawable/shape_rect_rounded_3"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/clipboard_pin"

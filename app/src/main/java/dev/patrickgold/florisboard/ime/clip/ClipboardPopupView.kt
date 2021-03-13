@@ -3,18 +3,14 @@ package dev.patrickgold.florisboard.ime.clip
 import android.content.Context
 import android.graphics.drawable.PaintDrawable
 import android.util.AttributeSet
-import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.graphics.drawable.DrawableCompat.setTint
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
-import timber.log.Timber
 
 class ClipboardPopupView: LinearLayout, ThemeManager.OnThemeUpdatedListener {
 
@@ -37,7 +33,7 @@ class ClipboardPopupView: LinearLayout, ThemeManager.OnThemeUpdatedListener {
         xOffset = 0,
         yOffset = 0
     )
-    val isShowing: Boolean
+    private val isShowing: Boolean
         get() = visibility == VISIBLE
 
     init {
@@ -130,15 +126,5 @@ class ClipboardPopupView: LinearLayout, ThemeManager.OnThemeUpdatedListener {
         var xOffset: Int,
         var yOffset: Int
     )
-
-    var viewHeight: Int = 0
-    var viewWidth: Int = 0
-
-
-    override fun onSizeChanged(xNew: Int, yNew: Int, xOld: Int, yOld: Int) {
-        super.onSizeChanged(xNew, yNew, xOld, yOld)
-        viewWidth = xNew
-        viewHeight = yNew
-    }
 
 }

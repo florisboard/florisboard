@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Handler
 import android.os.Looper
-import dev.patrickgold.florisboard.ime.core.EditorInstance
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.cancelAll
@@ -215,10 +214,13 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         clipInputManager.notifyItemChanged(0)
     }
 
-    fun peekHistoryOrPin(position: Int): ClipData {
+    /**
+     * Get the item at a particular [adapterPos] (i.e the position the item is displayed at.)
+     */
+    fun peekHistoryOrPin(adapterPos: Int): ClipData {
         return when {
-            position < pins.size -> pins[position]
-            else                 -> history[position - pins.size].data
+            adapterPos < pins.size -> pins[adapterPos]
+            else                 -> history[adapterPos - pins.size].data
         }
     }
 

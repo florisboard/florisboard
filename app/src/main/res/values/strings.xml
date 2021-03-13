@@ -356,4 +356,10 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Falling back to previous keyboard to stop infinite crash loop. Tap to view error details</string>
     <string name="pin">pin</string>
     <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Switch to clipboard history</string>
+    <string name="clipboard_context_header">Clipboard history</string>
+    <string name="clear_history">Clear history</string>
+    <string name="clip_unpin_item">Unpin item</string>
+    <string name="clip_pin_item">Pin item</string>
+    <string name="clip_delete_item">Delete</string>
+    <string name="clip_paste_item">Paste</string>
 </resources>

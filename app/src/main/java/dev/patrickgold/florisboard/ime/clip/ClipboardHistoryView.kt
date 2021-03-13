@@ -1,10 +1,7 @@
 package dev.patrickgold.florisboard.ime.clip
 
 import android.content.Context
-import android.graphics.Rect
 import android.util.AttributeSet
-import android.view.MotionEvent
-import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -14,7 +11,6 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import timber.log.Timber
 import kotlin.math.roundToInt
 
 
@@ -62,7 +58,7 @@ class ClipboardHistoryView : LinearLayout, FlorisBoard.EventListener,
     }
 
     override fun onThemeUpdated(theme: Theme) {
-        val fgColor = theme.getAttr(Theme.Attr.MEDIA_FOREGROUND).toSolidColor().color
+        val fgColor = theme.getAttr(Theme.Attr.KEY_FOREGROUND).toSolidColor().color
         clipText?.setTextColor(fgColor)
         backButton?.setTextColor(fgColor)
         clearAll?.setColorFilter(fgColor)
@@ -72,14 +68,5 @@ class ClipboardHistoryView : LinearLayout, FlorisBoard.EventListener,
         val height = florisboard?.inputView?.desiredMediaKeyboardViewHeight ?: 0.0f
         super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height.roundToInt(), MeasureSpec.EXACTLY))
     }
-
-    var intercept: View? = null
-    var clipboardPopupManager: ClipboardPopupManager? = null
-
-
-    override fun onTouchEvent(ev: MotionEvent?): Boolean {
-        return super.onTouchEvent(ev)
-    }
-
 
 }

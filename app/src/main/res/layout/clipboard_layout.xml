@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <dev.patrickgold.florisboard.ime.clip.ClipboardHistoryView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/clip_input"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,40 +14,39 @@
             android:id="@+id/clipboard_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.0"
             android:orientation="horizontal">
 
-            <!-- TODO: add own dimensions -->
             <Button
                 android:id="@+id/back_to_keyboard_button"
-                android:layout_width="@dimen/media_bottom_button_width"
-                android:layout_height="@dimen/media_bottom_button_height"
+                android:layout_width="@dimen/clipboard_button_width"
+                android:layout_height="@dimen/clipboard_button_height"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/button_transparent_bg_on_press"
                 android:hapticFeedbackEnabled="false"
-                android:layout_weight="0"
                 android:soundEffectsEnabled="false"
-                android:text="←" />
+                android:layout_weight="0"
+                android:text="@string/back_arrow_Text" />
 
             <TextView
                 android:id="@+id/clipboard_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Clipboard"
+                android:layout_weight="1"
+                android:text="@string/clipboard_context_header"
                 android:textSize="15sp" />
 
             <ImageButton
                 android:id="@+id/clear_clipboard_history"
-                android:layout_width="@dimen/media_bottom_button_width"
-                android:layout_height="@dimen/media_bottom_button_height"
+                android:layout_width="@dimen/clipboard_button_width"
+                android:layout_height="@dimen/clipboard_button_height"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0"
                 android:background="@drawable/button_transparent_bg_on_press"
                 android:hapticFeedbackEnabled="false"
                 android:soundEffectsEnabled="false"
-                android:src="@drawable/ic_clear_all" />
+                android:layout_weight="0"
+                android:src="@drawable/ic_clear_all"
+                android:contentDescription="@string/clear_history" />
 
         </LinearLayout>
 
