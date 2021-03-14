@@ -55,8 +55,10 @@ android {
 }
 
 dependencies {
+    implementation("androidx.activity", "activity-ktx", "1.2.1")
     implementation("androidx.appcompat", "appcompat", "1.2.0")
     implementation("androidx.core", "core-ktx", "1.3.2")
+    implementation("androidx.fragment", "fragment-ktx", "1.3.0")
     implementation("androidx.preference", "preference-ktx", "1.1.1")
     implementation("androidx.constraintlayout", "constraintlayout", "2.0.4")
     implementation("androidx.lifecycle", "lifecycle-service", "2.2.0")

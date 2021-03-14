@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.extension
 
 import android.content.Context
+import android.net.Uri
 import com.github.michaelbull.result.*
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -25,6 +26,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyVariationAdapter
 import dev.patrickgold.florisboard.ime.text.layout.LayoutTypeAdapter
 import timber.log.Timber
 import java.io.File
+import kotlin.reflect.KClass
 
 class AssetManager private constructor(private val applicationContext: Context) {
     private val moshi: Moshi = Moshi.Builder()
@@ -97,7 +99,7 @@ class AssetManager private constructor(private val applicationContext: Context) 
         }
     }
 
-    fun <T: Asset> listAssets(ref: AssetRef, assetClass: Class<T>): Result<Map<AssetRef, T>, Throwable> {
+    fun <T : Asset> listAssets(ref: AssetRef, assetClass: KClass<T>): Result<Map<AssetRef, T>, Throwable> {
         val retMap = mutableMapOf<AssetRef, T>()
         return when (ref.source) {
             AssetSource.Assets -> {
@@ -142,7 +144,7 @@ class AssetManager private constructor(private val applicationContext: Context) 
         }
     }
 
-    fun <T: Asset> loadAsset(ref: AssetRef, assetClass: Class<T>): Result<T, Throwable> {
+    fun <T : Asset> loadAsset(ref: AssetRef, assetClass: KClass<T>): Result<T, Throwable> {
         val rawJsonData = when (ref.source) {
             is AssetSource.Assets -> {
                 try {
@@ -163,7 +165,7 @@ class AssetManager private constructor(private val applicationContext: Context) 
             else -> "{}"
         }
         return try {
-            val adapter = moshi.adapter(assetClass)
+            val adapter = moshi.adapter(assetClass.java)
             val asset = adapter.fromJson(rawJsonData)
             if (asset != null) {
                 Ok(asset)
@@ -175,10 +177,50 @@ class AssetManager private constructor(private val applicationContext: Context) 
         }
     }
 
-    fun <T: Asset> writeAsset(ref: AssetRef, assetClass: Class<T>, asset: T): Result<Boolean, Throwable> {
+    fun <T : Asset> loadAsset(uri: Uri, assetClass: KClass<T>): Result<T, Throwable> {
+        val rawJsonData =
+            applicationContext.contentResolver?.openInputStream(uri)?.bufferedReader().use { it?.readText() }
+                ?: return Err(Exception("Failed to read contents of Uri!"))
+        return try {
+            val adapter = moshi.adapter(assetClass.java)
+            val asset = adapter.fromJson(rawJsonData)
+            if (asset != null) {
+                Ok(asset)
+            } else {
+                Err(NullPointerException("Asset failed to load!"))
+            }
+        } catch (e: Exception) {
+            Err(e)
+        }
+    }
+
+
+    fun loadAssetRaw(ref: AssetRef): Result<String, Throwable> {
+        return when (ref.source) {
+            is AssetSource.Assets -> {
+                try {
+                    Ok(applicationContext.assets.open(ref.path).bufferedReader().use { it.readText() })
+                } catch (e: Exception) {
+                    Err(e)
+                }
+            }
+            is AssetSource.Internal -> {
+                val file = File(applicationContext.filesDir.absolutePath + "/" + ref.path)
+                val contents = readFile(file)
+                if (contents.isBlank()) {
+                    Err(Exception("File is blank!"))
+                } else {
+                    Ok(contents)
+                }
+            }
+            else -> Err(Exception("Unsupported asset ref!"))
+        }
+    }
+
+    fun <T : Asset> writeAsset(ref: AssetRef, assetClass: KClass<T>, asset: T): Result<Boolean, Throwable> {
         return when (ref.source) {
             AssetSource.Internal -> {
-                val adapter = moshi.adapter(assetClass)
+                val adapter = moshi.adapter(assetClass.java)
                 val rawJson = adapter.toJson(asset)
                 val file = File(applicationContext.filesDir.absolutePath + "/" + ref.path)
                 writeToFile(file, rawJson)
