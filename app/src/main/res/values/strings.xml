@@ -99,6 +99,8 @@
     <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Create from selected theme</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Custom (based on %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">New theme</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Theme imported successfully!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Theme exported successfully!</string>
 
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Edit theme</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Name</string>

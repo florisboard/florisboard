@@ -33,9 +33,10 @@ class ExternalContentUtils private constructor() {
         fun writeTextToUri(context: Context, uri: Uri, text: String): Result<Unit> {
             val contentResolver = context.contentResolver
                 ?: return Result.failure(NullPointerException("System content resolver not available"))
-            val outputStream = contentResolver.openOutputStream(uri)
+            // Must use "rwt" mode to ensure destination file length is truncated after writing.
+            val outputStream = contentResolver.openOutputStream(uri, "rwt")
                 ?: return Result.failure(NullPointerException("Cannot open output stream for given uri '$uri'"))
-            outputStream.bufferedWriter(Charsets.UTF_8).use { it.write(text) }
+            outputStream.bufferedWriter(Charsets.UTF_8).use { it.flush(); it.write(text) }
             return Result.success(Unit)
         }
     }

@@ -90,7 +90,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
                 selectedRef = newAssetRef
                 setThemeRefInPrefs(newAssetRef)
                 buildUi()
-                showMessage("Theme imported successfully!")
+                showMessage(R.string.settings__theme_manager__theme_import_success)
             }.onFailure {
                 showError(it)
             }
@@ -106,8 +106,9 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         val selectedRef = selectedRef
         if (selectedRef != null) {
             AssetManager.default().loadAssetRaw(selectedRef).onSuccess {
+                Timber.i(it)
                 ExternalContentUtils.writeTextToUri(this, uri, it).onSuccess {
-                    showMessage("Theme exported successfully")
+                    showMessage(R.string.settings__theme_manager__theme_export_success)
                 }.onFailure {
                     showError(it)
                 }
