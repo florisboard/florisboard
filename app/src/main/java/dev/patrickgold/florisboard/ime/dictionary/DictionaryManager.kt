@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.dictionary
 
 import android.content.Context
-import com.github.michaelbull.result.*
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import timber.log.Timber
 
@@ -48,22 +47,22 @@ class DictionaryManager private constructor(private val applicationContext: Cont
         }
     }
 
-    fun loadDictionary(ref: AssetRef): Result<Dictionary<String, Int>, Throwable> {
+    fun loadDictionary(ref: AssetRef): Result<Dictionary<String, Int>> {
         dictionaryCache[ref.toString()]?.let {
-            return Ok(it)
+            return Result.success(it)
         }
         if (ref.path.endsWith(".flict")) {
             // Assume this is a Flictionary
             Flictionary.load(applicationContext, ref).onSuccess { flict ->
                 dictionaryCache[ref.toString()] = flict
-                return Ok(flict)
+                return Result.success(flict)
             }.onFailure { err ->
                 Timber.i(err)
-                return Err(err)
+                return Result.failure(err)
             }
         } else {
-            return Err(Exception("Unable to determine supported type for given AssetRef!"))
+            return Result.failure(Exception("Unable to determine supported type for given AssetRef!"))
         }
-        return Err(Exception("If this message is ever thrown, something is completely broken..."))
+        return Result.failure(Exception("If this message is ever thrown, something is completely broken..."))
     }
 }

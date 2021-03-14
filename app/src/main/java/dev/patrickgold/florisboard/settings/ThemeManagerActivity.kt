@@ -30,10 +30,6 @@ import androidx.annotation.IdRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.forEach
-import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.getOr
-import com.github.michaelbull.result.onFailure
-import com.github.michaelbull.result.onSuccess
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ThemeManagerActivityBinding
 import dev.patrickgold.florisboard.ime.core.FlorisActivity
@@ -75,10 +71,10 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         // so we don't display an error message here.
         if (uri == null) return@registerForActivityResult
         val toBeImportedTheme = themeManager.loadTheme(uri)
-        if (toBeImportedTheme is Ok) {
-            val newTheme = toBeImportedTheme.component1().copy(
-                name = toBeImportedTheme.component1().name + "_imported",
-                label = toBeImportedTheme.component1().label + " (Imported)"
+        if (toBeImportedTheme.isSuccess) {
+            val newTheme = toBeImportedTheme.getOrNull()!!.copy(
+                name = toBeImportedTheme.getOrNull()!!.name + "_imported",
+                label = toBeImportedTheme.getOrNull()!!.label + " (Imported)"
             )
             val newAssetRef = AssetRef(
                 AssetSource.Internal,
@@ -95,7 +91,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
                 showError(it)
             }
         } else {
-            showError(toBeImportedTheme.component2()!!)
+            showError(toBeImportedTheme.exceptionOrNull()!!)
         }
     }
 
@@ -193,7 +189,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
                     PrefHelper.Theme.NIGHT_THEME_REF -> prefs.theme.nightThemeRef
                     else -> ""
                 }
-            ).getOr(null)
+            ).getOrDefault(null)
         }
     }
 

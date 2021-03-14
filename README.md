@@ -179,8 +179,6 @@ to get more information on this topic.
   [Jared Rummler](https://github.com/jaredrummler)
 * [Timber](https://github.com/JakeWharton/timber) by
   [JakeWharton](https://github.com/JakeWharton)
-* [kotlin-result](https://github.com/michaelbull/kotlin-result) by
-  [Michael Bull](https://github.com/michaelbull)
 * [expandable-fab](https://github.com/nambicompany/expandable-fab) by
   [Nambi](https://github.com/nambicompany)
 

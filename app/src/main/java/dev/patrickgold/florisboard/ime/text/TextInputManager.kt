@@ -22,7 +22,6 @@ import android.view.KeyEvent
 import android.widget.LinearLayout
 import android.widget.Toast
 import android.widget.ViewFlipper
-import com.github.michaelbull.result.getOr
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.*
@@ -321,7 +320,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             if (activeEditorInstance.isComposingEnabled) {
                 withContext(Dispatchers.IO) {
                     dictionaryManager.loadDictionary(AssetRef(AssetSource.Assets,"ime/dict/en.flict")).let {
-                        activeDictionary = it.getOr(null)
+                        activeDictionary = it.getOrDefault(null)
                     }
                 }
             }

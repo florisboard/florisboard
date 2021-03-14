@@ -69,7 +69,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-android", "1.4.2")
     implementation("com.jaredrummler", "colorpicker", "1.1.0")
     implementation("com.jakewharton.timber", "timber", "4.7.1")
-    implementation("com.michael-bull.kotlin-result", "kotlin-result", "1.1.10")
     implementation("com.nambimobile.widgets", "expandable-fab", "1.0.2")
 
     testImplementation("junit", "junit", "4.13.1")
