@@ -28,7 +28,6 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.forEach
 import com.github.michaelbull.result.Ok
@@ -37,6 +36,7 @@ import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ThemeManagerActivityBinding
+import dev.patrickgold.florisboard.ime.core.FlorisActivity
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.AssetManager
@@ -53,11 +53,9 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class ThemeManagerActivity : AppCompatActivity() {
-    private lateinit var binding: ThemeManagerActivityBinding
+class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
     private lateinit var layoutManager: LayoutManager
     private val mainScope = MainScope()
-    private lateinit var prefs: PrefHelper
     private val themeManager: ThemeManager = ThemeManager.default()
 
     private var key: String = ""
@@ -65,56 +63,59 @@ class ThemeManagerActivity : AppCompatActivity() {
     private var selectedTheme: Theme = Theme.empty()
     private var selectedRef: AssetRef? = null
 
-    private val themeEditor = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result: ActivityResult? ->
+    private val themeEditor = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult? ->
         if (result?.resultCode == RESULT_OK) {
             themeManager.update()
             buildUi()
         }
     }
 
-    private val importTheme = registerForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
+    private val importTheme = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        // If uri is null it indicates that the selection activity was cancelled (mostly by pressing the back button,
+        // so we don't display an error message here.
         if (uri == null) return@registerForActivityResult
         val toBeImportedTheme = themeManager.loadTheme(uri)
         if (toBeImportedTheme is Ok) {
-            val newAssetRef =
-                AssetRef(
-                    AssetSource.Internal,
-                    ThemeManager.THEME_PATH_REL + "/" + toBeImportedTheme.component1().name + ".json"
-                )
-            themeManager.writeTheme(newAssetRef, toBeImportedTheme.component1()).onSuccess {
-                themeEditor.launch(
-                    Intent(this, ThemeEditorActivity::class.java).apply {
-                        putExtra(ThemeEditorActivity.EXTRA_THEME_REF, newAssetRef.toString())
-                    }
-                )
+            val newTheme = toBeImportedTheme.component1().copy(
+                name = toBeImportedTheme.component1().name + "_imported",
+                label = toBeImportedTheme.component1().label + " (Imported)"
+            )
+            val newAssetRef = AssetRef(
+                AssetSource.Internal,
+                ThemeManager.THEME_PATH_REL + "/" + newTheme.name + ".json"
+            )
+            themeManager.writeTheme(newAssetRef, newTheme).onSuccess {
+                themeManager.update()
+                selectedTheme = newTheme
+                selectedRef = newAssetRef
+                setThemeRefInPrefs(newAssetRef)
+                buildUi()
+                showMessage("Theme imported successfully!")
             }.onFailure {
-                Timber.e(it.toString())
+                showError(it)
             }
         } else {
-            Timber.e(toBeImportedTheme.component2())
+            showError(toBeImportedTheme.component2()!!)
         }
     }
 
-    private val exportTheme = registerForActivityResult(
-        ActivityResultContracts.OpenDocument()
-    ) { uri: Uri? ->
-        Timber.i("was here")
-        if (uri == null) {
-            Timber.e("error null")
-            return@registerForActivityResult
-        }
-        selectedRef?.let { selectedRef ->
+    private val exportTheme = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
+        // If uri is null it indicates that the selection activity was cancelled (mostly by pressing the back button,
+        // so we don't display an error message here.
+        if (uri == null) return@registerForActivityResult
+        val selectedRef = selectedRef
+        if (selectedRef != null) {
             AssetManager.default().loadAssetRaw(selectedRef).onSuccess {
-                ExternalContentUtils.writeTextToUri(applicationContext, uri, it).onFailure {
-                    Timber.e(it)
+                ExternalContentUtils.writeTextToUri(this, uri, it).onSuccess {
+                    showMessage("Theme exported successfully")
+                }.onFailure {
+                    showError(it)
                 }
             }.onFailure {
-                Timber.e(it)
+                showError(it)
             }
+        } else {
+            showError(NullPointerException("selectedRef is null!"))
         }
     }
 
@@ -124,11 +125,7 @@ class ThemeManagerActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        prefs = PrefHelper.getDefaultInstance(this)
-
         super.onCreate(savedInstanceState)
-        binding = ThemeManagerActivityBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         key = intent.getStringExtra(EXTRA_KEY) ?: ""
         defaultValue = intent.getStringExtra(EXTRA_DEFAULT_VALUE) ?: ""
@@ -158,6 +155,10 @@ class ThemeManagerActivity : AppCompatActivity() {
         }
 
         buildUi()
+    }
+
+    override fun onCreateBinding(): ThemeManagerActivityBinding {
+        return ThemeManagerActivityBinding.inflate(layoutInflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -345,17 +346,6 @@ class ThemeManagerActivity : AppCompatActivity() {
             }
             R.id.theme_export_btn -> {
                 exportTheme.launch(arrayOf("application/json"))
-                /*selectedRef?.let { selectedRef ->
-                    Intent().apply {
-                        action = Intent.ACTION_SEND
-                        putExtra(Intent.EXTRA_SUBJECT, "Theme export")
-                        AssetManager.default().loadAssetRaw(selectedRef).onSuccess {
-                            putExtra(Intent.EXTRA_TEXT, it)
-                            type = "application/json"
-                            startActivity(this)
-                        }
-                    }
-                }*/
             }
         }
     }

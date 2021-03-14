@@ -122,7 +122,7 @@
                             android:textAllCaps="false"
                             android:text="@string/assets__action__export"
                             android:textColor="?android:textColorPrimary"
-                            android:drawableStart="@drawable/ic_delete"
+                            android:drawableStart="@drawable/ic_share"
                             android:drawablePadding="8dp"
                             android:drawableTint="?colorAccent"/>
 

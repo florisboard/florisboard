@@ -178,12 +178,12 @@ class AssetManager private constructor(private val applicationContext: Context) 
     }
 
     fun <T : Asset> loadAsset(uri: Uri, assetClass: KClass<T>): Result<T, Throwable> {
-        val rawJsonData =
-            applicationContext.contentResolver?.openInputStream(uri)?.bufferedReader().use { it?.readText() }
-                ?: return Err(Exception("Failed to read contents of Uri!"))
+        val rawJsonData = ExternalContentUtils.readTextFromUri(applicationContext, uri).onFailure {
+            return Err(it)
+        }
         return try {
             val adapter = moshi.adapter(assetClass.java)
-            val asset = adapter.fromJson(rawJsonData)
+            val asset = adapter.fromJson(rawJsonData.getOrNull()!!)
             if (asset != null) {
                 Ok(asset)
             } else {

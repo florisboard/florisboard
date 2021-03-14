@@ -314,7 +314,9 @@
     <string name="assets__action__no">No</string>
     <string name="assets__action__save">Save</string>
     <string name="assets__action__yes">Yes</string>
+    <string name="assets__error__details">Details</string>
     <string name="assets__error__invalid">Invalid</string>
+    <string name="assets__error__snackbar_message">Something went wrong</string>
 
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Setup</string>
