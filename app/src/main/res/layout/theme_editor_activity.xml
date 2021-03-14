@@ -42,28 +42,31 @@
                         android:layout_margin="8dp"
                         app:isPreviewKeyboard="true"/>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/theme_name_label"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginHorizontal="8dp"
-                        android:hint="@string/settings__theme_editor__name_label"
-                        app:boxBackgroundMode="outline"
-                        app:boxBackgroundColor="?android:windowBackground"
-                        app:boxStrokeColor="?colorAccent"
-                        app:boxStrokeErrorColor="?colorError"
-                        app:boxStrokeWidth="1dp">
+                        android:orientation="horizontal"
+                        android:layout_margin="8dp">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/theme_name_value"
-                            android:layout_width="match_parent"
+                        <TextView
+                            android:id="@+id/theme_name_label"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:importantForAutofill="no"
-                            android:inputType="textFilter"
-                            android:imeOptions="flagForceAscii|flagNoExtractUi"/>
+                            android:layout_weight="1.0"
+                            android:textColor="?android:textColorPrimary"
+                            tools:text="GroupName"/>
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                        <ImageButton
+                            android:id="@+id/theme_name_edit_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:src="@drawable/ic_edit"
+                            android:tint="?android:textColorPrimary"
+                            android:contentDescription="@string/settings__theme_editor__edit_group_dialog_title"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

@@ -60,7 +60,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
     private var selectedRef: AssetRef? = null
 
     private val themeEditor = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult? ->
-        if (result?.resultCode == RESULT_OK) {
+        if (result?.resultCode == ThemeEditorActivity.RESULT_CODE_THEME_EDIT_SAVED) {
             themeManager.update()
             buildUi()
         }
