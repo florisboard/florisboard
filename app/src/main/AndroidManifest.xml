@@ -20,6 +20,11 @@
     <!-- Permission needed to vibrate if the user has key press vibration enabled -->
     <uses-permission android:name="android.permission.VIBRATE"/>
 
+    <!-- Permission to access the clipboard. Never granted to anything. -->
+    <permission
+        android:name="dev.patrickgold.florisboard.ACCESS_CLIPBOARD_PROVIDER"
+        android:protectionLevel="dangerous"/>
+
     <application
         android:name=".ime.core.FlorisApplication"
         android:allowBackup="false"
@@ -110,6 +115,15 @@
             android:icon="@mipmap/ic_launcher"
             android:label="@string/crash_dialog__title"
             android:theme="@style/CrashDialogTheme"/>
+
+        <provider
+            android:name="dev.patrickgold.florisboard.ime.clip.provider.FlorisContentProvider"
+            android:authorities="dev.patrickgold.florisboard.provider.clip"
+            android:grantUriPermissions="true"
+            android:permission="dev.patrickgold.florisboard.ACCESS_CLIPBOARD_PROVIDER"
+            android:exported="true">
+        </provider>
+
 
     </application>
 

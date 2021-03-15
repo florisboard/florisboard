@@ -1,16 +1,20 @@
 package dev.patrickgold.florisboard.ime.clip
 
-import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Handler
 import android.os.Looper
+import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.clip.provider.ItemType
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.cancelAll
 import dev.patrickgold.florisboard.util.postAtScheduledRate
 import java.io.Closeable
+import java.util.*
+import kotlin.collections.ArrayDeque
+import kotlin.collections.ArrayList
 
 /**
  * [FlorisClipboardManager] manages the clipboard and clipboard history.
@@ -38,14 +42,14 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     // Using ArrayDeque because it's "technically" the correct data structure (I think).
     // Newest stored first, oldest stored last.
     private var history: ArrayDeque<TimedClipData> = ArrayDeque()
-    private var pins: ArrayDeque<ClipData> = ArrayDeque()
-    private var current: ClipData? = null
+    private var pins: ArrayDeque<ClipboardItem> = ArrayDeque()
+    private var current: ClipboardItem? = null
     private var onPrimaryClipChangedListeners: ArrayList<OnPrimaryClipChangedListener> = arrayListOf()
     private lateinit var systemClipboardManager: ClipboardManager
     private lateinit var handler: Handler
     private lateinit var prefHelper: PrefHelper
 
-    data class TimedClipData(val data: ClipData, val timeUTC: Long)
+    data class TimedClipData(val data: ClipboardItem, val timeUTC: Long)
 
     interface OnPrimaryClipChangedListener {
         fun onPrimaryClipChanged()
@@ -67,7 +71,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     }
 
 
-    fun updateHistory(newData: ClipData) {
+    fun updateHistory(newData: ClipboardItem){
         val clipboardPrefs = prefHelper.clipboard
 
         if (clipboardPrefs.enableHistory) {
@@ -77,6 +81,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
                     history.removeLast()
                 }
             }
+
 
             val timed = TimedClipData(newData, System.currentTimeMillis())
             history.addFirst(timed)
@@ -94,18 +99,18 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     /**
      * Changes current clipboard item. WITHOUT updating the history.
      */
-    fun changeCurrent(newData: ClipData) {
+    fun changeCurrent(newData: ClipboardItem) {
         if (prefHelper.clipboard.enableInternal) {
             current = newData
-            val isEqual = when (newData.getItemAt(0).uri) {
-                null -> newData.getItemAt(0).text == systemClipboardManager.primaryClip?.getItemAt(0)?.text
-                else -> newData.getItemAt(0).uri == systemClipboardManager.primaryClip?.getItemAt(0)?.uri
+            val isEqual = when (newData.type) {
+                ItemType.TEXT-> newData.text == systemClipboardManager.primaryClip?.getItemAt(0)?.text
+                ItemType.IMAGE-> newData.uri == systemClipboardManager.primaryClip?.getItemAt(0)?.uri
             }
             if (prefHelper.clipboard.syncToSystem && !isEqual)
-                systemClipboardManager.setPrimaryClip(newData)
+                systemClipboardManager.setPrimaryClip(newData.toClipData())
         } else {
             shouldUpdateHistory = false
-            systemClipboardManager.setPrimaryClip(newData)
+            systemClipboardManager.setPrimaryClip(newData.toClipData())
         }
         onPrimaryClipChangedListeners.forEach { it.onPrimaryClipChanged() }
     }
@@ -115,7 +120,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      * Change the current text on clipboard, update history (if enabled).
      *
      */
-    fun addNewClip(newData: ClipData) {
+    fun addNewClip(newData: ClipboardItem) {
         updateHistory(newData)
         changeCurrent(newData)
     }
@@ -124,18 +129,18 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      * Wraps some plaintext in a ClipData and calls [addNewClip]
      */
     fun addNewPlaintext(newText: String) {
-        val newData = ClipData.newPlainText(newText, newText)
+        val newData = ClipboardItem(UUID.randomUUID(), ItemType.TEXT, null, newText, arrayOf("text/plain"))
         addNewClip(newData)
     }
 
-    val primaryClip: ClipData?
+    val primaryClip: ClipboardItem?
         get() = if (prefHelper.clipboard.enableInternal) {
             current
         } else {
-            systemClipboardManager.primaryClip
+            systemClipboardManager.primaryClip?.let { ClipboardItem.fromClipData(it) }
         }
 
-    fun peekHistory(index: Int): ClipData? {
+    fun peekHistory(index: Int): ClipboardItem? {
         return history.getOrNull(index)?.data
     }
 
@@ -151,21 +156,22 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      * Called by system clipboard when the contents are changed
      */
     override fun onPrimaryClipChanged() {
-        val isEqual = when (primaryClip?.getItemAt(0)?.uri) {
-            null -> primaryClip?.getItemAt(0)?.text == systemClipboardManager.primaryClip?.getItemAt(0)?.text
-            else -> primaryClip?.getItemAt(0)?.uri == systemClipboardManager.primaryClip?.getItemAt(0)?.uri
+        val isEqual = when (primaryClip?.type) {
+            ItemType.TEXT-> primaryClip?.text == systemClipboardManager.primaryClip?.getItemAt(0)?.text
+            ItemType.IMAGE-> primaryClip?.uri == systemClipboardManager.primaryClip?.getItemAt(0)?.uri
+            null -> false
         }
         systemClipboardManager.primaryClip?.let {
             if (prefHelper.clipboard.enableInternal) {
                 // In the event that the internal clipboard is enabled, sync to internal clipboard is enabled
                 // and the item is not already in internal clipboard, add it.
                 if (prefHelper.clipboard.syncToFloris && !isEqual) {
-                    addNewClip(it)
+                    addNewClip(ClipboardItem.fromClipData(it))
                 }
             } else if (prefHelper.clipboard.enableHistory) {
                 // in the event history is enabled, and it should be updated it is updated
                 if (shouldUpdateHistory) {
-                    updateHistory(it)
+                    updateHistory(ClipboardItem.fromClipData(it))
                 } else {
                     shouldUpdateHistory = true
                 }
@@ -256,7 +262,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     /**
      * Get the item at a particular [adapterPos] (i.e the position the item is displayed at.)
      */
-    fun peekHistoryOrPin(adapterPos: Int): ClipData {
+    fun peekHistoryOrPin(adapterPos: Int): ClipboardItem {
         return when {
             adapterPos < pins.size -> pins[adapterPos]
             else -> history[adapterPos - pins.size].data
@@ -306,7 +312,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
 
     fun pasteItem(pos: Int) {
         val item = peekHistoryOrPin(pos)
-        FlorisBoard.getInstance().activeEditorInstance.commitClipData(item)
+        FlorisBoard.getInstance().activeEditorInstance.commitClipboardItem(item)
     }
 
 }

@@ -31,6 +31,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
+import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.clip.provider.ItemType
 import timber.log.Timber
 
 /**
@@ -217,15 +219,13 @@ class EditorInstance private constructor(
      * @param data The ClipData to commit
      * @return True on success, false if something went wrong.
      */
-    fun commitClipData(data: ClipData): Boolean {
-        val item = data.getItemAt(0) ?: return false
-        val mimeTypes = (0 until data.description.mimeTypeCount).map { data.description.getMimeType(it) }
-        return when {
-            item.uri != null -> {
+    fun commitClipboardItem(item: ClipboardItem): Boolean {
+        val mimeTypes = item.mimeTypes
+        return when (item.type){
+            ItemType.IMAGE -> {
                 val inputContentInfo = InputContentInfoCompat(
-                    item.uri,
-                    ClipDescription(data.description.label,
-                        mimeTypes.toTypedArray()),
+                    item.uri!!,
+                    ClipDescription("clipboard image", mimeTypes),
                     null
                 )
                 val ic = inputConnection ?: return false
@@ -235,17 +235,8 @@ class EditorInstance private constructor(
                 }
                 InputConnectionCompat.commitContent(ic, editorInfo, inputContentInfo, flags, null)
             }
-            item.htmlText != null -> {
+            ItemType.TEXT -> {
                 commitText(item.text.toString())
-                true
-            }
-            item.text != null -> {
-                commitText(item.text.toString())
-            }
-            else -> {
-                // don't know how to handle it
-                Timber.i("Don't know how to handle clip data: $mimeTypes")
-                false
             }
         }
     }
@@ -439,7 +430,7 @@ class EditorInstance private constructor(
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
         Timber.d("Before commit clip data")
-        return commitClipData(florisClipboardManager.primaryClip!!)
+        return commitClipboardItem(florisClipboardManager.primaryClip!!)
     }
 
     /**

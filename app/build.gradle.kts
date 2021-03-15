@@ -1,6 +1,8 @@
+
 plugins {
     id("com.android.application") version "4.1.2"
     kotlin("android") version "1.4.30"
+    kotlin("kapt") version "1.4.30"
 }
 
 android {
@@ -54,6 +56,7 @@ android {
     }
 }
 
+
 dependencies {
     implementation("androidx.appcompat", "appcompat", "1.2.0")
     implementation("androidx.core", "core-ktx", "1.3.2")
@@ -69,6 +72,8 @@ dependencies {
     implementation("com.jakewharton.timber", "timber", "4.7.1")
     implementation("com.michael-bull.kotlin-result", "kotlin-result", "1.1.10")
     implementation("com.nambimobile.widgets", "expandable-fab", "1.0.2")
+    implementation("androidx.room", "room-runtime", "2.2.6")
+    kapt("androidx.room", "room-compiler","2.2.6")
 
     testImplementation("junit", "junit", "4.13.1")
     testImplementation("org.mockito", "mockito-inline", "3.7.7")

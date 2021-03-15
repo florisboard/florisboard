@@ -1,7 +1,6 @@
 package dev.patrickgold.florisboard.ime.clip
 
 import android.annotation.SuppressLint
-import android.content.ClipData
 import android.os.Handler
 import android.os.Looper
 import android.view.MotionEvent
@@ -11,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.InputView
@@ -175,7 +175,7 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
      * @param dataSet the data set to link to
      * @param pins The pins to link to
      */
-    fun initClipboard(dataSet: ArrayDeque<FlorisClipboardManager.TimedClipData>, pins: ArrayDeque<ClipData>) {
+    fun initClipboard(dataSet: ArrayDeque<FlorisClipboardManager.TimedClipData>, pins: ArrayDeque<ClipboardItem>) {
         this.adapter =  ClipboardHistoryItemAdapter(dataSet = dataSet, pins= pins)
     }
 
