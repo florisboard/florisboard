@@ -17,26 +17,28 @@
 package dev.patrickgold.florisboard.settings
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.forEach
-import com.github.michaelbull.result.getOr
-import com.github.michaelbull.result.onFailure
-import com.github.michaelbull.result.onSuccess
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ThemeManagerActivityBinding
+import dev.patrickgold.florisboard.ime.core.FlorisActivity
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
+import dev.patrickgold.florisboard.ime.extension.ExternalContentUtils
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
@@ -47,11 +49,9 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class ThemeManagerActivity : AppCompatActivity() {
-    private lateinit var binding: ThemeManagerActivityBinding
+class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
     private lateinit var layoutManager: LayoutManager
     private val mainScope = MainScope()
-    private lateinit var prefs: PrefHelper
     private val themeManager: ThemeManager = ThemeManager.default()
 
     private var key: String = ""
@@ -59,19 +59,70 @@ class ThemeManagerActivity : AppCompatActivity() {
     private var selectedTheme: Theme = Theme.empty()
     private var selectedRef: AssetRef? = null
 
-    companion object {
-        private const val EDITOR_REQ_CODE: Int = 0xFB01
+    private val themeEditor = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult? ->
+        if (result?.resultCode == ThemeEditorActivity.RESULT_CODE_THEME_EDIT_SAVED) {
+            themeManager.update()
+            buildUi()
+        }
+    }
 
+    private val importTheme = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        // If uri is null it indicates that the selection activity was cancelled (mostly by pressing the back button,
+        // so we don't display an error message here.
+        if (uri == null) return@registerForActivityResult
+        val toBeImportedTheme = themeManager.loadTheme(uri)
+        if (toBeImportedTheme.isSuccess) {
+            val newTheme = toBeImportedTheme.getOrNull()!!.copy(
+                name = toBeImportedTheme.getOrNull()!!.name + "_imported",
+                label = toBeImportedTheme.getOrNull()!!.label + " (Imported)"
+            )
+            val newAssetRef = AssetRef(
+                AssetSource.Internal,
+                ThemeManager.THEME_PATH_REL + "/" + newTheme.name + ".json"
+            )
+            themeManager.writeTheme(newAssetRef, newTheme).onSuccess {
+                themeManager.update()
+                selectedTheme = newTheme
+                selectedRef = newAssetRef
+                setThemeRefInPrefs(newAssetRef)
+                buildUi()
+                showMessage(R.string.settings__theme_manager__theme_import_success)
+            }.onFailure {
+                showError(it)
+            }
+        } else {
+            showError(toBeImportedTheme.exceptionOrNull()!!)
+        }
+    }
+
+    private val exportTheme = registerForActivityResult(ActivityResultContracts.CreateDocument()) { uri: Uri? ->
+        // If uri is null it indicates that the selection activity was cancelled (mostly by pressing the back button,
+        // so we don't display an error message here.
+        if (uri == null) return@registerForActivityResult
+        val selectedRef = selectedRef
+        if (selectedRef != null) {
+            AssetManager.default().loadAssetRaw(selectedRef).onSuccess {
+                Timber.i(it)
+                ExternalContentUtils.writeTextToUri(this, uri, it).onSuccess {
+                    showMessage(R.string.settings__theme_manager__theme_export_success)
+                }.onFailure {
+                    showError(it)
+                }
+            }.onFailure {
+                showError(it)
+            }
+        } else {
+            showError(NullPointerException("selectedRef is null!"))
+        }
+    }
+
+    companion object {
         const val EXTRA_KEY: String = "key"
         const val EXTRA_DEFAULT_VALUE: String = "default_value"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        prefs = PrefHelper.getDefaultInstance(this)
-
         super.onCreate(savedInstanceState)
-        binding = ThemeManagerActivityBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         key = intent.getStringExtra(EXTRA_KEY) ?: ""
         defaultValue = intent.getStringExtra(EXTRA_DEFAULT_VALUE) ?: ""
@@ -91,14 +142,20 @@ class ThemeManagerActivity : AppCompatActivity() {
 
         binding.fabOptionCreateEmpty.setOnClickListener { onActionClicked(it) }
         binding.fabOptionCreateFromSelected.setOnClickListener { onActionClicked(it) }
+        binding.fabOptionImport.setOnClickListener { onActionClicked(it) }
         binding.themeDeleteBtn.setOnClickListener { onActionClicked(it) }
         binding.themeEditBtn.setOnClickListener { onActionClicked(it) }
+        binding.themeExportBtn.setOnClickListener { onActionClicked(it) }
 
         layoutManager = LayoutManager(this).apply {
             preloadComputedLayout(KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs)
         }
 
         buildUi()
+    }
+
+    override fun onCreateBinding(): ThemeManagerActivityBinding {
+        return ThemeManagerActivityBinding.inflate(layoutInflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -132,7 +189,7 @@ class ThemeManagerActivity : AppCompatActivity() {
                     PrefHelper.Theme.NIGHT_THEME_REF -> prefs.theme.nightThemeRef
                     else -> ""
                 }
-            ).getOr(null)
+            ).getOrDefault(null)
         }
     }
 
@@ -177,15 +234,6 @@ class ThemeManagerActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == EDITOR_REQ_CODE) {
-            themeManager.update()
-            buildUi()
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
-        }
-    }
-
     fun onActionClicked(view: View) {
         when (view.id) {
             R.id.fab_option_create_empty -> {
@@ -202,9 +250,11 @@ class ThemeManagerActivity : AppCompatActivity() {
                         ThemeManager.THEME_PATH_REL + "/" + newTheme.name + ".json"
                     )
                 themeManager.writeTheme(newAssetRef, newTheme).onSuccess {
-                    startActivityForResult(Intent(this, ThemeEditorActivity::class.java).apply {
-                        putExtra(ThemeEditorActivity.EXTRA_THEME_REF, newAssetRef.toString())
-                    }, EDITOR_REQ_CODE)
+                    themeEditor.launch(
+                        Intent(this, ThemeEditorActivity::class.java).apply {
+                            putExtra(ThemeEditorActivity.EXTRA_THEME_REF, newAssetRef.toString())
+                        }
+                    )
                 }.onFailure {
                     Timber.e(it.toString())
                 }
@@ -227,16 +277,18 @@ class ThemeManagerActivity : AppCompatActivity() {
                         ThemeManager.THEME_PATH_REL + "/" + themeCopy.name + ".json"
                     )
                 themeManager.writeTheme(newAssetRef, themeCopy).onSuccess {
-                    startActivityForResult(Intent(this, ThemeEditorActivity::class.java).apply {
-                        putExtra(ThemeEditorActivity.EXTRA_THEME_REF, newAssetRef.toString())
-                    }, EDITOR_REQ_CODE)
+                    themeEditor.launch(
+                        Intent(this, ThemeEditorActivity::class.java).apply {
+                            putExtra(ThemeEditorActivity.EXTRA_THEME_REF, newAssetRef.toString())
+                        }
+                    )
                 }.onFailure {
                     Timber.e(it.toString())
                 }
             }
-            /*R.id.fab_option_import -> {
-                Toast.makeText(this, "Import not yet implemented", Toast.LENGTH_SHORT).show()
-            }*/
+            R.id.fab_option_import -> {
+                importTheme.launch("*/*")
+            }
             R.id.theme_delete_btn -> {
                 val deleteRef = selectedRef?.copy()
                 if (deleteRef?.source == AssetSource.Internal) {
@@ -273,9 +325,11 @@ class ThemeManagerActivity : AppCompatActivity() {
             R.id.theme_edit_btn -> {
                 val editRef = selectedRef
                 if (editRef?.source == AssetSource.Internal) {
-                    startActivityForResult(Intent(this, ThemeEditorActivity::class.java).apply {
-                        putExtra(ThemeEditorActivity.EXTRA_THEME_REF, editRef.toString())
-                    }, EDITOR_REQ_CODE)
+                    themeEditor.launch(
+                        Intent(this, ThemeEditorActivity::class.java).apply {
+                            putExtra(ThemeEditorActivity.EXTRA_THEME_REF, editRef.toString())
+                        }
+                    )
                 } else {
                     // This toast normally should never show, though if the edit button is enabled
                     // even if it shouldn't, just show a toast so the user knows the app is
@@ -286,6 +340,9 @@ class ThemeManagerActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+            }
+            R.id.theme_export_btn -> {
+                exportTheme.launch("${selectedTheme.name}.json")
             }
         }
     }

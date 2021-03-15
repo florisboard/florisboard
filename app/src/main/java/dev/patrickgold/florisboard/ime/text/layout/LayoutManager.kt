@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.text.layout
 
 import android.content.Context
-import com.github.michaelbull.result.onSuccess
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.patrickgold.florisboard.ime.core.PrefHelper
@@ -78,10 +77,10 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
             source = AssetSource.Assets,
             path = PopupManager.POPUP_EXTENSION_PATH_REL + "/" + (subtype?.locale?.language ?: "\$default") + ".json"
         )
-        assetManager.loadAsset(langTagRef, PopupExtension::class.java).onSuccess {
+        assetManager.loadAsset(langTagRef, PopupExtension::class).onSuccess {
             return it
         }
-        assetManager.loadAsset(langRef, PopupExtension::class.java).onSuccess {
+        assetManager.loadAsset(langRef, PopupExtension::class).onSuccess {
             return it
         }
         return PopupExtension.empty()

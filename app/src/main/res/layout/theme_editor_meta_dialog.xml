@@ -1,0 +1,31 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="20dp"
+    android:paddingTop="16dp"
+    android:orientation="vertical">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/meta_name_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/settings__theme_editor__name_label"
+        app:boxBackgroundMode="outline"
+        app:boxBackgroundColor="?android:windowBackground"
+        app:boxStrokeColor="?colorAccent"
+        app:boxStrokeErrorColor="?colorError"
+        app:boxStrokeWidth="1dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/meta_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:importantForAutofill="no"
+            android:inputType="textFilter"
+            android:imeOptions="flagForceAscii|flagNoExtractUi"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

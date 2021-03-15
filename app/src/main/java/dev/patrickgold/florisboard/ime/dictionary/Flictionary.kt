@@ -17,9 +17,6 @@
 package dev.patrickgold.florisboard.ime.dictionary
 
 import android.content.Context
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.Result
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.nlp.*
@@ -72,13 +69,13 @@ class Flictionary private constructor(
          * either the parsed dictionary or an exception giving information about the error which
          * occurred.
          */
-        fun load(context: Context, assetRef: AssetRef): Result<Flictionary, Exception> {
+        fun load(context: Context, assetRef: AssetRef): Result<Flictionary> {
             val buffer = ByteArray(5000) { 0 }
             val inputStream: InputStream
             if (assetRef.source == AssetSource.Assets) {
                 inputStream = context.assets.open(assetRef.path)
             } else {
-                return Err(Exception("Only AssetSource.Assets is currently supported!"))
+                return Result.failure(Exception("Only AssetSource.Assets is currently supported!"))
             }
 
             var headerStr: String? = null
@@ -99,7 +96,7 @@ class Flictionary private constructor(
                     (cmd and MASK_BEGIN_PTREE_NODE) == CMDB_BEGIN_PTREE_NODE -> {
                         if (pos == 0) {
                             inputStream.close()
-                            return Err(
+                            return Result.failure(
                                 ParseException(
                                     errorType = ParseException.ErrorType.UNEXPECTED_CMD_BEGIN_PTREE_NODE,
                                     address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
@@ -125,7 +122,7 @@ class Flictionary private constructor(
                                     freq = buffer[1].toInt() and 0xFF
                                 } else {
                                     inputStream.close()
-                                    return Err(
+                                    return Result.failure(
                                         ParseException(
                                             errorType = ParseException.ErrorType.UNEXPECTED_EOF,
                                             address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
@@ -134,7 +131,7 @@ class Flictionary private constructor(
                                 }
                                 freqSize = 1
                             }
-                            else -> return Err(Exception("TODO: shortcut not supported"))
+                            else -> return Result.failure(Exception("TODO: shortcut not supported"))
                         }
                         if (inputStream.readNext(buffer, freqSize + 1, size) > 0) {
                             val char = String(buffer, freqSize + 1, size, Charsets.UTF_8)[0]
@@ -154,7 +151,7 @@ class Flictionary private constructor(
                             pos += (freqSize + 1 + size)
                         } else {
                             inputStream.close()
-                            return Err(
+                            return Result.failure(
                                 ParseException(
                                     errorType = ParseException.ErrorType.UNEXPECTED_EOF,
                                     address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
@@ -166,7 +163,7 @@ class Flictionary private constructor(
                     (cmd and MASK_BEGIN_HEADER) == CMDB_BEGIN_HEADER -> {
                         if (pos != 0) {
                             inputStream.close()
-                            return Err(
+                            return Result.failure(
                                 ParseException(
                                     errorType = ParseException.ErrorType.UNEXPECTED_CMD_BEGIN_HEADER,
                                     address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
@@ -176,7 +173,7 @@ class Flictionary private constructor(
                         version = cmd and ATTR_HEADER_VERSION
                         if (version != VERSION_0) {
                             inputStream.close()
-                            return Err(
+                            return Result.failure(
                                 ParseException(
                                     errorType = ParseException.ErrorType.UNSUPPORTED_FLICTIONARY_VERSION,
                                     address = pos,
@@ -203,7 +200,7 @@ class Flictionary private constructor(
                                 pos += (10 + size)
                             } else {
                                 inputStream.close()
-                                return Err(
+                                return Result.failure(
                                     ParseException(
                                         errorType = ParseException.ErrorType.UNEXPECTED_EOF,
                                         address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
@@ -212,7 +209,7 @@ class Flictionary private constructor(
                             }
                         } else {
                             inputStream.close()
-                            return Err(
+                            return Result.failure(
                                 ParseException(
                                     errorType = ParseException.ErrorType.UNEXPECTED_EOF,
                                     address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
@@ -224,7 +221,7 @@ class Flictionary private constructor(
                     (cmd and MASK_END) == CMDB_END -> {
                         if (pos == 0) {
                             inputStream.close()
-                            return Err(
+                            return Result.failure(
                                 ParseException(
                                     errorType = ParseException.ErrorType.UNEXPECTED_CMD_END,
                                     address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
@@ -240,7 +237,7 @@ class Flictionary private constructor(
                                 }
                             } else {
                                 inputStream.close()
-                                return Err(
+                                return Result.failure(
                                     ParseException(
                                         errorType = ParseException.ErrorType.UNEXPECTED_ABSOLUTE_DEPTH_DECREASE_BELOW_ZERO,
                                         address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size - n
@@ -249,7 +246,7 @@ class Flictionary private constructor(
                             }
                         } else {
                             inputStream.close()
-                            return Err(
+                            return Result.failure(
                                 ParseException(
                                     errorType = ParseException.ErrorType.UNEXPECTED_CMD_END_ZERO_VALUE,
                                     address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
@@ -260,7 +257,7 @@ class Flictionary private constructor(
                     }
                     else -> {
                         inputStream.close()
-                        return Err(
+                        return Result.failure(
                             ParseException(
                                 errorType = ParseException.ErrorType.INVALID_CMD_BYTE_PROVIDED,
                                 address = pos, cmdByte = cmd.toByte(), absoluteDepth = ngramTreeStack.size
@@ -272,7 +269,7 @@ class Flictionary private constructor(
             inputStream.close()
 
             if (ngramTreeStack.size != 0) {
-                return Err(
+                return Result.failure(
                     ParseException(
                         errorType = ParseException.ErrorType.UNEXPECTED_ABSOLUTE_DEPTH_NOT_ZERO_AT_EOF,
                         address = pos, cmdByte = 0x00.toByte(), absoluteDepth = ngramTreeStack.size
@@ -280,7 +277,7 @@ class Flictionary private constructor(
                 )
             }
 
-            return Ok(
+            return Result.success(
                 Flictionary(
                     name = "flict",
                     label = "flict",

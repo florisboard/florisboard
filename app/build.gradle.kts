@@ -55,8 +55,10 @@ android {
 }
 
 dependencies {
+    implementation("androidx.activity", "activity-ktx", "1.2.1")
     implementation("androidx.appcompat", "appcompat", "1.2.0")
     implementation("androidx.core", "core-ktx", "1.3.2")
+    implementation("androidx.fragment", "fragment-ktx", "1.3.0")
     implementation("androidx.preference", "preference-ktx", "1.1.1")
     implementation("androidx.constraintlayout", "constraintlayout", "2.0.4")
     implementation("androidx.lifecycle", "lifecycle-service", "2.2.0")
@@ -67,7 +69,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-android", "1.4.2")
     implementation("com.jaredrummler", "colorpicker", "1.1.0")
     implementation("com.jakewharton.timber", "timber", "4.7.1")
-    implementation("com.michael-bull.kotlin-result", "kotlin-result", "1.1.10")
     implementation("com.nambimobile.widgets", "expandable-fab", "1.0.2")
 
     testImplementation("junit", "junit", "4.13.1")

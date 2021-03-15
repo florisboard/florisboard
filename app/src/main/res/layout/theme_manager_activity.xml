@@ -112,15 +112,30 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="end">
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/theme_export_btn"
+                            style="?android:attr/buttonBarButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAllCaps="false"
+                            android:text="@string/assets__action__export"
+                            android:textColor="?android:textColorPrimary"
+                            android:drawableStart="@drawable/ic_share"
+                            android:drawablePadding="8dp"
+                            android:drawableTint="?colorAccent"/>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.0"/>
 
                         <Button
                             android:id="@+id/theme_delete_btn"
                             style="?android:attr/buttonBarButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="end"
                             android:textAllCaps="false"
                             android:text="@string/assets__action__delete"
                             android:textColor="?android:textColorPrimary"
@@ -133,7 +148,6 @@
                             style="?android:attr/buttonBarButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="end"
                             android:textAllCaps="false"
                             android:text="@string/assets__action__edit"
                             android:textColor="?android:textColorPrimary"
@@ -160,7 +174,8 @@
 
     <com.nambimobile.widgets.efab.ExpandableFabLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_dodgeInsetEdges="bottom">
 
         <com.nambimobile.widgets.efab.Overlay
             android:layout_width="match_parent"
@@ -189,13 +204,13 @@
             app:fab_color="?colorPrimaryDark"
             app:fab_icon="@drawable/ic_file"
             app:label_text="@string/settings__theme_manager__create_from_selected"/>
-        <!--<com.nambimobile.widgets.efab.FabOption
+        <com.nambimobile.widgets.efab.FabOption
             android:id="@+id/fab_option_import"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_color="?colorPrimaryDark"
             app:fab_icon="@drawable/ic_input"
-            app:label_text="@string/assets__action__import"/>-->
+            app:label_text="@string/assets__action__import"/>
 
     </com.nambimobile.widgets.efab.ExpandableFabLayout>
 

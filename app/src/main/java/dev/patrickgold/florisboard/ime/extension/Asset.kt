@@ -17,8 +17,6 @@
 package dev.patrickgold.florisboard.ime.extension
 
 import android.content.Context
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Result
 
 /**
  * Interface for an Asset to use within FlorisBoard. An asset is everything from a dictionary to a
@@ -61,6 +59,6 @@ interface Asset {
         /**
          * Loads an Asset of type [T] from the specified path.
          */
-        fun fromFile(context: Context, path: String): Result<T, Throwable> = Err(NotImplementedError())
+        fun fromFile(context: Context, path: String): Result<T> = Result.failure(NotImplementedError())
     }
 }

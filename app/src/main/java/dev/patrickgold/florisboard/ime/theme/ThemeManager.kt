@@ -22,7 +22,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Color
-import com.github.michaelbull.result.*
+import android.net.Uri
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
@@ -102,7 +102,7 @@ class ThemeManager private constructor(
         activeTheme = AdaptiveThemeOverlay(this, if (ref == null) {
             Theme.BASE_THEME
         } else {
-            loadTheme(ref).getOr(Theme.BASE_THEME)
+            loadTheme(ref).getOrDefault(Theme.BASE_THEME)
         })
         Timber.i(activeTheme.label)
         notifyCallbackReceivers()
@@ -247,23 +247,34 @@ class ThemeManager private constructor(
         }
     }
 
-    fun deleteTheme(ref: AssetRef): Result<Nothing?, Throwable> {
+    fun deleteTheme(ref: AssetRef): Result<Unit> {
         return assetManager.deleteAsset(ref)
     }
 
-    fun loadTheme(ref: AssetRef): Result<Theme, Throwable> {
-        assetManager.loadAsset(ref, ThemeJson::class.java).onSuccess { themeJson ->
+    fun loadTheme(ref: AssetRef): Result<Theme> {
+        assetManager.loadAsset(ref, ThemeJson::class).onSuccess { themeJson ->
             val theme = themeJson.toTheme()
-            return Ok(theme)
+            return Result.success(theme)
         }.onFailure {
             Timber.e(it.toString())
-            return Err(it)
+            return Result.failure(it)
         }
-        return Err(Exception("Unreachable code"))
+        return Result.failure(Exception("Unreachable code"))
     }
 
-    fun writeTheme(ref: AssetRef, theme: Theme): Result<Boolean, Throwable> {
-        return assetManager.writeAsset(ref, ThemeJson::class.java, ThemeJson.fromTheme(theme))
+    fun loadTheme(uri: Uri): Result<Theme> {
+        assetManager.loadAsset(uri, ThemeJson::class).onSuccess { themeJson ->
+            val theme = themeJson.toTheme()
+            return Result.success(theme)
+        }.onFailure {
+            Timber.e(it.toString())
+            return Result.failure(it)
+        }
+        return Result.failure(Exception("Unreachable code"))
+    }
+
+    fun writeTheme(ref: AssetRef, theme: Theme): Result<Unit> {
+        return assetManager.writeAsset(ref, ThemeJson::class, ThemeJson.fromTheme(theme))
     }
 
     private fun evaluateActiveThemeRef(): AssetRef? {
@@ -300,7 +311,7 @@ class ThemeManager private constructor(
                     prefs.theme.dayThemeRef
                 }
             }
-        }).onFailure { Timber.e(it) }.getOr(null)
+        }).onFailure { Timber.e(it) }.getOrDefault(null)
     }
 
     private fun indexThemeRefs() {
@@ -308,7 +319,7 @@ class ThemeManager private constructor(
         indexedNightThemeRefs.clear()
         assetManager.listAssets(
             AssetRef(AssetSource.Assets, THEME_PATH_REL),
-            ThemeMetaOnly::class.java
+            ThemeMetaOnly::class
         ).onSuccess {
             for ((ref, themeMetaOnly) in it) {
                 if (themeMetaOnly.isNightTheme) {
@@ -322,7 +333,7 @@ class ThemeManager private constructor(
         }
         assetManager.listAssets(
             AssetRef(AssetSource.Internal, THEME_PATH_REL),
-            ThemeMetaOnly::class.java
+            ThemeMetaOnly::class
         ).onSuccess {
             for ((ref, themeMetaOnly) in it) {
                 if (themeMetaOnly.isNightTheme) {

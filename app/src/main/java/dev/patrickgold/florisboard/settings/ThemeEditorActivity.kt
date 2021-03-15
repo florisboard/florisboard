@@ -28,10 +28,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.children
 import androidx.core.view.forEach
-import com.github.michaelbull.result.onSuccess
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ThemeEditorActivityBinding
 import dev.patrickgold.florisboard.databinding.ThemeEditorGroupViewBinding
+import dev.patrickgold.florisboard.databinding.ThemeEditorMetaDialogBinding
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.AssetRef
@@ -60,6 +60,12 @@ class ThemeEditorActivity : AppCompatActivity() {
     private var editedThemeRef: AssetRef? = null
     private var isSaved: Boolean = false
 
+    private var themeLabel: String = ""
+        set(v) {
+            field = v
+            binding.themeNameLabel.text = v
+        }
+
     companion object {
         /** Constant code for a theme saved activity result. */
         const val RESULT_CODE_THEME_EDIT_SAVED: Int = 0xFBADC1
@@ -84,6 +90,8 @@ class ThemeEditorActivity : AppCompatActivity() {
                 editedTheme = theme.copy()
             }
         }
+
+        binding.themeNameEditBtn.setOnClickListener { showMetaEditDialog() }
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -129,22 +137,13 @@ class ThemeEditorActivity : AppCompatActivity() {
             R.id.add_group_btn -> addGroup()
             R.id.theme_cancel_btn -> onBackPressed()
             R.id.theme_save_btn -> {
-                val themeName = binding.themeNameValue.text.toString().trim()
-                if (Theme.validateField(Theme.ValidationField.THEME_LABEL, themeName)) {
-                    val ref = editedThemeRef
-                    if (ref != null) {
-                        themeManager.writeTheme(
-                            ref, editedTheme.copy(
-                                label = themeName
-                            )
-                        )
-                        isSaved = true
-                        finish()
-                    }
-                } else {
-                    binding.themeNameLabel.error =
-                        resources.getString(R.string.settings__theme_editor__error_theme_label_empty)
-                    binding.themeNameLabel.isErrorEnabled = true
+                val ref = editedThemeRef
+                if (ref != null) {
+                    themeManager.writeTheme(
+                        ref, editedTheme.copy(label = themeLabel)
+                    )
+                    isSaved = true
+                    finish()
                 }
             }
         }
@@ -305,7 +304,7 @@ class ThemeEditorActivity : AppCompatActivity() {
             }
         }
         editedTheme = editedTheme.copy(
-            label = binding.themeNameValue.text.toString(),
+            label = themeLabel,
             attributes = tempMap.toMap()
         )
         binding.keyboardPreview.onThemeUpdated(editedTheme)
@@ -315,7 +314,7 @@ class ThemeEditorActivity : AppCompatActivity() {
      * Builds the Ui for the current [editedTheme]. Also sorts the groups afterwards.
      */
     private fun buildUi() {
-        binding.themeNameValue.setText(editedTheme.label)
+        themeLabel = editedTheme.label
         for ((groupName, groupAttrs) in editedTheme.attributes) {
             val groupView = addGroup(groupName).root
             for ((attrName, attrValue) in groupAttrs) {
@@ -329,5 +328,30 @@ class ThemeEditorActivity : AppCompatActivity() {
             binding.keyboardPreview.onThemeUpdated(editedTheme)
         }
         sortGroups()
+    }
+
+    private fun showMetaEditDialog() {
+        val dialogView = ThemeEditorMetaDialogBinding.inflate(layoutInflater)
+        dialogView.metaName.setText(editedTheme.label)
+        val dialog: AlertDialog
+        AlertDialog.Builder(this).apply {
+            setTitle(R.string.settings__theme_editor__edit_theme_name_dialog_title)
+            setCancelable(true)
+            setView(dialogView.root)
+            setPositiveButton(android.R.string.ok, null)
+            setNegativeButton(android.R.string.cancel, null)
+            create()
+            dialog = show()
+            dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
+                val tempThemeLabel = dialogView.metaName.text.toString().trim()
+                if (Theme.validateField(Theme.ValidationField.THEME_LABEL, tempThemeLabel)) {
+                    themeLabel = tempThemeLabel
+                    dialog.dismiss()
+                } else {
+                    dialogView.metaNameLabel.error = resources.getString(R.string.settings__theme_editor__error_theme_label_empty)
+                    dialogView.metaNameLabel.isErrorEnabled = true
+                }
+            }
+        }
     }
 }

@@ -99,6 +99,8 @@
     <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Create from selected theme</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Custom (based on %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">New theme</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Theme imported successfully!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Theme exported successfully!</string>
 
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Edit theme</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Name</string>
@@ -107,6 +109,7 @@
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Edit group</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Add attribute</string>
     <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Edit attribute</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Edit theme name</string>
     <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Reference</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Group</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Attribute</string>
@@ -314,7 +317,9 @@
     <string name="assets__action__no">No</string>
     <string name="assets__action__save">Save</string>
     <string name="assets__action__yes">Yes</string>
+    <string name="assets__error__details">Details</string>
     <string name="assets__error__invalid">Invalid</string>
+    <string name="assets__error__snackbar_message">Something went wrong</string>
 
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Setup</string>
