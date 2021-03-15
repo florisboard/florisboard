@@ -85,6 +85,8 @@ class ThemeManager private constructor(
                 )
             }
         }
+
+        fun defaultOrNull(): ThemeManager? = defaultInstance
     }
 
     init {

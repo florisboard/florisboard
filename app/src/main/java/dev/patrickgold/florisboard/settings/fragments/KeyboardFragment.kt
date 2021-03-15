@@ -23,11 +23,13 @@ import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
 
 class KeyboardFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener {
     private var heightFactorCustom: DialogSeekBarPreference? = null
+    private var oneHandedModeScaleFactor: DialogSeekBarPreference? = null
     private var utilityKeyAction: ListPreference? = null
     private var sharedPrefs: SharedPreferences? = null
 
@@ -36,8 +38,10 @@ class KeyboardFragment : PreferenceFragmentCompat(),
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
         heightFactorCustom = findPreference(PrefHelper.Keyboard.HEIGHT_FACTOR_CUSTOM)
+        oneHandedModeScaleFactor = findPreference(PrefHelper.Keyboard.ONE_HANDED_MODE_SCALE_FACTOR)
         utilityKeyAction = findPreference(PrefHelper.Keyboard.UTILITY_KEY_ACTION)
         onSharedPreferenceChanged(null, PrefHelper.Keyboard.HEIGHT_FACTOR)
+        onSharedPreferenceChanged(null, PrefHelper.Keyboard.ONE_HANDED_MODE)
         onSharedPreferenceChanged(null, PrefHelper.Keyboard.UTILITY_KEY_ENABLED)
     }
 
@@ -52,10 +56,16 @@ class KeyboardFragment : PreferenceFragmentCompat(),
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key == PrefHelper.Keyboard.HEIGHT_FACTOR) {
-            heightFactorCustom?.isVisible = sharedPrefs?.getString(key, "") == "custom"
-        } else if (key == PrefHelper.Keyboard.UTILITY_KEY_ENABLED) {
-            utilityKeyAction?.isVisible = sharedPrefs?.getBoolean(key, false) == true
+        when (key) {
+            PrefHelper.Keyboard.HEIGHT_FACTOR -> {
+                heightFactorCustom?.isVisible = sharedPrefs?.getString(key, "") == "custom"
+            }
+            PrefHelper.Keyboard.ONE_HANDED_MODE -> {
+                oneHandedModeScaleFactor?.isEnabled = sharedPrefs?.getString(key, "") != OneHandedMode.OFF
+            }
+            PrefHelper.Keyboard.UTILITY_KEY_ENABLED -> {
+                utilityKeyAction?.isVisible = sharedPrefs?.getBoolean(key, false) == true
+            }
         }
     }
 }

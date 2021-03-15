@@ -22,6 +22,7 @@ import android.provider.Settings
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
+import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.text.gestures.DistanceThreshold
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.VelocityThreshold
@@ -322,6 +323,7 @@ class PrefHelper(
             const val LONG_PRESS_DELAY =                "keyboard__long_press_delay"
             const val NUMBER_ROW =                      "keyboard__number_row"
             const val ONE_HANDED_MODE =                 "keyboard__one_handed_mode"
+            const val ONE_HANDED_MODE_SCALE_FACTOR =    "keyboard__one_handed_mode_scale_factor"
             const val POPUP_ENABLED =                   "keyboard__popup_enabled"
             const val SOUND_ENABLED =                   "keyboard__sound_enabled"
             const val SOUND_VOLUME =                    "keyboard__sound_volume"
@@ -371,8 +373,11 @@ class PrefHelper(
             get() =  prefHelper.getPref(NUMBER_ROW, false)
             set(v) = prefHelper.setPref(NUMBER_ROW, v)
         var oneHandedMode: String
-            get() = prefHelper.getPref(ONE_HANDED_MODE, "off")
+            get() = prefHelper.getPref(ONE_HANDED_MODE, OneHandedMode.OFF)
             set(value) = prefHelper.setPref(ONE_HANDED_MODE, value)
+        var oneHandedModeScaleFactor: Int
+            get() =  prefHelper.getPref(ONE_HANDED_MODE_SCALE_FACTOR, 87)
+            set(v) = prefHelper.setPref(ONE_HANDED_MODE_SCALE_FACTOR, v)
         var popupEnabled: Boolean = false
             get() = prefHelper.getPref(POPUP_ENABLED, true)
             private set

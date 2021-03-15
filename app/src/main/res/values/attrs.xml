@@ -24,6 +24,10 @@
         <attr name="android:text" format="string|reference"/>
     </declare-styleable>
 
+    <declare-styleable name="OneHandedPanel">
+        <attr name="panelSide" format="string"/>
+    </declare-styleable>
+
     <declare-styleable name="KeyboardThemeBase">
         <attr name="keyboardViewStyle" format="reference"/>
         <attr name="keyboardRowViewStyle" format="reference"/>
