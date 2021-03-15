@@ -20,7 +20,6 @@ import android.annotation.SuppressLint
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.graphics.Color
 import android.inputmethodservice.ExtractEditText
@@ -32,7 +31,6 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.provider.Settings
 import android.view.*
-import android.view.inputmethod.CursorAnchorInfo
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
@@ -46,6 +44,7 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.MediaInputManager
+import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupLayerView
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
@@ -324,7 +323,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
             }
         }
         this.inputView = inputView
-        initializeOneHandedEnvironment()
         updateSoftInputWindowLayoutParameters()
         updateOneHandedPanelVisibility()
         themeManager.notifyCallbackReceivers()
@@ -526,14 +524,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
 
         // Update InputView theme
         inputView?.setBackgroundColor(theme.getAttr(Theme.Attr.KEYBOARD_BACKGROUND).toSolidColor().color)
-        inputView?.oneHandedCtrlPanelStart?.setBackgroundColor(theme.getAttr(Theme.Attr.ONE_HANDED_BACKGROUND).toSolidColor().color)
-        inputView?.oneHandedCtrlPanelEnd?.setBackgroundColor(theme.getAttr(Theme.Attr.ONE_HANDED_BACKGROUND).toSolidColor().color)
-        ColorStateList.valueOf(theme.getAttr(Theme.Attr.ONE_HANDED_FOREGROUND).toSolidColor().color).also {
-            inputView?.oneHandedCtrlMoveStart?.imageTintList = it
-            inputView?.oneHandedCtrlMoveEnd?.imageTintList = it
-            inputView?.oneHandedCtrlCloseStart?.imageTintList = it
-            inputView?.oneHandedCtrlCloseEnd?.imageTintList = it
-        }
         inputView?.invalidate()
 
         // Update ExtractTextView theme and attributes
@@ -741,58 +731,29 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, ClipboardManager.OnPri
         }
     }
 
-    private fun initializeOneHandedEnvironment() {
-        { v:View -> onOneHandedPanelButtonClick(v) }.also {
-            inputView?.oneHandedCtrlMoveStart?.setOnClickListener(it)
-            inputView?.oneHandedCtrlMoveEnd?.setOnClickListener(it)
-            inputView?.oneHandedCtrlCloseStart?.setOnClickListener(it)
-            inputView?.oneHandedCtrlCloseEnd?.setOnClickListener(it)
-        }
-    }
-
-    private fun onOneHandedPanelButtonClick(v: View) {
-        when (v.id) {
-            R.id.one_handed_ctrl_move_start -> {
-                prefs.keyboard.oneHandedMode = "start"
-            }
-            R.id.one_handed_ctrl_move_end -> {
-                prefs.keyboard.oneHandedMode = "end"
-            }
-            R.id.one_handed_ctrl_close_start,
-            R.id.one_handed_ctrl_close_end -> {
-                prefs.keyboard.oneHandedMode = "off"
-            }
-        }
-        updateOneHandedPanelVisibility()
-    }
-
     fun toggleOneHandedMode(isRight: Boolean) {
-        when (prefs.keyboard.oneHandedMode) {
-            "off" -> {
-                prefs.keyboard.oneHandedMode = if (isRight) { "end" } else { "start" }
-            }
-            else -> {
-                prefs.keyboard.oneHandedMode = "off"
-            }
+        prefs.keyboard.oneHandedMode = when (prefs.keyboard.oneHandedMode) {
+            OneHandedMode.OFF -> if (isRight) { OneHandedMode.END } else { OneHandedMode.START }
+            else -> OneHandedMode.OFF
         }
         updateOneHandedPanelVisibility()
     }
 
-    private fun updateOneHandedPanelVisibility() {
+    fun updateOneHandedPanelVisibility() {
         if (resources.configuration.orientation != Configuration.ORIENTATION_PORTRAIT) {
             inputView?.oneHandedCtrlPanelStart?.visibility = View.GONE
             inputView?.oneHandedCtrlPanelEnd?.visibility = View.GONE
         } else {
             when (prefs.keyboard.oneHandedMode) {
-                "off" -> {
+                OneHandedMode.OFF -> {
                     inputView?.oneHandedCtrlPanelStart?.visibility = View.GONE
                     inputView?.oneHandedCtrlPanelEnd?.visibility = View.GONE
                 }
-                "start" -> {
+                OneHandedMode.START -> {
                     inputView?.oneHandedCtrlPanelStart?.visibility = View.GONE
                     inputView?.oneHandedCtrlPanelEnd?.visibility = View.VISIBLE
                 }
-                "end" -> {
+                OneHandedMode.END -> {
                     inputView?.oneHandedCtrlPanelStart?.visibility = View.VISIBLE
                     inputView?.oneHandedCtrlPanelEnd?.visibility = View.GONE
                 }

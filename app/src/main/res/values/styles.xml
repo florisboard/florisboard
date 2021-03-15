@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="OneHandedPanel">
-        <item name="android:layout_width">@dimen/one_handed_width</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">0</item>
-        <item name="android:layout_alignParentBottom">true</item>
-        <item name="android:gravity">center</item>
-        <item name="android:orientation">vertical</item>
-    </style>
-
-    <style name="OneHandedPanelButton">
-        <item name="android:layout_width">@dimen/one_handed_button_width</item>
-        <item name="android:layout_height">@dimen/one_handed_button_height</item>
-        <item name="android:autoMirrored">true</item>
-        <item name="android:background">@drawable/button_transparent_bg_on_press</item>
-        <item name="android:padding">0dp</item>
-        <item name="android:tint">#000000</item>
-    </style>
-
     <style name="SmartbarCandidate">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>

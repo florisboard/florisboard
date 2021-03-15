@@ -20,10 +20,12 @@ import android.content.Context
 import android.content.res.Configuration
 import android.util.AttributeSet
 import android.util.DisplayMetrics
+import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ViewFlipper
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
@@ -48,17 +50,9 @@ class InputView : LinearLayout {
 
     var mainViewFlipper: ViewFlipper? = null
         private set
-    var oneHandedCtrlPanelStart: LinearLayout? = null
+    var oneHandedCtrlPanelStart: ViewGroup? = null
         private set
-    var oneHandedCtrlPanelEnd: LinearLayout? = null
-        private set
-    var oneHandedCtrlMoveStart: ImageButton? = null
-        private set
-    var oneHandedCtrlMoveEnd: ImageButton? = null
-        private set
-    var oneHandedCtrlCloseStart: ImageButton? = null
-        private set
-    var oneHandedCtrlCloseEnd: ImageButton? = null
+    var oneHandedCtrlPanelEnd: ViewGroup? = null
         private set
 
     constructor(context: Context) : this(context, null)
@@ -77,10 +71,6 @@ class InputView : LinearLayout {
         mainViewFlipper = findViewById(R.id.main_view_flipper)
         oneHandedCtrlPanelStart = findViewById(R.id.one_handed_ctrl_panel_start)
         oneHandedCtrlPanelEnd = findViewById(R.id.one_handed_ctrl_panel_end)
-        oneHandedCtrlMoveStart = findViewById(R.id.one_handed_ctrl_move_start)
-        oneHandedCtrlMoveEnd = findViewById(R.id.one_handed_ctrl_move_end)
-        oneHandedCtrlCloseStart = findViewById(R.id.one_handed_ctrl_close_start)
-        oneHandedCtrlCloseEnd = findViewById(R.id.one_handed_ctrl_close_end)
 
         florisboard.registerInputView(this)
     }
@@ -88,8 +78,8 @@ class InputView : LinearLayout {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val heightFactor = when (resources.configuration.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> 1.0f
-            else -> if (prefs.keyboard.oneHandedMode != "off") {
-                0.9f
+            else -> if (prefs.keyboard.oneHandedMode != OneHandedMode.OFF) {
+                prefs.keyboard.oneHandedModeScaleFactor / 100.0f
             } else {
                 1.0f
             }
@@ -171,5 +161,4 @@ class InputView : LinearLayout {
             resources.getDimension(R.dimen.inputView_baseHeight)
         )
     }
-
 }

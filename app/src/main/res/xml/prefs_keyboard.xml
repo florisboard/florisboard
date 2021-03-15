@@ -84,6 +84,17 @@
             app:title="@string/pref__keyboard__one_handed_mode__label"
             app:useSimpleSummaryProvider="true"/>
 
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="87"
+            app:key="keyboard__one_handed_mode_scale_factor"
+            app:min="70"
+            app:max="90"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__one_handed_mode_scale_factor__label"
+            app:seekBarIncrement="1"
+            app:unit="%"/>
+
         <ListPreference
             android:defaultValue="dynamically_show"
             app:entries="@array/pref__keyboard__landscape_input_ui_mode__entries"
