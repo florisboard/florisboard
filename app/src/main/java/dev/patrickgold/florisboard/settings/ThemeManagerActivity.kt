@@ -95,7 +95,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         }
     }
 
-    private val exportTheme = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
+    private val exportTheme = registerForActivityResult(ActivityResultContracts.CreateDocument()) { uri: Uri? ->
         // If uri is null it indicates that the selection activity was cancelled (mostly by pressing the back button,
         // so we don't display an error message here.
         if (uri == null) return@registerForActivityResult
@@ -287,7 +287,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
                 }
             }
             R.id.fab_option_import -> {
-                importTheme.launch("application/json")
+                importTheme.launch("*/*")
             }
             R.id.theme_delete_btn -> {
                 val deleteRef = selectedRef?.copy()
@@ -342,7 +342,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
                 }
             }
             R.id.theme_export_btn -> {
-                exportTheme.launch(arrayOf("application/json"))
+                exportTheme.launch("${selectedTheme.name}.json")
             }
         }
     }
