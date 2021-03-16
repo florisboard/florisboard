@@ -12,7 +12,10 @@
     <color name="colorError">#B00020</color><!-- Red 1000? -->
     <color name="textColorError">#FFFFFF</color><!-- White -->
 
-    <color name="ic_launcher_background">#78909C</color>
+    <color name="ic_app_icon_background">#424242</color>
+    <color name="ic_app_icon_release_background">@color/ic_app_icon_background</color>
+    <color name="ic_app_icon_beta_background">@color/ic_app_icon_background</color>
+    <color name="ic_app_icon_debug_background">@color/ic_app_icon_background</color>
 
     <color name="cardViewBackgroundColor">#FFFFFF</color><!-- White -->
     <color name="navigationBarColor">#000000</color><!-- Black -->
