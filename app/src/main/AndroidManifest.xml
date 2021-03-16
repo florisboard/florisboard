@@ -23,9 +23,9 @@
     <application
         android:name=".ime.core.FlorisApplication"
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/floris_app_icon"
         android:label="@string/floris_app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/floris_app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/SettingsTheme">
 
@@ -46,19 +46,19 @@
         <!-- Settings Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.settings.SettingsMainActivity"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@mipmap/floris_app_icon"
             android:label="@string/settings__title"
             android:launchMode="singleTask"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:roundIcon="@mipmap/floris_app_icon_round"
             android:theme="@style/SettingsTheme"/>
 
         <!-- Using an activity alias to disable/enable the app icon in the launcher -->
         <activity-alias
             android:name="dev.patrickgold.florisboard.SettingsLauncherAlias"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@mipmap/floris_app_icon"
             android:label="@string/floris_app_name"
             android:launchMode="singleTask"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:roundIcon="@mipmap/floris_app_icon_round"
             android:targetActivity="dev.patrickgold.florisboard.setup.SetupActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -69,45 +69,45 @@
         <!-- Theme Selector Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.settings.ThemeManagerActivity"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@mipmap/floris_app_icon"
             android:label="@string/settings__title"
             android:theme="@style/SettingsTheme"/>
 
         <!-- Theme Editor Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.settings.ThemeEditorActivity"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@mipmap/floris_app_icon"
             android:label="@string/settings__theme_editor__title"
             android:theme="@style/SettingsTheme"/>
 
         <!-- About Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.settings.AboutActivity"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@mipmap/floris_app_icon"
             android:label="@string/about__title"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:roundIcon="@mipmap/floris_app_icon_round"
             android:theme="@style/SettingsTheme"/>
 
         <!-- Advanced Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.settings.AdvancedActivity"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@mipmap/floris_app_icon"
             android:label="@string/settings__advanced__title"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:roundIcon="@mipmap/floris_app_icon_round"
             android:theme="@style/SettingsTheme"/>
 
         <!-- Setup Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.setup.SetupActivity"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@mipmap/floris_app_icon"
             android:label="@string/setup__title"
-            android:roundIcon="@mipmap/ic_launcher_round"
+            android:roundIcon="@mipmap/floris_app_icon_round"
             android:theme="@style/SettingsTheme"/>
 
         <!-- Crash Dialog Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.crashutility.CrashDialogActivity"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@mipmap/floris_app_icon"
             android:label="@string/crash_dialog__title"
             android:theme="@style/CrashDialogTheme"/>
 

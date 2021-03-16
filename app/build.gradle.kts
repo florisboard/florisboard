@@ -34,11 +34,29 @@ android {
     buildTypes {
         named("debug").configure {
             applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+
+            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_debug")
+            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_debug_round")
             resValue("string", "floris_app_name", "FlorisBoard Debug")
+        }
+
+        create("beta") // Needed because by default the "beta" BuildType does not exist
+        named("beta").configure {
+            applicationIdSuffix = ".beta"
+            versionNameSuffix = "-beta"
+            proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
+
+            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_beta")
+            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_beta_round")
+            resValue("string", "floris_app_name", "FlorisBoard Beta")
         }
 
         named("release").configure {
             proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
+
+            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_release")
+            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_release_round")
             resValue("string", "floris_app_name", "@string/app_name")
         }
     }

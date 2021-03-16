@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <input-method xmlns:android="https://schemas.android.com/apk/res/android"
-    android:icon="@mipmap/ic_launcher"
+    android:icon="@mipmap/floris_app_icon"
     android:isDefault="false"
     android:settingsActivity="dev.patrickgold.florisboard.settings.SettingsMainActivity"
     android:supportsSwitchingToNextInputMethod="true"/>
