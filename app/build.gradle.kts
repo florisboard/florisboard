@@ -21,8 +21,8 @@ android {
         applicationId = "dev.patrickgold.florisboard"
         minSdkVersion(23)
         targetSdkVersion(30)
-        versionCode(27)
-        versionName("0.3.8")
+        versionCode(28)
+        versionName("0.3.9")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

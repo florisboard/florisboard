@@ -1,0 +1,11 @@
+- Add one-handed width option / Improve one-handed code
+- Add theme import/export (#455)
+- Add shift variants for Colemak and Dvorak (#145)
+- Add shift + space bar left/right for selection
+- Rework the app icon to be more aligned with the app's theme
+- Fix theme editor jumping to top (#379)
+- Fix Greek uppercase bug (#452)
+- Fix crash on setup when no other IME is installed (#423)
+- Fix delete precise char selection init value always 2 units (#448)
+- Fix label text size decreasing bug in selection keyboard
+- Fix space bar arrow movement initial count always 2 (#448)
