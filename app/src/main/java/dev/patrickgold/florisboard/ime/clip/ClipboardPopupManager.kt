@@ -65,9 +65,9 @@ class ClipboardPopupManager(private val keyboardView: ClipboardHistoryView,
         val clipboardManager = FlorisClipboardManager.getInstance()
         val florisboard = FlorisBoard.getInstance()
         val clipItem = clipboardManager.peekHistoryOrPin(pos)
-        val pasteShouldBeEnabled =  true /*florisboard.activeEditorInstance.contentMimeTypes?.any {
-            clipItem.description?.hasMimeType(it) ?: false
-        } == true || clipItem.description?.hasMimeType("text/plain") == true*/
+        val pasteShouldBeEnabled = florisboard.activeEditorInstance.contentMimeTypes?.any {
+            clipItem.mimeTypes.contains(it)
+        } == true || clipItem.mimeTypes.contains("text/plain")
         // the clipboard item has any of the supported mime types of the editor OR is plain text.
 
         val paste = popupView.findViewById<LinearLayout>(R.id.paste_clip_item)

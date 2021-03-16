@@ -40,12 +40,8 @@ class FlorisContentProvider : ContentProvider() {
         ).build().fileUriDao()
 
         executor = Executors.newSingleThreadExecutor()
-        Timber.d("before execution")
-        executor.execute {
-            Timber.d("EXECUTED")
-            for (fileUri in fileUriDao.getAll()) {
-                mimeTypes[fileUri.fileName] = fileUri.mimeTypes
-            }
+        for (fileUri in fileUriDao.getAll()) {
+            mimeTypes[fileUri.fileName] = fileUri.mimeTypes
         }
     }
 

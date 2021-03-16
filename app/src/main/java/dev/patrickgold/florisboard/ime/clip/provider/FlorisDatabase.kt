@@ -101,7 +101,7 @@ data class ClipboardItem(
 
             Timber.d("mimetypes: ${mimeTypes.size} ${mimeTypes.asList()}")
 
-            return ClipboardItem(0, type, uri, text, mimeTypes)
+            return ClipboardItem(null, type, uri, text, mimeTypes)
         }
     }
 }
@@ -158,6 +158,22 @@ interface PinnedClipboardItemDao {
 @TypeConverters(Converters::class)
 abstract class PinnedItemsDatabase : RoomDatabase() {
     abstract fun clipboardItemDao() : PinnedClipboardItemDao
+
+    companion object {
+        private var instance: PinnedItemsDatabase? = null
+
+        fun getInstance(): PinnedItemsDatabase {
+
+            if (instance == null) {
+                instance = Room.databaseBuilder(
+                    FlorisBoard.getInstance().context,
+                    PinnedItemsDatabase::class.java,
+                    "pins").build()
+            }
+
+            return instance!!
+        }
+    }
 }
 
 @Entity(tableName = "file_uris")

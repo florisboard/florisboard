@@ -7,6 +7,8 @@ import android.os.Handler
 import android.os.Looper
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clip.provider.ItemType
+import dev.patrickgold.florisboard.ime.clip.provider.PinnedClipboardItemDao
+import dev.patrickgold.florisboard.ime.clip.provider.PinnedItemsDatabase
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.cancelAll
@@ -14,6 +16,8 @@ import dev.patrickgold.florisboard.util.postAtScheduledRate
 import timber.log.Timber
 import java.io.Closeable
 import java.util.*
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 import kotlin.collections.ArrayDeque
 import kotlin.collections.ArrayList
 
@@ -39,6 +43,9 @@ import kotlin.collections.ArrayList
  * [ClipboardPopupView] is the view representing a popup displayed when long pressing on a clipboard history item.
  */
 class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryClipChangedListener, Closeable {
+
+    private lateinit var pinsDao: PinnedClipboardItemDao
+    private lateinit var executor:  ExecutorService
 
     // Using ArrayDeque because it's "technically" the correct data structure (I think).
     // Newest stored first, oldest stored last.
@@ -130,8 +137,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      * Wraps some plaintext in a ClipData and calls [addNewClip]
      */
     fun addNewPlaintext(newText: String) {
-        Timber.d("mimetypes plain")
-        val newData = ClipboardItem(0, ItemType.TEXT, null, newText, arrayOf("text/plain"))
+        val newData = ClipboardItem(null, ItemType.TEXT, null, newText, arrayOf("text/plain"))
         addNewClip(newData)
     }
 
@@ -241,6 +247,11 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         handler = Handler(Looper.getMainLooper())
         prefHelper
         handler.postAtScheduledRate(0, INTERVAL, cleanUpClipboard)
+        executor = Executors.newSingleThreadExecutor()
+        executor.execute {
+            pinsDao = PinnedItemsDatabase.getInstance().clipboardItemDao()
+            pinsDao.getAll().toCollection(this.pins)
+        }
     }
 
 
@@ -264,6 +275,10 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         pins.addFirst(pin.data)
         clipInputManager.notifyItemMoved(adapterPos, 0)
         clipInputManager.notifyItemChanged(0)
+
+        executor.execute {
+            pinsDao.insert(pin.data)
+        }
     }
 
     /**
@@ -301,6 +316,10 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
 
         clipInputManager.notifyItemMoved(adapterPos, pins.size)
         clipInputManager.notifyItemChanged(pins.size)
+
+        executor.execute {
+            pinsDao.delete(item)
+        }
     }
 
     fun removeClip(pos: Int) {
