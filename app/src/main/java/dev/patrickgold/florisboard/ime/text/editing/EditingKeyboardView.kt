@@ -80,10 +80,11 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener,
             else -> View.GONE
         }
         copyKey?.isEnabled = isSelectionActive
+        //FIXME: proper mime type matching
         pasteKey?.isEnabled =
             florisboard?.florisClipboardManager?.hasPrimaryClip() == true &&
                 florisboard.activeEditorInstance.contentMimeTypes?.any {
-                    florisboard.florisClipboardManager!!.primaryClip?.description?.hasMimeType(it) ?: false
+                    florisboard.florisClipboardManager!!.primaryClip?.mimeTypes?.contains(it) ?: false
                 } == true
     }
 

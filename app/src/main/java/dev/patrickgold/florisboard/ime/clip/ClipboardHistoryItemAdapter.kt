@@ -9,7 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.clip.provider.ItemType
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import timber.log.Timber
 
 class ClipboardHistoryItemAdapter(
         private val dataSet: ArrayDeque<FlorisClipboardManager.TimedClipData>,
@@ -25,9 +27,6 @@ class ClipboardHistoryItemAdapter(
     }
 
     companion object {
-        const val IMAGE: Int = 1
-        const val TEXT: Int = 2
-
         private const val MAX_SIZE: Int = 256
     }
 
@@ -47,16 +46,18 @@ class ClipboardHistoryItemAdapter(
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         // Create a new view, which defines the UI of the list item
         val vh = when (viewType) {
-            IMAGE -> {
+            ItemType.IMAGE.value -> {
                 val view = LayoutInflater.from(viewGroup.context)
                     .inflate(R.layout.clipboard_history_item_image, viewGroup, false)
 
+                Timber.d("Inflating image")
                 ClipboardHistoryImageViewHolder(view)
             }
-            TEXT -> {
+            ItemType.TEXT.value  -> {
                 val view = LayoutInflater.from(viewGroup.context)
                     .inflate(R.layout.clipboard_history_item_text, viewGroup, false)
 
+                Timber.d("inflating text")
                 ClipboardHistoryTextViewHolder(view)
             }
             else -> null

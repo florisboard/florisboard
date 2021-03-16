@@ -1,11 +1,14 @@
 package dev.patrickgold.florisboard.ime.clip.provider
 
 import android.content.ClipData
+import android.content.ContentValues
 import android.net.Uri
+import android.provider.BaseColumns
 import androidx.room.*
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import java.util.*
-
+import org.json.JSONArray
+import org.json.JSONTokener
+import timber.log.Timber
 
 
 enum class ItemType(val value: Int) {
@@ -21,9 +24,10 @@ enum class ItemType(val value: Int) {
 
 
 
-@Entity
+@Entity(tableName = "pins")
 data class ClipboardItem(
-    @PrimaryKey val uid: UUID,
+    /** Only used for pins */
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name=BaseColumns._ID, index=true) val uid: Long?,
     val type: ItemType,
     val uri: Uri?,
     val text: String?,
@@ -77,33 +81,129 @@ data class ClipboardItem(
             }!!
 
             val uri = if (type == ItemType.IMAGE) {
-                    if (data.getItemAt(0).uri.authority == "dev.patrickgold.florisboard.provider.clips"){
+                    if (data.getItemAt(0).uri.authority == FlorisContentProvider.CONTENT_URI.authority){
                         data.getItemAt(0).uri
                     }else {
-                        val uuid = FileStorage.getInstance().cloneURI(data.getItemAt(0).uri)
-                        FlorisContentProvider.getInstance().uuidToUri(uuid)
+                        val values = ContentValues().apply{
+                            put("uri", data.getItemAt(0).uri.toString())
+                            put("mimetypes", data.description.filterMimeTypes("*/*").joinToString(","))
+                        }
+                        FlorisBoard.getInstance().context.contentResolver.insert(FlorisContentProvider.CLIPS_URI, values)
                     }
             }else { null }
 
-            val text = data.getItemAt(0).text.toString()
+            val text = data.getItemAt(0).text?.toString()
             val mimeTypes = Array(data.description.mimeTypeCount) { "" }
 
             (0 until data.description.mimeTypeCount).forEach {
                     mimeTypes[it] = data.description.getMimeType(it)
             }
 
-            return ClipboardItem(UUID.randomUUID(), type, uri, text, mimeTypes)
+            Timber.d("mimetypes: ${mimeTypes.size} ${mimeTypes.asList()}")
+
+            return ClipboardItem(0, type, uri, text, mimeTypes)
         }
+    }
+}
+
+class Converters {
+    @TypeConverter
+    fun uriFromString(value: String?): Uri? {
+        return Uri.parse(value)
+    }
+
+    @TypeConverter
+    fun stringFromUri(value: Uri?): String? {
+        return value.toString()
+    }
+
+    @TypeConverter
+    fun itemTypeToInt(value: ItemType?): Int? {
+        return value?.value
+    }
+
+    @TypeConverter
+    fun intToItemType(value: Int?): ItemType? {
+        return value?.let { ItemType.fromInt(it) }
+    }
+
+    /**
+     * Only works because the string array is a mimetype.
+     * DOES NOT USE A GENERALIZED FORMAT.
+     */
+    @TypeConverter
+    fun mimeTypesToString(mimeTypes: Array<String>): String {
+        return mimeTypes.joinToString(",")
+    }
+    @TypeConverter
+    fun stringToMimeTypes(value: String): Array<String> {
+        return value.split(",").toTypedArray()
     }
 }
 
 
 @Dao
-interface ClipboardItemDao {
- //   @Query("SELECT * FROM clipboard")
- //   fun getAll(): List<ClipboardItem>
+interface PinnedClipboardItemDao {
+    @Query("SELECT * FROM pins")
+    fun getAll(): List<ClipboardItem>
 
     @Insert
     fun insert(vararg items: ClipboardItem)
 
+    @Delete
+    fun delete(item: ClipboardItem)
+}
+
+@Database(entities = [ClipboardItem::class], version = 1)
+@TypeConverters(Converters::class)
+abstract class PinnedItemsDatabase : RoomDatabase() {
+    abstract fun clipboardItemDao() : PinnedClipboardItemDao
+}
+
+@Entity(tableName = "file_uris")
+data class FileUri(
+    @PrimaryKey @ColumnInfo(name=BaseColumns._ID, index=true) val fileName: Long,
+    val mimeTypes: Array<String>
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as FileUri
+
+        if (fileName != other.fileName) return false
+        if (!mimeTypes.contentEquals(other.mimeTypes)) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = 31 + fileName.hashCode()
+        result = 31 * result + mimeTypes.contentHashCode()
+        return result
+    }
+}
+
+@Dao
+interface FileUriDao {
+    @Query("SELECT * FROM file_uris WHERE ${BaseColumns._ID} == (:uid)")
+    fun getById(uid: Long) : FileUri
+
+    @Query("DELETE FROM file_uris WHERE ${BaseColumns._ID} == (:id)")
+    fun delete(id: Long)
+
+    @Insert
+    fun insert(vararg fileUris: FileUri)
+
+    @Query("SELECT COUNT(*) FROM file_uris WHERE ${BaseColumns._ID} == (:id)")
+    fun numberWithId(id: Long): Int
+
+    @Query("SELECT * FROM file_uris")
+    fun getAll(): List<FileUri>
+}
+
+@Database(entities = [FileUri::class], version = 1)
+@TypeConverters(Converters::class)
+abstract class FileUriDatabase : RoomDatabase() {
+    abstract fun fileUriDao() : FileUriDao
 }

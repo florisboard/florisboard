@@ -11,6 +11,7 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.cancelAll
 import dev.patrickgold.florisboard.util.postAtScheduledRate
+import timber.log.Timber
 import java.io.Closeable
 import java.util.*
 import kotlin.collections.ArrayDeque
@@ -129,7 +130,8 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      * Wraps some plaintext in a ClipData and calls [addNewClip]
      */
     fun addNewPlaintext(newText: String) {
-        val newData = ClipboardItem(UUID.randomUUID(), ItemType.TEXT, null, newText, arrayOf("text/plain"))
+        Timber.d("mimetypes plain")
+        val newData = ClipboardItem(0, ItemType.TEXT, null, newText, arrayOf("text/plain"))
         addNewClip(newData)
     }
 
@@ -156,6 +158,11 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      * Called by system clipboard when the contents are changed
      */
     override fun onPrimaryClipChanged() {
+        if(systemClipboardManager.primaryClip?.getItemAt(0)?.text == null &&
+            systemClipboardManager.primaryClip?.getItemAt(0)?.uri == null){
+            return
+        }
+
         val isEqual = when (primaryClip?.type) {
             ItemType.TEXT-> primaryClip?.text == systemClipboardManager.primaryClip?.getItemAt(0)?.text
             ItemType.IMAGE-> primaryClip?.uri == systemClipboardManager.primaryClip?.getItemAt(0)?.uri

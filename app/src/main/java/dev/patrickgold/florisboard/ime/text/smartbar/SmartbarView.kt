@@ -304,11 +304,12 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
             florisboard?.activeEditorInstance?.isPrivateMode == false ) {
 
                 // only suggest if mime types make sense.
+                // FIXME: add proper mime type matching with wildcards
                 shouldSuggestClipboardContents = florisboard.activeEditorInstance.contentMimeTypes?.any {
-                florisboard.florisClipboardManager!!.primaryClip?.description?.hasMimeType(it) ?: false
+                florisboard.florisClipboardManager!!.primaryClip?.mimeTypes?.contains(it) ?: false
             } == true
 
-            val item = florisboard.florisClipboardManager?.primaryClip?.getItemAt(0)
+            val item = florisboard.florisClipboardManager?.primaryClip
             when {
                 item?.text != null -> {
                     binding.clipboardSuggestion.text = item.text
