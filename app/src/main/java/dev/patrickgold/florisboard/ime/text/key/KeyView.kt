@@ -204,8 +204,9 @@ class KeyView(
                 KeyCode.URI_COMPONENT_TLD -> keyData.label.toLowerCase(Locale.ENGLISH)
                 else -> {
                     val labelText = (keyData.code.toChar()).toString()
+                    val locale = if (subtype.locale.language == "el") { Locale.getDefault() } else { subtype.locale }
                     if (caps) {
-                        labelText.toUpperCase(subtype.locale)
+                        labelText.toUpperCase(locale)
                     } else {
                         labelText
                     }

@@ -758,8 +758,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                             }
                             else -> {
                                 var text = data.code.toChar().toString()
+                                val locale = if (florisboard.activeSubtype.locale.language == "el") { Locale.getDefault() } else { florisboard.activeSubtype.locale }
                                 text = when (caps && activeKeyboardMode == KeyboardMode.CHARACTERS) {
-                                    true -> text.toUpperCase(florisboard.activeSubtype.locale)
+                                    true -> text.toUpperCase(locale)
                                     false -> text
                                 }
                                 activeEditorInstance.commitText(text)
