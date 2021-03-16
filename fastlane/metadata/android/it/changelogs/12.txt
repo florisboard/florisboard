@@ -1,9 +1,0 @@
-- Aggiunta di capacità di tematizzazione
-  - Selezione delle preimpostazioni
-  - Modificare ogni colore individualmente
-  - I temi sono ora definiti in asset/imo/tema/ come un file json, che permette un modo più conveniente per aggiungere temi personalizzati (base per la funzione futura)
-- Schema di denominazione e struttura delle impostazioni della ristrutturazione
-- Aggiungere la funzionalità del pulsante indietro nelle impostazioni
-- Aggiunta di strumenti per appunti/cursori
-- Migliorare la misurazione del layout e il comportamento in altezza
-- Correggere il bug del tasto azione (#17)

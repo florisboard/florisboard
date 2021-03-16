@@ -1,5 +1,0 @@
-- Riorganizzazione del core per implementare al meglio l'interfaccia tra FlorisBoard e le altre applicazioni
-  - Lo stato del turno dovrebbe ora aggiornarsi dopo la pressione di un tasto (#35)
-  - Il tasto Invio dovrebbe ora inviare l'azione desiderata o un carattere di nuova linea (#33)
-- La regolazione dell'altezza della tastiera influisce anche sulla dimensione dei caratteri dei tasti (#32)
-- Aggiungere l'opzione per ricordare / dimenticare lo stato di blocco dei maiuscoli in diversi campi di input (#30)

@@ -62,11 +62,9 @@ milestones, please refer to the [Feature roadmap](#feature-roadmap).
 * [x] Landscape orientation support (needs tweaks)
 
 ### Layouts
-* [x] Latin character layouts (QWERTY, QWERTZ, AZERTY, Swiss, Spanish,
-      Norwegian, Swedish/Finnish, Icelandic, Danish, Hungarian,
-      Croatian, Polish, Romanian, Colemak, Dvorak); more coming in future versions
-* [x] Non-latin character layouts (Arabic, Persian, Greek, Russian
-      (JCUKEN))
+* [x] Latin character layouts (QWERTY, QWERTZ, AZERTY, Swiss, Spanish, Norwegian, Swedish/Finnish, Icelandic, Danish,
+      Hungarian, Croatian, Polish, Romanian, Colemak, Dvorak, ...)
+* [x] Non-latin character layouts (Arabic, Persian, Greek, Russian (JCUKEN))
 * [x] Adapt to situation in app (password, url, text, etc. )
 * [x] Special character layout(s)
 * [x] Numeric layout
@@ -138,6 +136,7 @@ close as possible.
     and `Follow time`)
   - Define a separate theme both for day and night theme
   - Adapt to app theme if possible
+  - Theme import/export
 
 ### [v0.5.0](https://github.com/florisboard/florisboard/milestone/5)
 There's no exact roadmap yet but it is planned that the media part of
@@ -150,7 +149,6 @@ passes...
 
 Backlog (currently not assigned to any milestone):
 
-- Theme import/export
 - Floating keyboard
 
 [#91]: https://github.com/florisboard/florisboard/pull/91
