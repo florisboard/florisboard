@@ -1,4 +1,0 @@
-- Aggiungi gesti e barra spaziatrice a scorrimento
-  - Scorri su / giù / sinistra / destra
-  - Passare il dito a sinistra dal tasto di cancellazione (default per cancellare la parola corrente)
-  - Muovendo il dito lungo la barra spaziatrice, il cursore si sposta

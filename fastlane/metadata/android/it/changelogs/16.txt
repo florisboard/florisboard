@@ -1,5 +1,0 @@
-- Aggiungere suggerimenti per il contenuto degli appunti (#38)
-- Aggiungere il supporto per gli editor di input grezzi (come le app dei terminali, ecc.)
-- Aggiungere il gestore di crash e il modulo di errore
-- Migliorare il layout della Smartbar e della fila di numeri (#31)
-- Core di rilavorazione per correggere potenziali crash durante l'inserimento del testo
