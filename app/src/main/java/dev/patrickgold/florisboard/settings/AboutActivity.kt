@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.settings
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -32,6 +33,7 @@ class AboutActivity : AppCompatActivity() {
     private lateinit var binding: AboutActivityBinding
     private var licensesAlertDialog: AlertDialog? = null
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = AboutActivityBinding.inflate(layoutInflater)
@@ -41,7 +43,7 @@ class AboutActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         // Set app version string
-        binding.appVersion.text = AppVersionUtils.getRawVersionName(this)
+        binding.appVersion.text = "v" + AppVersionUtils.getRawVersionName(this)
 
         // Set onClickListeners for buttons
         binding.privacyPolicyButton.setOnClickListener {

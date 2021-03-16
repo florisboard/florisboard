@@ -68,12 +68,12 @@ data class VersionName(
                 if (list.size == 3) {
                     return VersionName(list[0], list[1], list[2])
                 }
-            } else if (raw.matches("""[0-9]+[.][0-9]+[.][0-9]+[.][0-9]+""".toRegex())) {
+            } else if (raw.matches("""[0-9]+[.][0-9]+[.][0-9]+[-][0-9]+""".toRegex())) {
                 val list = raw.split(".").map { it.toInt() }
                 if (list.size == 4) {
                     return VersionName(list[0], list[1], list[2], null, list[3])
                 }
-            } else if (raw.matches("""[0-9]+[.][0-9]+[.][0-9]+[.][a-zA-Z]+""".toRegex())) {
+            } else if (raw.matches("""[0-9]+[.][0-9]+[.][0-9]+[-][a-zA-Z]+""".toRegex())) {
                 val list = raw.split(".")
                 if (list.size == 4) {
                     return VersionName(
@@ -81,7 +81,7 @@ data class VersionName(
                         list[3], null
                     )
                 }
-            } else if (raw.matches("""[0-9]+[.][0-9]+[.][0-9]+[.][a-zA-Z]+[0-9]+""".toRegex())) {
+            } else if (raw.matches("""[0-9]+[.][0-9]+[.][0-9]+[-][a-zA-Z]+[0-9]+""".toRegex())) {
                 val list = raw.split(".")
                 if (list.size == 4) {
                     val extraName = list[3].split("""[0-9]+""".toRegex())[0]
