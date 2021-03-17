@@ -31,6 +31,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/ic_pin"
-        android:contentDescription="@string/pin"/>
+        android:contentDescription="@string/clip__pin_item"/>
 
 </dev.patrickgold.florisboard.ime.clip.ClipboardHistoryItemView>

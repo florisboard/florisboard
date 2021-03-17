@@ -212,11 +212,11 @@ class EditorInstance private constructor(
 
 
     /**
-     * Commits the given [ClipData]. If the clip data is text (incl. HTML), it delegates to [commitText].
+     * Commits the given [ClipboardItem]. If the clip data is text (incl. HTML), it delegates to [commitText].
      * If the item has a content URI (and the EditText supports it), the item is committed as rich data.
      * This allows for committing (e.g) images.
      *
-     * @param data The ClipData to commit
+     * @param item The ClipboardItem to commit
      * @return True on success, false if something went wrong.
      */
     fun commitClipboardItem(item: ClipboardItem): Boolean {
@@ -229,6 +229,7 @@ class EditorInstance private constructor(
                     null
                 )
                 val ic = inputConnection ?: return false
+                ic.finishComposingText()
                 var flags = 0
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
                     flags = flags or InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION

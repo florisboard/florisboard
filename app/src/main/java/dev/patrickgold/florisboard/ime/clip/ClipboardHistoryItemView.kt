@@ -2,11 +2,10 @@ package dev.patrickgold.florisboard.ime.clip
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.theme.Theme
@@ -51,7 +50,13 @@ class ClipboardHistoryItemView: ConstraintLayout, ThemeManager.OnThemeUpdatedLis
 
     private fun onClickItem(){
         val position = ClipboardInputManager.getInstance().getPositionOfView(this)
-        FlorisClipboardManager.getInstance().pasteItem(position)
+        val instance = FlorisClipboardManager.getInstance()
+        val canPaste = instance.canBePasted(instance.peekHistoryOrPin(position))
+        if (canPaste) {
+            instance.pasteItem(position)
+        }else {
+            Toast.makeText(context, context.getString(R.string.clip__cant_paste), Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun setPinned() {

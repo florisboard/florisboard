@@ -142,7 +142,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         get() = if (prefHelper.clipboard.enableInternal) {
             current
         } else {
-            systemClipboardManager.primaryClip?.let { ClipboardItem.fromClipData(it) }
+            systemClipboardManager.primaryClip?.let { ClipboardItem.fromClipData(it, false) }
         }
 
     fun peekHistory(index: Int): ClipboardItem? {
@@ -177,12 +177,12 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
                 // In the event that the internal clipboard is enabled, sync to internal clipboard is enabled
                 // and the item is not already in internal clipboard, add it.
                 if (prefHelper.clipboard.syncToFloris && !isEqual) {
-                    addNewClip(ClipboardItem.fromClipData(it))
+                    addNewClip(ClipboardItem.fromClipData(it, true))
                 }
             } else if (prefHelper.clipboard.enableHistory) {
                 // in the event history is enabled, and it should be updated it is updated
                 if (shouldUpdateHistory) {
-                    updateHistory(ClipboardItem.fromClipData(it))
+                    updateHistory(ClipboardItem.fromClipData(it, false))
                 } else {
                     shouldUpdateHistory = true
                 }
@@ -344,4 +344,14 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         FlorisBoard.getInstance().activeEditorInstance.commitClipboardItem(item)
     }
 
+    /**
+     * Returns true if the editor can accept the clip item, else false.
+     */
+    fun canBePasted(clipItem: ClipboardItem?): Boolean {
+        if (clipItem == null) return false
+
+        return FlorisBoard.getInstance().activeEditorInstance.contentMimeTypes?.any {
+            clipItem.mimeTypes.contains(it)
+        } == true || clipItem.mimeTypes.contains("text/plain")
+    }
 }

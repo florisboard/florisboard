@@ -3,13 +3,9 @@ package dev.patrickgold.florisboard.ime.clip.provider
 import android.content.ClipData
 import android.content.ContentValues
 import android.net.Uri
-import android.os.Bundle
 import android.provider.BaseColumns
 import androidx.room.*
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import org.json.JSONArray
-import org.json.JSONTokener
-import timber.log.Timber
 import java.io.Closeable
 
 
@@ -90,9 +86,12 @@ data class ClipboardItem(
 
     companion object {
         /**
-         * Returns a new ClipboardItem, with a URI belonging to [FlorisContentProvider].
+         * Returns a new ClipboardItem based on a ClipData
+         *
+         * @param data The ClipData to clone.
+         * @param cloneUri Whether to store the image using [FlorisContentProvider].
          */
-        fun fromClipData(data: ClipData) : ClipboardItem {
+        fun fromClipData(data: ClipData, cloneUri: Boolean) : ClipboardItem {
 
             val type = when {
                 data.getItemAt(0)?.uri != null -> ItemType.IMAGE
@@ -101,7 +100,7 @@ data class ClipboardItem(
             }!!
 
             val uri = if (type == ItemType.IMAGE) {
-                    if (data.getItemAt(0).uri.authority == FlorisContentProvider.CONTENT_URI.authority){
+                    if (data.getItemAt(0).uri.authority == FlorisContentProvider.CONTENT_URI.authority || !cloneUri){
                         data.getItemAt(0).uri
                     }else {
                         val values = ContentValues().apply{

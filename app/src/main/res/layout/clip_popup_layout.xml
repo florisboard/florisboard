@@ -19,7 +19,7 @@
             android:scaleY="0.8"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_pin"
-            android:contentDescription="@string/clip_pin_item" />
+            android:contentDescription="@string/clip__pin_item" />
 
         <Space
             android:layout_width="10dp"
@@ -28,7 +28,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/clip_pin_item"
+            android:text="@string/clip__pin_item"
             android:id="@+id/pin_clip_item_text"
             tools:layout_editor_absoluteY="3dp" />
 
@@ -52,7 +52,7 @@
             android:scaleY="0.8"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_delete"
-            android:contentDescription="@string/clip_delete_item" />
+            android:contentDescription="@string/clip__delete_item" />
 
         <Space
             android:layout_width="10dp"
@@ -61,7 +61,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/clip_delete_item"
+            android:text="@string/clip__delete_item"
             android:id="@+id/remove_from_history_text"
             tools:layout_editor_absoluteY="3dp" />
 
@@ -86,7 +86,7 @@
             android:scaleY="0.8"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_content_paste"
-            android:contentDescription="@string/clip_paste_item" />
+            android:contentDescription="@string/clip__paste_item" />
 
         <Space
             android:layout_width="10dp"
@@ -95,7 +95,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/clip_paste_item"
+            android:text="@string/clip__paste_item"
             android:id="@+id/paste_clip_item_text"
             tools:layout_editor_absoluteY="3dp" />
 

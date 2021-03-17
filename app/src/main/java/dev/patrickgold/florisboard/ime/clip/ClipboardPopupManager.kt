@@ -53,7 +53,7 @@ class ClipboardPopupManager(private val keyboardView: ClipboardHistoryView,
         val pinned = FlorisClipboardManager.getInstance().isPinned(pos)
 
         if (pinned) {
-            pinButton.findViewById<TextView>(R.id.pin_clip_item_text).text = view.context.getString(R.string.clip_unpin_item)
+            pinButton.findViewById<TextView>(R.id.pin_clip_item_text).text = view.context.getString(R.string.clip__unpin_item)
         }
 
         val delete = popupView.findViewById<LinearLayout>(R.id.remove_from_history)
