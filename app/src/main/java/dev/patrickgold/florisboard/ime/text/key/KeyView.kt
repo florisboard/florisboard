@@ -583,7 +583,6 @@ class KeyView(
                 // such gore. checks
                 // 1. has a clipboard item
                 // 2. the clipboard item has any of the supported mime types of the editor OR is plain text.
-                // FIXME: proper mime type matching.
                  florisboard?.florisClipboardManager?.hasPrimaryClip() == true &&
                     florisboard.activeEditorInstance.contentMimeTypes?.any{
                         florisboard.florisClipboardManager!!.primaryClip?.mimeTypes?.contains(it) ?: false

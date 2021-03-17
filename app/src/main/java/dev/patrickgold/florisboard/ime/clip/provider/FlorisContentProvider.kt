@@ -7,13 +7,11 @@ import android.content.UriMatcher
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
 import android.os.ParcelFileDescriptor
 import androidx.room.Room
+import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import timber.log.Timber
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
+import java.util.concurrent.ExecutorService
 
 /**
  * Allows apps to access images on the clipboard.
@@ -24,7 +22,7 @@ import java.util.concurrent.Executors
 class FlorisContentProvider : ContentProvider() {
     private lateinit var fileUriDao: FileUriDao
     private val mimeTypes: HashMap<Long, Array<String>> = hashMapOf()
-    private lateinit var executor:Executor
+    private lateinit var executor: ExecutorService
 
     override fun onCreate(): Boolean {
         instance = this
@@ -42,7 +40,7 @@ class FlorisContentProvider : ContentProvider() {
             FileUriDatabase::class.java, "fileuridb"
         ).build().fileUriDao()
 
-        executor = Executors.newSingleThreadExecutor()
+        executor = FlorisBoard.getInstance().asyncExecutor
         for (fileUri in fileUriDao.getAll()) {
             mimeTypes[fileUri.fileName] = fileUri.mimeTypes
         }

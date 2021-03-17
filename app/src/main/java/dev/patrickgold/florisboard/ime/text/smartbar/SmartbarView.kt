@@ -304,7 +304,6 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
             florisboard?.activeEditorInstance?.isPrivateMode == false ) {
 
                 // only suggest if mime types make sense.
-                // FIXME: add proper mime type matching with wildcards
                 shouldSuggestClipboardContents = florisboard.activeEditorInstance.contentMimeTypes?.any {
                 florisboard.florisClipboardManager!!.primaryClip?.mimeTypes?.contains(it) ?: false
             } == true

@@ -13,7 +13,6 @@ import dev.patrickgold.florisboard.util.postAtScheduledRate
 import java.io.Closeable
 import java.util.*
 import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 import kotlin.collections.ArrayDeque
 import kotlin.collections.ArrayList
 
@@ -247,7 +246,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         handler = Handler(Looper.getMainLooper())
         prefHelper
         handler.postAtScheduledRate(0, INTERVAL, cleanUpClipboard)
-        executor = Executors.newSingleThreadExecutor()
+        executor = FlorisBoard.getInstance().asyncExecutor
         executor.execute {
             pinsDao = PinnedItemsDatabase.getInstance().clipboardItemDao()
             pinsDao.getAll().toCollection(this.pins)

@@ -60,6 +60,9 @@ import dev.patrickgold.florisboard.util.*
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
+import java.util.concurrent.Executor
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 /**
  * Variable which holds the current [FlorisBoard] instance. To get this instance from another
@@ -129,6 +132,8 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         mediaInputManager = MediaInputManager.getInstance()
         clipInputManager = ClipboardInputManager.getInstance()
     }
+
+    lateinit var asyncExecutor: ExecutorService
 
     companion object {
         private const val IME_ID: String = "dev.patrickgold.florisboard/.ime.core.FlorisBoard"
@@ -208,7 +213,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
             )
         }*/
         Timber.i("onCreate()")
-
         serviceLifecycleDispatcher.onServicePreSuperOnCreate()
 
         imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
@@ -228,6 +232,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
 
         AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
 
+        asyncExecutor = Executors.newSingleThreadExecutor()
         florisClipboardManager = FlorisClipboardManager.getInstance()
         florisClipboardManager!!.initialize(context)
         florisClipboardManager?.addPrimaryClipChangedListener(this)
