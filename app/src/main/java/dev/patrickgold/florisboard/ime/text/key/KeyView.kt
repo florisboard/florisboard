@@ -35,6 +35,7 @@ import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.view.children
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.ImeOptions
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
@@ -579,16 +580,12 @@ class KeyView(
             KeyCode.CLIPBOARD_CUT -> (florisboard != null
                     && florisboard.activeEditorInstance.selection.isSelectionMode
                     && !florisboard.activeEditorInstance.isRawInputEditor)
-            KeyCode.CLIPBOARD_PASTE -> {
+            KeyCode.CLIPBOARD_PASTE -> (
                 // such gore. checks
                 // 1. has a clipboard item
                 // 2. the clipboard item has any of the supported mime types of the editor OR is plain text.
-                 florisboard?.florisClipboardManager?.hasPrimaryClip() == true &&
-                    florisboard.activeEditorInstance.contentMimeTypes?.any{
-                        florisboard.florisClipboardManager!!.primaryClip?.mimeTypes?.contains(it) ?: false
-                    } == true ||
-                        florisboard?.florisClipboardManager!!.primaryClip?.mimeTypes?.contains("text/plain") == true
-            }
+                florisboard?.florisClipboardManager?.canBePasted(florisboard.florisClipboardManager?.primaryClip)
+            ) == true
             KeyCode.CLIPBOARD_SELECT_ALL -> {
                 florisboard?.activeEditorInstance?.isRawInputEditor == false
             }

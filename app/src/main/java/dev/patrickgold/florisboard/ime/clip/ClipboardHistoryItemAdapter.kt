@@ -13,7 +13,6 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clip.provider.ItemType
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import timber.log.Timber
 
 class ClipboardHistoryItemAdapter(
         private val dataSet: ArrayDeque<FlorisClipboardManager.TimedClipData>,
@@ -52,14 +51,12 @@ class ClipboardHistoryItemAdapter(
                 val view = LayoutInflater.from(viewGroup.context)
                     .inflate(R.layout.clipboard_history_item_image, viewGroup, false)
 
-                Timber.d("Inflating image")
                 ClipboardHistoryImageViewHolder(view)
             }
             ItemType.TEXT.value  -> {
                 val view = LayoutInflater.from(viewGroup.context)
                     .inflate(R.layout.clipboard_history_item_text, viewGroup, false)
 
-                Timber.d("inflating text")
                 ClipboardHistoryTextViewHolder(view)
             }
             else -> null

@@ -10,11 +10,11 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.cancelAll
 import dev.patrickgold.florisboard.util.postAtScheduledRate
+import timber.log.Timber
 import java.io.Closeable
 import java.util.*
 import java.util.concurrent.ExecutorService
 import kotlin.collections.ArrayDeque
-import kotlin.collections.ArrayList
 
 /**
  * [FlorisClipboardManager] manages the clipboard and clipboard history.
@@ -70,6 +70,31 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
                 instance = FlorisClipboardManager()
             }
             return instance!!
+        }
+        /**
+         * Taken from ClipboardDescription.java from the AOSP
+         *
+         * Helper to compare two MIME types, where one may be a pattern.
+         * @param concreteType A fully-specified MIME type.
+         * @param desiredType A desired MIME type that may be a pattern such as * / *.
+         * @return Returns true if the two MIME types match.
+         */
+        fun compareMimeTypes(concreteType: String, desiredType: String): Boolean {
+            val typeLength = desiredType.length
+            if (typeLength == 3 && desiredType == "*/*") {
+                return true
+            }
+            val slashpos = desiredType.indexOf('/')
+            if (slashpos > 0) {
+                if (typeLength == slashpos + 2 && desiredType[slashpos + 1] == '*') {
+                    if (desiredType.regionMatches(0, concreteType, 0, slashpos + 1)) {
+                        return true
+                    }
+                } else if (desiredType == concreteType) {
+                    return true
+                }
+            }
+            return false
         }
     }
 
@@ -280,7 +305,8 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         clipInputManager.notifyItemChanged(0)
 
         executor.execute {
-            pinsDao.insert(pin.data)
+            val uid = pinsDao.insert(pin.data)
+            pin.data.uid = uid
         }
     }
 
@@ -328,10 +354,15 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     fun removeClip(pos: Int) {
         when {
             pos < pins.size -> {
-                pins.removeAt(pos)
+                val item = pins.removeAt(pos)
+                executor.execute {
+                    Timber.d("removing pin")
+                    pinsDao.delete(item)
+                }
+                item.close()
             }
             else -> {
-                history.removeAt(pos - pins.size)
+                history.removeAt(pos - pins.size).data.close()
             }
         }
         val clipboardInputManager = ClipboardInputManager.getInstance()
@@ -350,8 +381,14 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     fun canBePasted(clipItem: ClipboardItem?): Boolean {
         if (clipItem == null) return false
 
-        return FlorisBoard.getInstance().activeEditorInstance.contentMimeTypes?.any {
-            clipItem.mimeTypes.contains(it)
-        } == true || clipItem.mimeTypes.contains("text/plain")
+        return clipItem.mimeTypes.contains("text/plain") || FlorisBoard.getInstance().activeEditorInstance.contentMimeTypes?.any { editorType ->
+            clipItem.mimeTypes.any { clipType ->
+                if (editorType != null) {
+                    compareMimeTypes(clipType, editorType)
+                }else { false }
+            }
+        } == true
     }
+
+
 }

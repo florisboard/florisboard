@@ -31,7 +31,7 @@ enum class ItemType(val value: Int) {
 @Entity(tableName = "pins")
 data class ClipboardItem(
     /** Only used for pins */
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name=BaseColumns._ID, index=true) val uid: Long?,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name=BaseColumns._ID, index=true) var uid: Long?,
     val type: ItemType,
     val uri: Uri?,
     val text: String?,
@@ -165,7 +165,7 @@ interface PinnedClipboardItemDao {
     fun getAll(): List<ClipboardItem>
 
     @Insert
-    fun insert(vararg items: ClipboardItem)
+    fun insert(item: ClipboardItem) : Long
 
     @Delete
     fun delete(item: ClipboardItem)
