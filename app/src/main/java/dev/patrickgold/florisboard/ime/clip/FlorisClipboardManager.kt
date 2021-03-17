@@ -41,7 +41,7 @@ import kotlin.collections.ArrayList
 class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryClipChangedListener, Closeable {
 
     private lateinit var pinsDao: PinnedClipboardItemDao
-    private lateinit var executor: ExecutorService
+    lateinit var executor: ExecutorService
 
     // Using ArrayDeque because it's "technically" the correct data structure (I think).
     // Newest stored first, oldest stored last.

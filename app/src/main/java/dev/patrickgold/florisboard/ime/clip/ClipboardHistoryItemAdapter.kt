@@ -1,8 +1,12 @@
 package dev.patrickgold.florisboard.ime.clip
 
 import android.graphics.drawable.Drawable
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -95,11 +99,18 @@ class ClipboardHistoryItemAdapter(
 
 
                 viewHolder.imgView.clipToOutline = true
-                val resolver = FlorisBoard.getInstance().context.contentResolver
-                val inputStream = resolver.openInputStream(uri!!)
+                viewHolder.imgView.visibility = GONE
+                // For very large images, this can take a bit
+                FlorisClipboardManager.getInstance().executor.execute {
+                    val resolver = FlorisBoard.getInstance().context.contentResolver
+                    val inputStream = resolver.openInputStream(uri!!)
 
-                val drawable = Drawable.createFromStream(inputStream, "clipboard URI")
-                viewHolder.imgView.setImageDrawable(drawable)
+                    val drawable = Drawable.createFromStream(inputStream, "clipboard URI")
+                    viewHolder.itemView.post {
+                        viewHolder.imgView.setImageDrawable(drawable)
+                        viewHolder.imgView.visibility = VISIBLE
+                    }
+                }
             }
         }
     }

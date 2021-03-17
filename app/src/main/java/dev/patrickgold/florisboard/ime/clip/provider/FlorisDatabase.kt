@@ -25,7 +25,13 @@ enum class ItemType(val value: Int) {
 }
 
 
-
+/**
+ * Represents an item on the clipboard.
+ * The URI stored belongs to FlorisContentProvider, not whatever app copied the image
+ *
+ * If type == ItemType.IMAGE there must be a uri set
+ * if type == ItemType.TEXT there must be a text set
+ */
 @Entity(tableName = "pins")
 data class ClipboardItem(
     /** Only used for pins */
@@ -34,6 +40,10 @@ data class ClipboardItem(
     val uri: Uri?,
     val text: String?,
     val mimeTypes: Array<String>) : Closeable{
+
+    /**
+     * Creates a new ClipData which has the same contents as this.
+     */
     fun toClipData(): ClipData {
         return when (type) {
             ItemType.IMAGE -> {
@@ -45,6 +55,9 @@ data class ClipboardItem(
         }
     }
 
+    /**
+     * Instructs the content provider to delete this URI. If not an image, is a noop
+     */
     override fun close() {
         if (type == ItemType.IMAGE) {
             FlorisBoard.getInstance().context.contentResolver.delete(this.uri!!, null, null)
@@ -77,7 +90,7 @@ data class ClipboardItem(
 
     companion object {
         /**
-         * Returns a new ClipboardItem, resolving the URI.
+         * Returns a new ClipboardItem, with a URI belonging to [FlorisContentProvider].
          */
         fun fromClipData(data: ClipData) : ClipboardItem {
 
@@ -105,8 +118,6 @@ data class ClipboardItem(
             (0 until data.description.mimeTypeCount).forEach {
                     mimeTypes[it] = data.description.getMimeType(it)
             }
-
-            Timber.d("mimetypes: ${mimeTypes.size} ${mimeTypes.asList()}")
 
             return ClipboardItem(null, type, uri, text, mimeTypes)
         }

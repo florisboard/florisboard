@@ -15,9 +15,13 @@ import timber.log.Timber
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-
+/**
+ * Allows apps to access images on the clipboard.
+ *
+ * This is sometimes called by the UI thread, so all functions are non blocking.
+ * Database accesses are performed async.
+ */
 class FlorisContentProvider : ContentProvider() {
-
     private lateinit var fileUriDao: FileUriDao
     private val mimeTypes: HashMap<Long, Array<String>> = hashMapOf()
     private lateinit var executor:Executor

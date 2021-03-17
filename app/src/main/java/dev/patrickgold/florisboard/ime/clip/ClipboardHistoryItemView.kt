@@ -26,7 +26,7 @@ class ClipboardHistoryItemView: ConstraintLayout, ThemeManager.OnThemeUpdatedLis
         popupManager = ClipboardPopupManager(keyboardView, FlorisBoard.getInstance().popupLayerView, this)
 
         setOnClickListener{
-            onClickItem(this)
+            onClickItem()
         }
 
         setOnLongClickListener{
@@ -49,11 +49,9 @@ class ClipboardHistoryItemView: ConstraintLayout, ThemeManager.OnThemeUpdatedLis
         return true
     }
 
-    private fun onClickItem(view: View){
-        val florisBoard = FlorisBoard.getInstance()
-        val position = florisBoard.clipInputManager.getPositionOfView(view)
-        florisBoard.florisClipboardManager!!
-            .changeCurrent(florisBoard.florisClipboardManager!!.peekHistoryOrPin(position), false)
+    private fun onClickItem(){
+        val position = ClipboardInputManager.getInstance().getPositionOfView(this)
+        FlorisClipboardManager.getInstance().pasteItem(position)
     }
 
     fun setPinned() {
