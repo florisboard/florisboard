@@ -1,0 +1,2 @@
+- Stub release for initialing beta-track properly
+- Release code is identical to v0.3.9
