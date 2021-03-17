@@ -53,7 +53,7 @@ class ClipboardHistoryItemView: ConstraintLayout, ThemeManager.OnThemeUpdatedLis
         val florisBoard = FlorisBoard.getInstance()
         val position = florisBoard.clipInputManager.getPositionOfView(view)
         florisBoard.florisClipboardManager!!
-            .changeCurrent(florisBoard.florisClipboardManager!!.peekHistoryOrPin(position))
+            .changeCurrent(florisBoard.florisClipboardManager!!.peekHistoryOrPin(position), false)
     }
 
     fun setPinned() {

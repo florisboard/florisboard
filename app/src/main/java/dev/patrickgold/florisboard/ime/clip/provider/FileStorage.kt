@@ -53,6 +53,7 @@ class FileStorage private constructor() {
     }
 
     fun deleteById(id: Long) {
+        Timber.d("Cleaning up $id")
         val file = File(FlorisBoard.getInstance().filesDir, id.toString())
         file.delete()
     }

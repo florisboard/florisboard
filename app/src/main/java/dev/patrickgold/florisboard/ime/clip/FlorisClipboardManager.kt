@@ -5,15 +5,11 @@ import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Handler
 import android.os.Looper
-import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
-import dev.patrickgold.florisboard.ime.clip.provider.ItemType
-import dev.patrickgold.florisboard.ime.clip.provider.PinnedClipboardItemDao
-import dev.patrickgold.florisboard.ime.clip.provider.PinnedItemsDatabase
+import dev.patrickgold.florisboard.ime.clip.provider.*
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.util.cancelAll
 import dev.patrickgold.florisboard.util.postAtScheduledRate
-import timber.log.Timber
 import java.io.Closeable
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -45,7 +41,7 @@ import kotlin.collections.ArrayList
 class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryClipChangedListener, Closeable {
 
     private lateinit var pinsDao: PinnedClipboardItemDao
-    private lateinit var executor:  ExecutorService
+    private lateinit var executor: ExecutorService
 
     // Using ArrayDeque because it's "technically" the correct data structure (I think).
     // Newest stored first, oldest stored last.
@@ -79,14 +75,14 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     }
 
 
-    fun updateHistory(newData: ClipboardItem){
+    fun updateHistory(newData: ClipboardItem) {
         val clipboardPrefs = prefHelper.clipboard
 
         if (clipboardPrefs.enableHistory) {
             if (clipboardPrefs.limitHistorySize) {
                 if (history.size == clipboardPrefs.maxHistorySize) {
                     ClipboardInputManager.getInstance().notifyItemRemoved(history.size - 1)
-                    history.removeLast()
+                    history.removeLast().data.close()
                 }
             }
 
@@ -107,12 +103,13 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     /**
      * Changes current clipboard item. WITHOUT updating the history.
      */
-    fun changeCurrent(newData: ClipboardItem) {
+    fun changeCurrent(newData: ClipboardItem, closePrevious: Boolean) {
         if (prefHelper.clipboard.enableInternal) {
+            if (closePrevious) current?.close()
             current = newData
             val isEqual = when (newData.type) {
-                ItemType.TEXT-> newData.text == systemClipboardManager.primaryClip?.getItemAt(0)?.text
-                ItemType.IMAGE-> newData.uri == systemClipboardManager.primaryClip?.getItemAt(0)?.uri
+                ItemType.TEXT -> newData.text == systemClipboardManager.primaryClip?.getItemAt(0)?.text
+                ItemType.IMAGE -> newData.uri == systemClipboardManager.primaryClip?.getItemAt(0)?.uri
             }
             if (prefHelper.clipboard.syncToSystem && !isEqual)
                 systemClipboardManager.setPrimaryClip(newData.toClipData())
@@ -130,7 +127,8 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      */
     fun addNewClip(newData: ClipboardItem) {
         updateHistory(newData)
-        changeCurrent(newData)
+        // If history is disabled, this new item will replace the old one and hence should be closed.
+        changeCurrent(newData, !prefHelper.clipboard.enableHistory)
     }
 
     /**
@@ -164,14 +162,15 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      * Called by system clipboard when the contents are changed
      */
     override fun onPrimaryClipChanged() {
-        if(systemClipboardManager.primaryClip?.getItemAt(0)?.text == null &&
-            systemClipboardManager.primaryClip?.getItemAt(0)?.uri == null){
+        // Run on async thread to avoid blocking.
+        if (systemClipboardManager.primaryClip?.getItemAt(0)?.text == null &&
+            systemClipboardManager.primaryClip?.getItemAt(0)?.uri == null) {
             return
         }
 
         val isEqual = when (primaryClip?.type) {
-            ItemType.TEXT-> primaryClip?.text == systemClipboardManager.primaryClip?.getItemAt(0)?.text
-            ItemType.IMAGE-> primaryClip?.uri == systemClipboardManager.primaryClip?.getItemAt(0)?.uri
+            ItemType.TEXT -> primaryClip?.text == systemClipboardManager.primaryClip?.getItemAt(0)?.text
+            ItemType.IMAGE -> primaryClip?.uri == systemClipboardManager.primaryClip?.getItemAt(0)?.uri
             null -> false
         }
         systemClipboardManager.primaryClip?.let {
@@ -217,6 +216,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      * @param context Required to register as an onPrimaryClipChangedListener of ClipboardManager
      */
     fun initialize(context: Context) {
+
         this.systemClipboardManager = (context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager)
         systemClipboardManager.addPrimaryClipChangedListener(this)
 
@@ -239,7 +239,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
                 }
             }
             for (i in 0 until numToPop) {
-                history.removeLast()
+                history.removeLast().data.close()
             }
             ClipboardInputManager.getInstance().notifyItemRangeRemoved(pins.size + history.size, numToPop)
         }
@@ -251,6 +251,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         executor.execute {
             pinsDao = PinnedItemsDatabase.getInstance().clipboardItemDao()
             pinsDao.getAll().toCollection(this.pins)
+            FlorisContentProvider.getInstance().initIfNotAlready()
         }
     }
 
@@ -264,6 +265,9 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
 
         handler.postDelayed({
             val size = history.size
+            for (item in history) {
+                item.data.close()
+            }
             history.clear()
             clipInputManager.notifyItemRangeRemoved(pins.size, size)
         }, delay)
@@ -307,7 +311,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         if (clipboardPrefs.limitHistorySize) {
             if (history.size == clipboardPrefs.maxHistorySize) {
                 ClipboardInputManager.getInstance().notifyItemRemoved(history.size - 1)
-                history.removeLast()
+                history.removeLast().data.close()
             }
         }
 

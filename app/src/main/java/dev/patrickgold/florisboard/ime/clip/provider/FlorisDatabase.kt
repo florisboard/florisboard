@@ -3,12 +3,14 @@ package dev.patrickgold.florisboard.ime.clip.provider
 import android.content.ClipData
 import android.content.ContentValues
 import android.net.Uri
+import android.os.Bundle
 import android.provider.BaseColumns
 import androidx.room.*
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import org.json.JSONArray
 import org.json.JSONTokener
 import timber.log.Timber
+import java.io.Closeable
 
 
 enum class ItemType(val value: Int) {
@@ -31,8 +33,7 @@ data class ClipboardItem(
     val type: ItemType,
     val uri: Uri?,
     val text: String?,
-    val mimeTypes: Array<String>
-){
+    val mimeTypes: Array<String>) : Closeable{
     fun toClipData(): ClipData {
         return when (type) {
             ItemType.IMAGE -> {
@@ -41,6 +42,12 @@ data class ClipboardItem(
             ItemType.TEXT -> {
                 ClipData.newPlainText("Clipboard data", text)
             }
+        }
+    }
+
+    override fun close() {
+        if (type == ItemType.IMAGE) {
+            FlorisBoard.getInstance().context.contentResolver.delete(this.uri!!, null, null)
         }
     }
 

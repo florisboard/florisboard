@@ -23,12 +23,11 @@ class FlorisContentProvider : ContentProvider() {
     private lateinit var executor:Executor
 
     override fun onCreate(): Boolean {
-        Timber.d("oncreate?")
-
+        instance = this
         return true
     }
 
-    private fun initIfNotAlready(){
+    fun initIfNotAlready(){
         if (this::fileUriDao.isInitialized){
             return
         }
@@ -62,8 +61,6 @@ class FlorisContentProvider : ContentProvider() {
     }
 
     override fun getType(uri: Uri): String {
-        initIfNotAlready()
-        Timber.d("HAVE ${mimeTypes}")
         return when (matcher.match(uri)) {
             CLIP_ITEM -> mimeTypes.getOrElse(ContentUris.parseId(uri), {throw IllegalArgumentException("Don't have this item!")})[0]
             CLIPS_TABLE -> "vnd.android.cursor.dir/$AUTHORITY.clip"
@@ -75,7 +72,6 @@ class FlorisContentProvider : ContentProvider() {
         return openFileHelper(uri, mode)
     }
     override fun insert(uri: Uri, values: ContentValues?): Uri {
-        initIfNotAlready()
         when (matcher.match(uri)){
             CLIPS_TABLE -> {
                 val id = FileStorage.getInstance().cloneURI(Uri.parse(values?.getAsString("uri")))
@@ -95,7 +91,6 @@ class FlorisContentProvider : ContentProvider() {
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
-        initIfNotAlready()
         when (matcher.match(uri)){
             CLIP_ITEM -> {
                 val id = ContentUris.parseId(uri)
