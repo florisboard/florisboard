@@ -194,7 +194,8 @@ class KeyView(
      */
     fun getComputedLetter(
         keyData: KeyData = data,
-        caps: Boolean = florisboard?.textInputManager?.caps ?: false,
+        caps: Boolean = florisboard?.textInputManager?.caps ?: false &&
+            florisboard?.textInputManager?.getActiveKeyboardMode() == KeyboardMode.CHARACTERS,
         subtype: Subtype = florisboard?.activeSubtype ?: Subtype.DEFAULT
     ): String {
         return if (caps && keyData is FlorisKeyData && keyData.shift != null) {
