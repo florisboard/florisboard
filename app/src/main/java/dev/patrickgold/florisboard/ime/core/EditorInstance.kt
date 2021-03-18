@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.core
 
 import android.content.ClipData
 import android.content.ClipDescription
+import android.content.Intent
 import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.SystemClock
@@ -233,6 +234,8 @@ class EditorInstance private constructor(
                 var flags = 0
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
                     flags = flags or InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
+                }else {
+                    FlorisBoard.getInstance().context.grantUriPermission(editorInfo.packageName, item.uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 }
                 InputConnectionCompat.commitContent(ic, editorInfo, inputContentInfo, flags, null)
             }

@@ -1,9 +1,6 @@
 package dev.patrickgold.florisboard.ime.clip.provider
 
-import android.content.ContentProvider
-import android.content.ContentUris
-import android.content.ContentValues
-import android.content.UriMatcher
+import android.content.*
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
@@ -46,7 +43,6 @@ class FlorisContentProvider : ContentProvider() {
         }
     }
 
-
     override fun query(
         uri: Uri,
         projection: Array<out String>?,
@@ -64,7 +60,7 @@ class FlorisContentProvider : ContentProvider() {
 
     override fun getType(uri: Uri): String {
         return when (matcher.match(uri)) {
-            CLIP_ITEM -> mimeTypes.getOrElse(ContentUris.parseId(uri), {throw IllegalArgumentException("Don't have this item!")})[0]
+            CLIP_ITEM -> mimeTypes.getOrElse(ContentUris.parseId(uri), { throw IllegalArgumentException("Don't have this item!") })[0]
             CLIPS_TABLE -> "vnd.android.cursor.dir/$AUTHORITY.clip"
             else -> throw IllegalArgumentException("Don't know what this is $uri")
         }
@@ -98,6 +94,7 @@ class FlorisContentProvider : ContentProvider() {
                 val id = ContentUris.parseId(uri)
                 FileStorage.getInstance().deleteById(id)
                 mimeTypes.remove(id)
+                context?.revokeUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 executor.execute {
                     fileUriDao.delete(id)
                 }
