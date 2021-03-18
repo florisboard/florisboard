@@ -99,15 +99,20 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     }
 
 
+    /**
+     * Adds a new item to the clipboard history (if enabled).
+     */
     fun updateHistory(newData: ClipboardItem) {
         val clipboardPrefs = prefHelper.clipboard
 
         if (clipboardPrefs.enableHistory) {
             if (clipboardPrefs.limitHistorySize) {
-                if (history.size == clipboardPrefs.maxHistorySize) {
-                    ClipboardInputManager.getInstance().notifyItemRemoved(history.size - 1)
+                var numRemoved = 0
+                while (history.size >= clipboardPrefs.maxHistorySize) {
+                    numRemoved += 1
                     history.removeLast().data.close()
                 }
+                ClipboardInputManager.getInstance().notifyItemRangeRemoved(history.size, numRemoved)
             }
 
 
@@ -334,10 +339,12 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
 
         val clipboardPrefs = prefHelper.clipboard
         if (clipboardPrefs.limitHistorySize) {
-            if (history.size == clipboardPrefs.maxHistorySize) {
-                ClipboardInputManager.getInstance().notifyItemRemoved(history.size - 1)
+            var numRemoved = 0
+            while (history.size >= clipboardPrefs.maxHistorySize) {
+                numRemoved += 1
                 history.removeLast().data.close()
             }
+            ClipboardInputManager.getInstance().notifyItemRangeRemoved(history.size, numRemoved)
         }
 
         val timed = TimedClipData(item, System.currentTimeMillis())
