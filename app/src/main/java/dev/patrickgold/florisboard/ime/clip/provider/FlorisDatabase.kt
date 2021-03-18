@@ -130,7 +130,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun stringFromUri(value: Uri?): String? {
+    fun stringFromUri(value: Uri?): String {
         return value.toString()
     }
 

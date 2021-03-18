@@ -35,7 +35,7 @@ object LocaleUtils {
         }
     }
 
-    class JsonAdapter() {
+    class JsonAdapter {
         @FromJson
         fun fromJson(raw: String): Locale {
             return stringToLocale(raw)

@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.core
 
-import android.content.ClipData
 import android.content.ClipDescription
 import android.content.Intent
 import android.inputmethodservice.InputMethodService

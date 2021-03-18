@@ -26,7 +26,7 @@ class NgramNodeTest {
 
     @Test
     fun findWord_returnsCorrectNode_forExistingWord() {
-        val expected = ngramTreeToBeTested.higherOrderChildren['t']?.sameOrderChildren?.get('h')?.sameOrderChildren?.get('e')
+        val expected = ngramTreeToBeTested.higherOrderChildren['t'].sameOrderChildren.get('h').sameOrderChildren.get('e')
         val actual = ngramTreeToBeTested.findWord("the")
         assertThat(actual, `is`(expected))
     }
@@ -50,7 +50,7 @@ class NgramNodeTest {
     @Test
     fun listAllSameOrderWords_returnsCorrectList_forGivenPrefix() {
         val words = StagedSuggestionList<String, Int>(4)
-        ngramTreeToBeTested.higherOrderChildren['t']?.listAllSameOrderWords(words, true)
+        ngramTreeToBeTested.higherOrderChildren['t'].listAllSameOrderWords(words, true)
         assertThat(
             words,
             `is`(StagedSuggestionList<String, Int>(4).apply {
@@ -63,5 +63,4 @@ class NgramNodeTest {
     }
 }
 
-class FlorisLanguageModelTest {
-}
+class FlorisLanguageModelTest

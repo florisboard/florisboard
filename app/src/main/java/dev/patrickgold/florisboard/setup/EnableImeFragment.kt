@@ -33,7 +33,7 @@ class EnableImeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = SetupFragmentEnableImeBinding.inflate(inflater, container, false)
         binding.languageAndInputButton.setOnClickListener {
             val intent = Intent()

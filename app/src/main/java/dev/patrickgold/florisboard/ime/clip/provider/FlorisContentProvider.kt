@@ -2,12 +2,12 @@ package dev.patrickgold.florisboard.ime.clip.provider
 
 import android.content.*
 import android.database.Cursor
-import android.database.MatrixCursor
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import androidx.room.Room
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import timber.log.Timber
+import java.io.File
 import java.util.concurrent.ExecutorService
 
 /**
@@ -49,13 +49,9 @@ class FlorisContentProvider : ContentProvider() {
         selection: String?,
         selectionArgs: Array<out String>?,
         sortOrder: String?
-    ): Cursor {
-        val id = ContentUris.parseId(uri)
-        val cursor = MatrixCursor(arrayOf("_data"), 1)
-
-        cursor.addRow(arrayOf(FileStorage.getInstance().getAddress(id)))
-        cursor.setNotificationUri(context?.contentResolver, uri)
-        return cursor
+    ): Cursor? {
+        // just return nothing, nothing should call this function at all.
+        return null
     }
 
     override fun getType(uri: Uri): String {
@@ -67,8 +63,13 @@ class FlorisContentProvider : ContentProvider() {
     }
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor {
-        return openFileHelper(uri, mode)
+        val id = ContentUris.parseId(uri)
+        val path = File(FileStorage.getInstance().getAddress(id))
+
+        // Nothing has permission to write anyway.
+        return ParcelFileDescriptor.open(path, ParcelFileDescriptor.MODE_READ_ONLY)
     }
+
     override fun insert(uri: Uri, values: ContentValues?): Uri {
         when (matcher.match(uri)){
             CLIPS_TABLE -> {
