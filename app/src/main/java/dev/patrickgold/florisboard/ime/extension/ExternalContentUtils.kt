@@ -21,11 +21,16 @@ import android.net.Uri
 
 class ExternalContentUtils private constructor() {
     companion object {
-        fun readTextFromUri(context: Context, uri: Uri): Result<String> {
+        fun readTextFromUri(context: Context, uri: Uri, maxSize: Int): Result<String> {
             val contentResolver = context.contentResolver
                 ?: return Result.failure(NullPointerException("System content resolver not available"))
             val inputStream = contentResolver.openInputStream(uri)
                 ?: return Result.failure(NullPointerException("Cannot open input stream for given uri '$uri'"))
+            val assetFileDescriptor = contentResolver.openAssetFileDescriptor(uri, "r")
+                ?: return Result.failure(NullPointerException("Cannot open asset file descriptor for given uri '$uri'"))
+            if (assetFileDescriptor.length > maxSize) {
+                return Result.failure(Exception("Contents of given uri '$uri' exceeds maximum size of $maxSize bytes!"))
+            }
             val rawText = inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
             return Result.success(rawText)
         }
@@ -36,7 +41,7 @@ class ExternalContentUtils private constructor() {
             // Must use "rwt" mode to ensure destination file length is truncated after writing.
             val outputStream = contentResolver.openOutputStream(uri, "rwt")
                 ?: return Result.failure(NullPointerException("Cannot open output stream for given uri '$uri'"))
-            outputStream.bufferedWriter(Charsets.UTF_8).use { it.flush(); it.write(text) }
+            outputStream.bufferedWriter(Charsets.UTF_8).use { it.write(text) }
             return Result.success(Unit)
         }
     }

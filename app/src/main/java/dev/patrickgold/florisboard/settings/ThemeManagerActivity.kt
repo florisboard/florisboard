@@ -67,7 +67,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
     }
 
     private val importTheme = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        // If uri is null it indicates that the selection activity was cancelled (mostly by pressing the back button,
+        // If uri is null it indicates that the selection activity was cancelled (mostly by pressing the back button),
         // so we don't display an error message here.
         if (uri == null) return@registerForActivityResult
         val toBeImportedTheme = themeManager.loadTheme(uri)
