@@ -25,6 +25,7 @@ import android.graphics.Rect
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.PaintDrawable
+import android.opengl.Visibility
 import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
@@ -34,6 +35,7 @@ import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.view.children
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.ImeOptions
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
@@ -50,6 +52,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import dev.patrickgold.florisboard.util.cancelAll
 import dev.patrickgold.florisboard.util.postDelayed
+import timber.log.Timber
 import java.util.*
 import kotlin.math.abs
 
@@ -581,14 +584,27 @@ class KeyView(
         isEnabled = when (data.code) {
             KeyCode.CLIPBOARD_COPY,
             KeyCode.CLIPBOARD_CUT -> (florisboard != null
-                && florisboard.activeEditorInstance.selection.isSelectionMode
-                && !florisboard.activeEditorInstance.isRawInputEditor)
-            KeyCode.CLIPBOARD_PASTE -> florisboard?.clipboardManager?.hasPrimaryClip() == true
+                    && florisboard.activeEditorInstance.selection.isSelectionMode
+                    && !florisboard.activeEditorInstance.isRawInputEditor)
+            KeyCode.CLIPBOARD_PASTE -> (
+                // such gore. checks
+                // 1. has a clipboard item
+                // 2. the clipboard item has any of the supported mime types of the editor OR is plain text.
+                florisboard?.florisClipboardManager?.canBePasted(florisboard.florisClipboardManager?.primaryClip)
+            ) == true
             KeyCode.CLIPBOARD_SELECT_ALL -> {
                 florisboard?.activeEditorInstance?.isRawInputEditor == false
             }
+            KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
+                visibility = when (prefs.clipboard.enableHistory ) {
+                    true -> VISIBLE
+                    false -> GONE
+                }
+                prefs.clipboard.enableHistory
+            }
             else -> true
         }
+        if (data.code == KeyCode.CLIPBOARD_PASTE)
         if (!isEnabled) {
             isKeyPressed = false
         }
@@ -721,6 +737,12 @@ class KeyView(
                         }
                 }
             }
+            KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
+                when (prefs.clipboard.enableHistory) {
+                    true -> VISIBLE
+                    false -> GONE
+                }
+            }
             KeyCode.LANGUAGE_SWITCH -> {
                 val tempUtilityKeyAction = when {
                     prefs.keyboard.utilityKeyEnabled -> prefs.keyboard.utilityKeyAction
@@ -820,6 +842,9 @@ class KeyView(
                 KeyCode.CLIPBOARD_SELECT_ALL -> {
                     drawable = getDrawable(context, R.drawable.ic_select_all)
                 }
+                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
+                    drawable = getDrawable(context, R.drawable.ic_assignment)
+                }
                 KeyCode.DELETE -> {
                     drawable = getDrawable(context, R.drawable.ic_backspace)
                 }
@@ -867,6 +892,9 @@ class KeyView(
                 }
                 KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
                     drawable = getDrawable(context, R.drawable.ic_sentiment_satisfied)
+                }
+                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
+                    drawable = getDrawable(context, R.drawable.ic_assignment)
                 }
                 KeyCode.SWITCH_TO_TEXT_CONTEXT,
                 KeyCode.VIEW_CHARACTERS -> {

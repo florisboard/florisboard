@@ -57,6 +57,8 @@
 
             <include layout="@layout/media_input_layout"/>
 
+            <include layout="@layout/clipboard_layout"/>
+
         </dev.patrickgold.florisboard.ime.core.FlorisViewFlipper>
 
         <dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel

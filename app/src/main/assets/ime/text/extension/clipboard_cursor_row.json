@@ -10,7 +10,8 @@
       { "code":  -20, "label": "arrow_left", "type": "navigation" },
       { "code":  -21, "label": "arrow_right", "type": "navigation" },
       { "code": -131, "label": "clipboard_cut", "type": "enter_editing" },
-      { "code": -132, "label": "clipboard_paste", "type": "enter_editing" }
+      { "code": -132, "label": "clipboard_paste", "type": "enter_editing" },
+      { "code": -214, "label": "switch_to_clipboard_context", "type":  "system_gui"}
     ]
   ]
 }

@@ -53,6 +53,7 @@ class PrefHelper(
     val smartbar = Smartbar(this)
     val suggestion = Suggestion(this)
     val theme = Theme(this)
+    val clipboard = Clipboard(this)
 
     /**
      * Checks the cache if an entry for [key] exists, else calls [getPrefInternal] to retrieve the
@@ -493,5 +494,53 @@ class PrefHelper(
         var sunsetTime: Int
             get() =  prefHelper.getPref(SUNSET_TIME, TimeUtil.encode(18, 0))
             set(v) = prefHelper.setPref(SUNSET_TIME, v)
+    }
+
+    /**
+     * Wrapper class for clipboard preferences
+     */
+    class Clipboard(private val prefHelper: PrefHelper) {
+        companion object {
+            const val ENABLE_INTERNAL    = "clipboard__enable_internal"
+            const val SYNC_TO_SYSTEM     = "clipboard__sync_to_system"
+            const val SYNC_TO_FLORIS     = "clipboard__sync_to_floris"
+            const val ENABLE_HISTORY     = "clipboard__enable_history"
+            const val CLEAN_UP_OLD       = "clipboard__clean_up_old"
+            const val LIMIT_HISTORY_SIZE = "clipboard__limit_history_size"
+            const val CLEAN_UP_AFTER     = "clipboard__clean_up_after"
+            const val MAX_HISTORY_SIZE   = "clipboard__max_history_size"
+        }
+
+        var enableInternal: Boolean
+            get() =  prefHelper.getPref(ENABLE_INTERNAL, false)
+            set(v) = prefHelper.setPref(ENABLE_INTERNAL, v)
+
+        var syncToSystem: Boolean
+            get() =  prefHelper.getPref(SYNC_TO_SYSTEM, false)
+            set(v) = prefHelper.setPref(SYNC_TO_SYSTEM, v)
+
+        var syncToFloris: Boolean
+            get() =  prefHelper.getPref(SYNC_TO_FLORIS, true)
+            set(v) = prefHelper.setPref(SYNC_TO_FLORIS, v)
+
+        var enableHistory: Boolean
+            get()  = prefHelper.getPref(ENABLE_HISTORY, false)
+            set(v) = prefHelper.setPref(ENABLE_HISTORY, v)
+
+        var cleanUpOld: Boolean
+            get() =  prefHelper.getPref(CLEAN_UP_OLD, false)
+            set(v) = prefHelper.setPref(CLEAN_UP_OLD, v)
+
+        var limitHistorySize: Boolean
+            get() =  prefHelper.getPref(LIMIT_HISTORY_SIZE, true)
+            set(v) = prefHelper.setPref(LIMIT_HISTORY_SIZE, v)
+
+        var cleanUpAfter: Int
+            get() =  prefHelper.getPref(CLEAN_UP_AFTER, 20)
+            set(v) = prefHelper.setPref(CLEAN_UP_AFTER, v)
+
+        var maxHistorySize: Int
+            get() =  prefHelper.getPref(MAX_HISTORY_SIZE, 20)
+            set(v) = prefHelper.setPref(MAX_HISTORY_SIZE, v)
     }
 }

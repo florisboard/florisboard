@@ -301,9 +301,14 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
 
     fun onPrimaryClipChanged() {
         if (prefs.suggestion.enabled && prefs.suggestion.suggestClipboardContent &&
-            florisboard?.activeEditorInstance?.isPrivateMode == false) {
-            shouldSuggestClipboardContents = true
-            val item = florisboard.clipboardManager?.primaryClip?.getItemAt(0)
+            florisboard?.activeEditorInstance?.isPrivateMode == false ) {
+
+                // only suggest if mime types make sense.
+                shouldSuggestClipboardContents = florisboard.florisClipboardManager?.canBePasted(
+                    florisboard.florisClipboardManager?.primaryClip
+                ) == true
+
+            val item = florisboard.florisClipboardManager?.primaryClip
             when {
                 item?.text != null -> {
                     binding.clipboardSuggestion.text = item.text

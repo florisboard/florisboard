@@ -48,7 +48,8 @@ class PopupManager<T_KBD: View, T_KV: View>(
         KeyCode.ENTER,
         KeyCode.LANGUAGE_SWITCH,
         KeyCode.SWITCH_TO_TEXT_CONTEXT,
-        KeyCode.SWITCH_TO_MEDIA_CONTEXT
+        KeyCode.SWITCH_TO_MEDIA_CONTEXT,
+        KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT
     )
     private var keyPopupWidth: Int
     private var keyPopupHeight: Int
@@ -105,6 +106,11 @@ class PopupManager<T_KBD: View, T_KV: View>(
                     }
                     KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
                         getDrawable(keyView.context, R.drawable.ic_sentiment_satisfied)?.let {
+                            PopupExtendedView.Element.Icon(it, adjustedIndex)
+                        } ?: PopupExtendedView.Element.Undefined
+                    }
+                    KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
+                        getDrawable(keyView.context, R.drawable.ic_assignment)?.let {
                             PopupExtendedView.Element.Icon(it, adjustedIndex)
                         } ?: PopupExtendedView.Element.Undefined
                     }

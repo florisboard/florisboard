@@ -161,6 +161,12 @@ open class KeyData(
             code = KeyCode.SWITCH_TO_TEXT_CONTEXT,
             label = "switch_to_text_context"
         )
+        /** Predefined key data for [KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT] */
+        val SWITCH_TO_CLIPBOARD_CONTEXT = KeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT,
+            label = "switch_to_clipboard_context"
+        )
 
         /** Predefined key data for [KeyCode.SHIFT] */
         val SHIFT = KeyData(

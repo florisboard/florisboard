@@ -7,7 +7,8 @@
       "~enter": {
         "main": { "code": -213, "label": "switch_to_media_context", "type": "system_gui" },
         "relevant": [
-          { "code": -216, "label": "toggle_one_handed_mode_right", "type": "system_gui" }
+          { "code": -216, "label": "toggle_one_handed_mode_right", "type": "system_gui" },
+          { "code": -214, "label": "switch_to_clipboard_context", "type": "system_gui"}
         ]
       },
       "~left": {

@@ -30,7 +30,7 @@ class FinishFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = SetupFragmentFinishBinding.inflate(inflater, container, false)
 
         // Set theme to floris_day

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dev.patrickgold.florisboard.ime.clip.ClipboardPopupView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/pin_clip_item"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/pin_clip_item_icon"
+            android:layout_width="wrap_content"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_pin"
+            android:contentDescription="@string/clip__pin_item" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="0dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/clip__pin_item"
+            android:id="@+id/pin_clip_item_text"
+            tools:layout_editor_absoluteY="3dp" />
+
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/remove_from_history"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/remove_from_history_icon"
+            android:layout_width="wrap_content"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete"
+            android:contentDescription="@string/clip__delete_item" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="0dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/clip__delete_item"
+            android:id="@+id/remove_from_history_text"
+            tools:layout_editor_absoluteY="3dp" />
+
+
+    </LinearLayout>
+
+    <Space
+        android:id="@+id/paste_clip_item_space"
+        android:layout_width="0dp"
+        android:layout_height="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/paste_clip_item"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/paste_clip_item_icon"
+            android:layout_width="wrap_content"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_content_paste"
+            android:contentDescription="@string/clip__paste_item" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="0dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/clip__paste_item"
+            android:id="@+id/paste_clip_item_text"
+            tools:layout_editor_absoluteY="3dp" />
+
+
+    </LinearLayout>
+
+</dev.patrickgold.florisboard.ime.clip.ClipboardPopupView>

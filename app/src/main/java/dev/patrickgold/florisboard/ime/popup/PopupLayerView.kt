@@ -18,10 +18,15 @@ package dev.patrickgold.florisboard.ime.popup
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import dev.patrickgold.florisboard.ime.clip.ClipboardPopupManager
+import dev.patrickgold.florisboard.ime.clip.ClipboardPopupView
+import timber.log.Timber
 
 /**
  * Basic helper view class which acts as a non-interactive layer view, which sits above the whole
@@ -41,12 +46,29 @@ class PopupLayerView : FrameLayout {
         )
     }
 
+    var clipboardPopupManager: ClipboardPopupManager? = null
+    var intercept: ClipboardPopupView? = null
+    var shouldIntercept = true
+
     override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        if (ev != null) {
+            intercept?.run {
+                val viewRect = Rect()
+                getGlobalVisibleRect(viewRect)
+                return when {
+                    !viewRect.contains(ev.x.toInt(), ev.y.toInt()) -> {
+                        clipboardPopupManager?.hide()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }
         return true
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
+    override fun onTouchEvent(ev: MotionEvent?): Boolean {
         return false
     }
 }

@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.core
 
+import android.content.ClipDescription
+import android.content.Intent
 import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.SystemClock
@@ -26,6 +28,12 @@ import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import androidx.annotation.RequiresApi
+import androidx.core.view.inputmethod.InputConnectionCompat
+import androidx.core.view.inputmethod.InputContentInfoCompat
+import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
+import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.clip.provider.ItemType
+import timber.log.Timber
 
 /**
  * Class which holds information relevant to an editor instance like the [cachedInput], [selection],
@@ -36,10 +44,12 @@ class EditorInstance private constructor(
     private val ims: InputMethodService?,
     val imeOptions: ImeOptions,
     val inputAttributes: InputAttributes,
-    val packageName: String
+    val packageName: String,
+    private val editorInfo: EditorInfo
 ) {
     val cachedInput: CachedInput = CachedInput(this)
     var contentMimeTypes: Array<out String?>? = null
+    private val florisClipboardManager: FlorisClipboardManager = FlorisClipboardManager.getInstance()
     val cursorCapsMode: InputAttributes.CapsMode
         get() {
             val ic = inputConnection ?: return InputAttributes.CapsMode.NONE
@@ -75,7 +85,8 @@ class EditorInstance private constructor(
                 ims = null,
                 imeOptions = ImeOptions.fromImeOptionsInt(EditorInfo.IME_NULL),
                 inputAttributes = InputAttributes.fromInputTypeInt(InputType.TYPE_NULL),
-                packageName = "undefined"
+                packageName = "undefined",
+                editorInfo = EditorInfo()
             )
         }
 
@@ -85,7 +96,8 @@ class EditorInstance private constructor(
                     ims = ims,
                     imeOptions = ImeOptions.fromImeOptionsInt(editorInfo.imeOptions),
                     inputAttributes = InputAttributes.fromInputTypeInt(editorInfo.inputType),
-                    packageName = editorInfo.packageName
+                    packageName = editorInfo.packageName,
+                    editorInfo = editorInfo
                 ).apply {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
                         contentMimeTypes = editorInfo.contentMimeTypes
@@ -197,6 +209,41 @@ class EditorInstance private constructor(
             true
         }
     }
+
+
+    /**
+     * Commits the given [ClipboardItem]. If the clip data is text (incl. HTML), it delegates to [commitText].
+     * If the item has a content URI (and the EditText supports it), the item is committed as rich data.
+     * This allows for committing (e.g) images.
+     *
+     * @param item The ClipboardItem to commit
+     * @return True on success, false if something went wrong.
+     */
+    fun commitClipboardItem(item: ClipboardItem): Boolean {
+        val mimeTypes = item.mimeTypes
+        return when (item.type){
+            ItemType.IMAGE -> {
+                val inputContentInfo = InputContentInfoCompat(
+                    item.uri!!,
+                    ClipDescription("clipboard image", mimeTypes),
+                    null
+                )
+                val ic = inputConnection ?: return false
+                ic.finishComposingText()
+                var flags = 0
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+                    flags = flags or InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
+                }else {
+                    FlorisBoard.getInstance().context.grantUriPermission(editorInfo.packageName, item.uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+                InputConnectionCompat.commitContent(ic, editorInfo, inputContentInfo, flags, null)
+            }
+            ItemType.TEXT -> {
+                commitText(item.text.toString())
+            }
+        }
+    }
+
 
     /**
      * Executes a backward delete on this editor's text. If a text selection is active, all
@@ -355,15 +402,11 @@ class EditorInstance private constructor(
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardCut(): Boolean {
+        Timber.d("performClipboardCut")
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        val ic = inputConnection ?: return false
-        if (isRawInputEditor) {
-            sendDownUpKeyEvent(KeyEvent.KEYCODE_X, meta(ctrl = true))
-        } else {
-            ic.performContextMenuAction(android.R.id.cut)
-        }
-        return true
+        florisClipboardManager.addNewPlaintext(selection.text)
+        return sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
     }
 
     /**
@@ -373,17 +416,11 @@ class EditorInstance private constructor(
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardCopy(): Boolean {
+        Timber.d("performClipboardCopy")
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        val ic = inputConnection ?: return false
-        if (isRawInputEditor) {
-            sendDownUpKeyEvent(KeyEvent.KEYCODE_C, meta(ctrl = true)) &&
-                sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT)
-        } else {
-            ic.performContextMenuAction(android.R.id.copy)
-            selection.updateAndNotify(selection.end, selection.end)
-        }
-        return true
+        florisClipboardManager.addNewPlaintext(selection.text)
+        return selection.updateAndNotify(selection.end, selection.end)
     }
 
     /**
@@ -395,13 +432,8 @@ class EditorInstance private constructor(
     fun performClipboardPaste(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        val ic = inputConnection ?: return false
-        if (isRawInputEditor) {
-            sendDownUpKeyEvent(KeyEvent.KEYCODE_V, meta(ctrl = true))
-        } else {
-            ic.performContextMenuAction(android.R.id.paste)
-        }
-        return true
+        Timber.d("Before commit clip data")
+        return commitClipboardItem(florisClipboardManager.primaryClip!!)
     }
 
     /**

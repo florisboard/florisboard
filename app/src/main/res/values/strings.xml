@@ -360,4 +360,15 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Tap to view error details</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard seems to stop working repeatedly…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Falling back to previous keyboard to stop infinite crash loop. Tap to view error details</string>
+
+    <!-- clipboard strings -->
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Switch to clipboard history</string>
+    <string name="clip__context_header">Clipboard history</string>
+    <string name="clip__clear_history">Clear history</string>
+    <string name="clip__unpin_item">Unpin item</string>
+    <string name="clip__pin_item">Pin item</string>
+    <string name="clip__delete_item">Delete</string>
+    <string name="clip__paste_item">Paste</string>
+    <string name="clip__back_to_text_input">Back to text input</string>
+    <string name="clip__cant_paste">This app doesn\'t allow pasting this content.</string>
 </resources>

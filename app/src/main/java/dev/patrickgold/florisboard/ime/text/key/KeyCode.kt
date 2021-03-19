@@ -65,9 +65,10 @@ object KeyCode {
     const val CLIPBOARD_PASTE_POPUP =       -133
     const val CLIPBOARD_SELECT =            -134
     const val CLIPBOARD_SELECT_ALL =        -135
+    const val CLEAR_CLIPBOARD_HISTORY =     -136
 
-    const val UNDO =                        -136
-    const val REDO =                        -137
+    const val UNDO =                        -137
+    const val REDO =                        -138
 
     const val PHONE_PAUSE =                   44
     const val PHONE_WAIT =                    59
