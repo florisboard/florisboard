@@ -15,4 +15,5 @@
     <li>Customizable actions for gestures: swipe up/down/left/right, space bar left/right, delete key swipe)</li>
     <li>Integrated special symbols into character layouts</li>
     <li>Clipboard/Cursor toolbar</li>
+    <li>Clipboard manager/history</li>
 </ul>

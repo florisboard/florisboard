@@ -1,0 +1,8 @@
+- Add clipboard manager / history (#454, thanks @X-yl)
+  - Manage your clipboard entries in a modern and organized UI
+  - Automatic clearing of items after specified time
+  - Pin items to the top
+  - Enable/disable sync with Android clipboard
+  - Support for copy/paste of images (does not work in all apps though)
+- Fix import theme crash for big files (#465)
+- Fix symbols layouts applying the caps state once again (#298)

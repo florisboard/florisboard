@@ -9,7 +9,7 @@ fully respecting your privacy. Currently in early-beta state.
 
 ### Stable [![Latest stable release](https://img.shields.io/github/v/release/florisboard/florisboard)](https://github.com/florisboard/florisboard/releases/latest)
 
-Releases on this track are in general stable and ready for everyday use, except for features marked as `[Experimental]`. Use one of the following options to use FlorisBoard's stable releases:
+Releases on this track are in general stable and ready for everyday use, except for features marked as experimental. Use one of the following options to receive FlorisBoard's stable releases:
 
 _A. Get it on F-Droid_:
 
@@ -97,6 +97,7 @@ milestones, please refer to the [Feature roadmap](#feature-roadmap).
 ### Other useful features
 * [x] One-handed mode
 * [x] Clipboard/cursor tools
+* [x] Clipboard manager/history
 * [x] Integrated number row / symbols in character layouts
 * [x] Gesture support
 * [x] Full integration in IME service list of Android (xml/method)
