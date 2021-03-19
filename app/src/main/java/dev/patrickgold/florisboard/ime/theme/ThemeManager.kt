@@ -58,10 +58,10 @@ class ThemeManager private constructor(
         private set
 
     companion object {
-        /**
-         * The static relative path where a theme is located, regardless of the [AssetSource].
-         */
+        /** The static relative path where a theme is located, regardless of the [AssetSource]. */
         const val THEME_PATH_REL: String = "ime/theme"
+        /** Maximum size in bytes a theme file may have when loaded. */
+        const val THEME_MAX_SIZE: Int = 512_000
 
         private var defaultInstance: ThemeManager? = null
 
@@ -94,7 +94,7 @@ class ThemeManager private constructor(
     }
 
     /**
-     * Updates the current theme ref and loads the corresponding theme, as well as notfies all
+     * Updates the current theme ref and loads the corresponding theme, as well as notifies all
      * callback receivers about the new theme.
      */
     fun update() {
@@ -254,25 +254,21 @@ class ThemeManager private constructor(
     }
 
     fun loadTheme(ref: AssetRef): Result<Theme> {
-        assetManager.loadAsset(ref, ThemeJson::class).onSuccess { themeJson ->
-            val theme = themeJson.toTheme()
-            return Result.success(theme)
-        }.onFailure {
+        val themeJson = assetManager.loadAsset(ref, ThemeJson::class).getOrElse {
             Timber.e(it.toString())
             return Result.failure(it)
         }
-        return Result.failure(Exception("Unreachable code"))
+        val theme = themeJson.toTheme()
+        return Result.success(theme)
     }
 
     fun loadTheme(uri: Uri): Result<Theme> {
-        assetManager.loadAsset(uri, ThemeJson::class).onSuccess { themeJson ->
-            val theme = themeJson.toTheme()
-            return Result.success(theme)
-        }.onFailure {
+        val themeJson = assetManager.loadAsset(uri, ThemeJson::class, THEME_MAX_SIZE).getOrElse {
             Timber.e(it.toString())
             return Result.failure(it)
         }
-        return Result.failure(Exception("Unreachable code"))
+        val theme = themeJson.toTheme()
+        return Result.success(theme)
     }
 
     fun writeTheme(ref: AssetRef, theme: Theme): Result<Unit> {
