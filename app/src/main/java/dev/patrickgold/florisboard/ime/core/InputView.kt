@@ -21,7 +21,6 @@ import android.content.res.Configuration
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ViewFlipper
 import dev.patrickgold.florisboard.R
@@ -48,6 +47,8 @@ class InputView : LinearLayout {
     var desiredMediaKeyboardViewHeight: Float = resources.getDimension(R.dimen.mediaKeyboardView_baseHeight)
         private set
     var heightFactor: Float = 1.0f
+        private set
+    var shouldGiveAdditionalSpace: Boolean = false
         private set
 
     var mainViewFlipper: ViewFlipper? = null
@@ -100,12 +101,12 @@ class InputView : LinearLayout {
         var baseSmartbarHeight = 0.16129f * baseHeight
         var baseTextInputHeight = baseHeight - baseSmartbarHeight
         val tim = florisboard.textInputManager
-        val shouldGiveAdditionalSpace = prefs.keyboard.numberRow &&
+        shouldGiveAdditionalSpace = prefs.keyboard.numberRow &&
                 !(tim.getActiveKeyboardMode() == KeyboardMode.NUMERIC ||
                 tim.getActiveKeyboardMode() == KeyboardMode.PHONE ||
                 tim.getActiveKeyboardMode() == KeyboardMode.PHONE2)
         if (shouldGiveAdditionalSpace) {
-            val additionalHeight = desiredTextKeyboardViewHeight * 0.18f
+            val additionalHeight = baseTextInputHeight * 0.25f
             baseHeight += additionalHeight
             baseTextInputHeight += additionalHeight
         }
