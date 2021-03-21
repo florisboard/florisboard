@@ -25,7 +25,6 @@ import android.graphics.Rect
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.PaintDrawable
-import android.opengl.Visibility
 import android.os.Handler
 import android.view.MotionEvent
 import android.view.View
@@ -35,7 +34,6 @@ import androidx.core.content.ContextCompat.getDrawable
 import androidx.core.view.children
 import com.google.android.flexbox.FlexboxLayout
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.ImeOptions
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
@@ -52,7 +50,6 @@ import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import dev.patrickgold.florisboard.util.cancelAll
 import dev.patrickgold.florisboard.util.postDelayed
-import timber.log.Timber
 import java.util.*
 import kotlin.math.abs
 
@@ -478,7 +475,6 @@ class KeyView(
      *  by Devunwired
      */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-
         val keyMarginH: Int
         val keyMarginV: Int
 
@@ -561,7 +557,7 @@ class KeyView(
         }
 
         drawablePaddingH = (0.2f * width).toInt()
-        drawablePaddingV = (0.2f * height).toInt()
+        drawablePaddingV = (0.2f * height * (1.0f / (florisboard?.inputView?.heightFactor ?: 1.0f)).coerceAtMost(1.0f)).toInt()
 
         // MUST CALL THIS
         setMeasuredDimension(width, height)
@@ -841,9 +837,6 @@ class KeyView(
                 }
                 KeyCode.CLIPBOARD_SELECT_ALL -> {
                     drawable = getDrawable(context, R.drawable.ic_select_all)
-                }
-                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
-                    drawable = getDrawable(context, R.drawable.ic_assignment)
                 }
                 KeyCode.DELETE -> {
                     drawable = getDrawable(context, R.drawable.ic_backspace)

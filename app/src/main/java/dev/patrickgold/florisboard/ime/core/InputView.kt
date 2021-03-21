@@ -47,6 +47,8 @@ class InputView : LinearLayout {
         private set
     var desiredMediaKeyboardViewHeight: Float = resources.getDimension(R.dimen.mediaKeyboardView_baseHeight)
         private set
+    var heightFactor: Float = 1.0f
+        private set
 
     var mainViewFlipper: ViewFlipper? = null
         private set
@@ -76,7 +78,7 @@ class InputView : LinearLayout {
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val heightFactor = when (resources.configuration.orientation) {
+        heightFactor = when (resources.configuration.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> 1.0f
             else -> if (prefs.keyboard.oneHandedMode != OneHandedMode.OFF) {
                 prefs.keyboard.oneHandedModeScaleFactor / 100.0f
