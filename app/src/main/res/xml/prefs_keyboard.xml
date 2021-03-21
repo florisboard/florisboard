@@ -232,6 +232,13 @@
             app:seekBarIncrement="10"
             app:unit=" ms"/>
 
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            app:key="keyboard__space_bar_switches_to_characters"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__space_bar_switches_to_characters__label"
+            app:summary="@string/pref__keyboard__space_bar_switches_to_characters__summary"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

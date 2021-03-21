@@ -311,27 +311,28 @@ class PrefHelper(
     class Keyboard(private val prefHelper: PrefHelper) {
         companion object {
             const val BOTTOM_OFFSET_PORTRAIT =          "keyboard__bottom_offset_portrait"
-            const val BOTTOM_OFFSET_LANDSCAPE =         "keyboard__bottom_offset_landscape"
-            const val FONT_SIZE_MULTIPLIER_PORTRAIT =   "keyboard__font_size_multiplier_portrait"
-            const val FONT_SIZE_MULTIPLIER_LANDSCAPE =  "keyboard__font_size_multiplier_landscape"
-            const val HEIGHT_FACTOR =                   "keyboard__height_factor"
-            const val HEIGHT_FACTOR_CUSTOM =            "keyboard__height_factor_custom"
-            const val HINTED_NUMBER_ROW_MODE =          "keyboard__hinted_number_row_mode"
-            const val HINTED_SYMBOLS_MODE =             "keyboard__hinted_symbols_mode"
-            const val KEY_SPACING_HORIZONTAL =          "keyboard__key_spacing_horizontal"
-            const val KEY_SPACING_VERTICAL =            "keyboard__key_spacing_vertical"
-            const val LANDSCAPE_INPUT_UI_MODE =         "keyboard__landscape_input_ui_mode"
-            const val LONG_PRESS_DELAY =                "keyboard__long_press_delay"
-            const val NUMBER_ROW =                      "keyboard__number_row"
-            const val ONE_HANDED_MODE =                 "keyboard__one_handed_mode"
-            const val ONE_HANDED_MODE_SCALE_FACTOR =    "keyboard__one_handed_mode_scale_factor"
-            const val POPUP_ENABLED =                   "keyboard__popup_enabled"
-            const val SOUND_ENABLED =                   "keyboard__sound_enabled"
-            const val SOUND_VOLUME =                    "keyboard__sound_volume"
-            const val UTILITY_KEY_ACTION =              "keyboard__utility_key_action"
-            const val UTILITY_KEY_ENABLED =             "keyboard__utility_key_enabled"
-            const val VIBRATION_ENABLED =               "keyboard__vibration_enabled"
-            const val VIBRATION_STRENGTH =              "keyboard__vibration_strength"
+            const val BOTTOM_OFFSET_LANDSCAPE =             "keyboard__bottom_offset_landscape"
+            const val FONT_SIZE_MULTIPLIER_PORTRAIT =       "keyboard__font_size_multiplier_portrait"
+            const val FONT_SIZE_MULTIPLIER_LANDSCAPE =      "keyboard__font_size_multiplier_landscape"
+            const val HEIGHT_FACTOR =                       "keyboard__height_factor"
+            const val HEIGHT_FACTOR_CUSTOM =                "keyboard__height_factor_custom"
+            const val HINTED_NUMBER_ROW_MODE =              "keyboard__hinted_number_row_mode"
+            const val HINTED_SYMBOLS_MODE =                 "keyboard__hinted_symbols_mode"
+            const val KEY_SPACING_HORIZONTAL =              "keyboard__key_spacing_horizontal"
+            const val KEY_SPACING_VERTICAL =                "keyboard__key_spacing_vertical"
+            const val LANDSCAPE_INPUT_UI_MODE =             "keyboard__landscape_input_ui_mode"
+            const val LONG_PRESS_DELAY =                    "keyboard__long_press_delay"
+            const val NUMBER_ROW =                          "keyboard__number_row"
+            const val ONE_HANDED_MODE =                     "keyboard__one_handed_mode"
+            const val ONE_HANDED_MODE_SCALE_FACTOR =        "keyboard__one_handed_mode_scale_factor"
+            const val POPUP_ENABLED =                       "keyboard__popup_enabled"
+            const val SOUND_ENABLED =                       "keyboard__sound_enabled"
+            const val SOUND_VOLUME =                        "keyboard__sound_volume"
+            const val SPACE_BAR_SWITCHES_TO_CHARACTERS =    "keyboard__space_bar_switches_to_characters"
+            const val UTILITY_KEY_ACTION =                  "keyboard__utility_key_action"
+            const val UTILITY_KEY_ENABLED =                 "keyboard__utility_key_enabled"
+            const val VIBRATION_ENABLED =                   "keyboard__vibration_enabled"
+            const val VIBRATION_STRENGTH =                  "keyboard__vibration_strength"
         }
 
         var bottomOffsetPortrait: Int = 0
@@ -389,6 +390,9 @@ class PrefHelper(
         var soundVolume: Int = 0
             get() = prefHelper.getPref(SOUND_VOLUME, -1)
             private set
+        var spaceBarSwitchesToCharacters: Boolean
+            get() =  prefHelper.getPref(SPACE_BAR_SWITCHES_TO_CHARACTERS, true)
+            set(v) = prefHelper.setPref(SPACE_BAR_SWITCHES_TO_CHARACTERS, v)
         var utilityKeyAction: UtilityKeyAction
             get() =  UtilityKeyAction.fromString(prefHelper.getPref(UTILITY_KEY_ACTION, UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS.toString()))
             set(v) = prefHelper.setPref(UTILITY_KEY_ACTION, v)
@@ -524,7 +528,7 @@ class PrefHelper(
             set(v) = prefHelper.setPref(SYNC_TO_FLORIS, v)
 
         var enableHistory: Boolean
-            get()  = prefHelper.getPref(ENABLE_HISTORY, false)
+            get() =  prefHelper.getPref(ENABLE_HISTORY, false)
             set(v) = prefHelper.setPref(ENABLE_HISTORY, v)
 
         var cleanUpOld: Boolean

@@ -557,6 +557,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * enabled by the user.
      */
     private fun handleSpace(ev: InputKeyEvent) {
+        if (florisboard.prefs.keyboard.spaceBarSwitchesToCharacters && getActiveKeyboardMode() != KeyboardMode.CHARACTERS) {
+            setActiveKeyboardMode(KeyboardMode.CHARACTERS)
+        }
         if (florisboard.prefs.correction.doubleSpacePeriod) {
             if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventUp, florisboard.prefs.keyboard.longPressDelay.toLong())) {
                 val text = activeEditorInstance.getTextBeforeCursor(2)
@@ -720,6 +723,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyCode.SHIFT -> handleShiftUp()
             KeyCode.SHIFT_LOCK -> handleShiftLock()
             KeyCode.SHOW_INPUT_METHOD_PICKER -> florisboard.imeManager?.showInputMethodPicker()
+            KeyCode.SPACE -> handleSpace(ev)
             KeyCode.SWITCH_TO_MEDIA_CONTEXT -> florisboard.setActiveInput(R.id.media_input)
             KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> florisboard.setActiveInput(R.id.clip_input)
             KeyCode.SWITCH_TO_TEXT_CONTEXT -> florisboard.setActiveInput(R.id.text_input)
@@ -754,7 +758,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     }
                     else -> when (data.type) {
                         KeyType.CHARACTER, KeyType.NUMERIC -> when (data.code) {
-                            KeyCode.SPACE -> handleSpace(ev)
                             KeyCode.URI_COMPONENT_TLD -> {
                                 val tld = data.label.toLowerCase(Locale.ENGLISH)
                                 activeEditorInstance.commitText(tld)

@@ -210,6 +210,8 @@
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">PopUp Visibility</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Show popup when you press a key</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Long key press delay</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Space bar switches back to character layout</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Pressing space bar automatically switches back to characters when in symbols or numeric</string>
 
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Typing experience</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Enable Smartbar</string>
