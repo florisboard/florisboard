@@ -86,6 +86,10 @@ data class ClipboardItem(
 
     companion object {
         /**
+         * So that every item doesn't have to allocate its own array.
+         */
+        val TEXT_PLAIN = arrayOf("text/plain")
+        /**
          * Returns a new ClipboardItem based on a ClipData
          *
          * @param data The ClipData to clone.
@@ -112,10 +116,16 @@ data class ClipboardItem(
             }else { null }
 
             val text = data.getItemAt(0).text?.toString()
-            val mimeTypes = Array(data.description.mimeTypeCount) { "" }
+            val mimeTypes = when (type) {
+                ItemType.IMAGE -> {
+                    val x = Array(data.description.mimeTypeCount) { "" }
 
-            (0 until data.description.mimeTypeCount).forEach {
-                    mimeTypes[it] = data.description.getMimeType(it)
+                    (0 until data.description.mimeTypeCount).forEach {
+                        x[it] = data.description.getMimeType(it)
+                    }
+                    x
+                }
+                ItemType.TEXT -> { TEXT_PLAIN }
             }
 
             return ClipboardItem(null, type, uri, text, mimeTypes)

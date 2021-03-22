@@ -164,7 +164,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      * Wraps some plaintext in a ClipData and calls [addNewClip]
      */
     fun addNewPlaintext(newText: String) {
-        val newData = ClipboardItem(null, ItemType.TEXT, null, newText, arrayOf("text/plain"))
+        val newData = ClipboardItem(null, ItemType.TEXT, null, newText, ClipboardItem.TEXT_PLAIN)
         addNewClip(newData)
     }
 
