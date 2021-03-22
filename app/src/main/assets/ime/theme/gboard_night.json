@@ -1,0 +1,64 @@
+{
+  "$type": "dev.patrickgold.florisboard.ime.theme.Theme",
+  "name": "gboard_night",
+  "label": "Gboard Night",
+  "authors": [ "Netscaping" ],
+  "isNightTheme": true,
+  "attributes": {
+    "window": {
+      "colorPrimary": "#5e97f6",
+      "colorPrimaryDark": "#4285f4",
+      "colorAccent": "#FF9800",
+      "navigationBarColor": "@keyboard/background",
+      "navigationBarLight": "false",
+      "semiTransparentColor": "#20FFFFFF",
+      "textColor": "#FFFFFF"
+    },
+    "keyboard": {
+      "background": "#292e33"
+    },
+    "key": {
+      "background": "#484c4f",
+      "backgroundPressed": "#5e5e60",
+      "foreground": "@window/textColor",
+      "foregroundPressed": "@window/textColor",
+      "showBorder": "true"
+    },
+    "key:enter": {
+      "background": "@window/colorPrimary",
+      "backgroundPressed": "@window/colorPrimaryDark",
+      "foreground": "#FFFFFF",
+      "foregroundPressed": "#FFFFFF"
+    },
+    "key:shift:capslock": {
+      "foreground": "@window/colorAccent",
+      "foregroundPressed": "@window/colorAccent"
+    },
+    "media": {
+      "foreground": "@window/textColor",
+      "foregroundAlt": "#BDBDBD"
+    },
+    "oneHanded": {
+      "background": "#373c41",
+      "foreground": "#9b9da0"
+    },
+    "popup": {
+      "background": "#373c41",
+      "backgroundActive": "#5a5e60",
+      "foreground": "@window/textColor"
+    },
+    "privateMode": {
+      "background": "#A000FF",
+      "foreground": "#FFFFFF"
+    },
+    "smartbar": {
+      "background": "transparent",
+      "foreground": "#d4d5d6",
+      "foregroundAlt": "#73FFFFFF"
+    },
+    "smartbarButton": {
+      "background": "#FFFFFF",
+      "foreground": "#686868"
+    }
+  }
+}
