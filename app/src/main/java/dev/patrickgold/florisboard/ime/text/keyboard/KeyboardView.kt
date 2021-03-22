@@ -22,9 +22,10 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import androidx.core.view.children
+import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayout
+import com.google.android.flexbox.JustifyContent
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
@@ -48,7 +49,7 @@ import kotlin.math.roundToInt
  *
  * @property florisboard Reference to instance of core class [FlorisBoard].
  */
-class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Listener,
+class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.Listener,
     ThemeManager.OnThemeUpdatedListener {
     private var activeKeyViews: MutableMap<Int, KeyView> = mutableMapOf()
     private var initialKeyCodes: MutableMap<Int, Int> = mutableMapOf()
@@ -77,7 +78,8 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
             isLoadingPlaceholderKeyboard = getBoolean(R.styleable.KeyboardView_isLoadingPlaceholderKeyboard, false)
             recycle()
         }
-        orientation = VERTICAL
+        flexDirection = FlexDirection.COLUMN
+        justifyContent = JustifyContent.SPACE_BETWEEN
         layoutParams = layoutParams ?: FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.WRAP_CONTENT
@@ -360,9 +362,17 @@ class KeyboardView : LinearLayout, FlorisBoard.EventListener, SwipeGesture.Liste
         } else {
             (florisboard?.inputView?.desiredTextKeyboardViewHeight ?: MeasureSpec.getSize(heightMeasureSpec).toFloat())
         } * if (isPreviewMode) { 0.90f } else { 1.00f }
+        val layoutSize = computedLayout?.arrangement?.size?.toFloat() ?: 4.0f
         desiredKeyHeight = when {
-            isSmartbarKeyboardView -> desiredHeight - 1.5f * keyMarginV
-            else -> desiredHeight / (computedLayout?.arrangement?.size?.toFloat() ?: 4.0f) - 2.0f * keyMarginV
+            isSmartbarKeyboardView -> {
+                desiredHeight - 1.5f * keyMarginV
+            }
+            florisboard?.inputView?.shouldGiveAdditionalSpace == true -> {
+                desiredHeight / (layoutSize + 0.5f).coerceAtMost(5.0f) - 2.0f * keyMarginV
+            }
+            else -> {
+                desiredHeight / layoutSize - 2.0f * keyMarginV
+            }
         }.roundToInt()
 
         super.onMeasure(
