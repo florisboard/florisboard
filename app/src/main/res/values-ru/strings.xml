@@ -32,7 +32,7 @@
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Закрыть панель редактирования текста.</string>
     <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Переключить режим одной руки.</string>
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Открыть настройки.</string>
-    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Переключить на панель редактирования текста.</string>
+    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Перейти на панель редактирования текста</string>
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Переключение в режим смайлов</string>
     <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Кнопка \"Отменить\" для отмены последнего действия</string>
     <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Кнопка \"Повтор\", чтобы отменить последнее \"Отменить\"</string>
@@ -87,6 +87,8 @@
     <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Создать из выбранной темы</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Пользовательский (основан на %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Новая тема</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Тема успешно импортирована!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Тема успешно экспортирована!</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Редактировать тему</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Название</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Тип</string>
@@ -94,6 +96,7 @@
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Редактировать группу</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Добавить атрибут</string>
     <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Редактировать атрибут</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Изменить название темы</string>
     <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Источник</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Группа</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Атрибут</string>
@@ -160,10 +163,11 @@
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Мультипликатор размера шрифта (портрет)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Мультипликатор размера шрифта (ландшафт)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Внешний вид</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Управление одной рукой</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Управление одной рукой</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Выкл</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Режим правши</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Режим левши</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Ширина в режиме одной руки</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Альбомный полноэкранный ввод</string>
     <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Никогда не показывать</string>
     <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Показывать всегда</string>
@@ -222,6 +226,8 @@
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Переместить курсор вправо</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Переместить курсор в начало строки</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Переместить курсор в конец строки</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Переместить курсор в начало страницы</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Переместить курсор в конец страницы</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Показать способ ввода</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Переключиться на предыдущую клавиатуру</string>
@@ -284,7 +290,9 @@
     <string name="assets__action__no">Нет</string>
     <string name="assets__action__save">Сохранить</string>
     <string name="assets__action__yes">Да</string>
+    <string name="assets__error__details">Детали</string>
     <string name="assets__error__invalid">Ошибка</string>
+    <string name="assets__error__snackbar_message">Что-то пошло не так</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Настройка</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Пред.</string>
@@ -318,4 +326,5 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Нажмите, чтобы увидеть детали об ошибке</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Кажется, FlorisBoard постоянно перестаёт работать…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Возвращение к предыдущей клавиатуре, чтобы остановить бесконечный цикл сбоя. Нажмите, чтобы просмотреть детали об ошибке</string>
+    <!-- clipboard strings -->
 </resources>

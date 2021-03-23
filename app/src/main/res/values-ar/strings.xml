@@ -92,11 +92,19 @@
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">إضافة مجموعة</string>
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">تحرير المجموعة</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">اضافة الخاصيه</string>
+    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">المرجع</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">مجموعة</string>
+    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">الخاصية</string>
+    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">لون كامل</string>
+    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">تدرّج خطي</string>
+    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">تدرّج شعاعي</string>
     <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">تبديل</string>
     <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">الحالة</string>
     <string name="settings__theme_editor__value_type_other" comment="Theme value type">أخرى</string>
     <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">النص</string>
+    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">يرجى ادخال اسم المظهر.</string>
+    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">الرجاء إدخال اسم المجموعة.</string>
+    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">الرجاء إدخال اسم الخاصية.</string>
     <string name="settings__theme__group_window" comment="Theme group label">النافذة والنظام</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">لوحة المفاتيح</string>
     <string name="settings__theme__group_key" comment="Theme group label">المفتاح</string>
@@ -105,10 +113,17 @@
     <string name="settings__theme__group_popup" comment="Theme group label">نافذة منبثقة</string>
     <string name="settings__theme__group_privateMode" comment="Theme group label">الوضع الخاص</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">الشريط الذكـي</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">زر الشريط الذكي</string>
+    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">مجموعات مخصصة (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">لون الخلفية</string>
     <string name="settings__theme__attr_foreground" comment="Theme attribute label">لون الواجهة</string>
     <string name="settings__theme__attr_showBorder" comment="Theme attribute label">عرض الحدود</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">اللون الأساسي</string>
     <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">اللون الأساسي (داكن)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">لون التمييز</string>
+    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">لون شريط التصفّح</string>
+    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">الواجهة الداكنة لشريط التصفّح</string>
+    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">لون شبه شفاف</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">لون النص</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">تفضيلات لوحة المفاتيح</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">المفاتيح</string>
@@ -120,15 +135,18 @@
     <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">مفعّل (الأولوية للتلميح)</string>
     <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">مفعّل (الأولوية للحروف الإضافية)</string>
     <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">مفعّل (تحديد الأولويات الذكي)</string>
+    <string name="pref__keyboard__utility_key_action__switch_to_emojis" comment="Preference value">الإنتقال إلى الإيموجيز</string>
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">تغيير اللغة</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">تبديل تطبيق لوحة المفاتيح</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">مضاعف حجم الخط (عمودي)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">مضاعف حجم الخط (أفقي)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">نظام التخطيط</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">وضع اليد الواحدة</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">وضع اليد الواحدة</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">إيقاف</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">وضع اليد اليمنى</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">وضع اليد اليسرى</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">عدم الاظهار أبداً</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">الإظهار دائماً</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">ارتفاع لوحة المفاتيح</string>
     <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">قصير جدا</string>
     <string name="pref__keyboard__height_factor__short" comment="Preference value">قصير</string>
@@ -227,7 +245,9 @@
     <string name="assets__action__no">كلا</string>
     <string name="assets__action__save">حفظ</string>
     <string name="assets__action__yes">موافق</string>
+    <string name="assets__error__details">التفاصيل</string>
     <string name="assets__error__invalid">غير صحيح</string>
+    <string name="assets__error__snackbar_message">لقد حدث خطأ ما</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">الإعداد</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">السابق</string>
@@ -261,4 +281,10 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">انقر لعرض تفاصيل الخطأ</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">يبدو أن FlorisBoard يوقف عن العمل بشكل متكرر…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">العودة إلى لوحة المفاتيح السابقة لإيقاف حلقة التعطل الغير منتهية. انقر لعرض تفاصيل الخطأ</string>
+    <!-- clipboard strings -->
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">الإنتقال إلى سجل الحافظة</string>
+    <string name="clip__context_header">سجل الحافظة</string>
+    <string name="clip__clear_history">مسح السجل</string>
+    <string name="clip__delete_item">حذف</string>
+    <string name="clip__paste_item">لصق</string>
 </resources>

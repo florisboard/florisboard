@@ -85,7 +85,10 @@
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Gestor de temes (nocturn)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Crear un nou tema</string>
     <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Crear a partir del tema seleccionat</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Personalitzat (basat en %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nou tema</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">El tema s\'ha importat correctament!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">El tema s\'ha exportat correctament!</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Editar tema</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Nom</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Tipus</string>
@@ -93,14 +96,23 @@
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Editar grup</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Afegir un atribut</string>
     <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Editar atribut</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Editar el nom del tema</string>
     <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referència</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Grup</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Atribut</string>
     <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Color sòlid</string>
+    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Degradat lineal</string>
+    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Degradat radial</string>
     <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Canvia</string>
     <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Estat</string>
     <string name="settings__theme_editor__value_type_other" comment="Theme value type">Altres</string>
     <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Text</string>
+    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Vista prèvia del valor del tema</string>
+    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Introdueix un nom de tema.</string>
+    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Si us plau, introdueix un nom de grup que només contingui lletres (a-z i/o A-Z), columnes (:) per a sub-agrupament o addicionalment nombres (0-9), titlla (~) i guions baixos (_) per a l\'etiqueta de la clau.</string>
+    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Si us plau, introdueix un nom de grup.</string>
+    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Aquest nom de grup ja existeix dins d\'aquest tema. Si us plau, escolliu-ne un altre.</string>
+    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Introdueix un nom d\'atribut que només contingui les lletres a-z i/o A-Z.</string>
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Introduïu un nom d\'atribut.</string>
     <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Aquest nom d\'atribut ja existeix dins d\'aquest grup. Si us plau, especifiqueu-ne un altre.</string>
     <string name="settings__theme__group_window" comment="Theme group label">Finestra &amp; Sistema</string>
@@ -113,6 +125,8 @@
     <string name="settings__theme__group_privateMode" comment="Theme group label">Mode privat</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Barra intel·ligent</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Botó de barra intel·ligent</string>
+    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Disposició a pantalla completa del paisatge</string>
+    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Botó d\'acció de pantalla completa del paisatge</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Grup personalitzat (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Color de fons</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Color de fons (actiu)</string>
@@ -148,11 +162,22 @@
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicador de la mida del tipus de lletra (vertical)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicador de la mida de la lletra (horitzontal)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposició</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Mode d\'una sola mà</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Mode d\'una sola mà</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Desactivat</string>
+    <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Mode dretà</string>
+    <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Mode esquerrà</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Amplada del teclat en mode una sola ma</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrada a pantalla completa del paisatge</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">No mostrar mai</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Mostrar sempre</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">Mostrar dinàmicament</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">Alçada del teclat</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Personalitzat</string>
+    <string name="pref__correction__title" comment="Preference group title">Correccions</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Majúscules automàtiques</string>
     <!-- About UI strings -->
     <!-- Assets strings -->
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
+    <!-- clipboard strings -->
 </resources>

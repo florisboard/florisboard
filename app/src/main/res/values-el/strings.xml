@@ -153,7 +153,7 @@
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Πολλαπλασιαστής μεγέθους γραμματοσειράς (πορτραίτο)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Πολλαπλασιαστής μεγέθους γραμματοσειράς (τοπίο)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Διάταξη</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Λειτουργία ενός χεριού</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Λειτουργία ενός χεριού</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Ανενεργό</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Λειτουργία για δεξιόχειρες</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Λειτουργία για αριστερόχειρες</string>
@@ -302,4 +302,5 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Πατήστε για προβολή λεπτομερειών σφάλματος</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Φαίνεται πως το FlorisBoard σταματά να λειτουργεί επανειλημμένα…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Χρήση εναλλακτικά του προηγούμενου πληκτρολογίου για να σταματήσει ο αδιάκοπος κύκλος κρασαρισμάτων. Πατήστε για να δείτε λεπτομέρειες του σφάλματος</string>
+    <!-- clipboard strings -->
 </resources>

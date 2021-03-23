@@ -87,6 +87,8 @@
     <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Aus ausgewähltem Design erstellen</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Benutzerdefiniert (basierend auf %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Neues Design</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Design erfolgreich importiert!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Design erfolgreich exportiert!</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Design bearbeiten</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Name</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Typ</string>
@@ -94,6 +96,7 @@
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Gruppe bearbeiten</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Attribute hinzufügen</string>
     <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Attribut bearbeiten</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Design Name bearbeiten</string>
     <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Verweis</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Gruppe</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Attribut</string>
@@ -160,10 +163,11 @@
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Schriftgröße anpassen (Hochformat)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Schriftgröße anpassen (Querformat)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Einhandmodus</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Einhandmodus</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Aus</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Rechtshändermodus</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Linkshändermodus</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Breite der Tastatur im Einhandmodus</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Querformat Vollbild Eingabe</string>
     <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Nie zeigen</string>
     <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Immer zeigen</string>
@@ -180,6 +184,8 @@
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Benutzerdefinierte Tastaturhöhe</string>
     <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Unterer Versatz (Hochformat)</string>
     <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Unterer Versatz (Querformat)</string>
+    <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Platz zwischen Zeichen (vertikal)</string>
+    <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Platz zwischen Zeichen (horizontal)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastendruck</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Ton bei Tastendruck</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Lautstärke der Tastendrucktöne</string>
@@ -188,6 +194,8 @@
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Pop-Up Sichtbarkeit</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Pop-Up bei Tastendruck anzeigen</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Verzögerung bei langem Tastendruck</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Leertaste wechselt zurück zur Buchstabenansicht</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Leertaste wechselt aus der Symbol- oder Zahlenansicht zurück zur Buchstabenansicht</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Tipperlebnis</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schnellzugriffsleiste einschalten</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wird über der Tastatur angezeigt</string>
@@ -220,6 +228,8 @@
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Cursor nach rechts bewegen</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Cursor an den Zeilenanfang bewegen</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Cursor an das Zeilenende bewegen</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Bewege den Cursor zum Anfang der Seite</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Bewege den Cursor zum Ende der Seite</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Umschalttaste</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Auswahl der Eingabemethode anzeigen</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Zur vorherigen Tastatur wechseln</string>
@@ -280,7 +290,9 @@
     <string name="assets__action__no">Nein</string>
     <string name="assets__action__save">Speichern</string>
     <string name="assets__action__yes">Ja</string>
+    <string name="assets__error__details">Details</string>
     <string name="assets__error__invalid">Ungültig</string>
+    <string name="assets__error__snackbar_message">Etwas hat nicht geklappt</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Einrichtung</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Zurück</string>
@@ -314,4 +326,14 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Tippen, um Details anzuzeigen</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard funktioniert zum wiederholten Male nicht…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Um eine endlose Absturzschleife zu verhindern, wurde automatisch auf die zuvor benutzte Tastatur zurückgegriffen. Tippen, um die Fehlermeldung anzuzeigen</string>
+    <!-- clipboard strings -->
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Zum Zwischenablagenverlauf wechseln</string>
+    <string name="clip__context_header">Zwischenablagenverlauf</string>
+    <string name="clip__clear_history">Verlauf leeren</string>
+    <string name="clip__unpin_item">Element lösen</string>
+    <string name="clip__pin_item">Element anheften</string>
+    <string name="clip__delete_item">Löschen</string>
+    <string name="clip__paste_item">Einfügen</string>
+    <string name="clip__back_to_text_input">Zurück zur Texteingabe</string>
+    <string name="clip__cant_paste">Diese App erlaubt kein Einfügen aus der Zwischenablage.</string>
 </resources>

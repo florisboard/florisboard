@@ -87,6 +87,8 @@
     <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">ساختن از طرح‌زمینه انتخاب شده</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">سفارشی (بر اساس %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">طرح‌زمینه جدید</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">تم با موفقیت افزوده شد!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">تم با موفقیت استخراج شد!</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">ویرایش طرح زمینه</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">نام</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">نوع</string>
@@ -94,6 +96,7 @@
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">ویرایش گروه</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">افزودن ویژگی</string>
     <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">ویرایش ویژگی</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">ویرایش نام طرح زمینه</string>
     <string name="settings__theme_editor__value_type_reference" comment="Theme value type">مرجع</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">گروه</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">ویژگی</string>
@@ -160,10 +163,11 @@
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">اندازه فونت چند برابری(عمودی)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">اندازه فونت چند برابری(افقی)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">چیدمان</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">حالت تک دستی</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">حالت تک دستی</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">خاموش</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">حالت دست راستی</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">حالت دست چپی</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">عرض کیبورد در حالت یک دستی</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">ورودی تمام صفحه افقی</string>
     <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">هرگز نشان نده</string>
     <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">همیشه نشان بده</string>
@@ -190,6 +194,8 @@
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">نمایش پاپ‌آپ</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">نمایش پاپآپ وقتی کلیدی را می فشارید</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">تاخیر فشردن طولانی کلید</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">نوار فاصله به چیدمان متنی بازمیگرداند</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">در حالت نمادین یا عددها، با فشار نوار فاصله به صورت خودکار به حالت نوشتار متنی برمیگردد</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">تجربه در تایپ کردن</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">فعال سازی نوار هوشمند</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">بالای صفحه‌کلید نمایش داده خواهند شد</string>
@@ -208,7 +214,7 @@
     <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] نشان دادن دنباله سر خوردن</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">بعد از هر کلمه ناپدید خواهد شد</string>
     <string name="pref__gestures__general_title" comment="Preference group title">اشارات کلی</string>
-    <string name="pref__gestures__space_bar_title" comment="Preference group title">دکمه space اشارات</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">حرکات نوار فاصله</string>
     <string name="pref__gestures__other_title" comment="Preference group title">دیگر اشارات/ آشارات آستانه</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">بدون عمل</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">حذف کردن دقیق حروف</string>
@@ -284,7 +290,9 @@
     <string name="assets__action__no">خیر</string>
     <string name="assets__action__save">ذخیره</string>
     <string name="assets__action__yes">بله</string>
+    <string name="assets__error__details">جزئیات</string>
     <string name="assets__error__invalid">نامعتبر</string>
+    <string name="assets__error__snackbar_message">یک چیزی اشتباه پیش رفت</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">راه‌اندازی</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">قبلی</string>
@@ -310,7 +318,7 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">گزارش خطای فلوریس بورد</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">با عرض پوزش برای این مشکل ، اما فلوریس بورد به دلیلی غیرمنتظره ای متوفق شده است.\n\n اگر می خواهید این خطا را گزارش کنید ، روی \"کپی در کلیپ بورد\" کلیک کنید ، سپس بر روی دکمه \"باز کردن گزارش اشکال\" کلیک کنید. گزارش اشکال را پر کرده و گزارش را وارد کنید. این امر به بهتر و پایدارتر شدن فلوریس بورد برای همه کمک می کند. متشکرم!</string>
-    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">در کلیپ بورد کپی شد</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">کپی در حافطه موقت</string>
     <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">باز کردن گزارش خطا توسط (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">بستن</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">گزارش های خطای فلوریس بورد</string>
@@ -318,4 +326,14 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">برای دیدن جزئیات خطا ضربه بزنید</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">به نظر می رسد فلوریس بورد کار خود را مکرر متوقف می کند…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">در خال بازگشت به کیبورد قبلی برای جلو گیری از بروز خطای دوباره. برای مشاهده جزئیات خطا ، ضربه بزنید</string>
+    <!-- clipboard strings -->
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">تغییر به تاریخچه کلیپ بورد</string>
+    <string name="clip__context_header">تاریخچه کلیپ بورد</string>
+    <string name="clip__clear_history">پاک‌سازی تاریخچه</string>
+    <string name="clip__unpin_item">برداشتن نشانه</string>
+    <string name="clip__pin_item">نشانه گذاری</string>
+    <string name="clip__delete_item">حذف</string>
+    <string name="clip__paste_item">چسباندن</string>
+    <string name="clip__back_to_text_input">بازگشت به ورودی متن</string>
+    <string name="clip__cant_paste">این برنامه اجازه چسباندن این محتوا را نمی دهد.</string>
 </resources>

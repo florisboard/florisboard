@@ -35,6 +35,7 @@
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Přepnout na vkládaní médií.</string>
     <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Undo tlačítko pro vrácení poslední akce</string>
     <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Redo tlačítko pro obnovení poslední akce</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Pokud se zobrazuje, je aktivní soukromý režim. Kliknutím zobrazí informace o soukromém režimu.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Nastavení</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Více možností</string>
@@ -64,6 +65,47 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Tento podtyp již existuje!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Motiv klávesnice</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Definován</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Režim motivu</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Vždy denní</string>
+    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Vždy noční</string>
+    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Podle systému</string>
+    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Podle času</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Čas východu slunce</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Čas západu slunce</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Denní motiv</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Noční motiv</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Vybraný motiv</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Přizpůsobit barvy aplikaci</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Barvy motivu se přizpůsobí barvám používané aplikace, pokud to daná aplikace podporuje.</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">Interní úložiště</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">Externí poskytovatel</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Správce motivů (denní)</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Správce motivů (noční)</string>
+    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Vytvořit nový motiv</string>
+    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Vytvořit nový z vybraného motivu</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Vlastní (na základě %s)</string>
+    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nový motiv</string>
+    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Upravit motiv</string>
+    <string name="settings__theme_editor__name_label" comment="Label of name input">Název</string>
+    <string name="settings__theme_editor__type_label" comment="Label of type input">Typ</string>
+    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Přidat skupinu</string>
+    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Upravit skupinu</string>
+    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Přidat vlastnost</string>
+    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Upravit vlastnost</string>
+    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Odkaz</string>
+    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Skupina</string>
+    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Atribut</string>
+    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Jednolitá barva</string>
+    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Lineární přechod</string>
+    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Radiální přechod</string>
+    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Přepínač</string>
+    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Stav</string>
+    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Ostatní</string>
+    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Text</string>
+    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Zadejte prosím název motivu.</string>
+    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Prosím, zadejte název skupiny který používá pouze písmena (a-z a/nebo A-Z), dvojtečku (:) pro podskupiny a navíc číslice (0-9), vlnovku (~) a podtržítko (_) pro název klíče.</string>
+    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Zadejte název skupiny.</string>
+    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Prosím vložte název vlastnosti.</string>
     <string name="settings__theme__group_window" comment="Theme group label">Okno &amp; systém</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Klávesnice</string>
     <string name="settings__theme__group_key" comment="Theme group label">Klíč</string>
@@ -74,7 +116,7 @@
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplikátor velikosti písma (portrét)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplikátor velikosti písma (Krajina)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Rozložení</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Režim s jednou rukou</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Režim s jednou rukou</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Z</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Režim pravé ruky</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Režim levé ruky</string>
@@ -188,4 +230,5 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Klepnutím zobrazíte podrobnosti o chybě</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Zdá se, že FlorisBoard přestal opakovaně pracovat…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Vrácení zpět na předchozí klávesnici pro zastavení nekonečného crash loopu. Klepnutím zobrazíte podrobnosti o chybě</string>
+    <!-- clipboard strings -->
 </resources>

@@ -5,7 +5,7 @@
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Изчакване</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Икона с три точки. Ако е видима, означава, че при по-продължително натискане могат да се използват повече букви.</string>
     <!-- One-handed strings -->
-    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Излиза от режим за една ръка.</string>
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Излиза от режим за работа с една ръка.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Премества клавиатурата вляво.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Премества клавиатурата вдясно.</string>
     <!-- Private mode info dialog strings -->
@@ -30,7 +30,7 @@
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Превключва бързи действия. При докосване, превключва между предложения за думи и бутони за бързи действия.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Излиза от панела за редактиране на текст.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Превключва режима за работа с една ръка.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Превключва режим за работа с една ръка.</string>
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Отваря настройките.</string>
     <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Отваря панела за редактиране на текст.</string>
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Превключва към изглед за въвеждане на медия.</string>
@@ -87,6 +87,8 @@
     <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Създаване от избрана тема</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Персонализирано (базирано на %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Нова тема</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Темата е внесена успешно!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Темата е изнесена успешно!</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Редактиране на тема</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Име</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Вид</string>
@@ -94,6 +96,7 @@
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Редактиране на група</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Добавяне на атрибут</string>
     <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Редактиране на атрибут</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Промяна на име на тема</string>
     <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Референция</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Група</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Атрибут</string>
@@ -108,16 +111,16 @@
     <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Въведете име на темата.</string>
     <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Моля, въведете име на група, която съдържа само букви (a–я и/или A–Я), двоеточия (:) за подгрупиране или допълнително числа (0–9), тилда (~) и подчертаване (_) за етикета на клавиша.</string>
     <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Въведете име на групата.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Група с това име вече съществува в темата. Посочете друго.</string>
+    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Група с такова име вече съществува в темата. Посочете друго.</string>
     <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Въведете име на атрибут, което съдържа само буквите a-я и/или A-Я.</string>
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Въведете име на атрибут.</string>
-    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Атрибут с това име вече съществува в групата. Посочете друго.</string>
+    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Атрибут с такова име вече съществува в групата. Посочете друго.</string>
     <string name="settings__theme__group_window" comment="Theme group label">Прозорец и система</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Клавиатура</string>
     <string name="settings__theme__group_key" comment="Theme group label">Клавиши</string>
     <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Клавиш (%s)</string>
     <string name="settings__theme__group_media" comment="Theme group label">Медиен контекст</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">За една ръка</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">Работа с една ръка</string>
     <string name="settings__theme__group_popup" comment="Theme group label">Изскачащ прозорец</string>
     <string name="settings__theme__group_privateMode" comment="Theme group label">Поверителен режим</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Умна лента</string>
@@ -160,10 +163,11 @@
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Множител на размер на шрифта (портрет)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Множител на размер на шрифта (пейзаж)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Оформление</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Режим за работа с една ръка</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Режим за работа с една ръка</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Изключено</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Режим за дясна ръка</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Режим за лява ръка</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Ширина в режим за работа с една ръка</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Клавиатура на цял екран (пейзаж)</string>
     <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Никога да не се показва</string>
     <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Винаги да се показва</string>
@@ -177,7 +181,7 @@
     <string name="pref__keyboard__height_factor__tall" comment="Preference value">Висока</string>
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Много висока</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Персонализирана</string>
-    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Персонализирана стойност за височина на клавиатура</string>
+    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Персонализирана стойност за височина на клавиатурата</string>
     <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Отстъп отдолу (портрет)</string>
     <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Отстъп отдолу (пейзаж)</string>
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Разстояние между клавиши (вертикално)</string>
@@ -190,6 +194,8 @@
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Видимост на изскачащ прозорец</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Показване на изскачащ прозорец при докосване на клавиш</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Закъснение при задържане на клавиш</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Клавиш интервал връща към въвеждане на букви</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Натискане на клавиша интервал превключва към букви ако се въвеждат символи или цифри</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Изживяване при въвеждане</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Показване на умна лента</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Показване над първия ред</string>
@@ -284,7 +290,9 @@
     <string name="assets__action__no">Не</string>
     <string name="assets__action__save">Запазване</string>
     <string name="assets__action__yes">Да</string>
+    <string name="assets__error__details">Подробности</string>
     <string name="assets__error__invalid">Невалидно</string>
+    <string name="assets__error__snackbar_message">Нещо се обърка</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Настройка</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Пред.</string>
@@ -318,4 +326,14 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Докоснете, за да видите подробности за грешката</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard изглежда спира да работи многократно…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Връщане към предишна клавиатура, за да се спре безкрайния цикъл от сривове. Докоснете, за да видите подробности за грешката</string>
+    <!-- clipboard strings -->
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Превключване към история на буфера</string>
+    <string name="clip__context_header">История на буферната памет</string>
+    <string name="clip__clear_history">Изчистване на историята</string>
+    <string name="clip__unpin_item">Освобождаване на елемент</string>
+    <string name="clip__pin_item">Закачане на елемент</string>
+    <string name="clip__delete_item">Изтриване</string>
+    <string name="clip__paste_item">Поставяне</string>
+    <string name="clip__back_to_text_input">Към въвеждане на текст</string>
+    <string name="clip__cant_paste">Приложението не поддържа поставяне на това съдържание.</string>
 </resources>

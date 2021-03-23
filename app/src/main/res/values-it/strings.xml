@@ -29,7 +29,7 @@
     <string name="emoji__category__flags" comment="Emoji category name">Bandiere</string>
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Attiva/disattiva azione rapida. Se premuto, alterna i suggerimenti di parole ed i pulsanti di azione rapida.</string>
-    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Pannello di modifica del testo.</string>
+    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Esci dal pannello di modifica del testo.</string>
     <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Attiva/disattiva la modalità con una mano.</string>
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Apri Impostazioni.</string>
     <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Vai a pannello di modifica del testo.</string>
@@ -87,6 +87,8 @@
     <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Crea dal tema selezionato</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Personalizzato (basato su %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nuovo tema</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Tema importato correttamente!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Tema esportato correttamente!</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Modifica tema</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Nome</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Tipo</string>
@@ -94,6 +96,7 @@
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Modifica gruppo</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Aggiungi attributo</string>
     <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Modifica attributo</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Modifica il nome del tema</string>
     <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referenze</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Gruppo</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Attributo</string>
@@ -160,10 +163,11 @@
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Moltiplicatore della dimensione del testo (ritratto)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Moltiplicatore della dimensione del testo (panorama)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Modalità ad una mano</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Modalità ad una mano</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Off</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Modalità destrimano</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Modalità mancino</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Larghezza della tastiera in modalità a una mano</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Inserimento a schermo intero orizzontale</string>
     <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Non mostrare</string>
     <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Mostra sempre</string>
@@ -180,6 +184,8 @@
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Valore Altezza tastiera personalizzata</string>
     <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Distanza inferiore (verticale)</string>
     <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Distanza inferiore (orizzontale)</string>
+    <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Spazio fra i pulsanti (verticale)</string>
+    <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Spazio fra i pulsanti (orizzontale)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressione tasti</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Suono pressione tasti</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volume del suono alla pressione dei tasti</string>
@@ -188,6 +194,8 @@
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Visibilità Popup</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Mostra popup quando si preme un tasto</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Ritardo lunga pressione tasti</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra spaziatrice riporta alla digitazione a caratteri</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Premendo la barra spaziatrice si ritorna automaticamente ai caratteri quando si è nei simboli o numeri</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Esperienza di digitazione</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Abilità Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Verrà mostrato in cima alla tastiera</string>
@@ -220,6 +228,8 @@
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Muovi cursore a destra</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Spazia il cursore all\'inizio della linea</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Spazia il cursore alla fine della linea</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Sposta il cursore all\'inizio della pagina</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Sposta il cursore alla fine della pagina</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Mostra il selettore del metodo di digitazione</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Passa alla tastiera precedente</string>
@@ -280,7 +290,9 @@
     <string name="assets__action__no">No</string>
     <string name="assets__action__save">Salva</string>
     <string name="assets__action__yes">Sì</string>
+    <string name="assets__error__details">Dettagli</string>
     <string name="assets__error__invalid">Invalido</string>
+    <string name="assets__error__snackbar_message">Qualcosa è andato storto</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Configurazione</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Precedente</string>
@@ -314,4 +326,14 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Tocca per visualizzare i dettagli dell\'errore</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard sembra aver ripetutamente smesso di funzionare…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Ripiega alla tastiera precedente per porre fine ai crash ripetuti. Tocca per visualizzare i dettagli dell\'errore</string>
+    <!-- clipboard strings -->
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Passa alla cronologia appunti</string>
+    <string name="clip__context_header">Cronologia appunti</string>
+    <string name="clip__clear_history">Cancella la cronologia</string>
+    <string name="clip__unpin_item">Sblocca oggetto</string>
+    <string name="clip__pin_item">Blocca oggetto</string>
+    <string name="clip__delete_item">Elimina</string>
+    <string name="clip__paste_item">Incolla</string>
+    <string name="clip__back_to_text_input">Torna all\'immissione di testo</string>
+    <string name="clip__cant_paste">Questa app non permette di incollare questo contenuto.</string>
 </resources>

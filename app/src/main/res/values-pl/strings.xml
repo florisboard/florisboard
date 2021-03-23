@@ -160,7 +160,7 @@
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Mnożnik rozmiaru czcionki (portret)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Mnożnik rozmiaru czcionki (krajobraz)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Układ</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Tryb jednoręczny</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Tryb jednoręczny</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Wyłącz</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Tryb praworęczny</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Tryb leworęczny</string>
@@ -316,4 +316,5 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Kliknij, by zobaczyć szczegóły</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard wydaje się wielokrotnie przerywać pracę…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Powracanie do poprzedniej klawiatury w celu zatrzymania nieskończonej pętli awarii. Stuknij, aby wyświetlić szczegóły błędu</string>
+    <!-- clipboard strings -->
 </resources>

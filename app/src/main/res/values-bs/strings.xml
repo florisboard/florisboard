@@ -98,7 +98,7 @@
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Promijeni jezik</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Promijeni tastaturu</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Raspored</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Mod za jednu ruku</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Mod za jednu ruku</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Isključeno</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Mod za desnu ruku</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Mod za lijevu ruku</string>
@@ -183,4 +183,5 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopiraj u međuspremnik</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zatvori</string>
+    <!-- clipboard strings -->
 </resources>

@@ -157,7 +157,7 @@
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">מכפלת גודל גופן (אנכי)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">מכפלת גודל גופן (אופקי)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">אופן תצוגה</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">מצב יד אחת</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">מצב יד אחת</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">כבה</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">מצב ליד ימין</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">מצב לשמאליים</string>
@@ -307,4 +307,5 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">לחץ להצגת פרטי השגיאה</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">נראה שFlorisBoard מפסיק לעבוד שוב שוב…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">המקדלת הקומדת הוחזרה כדי למנוע לולאת קריסה אינסופית. לחץ כדי לראות את פרטי השגיאה</string>
+    <!-- clipboard strings -->
 </resources>

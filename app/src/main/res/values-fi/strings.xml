@@ -70,7 +70,7 @@
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Fonttikoon kerroin (pystysuunnassa)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Fonttikoon kerroin (vaakasuunnassa)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Ulkoasu</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Yksikätinen tila</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Yksikätinen tila</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Pois päältä</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Oikean käden tila</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Vasemman käden tila</string>
@@ -184,4 +184,5 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Napauta nähdäksesi virheen tiedot</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard vaikuttaa lopettavan toimintansa toistuvasti…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Vaihdetaan edelliseen näppäimistöön, jotta kaatumiskierre loppuu. Napauta nähdäksesi virheen tiedot</string>
+    <!-- clipboard strings -->
 </resources>

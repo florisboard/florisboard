@@ -120,4 +120,5 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Opsætning færdig!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard fejl rapport</string>
+    <!-- clipboard strings -->
 </resources>

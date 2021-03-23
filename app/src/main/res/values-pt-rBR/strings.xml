@@ -87,6 +87,8 @@
     <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Criar a partir do tema selecionado</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Personalizado (baseado no %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Novo tema</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Tema importado com sucesso!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Tema exportado com sucesso!</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Editar tema</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Nome</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Tipo</string>
@@ -94,6 +96,7 @@
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Editar grupo</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Adicionar atributo</string>
     <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Editar atributo</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Editar o nome do tema</string>
     <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referência</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Grupo</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Atributo</string>
@@ -160,10 +163,11 @@
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicador de tamanho da fonte (retrato)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicador de tamanho da fonte (paisagem)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Modo uma mão</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Modo uma mão</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Desligado</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Modo destro</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Modo canhoto</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Largura do teclado no modo uma mão</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrada do modo paisagem em tela cheia</string>
     <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Nunca mostrar</string>
     <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Sempre mostrar</string>
@@ -190,6 +194,8 @@
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Visibilidade do PopUp</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Mostrar popup quando pressionar uma tecla</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Atraso ao pressionar e segurar uma tecla</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Barra de espaço muda de volta para o layout de caracteres</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Apertar e segurar a barra de espaço muda automaticamente para os caracteres quando em símbolos ou números</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Experiência de digitação</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ativar barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Mostrar na parte superior do teclado</string>
@@ -284,7 +290,9 @@
     <string name="assets__action__no">Não</string>
     <string name="assets__action__save">Salvar</string>
     <string name="assets__action__yes">Sim</string>
+    <string name="assets__error__details">Detalhes</string>
     <string name="assets__error__invalid">Inválido</string>
+    <string name="assets__error__snackbar_message">Algo deu errado</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Configurar</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Anterior</string>
@@ -318,4 +326,14 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Toque para ver os detalhes do erro</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard parece parar de funcionar repetidamente…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Recuando para o teclado anterior para parar o loop infinito de travamento. Toque para ver os detalhes do erro</string>
+    <!-- clipboard strings -->
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Mudar para o histórico da área de transferência</string>
+    <string name="clip__context_header">Histórico da área de transferência</string>
+    <string name="clip__clear_history">Limpar histórico</string>
+    <string name="clip__unpin_item">Desfixar item</string>
+    <string name="clip__pin_item">Fixar item</string>
+    <string name="clip__delete_item">Excluir</string>
+    <string name="clip__paste_item">Colar</string>
+    <string name="clip__back_to_text_input">Voltar para a entrada de texto</string>
+    <string name="clip__cant_paste">Este aplicativo não permite colar esse conteúdo.</string>
 </resources>

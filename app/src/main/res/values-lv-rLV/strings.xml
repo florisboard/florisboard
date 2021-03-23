@@ -59,7 +59,7 @@
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Pievienot apakšveidu</string>
     <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Pielietot</string>
     <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Atcelt</string>
-    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Dzēst</string>
+    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Izdzēst</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Labot apakšveidu</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Lokalizācija</string>
     <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">Tastatūras izkārtojums</string>
@@ -87,6 +87,8 @@
     <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Izveidot no izvēlētā izskata</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Pielāgots (no %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Jauns izskats</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Izskats veiksmīgi ievietots!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Izskats veiksmīgi izdots!</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Labot izskatu</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Nosaukums</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Veids</string>
@@ -94,6 +96,7 @@
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Labot kopu</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Pievienot pazīmi</string>
     <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Labot pazīmi</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Labot izskata nosaukumu</string>
     <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Saikne</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Kopa</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Pazīme</string>
@@ -160,10 +163,11 @@
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Fonta izmēra reizinātājs (statenisks novietojums)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Fonta izmēra reizinātājs (līmenisks novietojums)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Izkārtojums</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Vienrocīga ievade</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Vienrocīga ievade</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Izslēgts</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Ievade ar labo roku</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Ievade ar kreiso roku</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Vienrocīgās ievades tastatūras platums</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Līmeniska pilnekrāna ievade</string>
     <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Nekad nerādīt</string>
     <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Vienmēr rādīt</string>
@@ -190,6 +194,8 @@
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Uznirstošā lodziņa redzamība</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Rādīt uznirstošo lodziņu, kad tiek nospiests taustiņš</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Ilgas taustiņa piespiešanas aizture</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Atstarpes taustiņš pārslēdz uz burtu izkārtojumu</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Atstarpes taustiņa nospiešana nomaina izkārtojumu no rakstzīmēm vai cipariem uz burtiem</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Rakstīšanas pieredze</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Iespējot viedjoslu</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Tiks rādīta tastatūras augšpusē</string>
@@ -211,9 +217,9 @@
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Atstarpes taustiņa kustības</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Citas kustības / Kustību sliekšņi</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Nav darbības</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Dzēst rakstzīmes rūpīgi</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Dzēst pašreizējo vārdu</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Dzēst vārdus rūpīgi</string>
+    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Rūpīgi izdzēst rakstzīmes</string>
+    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Izdzēst pašreizējo vārdu</string>
+    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Rūpīgi izdzēst vārdus</string>
     <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Paslēpt tastatūru</string>
     <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Ievietot atstarpi</string>
     <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Pārvietot rādītāju uz augšu</string>
@@ -237,7 +243,7 @@
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Pavilkt no atstarpes taustiņa pa kreisi</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Pavilkt no atstarpes taustiņa pa labi</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Atstarpes taustiņa ilga piespiešana</string>
-    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Pavilkt no dzēšanas taustiņa pa kreisi</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Pavilkt no izdzēšanas taustiņa pa kreisi</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Pavilkšanas ātruma slieksnis</string>
     <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Ļoti lēns</string>
     <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Lēns</string>
@@ -276,16 +282,18 @@
     <string name="assets__action__cancel">Atcelt</string>
     <string name="assets__action__cancel_confirm_title">Apstiprināt atcelšanu</string>
     <string name="assets__action__cancel_confirm_message">Vai tiešām atmest nesaglabātās izmaiņas? Šī darbība pēc izpildīšanas vairs nevar tikt atsaukta.</string>
-    <string name="assets__action__delete">Dzēst</string>
-    <string name="assets__action__delete_confirm_title">Apstiprināt dzēšanu</string>
-    <string name="assets__action__delete_confirm_message">Vai tiešām dzēst \"%s\"? Šī darbība pēc izpildīšanas vairs nevar tikt atsaukta.</string>
+    <string name="assets__action__delete">Izdzēst</string>
+    <string name="assets__action__delete_confirm_title">Apstiprināt izdzēšanu</string>
+    <string name="assets__action__delete_confirm_message">Vai tiešām izdzēst \"%s\"? Šī darbība pēc izpildīšanas vairs nevar tikt atsaukta.</string>
     <string name="assets__action__edit">Labot</string>
     <string name="assets__action__export">Izdot</string>
     <string name="assets__action__import">Iekļaut</string>
     <string name="assets__action__no">Nē</string>
     <string name="assets__action__save">Saglabāt</string>
     <string name="assets__action__yes">Jā</string>
+    <string name="assets__error__details">Izklāsts</string>
     <string name="assets__error__invalid">Nederīgs</string>
+    <string name="assets__error__snackbar_message">Kaut kas ir noticis nepareizi</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Iestatīšana</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Iepriekšējais</string>
@@ -319,4 +327,14 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Pieskarties, lai apskatītu kļudu izklāstu</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Izskatās, ka FlorisBoard atkārtoti pārstāj darboties…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Notiek atkāpšanāš uz iepriekšējo tastatūru, lai apturētu nebeidzamu avārijas cilpu. Piesist, lai apskatītu kļūdu izklāstu</string>
+    <!-- clipboard strings -->
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Pārslēgties uz starpliktuves vēsturi</string>
+    <string name="clip__context_header">Starpliktuves vēsture</string>
+    <string name="clip__clear_history">Notīrīt vēsturi</string>
+    <string name="clip__unpin_item">Atspraust vienumu</string>
+    <string name="clip__pin_item">Piespraust vienumu</string>
+    <string name="clip__delete_item">Izdzēst</string>
+    <string name="clip__paste_item">Ielīmēt</string>
+    <string name="clip__back_to_text_input">Atgriezties pie teksta ievades</string>
+    <string name="clip__cant_paste">Pašreizējā lietotne neļauj ielīmēt šo saturu.</string>
 </resources>

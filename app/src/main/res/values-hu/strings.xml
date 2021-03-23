@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Szünet</string>
-    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Várakozás</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Kérem várjon</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Hárompontos ikon. Ha látható, azt jelzi, hogy több betű használható, ha hosszabb ideig megnyomja.</string>
     <!-- One-handed strings -->
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Egykezes mód bezárása.</string>
@@ -18,7 +18,7 @@
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotikonok</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Mosolyok &amp; érzelmek</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Mosolyok és érzelmek</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Emberek és test</string>
     <string name="emoji__category__animals_nature" comment="Emoji category name">Állatok és természet</string>
     <string name="emoji__category__food_drink" comment="Emoji category name">Étel és ital</string>
@@ -42,7 +42,7 @@
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">További beállítások</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Segítség és visszajelzés</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Súgó</string>
-    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Kezdés</string>
+    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Kezdőlap</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Billentyűzet</string>
     <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Gépelés</string>
     <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Téma</string>
@@ -87,6 +87,8 @@
     <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Létrehozás a kiválasztott témából</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Egyéni (ezen alapul: %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Új téma</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Téma sikeresen importálva!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Téma sikeresen exportálva!</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Téma szerkesztése</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Név</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Típus</string>
@@ -94,6 +96,7 @@
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Csoport szerkesztése</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Tulajdonság hozzáadása</string>
     <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Tulajdonság szerkesztése</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Téma nevének szerkesztése</string>
     <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Hivatkozás</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Csoport</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Tulajdonság</string>
@@ -160,10 +163,11 @@
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Betűméret szorzó (álló)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Betűméret szorzó (fekvő)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Elrendezés</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Egykezes mód</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Egykezes mód</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Ki</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Jobbkezes mód</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Balkezes mód</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Billentyűzet szélessége egykezes módban</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Teljes képernyős fekvő elrendezés bemenet</string>
     <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Soha ne jelenjen meg</string>
     <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Mindig jelenjen meg</string>
@@ -180,14 +184,18 @@
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Egyéni billentyűzetmagasság értéke</string>
     <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Alsó eltolás (álló)</string>
     <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Alsó eltolás (fekvő)</string>
+    <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Gombtávolság (vízszintes)</string>
+    <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Gombtávolság (függőleges)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Gombnyomás</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Hang gombnyomáskor</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Gombnyomás hangereje</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Rezgés gombnyomáskor</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Rezgés erőssége gombnyomáskor</string>
-    <string name="pref__keyboard__popup_visible__label" comment="Preference title">Felugró megjelenítése</string>
-    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Felugró megjelenítése gombnyomáskor</string>
+    <string name="pref__keyboard__popup_visible__label" comment="Preference title">Nagyobb gomb megjelenítése</string>
+    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Nagyobb gomb megjelenítése gombnyomáskor</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Hosszú gombnyomás késleltetése</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Szóköz automatikusan visszavált a karakterelrendezésre</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">A szóköz lenyomáskor automatikusan visszavált a karakterekre, amikor a szimbólumok vagy a számok jelennek meg</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Gépelési élmény</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Okossáv engedélyezése</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">A billentyűzet tetején fog megjelenni</string>
@@ -199,7 +207,7 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock marad, ha mozog egy másik szövegmezőbe</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dupla szóköz: pont</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Ha kétszer megérinti a szóközt, beszúr egy pontot, amelyet egy szóköz követ</string>
-    <string name="settings__gestures__title" comment="Title of Gestures fragment">Gesztusok &amp; csúsztatott gépelés</string>
+    <string name="settings__gestures__title" comment="Title of Gestures fragment">Gesztusok és csúsztatott gépelés</string>
     <string name="pref__glide__title" comment="Preference group title">Csúsztatott gépelés</string>
     <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Csúsztatott gépelés engedélyezése</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Írjon be egy szót úgy, hogy ujját a betűin keresztülcsúsztatja</string>
@@ -220,6 +228,8 @@
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Kurzor mozgatása jobbra</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Kurzor sor elejére helyezése</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Kurzor sor végére helyezése</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Kurzor mozgatása a lap elejére</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Kurzor mozgatása a lap végére</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Bevitelválasztó megnyitása</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Váltás az előző billentyűzetre</string>
@@ -276,7 +286,9 @@
     <string name="assets__action__no">Nem</string>
     <string name="assets__action__save">Mentés</string>
     <string name="assets__action__yes">Igen</string>
+    <string name="assets__error__details">Részletek</string>
     <string name="assets__error__invalid">Érvénytelen</string>
+    <string name="assets__error__snackbar_message">Valami rosszul sült el</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Beállítás</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Előző</string>
@@ -310,4 +322,14 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Érintse meg a hiba részleteinek megtekintéséhez</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Úgy tűnik, hogy a FlorisBoard többször leállt…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Visszalépés az előző billentyűzetre, a végtelen összeomlás megakadályozásához. Érintse meg a hiba részleteinek megtekintéséhez</string>
+    <!-- clipboard strings -->
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Váltás a vágólapelőzményekre</string>
+    <string name="clip__context_header">Vágólap előzmények</string>
+    <string name="clip__clear_history">Előzmények törlése</string>
+    <string name="clip__unpin_item">Elem levétele</string>
+    <string name="clip__pin_item">Elem kitűzése</string>
+    <string name="clip__delete_item">Törlés</string>
+    <string name="clip__paste_item">Beillesztés</string>
+    <string name="clip__back_to_text_input">Vissza a szöveges bevitelre</string>
+    <string name="clip__cant_paste">Ez az alkalmazás nem engedélyezi beilleszteni ezt a tartalmat.</string>
 </resources>

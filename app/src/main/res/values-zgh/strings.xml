@@ -39,4 +39,5 @@
     <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">ⴱⵔⵔⴽ!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">ⵔⴳⵍ</string>
+    <!-- clipboard strings -->
 </resources>

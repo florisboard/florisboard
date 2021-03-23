@@ -87,6 +87,8 @@
     <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Créer depuis le thème sélectionné</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Personnalisé (basé sur %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nouveau thème</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Thème importé avec succès !</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Thème exporté avec succès !</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Modifier le thème</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Nom</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>
@@ -94,6 +96,7 @@
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Modifier le groupe</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Ajouter un attribut</string>
     <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Modifier l\'attribut</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Modifier le nom du thème</string>
     <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Référence</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Groupe</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Attribut</string>
@@ -160,10 +163,11 @@
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicateur de la taille de la police (portrait)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicateur de la taille de la police (paysage)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposition</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Mode à une main</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Mode à une main</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Désactivé</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Mode droitier</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Mode gaucher</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Largeur du clavier en mode une main</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Insertion horizontale en plein écran</string>
     <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Ne jamais afficher</string>
     <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Toujours afficher</string>
@@ -180,6 +184,8 @@
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Valeur personnalisée de la hauteur du clavier</string>
     <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Écart en bas (portrait)</string>
     <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Écart en bas (paysage)</string>
+    <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Espacement des touches (vertical)</string>
+    <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Espacement des touches (horizontal)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Touche pressée</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Tonalité des touches</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volume sonore des touches</string>
@@ -220,6 +226,8 @@
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Déplacer le curseur vers la droite</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Déplacer le curseur au début de la ligne</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Déplacer le curseur à la fin de la ligne</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Déplacer le curseur au début de la page</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Déplacer le curseur à la fin de la page</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Maj</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Afficher le sélecteur de mode de saisie</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Passer à la disposition précédente</string>
@@ -280,7 +288,9 @@
     <string name="assets__action__no">Non</string>
     <string name="assets__action__save">Sauvegarder</string>
     <string name="assets__action__yes">Oui</string>
+    <string name="assets__error__details">Détails</string>
     <string name="assets__error__invalid">Invalide</string>
+    <string name="assets__error__snackbar_message">Un problème est survenu</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Configuration</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Préc</string>
@@ -314,4 +324,11 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Appuyez sur pour afficher les détails de l\'erreur</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard semble cesser de fonctionner de façon répétitive…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Retour au clavier précédent pour arrêter la boucle de plantage infinie. Appuyez pour afficher les détails de l\'erreur</string>
+    <!-- clipboard strings -->
+    <string name="clip__context_header">Historique du presse-papiers</string>
+    <string name="clip__clear_history">Effacer l\'historique</string>
+    <string name="clip__delete_item">Effacer</string>
+    <string name="clip__paste_item">Coller</string>
+    <string name="clip__back_to_text_input">Retour à la saisie de texte</string>
+    <string name="clip__cant_paste">Cette app ne permet pas de coller ce contenu.</string>
 </resources>

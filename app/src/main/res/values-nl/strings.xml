@@ -160,7 +160,7 @@
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Factor lettergrootte (portret-modus)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Factor lettergrootte (landschapsmodus)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Indeling</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference value">Eenhandige modus</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Eenhandige modus</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Uit</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Rechtshandige modus</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Linkshandige modus</string>
@@ -310,4 +310,5 @@
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Tik om foutdetails te bekijken</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard lijkt herhaaldelijk te stoppen met werken…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Terugvallen op het vorige toetsenbord om oneindige crash-loop te stoppen. Tik om foutdetails te bekijken</string>
+    <!-- clipboard strings -->
 </resources>

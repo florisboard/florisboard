@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Rawesandin</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Wendeman</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Îkona sê-dot. Eger xuya be, nîşan dide ku eger zêdetir pêl bê kirin, zêdetir tîp dikarin bên bikaranîn.</string>
@@ -73,6 +74,7 @@
     <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Ji kerema xwe re navekî dirbê têkeve.</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Klavye</string>
     <string name="settings__theme__group_key" comment="Theme group label">Kilîd</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">Moda taybet</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Rengê Paşrûyê</string>
     <string name="settings__theme__attr_foreground" comment="Theme attribute label">Rengê rûerdê</string>
     <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Rengê rûerdê (Altêrnatîf)</string>
@@ -114,4 +116,5 @@
     <string name="assets__action__export">Hinardin</string>
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
+    <!-- clipboard strings -->
 </resources>
