@@ -1,0 +1,6 @@
+- Add Turkish-Q / Turkish-F layouts (#182)
+- Add Gboard Night theme (#486, thanks @Netscaping)
+- Add auto-switching to characters in symbols (#347)
+- Fix Ž key not available in Dvorak/Serbian (#381)
+- Fix language selector size for keyboard height greater than 125% (#129)
+- Rework symbols sizing when number row is enabled (#482)
