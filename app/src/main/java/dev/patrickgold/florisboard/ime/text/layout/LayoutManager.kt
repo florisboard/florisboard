@@ -209,7 +209,15 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
                         popupSet = extendedPopups.mapping[KeyVariation.ALL]?.get(label) ?:
                                 extendedPopupsDefault.mapping[KeyVariation.ALL]?.get(label)
                     }
-                    popupSet?.let { key.popup.merge(it) }
+                    var keySpecificPopupSet: PopupSet<KeyData>? = null
+                    if (label != key.label) {
+                        keySpecificPopupSet = extendedPopups.mapping[KeyVariation.ALL]?.get(key.label) ?:
+                            extendedPopupsDefault.mapping[KeyVariation.ALL]?.get(key.label)
+                    }
+                    key.popup.apply {
+                        keySpecificPopupSet?.let { merge(it) }
+                        popupSet?.let { merge(it) }
+                    }
                 }
             }
         }

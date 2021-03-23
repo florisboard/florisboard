@@ -21,9 +21,7 @@
         ]
       },
       "z": {
-        "relevant": [
-          { "code":  382, "label": "ž" }
-        ]
+        "main": { "code":  382, "label": "ž" }
       },
       "~right": {
         "main": { "code":   44, "label": "," },
@@ -50,9 +48,9 @@
       "~right": {
         "main": { "code": -255, "label": ".com" },
         "relevant": [
+          { "code": -255, "label": ".org" },
           { "code": -255, "label": ".eu" },
           { "code": -255, "label": ".rs" },
-          { "code": -255, "label": ".org" },
           { "code": -255, "label": ".net" }
         ]
       }
