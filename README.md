@@ -74,7 +74,7 @@ milestones, please refer to the [Feature roadmap](#feature-roadmap).
 
 ### Layouts
 * [x] Latin character layouts (QWERTY, QWERTZ, AZERTY, Swiss, Spanish, Norwegian, Swedish/Finnish, Icelandic, Danish,
-      Hungarian, Croatian, Polish, Romanian, Colemak, Dvorak, ...)
+      Hungarian, Croatian, Polish, Romanian, Colemak, Dvorak, Turkish-Q, Turkish-F, ...)
 * [x] Non-latin character layouts (Arabic, Persian, Greek, Russian (JCUKEN))
 * [x] Adapt to situation in app (password, url, text, etc. )
 * [x] Special character layout(s)
