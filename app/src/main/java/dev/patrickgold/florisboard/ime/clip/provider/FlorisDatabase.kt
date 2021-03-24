@@ -118,12 +118,9 @@ data class ClipboardItem(
             val text = data.getItemAt(0).text?.toString()
             val mimeTypes = when (type) {
                 ItemType.IMAGE -> {
-                    val x = Array(data.description.mimeTypeCount) { "" }
-
-                    (0 until data.description.mimeTypeCount).forEach {
-                        x[it] = data.description.getMimeType(it)
-                    }
-                    x
+                    (0 until data.description.mimeTypeCount).map {
+                        data.description.getMimeType(it)
+                    }.toTypedArray()
                 }
                 ItemType.TEXT -> { TEXT_PLAIN }
             }
