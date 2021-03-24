@@ -277,12 +277,14 @@ class EditorInstance private constructor(
             ic.beginBatchEdit()
             markComposingRegion(null)
 
-            getWordsInString(cachedInput.rawText.substring(0,
-                (selection.start - cachedInput.offset).coerceAtLeast(0))).run {
-                get(size - n.coerceAtLeast(0)).range
-            }.run {
-                ic.setSelection(first + cachedInput.offset, selection.start)
-            }
+            try {
+                getWordsInString(cachedInput.rawText.substring(0,
+                    (selection.start - cachedInput.offset).coerceAtLeast(0))).run {
+                    get(size - n.coerceAtLeast(0)).range
+                }.run {
+                    ic.setSelection(first + cachedInput.offset, selection.start)
+                }
+            } catch (e: Exception) {}
 
             ic.commitText("", 1)
 
