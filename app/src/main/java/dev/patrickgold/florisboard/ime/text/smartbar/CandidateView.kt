@@ -89,6 +89,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         super.onAttachedToWindow()
         themeManager = ThemeManager.defaultOrNull()
         themeManager?.registerOnThemeUpdatedListener(this)
+        updateCandidates(candidates)
     }
 
     override fun onDetachedFromWindow() {
@@ -100,9 +101,11 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         velocityTracker = null
     }
 
-    fun updateCandidates(newCandidates: List<String>) {
+    fun updateCandidates(newCandidates: List<String>?) {
         candidates.clear()
-        candidates.addAll(newCandidates)
+        if (newCandidates != null) {
+            candidates.addAll(newCandidates)
+        }
         recomputeCandidates()
     }
 

@@ -273,6 +273,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
         updateCapsState()
         setActiveKeyboardMode(keyboardMode)
+        smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
         smartbarView?.updateSmartbarState()
     }
 
@@ -366,7 +367,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     }
                 }
             } else {
-                smartbarView?.setCandidateSuggestionWords(System.nanoTime(), listOf())
+                smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
             }
         }
     }

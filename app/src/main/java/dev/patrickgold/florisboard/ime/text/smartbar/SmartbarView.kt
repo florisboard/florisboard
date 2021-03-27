@@ -282,7 +282,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
         }
     }
 
-    fun setCandidateSuggestionWords(suggestionInitDate: Long, suggestions: List<String>) {
+    fun setCandidateSuggestionWords(suggestionInitDate: Long, suggestions: List<String>?) {
         if (suggestionInitDate > lastSuggestionInitDate) {
             lastSuggestionInitDate = suggestionInitDate
             binding.candidates.updateCandidates(suggestions)
