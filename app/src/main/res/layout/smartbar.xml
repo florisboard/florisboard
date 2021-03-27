@@ -39,38 +39,9 @@
         app:layout_constraintEnd_toStartOf="@id/action_end_area"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <dev.patrickgold.florisboard.ime.text.smartbar.CandidateView
             android:id="@+id/candidates"
-            style="@style/SmartbarContainer">
-
-            <Button
-                android:id="@+id/candidate0"
-                style="@style/SmartbarCandidate"/>
-
-            <View style="@style/SmartbarDivider"/>
-
-            <Button
-                android:id="@+id/candidate1"
-                style="@style/SmartbarCandidate"/>
-
-            <View style="@style/SmartbarDivider"/>
-
-            <Button
-                android:id="@+id/candidate2"
-                style="@style/SmartbarCandidate"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/clipboard_suggestion_row"
-            style="@style/SmartbarContainer">
-
-            <Button
-                android:id="@+id/clipboard_suggestion"
-                android:drawableStart="@drawable/ic_content_paste_with_padding"
-                style="@style/SmartbarQuickAction.ClipboardSuggestion"/>
-
-        </LinearLayout>
+            style="@style/SmartbarContainer"/>
 
         <LinearLayout
             android:id="@+id/quick_actions"

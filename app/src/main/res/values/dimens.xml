@@ -49,6 +49,9 @@
     <dimen name="smartbar_radius">20dp</dimen>
     <dimen name="smartbar_button_margin">4dp</dimen>
     <dimen name="smartbar_button_padding">6dp</dimen>
+    <dimen name="smartbar_candidate_textSize">14sp</dimen>
+    <dimen name="smartbar_candidate_marginH">16dp</dimen>
+    <dimen name="smartbar_divider_width">1dp</dimen>
 
     <dimen name="fab_margin">16dp</dimen>
 

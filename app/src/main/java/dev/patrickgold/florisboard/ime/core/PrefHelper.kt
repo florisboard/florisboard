@@ -28,6 +28,7 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.VelocityThreshold
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
+import dev.patrickgold.florisboard.ime.text.smartbar.CandidateView
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.util.TimeUtil
 import dev.patrickgold.florisboard.util.VersionName
@@ -444,20 +445,28 @@ class PrefHelper(
     class Suggestion(private val prefHelper: PrefHelper) {
         companion object {
             const val BLOCK_POSSIBLY_OFFENSIVE =    "suggestion__block_possibly_offensive"
+            const val CLIPBOARD_CONTENT_ENABLED =   "suggestion__clipboard_content_enabled"
+            const val CLIPBOARD_CONTENT_TIMEOUT =   "suggestion__clipboard_content_timeout"
+            const val DISPLAY_MODE =                "suggestion__display_mode"
             const val ENABLED =                     "suggestion__enabled"
-            const val SUGGEST_CLIPBOARD_CONTENT =   "suggestion__suggest_clipboard_content"
             const val USE_PREV_WORDS =              "suggestion__use_prev_words"
         }
 
         var blockPossiblyOffensive: Boolean
             get() =  prefHelper.getPref(BLOCK_POSSIBLY_OFFENSIVE, true)
             set(v) = prefHelper.setPref(BLOCK_POSSIBLY_OFFENSIVE, v)
+        var clipboardContentEnabled: Boolean
+            get() =  prefHelper.getPref(CLIPBOARD_CONTENT_ENABLED, false)
+            set(v) = prefHelper.setPref(CLIPBOARD_CONTENT_ENABLED, v)
+        var clipboardContentTimeout: Int
+            get() =  prefHelper.getPref(CLIPBOARD_CONTENT_TIMEOUT, 30)
+            set(v) = prefHelper.setPref(CLIPBOARD_CONTENT_TIMEOUT, v)
+        var displayMode: CandidateView.DisplayMode
+            get() =  CandidateView.DisplayMode.fromString(prefHelper.getPref(DISPLAY_MODE, CandidateView.DisplayMode.DYNAMIC_SCROLLABLE.toString()))
+            set(v) = prefHelper.setPref(DISPLAY_MODE, v)
         var enabled: Boolean
             get() =  prefHelper.getPref(ENABLED, true)
             set(v) = prefHelper.setPref(ENABLED, v)
-        var suggestClipboardContent: Boolean
-            get() =  prefHelper.getPref(SUGGEST_CLIPBOARD_CONTENT, false)
-            set(v) = prefHelper.setPref(SUGGEST_CLIPBOARD_CONTENT, v)
         var usePrevWords: Boolean
             get() =  prefHelper.getPref(USE_PREV_WORDS, true)
             set(v) = prefHelper.setPref(USE_PREV_WORDS, v)

@@ -176,4 +176,15 @@
         <item>follow_system</item>
         <item>follow_time</item>
     </string-array>
+
+    <string-array name="pref__suggestion__display_mode__entries">
+        <item>@string/pref__suggestion__display_mode__classic</item>
+        <item>@string/pref__suggestion__display_mode__dynamic</item>
+        <item>@string/pref__suggestion__display_mode__dynamic_scrollable</item>
+    </string-array>
+    <string-array name="pref__suggestion__display_mode__values">
+        <item>classic</item>
+        <item>dynamic</item>
+        <item>dynamic_scrollable</item>
+    </string-array>
 </resources>

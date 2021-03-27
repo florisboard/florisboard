@@ -21,6 +21,16 @@
             app:title="@string/pref__suggestion__enabled__label"
             app:summary="@string/pref__suggestion__enabled__summary"/>
 
+        <ListPreference
+            android:defaultValue="dynamic_scrollable"
+            app:dependency="suggestion__enabled"
+            app:entries="@array/pref__suggestion__display_mode__entries"
+            app:entryValues="@array/pref__suggestion__display_mode__values"
+            app:key="suggestion__display_mode"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__suggestion__display_mode__label"
+            app:useSimpleSummaryProvider="true"/>
+
         <SwitchPreferenceCompat
             android:defaultValue="true"
             app:dependency="suggestion__enabled"
@@ -40,10 +50,22 @@
         <SwitchPreferenceCompat
             android:defaultValue="true"
             app:dependency="suggestion__enabled"
-            app:key="suggestion__suggest_clipboard_content"
+            app:key="suggestion__clipboard_content_enabled"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__suggestion__suggest_clipboard_content__label"
-            app:summary="@string/pref__suggestion__suggest_clipboard_content__summary"/>
+            app:title="@string/pref__suggestion__clipboard_content_enabled__label"
+            app:summary="@string/pref__suggestion__clipboard_content_enabled__summary"/>
+
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="60"
+            app:dependency="suggestion__clipboard_content_enabled"
+            app:key="suggestion__clipboard_content_timeout"
+            app:min="30"
+            app:max="150"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__suggestion__clipboard_content_timeout__label"
+            app:seekBarIncrement="5"
+            app:unit=" s"/>
 
     </PreferenceCategory>
 
