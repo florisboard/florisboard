@@ -18,6 +18,9 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewGroup
@@ -30,6 +33,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.text.gestures.Gesture
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -39,6 +43,7 @@ import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
+import timber.log.Timber
 import kotlin.math.roundToInt
 
 /**
@@ -49,8 +54,10 @@ import kotlin.math.roundToInt
  *
  * @property florisboard Reference to instance of core class [FlorisBoard].
  */
-class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.Listener,
+class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.Listener, Gesture.Listener,
     ThemeManager.OnThemeUpdatedListener {
+    private var gestureData: MutableList<Gesture.Detector.Position> = mutableListOf()
+    private var gesturing: Boolean = false
     private var activeKeyViews: MutableMap<Int, KeyView> = mutableMapOf()
     private var initialKeyCodes: MutableMap<Int, Int> = mutableMapOf()
 
@@ -68,6 +75,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val themeManager: ThemeManager = ThemeManager.default()
     private val swipeGestureDetector = SwipeGesture.Detector(context, this)
+    private val gestureDetector = Gesture.Detector(context, this)
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -88,6 +96,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         if (isLoadingPlaceholderKeyboard) {
             computedLayout = ComputedLayoutData.PRE_GENERATED_LOADING_KEYBOARD
         }
+        setWillNotDraw(false)
     }
 
     /**
@@ -183,6 +192,20 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             return true
         }
 
+        if (gestureDetector.onTouchEvent(event) && event.actionMasked != MotionEvent.ACTION_UP) {
+            for (pointerIndex in 0 until event.pointerCount) {
+                val pointerId = event.getPointerId(pointerIndex)
+                sendFlorisTouchEvent(event, pointerIndex, pointerId, MotionEvent.ACTION_CANCEL)
+                activeKeyViews.remove(pointerId)
+            }
+            invalidate()
+            this.gesturing = true
+            return true
+        } else {
+            this.gesturing = false
+            this.gestureData = arrayListOf()
+        }
+
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 florisboard?.textInputManager?.inputEventDispatcher?.send(InputKeyEvent.down(KeyData.INTERNAL_BATCH_EDIT))
@@ -227,6 +250,10 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             else -> return false
         }
         return true
+    }
+
+    override fun onGestureAdd(gesture: MutableList<Gesture.Detector.Position>) {
+        this.gestureData = gesture
     }
 
     /**
@@ -276,7 +303,8 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             initialKeyCodes[event.pointerId] == KeyCode.SHIFT && activeKeyViews[event.pointerId]?.data?.code != KeyCode.SHIFT &&
                 event.type == SwipeGesture.Type.TOUCH_UP -> {
                 activeKeyViews[event.pointerId]?.let {
-                    florisboard?.textInputManager?.inputEventDispatcher?.send(InputKeyEvent.up(it.popupManager.getActiveKeyData(it) ?: it.data))
+                    florisboard?.textInputManager?.inputEventDispatcher?.send(InputKeyEvent.up(it.popupManager.getActiveKeyData(it)
+                        ?: it.data))
                     florisboard?.textInputManager?.inputEventDispatcher?.send(InputKeyEvent.cancel(KeyData.SHIFT))
                 }
                 true
@@ -343,10 +371,10 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         val keyMarginH: Int
         val keyMarginV: Int
 
-        if (isSmartbarKeyboardView){
+        if (isSmartbarKeyboardView) {
             keyMarginH = resources.getDimension(R.dimen.key_marginH).toInt()
             keyMarginV = resources.getDimension(R.dimen.key_marginV).toInt()
-        }else {
+        } else {
             keyMarginV = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingVertical, context).toInt()
             keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
         }
@@ -361,7 +389,11 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             MeasureSpec.getSize(heightMeasureSpec).toFloat()
         } else {
             (florisboard?.inputView?.desiredTextKeyboardViewHeight ?: MeasureSpec.getSize(heightMeasureSpec).toFloat())
-        } * if (isPreviewMode) { 0.90f } else { 1.00f }
+        } * if (isPreviewMode) {
+            0.90f
+        } else {
+            1.00f
+        }
         val layoutSize = computedLayout?.arrangement?.size?.toFloat() ?: 4.0f
         desiredKeyHeight = when {
             isSmartbarKeyboardView -> {
@@ -411,6 +443,22 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         }
     }
 
+    private val paint = Paint().apply {
+        color = Color.GREEN
+        alpha = 100
+        strokeWidth = 10.0f
+    }
+
+    override fun dispatchDraw(canvas: Canvas?) {
+        super.dispatchDraw(canvas)
+        // draw a line if gesturing:
+        if (gesturing && gestureData.isNotEmpty()) {
+            for (i in 0 until gestureData.size - 1){
+                canvas?.drawLine(gestureData[i].x, gestureData[i].y, gestureData[i+1].x, gestureData[i+1].y, paint)
+            }
+        }
+    }
+
     /**
      * Queues a redraw for all keys. The ThemeManager's event automatically triggers an invalidate
      * call on the KeyView's, so no need to manually loop through all KeyViews here.
@@ -432,5 +480,15 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
                 }
             }
         }
+    }
+
+    override fun onGestureComplete(event: Gesture.Event): Boolean {
+        Timber.d("Called with gesture: $event")
+        gesturing = false
+        invalidate()
+
+        FlorisBoard.getInstance().activeEditorInstance.commitText("heyo")
+
+        return true
     }
 }
