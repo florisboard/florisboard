@@ -34,6 +34,7 @@ import android.widget.OverScroller
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
@@ -48,13 +49,14 @@ import kotlin.collections.ArrayList
  */
 class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
     private var themeManager: ThemeManager? = null
+    private var florisClipboardManager: FlorisClipboardManager? = null
     private var eventListener: WeakReference<SmartbarView.EventListener?> = WeakReference(null)
-    private var clipboardContentTimeout: Int = 60_000
     private var displayMode: DisplayMode = DisplayMode.DYNAMIC_SCROLLABLE
 
     private val candidates: ArrayList<String> = ArrayList()
-    private var clipboardCandidate: ClipboardItem? = null
-    private var clipboardCandidateTime: Long = 0
+    private var clipboardItem: ClipboardItem? = null
+    private var clipboardItemTime: Long = 0
+    private var clipboardItemTimeout: Int = 60_000
     private var computedCandidates: ArrayList<ComputedCandidate> = ArrayList()
     private var computedCandidatesWidthPx: Int = 0
     private var selectedIndex: Int = -1
@@ -94,6 +96,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         super.onAttachedToWindow()
         themeManager = ThemeManager.defaultOrNull()
         themeManager?.registerOnThemeUpdatedListener(this)
+        florisClipboardManager = FlorisClipboardManager.getInstanceOrNull()
         updateCandidates(candidates)
     }
 
@@ -101,6 +104,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         super.onDetachedFromWindow()
         themeManager?.unregisterOnThemeUpdatedListener(this)
         themeManager = null
+        florisClipboardManager = null
         candidates.clear()
         velocityTracker?.recycle()
         velocityTracker = null
@@ -114,9 +118,9 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         recomputeCandidates()
     }
 
-    fun updateClipboardCandidate(newClipboardCandidate: ClipboardItem) {
-        clipboardCandidate = newClipboardCandidate
-        clipboardCandidateTime = System.currentTimeMillis()
+    fun updateClipboardItem(newClipboardCandidate: ClipboardItem) {
+        clipboardItem = newClipboardCandidate
+        clipboardItemTime = System.currentTimeMillis()
         recomputeCandidates()
     }
 
@@ -125,8 +129,8 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
     }
 
     fun updateDisplaySettings(newDisplayMode: DisplayMode, newClipboardContentTimeout: Int) {
-        if (newClipboardContentTimeout != clipboardContentTimeout) {
-            clipboardContentTimeout = newClipboardContentTimeout
+        if (newClipboardContentTimeout != clipboardItemTimeout) {
+            clipboardItemTimeout = newClipboardContentTimeout
         }
         if (newDisplayMode != displayMode) {
             displayMode = newDisplayMode
@@ -137,15 +141,17 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
 
     private fun recomputeCandidates() {
         computedCandidates.clear()
-        if (clipboardCandidate != null && System.currentTimeMillis() - clipboardCandidateTime > clipboardContentTimeout) {
-            clipboardCandidate = null
+        if (clipboardItem != null && System.currentTimeMillis() - clipboardItemTime > clipboardItemTimeout) {
+            clipboardItem = null
         }
         val classicCandidateWidth = (measuredWidth - 2 * dividerWidth) / 3
         val maxDynamicCandidateWidth = (measuredWidth * 0.7).toInt()
+        val clipItem = clipboardItem
+        val clipItemAvailable = clipItem != null && florisClipboardManager?.canBePasted(clipItem) == true
         computedCandidatesWidthPx = 0
         if (candidates.isEmpty()) {
-            if (clipboardCandidate != null) {
-                computedCandidates.add(ComputedCandidate.Clip(clipboardCandidate!!, Rect(
+            if (clipItemAvailable) {
+                computedCandidates.add(ComputedCandidate.Clip(clipItem!!, Rect(
                     0,
                     0,
                     measuredWidth,
@@ -162,7 +168,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                     )))
                 }
             }
-        } else if (candidates.size == 1 && clipboardCandidate == null) {
+        } else if (candidates.size == 1 && !clipItemAvailable) {
             computedCandidates.add(ComputedCandidate.Word(candidates[0], Rect(
                 0,
                 0,
@@ -172,7 +178,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         } else {
             when (displayMode) {
                 DisplayMode.CLASSIC -> {
-                    if (clipboardCandidate == null) {
+                    if (!clipItemAvailable) {
                         for (n in 0 until candidates.size.coerceAtMost(3)) {
                             val left = (classicCandidateWidth + dividerWidth) * n
                             computedCandidates.add(ComputedCandidate.Word(candidates[n], Rect(
@@ -183,7 +189,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                             )))
                         }
                     } else {
-                        computedCandidates.add(ComputedCandidate.Clip(clipboardCandidate!!, Rect(
+                        computedCandidates.add(ComputedCandidate.Clip(clipItem!!, Rect(
                             0,
                             0,
                             classicCandidateWidth,
@@ -212,9 +218,9 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                     }
                 }
                 DisplayMode.DYNAMIC -> {
-                    if (clipboardCandidate != null) {
-                        val candidateWidth = (textPaint.measureText(clipboardCandidate!!.text).toInt() + candidateMarginH + measuredHeight * 4 / 6).coerceAtMost(maxDynamicCandidateWidth)
-                        computedCandidates.add(ComputedCandidate.Clip(clipboardCandidate!!, Rect(
+                    if (clipItemAvailable) {
+                        val candidateWidth = (textPaint.measureText(clipItem!!.stringRepresentation()).toInt() + candidateMarginH + measuredHeight * 4 / 6).coerceAtMost(maxDynamicCandidateWidth)
+                        computedCandidates.add(ComputedCandidate.Clip(clipItem, Rect(
                             0,
                             0,
                             candidateWidth,
@@ -250,9 +256,9 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                     }
                 }
                 DisplayMode.DYNAMIC_SCROLLABLE -> {
-                    if (clipboardCandidate != null) {
-                        val candidateWidth = (textPaint.measureText(clipboardCandidate!!.text).toInt() + candidateMarginH + measuredHeight * 4 / 6).coerceAtMost(maxDynamicCandidateWidth)
-                        computedCandidates.add(ComputedCandidate.Clip(clipboardCandidate!!, Rect(
+                    if (clipItemAvailable) {
+                        val candidateWidth = (textPaint.measureText(clipItem!!.stringRepresentation()).toInt() + candidateMarginH + measuredHeight * 4 / 6).coerceAtMost(maxDynamicCandidateWidth)
+                        computedCandidates.add(ComputedCandidate.Clip(clipItem, Rect(
                             0,
                             0,
                             candidateWidth,
@@ -431,7 +437,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                         pasteDrawable?.draw(canvas)
                         val pdWidth = geometry.height().toFloat()
                         val ellipsizedWord = TextUtils.ellipsize(
-                            clipboardItem.text, textPaint, geometry.width().toFloat() - pdWidth, TextUtils.TruncateAt.MIDDLE
+                            clipboardItem.stringRepresentation(), textPaint, geometry.width().toFloat() - pdWidth, TextUtils.TruncateAt.MIDDLE
                         ).toString()
                         canvas.drawText(
                             ellipsizedWord,
