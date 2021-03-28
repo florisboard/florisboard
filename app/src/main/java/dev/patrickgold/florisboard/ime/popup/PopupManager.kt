@@ -152,10 +152,10 @@ class PopupManager<T_KBD: View, T_KV: View>(
             when (keyboardView.resources.configuration.orientation) {
                 Configuration.ORIENTATION_LANDSCAPE -> {
                     if (keyboardView.isSmartbarKeyboardView) {
-                        keyPopupWidth = (keyView.measuredWidth * 0.6f).toInt()
+                        keyPopupWidth = (keyView.measuredWidth * 1.0f).toInt()
                         keyPopupHeight = (keyboardView.desiredKeyHeight * 3.0f * 1.2f).toInt()
                     } else {
-                        keyPopupWidth = (keyboardView.desiredKeyWidth * 0.6f).toInt()
+                        keyPopupWidth = (keyboardView.desiredKeyWidth * 1.0f).toInt()
                         keyPopupHeight = (keyboardView.desiredKeyHeight * 3.0f).toInt()
                     }
                 }
