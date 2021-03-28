@@ -32,16 +32,20 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.OverScroller
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
-import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.collections.ArrayList
 
+/**
+ * A candidate view allowing for easy of suggestions. Additionally it also features an integrated clipboard suggestion
+ * support, which works together with the normal suggestions provided by the NLP algorithm.
+ */
 class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
     private var themeManager: ThemeManager? = null
     private var eventListener: WeakReference<SmartbarView.EventListener?> = WeakReference(null)
@@ -60,6 +64,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
     private var candidateForeground: ThemeValue = ThemeValue.SolidColor.TRANSPARENT
     private val candidateMarginH: Int = resources.getDimensionPixelOffset(R.dimen.smartbar_candidate_marginH)
     private var dividerBackground: ThemeValue = ThemeValue.SolidColor.TRANSPARENT
+    private var dividerPaint: Paint = Paint().apply { color = Color.BLACK }
     private var dividerWidth: Int = resources.getDimensionPixelSize(R.dimen.smartbar_divider_width)
     private val pasteDrawable = ContextCompat.getDrawable(context, R.drawable.ic_content_paste)
     private var lastX: Float = 0.0f
@@ -395,13 +400,12 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas ?: return
-        Timber.i(computedCandidates.toString())
-        Timber.i(selectedIndex.toString())
+        backgroundPaint.apply { color = candidateBackground.toSolidColor().color }
+        dividerPaint.apply { color = ColorUtils.setAlphaComponent(dividerBackground.toSolidColor().color, 64) }
         textPaint.apply { color = candidateForeground.toSolidColor().color }
         for ((n, computedCandidate) in computedCandidates.withIndex()) {
             with(computedCandidate) {
                 if (n == selectedIndex) {
-                    backgroundPaint.apply { color = candidateBackground.toSolidColor().color }
                     canvas.drawRect(geometry, backgroundPaint)
                 }
                 when (this) {
@@ -440,20 +444,31 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                     }
                 }
                 if (n + 1 < computedCandidates.size) {
-                    backgroundPaint.apply { color = dividerBackground.toSolidColor().color }
                     canvas.drawRect(
                         geometry.right.toFloat(),
-                        (geometry.height() / 6).toFloat(),
+                        (geometry.height() / 4).toFloat(),
                         (geometry.right + dividerWidth).toFloat(),
-                        (geometry.height() * 5 / 6).toFloat(),
-                        backgroundPaint
+                        (geometry.height() * 3 / 4).toFloat(),
+                        dividerPaint
                     )
                 }
             }
         }
     }
 
+    /**
+     * Data class describing a computed candidate item.
+     *
+     * @property geometry The geometry of the computed candidate, used to position and size the item correctly when
+     *  being drawn on a canvas.
+     */
     private sealed class ComputedCandidate(val geometry: Rect) {
+        /**
+         * Computed word candidate, used for suggestions provided by the NLP algorithm.
+         *
+         * @property word The word this computed candidate item represents. Used in the callback to provide which word
+         *  should be filled out.
+         */
         class Word(
             val word: String,
             geometry: Rect
@@ -463,6 +478,10 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
             }
         }
 
+        /**
+         * Computed word candidate, used for filling space when [DisplayMode.CLASSIC] is active. Does not hold any data
+         * and also does nothing when clicked on.
+         */
         class Empty(
             geometry: Rect
         ) : ComputedCandidate(geometry) {
@@ -471,16 +490,25 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
             }
         }
 
+        /**
+         * Computed word candidate, used for clipboard paste suggestions.
+         *
+         * @property clipboardItem The clipboard item this computed candidate item represents. Used in the callback to
+         *  provide which item should be pasted.
+         */
         class Clip(
             val clipboardItem: ClipboardItem,
             geometry: Rect
         ) : ComputedCandidate(geometry) {
             override fun toString(): String {
-                return "Word { clipboardItem=$clipboardItem, geometry=$geometry }"
+                return "Clip { clipboardItem=$clipboardItem, geometry=$geometry }"
             }
         }
     }
 
+    /**
+     * Enum class defining the display mode for the candidate view.
+     */
     enum class DisplayMode {
         CLASSIC,
         DYNAMIC,
