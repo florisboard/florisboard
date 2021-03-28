@@ -24,6 +24,7 @@ import android.widget.Toast
 import android.widget.ViewFlipper
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.dictionary.Dictionary
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
@@ -272,6 +273,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
         updateCapsState()
         setActiveKeyboardMode(keyboardMode)
+        smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
         smartbarView?.updateSmartbarState()
     }
 
@@ -351,7 +353,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         val suggestions = it.getTokenPredictions(
                             precedingTokens = listOf(),
                             currentToken = Token(activeEditorInstance.cachedInput.currentWord.text),
-                            maxSuggestionCount = 3,
+                            maxSuggestionCount = 16,
                             allowPossiblyOffensive = !florisboard.prefs.suggestion.blockPossiblyOffensive
                         ).toStringList()
                         if (BuildConfig.DEBUG) {
@@ -365,7 +367,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     }
                 }
             } else {
-                smartbarView?.setCandidateSuggestionWords(System.nanoTime(), listOf())
+                smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
             }
         }
     }
@@ -418,6 +420,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     override fun onSmartbarCandidatePressed(word: String) {
         activeEditorInstance.commitCompletion(word)
+    }
+
+    override fun onSmartbarClipboardCandidatePressed(clipboardItem: ClipboardItem) {
+        activeEditorInstance.commitClipboardItem(clipboardItem)
     }
 
     override fun onSmartbarPrivateModeButtonClicked() {
@@ -692,28 +698,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             }
             KeyCode.CLIPBOARD_CUT -> activeEditorInstance.performClipboardCut()
             KeyCode.CLIPBOARD_COPY -> activeEditorInstance.performClipboardCopy()
-            KeyCode.CLIPBOARD_PASTE -> {
-                activeEditorInstance.performClipboardPaste()
-                smartbarView?.resetClipboardSuggestion()
-            }
+            KeyCode.CLIPBOARD_PASTE -> activeEditorInstance.performClipboardPaste()
             KeyCode.CLIPBOARD_SELECT -> handleClipboardSelect()
             KeyCode.CLIPBOARD_SELECT_ALL -> activeEditorInstance.performClipboardSelectAll()
-            KeyCode.DELETE -> {
-                handleDelete()
-                if (ev.action == InputKeyEvent.Action.DOWN_UP || ev.action == InputKeyEvent.Action.UP) {
-                    smartbarView?.resetClipboardSuggestion()
-                }
-            }
-            KeyCode.DELETE_WORD -> {
-                handleDeleteWord()
-                if (ev.action == InputKeyEvent.Action.DOWN_UP || ev.action == InputKeyEvent.Action.UP) {
-                    smartbarView?.resetClipboardSuggestion()
-                }
-            }
-            KeyCode.ENTER -> {
-                handleEnter()
-                smartbarView?.resetClipboardSuggestion()
-            }
+            KeyCode.DELETE -> handleDelete()
+            KeyCode.DELETE_WORD -> handleDeleteWord()
+            KeyCode.ENTER -> handleEnter()
             KeyCode.INTERNAL_BATCH_EDIT -> {
                 florisboard.endInternalBatchEdit()
                 return
@@ -777,7 +767,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         }
                     }
                 }
-                smartbarView?.resetClipboardSuggestion()
             }
         }
         if (data.code != KeyCode.SHIFT && !capsLock && !inputEventDispatcher.isPressed(KeyCode.SHIFT)) {

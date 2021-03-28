@@ -1,31 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="SmartbarCandidate">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:background">@drawable/button_transparent_bg_on_press</item>
-        <item name="android:fontFamily">sans-serif</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
     <style name="SmartbarContainer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center</item>
         <item name="android:orientation">horizontal</item>
-    </style>
-
-    <style name="SmartbarDivider">
-        <item name="android:layout_width">1dp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">0</item>
-        <item name="android:layout_marginTop">@dimen/smartbar_button_margin</item>
-        <item name="android:layout_marginBottom">@dimen/smartbar_button_margin</item>
-        <item name="android:background">?semiTransparentColor</item>
     </style>
 
     <style name="SmartbarQuickAction" parent="Widget.AppCompat.Button">
@@ -37,17 +17,6 @@
         <item name="android:padding">@dimen/smartbar_button_padding</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:tint">#000000</item>
-    </style>
-
-    <style name="SmartbarQuickAction.ClipboardSuggestion">
-        <item name="android:layout_width">200dp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@drawable/shape_rect_rounded_2</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:ellipsize">marquee</item>
-        <item name="android:fadingEdge">horizontal</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textStyle">normal</item>
     </style>
 
     <style name="SmartbarQuickAction.Toggle">

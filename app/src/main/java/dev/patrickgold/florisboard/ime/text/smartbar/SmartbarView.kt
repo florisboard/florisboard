@@ -19,12 +19,12 @@ package dev.patrickgold.florisboard.ime.text.smartbar
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.widget.Button
 import androidx.annotation.IdRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SmartbarBinding
+import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
@@ -32,8 +32,6 @@ import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.util.setBackgroundTintColor2
-import dev.patrickgold.florisboard.util.setDrawableTintColor2
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -51,7 +49,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val themeManager = ThemeManager.default()
-    private var eventListener: WeakReference<EventListener?>? = null
+    private var eventListener: WeakReference<EventListener?> = WeakReference(null)
     private val mainScope = MainScope()
     private var lastSuggestionInitDate: Long = 0
 
@@ -66,14 +64,11 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
             binding.quickActionToggle.rotation = if (v) 180.0f else 0.0f
             field = v
         }
-    private var shouldSuggestClipboardContents: Boolean = false
 
     private lateinit var binding: SmartbarBinding
     private var indexedActionStartArea: MutableList<Int> = mutableListOf()
     private var indexedMainArea: MutableList<Int> = mutableListOf()
     private var indexedActionEndArea: MutableList<Int> = mutableListOf()
-
-    private var candidateViewList: MutableList<Button> = mutableListOf()
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -102,11 +97,9 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
             indexedActionEndArea.add(view.id)
         }
 
-        candidateViewList.add(binding.candidate0)
-        candidateViewList.add(binding.candidate1)
-        candidateViewList.add(binding.candidate2)
+        binding.backButton.setOnClickListener { eventListener.get()?.onSmartbarBackButtonPressed() }
 
-        binding.backButton.setOnClickListener { eventListener?.get()?.onSmartbarBackButtonPressed() }
+        binding.candidates.updateDisplaySettings(prefs.suggestion.displayMode, prefs.suggestion.clipboardContentTimeout * 1_000)
 
         mainScope.launch(Dispatchers.Default) {
             florisboard?.let {
@@ -120,28 +113,6 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                     binding.clipboardCursorRow.updateVisibility()
                 }
             }
-        }
-
-        binding.candidate0.setOnClickListener {
-            if (it is Button) {
-                eventListener?.get()?.onSmartbarCandidatePressed(it.text.toString())
-            }
-        }
-        binding.candidate1.setOnClickListener {
-            if (it is Button) {
-                eventListener?.get()?.onSmartbarCandidatePressed(it.text.toString())
-            }
-        }
-        binding.candidate2.setOnClickListener {
-            if (it is Button) {
-                eventListener?.get()?.onSmartbarCandidatePressed(it.text.toString())
-            }
-        }
-
-        binding.clipboardSuggestion.setOnClickListener {
-            florisboard?.activeEditorInstance?.performClipboardPaste()
-            shouldSuggestClipboardContents = false
-            updateSmartbarState()
         }
 
         mainScope.launch(Dispatchers.Default) {
@@ -159,13 +130,13 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
         }
 
         binding.privateModeButton.setOnClickListener {
-            eventListener?.get()?.onSmartbarPrivateModeButtonClicked()
+            eventListener.get()?.onSmartbarPrivateModeButtonClicked()
         }
 
         for (quickAction in binding.quickActions.children) {
             if (quickAction is SmartbarQuickActionButton) {
                 quickAction.id.let { quickActionId ->
-                    quickAction.setOnClickListener { eventListener?.get()?.onSmartbarQuickActionPressed(quickActionId) }
+                    quickAction.setOnClickListener { eventListener.get()?.onSmartbarQuickActionPressed(quickActionId) }
                 }
             }
         }
@@ -189,7 +160,6 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
     }
 
     override fun onDetachedFromWindow() {
-        eventListener = null
         florisboard?.textInputManager?.unregisterSmartbarView(this)
         themeManager.unregisterOnThemeUpdatedListener(this)
         super.onDetachedFromWindow()
@@ -248,6 +218,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
      */
     fun updateSmartbarState() {
         binding.clipboardCursorRow.updateVisibility()
+        binding.candidates.updateDisplaySettings(prefs.suggestion.displayMode, prefs.suggestion.clipboardContentTimeout * 1_000)
         when (florisboard) {
             null -> configureFeatureVisibility(
                 actionStartAreaVisible = false,
@@ -276,10 +247,6 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                             KeyboardMode.PHONE2 -> null
                             else -> when {
                                 florisboard.activeEditorInstance.isComposingEnabled &&
-                                    shouldSuggestClipboardContents &&
-                                    florisboard.activeEditorInstance.selection.isCursorMode
-                                -> R.id.clipboard_suggestion_row
-                                florisboard.activeEditorInstance.isComposingEnabled &&
                                         florisboard.activeEditorInstance.selection.isCursorMode
                                     -> R.id.candidates
                                 else -> R.id.clipboard_cursor_row
@@ -300,55 +267,21 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
     }
 
     fun onPrimaryClipChanged() {
-        if (prefs.suggestion.enabled && prefs.suggestion.suggestClipboardContent &&
-            florisboard?.activeEditorInstance?.isPrivateMode == false ) {
-
-                // only suggest if mime types make sense.
-                shouldSuggestClipboardContents = florisboard.florisClipboardManager?.canBePasted(
-                    florisboard.florisClipboardManager?.primaryClip
-                ) == true
-
-            val item = florisboard.florisClipboardManager?.primaryClip
-            when {
-                item?.text != null -> {
-                    binding.clipboardSuggestion.text = item.text
-                }
-                item?.uri != null -> {
-                    binding.clipboardSuggestion.text = "(Image) " + item.uri.toString()
-                }
-                else -> {
-                    binding.clipboardSuggestion.text = item?.text ?: "(Error while retrieving clipboard data)"
-                }
-            }
+        if (prefs.suggestion.enabled && prefs.suggestion.clipboardContentEnabled && florisboard?.activeEditorInstance?.isPrivateMode == false ) {
+            florisboard.florisClipboardManager?.primaryClip?.let { binding.candidates.updateClipboardItem(it) }
             updateSmartbarState()
         }
     }
 
-    fun resetClipboardSuggestion() {
-        shouldSuggestClipboardContents = false
-        updateSmartbarState()
-    }
-
-    fun setCandidateSuggestionWords(suggestionInitDate: Long, suggestions: List<String>) {
+    fun setCandidateSuggestionWords(suggestionInitDate: Long, suggestions: List<String>?) {
         if (suggestionInitDate > lastSuggestionInitDate) {
             lastSuggestionInitDate = suggestionInitDate
-            binding.candidate1.text = suggestions.getOrNull(0) ?: ""
-            binding.candidate0.text = suggestions.getOrNull(1) ?: ""
-            binding.candidate2.text = suggestions.getOrNull(2) ?: ""
+            binding.candidates.updateCandidates(suggestions)
         }
     }
 
     fun updateCandidateSuggestionCapsState() {
-        val tim = florisboard?.textInputManager ?: return
-        if (tim.capsLock) {
-            binding.candidate0.text = binding.candidate0.text.toString().toUpperCase(florisboard.activeSubtype.locale)
-            binding.candidate1.text = binding.candidate1.text.toString().toUpperCase(florisboard.activeSubtype.locale)
-            binding.candidate2.text = binding.candidate2.text.toString().toUpperCase(florisboard.activeSubtype.locale)
-        } else {
-            binding.candidate0.text = binding.candidate0.text.toString().toLowerCase(florisboard.activeSubtype.locale)
-            binding.candidate1.text = binding.candidate1.text.toString().toLowerCase(florisboard.activeSubtype.locale)
-            binding.candidate2.text = binding.candidate2.text.toString().toLowerCase(florisboard.activeSubtype.locale)
-        }
+        //
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -374,17 +307,12 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
 
     override fun onThemeUpdated(theme: Theme) {
         setBackgroundColor(theme.getAttr(Theme.Attr.SMARTBAR_BACKGROUND).toSolidColor().color)
-        setBackgroundTintColor2(binding.clipboardSuggestion, theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND).toSolidColor().color)
-        setDrawableTintColor2(binding.clipboardSuggestion, theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_FOREGROUND).toSolidColor().color)
-        binding.clipboardSuggestion.setTextColor(theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_FOREGROUND).toSolidColor().color)
-        for (view in candidateViewList) {
-            view.setTextColor(theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND).toSolidColor().color)
-        }
         invalidate()
     }
 
     fun setEventListener(listener: EventListener) {
         eventListener = WeakReference(listener)
+        binding.candidates.setEventListener(listener)
     }
 
     /**
@@ -394,6 +322,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
     interface EventListener {
         fun onSmartbarBackButtonPressed() {}
         fun onSmartbarCandidatePressed(word: String) {}
+        fun onSmartbarClipboardCandidatePressed(clipboardItem: ClipboardItem) {}
         //fun onSmartbarCandidateLongPressed() {}
         fun onSmartbarPrivateModeButtonClicked() {}
         fun onSmartbarQuickActionPressed(@IdRes quickActionId: Int) {}

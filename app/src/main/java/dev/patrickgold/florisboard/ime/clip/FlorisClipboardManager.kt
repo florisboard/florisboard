@@ -71,6 +71,10 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
             }
             return instance!!
         }
+
+        @Synchronized
+        fun getInstanceOrNull(): FlorisClipboardManager? = instance
+
         /**
          * Taken from ClipboardDescription.java from the AOSP
          *

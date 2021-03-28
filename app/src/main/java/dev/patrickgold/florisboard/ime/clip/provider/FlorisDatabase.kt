@@ -84,11 +84,20 @@ data class ClipboardItem(
         return result
     }
 
+    fun stringRepresentation(): String {
+        return when {
+            uri != null -> "(Image) $uri"
+            text != null -> text
+            else -> "#ERROR"
+        }
+    }
+
     companion object {
         /**
          * So that every item doesn't have to allocate its own array.
          */
         val TEXT_PLAIN = arrayOf("text/plain")
+
         /**
          * Returns a new ClipboardItem based on a ClipData
          *
@@ -113,7 +122,7 @@ data class ClipboardItem(
                         }
                         FlorisBoard.getInstance().context.contentResolver.insert(FlorisContentProvider.CLIPS_URI, values)
                     }
-            }else { null }
+            } else { null }
 
             val text = data.getItemAt(0).text?.toString()
             val mimeTypes = when (type) {
