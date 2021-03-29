@@ -3,7 +3,6 @@ package dev.patrickgold.florisboard.ime.text.gestures
 import android.content.Context
 import android.view.MotionEvent
 import dev.patrickgold.florisboard.R
-import timber.log.Timber
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -18,7 +17,7 @@ class GlideTypingGesture {
      *
      * @property listener The listener to report detected swipes to.
      */
-    class Detector(private val context: Context, private val listener: Listener) {
+    class Detector(context: Context, private val listener: Listener) {
         private var pointerDataMap: MutableMap<Int, PointerData> = mutableMapOf()
         var velocityThreshold: VelocityThreshold = VelocityThreshold.NORMAL
         private val keySize = context.resources.getDimensionPixelSize(R.dimen.key_width).toDouble()
