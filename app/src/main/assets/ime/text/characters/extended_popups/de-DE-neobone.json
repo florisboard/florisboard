@@ -1,0 +1,19 @@
+{
+  "type": "characters/extended_popups",
+  "name": "de-DE-neobone",
+  "authors": [ "ostrya" ],
+  "mapping": {
+    "uri": {
+      "~right": {
+        "main": { "code": -255, "label": ".com" },
+        "relevant": [
+          { "code": -255, "label": ".ch" },
+          { "code": -255, "label": ".de" },
+          { "code": -255, "label": ".at" },
+          { "code": -255, "label": ".net" }
+        ]
+      }
+    }
+  }
+}
+
