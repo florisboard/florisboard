@@ -1,0 +1,6 @@
+- Add new candidate+clipboard suggestion view (#38, #424, #425, #426)
+- Add long-press caps-lock activation vibration (#523)
+- Adjust popup width in landscape (#504)
+- Fix clipboard suggestion related bugs and improve usability
+- Fix emoji ABC button not leading back to characters (#521)
+- Fix clipboard manager item not being pasted (#481, thanks @X-yl)
