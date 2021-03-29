@@ -33,7 +33,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.PrefHelper
-import dev.patrickgold.florisboard.ime.text.gestures.Gesture
+import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingGesture
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -54,9 +54,9 @@ import kotlin.math.roundToInt
  *
  * @property florisboard Reference to instance of core class [FlorisBoard].
  */
-class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.Listener, Gesture.Listener,
+class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.Listener, GlideTypingGesture.Listener,
     ThemeManager.OnThemeUpdatedListener {
-    private var gestureData: MutableList<Gesture.Detector.Position> = mutableListOf()
+    private var gestureData: MutableList<GlideTypingGesture.Detector.Position> = mutableListOf()
     private var gesturing: Boolean = false
     private var activeKeyViews: MutableMap<Int, KeyView> = mutableMapOf()
     private var initialKeyCodes: MutableMap<Int, Int> = mutableMapOf()
@@ -75,7 +75,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val themeManager: ThemeManager = ThemeManager.default()
     private val swipeGestureDetector = SwipeGesture.Detector(context, this)
-    private val gestureDetector = Gesture.Detector(context, this)
+    private val gestureDetector = GlideTypingGesture.Detector(context, this)
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -150,6 +150,9 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     override fun onWindowShown() {
         swipeGestureDetector.apply {
             distanceThreshold = prefs.gestures.swipeDistanceThreshold
+            velocityThreshold = prefs.gestures.swipeVelocityThreshold
+        }
+        gestureDetector.apply {
             velocityThreshold = prefs.gestures.swipeVelocityThreshold
         }
         for (row in children) {
@@ -252,7 +255,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         return true
     }
 
-    override fun onGestureAdd(gesture: MutableList<Gesture.Detector.Position>) {
+    override fun onGestureAdd(gesture: MutableList<GlideTypingGesture.Detector.Position>) {
         this.gestureData = gesture
     }
 
@@ -482,13 +485,10 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         }
     }
 
-    override fun onGestureComplete(event: Gesture.Event): Boolean {
+    override fun onGestureComplete(event: GlideTypingGesture.Event): Boolean {
         Timber.d("Called with gesture: $event")
         gesturing = false
         invalidate()
-
-        FlorisBoard.getInstance().activeEditorInstance.commitText("heyo")
-
         return true
     }
 }
