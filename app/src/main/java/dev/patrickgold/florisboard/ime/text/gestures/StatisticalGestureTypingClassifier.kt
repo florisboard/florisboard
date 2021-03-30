@@ -19,7 +19,7 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
     private val gesture = Gesture()
     private var keysByCharacter: SparseArray<FlorisKeyData> = SparseArray()
     private var words: Array<String> = arrayOf()
-    private var wordFrequencies: Array<Int> = arrayOf()
+    private var wordFrequencies: IntArray = intArrayOf()
     private var keys: ArrayList<FlorisKeyData> = arrayListOf()
     private lateinit var pruner: Pruner
 
@@ -27,7 +27,7 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
         private const val PRUNING_LENGTH_THRESHOLD = 8.42
         private const val SAMPLING_POINTS: Int = 300
 
-        private const val MIN_DIST_TO_ADD = 2000
+        private const val MIN_DIST_TO_ADD = 0
 
         /**
          * Standard deviation of the distribution of distances between the shapes of two gestures
@@ -58,6 +58,7 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
     }
 
     override fun setLayout(computedLayoutData: ComputedLayoutData) {
+        Timber.d("Setting layout: ${computedLayoutData.name}")
         computedLayoutData.arrangement.forEach { row ->
             row.forEach {
                 keysByCharacter[it.code] = it
@@ -67,7 +68,8 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
 
     }
 
-    override fun setWordData(words: Array<String>, freqs: Array<Int>) {
+    override fun setWordData(words: Array<String>, freqs: IntArray) {
+        Timber.d("Setting word data.")
         this.words = words
         this.wordFrequencies = freqs
         this.pruner = Pruner(PRUNING_LENGTH_THRESHOLD, words, keysByCharacter)
@@ -81,20 +83,17 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
 
     override fun getSuggestions(maxSuggestionCount: Int, gestureCompleted: Boolean): List<String> {
         val candidates = arrayListOf<String>()
-        val candidateWeights = arrayListOf<Int>()
+        val candidateWeights = arrayListOf<Float>()
 
         // 'h' just because it's in the middle of the keyboard and has a typical size unlike some
         // special keys.
         val key = keysByCharacter.get('h'.toInt())
         val radius: Int = min(key.height, key.width)
         val normalizedUserGesture: Gesture = gesture.normalizeByBoxSide()
-        Timber.d("Words: ${words.asList()} ${this.keys.map { "${it.label} ${it.x} ${it.y}" }}")
         var remainingWords = pruner.pruneByExtremities(gesture, this.keys)
-        Timber.d("Remaining words: $remainingWords")
+        Timber.d("Remaining1: ${"this" in remainingWords}")
         remainingWords = pruner.pruneByLength(gesture, remainingWords, keysByCharacter)
-
-        Timber.d("Remaining words: $remainingWords")
-
+        Timber.d("Remaining2: ${"this" in remainingWords}")
 
         for (i in remainingWords.indices) {
             val word = remainingWords[i]
@@ -105,8 +104,10 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
             val shapeProbability = calcGaussianProbability(shapeDistance, 0.0f, SHAPE_STD)
             val locationProbability = calcGaussianProbability(locationDistance, 0.0f, LOCATION_STD * radius)
             val frequency = wordFrequencies[words.indexOf(word)]
-            val confidenceFloat = 1.0 / (shapeProbability * locationProbability * frequency)
-            val confidence = ((confidenceFloat) * 255).toInt()
+            val confidence= 1.0f / (shapeProbability * locationProbability * frequency)
+
+            Timber.d("$word $shapeProbability $locationProbability $frequency $confidence")
+
             var candidateDistanceSortedIndex = 0
             while (candidateDistanceSortedIndex < candidateWeights.size
                 && candidateWeights[candidateDistanceSortedIndex] <= confidence) {
@@ -192,8 +193,7 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
             val endKeys = findNClosestKeys(endX, endY, 2, keys)
             for (startKey in startKeys) {
                 for (endKey in endKeys) {
-                    Timber.d("$startKey $endKey")
-                    val keyPair: Pair<FlorisKeyData, FlorisKeyData> = Pair(startKey, endKey)
+                    val keyPair = Pair(startKey, endKey)
                     val wordsForKeys = wordTree[keyPair]
                     if (wordsForKeys != null) {
                         remainingWords.addAll(wordsForKeys)
@@ -226,6 +226,9 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
             for (word in words) {
                 val idealGesture = Gesture.generateIdealGesture(word, keysByCharacter)
                 val wordIdealLength = idealGesture.getLength()
+                if (word == "this") {
+                    Timber.d("LENGTHS: $userLength $wordIdealLength ${lengthThreshold * radius}")
+                }
                 if (abs(userLength - wordIdealLength) < lengthThreshold * radius) {
                     remainingWords.add(word)
                 }
@@ -235,14 +238,21 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
 
         companion object {
             private fun getFirstKeyLastKey(
-                word: String, keysByCharacter: SparseArray<FlorisKeyData>): Pair<FlorisKeyData, FlorisKeyData> {
+                word: String, keysByCharacter: SparseArray<FlorisKeyData>): Pair<FlorisKeyData, FlorisKeyData>? {
                 val firstLetter = word[0]
                 val lastLetter = word[word.length - 1]
-                var baseCharacter: Char = Normalizer.normalize(firstLetter.toString(), Normalizer.Form.NFD)[0]
-                val firstKey: FlorisKeyData = keysByCharacter[baseCharacter.toInt()]
-                baseCharacter = Normalizer.normalize(lastLetter.toString(), Normalizer.Form.NFD)[0]
-                val lastKey: FlorisKeyData = keysByCharacter[baseCharacter.toInt()]
-                return Pair(firstKey, lastKey)
+                val firstBaseChar = Normalizer.normalize(firstLetter.toString(), Normalizer.Form.NFD)[0]
+                val lastBaseChar = Normalizer.normalize(lastLetter.toString(), Normalizer.Form.NFD)[0]
+                return when {
+                    keysByCharacter.indexOfKey(firstBaseChar.toInt()) < 0 || keysByCharacter.indexOfKey(lastBaseChar.toInt()) < 0 -> {
+                        null
+                    }
+                    else -> {
+                        val firstKey: FlorisKeyData = keysByCharacter[firstBaseChar.toInt()]
+                        val lastKey: FlorisKeyData = keysByCharacter[lastBaseChar.toInt()]
+                        Pair(firstKey, lastKey)
+                    }
+                }
             }
 
             /**
@@ -268,8 +278,10 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
 
         init {
             for (word in words) {
-                val keyPair: Pair<FlorisKeyData, FlorisKeyData> = getFirstKeyLastKey(word, keysByCharacter)
-                wordTree.getOrElse(keyPair, { arrayListOf() }).add(word)
+                val keyPair = getFirstKeyLastKey(word, keysByCharacter)
+                keyPair?.let {
+                    wordTree.getOrPut(keyPair, { arrayListOf() }).add(word)
+                }
             }
         }
     }
@@ -301,7 +313,6 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
                         val baseCharacter: Char = Normalizer.normalize(lc.toString(), Normalizer.Form.NFD)[0]
                         key = keysByCharacter[baseCharacter.toInt()]
                         if (key == null) {
-                            Timber.w("Key $lc not found on keyboard!")
                             continue
                         }
                     }
@@ -322,7 +333,6 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
                         idealGesture.addPoint(
                             key.x - key.width / 4.0f, key.y + key.height / 4.0f)
                     } else {
-                        Timber.d("Adding pt: ${key.x} ${key.y}")
                         idealGesture.addPoint(key.x, key.y)
                     }
                     previousLetter = lc

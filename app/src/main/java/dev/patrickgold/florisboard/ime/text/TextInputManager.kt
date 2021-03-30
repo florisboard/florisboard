@@ -28,6 +28,7 @@ import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.dictionary.Dictionary
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.nlp.Token
@@ -40,9 +41,13 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import kotlinx.coroutines.*
+import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 import kotlin.math.roundToLong
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 /**
  * TextInputManager is responsible for managing everything which is related to text input. All of
@@ -329,6 +334,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             val keyboardView = keyboardViews[KeyboardMode.CHARACTERS]
             keyboardView?.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, newSubtype, florisboard.prefs).await()
             keyboardView?.updateVisibility()
+
+            keyboardView?.initGestureClassifier()
         }
     }
 
