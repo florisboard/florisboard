@@ -75,6 +75,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     private val swipeGestureDetector = SwipeGesture.Detector(context, this)
     private val gestureDetector = GlideTypingGesture.Detector(context, this)
     private var gestureTypingClassifier: GestureTypingClassifier = StatisticalGestureTypingClassifier()
+    private val gestureDataForDrawing: MutableList<GlideTypingGesture.Detector.Position> = mutableListOf()
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -281,10 +282,6 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         return true
     }
 
-    override fun onGestureAdd(gesture: MutableList<GlideTypingGesture.Detector.Position>) {
-        gestureTypingClassifier.addGesturePoint(gesture.last())
-    }
-
     /**
      * Sends a touch [event] to the active key view which is associated with given [pointerId]. The action of the
      * event is set to [actionParam]. Normalizes passed actions (ACTION_POINTER_* will be converted to ACTION_*).
@@ -475,18 +472,19 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     private val paint = Paint().apply {
         color = Color.GREEN
         alpha = 100
-        strokeWidth = 10.0f
     }
 
     override fun dispatchDraw(canvas: Canvas?) {
         super.dispatchDraw(canvas)
         // draw a line if gesturing:
-        val gestureData = (gestureTypingClassifier as StatisticalGestureTypingClassifier).gesture
-        if (gesturing && gestureData.xs.isNotEmpty()) {
-            for (i in 0 until gestureData.xs.size - 1) {
-                canvas?.drawLine(gestureData.xs[i], gestureData.ys[i], gestureData.xs[i + 1], gestureData.ys[i + 1], paint)
+        val gestureData = gestureDataForDrawing
+        if (gesturing && gestureData.isNotEmpty()) {
+            for (i in gestureData.size - 2 downTo 0) {
+                paint.strokeWidth = paint.strokeWidth * 0.95f
+                canvas?.drawLine(gestureData[i].x, gestureData[i].y, gestureData[i + 1].x, gestureData[i + 1].y, paint)
             }
         }
+        paint.strokeWidth = 40.0f
     }
 
     /**
@@ -517,9 +515,15 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         val suggestion = gestureTypingClassifier.getSuggestions(5, true)
         Timber.d("Predictions: $suggestion")
         gestureTypingClassifier.clear()
+        this.gestureDataForDrawing.clear()
 
         gesturing = false
         invalidate()
         return true
+    }
+
+    override fun onGestureAdd(gesture: MutableList<GlideTypingGesture.Detector.Position>) {
+       this.gestureDataForDrawing.add(gesture.last())
+       this.gestureTypingClassifier.addGesturePoint(gesture.last())
     }
 }

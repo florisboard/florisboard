@@ -9,9 +9,14 @@ import java.text.Normalizer
 import java.util.*
 import kotlin.math.*
 
+/**
+ * Classifies gestures by comparing them with an "ideal gesture".
+ *
+ * Check out Étienne Desticourt's excellent write up at https://github.com/AnySoftKeyboard/AnySoftKeyboard/pull/1870
+ */
 class StatisticalGestureTypingClassifier : GestureTypingClassifier {
 
-    val gesture = Gesture()
+    private val gesture = Gesture()
     private var keysByCharacter: SparseArray<FlorisKeyData> = SparseArray()
     private var words: Array<String> = arrayOf()
     private var wordFrequencies: Array<Int> = arrayOf()
