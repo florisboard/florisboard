@@ -77,7 +77,7 @@
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tema notte</string>
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Tema selezionato</string>
     <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Adatta i colori all\'app</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">I colori del tema seguono quelli dell\'app, se lo sopporta.</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">I colori del tema seguono quelli dell\'app, se lo supporta.</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Risorse dell\'app FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Memoria interna</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Provider esterno</string>
