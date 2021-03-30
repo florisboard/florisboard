@@ -1,7 +1,7 @@
 {
   "type": "characters/extended_popups",
   "name": "hu",
-  "authors": [ "zoli111" ],
+  "authors": [ "zoli111, gabik65" ],
   "mapping": {
     "all": {
       "a": {
@@ -26,20 +26,10 @@
           { "code":  337, "label": "ő" }
         ]
       },
-      "ö": {
-        "relevant": [
-          { "code":  337, "label": "ő" }
-        ]
-      },
       "u": {
         "relevant": [
           { "code":  250, "label": "ú" },
           { "code":  252, "label": "ü" },
-          { "code":  369, "label": "ű" }
-        ]
-      },
-      "ü": {
-        "relevant": [
           { "code":  369, "label": "ű" }
         ]
       },
