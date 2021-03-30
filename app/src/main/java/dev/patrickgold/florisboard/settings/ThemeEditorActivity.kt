@@ -51,7 +51,6 @@ import kotlinx.coroutines.launch
  */
 class ThemeEditorActivity : AppCompatActivity() {
     private lateinit var binding: ThemeEditorActivityBinding
-    private lateinit var layoutManager: LayoutManager
     private val mainScope = MainScope()
     private lateinit var prefs: PrefHelper
     private val themeManager: ThemeManager = ThemeManager.default()
@@ -99,7 +98,7 @@ class ThemeEditorActivity : AppCompatActivity() {
         supportActionBar?.title = resources.getString(R.string.settings__theme_editor__title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        layoutManager = LayoutManager(this).apply {
+        LayoutManager.default().apply {
             preloadComputedLayout(KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs)
         }
 
@@ -322,7 +321,7 @@ class ThemeEditorActivity : AppCompatActivity() {
             }
         }
         mainScope.launch {
-            binding.keyboardPreview.computedLayout = layoutManager.fetchComputedLayoutAsync(
+            binding.keyboardPreview.computedLayout = LayoutManager.default().fetchComputedLayoutAsync(
                 KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs
             ).await()
             binding.keyboardPreview.onThemeUpdated(editedTheme)

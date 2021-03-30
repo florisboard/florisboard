@@ -16,9 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.text.layout
 
-import android.content.Context
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.AssetManager
@@ -31,6 +28,7 @@ import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import kotlinx.coroutines.*
 import java.util.*
+import kotlin.collections.HashMap
 
 private typealias LTN = Pair<LayoutType, String>
 private typealias KMS = Pair<KeyboardMode, Subtype>
@@ -38,34 +36,62 @@ private typealias KMS = Pair<KeyboardMode, Subtype>
 /**
  * Class which manages layout loading and caching.
  */
-class LayoutManager(private val context: Context) : CoroutineScope by MainScope() {
-    private val assetManager: AssetManager = AssetManager.default()
-    private val computedLayoutCache: HashMap<KMS, Deferred<ComputedLayoutData>> = hashMapOf()
+class LayoutManager private constructor(parentScope: CoroutineScope) {
+    private val assetManager: AssetManager
+        get() = AssetManager.default()
+
+    private val layoutCache: HashMap<LTN, Layout> = hashMapOf()
+    private val computedLayoutCache: HashMap<KMS, Deferred<ComputedLayout>> = hashMapOf()
+    private val scope = CoroutineScope(parentScope.coroutineContext)
+
+    private val indexedLayoutRefs: EnumMap<LayoutType, MutableList<Pair<AssetRef, LayoutMetaOnly>>> = EnumMap(LayoutType::class.java)
+
+    companion object {
+        private var defaultInstance: LayoutManager? = null
+
+        fun init(parentScope: CoroutineScope): LayoutManager {
+            val instance = LayoutManager(parentScope)
+            defaultInstance = instance
+            return instance
+        }
+
+        fun default(): LayoutManager {
+            return defaultOrNull() ?: throw UninitializedPropertyAccessException(
+                "${LayoutManager::class.simpleName} has not been initialized previously. Make sure to call init() before using default()."
+            )
+        }
+
+        fun defaultOrNull(): LayoutManager? = defaultInstance
+    }
+
+    init {
+        for (type in LayoutType.values()) {
+            indexedLayoutRefs[type] = mutableListOf()
+        }
+        indexLayoutRefs()
+    }
 
     /**
      * Loads the layout for the specified type and name.
      *
-     * @return the [LayoutData] or null.
+     * @return the [Layout] or null.
      */
-    private fun loadLayout(ltn: LTN?) = loadLayout(ltn?.first, ltn?.second)
-    private fun loadLayout(type: LayoutType?, name: String?): LayoutData? {
+    private suspend fun loadLayout(ltn: LTN?) = loadLayout(ltn?.first, ltn?.second)
+    private suspend fun loadLayout(type: LayoutType?, name: String?): Result<Layout> {
         if (type == null || name == null) {
-            return null
+            return Result.failure(Exception("Invalid arguments passed: either type or name is null!"))
         }
-
-        val rawJsonData: String = try {
-            context.assets.open("ime/text/$type/$name.json").bufferedReader().use { it.readText() }
-        } catch (e: Exception) {
-            null
-        } ?: return null
-        val moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .add(LayoutTypeAdapter())
-            .add(KeyTypeAdapter())
-            .add(KeyVariationAdapter())
-            .build()
-        val layoutAdapter = moshi.adapter(LayoutData::class.java)
-        return layoutAdapter.fromJson(rawJsonData)
+        val ltn = LTN(type, name)
+        val cachedLayout = layoutCache[ltn]
+        return if (cachedLayout != null) {
+            Result.success(cachedLayout)
+        } else {
+            val layout = AssetManager.default().loadAsset(
+                ref = AssetRef(source = AssetSource.Assets, path = "ime/text/$type/$name.json"),
+                assetClass = Layout::class
+            ).onSuccess { layoutCache[ltn] = it }
+            layout
+        }
     }
 
     private fun loadExtendedPopups(subtype: Subtype? = null): PopupExtension {
@@ -77,10 +103,10 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
             source = AssetSource.Assets,
             path = PopupManager.POPUP_EXTENSION_PATH_REL + "/" + (subtype?.locale?.language ?: "\$default") + ".json"
         )
-        assetManager.loadAsset(langTagRef, PopupExtension::class).onSuccess {
+        AssetManager.default().loadAsset(langTagRef, PopupExtension::class).onSuccess {
             return it
         }
-        assetManager.loadAsset(langRef, PopupExtension::class).onSuccess {
+        AssetManager.default().loadAsset(langRef, PopupExtension::class).onSuccess {
             return it
         }
         return PopupExtension.empty()
@@ -95,12 +121,12 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
      *   m c c c c c c c c m
      *   m m m m m m m m m m
      *
-     * @param keyboardMode The keyboard mode for the returning [ComputedLayoutData].
+     * @param keyboardMode The keyboard mode for the returning [ComputedLayout].
      * @param subtype The subtype used for populating the extended popups.
      * @param main The main layout type and name.
      * @param modifier The modifier (mod) layout type and name.
      * @param extension The extension layout type and name.
-     * @return a [ComputedLayoutData] object, regardless of the specified LTNs or errors.
+     * @return a [ComputedLayout] object, regardless of the specified LTNs or errors.
      */
     private suspend fun mergeLayoutsAsync(
         keyboardMode: KeyboardMode,
@@ -109,17 +135,17 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
         modifier: LTN? = null,
         extension: LTN? = null,
         prefs: PrefHelper
-    ): ComputedLayoutData {
-        val computedArrangement: ComputedLayoutDataArrangement = mutableListOf()
+    ): ComputedLayout {
+        val computedArrangement: ComputedLayoutArrangement = mutableListOf()
 
-        val mainLayout = loadLayout(main)
+        val mainLayout = loadLayout(main).getOrNull()
         val modifierToLoad = if (mainLayout?.modifier != null) {
             LTN(LayoutType.CHARACTERS_MOD, mainLayout.modifier)
         } else {
             modifier
         }
-        val modifierLayout = loadLayout(modifierToLoad)
-        val extensionLayout = loadLayout(extension)
+        val modifierLayout = loadLayout(modifierToLoad).getOrNull()
+        val extensionLayout = loadLayout(extension).getOrNull()
 
         if (extensionLayout != null) {
             val row = extensionLayout.arrangement.firstOrNull()
@@ -249,7 +275,7 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
             }
         }
 
-        return ComputedLayoutData(
+        return ComputedLayout(
             keyboardMode,
             "computed",
             mainLayout?.direction ?: "ltr",
@@ -260,8 +286,6 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
     /**
      * Computes a layout for [keyboardMode] based on the given [subtype] and returns it.
      *
-     * TODO: used layouts for symbols should be dynamically selected based on subtype
-     *
      * @param keyboardMode The keyboard mode for which the layout should be computed.
      * @param subtype The subtype which localizes the computed layout.
      */
@@ -269,7 +293,7 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
         keyboardMode: KeyboardMode,
         subtype: Subtype,
         prefs: PrefHelper
-    ): ComputedLayoutData {
+    ): ComputedLayout {
         var main: LTN? = null
         var modifier: LTN? = null
         var extension: LTN? = null
@@ -277,40 +301,40 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
         when (keyboardMode) {
             KeyboardMode.CHARACTERS -> {
                 if (prefs.keyboard.numberRow) {
-                    extension = LTN(LayoutType.EXTENSION, "number_row")
+                    extension = LTN(LayoutType.EXTENSION, subtype.layoutMap.numericRow)
                 }
-                main = LTN(LayoutType.CHARACTERS, subtype.layout)
-                modifier = LTN(LayoutType.CHARACTERS_MOD, "default")
+                main = LTN(LayoutType.CHARACTERS, subtype.layoutMap.characters)
+                modifier = LTN(LayoutType.CHARACTERS_MOD, "\$default")
             }
             KeyboardMode.EDITING -> {
                 // Layout for this mode is defined in custom layout xml file.
             }
             KeyboardMode.NUMERIC -> {
-                main = LTN(LayoutType.NUMERIC, "default")
+                main = LTN(LayoutType.NUMERIC, subtype.layoutMap.numeric)
             }
             KeyboardMode.NUMERIC_ADVANCED -> {
-                main = LTN(LayoutType.NUMERIC_ADVANCED, "default")
+                main = LTN(LayoutType.NUMERIC_ADVANCED, subtype.layoutMap.numericAdvanced)
             }
             KeyboardMode.PHONE -> {
-                main = LTN(LayoutType.PHONE, "default")
+                main = LTN(LayoutType.PHONE, subtype.layoutMap.phone)
             }
             KeyboardMode.PHONE2 -> {
-                main = LTN(LayoutType.PHONE2, "default")
+                main = LTN(LayoutType.PHONE2, subtype.layoutMap.phone2)
             }
             KeyboardMode.SYMBOLS -> {
-                extension = LTN(LayoutType.EXTENSION, "number_row")
-                main = LTN(LayoutType.SYMBOLS, "western_default")
-                modifier = LTN(LayoutType.SYMBOLS_MOD, "default")
+                extension = LTN(LayoutType.NUMERIC_ROW, subtype.layoutMap.numericRow)
+                main = LTN(LayoutType.SYMBOLS, subtype.layoutMap.symbols)
+                modifier = LTN(LayoutType.SYMBOLS_MOD, "\$default")
             }
             KeyboardMode.SYMBOLS2 -> {
-                main = LTN(LayoutType.SYMBOLS2, "western_default")
-                modifier = LTN(LayoutType.SYMBOLS2_MOD, "default")
+                main = LTN(LayoutType.SYMBOLS2, subtype.layoutMap.symbols2)
+                modifier = LTN(LayoutType.SYMBOLS2_MOD, "\$default")
             }
             KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW -> {
                 extension = LTN(LayoutType.EXTENSION, "clipboard_cursor_row")
             }
             KeyboardMode.SMARTBAR_NUMBER_ROW -> {
-                extension = LTN(LayoutType.EXTENSION, "number_row")
+                extension = LTN(LayoutType.EXTENSION, subtype.layoutMap.numericRow)
             }
         }
 
@@ -350,13 +374,13 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
         keyboardMode: KeyboardMode,
         subtype: Subtype,
         prefs: PrefHelper
-    ): Deferred<ComputedLayoutData> {
+    ): Deferred<ComputedLayout> {
         val kms = KMS(keyboardMode, subtype)
         val cachedComputedLayout = computedLayoutCache[kms]
         return if (cachedComputedLayout != null) {
             cachedComputedLayout
         } else {
-            val computedLayout = async(Dispatchers.IO) {
+            val computedLayout = scope.async(Dispatchers.IO) {
                 computeLayoutFor(keyboardMode, subtype, prefs)
             }
             computedLayoutCache[kms] = computedLayout
@@ -380,7 +404,7 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
     ) {
         val kms = KMS(keyboardMode, subtype)
         if (computedLayoutCache[kms] == null) {
-            computedLayoutCache[kms] = async(Dispatchers.IO) {
+            computedLayoutCache[kms] = scope.async(Dispatchers.IO) {
                 computeLayoutFor(keyboardMode, subtype, prefs)
             }
         }
@@ -390,6 +414,44 @@ class LayoutManager(private val context: Context) : CoroutineScope by MainScope(
      * Called when the application is destroyed. Used to cancel any pending coroutines.
      */
     fun onDestroy() {
-        cancel()
+        scope.cancel()
+    }
+
+    fun getMetaFor(type: LayoutType, name: String): LayoutMetaOnly? {
+        return indexedLayoutRefs[type]?.first { it.second.name == name }?.second
+    }
+
+    fun getMetaNameListFor(type: LayoutType): List<String> {
+        return indexedLayoutRefs[type]?.map { it.second.name } ?: listOf()
+    }
+
+    fun getMetaLabelListFor(type: LayoutType): List<String> {
+        return indexedLayoutRefs[type]?.map { it.second.label } ?: listOf()
+    }
+
+    private fun indexLayoutRefs() {
+        for (type in LayoutType.values()) {
+            indexedLayoutRefs[type]?.clear()
+            assetManager.listAssets(
+                AssetRef(AssetSource.Assets, "ime/text/$type"),
+                LayoutMetaOnly::class
+            ).onSuccess { assetList ->
+                indexedLayoutRefs[type]?.let { indexedList ->
+                    for ((ref, layoutMeta) in assetList) {
+                        indexedList.add(Pair(ref, layoutMeta))
+                    }
+                    indexedList.sortBy { it.second.name }
+                    if (type == LayoutType.CHARACTERS) {
+                        // Move selected layouts to the top of the list
+                        for (layoutName in listOf("azerty", "qwertz", "qwerty")) {
+                            val index: Int = indexedList.indexOfFirst { it.second.name == layoutName }
+                            if (index > 0) {
+                                indexedList.add(0, indexedList.removeAt(index))
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

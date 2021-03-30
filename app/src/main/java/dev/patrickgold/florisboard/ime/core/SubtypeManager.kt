@@ -19,11 +19,16 @@ package dev.patrickgold.florisboard.ime.core
 import android.content.Context
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import dev.patrickgold.florisboard.ime.extension.AssetRef
+import dev.patrickgold.florisboard.ime.extension.AssetSource
+import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.ime.theme.ThemeMetaOnly
 import dev.patrickgold.florisboard.util.LocaleUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -37,7 +42,6 @@ import java.util.*
  *  list of [Subtype]s. When setting this property, the given list is converted to a raw string
  *  and written to prefs.
  */
-@Suppress("SameParameterValue")
 class SubtypeManager(
     private val context: Context,
     private val prefs: PrefHelper
@@ -110,20 +114,20 @@ class SubtypeManager(
     }
 
     /**
-     * Creates a [Subtype] from the given [locale] and [layoutName] and adds it to the subtype
+     * Creates a [Subtype] from the given [locale] and [layoutMap] and adds it to the subtype
      * list, if it does not exist.
      *
      * @param locale The locale of the subtype to be added.
-     * @param layoutName The layout name of the subtype to be added.
+     * @param layoutMap The layout map of the subtype to be added.
      * @return True if the subtype was added, false otherwise. A return value of false indicates
      *  that the subtype already exists.
      */
-    fun addSubtype(locale: Locale, layoutName: String): Boolean {
+    fun addSubtype(locale: Locale, layoutMap: SubtypeLayoutMap): Boolean {
         return addSubtype(
             Subtype(
-                (locale.hashCode() + layoutName.hashCode()),
+                (locale.hashCode() + layoutMap.hashCode()),
                 locale,
-                layoutName
+                layoutMap
             )
         )
     }
@@ -193,7 +197,7 @@ class SubtypeManager(
         for (subtype in subtypeList) {
             if (subtype.id == subtypeToModify.id) {
                 subtype.locale = subtypeToModify.locale
-                subtype.layout = subtypeToModify.layout
+                subtype.layoutMap = subtypeToModify.layoutMap
                 break
             }
         }

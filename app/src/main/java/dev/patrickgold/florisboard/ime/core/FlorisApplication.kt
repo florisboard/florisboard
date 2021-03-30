@@ -21,10 +21,13 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.crashutility.CrashUtility
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.extension.AssetManager
+import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
 import timber.log.Timber
 
-class FlorisApplication : Application() {
+class FlorisApplication : Application(), CoroutineScope by MainScope() {
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
@@ -35,6 +38,7 @@ class FlorisApplication : Application() {
         val assetManager = AssetManager.init(this)
         DictionaryManager.init(this)
         ThemeManager.init(this, assetManager, prefHelper)
+        LayoutManager.init(this)
         prefHelper.initDefaultPreferences()
     }
 }

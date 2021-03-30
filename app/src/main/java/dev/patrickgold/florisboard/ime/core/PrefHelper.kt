@@ -147,8 +147,7 @@ class PrefHelper(
         PreferenceManager.setDefaultValues(context, R.xml.prefs_typing, true)
         //theme.dayThemeRef = "assets:ime/theme/floris_day.json"
         //theme.nightThemeRef = "assets:ime/theme/floris_night.json"
-        //setPref(Keyboard.SUBTYPES, "")
-        //setPref(Internal.IS_IME_SET_UP, false)
+        setPref(Localization.SUBTYPES, "-234/de-AT/c=qwertz")
     }
 
     /**

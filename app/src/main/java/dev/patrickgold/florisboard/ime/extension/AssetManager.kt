@@ -58,6 +58,8 @@ class AssetManager private constructor(private val applicationContext: Context) 
                 )
             }
         }
+
+        fun defaultOrNull(): AssetManager? = defaultInstance
     }
 
     fun deleteAsset(ref: AssetRef): Result<Unit> {

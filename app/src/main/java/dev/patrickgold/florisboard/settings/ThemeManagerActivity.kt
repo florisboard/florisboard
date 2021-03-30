@@ -50,7 +50,6 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
-    private lateinit var layoutManager: LayoutManager
     private val mainScope = MainScope()
     private val themeManager: ThemeManager = ThemeManager.default()
 
@@ -147,7 +146,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         binding.themeEditBtn.setOnClickListener { onActionClicked(it) }
         binding.themeExportBtn.setOnClickListener { onActionClicked(it) }
 
-        layoutManager = LayoutManager(this).apply {
+        LayoutManager.default().apply {
             preloadComputedLayout(KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs)
         }
 
@@ -393,7 +392,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
             setCheckedRadioButton(selectId!!)
         }
         mainScope.launch {
-            binding.keyboardPreview.computedLayout = layoutManager.fetchComputedLayoutAsync(
+            binding.keyboardPreview.computedLayout = LayoutManager.default().fetchComputedLayoutAsync(
                 KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs
             ).await()
             binding.keyboardPreview.onThemeUpdated(selectedTheme)

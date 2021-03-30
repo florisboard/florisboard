@@ -16,20 +16,23 @@
 
 package dev.patrickgold.florisboard.ime.text.layout
 
+import dev.patrickgold.florisboard.ime.extension.Asset
 import dev.patrickgold.florisboard.ime.text.key.FlorisKeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 
-typealias LayoutDataArrangement = List<List<FlorisKeyData>>
-data class LayoutData(
+typealias LayoutArrangement = List<List<FlorisKeyData>>
+data class Layout(
     val type: LayoutType,
-    val name: String,
+    override val name: String,
+    override val label: String,
+    override val authors: List<String>,
     val direction: String,
     val modifier: String?,
-    val arrangement: LayoutDataArrangement = listOf()
-) {
-    private fun getComputedLayoutDataArrangement(): ComputedLayoutDataArrangement {
+    val arrangement: LayoutArrangement = listOf()
+) : Asset {
+    private fun getComputedLayoutArrangement(): ComputedLayoutArrangement {
         val ret = mutableListOf<MutableList<FlorisKeyData>>()
         for (row in arrangement) {
             val retRow = mutableListOf<FlorisKeyData>()
@@ -41,22 +44,31 @@ data class LayoutData(
         return ret
     }
 
-    fun toComputedLayoutData(keyboardMode: KeyboardMode): ComputedLayoutData {
-        return ComputedLayoutData(
-            keyboardMode, name, direction, getComputedLayoutDataArrangement()
+    fun toComputedLayout(keyboardMode: KeyboardMode): ComputedLayout {
+        return ComputedLayout(
+            keyboardMode, name, direction, getComputedLayoutArrangement()
         )
     }
 }
 
-typealias ComputedLayoutDataArrangement = MutableList<MutableList<FlorisKeyData>>
-data class ComputedLayoutData(
+data class LayoutMetaOnly(
+    val type: LayoutType,
+    override val name: String,
+    override val label: String,
+    override val authors: List<String>,
+    val direction: String,
+    val modifier: String?
+) : Asset
+
+typealias ComputedLayoutArrangement = MutableList<MutableList<FlorisKeyData>>
+data class ComputedLayout(
     val mode: KeyboardMode,
     val name: String,
     val direction: String,
-    val arrangement: ComputedLayoutDataArrangement = mutableListOf()
+    val arrangement: ComputedLayoutArrangement = mutableListOf()
 ) {
     companion object {
-        val PRE_GENERATED_LOADING_KEYBOARD = ComputedLayoutData(
+        val PRE_GENERATED_LOADING_KEYBOARD = ComputedLayout(
             mode = KeyboardMode.CHARACTERS,
             name = "__loading_keyboard__",
             direction = "ltr",

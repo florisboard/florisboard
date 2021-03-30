@@ -55,10 +55,5 @@ interface Asset {
          * Creates an empty Asset of type [T].
          */
         fun empty(): T
-
-        /**
-         * Loads an Asset of type [T] from the specified path.
-         */
-        fun fromFile(context: Context, path: String): Result<T> = Result.failure(NotImplementedError())
     }
 }

@@ -30,6 +30,7 @@ import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import kotlinx.coroutines.Dispatchers
@@ -103,7 +104,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
 
         mainScope.launch(Dispatchers.Default) {
             florisboard?.let {
-                val layout = florisboard.textInputManager.layoutManager.fetchComputedLayoutAsync(
+                val layout = LayoutManager.default().fetchComputedLayoutAsync(
                     KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW,
                     Subtype.DEFAULT,
                     prefs
@@ -117,7 +118,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
 
         mainScope.launch(Dispatchers.Default) {
             florisboard?.let {
-                val layout = it.textInputManager.layoutManager.fetchComputedLayoutAsync(
+                val layout = LayoutManager.default().fetchComputedLayoutAsync(
                     KeyboardMode.SMARTBAR_NUMBER_ROW,
                     Subtype.DEFAULT,
                     prefs

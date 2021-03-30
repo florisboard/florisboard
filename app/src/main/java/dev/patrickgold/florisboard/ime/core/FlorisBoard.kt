@@ -52,6 +52,7 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.setup.SetupActivity
@@ -399,7 +400,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         prefs.sync()
         val newIsNumberRowVisible = prefs.keyboard.numberRow
         if (isNumberRowVisible != newIsNumberRowVisible) {
-            textInputManager.layoutManager.clearLayoutCache(KeyboardMode.CHARACTERS)
+            LayoutManager.default().clearLayoutCache(KeyboardMode.CHARACTERS)
             isNumberRowVisible = newIsNumberRowVisible
         }
         themeManager.update()
@@ -846,9 +847,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
      * ime/config.json so it can be parsed. Used by [SubtypeManager] and by the prefs.
      * NOTE: this class and its corresponding json file is subject to change in future versions.
      * @property packageName The package name of this IME.
-     * @property characterLayouts A map of valid layout names to use from. Each value defined
-     *  should have a <layout_name>.json file in ime/text/characters/ to avoid empty layouts.
-     *  The key is the layout name, the value is the layout label (string shown in UI).
      * @property defaultSubtypes A list of predefined default subtypes. This subtypes are used to
      *  define which locales are supported and which layout is preferred for that locale.
      * @property defaultSubtypesLanguageCodes Helper list for Settings Subtype Spinner elements.
@@ -857,7 +855,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     data class ImeConfig(
         @Json(name = "package")
         val packageName: String,
-        val characterLayouts: Map<String, String> = mapOf(),
         val defaultSubtypes: List<DefaultSubtype> = listOf()
     ) {
         val defaultSubtypesLanguageCodes: List<String>

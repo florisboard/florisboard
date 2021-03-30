@@ -72,7 +72,14 @@
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Delete</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Edit subtype</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Locale</string>
-    <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">Keyboard layout</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Characters layout</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Symbols primary layout</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Symbols secondary layout</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Numeric layout</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Numeric (advanced) layout</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Number row layout</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Phone primary layout</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Phone secondary layout</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">This subtype already exists!</string>
 
     <string name="settings__theme__title" comment="Title of the Theme fragment">Keyboard theme</string>

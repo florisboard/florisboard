@@ -84,7 +84,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     )
 
     var keyVariation: KeyVariation = KeyVariation.NORMAL
-    val layoutManager = LayoutManager(florisboard)
     private var smartbarView: SmartbarView? = null
 
     // Caps/Shift related properties
@@ -129,7 +128,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
         for (subtype in subtypes) {
             for (mode in KeyboardMode.values()) {
-                layoutManager.preloadComputedLayout(mode, subtype, florisboard.prefs)
+                LayoutManager.default().preloadComputedLayout(mode, subtype, florisboard.prefs)
             }
         }
     }
@@ -140,7 +139,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     private suspend fun addKeyboardView(mode: KeyboardMode) {
         val keyboardView = KeyboardView(florisboard.context)
-        keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(mode, florisboard.activeSubtype, florisboard.prefs).await()
+        keyboardView.computedLayout = LayoutManager.default().fetchComputedLayoutAsync(mode, florisboard.activeSubtype, florisboard.prefs).await()
         keyboardViews[mode] = keyboardView
         textViewFlipper?.addView(keyboardView)
     }
@@ -211,7 +210,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         inputEventDispatcher.keyEventReceiver = null
         inputEventDispatcher.close()
         cancel()
-        layoutManager.onDestroy()
+        LayoutManager.default().onDestroy()
         instance = null
     }
 
@@ -326,9 +325,14 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     }
                 }
             }
-            val keyboardView = keyboardViews[KeyboardMode.CHARACTERS]
-            keyboardView?.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, newSubtype, florisboard.prefs).await()
-            keyboardView?.updateVisibility()
+            // TODO: heavy load on main thread
+            for (keyboardMode in KeyboardMode.values()) {
+                if (keyboardMode != KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW && keyboardMode != KeyboardMode.SMARTBAR_NUMBER_ROW) {
+                    val keyboardView = keyboardViews[keyboardMode]
+                    keyboardView?.computedLayout = LayoutManager.default().fetchComputedLayoutAsync(keyboardMode, newSubtype, florisboard.prefs).await()
+                    keyboardView?.updateVisibility()
+                }
+            }
         }
     }
 
