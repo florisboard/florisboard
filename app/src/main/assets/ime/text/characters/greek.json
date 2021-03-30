@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "greek",
+  "label": "Ελληνικά",
   "authors": [ "tsiflimagas" ],
   "direction": "ltr",
   "arrangement": [

@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "workman",
+  "label": "Workman",
   "authors": [ "icyphox" ],
   "direction": "ltr",
   "arrangement": [

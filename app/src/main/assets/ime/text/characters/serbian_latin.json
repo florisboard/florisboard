@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "serbian_latin",
+  "label": "Serbian (QWERTZ)",
   "authors": ["GrbavaCigla"],
   "direction": "ltr",
   "arrangement": [

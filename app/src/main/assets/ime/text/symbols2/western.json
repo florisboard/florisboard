@@ -1,6 +1,7 @@
 {
   "type": "symbols2",
-  "name": "western_default",
+  "name": "western",
+  "label": "Western",
   "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [

@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "bulgarian_phonetic",
+  "label": "Bulgarian (Phonetic)",
   "authors": [ "iorvethe" ],
   "direction": "ltr",
   "arrangement": [

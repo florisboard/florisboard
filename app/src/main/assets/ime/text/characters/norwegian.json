@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "norwegian",
+  "label": "Norwegian (QWERTY)",
   "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [

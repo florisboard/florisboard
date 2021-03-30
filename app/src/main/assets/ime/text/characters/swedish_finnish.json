@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "swedish_finnish",
+  "label": "Swedish/Finnish (QWERTY)",
   "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [

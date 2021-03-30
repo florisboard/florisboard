@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "bulgarian_bds",
+  "label": "Bulgarian (BDS)",
   "authors": [ "iorvethe" ],
   "direction": "ltr",
   "arrangement": [
