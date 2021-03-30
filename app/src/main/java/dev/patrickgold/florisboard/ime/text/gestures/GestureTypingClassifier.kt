@@ -17,7 +17,7 @@ interface GestureTypingClassifier {
 
     fun setLayout(computedLayoutData: ComputedLayoutData)
 
-    fun setWordData(words: Array<String>, freqs: IntArray)
+    fun setWordData(words: HashMap<String, Int>)
 
     /**
      * Process a completed gesture and find its location.

@@ -6,6 +6,7 @@ import dev.patrickgold.florisboard.ime.text.key.FlorisKeyData
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import java.text.Normalizer
 import java.util.*
+import kotlin.collections.HashMap
 import kotlin.math.*
 
 /**
@@ -17,16 +18,16 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
 
     private val gesture = Gesture()
     private var keysByCharacter: SparseArray<FlorisKeyData> = SparseArray()
-    private var words: Array<String> = arrayOf()
-    private var wordFrequencies: IntArray = intArrayOf()
+    private var words: Set<String> = setOf()
+    private var wordFrequencies: Map<String, Int> = hashMapOf()
     private var keys: ArrayList<FlorisKeyData> = arrayListOf()
     private lateinit var pruner: Pruner
 
     companion object {
         private const val PRUNING_LENGTH_THRESHOLD = 8.42
-        private const val SAMPLING_POINTS: Int = 300
+        private const val SAMPLING_POINTS: Int = 200
 
-        private const val MIN_DIST_TO_ADD = 0
+        private const val MIN_DIST_TO_ADD = 1000
 
         /**
          * Standard deviation of the distribution of distances between the shapes of two gestures
@@ -66,10 +67,10 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
 
     }
 
-    override fun setWordData(words: Array<String>, freqs: IntArray) {
-        this.words = words
-        this.wordFrequencies = freqs
-        this.pruner = Pruner(PRUNING_LENGTH_THRESHOLD, words, keysByCharacter)
+    override fun setWordData(words: HashMap<String, Int>) {
+        this.words = words.keys
+        this.wordFrequencies = words
+        this.pruner = Pruner(PRUNING_LENGTH_THRESHOLD, this.words, keysByCharacter)
     }
 
     override fun initGestureFromPointerData(pointerData: GlideTypingGesture.Detector.PointerData) {
@@ -99,7 +100,7 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
             val locationDistance = calcLocationDistance(wordGesture, userGesture)
             val shapeProbability = calcGaussianProbability(shapeDistance, 0.0f, SHAPE_STD)
             val locationProbability = calcGaussianProbability(locationDistance, 0.0f, LOCATION_STD * radius)
-            val frequency = wordFrequencies[words.indexOf(word)]
+            val frequency = wordFrequencies[word]!!
             val confidence= 1.0f/(shapeProbability * locationProbability * frequency)
 
             var candidateDistanceSortedIndex = 0
@@ -164,7 +165,7 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
          * The length difference between a user gesture and a word gesture above which a word will
          * be pruned.
          */
-        private val lengthThreshold: Double, words: Array<String>, keysByCharacter: SparseArray<FlorisKeyData>) {
+        private val lengthThreshold: Double, words: Set<String>, keysByCharacter: SparseArray<FlorisKeyData>) {
 
         /** A tree that provides fast access to words based on their first and last letter.  */
         private val wordTree = HashMap<Pair<FlorisKeyData, FlorisKeyData>, ArrayList<String>>()

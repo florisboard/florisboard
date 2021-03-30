@@ -158,9 +158,9 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             // FIXME: get this info from dictionary.
             val data = AssetManager.default().loadAssetRaw(AssetRef(AssetSource.Assets, "ime/dict/data.json")).getOrThrow()
             val json = JSONObject(data)
-            val words = json.getJSONArray("words")
-            val freqs = json.getJSONArray("freqs")
-            gestureTypingClassifier.setWordData(Array(words.length()) { words.getString(it) }, IntArray(freqs.length()) { freqs.getInt(it) })
+            val map = hashMapOf<String, Int>()
+            map.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
+            gestureTypingClassifier.setWordData(map)
             Timber.d("Rebuild gesture detector info.")
         }
 
