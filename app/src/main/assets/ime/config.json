@@ -26,7 +26,9 @@
     "canadian_french": "Canadian French (QWERTY)",
     "greek": "Ελληνικά",
     "hebrew": "עברית",
-    "kurdish": "کوردی"
+    "kurdish": "کوردی",
+    "kurdish_standard": "کوردی (ستاندارد)",
+    "kurdish_kurmanci": "Kurdî"
   },
   "defaultSubtypes": [
     {
@@ -208,6 +210,11 @@
       "id": 2001,
       "languageTag": "ckb",
       "preferredLayout": "kurdish"
+    },
+    {
+    "id": 2301,
+    "languageTag": "ku",
+    "preferredLayout": "kurdish_kurmanci"
     }
   ]
 }
