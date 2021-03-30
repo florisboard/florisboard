@@ -4,7 +4,6 @@ import android.util.SparseArray
 import androidx.core.util.set
 import dev.patrickgold.florisboard.ime.text.key.FlorisKeyData
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
-import timber.log.Timber
 import java.text.Normalizer
 import java.util.*
 import kotlin.math.*
@@ -58,7 +57,6 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
     }
 
     override fun setLayout(computedLayoutData: ComputedLayoutData) {
-        Timber.d("Setting layout: ${computedLayoutData.name}")
         computedLayoutData.arrangement.forEach { row ->
             row.forEach {
                 keysByCharacter[it.code] = it
@@ -69,7 +67,6 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
     }
 
     override fun setWordData(words: Array<String>, freqs: IntArray) {
-        Timber.d("Setting word data.")
         this.words = words
         this.wordFrequencies = freqs
         this.pruner = Pruner(PRUNING_LENGTH_THRESHOLD, words, keysByCharacter)
@@ -89,26 +86,24 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
         // special keys.
         val key = keysByCharacter.get('h'.toInt())
         val radius: Int = min(key.height, key.width)
-        val normalizedUserGesture: Gesture = gesture.normalizeByBoxSide()
         var remainingWords = pruner.pruneByExtremities(gesture, this.keys)
-        Timber.d("Remaining1: ${"this" in remainingWords}")
+        val userGesture = gesture.resample(SAMPLING_POINTS)
+        val normalizedUserGesture: Gesture = userGesture.normalizeByBoxSide()
         remainingWords = pruner.pruneByLength(gesture, remainingWords, keysByCharacter)
-        Timber.d("Remaining2: ${"this" in remainingWords}")
 
         for (i in remainingWords.indices) {
             val word = remainingWords[i]
-            val wordGesture: Gesture = Gesture.generateIdealGesture(word, keysByCharacter)
+            val wordGesture: Gesture = Gesture.generateIdealGesture(word, keysByCharacter).resample(SAMPLING_POINTS)
             val normalizedGesture: Gesture = wordGesture.normalizeByBoxSide()
             val shapeDistance = calcShapeDistance(normalizedGesture, normalizedUserGesture)
-            val locationDistance = calcLocationDistance(wordGesture, gesture)
+            val locationDistance = calcLocationDistance(wordGesture, userGesture)
             val shapeProbability = calcGaussianProbability(shapeDistance, 0.0f, SHAPE_STD)
             val locationProbability = calcGaussianProbability(locationDistance, 0.0f, LOCATION_STD * radius)
             val frequency = wordFrequencies[words.indexOf(word)]
-            val confidence= 1.0f / (shapeProbability * locationProbability * frequency)
-
-            Timber.d("$word $shapeProbability $locationProbability $frequency $confidence")
+            val confidence= 1.0f/(shapeProbability * locationProbability * frequency)
 
             var candidateDistanceSortedIndex = 0
+
             while (candidateDistanceSortedIndex < candidateWeights.size
                 && candidateWeights[candidateDistanceSortedIndex] <= confidence) {
                 candidateDistanceSortedIndex++
@@ -132,10 +127,10 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
     private fun calcLocationDistance(gesture1: Gesture, gesture2: Gesture): Float {
         var totalDistance = 0.0f
         for (i in 0 until SAMPLING_POINTS) {
-            val x1 = gesture1.sampleX(i.toFloat() / SAMPLING_POINTS)
-            val x2 = gesture2.sampleX(i.toFloat() / SAMPLING_POINTS)
-            val y1 = gesture1.sampleY(i.toFloat() / SAMPLING_POINTS)
-            val y2 = gesture2.sampleY(i.toFloat() / SAMPLING_POINTS)
+            val x1 = gesture1.getX(i)
+            val x2 = gesture2.getX(i)
+            val y1 = gesture1.getY(i)
+            val y2 = gesture2.getY(i)
             val distance = abs(x1 - x2) + abs(y1 - y2)
             totalDistance += distance
         }
@@ -154,10 +149,10 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
         var distance: Float
         var totalDistance = 0.0f
         for (i in 0 until SAMPLING_POINTS) {
-            val x1 = gesture1.sampleX(i.toFloat() / SAMPLING_POINTS)
-            val x2 = gesture2.sampleX(i.toFloat() / SAMPLING_POINTS)
-            val y1 = gesture1.sampleY(i.toFloat() / SAMPLING_POINTS)
-            val y2 = gesture2.sampleY(i.toFloat() / SAMPLING_POINTS)
+            val x1 = gesture1.getX(i)
+            val x2 = gesture2.getX(i)
+            val y1 = gesture1.getY(i)
+            val y2 = gesture2.getY(i)
             distance = Gesture.distance(x1, y1, x2, y2)
             totalDistance += distance
         }
@@ -226,9 +221,6 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
             for (word in words) {
                 val idealGesture = Gesture.generateIdealGesture(word, keysByCharacter)
                 val wordIdealLength = idealGesture.getLength()
-                if (word == "this") {
-                    Timber.d("LENGTHS: $userLength $wordIdealLength ${lengthThreshold * radius}")
-                }
                 if (abs(userLength - wordIdealLength) < lengthThreshold * radius) {
                     remainingWords.add(word)
                 }
@@ -352,9 +344,59 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
         }
 
 
+        /**
+         * Resamples the gesture into a new gesture with the chosen number of points by oversampling
+         * it.
+         *
+         * @param numPoints The number of points that the new gesture will have. Must be superior to
+         * the number of points in the current gesture.
+         * @return An oversampled copy of the gesture.
+         */
+        fun resample(numPoints: Int): Gesture {
+            require(numPoints > this.xs.size)
+            val interpointDistance = (getLength() / numPoints)
+            val resampledGesture = Gesture()
+            resampledGesture.addPoint(xs[0], ys[0])
+            var lastX = xs[0]
+            var lastY  = ys[0]
+            var newX: Float
+            var newY: Float
+            var cumulativeError = 0.0f
+            for (i in 0 until xs.size - 1) {
+                // We calculate the unit vector from the two points we're between in the actual
+                // gesture
+                var dx = xs[i + 1] - xs[i]
+                var dy = ys[i + 1] - ys[i]
+                val norm = sqrt(dx.pow(2.0f) + dy.pow(2.0f))
+                dx /= norm
+                dy /= norm
+
+                // The number of evenly sampled points that fit between the two actual points
+                var numNewPoints = norm / interpointDistance
+
+                // The number of point that'd fit between the two actual points is often not round,
+                // which means we'll get an increasingly large error as we resample the gesture
+                // and round down that number. To compensate for this we keep track of the error
+                // and add additional points when it gets too large.
+                cumulativeError += numNewPoints - numNewPoints.toInt()
+                if (cumulativeError > 1) {
+                    numNewPoints = (numNewPoints.toInt() + cumulativeError.toInt()).toFloat()
+                    cumulativeError %= 1
+                }
+                for (j in 0 until numNewPoints.toInt()) {
+                    newX = lastX + dx * interpointDistance
+                    newY = lastY + dy * interpointDistance
+                    lastX = newX
+                    lastY = newY
+                    resampledGesture.addPoint(newX, newY)
+                }
+            }
+            return resampledGesture
+        }
+
         fun normalizeByBoxSide(): Gesture {
 
-            val normalizedGesture: Gesture = Gesture()
+            val normalizedGesture = Gesture()
 
             var maxX = -1.0f
             var maxY = -1.0f
@@ -402,39 +444,13 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
             return length
         }
 
-        /**
-         * Sample x coordinate at a point on the gesture
-         * @param pt Ranges from 0 (start of gesture) to 1 (end of gesture)
-         */
-        fun sampleX(pt: Float): Float {
-            val index = pt * (xs.size - 1)
-            val prev = xs[floor(index).toInt()]
-            val next = xs[ceil(index).toInt()]
-
-            val dist = index % 1
-            // linear interpolate
-            return prev * (1 - dist) + next * dist
-        }
-
-
-        /**
-         * Sample y coordinate at a point on the gesture
-         * @param pt Ranges from 0 (start of gesture) to 1 (end of gesture)
-         */
-        fun sampleY(pt: Float): Float {
-            val index = pt * (ys.size - 1)
-            val prev = ys[floor(index).toInt()]
-            val next = ys[ceil(index).toInt()]
-
-            val dist = index % 1
-            // linear interpolate
-            return prev * (1 - dist) + next * dist
-        }
-
         fun clear() {
             this.xs.clear()
             this.ys.clear()
         }
+
+        fun getX(i: Int): Float = xs[i]
+        fun getY(i: Int): Float = ys[i]
     }
 
 

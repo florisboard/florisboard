@@ -533,7 +533,6 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     }
 
     override fun onGestureComplete(event: GlideTypingGesture.Event): Boolean {
-        gestureTypingClassifier.initGestureFromPointerData(event.data)
         val suggestion = gestureTypingClassifier.getSuggestions(1, true)
         Timber.d("Predictions: $suggestion")
         gestureTypingClassifier.clear()
