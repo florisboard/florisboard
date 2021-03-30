@@ -2,7 +2,6 @@ package dev.patrickgold.florisboard.ime.text.gestures
 
 import android.util.SparseArray
 import androidx.core.util.set
-import dev.patrickgold.florisboard.ime.text.gestures.GestureTypingClassifier.Gesture
 import dev.patrickgold.florisboard.ime.text.key.FlorisKeyData
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import timber.log.Timber
@@ -12,8 +11,7 @@ import kotlin.math.*
 
 class StatisticalGestureTypingClassifier : GestureTypingClassifier {
 
-    private var isInitialized: Boolean = false
-    private val gesture = Gesture()
+    val gesture = Gesture()
     private var keysByCharacter: SparseArray<FlorisKeyData> = SparseArray()
     private var words: Array<String> = arrayOf()
     private var wordFrequencies: Array<Int> = arrayOf()
@@ -23,6 +21,8 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
     companion object {
         private const val PRUNING_LENGTH_THRESHOLD = 8.42
         private const val SAMPLING_POINTS: Int = 300
+
+        private const val MIN_DIST_TO_ADD = 2000
 
         /**
          * Standard deviation of the distribution of distances between the shapes of two gestures
@@ -40,14 +40,19 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
     }
 
     override fun addGesturePoint(position: GlideTypingGesture.Detector.Position) {
-        gesture.addPoint(position.x, position.y)
+        if (!gesture.isEmpty) {
+            val dx = gesture.getLastX() - position.x
+            val dy = gesture.getLastY() - position.y
+
+            if (dx * dx + dy * dy > MIN_DIST_TO_ADD) {
+                gesture.addPoint(position.x, position.y)
+            }
+        } else {
+            gesture.addPoint(position.x, position.y)
+        }
     }
 
-    override fun isInitialized(): Boolean {
-        return isInitialized
-    }
-
-    override fun initialize(computedLayoutData: ComputedLayoutData, words: Array<String>, wordFrequencies: Array<Int>) {
+    override fun setLayout(computedLayoutData: ComputedLayoutData) {
         computedLayoutData.arrangement.forEach { row ->
             row.forEach {
                 keysByCharacter[it.code] = it
@@ -55,12 +60,12 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
             }
         }
 
+    }
+
+    override fun setWordData(words: Array<String>, freqs: Array<Int>) {
         this.words = words
-        this.wordFrequencies = wordFrequencies
+        this.wordFrequencies = freqs
         this.pruner = Pruner(PRUNING_LENGTH_THRESHOLD, words, keysByCharacter)
-
-
-        isInitialized = true
     }
 
     override fun initGestureFromPointerData(pointerData: GlideTypingGesture.Detector.PointerData) {
@@ -81,7 +86,7 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
         Timber.d("Words: ${words.asList()} ${this.keys.map { "${it.label} ${it.x} ${it.y}" }}")
         var remainingWords = pruner.pruneByExtremities(gesture, this.keys)
         Timber.d("Remaining words: $remainingWords")
-        remainingWords     = pruner.pruneByLength(gesture, remainingWords, keysByCharacter)
+        remainingWords = pruner.pruneByLength(gesture, remainingWords, keysByCharacter)
 
         Timber.d("Remaining words: $remainingWords")
 
@@ -252,20 +257,168 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
                     keyDistances[key] = distance
                 }
 
-                return keyDistances.entries.sortedWith{ c1, c2 -> c1.value.compareTo(c2.value) }.take(n).map { it.key }
+                return keyDistances.entries.sortedWith { c1, c2 -> c1.value.compareTo(c2.value) }.take(n).map { it.key }
             }
         }
 
         init {
             for (word in words) {
                 val keyPair: Pair<FlorisKeyData, FlorisKeyData> = getFirstKeyLastKey(word, keysByCharacter)
-                var wordsForPair = wordTree[keyPair]
-                if (wordsForPair == null) {
-                    wordsForPair = java.util.ArrayList()
-                    wordTree[keyPair] = wordsForPair
-                }
-                wordsForPair.add(word)
+                wordTree.getOrElse(keyPair, { arrayListOf() }).add(word)
             }
+        }
+    }
+
+    class Gesture {
+        val isEmpty: Boolean
+            get() = this.xs.isEmpty()
+        private val xs = arrayListOf<Float>()
+        private val ys = arrayListOf<Float>()
+
+        companion object {
+            private val cachedIdeal = hashMapOf<String, Gesture>()
+
+            fun generateIdealGesture(word: String, keysByCharacter: SparseArray<FlorisKeyData>): Gesture {
+                return cachedIdeal.getOrPut(word, { unCachedGenerateIdealGesture(word, keysByCharacter) })
+            }
+
+            private fun unCachedGenerateIdealGesture(
+                word: String, keysByCharacter: SparseArray<FlorisKeyData>): Gesture {
+                val idealGesture = Gesture()
+                var previousLetter = '\u0000'
+
+                // Add points for each key
+                for (c in word) {
+                    val lc = Character.toLowerCase(c)
+                    var key = keysByCharacter[lc.toInt()]
+                    if (key == null) {
+                        // Try finding the base character instead, e.g., the "e" key instead of "é"
+                        val baseCharacter: Char = Normalizer.normalize(lc.toString(), Normalizer.Form.NFD)[0]
+                        key = keysByCharacter[baseCharacter.toInt()]
+                        if (key == null) {
+                            Timber.w("Key $lc not found on keyboard!")
+                            continue
+                        }
+                    }
+
+                    // We adda little loop on  the key for duplicate letters
+                    // so that we can differentiate words like pool and poll, lull and lul, etc...
+                    if (previousLetter == lc) {
+                        // bottom right
+                        idealGesture.addPoint(
+                            key.x + key.width / 4.0f, key.y + key.height / 4.0f)
+                        // top right
+                        idealGesture.addPoint(
+                            key.x + key.width / 4.0f, key.y - key.height / 4.0f)
+                        // top left
+                        idealGesture.addPoint(
+                            key.x - key.width / 4.0f, key.y - key.height / 4.0f)
+                        // bottom left
+                        idealGesture.addPoint(
+                            key.x - key.width / 4.0f, key.y + key.height / 4.0f)
+                    } else {
+                        Timber.d("Adding pt: ${key.x} ${key.y}")
+                        idealGesture.addPoint(key.x, key.y)
+                    }
+                    previousLetter = lc
+                }
+                return idealGesture
+            }
+
+            fun distance(x1: Float, y1: Float, x2: Float, y2: Float): Float {
+                return sqrt((x1 - x2).pow(2) + (y1 - y2).pow(2))
+            }
+
+        }
+
+        fun addPoint(x: Float, y: Float) {
+            xs.add(x)
+            ys.add(y)
+        }
+
+
+        fun normalizeByBoxSide(): Gesture {
+
+            val normalizedGesture: Gesture = Gesture()
+
+            var maxX = -1.0f
+            var maxY = -1.0f
+            var minX = 10000.0f
+            var minY = 10000.0f
+
+            for (i in 0 until xs.size) {
+                maxX = max(xs[i], maxX)
+                maxY = max(ys[i], maxY)
+                minX = min(xs[i], minX)
+                minY = min(ys[i], minY)
+            }
+
+            val width = maxX - minX
+            val height = maxY - minY
+            val longestSide = max(width, height)
+
+            val centroidX = (width / 2 + minX) / longestSide
+            val centroidY = (height / 2 + minY) / longestSide
+
+            for (i in 0 until xs.size) {
+                val x = xs[i] / longestSide - centroidX
+                val y = ys[i] / longestSide - centroidY
+                normalizedGesture.addPoint(x, y)
+            }
+
+            return normalizedGesture
+        }
+
+        fun getFirstX(): Float = xs[0]
+        fun getFirstY(): Float = ys[0]
+        fun getLastX(): Float = xs.last()
+        fun getLastY(): Float = ys.last()
+
+        fun getLength(): Float {
+            var length = 0f
+            for (i in 1 until xs.size) {
+                val previousX = xs[i - 1]
+                val previousY = ys[i - 1]
+                val currentX = xs[i]
+                val currentY = ys[i]
+                length += distance(previousX, previousY, currentX, currentY)
+            }
+
+            return length
+        }
+
+        /**
+         * Sample x coordinate at a point on the gesture
+         * @param pt Ranges from 0 (start of gesture) to 1 (end of gesture)
+         */
+        fun sampleX(pt: Float): Float {
+            val index = pt * (xs.size - 1)
+            val prev = xs[floor(index).toInt()]
+            val next = xs[ceil(index).toInt()]
+
+            val dist = index % 1
+            // linear interpolate
+            return prev * (1 - dist) + next * dist
+        }
+
+
+        /**
+         * Sample y coordinate at a point on the gesture
+         * @param pt Ranges from 0 (start of gesture) to 1 (end of gesture)
+         */
+        fun sampleY(pt: Float): Float {
+            val index = pt * (ys.size - 1)
+            val prev = ys[floor(index).toInt()]
+            val next = ys[ceil(index).toInt()]
+
+            val dist = index % 1
+            // linear interpolate
+            return prev * (1 - dist) + next * dist
+        }
+
+        fun clear() {
+            this.xs.clear()
+            this.ys.clear()
         }
     }
 

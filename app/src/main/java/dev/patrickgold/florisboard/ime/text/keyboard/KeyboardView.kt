@@ -54,7 +54,7 @@ import kotlin.math.roundToInt
  */
 class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.Listener, GlideTypingGesture.Listener,
     ThemeManager.OnThemeUpdatedListener {
-    private var gestureData: MutableList<GlideTypingGesture.Detector.Position> = mutableListOf()
+    private var updateGestureDetector: Boolean = false
     private var gesturing: Boolean = false
     private var activeKeyViews: MutableMap<Int, KeyView> = mutableMapOf()
     private var initialKeyCodes: MutableMap<Int, Int> = mutableMapOf()
@@ -74,7 +74,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     private val themeManager: ThemeManager = ThemeManager.default()
     private val swipeGestureDetector = SwipeGesture.Detector(context, this)
     private val gestureDetector = GlideTypingGesture.Detector(context, this)
-    private var gestureTypingClassifier: GestureTypingClassifier
+    private var gestureTypingClassifier: GestureTypingClassifier = StatisticalGestureTypingClassifier()
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -95,8 +95,19 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         if (isLoadingPlaceholderKeyboard) {
             computedLayout = ComputedLayoutData.PRE_GENERATED_LOADING_KEYBOARD
         }
-        setWillNotDraw(false)
-        gestureTypingClassifier = StatisticalGestureTypingClassifier()
+
+        if (!this.isSmartbarKeyboardView) {
+            setWillNotDraw(false)
+            this.viewTreeObserver.addOnGlobalLayoutListener {
+                computedLayout?.takeIf { it != ComputedLayoutData.PRE_GENERATED_LOADING_KEYBOARD && it.mode == KeyboardMode.CHARACTERS }?.let {
+                    if (updateGestureDetector) {
+                        gestureTypingClassifier.setLayout(it)
+                        gestureTypingClassifier.setWordData(arrayOf("hello", "world"), arrayOf(50, 100))
+                        updateGestureDetector = false
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -114,6 +125,19 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             addView(rowView)
         }
         if (!isPreviewMode) {
+            if (!this.isSmartbarKeyboardView && computedLayout.mode == KeyboardMode.CHARACTERS) {
+                computedLayout.arrangement.zip(this.children.asIterable()).forEach { pairOfRows ->
+                    pairOfRows.first.zip((pairOfRows.second as ViewGroup).children.asIterable()).forEach { pairOfKeys ->
+                        pairOfKeys.second.viewTreeObserver.addOnGlobalLayoutListener {
+                            pairOfKeys.first.x = pairOfRows.second.x + pairOfKeys.second.x + pairOfKeys.second.width / 2
+                            pairOfKeys.first.y = pairOfRows.second.y + pairOfKeys.second.y + pairOfKeys.second.height / 2
+                            pairOfKeys.first.height = pairOfKeys.second.height
+                            pairOfKeys.first.width = pairOfKeys.second.width
+                        }
+                    }
+                }
+                this.updateGestureDetector = true
+            }
             themeManager.requestThemeUpdate(this)
             onWindowShown()
         } else {
@@ -183,19 +207,6 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (event == null || isPreviewMode || isLoadingPlaceholderKeyboard) return false
 
-        if(!gestureTypingClassifier.isInitialized()){
-            computedLayout!!.arrangement.zip(this.children.asIterable()).forEach { pairOfRows ->
-              pairOfRows.first.zip((pairOfRows.second as ViewGroup).children.asIterable()).forEach { pairOfKeys ->
-                  pairOfKeys.first.x = pairOfRows.second.x + pairOfKeys.second.x + pairOfKeys.second.width/2
-                  pairOfKeys.first.y = pairOfRows.second.y +  pairOfKeys.second.y+ pairOfKeys.second.height/2
-                  pairOfKeys.first.height = pairOfKeys.second.height
-                  pairOfKeys.first.width = pairOfKeys.second.width
-
-                  Timber.d("${(pairOfKeys.second as KeyView).data.label} ${pairOfKeys.second.y}")
-              }
-            }
-            gestureTypingClassifier.initialize(this.computedLayout!!, arrayOf("hello", "world"), arrayOf(127, 127))
-        }
 
         if (!isSmartbarKeyboardView && swipeGestureDetector.onTouchEvent(event)) {
             for (pointerIndex in 0 until event.pointerCount) {
@@ -209,7 +220,9 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             return true
         }
 
-        if (gestureDetector.onTouchEvent(event) && event.actionMasked != MotionEvent.ACTION_UP) {
+        if (computedLayout?.mode == KeyboardMode.CHARACTERS &&
+            gestureDetector.onTouchEvent(event) &&
+            event.actionMasked != MotionEvent.ACTION_UP) {
             for (pointerIndex in 0 until event.pointerCount) {
                 val pointerId = event.getPointerId(pointerIndex)
                 sendFlorisTouchEvent(event, pointerIndex, pointerId, MotionEvent.ACTION_CANCEL)
@@ -220,7 +233,6 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             return true
         } else {
             this.gesturing = false
-            this.gestureData = arrayListOf()
         }
 
         when (event.actionMasked) {
@@ -270,7 +282,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     }
 
     override fun onGestureAdd(gesture: MutableList<GlideTypingGesture.Detector.Position>) {
-        this.gestureData = gesture
+        gestureTypingClassifier.addGesturePoint(gesture.last())
     }
 
     /**
@@ -469,9 +481,10 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     override fun dispatchDraw(canvas: Canvas?) {
         super.dispatchDraw(canvas)
         // draw a line if gesturing:
-        if (gesturing && gestureData.isNotEmpty()) {
-            for (i in 0 until gestureData.size - 1){
-                canvas?.drawLine(gestureData[i].x, gestureData[i].y, gestureData[i+1].x, gestureData[i+1].y, paint)
+        val gestureData = (gestureTypingClassifier as StatisticalGestureTypingClassifier).gesture
+        if (gesturing && gestureData.xs.isNotEmpty()) {
+            for (i in 0 until gestureData.xs.size - 1) {
+                canvas?.drawLine(gestureData.xs[i], gestureData.ys[i], gestureData.xs[i + 1], gestureData.ys[i + 1], paint)
             }
         }
     }
@@ -501,8 +514,8 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
 
     override fun onGestureComplete(event: GlideTypingGesture.Event): Boolean {
         gestureTypingClassifier.initGestureFromPointerData(event.data)
-        val suggestion = gestureTypingClassifier.getSuggestions(1, true)
-        FlorisBoard.getInstance().activeEditorInstance.commitText(suggestion[0] + " ")
+        val suggestion = gestureTypingClassifier.getSuggestions(5, true)
+        Timber.d("Predictions: $suggestion")
         gestureTypingClassifier.clear()
 
         gesturing = false
