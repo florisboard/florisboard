@@ -92,6 +92,11 @@
           { "code":  228, "label": "ä" }
         ]
       },
+      "ð": {
+        "relevant": [
+          { "code":  254, "label": "þ" }
+        ]
+      },
       "ø": {
         "relevant": [
           { "code":  246, "label": "ö" }
