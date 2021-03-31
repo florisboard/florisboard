@@ -5,17 +5,16 @@ import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.text.TextInputManager
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import kotlinx.coroutines.*
 import org.json.JSONObject
 
 /**
- * Handles the [GestureTypingClassifier] and its interactions with suggestions.
+ * Handles the [GlideTypingClassifier] and its interactions with suggestions.
  */
 class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainScope() {
 
-    private var gestureTypingClassifier = StatisticalGestureTypingClassifier()
+    private var gestureTypingClassifier = StatisticalGlideTypingClassifier()
 
     override fun onGestureComplete(data: GlideTypingGesture.Detector.PointerData) {
         updateSuggestionsAsync(5, true) {

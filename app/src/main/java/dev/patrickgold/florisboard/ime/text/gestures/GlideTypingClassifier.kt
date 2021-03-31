@@ -6,7 +6,7 @@ import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
  * Inherit this to be able to handle gesture typing. Takes in raw pointer data, and
  * spits out what it thinks the gesture is.
  */
-interface GestureTypingClassifier {
+interface GlideTypingClassifier {
     /**
      * Called to notify gesture classifier that it can add a new point to the gesture.
      * @param position The position to add

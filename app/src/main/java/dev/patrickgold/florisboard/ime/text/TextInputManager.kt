@@ -368,7 +368,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         withContext(Dispatchers.Main) {
                             smartbarView?.setCandidateSuggestionWords(startTime, suggestions)
                             smartbarView?.updateCandidateSuggestionCapsState()
-                            glideSuggestionsActive = true
+                            glideSuggestionsActive = false
                         }
                     }
                 }

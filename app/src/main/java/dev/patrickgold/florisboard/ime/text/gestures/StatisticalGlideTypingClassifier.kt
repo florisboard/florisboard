@@ -5,7 +5,6 @@ import androidx.collection.LruCache
 import androidx.core.util.set
 import dev.patrickgold.florisboard.ime.text.key.FlorisKeyData
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
-import timber.log.Timber
 import java.text.Normalizer
 import java.util.*
 import kotlin.collections.HashMap
@@ -16,7 +15,7 @@ import kotlin.math.*
  *
  * Check out Étienne Desticourt's excellent write up at https://github.com/AnySoftKeyboard/AnySoftKeyboard/pull/1870
  */
-class StatisticalGestureTypingClassifier : GestureTypingClassifier {
+class StatisticalGlideTypingClassifier : GlideTypingClassifier {
 
     private val gesture = Gesture()
     private var keysByCharacter: SparseArray<FlorisKeyData> = SparseArray()
