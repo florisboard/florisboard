@@ -475,10 +475,16 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Handles a [KeyCode.DELETE] event.
      */
     private fun handleDelete() {
-        isManualSelectionMode = false
-        isManualSelectionModeStart = false
-        isManualSelectionModeEnd = false
-        activeEditorInstance.deleteBackwards()
+        if (glideSuggestionsActive){
+            handleDeleteWord()
+            glideSuggestionsActive = false
+            this.smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+        }else {
+            isManualSelectionMode = false
+            isManualSelectionModeStart = false
+            isManualSelectionModeEnd = false
+            activeEditorInstance.deleteBackwards()
+        }
     }
 
     /**
