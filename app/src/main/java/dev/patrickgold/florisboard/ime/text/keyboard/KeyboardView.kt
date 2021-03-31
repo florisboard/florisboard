@@ -46,7 +46,9 @@ import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import org.json.JSONObject
 import timber.log.Timber
+import kotlin.math.pow
 import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
 /**
  * Manages the layout of the keyboard, key measurement, key selection and all touch events.
@@ -491,20 +493,29 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
 
     private val paint = Paint().apply {
         color = Color.GREEN
-        alpha = 100
+        alpha = 20
     }
 
     override fun dispatchDraw(canvas: Canvas?) {
         super.dispatchDraw(canvas)
-        // draw a line if gesturing:
+        var radius = 20f
+        val targetDist = 25f
         val gestureData = gestureDataForDrawing
         if (gesturing && gestureData.isNotEmpty()) {
-            for (i in gestureData.size - 2 downTo 0) {
-                paint.strokeWidth = paint.strokeWidth * 0.95f
-                canvas?.drawLine(gestureData[i].x, gestureData[i].y, gestureData[i + 1].x, gestureData[i + 1].y, paint)
+            for (i in gestureData.size - 1 downTo 1) {
+                val dx = gestureData[i].x - gestureData[i - 1].x
+                val dy = gestureData[i].y - gestureData[i - 1].y
+                val dist = (dx * dx + dy * dy)
+
+                val numPoints = sqrt(dist / targetDist)
+                for (j in 0 until numPoints.toInt()) {
+                    radius *= 0.992f
+                    val intermediateX = gestureData[i].x * (1-j/numPoints) + gestureData[i-1].x * (j/numPoints)
+                    val intermediateY = gestureData[i].y * (1-j/numPoints) + gestureData[i-1].y * (j/numPoints)
+                    canvas?.drawCircle(intermediateX, intermediateY, radius, paint)
+                }
             }
         }
-        paint.strokeWidth = 40.0f
     }
 
     /**
