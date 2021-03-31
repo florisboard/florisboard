@@ -3,7 +3,7 @@ package dev.patrickgold.florisboard.ime.text.gestures
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 
 /**
- * Subclass this to be able to handle gesture typing. Takes in raw pointer data, and
+ * Inherit this to be able to handle gesture typing. Takes in raw pointer data, and
  * spits out what it thinks the gesture is.
  */
 interface GestureTypingClassifier {
@@ -13,10 +13,14 @@ interface GestureTypingClassifier {
      */
     fun addGesturePoint(position: GlideTypingGesture.Detector.Position)
 
-
-
+    /**
+     * Change the layout of the gesture classifier.
+     */
     fun setLayout(computedLayoutData: ComputedLayoutData)
 
+    /**
+     * Change the word data of the gesture classifier.
+     */
     fun setWordData(words: HashMap<String, Int>)
 
     /**

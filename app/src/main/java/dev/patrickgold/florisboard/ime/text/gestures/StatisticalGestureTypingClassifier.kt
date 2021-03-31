@@ -5,6 +5,7 @@ import androidx.collection.LruCache
 import androidx.core.util.set
 import dev.patrickgold.florisboard.ime.text.key.FlorisKeyData
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
+import timber.log.Timber
 import java.text.Normalizer
 import java.util.*
 import kotlin.collections.HashMap
@@ -23,6 +24,8 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
     private var wordFrequencies: Map<String, Int> = hashMapOf()
     private var keys: ArrayList<FlorisKeyData> = arrayListOf()
     private lateinit var pruner: Pruner
+    private var wordDataSet = false
+    private var layoutSet = false
 
     companion object {
         private const val PRUNING_LENGTH_THRESHOLD = 8.42
@@ -72,12 +75,34 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
             }
         }
 
+        layoutSet = true
+
+        if (wordDataSet && layoutSet){
+            initializePruner()
+        }
     }
 
     override fun setWordData(words: HashMap<String, Int>) {
         this.words = words.keys
         this.wordFrequencies = words
+
+        this.wordDataSet = true
+
+        if (wordDataSet && layoutSet){
+            initializePruner()
+        }
+    }
+
+    /**
+     * Exists because Pruner requires both word data and layout are initialized,
+     * however we don't know what order they're initialized in.
+     */
+    private fun initializePruner(){
         this.pruner = Pruner(PRUNING_LENGTH_THRESHOLD, this.words, keysByCharacter)
+
+        // Reset so that same mechanism can be used in case subtype changes.
+        this.layoutSet = false
+        this.wordDataSet = false
     }
 
     override fun initGestureFromPointerData(pointerData: GlideTypingGesture.Detector.PointerData) {

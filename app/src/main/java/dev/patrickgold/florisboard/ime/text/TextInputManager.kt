@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.nlp.Token
 import dev.patrickgold.florisboard.ime.nlp.toStringList
 import dev.patrickgold.florisboard.ime.text.editing.EditingKeyboardView
+import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
@@ -331,6 +332,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             keyboardView?.updateVisibility()
 
             keyboardView?.initGestureClassifier()
+            GlideTypingManager.getInstance().setWordData()
         }
     }
 

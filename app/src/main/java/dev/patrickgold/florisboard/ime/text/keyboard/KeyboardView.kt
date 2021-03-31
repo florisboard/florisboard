@@ -33,10 +33,6 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.PrefHelper
-import dev.patrickgold.florisboard.ime.extension.AssetManager
-import dev.patrickgold.florisboard.ime.extension.AssetRef
-import dev.patrickgold.florisboard.ime.extension.AssetSource
-import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.gestures.*
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
@@ -45,9 +41,6 @@ import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
-import org.json.JSONObject
-import timber.log.Timber
-import java.util.concurrent.Executors
 import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
@@ -81,8 +74,11 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val themeManager: ThemeManager = ThemeManager.default()
     private val swipeGestureDetector = SwipeGesture.Detector(context, this)
-    private val gestureDetector = GlideTypingGesture.Detector(context, this)
-    private var gestureTypingClassifier: GestureTypingClassifier = StatisticalGestureTypingClassifier()
+    private val gestureDetector= GlideTypingGesture.Detector(context).let {
+        it.registerListener(this)
+        it.registerListener(GlideTypingManager.getInstance())
+        it
+    }
     private val gestureDataForDrawing: MutableList<GlideTypingGesture.Detector.Position> = mutableListOf()
 
     constructor(context: Context) : this(context, null)
@@ -143,6 +139,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             this.computedLayout?.mode != KeyboardMode.CHARACTERS)
             return
 
+        // View.post is used here because all the values would be zero.
         computedLayout!!.arrangement.zip(this.children.asIterable()).forEach { pairOfRows ->
             pairOfRows.first.zip((pairOfRows.second as ViewGroup).children.asIterable()).forEach { pairOfKeys ->
                 pairOfKeys.second.post {
@@ -153,20 +150,10 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
                 }
             }
         }
-
-
         this.post {
-            gestureTypingClassifier.setLayout(computedLayout!!)
-            // FIXME: get this info from dictionary.
-            val data = AssetManager.default().loadAssetRaw(AssetRef(AssetSource.Assets, "ime/dict/data.json")).getOrThrow()
-            val json = JSONObject(data)
-            val map = hashMapOf<String, Int>()
-            map.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
-            gestureTypingClassifier.setWordData(map)
-            Timber.d("Rebuild gesture detector info.")
+            GlideTypingManager.getInstance().setLayout(this.computedLayout!!)
         }
 
-        // set so that once keyboard layout is loaded, it can set up
         this.gestureClassifierInitialized = true
     }
 
@@ -542,50 +529,13 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         }
     }
 
-    override fun onGestureComplete(event: GlideTypingGesture.Event): Boolean {
-        updateSuggestionsAsync(5, true) {
-            gestureTypingClassifier.clear()
-        }
+    override fun onGestureComplete(data: GlideTypingGesture.Detector.PointerData) {
         this.gestureDataForDrawing.clear()
         gesturing = false
         invalidate()
-        return true
     }
 
-    private var lastTime = System.currentTimeMillis()
     override fun onGestureAdd(point: GlideTypingGesture.Detector.Position) {
         this.gestureDataForDrawing.add(point)
-        this.gestureTypingClassifier.addGesturePoint(point)
-
-        val time = System.currentTimeMillis()
-        if (time - lastTime > 100) {
-            updateSuggestionsAsync(1, false) {}
-            lastTime = time
-        }
-    }
-
-    private val asyncExecutor = Executors.newSingleThreadExecutor()
-
-    companion object {
-        private const val MAX_SUGGESTION_COUNT = 5
-    }
-
-    /**
-     * Asks gesture classifier for suggestions and then passes that on to the smartbar.
-     * Also commits the most confident suggestion if [commit] is set. All happens on an async executor.
-     * NB: only fetches [MAX_SUGGESTION_COUNT] suggestions.
-     */
-    private fun updateSuggestionsAsync(maxSuggestionsToShow: Int, commit: Boolean, callback: () -> Unit) {
-        asyncExecutor.execute {
-            // To avoid cache misses when maxSuggestions goes from 5 to 1.
-            val suggestions = gestureTypingClassifier.getSuggestions(MAX_SUGGESTION_COUNT, true)
-
-            if (commit && suggestions.isNotEmpty())
-                FlorisBoard.getInstance().activeEditorInstance.commitText("${suggestions.first()} ")
-            TextInputManager.getInstance().smartbarView?.setCandidateSuggestionWords(System.nanoTime(), suggestions.take(maxSuggestionsToShow))
-            TextInputManager.getInstance().smartbarView?.updateCandidateSuggestionCapsState()
-
-            callback.invoke()
-        }
     }
 }

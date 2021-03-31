@@ -17,11 +17,11 @@ class GlideTypingGesture {
      *
      * @property listener The listener to report detected swipes to.
      */
-    class Detector(context: Context, private val listener: Listener) {
+    class Detector(context: Context) {
         private var pointerDataMap: MutableMap<Int, PointerData> = mutableMapOf()
         var velocityThreshold: VelocityThreshold = VelocityThreshold.NORMAL
         private val keySize = context.resources.getDimensionPixelSize(R.dimen.key_width).toDouble()
-
+        private val listeners: ArrayList<Listener> = arrayListOf()
 
         companion object {
             private const val MAX_DETECT_TIME = 500
@@ -65,7 +65,11 @@ class GlideTypingGesture {
                             if (dist > keySize && (dist / time) > VELOCITY_THRESHOLD) {
                                 pointerData.isActuallyGesture = true
                                 // Let listener know all those points need to be added.
-                                pointerData.positions.take(pointerData.positions.size - 1).forEach { listener.onGestureAdd(it) }
+                                pointerData.positions.take(pointerData.positions.size - 1).forEach { point ->
+                                    listeners.forEach {
+                                        it.onGestureAdd(point)
+                                    }
+                                }
                             } else if (time > MAX_DETECT_TIME) {
                                 pointerData.isActuallyGesture = false
                             }
@@ -73,7 +77,7 @@ class GlideTypingGesture {
                         }
 
                         if (pointerData?.isActuallyGesture == true)
-                            pointerData.positions.last().let { listener.onGestureAdd(it) }
+                            pointerData.positions.last().let { point -> listeners.forEach {  it.onGestureAdd(point) } }
 
                         return pointerData?.isActuallyGesture ?: false
                     }
@@ -82,9 +86,9 @@ class GlideTypingGesture {
                 MotionEvent.ACTION_POINTER_UP -> {
                     val pointerIndex = event.actionIndex
                     val pointerId = event.getPointerId(pointerIndex)
-                    return pointerDataMap.remove(pointerId)?.let {
-                        if (it.isActuallyGesture == true)
-                            listener.onGestureComplete(Event(it, pointerId))
+                    return pointerDataMap.remove(pointerId)?.let { pointerData ->
+                        if (pointerData.isActuallyGesture == true)
+                            listeners.forEach {  listener -> listener.onGestureComplete(pointerData)  }
                         else{
                             resetState()
                         }
@@ -97,6 +101,10 @@ class GlideTypingGesture {
                 else -> return false
             }
             return false
+        }
+
+        fun registerListener(listener: Listener){
+            this.listeners.add(listener)
         }
 
         private fun resetState() {
@@ -124,7 +132,7 @@ class GlideTypingGesture {
         /**
          * Called when a gesture is complete.
          */
-        fun onGestureComplete(event: Event): Boolean
+        fun onGestureComplete(data: Detector.PointerData)
 
         /**
          * Called when a point is added to a gesture.
@@ -132,14 +140,5 @@ class GlideTypingGesture {
          */
         fun onGestureAdd(point: Detector.Position)
     }
-
-    /**
-     * Data class which describes a single gesture event.
-     */
-    data class Event(
-        val data: Detector.PointerData,
-        /** The pointer ID of this event, corresponds to the value reported by the original MotionEvent. */
-        val pointerId: Int,
-    )
 
 }
