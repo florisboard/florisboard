@@ -72,16 +72,14 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
 
             withContext(Dispatchers.Main) {
                 val textInputManager = TextInputManager.getInstance()
+                textInputManager.glideSuggestionsActive = true
                 textInputManager.smartbarView?.setCandidateSuggestionWords(
                     System.nanoTime(),
                     suggestions.take(maxSuggestionsToShow)
                 )
                 textInputManager.smartbarView?.updateCandidateSuggestionCapsState()
                 if (commit && suggestions.isNotEmpty()) {
-                    val before = FlorisBoard.getInstance().activeEditorInstance.getTextBeforeCursor(1)
-                    var prefix = ""
-                    if (before.isNotEmpty() && before != " ") prefix = " "
-                    FlorisBoard.getInstance().activeEditorInstance.commitText(prefix + suggestions.first())
+                    FlorisBoard.getInstance().activeEditorInstance.commitGesture(suggestions.first())
                 }
                 callback.invoke()
             }

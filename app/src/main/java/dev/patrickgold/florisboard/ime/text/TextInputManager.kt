@@ -59,6 +59,7 @@ import kotlin.math.roundToLong
 class TextInputManager private constructor() : CoroutineScope by MainScope(), InputKeyEventReceiver,
     FlorisBoard.EventListener, SmartbarView.EventListener {
 
+    var glideSuggestionsActive: Boolean = false
     private val florisboard = FlorisBoard.getInstance()
     private val activeEditorInstance: EditorInstance
         get() = florisboard.activeEditorInstance
@@ -348,7 +349,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         if (BuildConfig.DEBUG) {
             Timber.i("current word: ${activeEditorInstance.cachedInput.currentWord.text}")
         }
-        if (activeEditorInstance.isComposingEnabled && !inputEventDispatcher.isPressed(KeyCode.DELETE)) {
+        if (activeEditorInstance.isComposingEnabled && !inputEventDispatcher.isPressed(KeyCode.DELETE) && !glideSuggestionsActive) {
             if (activeEditorInstance.shouldReevaluateComposingSuggestions) {
                 activeEditorInstance.shouldReevaluateComposingSuggestions = false
                 activeDictionary?.let {
@@ -367,12 +368,17 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         withContext(Dispatchers.Main) {
                             smartbarView?.setCandidateSuggestionWords(startTime, suggestions)
                             smartbarView?.updateCandidateSuggestionCapsState()
+                            glideSuggestionsActive = true
                         }
                     }
                 }
             } else {
                 smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
             }
+        }
+
+        if (glideSuggestionsActive && activeEditorInstance.cachedInput.currentWord.text.isNotEmpty()){
+            glideSuggestionsActive = false
         }
     }
 
@@ -423,7 +429,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onSmartbarCandidatePressed(word: String) {
-        activeEditorInstance.commitCompletion(word)
+        if (glideSuggestionsActive) {
+            activeEditorInstance.commitGestureCorrection(word)
+            glideSuggestionsActive = false
+            smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+        }else {
+            activeEditorInstance.commitCompletion(word)
+        }
     }
 
     override fun onSmartbarClipboardCandidatePressed(clipboardItem: ClipboardItem) {
