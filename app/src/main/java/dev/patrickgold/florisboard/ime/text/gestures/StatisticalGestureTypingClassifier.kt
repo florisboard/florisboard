@@ -354,7 +354,6 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
          * @return An oversampled copy of the gesture.
          */
         fun resample(numPoints: Int): Gesture {
-            require(numPoints > this.xs.size)
             val interpointDistance = (getLength() / numPoints)
             val resampledGesture = Gesture()
             resampledGesture.addPoint(xs[0], ys[0])
@@ -363,6 +362,15 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
             var newX: Float
             var newY: Float
             var cumulativeError = 0.0f
+
+            // otherwise nothing happens if size is only 1:
+            if (this.xs.size == 1){
+                for (i in 0 until SAMPLING_POINTS){
+                    resampledGesture.addPoint(xs[0], ys[0])
+                }
+            }
+
+
             for (i in 0 until xs.size - 1) {
                 // We calculate the unit vector from the two points we're between in the actual
                 // gesture

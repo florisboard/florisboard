@@ -30,7 +30,7 @@ class GlideTypingGesture {
 
         /**
          * Method which evaluates if a given [event] is a gesture.
-         *
+         * @return whether or not the event was interpreted as part of a gesture.
          */
         fun onTouchEvent(event: MotionEvent): Boolean {
             when (event.actionMasked) {
@@ -62,16 +62,19 @@ class GlideTypingGesture {
                             // evaluate whether is actually a gesture
                             val dist = pointerData.positions[0].dist(pos)
                             val time = (System.currentTimeMillis() - pointerData.startTime) + 1
-                            // avoiding square roots because they're very slow
                             if (dist > keySize && (dist / time) > VELOCITY_THRESHOLD) {
                                 pointerData.isActuallyGesture = true
+                                // Let listener know all those points need to be added.
+                                pointerData.positions.take(pointerData.positions.size - 1).forEach { listener.onGestureAdd(it) }
                             } else if (time > MAX_DETECT_TIME) {
                                 pointerData.isActuallyGesture = false
                             }
 
                         }
 
-                        pointerData?.positions?.let { listener.onGestureAdd(it) }
+                        if (pointerData?.isActuallyGesture == true)
+                            pointerData.positions.last().let { listener.onGestureAdd(it) }
+
                         return pointerData?.isActuallyGesture ?: false
                     }
                 }
@@ -82,6 +85,9 @@ class GlideTypingGesture {
                     return pointerDataMap.remove(pointerId)?.let {
                         if (it.isActuallyGesture == true)
                             listener.onGestureComplete(Event(it, pointerId))
+                        else{
+                            resetState()
+                        }
                         true
                     } ?: false
                 }
@@ -115,8 +121,16 @@ class GlideTypingGesture {
     }
 
     interface Listener {
+        /**
+         * Called when a gesture is complete.
+         */
         fun onGestureComplete(event: Event): Boolean
-        fun onGestureAdd(gesture: MutableList<Detector.Position>)
+
+        /**
+         * Called when a point is added to a gesture.
+         * Will not be called before a series of events is detected as a gesture.
+         */
+        fun onGestureAdd(point: Detector.Position)
     }
 
     /**

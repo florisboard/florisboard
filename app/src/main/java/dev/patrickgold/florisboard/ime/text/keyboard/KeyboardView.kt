@@ -78,7 +78,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     private val themeManager: ThemeManager = ThemeManager.default()
     private val swipeGestureDetector = SwipeGesture.Detector(context, this)
     private val gestureDetector = GlideTypingGesture.Detector(context, this)
-    internal var gestureTypingClassifier: GestureTypingClassifier = StatisticalGestureTypingClassifier()
+    private var gestureTypingClassifier: GestureTypingClassifier = StatisticalGestureTypingClassifier()
     private val gestureDataForDrawing: MutableList<GlideTypingGesture.Detector.Position> = mutableListOf()
 
     constructor(context: Context) : this(context, null)
@@ -138,8 +138,6 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             this.computedLayout == ComputedLayoutData.PRE_GENERATED_LOADING_KEYBOARD ||
             this.computedLayout?.mode != KeyboardMode.CHARACTERS)
             return
-
-        Thread.dumpStack()
 
         computedLayout!!.arrangement.zip(this.children.asIterable()).forEach { pairOfRows ->
             pairOfRows.first.zip((pairOfRows.second as ViewGroup).children.asIterable()).forEach { pairOfKeys ->
@@ -243,6 +241,8 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             return true
         }
 
+        // Gesture typing only works on character keyboard, if gesture detector says it's a gesture,
+        // and if it's not an ACTION_UP
         if (computedLayout?.mode == KeyboardMode.CHARACTERS &&
             gestureDetector.onTouchEvent(event) &&
             event.actionMasked != MotionEvent.ACTION_UP) {
@@ -254,8 +254,6 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             invalidate()
             this.gesturing = true
             return true
-        } else {
-            this.gesturing = false
         }
 
         when (event.actionMasked) {
@@ -533,7 +531,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     }
 
     override fun onGestureComplete(event: GlideTypingGesture.Event): Boolean {
-        val suggestion = gestureTypingClassifier.getSuggestions(1, true)
+        val suggestion = gestureTypingClassifier.getSuggestions(5, true)
         Timber.d("Predictions: $suggestion")
         gestureTypingClassifier.clear()
         this.gestureDataForDrawing.clear()
@@ -543,8 +541,8 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         return true
     }
 
-    override fun onGestureAdd(gesture: MutableList<GlideTypingGesture.Detector.Position>) {
-        this.gestureDataForDrawing.add(gesture.last())
-        this.gestureTypingClassifier.addGesturePoint(gesture.last())
+    override fun onGestureAdd(point: GlideTypingGesture.Detector.Position) {
+        this.gestureDataForDrawing.add(point)
+        this.gestureTypingClassifier.addGesturePoint(point)
     }
 }
