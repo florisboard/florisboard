@@ -87,12 +87,13 @@ class GlideTypingGesture {
                     val pointerIndex = event.actionIndex
                     val pointerId = event.getPointerId(pointerIndex)
                     return pointerDataMap.remove(pointerId)?.let { pointerData ->
-                        if (pointerData.isActuallyGesture == true)
-                            listeners.forEach {  listener -> listener.onGestureComplete(pointerData)  }
-                        else{
+                        if (pointerData.isActuallyGesture == true) {
+                            listeners.forEach { listener -> listener.onGestureComplete(pointerData) }
+                            true
+                        } else {
                             resetState()
+                            false
                         }
-                        true
                     } ?: false
                 }
                 MotionEvent.ACTION_CANCEL -> {
