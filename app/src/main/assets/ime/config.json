@@ -166,14 +166,16 @@
       "id": 801,
       "languageTag": "fa-FA",
       "preferred": {
-        "characters": "persian"
+        "characters": "persian",
+        "numericRow": "persian"
       }
     },
     {
       "id": 901,
       "languageTag": "ar",
       "preferred": {
-        "characters": "arabic"
+        "characters": "arabic",
+        "numericRow": "eastern_arabic"
       }
     },
     {

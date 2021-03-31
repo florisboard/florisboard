@@ -1,5 +1,5 @@
 {
-  "type": "extension",
+  "type": "numeric_row",
   "name": "western_arabic",
   "label": "Western Arabic",
   "authors": [ "patrickgold" ],

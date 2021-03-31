@@ -327,10 +327,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             }
             // TODO: heavy load on main thread
             for (keyboardMode in KeyboardMode.values()) {
-                if (keyboardMode != KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW && keyboardMode != KeyboardMode.SMARTBAR_NUMBER_ROW) {
-                    val keyboardView = keyboardViews[keyboardMode]
-                    keyboardView?.computedLayout = LayoutManager.default().fetchComputedLayoutAsync(keyboardMode, newSubtype, florisboard.prefs).await()
-                    keyboardView?.updateVisibility()
+                val keyboardView = keyboardViews[keyboardMode]
+                if (keyboardView != null) {
+                    keyboardView.computedLayout = LayoutManager.default().fetchComputedLayoutAsync(keyboardMode, newSubtype, florisboard.prefs).await()
+                    keyboardView.updateVisibility()
                 }
             }
         }
