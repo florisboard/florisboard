@@ -5,15 +5,15 @@ import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.text.TextInputManager
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import kotlinx.coroutines.*
 import org.json.JSONObject
-import java.util.concurrent.Executors
 
 /**
  * Handles the [GestureTypingClassifier] and its interactions with suggestions.
  */
-class GlideTypingManager: GlideTypingGesture.Listener, CoroutineScope by MainScope() {
+class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainScope() {
 
     private var gestureTypingClassifier = StatisticalGestureTypingClassifier()
 
@@ -34,12 +34,12 @@ class GlideTypingManager: GlideTypingGesture.Listener, CoroutineScope by MainSco
         }
     }
 
-    fun setLayout(computedLayout: ComputedLayoutData){
+    fun setLayout(computedLayout: ComputedLayoutData) {
         gestureTypingClassifier.setLayout(computedLayout)
 
     }
 
-    fun setWordData(){
+    fun setWordData() {
         // FIXME: get this info from dictionary.
         val data = AssetManager.default().loadAssetRaw(AssetRef(AssetSource.Assets, "ime/dict/data.json")).getOrThrow()
         val json = JSONObject(data)
@@ -52,7 +52,7 @@ class GlideTypingManager: GlideTypingGesture.Listener, CoroutineScope by MainSco
         private const val MAX_SUGGESTION_COUNT = 5
 
         private lateinit var glideTypingManager: GlideTypingManager
-        fun getInstance(): GlideTypingManager{
+        fun getInstance(): GlideTypingManager {
             if (!this::glideTypingManager.isInitialized)
                 glideTypingManager = GlideTypingManager()
 
@@ -71,13 +71,18 @@ class GlideTypingManager: GlideTypingGesture.Listener, CoroutineScope by MainSco
             val suggestions = gestureTypingClassifier.getSuggestions(MAX_SUGGESTION_COUNT, true)
 
             withContext(Dispatchers.Main) {
-                if (commit && suggestions.isNotEmpty())
-                    FlorisBoard.getInstance().activeEditorInstance.commitText("${suggestions.first()} ")
-                TextInputManager.getInstance().smartbarView?.setCandidateSuggestionWords(
+                val textInputManager = TextInputManager.getInstance()
+                textInputManager.smartbarView?.setCandidateSuggestionWords(
                     System.nanoTime(),
                     suggestions.take(maxSuggestionsToShow)
                 )
-                TextInputManager.getInstance().smartbarView?.updateCandidateSuggestionCapsState()
+                textInputManager.smartbarView?.updateCandidateSuggestionCapsState()
+                if (commit && suggestions.isNotEmpty()) {
+                    val before = FlorisBoard.getInstance().activeEditorInstance.getTextBeforeCursor(1)
+                    var prefix = ""
+                    if (before.isNotEmpty() && before != " ") prefix = " "
+                    FlorisBoard.getInstance().activeEditorInstance.commitText(prefix + suggestions.first())
+                }
                 callback.invoke()
             }
         }

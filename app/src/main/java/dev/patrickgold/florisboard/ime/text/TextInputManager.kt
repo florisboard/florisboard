@@ -365,13 +365,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                             Timber.i("sugg fetch time: $elapsed us")
                         }
                         withContext(Dispatchers.Main) {
-//                            smartbarView?.setCandidateSuggestionWords(startTime, suggestions)
+                            smartbarView?.setCandidateSuggestionWords(startTime, suggestions)
                             smartbarView?.updateCandidateSuggestionCapsState()
                         }
                     }
                 }
             } else {
-//                smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+                smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
             }
         }
     }
