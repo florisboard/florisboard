@@ -28,7 +28,6 @@ import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.dictionary.Dictionary
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
-import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.nlp.Token
@@ -41,13 +40,9 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import kotlinx.coroutines.*
-import org.json.JSONObject
 import timber.log.Timber
 import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 import kotlin.math.roundToLong
-import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 /**
  * TextInputManager is responsible for managing everything which is related to text input. All of
@@ -90,7 +85,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     var keyVariation: KeyVariation = KeyVariation.NORMAL
     val layoutManager = LayoutManager(florisboard)
-    private var smartbarView: SmartbarView? = null
+    internal var smartbarView: SmartbarView? = null
 
     // Caps/Shift related properties
     var caps: Boolean = false
@@ -368,13 +363,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                             Timber.i("sugg fetch time: $elapsed us")
                         }
                         withContext(Dispatchers.Main) {
-                            smartbarView?.setCandidateSuggestionWords(startTime, suggestions)
+//                            smartbarView?.setCandidateSuggestionWords(startTime, suggestions)
                             smartbarView?.updateCandidateSuggestionCapsState()
                         }
                     }
                 }
             } else {
-                smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+//                smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
             }
         }
     }

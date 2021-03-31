@@ -1,6 +1,7 @@
 package dev.patrickgold.florisboard.ime.text.gestures
 
 import android.util.SparseArray
+import androidx.collection.LruCache
 import androidx.core.util.set
 import dev.patrickgold.florisboard.ime.text.key.FlorisKeyData
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
@@ -42,6 +43,12 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
          * un-normalized gestures and is therefore dependent on the size of the keys/keyboard.
          */
         private const val LOCATION_STD = 0.5109f
+
+        /**
+         * This is a very small cache that caches suggestions, so that they aren't recalculated e.g when releasing
+         * a pointer when the suggestions were already calculated. Avoids a lot of micro pauses.
+         */
+        private const val SUGGESTION_CACHE_SIZE = 5
     }
 
     override fun addGesturePoint(position: GlideTypingGesture.Detector.Position) {
@@ -79,7 +86,24 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
         }
     }
 
+
+    private val lruSuggestionCache = LruCache<Pair<Gesture, Int>, List<String>>(SUGGESTION_CACHE_SIZE)
     override fun getSuggestions(maxSuggestionCount: Int, gestureCompleted: Boolean): List<String> {
+
+        return when (val cached = lruSuggestionCache.get(Pair(this.gesture, maxSuggestionCount))) {
+            null -> {
+                val suggestions = unCachedGetSuggestions(maxSuggestionCount)
+                lruSuggestionCache.put(Pair(this.gesture.clone(), maxSuggestionCount), suggestions)
+
+                suggestions
+            }
+            else -> {
+                cached
+            }
+        }
+    }
+
+    private fun unCachedGetSuggestions(maxSuggestionCount: Int): List<String> {
         val candidates = arrayListOf<String>()
         val candidateWeights = arrayListOf<Float>()
 
@@ -101,7 +125,7 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
             val shapeProbability = calcGaussianProbability(shapeDistance, 0.0f, SHAPE_STD)
             val locationProbability = calcGaussianProbability(locationDistance, 0.0f, LOCATION_STD * radius)
             val frequency = wordFrequencies[word]!!
-            val confidence= 1.0f/(shapeProbability * locationProbability * frequency)
+            val confidence = 1.0f / (shapeProbability * locationProbability * frequency)
 
             var candidateDistanceSortedIndex = 0
 
@@ -279,17 +303,28 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
         }
     }
 
-    class Gesture {
+    class Gesture(private val xs: FloatArray, private val ys: FloatArray, private var size: Int) {
         val isEmpty: Boolean
-            get() = this.xs.isEmpty()
-        private val xs = arrayListOf<Float>()
-        private val ys = arrayListOf<Float>()
+            get() = size == 0
+
+        constructor() : this(FloatArray(MAX_SIZE), FloatArray(MAX_SIZE), 0)
 
         companion object {
-            private val cachedIdeal = hashMapOf<String, Gesture>()
+            private const val MAX_SIZE = 1000
+            private const val MAX_IDEAL_CACHE_SIZE = 10000
+            private val lruIdealCache = LruCache<String, Gesture>(MAX_IDEAL_CACHE_SIZE)
 
             fun generateIdealGesture(word: String, keysByCharacter: SparseArray<FlorisKeyData>): Gesture {
-                return cachedIdeal.getOrPut(word, { unCachedGenerateIdealGesture(word, keysByCharacter) })
+                return when (val cached = lruIdealCache.get(word)) {
+                    null -> {
+                        val ideal = unCachedGenerateIdealGesture(word, keysByCharacter)
+                        lruIdealCache.put(word, ideal)
+                        ideal
+                    }
+                    else -> {
+                        cached
+                    }
+                }
             }
 
             private fun unCachedGenerateIdealGesture(
@@ -340,8 +375,12 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
         }
 
         fun addPoint(x: Float, y: Float) {
-            xs.add(x)
-            ys.add(y)
+            if (size >= MAX_SIZE){
+                return
+            }
+            xs[size] = x
+            ys[size] = y
+            size += 1
         }
 
 
@@ -358,20 +397,20 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
             val resampledGesture = Gesture()
             resampledGesture.addPoint(xs[0], ys[0])
             var lastX = xs[0]
-            var lastY  = ys[0]
+            var lastY = ys[0]
             var newX: Float
             var newY: Float
             var cumulativeError = 0.0f
 
             // otherwise nothing happens if size is only 1:
-            if (this.xs.size == 1){
-                for (i in 0 until SAMPLING_POINTS){
+            if (this.size == 1) {
+                for (i in 0 until SAMPLING_POINTS) {
                     resampledGesture.addPoint(xs[0], ys[0])
                 }
             }
 
 
-            for (i in 0 until xs.size - 1) {
+            for (i in 0 until size - 1) {
                 // We calculate the unit vector from the two points we're between in the actual
                 // gesture
                 var dx = xs[i + 1] - xs[i]
@@ -412,7 +451,7 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
             var minX = 10000.0f
             var minY = 10000.0f
 
-            for (i in 0 until xs.size) {
+            for (i in 0 until size) {
                 maxX = max(xs[i], maxX)
                 maxY = max(ys[i], maxY)
                 minX = min(xs[i], minX)
@@ -426,7 +465,7 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
             val centroidX = (width / 2 + minX) / longestSide
             val centroidY = (height / 2 + minY) / longestSide
 
-            for (i in 0 until xs.size) {
+            for (i in 0 until size) {
                 val x = xs[i] / longestSide - centroidX
                 val y = ys[i] / longestSide - centroidY
                 normalizedGesture.addPoint(x, y)
@@ -437,12 +476,12 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
 
         fun getFirstX(): Float = xs[0]
         fun getFirstY(): Float = ys[0]
-        fun getLastX(): Float = xs.last()
-        fun getLastY(): Float = ys.last()
+        fun getLastX(): Float = xs[size-1]
+        fun getLastY(): Float = ys[size-1]
 
         fun getLength(): Float {
             var length = 0f
-            for (i in 1 until xs.size) {
+            for (i in 1 until size) {
                 val previousX = xs[i - 1]
                 val previousY = ys[i - 1]
                 val currentX = xs[i]
@@ -454,12 +493,38 @@ class StatisticalGestureTypingClassifier : GestureTypingClassifier {
         }
 
         fun clear() {
-            this.xs.clear()
-            this.ys.clear()
+            this.size = 0
         }
 
         fun getX(i: Int): Float = xs[i]
         fun getY(i: Int): Float = ys[i]
+
+        fun clone(): Gesture {
+            return Gesture(xs.clone(), ys.clone(), size)
+        }
+
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Gesture
+
+            if (this.size != other.size) return false
+
+            for (i in 0 until size){
+                if (xs[i] != other.xs[i] || ys[i] != other.ys[i]) return false
+            }
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = xs.contentHashCode()
+            result = 31 * result + ys.contentHashCode()
+            result = 31 * result + size
+            return result
+        }
     }
 
 

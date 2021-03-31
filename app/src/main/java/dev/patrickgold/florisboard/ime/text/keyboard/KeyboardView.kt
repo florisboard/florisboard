@@ -36,6 +36,7 @@ import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
+import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.gestures.*
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
@@ -46,7 +47,8 @@ import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import org.json.JSONObject
 import timber.log.Timber
-import kotlin.math.pow
+import java.util.concurrent.Executors
+import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
@@ -229,7 +231,6 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (event == null || isPreviewMode || isLoadingPlaceholderKeyboard) return false
-
 
         if (!isSmartbarKeyboardView && swipeGestureDetector.onTouchEvent(event)) {
             for (pointerIndex in 0 until event.pointerCount) {
@@ -493,25 +494,25 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
 
     private val paint = Paint().apply {
         color = Color.GREEN
-        alpha = 20
+        alpha = 40
     }
 
     override fun dispatchDraw(canvas: Canvas?) {
         super.dispatchDraw(canvas)
         var radius = 20f
-        val targetDist = 25f
+        val targetDist = 5f * 5f
         val gestureData = gestureDataForDrawing
         if (gesturing && gestureData.isNotEmpty()) {
-            for (i in gestureData.size - 1 downTo 1) {
+            for (i in gestureData.size - 1 downTo max(1, gestureData.size - 50)) {
                 val dx = gestureData[i].x - gestureData[i - 1].x
                 val dy = gestureData[i].y - gestureData[i - 1].y
                 val dist = (dx * dx + dy * dy)
 
                 val numPoints = sqrt(dist / targetDist)
                 for (j in 0 until numPoints.toInt()) {
-                    radius *= 0.992f
-                    val intermediateX = gestureData[i].x * (1-j/numPoints) + gestureData[i-1].x * (j/numPoints)
-                    val intermediateY = gestureData[i].y * (1-j/numPoints) + gestureData[i-1].y * (j/numPoints)
+                    radius *= 0.99f
+                    val intermediateX = gestureData[i].x * (1 - j / numPoints) + gestureData[i - 1].x * (j / numPoints)
+                    val intermediateY = gestureData[i].y * (1 - j / numPoints) + gestureData[i - 1].y * (j / numPoints)
                     canvas?.drawCircle(intermediateX, intermediateY, radius, paint)
                 }
             }
@@ -542,18 +543,49 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     }
 
     override fun onGestureComplete(event: GlideTypingGesture.Event): Boolean {
-        val suggestion = gestureTypingClassifier.getSuggestions(5, true)
-        Timber.d("Predictions: $suggestion")
-        gestureTypingClassifier.clear()
+        updateSuggestionsAsync(5, true) {
+            gestureTypingClassifier.clear()
+        }
         this.gestureDataForDrawing.clear()
-
         gesturing = false
         invalidate()
         return true
     }
 
+    private var lastTime = System.currentTimeMillis()
     override fun onGestureAdd(point: GlideTypingGesture.Detector.Position) {
         this.gestureDataForDrawing.add(point)
         this.gestureTypingClassifier.addGesturePoint(point)
+
+        val time = System.currentTimeMillis()
+        if (time - lastTime > 100) {
+            updateSuggestionsAsync(1, false) {}
+            lastTime = time
+        }
+    }
+
+    private val asyncExecutor = Executors.newSingleThreadExecutor()
+
+    companion object {
+        private const val MAX_SUGGESTION_COUNT = 5
+    }
+
+    /**
+     * Asks gesture classifier for suggestions and then passes that on to the smartbar.
+     * Also commits the most confident suggestion if [commit] is set. All happens on an async executor.
+     * NB: only fetches [MAX_SUGGESTION_COUNT] suggestions.
+     */
+    private fun updateSuggestionsAsync(maxSuggestionsToShow: Int, commit: Boolean, callback: () -> Unit) {
+        asyncExecutor.execute {
+            // To avoid cache misses when maxSuggestions goes from 5 to 1.
+            val suggestions = gestureTypingClassifier.getSuggestions(MAX_SUGGESTION_COUNT, true)
+
+            if (commit && suggestions.isNotEmpty())
+                FlorisBoard.getInstance().activeEditorInstance.commitText("${suggestions.first()} ")
+            TextInputManager.getInstance().smartbarView?.setCandidateSuggestionWords(System.nanoTime(), suggestions.take(maxSuggestionsToShow))
+            TextInputManager.getInstance().smartbarView?.updateCandidateSuggestionCapsState()
+
+            callback.invoke()
+        }
     }
 }
