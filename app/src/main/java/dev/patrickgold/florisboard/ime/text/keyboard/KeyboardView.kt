@@ -79,6 +79,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         it
     }
     private val gestureDataForDrawing: MutableList<GlideTypingGesture.Detector.Position> = mutableListOf()
+
     /**
      * For some reason, buildLayout() is called twice on first launch, and it messes up the gesture
      * classifier so I just had to do this. Please tell me if there's a better solution
@@ -129,7 +130,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             themeManager.requestThemeUpdate(this)
             onWindowShown()
 
-            if (prefs.glide.enabled && !isLoadingPlaceholderKeyboard && !isFirstBuildLayout){
+            if (prefs.glide.enabled && !isLoadingPlaceholderKeyboard && !isFirstBuildLayout) {
                 initGestureClassifier()
             }
             if (isFirstBuildLayout) {
@@ -226,7 +227,6 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (event == null || isPreviewMode || isLoadingPlaceholderKeyboard) return false
-
         if (!isSmartbarKeyboardView && swipeGestureDetector.onTouchEvent(event)) {
             for (pointerIndex in 0 until event.pointerCount) {
                 val pointerId = event.getPointerId(pointerIndex)
@@ -240,12 +240,12 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         }
 
         // Gesture typing only works on character keyboard, if gesture detector says it's a gesture,
-        // and if it's not an ACTION_UP
         if (prefs.glide.enabled &&
             computedLayout?.mode == KeyboardMode.CHARACTERS &&
-            gestureDetector.onTouchEvent(event) &&
+            gestureDetector.onTouchEvent(event, initialKeyCodes) &&
             event.actionMasked != MotionEvent.ACTION_UP
         ) {
+            // cancel all other button presses
             for (pointerIndex in 0 until event.pointerCount) {
                 val pointerId = event.getPointerId(pointerIndex)
                 sendFlorisTouchEvent(event, pointerIndex, pointerId, MotionEvent.ACTION_CANCEL)
@@ -515,7 +515,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
                     val dy = gestureData[i].y - gestureData[i - 1].y
                     val dist = sqrt(dx * dx + dy * dy)
 
-                    val numPoints = dist/targetDist
+                    val numPoints = dist / targetDist
                     for (j in 0 until numPoints.toInt()) {
                         radius *= 0.99f
                         val intermediateX =

@@ -333,7 +333,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             keyboardView?.updateVisibility()
 
             if (PrefHelper.getDefaultInstance(florisboard.context).glide.enabled) {
-//                keyboardView?.initGestureClassifier()
                 GlideTypingManager.getInstance().setWordData()
             }
         }

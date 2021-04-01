@@ -3,6 +3,7 @@ package dev.patrickgold.florisboard.ime.text.gestures
 import android.content.Context
 import android.view.MotionEvent
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -26,13 +27,14 @@ class GlideTypingGesture {
         companion object {
             private const val MAX_DETECT_TIME = 500
             private const val VELOCITY_THRESHOLD = 0.65
+            private val SWIPE_GESTURE_KEYS = arrayOf(KeyCode.DELETE, KeyCode.SHIFT, KeyCode.SPACE)
         }
 
         /**
          * Method which evaluates if a given [event] is a gesture.
          * @return whether or not the event was interpreted as part of a gesture.
          */
-        fun onTouchEvent(event: MotionEvent): Boolean {
+        fun onTouchEvent(event: MotionEvent, initialKeyCodes: MutableMap<Int, Int>): Boolean {
             when (event.actionMasked) {
                 MotionEvent.ACTION_DOWN,
                 MotionEvent.ACTION_POINTER_DOWN -> {
@@ -50,51 +52,49 @@ class GlideTypingGesture {
                     return false
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    for (pointerIndex in 0 until event.pointerCount) {
-                        val pointerId = event.getPointerId(pointerIndex)
-                        val pointerData = pointerDataMap[pointerId]
-                        val pos = Position(event.getX(pointerIndex), event.getY(pointerIndex))
-                        pointerData?.positions?.add(
-                            pos
-                        )
+                    val pointerIndex = event.actionIndex
+                    val pointerId = event.getPointerId(pointerIndex)
+                    val pointerData = pointerDataMap[pointerId]
+                    val pos = Position(event.getX(pointerIndex), event.getY(pointerIndex))
+                    pointerData?.positions?.add(
+                        pos
+                    )
 
-                        if (pointerData != null && pointerData.isActuallyGesture == null) {
-                            // evaluate whether is actually a gesture
-                            val dist = pointerData.positions[0].dist(pos)
-                            val time = (System.currentTimeMillis() - pointerData.startTime) + 1
-                            if (dist > keySize && (dist / time) > VELOCITY_THRESHOLD) {
-                                pointerData.isActuallyGesture = true
-                                // Let listener know all those points need to be added.
-                                pointerData.positions.take(pointerData.positions.size - 1).forEach { point ->
-                                    listeners.forEach {
-                                        it.onGestureAdd(point)
-                                    }
+                    if (pointerData != null && pointerData.isActuallyGesture == null) {
+                        // evaluate whether is actually a gesture
+                        val dist = pointerData.positions[0].dist(pos)
+                        val time = (System.currentTimeMillis() - pointerData.startTime) + 1
+                        if (dist > keySize && (dist / time) > VELOCITY_THRESHOLD && (initialKeyCodes[pointerId] !in SWIPE_GESTURE_KEYS)) {
+                            pointerData.isActuallyGesture = true
+                            // Let listener know all those points need to be added.
+                            pointerData.positions.take(pointerData.positions.size - 1).forEach { point ->
+                                listeners.forEach {
+                                    it.onGestureAdd(point)
                                 }
-                            } else if (time > MAX_DETECT_TIME) {
-                                pointerData.isActuallyGesture = false
                             }
-
+                        } else if (time > MAX_DETECT_TIME) {
+                            pointerData.isActuallyGesture = false
                         }
 
-                        if (pointerData?.isActuallyGesture == true)
-                            pointerData.positions.last().let { point -> listeners.forEach {  it.onGestureAdd(point) } }
-
-                        return pointerData?.isActuallyGesture ?: false
                     }
+
+                    if (pointerData?.isActuallyGesture == true)
+                        pointerData.positions.last().let { point -> listeners.forEach { it.onGestureAdd(point) } }
+
+                    return pointerData?.isActuallyGesture ?: false
                 }
                 MotionEvent.ACTION_UP,
                 MotionEvent.ACTION_POINTER_UP -> {
                     val pointerIndex = event.actionIndex
                     val pointerId = event.getPointerId(pointerIndex)
-                    return pointerDataMap.remove(pointerId)?.let { pointerData ->
+                    pointerDataMap.remove(pointerId)?.let { pointerData ->
                         if (pointerData.isActuallyGesture == true) {
                             listeners.forEach { listener -> listener.onGestureComplete(pointerData) }
-                            true
                         } else {
                             resetState()
-                            false
                         }
-                    } ?: false
+                    }
+                    return false
                 }
                 MotionEvent.ACTION_CANCEL -> {
                     resetState()
@@ -104,7 +104,7 @@ class GlideTypingGesture {
             return false
         }
 
-        fun registerListener(listener: Listener){
+        fun registerListener(listener: Listener) {
             this.listeners.add(listener)
         }
 
