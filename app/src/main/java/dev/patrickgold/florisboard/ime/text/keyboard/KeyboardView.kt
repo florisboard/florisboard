@@ -159,7 +159,14 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             }
         }
         this.post {
-            GlideTypingManager.getInstance().setLayout(this.computedLayout!!)
+            val inputView = FlorisBoard.getInstance().inputView!!
+            val dimensions = Dimensions(
+                this.width.toFloat(),
+                this.height.toFloat(),
+                inputView.oneHandedCtrlPanelStart!!.width.toFloat(),
+                inputView.oneHandedCtrlPanelEnd!!.width.toFloat()
+            )
+            GlideTypingManager.getInstance().setLayout(this.computedLayout!!, dimensions)
         }
 
     }
@@ -238,6 +245,15 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             }
             return true
         }
+
+        val inputView = FlorisBoard.getInstance().inputView!!
+        val dimensions = Dimensions(
+            this.width.toFloat(),
+            this.height.toFloat(),
+            inputView.oneHandedCtrlPanelStart!!.width.toFloat(),
+            inputView.oneHandedCtrlPanelEnd!!.width.toFloat()
+        )
+        GlideTypingManager.getInstance().updateDimensions(dimensions)
 
         // Gesture typing only works on character keyboard, if gesture detector says it's a gesture,
         if (prefs.glide.enabled &&

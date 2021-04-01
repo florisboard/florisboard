@@ -1,6 +1,7 @@
 package dev.patrickgold.florisboard.ime.text.gestures
 
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
@@ -8,6 +9,7 @@ import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import kotlinx.coroutines.*
 import org.json.JSONObject
+import timber.log.Timber
 
 /**
  * Handles the [GlideTypingClassifier]. Basically responsible for linking [GlideTypingGesture.Detector]
@@ -16,45 +18,8 @@ import org.json.JSONObject
 class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainScope() {
 
     private var glideTypingClassifier = StatisticalGlideTypingClassifier()
-
-    override fun onGestureComplete(data: GlideTypingGesture.Detector.PointerData) {
-        updateSuggestionsAsync(5, true) {
-            glideTypingClassifier.clear()
-        }
-    }
-
-    private var lastTime = System.currentTimeMillis()
-    override fun onGestureAdd(point: GlideTypingGesture.Detector.Position) {
-        this.glideTypingClassifier.addGesturePoint(point)
-
-        val time = System.currentTimeMillis()
-        if (time - lastTime > 100) {
-            updateSuggestionsAsync(1, false) {}
-            lastTime = time
-        }
-    }
-
-    /**
-     * Change the layout of the internal gesture classifier
-     */
-    fun setLayout(computedLayout: ComputedLayoutData) {
-        glideTypingClassifier.setLayout(computedLayout)
-    }
-
-    /**
-     * Set the word data for the internal gesture classifier
-     */
-    fun setWordData() {
-        launch (Dispatchers.Default) {
-            // FIXME: get this info from dictionary.
-            val data =
-                AssetManager.default().loadAssetRaw(AssetRef(AssetSource.Assets, "ime/dict/data.json")).getOrThrow()
-            val json = JSONObject(data)
-            val map = hashMapOf<String, Int>()
-            map.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
-            glideTypingClassifier.setWordData(map)
-        }
-    }
+    private val initialDimensions: HashMap<Subtype, Dimensions> = hashMapOf()
+    private var currentDimensions: Dimensions = Dimensions(0f, 0f, 0f, 0f)
 
     companion object {
         private const val MAX_SUGGESTION_COUNT = 8
@@ -66,6 +31,83 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
 
             return glideTypingManager
         }
+    }
+
+    override fun onGestureComplete(data: GlideTypingGesture.Detector.PointerData) {
+        updateSuggestionsAsync(MAX_SUGGESTION_COUNT, true) {
+            glideTypingClassifier.clear()
+        }
+    }
+
+    private var lastTime = System.currentTimeMillis()
+    override fun onGestureAdd(point: GlideTypingGesture.Detector.Position) {
+        val normalized = GlideTypingGesture.Detector.Position(normalizeX(point.x), normalizeY(point.y))
+        Timber.d("Scaled from ${point.x} ${point.x} to ${normalized.x} ${normalized.y}")
+
+        this.glideTypingClassifier.addGesturePoint(normalized)
+
+        val time = System.currentTimeMillis()
+        if (time - lastTime > 100) {
+            updateSuggestionsAsync(1, false) {}
+            lastTime = time
+        }
+    }
+
+    /**
+     * Change the layout of the internal gesture classifier
+     */
+    fun setLayout(computedLayout: ComputedLayoutData, dimensions: Dimensions) {
+        glideTypingClassifier.setLayout(computedLayout)
+        initialDimensions.getOrPut(FlorisBoard.getInstance().activeSubtype, {
+            Timber.d("initial dimensions: $dimensions")
+            dimensions })
+    }
+
+    /**
+     * Set the word data for the internal gesture classifier
+     */
+    fun setWordData() {
+        launch(Dispatchers.Default) {
+            // FIXME: get this info from dictionary.
+            val data =
+                AssetManager.default().loadAssetRaw(AssetRef(AssetSource.Assets, "ime/dict/data.json")).getOrThrow()
+            val json = JSONObject(data)
+            val map = hashMapOf<String, Int>()
+            map.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
+            glideTypingClassifier.setWordData(map)
+        }
+    }
+
+    fun updateDimensions(dimensions: Dimensions) {
+        Timber.d("new dimensions: $dimensions")
+        this.currentDimensions = dimensions
+    }
+
+    private fun normalizeX(x: Float): Float {
+        val initial = initialDimensions[FlorisBoard.getInstance().activeSubtype] ?: return x
+
+        return scaleRange(
+            x,
+            currentDimensions.startOffset,
+            currentDimensions.width - currentDimensions.endOffset,
+            initial.startOffset,
+            initial.width - initial.endOffset
+        )
+    }
+
+    private fun normalizeY(y: Float): Float {
+        val initial = initialDimensions[FlorisBoard.getInstance().activeSubtype] ?: return y
+
+        return scaleRange(
+            y,
+            0f,
+            currentDimensions.height,
+            0f,
+            initial.height
+        )
+    }
+    private fun scaleRange(x: Float, oldMin: Float, oldMax: Float, newMin: Float, newMax: Float): Float {
+        return (((x - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + newMin
     }
 
     /**
@@ -102,3 +144,10 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
         }
     }
 }
+
+data class Dimensions(
+    val width: Float,
+    val height: Float,
+    val startOffset: Float,
+    val endOffset: Float
+)
