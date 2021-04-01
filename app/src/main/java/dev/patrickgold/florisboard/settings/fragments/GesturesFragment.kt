@@ -16,12 +16,38 @@
 
 package dev.patrickgold.florisboard.settings.fragments
 
+import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 
-class GesturesFragment : PreferenceFragmentCompat() {
+class GesturesFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.prefs_gestures)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val preference: Preference? = findPreference("glide__show_trail")
+        preference?.isEnabled = sharedPreferences.getBoolean("glide__enabled", false)
     }
+
+    override fun onResume() {
+        super.onResume()
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    override fun onPause()
+    {
+        super.onPause()
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        if (key == "glide__enabled"){
+            val preference: Preference? = findPreference("glide__show_trail")
+            preference?.isEnabled = sharedPreferences.getBoolean("glide__enabled", false)
+        }
+    }
+
 }
