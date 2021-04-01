@@ -337,6 +337,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             }
         }
     }
+    // this is so unfortunate... but we need to skip clearing the suggestion only one time.
+    private var hackyGlideSuggestionSkip = false
 
     /**
      * Main logic point for processing cursor updates as well as parsing the current composing word
@@ -369,13 +371,18 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         withContext(Dispatchers.Main) {
                             smartbarView?.setCandidateSuggestionWords(startTime, suggestions)
                             smartbarView?.updateCandidateSuggestionCapsState()
-                            glideSuggestionsActive = false
                         }
                     }
                 }
             } else {
                 if (glideSuggestionsActive){
-                    glideSuggestionsActive = false
+                    if (hackyGlideSuggestionSkip) {
+                        smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+                        hackyGlideSuggestionSkip = false
+                        glideSuggestionsActive = false
+                    }else {
+                        hackyGlideSuggestionSkip = true
+                    }
                 }else {
                     smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
                 }
@@ -433,6 +440,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         if (glideSuggestionsActive) {
             activeEditorInstance.commitGestureCorrection(word)
             glideSuggestionsActive = false
+            hackyGlideSuggestionSkip = false
             smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
         }else {
             activeEditorInstance.commitCompletion(word)
@@ -479,6 +487,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         if (glideSuggestionsActive){
             handleDeleteWord()
             glideSuggestionsActive = false
+            hackyGlideSuggestionSkip = false
             this.smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
         }else {
             isManualSelectionMode = false
