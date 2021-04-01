@@ -306,15 +306,14 @@ class EditorInstance private constructor(
      *  method will fail.
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
-    fun deleteWordsBeforeCursor(n: Int, shouldStartBatchEdit: Boolean = true): Boolean {
+    fun deleteWordsBeforeCursor(n: Int): Boolean {
         val ic = inputConnection ?: return false
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
         return if (n < 1 || isRawInputEditor || !selection.isValid || !selection.isCursorMode) {
             false
         } else {
-            if (shouldStartBatchEdit)
-                ic.beginBatchEdit()
+            ic.beginBatchEdit()
             markComposingRegion(null)
 
             try {
@@ -329,8 +328,7 @@ class EditorInstance private constructor(
             ic.commitText("", 1)
 
             cachedInput.update()
-            if (shouldStartBatchEdit)
-                ic.endBatchEdit()
+            ic.endBatchEdit()
             true
         }
     }
