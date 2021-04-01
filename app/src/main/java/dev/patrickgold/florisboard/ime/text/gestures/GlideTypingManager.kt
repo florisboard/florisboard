@@ -35,16 +35,18 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
 
     fun setLayout(computedLayout: ComputedLayoutData) {
         gestureTypingClassifier.setLayout(computedLayout)
-
     }
 
     fun setWordData() {
-        // FIXME: get this info from dictionary.
-        val data = AssetManager.default().loadAssetRaw(AssetRef(AssetSource.Assets, "ime/dict/data.json")).getOrThrow()
-        val json = JSONObject(data)
-        val map = hashMapOf<String, Int>()
-        map.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
-        gestureTypingClassifier.setWordData(map)
+        launch (Dispatchers.Default) {
+            // FIXME: get this info from dictionary.
+            val data =
+                AssetManager.default().loadAssetRaw(AssetRef(AssetSource.Assets, "ime/dict/data.json")).getOrThrow()
+            val json = JSONObject(data)
+            val map = hashMapOf<String, Int>()
+            map.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
+            gestureTypingClassifier.setWordData(map)
+        }
     }
 
     companion object {
@@ -63,8 +65,16 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
      * Asks gesture classifier for suggestions and then passes that on to the smartbar.
      * Also commits the most confident suggestion if [commit] is set. All happens on an async executor.
      * NB: only fetches [MAX_SUGGESTION_COUNT] suggestions.
+     *
+     * @param callback Called when this function completes. Takes a boolean, which indicates if suggestions
+     * were successfully set.
      */
-    private fun updateSuggestionsAsync(maxSuggestionsToShow: Int, commit: Boolean, callback: () -> Unit) {
+    private fun updateSuggestionsAsync(maxSuggestionsToShow: Int, commit: Boolean, callback: (Boolean) -> Unit) {
+        if (!gestureTypingClassifier.ready) {
+            callback.invoke(false)
+            return
+        }
+
         launch(Dispatchers.Default) {
             // To avoid cache misses when maxSuggestions goes from 5 to 1.
             val suggestions = gestureTypingClassifier.getSuggestions(MAX_SUGGESTION_COUNT, true)
@@ -80,7 +90,7 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
                 if (commit && suggestions.isNotEmpty()) {
                     FlorisBoard.getInstance().activeEditorInstance.commitGesture(suggestions.first())
                 }
-                callback.invoke()
+                callback.invoke(true)
             }
         }
     }

@@ -240,9 +240,9 @@
 
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gestures &amp; Glide typing</string>
     <string name="pref__glide__title" comment="Preference group title">Glide typing</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Enable glide typing</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Enable glide typing</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Type in a word by sliding your finger through its letters</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Show glide trail</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Show glide trail</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Will disappear after each word</string>
     <string name="pref__gestures__general_title" comment="Preference group title">General gestures</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Space bar gestures</string>

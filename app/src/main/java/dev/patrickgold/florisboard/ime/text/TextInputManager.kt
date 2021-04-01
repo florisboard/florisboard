@@ -332,8 +332,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             keyboardView?.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, newSubtype, florisboard.prefs).await()
             keyboardView?.updateVisibility()
 
-            keyboardView?.initGestureClassifier()
-            GlideTypingManager.getInstance().setWordData()
+            if (PrefHelper.getDefaultInstance(florisboard.context).glide.enabled) {
+//                keyboardView?.initGestureClassifier()
+                GlideTypingManager.getInstance().setWordData()
+            }
         }
     }
 

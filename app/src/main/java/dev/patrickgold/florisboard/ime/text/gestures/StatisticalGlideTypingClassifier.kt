@@ -3,6 +3,8 @@ package dev.patrickgold.florisboard.ime.text.gestures
 import android.util.SparseArray
 import androidx.collection.LruCache
 import androidx.core.util.set
+import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.key.FlorisKeyData
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import java.text.Normalizer
@@ -25,6 +27,8 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
     private lateinit var pruner: Pruner
     private var wordDataSet = false
     private var layoutSet = false
+    val ready: Boolean
+        get() = !(wordDataSet || layoutSet) && this.keys.isNotEmpty()
 
     companion object {
         private const val PRUNING_LENGTH_THRESHOLD = 8.42
@@ -51,6 +55,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
          * a pointer when the suggestions were already calculated. Avoids a lot of micro pauses.
          */
         private const val SUGGESTION_CACHE_SIZE = 5
+        private const val PRUNER_CACHE_SIZE = 10
     }
 
     override fun addGesturePoint(position: GlideTypingGesture.Detector.Position) {
@@ -67,6 +72,8 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
     }
 
     override fun setLayout(computedLayoutData: ComputedLayoutData) {
+        keysByCharacter.clear()
+        keys.clear()
         computedLayoutData.arrangement.forEach { row ->
             row.forEach {
                 keysByCharacter[it.code] = it
@@ -92,13 +99,21 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         }
     }
 
+    private val prunerCache = LruCache<Subtype, Pruner>(PRUNER_CACHE_SIZE)
+
     /**
      * Exists because Pruner requires both word data and layout are initialized,
      * however we don't know what order they're initialized in.
      */
     private fun initializePruner(){
-        this.pruner = Pruner(PRUNING_LENGTH_THRESHOLD, this.words, keysByCharacter)
-
+        val currentSubtype = FlorisBoard.getInstance().activeSubtype
+        val cached = prunerCache.get(currentSubtype)
+        if (cached == null) {
+            this.pruner = Pruner(PRUNING_LENGTH_THRESHOLD, this.words, keysByCharacter)
+            prunerCache.put(currentSubtype, this.pruner)
+        }else {
+            this.pruner = cached
+        }
         // Reset so that same mechanism can be used in case subtype changes.
         this.layoutSet = false
         this.wordDataSet = false
