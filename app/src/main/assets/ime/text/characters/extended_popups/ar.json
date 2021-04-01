@@ -110,7 +110,8 @@
       },
       "ز": {
         "relevant": [
-          { "code": 1688, "label": "ژ" }
+          { "code": 1688, "label": "ژ" },
+          { "code": 1567, "label": "؟" }
         ]
       },
       "~right": {
