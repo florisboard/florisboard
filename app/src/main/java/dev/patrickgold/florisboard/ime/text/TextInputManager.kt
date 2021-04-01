@@ -338,7 +338,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
     }
     // this is so unfortunate... but we need to skip clearing the suggestion only one time.
-    private var hackyGlideSuggestionSkip = false
+    var hackyGlideSuggestionSkip = false
 
     /**
      * Main logic point for processing cursor updates as well as parsing the current composing word
