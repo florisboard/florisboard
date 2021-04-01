@@ -18,7 +18,6 @@
         <SwitchPreferenceCompat
             app:iconSpaceReserved="false"
             android:defaultValue="true"
-            app:dependency="glide__enabled"
             app:key="glide__show_trail"
             app:title="@string/pref__glide__show_trail__label"
             android:summary="@string/pref__glide__show_trail__summary"/>
