@@ -31,9 +31,20 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         get() = !(wordDataSet || layoutSet) && this.keys.isNotEmpty()
 
     companion object {
+        /**
+         * Describes the allowed length variance in a gesture. If a gesture is too long or too short, it is immediately
+         * discarded to save cycles.
+         */
         private const val PRUNING_LENGTH_THRESHOLD = 8.42
+
+        /**
+         * describes the number of points to sample a gesture at, i.e the resolution.
+         */
         private const val SAMPLING_POINTS: Int = 200
 
+        /**
+         * The minimum distance between points to be added to a gesture.
+         */
         private const val MIN_DIST_TO_ADD = 1000
 
         /**
@@ -55,7 +66,11 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
          * a pointer when the suggestions were already calculated. Avoids a lot of micro pauses.
          */
         private const val SUGGESTION_CACHE_SIZE = 5
-        private const val PRUNER_CACHE_SIZE = 10
+
+        /**
+         * For multiple subtypes, the pruner is cached.
+         */
+        private const val PRUNER_CACHE_SIZE = 5
     }
 
     override fun addGesturePoint(position: GlideTypingGesture.Detector.Position) {

@@ -10,21 +10,22 @@ import kotlinx.coroutines.*
 import org.json.JSONObject
 
 /**
- * Handles the [GlideTypingClassifier] and its interactions with suggestions.
+ * Handles the [GlideTypingClassifier]. Basically responsible for linking [GlideTypingGesture.Detector]
+ * with [GlideTypingClassifier].
  */
 class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainScope() {
 
-    private var gestureTypingClassifier = StatisticalGlideTypingClassifier()
+    private var glideTypingClassifier = StatisticalGlideTypingClassifier()
 
     override fun onGestureComplete(data: GlideTypingGesture.Detector.PointerData) {
         updateSuggestionsAsync(5, true) {
-            gestureTypingClassifier.clear()
+            glideTypingClassifier.clear()
         }
     }
 
     private var lastTime = System.currentTimeMillis()
     override fun onGestureAdd(point: GlideTypingGesture.Detector.Position) {
-        this.gestureTypingClassifier.addGesturePoint(point)
+        this.glideTypingClassifier.addGesturePoint(point)
 
         val time = System.currentTimeMillis()
         if (time - lastTime > 100) {
@@ -33,10 +34,16 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
         }
     }
 
+    /**
+     * Change the layout of the internal gesture classifier
+     */
     fun setLayout(computedLayout: ComputedLayoutData) {
-        gestureTypingClassifier.setLayout(computedLayout)
+        glideTypingClassifier.setLayout(computedLayout)
     }
 
+    /**
+     * Set the word data for the internal gesture classifier
+     */
     fun setWordData() {
         launch (Dispatchers.Default) {
             // FIXME: get this info from dictionary.
@@ -45,12 +52,12 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
             val json = JSONObject(data)
             val map = hashMapOf<String, Int>()
             map.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
-            gestureTypingClassifier.setWordData(map)
+            glideTypingClassifier.setWordData(map)
         }
     }
 
     companion object {
-        private const val MAX_SUGGESTION_COUNT = 5
+        private const val MAX_SUGGESTION_COUNT = 8
 
         private lateinit var glideTypingManager: GlideTypingManager
         fun getInstance(): GlideTypingManager {
@@ -70,14 +77,14 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
      * were successfully set.
      */
     private fun updateSuggestionsAsync(maxSuggestionsToShow: Int, commit: Boolean, callback: (Boolean) -> Unit) {
-        if (!gestureTypingClassifier.ready) {
+        if (!glideTypingClassifier.ready) {
             callback.invoke(false)
             return
         }
 
         launch(Dispatchers.Default) {
             // To avoid cache misses when maxSuggestions goes from 5 to 1.
-            val suggestions = gestureTypingClassifier.getSuggestions(MAX_SUGGESTION_COUNT, true)
+            val suggestions = glideTypingClassifier.getSuggestions(MAX_SUGGESTION_COUNT, true)
 
             withContext(Dispatchers.Main) {
                 val textInputManager = TextInputManager.getInstance()
