@@ -31,7 +31,8 @@
     "swiss_italian": "Swiss Italian (QWERTZ)",
     "turkish_q": "Turkish-Q",
     "turkish_f": "Turkish-F",
-    "workman": "Workman"
+    "workman": "Workman",
+    "german": "German (QWERTZ)"
   },
   "defaultSubtypes": [
     {
