@@ -159,12 +159,9 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             }
         }
         this.post {
-            val inputView = FlorisBoard.getInstance().inputView!!
             val dimensions = Dimensions(
-                this.width.toFloat(),
-                this.height.toFloat(),
-                inputView.oneHandedCtrlPanelStart!!.width.toFloat(),
-                inputView.oneHandedCtrlPanelEnd!!.width.toFloat()
+                width.toFloat(),
+                height.toFloat(),
             )
             GlideTypingManager.getInstance().setLayout(this.computedLayout!!, dimensions)
         }
@@ -246,12 +243,9 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             return true
         }
 
-        val inputView = FlorisBoard.getInstance().inputView!!
         val dimensions = Dimensions(
-            this.width.toFloat(),
-            this.height.toFloat(),
-            inputView.oneHandedCtrlPanelStart!!.width.toFloat(),
-            inputView.oneHandedCtrlPanelEnd!!.width.toFloat()
+            width.toFloat(),
+            height.toFloat(),
         )
         GlideTypingManager.getInstance().updateDimensions(dimensions)
 

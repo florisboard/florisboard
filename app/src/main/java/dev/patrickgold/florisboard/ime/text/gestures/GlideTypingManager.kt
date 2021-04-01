@@ -18,7 +18,7 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
 
     private var glideTypingClassifier = StatisticalGlideTypingClassifier()
     private val initialDimensions: HashMap<Subtype, Dimensions> = hashMapOf()
-    private var currentDimensions: Dimensions = Dimensions(0f, 0f, 0f, 0f)
+    private var currentDimensions: Dimensions = Dimensions(0f, 0f)
 
     companion object {
         private const val MAX_SUGGESTION_COUNT = 8
@@ -89,10 +89,10 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
 
         return scaleRange(
             x,
-            currentDimensions.startOffset,
-            currentDimensions.width - currentDimensions.endOffset,
-            initial.startOffset,
-            initial.width - initial.endOffset
+            0f,
+            currentDimensions.width,
+            0f,
+            initial.width
         )
     }
 
@@ -153,7 +153,5 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
 
 data class Dimensions(
     val width: Float,
-    val height: Float,
-    val startOffset: Float,
-    val endOffset: Float
+    val height: Float
 )
