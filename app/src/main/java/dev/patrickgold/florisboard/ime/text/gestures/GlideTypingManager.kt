@@ -9,7 +9,6 @@ import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 import kotlinx.coroutines.*
 import org.json.JSONObject
-import timber.log.Timber
 
 /**
  * Handles the [GlideTypingClassifier]. Basically responsible for linking [GlideTypingGesture.Detector]
@@ -42,7 +41,6 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
     private var lastTime = System.currentTimeMillis()
     override fun onGestureAdd(point: GlideTypingGesture.Detector.Position) {
         val normalized = GlideTypingGesture.Detector.Position(normalizeX(point.x), normalizeY(point.y))
-        Timber.d("Scaled from ${point.x} ${point.x} to ${normalized.x} ${normalized.y}")
 
         this.glideTypingClassifier.addGesturePoint(normalized)
 
@@ -59,7 +57,6 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
     fun setLayout(computedLayout: ComputedLayoutData, dimensions: Dimensions) {
         glideTypingClassifier.setLayout(computedLayout)
         initialDimensions.getOrPut(FlorisBoard.getInstance().activeSubtype, {
-            Timber.d("initial dimensions: $dimensions")
             dimensions })
     }
 
@@ -79,10 +76,14 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
     }
 
     fun updateDimensions(dimensions: Dimensions) {
-        Timber.d("new dimensions: $dimensions")
         this.currentDimensions = dimensions
     }
 
+    /**
+     * To avoid constantly having to regenerate Pruners every time we switch between landscape and portrait or enable/
+     * disable one handed mode, we just normalize the x, y coordinates to the same range as the original which were
+     * active when the Pruner was created.
+     */
     private fun normalizeX(x: Float): Float {
         val initial = initialDimensions[FlorisBoard.getInstance().activeSubtype] ?: return x
 
@@ -95,6 +96,11 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
         )
     }
 
+    /**
+     * To avoid constantly having to regenerate Pruners every time we switch between landscape and portrait or enable/
+     * disable one handed mode, we just normalize the x, y coordinates to the same range as the original which were
+     * active when the Pruner was created.
+     */
     private fun normalizeY(y: Float): Float {
         val initial = initialDimensions[FlorisBoard.getInstance().activeSubtype] ?: return y
 
