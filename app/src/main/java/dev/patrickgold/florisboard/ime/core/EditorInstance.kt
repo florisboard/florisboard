@@ -220,7 +220,7 @@ class EditorInstance private constructor(
         } else {
             ic.beginBatchEdit()
             ic.finishComposingText()
-            if (selection.start > 0 && getTextBeforeCursor(1) != " ") {
+            if (selection.start > 0 && getTextBeforeCursor(1).isNotBlank()) {
                 ic.commitText(" ", 1)
             }
             ic.commitText(text, 1)

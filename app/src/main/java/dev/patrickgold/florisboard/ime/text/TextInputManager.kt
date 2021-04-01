@@ -350,7 +350,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         if (BuildConfig.DEBUG) {
             Timber.i("current word: ${activeEditorInstance.cachedInput.currentWord.text}")
         }
-        if (activeEditorInstance.isComposingEnabled && !inputEventDispatcher.isPressed(KeyCode.DELETE) && !glideSuggestionsActive) {
+        if (activeEditorInstance.isComposingEnabled && !inputEventDispatcher.isPressed(KeyCode.DELETE)) {
             if (activeEditorInstance.shouldReevaluateComposingSuggestions) {
                 activeEditorInstance.shouldReevaluateComposingSuggestions = false
                 activeDictionary?.let {
@@ -374,12 +374,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     }
                 }
             } else {
-                smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+                if (glideSuggestionsActive){
+                    glideSuggestionsActive = false
+                }else {
+                    smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+                }
             }
-        }
-
-        if (glideSuggestionsActive && activeEditorInstance.cachedInput.currentWord.text.isNotEmpty()){
-            glideSuggestionsActive = false
         }
     }
 
