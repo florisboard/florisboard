@@ -3,7 +3,7 @@
   "currencySets": [
     {
       "name": "azerbaijani_manat",
-      "label": "Azerbaijani manat",
+      "label": "Azerbaijani manat (₼)",
       "slots": [
         { "code": 8380, "label": "₼" },
         { "code":   36, "label": "$" },
@@ -15,7 +15,7 @@
     },
     {
       "name": "bitcoin",
-      "label": "Bitcoin",
+      "label": "Bitcoin (₿)",
       "slots": [
         { "code": 8383, "label": "₿" },
         { "code":   36, "label": "$" },
@@ -27,7 +27,7 @@
     },
     {
       "name": "dollar",
-      "label": "Dollar",
+      "label": "Dollar ($)",
       "slots": [
         { "code":   36, "label": "$" },
         { "code":  162, "label": "¢" },
@@ -39,7 +39,7 @@
     },
     {
       "name": "euro",
-      "label": "Euro",
+      "label": "Euro (€)",
       "slots": [
         { "code": 8364, "label": "€" },
         { "code":  162, "label": "¢" },
@@ -51,7 +51,7 @@
     },
     {
       "name": "indian_rupee",
-      "label": "Indian rupee",
+      "label": "Indian rupee (₹)",
       "slots": [
         { "code": 8377, "label": "₹" },
         { "code":   36, "label": "$" },
@@ -63,7 +63,7 @@
     },
     {
       "name": "iranian_rial",
-      "label": "Iranian rial",
+      "label": "Iranian rial (﷼)",
       "slots": [
         { "code":65020, "label": "﷼" },
         { "code":   36, "label": "$" },
@@ -75,7 +75,7 @@
     },
     {
       "name": "israeli_new_shekel",
-      "label": "Israeli new shekel",
+      "label": "Israeli new shekel (₪)",
       "slots": [
         { "code": 8362, "label": "₪" },
         { "code":   36, "label": "$" },
@@ -87,7 +87,7 @@
     },
     {
       "name": "kazakhstani_tenge",
-      "label": "Kazakhstani tenge",
+      "label": "Kazakhstani tenge (₸)",
       "slots": [
         { "code": 8380, "label": "₸" },
         { "code":   36, "label": "$" },
@@ -99,7 +99,7 @@
     },
     {
       "name": "lao_kip",
-      "label": "Lao kip",
+      "label": "Lao kip (₭)",
       "slots": [
         { "code": 8365, "label": "₭" },
         { "code":   36, "label": "$" },
@@ -111,7 +111,7 @@
     },
     {
       "name": "mongolian_togrog",
-      "label": "Mongolian tögrög",
+      "label": "Mongolian tögrög (₮)",
       "slots": [
         { "code": 8366, "label": "₮" },
         { "code":   36, "label": "$" },
@@ -123,7 +123,7 @@
     },
     {
       "name": "nigerian_naira",
-      "label": "Nigerian naira",
+      "label": "Nigerian naira (₦)",
       "slots": [
         { "code": 8358, "label": "₦" },
         { "code":   36, "label": "$" },
@@ -135,7 +135,7 @@
     },
     {
       "name": "pakistani_rupee",
-      "label": "Pakistani rupee",
+      "label": "Pakistani rupee (₨)",
       "slots": [
         { "code": 8360, "label": "₨" },
         { "code":   36, "label": "$" },
@@ -147,7 +147,7 @@
     },
     {
       "name": "paraguayan_guarani",
-      "label": "Paraguayan guaraní",
+      "label": "Paraguayan guaraní (₲)",
       "slots": [
         { "code": 8370, "label": "₲" },
         { "code":   36, "label": "$" },
@@ -159,7 +159,7 @@
     },
     {
       "name": "peso",
-      "label": "Peso",
+      "label": "Peso (₱)",
       "slots": [
         { "code": 8369, "label": "₱" },
         { "code":   36, "label": "$" },
@@ -171,7 +171,7 @@
     },
     {
       "name": "pound",
-      "label": "Pound",
+      "label": "Pound (£)",
       "slots": [
         { "code":  163, "label": "£" },
         { "code":  162, "label": "¢" },
@@ -183,7 +183,7 @@
     },
     {
       "name": "russian_ruble",
-      "label": "Russian ruble",
+      "label": "Russian ruble (₽)",
       "slots": [
         { "code": 8381, "label": "₽" },
         { "code":   36, "label": "$" },
@@ -195,7 +195,7 @@
     },
     {
       "name": "south_korean_won",
-      "label": "South Korean won",
+      "label": "South Korean won (₩)",
       "slots": [
         { "code": 8361, "label": "₩" },
         { "code":   36, "label": "$" },
@@ -207,7 +207,7 @@
     },
     {
       "name": "turkish_lira",
-      "label": "Turkish lira",
+      "label": "Turkish lira (₺)",
       "slots": [
         { "code": 8378, "label": "₺" },
         { "code":   36, "label": "$" },
@@ -219,7 +219,7 @@
     },
     {
       "name": "ukrainian_hryvnia",
-      "label": "Ukrainian hryvnia",
+      "label": "Ukrainian hryvnia (₴)",
       "slots": [
         { "code": 8372, "label": "₴" },
         { "code":   36, "label": "$" },
@@ -231,7 +231,7 @@
     },
     {
       "name": "yen",
-      "label": "Yen",
+      "label": "Yen (¥)",
       "slots": [
         { "code":  165, "label": "¥" },
         { "code":   36, "label": "$" },
