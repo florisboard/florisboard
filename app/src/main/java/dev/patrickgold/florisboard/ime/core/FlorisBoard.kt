@@ -750,6 +750,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         when (type) {
             R.id.text_input -> {
                 inputView?.mainViewFlipper?.displayedChild = 0
+                textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.VIEW_CHARACTERS))
             }
             R.id.media_input -> {
                 inputView?.mainViewFlipper?.displayedChild = 1

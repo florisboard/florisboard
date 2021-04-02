@@ -293,6 +293,8 @@ class KeyView(
                     KeyCode.SHIFT -> {
                         longKeyPressHandler.postDelayed((delayMillis * 2.5).toLong()) {
                             this.florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.SHIFT_LOCK))
+                            florisboard.keyPressVibrate()
+                            florisboard.keyPressSound(data)
                         }
                     }
                     KeyCode.LANGUAGE_SWITCH -> {

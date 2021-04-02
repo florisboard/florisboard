@@ -267,17 +267,8 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
     }
 
     fun onPrimaryClipChanged() {
-        if (prefs.suggestion.enabled && prefs.suggestion.clipboardContentEnabled &&
-            florisboard?.activeEditorInstance?.isPrivateMode == false ) {
-
-            // only suggest if mime types make sense.
-            val shouldSuggestClipboardContents = florisboard.florisClipboardManager?.canBePasted(
-                florisboard.florisClipboardManager?.primaryClip
-            ) == true
-
-            if (shouldSuggestClipboardContents) {
-                florisboard.florisClipboardManager?.primaryClip?.let { binding.candidates.updateClipboardCandidate(it) }
-            }
+        if (prefs.suggestion.enabled && prefs.suggestion.clipboardContentEnabled && florisboard?.activeEditorInstance?.isPrivateMode == false ) {
+            florisboard.florisClipboardManager?.primaryClip?.let { binding.candidates.updateClipboardItem(it) }
             updateSmartbarState()
         }
     }

@@ -195,6 +195,13 @@ open class KeyData(
             code = KeyCode.UNSPECIFIED,
             label = "unspecified"
         )
+
+        /** Predefined key data for [KeyCode.VIEW_CHARACTERS] */
+        val VIEW_CHARACTERS = KeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.VIEW_CHARACTERS,
+            label = "view_characters"
+        )
     }
 
     override fun toString(): String {
