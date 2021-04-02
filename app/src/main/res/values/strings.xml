@@ -141,6 +141,7 @@
     <string name="settings__theme__group_smartbarButton"        comment="Theme group label">Smartbar button</string>
     <string name="settings__theme__group_extractEditLayout"     comment="Theme group label">Landscape fullscreen layout</string>
     <string name="settings__theme__group_extractActionButton"   comment="Theme group label">Landscape fullscreen action button</string>
+    <string name="settings__theme__group_glideTrail"            comment="Theme group label">Glide trail</string>
     <string name="settings__theme__group_custom"                comment="Theme group label (%s is custom group name)">Custom group (%s)</string>
 
     <string name="settings__theme__attr_background"             comment="Theme attribute label">Background color</string>

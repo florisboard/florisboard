@@ -16,13 +16,11 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
-import android.animation.TimeInterpolator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Interpolator
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -495,6 +493,12 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
                 }
             }
         }
+        if (theme.getAttr(Theme.Attr.GLIDE_TRAIL_COLOR).toSolidColor().color == 0){
+            this.glideTrailPaint.color = theme.getAttr(Theme.Attr.WINDOW_COLOR_PRIMARY).toSolidColor().color
+            this.glideTrailPaint.alpha = 32
+        }else {
+            theme.getAttr(Theme.Attr.GLIDE_TRAIL_COLOR).toSolidColor().color
+        }
     }
 
     /**
@@ -512,7 +516,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         }
     }
 
-    private val paint = Paint().apply {
+    private val glideTrailPaint = Paint().apply {
         color = Color.GREEN
         alpha = 40
     }
@@ -556,7 +560,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
                     gestureData[i].x * (1 - j / numPoints) + gestureData[i - 1].x * (j / numPoints)
                 val intermediateY =
                     gestureData[i].y * (1 - j / numPoints) + gestureData[i - 1].y * (j / numPoints)
-                canvas?.drawCircle(intermediateX, intermediateY, radius, paint)
+                canvas?.drawCircle(intermediateX, intermediateY, radius, glideTrailPaint)
             }
         }
     }

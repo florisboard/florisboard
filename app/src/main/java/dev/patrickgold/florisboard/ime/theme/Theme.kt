@@ -132,6 +132,7 @@ open class Theme(
                         "smartbarButton" ->         R.string.settings__theme__group_smartbarButton
                         "extractEditLayout" ->      R.string.settings__theme__group_extractEditLayout
                         "extractActionButton" ->    R.string.settings__theme__group_extractActionButton
+                        "glideTrail" ->             R.string.settings__theme__group_glideTrail
                         else -> null
                     }
                     if (strId != null) {
@@ -385,6 +386,8 @@ open class Theme(
 
             val EXTRACT_ACTION_BUTTON_BACKGROUND = ThemeValue.Reference("extractActionButton", "background")
             val EXTRACT_ACTION_BUTTON_FOREGROUND = ThemeValue.Reference("extractActionButton", "foreground")
+
+            val GLIDE_TRAIL_COLOR = ThemeValue.Reference("glideTrail", "foreground")
         }
     }
 
