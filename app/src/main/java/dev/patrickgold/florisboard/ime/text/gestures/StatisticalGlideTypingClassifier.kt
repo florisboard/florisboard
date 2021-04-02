@@ -87,6 +87,9 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
     }
 
     override fun setLayout(computedLayoutData: ComputedLayoutData) {
+        // stop duplicate calls
+        if (layoutSet) { return }
+
         keysByCharacter.clear()
         keys.clear()
         computedLayoutData.arrangement.forEach { row ->
@@ -104,6 +107,9 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
     }
 
     override fun setWordData(words: HashMap<String, Int>) {
+        // stop duplicate calls..
+        if (wordDataSet) { return }
+
         this.words = words.keys
         this.wordFrequencies = words
 
@@ -143,7 +149,6 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
 
     private val lruSuggestionCache = LruCache<Pair<Gesture, Int>, List<String>>(SUGGESTION_CACHE_SIZE)
     override fun getSuggestions(maxSuggestionCount: Int, gestureCompleted: Boolean): List<String> {
-
         return when (val cached = lruSuggestionCache.get(Pair(this.gesture, maxSuggestionCount))) {
             null -> {
                 val suggestions = unCachedGetSuggestions(maxSuggestionCount)
@@ -243,7 +248,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         private val lengthThreshold: Double, words: Set<String>, keysByCharacter: SparseArray<FlorisKeyData>) {
 
         /** A tree that provides fast access to words based on their first and last letter.  */
-        private val wordTree = HashMap<Pair<FlorisKeyData, FlorisKeyData>, ArrayList<String>>()
+        private val wordTree = HashMap<Pair<Int, Int>, ArrayList<String>>()
 
         /**
          * Finds the words whose start and end letter are closest to the start and end points of the
@@ -304,7 +309,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
 
         companion object {
             private fun getFirstKeyLastKey(
-                word: String, keysByCharacter: SparseArray<FlorisKeyData>): Pair<FlorisKeyData, FlorisKeyData>? {
+                word: String, keysByCharacter: SparseArray<FlorisKeyData>): Pair<Int, Int>? {
                 val firstLetter = word[0]
                 val lastLetter = word[word.length - 1]
                 val firstBaseChar = Normalizer.normalize(firstLetter.toString(), Normalizer.Form.NFD)[0]
@@ -316,7 +321,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
                     else -> {
                         val firstKey: FlorisKeyData = keysByCharacter[firstBaseChar.toInt()]
                         val lastKey: FlorisKeyData = keysByCharacter[lastBaseChar.toInt()]
-                        Pair(firstKey, lastKey)
+                        Pair(firstKey.code, lastKey.code)
                     }
                 }
             }
@@ -331,14 +336,14 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
              * @return A list of the n closest keys.
              */
             private fun findNClosestKeys(
-                x: Float, y: Float, n: Int, keys: Iterable<FlorisKeyData>): Iterable<FlorisKeyData> {
+                x: Float, y: Float, n: Int, keys: Iterable<FlorisKeyData>): Iterable<Int> {
                 val keyDistances = HashMap<FlorisKeyData, Float>()
                 for (key in keys) {
                     val distance = Gesture.distance(key.x, key.y, x, y)
                     keyDistances[key] = distance
                 }
 
-                return keyDistances.entries.sortedWith { c1, c2 -> c1.value.compareTo(c2.value) }.take(n).map { it.key }
+                return keyDistances.entries.sortedWith { c1, c2 -> c1.value.compareTo(c2.value) }.take(n).map { it.key.code }
             }
         }
 

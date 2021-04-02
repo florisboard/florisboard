@@ -84,13 +84,6 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     private val fadingGesture: MutableList<GlideTypingGesture.Detector.Position> = mutableListOf()
     private var fadingGestureRadius: Float = 0f
 
-    /**
-     * For some reason, buildLayout() is called twice on first launch, and it messes up the gesture
-     * classifier so I just had to do this. Please tell me if there's a better solution
-     */
-    private var isFirstBuildLayout = true
-
-
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
@@ -134,12 +127,8 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             themeManager.requestThemeUpdate(this)
             onWindowShown()
 
-            if (prefs.glide.enabled && !isLoadingPlaceholderKeyboard && !isFirstBuildLayout) {
+            if (!isLoadingPlaceholderKeyboard)
                 initGestureClassifier()
-            }
-            if (isFirstBuildLayout) {
-                isFirstBuildLayout = false
-            }
         } else {
             updateVisibility()
         }
@@ -497,7 +486,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             this.glideTrailPaint.color = theme.getAttr(Theme.Attr.WINDOW_COLOR_PRIMARY).toSolidColor().color
             this.glideTrailPaint.alpha = 32
         }else {
-            theme.getAttr(Theme.Attr.GLIDE_TRAIL_COLOR).toSolidColor().color
+            this.glideTrailPaint.color = theme.getAttr(Theme.Attr.GLIDE_TRAIL_COLOR).toSolidColor().color
         }
     }
 
