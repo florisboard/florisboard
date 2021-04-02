@@ -433,6 +433,8 @@
       "currencySet": "iranian_rial",
       "preferred": {
         "characters": "persian",
+        "symbols": "persian",
+        "symbols2": "persian",
         "numericRow": "persian"
       }
     },
@@ -442,6 +444,8 @@
       "currencySet": "dollar",
       "preferred": {
         "characters": "arabic",
+        "symbols": "eastern",
+        "symbols2": "eastern",
         "numericRow": "eastern_arabic"
       }
     },
