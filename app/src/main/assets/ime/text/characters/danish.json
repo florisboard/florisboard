@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "danish",
+  "label": "Danish (QWERTY)",
   "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [

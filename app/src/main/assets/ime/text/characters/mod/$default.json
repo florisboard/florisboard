@@ -1,6 +1,7 @@
 {
   "type": "characters/mod",
-  "name": "default",
+  "name": "$default",
+  "label": "Default",
   "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [

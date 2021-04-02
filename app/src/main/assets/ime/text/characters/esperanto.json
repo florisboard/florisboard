@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "esperanto",
+  "label": "Esperanto",
   "authors": [ "jeremiah-miller", "patrickgold" ],
   "direction": "ltr",
   "arrangement": [

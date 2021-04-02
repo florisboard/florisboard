@@ -1,6 +1,7 @@
 {
   "type": "phone",
-  "name": "default",
+  "name": "telpad",
+  "label": "Telephone Pad",
   "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [

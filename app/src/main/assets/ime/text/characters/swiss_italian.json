@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "swiss_italian",
+  "label": "Swiss Italian (QWERTZ)",
   "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [

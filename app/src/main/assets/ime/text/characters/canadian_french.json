@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "canadian_french",
+  "label": "Canadian French (QWERTY)",
   "authors": [ "The-Quantum-Alpha" ],
   "direction": "ltr",
   "arrangement": [

@@ -106,7 +106,8 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                 val layout = florisboard.textInputManager.layoutManager.fetchComputedLayoutAsync(
                     KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW,
                     Subtype.DEFAULT,
-                    prefs
+                    prefs,
+                    florisboard.subtypeManager.getCurrencySet(Subtype.DEFAULT)
                 ).await()
                 withContext(Dispatchers.Main) {
                     binding.clipboardCursorRow.computedLayout = layout
@@ -117,10 +118,11 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
 
         mainScope.launch(Dispatchers.Default) {
             florisboard?.let {
-                val layout = it.textInputManager.layoutManager.fetchComputedLayoutAsync(
+                val layout = florisboard.textInputManager.layoutManager.fetchComputedLayoutAsync(
                     KeyboardMode.SMARTBAR_NUMBER_ROW,
                     Subtype.DEFAULT,
-                    prefs
+                    prefs,
+                    florisboard.subtypeManager.getCurrencySet(Subtype.DEFAULT)
                 ).await()
                 withContext(Dispatchers.Main) {
                     binding.numberRow.computedLayout = layout

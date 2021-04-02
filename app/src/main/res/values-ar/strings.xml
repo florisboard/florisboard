@@ -61,7 +61,6 @@
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">حذف</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">تعديل نوع فرعي</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">اللغة</string>
-    <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">تخطيط لوحة المفاتيح</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">هذا النوع الفرعي موجود مسبقا!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">مظهر لوحة المفاتيح</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">غير محدد</string>

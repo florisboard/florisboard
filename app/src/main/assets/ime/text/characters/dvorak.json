@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "dvorak",
+  "label": "Dvorak",
   "authors": [ "patrickgold" ],
   "direction": "ltr",
   "modifier": "dvorak",

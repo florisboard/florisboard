@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "hungarian",
+  "label": "Hungarian (QWERTZ)",
   "authors": [ "zoli111" ],
   "direction": "ltr",
   "arrangement": [

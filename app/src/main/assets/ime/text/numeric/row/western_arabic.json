@@ -1,6 +1,7 @@
 {
-  "type": "extension",
-  "name": "number_row",
+  "type": "numeric_row",
+  "name": "western_arabic",
+  "label": "Western Arabic",
   "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [

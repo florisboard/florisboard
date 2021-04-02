@@ -1,0 +1,102 @@
+{
+  "type": "symbols",
+  "name": "persian",
+  "label": "Persian",
+  "authors": [ "patrickgold" ],
+  "direction": "ltr",
+  "arrangement": [
+    [
+      { "code":   64, "label": "@" },
+      { "code":   35, "label": "#", "popup": {
+        "main": { "code": 8470, "label": "№" }
+      } },
+      { "code": -801, "label": "currency_slot_1", "popup": {
+        "main": { "code": -802, "label": "currency_slot_2" },
+        "relevant": [
+          { "code": -806, "label": "currency_slot_6" },
+          { "code": -803, "label": "currency_slot_3" },
+          { "code": -804, "label": "currency_slot_4" },
+          { "code": -805, "label": "currency_slot_5" }
+        ]
+      } },
+      { "code": 1642, "label": "٪", "popup": {
+        "main": { "code":   37, "label": "%" },
+        "relevant": [
+          { "code": 8453, "label": "℅" },
+          { "code": 8240, "label": "‰" }
+        ]
+      } },
+      { "code":   38, "label": "&" },
+      { "code":   45, "label": "-", "popup": {
+        "main": { "code":   95, "label": "_" },
+        "relevant": [
+          { "code": 8212, "label": "—" },
+          { "code": 8211, "label": "–" },
+          { "code":  183, "label": "·" }
+        ]
+      } },
+      { "code":   43, "label": "+", "popup": {
+        "main": { "code":  177, "label": "±" }
+      } },
+      { "code":   40, "label": "(", "popup": {
+        "main": { "code":64830, "label": "﴾" },
+        "relevant": [
+          { "code":   91, "label": "[" },
+          { "code":   60, "label": "<" },
+          { "code":  123, "label": "{" }
+        ]
+      } },
+      { "code":   41, "label": ")", "popup": {
+        "main": { "code":64831, "label": "﴿" },
+        "relevant": [
+          { "code":   93, "label": "]" },
+          { "code":   62, "label": ">" },
+          { "code":  125, "label": "}" }
+        ]
+      } },
+      { "code": 1643, "label": "٫", "popup": {
+        "main": { "code": 1644, "label": "٬" },
+        "relevant": [
+          { "code":   42, "label": "*" },
+          { "code":   34, "label": "\"" },
+          { "code":   39, "label": "'" }
+        ]
+      } }
+    ],
+    [
+      { "code":   47, "label": "/" },
+      { "code":  171, "label": "«", "popup": {
+        "main": { "code": 8249, "label": "‹" },
+        "relevant": [
+          { "code":   60, "label": "<" },
+          { "code": 8804, "label": "≤" },
+          { "code":10216, "label": "⟨" }
+        ]
+      } },
+      { "code":  187, "label": "»", "popup": {
+        "main": { "code": 8250, "label": "›" },
+        "relevant": [
+          { "code":10217, "label": "⟩" },
+          { "code": 8805, "label": "≥" },
+          { "code":   62, "label": ">" }
+        ]
+      } },
+      { "code":   58, "label": ":", "popup": {
+        "main": { "code":  8942, "label": "⋮" }
+      } },
+      { "code": 1563, "label": "؛", "popup": {
+        "main": { "code":   59, "label": ";" }
+      } },
+      { "code":   33, "label": "!", "popup": {
+        "main": { "code":  161, "label": "¡" }
+      } },
+      { "code": 1567, "label": "؟", "popup": {
+        "main": { "code":   63, "label": "?" },
+        "relevant": [
+          { "code":  191, "label": "¿" },
+          { "code": 8253, "label": "‽" }
+        ]
+      } }
+    ]
+  ]
+}

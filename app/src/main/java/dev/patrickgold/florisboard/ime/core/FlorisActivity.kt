@@ -26,8 +26,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import dev.patrickgold.florisboard.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 
-abstract class FlorisActivity<V : ViewBinding> : AppCompatActivity() {
+abstract class FlorisActivity<V : ViewBinding> : AppCompatActivity(), CoroutineScope by MainScope() {
     private var _binding: V? = null
     protected val binding: V
         get() = _binding!!
@@ -54,6 +57,7 @@ abstract class FlorisActivity<V : ViewBinding> : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        cancel()
         _binding = null
         _prefs = null
         errorDialog?.dismiss()

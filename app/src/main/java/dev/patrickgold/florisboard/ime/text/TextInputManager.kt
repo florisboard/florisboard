@@ -62,6 +62,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private val activeEditorInstance: EditorInstance
         get() = florisboard.activeEditorInstance
 
+    lateinit var layoutManager: LayoutManager
+        private set
     private var activeKeyboardMode: KeyboardMode? = null
     private var animator: ObjectAnimator? = null
     private val keyboardViews = EnumMap<KeyboardMode, KeyboardView>(KeyboardMode::class.java)
@@ -84,7 +86,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     )
 
     var keyVariation: KeyVariation = KeyVariation.NORMAL
-    val layoutManager = LayoutManager(florisboard)
     private var smartbarView: SmartbarView? = null
 
     // Caps/Shift related properties
@@ -122,6 +123,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     override fun onCreate() {
         Timber.i("onCreate()")
 
+        layoutManager = LayoutManager(this)
         inputEventDispatcher.keyEventReceiver = this
         var subtypes = florisboard.subtypeManager.subtypes
         if (subtypes.isEmpty()) {
@@ -129,7 +131,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
         for (subtype in subtypes) {
             for (mode in KeyboardMode.values()) {
-                layoutManager.preloadComputedLayout(mode, subtype, florisboard.prefs)
+                layoutManager.preloadComputedLayout(mode, subtype, florisboard.prefs, florisboard.subtypeManager.getCurrencySet(subtype))
             }
         }
     }
@@ -140,7 +142,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     private suspend fun addKeyboardView(mode: KeyboardMode) {
         val keyboardView = KeyboardView(florisboard.context)
-        keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(mode, florisboard.activeSubtype, florisboard.prefs).await()
+        keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(mode, florisboard.activeSubtype, florisboard.prefs, florisboard.subtypeManager.getCurrencySet(florisboard.activeSubtype)).await()
         keyboardViews[mode] = keyboardView
         textViewFlipper?.addView(keyboardView)
     }
@@ -326,9 +328,14 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     }
                 }
             }
-            val keyboardView = keyboardViews[KeyboardMode.CHARACTERS]
-            keyboardView?.computedLayout = layoutManager.fetchComputedLayoutAsync(KeyboardMode.CHARACTERS, newSubtype, florisboard.prefs).await()
-            keyboardView?.updateVisibility()
+            // TODO: heavy load on main thread
+            for (keyboardMode in KeyboardMode.values()) {
+                val keyboardView = keyboardViews[keyboardMode]
+                if (keyboardView != null) {
+                    keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(keyboardMode, newSubtype, florisboard.prefs, florisboard.subtypeManager.getCurrencySet(newSubtype)).await()
+                    keyboardView.updateVisibility()
+                }
+            }
         }
     }
 
