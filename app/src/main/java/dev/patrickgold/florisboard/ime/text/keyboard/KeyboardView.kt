@@ -516,12 +516,12 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         if (prefs.glide.enabled && prefs.glide.showTrail && !isSmartbarKeyboardView) {
             if (this.fadingGestureRadius > 0) {
                 val targetDist = 3f
-                val maxNumberOfPoints = 30
+                val maxNumberOfPoints = 10
                 drawGesture(fadingGesture, maxNumberOfPoints, targetDist, fadingGestureRadius, canvas)
             }
 
             val radius = 20f
-            val maxNumberOfPoints = 40
+            val maxNumberOfPoints = 15
             val targetDist = 3f
             if (gesturing && gestureDataForDrawing.isNotEmpty()) {
                 drawGesture(gestureDataForDrawing, maxNumberOfPoints, targetDist, radius, canvas)

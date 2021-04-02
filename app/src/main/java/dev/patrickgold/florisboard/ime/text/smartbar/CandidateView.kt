@@ -395,8 +395,9 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas ?: return
-        Timber.i(computedCandidates.toString())
-        Timber.i(selectedIndex.toString())
+//        Sorry, but this was causing a bit of a performance issue so I commented it out.
+//        Timber.i(computedCandidates.toString())
+//        Timber.i(selectedIndex.toString())
         textPaint.apply { color = candidateForeground.toSolidColor().color }
         for ((n, computedCandidate) in computedCandidates.withIndex()) {
             with(computedCandidate) {

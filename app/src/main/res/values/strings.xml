@@ -380,4 +380,6 @@
     <string name="clip__back_to_text_input">Back to text input</string>
     <string name="clip__cant_paste">This app doesn\'t allow pasting this content.</string>
     <string name="pref__glide_trail_fade_duration">Glide trail fade time</string>
+    <string name="pref__glide_preview_refresh_delay">Preview refresh delay</string>
+    <string name="pref__glide__show_preview">Show preview while glide typing</string>
 </resources>

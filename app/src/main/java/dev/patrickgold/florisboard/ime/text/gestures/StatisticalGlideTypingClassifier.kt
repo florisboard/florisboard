@@ -27,6 +27,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
     private lateinit var pruner: Pruner
     private var wordDataSet = false
     private var layoutSet = false
+    private var activeSubtype: Subtype? = null
     val ready: Boolean
         get() = !(wordDataSet || layoutSet) && this.keys.isNotEmpty()
 
@@ -88,7 +89,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
 
     override fun setLayout(computedLayoutData: ComputedLayoutData) {
         // stop duplicate calls
-        if (layoutSet) { return }
+        if (layoutSet || FlorisBoard.getInstance().activeSubtype == this.activeSubtype) { return }
 
         keysByCharacter.clear()
         keys.clear()
@@ -108,7 +109,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
 
     override fun setWordData(words: HashMap<String, Int>) {
         // stop duplicate calls..
-        if (wordDataSet) { return }
+        if (wordDataSet || FlorisBoard.getInstance().activeSubtype == this.activeSubtype) { return }
 
         this.words = words.keys
         this.wordFrequencies = words
@@ -138,6 +139,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         // Reset so that same mechanism can be used in case subtype changes.
         this.layoutSet = false
         this.wordDataSet = false
+        this.activeSubtype = currentSubtype
     }
 
     override fun initGestureFromPointerData(pointerData: GlideTypingGesture.Detector.PointerData) {

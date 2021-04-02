@@ -1,6 +1,7 @@
 package dev.patrickgold.florisboard.ime.text.gestures
 
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
@@ -19,6 +20,7 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
     private var glideTypingClassifier = StatisticalGlideTypingClassifier()
     private val initialDimensions: HashMap<Subtype, Dimensions> = hashMapOf()
     private var currentDimensions: Dimensions = Dimensions(0f, 0f)
+    private lateinit var prefHelper: PrefHelper
 
     companion object {
         private const val MAX_SUGGESTION_COUNT = 8
@@ -27,6 +29,7 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
         fun getInstance(): GlideTypingManager {
             if (!this::glideTypingManager.isInitialized)
                 glideTypingManager = GlideTypingManager()
+                glideTypingManager.prefHelper = PrefHelper.getDefaultInstance(FlorisBoard.getInstance().context)
 
             return glideTypingManager
         }
@@ -45,7 +48,7 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
         this.glideTypingClassifier.addGesturePoint(normalized)
 
         val time = System.currentTimeMillis()
-        if (time - lastTime > 100) {
+        if (prefHelper.glide.showPreview && time - lastTime > prefHelper.glide.previewRefreshDelay) {
             updateSuggestionsAsync(1, false) {}
             lastTime = time
         }
