@@ -21,7 +21,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.appcompat.widget.AppCompatSpinner
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ListItemBinding
@@ -37,7 +36,7 @@ import dev.patrickgold.florisboard.util.setOnSelectedListener
 
 class TypingFragment : SettingsMainActivity.SettingsFragment() {
     private val layoutManager: LayoutManager
-        get() = LayoutManager.default()
+        get() = (activity as? SettingsMainActivity)?.layoutManager!!
 
     private lateinit var binding: SettingsFragmentTypingBinding
     /**
@@ -98,12 +97,18 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
         dialogView.languageSpinner.setOnSelectedListener { pos ->
             val selectedCode = subtypeManager.imeConfig.defaultSubtypesLanguageCodes[pos]
             val defaultSubtype = subtypeManager.getDefaultSubtypeForLocale(LocaleUtils.stringToLocale(selectedCode)) ?: return@setOnSelectedListener
+            dialogView.currencySetSpinner.setSelection(
+                subtypeManager.imeConfig.currencySetNames.indexOf(defaultSubtype.currencySetName).coerceAtLeast(0)
+            )
             for (layoutType in LayoutType.values()) {
                 getSpinnerForLayoutType(dialogView, layoutType)?.setSelection(
                     layoutManager.getMetaNameListFor(layoutType).indexOf(defaultSubtype.preferred[layoutType] ?: "").coerceAtLeast(0)
                 )
             }
         }
+        dialogView.currencySetSpinner.initItems(
+            labels = subtypeManager.imeConfig.currencySetLabels
+        )
         for (layoutType in LayoutType.values()) {
             getSpinnerForLayoutType(dialogView, layoutType)?.initItems(
                 labels = layoutManager.getMetaLabelListFor(layoutType)
@@ -123,6 +128,7 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
             // already exists.
             activeDialogWindow?.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
                 val languageCode = subtypeManager.imeConfig.defaultSubtypesLanguageCodes[dialogView.languageSpinner.selectedItemPosition]
+                val currencySetName = subtypeManager.imeConfig.currencySetNames[dialogView.currencySetSpinner.selectedItemPosition]
                 val layoutMap = SubtypeLayoutMap(
                     characters = layoutManager.getMetaNameListFor(LayoutType.CHARACTERS)[dialogView.charactersLayoutSpinner.selectedItemPosition],
                     symbols = layoutManager.getMetaNameListFor(LayoutType.SYMBOLS)[dialogView.symbolsLayoutSpinner.selectedItemPosition],
@@ -133,7 +139,7 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
                     phone = layoutManager.getMetaNameListFor(LayoutType.PHONE)[dialogView.phoneLayoutSpinner.selectedItemPosition],
                     phone2 = layoutManager.getMetaNameListFor(LayoutType.PHONE2)[dialogView.phone2LayoutSpinner.selectedItemPosition],
                 )
-                val success = subtypeManager.addSubtype(LocaleUtils.stringToLocale(languageCode), layoutMap)
+                val success = subtypeManager.addSubtype(LocaleUtils.stringToLocale(languageCode), currencySetName, layoutMap)
                 if (!success) {
                     dialogView.errorBox.setText(R.string.settings__localization__subtype_error_already_exists)
                     dialogView.errorBox.visibility = View.VISIBLE
@@ -154,6 +160,11 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
             keys = subtypeManager.imeConfig.defaultSubtypesLanguageCodes,
             defaultSelectedKey = subtype.locale.toString()
         )
+        dialogView.currencySetSpinner.initItems(
+            labels = subtypeManager.imeConfig.currencySetLabels,
+            keys = subtypeManager.imeConfig.currencySetNames,
+            defaultSelectedKey = subtype.currencySetName
+        )
         for (layoutType in LayoutType.values()) {
             getSpinnerForLayoutType(dialogView, layoutType)?.initItems(
                 labels = layoutManager.getMetaLabelListFor(layoutType),
@@ -168,6 +179,7 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
             setView(dialogView.root)
             setPositiveButton(R.string.settings__localization__subtype_apply) { _, _ ->
                 val languageCode = subtypeManager.imeConfig.defaultSubtypesLanguageCodes[dialogView.languageSpinner.selectedItemPosition]
+                val currencySetName = subtypeManager.imeConfig.currencySetNames[dialogView.currencySetSpinner.selectedItemPosition]
                 val layoutMap = SubtypeLayoutMap(
                     characters = layoutManager.getMetaNameListFor(LayoutType.CHARACTERS)[dialogView.charactersLayoutSpinner.selectedItemPosition],
                     symbols = layoutManager.getMetaNameListFor(LayoutType.SYMBOLS)[dialogView.symbolsLayoutSpinner.selectedItemPosition],
@@ -179,6 +191,7 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
                     phone2 = layoutManager.getMetaNameListFor(LayoutType.PHONE2)[dialogView.phone2LayoutSpinner.selectedItemPosition],
                 )
                 subtype.locale = LocaleUtils.stringToLocale(languageCode)
+                subtype.currencySetName = currencySetName
                 subtype.layoutMap = layoutMap
                 subtypeManager.modifySubtypeWithSameId(subtype)
                 updateSubtypeListView()

@@ -1,9 +1,252 @@
 {
   "package": "dev.patrickgold.florisboard",
+  "currencySets": [
+    {
+      "name": "azerbaijani_manat",
+      "label": "Azerbaijani manat",
+      "slots": [
+        { "code": 8380, "label": "₼" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
+      "name": "bitcoin",
+      "label": "Bitcoin",
+      "slots": [
+        { "code": 8383, "label": "₿" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
+      "name": "dollar",
+      "label": "Dollar",
+      "slots": [
+        { "code":   36, "label": "$" },
+        { "code":  162, "label": "¢" },
+        { "code": 8364, "label": "€" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" },
+        { "code": 8369, "label": "₱" }
+      ]
+    },
+    {
+      "name": "euro",
+      "label": "Euro",
+      "slots": [
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":   36, "label": "$" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" },
+        { "code": 8369, "label": "₱" }
+      ]
+    },
+    {
+      "name": "indian_rupee",
+      "label": "Indian rupee",
+      "slots": [
+        { "code": 8377, "label": "₹" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
+      "name": "iranian_rial",
+      "label": "Iranian rial",
+      "slots": [
+        { "code":65020, "label": "﷼" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
+      "name": "israeli_new_shekel",
+      "label": "Israeli new shekel",
+      "slots": [
+        { "code": 8362, "label": "₪" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
+      "name": "kazakhstani_tenge",
+      "label": "Kazakhstani tenge",
+      "slots": [
+        { "code": 8380, "label": "₸" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
+      "name": "lao_kip",
+      "label": "Lao kip",
+      "slots": [
+        { "code": 8365, "label": "₭" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
+      "name": "mongolian_togrog",
+      "label": "Mongolian tögrög",
+      "slots": [
+        { "code": 8366, "label": "₮" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
+      "name": "nigerian_naira",
+      "label": "Nigerian naira",
+      "slots": [
+        { "code": 8358, "label": "₦" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
+      "name": "pakistani_rupee",
+      "label": "Pakistani rupee",
+      "slots": [
+        { "code": 8360, "label": "₨" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
+      "name": "paraguayan_guarani",
+      "label": "Paraguayan guaraní",
+      "slots": [
+        { "code": 8370, "label": "₲" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
+      "name": "peso",
+      "label": "Peso",
+      "slots": [
+        { "code": 8369, "label": "₱" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
+      "name": "pound",
+      "label": "Pound",
+      "slots": [
+        { "code":  163, "label": "£" },
+        { "code":  162, "label": "¢" },
+        { "code": 8364, "label": "€" },
+        { "code":   36, "label": "$" },
+        { "code":  165, "label": "¥" },
+        { "code": 8369, "label": "₱" }
+      ]
+    },
+    {
+      "name": "russian_ruble",
+      "label": "Russian ruble",
+      "slots": [
+        { "code": 8381, "label": "₽" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
+      "name": "south_korean_won",
+      "label": "South Korean won",
+      "slots": [
+        { "code": 8361, "label": "₩" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
+      "name": "turkish_lira",
+      "label": "Turkish lira",
+      "slots": [
+        { "code": 8378, "label": "₺" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
+      "name": "ukrainian_hryvnia",
+      "label": "Ukrainian hryvnia",
+      "slots": [
+        { "code": 8372, "label": "₴" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
+      "name": "yen",
+      "label": "Yen",
+      "slots": [
+        { "code":  165, "label": "¥" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code": 8369, "label": "₱" }
+      ]
+    }
+  ],
   "defaultSubtypes": [
     {
       "id": 101,
       "languageTag": "en-US",
+      "currencySet": "dollar",
       "preferred": {
         "characters": "qwerty"
       }
@@ -11,6 +254,7 @@
     {
       "id": 102,
       "languageTag": "en-UK",
+      "currencySet": "pound",
       "preferred": {
         "characters": "qwerty"
       }
@@ -18,6 +262,7 @@
     {
       "id": 103,
       "languageTag": "en-CA",
+      "currencySet": "dollar",
       "preferred": {
         "characters": "qwerty"
       }
@@ -25,6 +270,7 @@
     {
       "id": 104,
       "languageTag": "en-AU",
+      "currencySet": "dollar",
       "preferred": {
         "characters": "qwerty"
       }
@@ -32,6 +278,7 @@
     {
       "id": 201,
       "languageTag": "de-DE",
+      "currencySet": "euro",
       "preferred": {
         "characters": "qwertz"
       }
@@ -39,6 +286,7 @@
     {
       "id": 202,
       "languageTag": "de-AT",
+      "currencySet": "euro",
       "preferred": {
         "characters": "qwertz"
       }
@@ -46,6 +294,7 @@
     {
       "id": 203,
       "languageTag": "de-CH",
+      "currencySet": "euro",
       "preferred": {
         "characters": "swiss_german"
       }
@@ -53,6 +302,7 @@
     {
       "id": 301,
       "languageTag": "fr-FR",
+      "currencySet": "euro",
       "preferred": {
         "characters": "azerty"
       }
@@ -60,6 +310,7 @@
     {
       "id": 302,
       "languageTag": "fr-CA",
+      "currencySet": "dollar",
       "preferred": {
         "characters": "canadian_french"
       }
@@ -67,6 +318,7 @@
     {
       "id": 303,
       "languageTag": "fr-CH",
+      "currencySet": "euro",
       "preferred": {
         "characters": "swiss_french"
       }
@@ -74,6 +326,7 @@
     {
       "id": 401,
       "languageTag": "it-IT",
+      "currencySet": "euro",
       "preferred": {
         "characters": "qwerty"
       }
@@ -81,6 +334,7 @@
     {
       "id": 402,
       "languageTag": "it-CH",
+      "currencySet": "euro",
       "preferred": {
         "characters": "swiss_italian"
       }
@@ -88,6 +342,7 @@
     {
       "id": 501,
       "languageTag": "es-ES",
+      "currencySet": "euro",
       "preferred": {
         "characters": "spanish"
       }
@@ -95,6 +350,7 @@
     {
       "id": 502,
       "languageTag": "es-US",
+      "currencySet": "dollar",
       "preferred": {
         "characters": "spanish"
       }
@@ -102,6 +358,7 @@
     {
       "id": 503,
       "languageTag": "es-419",
+      "currencySet": "dollar",
       "preferred": {
         "characters": "spanish"
       }
@@ -109,6 +366,7 @@
     {
       "id": 601,
       "languageTag": "pt-PT",
+      "currencySet": "euro",
       "preferred": {
         "characters": "qwerty"
       }
@@ -116,6 +374,7 @@
     {
       "id": 602,
       "languageTag": "pt-BR",
+      "currencySet": "dollar",
       "preferred": {
         "characters": "qwerty"
       }
@@ -123,6 +382,7 @@
     {
       "id": 701,
       "languageTag": "nb-NO",
+      "currencySet": "dollar",
       "preferred": {
         "characters": "norwegian"
       }
@@ -130,6 +390,7 @@
     {
       "id": 702,
       "languageTag": "nn-NO",
+      "currencySet": "dollar",
       "preferred": {
         "characters": "norwegian"
       }
@@ -137,6 +398,7 @@
     {
       "id": 711,
       "languageTag": "sv-SE",
+      "currencySet": "dollar",
       "preferred": {
         "characters": "swedish_finnish"
       }
@@ -144,6 +406,7 @@
     {
       "id": 721,
       "languageTag": "fi-FI",
+      "currencySet": "euro",
       "preferred": {
         "characters": "swedish_finnish"
       }
@@ -151,6 +414,7 @@
     {
       "id": 731,
       "languageTag": "da-DK",
+      "currencySet": "dollar",
       "preferred": {
         "characters": "danish"
       }
@@ -158,6 +422,7 @@
     {
       "id": 741,
       "languageTag": "is-IS",
+      "currencySet": "dollar",
       "preferred": {
         "characters": "icelandic"
       }
@@ -165,6 +430,7 @@
     {
       "id": 801,
       "languageTag": "fa-FA",
+      "currencySet": "iranian_rial",
       "preferred": {
         "characters": "persian",
         "numericRow": "persian"
@@ -173,6 +439,7 @@
     {
       "id": 901,
       "languageTag": "ar",
+      "currencySet": "dollar",
       "preferred": {
         "characters": "arabic",
         "numericRow": "eastern_arabic"
@@ -181,6 +448,7 @@
     {
       "id": 1001,
       "languageTag": "hu",
+      "currencySet": "euro",
       "preferred": {
         "characters": "hungarian"
       }
@@ -188,6 +456,7 @@
     {
       "id": 1101,
       "languageTag": "eo",
+      "currencySet": "dollar",
       "preferred": {
         "characters": "esperanto"
       }
@@ -195,6 +464,7 @@
     {
       "id": 1201,
       "languageTag": "hr",
+      "currencySet": "euro",
       "preferred": {
         "characters": "qwertz"
       }
@@ -202,6 +472,7 @@
     {
       "id": 1301,
       "languageTag": "ru",
+      "currencySet": "russian_ruble",
       "preferred": {
         "characters": "jcuken_russian"
       }
@@ -209,6 +480,7 @@
     {
       "id": 1401,
       "languageTag": "el",
+      "currencySet": "euro",
       "preferred": {
         "characters": "greek"
       }
@@ -216,6 +488,7 @@
     {
       "id": 1501,
       "languageTag": "ro",
+      "currencySet": "euro",
       "preferred": {
         "characters": "qwerty"
       }
@@ -223,6 +496,7 @@
     {
       "id": 1601,
       "languageTag": "pl",
+      "currencySet": "euro",
       "preferred": {
         "characters": "qwerty"
       }
@@ -230,6 +504,7 @@
     {
       "id": 1701,
       "languageTag": "bg-bg",
+      "currencySet": "dollar",
       "preferred": {
         "characters": "bulgarian_phonetic"
       }
@@ -237,6 +512,7 @@
     {
       "id": 1801,
       "languageTag": "tr",
+      "currencySet": "turkish_lira",
       "preferred": {
         "characters": "qwerty"
       }
@@ -244,6 +520,7 @@
     {
       "id": 1901,
       "languageTag": "iw-IL",
+      "currencySet": "israeli_new_shekel",
       "preferred": {
         "characters": "hebrew"
       }
@@ -251,6 +528,7 @@
     {
       "id": 2001,
       "languageTag": "ckb",
+      "currencySet": "dollar",
       "preferred": {
         "characters": "kurdish"
       }
@@ -258,6 +536,7 @@
     {
       "id": 2101,
       "languageTag": "sr-RS",
+      "currencySet": "dollar",
       "preferred": {
         "characters": "serbian_cyrillic"
       }
@@ -265,6 +544,7 @@
     {
       "id": 2201,
       "languageTag": "lv-LV",
+      "currencySet": "euro",
       "preferred": {
         "characters": "qwerty"
       }

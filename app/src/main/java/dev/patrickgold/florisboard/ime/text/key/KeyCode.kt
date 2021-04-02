@@ -90,6 +90,13 @@ object KeyCode {
     const val TOGGLE_ONE_HANDED_MODE_RIGHT =-216
     const val URI_COMPONENT_TLD =           -255
 
+    const val CURRENCY_SLOT_1 =             -801
+    const val CURRENCY_SLOT_2 =             -802
+    const val CURRENCY_SLOT_3 =             -803
+    const val CURRENCY_SLOT_4 =             -804
+    const val CURRENCY_SLOT_5 =             -805
+    const val CURRENCY_SLOT_6 =             -806
+
     const val INTERNAL_BATCH_EDIT =         -901
 
     const val KESHIDA =                     1600

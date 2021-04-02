@@ -90,7 +90,7 @@ class PopupSet<T> (
     }
 
     override fun iterator(): Iterator<T> {
-        TODO("Not yet implemented")
+        return PopupSetIterator(this)
     }
 
     override fun isEmpty(): Boolean {
@@ -115,5 +115,31 @@ class PopupSet<T> (
             }
         }
         relevant = tempRelevant.toList()
+    }
+
+    class PopupSetIterator<T> internal constructor (
+        private val popupSet: PopupSet<T>
+    ) : Iterator<T> {
+        var index = HINT_INDEX
+
+        override fun next(): T = popupSet[index++]
+
+        override fun hasNext(): Boolean {
+            if (index == HINT_INDEX) {
+                if (popupSet.getOrNull(index) != null) {
+                    return true
+                } else {
+                    index++
+                }
+            }
+            if (index == MAIN_INDEX) {
+                if (popupSet.getOrNull(index) != null) {
+                    return true
+                } else {
+                    index++
+                }
+            }
+            return popupSet.getOrNull(index) != null
+        }
     }
 }

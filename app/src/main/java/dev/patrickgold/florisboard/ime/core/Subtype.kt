@@ -27,42 +27,50 @@ import java.util.*
  * @property id The ID of this subtype. Although this can be any numeric value, its value
  *  typically matches the one of the [DefaultSubtype] with the same locale.
  * @property locale The locale this subtype is bound to.
+ * @property currencySetName The currency set name to display the correct currency symbols for this subtype.
  * @property layoutMap The layout map to properly display the correct layout for each layout type.
  */
 data class Subtype(
     var id: Int,
     var locale: Locale,
-    var layoutMap: SubtypeLayoutMap
+    var currencySetName: String,
+    var layoutMap: SubtypeLayoutMap,
 ) {
     companion object {
         /**
          * Subtype to use when prefs do not contain any valid subtypes.
          */
-        val DEFAULT = Subtype(-1, Locale.ENGLISH, SubtypeLayoutMap(characters = "qwerty"))
+        val DEFAULT = Subtype(
+            id = -1,
+            locale = Locale.ENGLISH,
+            currencySetName = "\$default",
+            layoutMap = SubtypeLayoutMap(characters = "qwerty")
+        )
 
         /**
          * Converts the string representation of this object to a [Subtype]. Must be in the
          * following format:
-         *  <id>/<language_code>/<layout_name>
+         *  <id>/<language_code>/<currency_set_name>/c=<layout_name>
          * or
-         *  <id>/<language_tag>/<layout_name>
-         * Eg: 101/en_US/qwerty
-         *     201/de-DE/qwertz
+         *  <id>/<language_tag>/<currency_set_name>/c=<layout_name>
+         * Eg: 101/en_US/dollar/c=qwerty
+         *     201/de-DE/euro/c=qwertz
          * If the given [str] does not match this format an [InvalidPropertiesFormatException]
          * will be thrown.
          */
         fun fromString(str: String): Subtype {
             val data = str.split("/")
-            if (data.size != 3) {
+            if (data.size != 4) {
                 throw InvalidPropertiesFormatException(
-                    "Given string contains more or less than 3 properties..."
+                    "Given string contains more or less than 4 properties..."
                 )
             } else {
                 val locale = LocaleUtils.stringToLocale(data[1])
                 return Subtype(
                     data[0].toInt(),
                     locale,
-                    SubtypeLayoutMap.fromString(data[2])
+                    data[2],
+                    SubtypeLayoutMap.fromString(data[3])
                 )
             }
         }
@@ -70,11 +78,33 @@ data class Subtype(
 
     /**
      * Converts this object into its string representation. Format:
-     *  <id>/<language_tag>/<layout_map>
+     *  <id>/<language_tag>/<currency_set_name>/<layout_map>
      */
     override fun toString(): String {
         val languageTag = locale.toLanguageTag()
-        return "$id/$languageTag/$layoutMap"
+        return "$id/$languageTag/$currencySetName/$layoutMap"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Subtype
+
+        if (id != other.id) return false
+        if (locale != other.locale) return false
+        if (currencySetName != other.currencySetName) return false
+        if (layoutMap != other.layoutMap) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id
+        result = 31 * result + locale.hashCode()
+        result = 31 * result + currencySetName.hashCode()
+        result = 31 * result + layoutMap.hashCode()
+        return result
     }
 }
 
@@ -207,17 +237,51 @@ data class SubtypeLayoutMap(
             toString()
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as SubtypeLayoutMap
+
+        if (characters != other.characters) return false
+        if (symbols != other.symbols) return false
+        if (symbols2 != other.symbols2) return false
+        if (numeric != other.numeric) return false
+        if (numericAdvanced != other.numericAdvanced) return false
+        if (numericRow != other.numericRow) return false
+        if (phone != other.phone) return false
+        if (phone2 != other.phone2) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = characters.hashCode()
+        result = 31 * result + symbols.hashCode()
+        result = 31 * result + symbols2.hashCode()
+        result = 31 * result + numeric.hashCode()
+        result = 31 * result + numericAdvanced.hashCode()
+        result = 31 * result + numericRow.hashCode()
+        result = 31 * result + phone.hashCode()
+        result = 31 * result + phone2.hashCode()
+        return result
+    }
 }
 
 /**
  * Data class which represents a predefined set of language and preferred layout.
+ *
  * @property id The ID of this subtype.
  * @property locale The locale of this subtype. Beware its different name in json: 'languageTag'.
+ * @property currencySetName The currency set name of this subtype. Beware its different name in json: 'currencySet'.
  * @property preferred The preferred layout map for this subtype's locale.
  */
 data class DefaultSubtype(
     var id: Int,
     @Json(name = "languageTag")
     var locale: Locale,
+    @Json(name = "currencySet")
+    var currencySetName: String,
     var preferred: SubtypeLayoutMap
 )

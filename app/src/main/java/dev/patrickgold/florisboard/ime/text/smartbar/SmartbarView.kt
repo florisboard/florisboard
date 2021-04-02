@@ -30,7 +30,6 @@ import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import kotlinx.coroutines.Dispatchers
@@ -104,10 +103,11 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
 
         mainScope.launch(Dispatchers.Default) {
             florisboard?.let {
-                val layout = LayoutManager.default().fetchComputedLayoutAsync(
+                val layout = florisboard.textInputManager.layoutManager.fetchComputedLayoutAsync(
                     KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW,
                     Subtype.DEFAULT,
-                    prefs
+                    prefs,
+                    florisboard.subtypeManager.getCurrencySet(Subtype.DEFAULT)
                 ).await()
                 withContext(Dispatchers.Main) {
                     binding.clipboardCursorRow.computedLayout = layout
@@ -118,10 +118,11 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
 
         mainScope.launch(Dispatchers.Default) {
             florisboard?.let {
-                val layout = LayoutManager.default().fetchComputedLayoutAsync(
+                val layout = florisboard.textInputManager.layoutManager.fetchComputedLayoutAsync(
                     KeyboardMode.SMARTBAR_NUMBER_ROW,
                     Subtype.DEFAULT,
-                    prefs
+                    prefs,
+                    florisboard.subtypeManager.getCurrencySet(Subtype.DEFAULT)
                 ).await()
                 withContext(Dispatchers.Main) {
                     binding.numberRow.computedLayout = layout

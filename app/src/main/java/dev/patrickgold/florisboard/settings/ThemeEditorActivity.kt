@@ -35,6 +35,7 @@ import dev.patrickgold.florisboard.databinding.ThemeEditorMetaDialogBinding
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.AssetRef
+import dev.patrickgold.florisboard.ime.text.key.CurrencySet
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
@@ -52,6 +53,7 @@ import kotlinx.coroutines.launch
 class ThemeEditorActivity : AppCompatActivity() {
     private lateinit var binding: ThemeEditorActivityBinding
     private val mainScope = MainScope()
+    private lateinit var layoutManager: LayoutManager
     private lateinit var prefs: PrefHelper
     private val themeManager: ThemeManager = ThemeManager.default()
 
@@ -83,6 +85,8 @@ class ThemeEditorActivity : AppCompatActivity() {
         binding = ThemeEditorActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        layoutManager = LayoutManager(mainScope)
+
         AssetRef.fromString(intent.getStringExtra(EXTRA_THEME_REF) ?: "").onSuccess { ref ->
             editedThemeRef = ref
             themeManager.loadTheme(ref).onSuccess { theme ->
@@ -98,8 +102,8 @@ class ThemeEditorActivity : AppCompatActivity() {
         supportActionBar?.title = resources.getString(R.string.settings__theme_editor__title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        LayoutManager.default().apply {
-            preloadComputedLayout(KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs)
+        layoutManager.apply {
+            preloadComputedLayout(KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs, CurrencySet.default())
         }
 
         buildUi()
@@ -321,8 +325,8 @@ class ThemeEditorActivity : AppCompatActivity() {
             }
         }
         mainScope.launch {
-            binding.keyboardPreview.computedLayout = LayoutManager.default().fetchComputedLayoutAsync(
-                KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs
+            binding.keyboardPreview.computedLayout = layoutManager.fetchComputedLayoutAsync(
+                KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs, CurrencySet.default()
             ).await()
             binding.keyboardPreview.onThemeUpdated(editedTheme)
         }

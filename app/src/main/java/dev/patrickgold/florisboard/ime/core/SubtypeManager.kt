@@ -19,16 +19,10 @@ package dev.patrickgold.florisboard.ime.core
 import android.content.Context
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import dev.patrickgold.florisboard.ime.extension.AssetRef
-import dev.patrickgold.florisboard.ime.extension.AssetSource
-import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.ime.theme.ThemeMetaOnly
+import dev.patrickgold.florisboard.ime.text.key.CurrencySet
 import dev.patrickgold.florisboard.util.LocaleUtils
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.util.*
 
 /**
@@ -69,9 +63,7 @@ class SubtypeManager(
         }
 
     init {
-        launch(Dispatchers.IO) {
-            imeConfig = loadImeConfig(IME_CONFIG_FILE_PATH)
-        }
+        imeConfig = loadImeConfig(IME_CONFIG_FILE_PATH)
     }
 
     /**
@@ -118,18 +110,30 @@ class SubtypeManager(
      * list, if it does not exist.
      *
      * @param locale The locale of the subtype to be added.
+     * @param currencySetName The currency set name of the subtype to be added.
      * @param layoutMap The layout map of the subtype to be added.
      * @return True if the subtype was added, false otherwise. A return value of false indicates
      *  that the subtype already exists.
      */
-    fun addSubtype(locale: Locale, layoutMap: SubtypeLayoutMap): Boolean {
+    fun addSubtype(locale: Locale, currencySetName: String, layoutMap: SubtypeLayoutMap): Boolean {
         return addSubtype(
             Subtype(
-                (locale.hashCode() + layoutMap.hashCode()),
+                (locale.hashCode() + 31 * layoutMap.hashCode() + 31 * currencySetName.hashCode()),
                 locale,
+                currencySetName,
                 layoutMap
             )
         )
+    }
+
+    /**
+     * Gets the currency set from the given subtype and returns it. Falls back to a default one if the subtype does not
+     * exist.
+     *
+     * @return The currency set or a fallback.
+     */
+    fun getCurrencySet(subtypeToSearch: Subtype): CurrencySet {
+        return imeConfig.currencySets.find { it.name == subtypeToSearch.currencySetName } ?: CurrencySet.default()
     }
 
     /**
@@ -197,6 +201,7 @@ class SubtypeManager(
         for (subtype in subtypeList) {
             if (subtype.id == subtypeToModify.id) {
                 subtype.locale = subtypeToModify.locale
+                subtype.currencySetName = subtypeToModify.currencySetName
                 subtype.layoutMap = subtypeToModify.layoutMap
                 break
             }

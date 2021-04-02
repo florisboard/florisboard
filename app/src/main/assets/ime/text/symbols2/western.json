@@ -37,10 +37,10 @@
       { "code": 8710, "label": "∆" }
     ],
     [
-      { "code":  163, "label": "£" },
-      { "code":  162, "label": "¢" },
-      { "code": 8364, "label": "€" },
-      { "code":  165, "label": "¥" },
+      { "code": -805, "label": "currency_slot_5" },
+      { "code": -804, "label": "currency_slot_4" },
+      { "code": -803, "label": "currency_slot_3" },
+      { "code": -802, "label": "currency_slot_2" },
       { "code":   94, "label": "^", "popup": {
         "main": { "code": 8593, "label": "↑" },
         "relevant": [
