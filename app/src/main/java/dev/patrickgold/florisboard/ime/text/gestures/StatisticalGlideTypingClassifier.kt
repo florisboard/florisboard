@@ -160,15 +160,12 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
     private fun unCachedGetSuggestions(maxSuggestionCount: Int): List<String> {
         val candidates = arrayListOf<String>()
         val candidateWeights = arrayListOf<Float>()
-
-        // 'h' just because it's in the middle of the keyboard and has a typical size unlike some
-        // special keys.
-        val key = keysByCharacter.get('h'.toInt())
+        val key = keys.firstOrNull() ?: return listOf()
         val radius: Int = min(key.height, key.width)
         var remainingWords = pruner.pruneByExtremities(gesture, this.keys)
         val userGesture = gesture.resample(SAMPLING_POINTS)
         val normalizedUserGesture: Gesture = userGesture.normalizeByBoxSide()
-        remainingWords = pruner.pruneByLength(gesture, remainingWords, keysByCharacter)
+        remainingWords = pruner.pruneByLength(gesture, remainingWords, keysByCharacter, keys)
 
         for (i in remainingWords.indices) {
             val word = remainingWords[i]
@@ -288,13 +285,11 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         fun pruneByLength(
             userGesture: Gesture,
             words: ArrayList<String>,
-            keysByCharacter: SparseArray<FlorisKeyData>): ArrayList<String> {
+            keysByCharacter: SparseArray<FlorisKeyData>,
+            keys: List<FlorisKeyData>): ArrayList<String> {
             val remainingWords = ArrayList<String>()
 
-            // 'h' just because it's in the middle of the keyboard and has a typical size unlike
-            // some
-            // special keys.
-            val key = keysByCharacter['h'.toInt()]
+            val key = keys.firstOrNull() ?: return arrayListOf()
             val radius = min(key.height, key.width)
             val userLength = userGesture.getLength()
             for (word in words) {
