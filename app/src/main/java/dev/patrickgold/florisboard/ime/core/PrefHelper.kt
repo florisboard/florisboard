@@ -124,6 +124,7 @@ class PrefHelper(
     }
 
     companion object {
+        private val OLD_SUBTYPES_REGEX = """^([\-0-9]+\/[\-a-zA-Z0-9]+\/[a-zA-Z\_]+[;]*)+${'$'}""".toRegex()
         private var defaultInstance: PrefHelper? = null
 
         @Synchronized
@@ -148,6 +149,10 @@ class PrefHelper(
         //theme.dayThemeRef = "assets:ime/theme/floris_day.json"
         //theme.nightThemeRef = "assets:ime/theme/floris_night.json"
         //setPref(Localization.SUBTYPES, "-234/de-AT/euro/c=qwertz")
+        val subtypes = getPref(Localization.SUBTYPES, "")
+        if (subtypes.matches(OLD_SUBTYPES_REGEX)) {
+            setPref(Localization.SUBTYPES, "")
+        }
     }
 
     /**
