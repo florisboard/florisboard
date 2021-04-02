@@ -817,4 +817,22 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyCode.SHIFT -> handleShiftCancel()
         }
     }
+
+    fun handleGesture(word: String) {
+        activeEditorInstance.commitGesture(fixCase(word))
+    }
+
+    /**
+     * Changes a word to the current case.
+     * eg if [capsLock] is true, abc -> ABC
+     *    if [caps]     is true, abc -> Abc
+     *    otherwise            , abc -> abc
+     */
+    fun fixCase(word: String): String {
+        return when {
+            capsLock -> word.toUpperCase(florisboard.activeSubtype.locale)
+            caps -> word.capitalize(florisboard.activeSubtype.locale)
+            else -> word
+        }
+    }
 }

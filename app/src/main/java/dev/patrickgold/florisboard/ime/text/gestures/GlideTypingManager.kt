@@ -140,11 +140,11 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
                 textInputManager.hackyGlideSuggestionSkip = false
                 textInputManager.smartbarView?.setCandidateSuggestionWords(
                     System.nanoTime(),
-                    suggestions.take(maxSuggestionsToShow)
+                    suggestions.take(maxSuggestionsToShow).map { textInputManager.fixCase(it) }
                 )
                 textInputManager.smartbarView?.updateCandidateSuggestionCapsState()
                 if (commit && suggestions.isNotEmpty()) {
-                    FlorisBoard.getInstance().activeEditorInstance.commitGesture(suggestions.first())
+                    textInputManager.handleGesture(suggestions.first())
                 }
                 callback.invoke(true)
             }
