@@ -22,6 +22,18 @@
             app:title="@string/pref__glide__show_trail__label"
             android:summary="@string/pref__glide__show_trail__summary"/>
 
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="200"
+            app:dependency="glide__show_trail"
+            app:key="glide__trail_fade_duration"
+            app:min="0"
+            app:max="500"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__glide_trail_fade_duration"
+            app:seekBarIncrement="10"
+            app:unit="ms"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory

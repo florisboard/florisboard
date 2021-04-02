@@ -378,4 +378,5 @@
     <string name="clip__paste_item">Paste</string>
     <string name="clip__back_to_text_input">Back to text input</string>
     <string name="clip__cant_paste">This app doesn\'t allow pasting this content.</string>
+    <string name="pref__glide_trail_fade_duration">Glide trail fade time</string>
 </resources>

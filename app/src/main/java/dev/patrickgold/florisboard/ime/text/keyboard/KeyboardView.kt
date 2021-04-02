@@ -16,14 +16,18 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
+import android.animation.TimeInterpolator
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Interpolator
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
 import android.widget.FrameLayout
 import androidx.core.view.children
 import com.google.android.flexbox.FlexDirection
@@ -79,6 +83,8 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         it
     }
     private val gestureDataForDrawing: MutableList<GlideTypingGesture.Detector.Position> = mutableListOf()
+    private val fadingGesture: MutableList<GlideTypingGesture.Detector.Position> = mutableListOf()
+    private var fadingGestureRadius: Float = 0f
 
     /**
      * For some reason, buildLayout() is called twice on first launch, and it messes up the gesture
@@ -515,26 +521,42 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         super.dispatchDraw(canvas)
 
         if (prefs.glide.enabled && prefs.glide.showTrail && !isSmartbarKeyboardView) {
-            var radius = 20f
+            if (this.fadingGestureRadius > 0) {
+                val targetDist = 3f
+                val maxNumberOfPoints = 30
+                drawGesture(fadingGesture, maxNumberOfPoints, targetDist, fadingGestureRadius, canvas)
+            }
+
+            val radius = 20f
             val maxNumberOfPoints = 40
             val targetDist = 3f
-            val gestureData = gestureDataForDrawing
-            if (gesturing && gestureData.isNotEmpty()) {
-                for (i in gestureData.size - 1 downTo max(1, gestureData.size - maxNumberOfPoints)) {
-                    val dx = gestureData[i].x - gestureData[i - 1].x
-                    val dy = gestureData[i].y - gestureData[i - 1].y
-                    val dist = sqrt(dx * dx + dy * dy)
+            if (gesturing && gestureDataForDrawing.isNotEmpty()) {
+                drawGesture(gestureDataForDrawing, maxNumberOfPoints, targetDist, radius, canvas)
+            }
+        }
+    }
 
-                    val numPoints = dist / targetDist
-                    for (j in 0 until numPoints.toInt()) {
-                        radius *= 0.99f
-                        val intermediateX =
-                            gestureData[i].x * (1 - j / numPoints) + gestureData[i - 1].x * (j / numPoints)
-                        val intermediateY =
-                            gestureData[i].y * (1 - j / numPoints) + gestureData[i - 1].y * (j / numPoints)
-                        canvas?.drawCircle(intermediateX, intermediateY, radius, paint)
-                    }
-                }
+    private fun drawGesture(
+        gestureData: MutableList<GlideTypingGesture.Detector.Position>,
+        maxNumberOfPoints: Int,
+        targetDist: Float,
+        initialRadius: Float,
+        canvas: Canvas?
+    ) {
+        var radius = initialRadius
+        for (i in gestureData.size - 1 downTo max(1, gestureData.size - maxNumberOfPoints)) {
+            val dx = gestureData[i].x - gestureData[i - 1].x
+            val dy = gestureData[i].y - gestureData[i - 1].y
+            val dist = sqrt(dx * dx + dy * dy)
+
+            val numPoints = dist / targetDist
+            for (j in 0 until numPoints.toInt()) {
+                radius *= 0.99f
+                val intermediateX =
+                    gestureData[i].x * (1 - j / numPoints) + gestureData[i - 1].x * (j / numPoints)
+                val intermediateY =
+                    gestureData[i].y * (1 - j / numPoints) + gestureData[i - 1].y * (j / numPoints)
+                canvas?.drawCircle(intermediateX, intermediateY, radius, paint)
             }
         }
     }
@@ -564,6 +586,18 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
 
     override fun onGestureComplete(data: GlideTypingGesture.Detector.PointerData) {
         if (prefs.glide.enabled) {
+            this.fadingGesture.clear()
+            this.fadingGesture.addAll(gestureDataForDrawing)
+
+            val animator = ValueAnimator.ofFloat(20f, 0f)
+            animator.interpolator =  AccelerateInterpolator()
+            animator.duration = prefs.glide.trailDuration.toLong()
+            animator.addUpdateListener {
+                this.fadingGestureRadius = it.animatedValue as Float
+                this.invalidate()
+            }
+            animator.start()
+
             this.gestureDataForDrawing.clear()
             gesturing = false
             invalidate()
