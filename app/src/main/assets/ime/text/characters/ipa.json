@@ -27,6 +27,7 @@
             { "code": 604, "label": "ɜ" },
             { "code": 601, "label": "ə" },
             { "code": 602, "label": "ɚ" },
+            { "code": 7498, "label": "◌ᵊ" },
             { "code": 603, "label": "ɛ" }
           ]
         }
@@ -40,6 +41,7 @@
             { "code": 638, "label": "ɾ" },
             { "code": 635, "label": "ɻ" },
             { "code": 641, "label": "ʁ" },
+            { "code": 734, "label": "◌˞" },
             { "code": 640, "label": "ʀ" }
           ]
         }
@@ -148,6 +150,8 @@
             { "code": 608, "label": "ɠ" },
             { "code": 610, "label": "ɢ" },
             { "code": 667, "label": "ʛ" },
+            { "code": 667, "label": "ʛ" },
+            { "code": 736, "label": "◌ˠ" },
             { "code": 611, "label": "ɣ" }
           ]
         }
@@ -187,6 +191,7 @@
             { "code": 634, "label": "ɺ" },
             { "code": 671, "label": "ʟ" },
             { "code": 654, "label": "ʎ" },
+            { "code": 737, "label": "◌ˡ" },
             { "code": 622, "label": "ɮ" }
           ]
         }
@@ -197,6 +202,7 @@
           "relevant": [
             { "code": 661, "label": "ʕ" },
             { "code": 674, "label": "ʢ" },
+            { "code": 740, "label": "◌ˤ" },
             { "code": 673, "label": "ʡ" }
           ]
         }
@@ -217,6 +223,7 @@
         "code": 120, "label": "x",
         "popup": {
           "relevant": [
+            { "code": 739, "label": "◌ˣ" },
             { "code": 967, "label": "χ" }
           ]
         }
