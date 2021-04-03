@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "kurdish_kurmanci",
+  "label": "Kurdî",
   "authors": [ "GoRaN" ],
   "direction": "ltr",
   "arrangement": [
