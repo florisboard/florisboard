@@ -317,6 +317,8 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                 }
                 is ComputedCandidate.Clip -> {
                     eventListener.get()?.onSmartbarClipboardCandidatePressed(candidate.clipboardItem)
+                    clipboardItem = null
+                    recomputeCandidates()
                 }
                 is ComputedCandidate.Empty -> {
                 }
