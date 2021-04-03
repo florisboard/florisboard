@@ -72,8 +72,8 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
             val data =
                 AssetManager.default().loadAssetRaw(AssetRef(AssetSource.Assets, "ime/dict/data.json")).getOrThrow()
             val json = JSONObject(data)
-            val map = hashMapOf<CharArray, Int>()
-            map.putAll(json.keys().asSequence().map { Pair(it.toCharArray(), json.getInt(it)) })
+            val map = hashMapOf<String, Int>()
+            map.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
             glideTypingClassifier.setWordData(map, subtype)
         }
     }
@@ -143,11 +143,11 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
                 textInputManager.hackyGlideSuggestionSkip = false
                 textInputManager.smartbarView?.setCandidateSuggestionWords(
                     System.nanoTime(),
-                    suggestions.take(maxSuggestionsToShow).map { textInputManager.fixCase(String(it)) }
+                    suggestions.take(maxSuggestionsToShow).map { textInputManager.fixCase(it) }
                 )
                 textInputManager.smartbarView?.updateCandidateSuggestionCapsState()
                 if (commit && suggestions.isNotEmpty()) {
-                    textInputManager.handleGesture(String(suggestions.first()))
+                    textInputManager.handleGesture(suggestions.first())
                 }
                 callback.invoke(true)
             }
