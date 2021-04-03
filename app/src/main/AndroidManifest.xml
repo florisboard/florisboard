@@ -113,11 +113,10 @@
 
         <provider
             android:name="dev.patrickgold.florisboard.ime.clip.provider.FlorisContentProvider"
-            android:authorities="dev.patrickgold.florisboard.provider.clip"
+            android:authorities="${applicationId}.provider.clip"
             android:grantUriPermissions="true"
             android:exported="false">
         </provider>
-
 
     </application>
 

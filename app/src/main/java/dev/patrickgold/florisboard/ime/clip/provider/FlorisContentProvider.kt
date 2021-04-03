@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import androidx.room.Room
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import timber.log.Timber
 import java.io.File
@@ -109,10 +110,9 @@ class FlorisContentProvider : ContentProvider() {
         throw IllegalArgumentException("This ContentProvider does not support update.")
     }
 
-
     companion object {
         private var instance: FlorisContentProvider? = null
-        const val AUTHORITY = "dev.patrickgold.florisboard.provider.clip"
+        const val AUTHORITY = "${BuildConfig.APPLICATION_ID}.provider.clip"
         val CONTENT_URI: Uri = Uri.parse("content://$AUTHORITY")
         val CLIPS_URI: Uri = Uri.parse("content://$AUTHORITY/clips")
 
@@ -127,6 +127,5 @@ class FlorisContentProvider : ContentProvider() {
             addURI(AUTHORITY, "clips/#", CLIP_ITEM)
             addURI(AUTHORITY, "clips", CLIPS_TABLE)
         }
-
     }
 }
