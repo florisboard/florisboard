@@ -12,6 +12,7 @@ enum class LayoutType {
     EXTENSION,
     NUMERIC,
     NUMERIC_ADVANCED,
+    NUMERIC_ROW,
     PHONE,
     PHONE2,
     SYMBOLS,

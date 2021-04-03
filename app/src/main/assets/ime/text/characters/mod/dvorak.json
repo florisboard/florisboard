@@ -1,6 +1,7 @@
 {
   "type": "characters/mod",
   "name": "dvorak",
+  "label": "Dvorak",
   "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [

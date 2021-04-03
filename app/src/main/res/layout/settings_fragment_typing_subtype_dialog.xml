@@ -1,59 +1,230 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
-
-    <!-- TODO: improve the design and UX of this layout -->
-
-    <TextView
-        android:id="@+id/error_box"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorError"
-        tools:text="@string/settings__localization__subtype_error_already_exists"
-        android:textColor="@color/textColorError"
-        android:layout_marginBottom="8dp"
-        android:padding="8dp"
-        android:visibility="gone"/>
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingVertical="8dp">
+        android:padding="16dp">
+
+        <!-- TODO: improve the design and UX of this layout -->
 
         <TextView
+            android:id="@+id/error_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settings__localization__subtype_locale"
-            android:paddingHorizontal="8dp"/>
+            android:background="@color/colorError"
+            tools:text="@string/settings__localization__subtype_error_already_exists"
+            android:textColor="@color/textColorError"
+            android:layout_marginBottom="8dp"
+            android:padding="8dp"
+            android:visibility="gone"/>
 
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/language_spinner"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings__localization__subtype_locale"
+                android:paddingHorizontal="8dp"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/language_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings__localization__subtype_characters_layout"
+                android:paddingHorizontal="8dp"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/characters_layout_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"/>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="24dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings__localization__subtype_symbols_layout"
+                android:paddingHorizontal="8dp"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/symbols_layout_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings__localization__subtype_symbols2_layout"
+                android:paddingHorizontal="8dp"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/symbols2_layout_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings__localization__subtype_currency_set"
+                android:paddingHorizontal="8dp"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/currency_set_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"/>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="24dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings__localization__subtype_numeric_layout"
+                android:paddingHorizontal="8dp"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/numeric_layout_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings__localization__subtype_numeric_advanced_layout"
+                android:paddingHorizontal="8dp"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/numeric_advanced_layout_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings__localization__subtype_numeric_row_layout"
+                android:paddingHorizontal="8dp"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/numeric_row_layout_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"/>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="24dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings__localization__subtype_phone_layout"
+                android:paddingHorizontal="8dp"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/phone_layout_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings__localization__subtype_phone2_layout"
+                android:paddingHorizontal="8dp"/>
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/phone2_layout_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="8dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings__localization__subtype_layout"
-            android:paddingHorizontal="8dp"/>
-
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/layout_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"/>
-
-    </LinearLayout>
-
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>

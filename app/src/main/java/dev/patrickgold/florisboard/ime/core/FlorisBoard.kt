@@ -49,6 +49,7 @@ import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupLayerView
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
+import dev.patrickgold.florisboard.ime.text.key.CurrencySet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
@@ -59,7 +60,6 @@ import dev.patrickgold.florisboard.util.*
 import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
-import java.util.concurrent.Executor
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -402,6 +402,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
             textInputManager.layoutManager.clearLayoutCache(KeyboardMode.CHARACTERS)
             isNumberRowVisible = newIsNumberRowVisible
         }
+        textInputManager.layoutManager.clearLayoutCache()
         themeManager.update()
         updateOneHandedPanelVisibility()
         activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
@@ -746,11 +747,13 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         clipInputManager.onSubtypeChanged(newSubtype)
     }
 
-    fun setActiveInput(type: Int) {
+    fun setActiveInput(type: Int, forceSwitchToCharacters: Boolean = false) {
         when (type) {
             R.id.text_input -> {
                 inputView?.mainViewFlipper?.displayedChild = 0
-                textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.VIEW_CHARACTERS))
+                if (forceSwitchToCharacters) {
+                    textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.VIEW_CHARACTERS))
+                }
             }
             R.id.media_input -> {
                 inputView?.mainViewFlipper?.displayedChild = 1
@@ -846,39 +849,58 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
      * ime/config.json so it can be parsed. Used by [SubtypeManager] and by the prefs.
      * NOTE: this class and its corresponding json file is subject to change in future versions.
      * @property packageName The package name of this IME.
-     * @property characterLayouts A map of valid layout names to use from. Each value defined
-     *  should have a <layout_name>.json file in ime/text/characters/ to avoid empty layouts.
-     *  The key is the layout name, the value is the layout label (string shown in UI).
+     * @property currencySets The predefined currency sets for this IME, available for selection
+     *  in the Settings UI.
      * @property defaultSubtypes A list of predefined default subtypes. This subtypes are used to
      *  define which locales are supported and which layout is preferred for that locale.
+     * @property currencySetNames Helper list for Settings Subtype Spinner elements.
+     * @property currencySetLabels Helper list for Settings Subtype Spinner elements.
      * @property defaultSubtypesLanguageCodes Helper list for Settings Subtype Spinner elements.
      * @property defaultSubtypesLanguageNames Helper list for Settings Subtype Spinner elements.
      */
     data class ImeConfig(
         @Json(name = "package")
         val packageName: String,
-        val characterLayouts: Map<String, String> = mapOf(),
+        val currencySets: List<CurrencySet> = listOf(),
         val defaultSubtypes: List<DefaultSubtype> = listOf()
     ) {
+        val currencySetNames: List<String>
+        val currencySetLabels: List<String>
         val defaultSubtypesLanguageCodes: List<String>
         val defaultSubtypesLanguageNames: List<String>
 
         init {
-            val tmpList = mutableListOf<Pair<String, String>>()
-            for (defaultSubtype in defaultSubtypes) {
-                tmpList.add(Pair(defaultSubtype.locale.toString(), defaultSubtype.locale.displayName))
+            val tmpCurrencyList = mutableListOf<Pair<String, String>>()
+            for (currencySet in currencySets) {
+                tmpCurrencyList.add(Pair(currencySet.name, currencySet.label))
             }
-            // Sort language list alphabetically by the display name of a language
-            tmpList.sortBy { it.second }
-            // Move selected English variants to the top of the list
-            for (languageCode in listOf("en_CA", "en_AU", "en_UK", "en_US")) {
-                val index: Int = tmpList.indexOfFirst { it.first == languageCode }
+            // Sort currency set list alphabetically by the label of a currency set
+            tmpCurrencyList.sortBy { it.second }
+            // Move selected currency variants to the top of the list
+            for (currencyName in listOf("euro", "dollar")) {
+                val index: Int = tmpCurrencyList.indexOfFirst { it.first == currencyName }
                 if (index > 0) {
-                    tmpList.add(0, tmpList.removeAt(index))
+                    tmpCurrencyList.add(0, tmpCurrencyList.removeAt(index))
                 }
             }
-            defaultSubtypesLanguageCodes = tmpList.map { it.first }.toList()
-            defaultSubtypesLanguageNames = tmpList.map { it.second }.toList()
+            currencySetNames = tmpCurrencyList.map { it.first }.toList()
+            currencySetLabels = tmpCurrencyList.map { it.second }.toList()
+
+            val tmpSubtypeList = mutableListOf<Pair<String, String>>()
+            for (defaultSubtype in defaultSubtypes) {
+                tmpSubtypeList.add(Pair(defaultSubtype.locale.toString(), defaultSubtype.locale.displayName))
+            }
+            // Sort language list alphabetically by the display name of a language
+            tmpSubtypeList.sortBy { it.second }
+            // Move selected English variants to the top of the list
+            for (languageCode in listOf("en_CA", "en_AU", "en_UK", "en_US")) {
+                val index: Int = tmpSubtypeList.indexOfFirst { it.first == languageCode }
+                if (index > 0) {
+                    tmpSubtypeList.add(0, tmpSubtypeList.removeAt(index))
+                }
+            }
+            defaultSubtypesLanguageCodes = tmpSubtypeList.map { it.first }.toList()
+            defaultSubtypesLanguageNames = tmpSubtypeList.map { it.second }.toList()
         }
     }
 }

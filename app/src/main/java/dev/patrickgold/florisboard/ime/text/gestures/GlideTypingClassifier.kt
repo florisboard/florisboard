@@ -1,7 +1,7 @@
 package dev.patrickgold.florisboard.ime.text.gestures
 
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
+import dev.patrickgold.florisboard.ime.text.layout.LayoutData
 
 /**
  * Inherit this to be able to handle gesture typing. Takes in raw pointer data, and
@@ -17,7 +17,7 @@ interface GlideTypingClassifier {
     /**
      * Change the layout of the gesture classifier.
      */
-    fun setLayout(computedLayoutData: ComputedLayoutData, subtype: Subtype)
+    fun setLayout(computedLayoutData: LayoutData, subtype: Subtype)
 
     /**
      * Change the word data of the gesture classifier.

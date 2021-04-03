@@ -39,7 +39,7 @@ import dev.patrickgold.florisboard.ime.text.gestures.*
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyView
-import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
+import dev.patrickgold.florisboard.ime.text.layout.LayoutData
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
@@ -61,7 +61,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     private var activeKeyViews: MutableMap<Int, KeyView> = mutableMapOf()
     private var initialKeyCodes: MutableMap<Int, Int> = mutableMapOf()
 
-    var computedLayout: ComputedLayoutData? = null
+    var computedLayout: LayoutData? = null
         set(v) {
             field = v
             buildLayout()
@@ -101,7 +101,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         )
         onWindowShown()
         if (isLoadingPlaceholderKeyboard) {
-            computedLayout = ComputedLayoutData.PRE_GENERATED_LOADING_KEYBOARD
+            computedLayout = LayoutData.PRE_GENERATED_LOADING_KEYBOARD
         }
 
         if (!this.isSmartbarKeyboardView) {

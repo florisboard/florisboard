@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "esperanto_with_hx",
+  "label": "Esperanto with 'ĥ'",
   "authors": [ "jeremiah-miller", "patrickgold" ],
   "direction": "ltr",
   "arrangement": [

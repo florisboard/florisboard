@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "turkish_q",
+  "label": "Turkish-Q",
   "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [

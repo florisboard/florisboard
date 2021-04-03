@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "jcuken_russian",
+  "label": "Russian (JCUKEN)",
   "authors": [ "williamtheaker" ],
   "direction": "ltr",
   "arrangement": [

@@ -1,6 +1,7 @@
 {
   "type": "characters/mod",
   "name": "arabic",
+  "label": "Arabic",
   "authors": [ "HeiWiper" ],
   "direction": "rtl",
   "arrangement": [

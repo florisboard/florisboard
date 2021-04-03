@@ -5,7 +5,7 @@ import androidx.collection.LruCache
 import androidx.core.util.set
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.key.FlorisKeyData
-import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
+import dev.patrickgold.florisboard.ime.text.layout.LayoutData
 import java.text.Normalizer
 import java.util.*
 import kotlin.collections.HashMap
@@ -86,7 +86,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         }
     }
 
-    override fun setLayout(computedLayoutData: ComputedLayoutData, subtype: Subtype) {
+    override fun setLayout(computedLayoutData: LayoutData, subtype: Subtype) {
         // stop duplicate calls
         if (this.layoutSubtype == subtype) {
             return

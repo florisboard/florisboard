@@ -39,19 +39,18 @@ import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.extension.ExternalContentUtils
+import dev.patrickgold.florisboard.ime.text.key.CurrencySet
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeMetaOnly
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
     private lateinit var layoutManager: LayoutManager
-    private val mainScope = MainScope()
     private val themeManager: ThemeManager = ThemeManager.default()
 
     private var key: String = ""
@@ -124,6 +123,8 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        layoutManager = LayoutManager(this)
+
         key = intent.getStringExtra(EXTRA_KEY) ?: ""
         defaultValue = intent.getStringExtra(EXTRA_DEFAULT_VALUE) ?: ""
         selectedRef = evaluateSelectedRef()
@@ -147,8 +148,8 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         binding.themeEditBtn.setOnClickListener { onActionClicked(it) }
         binding.themeExportBtn.setOnClickListener { onActionClicked(it) }
 
-        layoutManager = LayoutManager(this).apply {
-            preloadComputedLayout(KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs)
+        layoutManager.apply {
+            preloadComputedLayout(KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs, CurrencySet.default())
         }
 
         buildUi()
@@ -392,9 +393,9 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         } else {
             setCheckedRadioButton(selectId!!)
         }
-        mainScope.launch {
+        launch {
             binding.keyboardPreview.computedLayout = layoutManager.fetchComputedLayoutAsync(
-                KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs
+                KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs, CurrencySet.default()
             ).await()
             binding.keyboardPreview.onThemeUpdated(selectedTheme)
         }
