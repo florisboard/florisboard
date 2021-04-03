@@ -542,7 +542,10 @@
       "languageTag": "ckb",
       "currencySet": "dollar",
       "preferred": {
-        "characters": "kurdish"
+        "characters": "kurdish",
+        "symbols": "eastern",
+        "symbols2": "eastern",
+        "numericRow": "eastern_arabic"
       }
     },
     {
@@ -560,6 +563,17 @@
       "preferred": {
         "characters": "qwerty"
       }
+    },
+    {
+    "id": 2301,
+    "languageTag": "ku",
+    "currencySet": "dollar",
+    "preferred": {
+      "characters": "kurdish_kurmanci",
+      "symbols": "western",
+      "symbols2": "western",
+      "numericRow": "western_arabic"
+    }
     }
   ]
 }
