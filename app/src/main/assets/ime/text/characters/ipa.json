@@ -8,8 +8,7 @@
   "arrangement": [
     [
       {
-        "code": 113, "label": "q",
-        "shift": { "code": 594, "label": "ɒ" }
+        "code": 113, "label": "q"
       },
       {
         "code": 119, "label": "w",
@@ -18,8 +17,7 @@
             { "code": 695, "label": "◌ʷ" },
             { "code": 653, "label": "ʍ" }
           ]
-        },
-        "shift": { "code": 653, "label": "ʍ" }
+        }
       },
       {
         "code": 101, "label": "e",
@@ -31,8 +29,7 @@
             { "code": 602, "label": "ɚ" },
             { "code": 603, "label": "ɛ" }
           ]
-        },
-        "shift": { "code": 603, "label": "ɛ" }
+        }
       },
       {
         "code": 114, "label": "r",
@@ -45,8 +42,7 @@
             { "code": 641, "label": "ʁ" },
             { "code": 640, "label": "ʀ" }
           ]
-        },
-        "shift": { "code": 640, "label": "ʀ" }
+        }
       },
       {
         "code": 116, "label": "t",
@@ -56,8 +52,7 @@
             { "code": 7615, "label": "◌ᶿ" },
             { "code": 952, "label": "θ" }
           ]
-        },
-        "shift": { "code": 952, "label": "θ" }
+        }
       },
       {
         "code": 121, "label": "y",
@@ -66,8 +61,7 @@
             { "code": 612, "label": "ɤ" },
             { "code": 655, "label": "ʏ" }
           ]
-        },
-        "shift": { "code": 655, "label": "ʏ" }
+        }
       },
       {
         "code": 117, "label": "u",
@@ -77,8 +71,7 @@
             { "code": 649, "label": "ʉ" },
             { "code": 650, "label": "ʊ" }
           ]
-        },
-        "shift": { "code": 650, "label": "ʊ" }
+        }
       },
       {
         "code": 105, "label": "i",
@@ -88,8 +81,7 @@
             { "code": 616, "label": "ɨ" },
             { "code": 618, "label": "ɪ" }
           ]
-        },
-        "shift": { "code": 618, "label": "ɪ" }
+        }
       },
       {
         "code": 111, "label": "o",
@@ -103,18 +95,10 @@
             { "code": 630, "label": "ɶ" },
             { "code": 596, "label": "ɔ" }
           ]
-        },
-        "shift": { "code": 596, "label": "ɔ" }
+        }
       },
       {
-        "code": 112, "label": "p",
-        "popup": {
-          "relevant": [
-            { "code": 632, "label": "ɸ" },
-            { "code": 651, "label": "ʋ" }
-          ]
-        },
-        "shift": { "code": 651, "label": "ʋ" }
+        "code": 112, "label": "p"
       }
     ],
     [
@@ -123,11 +107,11 @@
         "popup": {
           "relevant": [
             { "code": 230, "label": "æ" },
+            { "code": 594, "label": "ɒ" },
             { "code": 592, "label": "ɐ" },
             { "code": 593, "label": "ɑ" }
           ]
-        },
-        "shift": { "code": 593, "label": "ɑ" }
+        }
       },
       {
         "code": 115, "label": "s",
@@ -137,8 +121,7 @@
             { "code": 597, "label": "ɕ" },
             { "code": 643, "label": "ʃ" }
           ]
-        },
-        "shift": { "code": 643, "label": "ʃ" }
+        }
       },
       {
         "code": 100, "label": "d",
@@ -148,8 +131,7 @@
             { "code": 599, "label": "ɗ" },
             { "code": 240, "label": "ð" }
           ]
-        },
-        "shift": { "code": 240, "label": "ð" }
+        }
       },
       {
         "code": 102, "label": "f",
@@ -157,11 +139,10 @@
           "relevant": [
             { "code": 632, "label": "ɸ" }
           ]
-        },
-        "shift": { "code": 625, "label": "ɱ" }
+        }
       },
       {
-        "code": 103, "label": "g",
+        "code": 609, "label": "ɡ",
         "popup": {
           "relevant": [
             { "code": 608, "label": "ɠ" },
@@ -169,8 +150,7 @@
             { "code": 667, "label": "ʛ" },
             { "code": 611, "label": "ɣ" }
           ]
-        },
-        "shift": { "code": 611, "label": "ɣ" }
+        }
       },
       {
         "code": 104, "label": "h",
@@ -180,15 +160,10 @@
             { "code": 615, "label": "ɧ" },
             { "code": 295, "label": "ħ" },
             { "code": 613, "label": "ɥ" },
-            { "code": 660, "label": "ʔ" },
-            { "code": 661, "label": "ʕ" },
-            { "code": 674, "label": "ʢ" },
-            { "code": 673, "label": "ʡ" },
             { "code": 688, "label": "◌ʰ" },
             { "code": 668, "label": "ʜ" }
           ]
-        },
-        "shift": { "code": 613, "label": "ɥ" }
+        }
       },
       {
         "code": 106, "label": "j",
@@ -199,12 +174,10 @@
             { "code": 690, "label": "◌ʲ" },
             { "code": 664, "label": "ʄ" }
           ]
-        },
-        "shift": { "code": 626, "label": "ɲ" }
+        }
       },
       {
-        "code": 107, "label": "k",
-        "shift": { "code": 620, "label": "ɬ" }
+        "code": 107, "label": "k"
       },
       {
         "code": 108, "label": "l",
@@ -216,8 +189,17 @@
             { "code": 654, "label": "ʎ" },
             { "code": 622, "label": "ɮ" }
           ]
-        },
-        "shift": { "code": 654, "label": "ʎ" }
+        }
+      },
+      {
+        "code": 660, "label": "ʔ",
+        "popup": {
+          "relevant": [
+            { "code": 661, "label": "ʕ" },
+            { "code": 674, "label": "ʢ" },
+            { "code": 673, "label": "ʡ" }
+          ]
+        }
       }
     ],
     [
@@ -229,8 +211,7 @@
             { "code": 657, "label": "ʑ" },
             { "code": 658, "label": "ʒ" }
           ]
-        },
-        "shift": { "code": 658, "label": "ʒ" }
+        }
       },
       {
         "code": 120, "label": "x",
@@ -238,8 +219,7 @@
           "relevant": [
             { "code": 967, "label": "χ" }
           ]
-        },
-        "shift": { "code": 967, "label": "χ" }
+        }
       },
       {
         "code": 99, "label": "c",
@@ -247,8 +227,7 @@
           "relevant": [
             { "code": 231, "label": "ç" }
           ]
-        },
-        "shift": { "code": 231, "label": "ç" }
+        }
       },
       {
         "code": 118, "label": "v",
@@ -257,8 +236,7 @@
             { "code": 651, "label": "ʋ" },
             { "code": 652, "label": "ʌ" }
           ]
-        },
-        "shift": { "code": 652, "label": "ʌ" }
+        }
       },
       {
         "code": 98, "label": "b",
@@ -268,8 +246,7 @@
             { "code": 665, "label": "ʙ" },
             { "code": 946, "label": "β" }
           ]
-        },
-        "shift": { "code": 946, "label": "β" }
+        }
       },
       {
         "code": 110, "label": "n",
@@ -282,8 +259,7 @@
             { "code": 771, "label": "◌̃" },
             { "code": 631, "label": "ŋ" }
           ]
-        },
-        "shift": { "code": 631, "label": "ŋ" }
+        }
       },
       {
         "code": 109, "label": "m",
@@ -293,8 +269,7 @@
             { "code": 624, "label": "ɰ" },
             { "code": 623, "label": "ɯ" }
           ]
-        },
-        "shift": { "code": 623, "label": "ɯ" }
+        }
       }
     ]
   ]
