@@ -297,7 +297,7 @@ class LayoutManager(parentScope: CoroutineScope) {
         when (keyboardMode) {
             KeyboardMode.CHARACTERS -> {
                 if (prefs.keyboard.numberRow) {
-                    extension = LTN(LayoutType.EXTENSION, subtype.layoutMap.numericRow)
+                    extension = LTN(LayoutType.NUMERIC_ROW, subtype.layoutMap.numericRow)
                 }
                 main = LTN(LayoutType.CHARACTERS, subtype.layoutMap.characters)
                 modifier = LTN(LayoutType.CHARACTERS_MOD, "\$default")
@@ -330,7 +330,7 @@ class LayoutManager(parentScope: CoroutineScope) {
                 extension = LTN(LayoutType.EXTENSION, "clipboard_cursor_row")
             }
             KeyboardMode.SMARTBAR_NUMBER_ROW -> {
-                extension = LTN(LayoutType.EXTENSION, subtype.layoutMap.numericRow)
+                extension = LTN(LayoutType.NUMERIC_ROW, subtype.layoutMap.numericRow)
             }
         }
 
