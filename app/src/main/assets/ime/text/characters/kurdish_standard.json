@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "kurdish_standard",
+  "label": "کوردی - ستاندارد"
   "authors": [ "GoRaN" ],
   "direction": "rtl",
   "modifier": "kurdish",
