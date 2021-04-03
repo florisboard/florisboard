@@ -1,0 +1,9 @@
+- Add subtype speciifc symbol/numeric layouts
+  - NOTE: this change causes your selected subtypes to be reset during the
+    upgrade. Sorry for the inconvenience, but this was unavoidable!
+- Add currency sets on a per-subtype base
+- Add new suggestions view with integrated clipboard suggestions
+- Add Faroese layout (thanks @BinFlush)
+- Lots of bug fixing & improvements
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.10-beta05
