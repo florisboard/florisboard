@@ -428,6 +428,14 @@
       }
     },
     {
+      "id": 751,
+      "languageTag": "fo",
+      "currencySet": "dollar",
+      "preferred": {
+        "characters": "faroese"
+      }
+    },
+    {
       "id": 801,
       "languageTag": "fa-FA",
       "currencySet": "iranian_rial",
