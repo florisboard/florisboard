@@ -1,5 +1,6 @@
 package dev.patrickgold.florisboard.ime.text.gestures
 
+import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
 
 /**
@@ -16,12 +17,12 @@ interface GlideTypingClassifier {
     /**
      * Change the layout of the gesture classifier.
      */
-    fun setLayout(computedLayoutData: ComputedLayoutData)
+    fun setLayout(computedLayoutData: ComputedLayoutData, subtype: Subtype)
 
     /**
      * Change the word data of the gesture classifier.
      */
-    fun setWordData(words: HashMap<String, Int>)
+    fun setWordData(words: HashMap<String, Int>, subtype: Subtype)
 
     /**
      * Process a completed gesture and find its location.

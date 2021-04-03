@@ -58,7 +58,7 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
      * Change the layout of the internal gesture classifier
      */
     fun setLayout(computedLayout: ComputedLayoutData, dimensions: Dimensions) {
-        glideTypingClassifier.setLayout(computedLayout)
+        glideTypingClassifier.setLayout(computedLayout, FlorisBoard.getInstance().activeSubtype)
         initialDimensions.getOrPut(FlorisBoard.getInstance().activeSubtype, {
             dimensions })
     }
@@ -66,7 +66,7 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
     /**
      * Set the word data for the internal gesture classifier
      */
-    fun setWordData() {
+    fun setWordData(subtype: Subtype) {
         launch(Dispatchers.Default) {
             // FIXME: get this info from dictionary.
             val data =
@@ -74,7 +74,7 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
             val json = JSONObject(data)
             val map = hashMapOf<String, Int>()
             map.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
-            glideTypingClassifier.setWordData(map)
+            glideTypingClassifier.setWordData(map, subtype)
         }
     }
 

@@ -25,11 +25,10 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
     private var wordFrequencies: Map<String, Int> = hashMapOf()
     private var keys: ArrayList<FlorisKeyData> = arrayListOf()
     private lateinit var pruner: Pruner
-    private var wordDataSet = false
-    private var layoutSet = false
-    private var activeSubtype: Subtype? = null
+    private var wordDataSubtype: Subtype? = null
+    private var layoutSubtype: Subtype? = null
     val ready: Boolean
-        get() = !(wordDataSet || layoutSet) && this.keys.isNotEmpty()
+        get() = wordDataSubtype == layoutSubtype && wordDataSubtype != null
 
     companion object {
         /**
@@ -87,9 +86,11 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         }
     }
 
-    override fun setLayout(computedLayoutData: ComputedLayoutData) {
+    override fun setLayout(computedLayoutData: ComputedLayoutData, subtype: Subtype) {
         // stop duplicate calls
-        if (layoutSet || FlorisBoard.getInstance().activeSubtype == this.activeSubtype) { return }
+        if (this.layoutSubtype == subtype) {
+            return
+        }
 
         keysByCharacter.clear()
         keys.clear()
@@ -99,26 +100,21 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
                 this.keys.add(it)
             }
         }
-
-        layoutSet = true
-
-        if (wordDataSet && layoutSet){
-            initializePruner()
-        }
+        layoutSubtype = subtype
+        initializePruner()
     }
 
-    override fun setWordData(words: HashMap<String, Int>) {
+    override fun setWordData(words: HashMap<String, Int>, subtype: Subtype) {
         // stop duplicate calls..
-        if (wordDataSet || FlorisBoard.getInstance().activeSubtype == this.activeSubtype) { return }
+        if (this.wordDataSubtype == subtype) {
+            return
+        }
 
         this.words = words.keys
         this.wordFrequencies = words
 
-        this.wordDataSet = true
-
-        if (wordDataSet && layoutSet){
-            initializePruner()
-        }
+        this.wordDataSubtype = subtype
+        initializePruner()
     }
 
     private val prunerCache = LruCache<Subtype, Pruner>(PRUNER_CACHE_SIZE)
@@ -127,19 +123,19 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
      * Exists because Pruner requires both word data and layout are initialized,
      * however we don't know what order they're initialized in.
      */
-    private fun initializePruner(){
-        val currentSubtype = FlorisBoard.getInstance().activeSubtype
+    private fun initializePruner() {
+        if (this.layoutSubtype == null || this.wordDataSubtype != this.layoutSubtype){
+            // not yet ready
+            return
+        }
+        val currentSubtype = this.layoutSubtype!!
         val cached = prunerCache.get(currentSubtype)
         if (cached == null) {
             this.pruner = Pruner(PRUNING_LENGTH_THRESHOLD, this.words, keysByCharacter)
             prunerCache.put(currentSubtype, this.pruner)
-        }else {
+        } else {
             this.pruner = cached
         }
-        // Reset so that same mechanism can be used in case subtype changes.
-        this.layoutSet = false
-        this.wordDataSet = false
-        this.activeSubtype = currentSubtype
     }
 
     override fun initGestureFromPointerData(pointerData: GlideTypingGesture.Detector.PointerData) {
@@ -188,7 +184,8 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             var candidateDistanceSortedIndex = 0
 
             while (candidateDistanceSortedIndex < candidateWeights.size
-                && candidateWeights[candidateDistanceSortedIndex] <= confidence) {
+                && candidateWeights[candidateDistanceSortedIndex] <= confidence
+            ) {
                 candidateDistanceSortedIndex++
             }
             if (candidateDistanceSortedIndex < maxSuggestionCount) {
@@ -247,7 +244,8 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
          * The length difference between a user gesture and a word gesture above which a word will
          * be pruned.
          */
-        private val lengthThreshold: Double, words: Set<String>, keysByCharacter: SparseArray<FlorisKeyData>) {
+        private val lengthThreshold: Double, words: Set<String>, keysByCharacter: SparseArray<FlorisKeyData>
+    ) {
 
         /** A tree that provides fast access to words based on their first and last letter.  */
         private val wordTree = HashMap<Pair<Int, Int>, ArrayList<String>>()
@@ -261,7 +259,8 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
          * @return A list of likely words.
          */
         fun pruneByExtremities(
-            userGesture: Gesture, keys: Iterable<FlorisKeyData>): ArrayList<String> {
+            userGesture: Gesture, keys: Iterable<FlorisKeyData>
+        ): ArrayList<String> {
             val remainingWords = ArrayList<String>()
             val startX = userGesture.getFirstX()
             val startY = userGesture.getFirstY()
@@ -293,7 +292,8 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             userGesture: Gesture,
             words: ArrayList<String>,
             keysByCharacter: SparseArray<FlorisKeyData>,
-            keys: List<FlorisKeyData>): ArrayList<String> {
+            keys: List<FlorisKeyData>
+        ): ArrayList<String> {
             val remainingWords = ArrayList<String>()
 
             val key = keys.firstOrNull() ?: return arrayListOf()
@@ -311,7 +311,8 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
 
         companion object {
             private fun getFirstKeyLastKey(
-                word: String, keysByCharacter: SparseArray<FlorisKeyData>): Pair<Int, Int>? {
+                word: String, keysByCharacter: SparseArray<FlorisKeyData>
+            ): Pair<Int, Int>? {
                 val firstLetter = word[0]
                 val lastLetter = word[word.length - 1]
                 val firstBaseChar = Normalizer.normalize(firstLetter.toString(), Normalizer.Form.NFD)[0]
@@ -338,14 +339,16 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
              * @return A list of the n closest keys.
              */
             private fun findNClosestKeys(
-                x: Float, y: Float, n: Int, keys: Iterable<FlorisKeyData>): Iterable<Int> {
+                x: Float, y: Float, n: Int, keys: Iterable<FlorisKeyData>
+            ): Iterable<Int> {
                 val keyDistances = HashMap<FlorisKeyData, Float>()
                 for (key in keys) {
                     val distance = Gesture.distance(key.x, key.y, x, y)
                     keyDistances[key] = distance
                 }
 
-                return keyDistances.entries.sortedWith { c1, c2 -> c1.value.compareTo(c2.value) }.take(n).map { it.key.code }
+                return keyDistances.entries.sortedWith { c1, c2 -> c1.value.compareTo(c2.value) }.take(n)
+                    .map { it.key.code }
             }
         }
 
@@ -384,7 +387,8 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             }
 
             private fun unCachedGenerateIdealGesture(
-                word: String, keysByCharacter: SparseArray<FlorisKeyData>): Gesture {
+                word: String, keysByCharacter: SparseArray<FlorisKeyData>
+            ): Gesture {
                 val idealGesture = Gesture()
                 var previousLetter = '\u0000'
 
@@ -406,16 +410,20 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
                     if (previousLetter == lc) {
                         // bottom right
                         idealGesture.addPoint(
-                            key.x + key.width / 4.0f, key.y + key.height / 4.0f)
+                            key.x + key.width / 4.0f, key.y + key.height / 4.0f
+                        )
                         // top right
                         idealGesture.addPoint(
-                            key.x + key.width / 4.0f, key.y - key.height / 4.0f)
+                            key.x + key.width / 4.0f, key.y - key.height / 4.0f
+                        )
                         // top left
                         idealGesture.addPoint(
-                            key.x - key.width / 4.0f, key.y - key.height / 4.0f)
+                            key.x - key.width / 4.0f, key.y - key.height / 4.0f
+                        )
                         // bottom left
                         idealGesture.addPoint(
-                            key.x - key.width / 4.0f, key.y + key.height / 4.0f)
+                            key.x - key.width / 4.0f, key.y + key.height / 4.0f
+                        )
                     } else {
                         idealGesture.addPoint(key.x, key.y)
                     }
@@ -431,7 +439,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         }
 
         fun addPoint(x: Float, y: Float) {
-            if (size >= MAX_SIZE){
+            if (size >= MAX_SIZE) {
                 return
             }
             xs[size] = x
@@ -532,8 +540,8 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
 
         fun getFirstX(): Float = xs[0]
         fun getFirstY(): Float = ys[0]
-        fun getLastX(): Float = xs[size-1]
-        fun getLastY(): Float = ys[size-1]
+        fun getLastX(): Float = xs[size - 1]
+        fun getLastY(): Float = ys[size - 1]
 
         fun getLength(): Float {
             var length = 0f
@@ -568,7 +576,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
 
             if (this.size != other.size) return false
 
-            for (i in 0 until size){
+            for (i in 0 until size) {
                 if (xs[i] != other.xs[i] || ys[i] != other.ys[i]) return false
             }
 
