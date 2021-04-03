@@ -110,7 +110,7 @@
         "code": 112, "label": "p",
         "popup": {
           "relevant": [
-            { "code": 632, "label": "ɸ" }
+            { "code": 632, "label": "ɸ" },
             { "code": 651, "label": "ʋ" }
           ]
         },
