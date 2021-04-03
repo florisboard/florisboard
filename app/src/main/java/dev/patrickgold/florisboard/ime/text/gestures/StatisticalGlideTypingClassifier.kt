@@ -3,7 +3,6 @@ package dev.patrickgold.florisboard.ime.text.gestures
 import android.util.SparseArray
 import androidx.collection.LruCache
 import androidx.core.util.set
-import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.key.FlorisKeyData
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayoutData
@@ -27,8 +26,9 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
     private lateinit var pruner: Pruner
     private var wordDataSubtype: Subtype? = null
     private var layoutSubtype: Subtype? = null
+    private var currentSubtype: Subtype? = null
     val ready: Boolean
-        get() = wordDataSubtype == layoutSubtype && wordDataSubtype != null
+        get() = currentSubtype == layoutSubtype && wordDataSubtype == layoutSubtype && wordDataSubtype != null
 
     companion object {
         /**
@@ -136,6 +136,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         } else {
             this.pruner = cached
         }
+        this.currentSubtype = currentSubtype
     }
 
     override fun initGestureFromPointerData(pointerData: GlideTypingGesture.Detector.PointerData) {
@@ -172,31 +173,42 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
 
         for (i in remainingWords.indices) {
             val word = remainingWords[i]
-            val wordGesture: Gesture = Gesture.generateIdealGesture(word, keysByCharacter).resample(SAMPLING_POINTS)
-            val normalizedGesture: Gesture = wordGesture.normalizeByBoxSide()
-            val shapeDistance = calcShapeDistance(normalizedGesture, normalizedUserGesture)
-            val locationDistance = calcLocationDistance(wordGesture, userGesture)
-            val shapeProbability = calcGaussianProbability(shapeDistance, 0.0f, SHAPE_STD)
-            val locationProbability = calcGaussianProbability(locationDistance, 0.0f, LOCATION_STD * radius)
-            val frequency = wordFrequencies[word]!!
-            val confidence = 1.0f / (shapeProbability * locationProbability * frequency)
+            val idealGestures = Gesture.generateIdealGestures(word, keysByCharacter)
 
-            var candidateDistanceSortedIndex = 0
+            for (idealGesture in idealGestures) {
+                val wordGesture = idealGesture.resample(SAMPLING_POINTS)
+                val normalizedGesture: Gesture = wordGesture.normalizeByBoxSide()
+                val shapeDistance = calcShapeDistance(normalizedGesture, normalizedUserGesture)
+                val locationDistance = calcLocationDistance(wordGesture, userGesture)
+                val shapeProbability = calcGaussianProbability(shapeDistance, 0.0f, SHAPE_STD)
+                val locationProbability = calcGaussianProbability(locationDistance, 0.0f, LOCATION_STD * radius)
+                val frequency = wordFrequencies[word]!!
+                val confidence = 1.0f / (shapeProbability * locationProbability * frequency)
 
-            while (candidateDistanceSortedIndex < candidateWeights.size
-                && candidateWeights[candidateDistanceSortedIndex] <= confidence
-            ) {
-                candidateDistanceSortedIndex++
-            }
-            if (candidateDistanceSortedIndex < maxSuggestionCount) {
-                candidateWeights.add(candidateDistanceSortedIndex, confidence)
-                candidates.add(candidateDistanceSortedIndex, word)
-                if (candidateWeights.size > maxSuggestionCount) {
-                    candidateWeights.removeAt(maxSuggestionCount)
-                    candidates.removeAt(maxSuggestionCount)
+                var candidateDistanceSortedIndex = 0
+                var duplicateIndex = Int.MAX_VALUE
+
+                while (candidateDistanceSortedIndex < candidateWeights.size
+                    && candidateWeights[candidateDistanceSortedIndex] <= confidence
+                ) {
+                    if (candidates[candidateDistanceSortedIndex] == word) duplicateIndex = candidateDistanceSortedIndex
+                    candidateDistanceSortedIndex++
+                }
+                if (candidateDistanceSortedIndex < maxSuggestionCount && candidateDistanceSortedIndex <= duplicateIndex) {
+                    if (duplicateIndex < Int.MAX_VALUE){
+                        candidateWeights.removeAt(duplicateIndex)
+                        candidates.removeAt(duplicateIndex)
+                    }
+                    candidateWeights.add(candidateDistanceSortedIndex, confidence)
+                    candidates.add(candidateDistanceSortedIndex, word)
+                    if (candidateWeights.size > maxSuggestionCount) {
+                        candidateWeights.removeAt(maxSuggestionCount)
+                        candidates.removeAt(maxSuggestionCount)
+                    }
                 }
             }
         }
+
         return candidates
     }
 
@@ -300,10 +312,12 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             val radius = min(key.height, key.width)
             val userLength = userGesture.getLength()
             for (word in words) {
-                val idealGesture = Gesture.generateIdealGesture(word, keysByCharacter)
-                val wordIdealLength = idealGesture.getLength()
-                if (abs(userLength - wordIdealLength) < lengthThreshold * radius) {
-                    remainingWords.add(word)
+                val idealGestures = Gesture.generateIdealGestures(word, keysByCharacter)
+                for (idealGesture in idealGestures) {
+                    val wordIdealLength = idealGesture.getLength()
+                    if (abs(userLength - wordIdealLength) < lengthThreshold * radius) {
+                        remainingWords.add(word)
+                    }
                 }
             }
             return remainingWords
@@ -371,9 +385,9 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         companion object {
             private const val MAX_SIZE = 1000
             private const val MAX_IDEAL_CACHE_SIZE = 10000
-            private val lruIdealCache = LruCache<String, Gesture>(MAX_IDEAL_CACHE_SIZE)
+            private val lruIdealCache = LruCache<String, List<Gesture>>(MAX_IDEAL_CACHE_SIZE)
 
-            fun generateIdealGesture(word: String, keysByCharacter: SparseArray<FlorisKeyData>): Gesture {
+            fun generateIdealGestures(word: String, keysByCharacter: SparseArray<FlorisKeyData>): List<Gesture> {
                 return when (val cached = lruIdealCache.get(word)) {
                     null -> {
                         val ideal = unCachedGenerateIdealGesture(word, keysByCharacter)
@@ -388,8 +402,9 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
 
             private fun unCachedGenerateIdealGesture(
                 word: String, keysByCharacter: SparseArray<FlorisKeyData>
-            ): Gesture {
+            ): List<Gesture> {
                 val idealGesture = Gesture()
+                val idealGestureWithLoops = Gesture()
                 var previousLetter = '\u0000'
 
                 // Add points for each key
@@ -409,27 +424,29 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
                     // so that we can differentiate words like pool and poll, lull and lul, etc...
                     if (previousLetter == lc) {
                         // bottom right
-                        idealGesture.addPoint(
+                        idealGestureWithLoops.addPoint(
                             key.x + key.width / 4.0f, key.y + key.height / 4.0f
                         )
                         // top right
-                        idealGesture.addPoint(
+                        idealGestureWithLoops.addPoint(
                             key.x + key.width / 4.0f, key.y - key.height / 4.0f
                         )
                         // top left
-                        idealGesture.addPoint(
+                        idealGestureWithLoops.addPoint(
                             key.x - key.width / 4.0f, key.y - key.height / 4.0f
                         )
                         // bottom left
-                        idealGesture.addPoint(
+                        idealGestureWithLoops.addPoint(
                             key.x - key.width / 4.0f, key.y + key.height / 4.0f
                         )
+                        idealGesture.addPoint(key.x, key.y)
                     } else {
                         idealGesture.addPoint(key.x, key.y)
+                        idealGestureWithLoops.addPoint(key.x, key.y)
                     }
                     previousLetter = lc
                 }
-                return idealGesture
+                return listOf(idealGesture, idealGestureWithLoops)
             }
 
             fun distance(x1: Float, y1: Float, x2: Float, y2: Float): Float {
