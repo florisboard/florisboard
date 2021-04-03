@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.abs
 
 /**
  * A candidate view allowing for easy of suggestions. Additionally it also features an integrated clipboard suggestion
@@ -70,6 +71,9 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
     private var dividerWidth: Int = resources.getDimensionPixelSize(R.dimen.smartbar_divider_width)
     private val pasteDrawable = ContextCompat.getDrawable(context, R.drawable.ic_content_paste)
     private var lastX: Float = 0.0f
+    private var initX: Float = 0.0f
+    private var hasScrollingTriggered: Boolean = false
+    private var scrollingThreshold: Float = resources.getDimension(R.dimen.gesture_distance_threshold_very_short)
     private val scroller: OverScroller = OverScroller(context, AccelerateDecelerateInterpolator())
     private val textPaint: TextPaint = TextPaint().apply {
         alpha = 255
@@ -340,6 +344,8 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                     velocityTracker = VelocityTracker.obtain()
                     velocityTracker?.addMovement(event)
                     lastX = event.x
+                    initX = event.x
+                    hasScrollingTriggered = false
                 }
                 invalidate()
                 true
@@ -357,7 +363,10 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
                 }
                 DisplayMode.DYNAMIC_SCROLLABLE -> {
                     velocityTracker?.addMovement(event)
-                    selectedIndex = -1
+                    if (hasScrollingTriggered || abs(event.x - initX) > scrollingThreshold) {
+                        hasScrollingTriggered = true
+                        selectedIndex = -1
+                    }
                     if (computedCandidatesWidthPx > measuredWidth) {
                         scrollTo((scrollX + lastX - event.x).toInt().coerceIn(0, computedCandidatesWidthPx - measuredWidth), 0)
                         lastX = event.x
