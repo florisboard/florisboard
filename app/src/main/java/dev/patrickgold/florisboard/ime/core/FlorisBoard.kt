@@ -747,11 +747,13 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         clipInputManager.onSubtypeChanged(newSubtype)
     }
 
-    fun setActiveInput(type: Int) {
+    fun setActiveInput(type: Int, forceSwitchToCharacters: Boolean = false) {
         when (type) {
             R.id.text_input -> {
                 inputView?.mainViewFlipper?.displayedChild = 0
-                textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.VIEW_CHARACTERS))
+                if (forceSwitchToCharacters) {
+                    textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.VIEW_CHARACTERS))
+                }
             }
             R.id.media_input -> {
                 inputView?.mainViewFlipper?.displayedChild = 1
