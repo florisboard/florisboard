@@ -39,7 +39,7 @@ import dev.patrickgold.florisboard.ime.text.gestures.*
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyView
-import dev.patrickgold.florisboard.ime.text.layout.LayoutData
+import dev.patrickgold.florisboard.ime.text.layout.ComputedLayout
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
@@ -61,7 +61,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     private var activeKeyViews: MutableMap<Int, KeyView> = mutableMapOf()
     private var initialKeyCodes: MutableMap<Int, Int> = mutableMapOf()
 
-    var computedLayout: LayoutData? = null
+    var computedLayout: ComputedLayout? = null
         set(v) {
             field = v
             buildLayout()
@@ -101,7 +101,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         )
         onWindowShown()
         if (isLoadingPlaceholderKeyboard) {
-            computedLayout = LayoutData.PRE_GENERATED_LOADING_KEYBOARD
+            computedLayout = ComputedLayout.PRE_GENERATED_LOADING_KEYBOARD
         }
 
         if (!this.isSmartbarKeyboardView) {
@@ -135,11 +135,9 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     }
 
     private fun initGestureClassifier() {
-        if (this.isSmartbarKeyboardView ||
-            this.computedLayout?.mode != KeyboardMode.CHARACTERS
-        )
+        if (this.isSmartbarKeyboardView || this.computedLayout?.mode != KeyboardMode.CHARACTERS) {
             return
-
+        }
         // View.post is used here because all the values would be zero.
         computedLayout!!.arrangement.zip(this.children.asIterable()).forEach { pairOfRows ->
             pairOfRows.first.zip((pairOfRows.second as ViewGroup).children.asIterable()).forEach { pairOfKeys ->
@@ -482,10 +480,10 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
                 }
             }
         }
-        if (theme.getAttr(Theme.Attr.GLIDE_TRAIL_COLOR).toSolidColor().color == 0){
+        if (theme.getAttr(Theme.Attr.GLIDE_TRAIL_COLOR).toSolidColor().color == 0) {
             this.glideTrailPaint.color = theme.getAttr(Theme.Attr.WINDOW_COLOR_PRIMARY).toSolidColor().color
             this.glideTrailPaint.alpha = 32
-        }else {
+        } else {
             this.glideTrailPaint.color = theme.getAttr(Theme.Attr.GLIDE_TRAIL_COLOR).toSolidColor().color
         }
     }
@@ -583,7 +581,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             this.fadingGesture.addAll(gestureDataForDrawing)
 
             val animator = ValueAnimator.ofFloat(20f, 0f)
-            animator.interpolator =  AccelerateInterpolator()
+            animator.interpolator = AccelerateInterpolator()
             animator.duration = prefs.glide.trailDuration.toLong()
             animator.addUpdateListener {
                 this.fadingGestureRadius = it.animatedValue as Float

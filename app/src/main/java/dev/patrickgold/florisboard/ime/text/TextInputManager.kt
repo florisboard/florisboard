@@ -332,18 +332,18 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             }
             if (PrefHelper.getDefaultInstance(florisboard.context).glide.enabled) {
                 GlideTypingManager.getInstance().setWordData(newSubtype)
-                // TODO: heavy load on main thread
-                for (keyboardMode in KeyboardMode.values()) {
-                    val keyboardView = keyboardViews[keyboardMode]
-                    if (keyboardView != null) {
-                        keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(
-                            keyboardMode,
-                            newSubtype,
-                            florisboard.prefs,
-                            florisboard.subtypeManager.getCurrencySet(newSubtype)
-                        ).await()
-                        keyboardView.updateVisibility()
-                    }
+            }
+            // TODO: heavy load on main thread
+            for (keyboardMode in KeyboardMode.values()) {
+                val keyboardView = keyboardViews[keyboardMode]
+                if (keyboardView != null) {
+                    keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(
+                        keyboardMode,
+                        newSubtype,
+                        florisboard.prefs,
+                        florisboard.subtypeManager.getCurrencySet(newSubtype)
+                    ).await()
+                    keyboardView.updateVisibility()
                 }
             }
         }

@@ -47,7 +47,7 @@ class LayoutManager(parentScope: CoroutineScope) {
     private val assetManager: AssetManager
         get() = AssetManager.default()
 
-    private val computedLayoutCache: HashMap<KMS, Deferred<LayoutData>> = hashMapOf()
+    private val computedLayoutCache: HashMap<KMS, Deferred<ComputedLayout>> = hashMapOf()
     private val scope = CoroutineScope(parentScope.coroutineContext)
 
     private val indexedLayoutRefs: EnumMap<LayoutType, MutableList<Pair<AssetRef, LayoutMetaOnly>>> = EnumMap(LayoutType::class.java)
@@ -101,12 +101,12 @@ class LayoutManager(parentScope: CoroutineScope) {
      *   m c c c c c c c c m
      *   m m m m m m m m m m
      *
-     * @param keyboardMode The keyboard mode for the returning [LayoutData].
+     * @param keyboardMode The keyboard mode for the returning [ComputedLayout].
      * @param subtype The subtype used for populating the extended popups.
      * @param main The main layout type and name.
      * @param modifier The modifier (mod) layout type and name.
      * @param extension The extension layout type and name.
-     * @return a [LayoutData] object, regardless of the specified LTNs or errors.
+     * @return a [ComputedLayout] object, regardless of the specified LTNs or errors.
      */
     private suspend fun mergeLayoutsAsync(
         keyboardMode: KeyboardMode,
@@ -116,7 +116,7 @@ class LayoutManager(parentScope: CoroutineScope) {
         extension: LTN? = null,
         prefs: PrefHelper,
         currencySet: CurrencySet
-    ): LayoutData {
+    ): ComputedLayout {
         val computedArrangement: ComputedLayoutArrangement = mutableListOf()
 
         val mainLayout = loadLayout(main).getOrNull()?.copy()
@@ -270,7 +270,7 @@ class LayoutManager(parentScope: CoroutineScope) {
             }
         }
 
-        return LayoutData(
+        return ComputedLayout(
             keyboardMode,
             "computed",
             mainLayout?.direction ?: "ltr",
@@ -289,7 +289,7 @@ class LayoutManager(parentScope: CoroutineScope) {
         subtype: Subtype,
         prefs: PrefHelper,
         currencySet: CurrencySet
-    ): LayoutData {
+    ): ComputedLayout {
         var main: LTN? = null
         var modifier: LTN? = null
         var extension: LTN? = null
@@ -371,7 +371,7 @@ class LayoutManager(parentScope: CoroutineScope) {
         subtype: Subtype,
         prefs: PrefHelper,
         currencySet: CurrencySet
-    ): Deferred<LayoutData> {
+    ): Deferred<ComputedLayout> {
         val kms = KMS(keyboardMode, subtype)
         val cachedComputedLayout = computedLayoutCache[kms]
         return if (cachedComputedLayout != null) {

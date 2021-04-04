@@ -44,8 +44,8 @@ data class Layout(
         return ret
     }
 
-    fun toComputedLayout(keyboardMode: KeyboardMode): LayoutData {
-        return LayoutData(
+    fun toComputedLayout(keyboardMode: KeyboardMode): ComputedLayout {
+        return ComputedLayout(
             keyboardMode, name, direction, getComputedLayoutArrangement()
         )
     }
@@ -61,14 +61,14 @@ data class LayoutMetaOnly(
 ) : Asset
 
 typealias ComputedLayoutArrangement = MutableList<MutableList<FlorisKeyData>>
-data class LayoutData(
+data class ComputedLayout(
     val mode: KeyboardMode,
     val name: String,
     val direction: String,
     val arrangement: ComputedLayoutArrangement = mutableListOf()
 ) {
     companion object {
-        val PRE_GENERATED_LOADING_KEYBOARD = LayoutData(
+        val PRE_GENERATED_LOADING_KEYBOARD = ComputedLayout(
             mode = KeyboardMode.CHARACTERS,
             name = "__loading_keyboard__",
             direction = "ltr",
