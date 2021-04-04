@@ -1,6 +1,7 @@
 {
   "type": "characters/mod",
   "name": "hebrew",
+  "label": "עברית",
   "authors": [ "Antony" ],
   "direction": "rtl",
   "arrangement": [

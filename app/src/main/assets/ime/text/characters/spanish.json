@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "spanish",
+  "label": "Spanish (QWERTY)",
   "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [

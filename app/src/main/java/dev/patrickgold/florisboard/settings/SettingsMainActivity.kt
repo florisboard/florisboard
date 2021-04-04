@@ -33,9 +33,12 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsActivityBinding
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
+import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.settings.fragments.*
 import dev.patrickgold.florisboard.util.AppVersionUtils
 import dev.patrickgold.florisboard.util.PackageManagerUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
 
 internal const val FRAGMENT_TAG = "FRAGMENT_TAG"
 private const val PREF_RES_ID = "PREF_RES_ID"
@@ -44,9 +47,11 @@ private const val ADVANCED_REQ_CODE = 0x145F
 
 class SettingsMainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener,
-    SharedPreferences.OnSharedPreferenceChangeListener {
+    SharedPreferences.OnSharedPreferenceChangeListener,
+    CoroutineScope by MainScope() {
 
     lateinit var binding: SettingsActivityBinding
+    lateinit var layoutManager: LayoutManager
     private lateinit var prefs: PrefHelper
     lateinit var subtypeManager: SubtypeManager
 
@@ -55,6 +60,7 @@ class SettingsMainActivity : AppCompatActivity(),
         prefs.initDefaultPreferences()
         prefs.sync()
         subtypeManager = SubtypeManager(this, prefs)
+        layoutManager = LayoutManager(this)
 
         val mode = when (prefs.advanced.settingsTheme) {
             "light" -> AppCompatDelegate.MODE_NIGHT_NO

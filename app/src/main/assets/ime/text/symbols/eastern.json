@@ -1,6 +1,7 @@
 {
   "type": "symbols",
-  "name": "western_default",
+  "name": "eastern",
+  "label": "Eastern",
   "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [
@@ -9,19 +10,20 @@
       { "code":   35, "label": "#", "popup": {
         "main": { "code": 8470, "label": "№" }
       } },
-      { "code":   36, "label": "$", "popup": {
-        "main": { "code": 8364, "label": "€" },
+      { "code": -801, "label": "currency_slot_1", "popup": {
+        "main": { "code": -802, "label": "currency_slot_2" },
         "relevant": [
-          { "code": 8369, "label": "₱" },
-          { "code":  162, "label": "¢" },
-          { "code":  163, "label": "£" },
-          { "code":  165, "label": "¥" }
+          { "code": -806, "label": "currency_slot_6" },
+          { "code": -803, "label": "currency_slot_3" },
+          { "code": -804, "label": "currency_slot_4" },
+          { "code": -805, "label": "currency_slot_5" }
         ]
       } },
-      { "code":   37, "label": "%", "popup": {
-        "main": { "code": 8240, "label": "‰" },
+      { "code": 1642, "label": "٪", "popup": {
+        "main": { "code":   37, "label": "%" },
         "relevant": [
-          { "code": 8453, "label": "℅" }
+          { "code": 8453, "label": "℅" },
+          { "code": 8240, "label": "‰" }
         ]
       } },
       { "code":   38, "label": "&" },
@@ -37,16 +39,18 @@
         "main": { "code":  177, "label": "±" }
       } },
       { "code":   40, "label": "(", "popup": {
-        "main": { "code":   60, "label": "<" },
+        "main": { "code":64830, "label": "﴾" },
         "relevant": [
           { "code":   91, "label": "[" },
+          { "code":   60, "label": "<" },
           { "code":  123, "label": "{" }
         ]
       } },
       { "code":   41, "label": ")", "popup": {
-        "main": { "code":   62, "label": ">" },
+        "main": { "code":64831, "label": "﴿" },
         "relevant": [
           { "code":   93, "label": "]" },
+          { "code":   62, "label": ">" },
           { "code":  125, "label": "}" }
         ]
       } },
@@ -54,10 +58,9 @@
     ],
     [
       { "code":   42, "label": "*", "popup": {
-        "main": { "code": 8224, "label": "†" },
+        "main": { "code": 9733, "label": "★" },
         "relevant": [
-          { "code": 9733, "label": "★" },
-          { "code": 8225, "label": "‡" }
+          { "code": 1645, "label": "٭" }
         ]
       } },
       { "code":   34, "label": "\"", "popup": {
@@ -81,13 +84,16 @@
       { "code":   58, "label": ":", "popup": {
         "main": { "code":  8942, "label": "⋮" }
       } },
-      { "code":   59, "label": ";" },
+      { "code": 1563, "label": "؛", "popup": {
+        "main": { "code":   59, "label": ";" }
+      } },
       { "code":   33, "label": "!", "popup": {
         "main": { "code":  161, "label": "¡" }
       } },
-      { "code":   63, "label": "?", "popup": {
-        "main": { "code":  191, "label": "¿" },
+      { "code": 1567, "label": "؟", "popup": {
+        "main": { "code":   63, "label": "?" },
         "relevant": [
+          { "code":  191, "label": "¿" },
           { "code": 8253, "label": "‽" }
         ]
       } }

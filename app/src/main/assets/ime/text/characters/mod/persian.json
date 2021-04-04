@@ -1,6 +1,7 @@
 {
   "type": "characters/mod",
   "name": "persian",
+  "label": "Persian",
   "authors": [ "PHELAT" ],
   "direction": "rtl",
   "arrangement": [

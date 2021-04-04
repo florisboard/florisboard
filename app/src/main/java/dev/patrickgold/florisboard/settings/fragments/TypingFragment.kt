@@ -21,16 +21,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import androidx.appcompat.widget.AppCompatSpinner
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ListItemBinding
 import dev.patrickgold.florisboard.databinding.SettingsFragmentTypingBinding
 import dev.patrickgold.florisboard.databinding.SettingsFragmentTypingSubtypeDialogBinding
+import dev.patrickgold.florisboard.ime.core.SubtypeLayoutMap
+import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
+import dev.patrickgold.florisboard.ime.text.layout.LayoutType
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.util.LocaleUtils
+import dev.patrickgold.florisboard.util.initItems
+import dev.patrickgold.florisboard.util.setOnSelectedListener
 
 class TypingFragment : SettingsMainActivity.SettingsFragment() {
+    private val layoutManager: LayoutManager
+        get() = (activity as? SettingsMainActivity)?.layoutManager!!
+
     private lateinit var binding: SettingsFragmentTypingBinding
     /**
      * Must always have a reference to the open AlertDialog to dismiss the AlertDialog in the event
@@ -42,7 +49,7 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = SettingsFragmentTypingBinding.inflate(inflater, container, false)
         binding.subtypeAddBtn.setOnClickListener { showAddSubtypeDialog() }
 
@@ -64,36 +71,50 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
         super.onDestroy()
     }
 
+    private fun getSpinnerForLayoutType(
+        dialogView: SettingsFragmentTypingSubtypeDialogBinding,
+        layoutType: LayoutType
+    ): AppCompatSpinner? {
+        return when (layoutType) {
+            LayoutType.CHARACTERS -> dialogView.charactersLayoutSpinner
+            LayoutType.SYMBOLS -> dialogView.symbolsLayoutSpinner
+            LayoutType.SYMBOLS2 -> dialogView.symbols2LayoutSpinner
+            LayoutType.NUMERIC -> dialogView.numericLayoutSpinner
+            LayoutType.NUMERIC_ADVANCED -> dialogView.numericAdvancedLayoutSpinner
+            LayoutType.NUMERIC_ROW -> dialogView.numericRowLayoutSpinner
+            LayoutType.PHONE -> dialogView.phoneLayoutSpinner
+            LayoutType.PHONE2 -> dialogView.phone2LayoutSpinner
+            else -> null
+        }
+    }
+
     private fun showAddSubtypeDialog() {
-        val dialogView =
-            SettingsFragmentTypingSubtypeDialogBinding.inflate(layoutInflater)
-        val languageAdapter: ArrayAdapter<String> = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_dropdown_item,
-            subtypeManager.imeConfig.defaultSubtypesLanguageNames
+        val dialogView = SettingsFragmentTypingSubtypeDialogBinding.inflate(layoutInflater)
+
+        dialogView.languageSpinner.initItems(
+            labels = subtypeManager.imeConfig.defaultSubtypesLanguageNames
         )
-        dialogView.languageSpinner.adapter = languageAdapter
-        // Add listener to languageSpinner to automatically pre-select the preferred layout for the
-        // selected language in layoutSpinner.
-        dialogView.languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
-                val selectedCode = subtypeManager.imeConfig.defaultSubtypesLanguageCodes[pos]
-                val defaultSubtype = subtypeManager.getDefaultSubtypeForLocale(LocaleUtils.stringToLocale(selectedCode)) ?: return
-                dialogView.layoutSpinner.setSelection(
-                    subtypeManager.imeConfig.characterLayouts.keys.toList().indexOf(defaultSubtype.preferredLayout)
+        dialogView.languageSpinner.setOnSelectedListener { pos ->
+            val selectedCode = subtypeManager.imeConfig.defaultSubtypesLanguageCodes[pos]
+            val defaultSubtype = subtypeManager.getDefaultSubtypeForLocale(LocaleUtils.stringToLocale(selectedCode)) ?: return@setOnSelectedListener
+            dialogView.currencySetSpinner.setSelection(
+                subtypeManager.imeConfig.currencySetNames.indexOf(defaultSubtype.currencySetName).coerceAtLeast(0)
+            )
+            for (layoutType in LayoutType.values()) {
+                getSpinnerForLayoutType(dialogView, layoutType)?.setSelection(
+                    layoutManager.getMetaNameListFor(layoutType).indexOf(defaultSubtype.preferred[layoutType] ?: "").coerceAtLeast(0)
                 )
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Auto-generated stub method
-            }
         }
-        val layoutAdapter: ArrayAdapter<String> = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_dropdown_item,
-            subtypeManager.imeConfig.characterLayouts.values.toList()
+        dialogView.currencySetSpinner.initItems(
+            labels = subtypeManager.imeConfig.currencySetLabels
         )
-        dialogView.layoutSpinner.adapter = layoutAdapter
+        for (layoutType in LayoutType.values()) {
+            getSpinnerForLayoutType(dialogView, layoutType)?.initItems(
+                labels = layoutManager.getMetaLabelListFor(layoutType)
+            )
+        }
+
         AlertDialog.Builder(context).apply {
             setTitle(R.string.settings__localization__subtype_add_title)
             setCancelable(true)
@@ -107,8 +128,18 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
             // already exists.
             activeDialogWindow?.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
                 val languageCode = subtypeManager.imeConfig.defaultSubtypesLanguageCodes[dialogView.languageSpinner.selectedItemPosition]
-                val layoutName = subtypeManager.imeConfig.characterLayouts.keys.toList()[dialogView.layoutSpinner.selectedItemPosition]
-                val success = subtypeManager.addSubtype(LocaleUtils.stringToLocale(languageCode), layoutName)
+                val currencySetName = subtypeManager.imeConfig.currencySetNames[dialogView.currencySetSpinner.selectedItemPosition]
+                val layoutMap = SubtypeLayoutMap(
+                    characters = layoutManager.getMetaNameListFor(LayoutType.CHARACTERS)[dialogView.charactersLayoutSpinner.selectedItemPosition],
+                    symbols = layoutManager.getMetaNameListFor(LayoutType.SYMBOLS)[dialogView.symbolsLayoutSpinner.selectedItemPosition],
+                    symbols2 = layoutManager.getMetaNameListFor(LayoutType.SYMBOLS2)[dialogView.symbols2LayoutSpinner.selectedItemPosition],
+                    numeric = layoutManager.getMetaNameListFor(LayoutType.NUMERIC)[dialogView.numericLayoutSpinner.selectedItemPosition],
+                    numericAdvanced = layoutManager.getMetaNameListFor(LayoutType.NUMERIC_ADVANCED)[dialogView.numericAdvancedLayoutSpinner.selectedItemPosition],
+                    numericRow = layoutManager.getMetaNameListFor(LayoutType.NUMERIC_ROW)[dialogView.numericRowLayoutSpinner.selectedItemPosition],
+                    phone = layoutManager.getMetaNameListFor(LayoutType.PHONE)[dialogView.phoneLayoutSpinner.selectedItemPosition],
+                    phone2 = layoutManager.getMetaNameListFor(LayoutType.PHONE2)[dialogView.phone2LayoutSpinner.selectedItemPosition],
+                )
+                val success = subtypeManager.addSubtype(LocaleUtils.stringToLocale(languageCode), currencySetName, layoutMap)
                 if (!success) {
                     dialogView.errorBox.setText(R.string.settings__localization__subtype_error_already_exists)
                     dialogView.errorBox.visibility = View.VISIBLE
@@ -122,35 +153,46 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
 
     private fun showEditSubtypeDialog(id: Int) {
         val subtype = subtypeManager.getSubtypeById(id) ?: return
-        val dialogView =
-            SettingsFragmentTypingSubtypeDialogBinding.inflate(layoutInflater)
-        val languageAdapter: ArrayAdapter<String> = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_dropdown_item,
-            subtypeManager.imeConfig.defaultSubtypesLanguageNames
+        val dialogView = SettingsFragmentTypingSubtypeDialogBinding.inflate(layoutInflater)
+
+        dialogView.languageSpinner.initItems(
+            labels = subtypeManager.imeConfig.defaultSubtypesLanguageNames,
+            keys = subtypeManager.imeConfig.defaultSubtypesLanguageCodes,
+            defaultSelectedKey = subtype.locale.toString()
         )
-        dialogView.languageSpinner.adapter = languageAdapter
-        dialogView.languageSpinner.setSelection(
-            subtypeManager.imeConfig.defaultSubtypesLanguageCodes.indexOf(subtype.locale.toString())
+        dialogView.currencySetSpinner.initItems(
+            labels = subtypeManager.imeConfig.currencySetLabels,
+            keys = subtypeManager.imeConfig.currencySetNames,
+            defaultSelectedKey = subtype.currencySetName
         )
-        val layoutAdapter: ArrayAdapter<String> = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_dropdown_item,
-            subtypeManager.imeConfig.characterLayouts.values.toList()
-        )
-        dialogView.layoutSpinner.adapter = layoutAdapter
-        dialogView.layoutSpinner.setSelection(
-            subtypeManager.imeConfig.characterLayouts.keys.toList().indexOf(subtype.layout)
-        )
+        for (layoutType in LayoutType.values()) {
+            getSpinnerForLayoutType(dialogView, layoutType)?.initItems(
+                labels = layoutManager.getMetaLabelListFor(layoutType),
+                keys = layoutManager.getMetaNameListFor(layoutType),
+                defaultSelectedKey = subtype.layoutMap[layoutType] ?: ""
+            )
+        }
+
         AlertDialog.Builder(context).apply {
             setTitle(R.string.settings__localization__subtype_edit_title)
             setCancelable(true)
             setView(dialogView.root)
             setPositiveButton(R.string.settings__localization__subtype_apply) { _, _ ->
                 val languageCode = subtypeManager.imeConfig.defaultSubtypesLanguageCodes[dialogView.languageSpinner.selectedItemPosition]
-                val layoutName = subtypeManager.imeConfig.characterLayouts.keys.toList()[dialogView.layoutSpinner.selectedItemPosition]
+                val currencySetName = subtypeManager.imeConfig.currencySetNames[dialogView.currencySetSpinner.selectedItemPosition]
+                val layoutMap = SubtypeLayoutMap(
+                    characters = layoutManager.getMetaNameListFor(LayoutType.CHARACTERS)[dialogView.charactersLayoutSpinner.selectedItemPosition],
+                    symbols = layoutManager.getMetaNameListFor(LayoutType.SYMBOLS)[dialogView.symbolsLayoutSpinner.selectedItemPosition],
+                    symbols2 = layoutManager.getMetaNameListFor(LayoutType.SYMBOLS2)[dialogView.symbols2LayoutSpinner.selectedItemPosition],
+                    numeric = layoutManager.getMetaNameListFor(LayoutType.NUMERIC)[dialogView.numericLayoutSpinner.selectedItemPosition],
+                    numericAdvanced = layoutManager.getMetaNameListFor(LayoutType.NUMERIC_ADVANCED)[dialogView.numericAdvancedLayoutSpinner.selectedItemPosition],
+                    numericRow = layoutManager.getMetaNameListFor(LayoutType.NUMERIC_ROW)[dialogView.numericRowLayoutSpinner.selectedItemPosition],
+                    phone = layoutManager.getMetaNameListFor(LayoutType.PHONE)[dialogView.phoneLayoutSpinner.selectedItemPosition],
+                    phone2 = layoutManager.getMetaNameListFor(LayoutType.PHONE2)[dialogView.phone2LayoutSpinner.selectedItemPosition],
+                )
                 subtype.locale = LocaleUtils.stringToLocale(languageCode)
-                subtype.layout = layoutName
+                subtype.currencySetName = currencySetName
+                subtype.layoutMap = layoutMap
                 subtypeManager.modifySubtypeWithSameId(subtype)
                 updateSubtypeListView()
             }
@@ -173,10 +215,9 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
         } else {
             binding.subtypeNotConfWarning.visibility = View.GONE
             for (subtype in subtypes) {
-                val itemView =
-                    ListItemBinding.inflate(layoutInflater)
+                val itemView = ListItemBinding.inflate(layoutInflater)
                 itemView.title.text = subtype.locale.displayName
-                itemView.summary.text = subtypeManager.imeConfig.characterLayouts[subtype.layout]
+                itemView.summary.text = layoutManager.getMetaFor(LayoutType.CHARACTERS, subtype.layoutMap.characters)?.label ?: "???"
                 itemView.root.setOnClickListener { showEditSubtypeDialog(subtype.id) }
                 binding.subtypeListView.addView(itemView.root)
             }

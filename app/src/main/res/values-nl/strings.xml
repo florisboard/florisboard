@@ -62,7 +62,6 @@
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Verwijderen</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Indeling bewerken</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Landinstelling</string>
-    <string name="settings__localization__subtype_layout" comment="Label for keyboard layout dropdown in subtype dialog">Toetsenbordindeling</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Deze indeling bestaat al!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Toetsenbordthema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ongedefinieerd</string>

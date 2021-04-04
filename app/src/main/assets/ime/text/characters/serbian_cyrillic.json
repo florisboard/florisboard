@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "serbian_cyrillic",
+  "label": "Serbian (ЉЊЕРТЗ)",
   "authors": ["GrbavaCigla"],
   "direction": "ltr",
   "arrangement": [
