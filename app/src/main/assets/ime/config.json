@@ -560,6 +560,16 @@
       "preferred": {
         "characters": "qwerty"
       }
+    },
+    {
+      "id": 2601,
+      "languageTag": "IPA-IPA",
+      "currencySet": "dollar",
+      "preferred": {
+        "characters": "ipa",
+        "symbols": "ipa",
+        "symbols2": "ipa"
+      }
     }
   ]
 }

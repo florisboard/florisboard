@@ -1,6 +1,7 @@
 {
   "type": "characters",
   "name": "ipa",
+  "label": "International Phonetic Alphabet",
   "authors": [
     "Huy-Ngo"
   ],
@@ -146,6 +147,7 @@
       {
         "code": 609, "label": "ɡ",
         "popup": {
+          "main": { "code": 103, "label": "g" },
           "relevant": [
             { "code": 608, "label": "ɠ" },
             { "code": 610, "label": "ɢ" },
