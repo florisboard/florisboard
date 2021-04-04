@@ -116,6 +116,14 @@ class KeyView(
     val swipeGestureDetector = SwipeGesture.Detector(context, this)
     var touchHitBox: Rect = Rect(-1, -1, -1, -1)
 
+    /** Relative to [KeyboardView] */
+    val centerX: Float
+        get() = (parent as FlexboxLayout).x + x + width/2f
+
+    /** Relative to [KeyboardView] */
+    val centerY: Float
+        get() = (parent as FlexboxLayout).y + y + height/2f
+
     init {
         layoutParams = FlexboxLayout.LayoutParams(
             FlexboxLayout.LayoutParams.WRAP_CONTENT, FlexboxLayout.LayoutParams.WRAP_CONTENT

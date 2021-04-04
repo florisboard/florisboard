@@ -7,7 +7,7 @@ import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.text.TextInputManager
-import dev.patrickgold.florisboard.ime.text.layout.ComputedLayout
+import dev.patrickgold.florisboard.ime.text.key.KeyView
 import kotlinx.coroutines.*
 import org.json.JSONObject
 
@@ -57,10 +57,11 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
     /**
      * Change the layout of the internal gesture classifier
      */
-    fun setLayout(computedLayout: ComputedLayout, dimensions: Dimensions) {
-        glideTypingClassifier.setLayout(computedLayout, FlorisBoard.getInstance().activeSubtype)
+    fun setLayout(keys: Sequence<KeyView>, dimensions: Dimensions) {
+        glideTypingClassifier.setLayout(keys, FlorisBoard.getInstance().activeSubtype)
         initialDimensions.getOrPut(FlorisBoard.getInstance().activeSubtype, {
-            dimensions })
+            dimensions
+        })
     }
 
     /**
@@ -115,6 +116,7 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
             initial.height
         )
     }
+
     private fun scaleRange(x: Float, oldMin: Float, oldMax: Float, newMin: Float, newMax: Float): Float {
         return (((x - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + newMin
     }

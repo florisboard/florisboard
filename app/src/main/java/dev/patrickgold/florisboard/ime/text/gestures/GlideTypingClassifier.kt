@@ -1,6 +1,7 @@
 package dev.patrickgold.florisboard.ime.text.gestures
 
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.text.key.KeyView
 import dev.patrickgold.florisboard.ime.text.layout.ComputedLayout
 
 /**
@@ -17,7 +18,7 @@ interface GlideTypingClassifier {
     /**
      * Change the layout of the gesture classifier.
      */
-    fun setLayout(computedLayoutData: ComputedLayout, subtype: Subtype)
+    fun setLayout(keyViews: Sequence<KeyView>, subtype: Subtype)
 
     /**
      * Change the word data of the gesture classifier.
@@ -35,7 +36,7 @@ interface GlideTypingClassifier {
      * @param maxSuggestionCount The maximum number of suggestions that are accepted.
      * @param gestureCompleted Whether the gesture is finished. (e.g to use a different algorithm for in progress words)
      */
-    fun getSuggestions(maxSuggestionCount: Int, gestureCompleted: Boolean) : List<String>
+    fun getSuggestions(maxSuggestionCount: Int, gestureCompleted: Boolean): List<String>
 
     fun clear()
 

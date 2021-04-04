@@ -233,10 +233,6 @@ class FlorisKeyData(
     var variation: KeyVariation = KeyVariation.ALL,
     var popup: PopupSet<KeyData> = PopupSet(),
     var shift: KeyData? = null,
-    var x: Float = 0f,
-    var y: Float = 0f,
-    var height: Int = 0,
-    var width: Int = 0
 ) : KeyData(type, code, label) {
     companion object {
         /**

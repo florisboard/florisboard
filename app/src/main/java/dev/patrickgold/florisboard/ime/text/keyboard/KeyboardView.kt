@@ -138,23 +138,13 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         if (this.isSmartbarKeyboardView || this.computedLayout?.mode != KeyboardMode.CHARACTERS) {
             return
         }
-        // View.post is used here because all the values would be zero.
-        computedLayout!!.arrangement.zip(this.children.asIterable()).forEach { pairOfRows ->
-            pairOfRows.first.zip((pairOfRows.second as ViewGroup).children.asIterable()).forEach { pairOfKeys ->
-                pairOfKeys.second.post {
-                    pairOfKeys.first.x = pairOfRows.second.x + pairOfKeys.second.x + pairOfKeys.second.width / 2
-                    pairOfKeys.first.y = pairOfRows.second.y + pairOfKeys.second.y + pairOfKeys.second.height / 2
-                    pairOfKeys.first.height = pairOfKeys.second.height
-                    pairOfKeys.first.width = pairOfKeys.second.width
-                }
-            }
-        }
         this.post {
             val dimensions = Dimensions(
                 width.toFloat(),
                 height.toFloat(),
             )
-            GlideTypingManager.getInstance().setLayout(this.computedLayout!!, dimensions)
+            val keys = children.map { (it as FlexboxLayout).children }.flatten().map { it as KeyView }
+            GlideTypingManager.getInstance().setLayout(keys, dimensions)
         }
 
     }
