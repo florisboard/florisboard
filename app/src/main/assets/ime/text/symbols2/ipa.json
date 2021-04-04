@@ -6,6 +6,41 @@
   "direction": "ltr",
   "arrangement": [
     [
+      { "code":   809, "label": "◌̩", "popup": {
+        "main": { "code": 781, "label": "◌̍" }
+      } },
+      { "code":   815, "label": "◌̯", "popup": {
+        "main": { "code": 785, "label": "◌̑" }
+      } },
+      { "code":   794, "label": "◌̚" },
+      { "code":   805, "label": "◌̥", "popup": {
+        "main": { "code": 778, "label": "◌̊" }
+      } },
+      { "code":   828, "label": "◌̼" },
+      { "code":   827, "label": "◌̻" },
+      { "code":   804, "label": "◌̤" },
+      { "code":   797, "label": "◌̝", "popup": {
+        "main": { "code":   724, "label": "◌˔" },
+        "relevant": [
+          { "code":   798, "label": "◌̞" },
+          { "code":  725, "label": "◌˕" },
+          { "code":  792, "label": "◌̘" },
+          { "code":  793, "label": "◌̙" }
+        ]
+      } },
+      { "code":   812, "label": "◌̬" },
+      { "code":   829, "label": "◌̽" },
+      { "code":   826, "label": "◌̺" }
+    ],
+    [
+      { "code":   816, "label": "◌̰" },
+      { "code":   810, "label": "◌̪", "popup": {
+        "main": { "code":   838, "label": "◌͆" }
+      } },
+      { "code":   826, "label": "◌̺" },
+      { "code":   799, "label": "◌̟", "popup": {
+        "main": { "code":  726, "label": "◌˖" }
+      } },
       { "code":   64, "label": "@" },
       { "code":   35, "label": "#", "popup": {
         "main": { "code": 8470, "label": "№" }
@@ -36,22 +71,7 @@
       } },
       { "code":   43, "label": "+", "popup": {
         "main": { "code":  177, "label": "±" }
-      } },
-      { "code":   40, "label": "(", "popup": {
-        "main": { "code":   60, "label": "<" },
-        "relevant": [
-          { "code":   91, "label": "[" },
-          { "code":  123, "label": "{" }
-        ]
-      } },
-      { "code":   41, "label": ")", "popup": {
-        "main": { "code":   62, "label": ">" },
-        "relevant": [
-          { "code":   93, "label": "]" },
-          { "code":  125, "label": "}" }
-        ]
-      } },
-      { "code":   47, "label": "/" }
+      } }
     ],
     [
       { "code":   42, "label": "*", "popup": {
