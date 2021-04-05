@@ -71,6 +71,7 @@
     "extractActionButton": {
       "background": "@smartbarButton/background",
       "foreground": "@smartbarButton/foreground"
-    }
+    },
+    "glideTrail": {"foreground":  "#20388E3C"}
   }
 }

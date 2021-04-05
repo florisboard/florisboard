@@ -59,6 +59,7 @@
     "smartbarButton": {
       "background": "@key/background",
       "foreground": "@key/foreground"
-    }
+    },
+    "glideTrail": {"foreground":  "#200479ed"}
   }
 }

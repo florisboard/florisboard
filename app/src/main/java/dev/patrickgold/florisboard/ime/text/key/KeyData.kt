@@ -232,7 +232,7 @@ class FlorisKeyData(
     var groupId: Int = GROUP_DEFAULT,
     var variation: KeyVariation = KeyVariation.ALL,
     var popup: PopupSet<KeyData> = PopupSet(),
-    var shift: KeyData? = null
+    var shift: KeyData? = null,
 ) : KeyData(type, code, label) {
     companion object {
         /**

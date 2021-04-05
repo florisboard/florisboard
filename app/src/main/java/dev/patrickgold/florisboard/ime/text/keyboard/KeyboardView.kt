@@ -16,11 +16,16 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewGroup
+import android.view.animation.AccelerateInterpolator
 import android.widget.FrameLayout
 import androidx.core.view.children
 import com.google.android.flexbox.FlexDirection
@@ -30,8 +35,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.PrefHelper
-import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
+import dev.patrickgold.florisboard.ime.text.gestures.*
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyView
@@ -39,7 +43,9 @@ import dev.patrickgold.florisboard.ime.text.layout.ComputedLayout
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
+import kotlin.math.max
 import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
 /**
  * Manages the layout of the keyboard, key measurement, key selection and all touch events.
@@ -49,8 +55,9 @@ import kotlin.math.roundToInt
  *
  * @property florisboard Reference to instance of core class [FlorisBoard].
  */
-class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.Listener,
+class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.Listener, GlideTypingGesture.Listener,
     ThemeManager.OnThemeUpdatedListener {
+    private var gesturing: Boolean = false
     private var activeKeyViews: MutableMap<Int, KeyView> = mutableMapOf()
     private var initialKeyCodes: MutableMap<Int, Int> = mutableMapOf()
 
@@ -68,6 +75,14 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val themeManager: ThemeManager = ThemeManager.default()
     private val swipeGestureDetector = SwipeGesture.Detector(context, this)
+    private val gestureDetector = GlideTypingGesture.Detector(context).let {
+        it.registerListener(this)
+        it.registerListener(GlideTypingManager.getInstance())
+        it
+    }
+    private val gestureDataForDrawing: MutableList<GlideTypingGesture.Detector.Position> = mutableListOf()
+    private val fadingGesture: MutableList<GlideTypingGesture.Detector.Position> = mutableListOf()
+    private var fadingGestureRadius: Float = 0f
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -88,6 +103,10 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         if (isLoadingPlaceholderKeyboard) {
             computedLayout = ComputedLayout.PRE_GENERATED_LOADING_KEYBOARD
         }
+
+        if (!this.isSmartbarKeyboardView) {
+            setWillNotDraw(false)
+        }
     }
 
     /**
@@ -107,9 +126,27 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         if (!isPreviewMode) {
             themeManager.requestThemeUpdate(this)
             onWindowShown()
+
+            if (!isLoadingPlaceholderKeyboard)
+                initGestureClassifier()
         } else {
             updateVisibility()
         }
+    }
+
+    private fun initGestureClassifier() {
+        if (this.isSmartbarKeyboardView || this.computedLayout?.mode != KeyboardMode.CHARACTERS) {
+            return
+        }
+        this.post {
+            val dimensions = Dimensions(
+                width.toFloat(),
+                height.toFloat(),
+            )
+            val keys = children.map { (it as FlexboxLayout).children }.flatten().map { it as KeyView }
+            GlideTypingManager.getInstance().setLayout(keys, dimensions)
+        }
+
     }
 
     /**
@@ -143,6 +180,11 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             distanceThreshold = prefs.gestures.swipeDistanceThreshold
             velocityThreshold = prefs.gestures.swipeVelocityThreshold
         }
+        if (prefs.glide.enabled) {
+            gestureDetector.apply {
+                velocityThreshold = prefs.gestures.swipeVelocityThreshold
+            }
+        }
         for (row in children) {
             if (row is ViewGroup) {
                 for (keyView in row.children) {
@@ -170,7 +212,6 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         if (event == null || isPreviewMode || isLoadingPlaceholderKeyboard) return false
-
         if (!isSmartbarKeyboardView && swipeGestureDetector.onTouchEvent(event)) {
             for (pointerIndex in 0 until event.pointerCount) {
                 val pointerId = event.getPointerId(pointerIndex)
@@ -180,6 +221,29 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             if (event.actionMasked == MotionEvent.ACTION_UP || event.actionMasked == MotionEvent.ACTION_CANCEL) {
                 florisboard?.textInputManager?.inputEventDispatcher?.send(InputKeyEvent.up(KeyData.INTERNAL_BATCH_EDIT))
             }
+            return true
+        }
+
+        val dimensions = Dimensions(
+            width.toFloat(),
+            height.toFloat(),
+        )
+        GlideTypingManager.getInstance().updateDimensions(dimensions)
+
+        // Gesture typing only works on character keyboard, if gesture detector says it's a gesture,
+        if (prefs.glide.enabled &&
+            computedLayout?.mode == KeyboardMode.CHARACTERS &&
+            gestureDetector.onTouchEvent(event, initialKeyCodes) &&
+            event.actionMasked != MotionEvent.ACTION_UP
+        ) {
+            // cancel all other button presses
+            for (pointerIndex in 0 until event.pointerCount) {
+                val pointerId = event.getPointerId(pointerIndex)
+                sendFlorisTouchEvent(event, pointerIndex, pointerId, MotionEvent.ACTION_CANCEL)
+                activeKeyViews.remove(pointerId)
+            }
+            invalidate()
+            this.gesturing = true
             return true
         }
 
@@ -266,7 +330,8 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         return when {
             initialKeyCodes[event.pointerId] == KeyCode.DELETE -> {
                 if (event.type == SwipeGesture.Type.TOUCH_UP && event.direction == SwipeGesture.Direction.LEFT &&
-                    prefs.gestures.deleteKeySwipeLeft == SwipeAction.DELETE_WORD) {
+                    prefs.gestures.deleteKeySwipeLeft == SwipeAction.DELETE_WORD
+                ) {
                     florisboard?.executeSwipeAction(prefs.gestures.deleteKeySwipeLeft)
                     true
                 } else {
@@ -276,7 +341,12 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             initialKeyCodes[event.pointerId] == KeyCode.SHIFT && activeKeyViews[event.pointerId]?.data?.code != KeyCode.SHIFT &&
                 event.type == SwipeGesture.Type.TOUCH_UP -> {
                 activeKeyViews[event.pointerId]?.let {
-                    florisboard?.textInputManager?.inputEventDispatcher?.send(InputKeyEvent.up(it.popupManager.getActiveKeyData(it) ?: it.data))
+                    florisboard?.textInputManager?.inputEventDispatcher?.send(
+                        InputKeyEvent.up(
+                            it.popupManager.getActiveKeyData(it)
+                                ?: it.data
+                        )
+                    )
                     florisboard?.textInputManager?.inputEventDispatcher?.send(InputKeyEvent.cancel(KeyData.SHIFT))
                 }
                 true
@@ -331,9 +401,11 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
      * Invalidates the current active key view and sends a [MotionEvent.ACTION_CANCEL] to indicate the loss of focus.
      */
     fun dismissActiveKeyViewReference(pointerId: Int) {
-        activeKeyViews.remove(pointerId)?.onFlorisTouchEvent(MotionEvent.obtain(
-            0, 0, MotionEvent.ACTION_CANCEL, 0.0f, 0.0f, 0
-        ))
+        activeKeyViews.remove(pointerId)?.onFlorisTouchEvent(
+            MotionEvent.obtain(
+                0, 0, MotionEvent.ACTION_CANCEL, 0.0f, 0.0f, 0
+            )
+        )
     }
 
     /**
@@ -343,10 +415,10 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
         val keyMarginH: Int
         val keyMarginV: Int
 
-        if (isSmartbarKeyboardView){
+        if (isSmartbarKeyboardView) {
             keyMarginH = resources.getDimension(R.dimen.key_marginH).toInt()
             keyMarginV = resources.getDimension(R.dimen.key_marginV).toInt()
-        }else {
+        } else {
             keyMarginV = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingVertical, context).toInt()
             keyMarginH = ViewLayoutUtils.convertDpToPixel(prefs.keyboard.keySpacingHorizontal, context).toInt()
         }
@@ -361,7 +433,11 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             MeasureSpec.getSize(heightMeasureSpec).toFloat()
         } else {
             (florisboard?.inputView?.desiredTextKeyboardViewHeight ?: MeasureSpec.getSize(heightMeasureSpec).toFloat())
-        } * if (isPreviewMode) { 0.90f } else { 1.00f }
+        } * if (isPreviewMode) {
+            0.90f
+        } else {
+            1.00f
+        }
         val layoutSize = computedLayout?.arrangement?.size?.toFloat() ?: 4.0f
         desiredKeyHeight = when {
             isSmartbarKeyboardView -> {
@@ -394,6 +470,12 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
                 }
             }
         }
+        if (theme.getAttr(Theme.Attr.GLIDE_TRAIL_COLOR).toSolidColor().color == 0) {
+            this.glideTrailPaint.color = theme.getAttr(Theme.Attr.WINDOW_COLOR_PRIMARY).toSolidColor().color
+            this.glideTrailPaint.alpha = 32
+        } else {
+            this.glideTrailPaint.color = theme.getAttr(Theme.Attr.GLIDE_TRAIL_COLOR).toSolidColor().color
+        }
     }
 
     /**
@@ -407,6 +489,55 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
                         keyView.requestLayout()
                     }
                 }
+            }
+        }
+    }
+
+    private val glideTrailPaint = Paint().apply {
+        color = Color.GREEN
+        alpha = 40
+    }
+
+    override fun dispatchDraw(canvas: Canvas?) {
+        super.dispatchDraw(canvas)
+
+        if (prefs.glide.enabled && prefs.glide.showTrail && !isSmartbarKeyboardView) {
+            if (this.fadingGestureRadius > 0) {
+                val targetDist = 3f
+                val maxNumberOfPoints = 10
+                drawGesture(fadingGesture, maxNumberOfPoints, targetDist, fadingGestureRadius, canvas)
+            }
+
+            val radius = 20f
+            val maxNumberOfPoints = 15
+            val targetDist = 3f
+            if (gesturing && gestureDataForDrawing.isNotEmpty()) {
+                drawGesture(gestureDataForDrawing, maxNumberOfPoints, targetDist, radius, canvas)
+            }
+        }
+    }
+
+    private fun drawGesture(
+        gestureData: MutableList<GlideTypingGesture.Detector.Position>,
+        maxNumberOfPoints: Int,
+        targetDist: Float,
+        initialRadius: Float,
+        canvas: Canvas?
+    ) {
+        var radius = initialRadius
+        for (i in gestureData.size - 1 downTo max(1, gestureData.size - maxNumberOfPoints)) {
+            val dx = gestureData[i].x - gestureData[i - 1].x
+            val dy = gestureData[i].y - gestureData[i - 1].y
+            val dist = sqrt(dx * dx + dy * dy)
+
+            val numPoints = dist / targetDist
+            for (j in 0 until numPoints.toInt()) {
+                radius *= 0.99f
+                val intermediateX =
+                    gestureData[i].x * (1 - j / numPoints) + gestureData[i - 1].x * (j / numPoints)
+                val intermediateY =
+                    gestureData[i].y * (1 - j / numPoints) + gestureData[i - 1].y * (j / numPoints)
+                canvas?.drawCircle(intermediateX, intermediateY, radius, glideTrailPaint)
             }
         }
     }
@@ -431,6 +562,36 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
                     }
                 }
             }
+        }
+    }
+
+    override fun onGestureComplete(data: GlideTypingGesture.Detector.PointerData) {
+        onGestureCancelled()
+    }
+
+    override fun onGestureAdd(point: GlideTypingGesture.Detector.Position) {
+        if (prefs.glide.enabled) {
+            this.gestureDataForDrawing.add(point)
+        }
+    }
+
+    override fun onGestureCancelled() {
+        if (prefs.glide.showTrail) {
+            this.fadingGesture.clear()
+            this.fadingGesture.addAll(gestureDataForDrawing)
+
+            val animator = ValueAnimator.ofFloat(20f, 0f)
+            animator.interpolator = AccelerateInterpolator()
+            animator.duration = prefs.glide.trailDuration.toLong()
+            animator.addUpdateListener {
+                this.fadingGestureRadius = it.animatedValue as Float
+                this.invalidate()
+            }
+            animator.start()
+
+            this.gestureDataForDrawing.clear()
+            gesturing = false
+            invalidate()
         }
     }
 }

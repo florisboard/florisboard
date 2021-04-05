@@ -15,12 +15,43 @@
             app:title="@string/pref__glide__enabled__label"
             android:summary="@string/pref__glide__enabled__summary"/>
 
-        <!--<SwitchPreferenceCompat
+        <SwitchPreferenceCompat
             app:iconSpaceReserved="false"
             android:defaultValue="true"
             app:key="glide__show_trail"
             app:title="@string/pref__glide__show_trail__label"
-            android:summary="@string/pref__glide__show_trail__summary"/>-->
+            android:summary="@string/pref__glide__show_trail__summary"/>
+
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="200"
+            app:dependency="glide__show_trail"
+            app:key="glide__trail_fade_duration"
+            app:min="0"
+            app:max="500"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__glide_trail_fade_duration"
+            app:seekBarIncrement="10"
+            app:unit="ms"/>
+
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            android:defaultValue="true"
+            app:dependency="glide__show_trail"
+            app:key="glide__show_preview"
+            app:title="@string/pref__glide__show_preview" />
+
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="150"
+            app:dependency="glide__show_preview"
+            app:key="glide__preview_refresh_delay"
+            app:min="50"
+            app:max="500"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__glide_preview_refresh_delay"
+            app:seekBarIncrement="25"
+            app:unit="ms"/>
 
     </PreferenceCategory>
 

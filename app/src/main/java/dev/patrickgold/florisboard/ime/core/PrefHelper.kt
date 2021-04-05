@@ -274,6 +274,9 @@ class PrefHelper(
         companion object {
             const val ENABLED =                     "glide__enabled"
             const val SHOW_TRAIL =                  "glide__show_trail"
+            const val TRAIL_DURATION =              "glide__trail_fade_duration"
+            const val SHOW_PREVIEW =                "glide__show_preview"
+            const val PREVIEW_REFRESH_DELAY =       "glide__preview_refresh_delay"
         }
 
         var enabled: Boolean
@@ -282,6 +285,15 @@ class PrefHelper(
         var showTrail: Boolean
             get() =  prefHelper.getPref(SHOW_TRAIL, false)
             set(v) = prefHelper.setPref(SHOW_TRAIL, v)
+        var trailDuration: Int
+            get() =  prefHelper.getPref(TRAIL_DURATION, 200)
+            set(v) = prefHelper.setPref(TRAIL_DURATION, v)
+        var showPreview: Boolean
+            get() = prefHelper.getPref(SHOW_PREVIEW, true)
+            set(v) = prefHelper.setPref(SHOW_PREVIEW, v)
+        var previewRefreshDelay: Int
+            get() = prefHelper.getPref(PREVIEW_REFRESH_DELAY, 150)
+            set(v) = prefHelper.setPref(PREVIEW_REFRESH_DELAY, v)
     }
 
     /**

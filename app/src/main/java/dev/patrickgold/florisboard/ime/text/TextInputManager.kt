@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.nlp.Token
 import dev.patrickgold.florisboard.ime.nlp.toStringList
 import dev.patrickgold.florisboard.ime.text.editing.EditingKeyboardView
+import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
@@ -58,6 +59,7 @@ import kotlin.math.roundToLong
 class TextInputManager private constructor() : CoroutineScope by MainScope(), InputKeyEventReceiver,
     FlorisBoard.EventListener, SmartbarView.EventListener {
 
+    var glideSuggestionsActive: Boolean = false
     private val florisboard = FlorisBoard.getInstance()
     private val activeEditorInstance: EditorInstance
         get() = florisboard.activeEditorInstance
@@ -86,7 +88,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     )
 
     var keyVariation: KeyVariation = KeyVariation.NORMAL
-    private var smartbarView: SmartbarView? = null
+    internal var smartbarView: SmartbarView? = null
 
     // Caps/Shift related properties
     var caps: Boolean = false
@@ -323,21 +325,31 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         launch {
             if (activeEditorInstance.isComposingEnabled) {
                 withContext(Dispatchers.IO) {
-                    dictionaryManager.loadDictionary(AssetRef(AssetSource.Assets,"ime/dict/en.flict")).let {
+                    dictionaryManager.loadDictionary(AssetRef(AssetSource.Assets, "ime/dict/en.flict")).let {
                         activeDictionary = it.getOrDefault(null)
                     }
                 }
+            }
+            if (PrefHelper.getDefaultInstance(florisboard.context).glide.enabled) {
+                GlideTypingManager.getInstance().setWordData(newSubtype)
             }
             // TODO: heavy load on main thread
             for (keyboardMode in KeyboardMode.values()) {
                 val keyboardView = keyboardViews[keyboardMode]
                 if (keyboardView != null) {
-                    keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(keyboardMode, newSubtype, florisboard.prefs, florisboard.subtypeManager.getCurrencySet(newSubtype)).await()
+                    keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(
+                        keyboardMode,
+                        newSubtype,
+                        florisboard.prefs,
+                        florisboard.subtypeManager.getCurrencySet(newSubtype)
+                    ).await()
                     keyboardView.updateVisibility()
                 }
             }
         }
     }
+    // this is so unfortunate... but we need to skip clearing the suggestion only one time.
+    var hackyGlideSuggestionSkip = false
 
     /**
      * Main logic point for processing cursor updates as well as parsing the current composing word
@@ -374,7 +386,17 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     }
                 }
             } else {
-                smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+                if (glideSuggestionsActive){
+                    if (hackyGlideSuggestionSkip) {
+                        smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+                        hackyGlideSuggestionSkip = false
+                        glideSuggestionsActive = false
+                    }else {
+                        hackyGlideSuggestionSkip = true
+                    }
+                }else {
+                    smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+                }
             }
         }
     }
@@ -426,7 +448,14 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onSmartbarCandidatePressed(word: String) {
-        activeEditorInstance.commitCompletion(word)
+        if (glideSuggestionsActive) {
+            activeEditorInstance.commitGestureCorrection(word)
+            glideSuggestionsActive = false
+            hackyGlideSuggestionSkip = false
+            smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+        }else {
+            activeEditorInstance.commitCompletion(word)
+        }
     }
 
     override fun onSmartbarClipboardCandidatePressed(clipboardItem: ClipboardItem) {
@@ -466,10 +495,17 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Handles a [KeyCode.DELETE] event.
      */
     private fun handleDelete() {
-        isManualSelectionMode = false
-        isManualSelectionModeStart = false
-        isManualSelectionModeEnd = false
-        activeEditorInstance.deleteBackwards()
+        if (glideSuggestionsActive){
+            handleDeleteWord()
+            glideSuggestionsActive = false
+            hackyGlideSuggestionSkip = false
+            this.smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+        }else {
+            isManualSelectionMode = false
+            isManualSelectionModeStart = false
+            isManualSelectionModeEnd = false
+            activeEditorInstance.deleteBackwards()
+        }
     }
 
     /**
@@ -790,6 +826,24 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         val data = getAdjustedKeyData(ev.data)
         when (data.code) {
             KeyCode.SHIFT -> handleShiftCancel()
+        }
+    }
+
+    fun handleGesture(word: String) {
+        activeEditorInstance.commitGesture(fixCase(word))
+    }
+
+    /**
+     * Changes a word to the current case.
+     * eg if [capsLock] is true, abc -> ABC
+     *    if [caps]     is true, abc -> Abc
+     *    otherwise            , abc -> abc
+     */
+    fun fixCase(word: String): String {
+        return when {
+            capsLock -> word.toUpperCase(florisboard.activeSubtype.locale)
+            caps -> word.capitalize(florisboard.activeSubtype.locale)
+            else -> word
         }
     }
 }

@@ -19,9 +19,8 @@ package dev.patrickgold.florisboard.ime.text.gestures
 import android.content.Context
 import android.view.MotionEvent
 import dev.patrickgold.florisboard.R
-import kotlin.math.PI
 import kotlin.math.abs
-import kotlin.math.atan
+import kotlin.math.atan2
 
 /**
  * Wrapper class which holds all enums, interfaces and classes for detecting a swipe gesture.
@@ -188,16 +187,7 @@ abstract class SwipeGesture {
          *    +y
          */
         private fun angle(diffX: Double, diffY: Double): Double {
-            val tmpAngle = abs(360 * atan(diffY / diffX) / (2 * PI))
-            return if (diffX < 0 && diffY >= 0) {
-                180.0f - tmpAngle
-            } else if (diffX < 0 && diffY < 0) {
-                180.0f + tmpAngle
-            } else if (diffX >= 0 && diffY < 0) {
-                360.0f - tmpAngle
-            } else {
-                tmpAngle
-            }
+            return (Math.toDegrees(atan2(diffY, diffX)) + 360) % 360
         }
 
         /**
