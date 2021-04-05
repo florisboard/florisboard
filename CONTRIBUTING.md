@@ -42,7 +42,7 @@ section and the `defaultSubtypes` section, making sure to include
 the language's IETF BCP 47 code ([ISO 639-1 language code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
 and [ISO 3166-1 region code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements)).
 For example, Dutch as spoken in Belgium is `nl-be`. Use a unique value
-for `id` to avoid possible crahses caused by duplicate ids.
+for `id` to avoid possible crashes caused by duplicate ids.
 
 Add the keyboard layout at `app/src/main/assets/ime/text/characters/<preferredLayout_name_here>.json`,
 with `code` referring to the characters codepoint and `label` being the
@@ -61,7 +61,7 @@ use relevant for accents which are not-so important.
 This kind of contribution is the most important, as it tells where
 FlorisBoard has flaws and thus should be improved to maximize stability
 and user experience. To make this process as smooth as possible, please
-use the premade [issue template](.github/ISSUE_TEMPLATE/bug_report.md)
+use the pre-made [issue template](.github/ISSUE_TEMPLATE/bug_report.md)
 for bug reporting. This makes it easy for us to understand what the bug
 is and how to solve it.
 
@@ -73,3 +73,10 @@ preferred way to capture logs.
 
 Alternatively, you can also use ADB (Android Debug Bridge) to capture
 the error log. This is recommended for experienced users only.
+
+## Donating
+
+If none of the above options are feasible for you but you still want to
+show your support, you can also buy me a coffee, so I can stay up all night
+and chase away bugs or add new cool stuff :)
+See the `Sponsors` button for available options!
