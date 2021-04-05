@@ -13,6 +13,7 @@
     <string name="key__view_symbols2" translatable="false">=\\&lt;</string>
     <string name="key__view_half_space" translatable="false">&#8626;</string>
     <string name="key__view_keshida" translatable="false">"یــــ"</string>
+    <string name="key__dotted_circle" translatable="false">&#9676;</string>
 
     <!-- Media strings -->
     <string name="media__tab__emoticons_label" translatable="false">;-)</string>

@@ -91,6 +91,7 @@ class KeyView(
     private var drawablePaddingH: Int = 0
     private var drawablePaddingV: Int = 0
     private var label: String? = null
+    private val labelDottedCircle: String = resources.getString(R.string.key__dotted_circle)
     private var labelPaint: Paint = Paint().apply {
         alpha = 255
         color = 0
@@ -198,29 +199,39 @@ class KeyView(
      *  [keyData] is a TLD, in which case always the lower case variant is returned.
      * @param subtype The subtype for which this label should be created. Defaults to
      *  [Subtype.DEFAULT]. Ignored when the passed [keyData] is a TLD.
+     * @param isForDisplay If the to be generated label is for display or for sending to the input connection.
      * @return The generated label ready for usage in the front-end UI.
      */
     fun getComputedLetter(
         keyData: KeyData = data,
         caps: Boolean = florisboard?.textInputManager?.caps ?: false &&
             florisboard?.textInputManager?.getActiveKeyboardMode() == KeyboardMode.CHARACTERS,
-        subtype: Subtype = florisboard?.activeSubtype ?: Subtype.DEFAULT
+        subtype: Subtype = florisboard?.activeSubtype ?: Subtype.DEFAULT,
+        isForDisplay: Boolean = false
     ): String {
-        return if (caps && keyData is FlorisKeyData && keyData.shift != null) {
-            (keyData.shift!!.code.toChar()).toString()
-        } else {
-            when (data.code) {
-                KeyCode.URI_COMPONENT_TLD -> keyData.label.toLowerCase(Locale.ENGLISH)
-                else -> {
-                    val labelText = (keyData.code.toChar()).toString()
-                    val locale = if (subtype.locale.language == "el") { Locale.getDefault() } else { subtype.locale }
-                    if (caps) {
-                        labelText.toUpperCase(locale)
-                    } else {
-                        labelText
+        return StringBuilder().run {
+            // Combining Diacritical Marks
+            // See: https://en.wikipedia.org/wiki/Combining_Diacritical_Marks
+            if (isForDisplay && keyData.code in 0x0300..0x036F) {
+                append(labelDottedCircle)
+            }
+            if (caps && keyData is FlorisKeyData && keyData.shift != null) {
+                append(keyData.shift!!.code.toChar())
+            } else {
+                when (data.code) {
+                    KeyCode.URI_COMPONENT_TLD -> append(keyData.label.toLowerCase(Locale.ENGLISH))
+                    else -> {
+                        val labelText = (keyData.code.toChar()).toString()
+                        val locale = if (subtype.locale.language == "el") { Locale.getDefault() } else { subtype.locale }
+                        if (caps) {
+                            append(labelText.toUpperCase(locale))
+                        } else {
+                            append(labelText)
+                        }
                     }
                 }
             }
+            toString()
         }
     }
 
@@ -819,13 +830,13 @@ class KeyView(
         if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE
             && data.code != KeyCode.HALF_SPACE && data.code != KeyCode.KESHIDA || data.type == KeyType.NUMERIC
         ) {
-            label = getComputedLetter()
+            label = getComputedLetter(isForDisplay = true)
             val hint = data.popup.hint
             if (prefs.keyboard.hintedNumberRowMode != KeyHintMode.DISABLED && hint?.type == KeyType.NUMERIC) {
-                hintedLabel = getComputedLetter(hint)
+                hintedLabel = getComputedLetter(hint, isForDisplay = true)
             }
             if (prefs.keyboard.hintedSymbolsMode != KeyHintMode.DISABLED && hint?.type == KeyType.CHARACTER) {
-                hintedLabel = getComputedLetter(hint)
+                hintedLabel = getComputedLetter(hint, isForDisplay = true)
             }
 
         } else {
