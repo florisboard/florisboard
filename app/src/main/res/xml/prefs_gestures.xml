@@ -47,10 +47,10 @@
             app:dependency="glide__show_preview"
             app:key="glide__preview_refresh_delay"
             app:min="50"
-            app:max="1500"
+            app:max="500"
             app:iconSpaceReserved="false"
             app:title="@string/pref__glide_preview_refresh_delay"
-            app:seekBarIncrement="50"
+            app:seekBarIncrement="25"
             app:unit="ms"/>
 
     </PreferenceCategory>
