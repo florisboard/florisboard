@@ -8,15 +8,13 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
- * Wrapper class which holds all enums, interfaces and classes for detecting a swipe gesture.
+ * Wrapper class which holds all enums, interfaces and classes for detecting a gesture.
  */
 class GlideTypingGesture {
 
     /**
      * Class which detects swipes based on given [MotionEvent]s. Only supports single-finger swipes
      * and ignores additional pointers provided, if any.
-     *
-     * @property listener The listener to report detected swipes to.
      */
     class Detector(context: Context) {
         private var pointerDataMap: MutableMap<Int, PointerData> = mutableMapOf()
@@ -35,14 +33,14 @@ class GlideTypingGesture {
          * @return whether or not the event was interpreted as part of a gesture.
          */
         fun onTouchEvent(event: MotionEvent, initialKeyCodes: MutableMap<Int, Int>): Boolean {
+            val pointerIndex = event.actionIndex
+            val pointerId = event.getPointerId(pointerIndex)
             when (event.actionMasked) {
                 MotionEvent.ACTION_DOWN,
                 MotionEvent.ACTION_POINTER_DOWN -> {
                     if (event.actionMasked == MotionEvent.ACTION_DOWN) {
-                        resetState()
+                        resetState(pointerId)
                     }
-                    val pointerIndex = event.actionIndex
-                    val pointerId = event.getPointerId(pointerIndex)
                     pointerDataMap[pointerId] = PointerData(
                         mutableListOf(
                             Position(event.getX(pointerIndex), event.getY(pointerIndex))
@@ -52,8 +50,6 @@ class GlideTypingGesture {
                     return false
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    val pointerIndex = event.actionIndex
-                    val pointerId = event.getPointerId(pointerIndex)
                     val pointerData = pointerDataMap[pointerId]
                     val pos = Position(event.getX(pointerIndex), event.getY(pointerIndex))
                     pointerData?.positions?.add(
@@ -85,19 +81,17 @@ class GlideTypingGesture {
                 }
                 MotionEvent.ACTION_UP,
                 MotionEvent.ACTION_POINTER_UP -> {
-                    val pointerIndex = event.actionIndex
-                    val pointerId = event.getPointerId(pointerIndex)
                     pointerDataMap.remove(pointerId)?.let { pointerData ->
                         if (pointerData.isActuallyGesture == true) {
                             listeners.forEach { listener -> listener.onGestureComplete(pointerData) }
                         } else {
-                            resetState()
+                            resetState(pointerId)
                         }
                     }
                     return false
                 }
                 MotionEvent.ACTION_CANCEL -> {
-                    resetState()
+                    resetState(pointerId)
                 }
                 else -> return false
             }
@@ -108,8 +102,8 @@ class GlideTypingGesture {
             this.listeners.add(listener)
         }
 
-        private fun resetState() {
-            pointerDataMap.clear()
+        private fun resetState(pointerId: Int) {
+            pointerDataMap.remove(pointerId)
         }
 
         data class PointerData(
