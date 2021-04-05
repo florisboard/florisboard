@@ -127,7 +127,7 @@ class PopupManager<T_KBD: View, T_KV: View>(
                     }
                     else -> {
                         PopupExtendedView.Element.Label(
-                            keyView.getComputedLetter(keyView.data.popup[adjustedIndex]), adjustedIndex
+                            keyView.getComputedLetter(keyView.data.popup[adjustedIndex], isForDisplay = true), adjustedIndex
                         )
                     }
                 }
