@@ -13,19 +13,21 @@
       { "code":  1608, "label": "و", "popup": {
         "main": { "code": -255, "label": "وو" }
       } },
-      { "code":  1749, "label": "ﻪ", "popup": {
-        "main": { "code": 1577, "label": "ة" }
-      } },
+      { "code":  1749, "label": "ﻪ" },
       { "code":  1585, "label": "ر" },
+
       { "code":  1578, "label": "ت", "popup": {
         "main": { "code": 1591, "label": "ط" }
       } },
       { "code":  1740, "label": "ی" },
-      { "code":  1574, "label": "ﺋ", "popup": {
-        "main": { "code": 1569, "label": "ء" }
+
+      { "code":  1574, "label": "ﺋ"},
+
+      { "code":  1593, "label": "ع", "popup": {
+        "main": { "code": 1594, "label": "غ" }
       } },
-      { "code":  1593, "label": "ع" },
       { "code":  1734, "label": "ۆ" },
+
       { "code":  1662, "label": "پ", "popup": {
         "main": { "code": 1579, "label": "ث" }
       } }

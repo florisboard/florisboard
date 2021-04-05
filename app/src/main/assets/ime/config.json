@@ -562,6 +562,14 @@
       }
     },
     {
+      "id": 2301,
+      "languageTag": "ku",
+      "currencySet": "dollar",
+      "preferred": {
+        "characters": "kurdish_kurmanci"
+      }
+    },
+    {
       "id": 2601,
       "languageTag": "IPA-IPA",
       "currencySet": "dollar",
