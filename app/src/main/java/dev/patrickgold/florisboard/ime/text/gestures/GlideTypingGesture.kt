@@ -17,10 +17,11 @@ class GlideTypingGesture {
      * and ignores additional pointers provided, if any.
      */
     class Detector(context: Context) {
-        private var pointerDataMap: MutableMap<Int, PointerData> = mutableMapOf()
+        private var pointerData: PointerData = PointerData(mutableListOf(), 0)
         var velocityThreshold: VelocityThreshold = VelocityThreshold.NORMAL
         private val keySize = context.resources.getDimensionPixelSize(R.dimen.key_width).toDouble()
         private val listeners: ArrayList<Listener> = arrayListOf()
+        private var pointerId: Int = -1
 
         companion object {
             private const val MAX_DETECT_TIME = 500
@@ -33,30 +34,36 @@ class GlideTypingGesture {
          * @return whether or not the event was interpreted as part of a gesture.
          */
         fun onTouchEvent(event: MotionEvent, initialKeyCodes: MutableMap<Int, Int>): Boolean {
-            val pointerIndex = event.actionIndex
-            val pointerId = event.getPointerId(pointerIndex)
             when (event.actionMasked) {
                 MotionEvent.ACTION_DOWN,
                 MotionEvent.ACTION_POINTER_DOWN -> {
-                    if (event.actionMasked == MotionEvent.ACTION_DOWN) {
-                        resetState(pointerId)
+                    if (pointerId != -1) {
+                        // if we already have another pointer, we don't care
+                        return false
                     }
-                    pointerDataMap[pointerId] = PointerData(
-                        mutableListOf(
-                            Position(event.getX(pointerIndex), event.getY(pointerIndex))
-                        ),
-                        System.currentTimeMillis()
-                    )
+                    if (event.actionMasked == MotionEvent.ACTION_DOWN) {
+                        resetState()
+                    }
+                    val pointerIndex = event.actionIndex
+                    pointerId = event.getPointerId(pointerIndex)
+                    pointerData.apply {
+                        positions.add(Position(event.getX(pointerIndex), event.getY(pointerIndex)))
+                        startTime = System.currentTimeMillis()
+                    }
                     return false
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    val pointerData = pointerDataMap[pointerId]
+                    if (pointerId != event.getPointerId(event.actionIndex)) {
+                        // not our pointer.
+                        return false
+                    }
+
+                    val pointerIndex = event.findPointerIndex(pointerId)
                     val pos = Position(event.getX(pointerIndex), event.getY(pointerIndex))
-                    pointerData?.positions?.add(
+                    pointerData.positions.add(
                         pos
                     )
-
-                    if (pointerData != null && pointerData.isActuallyGesture == null) {
+                    if (pointerData.isActuallyGesture == null) {
                         // evaluate whether is actually a gesture
                         val dist = pointerData.positions[0].dist(pos)
                         val time = (System.currentTimeMillis() - pointerData.startTime) + 1
@@ -74,24 +81,25 @@ class GlideTypingGesture {
 
                     }
 
-                    if (pointerData?.isActuallyGesture == true)
+                    if (pointerData.isActuallyGesture == true)
                         pointerData.positions.last().let { point -> listeners.forEach { it.onGestureAdd(point) } }
 
-                    return pointerData?.isActuallyGesture ?: false
+                    return pointerData.isActuallyGesture ?: false
                 }
                 MotionEvent.ACTION_UP,
                 MotionEvent.ACTION_POINTER_UP -> {
-                    pointerDataMap.remove(pointerId)?.let { pointerData ->
-                        if (pointerData.isActuallyGesture == true) {
-                            listeners.forEach { listener -> listener.onGestureComplete(pointerData) }
-                        } else {
-                            resetState(pointerId)
-                        }
+                    if (pointerId != event.getPointerId(event.actionIndex)) {
+                        // not our pointer.
+                        return false
                     }
+                    if (pointerData.isActuallyGesture == true) {
+                        listeners.forEach { listener -> listener.onGestureComplete(pointerData) }
+                    }
+                    resetState()
                     return false
                 }
                 MotionEvent.ACTION_CANCEL -> {
-                    resetState(pointerId)
+                    resetState()
                 }
                 else -> return false
             }
@@ -102,13 +110,18 @@ class GlideTypingGesture {
             this.listeners.add(listener)
         }
 
-        private fun resetState(pointerId: Int) {
-            pointerDataMap.remove(pointerId)
+        private fun resetState() {
+            pointerData.apply {
+                positions.clear()
+                startTime = 0
+                isActuallyGesture = null
+            }
+            pointerId = -1
         }
 
         data class PointerData(
             val positions: MutableList<Position>,
-            val startTime: Long,
+            var startTime: Long,
             var isActuallyGesture: Boolean? = null
         )
 
