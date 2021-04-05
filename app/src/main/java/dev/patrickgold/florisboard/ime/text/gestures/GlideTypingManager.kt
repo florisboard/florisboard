@@ -41,6 +41,10 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
         }
     }
 
+    override fun onGestureCancelled() {
+        glideTypingClassifier.clear()
+    }
+
     private var lastTime = System.currentTimeMillis()
     override fun onGestureAdd(point: GlideTypingGesture.Detector.Position) {
         val normalized = GlideTypingGesture.Detector.Position(normalizeX(point.x), normalizeY(point.y))

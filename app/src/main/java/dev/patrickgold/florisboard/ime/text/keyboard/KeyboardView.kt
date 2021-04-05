@@ -566,7 +566,17 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     }
 
     override fun onGestureComplete(data: GlideTypingGesture.Detector.PointerData) {
+        onGestureCancelled()
+    }
+
+    override fun onGestureAdd(point: GlideTypingGesture.Detector.Position) {
         if (prefs.glide.enabled) {
+            this.gestureDataForDrawing.add(point)
+        }
+    }
+
+    override fun onGestureCancelled() {
+        if (prefs.glide.showTrail) {
             this.fadingGesture.clear()
             this.fadingGesture.addAll(gestureDataForDrawing)
 
@@ -582,12 +592,6 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             this.gestureDataForDrawing.clear()
             gesturing = false
             invalidate()
-        }
-    }
-
-    override fun onGestureAdd(point: GlideTypingGesture.Detector.Position) {
-        if (prefs.glide.enabled) {
-            this.gestureDataForDrawing.add(point)
         }
     }
 }

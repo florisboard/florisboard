@@ -99,6 +99,9 @@ class GlideTypingGesture {
                     return false
                 }
                 MotionEvent.ACTION_CANCEL -> {
+                    if (pointerData.isActuallyGesture == true) {
+                        listeners.forEach { it.onGestureCancelled() }
+                    }
                     resetState()
                 }
                 else -> return false
@@ -140,13 +143,18 @@ class GlideTypingGesture {
         /**
          * Called when a gesture is complete.
          */
-        fun onGestureComplete(data: Detector.PointerData)
+        fun onGestureComplete(data: Detector.PointerData) {}
 
         /**
          * Called when a point is added to a gesture.
          * Will not be called before a series of events is detected as a gesture.
          */
-        fun onGestureAdd(point: Detector.Position)
+        fun onGestureAdd(point: Detector.Position) {}
+
+        /**
+         * Called to cancel a gesture
+         */
+        fun onGestureCancelled() {}
     }
 
 }
