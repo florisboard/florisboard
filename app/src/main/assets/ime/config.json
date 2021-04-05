@@ -542,7 +542,10 @@
       "languageTag": "ckb",
       "currencySet": "dollar",
       "preferred": {
-        "characters": "kurdish"
+        "characters": "kurdish",
+        "symbols": "eastern",
+        "symbols2": "eastern",
+        "numericRow": "eastern_arabic"
       }
     },
     {
