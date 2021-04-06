@@ -62,6 +62,15 @@
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Izdzēst</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Labot apakšveidu</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Lokalizācija</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Rakstzīmju izkārtojums</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Zīmju galvenais izkārtojums</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Zīmju papildu izkārtojums</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Valūtu kopa</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Ciparzīmju izkārtojums</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Ciparzīmju (paplašināts) izkārtojums</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Ciparu rindas izkārtojums</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Tālruņa galvenais izkārtojums</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Tālruņa papildu izkārtojums</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Šis apakšveids jau pastāv!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tastatūras izskats</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nenoteikts</string>
@@ -126,6 +135,7 @@
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Viedjoslas poga</string>
     <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Līmeniska pilnekrāna izkārtojums</string>
     <string name="settings__theme__group_extractActionButton" comment="Theme group label">Līmeniska pilnekrāna izkārtojuma darbības poga</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">Slīdēšanas pēdas</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Pielāgota kopa (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Fona krāsa</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Fona krāsa (izmantots)</string>
@@ -208,9 +218,9 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Divreiz piesitot atstarpes taustiņam, tiks ievietots punkts un atstarpe</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Kustību un slīdošā rakstīšana</string>
     <string name="pref__glide__title" comment="Preference group title">Slīdošā rakstīšana</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Iespējot slīdošo rakstīšanu</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Iespējot slīdošo rakstīšanu</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Rakstīt vārdu, slidinot pirkstu pa burtiem, kas to veido</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Rādīt slīdēšanas pēdas</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Rādīt slīdēšanas pēdas</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Izzudīs pēc katra vārda</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Vispārējas kustības</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Atstarpes taustiņa kustības</string>
@@ -336,4 +346,7 @@
     <string name="clip__paste_item">Ielīmēt</string>
     <string name="clip__back_to_text_input">Atgriezties pie teksta ievades</string>
     <string name="clip__cant_paste">Pašreizējā lietotne neļauj ielīmēt šo saturu.</string>
+    <string name="pref__glide_trail_fade_duration">Slīdēšanas pēdu izzušanas laiks</string>
+    <string name="pref__glide_preview_refresh_delay">Priekšskatīt atsvaidzināšanas aizkavi</string>
+    <string name="pref__glide__show_preview">Rādīt priekšskatījumu slīdošās rakstīšanas laikā</string>
 </resources>

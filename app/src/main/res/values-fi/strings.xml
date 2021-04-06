@@ -102,9 +102,7 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Kun välilyöntiä napautetaan kahdesti, lisätään piste ja välilyönti</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Eleet &amp; liukukirjoitus</string>
     <string name="pref__glide__title" comment="Preference group title">Liukukirjoitus</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">[EVS] Ota liukukirjoitus käyttöön</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Syötä sana liu\'uttamalla sormea sen kirjaimilla</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">[EVS] Näytä liu\'un jälki</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Häviää joka sanan jälkeen</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Ei toimintoa</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Tarkka merkkien poisto</string>

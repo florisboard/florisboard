@@ -200,9 +200,7 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dwukrotne naciśnięcie klawisza spacji powoduje wstawienie kropki, po której następuje spacja</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gesty &amp; Glide pisanie</string>
     <string name="pref__glide__title" comment="Preference group title">Pisanie Glide</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Włącz pisanie Glide</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Wpisz słowo, przesuwając palcem po jego literach</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Pokaż ślad ślizgu</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Zniknie po każdym słowie</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Gesty ogólne</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gesty klawisza spacji</string>

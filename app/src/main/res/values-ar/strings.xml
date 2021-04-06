@@ -72,7 +72,7 @@
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">وقت الشروق</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">وقت الغروب</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">نسق يومي</string>
-    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">نسق ليلي</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">النسق ليلي</string>
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">النسق المحدد</string>
     <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">تكييف الألوان مع التطبيق</string>
     <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">تتكيف ألوان النسق مع تلك الموجودة في التطبيق الحالي ، إذا كان التطبيق المستهدف يدعم ذلك.</string>
@@ -85,12 +85,16 @@
     <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">إنشاء من النسق المحدد</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">مخصص (على أساس %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">نسق جديد</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">تم استيراد الثيم بنجاح!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">تم تصدير الثيم بنجاح!</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">تحرير النسق</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">اسم</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">نوع</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">إضافة مجموعة</string>
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">تحرير المجموعة</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">اضافة الخاصيه</string>
+    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">تحرير الصفة</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">تحرير اسم الثيم</string>
     <string name="settings__theme_editor__value_type_reference" comment="Theme value type">المرجع</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">مجموعة</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">الخاصية</string>
@@ -101,12 +105,16 @@
     <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">الحالة</string>
     <string name="settings__theme_editor__value_type_other" comment="Theme value type">أخرى</string>
     <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">النص</string>
+    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">معاينو قيم الثيم</string>
     <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">يرجى ادخال اسم المظهر.</string>
+    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">الرجاء إدخال اسم مجموعة يحتوي فقط على أحرف (a-z و / أو A-Z) ، والنقطتان (:) للتجميع الفرعي أو بالإضافة إلى الأرقام (0–9) ، والمده (~) والتسطير (_) للمفتاح ضع الكلمة المناسبة.</string>
     <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">الرجاء إدخال اسم المجموعة.</string>
+    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">اسم هذه المجموعة موجود بالفعل في هذا الموضوع. الرجاء اختيار واحد آخر.</string>
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">الرجاء إدخال اسم الخاصية.</string>
     <string name="settings__theme__group_window" comment="Theme group label">النافذة والنظام</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">لوحة المفاتيح</string>
     <string name="settings__theme__group_key" comment="Theme group label">المفتاح</string>
+    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">المفتاح (%s)</string>
     <string name="settings__theme__group_media" comment="Theme group label">سياق الوسائط</string>
     <string name="settings__theme__group_oneHanded" comment="Theme group label">اليد الواحدة</string>
     <string name="settings__theme__group_popup" comment="Theme group label">نافذة منبثقة</string>
@@ -134,6 +142,9 @@
     <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">مفعّل (الأولوية للتلميح)</string>
     <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">مفعّل (الأولوية للحروف الإضافية)</string>
     <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">مفعّل (تحديد الأولويات الذكي)</string>
+    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">عرض مفتاح الادوات</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">عرض مفتاح الأدوات القابل لتخصيص بجوار شريط المسافة</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">وظيفة مفتاح الادوات</string>
     <string name="pref__keyboard__utility_key_action__switch_to_emojis" comment="Preference value">الإنتقال إلى الإيموجيز</string>
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">تغيير اللغة</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">تبديل تطبيق لوحة المفاتيح</string>
@@ -177,9 +188,7 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">الضغط مرتين على مفتاح المسافة يضيف نقطة متبوعة بمسافة</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">الإيماءات و الكتابة بالتمرير</string>
     <string name="pref__glide__title" comment="Preference group title">الكتابة بالتمرير</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] تفعيل الكتابة بالتمرير</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">أكتب كلمة بتمرير إصبعك عبر حروفها</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] إظهار آثار التمرير</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">سوف يختفي بعد كل كلمة</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">بدون إجراء</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">حذف الحروف بدقة</string>

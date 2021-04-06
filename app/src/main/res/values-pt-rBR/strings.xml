@@ -62,6 +62,15 @@
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Excluir</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Editar formato de digitação</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Idioma</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Layout de caracteres</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Layout primário de símbolos</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Layout secundário de símbolos</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Conjunto de moedas</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Layout numérico</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Layout numérico (avançado)</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Layout da linha de números</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Layout primário do telefone</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Layout secundário do telefone</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Este formato de digitação já existe!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tema do teclado</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Indefinido</string>
@@ -126,6 +135,7 @@
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Botão da barra inteligente</string>
     <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Layout do modo paisagem em tela cheia</string>
     <string name="settings__theme__group_extractActionButton" comment="Theme group label">Botão de ação do modo paisagem em tela cheia</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">Trilha de deslizamento</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Grupo personalizado (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Cor do plano de fundo</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Cor do plano de fundo (ativa)</string>
@@ -208,9 +218,9 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Tocar duas vezes na barra de espaço insere um ponto final seguido por um espaço</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gestos &amp; Digitação deslizante</string>
     <string name="pref__glide__title" comment="Preference group title">Digitação deslizante</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Ativar digitação deslizante</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Ativar digitação deslizante</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Digitar uma palavra deslizando o dedo através de suas letras</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Mostrar trilha de deslizamento</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Mostrar trilha de deslizamento</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Desaparecerá após cada palavra</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Gestos gerais</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestos da barra de espaço</string>
@@ -335,4 +345,7 @@
     <string name="clip__paste_item">Colar</string>
     <string name="clip__back_to_text_input">Voltar para a entrada de texto</string>
     <string name="clip__cant_paste">Este aplicativo não permite colar esse conteúdo.</string>
+    <string name="pref__glide_trail_fade_duration">Tempo de desaparecimento da trilha de deslizamento</string>
+    <string name="pref__glide_preview_refresh_delay">Atraso de atualização da pré-visualização</string>
+    <string name="pref__glide__show_preview">Mostrar pré-visualização durante a digitação deslizante</string>
 </resources>

@@ -95,9 +95,7 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Tast to gange på mellemrum for at indætte et punktum efterfulgt af mellemrum</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Bevægelser &amp; Strygeskrivning</string>
     <string name="pref__glide__title" comment="Preference group title">Strygeskrivning</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Aktivér strygeskrivning</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Skriv ord ved at stryge fingeren igennem bogstaver</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Vis glidespor</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Vil forsvinde efter hvert ord</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Ingen handling</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Slet tegn præcist</string>

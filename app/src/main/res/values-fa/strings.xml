@@ -208,9 +208,7 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">فشردن دو بار فاصله در فاصله زمانی باعث ادامه دادن فاصله گذاشتن شود</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">اشارات &amp; نوشتن گلایدی</string>
     <string name="pref__glide__title" comment="Preference group title">نوشتن گلایدی</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] فعال سازی نوشتن گلایدی</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">نوشتن حروف با حرکت مداوم و نگه داشتن روی حرف مورد نظر</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] نشان دادن دنباله سر خوردن</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">بعد از هر کلمه ناپدید خواهد شد</string>
     <string name="pref__gestures__general_title" comment="Preference group title">اشارات کلی</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">حرکات نوار فاصله</string>

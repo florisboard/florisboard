@@ -62,6 +62,15 @@
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Törlés</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Altípus szerkesztése</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Terület</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Karakterelrendezés</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Elsődleges szimbólumelrendezés</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Másodlagos szimbólumelrendezés</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Pénznem készlet</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Számelrendezés</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">(Haladó) számelrendezés</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Számsor elrendezés</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Elsődleges telefonelrendezés</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Másodlagos telefonelrendezés</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ez az altípus már létezik!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Billentyűzet téma</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nem meghatározott</string>
@@ -126,6 +135,7 @@
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Okossáv gomb</string>
     <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Teljes képernyős fekvő elrendezés</string>
     <string name="settings__theme__group_extractActionButton" comment="Theme group label">Teljes képernyős fekvő elrendezés gombja</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">Csúszási nyomvonal</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Egyéni csoport (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Háttérszín</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Háttérszín (aktív)</string>
@@ -208,9 +218,9 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Ha kétszer megérinti a szóközt, beszúr egy pontot, amelyet egy szóköz követ</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gesztusok és csúsztatott gépelés</string>
     <string name="pref__glide__title" comment="Preference group title">Csúsztatott gépelés</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Csúsztatott gépelés engedélyezése</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Csúsztatott gépelés engedélyezése</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Írjon be egy szót úgy, hogy ujját a betűin keresztülcsúsztatja</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Nyomvonal megjelenítése</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Nyomvonal megjelenítése</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Minden szó után eltűnik</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Általános gesztusok</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Szóköz gesztusok</string>
@@ -270,6 +280,10 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">Forráskód</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Nyílt forráskódú licencek</string>
     <!-- Assets strings -->
+    <plurals name="assets__file__authors">
+        <item quantity="one">Készítő</item>
+        <item quantity="other">Készítők</item>
+    </plurals>
     <string name="assets__file__name">Név</string>
     <string name="assets__file__source">Forrás</string>
     <string name="assets__action__add">Hozzáadás</string>
@@ -331,4 +345,7 @@
     <string name="clip__paste_item">Beillesztés</string>
     <string name="clip__back_to_text_input">Vissza a szöveges bevitelre</string>
     <string name="clip__cant_paste">Ez az alkalmazás nem engedélyezi beilleszteni ezt a tartalmat.</string>
+    <string name="pref__glide_trail_fade_duration">Nyomvonal elhalványulási ideje</string>
+    <string name="pref__glide_preview_refresh_delay">Frissítési késleltetés megtekintése</string>
+    <string name="pref__glide__show_preview">Előnézet megjelenítése csúsztatott gépelés közben</string>
 </resources>

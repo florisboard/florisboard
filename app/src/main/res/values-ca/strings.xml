@@ -154,6 +154,7 @@
     <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">Activat (priorització intel·ligent)</string>
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Mostra la clau d\'utilitat</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Mostra una clau d\'utilitat configurable al costat de la barra d\'espai</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Acció de la clau d\'utilitat</string>
     <string name="pref__keyboard__utility_key_action__switch_to_emojis" comment="Preference value">Canvia als emojis</string>
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Canviar l\'idioma</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Canviar l\'aplicació de teclat</string>
@@ -171,6 +172,13 @@
     <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Mostrar sempre</string>
     <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">Mostrar dinàmicament</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Alçada del teclat</string>
+    <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Extra-curt</string>
+    <string name="pref__keyboard__height_factor__short" comment="Preference value">Curt</string>
+    <string name="pref__keyboard__height_factor__mid_short" comment="Preference value">Mig-curt</string>
+    <string name="pref__keyboard__height_factor__normal" comment="Preference value">Normal</string>
+    <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">Mig-gran</string>
+    <string name="pref__keyboard__height_factor__tall" comment="Preference value">Gran</string>
+    <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Extra-gran</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Personalitzat</string>
     <string name="pref__correction__title" comment="Preference group title">Correccions</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Majúscules automàtiques</string>

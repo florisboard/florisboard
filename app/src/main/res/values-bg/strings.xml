@@ -62,6 +62,15 @@
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Изтриване</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Редактиране на подтип</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Език</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Клавиатурна подредба</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Символи, основен изглед</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Символи, вторичен изглед</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Валути</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Цифри</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Цифри (разширено)</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Ред с цифри</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Телефонни номера, първичен изглед</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Телефонни номера, вторичен изглед</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Този подтип вече съществува!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Тема на клавиатурата</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Недефинирано</string>
@@ -126,6 +135,7 @@
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Бутон за умна лента</string>
     <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Клавиатура на цял екран (пейзаж)</string>
     <string name="settings__theme__group_extractActionButton" comment="Theme group label">Бутон към клавиатура на цял екран (пейзаж)</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">Следи от плъзгане</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Персонализирана група (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Цвят на фон</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Цвят на фон (активен)</string>
@@ -208,9 +218,9 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Двукратното докосване на интервала вмъква точка, последвана от интервал</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Жестове и писане чрез плъзгане</string>
     <string name="pref__glide__title" comment="Preference group title">Писане чрез плъзгане</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Въвеждане чрез плъзгане</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Въвеждане чрез плъзгане</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Въвеждане на дума чрез плъзгане на пръст през буквите ѝ</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Показване на следа от плъзгане</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Показване на следи от плъзгане</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Ще изчезва след въведена дума</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Основни жестове</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Жестове с клавиша за интервал</string>
@@ -335,4 +345,7 @@
     <string name="clip__paste_item">Поставяне</string>
     <string name="clip__back_to_text_input">Към въвеждане на текст</string>
     <string name="clip__cant_paste">Приложението не поддържа поставяне на това съдържание.</string>
+    <string name="pref__glide_trail_fade_duration">Време на видимост на следите</string>
+    <string name="pref__glide_preview_refresh_delay">Време на видимост на следите</string>
+    <string name="pref__glide__show_preview">Преглед при въвеждане чрез плъзгане</string>
 </resources>

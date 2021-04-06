@@ -196,9 +196,7 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Twee keer tikken op spatiebalk voegt een punt toe gevolgd door een spatie</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gebaren &amp; Vegen</string>
     <string name="pref__glide__title" comment="Preference group title">Vegend typen</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Vegen inschakelen</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Typ een woord door je vinger over de letters te vegen</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Veegspoor tonen</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Verdwijnt na elk woord</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Algemene gebaren</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Spatiebalkgebaren</string>

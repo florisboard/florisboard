@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Παύση</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Αναμονή</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Εικονίδιο με τρεις τελείες. Εάν εμφανιστεί, υποδεικνύει πως περισσότερα γράμματα μπορούν να χρησιμοποιηθούν εάν πατηθεί παρατεταμένα.</string>
@@ -84,6 +85,8 @@
     <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Δημιουργία από επιλεγμένο θέμα</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Ειδικό (βασισμένο σε %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Νέο θέμα</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Το θέμα εισήχθη με επιτυχία!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Το θέμα εξήχθη με επιτυχία!</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Επεξεργασία θέματος</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Όνομα</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Τύπος</string>
@@ -91,6 +94,7 @@
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Επεξεργασία ομάδας</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Προσθήκη χαρακτηριστικού</string>
     <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Επεξεργασία χαρακτηριστικού</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Επεξεργασία ονόματος θέματος</string>
     <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Αναφορά</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Ομάδα</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Χαρακτηριστικό</string>
@@ -191,9 +195,7 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Πατώντας δύο φορές στο πλήκτρο διαστήματος εισάγει μία τελεία ακολουθούμενη από ένα κενό</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Κινήσεις &amp; Πληκτρολόγηση με ολίσθηση</string>
     <string name="pref__glide__title" comment="Preference group title">Πληκτρολόγηση με ολίσθηση</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Ενεργοποίηση πληκτρολόγησης με ολίσθηση</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Πληκτρολογήστε μία λέξη με ολίσθηση του δαχτύλου μέσα από τα γράμματά της</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Εμφάνιση διαδρομής ολίσθησης</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Θα εξαφανίζεται μετά από κάθε λέξη</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Καμία ενέργεια</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Διαγραφή χαρακτήρων με ακρίβεια</string>

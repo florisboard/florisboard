@@ -191,9 +191,7 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">לחיצה על מקש הרווח פעמים תכניס נקודה ואחריה רווח</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">מחוות &amp; הקלדה גולשת</string>
     <string name="pref__glide__title" comment="Preference group title">הקלדה גולשת</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] הפעל הקלדה גולשת</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">הקלד מילה באמצעות החלקה של האצבע בין האותיות</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] הצד את שביל הגלישה</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">יעלם אחרי כל מילה</string>
     <string name="pref__gestures__general_title" comment="Preference group title">מחוות כלליות</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">מחוות סרגל רווח</string>

@@ -62,6 +62,15 @@
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Eliminar</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Editar subtipo</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Localización</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Disposición de caracteres</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Disposición de símbolos primarios</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Disposición de símbolos secundarios</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Establecer moneda</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Disposición numérica</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Disposición numérica (avanzada)</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Disposición de la fila de números</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Disposición primaria del teléfono</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Disposición secundaria del teléfono</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">¡Este subtipo ya existe!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tema de teclado</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Sin definir</string>
@@ -193,6 +202,8 @@
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Visibilidad de las teclas emergentes</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Ampliar al pulsar una tecla</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Retardo de la pulsación larga</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra de espacio cambia a la disposición de los caracteres</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Al pulsar la barra de espacio, se vuelve automáticamente a los caracteres cuando se trata de símbolos o números</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Experiencia de escritura</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Habilitar barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Se mostrará en la parte superior del teclado</string>
@@ -206,9 +217,7 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Al presionar dos veces en la barra espaciadora se inserta un punto seguido de un espacio</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gestos &amp; escritura deslizante</string>
     <string name="pref__glide__title" comment="Preference group title">Escritura deslizante</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Habilitar escritura deslizante</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Escriba una palabra deslizando su dedo a través de las letras</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Mostrar recorrido del deslizamiento</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Desaparecerá después de cada palabra</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Gestos generales</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestos en la barra espaciadora</string>

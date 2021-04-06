@@ -62,6 +62,15 @@
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Elimina</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Modifica stile di input</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Localizzazione</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Disposizione caratteri</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Disposizione principale simboli</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Disposizione secondaria simboli</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Imposta valuta</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Disposizione numeri</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Disposizione numeri (avanzata)</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Disposizione riga dei numeri</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Disposizione principale telefono</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Disposizione secondaria telefono</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Questo stile di input esiste già !</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tema tastiera</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Sconosciuto</string>
@@ -76,7 +85,7 @@
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tema notte</string>
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Tema selezionato</string>
     <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Adatta i colori all\'app</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">I colori del tema seguono quelli dell\'app, se lo sopporta.</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">I colori del tema seguono quelli dell\'app, se lo supporta.</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Risorse dell\'app FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Memoria interna</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Provider esterno</string>
@@ -126,6 +135,7 @@
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Pulsante smartbar</string>
     <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Layout a schermo intero orizzontale</string>
     <string name="settings__theme__group_extractActionButton" comment="Theme group label">Pulsante d\'azione a schermo intero orizzontale</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">Percorso di scorrimento</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Gruppo personalizzato (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Colore di sfondo</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Colore di sfondo (attivo)</string>
@@ -183,8 +193,8 @@
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Valore Altezza tastiera personalizzata</string>
     <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Distanza inferiore (verticale)</string>
     <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Distanza inferiore (orizzontale)</string>
-    <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Spazio fra i pulsanti (verticale)</string>
-    <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Spazio fra i pulsanti (orizzontale)</string>
+    <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Spazio tra i pulsanti (verticale)</string>
+    <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Spazio tra i pulsanti (orizzontale)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressione tasti</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Suono pressione tasti</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volume del suono alla pressione dei tasti</string>
@@ -208,9 +218,9 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Doppio tocco su barra spaziatrice per mettere il punto (.) seguito da uno spazio</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gesti &amp; Digitazione a scorrimento</string>
     <string name="pref__glide__title" comment="Preference group title">Scrittura con swype</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Abilità scrittura con swype</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Attiva digitazione a scorrimento</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Scrivi una parola facendo scivolare il dito sulle lettere che la compongono</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Mostra scia dello swype</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Mostra il percorso di scorrimento</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Scomparirà dopo ogni parola</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Gesti generali</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gesti della barra di spazio</string>
@@ -335,4 +345,7 @@
     <string name="clip__paste_item">Incolla</string>
     <string name="clip__back_to_text_input">Torna all\'immissione di testo</string>
     <string name="clip__cant_paste">Questa app non permette di incollare questo contenuto.</string>
+    <string name="pref__glide_trail_fade_duration">Tempo di dissolvenza del percorso di scorrimento</string>
+    <string name="pref__glide_preview_refresh_delay">Ritardo di aggiornamento dell\'anteprima</string>
+    <string name="pref__glide__show_preview">Mostra l\'anteprima durante la digitazione a scorrimento</string>
 </resources>

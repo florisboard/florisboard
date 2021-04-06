@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">일시 정지</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">기다리기</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">3점 아이콘. 보이는 경우 길게 눌러서 더 많은 문자를 사용 할 수 있음을 나타냅니다.</string>
     <!-- One-handed strings -->
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">한 손 조작 모드 닫기.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">키보드를 왼쪽으로 이동</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">키보드를 오른쪽으로 이동</string>
     <!-- Private mode info dialog strings -->
-    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">사생활 모드</string>
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">사생활 보호 모드</string>
     <!--
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
@@ -29,6 +31,7 @@
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">텍스트 수정판 나가기.</string>
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">설정 열기</string>
     <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">설정</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">홈</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">키보드</string>
     <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">테마</string>
@@ -40,9 +43,20 @@
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">삭제</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">하위 유형 편집</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">언어</string>
+    <string name="settings__theme_editor__name_label" comment="Label of name input">이름</string>
+    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">그룹 편집</string>
+    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">속성 추가</string>
+    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">속성 편집</string>
     <!-- About UI strings -->
     <!-- Assets strings -->
+    <string name="assets__action__yes">예</string>
+    <string name="assets__error__details">세부사항</string>
+    <string name="assets__error__invalid">유효하지 않음</string>
     <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">설정</string>
+    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">이전</string>
+    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">취소</string>
+    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">다음</string>
     <!-- Crash Dialog strings -->
     <!-- clipboard strings -->
 </resources>

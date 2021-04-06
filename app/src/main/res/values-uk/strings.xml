@@ -62,6 +62,15 @@
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Видалити</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Редагувати підтип</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Локалізація</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Символьні розкладки</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Основна символьна розкладка</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Додаткова символьна розкладка</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Налаштування валют</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Цифрова розкладка</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Цифрова (розширена) розкладка</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Налаштування рядка з цифрами</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Основна телефонна розкладка</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Додаткова телефонна розкладка</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Цей підтип вже існує!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Тема клавіатури</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Не визначено</string>
@@ -126,6 +135,7 @@
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Кнопка розумної панелі</string>
     <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Клавіатура на цілий екран (пейзаж)</string>
     <string name="settings__theme__group_extractActionButton" comment="Theme group label">Кнопка дії клавіатури на цілий екран (пейзаж)</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">Безперервний слід</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Користувацька група (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Колір фону</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Колір фону (активний)</string>
@@ -193,6 +203,8 @@
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Видимість спливаючої підказки</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Показувати спливаючу підказку при натисканні клавіші</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Затримка при натисканні</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Пробіл перемикає назад в буквенну розкладку</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Натискання пробіл автоматичну перемикає на буквенну розкладку коли знаходиться в символьні або цифровій</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Налаштування вводу тексту</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Увімкнути Розумну панель</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Буде показано над клавіатурою</string>
@@ -206,9 +218,9 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Двічі натиснувши на пробіл, вставляється крапка, за якою йде пробіл</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Жести та безперервний ввід</string>
     <string name="pref__glide__title" comment="Preference group title">Безперервний ввід</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">[NYI] Увімкнути безперервний ввід</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Увімкнути безперервний ввід</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Введіть слово, провівши пальцем по буквах</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">[NYI] Показати безперервний слід</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Показувати безперервний слід</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Зникає після кожного слова</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Загальні жести</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Жести пробілу</string>
@@ -326,4 +338,16 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Здається, FlorisBoard постійно перестає працювати…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Повернення до попередньої клавіатури, щоб зупинити нескінченний цикл збою. Натисніть, щоб переглянути деталі про помилку</string>
     <!-- clipboard strings -->
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Перейти до історії буферу обміну</string>
+    <string name="clip__context_header">Історія буфера обміну</string>
+    <string name="clip__clear_history">Очистити історію</string>
+    <string name="clip__unpin_item">Відкріпити</string>
+    <string name="clip__pin_item">Закріпити</string>
+    <string name="clip__delete_item">Видалити</string>
+    <string name="clip__paste_item">Вставити</string>
+    <string name="clip__back_to_text_input">Повернутися до вводу тексту</string>
+    <string name="clip__cant_paste">Цей додаток не дозволяє вставляти такі дані.</string>
+    <string name="pref__glide_trail_fade_duration">Час зникання безперервного сліду</string>
+    <string name="pref__glide_preview_refresh_delay">Затримка оновлення попереднього перегляду</string>
+    <string name="pref__glide__show_preview">Попередній перегляд під час безперервного вводу</string>
 </resources>
