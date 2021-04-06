@@ -1,0 +1,8 @@
+- Add gesture/glide/swipe typing (#139, big thanks to @X-yl)
+- Add IPA keyboard (thanks @Huy-Ngo)
+- Add further Kurdish layouts (thanks @kurdikeyboard)
+- Add German äöüß layout (thanks @Mahmoudk1000)
+- Fix number row not showing in characters layout (#563)
+- Other bug fixes and small improvements
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.10-beta06
