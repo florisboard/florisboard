@@ -1,17 +1,12 @@
 {
   "type": "characters/extended_popups",
-  "name": "ru",
+  "name": "uk",
   "authors": [ "williamtheaker", "33kk" ],
   "mapping": {
     "all": {
-      "е": {
+      "і": {
         "relevant": [
-          { "code":  1105, "label": "ё" }
-        ]
-      },
-      "ь": {
-        "relevant": [
-          { "code":  1098, "label": "ъ" }
+          { "code":  1111, "label": "ї" }
         ]
       },
       "~right": {
@@ -39,7 +34,7 @@
       "~right": {
         "main": { "code": -255, "label": ".com" },
         "relevant": [
-          { "code": -255, "label": ".ru" },
+          { "code": -255, "label": ".ua" },
           { "code": -255, "label": ".edu" },
           { "code": -255, "label": ".org" },
           { "code": -255, "label": ".net" }

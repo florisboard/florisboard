@@ -490,6 +490,14 @@
       }
     },
     {
+      "id": 1351,
+      "languageTag": "uk",
+      "currencySet": "ukrainian_hryvnia",
+      "preferred": {
+        "characters": "jcuken_ukrainian"
+      }
+    },
+    {
       "id": 1401,
       "languageTag": "el",
       "currencySet": "euro",
