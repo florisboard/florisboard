@@ -2,7 +2,7 @@ name: FlorisBoard CI
 
 on:
   push:
-    branches: [master]
+    branches: [master, gesture-typing]
   pull_request:
     branches: [master]
 
