@@ -29,6 +29,12 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
     val ready: Boolean
         get() = currentSubtype == layoutSubtype && wordDataSubtype == layoutSubtype && wordDataSubtype != null
 
+    /**
+     * The minimum distance between points to be added to a gesture.
+     */
+    private var distanceThresholdSquared = 0
+
+
     companion object {
         /**
          * Describes the allowed length variance in a gesture. If a gesture is too long or too short, it is immediately
@@ -40,11 +46,6 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
          * describes the number of points to sample a gesture at, i.e the resolution.
          */
         private const val SAMPLING_POINTS: Int = 200
-
-        /**
-         * The minimum distance between points to be added to a gesture.
-         */
-        private const val MIN_DIST_TO_ADD = 1000
 
         /**
          * Standard deviation of the distribution of distances between the shapes of two gestures
@@ -77,7 +78,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             val dx = gesture.getLastX() - position.x
             val dy = gesture.getLastY() - position.y
 
-            if (dx * dx + dy * dy > MIN_DIST_TO_ADD) {
+            if (dx * dx + dy * dy > distanceThresholdSquared) {
                 gesture.addPoint(position.x, position.y)
             }
         } else {
@@ -98,6 +99,8 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             this.keys.add(it)
         }
         layoutSubtype = subtype
+        distanceThresholdSquared = (keyViews.first().width / 4)
+        distanceThresholdSquared *= distanceThresholdSquared
         initializePruner()
     }
 
