@@ -4,6 +4,7 @@
   "label": "Neo2",
   "authors": [ "ostrya" ],
   "direction": "ltr",
+  "modifier": "neo2",
   "arrangement": [
     [
       { "code": 8230, "label": "…" },

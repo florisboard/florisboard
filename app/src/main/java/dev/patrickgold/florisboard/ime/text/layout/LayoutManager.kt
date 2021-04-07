@@ -151,7 +151,18 @@ class LayoutManager {
 
         val mainLayout = loadLayoutAsync(main).await().getOrNull()
         val modifierToLoad = if (mainLayout?.modifier != null) {
-            LTN(LayoutType.CHARACTERS_MOD, mainLayout.modifier)
+            val layoutType = when (mainLayout.type) {
+                LayoutType.SYMBOLS -> {
+                    LayoutType.SYMBOLS_MOD
+                }
+                LayoutType.SYMBOLS2 -> {
+                    LayoutType.SYMBOLS2_MOD
+                }
+                else -> {
+                    LayoutType.CHARACTERS_MOD
+                }
+            }
+            LTN(layoutType, mainLayout.modifier)
         } else {
             modifier
         }
