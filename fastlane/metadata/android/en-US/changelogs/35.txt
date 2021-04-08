@@ -1,0 +1,11 @@
+- Add glide/gesture typing
+- Add rtl-optimized symbol layouts
+- Add ability to choose currency symbol set
+- Add clipboard manager/history
+- Add several new layouts and improve existing ones
+- Improve suggestions frontend (candidate view now supports different view modes)
+- Fix a lot of bugs and crashes
+
+Note that this release does a one-time reset of your subtypes, this is because the internal structure has changed.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.10
