@@ -49,7 +49,11 @@ class AdaptiveThemeOverlay(
                 }
                 Attr.KEY_FOREGROUND,
                 Attr.SMARTBAR_BUTTON_FOREGROUND -> {
-                    themeManager.remoteColorPrimary?.complimentaryTextColor() ?: super.getAttr(ref, s1, s2)
+                    if (s1 == "shift" && s2 == "capslock") {
+                        themeManager.remoteColorSecondary ?: super.getAttr(ref, s1, s2)
+                    } else {
+                        themeManager.remoteColorPrimary?.complimentaryTextColor() ?: super.getAttr(ref, s1, s2)
+                    }
                 }
                 Attr.KEY_SHOW_BORDER -> {
                     if (themeManager.remoteColorPrimary != null) {
@@ -65,7 +69,8 @@ class AdaptiveThemeOverlay(
                         super.getAttr(ref, s1, s2)
                     }
                 }
-                Attr.POPUP_BACKGROUND -> {
+                Attr.POPUP_BACKGROUND,
+                Attr.GLIDE_TRAIL_COLOR -> {
                     themeManager.remoteColorSecondary ?: super.getAttr(ref, s1, s2)
                 }
                 Attr.POPUP_BACKGROUND_ACTIVE -> {
