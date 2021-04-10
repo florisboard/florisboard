@@ -43,6 +43,7 @@ import dev.patrickgold.florisboard.ime.text.layout.ComputedLayout
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
+import timber.log.Timber
 import kotlin.math.max
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
@@ -75,11 +76,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val themeManager: ThemeManager = ThemeManager.default()
     private val swipeGestureDetector = SwipeGesture.Detector(context, this)
-    private val gestureDetector = GlideTypingGesture.Detector(context).let {
-        it.registerListener(this)
-        it.registerListener(GlideTypingManager.getInstance())
-        it
-    }
+    private lateinit var gestureDetector: GlideTypingGesture.Detector
     private val gestureDataForDrawing: MutableList<GlideTypingGesture.Detector.Position> = mutableListOf()
     private val fadingGesture: MutableList<GlideTypingGesture.Detector.Position> = mutableListOf()
     private var fadingGestureRadius: Float = 0f
@@ -146,7 +143,6 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             val keys = children.map { (it as FlexboxLayout).children }.flatten().map { it as KeyView }
             GlideTypingManager.getInstance().setLayout(keys, dimensions)
         }
-
     }
 
     /**
@@ -176,14 +172,17 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     }
 
     override fun onWindowShown() {
+        if (prefs.glide.enabled && !isPreviewMode && !isSmartbarKeyboardView) {
+            this.gestureDetector = GlideTypingGesture.Detector(context).let {
+                it.registerListener(this)
+                it.registerListener(GlideTypingManager.getInstance())
+                it.velocityThreshold = prefs.gestures.swipeVelocityThreshold
+                it
+            }
+        }
         swipeGestureDetector.apply {
             distanceThreshold = prefs.gestures.swipeDistanceThreshold
             velocityThreshold = prefs.gestures.swipeVelocityThreshold
-        }
-        if (prefs.glide.enabled) {
-            gestureDetector.apply {
-                velocityThreshold = prefs.gestures.swipeVelocityThreshold
-            }
         }
         for (row in children) {
             if (row is ViewGroup) {
