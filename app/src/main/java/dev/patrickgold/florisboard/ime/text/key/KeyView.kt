@@ -355,6 +355,7 @@ class KeyView(
                 longKeyPressHandler.cancelAll()
                 if (hasTriggeredGestureMove && data.code == KeyCode.DELETE) {
                     florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(data))
+                    florisboard.textInputManager.isGlidePostEffect = false
                     florisboard.activeEditorInstance.apply {
                         if (selection.isSelectionMode) {
                             deleteBackwards()
