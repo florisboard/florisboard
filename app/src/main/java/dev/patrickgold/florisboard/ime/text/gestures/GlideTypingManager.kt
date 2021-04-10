@@ -145,8 +145,7 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
 
             withContext(Dispatchers.Main) {
                 val textInputManager = TextInputManager.getInstance()
-                textInputManager.glideSuggestionsActive = true
-                textInputManager.hackyGlideSuggestionSkip = false
+                textInputManager.isGlidePostEffect = true
                 textInputManager.smartbarView?.setCandidateSuggestionWords(
                     System.nanoTime(),
                     suggestions.take(maxSuggestionsToShow).map { textInputManager.fixCase(it) }

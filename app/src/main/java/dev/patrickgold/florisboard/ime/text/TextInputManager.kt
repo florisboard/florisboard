@@ -59,7 +59,7 @@ import kotlin.math.roundToLong
 class TextInputManager private constructor() : CoroutineScope by MainScope(), InputKeyEventReceiver,
     FlorisBoard.EventListener, SmartbarView.EventListener {
 
-    var glideSuggestionsActive: Boolean = false
+    var isGlidePostEffect: Boolean = false
     private val florisboard = FlorisBoard.getInstance()
     private val activeEditorInstance: EditorInstance
         get() = florisboard.activeEditorInstance
@@ -275,6 +275,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         if (!florisboard.prefs.correction.rememberCapsLockState) {
             capsLock = false
         }
+        isGlidePostEffect = false
         updateCapsState()
         setActiveKeyboardMode(keyboardMode)
         smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
@@ -317,6 +318,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         isManualSelectionMode = false
         isManualSelectionModeStart = false
         isManualSelectionModeEnd = false
+        isGlidePostEffect = false
         smartbarView?.isQuickActionsVisible = false
         smartbarView?.updateSmartbarState()
     }
@@ -348,8 +350,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             }
         }
     }
-    // this is so unfortunate... but we need to skip clearing the suggestion only one time.
-    var hackyGlideSuggestionSkip = false
 
     /**
      * Main logic point for processing cursor updates as well as parsing the current composing word
@@ -386,17 +386,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     }
                 }
             } else {
-                if (glideSuggestionsActive){
-                    if (hackyGlideSuggestionSkip) {
-                        smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
-                        hackyGlideSuggestionSkip = false
-                        glideSuggestionsActive = false
-                    }else {
-                        hackyGlideSuggestionSkip = true
-                    }
-                }else {
-                    smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
-                }
+                smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
             }
         }
     }
@@ -448,17 +438,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onSmartbarCandidatePressed(word: String) {
-        if (glideSuggestionsActive) {
-            activeEditorInstance.commitGestureCorrection(word)
-            glideSuggestionsActive = false
-            hackyGlideSuggestionSkip = false
-            smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
-        }else {
-            activeEditorInstance.commitCompletion(word)
-        }
+        isGlidePostEffect = false
+        activeEditorInstance.commitCompletion(word)
     }
 
     override fun onSmartbarClipboardCandidatePressed(clipboardItem: ClipboardItem) {
+        isGlidePostEffect = false
         activeEditorInstance.commitClipboardItem(clipboardItem)
     }
 
@@ -495,12 +480,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Handles a [KeyCode.DELETE] event.
      */
     private fun handleDelete() {
-        if (glideSuggestionsActive){
+        if (isGlidePostEffect){
             handleDeleteWord()
-            glideSuggestionsActive = false
-            hackyGlideSuggestionSkip = false
-            this.smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
-        }else {
+            isGlidePostEffect = false
+            smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+        } else {
             isManualSelectionMode = false
             isManualSelectionModeStart = false
             isManualSelectionModeEnd = false
@@ -618,6 +602,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 }
             }
         }
+        isGlidePostEffect = false
         activeEditorInstance.commitText(KeyCode.SPACE.toChar().toString())
     }
 
@@ -779,12 +764,18 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         KeyType.CHARACTER,
                         KeyType.NUMERIC -> {
                             val text = data.code.toChar().toString()
+                            if (isGlidePostEffect && CachedInput.isWordComponent(text)) {
+                                activeEditorInstance.commitText(" ")
+                            }
                             activeEditorInstance.commitText(text)
                         }
                         else -> when (data.code) {
                             KeyCode.PHONE_PAUSE,
                             KeyCode.PHONE_WAIT -> {
                                 val text = data.code.toChar().toString()
+                                if (isGlidePostEffect && CachedInput.isWordComponent(text)) {
+                                    activeEditorInstance.commitText(" ")
+                                }
                                 activeEditorInstance.commitText(text)
                             }
                         }
@@ -802,6 +793,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                                     true -> text.toUpperCase(locale)
                                     false -> text
                                 }
+                                if (isGlidePostEffect && CachedInput.isWordComponent(text)) {
+                                    activeEditorInstance.commitText(" ")
+                                }
                                 activeEditorInstance.commitText(text)
                             }
                         }
@@ -815,6 +809,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         if (data.code != KeyCode.SHIFT && !capsLock && !inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
             updateCapsState()
         }
+        isGlidePostEffect = false
         smartbarView?.updateSmartbarState()
     }
 

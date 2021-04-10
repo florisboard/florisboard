@@ -224,27 +224,6 @@ class EditorInstance private constructor(
                 ic.commitText(" ", 1)
             }
             ic.commitText(text, 1)
-            isPhantomSpaceActive = true
-            wasPhantomSpaceActiveLastUpdate = false
-            ic.endBatchEdit()
-            true
-        }
-    }
-
-    /**
-     * Replaces the previous word with the given [text]. Used to correct gestures.
-     */
-    fun commitGestureCorrection(text: String): Boolean {
-        val ic = inputConnection ?: return false
-        return if (isRawInputEditor) {
-            false
-        } else {
-            ic.beginBatchEdit()
-            markComposingRegion(Region(this, cachedInput.getWordForIndex(-1).start, cachedInput.getWordForIndex(-1).end))
-            ic.commitText(text, 1)
-            markComposingRegion(null)
-            isPhantomSpaceActive = true
-            wasPhantomSpaceActiveLastUpdate = false
             ic.endBatchEdit()
             true
         }
