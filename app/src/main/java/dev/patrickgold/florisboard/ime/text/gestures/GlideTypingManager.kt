@@ -141,13 +141,14 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
 
         launch(Dispatchers.Default) {
             // To avoid cache misses when maxSuggestions goes from 5 to 1.
+            val time = System.nanoTime()
             val suggestions = glideTypingClassifier.getSuggestions(MAX_SUGGESTION_COUNT, true)
 
             withContext(Dispatchers.Main) {
                 val textInputManager = TextInputManager.getInstance()
                 textInputManager.isGlidePostEffect = true
                 textInputManager.smartbarView?.setCandidateSuggestionWords(
-                    System.nanoTime(),
+                    time,
                     suggestions.take(maxSuggestionsToShow).map { textInputManager.fixCase(it) }
                 )
                 textInputManager.smartbarView?.updateCandidateSuggestionCapsState()
