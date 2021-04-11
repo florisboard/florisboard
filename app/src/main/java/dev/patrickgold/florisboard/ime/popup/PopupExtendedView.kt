@@ -82,6 +82,7 @@ class PopupExtendedView : View, ThemeManager.OnThemeUpdatedListener {
     )
 
     init {
+        layoutDirection = LAYOUT_DIRECTION_LTR
         visibility = GONE
         background = backgroundDrawable
         elevation = ViewLayoutUtils.convertDpToPixel(4.0f, context)

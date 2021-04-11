@@ -41,6 +41,7 @@ class PopupLayerView : FrameLayout {
         background = null
         isClickable = false
         isFocusable = false
+        layoutDirection = LAYOUT_DIRECTION_LTR
         layoutParams = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
         )
