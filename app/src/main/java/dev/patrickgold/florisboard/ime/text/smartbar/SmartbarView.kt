@@ -243,10 +243,10 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                     else -> when (isQuickActionsVisible) {
                         true -> R.id.quick_actions
                         else -> when (florisboard.textInputManager.getActiveKeyboardMode()) {
-                            KeyboardMode.EDITING,
+                            KeyboardMode.EDITING -> null
                             KeyboardMode.NUMERIC,
                             KeyboardMode.PHONE,
-                            KeyboardMode.PHONE2 -> null
+                            KeyboardMode.PHONE2 -> R.id.clipboard_cursor_row
                             else -> when {
                                 florisboard.activeEditorInstance.isComposingEnabled &&
                                         florisboard.activeEditorInstance.selection.isCursorMode
