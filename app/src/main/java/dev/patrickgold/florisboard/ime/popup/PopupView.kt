@@ -71,6 +71,7 @@ class PopupView : View, ThemeManager.OnThemeUpdatedListener {
     )
 
     init {
+        layoutDirection = LAYOUT_DIRECTION_LOCALE
         visibility = GONE
         background = backgroundDrawable
     }
@@ -164,12 +165,21 @@ class PopupView : View, ThemeManager.OnThemeUpdatedListener {
         if (drawable != null && properties.shouldIndicateExtendedPopups) {
             val marginTop = measuredHeight * properties.innerLabelFactor
             val drawableSize = marginTop * 0.25f
-            drawable.setBounds(
-                (measuredWidth * 0.95f - drawableSize).toInt(),
-                marginTop.toInt(),
-                (measuredWidth * 0.95f).toInt(),
-                (marginTop + drawableSize).toInt()
-            )
+            if (layoutDirection == LAYOUT_DIRECTION_RTL) {
+                drawable.setBounds(
+                    (measuredWidth * 0.10f).toInt(),
+                    marginTop.toInt(),
+                    (measuredWidth * 0.10f + drawableSize).toInt(),
+                    (marginTop + drawableSize).toInt()
+                )
+            } else {
+                drawable.setBounds(
+                    (measuredWidth * 0.95f - drawableSize).toInt(),
+                    marginTop.toInt(),
+                    (measuredWidth * 0.95f).toInt(),
+                    (marginTop + drawableSize).toInt()
+                )
+            }
             drawable.draw(canvas)
         }
     }
