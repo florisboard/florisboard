@@ -28,6 +28,7 @@ import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.dictionary.Dictionary
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.nlp.Token
@@ -41,6 +42,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import kotlinx.coroutines.*
+import org.json.JSONArray
 import timber.log.Timber
 import java.util.*
 import kotlin.math.roundToLong
@@ -61,6 +63,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     var isGlidePostEffect: Boolean = false
     private val florisboard = FlorisBoard.getInstance()
+    val symbolsWithSpaceAfter: List<String>
     private val activeEditorInstance: EditorInstance
         get() = florisboard.activeEditorInstance
 
@@ -116,6 +119,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     init {
         florisboard.addEventListener(this)
+        val data =
+            AssetManager.default().loadAssetRaw(AssetRef(AssetSource.Assets, "ime/text/symbols-with-space.json")).getOrThrow()
+        val json = JSONArray(data)
+        this.symbolsWithSpaceAfter = List(json.length()){ json.getString(it) }
     }
 
     /**
