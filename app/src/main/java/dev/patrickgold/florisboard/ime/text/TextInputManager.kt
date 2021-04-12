@@ -436,6 +436,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             SwipeAction.SHOW_INPUT_METHOD_PICKER -> KeyData.SHOW_INPUT_METHOD_PICKER
             else -> null
         }
+        Timber.i("§")
         if (keyData != null) {
             inputEventDispatcher.send(InputKeyEvent.downUp(keyData))
         }

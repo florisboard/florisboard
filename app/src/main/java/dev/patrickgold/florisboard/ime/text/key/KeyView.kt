@@ -442,16 +442,6 @@ class KeyView(
             }
             KeyCode.SPACE -> when (event.type) {
                 SwipeGesture.Type.TOUCH_MOVE -> when (event.direction) {
-                    SwipeGesture.Direction.UP -> {
-                        if (event.absUnitCountY.times(-1) >= 6) {
-                            florisboard.executeSwipeAction(prefs.gestures.spaceBarSwipeUp)
-                            hasTriggeredGestureMove = true
-                            shouldBlockNextKeyCode = true
-                            true
-                        } else {
-                            false
-                        }
-                    }
                     SwipeGesture.Direction.LEFT -> {
                         if (prefs.gestures.spaceBarSwipeLeft == SwipeAction.MOVE_CURSOR_LEFT) {
                             abs(event.relUnitCountX).let {

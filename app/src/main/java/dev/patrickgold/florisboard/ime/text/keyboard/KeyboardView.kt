@@ -348,6 +348,11 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
                 }
                 true
             }
+            initialKeyCodes[event.pointerId] == KeyCode.SPACE && event.type == SwipeGesture.Type.TOUCH_UP
+                && event.absUnitCountY.times(-1) > 6 -> {
+                florisboard?.executeSwipeAction(prefs.gestures.spaceBarSwipeUp)
+                true
+            }
             initialKeyCodes[event.pointerId] ?: 0 > KeyCode.SPACE &&
                 activeKeyViews[event.pointerId]?.popupManager?.isShowingExtendedPopup == false -> when {
                 !prefs.glide.enabled -> when (event.type) {
