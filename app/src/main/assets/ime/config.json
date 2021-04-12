@@ -589,6 +589,22 @@
         "symbols": "ipa",
         "symbols2": "ipa"
       }
+    },
+    {
+      "id": 2701,
+      "languageTag": "sk",
+      "currencySet": "euro",
+      "preferred": {
+        "characters": "qwertz"
+      }
+    },
+    {
+      "id": 2801,
+      "languageTag": "cs",
+      "currencySet": "euro",
+      "preferred": {
+        "characters": "qwertz"
+      }
     }
   ]
 }
