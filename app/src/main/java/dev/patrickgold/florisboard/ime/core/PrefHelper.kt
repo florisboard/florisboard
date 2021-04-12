@@ -277,6 +277,7 @@ class PrefHelper(
             const val TRAIL_DURATION =              "glide__trail_fade_duration"
             const val SHOW_PREVIEW =                "glide__show_preview"
             const val PREVIEW_REFRESH_DELAY =       "glide__preview_refresh_delay"
+            const val MAX_TRAIL_LENGTH  =           "glide__trail_max_length"
         }
 
         var enabled: Boolean
@@ -294,6 +295,9 @@ class PrefHelper(
         var previewRefreshDelay: Int
             get() = prefHelper.getPref(PREVIEW_REFRESH_DELAY, 150)
             set(v) = prefHelper.setPref(PREVIEW_REFRESH_DELAY, v)
+        var trailMaxLength: Int
+            get() = prefHelper.getPref(MAX_TRAIL_LENGTH, 150)
+            set(v) = prefHelper.setPref(MAX_TRAIL_LENGTH, v)
     }
 
     /**

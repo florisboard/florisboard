@@ -390,4 +390,5 @@
     <string name="pref__glide_trail_fade_duration">Glide trail fade time</string>
     <string name="pref__glide_preview_refresh_delay">Preview refresh delay</string>
     <string name="pref__glide__show_preview">Show preview while glide typing</string>
+    <string name="pref__glide_trail_max_length">Maximum glide trail length</string>
 </resources>
