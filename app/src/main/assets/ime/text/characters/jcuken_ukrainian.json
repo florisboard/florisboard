@@ -1,8 +1,8 @@
 {
   "type": "characters",
-  "name": "jcuken_russian",
-  "label": "Russian (JCUKEN)",
-  "authors": [ "williamtheaker" ],
+  "name": "jcuken_ukrainian",
+  "label": "Ukrainian (JCUKEN)",
+  "authors": [ "williamtheaker", "33kk" ],
   "direction": "ltr",
   "arrangement": [
     [
@@ -20,7 +20,7 @@
     ],
     [
       { "code": 1092 , "label": "ф" },
-      { "code": 1099 , "label": "ы" },
+      { "code": 1110 , "label": "і" },
       { "code": 1074 , "label": "в" },
       { "code": 1072 , "label": "а" },
       { "code": 1087 , "label": "п" },
@@ -29,7 +29,7 @@
       { "code": 1083 , "label": "л" },
       { "code": 1076 , "label": "д" },
       { "code": 1078 , "label": "ж" },
-      { "code": 1101 , "label": "э" }
+      { "code": 1108 , "label": "є" }
     ],
     [
       { "code": 1103 , "label": "я" },
