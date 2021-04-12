@@ -581,6 +581,14 @@
         "symbols": "ipa",
         "symbols2": "ipa"
       }
+    },
+    {
+      "id": 2602,
+      "languageTag": "ca",
+      "currencySet": "euro",
+      "preferred": {
+        "characters": "catalan"
+      }
     }
   ]
 }
