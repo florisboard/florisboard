@@ -148,6 +148,13 @@ open class KeyData(
             label = "move_end_of_page"
         )
 
+        /** Predefined key data for [KeyCode.REDO] */
+        val REDO = KeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.REDO,
+            label = "redo"
+        )
+
         /** Predefined key data for [KeyCode.SHOW_INPUT_METHOD_PICKER] */
         val SHOW_INPUT_METHOD_PICKER = KeyData(
             type = KeyType.FUNCTION,
@@ -189,6 +196,13 @@ open class KeyData(
             label = "space"
         )
 
+        /** Predefined key data for [KeyCode.UNDO] */
+        val UNDO = KeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.UNDO,
+            label = "undo"
+        )
+
         /** Predefined key data for [KeyCode.UNSPECIFIED] */
         val UNSPECIFIED = KeyData(
             type = KeyType.UNSPECIFIED,
@@ -201,6 +215,27 @@ open class KeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.VIEW_CHARACTERS,
             label = "view_characters"
+        )
+
+        /** Predefined key data for [KeyCode.VIEW_SYMBOLS] */
+        val VIEW_SYMBOLS = KeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.VIEW_SYMBOLS,
+            label = "view_symbols"
+        )
+
+        /** Predefined key data for [KeyCode.VIEW_SYMBOLS2] */
+        val VIEW_SYMBOLS2 = KeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.VIEW_SYMBOLS2,
+            label = "view_symbols2"
+        )
+
+        /** Predefined key data for [KeyCode.VIEW_NUMERIC_ADVANCED] */
+        val VIEW_NUMERIC_ADVANCED = KeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.VIEW_NUMERIC_ADVANCED,
+            label = "view_numeric_advanced"
         )
     }
 
