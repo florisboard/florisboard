@@ -68,18 +68,20 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
         })
     }
 
+    private val wordDataCache = hashMapOf<String, Int>()
     /**
      * Set the word data for the internal gesture classifier
      */
     fun setWordData(subtype: Subtype) {
         launch(Dispatchers.Default) {
-            // FIXME: get this info from dictionary.
-            val data =
-                AssetManager.default().loadAssetRaw(AssetRef(AssetSource.Assets, "ime/dict/data.json")).getOrThrow()
-            val json = JSONObject(data)
-            val map = hashMapOf<String, Int>()
-            map.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
-            glideTypingClassifier.setWordData(map, subtype)
+            if (wordDataCache.isEmpty()) {
+                // FIXME: get this info from dictionary.
+                val data =
+                    AssetManager.default().loadAssetRaw(AssetRef(AssetSource.Assets, "ime/dict/data.json")).getOrThrow()
+                val json = JSONObject(data)
+                wordDataCache.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
+            }
+            glideTypingClassifier.setWordData(wordDataCache, subtype)
         }
     }
 
