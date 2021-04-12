@@ -5,39 +5,39 @@
   "mapping": {
     "all": {
       "a": {
+        "main": { "code":  224, "label": "à" },
         "relevant": [
-          { "code":  224, "label": "à" },
+          { "code":  228, "label": "ä" },
           { "code":  227, "label": "ã" },
           { "code":  229, "label": "å" },
           { "code":  257, "label": "ā" },
           { "code":  170, "label": "ª" },
           { "code":  226, "label": "â" },
           { "code":  230, "label": "æ" },
-          { "code":  225, "label": "á" },
-          { "code":  228, "label": "ä" }
+          { "code":  225, "label": "á" }
         ]
       },
       "c": {
+        "main": { "code":  231, "label": "ç" },
         "relevant": [
-          { "code":  231, "label": "ç" },
           { "code":  269, "label": "č" },
           { "code":  263, "label": "ć" }
         ]
       },
       "e": {
+        "main": { "code":  233, "label": "é" },
         "relevant": [
-          { "code":  233, "label": "é" },
-          { "code":  275, "label": "ē" },
-          { "code":  281, "label": "ę" },
           { "code":  279, "label": "ė" },
+          { "code":  281, "label": "ę" },
+          { "code":  275, "label": "ē" },
           { "code":  234, "label": "ê" },
           { "code":  232, "label": "è" },
           { "code":  235, "label": "ë" }
         ]
       },
       "i": {
+        "main": { "code":  238, "label": "î" },
         "relevant": [
-          { "code":  238, "label": "î" },
           { "code":  299, "label": "ī" },
           { "code":  237, "label": "í" },
           { "code":  303, "label": "į" },
@@ -52,12 +52,12 @@
         ]
       },
       "o": {
+        "main": { "code":  244, "label": "ô" },
         "relevant": [
-          { "code":  244, "label": "ô" },
           { "code":  186, "label": "º" },
           { "code":  333, "label": "ō" },
-          { "code":  245, "label": "õ" },
           { "code":  248, "label": "ø" },
+          { "code":  245, "label": "õ" },
           { "code":  243, "label": "ó" },
           { "code":  242, "label": "ò" },
           { "code":  246, "label": "ö" },
@@ -72,12 +72,12 @@
         ]
       },
       "u": {
+        "main": { "code":  249, "label": "ù" },
         "relevant": [
-          { "code":  249, "label": "ù" },
           { "code":  363, "label": "ū" },
           { "code":  252, "label": "ü" },
-          { "code":  251, "label": "û" },
-          { "code":  250, "label": "ú" }
+          { "code":  250, "label": "ú" },
+          { "code":  251, "label": "û" }
         ]
       },
       "y": {
