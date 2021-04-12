@@ -82,6 +82,8 @@
 
     <string-array name="pref__gestures__swipe_action__entries">
         <item>@string/pref__gestures__swipe_action__no_action</item>
+        <item>@string/pref__gestures__swipe_action__cycle_to_previous_keyboard_mode</item>
+        <item>@string/pref__gestures__swipe_action__cycle_to_next_keyboard_mode</item>
         <item>@string/pref__gestures__swipe_action__delete_word</item>
         <item>@string/pref__gestures__swipe_action__hide_keyboard</item>
         <item>@string/pref__gestures__swipe_action__insert_space</item>
@@ -93,15 +95,19 @@
         <item>@string/pref__gestures__swipe_action__move_cursor_end_of_line</item>
         <item>@string/pref__gestures__swipe_action__move_cursor_start_of_page</item>
         <item>@string/pref__gestures__swipe_action__move_cursor_end_of_page</item>
+        <item>@string/pref__gestures__swipe_action__switch_to_clipboard_context</item>
         <item>@string/pref__gestures__swipe_action__shift</item>
+        <item>@string/pref__gestures__swipe_action__redo</item>
+        <item>@string/pref__gestures__swipe_action__undo</item>
         <item>@string/pref__gestures__swipe_action__show_input_method_picker</item>
         <item>@string/pref__gestures__swipe_action__switch_to_prev_subtype</item>
         <item>@string/pref__gestures__swipe_action__switch_to_next_subtype</item>
         <item>@string/pref__gestures__swipe_action__switch_to_prev_keyboard</item>
-        <item>@string/pref__gestures__swipe_action__switch_to_clipboard_context</item>
     </string-array>
     <string-array name="pref__gestures__swipe_action__values">
         <item>no_action</item>
+        <item>cycle_to_previous_keyboard_mode</item>
+        <item>cycle_to_next_keyboard_mode</item>
         <item>delete_word</item>
         <item>hide_keyboard</item>
         <item>insert_space</item>
@@ -113,12 +119,14 @@
         <item>move_cursor_end_of_line</item>
         <item>move_cursor_start_of_page</item>
         <item>move_cursor_end_of_page</item>
+        <item>switch_to_clipboard_context</item>
         <item>shift</item>
+        <item>redo</item>
+        <item>undo</item>
         <item>show_input_method_picker</item>
         <item>switch_to_prev_subtype</item>
         <item>switch_to_next_subtype</item>
         <item>switch_to_prev_keyboard</item>
-        <item>switch_to_clipboard_context</item>
     </string-array>
 
     <string-array name="pref__gestures__swipe_action_delete__entries">

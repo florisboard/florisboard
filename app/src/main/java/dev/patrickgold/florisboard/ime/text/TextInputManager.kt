@@ -421,6 +421,18 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     fun executeSwipeAction(swipeAction: SwipeAction) {
         val keyData = when (swipeAction) {
+            SwipeAction.CYCLE_TO_PREVIOUS_KEYBOARD_MODE -> when (getActiveKeyboardMode()) {
+                KeyboardMode.CHARACTERS -> KeyData.VIEW_NUMERIC_ADVANCED
+                KeyboardMode.NUMERIC_ADVANCED -> KeyData.VIEW_SYMBOLS2
+                KeyboardMode.SYMBOLS2 -> KeyData.VIEW_SYMBOLS
+                else -> KeyData.VIEW_CHARACTERS
+            }
+            SwipeAction.CYCLE_TO_NEXT_KEYBOARD_MODE -> when (getActiveKeyboardMode()) {
+                KeyboardMode.CHARACTERS -> KeyData.VIEW_SYMBOLS
+                KeyboardMode.SYMBOLS -> KeyData.VIEW_SYMBOLS2
+                KeyboardMode.SYMBOLS2 -> KeyData.VIEW_NUMERIC_ADVANCED
+                else -> KeyData.VIEW_CHARACTERS
+            }
             SwipeAction.DELETE_WORD -> KeyData.DELETE_WORD
             SwipeAction.INSERT_SPACE -> KeyData.SPACE
             SwipeAction.MOVE_CURSOR_DOWN -> KeyData.ARROW_DOWN
@@ -432,6 +444,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             SwipeAction.MOVE_CURSOR_START_OF_PAGE -> KeyData.MOVE_START_OF_PAGE
             SwipeAction.MOVE_CURSOR_END_OF_PAGE -> KeyData.MOVE_END_OF_PAGE
             SwipeAction.SHIFT -> KeyData.SHIFT
+            SwipeAction.REDO -> KeyData.REDO
+            SwipeAction.UNDO -> KeyData.UNDO
             SwipeAction.SWITCH_TO_CLIPBOARD_CONTEXT -> KeyData.SWITCH_TO_CLIPBOARD_CONTEXT
             SwipeAction.SHOW_INPUT_METHOD_PICKER -> KeyData.SHOW_INPUT_METHOD_PICKER
             else -> null
@@ -473,11 +487,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             R.id.quick_action_open_settings -> florisboard.launchSettings()
             R.id.quick_action_one_handed_toggle -> florisboard.toggleOneHandedMode(isRight = true)
             R.id.quick_action_undo -> {
-                activeEditorInstance.performUndo()
+                inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.UNDO))
                 return
             }
             R.id.quick_action_redo -> {
-                activeEditorInstance.performRedo()
+                inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.REDO))
                 return
             }
         }
@@ -733,6 +747,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             } else {
                 handleArrow(data.code, 1)
             }
+            KeyCode.CLEAR_CLIPBOARD_HISTORY -> florisboard.florisClipboardManager?.clearHistoryWithAnimation()
             KeyCode.CLIPBOARD_CUT -> activeEditorInstance.performClipboardCut()
             KeyCode.CLIPBOARD_COPY -> activeEditorInstance.performClipboardCopy()
             KeyCode.CLIPBOARD_PASTE -> activeEditorInstance.performClipboardPaste()
@@ -746,6 +761,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 return
             }
             KeyCode.LANGUAGE_SWITCH -> handleLanguageSwitch()
+            KeyCode.REDO -> activeEditorInstance.performRedo()
             KeyCode.SETTINGS -> florisboard.launchSettings()
             KeyCode.SHIFT -> handleShiftUp()
             KeyCode.SHIFT_LOCK -> handleShiftLock()
@@ -754,7 +770,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyCode.SWITCH_TO_MEDIA_CONTEXT -> florisboard.setActiveInput(R.id.media_input)
             KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> florisboard.setActiveInput(R.id.clip_input)
             KeyCode.SWITCH_TO_TEXT_CONTEXT -> florisboard.setActiveInput(R.id.text_input, forceSwitchToCharacters = true)
-            KeyCode.CLEAR_CLIPBOARD_HISTORY -> florisboard.florisClipboardManager?.clearHistoryWithAnimation()
             KeyCode.TOGGLE_ONE_HANDED_MODE_LEFT -> florisboard.toggleOneHandedMode(isRight = false)
             KeyCode.TOGGLE_ONE_HANDED_MODE_RIGHT -> florisboard.toggleOneHandedMode(isRight = true)
             KeyCode.VIEW_CHARACTERS -> setActiveKeyboardMode(KeyboardMode.CHARACTERS)
@@ -764,6 +779,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyCode.VIEW_PHONE2 -> setActiveKeyboardMode(KeyboardMode.PHONE2)
             KeyCode.VIEW_SYMBOLS -> setActiveKeyboardMode(KeyboardMode.SYMBOLS)
             KeyCode.VIEW_SYMBOLS2 -> setActiveKeyboardMode(KeyboardMode.SYMBOLS2)
+            KeyCode.UNDO -> activeEditorInstance.performUndo()
             else -> {
                 when (activeKeyboardMode) {
                     KeyboardMode.NUMERIC,
