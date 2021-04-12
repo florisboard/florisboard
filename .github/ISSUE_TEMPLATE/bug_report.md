@@ -25,7 +25,7 @@ Describe the bug in a short but concise way.
 4. See error
 
 #### Environment information
-- FlorisBoard Version: <!-- e.g. 0.3.6 -->
+- FlorisBoard Version: <!-- e.g. 0.X.X -->
 - Install Source: <!-- Google PlayStore/F-Droid/GitHub/? -->
 - Device: <!-- e.g. OnePlus 7T -->
 - Android version, ROM: <!-- e.g. 10, Stock -->
