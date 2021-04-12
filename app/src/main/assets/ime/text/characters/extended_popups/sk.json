@@ -1,7 +1,7 @@
 {
   "type": "characters/extended_popups",
   "name": "sk",
-  "authors": [ "stefan-misik" ],
+  "authors": [ "stefan-misik", "majso" ],
   "mapping": {
     "all": {
       "e": {
@@ -45,7 +45,8 @@
       },
       "a": {
         "relevant": [
-          { "code":  225, "label": "á" }
+          { "code":  225, "label": "á" },
+          { "code":  228, "label": "ä" }
         ]
       },
       "s": {
