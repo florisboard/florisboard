@@ -762,6 +762,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
                 inputView?.mainViewFlipper?.displayedChild = 2
             }
         }
+        textInputManager.isGlidePostEffect = false
     }
 
     fun toggleOneHandedMode(isRight: Boolean) {

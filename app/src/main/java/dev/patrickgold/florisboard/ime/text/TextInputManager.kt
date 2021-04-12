@@ -326,7 +326,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         isManualSelectionMode = false
         isManualSelectionModeStart = false
         isManualSelectionModeEnd = false
-        isGlidePostEffect = false
         smartbarView?.isQuickActionsVisible = false
         smartbarView?.updateSmartbarState()
     }
@@ -357,6 +356,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 }
             }
         }
+        isGlidePostEffect = false
     }
 
     /**
@@ -522,6 +522,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         isManualSelectionMode = false
         isManualSelectionModeStart = false
         isManualSelectionModeEnd = false
+        isGlidePostEffect = false
         activeEditorInstance.deleteWordsBeforeCursor(1)
     }
 
@@ -544,6 +545,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 else -> activeEditorInstance.performEnter()
             }
         }
+        isGlidePostEffect = false
     }
 
     /**
@@ -692,6 +694,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT, meta(alt = true, shift = isShiftPressed), count)
             }
         }
+        isGlidePostEffect = false
     }
 
     /**
@@ -710,6 +713,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             // Must call to update UI properly
             editingKeyboardView?.onUpdateSelection()
         }
+        isGlidePostEffect = false
     }
 
     /**
@@ -789,7 +793,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         KeyType.CHARACTER,
                         KeyType.NUMERIC -> {
                             val text = data.code.toChar().toString()
-                            if (isGlidePostEffect && CachedInput.isWordComponent(text) || text.isDigitsOnly()) {
+                            if (isGlidePostEffect && (CachedInput.isWordComponent(text) || text.isDigitsOnly())) {
                                 activeEditorInstance.commitText(" ")
                             }
                             activeEditorInstance.commitText(text)
@@ -798,7 +802,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                             KeyCode.PHONE_PAUSE,
                             KeyCode.PHONE_WAIT -> {
                                 val text = data.code.toChar().toString()
-                                if (isGlidePostEffect && CachedInput.isWordComponent(text) || text.isDigitsOnly()) {
+                                if (isGlidePostEffect && (CachedInput.isWordComponent(text) || text.isDigitsOnly())) {
                                     activeEditorInstance.commitText(" ")
                                 }
                                 activeEditorInstance.commitText(text)
@@ -818,7 +822,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                                     true -> text.toUpperCase(locale)
                                     false -> text
                                 }
-                                if (isGlidePostEffect && CachedInput.isWordComponent(text) || text.isDigitsOnly()) {
+                                if (isGlidePostEffect && (CachedInput.isWordComponent(text) || text.isDigitsOnly())) {
                                     activeEditorInstance.commitText(" ")
                                 }
                                 activeEditorInstance.commitText(text)
@@ -834,7 +838,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         if (data.code != KeyCode.SHIFT && !capsLock && !inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
             updateCapsState()
         }
-        isGlidePostEffect = false
+        if (ev.data.code > KeyCode.SPACE) {
+            isGlidePostEffect = false
+        }
         smartbarView?.updateSmartbarState()
     }
 
