@@ -29,6 +29,12 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
     val ready: Boolean
         get() = currentSubtype == layoutSubtype && wordDataSubtype == layoutSubtype && wordDataSubtype != null
 
+    /**
+     * The minimum distance between points to be added to a gesture.
+     */
+    private var distanceThresholdSquared = 0
+
+
     companion object {
         /**
          * Describes the allowed length variance in a gesture. If a gesture is too long or too short, it is immediately
@@ -40,11 +46,6 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
          * describes the number of points to sample a gesture at, i.e the resolution.
          */
         private const val SAMPLING_POINTS: Int = 200
-
-        /**
-         * The minimum distance between points to be added to a gesture.
-         */
-        private const val MIN_DIST_TO_ADD = 1000
 
         /**
          * Standard deviation of the distribution of distances between the shapes of two gestures
@@ -77,7 +78,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             val dx = gesture.getLastX() - position.x
             val dy = gesture.getLastY() - position.y
 
-            if (dx * dx + dy * dy > MIN_DIST_TO_ADD) {
+            if (dx * dx + dy * dy > distanceThresholdSquared) {
                 gesture.addPoint(position.x, position.y)
             }
         } else {
@@ -98,6 +99,8 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             this.keys.add(it)
         }
         layoutSubtype = subtype
+        distanceThresholdSquared = (keyViews.first().width / 4)
+        distanceThresholdSquared *= distanceThresholdSquared
         initializePruner()
     }
 
@@ -162,7 +165,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         val candidates = arrayListOf<String>()
         val candidateWeights = arrayListOf<Float>()
         val key = keys.firstOrNull() ?: return listOf()
-        val radius: Int = min(key.height, key.width)
+        val radius = min(key.height, key.width)
         var remainingWords = pruner.pruneByExtremities(gesture, this.keys)
         val userGesture = gesture.resample(SAMPLING_POINTS)
         val normalizedUserGesture: Gesture = userGesture.normalizeByBoxSide()
@@ -387,6 +390,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
                 val idealGesture = Gesture()
                 val idealGestureWithLoops = Gesture()
                 var previousLetter = '\u0000'
+                var hasLoops = false
 
                 // Add points for each key
                 for (c in word) {
@@ -420,6 +424,8 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
                         idealGestureWithLoops.addPoint(
                             key.centerX - key.width / 4.0f, key.centerY + key.height / 4.0f
                         )
+                        hasLoops = true
+
                         idealGesture.addPoint(key.centerX, key.centerY)
                     } else {
                         idealGesture.addPoint(key.centerX, key.centerY)
@@ -427,7 +433,10 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
                     }
                     previousLetter = lc
                 }
-                return listOf(idealGesture, idealGestureWithLoops)
+                return when (hasLoops) {
+                    true -> listOf(idealGesture, idealGestureWithLoops)
+                    false -> listOf(idealGesture)
+                }
             }
 
             fun distance(x1: Float, y1: Float, x2: Float, y2: Float): Float {

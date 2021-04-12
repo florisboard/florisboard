@@ -22,12 +22,14 @@ import android.view.KeyEvent
 import android.widget.LinearLayout
 import android.widget.Toast
 import android.widget.ViewFlipper
+import androidx.core.text.isDigitsOnly
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.dictionary.Dictionary
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.nlp.Token
@@ -41,6 +43,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import kotlinx.coroutines.*
+import org.json.JSONArray
 import timber.log.Timber
 import java.util.*
 import kotlin.math.roundToLong
@@ -61,6 +64,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     var isGlidePostEffect: Boolean = false
     private val florisboard = FlorisBoard.getInstance()
+    val symbolsWithSpaceAfter: List<String>
     private val activeEditorInstance: EditorInstance
         get() = florisboard.activeEditorInstance
 
@@ -116,6 +120,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     init {
         florisboard.addEventListener(this)
+        val data =
+            AssetManager.default().loadAssetRaw(AssetRef(AssetSource.Assets, "ime/text/symbols-with-space.json")).getOrThrow()
+        val json = JSONArray(data)
+        this.symbolsWithSpaceAfter = List(json.length()){ json.getString(it) }
     }
 
     /**
@@ -764,7 +772,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         KeyType.CHARACTER,
                         KeyType.NUMERIC -> {
                             val text = data.code.toChar().toString()
-                            if (isGlidePostEffect && CachedInput.isWordComponent(text)) {
+                            if (isGlidePostEffect && CachedInput.isWordComponent(text) || text.isDigitsOnly()) {
                                 activeEditorInstance.commitText(" ")
                             }
                             activeEditorInstance.commitText(text)
@@ -773,7 +781,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                             KeyCode.PHONE_PAUSE,
                             KeyCode.PHONE_WAIT -> {
                                 val text = data.code.toChar().toString()
-                                if (isGlidePostEffect && CachedInput.isWordComponent(text)) {
+                                if (isGlidePostEffect && CachedInput.isWordComponent(text) || text.isDigitsOnly()) {
                                     activeEditorInstance.commitText(" ")
                                 }
                                 activeEditorInstance.commitText(text)
@@ -793,7 +801,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                                     true -> text.toUpperCase(locale)
                                     false -> text
                                 }
-                                if (isGlidePostEffect && CachedInput.isWordComponent(text)) {
+                                if (isGlidePostEffect && CachedInput.isWordComponent(text) || text.isDigitsOnly()) {
                                     activeEditorInstance.commitText(" ")
                                 }
                                 activeEditorInstance.commitText(text)

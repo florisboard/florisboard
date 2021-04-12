@@ -68,18 +68,20 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
         })
     }
 
+    private val wordDataCache = hashMapOf<String, Int>()
     /**
      * Set the word data for the internal gesture classifier
      */
     fun setWordData(subtype: Subtype) {
         launch(Dispatchers.Default) {
-            // FIXME: get this info from dictionary.
-            val data =
-                AssetManager.default().loadAssetRaw(AssetRef(AssetSource.Assets, "ime/dict/data.json")).getOrThrow()
-            val json = JSONObject(data)
-            val map = hashMapOf<String, Int>()
-            map.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
-            glideTypingClassifier.setWordData(map, subtype)
+            if (wordDataCache.isEmpty()) {
+                // FIXME: get this info from dictionary.
+                val data =
+                    AssetManager.default().loadAssetRaw(AssetRef(AssetSource.Assets, "ime/dict/data.json")).getOrThrow()
+                val json = JSONObject(data)
+                wordDataCache.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
+            }
+            glideTypingClassifier.setWordData(wordDataCache, subtype)
         }
     }
 
@@ -141,13 +143,14 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
 
         launch(Dispatchers.Default) {
             // To avoid cache misses when maxSuggestions goes from 5 to 1.
+            val time = System.nanoTime()
             val suggestions = glideTypingClassifier.getSuggestions(MAX_SUGGESTION_COUNT, true)
 
             withContext(Dispatchers.Main) {
                 val textInputManager = TextInputManager.getInstance()
                 textInputManager.isGlidePostEffect = true
                 textInputManager.smartbarView?.setCandidateSuggestionWords(
-                    System.nanoTime(),
+                    time,
                     suggestions.take(maxSuggestionsToShow).map { textInputManager.fixCase(it) }
                 )
                 textInputManager.smartbarView?.updateCandidateSuggestionCapsState()

@@ -24,6 +24,18 @@
 
         <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
+            android:defaultValue="150"
+            app:dependency="glide__show_trail"
+            app:key="glide__trail_max_length"
+            app:min="25"
+            app:max="1000"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__glide_trail_max_length"
+            app:seekBarIncrement="25"
+            app:unit=" points"/>
+
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
             android:defaultValue="200"
             app:dependency="glide__show_trail"
             app:key="glide__trail_fade_duration"
