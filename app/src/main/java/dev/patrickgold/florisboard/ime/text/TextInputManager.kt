@@ -22,6 +22,7 @@ import android.view.KeyEvent
 import android.widget.LinearLayout
 import android.widget.Toast
 import android.widget.ViewFlipper
+import androidx.core.text.isDigitsOnly
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
@@ -771,7 +772,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         KeyType.CHARACTER,
                         KeyType.NUMERIC -> {
                             val text = data.code.toChar().toString()
-                            if (isGlidePostEffect && CachedInput.isWordComponent(text)) {
+                            if (isGlidePostEffect && CachedInput.isWordComponent(text) || text.isDigitsOnly()) {
                                 activeEditorInstance.commitText(" ")
                             }
                             activeEditorInstance.commitText(text)
@@ -780,7 +781,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                             KeyCode.PHONE_PAUSE,
                             KeyCode.PHONE_WAIT -> {
                                 val text = data.code.toChar().toString()
-                                if (isGlidePostEffect && CachedInput.isWordComponent(text)) {
+                                if (isGlidePostEffect && CachedInput.isWordComponent(text) || text.isDigitsOnly()) {
                                     activeEditorInstance.commitText(" ")
                                 }
                                 activeEditorInstance.commitText(text)
@@ -800,7 +801,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                                     true -> text.toUpperCase(locale)
                                     false -> text
                                 }
-                                if (isGlidePostEffect && CachedInput.isWordComponent(text)) {
+                                if (isGlidePostEffect && CachedInput.isWordComponent(text) || text.isDigitsOnly()) {
                                     activeEditorInstance.commitText(" ")
                                 }
                                 activeEditorInstance.commitText(text)
