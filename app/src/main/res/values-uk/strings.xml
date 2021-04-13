@@ -338,7 +338,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Здається, FlorisBoard постійно перестає працювати…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Повернення до попередньої клавіатури, щоб зупинити нескінченний цикл збою. Натисніть, щоб переглянути деталі про помилку</string>
     <!-- clipboard strings -->
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Перейти до історії буферу обміну</string>
     <string name="clip__context_header">Історія буфера обміну</string>
     <string name="clip__clear_history">Очистити історію</string>
     <string name="clip__unpin_item">Відкріпити</string>
@@ -350,4 +349,5 @@
     <string name="pref__glide_trail_fade_duration">Час зникання безперервного сліду</string>
     <string name="pref__glide_preview_refresh_delay">Затримка оновлення попереднього перегляду</string>
     <string name="pref__glide__show_preview">Попередній перегляд під час безперервного вводу</string>
+    <string name="pref__glide_trail_max_length">Максимальна довжина безперервного сліду</string>
 </resources>

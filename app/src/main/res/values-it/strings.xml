@@ -336,7 +336,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard sembra aver ripetutamente smesso di funzionare…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Ripiega alla tastiera precedente per porre fine ai crash ripetuti. Tocca per visualizzare i dettagli dell\'errore</string>
     <!-- clipboard strings -->
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Passa alla cronologia appunti</string>
     <string name="clip__context_header">Cronologia appunti</string>
     <string name="clip__clear_history">Cancella la cronologia</string>
     <string name="clip__unpin_item">Sblocca oggetto</string>
@@ -348,4 +347,5 @@
     <string name="pref__glide_trail_fade_duration">Tempo di dissolvenza del percorso di scorrimento</string>
     <string name="pref__glide_preview_refresh_delay">Ritardo di aggiornamento dell\'anteprima</string>
     <string name="pref__glide__show_preview">Mostra l\'anteprima durante la digitazione a scorrimento</string>
+    <string name="pref__glide_trail_max_length">Lunghezza massima del percorso di scorrimento</string>
 </resources>

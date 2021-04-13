@@ -226,6 +226,8 @@
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Leertaste Gesten</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Andere Gesten / Gesten Schwellenwerte</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Keine Aktion</string>
+    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Zyklus vom vorherigen Tastaturmodus</string>
+    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Zyklus zum nächsten Tastaturmodus</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Einzelne Zeichen exakt löschen</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Aktuelles Wort löschen</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Einzelne Wörter exakt löschen</string>
@@ -239,7 +241,10 @@
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Cursor an das Zeilenende bewegen</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Bewege den Cursor zum Anfang der Seite</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Bewege den Cursor zum Ende der Seite</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Zwischenablage Verlauf öffnen</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Umschalttaste</string>
+    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Wiederherstellen</string>
+    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Rückgängig machen</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Auswahl der Eingabemethode anzeigen</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Zur vorherigen Tastatur wechseln</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Zum vorherigen Eingabestil wechseln</string>
@@ -336,7 +341,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard funktioniert zum wiederholten Male nicht…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Um eine endlose Absturzschleife zu verhindern, wurde automatisch auf die zuvor benutzte Tastatur zurückgegriffen. Tippen, um die Fehlermeldung anzuzeigen</string>
     <!-- clipboard strings -->
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Zum Zwischenablagenverlauf wechseln</string>
     <string name="clip__context_header">Zwischenablagenverlauf</string>
     <string name="clip__clear_history">Verlauf leeren</string>
     <string name="clip__unpin_item">Element lösen</string>
@@ -348,4 +352,5 @@
     <string name="pref__glide_trail_fade_duration">Ausblendzeit vom Spurbewegung</string>
     <string name="pref__glide_preview_refresh_delay">Verzögerung der Vorschau</string>
     <string name="pref__glide__show_preview">Vorschau während des Gleitens anzeigen</string>
+    <string name="pref__glide_trail_max_length">Maximale Bewegungslänge</string>
 </resources>

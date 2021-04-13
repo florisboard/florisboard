@@ -337,7 +337,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">تەختەکلیلی FlorisBoard لەوانەیە زوو زوو لەکارکردن بوەستێت…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">گۆڕین بۆ تەختەکلیلی پێشوو لەکاتی بوونی هەڵە و وەستانی لەناکاو، بینینی زانیاری هەڵەکان</string>
     <!-- clipboard strings -->
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">گۆڕین بۆ مێژووی لەبەرگیراوەکان</string>
     <string name="clip__context_header">لەبەرگیراوەکان</string>
     <string name="clip__clear_history">سڕینەوەی مێژوو</string>
     <string name="clip__unpin_item">جێگیر نەکردن</string>

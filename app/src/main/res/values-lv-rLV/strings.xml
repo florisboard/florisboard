@@ -226,6 +226,8 @@
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Atstarpes taustiņa kustības</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Citas kustības / Kustību sliekšņi</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Nav darbības</string>
+    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Pārslēgties uz iepriekšējo tastatūras veidu</string>
+    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Pārslēgties uz nākamo tastatūras veidu</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Rūpīgi izdzēst rakstzīmes</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Izdzēst pašreizējo vārdu</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Rūpīgi izdzēst vārdus</string>
@@ -239,7 +241,10 @@
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Pārvietot rādītāju uz līnijas beigām</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Pārvietot rādītāju uz lapas sākumu</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Pārvietot rādītāju uz lapas beigām</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Atvērt starpliktuves pārvaldnieku/vēsturi</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Pārslēgšanās taustiņš</string>
+    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Atatsaukt</string>
+    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Atsaukt</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Rādīt ievades veida atlasītāju</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Pārslēgties uz iepriekšējo tastatūru</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Pārslēgties uz iepriekšējo apakšveidu</string>
@@ -337,7 +342,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Izskatās, ka FlorisBoard atkārtoti pārstāj darboties…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Notiek atkāpšanāš uz iepriekšējo tastatūru, lai apturētu nebeidzamu avārijas cilpu. Piesist, lai apskatītu kļūdu izklāstu</string>
     <!-- clipboard strings -->
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Pārslēgties uz starpliktuves vēsturi</string>
     <string name="clip__context_header">Starpliktuves vēsture</string>
     <string name="clip__clear_history">Notīrīt vēsturi</string>
     <string name="clip__unpin_item">Atspraust vienumu</string>
@@ -349,4 +353,5 @@
     <string name="pref__glide_trail_fade_duration">Slīdēšanas pēdu izzušanas laiks</string>
     <string name="pref__glide_preview_refresh_delay">Priekšskatīt atsvaidzināšanas aizkavi</string>
     <string name="pref__glide__show_preview">Rādīt priekšskatījumu slīdošās rakstīšanas laikā</string>
+    <string name="pref__glide_trail_max_length">Lielākais slīdēšanas pēdu garums</string>
 </resources>
