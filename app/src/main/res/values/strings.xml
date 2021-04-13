@@ -215,6 +215,7 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Sound on key press</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Sound volume on key press</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibrate on key press</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Vibration duration on key press</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Vibration strength on key press</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">PopUp Visibility</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Show popup when you press a key</string>

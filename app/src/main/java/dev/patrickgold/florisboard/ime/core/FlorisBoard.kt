@@ -620,28 +620,55 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     /**
      * Makes a key press vibration if the user has this feature enabled in the preferences.
      */
-    fun keyPressVibrate() {
+    fun keyPressVibrate(isMovingGestureEffect: Boolean = false) {
         if (prefs.keyboard.vibrationEnabled) {
+            var vibrationDuration = prefs.keyboard.vibrationDuration.toLong()
             var vibrationStrength = prefs.keyboard.vibrationStrength
-            if (vibrationStrength == -1 && prefs.keyboard.vibrationEnabledSystem) {
-                val hapticsPerformed =
-                    inputWindowView?.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
 
-                if (hapticsPerformed == false) {
-                    vibrationStrength = 36
-                }
+            if (!prefs.keyboard.vibrationEnabledSystem && vibrationDuration < 0 && vibrationStrength < 0) {
+                return
             }
-            if (vibrationStrength > 0) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vibrator?.vibrate(
-                        VibrationEffect.createOneShot(
-                            vibrationStrength.toLong(), VibrationEffect.DEFAULT_AMPLITUDE
-                        )
-                    )
+
+            val hapticsPerformed = if (vibrationDuration < 0 && vibrationStrength < 0) {
+                if (isMovingGestureEffect && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+                    inputWindowView?.performHapticFeedback(HapticFeedbackConstants.TEXT_HANDLE_MOVE)
                 } else {
-                    @Suppress("DEPRECATION")
-                    vibrator?.vibrate(vibrationStrength.toLong())
+                    inputWindowView?.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
                 }
+            } else {
+                false
+            }
+
+            if (hapticsPerformed == true) {
+                return
+            }
+
+            if (vibrationDuration == -1L) {
+                vibrationDuration = 36
+            }
+            if (isMovingGestureEffect) {
+                vibrationDuration = (vibrationDuration / 8.0).toLong().coerceAtLeast(1)
+            }
+            if (vibrationStrength == -1 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrationStrength = VibrationEffect.DEFAULT_AMPLITUDE
+            } else if (vibrationStrength == -1) {
+                vibrationStrength = 36
+            }
+            if (isMovingGestureEffect && vibrationStrength > 0) {
+                vibrationStrength = (vibrationStrength / 2.0).toInt().coerceAtLeast(1)
+            } else if (isMovingGestureEffect) {
+                vibrationStrength = 8
+            }
+            Timber.i(vibrationDuration.toString())
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                vibrator?.vibrate(
+                    VibrationEffect.createOneShot(
+                        vibrationDuration, vibrationStrength
+                    )
+                )
+            } else {
+                @Suppress("DEPRECATION")
+                vibrator?.vibrate(vibrationDuration)
             }
         }
     }

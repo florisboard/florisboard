@@ -845,6 +845,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onInputKeyRepeat(ev: InputKeyEvent) {
+        florisboard.keyPressVibrate(isMovingGestureEffect = true)
         onInputKeyUp(ev)
     }
 
