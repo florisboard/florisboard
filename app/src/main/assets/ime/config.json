@@ -490,6 +490,14 @@
       }
     },
     {
+      "id": 1351,
+      "languageTag": "uk",
+      "currencySet": "ukrainian_hryvnia",
+      "preferred": {
+        "characters": "jcuken_ukrainian"
+      }
+    },
+    {
       "id": 1401,
       "languageTag": "el",
       "currencySet": "euro",
@@ -573,6 +581,14 @@
       }
     },
     {
+      "id": 2501,
+      "languageTag": "ca",
+      "currencySet": "euro",
+      "preferred": {
+        "characters": "catalan"
+      }
+    },
+    {
       "id": 2601,
       "languageTag": "IPA-IPA",
       "currencySet": "dollar",
@@ -583,11 +599,19 @@
       }
     },
     {
-      "id": 2602,
-      "languageTag": "ca",
+      "id": 2701,
+      "languageTag": "sk",
       "currencySet": "euro",
       "preferred": {
-        "characters": "catalan"
+        "characters": "qwertz"
+      }
+    },
+    {
+      "id": 2801,
+      "languageTag": "cs",
+      "currencySet": "euro",
+      "preferred": {
+        "characters": "qwertz"
       }
     }
   ]

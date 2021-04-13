@@ -226,6 +226,8 @@
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestos da barra de espaço</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Outros gestos / Limites dos gestos</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Nenhuma ação</string>
+    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Trocar para o modo anterior de teclado</string>
+    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Trocar para o próximo modo de teclado</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Excluir caracteres com precisão</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Excluir palavra atual</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Excluir palavras com precisão</string>
@@ -239,7 +241,10 @@
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Mover cursor para o fim da linha</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Mover cursor para o início da página</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Mover cursor para o fim da página</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Abrir o gerenciador/histórico da área de transferência</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
+    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Refazer</string>
+    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Desfazer</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Mostrar alternador de teclado</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Mudar para teclado anterior</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Mudar para formato de digitação anterior</string>
@@ -336,7 +341,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard parece parar de funcionar repetidamente…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Recuando para o teclado anterior para parar o loop infinito de travamento. Toque para ver os detalhes do erro</string>
     <!-- clipboard strings -->
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Mudar para o histórico da área de transferência</string>
     <string name="clip__context_header">Histórico da área de transferência</string>
     <string name="clip__clear_history">Limpar histórico</string>
     <string name="clip__unpin_item">Desfixar item</string>
@@ -348,4 +352,5 @@
     <string name="pref__glide_trail_fade_duration">Tempo de desaparecimento da trilha de deslizamento</string>
     <string name="pref__glide_preview_refresh_delay">Atraso de atualização da pré-visualização</string>
     <string name="pref__glide__show_preview">Mostrar pré-visualização durante a digitação deslizante</string>
+    <string name="pref__glide_trail_max_length">Comprimento máximo da trilha de deslizamento</string>
 </resources>

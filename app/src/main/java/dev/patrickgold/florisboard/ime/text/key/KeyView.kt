@@ -326,6 +326,8 @@ class KeyView(
                         longKeyPressHandler.postDelayed(delayMillis) {
                             if (data.popup.isNotEmpty()) {
                                 popupManager.extend(this@KeyView, keyHintMode)
+                                florisboard.keyPressVibrate()
+                                florisboard.keyPressSound(data)
                             }
                         }
                     }
@@ -409,6 +411,9 @@ class KeyView(
                 SwipeGesture.Type.TOUCH_MOVE -> when (prefs.gestures.deleteKeySwipeLeft) {
                     SwipeAction.DELETE_CHARACTERS_PRECISELY -> {
                         florisboard.activeEditorInstance.apply {
+                            if (abs(event.relUnitCountX) > 0) {
+                                florisboard.keyPressVibrate(isMovingGestureEffect = true)
+                            }
                             selection.updateAndNotify(
                                 (selection.end + event.absUnitCountX + 1).coerceIn(0, selection.end),
                                 selection.end
@@ -420,6 +425,7 @@ class KeyView(
                     }
                     SwipeAction.DELETE_WORDS_PRECISELY -> when (event.direction) {
                         SwipeGesture.Direction.LEFT -> {
+                            florisboard.keyPressVibrate(isMovingGestureEffect = true)
                             florisboard.activeEditorInstance.apply {
                                 leftAppendWordToSelection()
                             }
@@ -428,6 +434,7 @@ class KeyView(
                             true
                         }
                         SwipeGesture.Direction.RIGHT -> {
+                            florisboard.keyPressVibrate(isMovingGestureEffect = true)
                             florisboard.activeEditorInstance.apply {
                                 leftPopWordFromSelection()
                             }
@@ -442,21 +449,12 @@ class KeyView(
             }
             KeyCode.SPACE -> when (event.type) {
                 SwipeGesture.Type.TOUCH_MOVE -> when (event.direction) {
-                    SwipeGesture.Direction.UP -> {
-                        if (event.absUnitCountY.times(-1) >= 6) {
-                            florisboard.executeSwipeAction(prefs.gestures.spaceBarSwipeUp)
-                            hasTriggeredGestureMove = true
-                            shouldBlockNextKeyCode = true
-                            true
-                        } else {
-                            false
-                        }
-                    }
                     SwipeGesture.Direction.LEFT -> {
                         if (prefs.gestures.spaceBarSwipeLeft == SwipeAction.MOVE_CURSOR_LEFT) {
                             abs(event.relUnitCountX).let {
                                 val count = if (!hasTriggeredGestureMove) { it - 1 } else { it }
                                 if (count > 0) {
+                                    florisboard.keyPressVibrate(isMovingGestureEffect = true)
                                     florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.ARROW_LEFT, count))
                                 }
                             }
@@ -472,6 +470,7 @@ class KeyView(
                             abs(event.relUnitCountX).let {
                                 val count = if (!hasTriggeredGestureMove) { it - 1 } else { it }
                                 if (count > 0) {
+                                    florisboard.keyPressVibrate(isMovingGestureEffect = true)
                                     florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.ARROW_RIGHT, count))
                                 }
                             }

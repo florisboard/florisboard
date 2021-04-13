@@ -215,6 +215,7 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Sound on key press</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Sound volume on key press</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibrate on key press</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Vibration duration on key press</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Vibration strength on key press</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">PopUp Visibility</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Show popup when you press a key</string>
@@ -257,6 +258,8 @@
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Space bar gestures</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Other gestures / Gesture thresholds</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">No action</string>
+    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Cycle to previous keyboard mode</string>
+    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Cycle to next keyboard mode</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Delete characters precisely</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Delete current word</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Delete words precisely</string>
@@ -270,7 +273,10 @@
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Move cursor to end of line</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Move cursor to start of page</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Move cursor to end of page</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Open clipboard manager/history</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
+    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Redo</string>
+    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Undo</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Show input method picker</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Switch to previous keyboard</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Switch to previous subtype</string>
@@ -378,7 +384,6 @@
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Falling back to previous keyboard to stop infinite crash loop. Tap to view error details</string>
 
     <!-- clipboard strings -->
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Switch to clipboard history</string>
     <string name="clip__context_header">Clipboard history</string>
     <string name="clip__clear_history">Clear history</string>
     <string name="clip__unpin_item">Unpin item</string>
@@ -387,7 +392,26 @@
     <string name="clip__paste_item">Paste</string>
     <string name="clip__back_to_text_input">Back to text input</string>
     <string name="clip__cant_paste">This app doesn\'t allow pasting this content.</string>
+    <string name="pref__clipboard__clipboard_category__label">Clipboard</string>
+    <string name="pref__clipboard__use_internal_clipboard___label">Use internal clipboard</string>
+    <string name="pref__clipboard__use_internal_clipboard_title__summary">Use an internal clipboard instead of the system clipboard</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Sync from system clipboard</string>
+    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">System clipboard updates also update Floris clipboard</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Sync to system clipboard</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris clipboard updates also update system clipboard</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Enable clipboard history</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Retain clipboard items</string>
+    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Clean up old items</string>
+    <string name="pref__clipboard__clean_up_old_after__label">Clean up old items after</string>
+    <string name="pref__unit_minutes">" minutes"</string>
+    <string name="pref__clipboard__limit_history_size__label">Limit history size</string>
+    <string name="pref__clipboard__max_history_size__label">Max history size</string>
+    <string name="pref__unit_items">" items"</string>
+
+    <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Glide trail fade time</string>
     <string name="pref__glide_preview_refresh_delay">Preview refresh delay</string>
     <string name="pref__glide__show_preview">Show preview while glide typing</string>
+    <string name="pref__glide_trail_max_length">Maximum glide trail length</string>
+
 </resources>

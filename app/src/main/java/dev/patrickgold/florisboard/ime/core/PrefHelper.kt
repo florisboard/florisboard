@@ -277,6 +277,7 @@ class PrefHelper(
             const val TRAIL_DURATION =              "glide__trail_fade_duration"
             const val SHOW_PREVIEW =                "glide__show_preview"
             const val PREVIEW_REFRESH_DELAY =       "glide__preview_refresh_delay"
+            const val MAX_TRAIL_LENGTH  =           "glide__trail_max_length"
         }
 
         var enabled: Boolean
@@ -294,6 +295,9 @@ class PrefHelper(
         var previewRefreshDelay: Int
             get() = prefHelper.getPref(PREVIEW_REFRESH_DELAY, 150)
             set(v) = prefHelper.setPref(PREVIEW_REFRESH_DELAY, v)
+        var trailMaxLength: Int
+            get() = prefHelper.getPref(MAX_TRAIL_LENGTH, 150)
+            set(v) = prefHelper.setPref(MAX_TRAIL_LENGTH, v)
     }
 
     /**
@@ -349,6 +353,7 @@ class PrefHelper(
             const val UTILITY_KEY_ACTION =                  "keyboard__utility_key_action"
             const val UTILITY_KEY_ENABLED =                 "keyboard__utility_key_enabled"
             const val VIBRATION_ENABLED =                   "keyboard__vibration_enabled"
+            const val VIBRATION_DURATION =                  "keyboard__vibration_duration"
             const val VIBRATION_STRENGTH =                  "keyboard__vibration_strength"
         }
 
@@ -420,6 +425,9 @@ class PrefHelper(
             get() = prefHelper.getPref(VIBRATION_ENABLED, true)
             private set
         var vibrationEnabledSystem: Boolean = false
+        var vibrationDuration: Int = 0
+            get() = prefHelper.getPref(VIBRATION_DURATION, -1)
+            private set
         var vibrationStrength: Int = 0
             get() = prefHelper.getPref(VIBRATION_STRENGTH, -1)
             private set

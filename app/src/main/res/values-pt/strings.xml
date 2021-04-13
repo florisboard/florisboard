@@ -135,6 +135,7 @@
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Botão da barra inteligente</string>
     <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Disposição em ecrã completo (horizontal)</string>
     <string name="settings__theme__group_extractActionButton" comment="Theme group label">Botão de ação na introdução em ecrã completo (horizontal)</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">Rasto de gestos</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Grupo personalizado (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Cor de fundo</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Cor de fundo (ativo)</string>
@@ -217,12 +218,16 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Ao tocar 2 vezes na barra de espaços, inserir um ponto final e um espaço</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gestos e deslize</string>
     <string name="pref__glide__title" comment="Preference group title">Digitar ao deslizar</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Ativar escrita por egstos</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Digitar uma palavra deslizando o dedo através das teclas</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Mostrar rasto dos gestos</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">O rasto desaparece no final de cada palavra</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Gestos genéricos</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestos na barra de espaço</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Outros gestos / Limitação de gestos</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Nenhuma ação</string>
+    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Trocar para o modo anterior de teclado</string>
+    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Trocar para o modo seguinte de teclado</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Remover caracteres com precisão</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Remover palavra atual</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Remover palavras com precisão</string>
@@ -236,7 +241,10 @@
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Mover cursor para o fim da linha</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Mover cursor para o início da página</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Mover cursor para o final da página</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Abrir gestor de área de transferência/histórico</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Premir a tecla Shift</string>
+    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Refazer</string>
+    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Desfazer</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Mostrar seletor do método de introdução</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Trocar para o teclado anterior</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Trocar para o subtipo anterior</string>
@@ -333,7 +341,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Parece que FlorisBoard não está a funcionar muito bem…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">A ativar o teclado usado anteriormente para parar este ciclo. Toque para ver os detalhes do erro.</string>
     <!-- clipboard strings -->
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Ir para histórico da área de transferência</string>
     <string name="clip__context_header">Histórico da área de transferência</string>
     <string name="clip__clear_history">Limpar histórico</string>
     <string name="clip__unpin_item">Desafixar item</string>
@@ -342,4 +349,8 @@
     <string name="clip__paste_item">Colar</string>
     <string name="clip__back_to_text_input">Voltar para a introdução de texto</string>
     <string name="clip__cant_paste">A aplicação não permite a colagem deste conteúdo.</string>
+    <string name="pref__glide_trail_fade_duration">Tempo para mostrar o rasto</string>
+    <string name="pref__glide_preview_refresh_delay">Atraso de pré-visualização</string>
+    <string name="pref__glide__show_preview">Mostrar pré-visualização ao escrever com gestos</string>
+    <string name="pref__glide_trail_max_length">Valor máximo para o rasto de deslize</string>
 </resources>

@@ -333,7 +333,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Parece que FlorisBoard ha dejado de funcionar repetidamente…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Volviendo al teclado anterior para detener el bucle de cierre infinito. Toque para ver los detalles del error</string>
     <!-- clipboard strings -->
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Cambiar al historial del portapapeles</string>
     <string name="clip__context_header">Historial del portapapeles</string>
     <string name="clip__clear_history">Borrar historial</string>
     <string name="clip__unpin_item">Desanclar</string>

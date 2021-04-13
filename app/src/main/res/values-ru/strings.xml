@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Пауза</string>
-    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Подождите</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Ожидание</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Значок троеточия. Если отображается, показывает, что можно использовать больше знаков при долгом нажатии.</string>
     <!-- One-handed strings -->
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Закрыть режим одной руки</string>
@@ -226,6 +226,8 @@
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Жесты пробела</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Другие жесты / Пороговые значения жестов</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Не задано</string>
+    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Перейти к предыдущему режиму клавиатуры</string>
+    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Перейти к следующему режиму клавиатуры</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Точное удаление символов</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Удалить текущее слово</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Точное удаление слова</string>
@@ -239,7 +241,10 @@
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Переместить курсор в конец строки</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Переместить курсор в начало страницы</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Переместить курсор в конец страницы</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Открыть буфер обмена/историю</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
+    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Повторить</string>
+    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Отменить</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Показать способ ввода</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Переключиться на предыдущую клавиатуру</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Переключиться на предыдущую раскладку</string>
@@ -338,7 +343,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Кажется, FlorisBoard постоянно перестаёт работать…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Возвращение к предыдущей клавиатуре, чтобы остановить бесконечный цикл сбоя. Нажмите, чтобы просмотреть детали об ошибке.</string>
     <!-- clipboard strings -->
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Перейти к истории буфера обмена</string>
     <string name="clip__context_header">История буфера обмена</string>
     <string name="clip__clear_history">Очистить историю</string>
     <string name="clip__unpin_item">Открепить</string>
@@ -350,4 +354,5 @@
     <string name="pref__glide_trail_fade_duration">Время исчезания непрерывного следа</string>
     <string name="pref__glide_preview_refresh_delay">Задержка обновления предварительного просмотра</string>
     <string name="pref__glide__show_preview">Предварительный просмотр при непрерывном вводе</string>
+    <string name="pref__glide_trail_max_length">Максимальная длина непрерывного следа</string>
 </resources>

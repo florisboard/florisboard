@@ -62,6 +62,15 @@
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Verwijderen</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Indeling bewerken</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Landinstelling</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Tekenlayout</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Primaire symbolenlayout</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Secundaire symbolenlayout</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Valuta-set</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Numerische layout</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Numerische (gevorderde) layout</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Nummerrij-layout</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Telefoon primaire layout</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Telefoon secundaire layout</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Deze indeling bestaat al!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Toetsenbordthema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ongedefinieerd</string>
@@ -86,6 +95,8 @@
     <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Maak op basis van gekozen thema</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Aangepast (gebaseerd op %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nieuw thema</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Thema succesvol geïnporteerd!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Thema succesvol geëxporteerd!</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Thema bewerken</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Naam</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>
@@ -93,6 +104,7 @@
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Bewerk groep</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Kenmerk toevoegen</string>
     <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Kenmerken bewerken</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Bewerk themanaam</string>
     <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Referentie</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Groep</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Kenmerk</string>
@@ -123,6 +135,7 @@
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Knop voor Slimme Balk</string>
     <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Landschapsmodus volledig scherm indeling</string>
     <string name="settings__theme__group_extractActionButton" comment="Theme group label">Landschapsmodus volledig scherm functieknop</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">Glijspoor</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Aangepaste groep (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Achtergrondkleur</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Achtergrondkleur (wanneer actief)</string>
@@ -163,6 +176,11 @@
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Uit</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Rechtshandige modus</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Linkshandige modus</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Toetsenbordbreedte in eenhandige modus</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Landschapsmodus volledig scherm invoer</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Nooit tonen</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Altijd tonen</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">Dynamisch tonen</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Toetsenbordhoogte</string>
     <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Extra kort</string>
     <string name="pref__keyboard__height_factor__short" comment="Preference value">Kort</string>
@@ -175,6 +193,8 @@
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Aangepaste hoogte van toetsenbord</string>
     <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Bodem offset (portet)</string>
     <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Bodem offset (landschap)</string>
+    <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Toetsafstand (verticaal)</string>
+    <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Toetsafstand (horizontaal)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Toetsdruk</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Geluid bij toetsdruk</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Geluidsvolume bij toetsdruk</string>
@@ -183,6 +203,8 @@
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Zichtbaarheid pop-up</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Pop-up tonen als je op een toets drukt</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Vertraging voor lange toetsdruk</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Spatiebalk wisselt terug naar tekenlayout</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">De spatiebalk indrukken wisselt automatisch terug naar tekenmodus wanneer in symbool- of nummermodus</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Typervaring</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schakel Slimme Balk in</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Word getoond boven het toetsenbord</string>
@@ -196,12 +218,16 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Twee keer tikken op spatiebalk voegt een punt toe gevolgd door een spatie</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gebaren &amp; Vegen</string>
     <string name="pref__glide__title" comment="Preference group title">Vegend typen</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Glijdend typen inschakelen</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Typ een woord door je vinger over de letters te vegen</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Veegspoor tonen</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Verdwijnt na elk woord</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Algemene gebaren</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Spatiebalkgebaren</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Andere gebaren / Drempelwaardes voor gebaren</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Geen actie</string>
+    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Roteer naar de vorige toetsenbordmodus</string>
+    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Roteer naar de volgende toetsenbordmodus</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Tekens nauwkeurig verwijderen</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Huidige woord verwijderen</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Woorden nauwkeurig verwijderen</string>
@@ -213,7 +239,12 @@
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Cursor naar rechts verplaatsen</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Cursor aan het begin van de regel plaatsen</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Cursor aan het einde van de regel plaatsen</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Cursor aan het begin van de pagina plaatsen</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Cursor aan het einde van de pagina plaatsen</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Open klembordbeheer/geschiedenis</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
+    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Opnieuw</string>
+    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Ongedaan maken</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Invoermethodekiezer weergeven</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Overschakelen naar het vorige toetsenbord</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Overschakelen naar de vorige indeling</string>
@@ -273,7 +304,9 @@
     <string name="assets__action__no">Nee</string>
     <string name="assets__action__save">Opslaan</string>
     <string name="assets__action__yes">Ja</string>
+    <string name="assets__error__details">Details</string>
     <string name="assets__error__invalid">Ongeldig</string>
+    <string name="assets__error__snackbar_message">Er is iets mis gegaan</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Setup</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Vorige</string>
@@ -308,4 +341,16 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard lijkt herhaaldelijk te stoppen met werken…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Terugvallen op het vorige toetsenbord om oneindige crash-loop te stoppen. Tik om foutdetails te bekijken</string>
     <!-- clipboard strings -->
+    <string name="clip__context_header">Klembordgeschiedenis</string>
+    <string name="clip__clear_history">Wis geschiedenis</string>
+    <string name="clip__unpin_item">Item losmaken</string>
+    <string name="clip__pin_item">Item vastmaken</string>
+    <string name="clip__delete_item">Verwijderen</string>
+    <string name="clip__paste_item">Plakken</string>
+    <string name="clip__back_to_text_input">Terug naar tekstinvoer</string>
+    <string name="clip__cant_paste">Deze app laat niet toe om deze inhoud te plakken.</string>
+    <string name="pref__glide_trail_fade_duration">Vervaagtijd veegspoor</string>
+    <string name="pref__glide_preview_refresh_delay">Vertraging vernieuwing voorbeeld</string>
+    <string name="pref__glide__show_preview">Toon voorbeeld tijdens vegend typen</string>
+    <string name="pref__glide_trail_max_length">Maximale lengte veegspoor</string>
 </resources>

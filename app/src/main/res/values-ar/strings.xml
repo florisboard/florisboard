@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">إيقاف مؤقت</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">انتظار</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">أيقونة ثلاث نقاط. إذا كانت ظاهرة ، تشير إلى أنه يمكن استخدام المزيد من الأحرف إذا تم الضغط عليها لفترة أطول.</string>
@@ -61,6 +62,15 @@
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">حذف</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">تعديل نوع فرعي</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">اللغة</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">تخطيط المحارف</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">مخطط تصميم الرموز الاساسي</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">مخطط تصميم الرموز الثانوي</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">إعدادات العملة</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">تخطيط الارقام</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">تخطيط(متقدم) للارقام</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">تخطيط صف الأرقام</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">التخطيط الأساسي للهاتف</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">التخطيط الثانوي للهاتف</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">هذا النوع الفرعي موجود مسبقا!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">مظهر لوحة المفاتيح</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">غير محدد</string>
@@ -110,20 +120,29 @@
     <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">الرجاء إدخال اسم مجموعة يحتوي فقط على أحرف (a-z و / أو A-Z) ، والنقطتان (:) للتجميع الفرعي أو بالإضافة إلى الأرقام (0–9) ، والمده (~) والتسطير (_) للمفتاح ضع الكلمة المناسبة.</string>
     <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">الرجاء إدخال اسم المجموعة.</string>
     <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">اسم هذه المجموعة موجود بالفعل في هذا الموضوع. الرجاء اختيار واحد آخر.</string>
+    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">الرجاء إدخال اسم وصفي يحتوي فقط على الأحرف a-z و / أو A-Z.</string>
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">الرجاء إدخال اسم الخاصية.</string>
+    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">الاسم الوصفي هذا موجود بالفعل داخل هذه المجموعة. يرجى تحديد واحد آخر.</string>
     <string name="settings__theme__group_window" comment="Theme group label">النافذة والنظام</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">لوحة المفاتيح</string>
     <string name="settings__theme__group_key" comment="Theme group label">المفتاح</string>
     <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">المفتاح (%s)</string>
     <string name="settings__theme__group_media" comment="Theme group label">سياق الوسائط</string>
-    <string name="settings__theme__group_oneHanded" comment="Theme group label">اليد الواحدة</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">وضع اليد الواحدة</string>
     <string name="settings__theme__group_popup" comment="Theme group label">نافذة منبثقة</string>
     <string name="settings__theme__group_privateMode" comment="Theme group label">الوضع الخاص</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">الشريط الذكـي</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">زر الشريط الذكي</string>
+    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">تخطيط ملء الشاشة الأفقي</string>
+    <string name="settings__theme__group_extractActionButton" comment="Theme group label">زر إجراء ملء الشاشة الأفقي</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">مسار التمرير</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">مجموعات مخصصة (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">لون الخلفية</string>
+    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">لون الخلفية (مفعل)</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">لون الخلفية (عند الضغط)</string>
     <string name="settings__theme__attr_foreground" comment="Theme attribute label">لون الواجهة</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">لون المقدمة (بديل)</string>
+    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">لون الخلفية (عند الضغط)</string>
     <string name="settings__theme__attr_showBorder" comment="Theme attribute label">عرض الحدود</string>
     <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">اللون الأساسي</string>
     <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">اللون الأساسي (داكن)</string>
@@ -132,6 +151,7 @@
     <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">الواجهة الداكنة لشريط التصفّح</string>
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">لون شبه شفاف</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">لون النص</string>
+    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">وصف مخصص (%s)</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">تفضيلات لوحة المفاتيح</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">المفاتيح</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">صف الأعداد</string>
@@ -148,6 +168,7 @@
     <string name="pref__keyboard__utility_key_action__switch_to_emojis" comment="Preference value">الإنتقال إلى الإيموجيز</string>
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">تغيير اللغة</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">تبديل تطبيق لوحة المفاتيح</string>
+    <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">ديناميكي: قم بالتبديل إلى الرموز التعبيرية / تبديل اللغة</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">مضاعف حجم الخط (عمودي)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">مضاعف حجم الخط (أفقي)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">نظام التخطيط</string>
@@ -155,8 +176,11 @@
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">إيقاف</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">وضع اليد اليمنى</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">وضع اليد اليسرى</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">عرض لوحة مفاتيح الوضع بيد واحدة</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">إدخال ملء الشاشة الأفقي</string>
     <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">عدم الاظهار أبداً</string>
     <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">الإظهار دائماً</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">يعين بشكل تلقائي</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">ارتفاع لوحة المفاتيح</string>
     <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">قصير جدا</string>
     <string name="pref__keyboard__height_factor__short" comment="Preference value">قصير</string>
@@ -167,6 +191,10 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">طويل جدا</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">مخصص</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">قيمة ارتفاع لوحة المفاتيح المخصصة</string>
+    <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">الإزاحة السفلية (عمودي)</string>
+    <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">الإزاحة السفلية (عمودي)</string>
+    <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">تباعد المفاتيح (عموديًا)</string>
+    <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">تباعد المفاتيح (افقيا)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">ضغط المفتاح</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">الصوت عند ضغط المفتاح</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">حجم الصوت عند ضغط المفتاح</string>
@@ -175,6 +203,8 @@
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">رؤية النافذة المنبثقة</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">إظهار النافذة المنبثقة عندما تضغط على مفتاح</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">مدة الضغط المطوّل على المفتاح</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">شريط المسافة يبدل بين تخطيط الأحرف</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">يؤدي الضغط على شريط المسافة إلى التبديل تلقائيًا إلى الأحرف عندما تكون في الرموز أو الأرقام</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">تجربة الكتابة</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">تفعيل الشريط الذكي</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">سوف يظهر أعلى لوحة المفاتيح</string>
@@ -188,9 +218,16 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">الضغط مرتين على مفتاح المسافة يضيف نقطة متبوعة بمسافة</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">الإيماءات و الكتابة بالتمرير</string>
     <string name="pref__glide__title" comment="Preference group title">الكتابة بالتمرير</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">تفعيل الكتابة بالتمرير</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">أكتب كلمة بتمرير إصبعك عبر حروفها</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">إظهار آثار التمرير</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">سوف يختفي بعد كل كلمة</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">الإيماءات العامة</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">إيماءات شريط المسافة</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">إيماءات أخرى / حدود الإيماءات</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">بدون إجراء</string>
+    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">التبديل إلى لوحة المفاتيح السابقة</string>
+    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">التبديل الى لوحة المفاتيح التالية</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">حذف الحروف بدقة</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">حذف الكلمة الحالية</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">حذف الكلمات بدقة</string>
@@ -200,7 +237,15 @@
     <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">تحريك المؤشر إلى الأسفل</string>
     <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">تحريك المؤشر إلى اليسار</string>
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">تحريك المؤشر إلى اليمين</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">حرك المؤشر إلى بداية السطر</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">حرك المؤشر إلى نهاية السطر</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">حرك المؤشر إلى بداية الصفحة</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">حرك المؤشر إلى نهاية الصفحة</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">فتح مدير الحافظة /السجل</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">مفتاح التحويل</string>
+    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">إعادة</string>
+    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">تراجع</string>
+    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">إظهار طريقة الإدخال</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">التبديل إلى لوحة المفاتيح السابقة</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">التبديل إلى النوع الفرعي السابق</string>
     <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">التبديل إلى النوع الفرعي التالي</string>
@@ -211,6 +256,7 @@
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">السحب للفوق من خلال مفتاح المسافة</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">السحب لليسار من خلال مفتاح المسافة</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">السحب لليمين من خلال مفتاح المسافة</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">الضغط المطول على شريط المسافه</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">السحب لليسار من خلال مفتاح الحذف</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">عتبة سرعة السحب</string>
     <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">بطيئة جداً</string>
@@ -239,11 +285,20 @@
     <string name="about__view_source_code" comment="Label of View source code button in About">مصدر التعليمات البرمجية</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">تراخيص البرامج مفتوحة المصدر</string>
     <!-- Assets strings -->
+    <plurals name="assets__file__authors">
+        <item quantity="zero">المؤلف</item>
+        <item quantity="one">المؤلف</item>
+        <item quantity="two">المؤلفون</item>
+        <item quantity="few">كُتَّاب</item>
+        <item quantity="many">كُتَّاب</item>
+        <item quantity="other">المؤلفون</item>
+    </plurals>
     <string name="assets__file__name">الاسم</string>
     <string name="assets__file__source">المصدر</string>
     <string name="assets__action__add">إضافة</string>
     <string name="assets__action__cancel">إلغاء</string>
     <string name="assets__action__cancel_confirm_title">تأكيد الإلغاء</string>
+    <string name="assets__action__cancel_confirm_message">هل أنت متأكد أنك تريد تجاهل أي تغييرات غير محفوظة؟ لا يمكن التراجع عن هذا الإجراء بمجرد تنفيذه.</string>
     <string name="assets__action__delete">حذف</string>
     <string name="assets__action__delete_confirm_title">تأكيد الحذف</string>
     <string name="assets__action__delete_confirm_message">هل أنت متأكد من حذف \"%s\"؟ لا يمكن التراجع عن هذا الإجراء.</string>
@@ -290,9 +345,16 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">يبدو أن FlorisBoard يوقف عن العمل بشكل متكرر…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">العودة إلى لوحة المفاتيح السابقة لإيقاف حلقة التعطل الغير منتهية. انقر لعرض تفاصيل الخطأ</string>
     <!-- clipboard strings -->
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">الإنتقال إلى سجل الحافظة</string>
     <string name="clip__context_header">سجل الحافظة</string>
     <string name="clip__clear_history">مسح السجل</string>
+    <string name="clip__unpin_item">إلغاء تثبيت العنصر</string>
+    <string name="clip__pin_item">تثبيت العنصر</string>
     <string name="clip__delete_item">حذف</string>
     <string name="clip__paste_item">لصق</string>
+    <string name="clip__back_to_text_input">رجوع إلى الإدخال النصي</string>
+    <string name="clip__cant_paste">هذا التطبيق لايسمح بلصق المحتويات.</string>
+    <string name="pref__glide_trail_fade_duration">وقت تلاشي مسار الانزلاق</string>
+    <string name="pref__glide_preview_refresh_delay">عرض تاخير التحديث</string>
+    <string name="pref__glide__show_preview">عرض المعاينة أثناء الكتابة بالتمرير</string>
+    <string name="pref__glide_trail_max_length">الحد الأقصى لطول مسار الانزلاق</string>
 </resources>

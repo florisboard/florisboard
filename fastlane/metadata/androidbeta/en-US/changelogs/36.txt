@@ -1,0 +1,8 @@
+- Add Czech, Slovak and Ukrainian layout
+- Add Undo, Redo and Cycle keyboard mode gestures
+- Improve haptic feedback experience
+- Fix popup position for rtl mode
+- Fix Persian & French layouts
+- Fix ThemeManager crashing when service uninitialized
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.11-beta01

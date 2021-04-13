@@ -59,31 +59,33 @@ class GlideTypingGesture {
                     }
 
                     val pointerIndex = event.findPointerIndex(pointerId)
-                    val pos = Position(event.getX(pointerIndex), event.getY(pointerIndex))
-                    pointerData.positions.add(
-                        pos
-                    )
-                    if (pointerData.isActuallyGesture == null) {
-                        // evaluate whether is actually a gesture
-                        val dist = pointerData.positions[0].dist(pos)
-                        val time = (System.currentTimeMillis() - pointerData.startTime) + 1
-                        if (dist > keySize && (dist / time) > VELOCITY_THRESHOLD && (initialKeyCodes[pointerId] !in SWIPE_GESTURE_KEYS)) {
-                            pointerData.isActuallyGesture = true
-                            // Let listener know all those points need to be added.
-                            pointerData.positions.take(pointerData.positions.size - 1).forEach { point ->
-                                listeners.forEach {
-                                    it.onGestureAdd(point)
+                    for (i in 0..event.historySize) {
+                        val pos = when (i) {
+                            event.historySize -> Position(event.getX(pointerIndex), event.getY(pointerIndex))
+                            else -> Position(event.getHistoricalX(pointerIndex, i), event.getHistoricalY(pointerIndex, i))
+                        }
+                        pointerData.positions.add(pos)
+                        if (pointerData.isActuallyGesture == null) {
+                            // evaluate whether is actually a gesture
+                            val dist = pointerData.positions[0].dist(pos)
+                            val time = (System.currentTimeMillis() - pointerData.startTime) + 1
+                            if (dist > keySize && (dist / time) > VELOCITY_THRESHOLD && (initialKeyCodes[pointerId] !in SWIPE_GESTURE_KEYS)) {
+                                pointerData.isActuallyGesture = true
+                                // Let listener know all those points need to be added.
+                                pointerData.positions.take(pointerData.positions.size - 1).forEach { point ->
+                                    listeners.forEach {
+                                        it.onGestureAdd(point)
+                                    }
                                 }
+                            } else if (time > MAX_DETECT_TIME) {
+                                pointerData.isActuallyGesture = false
                             }
-                        } else if (time > MAX_DETECT_TIME) {
-                            pointerData.isActuallyGesture = false
+
                         }
 
+                        if (pointerData.isActuallyGesture == true)
+                            pointerData.positions.last().let { point -> listeners.forEach { it.onGestureAdd(point) } }
                     }
-
-                    if (pointerData.isActuallyGesture == true)
-                        pointerData.positions.last().let { point -> listeners.forEach { it.onGestureAdd(point) } }
-
                     return pointerData.isActuallyGesture ?: false
                 }
                 MotionEvent.ACTION_UP,

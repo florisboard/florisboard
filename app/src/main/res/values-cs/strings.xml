@@ -135,6 +135,7 @@
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Tlačítko chytré lišty</string>
     <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Celoobrazovkové zobrazení na šířku</string>
     <string name="settings__theme__group_extractActionButton" comment="Theme group label">Akční tlačítko při celoobrazovkovém zobrazení na šířku</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">Stopa tahu</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Vlastní skupina (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Barva pozadí</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Barva pozadí (aktivní)</string>
@@ -216,7 +217,9 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Poklepáním dvakrát na mezerník vloží období následuje prostor</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gesta &amp; Glide psan</string>
     <string name="pref__glide__title" comment="Preference group title">Glide psan</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Povolit psaní tahem</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Zadejte slovo posunutím prstu jeho písmeny</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Zobrazit stopu tahu</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Zmizí po každém slově</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Žádná akce</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Smazat znaky přesně</string>
@@ -322,7 +325,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Zdá se, že FlorisBoard přestal opakovaně pracovat…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Vrácení zpět na předchozí klávesnici pro zastavení nekonečného crash loopu. Klepnutím zobrazíte podrobnosti o chybě</string>
     <!-- clipboard strings -->
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">Přepnout na historii schránky</string>
     <string name="clip__context_header">Historie schránky</string>
     <string name="clip__clear_history">Smazat historii</string>
     <string name="clip__unpin_item">Odepnout položku</string>

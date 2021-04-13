@@ -62,6 +62,15 @@
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">حذف</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">ویرایش زیر-نوعی</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">منطقه</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">چیدمان کاراکتر ها</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">چیدمان اصلی نشانه ها</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">چیدمان فرعی نشانه ها</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">تنظیم واحد ارز</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">چیدمان عددی</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">چیدمان (پیشرفته) عددی</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">چیدمان ردیف اعداد</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">چیدمان اصلی موبایل</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">چیدمان فرعی موبایل</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">این زیرنوع درحال حاضر وجود دارد!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">طرح زمینه صفحه کلید</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">تعریف نشده</string>
@@ -126,6 +135,7 @@
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">دکمه نوار نوشمند</string>
     <string name="settings__theme__group_extractEditLayout" comment="Theme group label">حالت چیدمان تمام صفحه افقی</string>
     <string name="settings__theme__group_extractActionButton" comment="Theme group label">دکمه عملیات در حالت تمام صفحه افقی</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">دنباله پرواز</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">گروه سفارشی (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">رنگ پس‌زمینه</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">رنگ پس زمینه (هنگام فعال بودن)</string>
@@ -208,12 +218,16 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">فشردن دو بار فاصله در فاصله زمانی باعث ادامه دادن فاصله گذاشتن شود</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">اشارات &amp; نوشتن گلایدی</string>
     <string name="pref__glide__title" comment="Preference group title">نوشتن گلایدی</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">فعال سازی دنباله نویسی</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">نوشتن حروف با حرکت مداوم و نگه داشتن روی حرف مورد نظر</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">نمایش دنباله پروازی</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">بعد از هر کلمه ناپدید خواهد شد</string>
     <string name="pref__gestures__general_title" comment="Preference group title">اشارات کلی</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">حرکات نوار فاصله</string>
     <string name="pref__gestures__other_title" comment="Preference group title">دیگر اشارات/ آشارات آستانه</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">بدون عمل</string>
+    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">چرخش به حالت صفحه کلید پیشین</string>
+    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">چرخش به حالت صفحه کلید پسین</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">حذف کردن دقیق حروف</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">حذف کلمه کنونی</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">حذف دقیق‌ کلمات</string>
@@ -227,7 +241,10 @@
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">انتقال اشاره به پایان خط</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">انتقال اشاره‌گر به اول صفحه</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">انتقال اشاره‌گر به پایان صفحه</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">بازکردن تاریخچه/مدیریت کلیپ‌بورد</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">شیفت</string>
+    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">بازانجام</string>
+    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">واگردانی</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">نمایش حالت انتخاب کننده</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">تعویض به صفحه کلید قبلی</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">تغییر به زیر گروه قبلی</string>
@@ -324,7 +341,6 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">به نظر می رسد فلوریس بورد کار خود را مکرر متوقف می کند…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">در خال بازگشت به کیبورد قبلی برای جلو گیری از بروز خطای دوباره. برای مشاهده جزئیات خطا ، ضربه بزنید</string>
     <!-- clipboard strings -->
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context">تغییر به تاریخچه کلیپ بورد</string>
     <string name="clip__context_header">تاریخچه کلیپ بورد</string>
     <string name="clip__clear_history">پاک‌سازی تاریخچه</string>
     <string name="clip__unpin_item">برداشتن نشانه</string>
@@ -333,4 +349,8 @@
     <string name="clip__paste_item">چسباندن</string>
     <string name="clip__back_to_text_input">بازگشت به ورودی متن</string>
     <string name="clip__cant_paste">این برنامه اجازه چسباندن این محتوا را نمی دهد.</string>
+    <string name="pref__glide_trail_fade_duration">مدت زمان محو شدن دنباله پروازی</string>
+    <string name="pref__glide_preview_refresh_delay">پیشنمایش تاخیر در تازه‌سازی</string>
+    <string name="pref__glide__show_preview">مشاهده پیشنمایش هنگام دنباله نویسی</string>
+    <string name="pref__glide_trail_max_length">حداکثر طول دنباله</string>
 </resources>

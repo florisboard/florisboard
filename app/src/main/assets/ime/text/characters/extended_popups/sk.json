@@ -1,0 +1,116 @@
+{
+  "type": "characters/extended_popups",
+  "name": "sk",
+  "authors": [ "stefan-misik", "majso" ],
+  "mapping": {
+    "all": {
+      "e": {
+        "relevant": [
+          { "code":  233, "label": "é" },
+          { "code":  283, "label": "ě" }
+        ]
+      },
+      "r": {
+        "relevant": [
+          { "code":  341, "label": "ŕ" },
+          { "code":  345, "label": "ř" }
+        ]
+      },
+      "t": {
+        "relevant": [
+          { "code":  357, "label": "ť" }
+        ]
+      },
+      "y": {
+        "relevant": [
+          { "code":  253, "label": "ý" }
+        ]
+      },
+      "u": {
+        "relevant": [
+          { "code":  250, "label": "ú" },
+          { "code":  367, "label": "ů" }
+        ]
+      },
+      "i": {
+        "relevant": [
+          { "code":  237, "label": "í" }
+        ]
+      },
+      "o": {
+        "relevant": [
+          { "code":  243, "label": "ó" },
+          { "code":  244, "label": "ô" }
+        ]
+      },
+      "a": {
+        "relevant": [
+          { "code":  225, "label": "á" },
+          { "code":  228, "label": "ä" }
+        ]
+      },
+      "s": {
+        "relevant": [
+          { "code":  353, "label": "š" }
+        ]
+      },
+      "d": {
+        "relevant": [
+          { "code":  271, "label": "ď" }
+        ]
+      },
+      "l": {
+        "relevant": [
+          { "code":  318, "label": "ľ" },
+          { "code":  314, "label": "ĺ" }
+        ]
+      },
+      "z": {
+        "relevant": [
+          { "code":  382, "label": "ž" }
+        ]
+      },
+      "c": {
+        "relevant": [
+          { "code":  269, "label": "č" }
+        ]
+      },
+      "n": {
+        "relevant": [
+          { "code":  328, "label": "ň" }
+        ]
+      },
+      "~right": {
+        "main": { "code":   44, "label": "," },
+        "relevant": [
+          { "code":   38, "label": "&" },
+          { "code":   37, "label": "%" },
+          { "code":   43, "label": "+" },
+          { "code":   34, "label": "\"" },
+          { "code":   45, "label": "-" },
+          { "code":   58, "label": ":" },
+          { "code":   39, "label": "'" },
+          { "code":   64, "label": "@" },
+          { "code":   59, "label": ";" },
+          { "code":   47, "label": "/" },
+          { "code":   40, "label": "(" },
+          { "code":   41, "label": ")" },
+          { "code":   35, "label": "#" },
+          { "code":   33, "label": "!" },
+          { "code":   63, "label": "?" }
+        ]
+      }
+    },
+    "uri": {
+      "~right": {
+        "main": { "code": -255, "label": ".com" },
+        "relevant": [
+          { "code": -255, "label": ".sk" },
+          { "code": -255, "label": ".eu" },
+          { "code": -255, "label": ".org" },
+          { "code": -255, "label": ".net" }
+        ]
+      }
+    }
+  }
+}
