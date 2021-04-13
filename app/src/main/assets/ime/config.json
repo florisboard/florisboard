@@ -581,6 +581,14 @@
       }
     },
     {
+      "id": 2501,
+      "languageTag": "ca",
+      "currencySet": "euro",
+      "preferred": {
+        "characters": "catalan"
+      }
+    },
+    {
       "id": 2601,
       "languageTag": "IPA-IPA",
       "currencySet": "dollar",
