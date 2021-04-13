@@ -392,8 +392,26 @@
     <string name="clip__paste_item">Paste</string>
     <string name="clip__back_to_text_input">Back to text input</string>
     <string name="clip__cant_paste">This app doesn\'t allow pasting this content.</string>
+    <string name="pref__clipboard__clipboard_category__label">Clipboard</string>
+    <string name="pref__clipboard__use_internal_clipboard___label">Use internal clipboard</string>
+    <string name="pref__clipboard__use_internal_clipboard_title__summary">Use an internal clipboard instead of the system clipboard</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Sync from system clipboard</string>
+    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">System clipboard updates also update Floris clipboard</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Sync to system clipboard</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris clipboard updates also update system clipboard</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Enable clipboard history</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Retain clipboard items</string>
+    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Clean up old items</string>
+    <string name="pref__clipboard__clean_up_old_after__label">Clean up old items after</string>
+    <string name="pref__unit_minutes">" minutes"</string>
+    <string name="pref__clipboard__limit_history_size__label">Limit history size</string>
+    <string name="pref__clipboard__max_history_size__label">Max history size</string>
+    <string name="pref__unit_items">" items"</string>
+
+    <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Glide trail fade time</string>
     <string name="pref__glide_preview_refresh_delay">Preview refresh delay</string>
     <string name="pref__glide__show_preview">Show preview while glide typing</string>
     <string name="pref__glide_trail_max_length">Maximum glide trail length</string>
+
 </resources>

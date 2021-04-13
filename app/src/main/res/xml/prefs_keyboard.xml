@@ -257,44 +257,44 @@
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        android:title="Clipboard">
+        android:title="@string/pref__clipboard__clipboard_category__label">
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
             app:key="clipboard__enable_internal"
             app:iconSpaceReserved="false"
-            app:title="Use internal clipboard"
-            app:summary="Use an internal clipboard instead of the system clipboard"/>
+            app:title="@string/pref__clipboard__use_internal_clipboard___label"
+            app:summary="@string/pref__clipboard__use_internal_clipboard_title__summary"/>
 
         <SwitchPreferenceCompat
             android:dependency="clipboard__enable_internal"
             android:defaultValue="true"
             app:key="clipboard__sync_to_floris"
             app:iconSpaceReserved="false"
-            app:title="Sync from system clipboard"
-            app:summary="System clipboard updates also update Floris clipboard"/>
+            app:title="@string/pref__clipboard__sync_from_system_clipboard__label"
+            app:summary="@string/pref__clipboard__keyboard_sync_from_system_clipboard__summary"/>
 
         <SwitchPreferenceCompat
             android:dependency="clipboard__enable_internal"
             android:defaultValue="false"
             app:key="clipboard__sync_to_system"
             app:iconSpaceReserved="false"
-            app:title="Sync to system clipboard"
-            app:summary="Floris clipboard updates also update system clipboard"/>
+            app:title="@string/pref__clipboard__sync_to_system_clipboard__label"
+            app:summary="@string/pref__clipboard__sync_to_system_clipboard__summary"/>
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
             app:key="clipboard__enable_history"
             app:iconSpaceReserved="false"
-            app:title="Enable clipboard history"
-            app:summary="Retain clipboard items"/>
+            app:title="@string/pref__clipboard__enable_clipboard_history__label"
+            app:summary="@string/pref__clipboard__enable_clipboard_history__summary"/>
 
         <SwitchPreferenceCompat
             android:dependency="clipboard__enable_history"
             android:defaultValue="true"
             app:key="clipboard__clean_up_old"
             app:iconSpaceReserved="false"
-            app:title="Clean up old items" />
+            app:title="@string/pref__clipboard__clean_up_old_clipboard_items__label" />
 
         <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
@@ -304,16 +304,16 @@
             app:min="0"
             app:max="120"
             app:iconSpaceReserved="false"
-            app:title="Clean up old items after"
+            app:title="@string/pref__clipboard__clean_up_old_after__label"
             app:seekBarIncrement="5"
-            app:unit=" minutes"/>
+            app:unit="@string/pref__unit_minutes"/>
 
         <SwitchPreferenceCompat
             android:dependency="clipboard__enable_history"
             android:defaultValue="true"
             app:key="clipboard__limit_history_size"
             app:iconSpaceReserved="false"
-            app:title="Limit history size" />
+            app:title="@string/pref__clipboard__limit_history_size__label" />
 
         <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
@@ -323,9 +323,9 @@
             app:min="5"
             app:max="100"
             app:iconSpaceReserved="false"
-            app:title="Max history size"
+            app:title="@string/pref__clipboard__max_history_size__label"
             app:seekBarIncrement="5"
-            app:unit=" items"/>
+            app:unit="@string/pref__unit_items"/>
 
     </PreferenceCategory>
 
