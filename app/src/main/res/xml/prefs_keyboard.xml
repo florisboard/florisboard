@@ -214,6 +214,20 @@
             app:seekBarIncrement="1"
             app:unit="%"/>
 
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="-1"
+            app:systemDefaultValue="-1"
+            app:systemDefaultValueText="@string/settings__system_default"
+            app:dependency="keyboard__vibration_enabled"
+            app:key="keyboard__vibration_duration"
+            app:min="0"
+            app:max="100"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__vibration_duration__label"
+            app:seekBarIncrement="1"
+            app:unit=" ms"/>
+
         <SwitchPreferenceCompat
             android:defaultValue="true"
             app:key="keyboard__popup_enabled"
