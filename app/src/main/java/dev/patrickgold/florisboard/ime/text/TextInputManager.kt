@@ -71,7 +71,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     lateinit var layoutManager: LayoutManager
         private set
     private var activeKeyboardMode: KeyboardMode? = null
-    private var animator: ObjectAnimator? = null
     private val keyboardViews = EnumMap<KeyboardMode, KeyboardView>(KeyboardMode::class.java)
     private var editingKeyboardView: EditingKeyboardView? = null
     private var loadingPlaceholderKeyboard: KeyboardView? = null
@@ -169,27 +168,29 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         loadingPlaceholderKeyboard = inputView.findViewById(R.id.keyboard_preview)
 
         launch(Dispatchers.Main) {
-            textViewGroup?.let {
-                animator = ObjectAnimator.ofFloat(it, "alpha", 0.9f, 1.0f).apply {
+            val animator1 = textViewGroup?.let {
+                ObjectAnimator.ofFloat(it, "alpha", 0.9f, 1.0f).apply {
                     duration = 125
+                    repeatCount = 0
+                    start()
+                }
+            }
+            val animator2 = textViewGroup?.let {
+                ObjectAnimator.ofFloat(it, "alpha", 1.0f, 0.4f).apply {
+                    startDelay = 125
+                    duration = 500
                     repeatCount = ValueAnimator.INFINITE
                     repeatMode = ValueAnimator.REVERSE
                     start()
-                    launch {
-                        delay(duration)
-                        try {
-                            duration = 500
-                            setFloatValues(1.0f, 0.4f)
-                        } catch (_: Exception) {}
-                    }
                 }
             }
             val activeKeyboardMode = getActiveKeyboardMode()
             addKeyboardView(activeKeyboardMode)
             setActiveKeyboardMode(activeKeyboardMode)
-            animator?.cancel()
-            textViewGroup?.let {
-                animator = ObjectAnimator.ofFloat(it, "alpha", it.alpha, 1.0f).apply {
+            animator1?.cancel()
+            animator2?.cancel()
+            val animator3 = textViewGroup?.let {
+                ObjectAnimator.ofFloat(it, "alpha", it.alpha, 1.0f).apply {
                     duration = (((1.0f - it.alpha) / 0.6f) * 125f).roundToLong()
                     repeatCount = 0
                     start()
@@ -200,6 +201,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     addKeyboardView(mode)
                 }
             }
+            delay(animator3?.duration ?: 1)
+            animator3?.end()
         }
     }
 
