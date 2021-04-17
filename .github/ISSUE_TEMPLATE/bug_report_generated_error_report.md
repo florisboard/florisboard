@@ -1,6 +1,6 @@
 ---
-name: Bug report (blank)
-about: Create a new report to help FlorisBoard improve
+name: Bug report (generated)
+about: Create a report with a generated error log attached to help FlorisBoard improve
 title: ''
 labels: bug
 assignees: ''
@@ -8,8 +8,8 @@ assignees: ''
 ---
 
 <!--
-- Important: If you have a generated error log to paste, use the
-             "Bug report (generated)" template instead!
+- Important: Use this template only if you can paste a generated error log. If
+             you don't have such log, use the "Bug report (blank)" template instead.
 -
 - Describe the bug in a short but concise way.
 - If you have a screenshot or screen recording of the bug, link them at the end
@@ -17,8 +17,6 @@ assignees: ''
 - Please search existing bug reports to avoid creating duplicates.
 - Give your bug report a good name (no generics like "Error" or "Crash"), so
   others can easily identify the topic of your issue.
-- Also make sure to fill out the environment information. This info is valuable
-  when trying to fix your described bug.
 -
 - Important: should your issue be regarding an OutOfMemory crash, please
              don't submit this bug report and check out issue #677 (is pinned).
@@ -35,8 +33,4 @@ Describe the bug in a short but concise way.
 3. Scroll down to '....'
 4. See error
 
-#### Environment information
-- FlorisBoard Version: <!-- e.g. 0.X.X -->
-- Install Source: <!-- Google PlayStore/F-Droid/GitHub/? -->
-- Device: <!-- e.g. OnePlus 7T -->
-- Android: <!-- e.g. 10, Stock -->
+<!-- Paste the generated error log below -->
