@@ -331,7 +331,7 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">Отчет за грешка на FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Извинете за неудобството, но FlorisBoard се срина поради неочаквана грешка.\n\nАко искате да съобщите за нея, докоснете „Копиране в буфера“, след това „Отваряне на доклад за грешка“. Попълнете доклада за грешки и го поставете. Така ще допринесете за подобряване на FlorisBoard за всички потребители! Благодарим ви!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Копиране в буфера</string>
-    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Отваряне на формуляр за доклад за грешка (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Отваряне на формуляр за доклад за грешка (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Затваряне</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Доклади за грешки на FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard спря да работи…</string>

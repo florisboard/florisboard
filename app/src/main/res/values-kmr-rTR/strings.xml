@@ -328,7 +328,7 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">Raporta xeletiya FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Ji ber xemgîniyê, lê FlorisBoard ji ber çewtiyek nediyar qulipî.\n\nEger tu dixwazî vê çewtiyê rabikî, li ser \"Ji ber bibe panelê\" bitikîne, paşê li ser bişkojka \"Rapora çewtiyên veke\". Raporta çewt tijî bike û logê pêve bike. Ev dibe alîkar ku FlorisBoard ji bo her kesî çêtir û aramtir bibe. Sax bî!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Ji ber bibe panelê</string>
-    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Forma rapora çewtiyên veke (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Forma rapora çewtiyên veke (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Bigire</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Raportên xeletiya FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorîsBoardê dest ji kar berda…</string>

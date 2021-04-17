@@ -12,6 +12,13 @@
         android:padding="8dp"
         android:text="@string/crash_dialog__description"/>
 
+    <TextView
+        android:id="@+id/report_instructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:text="@string/crash_dialog__report_instructions"/>
+
     <Button
         android:id="@+id/copy_to_clipboard"
         android:layout_width="wrap_content"
@@ -24,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="@string/crash_dialog__open_bug_report_form"/>
+        android:text="@string/crash_dialog__open_issue_tracker"/>
 
     <ScrollView
         android:layout_width="match_parent"

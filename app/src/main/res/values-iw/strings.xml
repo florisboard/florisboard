@@ -297,7 +297,7 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard דוח שגיאה</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">מצטערים על אי הנוחות, אבל FlorisBoard קרס בגלל שגיאה לא צפויה.\n\n אם אתם מעוניינים לדווח על כך, לחצו על \"העתקה ללוח העריכה\" ואז על כפתור \"פתיחת טופס דיווח על באג\". מלאו את פרטי התקלה והדביקו את הלוג. הדיווח שלכם עוזר להפוך את FlorisBoard יותר טוב ויציב עבור כולם. תודה רבה!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">העתקה ללוח העריכה</string>
-    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">פתיחת טופס דיווח על באג (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">פתיחת טופס דיווח על באג (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">סגור</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard דוח שגיאה</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard הפסיק לעבוד…</string>

@@ -312,7 +312,7 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">Αναφορά σφάλματος FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Συγγνώμη για την ταλαιπωρία, άλλα το FlorisBoard έχει κρασάρει εξαιτίας ενός απρόβλεπτου σφάλματος.\n\nΕάν επιθυμείτε να αναφέρετε αυτό το σφάλμα, πατήστε στο πλήκτρο \"Αντιγραφή στο πρόχειρο\", έπειτα στο πλήκτρο \"Άνοιγμα αναφοράς προβλήματος\". Συμπληρώστε την αναφορά προβλήματος και αντιγράψτε το αρχείο καταγραφής. Αυτό βοηθάει στο να γίνει το FlorisBoard καλύτερο και πιο σταθερό για όλους. Σας ευχαριστώ!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Αντιγραφή στο πρόχειρο</string>
-    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Άνοιγμα φόρμας αναφοράς προβλήματος (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Άνοιγμα φόρμας αναφοράς προβλήματος (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Κλείσιμο</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Αναφορές σφάλματος FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Το FlorisBoard έχει σταματήσει να λειτουργεί…</string>

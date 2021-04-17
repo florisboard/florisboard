@@ -333,7 +333,7 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">گزارش خطای فلوریس بورد</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">با عرض پوزش برای این مشکل ، اما فلوریس بورد به دلیلی غیرمنتظره ای متوفق شده است.\n\n اگر می خواهید این خطا را گزارش کنید ، روی \"کپی در کلیپ بورد\" کلیک کنید ، سپس بر روی دکمه \"باز کردن گزارش اشکال\" کلیک کنید. گزارش اشکال را پر کرده و گزارش را وارد کنید. این امر به بهتر و پایدارتر شدن فلوریس بورد برای همه کمک می کند. متشکرم!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">کپی در حافطه موقت</string>
-    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">باز کردن گزارش خطا توسط (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">باز کردن گزارش خطا توسط (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">بستن</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">گزارش های خطای فلوریس بورد</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">فلوریس بورد کار خود را متوقف کرده است…</string>

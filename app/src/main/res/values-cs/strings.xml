@@ -317,7 +317,7 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">Zpráva o chybě florisboardu</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Omlouváme se za nepříjemnosti, ale FlorisBoard se zhroutil kvůli neočekávané chybě. \n\nChcete-li tuto chybu nahlásit, klikněte na „Kopírovat do schránky“ a poté na tlačítko „Otevřít hlášení o chybě“. Vyplňte hlášení o chybě a vložte protokol. To pomáhá zlepšovat a stabilizovat FlorisBoard pro všechny. Děkuju!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopírovat do schránky</string>
-    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Otevřít formulář hlášení chyb (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Otevřít formulář hlášení chyb (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Uzavřít</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard chybové hlášení</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard přestal fungovat…</string>

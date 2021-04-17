@@ -311,7 +311,7 @@
     <string name="crash_dialog__description" comment="Description of crash dialog">Bu rahatsızlık yüzünden özür dileriz, ancak FlorisBoard bilinmeyen bir hata yüzünden çöktü.\n\nlf
 Eğer bu hatayı bildirmek isterseniz, \"Panoya Kopyala\" butonuna basın, sonra \"Hata Bildirisini Aç\" düğmesine basın. Hata bildirisini doldurun ve hata günlüğünü yapıştırın. Bunu yapmanız FlorisBoard\'ı daha kararlı ve iyi yapmamızı sağlayacaktır. Teşekkür ederiz!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Panoya kopyala</string>
-    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Hata rapor formunu aç (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Hata rapor formunu aç (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Kapat</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard hata raporları</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard çalışmayı durdurdu…</string>

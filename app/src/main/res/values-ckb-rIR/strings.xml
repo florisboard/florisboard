@@ -329,7 +329,7 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBorad ڕاپۆرتی هەڵەی</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">بەداخەوە تەختەکلیلی FlorisBoard بەهۆی هەڵەیەکی چاوەڕوان نەکراوەوە لەکارکەوت، \n\n ئەگەر دەتەوێت ئەم هەڵەیە ڕاپۆڕت بکەیت، کرتە بکە لەسەر \"کۆپی کردن بۆ کلیپ بۆرد\"، پاشان لەسەر دوگمەی \"کردنەوەی ڕاپۆرتی هەڵە\" پڕکردنەوەی ڕاپۆرتی هەڵە  و لکاندنی تۆماربکە،  ئەمە یارمەتی دەدات لە باشترکردنی FlorisBoard  و سەقامگیرتر بۆ هەموو کەسێک سوپاس بۆ تۆ!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">لەبەرگرتنەوە</string>
-    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">ڕاپۆرتی هەڵە بکەرەوە لەڕێی (github.com) ـەوە</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">ڕاپۆرتی هەڵە بکەرەوە لەڕێی (github.com) ـەوە</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">داخستن</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBorad ڕاپۆرتی هەڵەی</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">تەختەکلیلی FlorisBoard لە کارکەوت…</string>
