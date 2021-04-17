@@ -8,22 +8,14 @@ assignees: ''
 ---
 
 <!--
-- Important: If you have a generated crash log to paste, use the
-             "Crash report" template instead!
--
-- Describe the bug in a short but concise way.
-- If you have a screenshot or screen recording of the bug, link them at the end
-  of this issue.
-- Please search existing bug/crash reports reports to avoid creating duplicates.
-- Give your bug report a good name (no generics like "Error" or "Crash"), so
-  others can easily identify the topic of your issue.
-- Also make sure to fill out the environment information. This info is valuable
-  when trying to fix your described bug.
--
-- Important: should your issue be regarding an OutOfMemory crash, please
-             don't submit this bug report and check out issue #677 (is pinned).
--
-- Thank you for your help in making FlorisBoard better!
+Thank you for your help in making FlorisBoard better!
+
+Guide to a good bug-report:
+• Please search existing bug/crash reports reports to avoid creating duplicates.
+• Give your bug report a good name (no generics like "Error" or "Crash"), so others can easily identify the topic of your issue.
+• Describe the bug in a short but concise way.
+• If you have a screenshot or screen recording of the bug, link them at the end of this issue.
+• Also make sure to fill out the environment information. This info is valuable when trying to fix your described bug.
 -->
 
 #### Short description
