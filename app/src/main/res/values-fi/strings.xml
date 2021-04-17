@@ -174,7 +174,7 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoardin virheraportti</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Pahoittelemme, mutta FlorisBoard on kaatunut odottamattomasta virheestä.\n\nJos haluat lähettää virheraportin, klikkaa \"Kopioi leikepöydälle\" ja paina sitten \"Avaa virheraportti\"-painiketta. Täytä virheraportti ja liitä loki. Tämä auttaa FlorisBoardin kehittämisessä paremmaksi ja vakaammaksi kaikille. Kiitos!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopioi leikepöydälle</string>
-    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Avaa virheraportti (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Avaa virheraportti (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Sulje</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard-virheraportit</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard on lopettanut toimintansa…</string>

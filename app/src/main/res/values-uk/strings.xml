@@ -330,7 +330,7 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">Звіт про помилку FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Вибачте за незручності, але в FlorisBoard стався збій через несподівану помилку.\n\nЯкщо ви хочете повідомити про цю помилку, натисніть \"Копіювати в буфер обміну\", а потім на кнопку \"Відкрити форму звіту про помилку\". Заповніть звіт про помилку і вставте журнал. Це допомагає зробити FlorisBoard кращим та стабільнішим для всіх. Дякуємо!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Копіювати до буфера обміну</string>
-    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Відкрити форму звіту про помилку (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Відкрити форму звіту про помилку (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Закрити</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Звіти про помилки FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard перестав працювати…</string>

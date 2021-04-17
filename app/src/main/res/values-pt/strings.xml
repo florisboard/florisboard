@@ -333,7 +333,7 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">Relatório de erros do FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Pedimos desculpa por esta situação mas o FlorisBoard encerrou em virtude de um erro inesperado.\n\nSe quiser reportar este erro, toque em \"Copiar para a área de transferência\" e depois no botão \"Abrir relatório de erro\". Preencha o relatório e cole o registo. Desta forma, ajuda-nos a melhorar a aplicação para todos os que a quiserem usar. Obrigado!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copiar para a área de transferência</string>
-    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Abrir formulário de erros (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Abrir formulário de erros (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Fechar</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Relatórios de erros do FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">O FlorisBoard parou de funcionar…</string>

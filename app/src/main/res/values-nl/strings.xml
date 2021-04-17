@@ -333,7 +333,7 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">Foutenrapport FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Sorry voor het ongemak, maar FlorisBoard is gecrasht door een onverwachte fout.\n\nAls u deze fout wilt melden, klikt u op \"Kopiëren naar klembord\" en vervolgens op de \"Open bug report\"-knop. Vul het foutenrapport in en plak het logboek. Dit helpt bij het verbeteren en stabieler maken van FlorisBoard voor iedereen. Bedankt!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopiëren naar klembord</string>
-    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Bug-rapportformulier openen (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Bug-rapportformulier openen (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Sluiten</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Foutenrapporten van FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard is gestopt met werken…</string>

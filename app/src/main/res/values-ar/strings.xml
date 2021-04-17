@@ -337,7 +337,7 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">تقرير حول خطأ في FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">نأسف للإزعاج ، ولكن FlorisBoard تعطل بسبب خطأ غير متوقع.\n\nإذا كنت ترغب في الإبلاغ عن هذا الخطأ ، انقر على \"نسخ إلى الحافظة\" ، ثم على الزر \"فتح تقرير الخطأ\". املأ تقرير الخطأ والصق السجل. هذا يساعد في جعل FlorisBoard أفضل وأكثر استقرارًا للجميع. شكرا جزيلا!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">نسخ إلى الحافظة</string>
-    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">فتح نموذج تقرير الخطأ (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">فتح نموذج تقرير الخطأ (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">إغلاق</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">تقارير حول خطأ في FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">توقف FlorisBoard عن العمل…</string>

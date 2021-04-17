@@ -334,7 +334,7 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard kļūdu ziņojums</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Atvainojamies par neērtībām, bet FlorisBoard ir avarējis neparedzētas kļūdas dēļ.\n\nJa ir vēlme ziņot par šo kļūdu, jāspiež uz \"Ievietot starpliktuvē\", tad uz \"Atvērt nepilnību pieteikumu\" pogas. Jāaizpilda nepilnību pieteikums un jāielīmē starpliktuvē esošie žurnāla ieraksti. Tas palīdz padarīt FlorisBoard labāku un noturīgāku ikvienam. Paldies!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Ielikt starpliktuvē</string>
-    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Atvērt kļūdu ziņojuma veidni (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Atvērt kļūdu ziņojuma veidni (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Aizvērt</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard kļūdu ziņojumi</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard pārstāja darboties…</string>

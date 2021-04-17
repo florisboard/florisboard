@@ -333,7 +333,7 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard Fehlermeldung</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Wir bitten die Unannehmlichkeiten zu entschuldigen, aber FlorisBoard wurde wegen eines Fehlers unerwartet geschlossen.\n\nWenn Sie diesen Fehler melden möchten, klicken Sie auf \"In die Zwischenablage kopieren\" und danach auf \"Fehlermeldung erstellen\". Füllen Sie die Fehlermeldung aus und fügen Sie das Protokoll ein. Mit Ihrer Hilfe kann FlorisBoard besser und stabiler für alle werden. Vielen Dank!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">In die Zwischenablage kopieren</string>
-    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Fehler melden (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Fehler melden (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Schließen</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard Fehlermeldungen</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard funktioniert nicht mehr…</string>

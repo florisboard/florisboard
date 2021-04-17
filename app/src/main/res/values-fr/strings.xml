@@ -333,7 +333,7 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">Rapport d\'erreur de FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Désolé pour le dérangement, mais FlorisBoard a planté à cause d\'une erreur inattendue.\n\nSi vous souhaitez signaler cette erreur, cliquez sur \"Copier dans le presse-papiers\", puis sur le bouton \"Ouvrir le rapport de bug\". Remplissez le rapport de bug et collez le journal. Cela permet de rendre FlorisBoard meilleur et plus stable pour tout le monde. Merci !</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copier dans le presse-papiers</string>
-    <string name="crash_dialog__open_bug_report_form" comment="Label of Open bug report button in crash dialog">Ouvrir le formulaire de rapport de bug (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Ouvrir le formulaire de rapport de bug (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Fermer</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Rapports d\'erreur de FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard a cessé de fonctionner…</string>

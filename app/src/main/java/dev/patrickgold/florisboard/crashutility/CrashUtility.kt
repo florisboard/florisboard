@@ -26,9 +26,10 @@ import android.os.Bundle
 import android.os.Process
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
+import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import timber.log.Timber
 import java.io.File
 import java.lang.ref.WeakReference
 import kotlin.system.exitProcess
@@ -46,7 +47,7 @@ abstract class CrashUtility private constructor() {
         private const val SHARED_PREFS_FILE = "crash_utility"
         private const val SHARED_PREFS_LAST_CRASH_TIMESTAMP = "last_crash_timestamp"
 
-        private const val NOTIFICATION_CHANNEL_ID = "dev.patrickgold.florisboard.crashutility"
+        private const val NOTIFICATION_CHANNEL_ID = "${BuildConfig.APPLICATION_ID}.crashutility"
         private const val NOTIFICATION_ID = 0xFBAD0100
 
         private const val UNHANDLED_STACKTRACE_FILE_EXT = "stacktrace"
@@ -63,14 +64,16 @@ abstract class CrashUtility private constructor() {
          */
         fun install(context: Context?): Boolean {
             if (context == null) {
-                Timber.e(
+                flogError(LogTopic.CRASH_UTILITY) {
                     "install($context): Can't install crash handler with a null Context object, doing nothing!"
-                )
+                }
                 return false
             }
             val oldHandler = Thread.getDefaultUncaughtExceptionHandler()
             if (oldHandler is UncaughtExceptionHandler) {
-                Timber.i("install($context): Crash handler is already installed, doing nothing!")
+                flogInfo(LogTopic.CRASH_UTILITY) {
+                    "install($context): Crash handler is already installed, doing nothing!"
+                }
             } else {
                 val application = context.applicationContext
                 if (application != null && application is Application) {
@@ -82,18 +85,18 @@ abstract class CrashUtility private constructor() {
                                 application.filesDir.absolutePath
                             )
                         )
-                        Timber.i(
+                        flogInfo(LogTopic.CRASH_UTILITY) {
                             "install($context): Successfully installed crash handler for this application!"
-                        )
+                        }
                     } catch (e: SecurityException) {
-                        Timber.e(
+                        flogError(LogTopic.CRASH_UTILITY) {
                             "install($context): Failed to install crash handler, probably due to missing runtime permission 'setDefaultUncaughtExceptionHandler':\n$e"
-                        )
+                        }
                         return false
                     } catch (e: Exception) {
-                        Timber.e(
+                        flogError(LogTopic.CRASH_UTILITY) {
                             "install($context): Failed to install crash handler due to an unspecified error:\n$e"
-                        )
+                        }
                         return false
                     }
                     application.registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
@@ -126,19 +129,19 @@ abstract class CrashUtility private constructor() {
                                 )
                                 notificationManager.createNotificationChannel(notificationChannel)
                             }
-                            Timber.i(
+                            flogInfo(LogTopic.CRASH_UTILITY) {
                                 "install($context): Successfully created crash handler notification channel!"
-                            )
+                            }
                         } catch (e: Exception) {
-                            Timber.e(
+                            flogError(LogTopic.CRASH_UTILITY) {
                                 "install($context): Failed to create crash handler notification channel due to an unspecified error:\n$e"
-                            )
+                            }
                         }
                     }
                 } else {
-                    Timber.e(
+                    flogError(LogTopic.CRASH_UTILITY) {
                         "install($context): Can't install crash handler with a null Application object, doing nothing!"
-                    )
+                    }
                     return false
                 }
             }
@@ -150,24 +153,24 @@ abstract class CrashUtility private constructor() {
          *
          * @param context The current package context. If null is supplied, this function returns
          *  an empty string.
-         * @return All unhandled stacktrace files or an empty string.
+         * @return All unhandled stacktrace files or an empty list.
          */
-        fun getUnhandledStacktrace(context: Context?): String {
-            context ?: return ""
-            val retString: StringBuilder = StringBuilder()
+        fun getUnhandledStacktraces(context: Context?): List<Stacktrace> {
+            context ?: return listOf()
+            val retList = mutableListOf<Stacktrace>()
             val ustDir = getUstDir(context)
             if (ustDir.isDirectory) {
                 (ustDir.listFiles { pathname ->
                     pathname.name.endsWith(".$UNHANDLED_STACKTRACE_FILE_EXT")
                 })?.forEach { file ->
-                    val newLine = System.lineSeparator()
-                    Timber.i("Reading unhandled stacktrace: ${file.name}")
-                    retString.append("~~~ ${file.name} ~~~$newLine$newLine")
-                    retString.append(readFile(file))
+                    flogInfo(LogTopic.CRASH_UTILITY) {
+                        "Reading unhandled stacktrace: ${file.name}"
+                    }
+                    retList.add(Stacktrace(file.name, readFile(file)))
                     file.delete()
                 }
             }
-            return retString.toString()
+            return retList.toList()
         }
 
         fun hasUnhandledStacktraceFiles(context: Context): Boolean {
@@ -339,6 +342,14 @@ abstract class CrashUtility private constructor() {
     }
 
     /**
+     * A simple stacktrace data class capable of holding a [name] and the [details] of a stacktrace.
+     */
+    data class Stacktrace(
+        val name: String,
+        val details: String
+    )
+
+    /**
      * Custom UncaughtExceptionHandler, which writes the captured stacktrace of the crash to the
      * internal storage, pushes a crash notification and kills the current process.
      */
@@ -348,7 +359,9 @@ abstract class CrashUtility private constructor() {
         private val path: String
     ) : Thread.UncaughtExceptionHandler {
         override fun uncaughtException(thread: Thread?, throwable: Throwable?) {
-            Timber.e("Detected application crash, executing custom crash handler.")
+            flogInfo(LogTopic.CRASH_UTILITY) {
+                "Detected application crash, executing custom crash handler."
+            }
             thread ?: return
             throwable ?: return
             val timestamp = System.currentTimeMillis()
