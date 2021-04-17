@@ -19,6 +19,8 @@ package dev.patrickgold.florisboard.ime.core
 import android.app.Application
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.crashutility.CrashUtility
+import dev.patrickgold.florisboard.debug.Flog
+import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
@@ -26,12 +28,20 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import timber.log.Timber
 
+@Suppress("unused")
 class FlorisApplication : Application(), CoroutineScope by MainScope() {
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
+        Flog.install(
+            applicationContext = this,
+            isFloggingEnabled = BuildConfig.DEBUG,
+            flogTopics = LogTopic.ALL,
+            flogLevels = Flog.LEVEL_ALL,
+            flogOutputs = Flog.OUTPUT_CONSOLE
+        )
         CrashUtility.install(this)
         val prefHelper = PrefHelper.getDefaultInstance(this)
         val assetManager = AssetManager.init(this)

@@ -41,6 +41,7 @@ import androidx.lifecycle.*
 import com.squareup.moshi.Json
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.clip.ClipboardInputManager
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
@@ -57,7 +58,6 @@ import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.setup.SetupActivity
 import dev.patrickgold.florisboard.util.*
-import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.ExecutorService
@@ -144,7 +144,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
                 context.contentResolver,
                 Settings.Secure.ENABLED_INPUT_METHODS
             ) ?: "(none)"
-            Timber.i("List of active IMEs: $activeImeIds")
+            flogInfo { "List of active IMEs: $activeImeIds" }
             return when {
                 BuildConfig.DEBUG -> {
                     activeImeIds.split(":").contains(IME_ID_DEBUG)
@@ -163,7 +163,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
                 context.contentResolver,
                 Settings.Secure.DEFAULT_INPUT_METHOD
             ) ?: "(none)"
-            Timber.i("Selected IME: $selectedImeId")
+            flogInfo { "Selected IME: $selectedImeId" }
             return when {
                 BuildConfig.DEBUG -> {
                     selectedImeId == IME_ID_DEBUG
@@ -218,7 +218,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
                     .build()
             )
         }*/
-        Timber.i("onCreate()")
+        flogInfo(LogTopic.IMS_EVENTS) { "onCreate()" }
         serviceLifecycleDispatcher.onServicePreSuperOnCreate()
 
         imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
@@ -249,7 +249,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
 
     @SuppressLint("InflateParams")
     override fun onCreateInputView(): View? {
-        Timber.i("onCreateInputView()")
+        flogInfo(LogTopic.IMS_EVENTS) { "onCreateInputView()" }
 
         baseContext.setTheme(currentThemeResId)
 
@@ -291,7 +291,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     }
 
     override fun onDestroy() {
-        Timber.i("onDestroy()")
+        flogInfo(LogTopic.IMS_EVENTS) { "onDestroy()" }
 
         themeManager.unregisterOnThemeUpdatedListener(this)
         florisClipboardManager!!.removePrimaryClipChangedListener(this)
@@ -334,7 +334,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     }
 
     fun registerInputView(inputView: InputView) {
-        Timber.i("registerInputView($inputView)")
+        flogInfo(LogTopic.IMS_EVENTS) { "registerInputView($inputView)" }
 
         window?.window?.findViewById<View>(android.R.id.content)?.let { content ->
             popupLayerView = PopupLayerView(content.context)
@@ -352,14 +352,14 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     }
 
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
-        Timber.i("onStartInput($attribute, $restarting)")
+        flogInfo(LogTopic.IMS_EVENTS) { "onStartInput($attribute, $restarting)" }
         super.onStartInput(attribute, restarting)
         currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
-        Timber.i("onStartInputView($info, $restarting)")
-        Timber.i("onStartInputView: ${info?.debugSummarize()}")
+        flogInfo(LogTopic.IMS_EVENTS) { "onStartInputView($info, $restarting)" }
+        flogInfo(LogTopic.IMS_EVENTS) { "onStartInputView: ${info?.debugSummarize()}" }
 
         super.onStartInputView(info, restarting)
         activeEditorInstance = EditorInstance.from(info, this)
@@ -370,7 +370,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
-        Timber.i( "onFinishInputView($finishingInput)")
+        flogInfo(LogTopic.IMS_EVENTS) { "onFinishInputView($finishingInput)" }
 
         if (finishingInput) {
             activeEditorInstance = EditorInstance.default()
@@ -381,18 +381,19 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     }
 
     override fun onFinishInput() {
-        Timber.i("onFinishInput()")
+        flogInfo(LogTopic.IMS_EVENTS) { "onFinishInput()" }
 
         super.onFinishInput()
         currentInputConnection?.requestCursorUpdates(0)
     }
 
     override fun onWindowShown() {
+        super.onWindowShown()
         if (isWindowShown) {
-            Timber.i("Ignoring onWindowShown()")
+            flogInfo(LogTopic.IMS_EVENTS) { "Ignoring onWindowShown()" }
             return
         } else {
-            Timber.i("onWindowShown()")
+            flogInfo(LogTopic.IMS_EVENTS) { "onWindowShown()" }
         }
         isWindowShown = true
 
@@ -409,25 +410,24 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         onSubtypeChanged(activeSubtype)
         setActiveInput(R.id.text_input)
 
-        super.onWindowShown()
         eventListeners.toList().forEach { it?.onWindowShown() }
     }
 
     override fun onWindowHidden() {
+        super.onWindowHidden()
         if (!isWindowShown) {
-            Timber.i("Ignoring onWindowHidden()")
+            flogInfo(LogTopic.IMS_EVENTS) { "Ignoring onWindowHidden()" }
             return
         } else {
-            Timber.i("onWindowHidden()")
+            flogInfo(LogTopic.IMS_EVENTS) { "onWindowHidden()" }
         }
         isWindowShown = false
 
-        super.onWindowHidden()
         eventListeners.toList().forEach { it?.onWindowHidden() }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
-        Timber.i("onConfigurationChanged($newConfig)")
+        flogInfo(LogTopic.IMS_EVENTS) { "onConfigurationChanged($newConfig)" }
         if (isInputViewShown) {
             updateOneHandedPanelVisibility()
         }
@@ -485,7 +485,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         )
 
         if (internalBatchNestingLevel == 0) {
-            Timber.i("onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd)")
+            flogInfo(LogTopic.IMS_EVENTS) { "onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd)" }
             activeEditorInstance.onUpdateSelection(
                 oldSelStart, oldSelEnd,
                 newSelStart, newSelEnd,
@@ -493,7 +493,9 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
             )
             eventListeners.toList().forEach { it?.onUpdateSelection() }
         } else {
-            Timber.i("onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd): caught due to internal batch level of $internalBatchNestingLevel!")
+            flogInfo(LogTopic.IMS_EVENTS) {
+                "onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd): caught due to internal batch level of $internalBatchNestingLevel!"
+            }
             if (internalSelectionCache.selectionCatchCount++ == 0) {
                 internalSelectionCache.oldSelStart = oldSelStart
                 internalSelectionCache.oldSelEnd = oldSelEnd
@@ -659,7 +661,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
             } else if (isMovingGestureEffect) {
                 vibrationStrength = 8
             }
-            Timber.i(vibrationDuration.toString())
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 vibrator?.vibrate(
                     VibrationEffect.createOneShot(
@@ -737,7 +738,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
                 }
             }
         } catch (e: Exception) {
-            Timber.e(e,"Unable to switch to the previous IME")
+            flogError { "Unable to switch to the previous IME" }
             imeManager?.showInputMethodPicker()
         }
     }
@@ -753,7 +754,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
                 }
             }
         } catch (e: Exception) {
-            Timber.e(e,"Unable to switch to the next IME")
+            flogError { "Unable to switch to the next IME" }
             imeManager?.showInputMethodPicker()
         }
     }
