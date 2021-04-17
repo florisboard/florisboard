@@ -1,6 +1,6 @@
 
 plugins {
-    id("com.android.application") version "4.1.2"
+    id("com.android.application") version "4.1.3"
     kotlin("android") version "1.4.30"
     kotlin("kapt") version "1.4.30"
 }
@@ -16,7 +16,7 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
-        freeCompilerArgs = listOf("-Xallow-result-return-type") // enables use of kotlin.Result
+        freeCompilerArgs = listOf("-Xallow-result-return-type", "-Xopt-in=kotlin.RequiresOptIn")
     }
 
     defaultConfig {
