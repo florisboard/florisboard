@@ -1,6 +1,6 @@
 ---
-name: Bug report (blank)
-about: Create a new report to help FlorisBoard improve
+name: Bug report
+about: Create a report to help FlorisBoard improve
 title: ''
 labels: bug
 assignees: ''
@@ -8,13 +8,13 @@ assignees: ''
 ---
 
 <!--
-- Important: If you have a generated error log to paste, use the
-             "Bug report (generated)" template instead!
+- Important: If you have a generated crash log to paste, use the
+             "Crash report" template instead!
 -
 - Describe the bug in a short but concise way.
 - If you have a screenshot or screen recording of the bug, link them at the end
   of this issue.
-- Please search existing bug reports to avoid creating duplicates.
+- Please search existing bug/crash reports reports to avoid creating duplicates.
 - Give your bug report a good name (no generics like "Error" or "Crash"), so
   others can easily identify the topic of your issue.
 - Also make sure to fill out the environment information. This info is valuable
