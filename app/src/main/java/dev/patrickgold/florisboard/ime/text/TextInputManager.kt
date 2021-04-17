@@ -25,6 +25,7 @@ import android.widget.ViewFlipper
 import androidx.core.text.isDigitsOnly
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.dictionary.Dictionary
@@ -44,7 +45,6 @@ import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import kotlinx.coroutines.*
 import org.json.JSONArray
-import timber.log.Timber
 import java.util.*
 import kotlin.math.roundToLong
 
@@ -130,7 +130,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * background).
      */
     override fun onCreate() {
-        Timber.i("onCreate()")
+        flogInfo(LogTopic.IMS_EVENTS) { "onCreate()" }
 
         layoutManager = LayoutManager(this)
         inputEventDispatcher.keyEventReceiver = this
@@ -160,7 +160,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Sets up the newly registered input view.
      */
     override fun onRegisterInputView(inputView: InputView) {
-        Timber.i("onRegisterInputView(inputView)")
+        flogInfo(LogTopic.IMS_EVENTS) { "onRegisterInputView(inputView)" }
 
         textViewGroup = inputView.findViewById(R.id.text_input)
         textViewFlipper = inputView.findViewById(R.id.text_input_view_flipper)
@@ -221,7 +221,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Cancels all coroutines and cleans up.
      */
     override fun onDestroy() {
-        Timber.i("onDestroy()")
+        flogInfo(LogTopic.IMS_EVENTS) { "onDestroy()" }
 
         inputEventDispatcher.keyEventReceiver = null
         inputEventDispatcher.close()
@@ -371,9 +371,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             updateCapsState()
         }
         smartbarView?.updateSmartbarState()
-        if (BuildConfig.DEBUG) {
-            Timber.i("current word: ${activeEditorInstance.cachedInput.currentWord.text}")
-        }
+        flogInfo(LogTopic.IMS_EVENTS) { "current word: ${activeEditorInstance.cachedInput.currentWord.text}" }
         if (activeEditorInstance.isComposingEnabled && !inputEventDispatcher.isPressed(KeyCode.DELETE)) {
             if (activeEditorInstance.shouldReevaluateComposingSuggestions) {
                 activeEditorInstance.shouldReevaluateComposingSuggestions = false
@@ -388,7 +386,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         ).toStringList()
                         if (BuildConfig.DEBUG) {
                             val elapsed = (System.nanoTime() - startTime) / 1000.0
-                            Timber.i("sugg fetch time: $elapsed us")
+                            flogInfo { "sugg fetch time: $elapsed us" }
                         }
                         withContext(Dispatchers.Main) {
                             smartbarView?.setCandidateSuggestionWords(startTime, suggestions)
@@ -453,7 +451,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             SwipeAction.SHOW_INPUT_METHOD_PICKER -> KeyData.SHOW_INPUT_METHOD_PICKER
             else -> null
         }
-        Timber.i("§")
         if (keyData != null) {
             inputEventDispatcher.send(InputKeyEvent.downUp(keyData))
         }
@@ -832,7 +829,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                             }
                         }
                         else -> {
-                            Timber.e("sendKeyPress(keyData): Received unknown key: $data")
+                            flogError(LogTopic.KEY_EVENTS) { "sendKeyPress(keyData): Received unknown key: $data" }
                         }
                     }
                 }
