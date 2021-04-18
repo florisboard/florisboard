@@ -8,7 +8,6 @@ import androidx.room.*
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import java.io.Closeable
 
-
 enum class ItemType(val value: Int) {
     TEXT(1),
     IMAGE(2);
@@ -19,7 +18,6 @@ enum class ItemType(val value: Int) {
         }
     }
 }
-
 
 /**
  * Represents an item on the clipboard.
@@ -43,7 +41,7 @@ data class ClipboardItem(
     fun toClipData(): ClipData {
         return when (type) {
             ItemType.IMAGE -> {
-                ClipData.newUri(FlorisBoard.getInstance().context.contentResolver, "Clipboard data", uri)
+                ClipData.newUri(FlorisBoard.getInstance().contentResolver, "Clipboard data", uri)
             }
             ItemType.TEXT -> {
                 ClipData.newPlainText("Clipboard data", text)
@@ -56,7 +54,7 @@ data class ClipboardItem(
      */
     override fun close() {
         if (type == ItemType.IMAGE) {
-            FlorisBoard.getInstance().context.contentResolver.delete(this.uri!!, null, null)
+            FlorisBoard.getInstance().contentResolver.delete(this.uri!!, null, null)
         }
     }
 
@@ -120,7 +118,7 @@ data class ClipboardItem(
                             put("uri", data.getItemAt(0).uri.toString())
                             put("mimetypes", data.description.filterMimeTypes("*/*").joinToString(","))
                         }
-                        FlorisBoard.getInstance().context.contentResolver.insert(FlorisContentProvider.CLIPS_URI, values)
+                        FlorisBoard.getInstance().contentResolver.insert(FlorisContentProvider.CLIPS_URI, values)
                     }
             } else { null }
 
@@ -174,7 +172,6 @@ class Converters {
     }
 }
 
-
 @Dao
 interface PinnedClipboardItemDao {
     @Query("SELECT * FROM pins")
@@ -199,7 +196,7 @@ abstract class PinnedItemsDatabase : RoomDatabase() {
 
             if (instance == null) {
                 instance = Room.databaseBuilder(
-                    FlorisBoard.getInstance().context,
+                    FlorisBoard.getInstance(),
                     PinnedItemsDatabase::class.java,
                     "pins").build()
             }
