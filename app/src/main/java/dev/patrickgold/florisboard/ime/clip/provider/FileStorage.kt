@@ -1,45 +1,39 @@
 package dev.patrickgold.florisboard.ime.clip.provider
 
 import android.net.Uri
+import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import timber.log.Timber
 import java.io.File
+import java.io.InputStream
 
 /**
- * Backend class which is used by [FlorisContentProvider] to serve content.
+ * Backend helper object which is used by [FlorisContentProvider] to serve content.
  */
-class FileStorage private constructor() {
-
-
-    companion object {
-        private const val BUF_SIZE = 1024 * 8
-        private var instance: FileStorage? = null
-        private var offset = 0
-
-
-        fun getInstance() : FileStorage {
-            if (this.instance == null){
-                this.instance = FileStorage()
-            }
-            return instance!!
-        }
-
-    }
-
+object FileStorage {
+    private const val BUF_SIZE = 1024 * 8
+    private var offset = 0
 
     /**
      * Clones a content URI to internal storage.
+     *
      * @param uri The URI
-     * @return  the file's name which is a unique long
+     * @return The file's name which is a unique long
      */
     @Synchronized
-    fun cloneURI(uri: Uri) : Long {
-        val context = FlorisBoard.getInstance().context
+    fun cloneURI(uri: Uri): Result<Long> {
+        val context = FlorisBoard.getInstance()
         // nanoTime + the number of items created so that it's unique.
         val name = (System.nanoTime() + offset)
 
         // Just a normal copy from input stream to output stream.
-        val source = context.contentResolver.openInputStream(uri)!!
+        val source: InputStream
+        try {
+            source = context.contentResolver.openInputStream(uri) ?: return Result.failure(
+                NullPointerException("Input stream for given URI '$uri' is null!")
+            )
+        } catch (e: Exception) {
+            return Result.failure(e)
+        }
         val sink = File(context.filesDir, name.toString()).outputStream()
         var nread = 0L
         val buf = ByteArray(BUF_SIZE)
@@ -52,14 +46,14 @@ class FileStorage private constructor() {
         source.close()
         sink.close()
 
-        return name
+        return Result.success(name)
     }
 
     /**
      * Deletes the file corresponding to an id.
      */
     fun deleteById(id: Long) {
-        Timber.d("Cleaning up $id")
+        flogDebug(LogTopic.CLIPBOARD) { "Cleaning up $id" }
         val file = File(FlorisBoard.getInstance().filesDir, id.toString())
         file.delete()
     }
@@ -70,6 +64,4 @@ class FileStorage private constructor() {
     fun getAddress(id: Long): String {
         return FlorisBoard.getInstance().filesDir.toString() + "/$id"
     }
-
-
 }
