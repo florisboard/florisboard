@@ -22,23 +22,25 @@ import android.view.inputmethod.EditorInfo
 import kotlin.reflect.KClass
 
 fun EditorInfo.debugSummarize(): String {
-    var summary = this::class.qualifiedName + "\r\n"
-    summary += "imeOptions: " + this.imeOptions.debugSummarize(EditorInfo::class) + "\r\n"
-    summary += "initialCapsMode: " + this.initialCapsMode.debugSummarize(TextUtils::class) + "\r\n"
-    summary += "initialSelStart: " + this.initialSelStart + "\r\n"
-    summary += "initialSelEnd: " + this.initialSelEnd + "\r\n"
-    summary += "inputType: " + this.inputType.debugSummarize(InputType::class) + "\r\n"
-    summary += "packageName: " + this.packageName
-    return summary
+    return StringBuilder().let {
+        it.appendLine(this::class.qualifiedName)
+        it.append("imeOptions: ").appendLine(this.imeOptions.debugSummarize(EditorInfo::class))
+        it.append("initialCapsMode: ").appendLine(this.initialCapsMode.debugSummarize(TextUtils::class))
+        it.append("initialSelStart: ").appendLine(this.initialSelStart)
+        it.append("initialSelEnd: ").appendLine(this.initialSelEnd)
+        it.append("inputType: ").appendLine(this.inputType.debugSummarize(InputType::class))
+        it.append("packageName: ").appendLine(this.packageName)
+        it.toString()
+    }
 }
 
 fun <T: Any> Int.debugSummarize(type: KClass<T>): String {
-    var summary = ""
+    val summary = StringBuilder()
     when (type) {
         EditorInfo::class -> {
             when (this) {
                 EditorInfo.IME_NULL -> {
-                    summary += "IME_NULL"
+                    summary.append("IME_NULL")
                 }
                 else -> {
                     val tAction = when (this and EditorInfo.IME_MASK_ACTION) {
@@ -52,50 +54,50 @@ fun <T: Any> Int.debugSummarize(type: KClass<T>): String {
                         EditorInfo.IME_ACTION_UNSPECIFIED -> "IME_ACTION_UNSPECIFIED"
                         else -> String.format("0x%08x", this and EditorInfo.IME_MASK_ACTION)
                     }
-                    var tFlags = ""
+                    val tFlags = StringBuilder()
                     if (this and EditorInfo.IME_FLAG_FORCE_ASCII > 0) {
-                        tFlags += "IME_FLAG_FORCE_ASCII|"
+                        tFlags.append("IME_FLAG_FORCE_ASCII|")
                     }
                     if (this and EditorInfo.IME_FLAG_NAVIGATE_NEXT > 0) {
-                        tFlags += "IME_FLAG_NAVIGATE_NEXT|"
+                        tFlags.append("IME_FLAG_NAVIGATE_NEXT|")
                     }
                     if (this and EditorInfo.IME_FLAG_NAVIGATE_PREVIOUS > 0) {
-                        tFlags += "IME_FLAG_NAVIGATE_PREVIOUS|"
+                        tFlags.append("IME_FLAG_NAVIGATE_PREVIOUS|")
                     }
                     if (this and EditorInfo.IME_FLAG_NO_ACCESSORY_ACTION > 0) {
-                        tFlags += "IME_FLAG_NO_ACCESSORY_ACTION|"
+                        tFlags.append("IME_FLAG_NO_ACCESSORY_ACTION|")
                     }
                     if (this and EditorInfo.IME_FLAG_NO_ENTER_ACTION > 0) {
-                        tFlags += "IME_FLAG_NO_ENTER_ACTION|"
+                        tFlags.append("IME_FLAG_NO_ENTER_ACTION|")
                     }
                     if (this and EditorInfo.IME_FLAG_NO_EXTRACT_UI > 0) {
-                        tFlags += "IME_FLAG_NO_EXTRACT_UI|"
+                        tFlags.append("IME_FLAG_NO_EXTRACT_UI|")
                     }
                     if (this and EditorInfo.IME_FLAG_NO_FULLSCREEN > 0) {
-                        tFlags += "IME_FLAG_NO_FULLSCREEN|"
+                        tFlags.append("IME_FLAG_NO_FULLSCREEN|")
                     }
                     if (this and EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING > 0) {
-                        tFlags += "IME_FLAG_NO_PERSONALIZED_LEARNING|"
+                        tFlags.append("IME_FLAG_NO_PERSONALIZED_LEARNING|")
                     }
                     if (tFlags.isEmpty()) {
-                        tFlags = "(none)"
+                        tFlags.append("(none)")
                     }
                     if (tFlags.endsWith("|")) {
-                        tFlags = tFlags.substring(0, tFlags.length - 1)
+                        tFlags.deleteAt(tFlags.length - 1)
                     }
-                    summary += "action=$tAction flags=$tFlags"
+                    summary.append("action=$tAction flags=$tFlags")
                 }
             }
         }
         InputType::class -> {
             when (this) {
                 InputType.TYPE_NULL -> {
-                    summary += "TYPE_NULL"
+                    summary.append("TYPE_NULL")
                 }
                 else -> {
                     val tClass: String
                     val tVariation: String
-                    var tFlags = ""
+                    val tFlags = StringBuilder()
                     when (this and InputType.TYPE_MASK_CLASS) {
                         InputType.TYPE_CLASS_DATETIME -> {
                             tClass = "TYPE_CLASS_DATETIME"
@@ -114,10 +116,10 @@ fun <T: Any> Int.debugSummarize(type: KClass<T>): String {
                                 else -> String.format("0x%08x", this and InputType.TYPE_MASK_VARIATION)
                             }
                             if (this and InputType.TYPE_NUMBER_FLAG_DECIMAL > 0) {
-                                tFlags += "TYPE_NUMBER_FLAG_DECIMAL|"
+                                tFlags.append("TYPE_NUMBER_FLAG_DECIMAL|")
                             }
                             if (this and InputType.TYPE_NUMBER_FLAG_SIGNED > 0) {
-                                tFlags += "TYPE_NUMBER_FLAG_SIGNED|"
+                                tFlags.append("TYPE_NUMBER_FLAG_SIGNED|")
                             }
                         }
                         InputType.TYPE_CLASS_PHONE -> {
@@ -145,28 +147,28 @@ fun <T: Any> Int.debugSummarize(type: KClass<T>): String {
                                 else -> String.format("0x%08x", this and InputType.TYPE_MASK_VARIATION)
                             }
                             if (this and InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE > 0) {
-                                tFlags += "TYPE_TEXT_FLAG_AUTO_COMPLETE|"
+                                tFlags.append("TYPE_TEXT_FLAG_AUTO_COMPLETE|")
                             }
                             if (this and InputType.TYPE_TEXT_FLAG_AUTO_CORRECT > 0) {
-                                tFlags += "TYPE_TEXT_FLAG_AUTO_CORRECT|"
+                                tFlags.append("TYPE_TEXT_FLAG_AUTO_CORRECT|")
                             }
                             if (this and InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS > 0) {
-                                tFlags += "TYPE_TEXT_FLAG_CAP_CHARACTERS|"
+                                tFlags.append("TYPE_TEXT_FLAG_CAP_CHARACTERS|")
                             }
                             if (this and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES > 0) {
-                                tFlags += "TYPE_TEXT_FLAG_CAP_SENTENCES|"
+                                tFlags.append("TYPE_TEXT_FLAG_CAP_SENTENCES|")
                             }
                             if (this and InputType.TYPE_TEXT_FLAG_CAP_WORDS > 0) {
-                                tFlags += "TYPE_TEXT_FLAG_CAP_WORDS|"
+                                tFlags.append("TYPE_TEXT_FLAG_CAP_WORDS|")
                             }
                             if (this and InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE > 0) {
-                                tFlags += "TYPE_TEXT_FLAG_IME_MULTI_LINE|"
+                                tFlags.append("TYPE_TEXT_FLAG_IME_MULTI_LINE|")
                             }
                             if (this and InputType.TYPE_TEXT_FLAG_MULTI_LINE > 0) {
-                                tFlags += "TYPE_TEXT_FLAG_MULTI_LINE|"
+                                tFlags.append("TYPE_TEXT_FLAG_MULTI_LINE|")
                             }
                             if (this and InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS > 0) {
-                                tFlags += "TYPE_TEXT_FLAG_NO_SUGGESTIONS|"
+                                tFlags.append("TYPE_TEXT_FLAG_NO_SUGGESTIONS|")
                             }
                         }
                         else -> {
@@ -175,43 +177,43 @@ fun <T: Any> Int.debugSummarize(type: KClass<T>): String {
                         }
                     }
                     if (tFlags.isEmpty()) {
-                        tFlags = "(none)"
+                        tFlags.append("(none)")
                     }
                     if (tFlags.endsWith("|")) {
-                        tFlags = tFlags.substring(0, tFlags.length - 1)
+                        tFlags.deleteAt(tFlags.length - 1)
                     }
-                    summary += "class=$tClass variation=$tVariation flags=$tFlags"
+                    summary.append("class=$tClass variation=$tVariation flags=$tFlags")
                 }
             }
         }
         TextUtils::class -> {
-            var tFlags = ""
+            val tFlags = StringBuilder()
             if (this and TextUtils.CAP_MODE_CHARACTERS > 0) {
-                tFlags += "CAP_MODE_CHARACTERS|"
+                tFlags.append("CAP_MODE_CHARACTERS|")
             }
             if (this and TextUtils.CAP_MODE_SENTENCES > 0) {
-                tFlags += "CAP_MODE_SENTENCES|"
+                tFlags.append("CAP_MODE_SENTENCES|")
             }
             if (this and TextUtils.CAP_MODE_WORDS > 0) {
-                tFlags += "CAP_MODE_WORDS|"
+                tFlags.append("CAP_MODE_WORDS|")
             }
             if (this and TextUtils.SAFE_STRING_FLAG_FIRST_LINE > 0) {
-                tFlags += "SAFE_STRING_FLAG_FIRST_LINE|"
+                tFlags.append("SAFE_STRING_FLAG_FIRST_LINE|")
             }
             if (this and TextUtils.SAFE_STRING_FLAG_SINGLE_LINE > 0) {
-                tFlags += "SAFE_STRING_FLAG_SINGLE_LINE|"
+                tFlags.append("SAFE_STRING_FLAG_SINGLE_LINE|")
             }
             if (this and TextUtils.SAFE_STRING_FLAG_TRIM > 0) {
-                tFlags += "SAFE_STRING_FLAG_TRIM|"
+                tFlags.append("SAFE_STRING_FLAG_TRIM|")
             }
             if (tFlags.isEmpty()) {
-                tFlags = "(none)"
+                tFlags.append("(none)")
             }
             if (tFlags.endsWith("|")) {
-                tFlags = tFlags.substring(0, tFlags.length - 1)
+                tFlags.deleteAt(tFlags.length - 1)
             }
-            summary += "flags=$tFlags"
+            summary.append("flags=$tFlags")
         }
     }
-    return summary
+    return summary.toString()
 }
