@@ -262,7 +262,7 @@ class EditorInstance private constructor(
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
                     flags = flags or InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
                 } else {
-                    FlorisBoard.getInstance().context.grantUriPermission(
+                    FlorisBoard.getInstance().grantUriPermission(
                         editorInfo.packageName,
                         item.uri,
                         Intent.FLAG_GRANT_READ_URI_PERMISSION
@@ -275,7 +275,6 @@ class EditorInstance private constructor(
             }
         }
     }
-
 
     /**
      * Executes a backward delete on this editor's text. If a text selection is active, all

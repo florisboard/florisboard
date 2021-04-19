@@ -25,7 +25,6 @@ import android.inputmethodservice.ExtractEditText
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
 import android.os.Build
-import android.os.Handler
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.provider.Settings
@@ -35,6 +34,7 @@ import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.FrameLayout
+import androidx.annotation.StyleRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.*
@@ -58,6 +58,7 @@ import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.setup.SetupActivity
 import dev.patrickgold.florisboard.util.*
+import kotlinx.coroutines.launch
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.ExecutorService
@@ -66,6 +67,8 @@ import java.util.concurrent.Executors
 /**
  * Variable which holds the current [FlorisBoard] instance. To get this instance from another
  * package, see [FlorisBoard.getInstance].
+ * TODO: The end goal is to have no static field for service/manager class anymore. This will take a long time to
+ *  rework the codebase but it should be doable.
  */
 private var florisboardInstance: FlorisBoard? = null
 
@@ -76,12 +79,20 @@ private var florisboardInstance: FlorisBoard? = null
 class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager.OnPrimaryClipChangedListener,
     ThemeManager.OnThemeUpdatedListener {
 
+    private val serviceLifecycleDispatcher: ServiceLifecycleDispatcher = ServiceLifecycleDispatcher(this)
+    private val uiScope: LifecycleCoroutineScope
+        get() = lifecycle.coroutineScope
+
+    /**
+     * The theme context for the UI. Must only be used for inflating/creating Views for the keyboard UI, else the IME
+     * service class should be used directly.
+     */
+    private var _themeContext: Context? = null
+    private val themeContext: Context
+        get() = _themeContext ?: this
+
     lateinit var prefs: PrefHelper
         private set
-
-    val context: Context
-        get() = inputWindowView?.context ?: this
-    private val serviceLifecycleDispatcher: ServiceLifecycleDispatcher = ServiceLifecycleDispatcher(this)
 
     private var extractEditLayout: WeakReference<ViewGroup?> = WeakReference(null)
     var inputView: InputView? = null
@@ -92,11 +103,10 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     private var eventListeners: CopyOnWriteArrayList<EventListener> = CopyOnWriteArrayList()
 
     private var audioManager: AudioManager? = null
-    var imeManager:InputMethodManager? = null
+    var imeManager: InputMethodManager? = null
     var florisClipboardManager: FlorisClipboardManager? = null
     private val themeManager: ThemeManager = ThemeManager.default()
     private var vibrator: Vibrator? = null
-    private val osHandler = Handler()
 
     private var internalBatchNestingLevel: Int = 0
     private val internalSelectionCache = object {
@@ -199,6 +209,10 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         return serviceLifecycleDispatcher.lifecycle
     }
 
+    private fun updateThemeContext(@StyleRes themeId: Int) {
+        _themeContext = ContextThemeWrapper(this, themeId)
+    }
+
     override fun onCreate() {
         /*if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(
@@ -223,7 +237,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
 
         imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         audioManager = getSystemService(Context.AUDIO_SERVICE) as? AudioManager
-        vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
         prefs = PrefHelper.getDefaultInstance(this)
         prefs.initDefaultPreferences()
         prefs.sync()
@@ -239,9 +253,10 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
 
         asyncExecutor = Executors.newSingleThreadExecutor()
-        florisClipboardManager = FlorisClipboardManager.getInstance()
-        florisClipboardManager!!.initialize(context)
-        florisClipboardManager?.addPrimaryClipChangedListener(this)
+        florisClipboardManager = FlorisClipboardManager.getInstance().also {
+            it.initialize(this)
+            it.addPrimaryClipChangedListener(this)
+        }
 
         super.onCreate()
         eventListeners.toList().forEach { it?.onCreate() }
@@ -251,9 +266,9 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     override fun onCreateInputView(): View? {
         flogInfo(LogTopic.IMS_EVENTS) { "onCreateInputView()" }
 
-        baseContext.setTheme(currentThemeResId)
+        updateThemeContext(currentThemeResId)
 
-        inputWindowView = layoutInflater.inflate(R.layout.florisboard, null) as? InputWindowView
+        inputWindowView = LayoutInflater.from(themeContext).inflate(R.layout.florisboard, null) as? InputWindowView
         inputWindowView?.isHapticFeedbackEnabled = true
 
         eventListeners.toList().forEach { it?.onCreateInputView() }
@@ -292,14 +307,21 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
 
     override fun onDestroy() {
         flogInfo(LogTopic.IMS_EVENTS) { "onDestroy()" }
+        serviceLifecycleDispatcher.onServicePreSuperOnDestroy()
 
         themeManager.unregisterOnThemeUpdatedListener(this)
-        florisClipboardManager!!.removePrimaryClipChangedListener(this)
-        florisClipboardManager!!.close()
-        osHandler.removeCallbacksAndMessages(null)
+        florisClipboardManager?.let {
+            it.removePrimaryClipChangedListener(this)
+            it.close()
+            florisClipboardManager = null
+        }
+        audioManager = null
+        imeManager = null
+        vibrator = null
+        popupLayerView = null
+        inputView = null
+        inputWindowView = null
         florisboardInstance = null
-
-        serviceLifecycleDispatcher.onServicePreSuperOnDestroy()
 
         eventListeners.toList().forEach { it?.onDestroy() }
         eventListeners.clear()
@@ -337,7 +359,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         flogInfo(LogTopic.IMS_EVENTS) { "registerInputView($inputView)" }
 
         window?.window?.findViewById<View>(android.R.id.content)?.let { content ->
-            popupLayerView = PopupLayerView(content.context)
+            popupLayerView = PopupLayerView(themeContext)
             if (content is ViewGroup) {
                 content.addView(popupLayerView)
             }
@@ -353,6 +375,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
 
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
         flogInfo(LogTopic.IMS_EVENTS) { "onStartInput($attribute, $restarting)" }
+
         super.onStartInput(attribute, restarting)
         currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
     }
@@ -383,8 +406,8 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     override fun onFinishInput() {
         flogInfo(LogTopic.IMS_EVENTS) { "onFinishInput()" }
 
-        super.onFinishInput()
         currentInputConnection?.requestCursorUpdates(0)
+        super.onFinishInput()
     }
 
     override fun onWindowShown() {
@@ -822,9 +845,9 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
             }
         }
         // Delay execution so this function can return, then refresh the whole layout
-        osHandler.postDelayed({
+        uiScope.launch {
             refreshLayoutOf(inputView)
-        }, 0)
+        }
     }
 
     override fun onPrimaryClipChanged() {

@@ -1,8 +1,6 @@
 package dev.patrickgold.florisboard.ime.clip
 
 import android.annotation.SuppressLint
-import android.os.Handler
-import android.os.Looper
 import android.view.MotionEvent
 import android.view.View
 import android.widget.*
@@ -23,10 +21,9 @@ import kotlin.math.pow
  * Handles the clipboard view and allows for communication between UI and logic.
  */
 class ClipboardInputManager private constructor() : CoroutineScope by MainScope(),
-    FlorisBoard.EventListener{
+    FlorisBoard.EventListener {
 
     private val florisboard = FlorisBoard.getInstance()
-    private var repeatedKeyPressHandler: Handler? = null
     private var recyclerView: RecyclerView? = null
     private var adapter: ClipboardHistoryItemAdapter? = null
 
@@ -46,20 +43,13 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
         florisboard.addEventListener(this)
     }
 
-    override fun onCreateInputView() {
-        super.onCreateInputView()
-        repeatedKeyPressHandler = Handler(florisboard.context.mainLooper)
-    }
-
     /**
      * Called when a new input view has been registered. Used to initialize all media-relevant
      * views and layouts.
      */
     @SuppressLint("ClickableViewAccessibility")
     override fun onRegisterInputView(inputView: InputView) {
-
         launch(Dispatchers.Default) {
-
             inputView.findViewById<ImageButton>(R.id.back_to_keyboard_button)
                 .setOnTouchListener { view, event -> onButtonPressEvent(view, event) }
 
@@ -82,16 +72,14 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
      * Clean-up of resources and stopping all coroutines.
      */
     override fun onDestroy() {
-
         cancel()
         instance = null
     }
 
-
     /**
      * Returns a reference to the [ClipboardHistoryView]
      */
-    fun getClipboardHistoryView() : ClipboardHistoryView{
+    fun getClipboardHistoryView(): ClipboardHistoryView{
         return FlorisBoard.getInstance().inputView?.mainViewFlipper?.getChildAt(2) as ClipboardHistoryView
     }
 
@@ -144,13 +132,14 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
      * Handles clicks on the back to keyboard button.
      */
     private fun onButtonPressEvent(view: View, event: MotionEvent?): Boolean {
-
         event ?: return false
+
         val data = when (view.id) {
             R.id.back_to_keyboard_button -> KeyData(code = KeyCode.SWITCH_TO_TEXT_CONTEXT)
             R.id.clear_clipboard_history -> KeyData(code = KeyCode.CLEAR_CLIPBOARD_HISTORY)
             else -> null
-        }!!
+        } ?: return false
+
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 florisboard.keyPressVibrate()
@@ -176,7 +165,7 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
      * @param pins The pins to link to
      */
     fun initClipboard(dataSet: ArrayDeque<FlorisClipboardManager.TimedClipData>, pins: ArrayDeque<ClipboardItem>) {
-        this.adapter =  ClipboardHistoryItemAdapter(dataSet = dataSet, pins= pins)
+        this.adapter = ClipboardHistoryItemAdapter(dataSet = dataSet, pins = pins)
     }
 
     /**
@@ -189,7 +178,7 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
     fun clearClipboardWithAnimation(start: Int, size: Int): Long {
         // list of views to animate
         val views = arrayListOf<View>()
-        for(i in 0 until size){
+        for (i in 0 until size) {
             recyclerView?.findViewHolderForLayoutPosition(i + start)?.let {
                 views.add(it.itemView)
             }
@@ -205,14 +194,13 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
         }
 
         // a little while later we reset the views so they can be reused.
-        Handler(Looper.getMainLooper()).postDelayed({
+        launch(Dispatchers.Main) {
+            delay(450 + delay)
             for (view in views) {
                 view.translationX = 0f
             }
-        }, 450 + delay)
+        }
 
         return 280 + delay
     }
-
-
 }

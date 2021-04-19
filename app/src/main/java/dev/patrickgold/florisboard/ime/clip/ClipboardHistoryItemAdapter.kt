@@ -97,7 +97,7 @@ class ClipboardHistoryItemAdapter(
                 viewHolder.imgView.visibility = GONE
                 // For very large images, this can take a bit
                 FlorisClipboardManager.getInstance().executor.execute {
-                    val resolver = FlorisBoard.getInstance().context.contentResolver
+                    val resolver = FlorisBoard.getInstance().contentResolver
                     val inputStream = resolver.openInputStream(uri!!)
 
                     val drawable = Drawable.createFromStream(inputStream, "clipboard URI")

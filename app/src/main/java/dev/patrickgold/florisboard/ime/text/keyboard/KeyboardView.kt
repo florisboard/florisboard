@@ -240,7 +240,7 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
                 activeKeyViews.remove(pointerId)
             }
             invalidate()
-            this.gesturing = true
+            gesturing = true
             return true
         }
 
@@ -473,10 +473,10 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
             }
         }
         if (theme.getAttr(Theme.Attr.GLIDE_TRAIL_COLOR).toSolidColor().color == 0) {
-            this.glideTrailPaint.color = theme.getAttr(Theme.Attr.WINDOW_COLOR_PRIMARY).toSolidColor().color
-            this.glideTrailPaint.alpha = 32
+            glideTrailPaint.color = theme.getAttr(Theme.Attr.WINDOW_COLOR_PRIMARY).toSolidColor().color
+            glideTrailPaint.alpha = 32
         } else {
-            this.glideTrailPaint.color = theme.getAttr(Theme.Attr.GLIDE_TRAIL_COLOR).toSolidColor().color
+            glideTrailPaint.color = theme.getAttr(Theme.Attr.GLIDE_TRAIL_COLOR).toSolidColor().color
         }
     }
 
@@ -580,30 +580,26 @@ class KeyboardView : FlexboxLayout, FlorisBoard.EventListener, SwipeGesture.List
     }
 
     override fun onGestureAdd(point: GlideTypingGesture.Detector.Position) {
-        val initialRadius = 25f
-        val gestureData = this.gestureDataForDrawing
-        val targetDist = 5f
-        val maxLength = 1000f
         if (prefs.glide.enabled) {
-            this.gestureDataForDrawing.add(point)
+            gestureDataForDrawing.add(point)
         }
     }
 
     override fun onGestureCancelled() {
         if (prefs.glide.showTrail) {
-            this.fadingGesture.clear()
-            this.fadingGesture.addAll(gestureDataForDrawing)
+            fadingGesture.clear()
+            fadingGesture.addAll(gestureDataForDrawing)
 
             val animator = ValueAnimator.ofFloat(20f, 0f)
             animator.interpolator = AccelerateInterpolator()
             animator.duration = prefs.glide.trailDuration.toLong()
             animator.addUpdateListener {
-                this.fadingGestureRadius = it.animatedValue as Float
-                this.invalidate()
+                fadingGestureRadius = it.animatedValue as Float
+                invalidate()
             }
             animator.start()
 
-            this.gestureDataForDrawing.clear()
+            gestureDataForDrawing.clear()
             gesturing = false
             invalidate()
         }
