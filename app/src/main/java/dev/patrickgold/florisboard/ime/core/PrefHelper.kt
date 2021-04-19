@@ -32,14 +32,17 @@ import dev.patrickgold.florisboard.ime.text.smartbar.CandidateView
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.util.TimeUtil
 import dev.patrickgold.florisboard.util.VersionName
+import java.lang.ref.WeakReference
 
 /**
  * Helper class for an organized access to the shared preferences.
  */
 class PrefHelper(
-    private val context: Context,
+    context: Context,
     val shared: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 ) {
+    private val applicationContext: WeakReference<Context> = WeakReference(context.applicationContext)
+
     private val cacheBoolean: HashMap<String, Boolean> = hashMapOf()
     private val cacheInt: HashMap<String, Int> = hashMapOf()
     private val cacheString: HashMap<String, String> = hashMapOf()
@@ -124,7 +127,7 @@ class PrefHelper(
     }
 
     companion object {
-        private val OLD_SUBTYPES_REGEX = """^([\-0-9]+\/[\-a-zA-Z0-9]+\/[a-zA-Z\_]+[;]*)+${'$'}""".toRegex()
+        private val OLD_SUBTYPES_REGEX = """^([\-0-9]+/[\-a-zA-Z0-9]+/[a-zA-Z_]+[;]*)+${'$'}""".toRegex()
         private var defaultInstance: PrefHelper? = null
 
         @Synchronized
@@ -141,11 +144,14 @@ class PrefHelper(
      * they have not been initialized yet.
      */
     fun initDefaultPreferences() {
-        PreferenceManager.setDefaultValues(context, R.xml.prefs_advanced, true)
-        PreferenceManager.setDefaultValues(context, R.xml.prefs_gestures, true)
-        PreferenceManager.setDefaultValues(context, R.xml.prefs_keyboard, true)
-        PreferenceManager.setDefaultValues(context, R.xml.prefs_theme, true)
-        PreferenceManager.setDefaultValues(context, R.xml.prefs_typing, true)
+        applicationContext.get()?.let { context ->
+            PreferenceManager.setDefaultValues(context, R.xml.prefs_advanced, true)
+            PreferenceManager.setDefaultValues(context, R.xml.prefs_gestures, true)
+            PreferenceManager.setDefaultValues(context, R.xml.prefs_keyboard, true)
+            PreferenceManager.setDefaultValues(context, R.xml.prefs_theme, true)
+            PreferenceManager.setDefaultValues(context, R.xml.prefs_typing, true)
+        }
+
         //theme.dayThemeRef = "assets:ime/theme/floris_day.json"
         //theme.nightThemeRef = "assets:ime/theme/floris_night.json"
         //setPref(Localization.SUBTYPES, "-234/de-AT/euro/c=qwertz")
@@ -159,13 +165,15 @@ class PrefHelper(
      * Syncs the system preference values and clears the cache.
      */
     fun sync() {
-        val contentResolver = context.contentResolver
-        keyboard.soundEnabledSystem = Settings.System.getInt(
-            contentResolver, Settings.System.SOUND_EFFECTS_ENABLED, 0
-        ) != 0
-        keyboard.vibrationEnabledSystem = Settings.System.getInt(
-            contentResolver, Settings.System.HAPTIC_FEEDBACK_ENABLED, 0
-        ) != 0
+        applicationContext.get()?.let { context ->
+            val contentResolver = context.contentResolver
+            keyboard.soundEnabledSystem = Settings.System.getInt(
+                contentResolver, Settings.System.SOUND_EFFECTS_ENABLED, 0
+            ) != 0
+            keyboard.vibrationEnabledSystem = Settings.System.getInt(
+                contentResolver, Settings.System.HAPTIC_FEEDBACK_ENABLED, 0
+            ) != 0
+        }
 
         cacheBoolean.clear()
         cacheInt.clear()

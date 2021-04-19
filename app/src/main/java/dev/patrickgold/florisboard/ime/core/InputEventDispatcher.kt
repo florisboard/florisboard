@@ -20,16 +20,8 @@ import android.os.SystemClock
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyData
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 /**
@@ -38,14 +30,13 @@ import timber.log.Timber
  * events can be dispatched.
  */
 class InputEventDispatcher private constructor(
-    parentScope: CoroutineScope,
     channelCapacity: Int,
     private val mainDispatcher: CoroutineDispatcher,
     private val defaultDispatcher: CoroutineDispatcher,
     private val repeatableKeyCodes: IntArray
 ) : InputKeyEventSender {
     private val channel: Channel<InputKeyEvent> = Channel(channelCapacity)
-    private val scope: CoroutineScope = CoroutineScope(parentScope.coroutineContext)
+    private val scope: CoroutineScope = CoroutineScope(defaultDispatcher + SupervisorJob())
     private val pressedKeys: HashMap<Int, PressedKeyInfo> = hashMapOf()
     var lastKeyEventDown: InputKeyEvent? = null
         private set
@@ -67,7 +58,6 @@ class InputEventDispatcher private constructor(
         /**
          * Creates a new [InputEventDispatcher] instance from given arguments and returns it.
          *
-         * @param parentScope The parent coroutine scope which this dispatcher will attach its own scope to.
          * @param channelCapacity The capacity of this input channel, defaults to [DEFAULT_CHANNEL_CAPACITY].
          * @param mainDispatcher The main dispatcher used to switch the context to call the receiver callbacks.
          *  Defaults to [Dispatchers.Main].
@@ -78,13 +68,12 @@ class InputEventDispatcher private constructor(
          * @return A new [InputEventDispatcher] instance initialized with given arguments.
          */
         fun new(
-            parentScope: CoroutineScope,
             channelCapacity: Int = DEFAULT_CHANNEL_CAPACITY,
             mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
             defaultDispatcher: CoroutineDispatcher = Dispatchers.Default,
             repeatableKeyCodes: IntArray = intArrayOf()
         ): InputEventDispatcher = InputEventDispatcher(
-            parentScope, channelCapacity, mainDispatcher, defaultDispatcher, repeatableKeyCodes.clone()
+             channelCapacity, mainDispatcher, defaultDispatcher, repeatableKeyCodes.clone()
         )
     }
 

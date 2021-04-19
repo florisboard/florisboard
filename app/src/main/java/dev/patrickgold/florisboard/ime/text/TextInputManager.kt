@@ -79,7 +79,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private val dictionaryManager: DictionaryManager = DictionaryManager.default()
     private var activeDictionary: Dictionary<String, Int>? = null
     val inputEventDispatcher: InputEventDispatcher = InputEventDispatcher.new(
-        parentScope = this,
         repeatableKeyCodes = intArrayOf(
             KeyCode.ARROW_DOWN,
             KeyCode.ARROW_LEFT,
@@ -146,11 +145,15 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onCreateInputView() {
-        keyboardViews.clear()
+        flogInfo(LogTopic.IMS_EVENTS) { "onCreateInputView()" }
+
+        if (keyboardViews.isNotEmpty()) {
+            keyboardViews.clear()
+        }
     }
 
     private suspend fun addKeyboardView(mode: KeyboardMode) {
-        val keyboardView = KeyboardView(florisboard.context)
+        val keyboardView = KeyboardView(florisboard)
         keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(mode, florisboard.activeSubtype, florisboard.prefs, florisboard.subtypeManager.getCurrencySet(florisboard.activeSubtype)).await()
         keyboardViews[mode] = keyboardView
         textViewFlipper?.addView(keyboardView)
@@ -342,7 +345,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     }
                 }
             }
-            if (PrefHelper.getDefaultInstance(florisboard.context).glide.enabled) {
+            if (PrefHelper.getDefaultInstance(florisboard).glide.enabled) {
                 GlideTypingManager.getInstance().setWordData(newSubtype)
             }
             // TODO: heavy load on main thread
@@ -471,7 +474,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onSmartbarPrivateModeButtonClicked() {
-        Toast.makeText(florisboard.context, R.string.private_mode_dialog__title, Toast.LENGTH_LONG).show()
+        Toast.makeText(florisboard, R.string.private_mode_dialog__title, Toast.LENGTH_LONG).show()
     }
 
     override fun onSmartbarQuickActionPressed(quickActionId: Int) {

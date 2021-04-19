@@ -29,7 +29,7 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
         fun getInstance(): GlideTypingManager {
             if (!this::glideTypingManager.isInitialized) {
                 glideTypingManager = GlideTypingManager()
-                glideTypingManager.prefHelper = PrefHelper.getDefaultInstance(FlorisBoard.getInstance().context)
+                glideTypingManager.prefHelper = FlorisBoard.getInstance().prefs
             }
             return glideTypingManager
         }
