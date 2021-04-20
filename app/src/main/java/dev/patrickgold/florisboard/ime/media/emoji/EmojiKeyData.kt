@@ -41,13 +41,22 @@ class EmojiKeyData(
         return null
     }
 
+    private var string: String? = null
+
     override fun asString(isForDisplay: Boolean): String {
-        return StringBuilder().run {
-            for (codePoint in codePoints) {
-                append(Character.toChars(codePoint))
+        if (string == null) {
+            string = StringBuilder().run {
+                for (codePoint in codePoints) {
+                    append(Character.toChars(codePoint))
+                }
+                toString()
             }
-            toString()
         }
+        return string!!
+    }
+
+    companion object {
+        val EMPTY = EmojiKeyData(listOf())
     }
 
     override fun toString(): String {
