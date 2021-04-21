@@ -20,9 +20,9 @@ Guide to a good crash-report:
 Describe what you were doing that could've led to the crash.
 
 #### Steps to reproduce
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
+1. Go to '…'
+2. Click on '…'
+3. Scroll down to '…'
 4. See crash
 
 <!-- Paste the generated crash log below -->
