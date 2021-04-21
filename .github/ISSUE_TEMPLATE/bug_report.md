@@ -22,9 +22,9 @@ Guide to a good bug-report:
 Describe the bug in a short but concise way.
 
 #### Steps to reproduce
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
+1. Go to '…'
+2. Click on '…'
+3. Scroll down to '…'
 4. See error
 
 #### Environment information
