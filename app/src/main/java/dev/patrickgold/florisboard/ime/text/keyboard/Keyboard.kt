@@ -75,10 +75,11 @@ class TextKeyboard(
         val desiredTouchBounds = keyboardView.desiredKey.touchBounds
         val desiredVisibleBounds = keyboardView.desiredKey.visibleBounds
         val keyboardWidth = keyboardView.measuredWidth.toDouble()
+        val rowMarginH = abs(desiredTouchBounds.width() - desiredVisibleBounds.width())
 
         for ((r, row) in rows().withIndex()) {
             val posY = desiredTouchBounds.height() * r
-            val availableWidth = keyboardWidth / desiredTouchBounds.width()
+            val availableWidth = (keyboardWidth - rowMarginH) / desiredTouchBounds.width()
             var requestedWidth = 0.0
             var shrinkSum = 0.0
             var growSum = 0.0
@@ -90,7 +91,7 @@ class TextKeyboard(
             if (requestedWidth <= availableWidth) {
                 // Requested with is smaller or equal to the available with, so we can grow
                 val additionalWidth = availableWidth - requestedWidth
-                var posX = 0
+                var posX = rowMarginH / 2
                 for ((k, key) in row.withIndex()) {
                     val keyWidth = desiredTouchBounds.width() * when (growSum) {
                         0.0 -> when (k) {
@@ -120,13 +121,20 @@ class TextKeyboard(
                     layoutDrawableBounds(key)
                     layoutLabelBounds(key)
                     posX += key.touchBounds.width()
+                    // After-adjust touch bounds for the row margin
+                    key.touchBounds.apply {
+                        if (k == 0) {
+                            left = 0
+                        } else if (k == row.size - 1) {
+                            right = keyboardWidth.toInt()
+                        }
+                    }
                 }
-
             } else {
                 // Requested size too big, must shrink.
                 val clippingWidth = requestedWidth - availableWidth
-                var posX = 0
-                for (key in row) {
+                var posX = rowMarginH / 2
+                for ((k, key) in row.withIndex()) {
                     val keyWidth = desiredTouchBounds.width() * if (key.flayShrink == 0.0) {
                         key.flayWidthFactor
                     } else {
@@ -147,6 +155,14 @@ class TextKeyboard(
                     layoutDrawableBounds(key)
                     layoutLabelBounds(key)
                     posX += key.touchBounds.width()
+                    // After-adjust touch bounds for the row margin
+                    key.touchBounds.apply {
+                        if (k == 0) {
+                            left = 0
+                        } else if (k == row.size - 1) {
+                            right = keyboardWidth.toInt()
+                        }
+                    }
                 }
             }
         }
