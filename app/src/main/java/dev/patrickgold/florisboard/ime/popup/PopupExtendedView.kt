@@ -27,6 +27,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.text.keyboard.Key
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
@@ -112,11 +113,11 @@ class PopupExtendedView : View, ThemeManager.OnThemeUpdatedListener {
         }
     }
 
-    private fun applyProperties(anchor: View) {
+    private fun applyProperties(anchor: Key) {
         val anchorCoords = IntArray(2)
-        anchor.getLocationInWindow(anchorCoords)
+        //anchor.getLocationInWindow(anchorCoords)
         val anchorX = anchorCoords[0]
-        val anchorY = anchorCoords[1] + anchor.measuredHeight
+        val anchorY = anchorCoords[1] + anchor.visibleBounds.height()
         when (val lp = layoutParams) {
             is FrameLayout.LayoutParams -> lp.apply {
                 width = properties.width
@@ -147,7 +148,7 @@ class PopupExtendedView : View, ThemeManager.OnThemeUpdatedListener {
         }
     }
 
-    fun show(anchor: View) {
+    fun show(anchor: Key) {
         applyProperties(anchor)
         visibility = VISIBLE
         requestLayout()

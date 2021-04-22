@@ -60,7 +60,7 @@ class SettingsMainActivity : AppCompatActivity(),
         prefs.initDefaultPreferences()
         prefs.sync()
         subtypeManager = SubtypeManager(this, prefs)
-        layoutManager = LayoutManager(this)
+        layoutManager = LayoutManager()
 
         val mode = when (prefs.advanced.settingsTheme) {
             "light" -> AppCompatDelegate.MODE_NIGHT_NO

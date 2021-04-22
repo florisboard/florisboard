@@ -33,7 +33,7 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.ime.text.key.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
@@ -47,20 +47,20 @@ class EditingKeyView : AppCompatImageButton, ThemeManager.OnThemeUpdatedListener
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
     private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
     private val themeManager: ThemeManager = ThemeManager.default()
-    private val data: KeyData = when (id) {
-        R.id.arrow_down -> KeyData.ARROW_DOWN
-        R.id.arrow_left -> KeyData.ARROW_LEFT
-        R.id.arrow_right -> KeyData.ARROW_RIGHT
-        R.id.arrow_up -> KeyData.ARROW_UP
-        R.id.backspace -> KeyData.DELETE
-        R.id.clipboard_copy -> KeyData.CLIPBOARD_COPY
-        R.id.clipboard_cut -> KeyData.CLIPBOARD_CUT
-        R.id.clipboard_paste -> KeyData.CLIPBOARD_PASTE
-        R.id.move_start_of_line -> KeyData.MOVE_START_OF_LINE
-        R.id.move_end_of_line -> KeyData.MOVE_END_OF_LINE
-        R.id.select -> KeyData.CLIPBOARD_SELECT
-        R.id.select_all -> KeyData.CLIPBOARD_SELECT_ALL
-        else -> KeyData.UNSPECIFIED
+    private val data: TextKeyData = when (id) {
+        R.id.arrow_down -> TextKeyData.ARROW_DOWN
+        R.id.arrow_left -> TextKeyData.ARROW_LEFT
+        R.id.arrow_right -> TextKeyData.ARROW_RIGHT
+        R.id.arrow_up -> TextKeyData.ARROW_UP
+        R.id.backspace -> TextKeyData.DELETE
+        R.id.clipboard_copy -> TextKeyData.CLIPBOARD_COPY
+        R.id.clipboard_cut -> TextKeyData.CLIPBOARD_CUT
+        R.id.clipboard_paste -> TextKeyData.CLIPBOARD_PASTE
+        R.id.move_start_of_line -> TextKeyData.MOVE_START_OF_LINE
+        R.id.move_end_of_line -> TextKeyData.MOVE_END_OF_LINE
+        R.id.select -> TextKeyData.CLIPBOARD_SELECT
+        R.id.select_all -> TextKeyData.CLIPBOARD_SELECT_ALL
+        else -> TextKeyData.UNSPECIFIED
     }
     private var isKeyPressed: Boolean = false
     private val repeatedKeyPressHandler: Handler = Handler(context.mainLooper)

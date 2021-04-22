@@ -2,9 +2,8 @@ package dev.patrickgold.florisboard.ime.text.gestures
 
 import android.util.SparseArray
 import androidx.collection.LruCache
-import androidx.core.util.set
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.text.key.KeyView
+import dev.patrickgold.florisboard.ime.text.keyboard.Key
 import java.text.Normalizer
 import java.util.*
 import kotlin.collections.HashMap
@@ -18,10 +17,10 @@ import kotlin.math.*
 class StatisticalGlideTypingClassifier : GlideTypingClassifier {
 
     private val gesture = Gesture()
-    private var keysByCharacter: SparseArray<KeyView> = SparseArray()
+    private var keysByCharacter: SparseArray<Key> = SparseArray()
     private var words: Set<String> = setOf()
     private var wordFrequencies: Map<String, Int> = hashMapOf()
-    private var keys: ArrayList<KeyView> = arrayListOf()
+    private var keys: ArrayList<Key> = arrayListOf()
     private lateinit var pruner: Pruner
     private var wordDataSubtype: Subtype? = null
     private var layoutSubtype: Subtype? = null
@@ -86,7 +85,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         }
     }
 
-    override fun setLayout(keyViews: Sequence<KeyView>, subtype: Subtype) {
+    override fun setLayout(keyViews: Sequence<Key>, subtype: Subtype) {
         // stop duplicate calls
         if (this.layoutSubtype == subtype) {
             return
@@ -94,12 +93,12 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
 
         keysByCharacter.clear()
         keys.clear()
-        keyViews.forEach {
+        /*keyViews.forEach {
             keysByCharacter[it.data.code] = it
             this.keys.add(it)
         }
         layoutSubtype = subtype
-        distanceThresholdSquared = (keyViews.first().width / 4)
+        distanceThresholdSquared = (keyViews.first().width / 4)*/
         distanceThresholdSquared *= distanceThresholdSquared
         initializePruner()
     }
@@ -165,7 +164,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         val candidates = arrayListOf<String>()
         val candidateWeights = arrayListOf<Float>()
         val key = keys.firstOrNull() ?: return listOf()
-        val radius = min(key.height, key.width)
+        val radius = 0//min(key.height, key.width)
         var remainingWords = pruner.pruneByExtremities(gesture, this.keys)
         val userGesture = gesture.resample(SAMPLING_POINTS)
         val normalizedUserGesture: Gesture = userGesture.normalizeByBoxSide()
@@ -257,7 +256,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
          * The length difference between a user gesture and a word gesture above which a word will
          * be pruned.
          */
-        private val lengthThreshold: Double, words: Set<String>, keysByCharacter: SparseArray<KeyView>
+        private val lengthThreshold: Double, words: Set<String>, keysByCharacter: SparseArray<Key>
     ) {
 
         /** A tree that provides fast access to words based on their first and last letter.  */
@@ -272,7 +271,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
          * @return A list of likely words.
          */
         fun pruneByExtremities(
-            userGesture: Gesture, keys: Iterable<KeyView>
+            userGesture: Gesture, keys: Iterable<Key>
         ): ArrayList<String> {
             val remainingWords = ArrayList<String>()
             val startX = userGesture.getFirstX()
@@ -304,13 +303,13 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         fun pruneByLength(
             userGesture: Gesture,
             words: ArrayList<String>,
-            keysByCharacter: SparseArray<KeyView>,
-            keys: List<KeyView>
+            keysByCharacter: SparseArray<Key>,
+            keys: List<Key>
         ): ArrayList<String> {
             val remainingWords = ArrayList<String>()
 
             val key = keys.firstOrNull() ?: return arrayListOf()
-            val radius = min(key.height, key.width)
+            val radius = 0//min(key.height, key.width)
             val userLength = userGesture.getLength()
             for (word in words) {
                 val idealGestures = Gesture.generateIdealGestures(word, keysByCharacter)
@@ -326,7 +325,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
 
         companion object {
             private fun getFirstKeyLastKey(
-                word: String, keysByCharacter: SparseArray<KeyView>
+                word: String, keysByCharacter: SparseArray<Key>
             ): Pair<Int, Int>? {
                 val firstLetter = word[0]
                 val lastLetter = word[word.length - 1]
@@ -339,7 +338,8 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
                     else -> {
                         val firstKey = keysByCharacter[firstBaseChar.toInt()]
                         val lastKey = keysByCharacter[lastBaseChar.toInt()]
-                        Pair(firstKey.data.code, lastKey.data.code)
+                        //Pair(firstKey.data.code, lastKey.data.code)
+                        Pair(0, 0)
                     }
                 }
             }
@@ -354,16 +354,17 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
              * @return A list of the n closest keys.
              */
             private fun findNClosestKeys(
-                x: Float, y: Float, n: Int, keys: Iterable<KeyView>
+                x: Float, y: Float, n: Int, keys: Iterable<Key>
             ): Iterable<Int> {
-                val keyDistances = HashMap<KeyView, Float>()
-                for (key in keys) {
+                val keyDistances = HashMap<Key, Float>()
+                /*for (key in keys) {
                     val distance = Gesture.distance(key.centerX, key.centerY, x, y)
                     keyDistances[key] = distance
                 }
 
                 return keyDistances.entries.sortedWith { c1, c2 -> c1.value.compareTo(c2.value) }.take(n)
-                    .map { it.key.data.code }
+                    .map { it.key.data.code }*/
+                return listOf()
             }
         }
 
@@ -386,7 +387,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         companion object {
             private const val MAX_SIZE = 300
 
-            fun generateIdealGestures(word: String, keysByCharacter: SparseArray<KeyView>): List<Gesture> {
+            fun generateIdealGestures(word: String, keysByCharacter: SparseArray<Key>): List<Gesture> {
                 val idealGesture = Gesture()
                 val idealGestureWithLoops = Gesture()
                 var previousLetter = '\u0000'
@@ -407,7 +408,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
 
                     // We adda little loop on  the key for duplicate letters
                     // so that we can differentiate words like pool and poll, lull and lul, etc...
-                    if (previousLetter == lc) {
+                    /*if (previousLetter == lc) {
                         // bottom right
                         idealGestureWithLoops.addPoint(
                             key.centerX + key.width / 4.0f, key.centerY + key.height / 4.0f
@@ -430,7 +431,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
                     } else {
                         idealGesture.addPoint(key.centerX, key.centerY)
                         idealGestureWithLoops.addPoint(key.centerX, key.centerY)
-                    }
+                    }*/
                     previousLetter = lc
                 }
                 return when (hasLoops) {
