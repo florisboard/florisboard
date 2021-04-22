@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Patrick Goldinger
+ * Copyright (C) 2021 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,26 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.text.key
 
-import com.squareup.moshi.FromJson
-import java.util.*
-
 enum class KeyVariation {
     ALL,
     EMAIL_ADDRESS,
     NORMAL,
     PASSWORD,
     URI;
-
-    companion object {
-        fun fromString(string: String): KeyVariation {
-            return valueOf(string.toUpperCase(Locale.ENGLISH))
-        }
-    }
-}
-
-class KeyVariationAdapter {
-    @FromJson
-    fun fromJson(raw: String): KeyVariation {
-        return KeyVariation.fromString(raw)
-    }
 }

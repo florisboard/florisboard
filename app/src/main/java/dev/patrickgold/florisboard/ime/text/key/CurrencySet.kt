@@ -16,12 +16,14 @@
 
 package dev.patrickgold.florisboard.ime.text.key
 
+import kotlinx.serialization.Serializable
 import kotlin.math.abs
 
+@Serializable
 class CurrencySet(
     val name: String,
     val label: String,
-    private val slots: List<KeyData>
+    private val slots: List<TextKeyData>
 ) {
     companion object {
         fun isCurrencySlot(keyCode: Int): Boolean {
@@ -40,17 +42,17 @@ class CurrencySet(
             name = "\$default",
             label = "Default",
             slots = listOf(
-                KeyData(code =   36, label = "$"),
-                KeyData(code =  162, label = "¢"),
-                KeyData(code = 8364, label = "€"),
-                KeyData(code =  163, label = "£"),
-                KeyData(code =  165, label = "¥"),
-                KeyData(code = 8369, label = "₱")
+                TextKeyData(code =   36, label = "$"),
+                TextKeyData(code =  162, label = "¢"),
+                TextKeyData(code = 8364, label = "€"),
+                TextKeyData(code =  163, label = "£"),
+                TextKeyData(code =  165, label = "¥"),
+                TextKeyData(code = 8369, label = "₱")
             )
         )
     }
 
-    fun getSlot(keyCode: Int): KeyData? {
+    fun getSlot(keyCode: Int): TextKeyData? {
         val slot = abs(keyCode) - abs(KeyCode.CURRENCY_SLOT_1)
         return slots.getOrNull(slot)
     }

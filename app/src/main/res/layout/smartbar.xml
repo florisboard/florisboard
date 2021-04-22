@@ -86,13 +86,13 @@
 
         </LinearLayout>
 
-        <dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
+        <dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardView
             android:id="@+id/clipboard_cursor_row"
             style="@style/SmartbarContainer"
             android:layoutDirection="ltr"
             app:isSmartbarKeyboard="true"/>
 
-        <dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
+        <dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardView
             android:id="@+id/number_row"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

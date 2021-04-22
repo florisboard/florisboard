@@ -35,7 +35,7 @@
                     android:orientation="vertical"
                     android:theme="@style/PreferenceThemeOverlay">
 
-                    <dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
+                    <dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardView
                         android:id="@+id/keyboard_preview"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/textKeyboardView_baseHeight"
