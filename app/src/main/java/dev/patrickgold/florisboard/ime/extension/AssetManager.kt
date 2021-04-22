@@ -18,26 +18,25 @@ package dev.patrickgold.florisboard.ime.extension
 
 import android.content.Context
 import android.net.Uri
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import dev.patrickgold.florisboard.ime.text.key.KeyTypeAdapter
-import dev.patrickgold.florisboard.ime.text.key.KeyVariationAdapter
-import dev.patrickgold.florisboard.ime.text.layout.LayoutTypeAdapter
+import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.ime.text.key.PopupAwareTextKeyData
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
 import timber.log.Timber
 import java.io.File
-import kotlin.reflect.KClass
 
-class AssetManager private constructor(private val applicationContext: Context) {
-    private val moshi: Moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        /*.add(PolymorphicJsonAdapterFactory.of(Asset::class.java, "\$type")
-            .withSubtype(PopupExtension::class.java, PopupExtension::class.qualifiedName)
-            .withSubtype(Theme::class.java, Theme::class.qualifiedName)
-        )*/
-        .add(LayoutTypeAdapter())
-        .add(KeyTypeAdapter())
-        .add(KeyVariationAdapter())
-        .build()
+class AssetManager private constructor(val applicationContext: Context) {
+    private val json = Json {
+        classDiscriminator = "$"
+        ignoreUnknownKeys = true
+        serializersModule = SerializersModule {
+            polymorphicDefault(KeyData::class) {
+                PopupAwareTextKeyData.serializer()
+            }
+        }
+    }
 
     companion object {
         private var defaultInstance: AssetManager? = null
@@ -61,6 +60,8 @@ class AssetManager private constructor(private val applicationContext: Context) 
 
         fun defaultOrNull(): AssetManager? = defaultInstance
     }
+
+    fun jsonBuilder(): Json = json
 
     fun deleteAsset(ref: AssetRef): Result<Unit> {
         return when (ref.source) {
@@ -100,27 +101,23 @@ class AssetManager private constructor(private val applicationContext: Context) 
         }
     }
 
-    fun <T : Asset> listAssets(ref: AssetRef, assetClass: KClass<T>): Result<Map<AssetRef, T>> {
+    inline fun <reified T> listAssets(ref: AssetRef): Result<Map<AssetRef, T>> {
         val retMap = mutableMapOf<AssetRef, T>()
         return when (ref.source) {
-            AssetSource.Assets -> {
-                try {
-                    val list = applicationContext.assets.list(ref.path)
-                    if (list != null) {
-                        for (file in list) {
-                            val fileRef = ref.copy(path = ref.path + "/" + file)
-                            val assetResult = loadAsset(fileRef, assetClass)
-                            assetResult.onSuccess { asset ->
-                                retMap[fileRef.copy()] = asset
-                            }.onFailure { error ->
-                                Timber.e(error.toString())
-                            }
+            AssetSource.Assets -> runCatching {
+                val list = applicationContext.assets.list(ref.path)
+                if (list != null) {
+                    for (file in list) {
+                        val fileRef = ref.copy(path = ref.path + "/" + file)
+                        val assetResult = loadJsonAsset<T>(fileRef)
+                        assetResult.onSuccess { asset ->
+                            retMap[fileRef.copy()] = asset
+                        }.onFailure { error ->
+                            Timber.e(error.toString())
                         }
                     }
-                    Result.success(retMap.toMap())
-                } catch (e: Exception) {
-                    Result.failure(e)
                 }
+                retMap.toMap()
             }
             AssetSource.Internal -> {
                 val dir = File(applicationContext.filesDir.absolutePath + "/" + ref.path)
@@ -129,7 +126,7 @@ class AssetManager private constructor(private val applicationContext: Context) 
                         it.forEach { file ->
                             if (file.isFile) {
                                 val fileRef = ref.copy(path = ref.path + "/" + file.name)
-                                val assetResult = loadAsset(fileRef, assetClass)
+                                val assetResult = loadJsonAsset<T>(fileRef)
                                 assetResult.onSuccess { asset ->
                                     retMap[fileRef.copy()] = asset
                                 }.onFailure { error ->
@@ -145,68 +142,28 @@ class AssetManager private constructor(private val applicationContext: Context) 
         }
     }
 
-    fun <T : Asset> loadAsset(ref: AssetRef, assetClass: KClass<T>): Result<T> {
-        val rawJsonData = when (ref.source) {
-            is AssetSource.Assets -> {
-                try {
-                    applicationContext.assets.open(ref.path).bufferedReader().use { it.readText() }
-                } catch (e: Exception) {
-                    return Result.failure(e)
-                }
-            }
-            is AssetSource.Internal -> {
-                val file = File(applicationContext.filesDir.absolutePath + "/" + ref.path)
-                val contents = readFile(file)
-                if (contents.isBlank()) {
-                    "{}"
-                } else {
-                    contents
-                }
-            }
-            else -> "{}"
-        }
-        return try {
-            val adapter = moshi.adapter(assetClass.java)
-            val asset = adapter.fromJson(rawJsonData)
-            if (asset != null) {
-                Result.success(asset)
-            } else {
-                Result.failure(NullPointerException("Asset failed to load!"))
-            }
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+    inline fun <reified T> loadJsonAsset(ref: AssetRef): Result<T> {
+        return loadTextAsset(ref).fold(
+            onSuccess = { runCatching { jsonBuilder().decodeFromString(it) } },
+            onFailure = { Result.failure(it) }
+        )
     }
 
-    fun <T : Asset> loadAsset(uri: Uri, assetClass: KClass<T>, maxSize: Int): Result<T> {
-        val rawJsonData = ExternalContentUtils.readTextFromUri(applicationContext, uri, maxSize).getOrElse {
-            return Result.failure(it)
-        }
-        return try {
-            val adapter = moshi.adapter(assetClass.java)
-            val asset = adapter.fromJson(rawJsonData)
-            if (asset != null) {
-                Result.success(asset)
-            } else {
-                Result.failure(NullPointerException("Asset failed to load!"))
-            }
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+    inline fun <reified T> loadJsonAsset(uri: Uri, maxSize: Int): Result<T> {
+        return loadTextAsset(uri, maxSize).fold(
+            onSuccess = { runCatching { jsonBuilder().decodeFromString(it) } },
+            onFailure = { Result.failure(it) }
+        )
     }
 
-    fun loadAssetRaw(ref: AssetRef): Result<String> {
+    fun loadTextAsset(ref: AssetRef): Result<String> {
         return when (ref.source) {
-            is AssetSource.Assets -> {
-                try {
-                    Result.success(applicationContext.assets.open(ref.path).bufferedReader().use { it.readText() })
-                } catch (e: Exception) {
-                    Result.failure(e)
-                }
+            is AssetSource.Assets -> runCatching {
+                applicationContext.assets.open(ref.path).bufferedReader().use { it.readText() }
             }
             is AssetSource.Internal -> {
                 val file = File(applicationContext.filesDir.absolutePath + "/" + ref.path)
-                val contents = readFile(file)
+                val contents = readTextFile(file).getOrElse { return Result.failure(it) }
                 if (contents.isBlank()) {
                     Result.failure(Exception("File is blank!"))
                 } else {
@@ -217,26 +174,13 @@ class AssetManager private constructor(private val applicationContext: Context) 
         }
     }
 
-    fun <T : Asset> writeAsset(ref: AssetRef, assetClass: KClass<T>, asset: T): Result<Unit> {
-        return when (ref.source) {
-            AssetSource.Internal -> {
-                val adapter = moshi.adapter(assetClass.java)
-                val rawJson = adapter.toJson(asset)
-                val file = File(applicationContext.filesDir.absolutePath + "/" + ref.path)
-                writeToFile(file, rawJson)
-                Result.success(Unit)
-            }
-            else -> Result.failure(Exception("Can not write an asset in source '${ref.source}'"))
-        }
-    }
-
     /**
      * Reads a given [file] and returns its content.
      *
      * @param file The file object.
      * @return The contents of the file or an empty string, if the file does not exist.
      */
-    private fun readFile(file: File): String {
+    private fun readTextFile(file: File) = runCatching {
         val retText = StringBuilder()
         if (file.exists()) {
             val newLine = System.lineSeparator()
@@ -245,7 +189,35 @@ class AssetManager private constructor(private val applicationContext: Context) 
                 retText.append(newLine)
             }
         }
-        return retText.toString()
+        retText.toString()
+    }
+
+    fun loadTextAsset(uri: Uri, maxSize: Int): Result<String> {
+        return ExternalContentUtils.readTextFromUri(applicationContext, uri, maxSize)
+    }
+
+    inline fun <reified T> writeJsonAsset(ref: AssetRef, asset: T): Result<Unit> {
+        return runCatching { jsonBuilder().encodeToString(asset) }.fold(
+            onSuccess = { writeTextAsset(ref, it) },
+            onFailure = { Result.failure(it) }
+        )
+    }
+
+    inline fun <reified T> writeJsonAsset(uri: Uri, asset: T): Result<Unit> {
+        return runCatching { jsonBuilder().encodeToString(asset) }.fold(
+            onSuccess = { writeTextAsset(uri, it) },
+            onFailure = { Result.failure(it) }
+        )
+    }
+
+    fun writeTextAsset(ref: AssetRef, text: String): Result<Unit> {
+        return when (ref.source) {
+            AssetSource.Internal -> {
+                val file = File(applicationContext.filesDir.absolutePath + "/" + ref.path)
+                writeTextFile(file, text)
+            }
+            else -> Result.failure(Exception("Can not write an asset in source '${ref.source}'"))
+        }
     }
 
     /**
@@ -256,17 +228,17 @@ class AssetManager private constructor(private val applicationContext: Context) 
      * @param text The text to write to the file.
      * @return The contents of the file or an empty string, if the file does not exist.
      */
-    private fun writeToFile(file: File, text: String) {
-        try {
-            file.parent?.let {
-                val dir = File(it)
-                if (!dir.exists()) {
-                    dir.mkdirs()
-                }
+    private fun writeTextFile(file: File, text: String) = runCatching {
+        file.parent?.let {
+            val dir = File(it)
+            if (!dir.exists()) {
+                dir.mkdirs()
             }
-            file.writeText(text)
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
+        file.writeText(text)
+    }
+
+    fun writeTextAsset(uri: Uri, text: String): Result<Unit> {
+        return ExternalContentUtils.writeTextToUri(applicationContext, uri, text)
     }
 }

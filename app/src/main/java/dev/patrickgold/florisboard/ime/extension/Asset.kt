@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.extension
 
-import android.content.Context
-
 /**
  * Interface for an Asset to use within FlorisBoard. An asset is everything from a dictionary to a
  * keyboard layout to a extended popup mapping, etc. Assets are very important for the splitting
@@ -46,14 +44,4 @@ interface Asset {
      * valid, but the best practice is to use the GitHub username.
      */
     val authors: List<String>
-
-    /**
-     * "Static" functions which every Asset should provide.
-     */
-    interface Companion<T> {
-        /**
-         * Creates an empty Asset of type [T].
-         */
-        fun empty(): T
-    }
 }

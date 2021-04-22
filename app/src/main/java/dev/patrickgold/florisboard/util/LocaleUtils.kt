@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.util
 
-import com.squareup.moshi.FromJson
-import com.squareup.moshi.ToJson
 import java.util.*
 
 object LocaleUtils {
@@ -32,17 +30,6 @@ object LocaleUtils {
             else -> {
                 Locale(string)
             }
-        }
-    }
-
-    class JsonAdapter {
-        @FromJson
-        fun fromJson(raw: String): Locale {
-            return stringToLocale(raw)
-        }
-        @ToJson
-        fun toJson(raw: Locale): String {
-            return raw.toString()
         }
     }
 }

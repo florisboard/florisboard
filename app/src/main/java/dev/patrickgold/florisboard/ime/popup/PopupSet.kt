@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.popup
 
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
+import kotlinx.serialization.Serializable
 
 /**
  * A popup set for a single key. This set describes, if the key has a [hint] character,
@@ -32,6 +33,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
  * within this companion object are allowed (as long as the corresponding [hint] or [main]
  * character is *not* null).
  */
+@Serializable
 class PopupSet<T> (
     var hint: T? = null,
     var main: T? = null,
