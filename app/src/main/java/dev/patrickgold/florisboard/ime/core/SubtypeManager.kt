@@ -17,10 +17,11 @@
 package dev.patrickgold.florisboard.ime.core
 
 import android.content.Context
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import dev.patrickgold.florisboard.debug.*
+import dev.patrickgold.florisboard.ime.extension.AssetManager
+import dev.patrickgold.florisboard.ime.extension.AssetRef
+import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.text.key.CurrencySet
-import dev.patrickgold.florisboard.util.LocaleUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import java.util.*
@@ -40,6 +41,7 @@ class SubtypeManager(
     private val context: Context,
     private val prefs: PrefHelper
 ) : CoroutineScope by MainScope() {
+    private val assetManager get() = AssetManager.default()
 
     companion object {
         const val IME_CONFIG_FILE_PATH = "ime/config.json"
@@ -73,19 +75,10 @@ class SubtypeManager(
      * @return The [FlorisBoard.ImeConfig] or a default config.
      */
     private fun loadImeConfig(path: String): FlorisBoard.ImeConfig {
-        val rawJsonData: String = try {
-            context.assets.open(path).bufferedReader().use { it.readText() }
-        } catch (e: Exception) {
-            null
-        } ?: return FlorisBoard.ImeConfig(context.packageName)
-        val moshi = Moshi.Builder()
-            .add(KotlinJsonAdapterFactory())
-            .add(LocaleUtils.JsonAdapter())
-            .build()
-        val layoutAdapter = moshi.adapter(FlorisBoard.ImeConfig::class.java)
-        return layoutAdapter.fromJson(rawJsonData) ?: FlorisBoard.ImeConfig(
-            context.packageName
-        )
+        return assetManager.loadJsonAsset<FlorisBoard.ImeConfig>(AssetRef(AssetSource.Assets, path)).getOrElse {
+            flogError(LogTopic.SUBTYPE_MANAGER) { "Failed to retrieve IME config: $it" }
+            FlorisBoard.ImeConfig(context.packageName)
+        }
     }
 
     /**

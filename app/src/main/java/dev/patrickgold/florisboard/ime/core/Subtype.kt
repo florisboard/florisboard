@@ -16,9 +16,14 @@
 
 package dev.patrickgold.florisboard.ime.core
 
-import com.squareup.moshi.Json
 import dev.patrickgold.florisboard.ime.text.layout.LayoutType
 import dev.patrickgold.florisboard.util.LocaleUtils
+import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import java.util.*
 
 /**
@@ -108,6 +113,7 @@ data class Subtype(
     }
 }
 
+@Serializable
 data class SubtypeLayoutMap(
     val characters: String = CHARACTERS_DEFAULT,
     val symbols: String = SYMBOLS_DEFAULT,
@@ -277,11 +283,25 @@ data class SubtypeLayoutMap(
  * @property currencySetName The currency set name of this subtype. Beware its different name in json: 'currencySet'.
  * @property preferred The preferred layout map for this subtype's locale.
  */
+@Serializable
 data class DefaultSubtype(
     var id: Int,
-    @Json(name = "languageTag")
+    @Serializable(with = LocaleSerializer::class)
+    @SerialName("languageTag")
     var locale: Locale,
-    @Json(name = "currencySet")
+    @SerialName("currencySet")
     var currencySetName: String,
     var preferred: SubtypeLayoutMap
 )
+
+class LocaleSerializer : KSerializer<Locale> {
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Locale", PrimitiveKind.STRING)
+
+    override fun serialize(encoder: Encoder, value: Locale) {
+        encoder.encodeString(value.toString())
+    }
+
+    override fun deserialize(decoder: Decoder): Locale {
+        return LocaleUtils.stringToLocale(decoder.decodeString())
+    }
+}
