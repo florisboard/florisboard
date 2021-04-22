@@ -47,6 +47,10 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         get() = ThemeManager.defaultOrNull()
 
     private var computedKeyboard: TextKeyboard? = null
+
+    // IS ONLY USED IF KEYBOARD IS IN PREVIEW MODE
+    private var cachedTheme: Theme? = null
+
     private var capsState: Boolean = false
     private var keyVariation: KeyVariation = KeyVariation.NORMAL
     private var isRecomputingRequested: Boolean = true
@@ -136,6 +140,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         themeManager?.unregisterOnThemeUpdatedListener(this)
+        cachedTheme = null
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -267,6 +272,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
 
     override fun onThemeUpdated(theme: Theme) {
         if (isPreviewMode) {
+            cachedTheme = theme
             keyboardBackground.apply {
                 setTint(theme.getAttr(Theme.Attr.KEYBOARD_BACKGROUND).toSolidColor().color)
             }
@@ -295,17 +301,32 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
 
     private fun onDrawComputedKeyboard(canvas: Canvas) {
         val keyboard = computedKeyboard ?: return
-        setTextSizeFor(labelPaint, desiredKey.visibleLabelBounds.width().toFloat(), desiredKey.visibleLabelBounds.height().toFloat(), "X")
+
+        setTextSizeFor(
+            labelPaint,
+            desiredKey.visibleLabelBounds.width().toFloat(),
+            desiredKey.visibleLabelBounds.height().toFloat(),
+            "X"
+        )
         labelPaintTextSize = labelPaint.textSize
-        setTextSizeFor(hintedLabelPaint, desiredKey.visibleBounds.width() * 1.0f / 5.0f, desiredKey.visibleBounds.height() * 1.0f / 5.0f, "X")
+
+        setTextSizeFor(
+            hintedLabelPaint,
+            desiredKey.visibleBounds.width() * 1.0f / 5.0f,
+            desiredKey.visibleBounds.height() * 1.0f / 5.0f,
+            "X"
+        )
         hintedLabelPaintTextSize = hintedLabelPaint.textSize
+
+        val theme = cachedTheme ?: themeManager?.activeTheme ?: Theme.BASE_THEME
+        val isBorderless = !theme.getAttr(Theme.Attr.KEY_SHOW_BORDER).toOnOff().state &&
+            Color.alpha(theme.getAttr(Theme.Attr.KEY_BACKGROUND).toSolidColor().color) <= 0x0F
         for (key in keyboard.keys()) {
-            onDrawComputedKey(canvas, key)
+            onDrawComputedKey(canvas, key, theme, isBorderless)
         }
     }
 
-    private fun onDrawComputedKey(canvas: Canvas, key: TextKey) {
-        val theme = themeManager?.activeTheme ?: Theme.BASE_THEME
+    private fun onDrawComputedKey(canvas: Canvas, key: TextKey, theme: Theme, isBorderless: Boolean) {
         val keyBackground: ThemeValue
         val keyForeground: ThemeValue
         val shouldShowBorder: Boolean
@@ -363,7 +384,20 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         }
 
         keyBackgroundDrawable.apply {
-            bounds = key.visibleBounds
+            setBounds(
+                key.visibleBounds.left,
+                if (isBorderless) {
+                    (key.visibleBounds.top + key.visibleBounds.height() * 0.12).toInt()
+                } else {
+                    key.visibleBounds.top
+                },
+                key.visibleBounds.right,
+                if (isBorderless) {
+                    (key.visibleBounds.bottom - key.visibleBounds.height() * 0.12).toInt()
+                } else {
+                    key.visibleBounds.bottom
+                }
+            )
             elevation = if (shouldShowBorder) 4.0f else 0.0f
             setTint(keyBackground.toSolidColor().color)
             draw(canvas)

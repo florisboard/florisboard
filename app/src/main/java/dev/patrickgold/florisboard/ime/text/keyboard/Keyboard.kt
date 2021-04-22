@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
+import android.graphics.Rect
 import kotlin.math.abs
 
 abstract class Keyboard {
@@ -33,48 +34,30 @@ class TextKeyboard(
 
     companion object {
         fun layoutDrawableBounds(key: TextKey) {
-            key.visibleDrawableBounds.apply {
-                val w = key.visibleBounds.width()
-                val h = key.visibleBounds.height()
-                val xOffset: Int
-                val yOffset: Int
-                val factor: Double
-                if (w < h) {
-                    factor = if (w / h < 0.5) 0.2 else 0.35
-                    xOffset = (factor * w).toInt()
-                    yOffset = (h - (w - 2 * xOffset)) / 2
-                } else {
-                    factor = if (h / w < 0.5) 0.2 else 0.35
-                    yOffset = (factor * h).toInt()
-                    xOffset = (w - (h - 2 * yOffset)) / 2
-                }
-                left = key.visibleBounds.left + xOffset
-                top = key.visibleBounds.top + yOffset
-                right = key.visibleBounds.right - xOffset
-                bottom = key.visibleBounds.bottom - yOffset
-            }
+            layoutForegroundBounds(key, key.visibleDrawableBounds, 0.21)
         }
 
         fun layoutLabelBounds(key: TextKey) {
-            key.visibleLabelBounds.apply {
-                val w = key.visibleBounds.width()
-                val h = key.visibleBounds.height()
-                val xOffset: Int
-                val yOffset: Int
-                val factor: Double
+            layoutForegroundBounds(key, key.visibleLabelBounds, 0.28)
+        }
+
+        private fun layoutForegroundBounds(key: TextKey, bounds: Rect, factor: Double) {
+            bounds.apply {
+                val w = key.visibleBounds.width().toDouble()
+                val h = key.visibleBounds.height().toDouble()
+                val xOffset: Double
+                val yOffset: Double
                 if (w < h) {
-                    factor = if (w / h < 0.5) 0.28 else 0.43
-                    xOffset = (factor * w).toInt()
-                    yOffset = (h - (w - 2 * xOffset)) / 2
+                    xOffset = factor * w
+                    yOffset = (h - (w - 2.0 * xOffset)) / 2.0
                 } else {
-                    factor = if (h / w < 0.5) 0.28 else 0.43
-                    yOffset = (factor * h).toInt()
-                    xOffset = (w - (h - 2 * yOffset)) / 2
+                    yOffset = factor * h
+                    xOffset = (w - (h - 2.0 * yOffset)) / 2.0
                 }
-                left = key.visibleBounds.left + xOffset
-                top = key.visibleBounds.top + yOffset
-                right = key.visibleBounds.right - xOffset
-                bottom = key.visibleBounds.bottom - yOffset
+                left = key.visibleBounds.left + xOffset.toInt()
+                top = key.visibleBounds.top + yOffset.toInt()
+                right = key.visibleBounds.right - xOffset.toInt()
+                bottom = key.visibleBounds.bottom - yOffset.toInt()
             }
         }
     }
