@@ -30,6 +30,7 @@ import androidx.core.graphics.BlendModeCompat
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.text.key.EmojiKeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
@@ -65,7 +66,7 @@ class EmojiKeyView(
 
         triangleDrawable = ContextCompat.getDrawable(context, R.drawable.triangle_bottom_right)
 
-        text = data.getCodePointsAsString()
+        text = data.asString(isForDisplay = true)
     }
 
     override fun onAttachedToWindow() {
@@ -87,7 +88,7 @@ class EmojiKeyView(
      */
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        event ?: return false
+        /*event ?: return false
 
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
@@ -140,7 +141,7 @@ class EmojiKeyView(
                     isCancelled = true
                 }
             }
-        }
+        }*/
         return true
     }
 
