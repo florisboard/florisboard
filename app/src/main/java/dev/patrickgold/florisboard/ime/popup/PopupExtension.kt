@@ -25,7 +25,7 @@ import kotlinx.serialization.Serializable
  * An object which maps each base key to its extended popups. This can be done for each
  * key variation. [KeyVariation.ALL] is always the fallback for each key.
  */
-typealias PopupMapping = Map<KeyVariation, Map<String, PopupSet<TextKeyData>>>
+typealias PopupMapping = Map<KeyVariation, List<PopupSet<TextKeyData>>>
 
 /**
  * Class which contains an extended popup mapping to use for adding popups subtype based on the
@@ -36,23 +36,11 @@ typealias PopupMapping = Map<KeyVariation, Map<String, PopupSet<TextKeyData>>>
 @Serializable
 class PopupExtension(
     override val name: String,
-    override var label: String = DUMMY,
+    override val label: String = name,
     override val authors: List<String>,
     val mapping: PopupMapping
 ) : Asset {
-    init {
-        /*
-        Must use dummy string because of issue with using other parameters as a default value for string in Kotlin
-        serialization. See https://github.com/Kotlin/kotlinx.serialization/issues/133
-         */
-        if (label == DUMMY) {
-            label = name
-        }
-    }
-
     companion object {
-        private const val DUMMY: String = "___dummy_string_for_ktx_serialization___"
-
         fun empty() = PopupExtension("", "", listOf(), mapOf())
     }
 }

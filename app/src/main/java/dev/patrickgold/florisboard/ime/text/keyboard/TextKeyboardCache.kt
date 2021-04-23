@@ -49,11 +49,11 @@ class TextKeyboardCache {
     }
 
     fun clear(mode: KeyboardMode, subtype: Subtype) {
-        cache[mode]!!.remove(subtype.id)?.cancel()
+        cache[mode]!!.remove(subtype.hashCode())?.cancel()
     }
 
     fun get(mode: KeyboardMode, subtype: Subtype): Deferred<TextKeyboard>? {
-        return cache[mode]!![subtype.id]
+        return cache[mode]!![subtype.hashCode()]
     }
 
     fun getOrElse(mode: KeyboardMode, subtype: Subtype, block: () -> Deferred<TextKeyboard>): Deferred<TextKeyboard> {
@@ -62,12 +62,12 @@ class TextKeyboardCache {
             cachedKeyboard
         } else {
             val keyboard = block()
-            cache[mode]!![subtype.id] = keyboard
+            cache[mode]!![subtype.hashCode()] = keyboard
             keyboard
         }
     }
 
     fun set(mode: KeyboardMode, subtype: Subtype, keyboard: Deferred<TextKeyboard>) {
-        cache[mode]!![subtype.id] = keyboard
+        cache[mode]!![subtype.hashCode()] = keyboard
     }
 }

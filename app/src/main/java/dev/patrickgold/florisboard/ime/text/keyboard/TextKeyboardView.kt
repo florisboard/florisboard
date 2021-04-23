@@ -27,10 +27,8 @@ import android.view.View
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.debug.*
-import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.core.ImeOptions
-import dev.patrickgold.florisboard.ime.core.PrefHelper
-import dev.patrickgold.florisboard.ime.text.TextInputManager
+import dev.patrickgold.florisboard.ime.core.*
+import dev.patrickgold.florisboard.ime.popup.PopupManager
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
@@ -51,14 +49,34 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
     // IS ONLY USED IF KEYBOARD IS IN PREVIEW MODE
     private var cachedTheme: Theme? = null
 
-    private var capsState: Boolean = false
-    private var keyVariation: KeyVariation = KeyVariation.NORMAL
     private var isRecomputingRequested: Boolean = true
+    private var computingEvaluator: ComputingEvaluator? = null
+    private val fallbackEvaluator = object : ComputingEvaluator {
+        override fun caps(): Boolean {
+            return false
+        }
 
-    private var activePointerId: Int = -1
+        override fun keyVariation(): KeyVariation {
+            return KeyVariation.NORMAL
+        }
+
+        override fun activeSubtype(): Subtype {
+            return Subtype.DEFAULT
+        }
+
+        override fun activeCurrencySet(): CurrencySet {
+            return CurrencySet.default()
+        }
+    }
+
     internal var isSmartbarKeyboardView: Boolean = false
     private var isPreviewMode: Boolean = false
     private var isLoadingPlaceholderKeyboard: Boolean = false
+
+    private var initialKey: TextKey? = null
+    private var activeKey: TextKey? = null
+    private var activePointerId: Int? = null
+    private val popupManager: PopupManager<TextKeyboardView>
 
     val desiredKey: TextKey = TextKey(data = TextKeyData.UNSPECIFIED)
 
@@ -99,34 +117,28 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
             isLoadingPlaceholderKeyboard = getBoolean(R.styleable.TextKeyboardView_isLoadingPlaceholderKeyboard, false)
             recycle()
         }
+
+        val popupLayerView = florisboard?.popupLayerView
+        if (popupLayerView == null) {
+            flogError(LogTopic.TEXT_KEYBOARD_VIEW) { "PopupLayerView is null, cannot show popups!" }
+        }
+        popupManager = PopupManager(this, popupLayerView)
+
         setWillNotDraw(false)
+    }
+
+    fun setComputingEvaluator(evaluator: ComputingEvaluator?) {
+        computingEvaluator = evaluator
     }
 
     fun setComputedKeyboard(keyboard: TextKeyboard) {
         flogInfo(LogTopic.TEXT_KEYBOARD_VIEW) { keyboard.toString() }
         computedKeyboard = keyboard
-        notifyStateChanged(capsState, keyVariation)
+        notifyStateChanged()
     }
 
-    fun setComputedKeyboard(keyboard: TextKeyboard, tim: TextInputManager) {
-        flogInfo(LogTopic.TEXT_KEYBOARD_VIEW) { keyboard.toString() }
-        computedKeyboard = keyboard
-        notifyStateChanged(tim)
-    }
-
-    fun setComputedKeyboard(keyboard: TextKeyboard, newCapsState: Boolean, newKeyVariation: KeyVariation) {
-        computedKeyboard = keyboard
-        notifyStateChanged(newCapsState, newKeyVariation)
-    }
-
-    fun notifyStateChanged(tim: TextInputManager) {
-        notifyStateChanged(tim.caps || tim.capsLock, tim.keyVariation)
-    }
-
-    fun notifyStateChanged(newCapsState: Boolean, newKeyVariation: KeyVariation) {
-        flogInfo(LogTopic.TEXT_KEYBOARD_VIEW) { "newCapsState=$newCapsState, newKeyVariation=$newKeyVariation" }
-        capsState = newCapsState
-        keyVariation = newKeyVariation
+    fun notifyStateChanged() {
+        flogInfo(LogTopic.TEXT_KEYBOARD_VIEW)
         isRecomputingRequested = true
         onLayoutInternal()
         invalidate()
@@ -146,7 +158,84 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
-        return false
+        val florisboard = florisboard ?: return false
+
+        return when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN,
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                if (activePointerId != null) {
+                    val me = MotionEvent.obtainNoHistory(event).apply { action = MotionEvent.ACTION_UP }
+                    onTouchEvent(me)
+                    me.recycle()
+                }
+                val pointerIndex = event.actionIndex
+                val pointerId = event.getPointerId(pointerIndex)
+                activePointerId = pointerId
+                val key = computedKeyboard?.getKeyForPos(
+                    event.getX(pointerIndex).toInt(), event.getY(pointerIndex).toInt()
+                )
+                if (key != null) {
+                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.down(key.computedData))
+                    if (prefs.keyboard.popupEnabled) {
+                        popupManager.show(key, KeyHintMode.DISABLED)
+                    }
+                    florisboard.keyPressVibrate()
+                    florisboard.keyPressSound(key.computedData)
+                    key.isPressed = true
+                    initialKey = key
+                    activeKey = key
+                } else {
+                    initialKey = null
+                    activeKey = null
+                }
+                invalidate()
+                true
+            }
+            MotionEvent.ACTION_MOVE -> {
+                invalidate()
+                true
+            }
+            MotionEvent.ACTION_UP,
+            MotionEvent.ACTION_POINTER_UP -> {
+                activeKey?.let {
+                    it.isPressed = false
+                    val retData = popupManager.getActiveKeyData(it)
+                    if (retData != null) {
+                        if (retData == it.computedData) {
+                            florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.up(it.computedData))
+                        } else {
+                            if (florisboard.textInputManager.inputEventDispatcher.isPressed(it.computedData.code)) {
+                                florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(it.computedData))
+                            }
+                            florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(retData))
+                        }
+                    } else {
+                        if (florisboard.textInputManager.inputEventDispatcher.isPressed(it.computedData.code)) {
+                            florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(it.computedData))
+                        }
+                    }
+                }
+                popupManager.hide()
+                initialKey = null
+                activeKey = null
+                activePointerId = null
+                invalidate()
+                true
+            }
+            MotionEvent.ACTION_CANCEL -> {
+                activeKey?.let {
+                    it.isPressed = false
+                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(it.computedData))
+                }
+                popupManager.hide()
+                initialKey = null
+                activeKey = null
+                activePointerId = null
+                invalidate()
+                true
+            }
+            else -> false
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -206,7 +295,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
                     (measuredHeight / (keyboard.rowCount + 0.5f).coerceAtMost(5.0f)).toInt()
                 }
                 else -> {
-                    measuredHeight / keyboard.rowCount
+                    measuredHeight / keyboard.rowCount.coerceAtLeast(1)
                 }
             }
         }
@@ -230,7 +319,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         if (isRecomputingRequested) {
             isRecomputingRequested = false
             for (key in keyboard.keys()) {
-                key.compute(capsState, keyVariation)
+                key.compute(computingEvaluator ?: fallbackEvaluator)
             }
         }
 

@@ -17,10 +17,7 @@
 package dev.patrickgold.florisboard.ime.text.layout
 
 import dev.patrickgold.florisboard.ime.extension.Asset
-import dev.patrickgold.florisboard.ime.text.key.TextKeyData
-import dev.patrickgold.florisboard.ime.text.key.KeyData
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.key.KeyType
+import dev.patrickgold.florisboard.ime.text.key.*
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -31,7 +28,7 @@ data class Layout(
     override val authors: List<String>,
     val direction: String,
     val modifier: String? = null,
-    val arrangement: Array<Array<KeyData>> = arrayOf()
+    val arrangement: List<List<KeyData>> = listOf()
 ) : Asset {
     companion object {
         val PRE_GENERATED_LOADING_KEYBOARD = Layout(
@@ -40,79 +37,51 @@ data class Layout(
             label = "__loading_keyboard__",
             authors = listOf(),
             direction = "ltr",
-            arrangement = arrayOf(
-                arrayOf(
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0)
+            arrangement = listOf(
+                listOf(
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0)
                 ),
-                arrayOf(
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0)
+                listOf(
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0)
                 ),
-                arrayOf(
-                    TextKeyData(code = KeyCode.SHIFT, type = KeyType.MODIFIER, label = "shift"),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = KeyCode.DELETE, type = KeyType.ENTER_EDITING, label = "delete")
+                listOf(
+                    BasicTextKeyData(code = KeyCode.SHIFT, type = KeyType.MODIFIER, label = "shift"),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = KeyCode.DELETE, type = KeyType.ENTER_EDITING, label = "delete")
                 ),
-                arrayOf(
-                    TextKeyData(code = KeyCode.VIEW_SYMBOLS, type = KeyType.SYSTEM_GUI, label = "view_symbols"),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = KeyCode.SPACE, label = "space"),
-                    TextKeyData(code = 0),
-                    TextKeyData(code = KeyCode.ENTER, type = KeyType.ENTER_EDITING, label = "enter")
+                listOf(
+                    BasicTextKeyData(code = KeyCode.VIEW_SYMBOLS, type = KeyType.SYSTEM_GUI, label = "view_symbols"),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = KeyCode.SPACE, label = "space"),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = KeyCode.ENTER, type = KeyType.ENTER_EDITING, label = "enter")
                 )
             )
         )
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Layout
-
-        if (type != other.type) return false
-        if (name != other.name) return false
-        if (label != other.label) return false
-        if (authors != other.authors) return false
-        if (direction != other.direction) return false
-        if (modifier != other.modifier) return false
-        if (!arrangement.contentDeepEquals(other.arrangement)) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = type.hashCode()
-        result = 31 * result + name.hashCode()
-        result = 31 * result + label.hashCode()
-        result = 31 * result + authors.hashCode()
-        result = 31 * result + direction.hashCode()
-        result = 31 * result + (modifier?.hashCode() ?: 0)
-        result = 31 * result + arrangement.contentDeepHashCode()
-        return result
     }
 }
 

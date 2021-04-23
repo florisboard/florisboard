@@ -113,11 +113,11 @@ class PopupExtendedView : View, ThemeManager.OnThemeUpdatedListener {
         }
     }
 
-    private fun applyProperties(anchor: Key) {
+    private fun applyProperties(keyboardView: View, anchor: Key) {
         val anchorCoords = IntArray(2)
-        //anchor.getLocationInWindow(anchorCoords)
-        val anchorX = anchorCoords[0]
-        val anchorY = anchorCoords[1] + anchor.visibleBounds.height()
+        keyboardView.getLocationInWindow(anchorCoords)
+        val anchorX = anchorCoords[0] + anchor.visibleBounds.left
+        val anchorY = anchorCoords[1] + anchor.visibleBounds.top + anchor.visibleBounds.height()
         when (val lp = layoutParams) {
             is FrameLayout.LayoutParams -> lp.apply {
                 width = properties.width
@@ -148,8 +148,8 @@ class PopupExtendedView : View, ThemeManager.OnThemeUpdatedListener {
         }
     }
 
-    fun show(anchor: Key) {
-        applyProperties(anchor)
+    fun show(keyboardView: View, anchor: Key) {
+        applyProperties(keyboardView, anchor)
         visibility = VISIBLE
         requestLayout()
         invalidate()

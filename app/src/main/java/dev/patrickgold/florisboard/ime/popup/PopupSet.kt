@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.popup
 
+import dev.patrickgold.florisboard.ime.text.key.TextKeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import kotlinx.serialization.Serializable
 
@@ -35,6 +36,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 class PopupSet<T> (
+    val base: TextKeyData? = null,
     var hint: T? = null,
     var main: T? = null,
     var relevant: List<T> = listOf()
@@ -45,8 +47,7 @@ class PopupSet<T> (
     }
 
     override val size: Int
-        get() = if (hint != null) { 1 } else { 0 } + if (main != null) { 1 } else { 0 } +
-                relevant.size
+        get() = if (hint != null) { 1 } else { 0 } + if (main != null) { 1 } else { 0 } + relevant.size
 
     fun size(keyHintMode: KeyHintMode): Int {
         return if (keyHintMode == KeyHintMode.DISABLED && hint != null) {

@@ -267,6 +267,8 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
 
         updateThemeContext(currentThemeResId)
 
+        popupLayerView = PopupLayerView(themeContext)
+
         inputWindowView = LayoutInflater.from(themeContext).inflate(R.layout.florisboard, null) as? InputWindowView
         inputWindowView?.isHapticFeedbackEnabled = true
 
@@ -358,9 +360,8 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         flogInfo(LogTopic.IMS_EVENTS)
 
         window?.window?.findViewById<View>(android.R.id.content)?.let { content ->
-            popupLayerView = PopupLayerView(themeContext)
             if (content is ViewGroup) {
-                content.addView(popupLayerView)
+                popupLayerView?.let { content.addView(it) }
             }
         }
         this.inputView = inputView
@@ -708,7 +709,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
                     KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN
                     else -> AudioManager.FX_KEYPRESS_STANDARD
                 }
-                is PopupAwareTextKeyData -> when (keyData.code) {
+                is ExtendedTextKeyData -> when (keyData.code) {
                     KeyCode.SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR
                     KeyCode.DELETE -> AudioManager.FX_KEYPRESS_DELETE
                     KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN

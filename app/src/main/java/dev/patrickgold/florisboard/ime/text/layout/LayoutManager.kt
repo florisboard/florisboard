@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.text.layout
 
+import dev.patrickgold.florisboard.debug.LogTopic
+import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.AssetManager
@@ -137,7 +139,9 @@ class LayoutManager {
         prefs: PrefHelper,
         currencySet: CurrencySet
     ): TextKeyboard {
-        val mainLayout = loadLayoutAsync(main).await().getOrNull()
+        val mainLayout = loadLayoutAsync(main).await().onFailure {
+            flogError(LogTopic.LAYOUT_MANAGER) { it.toString() }
+        }.getOrNull()
         val modifierToLoad = if (mainLayout?.modifier != null) {
             LTN(LayoutType.CHARACTERS_MOD, mainLayout.modifier)
         } else {
@@ -165,8 +169,8 @@ class LayoutManager {
                     // merge main and mod here
                     val rowArray = arrayListOf<TextKey>()
                     val firstModRow = modifierLayout.arrangement.firstOrNull()
-                    for (modKey in (firstModRow ?: arrayOf())) {
-                        if (modKey is TextKeyData && modKey.code == 0 || modKey is PopupAwareTextKeyData && modKey.code == 0) {
+                    for (modKey in (firstModRow ?: listOf())) {
+                        if (modKey is TextKeyData && modKey.code == 0) {
                             rowArray.addAll(mainRow.map { TextKey(it) })
                         } else {
                             rowArray.add(TextKey(modKey))
@@ -201,12 +205,6 @@ class LayoutManager {
             for (row in computedArrangement) {
                 var kOffset = 0
                 for ((k, key) in row.withIndex()) {
-                    if (CurrencySet.isCurrencySlot(key.code)) {
-                        val newKey = currencySet.getSlot(key.code) ?: KeyData.UNSPECIFIED
-                        key.type = newKey.type
-                        key.code = newKey.code
-                        key.label = newKey.label
-                    }
                     val lastKey = row.getOrNull(k - 1)
                     if (lastKey != null && lastKey.groupId == key.groupId && key.groupId != FlorisKeyData.GROUP_DEFAULT) {
                         kOffset++

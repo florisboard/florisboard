@@ -57,7 +57,7 @@ import kotlin.math.roundToLong
  * instance and the Smartbar.
  */
 class TextInputManager private constructor() : CoroutineScope by MainScope(), InputKeyEventReceiver,
-    FlorisBoard.EventListener, SmartbarView.EventListener {
+    FlorisBoard.EventListener, SmartbarView.EventListener, ComputingEvaluator {
 
     var isGlidePostEffect: Boolean = false
     private val florisboard = FlorisBoard.getInstance()
@@ -119,6 +119,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         this.symbolsWithSpaceAfter = List(json.length()){ json.getString(it) }
     }
 
+    override fun caps(): Boolean = caps || capsLock
+    override fun keyVariation(): KeyVariation = keyVariation
+    override fun activeSubtype(): Subtype = florisboard.activeSubtype
+    override fun activeCurrencySet(): CurrencySet = florisboard.subtypeManager.getCurrencySet(florisboard.activeSubtype)
+
     /**
      * Non-UI-related setup + preloading of all required computed layouts (asynchronous in the
      * background).
@@ -156,6 +161,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
         textViewGroup = inputView.findViewById(R.id.text_input)
         textInputKeyboardView = inputView.findViewById(R.id.text_input_keyboard_view)
+        textInputKeyboardView?.setComputingEvaluator(this)
 
         launch(Dispatchers.Main) {
             val animator1 = textViewGroup?.let {
@@ -206,6 +212,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     override fun onDestroy() {
         flogInfo(LogTopic.IMS_EVENTS)
 
+        textInputKeyboardView?.setComputingEvaluator(null)
         inputEventDispatcher.keyEventReceiver = null
         inputEventDispatcher.close()
         cancel()
@@ -318,7 +325,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 currencySet = florisboard.subtypeManager.getCurrencySet(subtype)
             )
         }
-        textInputKeyboardView?.setComputedKeyboard(activeKeyboard.await(), this@TextInputManager)
+        textInputKeyboardView?.setComputedKeyboard(activeKeyboard.await())
     }
 
     override fun onSubtypeChanged(newSubtype: Subtype) {
@@ -388,7 +395,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         if (!capsLock) {
             caps = florisboard.prefs.correction.autoCapitalization &&
                     activeEditorInstance.cursorCapsMode != InputAttributes.CapsMode.NONE
-            textInputKeyboardView?.notifyStateChanged(this)
+            textInputKeyboardView?.notifyStateChanged()
         }
     }
 
@@ -549,7 +556,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             caps = true
             capsLock = false
         }
-        textInputKeyboardView?.notifyStateChanged(this)
+        textInputKeyboardView?.notifyStateChanged()
         smartbarView?.updateCandidateSuggestionCapsState()
     }
 
@@ -558,7 +565,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     private fun handleShiftUp() {
         caps = newCapsState
-        textInputKeyboardView?.notifyStateChanged(this)
+        textInputKeyboardView?.notifyStateChanged()
         smartbarView?.updateCandidateSuggestionCapsState()
     }
 
@@ -568,7 +575,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private fun handleShiftCancel() {
         caps = false
         capsLock = false
-        textInputKeyboardView?.notifyStateChanged(this)
+        textInputKeyboardView?.notifyStateChanged()
         smartbarView?.updateCandidateSuggestionCapsState()
     }
 
@@ -581,7 +588,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             newCapsState = true
             caps = true
             capsLock = true
-            textInputKeyboardView?.notifyStateChanged(this)
+            textInputKeyboardView?.notifyStateChanged()
             smartbarView?.updateCandidateSuggestionCapsState()
         }
     }

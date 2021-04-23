@@ -18,12 +18,12 @@ package dev.patrickgold.florisboard.ime.extension
 
 import android.content.Context
 import android.net.Uri
-import dev.patrickgold.florisboard.ime.text.key.KeyData
-import dev.patrickgold.florisboard.ime.text.key.PopupAwareTextKeyData
+import dev.patrickgold.florisboard.ime.text.key.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.polymorphic
 import timber.log.Timber
 import java.io.File
 
@@ -31,9 +31,20 @@ class AssetManager private constructor(val applicationContext: Context) {
     private val json = Json {
         classDiscriminator = "$"
         ignoreUnknownKeys = true
+        isLenient = true
         serializersModule = SerializersModule {
-            polymorphicDefault(KeyData::class) {
-                PopupAwareTextKeyData.serializer()
+            polymorphic(KeyData::class) {
+                subclass(BasicTextKeyData::class, BasicTextKeyData.serializer())
+                subclass(ExtendedTextKeyData::class, ExtendedTextKeyData.serializer())
+                subclass(EmojiKeyData::class, EmojiKeyData.serializer())
+                subclass(CaseSelector::class, CaseSelector.serializer())
+                subclass(VariationSelector::class, VariationSelector.serializer())
+                default { ExtendedTextKeyData.serializer() }
+            }
+            polymorphic(TextKeyData::class) {
+                subclass(BasicTextKeyData::class, BasicTextKeyData.serializer())
+                subclass(ExtendedTextKeyData::class, ExtendedTextKeyData.serializer())
+                default { ExtendedTextKeyData.serializer() }
             }
         }
     }

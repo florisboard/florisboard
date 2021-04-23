@@ -24,10 +24,7 @@ import androidx.core.content.ContextCompat.getDrawable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyView
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyboardView
-import dev.patrickgold.florisboard.ime.text.key.EmojiKeyData
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.key.KeyData
-import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
+import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.EmojiKey
 import dev.patrickgold.florisboard.ime.text.keyboard.Key
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
@@ -209,7 +206,7 @@ class PopupManager<V : View>(
                 else -> false
             }
         }
-        popupView.show(key)
+        popupView.show(keyboardView, key)
     }
 
     /**
@@ -393,7 +390,7 @@ class PopupManager<V : View>(
             labelTextSize = keyPopupTextSize
             activeElementIndex = initUiIndex
         }
-        popupViewExt.show(key)
+        popupViewExt.show(keyboardView, key)
 
         popupView.properties.shouldIndicateExtendedPopups = false
         popupView.invalidate()
@@ -478,7 +475,7 @@ class PopupManager<V : View>(
      * @param key Reference to the keyView currently controlling the popup.
      * @return The [KeyData] object of the currently active key or null.
      */
-    fun getActiveKeyData(key: Key): KeyData? {
+    fun getActiveKeyData(key: Key): TextKeyData? {
         return if (key is TextKey) {
             val element = popupViewExt.properties.getElementOrNull()
             if (element != null) {

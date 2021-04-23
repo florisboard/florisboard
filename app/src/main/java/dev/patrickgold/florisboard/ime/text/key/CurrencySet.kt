@@ -42,12 +42,12 @@ class CurrencySet(
             name = "\$default",
             label = "Default",
             slots = listOf(
-                TextKeyData(code =   36, label = "$"),
-                TextKeyData(code =  162, label = "¢"),
-                TextKeyData(code = 8364, label = "€"),
-                TextKeyData(code =  163, label = "£"),
-                TextKeyData(code =  165, label = "¥"),
-                TextKeyData(code = 8369, label = "₱")
+                BasicTextKeyData(code =   36, label = "$"),
+                BasicTextKeyData(code =  162, label = "¢"),
+                BasicTextKeyData(code = 8364, label = "€"),
+                BasicTextKeyData(code =  163, label = "£"),
+                BasicTextKeyData(code =  165, label = "¥"),
+                BasicTextKeyData(code = 8369, label = "₱")
             )
         )
     }

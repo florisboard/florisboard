@@ -17,10 +17,8 @@
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.graphics.Rect
-import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.*
-import java.util.*
 
 abstract class Key(open val data: KeyData) {
     open var isEnabled: Boolean = true
@@ -34,11 +32,7 @@ abstract class Key(open val data: KeyData) {
     open var flayGrow: Double = 0.0
     open var flayWidthFactor: Double = 0.0
 
-    abstract fun compute(
-        caps: Boolean = false,
-        variation: KeyVariation,
-        subtype: Subtype = Subtype.DEFAULT
-    )
+    abstract fun compute(evaluator: ComputingEvaluator)
 }
 
 class TextKey(override val data: KeyData) : Key(data) {
@@ -47,19 +41,8 @@ class TextKey(override val data: KeyData) : Key(data) {
     var computedPopups: PopupSet<TextKeyData> = PopupSet()
         private set
 
-    override fun compute(caps: Boolean, variation: KeyVariation, subtype: Subtype) {
-        val computed = data.compute(caps, variation)
-        computedData = when (computed) {
-            is TextKeyData -> {
-                computed
-            }
-            is PopupAwareTextKeyData -> {
-                TextKeyData.obtain(computed)
-            }
-            else -> {
-                TextKeyData.UNSPECIFIED
-            }
-        }
+    override fun compute(evaluator: ComputingEvaluator) {
+        computedData = data.compute(evaluator)
 
         flayShrink = when (null) {
             KeyboardMode.NUMERIC,
@@ -114,10 +97,10 @@ class TextKey(override val data: KeyData) : Key(data) {
 class EmojiKey(override val data: KeyData) : Key(data) {
     var computedData: EmojiKeyData = EmojiKeyData(listOf())
         private set
-    var computedPopups: PopupSet<EmojiKeyData> = PopupSet()
+    var computedPopups: PopupSet<EmojiKeyData> = PopupSet(ExtendedTextKeyData())
         private set
 
-    override fun compute(caps: Boolean, variation: KeyVariation, subtype: Subtype) {
+    override fun compute(evaluator: ComputingEvaluator) {
         //computedData = data
         //computedPopups = computedData.popup
     }
