@@ -388,7 +388,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         }
         launch {
             binding.keyboardPreview.setComputedKeyboard(layoutManager.computeKeyboardAsync(
-                KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs, CurrencySet.default()
+                KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs
             ).await())
             binding.keyboardPreview.onThemeUpdated(selectedTheme)
         }

@@ -140,7 +140,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         for (subtype in subtypes) {
             for (mode in KeyboardMode.values()) {
                 launch(Dispatchers.Default) {
-                    val keyboard = layoutManager.computeKeyboardAsync(mode, subtype, florisboard.prefs, florisboard.subtypeManager.getCurrencySet(subtype))
+                    val keyboard = layoutManager.computeKeyboardAsync(mode, subtype, florisboard.prefs)
                     keyboards.set(mode, subtype, keyboard)
                 }
             }
@@ -321,8 +321,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             layoutManager.computeKeyboardAsync(
                 keyboardMode = mode,
                 subtype = subtype,
-                prefs = florisboard.prefs,
-                currencySet = florisboard.subtypeManager.getCurrencySet(subtype)
+                prefs = florisboard.prefs
             )
         }
         textInputKeyboardView?.setComputedKeyboard(activeKeyboard.await())

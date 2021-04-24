@@ -35,7 +35,7 @@ abstract class Key(open val data: KeyData) {
     abstract fun compute(evaluator: ComputingEvaluator)
 }
 
-class TextKey(override val data: KeyData) : Key(data) {
+class TextKey(override val data: KeyData, private val keyboardMode: KeyboardMode) : Key(data) {
     var computedData: TextKeyData = TextKeyData.UNSPECIFIED
         private set
     var computedPopups: PopupSet<TextKeyData> = PopupSet()
@@ -44,7 +44,7 @@ class TextKey(override val data: KeyData) : Key(data) {
     override fun compute(evaluator: ComputingEvaluator) {
         computedData = data.compute(evaluator)
 
-        flayShrink = when (null) {
+        flayShrink = when (keyboardMode) {
             KeyboardMode.NUMERIC,
             KeyboardMode.NUMERIC_ADVANCED,
             KeyboardMode.PHONE,
@@ -59,7 +59,7 @@ class TextKey(override val data: KeyData) : Key(data) {
                 else -> 1.0
             }
         }
-        flayGrow = when (null) {
+        flayGrow = when (keyboardMode) {
             KeyboardMode.NUMERIC,
             KeyboardMode.PHONE,
             KeyboardMode.PHONE2 -> 0.0
@@ -72,13 +72,13 @@ class TextKey(override val data: KeyData) : Key(data) {
                 else -> 0.0
             }
         }
-        flayWidthFactor = when (null) {
+        flayWidthFactor = when (keyboardMode) {
             KeyboardMode.NUMERIC,
             KeyboardMode.PHONE,
             KeyboardMode.PHONE2 -> 2.68
             KeyboardMode.NUMERIC_ADVANCED -> when (computedData.code) {
                 44, 46 -> 1.00
-                KeyCode.VIEW_SYMBOLS, 61 -> 1.34
+                KeyCode.VIEW_SYMBOLS, 61 -> 1.26
                 else -> 1.56
             }
             else -> when (computedData.code) {

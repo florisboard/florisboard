@@ -78,7 +78,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
     private var activePointerId: Int? = null
     private val popupManager: PopupManager<TextKeyboardView>
 
-    val desiredKey: TextKey = TextKey(data = TextKeyData.UNSPECIFIED)
+    val desiredKey: TextKey = TextKey(data = TextKeyData.UNSPECIFIED, keyboardMode = KeyboardMode.CHARACTERS)
 
     private var keyBackgroundDrawable: PaintDrawable = PaintDrawable().apply {
         setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
@@ -172,7 +172,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
                 val pointerId = event.getPointerId(pointerIndex)
                 activePointerId = pointerId
                 val key = computedKeyboard?.getKeyForPos(
-                    event.getX(pointerIndex).toInt(), event.getY(pointerIndex).toInt()
+                    event.getX(pointerIndex).roundToInt(), event.getY(pointerIndex).roundToInt()
                 )
                 if (key != null) {
                     florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.down(key.computedData))
@@ -498,10 +498,25 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         if (label != null && key.computedData.code != KeyCode.SPACE) {
             labelPaint.apply {
                 color = keyForeground.toSolidColor().color
-                textSize = labelPaintTextSize
+                textSize = when (key.computedData.code) {
+                    KeyCode.VIEW_CHARACTERS,
+                    KeyCode.VIEW_SYMBOLS,
+                    KeyCode.VIEW_SYMBOLS2 -> labelPaintTextSize * 0.80f
+                    KeyCode.VIEW_NUMERIC,
+                    KeyCode.VIEW_NUMERIC_ADVANCED -> labelPaintTextSize * 0.55f
+                    else -> labelPaintTextSize
+                }
                 val centerX = key.visibleLabelBounds.exactCenterX()
                 val centerY = key.visibleLabelBounds.exactCenterY() + (labelPaint.textSize - labelPaint.descent()) / 2
-                canvas.drawText(label, centerX, centerY, labelPaint)
+                if (label.contains("\n")) {
+                    // Even if more lines may be existing only the first 2 are shown
+                    val labelLines = label.split("\n")
+                    val verticalAdjustment = key.visibleBounds.height() * 0.18f
+                    canvas.drawText(labelLines[0], centerX, centerY - verticalAdjustment, labelPaint)
+                    canvas.drawText(labelLines[1], centerX, centerY + verticalAdjustment, labelPaint)
+                } else {
+                    canvas.drawText(label, centerX, centerY, labelPaint)
+                }
             }
         }
 

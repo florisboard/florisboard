@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.graphics.Rect
 import kotlin.math.abs
+import kotlin.math.roundToInt
 
 abstract class Keyboard {
     abstract fun getKeyForPos(pointerX: Int, pointerY: Int): Key?
@@ -91,7 +92,7 @@ class TextKeyboard(
             if (requestedWidth <= availableWidth) {
                 // Requested with is smaller or equal to the available with, so we can grow
                 val additionalWidth = availableWidth - requestedWidth
-                var posX = rowMarginH / 2
+                var posX = rowMarginH / 2.0
                 for ((k, key) in row.withIndex()) {
                     val keyWidth = desiredTouchBounds.width() * when (growSum) {
                         0.0 -> when (k) {
@@ -101,39 +102,39 @@ class TextKeyboard(
                         else -> key.flayWidthFactor + additionalWidth * (key.flayGrow / growSum)
                     }
                     key.touchBounds.apply {
-                        left = posX
+                        left = posX.roundToInt()
                         top = posY
-                        right = (posX + keyWidth).toInt()
+                        right = (posX + keyWidth).roundToInt()
                         bottom = posY + desiredTouchBounds.height()
                     }
                     key.visibleBounds.apply {
                         left = key.touchBounds.left + abs(desiredTouchBounds.left - desiredVisibleBounds.left) + when {
-                            growSum == 0.0 && k == 0 -> ((additionalWidth / 2.0) * desiredTouchBounds.width()).toInt()
+                            growSum == 0.0 && k == 0 -> ((additionalWidth / 2.0) * desiredTouchBounds.width()).roundToInt()
                             else -> 0
                         }
                         top = key.touchBounds.top + abs(desiredTouchBounds.top - desiredVisibleBounds.top)
                         right = key.touchBounds.right - abs(desiredTouchBounds.right - desiredVisibleBounds.right) - when {
-                            growSum == 0.0 && k == row.size - 1 -> ((additionalWidth / 2.0) * desiredTouchBounds.width()).toInt()
+                            growSum == 0.0 && k == row.size - 1 -> ((additionalWidth / 2.0) * desiredTouchBounds.width()).roundToInt()
                             else -> 0
                         }
                         bottom = key.touchBounds.bottom - abs(desiredTouchBounds.bottom - desiredVisibleBounds.bottom)
                     }
                     layoutDrawableBounds(key)
                     layoutLabelBounds(key)
-                    posX += key.touchBounds.width()
+                    posX += keyWidth
                     // After-adjust touch bounds for the row margin
                     key.touchBounds.apply {
                         if (k == 0) {
                             left = 0
                         } else if (k == row.size - 1) {
-                            right = keyboardWidth.toInt()
+                            right = keyboardWidth.roundToInt()
                         }
                     }
                 }
             } else {
                 // Requested size too big, must shrink.
                 val clippingWidth = requestedWidth - availableWidth
-                var posX = rowMarginH / 2
+                var posX = rowMarginH / 2.0
                 for ((k, key) in row.withIndex()) {
                     val keyWidth = desiredTouchBounds.width() * if (key.flayShrink == 0.0) {
                         key.flayWidthFactor
@@ -141,9 +142,9 @@ class TextKeyboard(
                         key.flayWidthFactor - clippingWidth * (key.flayShrink / shrinkSum)
                     }
                     key.touchBounds.apply {
-                        left = posX
+                        left = posX.roundToInt()
                         top = posY
-                        right = (posX + keyWidth).toInt()
+                        right = (posX + keyWidth).roundToInt()
                         bottom = posY + desiredTouchBounds.height()
                     }
                     key.visibleBounds.apply {
@@ -154,13 +155,13 @@ class TextKeyboard(
                     }
                     layoutDrawableBounds(key)
                     layoutLabelBounds(key)
-                    posX += key.touchBounds.width()
+                    posX += keyWidth
                     // After-adjust touch bounds for the row margin
                     key.touchBounds.apply {
                         if (k == 0) {
                             left = 0
                         } else if (k == row.size - 1) {
-                            right = keyboardWidth.toInt()
+                            right = keyboardWidth.roundToInt()
                         }
                     }
                 }

@@ -38,11 +38,6 @@ private data class LTN(
     val name: String
 )
 
-private data class KMS(
-    val keyboardMode: KeyboardMode,
-    val subtype: Subtype
-)
-
 /**
  * Class which manages layout loading and caching.
  */
@@ -136,8 +131,7 @@ class LayoutManager {
         main: LTN? = null,
         modifier: LTN? = null,
         extension: LTN? = null,
-        prefs: PrefHelper,
-        currencySet: CurrencySet
+        prefs: PrefHelper
     ): TextKeyboard {
         val mainLayout = loadLayoutAsync(main).await().onFailure {
             flogError(LogTopic.LAYOUT_MANAGER) { it.toString() }
@@ -154,7 +148,7 @@ class LayoutManager {
 
         if (extensionLayout != null) {
             for (row in extensionLayout.arrangement) {
-                val rowArray = Array(row.size) { TextKey(row[it]) }
+                val rowArray = Array(row.size) { TextKey(row[it], keyboardMode) }
                 computedArrangement.add(rowArray)
             }
         }
@@ -163,7 +157,7 @@ class LayoutManager {
             for (mainRowI in mainLayout.arrangement.indices) {
                 val mainRow = mainLayout.arrangement[mainRowI]
                 if (mainRowI + 1 < mainLayout.arrangement.size) {
-                    val rowArray = Array(mainRow.size) { TextKey(mainRow[it]) }
+                    val rowArray = Array(mainRow.size) { TextKey(mainRow[it], keyboardMode) }
                     computedArrangement.add(rowArray)
                 } else {
                     // merge main and mod here
@@ -171,9 +165,9 @@ class LayoutManager {
                     val firstModRow = modifierLayout.arrangement.firstOrNull()
                     for (modKey in (firstModRow ?: listOf())) {
                         if (modKey is TextKeyData && modKey.code == 0) {
-                            rowArray.addAll(mainRow.map { TextKey(it) })
+                            rowArray.addAll(mainRow.map { TextKey(it, keyboardMode) })
                         } else {
-                            rowArray.add(TextKey(modKey))
+                            rowArray.add(TextKey(modKey, keyboardMode))
                         }
                     }
                     val temp = Array(rowArray.size) { rowArray[it] }
@@ -182,17 +176,17 @@ class LayoutManager {
             }
             for (modRowI in 1 until modifierLayout.arrangement.size) {
                 val modRow = modifierLayout.arrangement[modRowI]
-                val rowArray = Array(modRow.size) { TextKey(modRow[it]) }
+                val rowArray = Array(modRow.size) { TextKey(modRow[it], keyboardMode) }
                 computedArrangement.add(rowArray)
             }
         } else if (mainLayout != null && modifierLayout == null) {
             for (mainRow in mainLayout.arrangement) {
-                val rowArray = Array(mainRow.size) { TextKey(mainRow[it]) }
+                val rowArray = Array(mainRow.size) { TextKey(mainRow[it], keyboardMode) }
                 computedArrangement.add(rowArray)
             }
         } else if (mainLayout == null && modifierLayout != null) {
             for (modRow in modifierLayout.arrangement) {
-                val rowArray = Array(modRow.size) { TextKey(modRow[it]) }
+                val rowArray = Array(modRow.size) { TextKey(modRow[it], keyboardMode) }
                 computedArrangement.add(rowArray)
             }
         }
@@ -254,14 +248,6 @@ class LayoutManager {
                         keySpecificPopupSet?.let { merge(it) }
                         popupSet?.let { merge(it) }
                     }
-                    key.popup.forEach { popupKey ->
-                        if (CurrencySet.isCurrencySlot(popupKey.code)) {
-                            val newKey = currencySet.getSlot(popupKey.code) ?: KeyData.UNSPECIFIED
-                            popupKey.type = newKey.type
-                            popupKey.code = newKey.code
-                            popupKey.label = newKey.label
-                        }
-                    }
                 }
             }
         }*/
@@ -309,8 +295,7 @@ class LayoutManager {
     fun computeKeyboardAsync(
         keyboardMode: KeyboardMode,
         subtype: Subtype,
-        prefs: PrefHelper,
-        currencySet: CurrencySet
+        prefs: PrefHelper
     ): Deferred<TextKeyboard> = ioScope.async {
         var main: LTN? = null
         var modifier: LTN? = null
@@ -356,7 +341,7 @@ class LayoutManager {
             }
         }
 
-        return@async mergeLayoutsAsync(keyboardMode, subtype, main, modifier, extension, prefs, currencySet)
+        return@async mergeLayoutsAsync(keyboardMode, subtype, main, modifier, extension, prefs)
     }
 
     /**
