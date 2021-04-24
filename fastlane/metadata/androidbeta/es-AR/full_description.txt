@@ -1,0 +1,19 @@
+<p><i>FlorisBoard</i> es un teclado de código abierto enfocado en proveerte con una forma fácil de escribir mientras se respeta tu privacidad.</p>
+<p><b>Nota:</b> Este proyecto se encuentra en fase de beta inicial. Si querés ver una nueva función ser implementada o querés reporar un bug, por favor visitá el repositorio de este proyecto (hay un link al final de la descripción) en GitHub y abrí una Issue. ¡Esto ayuda a FlorisBoard a ser incluso mejor! ¡Gracias!</p>
+<p><b>Características ya implementadas y completamente funcionales:</b></p>
+<ul>
+    <li>Enorme variedad de layouts para teclados Latinos.</li>
+    <li>Soporte limitado para layouts de teclados no Latinos (Árabe, Persa y Hebreo por el momento, se planea agregar más).</li>
+    <li>Cambio fácil entre idiomas/layouts definiendo subtipos en ajustes.</li>
+    <li>Personalización completa de temas + Presets para temas de día/noche.</li>
+    <li>Cambio automático de tema diurno/nocturno.</li>
+    <li>Layouts de teclado para escribir números (de teléfono).</li>
+    <li>Caracteres especiales.</li>
+    <li>Teclado de Emojis/Emoticones.</li>
+    <li>Modo Compacto/Una Mano, para una escritura más fácil en dispositivos grandes.</li>
+    <li>Personalización de vibración y del sonido al presionar las teclas.</li>
+    <li>Acciones personalizables para gestos: deslizar arriba/abajo/izq./der./, barra de espacio a la izquierda/derecha, deslizar la tecla de borrado.</li>
+    <li>Símbolos especiales integrados a las layouts de caracteres.</li>
+    <li>Barra de utilidad con Portapapeles y Cursor.</li>
+    <li>Administrador/historial de Portapapeles.</li>
+</ul>
