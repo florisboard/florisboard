@@ -24,9 +24,10 @@ import android.view.View
 import android.view.ViewGroup
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsFragmentHomeBinding
-import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.setup.SetupActivity
+import dev.patrickgold.florisboard.util.checkIfImeIsEnabled
+import dev.patrickgold.florisboard.util.checkIfImeIsSelected
 
 class HomeFragment : SettingsMainActivity.SettingsFragment() {
     private lateinit var binding: SettingsFragmentHomeBinding
@@ -35,7 +36,7 @@ class HomeFragment : SettingsMainActivity.SettingsFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = SettingsFragmentHomeBinding.inflate(inflater, container, false)
         binding.imeNotEnabledCard.setOnClickListener {
             Intent(context, SetupActivity::class.java).apply {
@@ -73,8 +74,8 @@ class HomeFragment : SettingsMainActivity.SettingsFragment() {
     }
 
     private fun updateImeIssueCardsVisibilities() {
-        val isImeEnabled = FlorisBoard.checkIfImeIsEnabled(requireContext())
-        val isImeSelected = FlorisBoard.checkIfImeIsSelected(requireContext())
+        val isImeEnabled = checkIfImeIsEnabled(requireContext())
+        val isImeSelected = checkIfImeIsSelected(requireContext())
         binding.imeNotEnabledCard.visibility =
             if (isImeEnabled) {
                 View.GONE
