@@ -526,16 +526,26 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         computeLabelsAndDrawables(key)
 
         val label = label
-        if (label != null && key.computedData.code != KeyCode.SPACE) {
+        if (label != null) {
             labelPaint.apply {
                 color = keyForeground.toSolidColor().color
-                textSize = when (key.computedData.code) {
-                    KeyCode.VIEW_CHARACTERS,
-                    KeyCode.VIEW_SYMBOLS,
-                    KeyCode.VIEW_SYMBOLS2 -> labelPaintTextSize * 0.80f
-                    KeyCode.VIEW_NUMERIC,
-                    KeyCode.VIEW_NUMERIC_ADVANCED -> labelPaintTextSize * 0.55f
-                    else -> labelPaintTextSize
+                if (computedKeyboard?.mode == KeyboardMode.CHARACTERS && key.computedData.code == KeyCode.SPACE) {
+                    alpha = 120
+                    setTextSizeFor(
+                        labelPaint,
+                        key.visibleLabelBounds.width().toFloat(),
+                        key.visibleLabelBounds.height().toFloat(),
+                        label
+                    )
+                } else {
+                    textSize = when (key.computedData.code) {
+                        KeyCode.VIEW_CHARACTERS,
+                        KeyCode.VIEW_SYMBOLS,
+                        KeyCode.VIEW_SYMBOLS2 -> labelPaintTextSize * 0.80f
+                        KeyCode.VIEW_NUMERIC,
+                        KeyCode.VIEW_NUMERIC_ADVANCED -> labelPaintTextSize * 0.55f
+                        else -> labelPaintTextSize
+                    }
                 }
                 val centerX = key.visibleLabelBounds.exactCenterX()
                 val centerY = key.visibleLabelBounds.exactCenterY() + (labelPaint.textSize - labelPaint.descent()) / 2

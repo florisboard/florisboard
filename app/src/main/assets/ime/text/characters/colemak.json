@@ -15,11 +15,18 @@
       { "code":  108, "label": "l" },
       { "code":  117, "label": "u" },
       { "code":  121, "label": "y" },
-      { "code":   59, "label": ";", "popup": {
-        "relevant": [
-          { "code":   58, "label": ":" }
-        ]
-      }, "shift": { "code":   58, "label": ":" } }
+      { "$": "case_selector",
+        "lower": { "code":   59, "label": ";", "popup": {
+          "relevant": [
+            { "code":   58, "label": ":" }
+          ]
+        } },
+        "upper": { "code":   58, "label": ":", "popup": {
+          "relevant": [
+            { "code":   59, "label": ";" }
+          ]
+        } }
+      }
     ],
     [
       { "code":   97, "label": "a" },

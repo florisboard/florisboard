@@ -791,16 +791,19 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     }
 
     fun switchToPrevSubtype() {
+        flogInfo(LogTopic.IMS_EVENTS)
         activeSubtype = subtypeManager.switchToPrevSubtype() ?: Subtype.DEFAULT
         onSubtypeChanged(activeSubtype)
     }
 
     fun switchToNextSubtype() {
+        flogInfo(LogTopic.IMS_EVENTS)
         activeSubtype = subtypeManager.switchToNextSubtype() ?: Subtype.DEFAULT
         onSubtypeChanged(activeSubtype)
     }
 
     private fun onSubtypeChanged(newSubtype: Subtype) {
+        flogInfo(LogTopic.SUBTYPE_MANAGER) { "New subtype: $newSubtype" }
         textInputManager.onSubtypeChanged(newSubtype)
         mediaInputManager.onSubtypeChanged(newSubtype)
         clipInputManager.onSubtypeChanged(newSubtype)

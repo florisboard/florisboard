@@ -47,17 +47,20 @@ class TextKey(override val data: KeyData) : Key(data) {
             evaluator,
             allowAutoCaps = keyboardMode == KeyboardMode.CHARACTERS
         )
-        computedData = computed ?: TextKeyData.UNSPECIFIED
 
         if (computed == null || !evaluator.evaluateVisible(computed)) {
+            computedData = TextKeyData.UNSPECIFIED
             isEnabled = false
             isVisible = false
+
             flayShrink = 0.0
             flayGrow = 0.0
             flayWidthFactor = 0.0
         } else {
+            computedData = computed
             isEnabled = evaluator.evaluateEnabled(computed)
             isVisible = true
+
             flayShrink = when (keyboardMode) {
                 KeyboardMode.NUMERIC,
                 KeyboardMode.NUMERIC_ADVANCED,
@@ -65,7 +68,7 @@ class TextKey(override val data: KeyData) : Key(data) {
                 KeyboardMode.PHONE2 -> 1.0
                 else -> when (computed.code) {
                     KeyCode.SHIFT,
-                    KeyCode.DELETE -> 0.5
+                    KeyCode.DELETE -> 1.5
                     KeyCode.VIEW_CHARACTERS,
                     KeyCode.VIEW_SYMBOLS,
                     KeyCode.VIEW_SYMBOLS2,
@@ -106,7 +109,6 @@ class TextKey(override val data: KeyData) : Key(data) {
                 }
             }
         }
-
     }
 }
 

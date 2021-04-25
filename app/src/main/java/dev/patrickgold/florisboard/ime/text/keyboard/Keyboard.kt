@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.graphics.Rect
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -50,10 +51,18 @@ class TextKeyboard(
                 val yOffset: Double
                 if (w < h) {
                     xOffset = factor * w
-                    yOffset = (h - (w - 2.0 * xOffset)) / 2.0
+                    yOffset = if (key.computedData.code == KeyCode.SPACE) {
+                        xOffset
+                    } else {
+                        (h - (w - 2.0 * xOffset)) / 2.0
+                    }
                 } else {
                     yOffset = factor * h
-                    xOffset = (w - (h - 2.0 * yOffset)) / 2.0
+                    xOffset = if (key.computedData.code == KeyCode.SPACE) {
+                        yOffset
+                    } else {
+                        (w - (h - 2.0 * yOffset)) / 2.0
+                    }
                 }
                 left = key.visibleBounds.left + xOffset.toInt()
                 top = key.visibleBounds.top + yOffset.toInt()
