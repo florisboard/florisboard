@@ -57,7 +57,7 @@ import kotlin.math.roundToLong
  * instance and the Smartbar.
  */
 class TextInputManager private constructor() : CoroutineScope by MainScope(), InputKeyEventReceiver,
-    FlorisBoard.EventListener, SmartbarView.EventListener, ComputingEvaluator {
+    FlorisBoard.EventListener, SmartbarView.EventListener {
 
     var isGlidePostEffect: Boolean = false
     private val florisboard = FlorisBoard.getInstance()
@@ -119,10 +119,67 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         this.symbolsWithSpaceAfter = List(json.length()){ json.getString(it) }
     }
 
-    override fun caps(): Boolean = caps || capsLock
-    override fun keyVariation(): KeyVariation = keyVariation
-    override fun activeSubtype(): Subtype = florisboard.activeSubtype
-    override fun activeCurrencySet(): CurrencySet = florisboard.subtypeManager.getCurrencySet(florisboard.activeSubtype)
+    val evaluator = object : TextComputingEvaluator {
+        override fun evaluateCaps(): Boolean {
+            return caps || capsLock
+        }
+
+        override fun evaluateCaps(data: TextKeyData): Boolean {
+            return evaluateCaps() && data.code >= KeyCode.SPACE
+        }
+
+        override fun evaluateEnabled(data: TextKeyData): Boolean {
+            return when (data.code) {
+                KeyCode.CLIPBOARD_COPY,
+                KeyCode.CLIPBOARD_CUT -> {
+                    florisboard.activeEditorInstance.selection.isSelectionMode &&
+                        !florisboard.activeEditorInstance.isRawInputEditor
+                }
+                KeyCode.CLIPBOARD_PASTE -> {
+                    // such gore. checks
+                    // 1. has a clipboard item
+                    // 2. the clipboard item has any of the supported mime types of the editor OR is plain text.
+                    florisboard.florisClipboardManager?.canBePasted(
+                        florisboard.florisClipboardManager?.primaryClip
+                    ) == true
+                }
+                KeyCode.CLIPBOARD_SELECT_ALL -> {
+                    !florisboard.activeEditorInstance.isRawInputEditor
+                }
+                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
+                    florisboard.prefs.clipboard.enableHistory
+                }
+                else -> true
+            }
+        }
+
+        override fun evaluateVisible(data: TextKeyData): Boolean {
+            return when (data.code) {
+                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> florisboard.prefs.clipboard.enableHistory
+                else -> true
+            }
+        }
+
+        override fun getActiveSubtype(): Subtype {
+            return florisboard.activeSubtype
+        }
+
+        override fun getKeyVariation(): KeyVariation {
+            return keyVariation
+        }
+
+        override fun getKeyboardMode(): KeyboardMode {
+            return KeyboardMode.CHARACTERS // Correct value will be inserted by the TextKeyboardView
+        }
+
+        override fun isSlot(data: TextKeyData): Boolean {
+            return CurrencySet.isCurrencySlot(data.code)
+        }
+
+        override fun getSlotData(data: TextKeyData): TextKeyData? {
+            return florisboard.subtypeManager.getCurrencySet(getActiveSubtype()).getSlot(data.code)
+        }
+    }
 
     /**
      * Non-UI-related setup + preloading of all required computed layouts (asynchronous in the
@@ -161,7 +218,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
         textViewGroup = inputView.findViewById(R.id.text_input)
         textInputKeyboardView = inputView.findViewById(R.id.text_input_keyboard_view)
-        textInputKeyboardView?.setComputingEvaluator(this)
+        textInputKeyboardView?.setComputingEvaluator(evaluator)
 
         launch(Dispatchers.Main) {
             val animator1 = textViewGroup?.let {

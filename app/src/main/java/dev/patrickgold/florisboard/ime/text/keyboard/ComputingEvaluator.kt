@@ -17,15 +17,44 @@
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.text.key.CurrencySet
-import dev.patrickgold.florisboard.ime.text.key.KeyVariation
+import dev.patrickgold.florisboard.ime.text.key.*
 
-interface ComputingEvaluator {
-    fun caps(): Boolean
+interface TextComputingEvaluator {
+    fun evaluateCaps(): Boolean
 
-    fun keyVariation(): KeyVariation
+    fun evaluateCaps(data: TextKeyData): Boolean
 
-    fun activeSubtype(): Subtype
+    fun evaluateEnabled(data: TextKeyData): Boolean
 
-    fun activeCurrencySet(): CurrencySet
+    fun evaluateVisible(data: TextKeyData): Boolean
+
+    fun getActiveSubtype(): Subtype
+
+    fun getKeyVariation(): KeyVariation
+
+    fun getKeyboardMode(): KeyboardMode
+
+    fun isSlot(data: TextKeyData): Boolean
+
+    fun getSlotData(data: TextKeyData): TextKeyData?
+}
+
+object DefaultTextComputingEvaluator : TextComputingEvaluator {
+    override fun evaluateCaps(): Boolean = false
+
+    override fun evaluateCaps(data: TextKeyData): Boolean = false
+
+    override fun evaluateEnabled(data: TextKeyData): Boolean = true
+
+    override fun evaluateVisible(data: TextKeyData): Boolean = true
+
+    override fun getActiveSubtype(): Subtype = Subtype.DEFAULT
+
+    override fun getKeyVariation(): KeyVariation = KeyVariation.NORMAL
+
+    override fun getKeyboardMode(): KeyboardMode = KeyboardMode.CHARACTERS
+
+    override fun isSlot(data: TextKeyData): Boolean = false
+
+    override fun getSlotData(data: TextKeyData): TextKeyData? = null
 }

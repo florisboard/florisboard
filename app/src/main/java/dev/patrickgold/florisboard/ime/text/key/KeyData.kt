@@ -17,12 +17,11 @@
 package dev.patrickgold.florisboard.ime.text.key
 
 import dev.patrickgold.florisboard.ime.popup.PopupSet
-import dev.patrickgold.florisboard.ime.text.keyboard.ComputingEvaluator
+import dev.patrickgold.florisboard.ime.text.keyboard.TextComputingEvaluator
 import kotlinx.serialization.*
-import java.util.*
 
 interface KeyData {
-    fun compute(evaluator: ComputingEvaluator): TextKeyData
+    fun computeTextKeyData(evaluator: TextComputingEvaluator, allowAutoCaps: Boolean): TextKeyData?
 
     fun asString(isForDisplay: Boolean): String
 }
@@ -255,12 +254,12 @@ class BasicTextKeyData(
     override val code: Int = KeyCode.UNSPECIFIED,
     override val label: String = ""
 ) : TextKeyData {
-    override fun compute(evaluator: ComputingEvaluator): TextKeyData {
-        return if (CurrencySet.isCurrencySlot(code)) {
-            evaluator.activeCurrencySet().getSlot(code) ?: TextKeyData.UNSPECIFIED
+    override fun computeTextKeyData(evaluator: TextComputingEvaluator, allowAutoCaps: Boolean): TextKeyData? {
+        return if (evaluator.isSlot(this)) {
+            evaluator.getSlotData(this)
         } else {
-            if (evaluator.caps() && code >= KeyCode.SPACE) {
-                BasicTextKeyData(type, code, label.toUpperCase(Locale.getDefault()))
+            if (allowAutoCaps && evaluator.evaluateCaps(this)) {
+                BasicTextKeyData(type, code, label.toUpperCase(evaluator.getActiveSubtype().locale))
             } else {
                 this
             }
@@ -291,7 +290,7 @@ class ExtendedTextKeyData(
     override val code: Int = 0,
     override val label: String = "",
     val groupId: Int = GROUP_DEFAULT,
-    val popup: PopupSet<TextKeyData> = PopupSet(BasicTextKeyData())
+    val popup: PopupSet<TextKeyData> = PopupSet()
 ) : TextKeyData {
     companion object {
         /**
@@ -319,12 +318,12 @@ class ExtendedTextKeyData(
         const val GROUP_ENTER: Int = 3
     }
 
-    override fun compute(evaluator: ComputingEvaluator): TextKeyData {
-        return if (CurrencySet.isCurrencySlot(code)) {
-            evaluator.activeCurrencySet().getSlot(code) ?: TextKeyData.UNSPECIFIED
+    override fun computeTextKeyData(evaluator: TextComputingEvaluator, allowAutoCaps: Boolean): TextKeyData? {
+        return if (evaluator.isSlot(this)) {
+            evaluator.getSlotData(this)
         } else {
-            if (evaluator.caps() && code >= KeyCode.SPACE) {
-                ExtendedTextKeyData(type, code, label.toUpperCase(Locale.getDefault()))
+            if (allowAutoCaps && evaluator.evaluateCaps(this)) {
+                ExtendedTextKeyData(type, code, label.toUpperCase(evaluator.getActiveSubtype().locale), groupId, popup)
             } else {
                 this
             }
@@ -362,8 +361,8 @@ class EmojiKeyData(
     val label: String = "",
     val popup: MutableList<EmojiKeyData> = mutableListOf()
 ) : KeyData {
-    override fun compute(evaluator: ComputingEvaluator): TextKeyData {
-        return BasicTextKeyData()
+    override fun computeTextKeyData(evaluator: TextComputingEvaluator, allowAutoCaps: Boolean): TextKeyData? {
+        return null
     }
 
     override fun asString(isForDisplay: Boolean): String {
@@ -385,8 +384,8 @@ class CaseSelector(
     val lower: KeyData,
     val upper: KeyData
 ) : KeyData {
-    override fun compute(evaluator: ComputingEvaluator): TextKeyData {
-        return (if (evaluator.caps()) { upper } else { lower }).compute(evaluator)
+    override fun computeTextKeyData(evaluator: TextComputingEvaluator, allowAutoCaps: Boolean): TextKeyData? {
+        return (if (evaluator.evaluateCaps()) upper else lower ).computeTextKeyData(evaluator, allowAutoCaps = false)
     }
 
     override fun asString(isForDisplay: Boolean): String {
@@ -403,14 +402,14 @@ data class VariationSelector(
     val password: KeyData? = null,
     val uri: KeyData? = null,
 ) : KeyData {
-    override fun compute(evaluator: ComputingEvaluator): TextKeyData {
-        return when (evaluator.keyVariation()) {
+    override fun computeTextKeyData(evaluator: TextComputingEvaluator, allowAutoCaps: Boolean): TextKeyData? {
+        return when (evaluator.getKeyVariation()) {
             KeyVariation.ALL -> default
             KeyVariation.EMAIL_ADDRESS -> email ?: default
             KeyVariation.NORMAL -> normal ?: default
             KeyVariation.PASSWORD -> password ?: default
             KeyVariation.URI -> uri ?: default
-        }.compute(evaluator)
+        }.computeTextKeyData(evaluator, allowAutoCaps)
     }
 
     override fun asString(isForDisplay: Boolean): String {

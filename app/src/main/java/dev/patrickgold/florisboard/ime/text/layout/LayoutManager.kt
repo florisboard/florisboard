@@ -148,7 +148,7 @@ class LayoutManager {
 
         if (extensionLayout != null) {
             for (row in extensionLayout.arrangement) {
-                val rowArray = Array(row.size) { TextKey(row[it], keyboardMode) }
+                val rowArray = Array(row.size) { TextKey(row[it]) }
                 computedArrangement.add(rowArray)
             }
         }
@@ -157,7 +157,7 @@ class LayoutManager {
             for (mainRowI in mainLayout.arrangement.indices) {
                 val mainRow = mainLayout.arrangement[mainRowI]
                 if (mainRowI + 1 < mainLayout.arrangement.size) {
-                    val rowArray = Array(mainRow.size) { TextKey(mainRow[it], keyboardMode) }
+                    val rowArray = Array(mainRow.size) { TextKey(mainRow[it]) }
                     computedArrangement.add(rowArray)
                 } else {
                     // merge main and mod here
@@ -165,9 +165,9 @@ class LayoutManager {
                     val firstModRow = modifierLayout.arrangement.firstOrNull()
                     for (modKey in (firstModRow ?: listOf())) {
                         if (modKey is TextKeyData && modKey.code == 0) {
-                            rowArray.addAll(mainRow.map { TextKey(it, keyboardMode) })
+                            rowArray.addAll(mainRow.map { TextKey(it) })
                         } else {
-                            rowArray.add(TextKey(modKey, keyboardMode))
+                            rowArray.add(TextKey(modKey))
                         }
                     }
                     val temp = Array(rowArray.size) { rowArray[it] }
@@ -176,17 +176,17 @@ class LayoutManager {
             }
             for (modRowI in 1 until modifierLayout.arrangement.size) {
                 val modRow = modifierLayout.arrangement[modRowI]
-                val rowArray = Array(modRow.size) { TextKey(modRow[it], keyboardMode) }
+                val rowArray = Array(modRow.size) { TextKey(modRow[it]) }
                 computedArrangement.add(rowArray)
             }
         } else if (mainLayout != null && modifierLayout == null) {
             for (mainRow in mainLayout.arrangement) {
-                val rowArray = Array(mainRow.size) { TextKey(mainRow[it], keyboardMode) }
+                val rowArray = Array(mainRow.size) { TextKey(mainRow[it]) }
                 computedArrangement.add(rowArray)
             }
         } else if (mainLayout == null && modifierLayout != null) {
             for (modRow in modifierLayout.arrangement) {
-                val rowArray = Array(modRow.size) { TextKey(modRow[it], keyboardMode) }
+                val rowArray = Array(modRow.size) { TextKey(modRow[it]) }
                 computedArrangement.add(rowArray)
             }
         }

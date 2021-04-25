@@ -50,22 +50,51 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
     private var cachedTheme: Theme? = null
 
     private var isRecomputingRequested: Boolean = true
-    private var computingEvaluator: ComputingEvaluator? = null
-    private val fallbackEvaluator = object : ComputingEvaluator {
-        override fun caps(): Boolean {
-            return false
+    private var externalComputingEvaluator: TextComputingEvaluator? = null
+    private val internalComputingEvaluator = object : TextComputingEvaluator {
+        override fun evaluateCaps(): Boolean {
+            return externalComputingEvaluator?.evaluateCaps()
+                ?: DefaultTextComputingEvaluator.evaluateCaps()
         }
 
-        override fun keyVariation(): KeyVariation {
-            return KeyVariation.NORMAL
+        override fun evaluateCaps(data: TextKeyData): Boolean {
+            return externalComputingEvaluator?.evaluateCaps(data)
+                ?: DefaultTextComputingEvaluator.evaluateCaps(data)
         }
 
-        override fun activeSubtype(): Subtype {
-            return Subtype.DEFAULT
+        override fun evaluateEnabled(data: TextKeyData): Boolean {
+            return externalComputingEvaluator?.evaluateEnabled(data)
+                ?: DefaultTextComputingEvaluator.evaluateEnabled(data)
         }
 
-        override fun activeCurrencySet(): CurrencySet {
-            return CurrencySet.default()
+        override fun evaluateVisible(data: TextKeyData): Boolean {
+            return externalComputingEvaluator?.evaluateVisible(data)
+                ?: DefaultTextComputingEvaluator.evaluateVisible(data)
+        }
+
+        override fun getActiveSubtype(): Subtype {
+            return externalComputingEvaluator?.getActiveSubtype()
+                ?: DefaultTextComputingEvaluator.getActiveSubtype()
+        }
+
+        override fun getKeyVariation(): KeyVariation {
+            return externalComputingEvaluator?.getKeyVariation()
+                ?: DefaultTextComputingEvaluator.getKeyVariation()
+        }
+
+        override fun getKeyboardMode(): KeyboardMode {
+            return computedKeyboard?.mode // Purposely not calling the external evaluator!
+                ?: DefaultTextComputingEvaluator.getKeyboardMode()
+        }
+
+        override fun isSlot(data: TextKeyData): Boolean {
+            return externalComputingEvaluator?.isSlot(data)
+                ?: DefaultTextComputingEvaluator.isSlot(data)
+        }
+
+        override fun getSlotData(data: TextKeyData): TextKeyData? {
+            return externalComputingEvaluator?.getSlotData(data)
+                ?: DefaultTextComputingEvaluator.getSlotData(data)
         }
     }
 
@@ -78,7 +107,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
     private var activePointerId: Int? = null
     private val popupManager: PopupManager<TextKeyboardView>
 
-    val desiredKey: TextKey = TextKey(data = TextKeyData.UNSPECIFIED, keyboardMode = KeyboardMode.CHARACTERS)
+    val desiredKey: TextKey = TextKey(data = TextKeyData.UNSPECIFIED)
 
     private var keyBackgroundDrawable: PaintDrawable = PaintDrawable().apply {
         setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
@@ -127,8 +156,8 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         setWillNotDraw(false)
     }
 
-    fun setComputingEvaluator(evaluator: ComputingEvaluator?) {
-        computingEvaluator = evaluator
+    fun setComputingEvaluator(evaluator: TextComputingEvaluator?) {
+        externalComputingEvaluator = evaluator
     }
 
     fun setComputedKeyboard(keyboard: TextKeyboard) {
@@ -174,7 +203,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
                 val key = computedKeyboard?.getKeyForPos(
                     event.getX(pointerIndex).roundToInt(), event.getY(pointerIndex).roundToInt()
                 )
-                if (key != null) {
+                if (key != null && key.isEnabled) {
                     florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.down(key.computedData))
                     if (prefs.keyboard.popupEnabled) {
                         popupManager.show(key, KeyHintMode.DISABLED)
@@ -319,7 +348,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         if (isRecomputingRequested) {
             isRecomputingRequested = false
             for (key in keyboard.keys()) {
-                key.compute(computingEvaluator ?: fallbackEvaluator)
+                key.compute(internalComputingEvaluator)
             }
         }
 
@@ -416,6 +445,8 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
     }
 
     private fun onDrawComputedKey(canvas: Canvas, key: TextKey, theme: Theme, isBorderless: Boolean) {
+        if (!key.isVisible) return
+
         val keyBackground: ThemeValue
         val keyForeground: ThemeValue
         val shouldShowBorder: Boolean
@@ -423,7 +454,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         when {
             isLoadingPlaceholderKeyboard -> {
                 shouldShowBorder = theme.getAttr(Theme.Attr.KEY_SHOW_BORDER, themeLabel).toOnOff().state
-                if (key.isPressed) {
+                if (key.isPressed && key.isEnabled) {
                     keyBackground = theme.getAttr(Theme.Attr.KEY_BACKGROUND_PRESSED, themeLabel)
                     keyForeground = theme.getAttr(Theme.Attr.KEY_FOREGROUND_PRESSED, themeLabel)
                 } else {
@@ -437,7 +468,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
             }
             isSmartbarKeyboardView -> {
                 shouldShowBorder = false
-                if (key.isPressed) {
+                if (key.isPressed && key.isEnabled) {
                     keyBackground = theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND)
                     keyForeground = theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND)
                 } else {
@@ -462,7 +493,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
                     }
                 }
                 shouldShowBorder = theme.getAttr(Theme.Attr.KEY_SHOW_BORDER, themeLabel, capsSpecific).toOnOff().state
-                if (key.isPressed) {
+                if (key.isPressed && key.isEnabled) {
                     keyBackground = theme.getAttr(Theme.Attr.KEY_BACKGROUND_PRESSED, themeLabel, capsSpecific)
                     keyForeground = theme.getAttr(Theme.Attr.KEY_FOREGROUND_PRESSED, themeLabel, capsSpecific)
                 } else {
