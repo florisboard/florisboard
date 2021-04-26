@@ -120,6 +120,7 @@ class ThemeManager private constructor(
     @SuppressLint("ResourceType")
     @Suppress("UNNECESSARY_SAFE_CALL")
     fun updateRemoteColorValues(packageName: String) {
+        return // See why: https://github.com/florisboard/florisboard/issues/763
         try {
             val pm = packageManager ?: return
             val res = pm.getResourcesForApplication(packageName)

@@ -19,12 +19,10 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
-import android.graphics.drawable.Drawable
 import android.graphics.drawable.PaintDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.core.*
@@ -45,6 +43,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         get() = ThemeManager.defaultOrNull()
 
     private var computedKeyboard: TextKeyboard? = null
+    private var iconSet: TextKeyboardIconSet? = null
 
     // IS ONLY USED IF KEYBOARD IS IN PREVIEW MODE
     private var cachedTheme: Theme? = null
@@ -113,10 +112,9 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
     }
 
-    private var keyboardBackground: PaintDrawable = PaintDrawable()
-    private var foregroundDrawable: Drawable? = null
-    private var label: String? = null
+    private var backgroundDrawable: PaintDrawable = PaintDrawable()
     private var labelPaintTextSize: Float = resources.getDimension(R.dimen.key_textSize)
+    private var labelPaintSpaceTextSize: Float = resources.getDimension(R.dimen.key_textSize)
     private var labelPaint: Paint = Paint().apply {
         color = 0
         isAntiAlias = true
@@ -125,7 +123,6 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         textSize = labelPaintTextSize
         typeface = Typeface.DEFAULT
     }
-    private var hintedLabel: String? = null
     private var hintedLabelPaintTextSize: Float = resources.getDimension(R.dimen.key_textHintSize)
     private var hintedLabelPaint: Paint = Paint().apply {
         color = 0
@@ -164,6 +161,11 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         flogInfo(LogTopic.TEXT_KEYBOARD_VIEW) { keyboard.toString() }
         computedKeyboard = keyboard
         notifyStateChanged()
+    }
+
+    fun setIconSet(textKeyboardIconSet: TextKeyboardIconSet) {
+        flogInfo(LogTopic.TEXT_KEYBOARD_VIEW)
+        iconSet = textKeyboardIconSet
     }
 
     fun notifyStateChanged() {
@@ -345,14 +347,45 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         TextKeyboard.layoutDrawableBounds(desiredKey)
         TextKeyboard.layoutLabelBounds(desiredKey)
 
+        var spaceKey: TextKey? = null
         if (isRecomputingRequested) {
             isRecomputingRequested = false
             for (key in keyboard.keys()) {
                 key.compute(internalComputingEvaluator)
+                computeLabelsAndDrawables(key)
+                if (key.computedData.code == KeyCode.SPACE) {
+                    spaceKey = key
+                }
             }
         }
 
         keyboard.layout(this)
+
+        setTextSizeFor(
+            labelPaint,
+            desiredKey.visibleLabelBounds.width().toFloat(),
+            desiredKey.visibleLabelBounds.height().toFloat(),
+            "X"
+        )
+        labelPaintTextSize = labelPaint.textSize
+
+        if (spaceKey != null) {
+            setTextSizeFor(
+                labelPaint,
+                spaceKey.visibleLabelBounds.width().toFloat(),
+                spaceKey.visibleLabelBounds.height().toFloat(),
+                spaceKey.label ?: "X"
+            )
+            labelPaintSpaceTextSize = labelPaint.textSize
+        }
+
+        setTextSizeFor(
+            hintedLabelPaint,
+            desiredKey.visibleBounds.width() * 1.0f / 5.0f,
+            desiredKey.visibleBounds.height() * 1.0f / 5.0f,
+            "X"
+        )
+        hintedLabelPaintTextSize = hintedLabelPaint.textSize
     }
 
     /**
@@ -391,7 +424,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
     override fun onThemeUpdated(theme: Theme) {
         if (isPreviewMode) {
             cachedTheme = theme
-            keyboardBackground.apply {
+            backgroundDrawable.apply {
                 setTint(theme.getAttr(Theme.Attr.KEYBOARD_BACKGROUND).toSolidColor().color)
             }
         }
@@ -408,7 +441,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         }
 
         if (isPreviewMode) {
-            keyboardBackground.apply {
+            backgroundDrawable.apply {
                 setBounds(0, 0, measuredWidth, measuredHeight)
                 draw(canvas)
             }
@@ -419,22 +452,6 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
 
     private fun onDrawComputedKeyboard(canvas: Canvas) {
         val keyboard = computedKeyboard ?: return
-
-        setTextSizeFor(
-            labelPaint,
-            desiredKey.visibleLabelBounds.width().toFloat(),
-            desiredKey.visibleLabelBounds.height().toFloat(),
-            "X"
-        )
-        labelPaintTextSize = labelPaint.textSize
-
-        setTextSizeFor(
-            hintedLabelPaint,
-            desiredKey.visibleBounds.width() * 1.0f / 5.0f,
-            desiredKey.visibleBounds.height() * 1.0f / 5.0f,
-            "X"
-        )
-        hintedLabelPaintTextSize = hintedLabelPaint.textSize
 
         val theme = cachedTheme ?: themeManager?.activeTheme ?: Theme.BASE_THEME
         val isBorderless = !theme.getAttr(Theme.Attr.KEY_SHOW_BORDER).toOnOff().state &&
@@ -523,29 +540,21 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
             draw(canvas)
         }
 
-        computeLabelsAndDrawables(key)
-
-        val label = label
+        val label = key.label
         if (label != null) {
             labelPaint.apply {
                 color = keyForeground.toSolidColor().color
                 if (computedKeyboard?.mode == KeyboardMode.CHARACTERS && key.computedData.code == KeyCode.SPACE) {
                     alpha = 120
-                    setTextSizeFor(
-                        labelPaint,
-                        key.visibleLabelBounds.width().toFloat(),
-                        key.visibleLabelBounds.height().toFloat(),
-                        label
-                    )
-                } else {
-                    textSize = when (key.computedData.code) {
-                        KeyCode.VIEW_CHARACTERS,
-                        KeyCode.VIEW_SYMBOLS,
-                        KeyCode.VIEW_SYMBOLS2 -> labelPaintTextSize * 0.80f
-                        KeyCode.VIEW_NUMERIC,
-                        KeyCode.VIEW_NUMERIC_ADVANCED -> labelPaintTextSize * 0.55f
-                        else -> labelPaintTextSize
-                    }
+                }
+                textSize = when (key.computedData.code) {
+                    KeyCode.SPACE -> labelPaintSpaceTextSize
+                    KeyCode.VIEW_CHARACTERS,
+                    KeyCode.VIEW_SYMBOLS,
+                    KeyCode.VIEW_SYMBOLS2 -> labelPaintTextSize * 0.80f
+                    KeyCode.VIEW_NUMERIC,
+                    KeyCode.VIEW_NUMERIC_ADVANCED -> labelPaintTextSize * 0.55f
+                    else -> labelPaintTextSize
                 }
                 val centerX = key.visibleLabelBounds.exactCenterX()
                 val centerY = key.visibleLabelBounds.exactCenterY() + (labelPaint.textSize - labelPaint.descent()) / 2
@@ -561,7 +570,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
             }
         }
 
-        val hintedLabel = hintedLabel
+        val hintedLabel = key.hintedLabel
         if (hintedLabel != null) {
             labelPaint.apply {
                 color = keyForeground.toSolidColor().color
@@ -572,11 +581,13 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
             }
         }
 
-        val foregroundDrawable = foregroundDrawable
-        foregroundDrawable?.apply {
-            bounds = key.visibleDrawableBounds
-            setTint(keyForeground.toSolidColor().color)
-            draw(canvas)
+        val foregroundDrawableId = key.foregroundDrawableId
+        if (foregroundDrawableId != null) {
+            iconSet?.withDrawable(foregroundDrawableId) {
+                bounds = key.visibleDrawableBounds
+                setTint(keyForeground.toSolidColor().color)
+                draw(canvas)
+            }
         }
     }
 
@@ -585,49 +596,48 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
      */
     private fun computeLabelsAndDrawables(key: TextKey) {
         // Reset attributes first to avoid invalid states if not updated
-        label = null
-        hintedLabel = null
-        foregroundDrawable = null
+        key.label = null
+        key.hintedLabel = null
+        key.foregroundDrawableId = null
 
         val data = key.computedData
         if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE
             && data.code != KeyCode.HALF_SPACE && data.code != KeyCode.KESHIDA || data.type == KeyType.NUMERIC
         ) {
-            label = data.asString(isForDisplay = true)
+            key.label = data.asString(isForDisplay = true)
             val hint = key.computedPopups.hint
             if (prefs.keyboard.hintedNumberRowMode != KeyHintMode.DISABLED && hint?.type == KeyType.NUMERIC) {
-                hintedLabel = hint.asString(isForDisplay = true)
+                key.hintedLabel = hint.asString(isForDisplay = true)
             }
             if (prefs.keyboard.hintedSymbolsMode != KeyHintMode.DISABLED && hint?.type == KeyType.CHARACTER) {
-                hintedLabel = hint.asString(isForDisplay = true)
+                key.hintedLabel = hint.asString(isForDisplay = true)
             }
-
         } else {
             when (data.code) {
                 KeyCode.ARROW_LEFT -> {
-                    foregroundDrawable = getDrawable(context, R.drawable.ic_keyboard_arrow_left)
+                    key.foregroundDrawableId = R.drawable.ic_keyboard_arrow_left
                 }
                 KeyCode.ARROW_RIGHT -> {
-                    foregroundDrawable = getDrawable(context, R.drawable.ic_keyboard_arrow_right)
+                    key.foregroundDrawableId = R.drawable.ic_keyboard_arrow_right
                 }
                 KeyCode.CLIPBOARD_COPY -> {
-                    foregroundDrawable = getDrawable(context, R.drawable.ic_content_copy)
+                    key.foregroundDrawableId = R.drawable.ic_content_copy
                 }
                 KeyCode.CLIPBOARD_CUT -> {
-                    foregroundDrawable = getDrawable(context, R.drawable.ic_content_cut)
+                    key.foregroundDrawableId = R.drawable.ic_content_cut
                 }
                 KeyCode.CLIPBOARD_PASTE -> {
-                    foregroundDrawable = getDrawable(context, R.drawable.ic_content_paste)
+                    key.foregroundDrawableId = R.drawable.ic_content_paste
                 }
                 KeyCode.CLIPBOARD_SELECT_ALL -> {
-                    foregroundDrawable = getDrawable(context, R.drawable.ic_select_all)
+                    key.foregroundDrawableId = R.drawable.ic_select_all
                 }
                 KeyCode.DELETE -> {
-                    foregroundDrawable = getDrawable(context, R.drawable.ic_backspace)
+                    key.foregroundDrawableId = R.drawable.ic_backspace
                 }
                 KeyCode.ENTER -> {
                     val imeOptions = florisboard?.activeEditorInstance?.imeOptions ?: ImeOptions.default()
-                    foregroundDrawable = getDrawable(context, when (imeOptions.action) {
+                    key.foregroundDrawableId = when (imeOptions.action) {
                         ImeOptions.Action.DONE -> R.drawable.ic_done
                         ImeOptions.Action.GO -> R.drawable.ic_arrow_right_alt
                         ImeOptions.Action.NEXT -> R.drawable.ic_arrow_right_alt
@@ -636,21 +646,21 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
                         ImeOptions.Action.SEARCH -> R.drawable.ic_search
                         ImeOptions.Action.SEND -> R.drawable.ic_send
                         ImeOptions.Action.UNSPECIFIED -> R.drawable.ic_keyboard_return
-                    })
+                    }
                     if (imeOptions.flagNoEnterAction) {
-                        foregroundDrawable = getDrawable(context, R.drawable.ic_keyboard_return)
+                        key.foregroundDrawableId = R.drawable.ic_keyboard_return
                     }
                 }
                 KeyCode.LANGUAGE_SWITCH -> {
-                    foregroundDrawable = getDrawable(context, R.drawable.ic_language)
+                    key.foregroundDrawableId = R.drawable.ic_language
                 }
-                KeyCode.PHONE_PAUSE -> label = resources.getString(R.string.key__phone_pause)
-                KeyCode.PHONE_WAIT -> label = resources.getString(R.string.key__phone_wait)
+                KeyCode.PHONE_PAUSE -> key.label = resources.getString(R.string.key__phone_pause)
+                KeyCode.PHONE_WAIT -> key.label = resources.getString(R.string.key__phone_wait)
                 KeyCode.SHIFT -> {
-                    foregroundDrawable = getDrawable(context, when (florisboard?.textInputManager?.caps) {
+                    key.foregroundDrawableId = when (florisboard?.textInputManager?.caps) {
                         true -> R.drawable.ic_keyboard_capslock
                         else -> R.drawable.ic_keyboard_arrow_up
-                    })
+                    }
                 }
                 KeyCode.SPACE -> {
                     when (computedKeyboard?.mode) {
@@ -658,46 +668,46 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
                         KeyboardMode.NUMERIC_ADVANCED,
                         KeyboardMode.PHONE,
                         KeyboardMode.PHONE2 -> {
-                            foregroundDrawable = getDrawable(context, R.drawable.ic_space_bar)
+                            key.foregroundDrawableId = R.drawable.ic_space_bar
                         }
                         KeyboardMode.CHARACTERS -> {
-                            label = florisboard?.activeSubtype?.locale?.displayName
+                            key.label = florisboard?.activeSubtype?.locale?.displayName
                         }
                         else -> {
                         }
                     }
                 }
                 KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
-                    foregroundDrawable = getDrawable(context, R.drawable.ic_sentiment_satisfied)
+                    key.foregroundDrawableId = R.drawable.ic_sentiment_satisfied
                 }
                 KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
-                    foregroundDrawable = getDrawable(context, R.drawable.ic_assignment)
+                    key.foregroundDrawableId = R.drawable.ic_assignment
                 }
                 KeyCode.SWITCH_TO_TEXT_CONTEXT,
                 KeyCode.VIEW_CHARACTERS -> {
-                    label = resources.getString(R.string.key__view_characters)
+                    key.label = resources.getString(R.string.key__view_characters)
                 }
                 KeyCode.VIEW_NUMERIC,
                 KeyCode.VIEW_NUMERIC_ADVANCED -> {
-                    label = resources.getString(R.string.key__view_numeric)
+                    key.label = resources.getString(R.string.key__view_numeric)
                 }
                 KeyCode.VIEW_PHONE -> {
-                    label = resources.getString(R.string.key__view_phone)
+                    key.label = resources.getString(R.string.key__view_phone)
                 }
                 KeyCode.VIEW_PHONE2 -> {
-                    label = resources.getString(R.string.key__view_phone2)
+                    key.label = resources.getString(R.string.key__view_phone2)
                 }
                 KeyCode.VIEW_SYMBOLS -> {
-                    label = resources.getString(R.string.key__view_symbols)
+                    key.label = resources.getString(R.string.key__view_symbols)
                 }
                 KeyCode.VIEW_SYMBOLS2 -> {
-                    label = resources.getString(R.string.key__view_symbols2)
+                    key.label = resources.getString(R.string.key__view_symbols2)
                 }
                 KeyCode.HALF_SPACE -> {
-                    label = resources.getString(R.string.key__view_half_space)
+                    key.label = resources.getString(R.string.key__view_half_space)
                 }
                 KeyCode.KESHIDA -> {
-                    label = resources.getString(R.string.key__view_keshida)
+                    key.label = resources.getString(R.string.key__view_keshida)
                 }
             }
         }

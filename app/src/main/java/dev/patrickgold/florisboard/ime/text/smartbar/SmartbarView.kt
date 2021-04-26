@@ -110,6 +110,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                 ).await()
                 withContext(Dispatchers.Main) {
                     binding.clipboardCursorRow.setComputingEvaluator(florisboard.textInputManager.evaluator)
+                    binding.clipboardCursorRow.setIconSet(florisboard.textInputManager.textKeyboardIconSet)
                     binding.clipboardCursorRow.setComputedKeyboard(layout)
                 }
             }
@@ -124,6 +125,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                 ).await()
                 withContext(Dispatchers.Main) {
                     binding.numberRow.setComputingEvaluator(florisboard.textInputManager.evaluator)
+                    binding.numberRow.setIconSet(florisboard.textInputManager.textKeyboardIconSet)
                     binding.numberRow.setComputedKeyboard(layout)
                 }
             }

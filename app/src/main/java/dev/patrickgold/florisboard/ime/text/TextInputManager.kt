@@ -71,6 +71,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private var activeKeyboardMode: KeyboardMode? = null
     private val keyboards = TextKeyboardCache()
     private var textInputKeyboardView: TextKeyboardView? = null
+    lateinit var textKeyboardIconSet: TextKeyboardIconSet
+        private set
     private var textViewGroup: LinearLayout? = null
     private val dictionaryManager: DictionaryManager = DictionaryManager.default()
     private var activeDictionary: Dictionary<String, Int>? = null
@@ -217,6 +219,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         flogInfo(LogTopic.IMS_EVENTS)
 
         layoutManager = LayoutManager()
+        textKeyboardIconSet = TextKeyboardIconSet.new(florisboard)
         inputEventDispatcher.keyEventReceiver = this
         var subtypes = florisboard.subtypeManager.subtypes
         if (subtypes.isEmpty()) {
@@ -246,6 +249,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
         textViewGroup = inputView.findViewById(R.id.text_input)
         textInputKeyboardView = inputView.findViewById(R.id.text_input_keyboard_view)
+        textInputKeyboardView?.setIconSet(textKeyboardIconSet)
         textInputKeyboardView?.setComputingEvaluator(evaluator)
 
         launch(Dispatchers.Main) {

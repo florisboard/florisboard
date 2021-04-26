@@ -232,9 +232,6 @@ object Flog {
     /** The maximum tag length limit. */
     private const val MAX_TAG_LENGTH: Int =         23
 
-    /** Regex for matching anonymous classes. */
-    private val ANONYMOUS_CLASS: Regex =            """(\\\$\\d+)+\$""".toRegex()
-
     private var applicationContext: WeakReference<Context> = WeakReference(null)
     private var isFloggingEnabled: Boolean = false
     private var flogTopics: FlogTopic = TOPIC_NONE
@@ -285,12 +282,10 @@ object Flog {
     }
 
     /**
-     * Extract the tag which should be used for the message from the `element`. By default
-     * this will use the class name without any anonymous class suffixes (e.g., `Foo$1`
-     * becomes `Foo`).
+     * Extract the tag which should be used for the message from the `element`.
      */
     private fun createTag(element: StackTraceElement): String {
-        var tag = ANONYMOUS_CLASS.replace(element.className, "")
+        var tag = element.className
         tag = tag.substring(tag.lastIndexOf('.') + 1)
         // Tag length limit was removed in API 24.
         return if (tag.length <= MAX_TAG_LENGTH || Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

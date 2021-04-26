@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.graphics.Rect
+import dev.patrickgold.florisboard.ime.popup.MutablePopupSet
 import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.*
 
@@ -33,12 +34,16 @@ abstract class Key(open val data: KeyData) {
     open var flayShrink: Double = 0.0
     open var flayGrow: Double = 0.0
     open var flayWidthFactor: Double = 0.0
+
+    open var label: String? = null
+    open var hintedLabel: String? = null
+    open var foregroundDrawableId: Int? = null
 }
 
 class TextKey(override val data: KeyData) : Key(data) {
     var computedData: TextKeyData = TextKeyData.UNSPECIFIED
         private set
-    var computedPopups: PopupSet<TextKeyData> = PopupSet()
+    var computedPopups: MutablePopupSet<TextKeyData> = MutablePopupSet()
         private set
 
     fun compute(evaluator: TextComputingEvaluator) {
@@ -50,6 +55,7 @@ class TextKey(override val data: KeyData) : Key(data) {
 
         if (computed == null || !evaluator.evaluateVisible(computed)) {
             computedData = TextKeyData.UNSPECIFIED
+            computedPopups.clear()
             isEnabled = false
             isVisible = false
 
@@ -58,6 +64,10 @@ class TextKey(override val data: KeyData) : Key(data) {
             flayWidthFactor = 0.0
         } else {
             computedData = computed
+            computedPopups.clear()
+            if (computed is ExtendedTextKeyData) {
+                computedPopups.merge(computed.popup)
+            }
             isEnabled = evaluator.evaluateEnabled(computed)
             isVisible = true
 

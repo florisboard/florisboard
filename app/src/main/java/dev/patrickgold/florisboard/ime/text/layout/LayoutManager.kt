@@ -25,6 +25,7 @@ import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.popup.PopupExtension
 import dev.patrickgold.florisboard.ime.popup.PopupManager
+import dev.patrickgold.florisboard.ime.popup.PopupMapping
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.*
 import kotlinx.coroutines.*
@@ -47,7 +48,7 @@ class LayoutManager {
 
     private val layoutCache: HashMap<LTN, Deferred<Result<Layout>>> = hashMapOf()
     private val layoutCacheGuard: Mutex = Mutex(locked = false)
-    private val extendedPopupsCache: HashMap<LTN, Deferred<Result<Layout>>> = hashMapOf()
+    private val extendedPopupsCache: HashMap<String, Deferred<Result<PopupExtension>>> = hashMapOf()
     private val extendedPopupsCacheGuard: Mutex = Mutex(locked = false)
     private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
@@ -93,20 +94,47 @@ class LayoutManager {
         )
     }
 
-    private fun loadExtendedPopups(subtype: Subtype? = null): PopupExtension {
-        val langTagRef = AssetRef(
-            source = AssetSource.Assets,
-            path = PopupManager.POPUP_EXTENSION_PATH_REL + "/" + (subtype?.locale?.toLanguageTag() ?: "\$default") + ".json"
-        )
-        val langRef = AssetRef(
-            source = AssetSource.Assets,
-            path = PopupManager.POPUP_EXTENSION_PATH_REL + "/" + (subtype?.locale?.language ?: "\$default") + ".json"
-        )
-        return assetManager.loadJsonAsset<PopupExtension>(langTagRef).getOrElse {
-            assetManager.loadJsonAsset<PopupExtension>(langRef).getOrElse {
-                PopupExtension.empty()
+    private fun loadExtendedPopupsAsync(subtype: Subtype?): Deferred<Result<PopupExtension>> = ioScope.async {
+        if (subtype == null) {
+            return@async Result.failure(NullPointerException("Invalid argument value for 'subtype': null"))
+        }
+        extendedPopupsCacheGuard.lock()
+        val cached = extendedPopupsCache[subtype.locale.toLanguageTag()]
+        if (cached != null) {
+            extendedPopupsCacheGuard.unlock()
+            return@async cached.await()
+        } else {
+            val cached2 = extendedPopupsCache[subtype.locale.language]
+            if (cached2 != null) {
+                extendedPopupsCacheGuard.unlock()
+                return@async cached2.await()
+            } else {
+                val extendedPopupsLangTag = loadExtendedPopupsInternalAsync(subtype, useLangTag = true)
+                extendedPopupsCache[subtype.locale.toLanguageTag()] = extendedPopupsLangTag
+                val extendedPopupsLangCode = loadExtendedPopupsInternalAsync(subtype, useLangTag = false)
+                extendedPopupsCache[subtype.locale.language] = extendedPopupsLangCode
+                layoutCacheGuard.unlock()
+                val awaitedLangTagExtendedPopups = extendedPopupsLangTag.await()
+                return@async if (awaitedLangTagExtendedPopups.isSuccess) {
+                    awaitedLangTagExtendedPopups
+                } else {
+                    extendedPopupsLangCode.await()
+                }
             }
         }
+    }
+
+    private fun loadExtendedPopupsInternalAsync(subtype: Subtype, useLangTag: Boolean): Deferred<Result<PopupExtension>> = ioScope.async {
+        val langTag = if (useLangTag) {
+            subtype.locale.toLanguageTag()
+        } else {
+            subtype.locale.language
+        } ?: "\$default"
+        val ref = AssetRef(
+            source = AssetSource.Assets,
+            path = "${PopupManager.POPUP_EXTENSION_PATH_REL}/$langTag.json"
+        )
+        return@async assetManager.loadJsonAsset<PopupExtension>(ref)
     }
 
     /**
@@ -282,7 +310,9 @@ class LayoutManager {
         val array = Array(computedArrangement.size) { computedArrangement[it] }
         return TextKeyboard(
             arrangement = array,
-            mode = keyboardMode
+            mode = keyboardMode,
+            extendedPopupMapping = mapOf(),
+            extendedPopupMappingDefault = mapOf()
         )
     }
 

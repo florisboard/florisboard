@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.graphics.Rect
+import dev.patrickgold.florisboard.ime.popup.PopupMapping
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import kotlin.math.abs
 import kotlin.math.roundToInt
@@ -29,7 +30,9 @@ abstract class Keyboard {
 
 class TextKeyboard(
     private val arrangement: Array<Array<TextKey>>,
-    val mode: KeyboardMode
+    val mode: KeyboardMode,
+    extendedPopupMapping: PopupMapping,
+    extendedPopupMappingDefault: PopupMapping
 ) : Keyboard() {
     val rowCount: Int
         get() = arrangement.size

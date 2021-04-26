@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.popup
 
+import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.TextKeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import kotlinx.serialization.Serializable
@@ -35,11 +36,11 @@ import kotlinx.serialization.Serializable
  * character is *not* null).
  */
 @Serializable
-class PopupSet<T> (
-    val base: TextKeyData? = null,
-    var hint: T? = null,
-    var main: T? = null,
-    var relevant: List<T> = listOf()
+open class PopupSet<T : KeyData>(
+    open val base: TextKeyData? = null,
+    open val hint: T? = null,
+    open val main: T? = null,
+    open val relevant: List<T> = listOf()
 ) : Collection<T> {
     companion object {
         const val HINT_INDEX: Int = -2
@@ -100,27 +101,7 @@ class PopupSet<T> (
         return size == 0
     }
 
-    fun merge(other: PopupSet<T>) {
-        val tempRelevant = relevant.toMutableList()
-        tempRelevant.addAll(other.relevant)
-        other.hint?.let {
-            if (hint == null) {
-                hint = it
-            } else {
-                tempRelevant.add(it)
-            }
-        }
-        other.main?.let {
-            if (main == null) {
-                main = it
-            } else {
-                tempRelevant.add(it)
-            }
-        }
-        relevant = tempRelevant.toList()
-    }
-
-    class PopupSetIterator<T> internal constructor (
+    class PopupSetIterator<T : KeyData> internal constructor (
         private val popupSet: PopupSet<T>
     ) : Iterator<T> {
         var index = HINT_INDEX
@@ -143,6 +124,38 @@ class PopupSet<T> (
                 }
             }
             return popupSet.getOrNull(index) != null
+        }
+    }
+}
+
+class MutablePopupSet<T : KeyData>(
+    override var base: TextKeyData? = null,
+    override var hint: T? = null,
+    override var main: T? = null,
+    override val relevant: ArrayList<T> = arrayListOf()
+) : PopupSet<T>(base, hint, main, relevant) {
+    fun clear() {
+        base = null
+        hint = null
+        main = null
+        relevant.clear()
+    }
+
+    fun merge(other: PopupSet<T>) {
+        relevant.addAll(other.relevant)
+        other.hint?.let {
+            if (hint == null) {
+                hint = it
+            } else {
+                relevant.add(it)
+            }
+        }
+        other.main?.let {
+            if (main == null) {
+                main = it
+            } else {
+                relevant.add(it)
+            }
         }
     }
 }

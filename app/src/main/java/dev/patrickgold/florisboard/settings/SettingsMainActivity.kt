@@ -53,13 +53,12 @@ class SettingsMainActivity : AppCompatActivity(),
     lateinit var binding: SettingsActivityBinding
     lateinit var layoutManager: LayoutManager
     private lateinit var prefs: PrefHelper
-    lateinit var subtypeManager: SubtypeManager
+    val subtypeManager: SubtypeManager get() = SubtypeManager.default()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         prefs = PrefHelper.getDefaultInstance(this)
         prefs.initDefaultPreferences()
         prefs.sync()
-        subtypeManager = SubtypeManager(this, prefs)
         layoutManager = LayoutManager()
 
         val mode = when (prefs.advanced.settingsTheme) {

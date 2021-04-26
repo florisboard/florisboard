@@ -120,7 +120,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
 
     var activeEditorInstance: EditorInstance = EditorInstance.default()
 
-    lateinit var subtypeManager: SubtypeManager
+    val subtypeManager: SubtypeManager get() = SubtypeManager.default()
     lateinit var activeSubtype: Subtype
     private var currentThemeIsNight: Boolean = false
     private var currentThemeResId: Int = 0
@@ -240,7 +240,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         prefs = PrefHelper.getDefaultInstance(this)
         prefs.initDefaultPreferences()
         prefs.sync()
-        subtypeManager = SubtypeManager(this, prefs)
         activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
 
         currentThemeIsNight = themeManager.activeTheme.isNightTheme
