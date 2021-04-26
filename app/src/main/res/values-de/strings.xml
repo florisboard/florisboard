@@ -63,14 +63,14 @@
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Benutzerdefinierten Eingabestil bearbeiten</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Gebietsschema</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Zeichenanordnung</string>
-    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Primäre Symboleanordnung</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Primäre Symbolanordnung</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Sekundäre Symbolanordnung</string>
     <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Währung setzen</string>
-    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Numerischeanordnung</string>
-    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">(Erweiterte) Numerischeanordnung</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Numerische Anordnung</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">(Erweiterte) Numerische Anordnung</string>
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Zahlenanordnung</string>
-    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Primäre Händyanordnung</string>
-    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Sekundäre Händyanordnung</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Primäre Handyanordnung</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Sekundäre Handyanordnung</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Dieser Eingabestil ist bereits vorhanden!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tastaturdesign</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nicht definiert</string>
