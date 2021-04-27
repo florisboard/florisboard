@@ -20,14 +20,19 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 
 import androidx.collection.SparseArrayCompat
 import androidx.collection.set
+import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.core.Subtype
+import kotlinx.coroutines.*
+import kotlinx.coroutines.sync.Mutex
 import java.util.*
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-class TextKeyboardCache {
-    private val cache: EnumMap<KeyboardMode, SparseArrayCompat<TextKeyboard>> = EnumMap(KeyboardMode::class.java)
+class TextKeyboardCache(ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
+    private val cache: EnumMap<KeyboardMode, SparseArrayCompat<Deferred<TextKeyboard>>> = EnumMap(KeyboardMode::class.java)
+    private val cacheGuard: Mutex = Mutex(locked = false)
+    private val scope: CoroutineScope = CoroutineScope(ioDispatcher + SupervisorJob())
 
     init {
         // Initialize all odes with an empty array. As we won't remove the arrays anymore (only clear them), any
@@ -38,45 +43,51 @@ class TextKeyboardCache {
     }
 
     fun clear() {
+        flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "Clear whole cache" }
         for (mode in KeyboardMode.values()) {
-            clear(mode)
+            cache[mode]!!.clear()
         }
     }
 
     fun clear(mode: KeyboardMode) {
+        flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "Clear cache for mode '$mode'" }
         cache[mode]!!.clear()
     }
 
     fun clear(subtype: Subtype) {
+        flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "Clear cache for subtype '${subtype.toShortString()}'" }
         for (mode in KeyboardMode.values()) {
-            clear(mode, subtype)
+            cache[mode]!!.remove(subtype.hashCode())
         }
     }
 
     fun clear(mode: KeyboardMode, subtype: Subtype) {
-        cache[mode]!![subtype.hashCode()]
+        flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "Clear cache for mode '$mode' and subtype '${subtype.toShortString()}'" }
         cache[mode]!!.remove(subtype.hashCode())
     }
 
-    fun get(mode: KeyboardMode, subtype: Subtype): TextKeyboard? {
-        return cache[mode]!![subtype.hashCode()]
+    fun getAsync(mode: KeyboardMode, subtype: Subtype): Deferred<TextKeyboard>? {
+        return cache[mode]!![subtype.hashCode()].also {
+            flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "Get keyboard '$mode ${subtype.toShortString()}'" }
+        }
     }
 
-    inline fun getOrElse(mode: KeyboardMode, subtype: Subtype, block: () -> TextKeyboard): TextKeyboard {
+    fun getOrElseAsync(mode: KeyboardMode, subtype: Subtype, block: suspend () -> TextKeyboard): Deferred<TextKeyboard> {
         contract {
             callsInPlace(block, InvocationKind.AT_MOST_ONCE)
         }
-        val cachedKeyboard = get(mode, subtype)
+        val cachedKeyboard = getAsync(mode, subtype)
         return if (cachedKeyboard != null) {
             cachedKeyboard
         } else {
-            val keyboard = block()
+            val keyboard = scope.async { block() }
             set(mode, subtype, keyboard)
             keyboard
         }
     }
 
-    fun set(mode: KeyboardMode, subtype: Subtype, keyboard: TextKeyboard) {
+    fun set(mode: KeyboardMode, subtype: Subtype, keyboard: Deferred<TextKeyboard>) {
+        flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "Set keyboard '$mode ${subtype.toShortString()}'" }
         cache[mode]!![subtype.hashCode()] = keyboard
     }
 }

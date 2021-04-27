@@ -227,18 +227,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
         for (subtype in subtypes) {
             for (mode in KeyboardMode.values()) {
-                launch(Dispatchers.IO) {
-                    val keyboard = layoutManager.computeKeyboardAsync(mode, subtype, prefs).await()
-                    keyboards.set(mode, subtype, keyboard)
-                }
+                keyboards.set(mode, subtype, keyboard = layoutManager.computeKeyboardAsync(mode, subtype, prefs))
             }
         }
     }
 
     override fun onCreateInputView() {
         flogInfo(LogTopic.IMS_EVENTS)
-
-        keyboards.clear()
     }
 
     /**
@@ -302,6 +297,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         flogInfo(LogTopic.IMS_EVENTS)
 
         textInputKeyboardView?.setComputingEvaluator(null)
+        keyboards.clear()
         inputEventDispatcher.keyEventReceiver = null
         inputEventDispatcher.close()
         cancel()
@@ -406,13 +402,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     private fun setActiveKeyboard(mode: KeyboardMode, subtype: Subtype) = launch(Dispatchers.IO) {
-        val activeKeyboard = keyboards.getOrElse(mode, subtype) {
+        val activeKeyboard = keyboards.getOrElseAsync(mode, subtype) {
             layoutManager.computeKeyboardAsync(
                 keyboardMode = mode,
                 subtype = subtype,
                 prefs = prefs
             ).await()
-        }
+        }.await()
         withContext(Dispatchers.Main) {
             textInputKeyboardView?.setComputedKeyboard(activeKeyboard)
         }

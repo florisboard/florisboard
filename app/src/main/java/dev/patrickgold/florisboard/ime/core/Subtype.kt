@@ -100,6 +100,15 @@ data class Subtype(
         return "$id/$languageTag/$currencySetName/$layoutMap"
     }
 
+    /**
+     * Converts this object into its short string representation, used for debugging. Format:
+     *  <id>/<language_tag>/<currency_set_name>
+     */
+    fun toShortString(): String {
+        val languageTag = locale.toLanguageTag()
+        return "$id/$languageTag/$currencySetName"
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
