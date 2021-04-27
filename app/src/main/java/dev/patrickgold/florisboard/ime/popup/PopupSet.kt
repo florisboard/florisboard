@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.popup
 
 import dev.patrickgold.florisboard.ime.text.key.KeyData
-import dev.patrickgold.florisboard.ime.text.key.TextKeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import kotlinx.serialization.Serializable
 
@@ -37,7 +36,6 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 open class PopupSet<T : KeyData>(
-    open val base: TextKeyData? = null,
     open val hint: T? = null,
     open val main: T? = null,
     open val relevant: List<T> = listOf()
@@ -129,13 +127,11 @@ open class PopupSet<T : KeyData>(
 }
 
 class MutablePopupSet<T : KeyData>(
-    override var base: TextKeyData? = null,
     override var hint: T? = null,
     override var main: T? = null,
     override val relevant: ArrayList<T> = arrayListOf()
-) : PopupSet<T>(base, hint, main, relevant) {
+) : PopupSet<T>(hint, main, relevant) {
     fun clear() {
-        base = null
         hint = null
         main = null
         relevant.clear()

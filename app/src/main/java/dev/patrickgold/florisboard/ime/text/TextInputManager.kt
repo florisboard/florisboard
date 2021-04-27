@@ -198,8 +198,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             return keyVariation
         }
 
-        override fun getKeyboardMode(): KeyboardMode {
-            return KeyboardMode.CHARACTERS // Correct value will be inserted by the TextKeyboardView
+        override fun getKeyboard(): TextKeyboard {
+            throw NotImplementedError() // Correct value must be inserted by the TextKeyboardView
         }
 
         override fun isSlot(data: TextKeyData): Boolean {

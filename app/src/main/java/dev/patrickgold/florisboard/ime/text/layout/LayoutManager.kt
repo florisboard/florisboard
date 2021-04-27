@@ -17,7 +17,9 @@
 package dev.patrickgold.florisboard.ime.text.layout
 
 import dev.patrickgold.florisboard.debug.LogTopic
+import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogError
+import dev.patrickgold.florisboard.debug.flogWarning
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.AssetManager
@@ -46,7 +48,7 @@ class LayoutManager {
     private val assetManager: AssetManager
         get() = AssetManager.default()
 
-    private val layoutCache: HashMap<LTN, Deferred<Result<Layout>>> = hashMapOf()
+    private val layoutCache: HashMap<String, Deferred<Result<Layout>>> = hashMapOf()
     private val layoutCacheGuard: Mutex = Mutex(locked = false)
     private val extendedPopupsCache: HashMap<String, Deferred<Result<PopupExtension>>> = hashMapOf()
     private val extendedPopupsCacheGuard: Mutex = Mutex(locked = false)
@@ -70,71 +72,56 @@ class LayoutManager {
         if (ltn == null) {
             return@async Result.failure(NullPointerException("Invalid argument value for 'ltn': null"))
         }
+        val ref = AssetRef(source = AssetSource.Assets, path = "ime/text/${ltn.type}/${ltn.name}.json")
         layoutCacheGuard.lock()
-        val cached = layoutCache[ltn]
+        val cached = layoutCache[ref.path]
         if (cached != null) {
+            flogDebug(LogTopic.LAYOUT_MANAGER) { "Using cache for '$ref'" }
             layoutCacheGuard.unlock()
             return@async cached.await()
         } else {
-            val layout = loadLayoutInternalAsync(ltn)
-            layoutCache[ltn] = layout
+            flogDebug(LogTopic.LAYOUT_MANAGER) { "Loading '$ref'" }
+            val layout = async { assetManager.loadJsonAsset<Layout>(ref) }
+            layoutCache[ref.path] = layout
             layoutCacheGuard.unlock()
             return@async layout.await()
         }
     }
 
-    /**
-     * Loads the layout for the specified type and name.
-     *
-     * @return the [Layout] or null.
-     */
-    private fun loadLayoutInternalAsync(ltn: LTN): Deferred<Result<Layout>> = ioScope.async {
-        return@async assetManager.loadJsonAsset(
-            ref = AssetRef(source = AssetSource.Assets, path = "ime/text/${ltn.type}/${ltn.name}.json")
-        )
-    }
-
-    private fun loadExtendedPopupsAsync(subtype: Subtype?): Deferred<Result<PopupExtension>> = ioScope.async {
+    private fun loadExtendedPopupsAsync(subtype: Subtype? = null): Deferred<Result<PopupExtension>> = ioScope.async {
+        val ref: AssetRef
         if (subtype == null) {
-            return@async Result.failure(NullPointerException("Invalid argument value for 'subtype': null"))
+            ref = AssetRef(
+                source = AssetSource.Assets,
+                path = "${PopupManager.POPUP_EXTENSION_PATH_REL}/\$default.json"
+            )
+        } else {
+            val tempRef = AssetRef(
+                source = AssetSource.Assets,
+                path = "${PopupManager.POPUP_EXTENSION_PATH_REL}/${subtype.locale.toLanguageTag()}.json"
+            )
+            ref = if (assetManager.hasAsset(tempRef)) {
+                tempRef
+            } else {
+                AssetRef(
+                    source = AssetSource.Assets,
+                    path = "${PopupManager.POPUP_EXTENSION_PATH_REL}/${subtype.locale.language}.json"
+                )
+            }
         }
         extendedPopupsCacheGuard.lock()
-        val cached = extendedPopupsCache[subtype.locale.toLanguageTag()]
+        val cached = extendedPopupsCache[ref.path]
         if (cached != null) {
+            flogDebug(LogTopic.LAYOUT_MANAGER) { "Using cache for '$ref'" }
             extendedPopupsCacheGuard.unlock()
             return@async cached.await()
         } else {
-            val cached2 = extendedPopupsCache[subtype.locale.language]
-            if (cached2 != null) {
-                extendedPopupsCacheGuard.unlock()
-                return@async cached2.await()
-            } else {
-                val extendedPopupsLangTag = loadExtendedPopupsInternalAsync(subtype, useLangTag = true)
-                extendedPopupsCache[subtype.locale.toLanguageTag()] = extendedPopupsLangTag
-                val extendedPopupsLangCode = loadExtendedPopupsInternalAsync(subtype, useLangTag = false)
-                extendedPopupsCache[subtype.locale.language] = extendedPopupsLangCode
-                layoutCacheGuard.unlock()
-                val awaitedLangTagExtendedPopups = extendedPopupsLangTag.await()
-                return@async if (awaitedLangTagExtendedPopups.isSuccess) {
-                    awaitedLangTagExtendedPopups
-                } else {
-                    extendedPopupsLangCode.await()
-                }
-            }
+            flogDebug(LogTopic.LAYOUT_MANAGER) { "Loading '$ref'" }
+            val extendedPopups = async { assetManager.loadJsonAsset<PopupExtension>(ref) }
+            extendedPopupsCache[ref.path] = extendedPopups
+            extendedPopupsCacheGuard.unlock()
+            return@async extendedPopups.await()
         }
-    }
-
-    private fun loadExtendedPopupsInternalAsync(subtype: Subtype, useLangTag: Boolean): Deferred<Result<PopupExtension>> = ioScope.async {
-        val langTag = if (useLangTag) {
-            subtype.locale.toLanguageTag()
-        } else {
-            subtype.locale.language
-        } ?: "\$default"
-        val ref = AssetRef(
-            source = AssetSource.Assets,
-            path = "${PopupManager.POPUP_EXTENSION_PATH_REL}/$langTag.json"
-        )
-        return@async assetManager.loadJsonAsset<PopupExtension>(ref)
     }
 
     /**
@@ -161,9 +148,10 @@ class LayoutManager {
         extension: LTN? = null,
         prefs: PrefHelper
     ): TextKeyboard {
-        val mainLayout = loadLayoutAsync(main).await().onFailure {
-            flogError(LogTopic.LAYOUT_MANAGER) { it.toString() }
-        }.getOrNull()
+        val extendedPopupsDefault = loadExtendedPopupsAsync()
+        val extendedPopups = loadExtendedPopupsAsync(subtype)
+
+        val mainLayout = loadLayoutAsync(main).await().getOrNull()
         val modifierToLoad = if (mainLayout?.modifier != null) {
             LTN(LayoutType.CHARACTERS_MOD, mainLayout.modifier)
         } else {
@@ -219,67 +207,6 @@ class LayoutManager {
             }
         }
 
-        /*// Add popup to keys
-        if (keyboardMode == KeyboardMode.CHARACTERS || keyboardMode == KeyboardMode.NUMERIC_ADVANCED ||
-            keyboardMode == KeyboardMode.SYMBOLS || keyboardMode == KeyboardMode.SYMBOLS2) {
-            val extendedPopupsDefault = loadExtendedPopups()
-            val extendedPopups = loadExtendedPopups(subtype)
-            for (row in computedArrangement) {
-                var kOffset = 0
-                for ((k, key) in row.withIndex()) {
-                    val lastKey = row.getOrNull(k - 1)
-                    if (lastKey != null && lastKey.groupId == key.groupId && key.groupId != FlorisKeyData.GROUP_DEFAULT) {
-                        kOffset++
-                    }
-                    val label = when (key.groupId) {
-                        FlorisKeyData.GROUP_ENTER -> {
-                            "~enter"
-                        }
-                        FlorisKeyData.GROUP_LEFT -> {
-                            "~left"
-                        }
-                        FlorisKeyData.GROUP_RIGHT -> {
-                            "~right"
-                        }
-                        else -> {
-                            key.label
-                        }
-                    }
-                    var popupSet: PopupSet<KeyData>? = null
-                    val kv = key.variation
-                    if (popupSet == null && kv == KeyVariation.PASSWORD) {
-                        popupSet = extendedPopups.mapping[KeyVariation.PASSWORD]?.get(label) ?:
-                                extendedPopupsDefault.mapping[KeyVariation.PASSWORD]?.get(label)
-                    }
-                    if (popupSet == null && (kv == KeyVariation.NORMAL || kv == KeyVariation.PASSWORD)) {
-                        popupSet = extendedPopups.mapping[KeyVariation.NORMAL]?.get(label) ?:
-                                extendedPopupsDefault.mapping[KeyVariation.NORMAL]?.get(label)
-                    }
-                    if (popupSet == null && kv == KeyVariation.EMAIL_ADDRESS) {
-                        popupSet = extendedPopups.mapping[KeyVariation.EMAIL_ADDRESS]?.get(label) ?:
-                                extendedPopupsDefault.mapping[KeyVariation.EMAIL_ADDRESS]?.get(label)
-                    }
-                    if (popupSet == null && (kv == KeyVariation.EMAIL_ADDRESS || kv == KeyVariation.URI)) {
-                        popupSet = extendedPopups.mapping[KeyVariation.URI]?.get(label) ?:
-                                extendedPopupsDefault.mapping[KeyVariation.URI]?.get(label)
-                    }
-                    if (popupSet == null) {
-                        popupSet = extendedPopups.mapping[KeyVariation.ALL]?.get(label) ?:
-                                extendedPopupsDefault.mapping[KeyVariation.ALL]?.get(label)
-                    }
-                    var keySpecificPopupSet: PopupSet<KeyData>? = null
-                    if (label != key.label) {
-                        keySpecificPopupSet = extendedPopups.mapping[KeyVariation.ALL]?.get(key.label) ?:
-                            extendedPopupsDefault.mapping[KeyVariation.ALL]?.get(key.label)
-                    }
-                    key.popup.apply {
-                        keySpecificPopupSet?.let { merge(it) }
-                        popupSet?.let { merge(it) }
-                    }
-                }
-            }
-        }*/
-
         /*// Add hints to keys
         if (keyboardMode == KeyboardMode.CHARACTERS) {
             val symbolsComputedArrangement = fetchComputedLayoutAsync(KeyboardMode.SYMBOLS, subtype, prefs, currencySet).await().arrangement
@@ -311,8 +238,12 @@ class LayoutManager {
         return TextKeyboard(
             arrangement = array,
             mode = keyboardMode,
-            extendedPopupMapping = mapOf(),
-            extendedPopupMappingDefault = mapOf()
+            extendedPopupMapping = extendedPopups.await().onFailure {
+                flogWarning(LogTopic.LAYOUT_MANAGER) { it.toString() }
+            }.getOrNull()?.mapping,
+            extendedPopupMappingDefault = extendedPopupsDefault.await().onFailure {
+                flogWarning(LogTopic.LAYOUT_MANAGER) { it.toString() }
+            }.getOrNull()?.mapping
         )
     }
 
@@ -341,6 +272,7 @@ class LayoutManager {
             }
             KeyboardMode.EDITING -> {
                 // Layout for this mode is defined in custom layout xml file.
+                return@async TextKeyboard(arrayOf(), keyboardMode, null, null)
             }
             KeyboardMode.NUMERIC -> {
                 main = LTN(LayoutType.NUMERIC, subtype.layoutMap.numeric)

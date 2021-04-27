@@ -43,15 +43,11 @@ abstract class Key(open val data: KeyData) {
 class TextKey(override val data: KeyData) : Key(data) {
     var computedData: TextKeyData = TextKeyData.UNSPECIFIED
         private set
-    var computedPopups: MutablePopupSet<TextKeyData> = MutablePopupSet()
-        private set
+    val computedPopups: MutablePopupSet<TextKeyData> = MutablePopupSet()
 
     fun compute(evaluator: TextComputingEvaluator) {
-        val keyboardMode = evaluator.getKeyboardMode()
-        val computed = data.computeTextKeyData(
-            evaluator,
-            allowAutoCaps = keyboardMode == KeyboardMode.CHARACTERS
-        )
+        val keyboardMode = evaluator.getKeyboard().mode
+        val computed = data.computeTextKeyData(evaluator)
 
         if (computed == null || !evaluator.evaluateVisible(computed)) {
             computedData = TextKeyData.UNSPECIFIED
@@ -65,8 +61,61 @@ class TextKey(override val data: KeyData) : Key(data) {
         } else {
             computedData = computed
             computedPopups.clear()
-            if (computed is ExtendedTextKeyData) {
+            if (computed is BasicTextKeyData && computed.popup != null) {
                 computedPopups.merge(computed.popup)
+            }
+            if (keyboardMode == KeyboardMode.CHARACTERS || keyboardMode == KeyboardMode.NUMERIC_ADVANCED ||
+                keyboardMode == KeyboardMode.SYMBOLS || keyboardMode == KeyboardMode.SYMBOLS2) {
+                val extLabel = when (computed.groupId) {
+                    TextKeyData.GROUP_ENTER -> {
+                        "~enter"
+                    }
+                    TextKeyData.GROUP_LEFT -> {
+                        "~left"
+                    }
+                    TextKeyData.GROUP_RIGHT -> {
+                        "~right"
+                    }
+                    else -> {
+                        computed.label.toLowerCase()
+                    }
+                }
+                if (computed.label == ".") {
+                    val e = 1
+                }
+                val extendedPopupsDefault = evaluator.getKeyboard().extendedPopupMappingDefault
+                val extendedPopups = evaluator.getKeyboard().extendedPopupMapping
+                var popupSet: PopupSet<TextKeyData>? = null
+                val kv = evaluator.getKeyVariation()
+                if (popupSet == null && kv == KeyVariation.PASSWORD) {
+                    popupSet = extendedPopups?.get(KeyVariation.PASSWORD)?.get(extLabel) ?:
+                        extendedPopupsDefault?.get(KeyVariation.PASSWORD)?.get(extLabel)
+                }
+                if (popupSet == null && (kv == KeyVariation.NORMAL || kv == KeyVariation.PASSWORD)) {
+                    popupSet = extendedPopups?.get(KeyVariation.NORMAL)?.get(extLabel) ?:
+                        extendedPopupsDefault?.get(KeyVariation.NORMAL)?.get(extLabel)
+                }
+                if (popupSet == null && kv == KeyVariation.EMAIL_ADDRESS) {
+                    popupSet = extendedPopups?.get(KeyVariation.EMAIL_ADDRESS)?.get(extLabel) ?:
+                        extendedPopupsDefault?.get(KeyVariation.EMAIL_ADDRESS)?.get(extLabel)
+                }
+                if (popupSet == null && (kv == KeyVariation.EMAIL_ADDRESS || kv == KeyVariation.URI)) {
+                    popupSet = extendedPopups?.get(KeyVariation.URI)?.get(extLabel) ?:
+                        extendedPopupsDefault?.get(KeyVariation.URI)?.get(extLabel)
+                }
+                if (popupSet == null) {
+                    popupSet = extendedPopups?.get(KeyVariation.ALL)?.get(extLabel) ?:
+                        extendedPopupsDefault?.get(KeyVariation.ALL)?.get(extLabel)
+                }
+                var keySpecificPopupSet: PopupSet<TextKeyData>? = null
+                if (extLabel != computed.label) {
+                    keySpecificPopupSet = extendedPopups?.get(KeyVariation.ALL)?.get(computed.label) ?:
+                        extendedPopupsDefault?.get(KeyVariation.ALL)?.get(computed.label)
+                }
+                computedPopups.apply {
+                    keySpecificPopupSet?.let { merge(it) }
+                    popupSet?.let { merge(it) }
+                }
             }
             isEnabled = evaluator.evaluateEnabled(computed)
             isVisible = true
@@ -125,6 +174,6 @@ class TextKey(override val data: KeyData) : Key(data) {
 class EmojiKey(override val data: KeyData) : Key(data) {
     var computedData: EmojiKeyData = EmojiKeyData(listOf())
         private set
-    var computedPopups: PopupSet<EmojiKeyData> = PopupSet(ExtendedTextKeyData())
+    var computedPopups: PopupSet<EmojiKeyData> = PopupSet()
         private set
 }

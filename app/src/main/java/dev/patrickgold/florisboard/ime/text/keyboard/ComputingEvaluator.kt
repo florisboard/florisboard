@@ -32,7 +32,7 @@ interface TextComputingEvaluator {
 
     fun getKeyVariation(): KeyVariation
 
-    fun getKeyboardMode(): KeyboardMode
+    fun getKeyboard(): TextKeyboard
 
     fun isSlot(data: TextKeyData): Boolean
 
@@ -52,7 +52,7 @@ object DefaultTextComputingEvaluator : TextComputingEvaluator {
 
     override fun getKeyVariation(): KeyVariation = KeyVariation.NORMAL
 
-    override fun getKeyboardMode(): KeyboardMode = KeyboardMode.CHARACTERS
+    override fun getKeyboard(): TextKeyboard = throw NotImplementedError()
 
     override fun isSlot(data: TextKeyData): Boolean = false
 

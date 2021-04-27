@@ -20,6 +20,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.PaintDrawable
+import android.os.Handler
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -32,6 +33,8 @@ import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
+import dev.patrickgold.florisboard.util.cancelAll
+import dev.patrickgold.florisboard.util.postDelayed
 import kotlin.math.roundToInt
 
 class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
@@ -81,9 +84,9 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
                 ?: DefaultTextComputingEvaluator.getKeyVariation()
         }
 
-        override fun getKeyboardMode(): KeyboardMode {
-            return computedKeyboard?.mode // Purposely not calling the external evaluator!
-                ?: DefaultTextComputingEvaluator.getKeyboardMode()
+        override fun getKeyboard(): TextKeyboard {
+            return computedKeyboard // Purposely not calling the external evaluator!
+                ?: DefaultTextComputingEvaluator.getKeyboard()
         }
 
         override fun isSlot(data: TextKeyData): Boolean {
@@ -104,6 +107,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
     private var initialKey: TextKey? = null
     private var activeKey: TextKey? = null
     private var activePointerId: Int? = null
+    private val longPressHandler: Handler = Handler(context.mainLooper)
     private val popupManager: PopupManager<TextKeyboardView>
 
     val desiredKey: TextKey = TextKey(data = TextKeyData.UNSPECIFIED)
@@ -215,6 +219,11 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
                     key.isPressed = true
                     initialKey = key
                     activeKey = key
+                    longPressHandler.postDelayed(300) {
+                        if (key.computedPopups.isNotEmpty()) {
+                            popupManager.extend(key, KeyHintMode.DISABLED)
+                        }
+                    }
                 } else {
                     initialKey = null
                     activeKey = null
@@ -228,6 +237,12 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
             }
             MotionEvent.ACTION_UP,
             MotionEvent.ACTION_POINTER_UP -> {
+                val pointerIndex = event.actionIndex
+                val pointerId = event.getPointerId(pointerIndex)
+                if (activePointerId != pointerId && event.actionMasked == MotionEvent.ACTION_POINTER_UP) {
+                    return true
+                }
+                longPressHandler.cancelAll()
                 activeKey?.let {
                     it.isPressed = false
                     val retData = popupManager.getActiveKeyData(it)

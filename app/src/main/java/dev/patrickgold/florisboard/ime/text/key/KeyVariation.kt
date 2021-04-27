@@ -16,10 +16,19 @@
 
 package dev.patrickgold.florisboard.ime.text.key
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
 enum class KeyVariation {
+    @SerialName("all")
     ALL,
+    @SerialName("email")
     EMAIL_ADDRESS,
+    @SerialName("normal")
     NORMAL,
+    @SerialName("password")
     PASSWORD,
+    @SerialName("uri")
     URI;
 }

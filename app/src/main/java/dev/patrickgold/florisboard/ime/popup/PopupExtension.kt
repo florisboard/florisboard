@@ -25,7 +25,7 @@ import kotlinx.serialization.Serializable
  * An object which maps each base key to its extended popups. This can be done for each
  * key variation. [KeyVariation.ALL] is always the fallback for each key.
  */
-typealias PopupMapping = Map<KeyVariation, List<PopupSet<TextKeyData>>>
+typealias PopupMapping = Map<KeyVariation, Map<String, PopupSet<TextKeyData>>>
 
 /**
  * Class which contains an extended popup mapping to use for adding popups subtype based on the

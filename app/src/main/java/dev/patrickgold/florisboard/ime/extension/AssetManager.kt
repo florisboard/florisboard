@@ -35,16 +35,16 @@ class AssetManager private constructor(val applicationContext: Context) {
         serializersModule = SerializersModule {
             polymorphic(KeyData::class) {
                 subclass(BasicTextKeyData::class, BasicTextKeyData.serializer())
-                subclass(ExtendedTextKeyData::class, ExtendedTextKeyData.serializer())
+                subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
                 subclass(EmojiKeyData::class, EmojiKeyData.serializer())
                 subclass(CaseSelector::class, CaseSelector.serializer())
                 subclass(VariationSelector::class, VariationSelector.serializer())
-                default { ExtendedTextKeyData.serializer() }
+                default { BasicTextKeyData.serializer() }
             }
             polymorphic(TextKeyData::class) {
                 subclass(BasicTextKeyData::class, BasicTextKeyData.serializer())
-                subclass(ExtendedTextKeyData::class, ExtendedTextKeyData.serializer())
-                default { ExtendedTextKeyData.serializer() }
+                subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
+                default { BasicTextKeyData.serializer() }
             }
         }
     }

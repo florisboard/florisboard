@@ -708,12 +708,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
                     KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN
                     else -> AudioManager.FX_KEYPRESS_STANDARD
                 }
-                is ExtendedTextKeyData -> when (keyData.code) {
-                    KeyCode.SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR
-                    KeyCode.DELETE -> AudioManager.FX_KEYPRESS_DELETE
-                    KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN
-                    else -> AudioManager.FX_KEYPRESS_STANDARD
-                }
                 else -> AudioManager.FX_KEYPRESS_STANDARD
             }
             if (soundVolume == -1 && prefs.keyboard.soundEnabledSystem) {

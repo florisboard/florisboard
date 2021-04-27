@@ -31,8 +31,8 @@ abstract class Keyboard {
 class TextKeyboard(
     private val arrangement: Array<Array<TextKey>>,
     val mode: KeyboardMode,
-    extendedPopupMapping: PopupMapping,
-    extendedPopupMappingDefault: PopupMapping
+    val extendedPopupMapping: PopupMapping?,
+    val extendedPopupMappingDefault: PopupMapping?
 ) : Keyboard() {
     val rowCount: Int
         get() = arrangement.size

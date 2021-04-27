@@ -12,7 +12,7 @@ import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.InputView
-import dev.patrickgold.florisboard.ime.text.key.BasicTextKeyData
+import dev.patrickgold.florisboard.ime.text.key.AutoTextKeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import kotlinx.coroutines.*
 import kotlin.math.pow
@@ -135,8 +135,8 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
         event ?: return false
 
         val data = when (view.id) {
-            R.id.back_to_keyboard_button -> BasicTextKeyData(code = KeyCode.SWITCH_TO_TEXT_CONTEXT)
-            R.id.clear_clipboard_history -> BasicTextKeyData(code = KeyCode.CLEAR_CLIPBOARD_HISTORY)
+            R.id.back_to_keyboard_button -> AutoTextKeyData(code = KeyCode.SWITCH_TO_TEXT_CONTEXT)
+            R.id.clear_clipboard_history -> AutoTextKeyData(code = KeyCode.CLEAR_CLIPBOARD_HISTORY)
             else -> null
         } ?: return false
 
