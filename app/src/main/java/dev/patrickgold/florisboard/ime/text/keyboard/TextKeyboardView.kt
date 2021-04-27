@@ -425,7 +425,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         if (isPreviewMode) {
             cachedTheme = theme
             backgroundDrawable.apply {
-                setTint(theme.getAttr(Theme.Attr.KEYBOARD_BACKGROUND).toSolidColor().color)
+                paint.color = theme.getAttr(Theme.Attr.KEYBOARD_BACKGROUND).toSolidColor().color
             }
         }
         invalidate()
@@ -536,7 +536,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
                 }
             )
             elevation = if (shouldShowBorder) 4.0f else 0.0f
-            setTint(keyBackground.toSolidColor().color)
+            paint.color = keyBackground.toSolidColor().color
             draw(canvas)
         }
 

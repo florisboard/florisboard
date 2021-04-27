@@ -14,21 +14,26 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalContracts::class)
+
 package dev.patrickgold.florisboard.ime.text.keyboard
 
+import androidx.collection.SparseArrayCompat
+import androidx.collection.set
 import dev.patrickgold.florisboard.ime.core.Subtype
-import kotlinx.coroutines.Deferred
 import java.util.*
-import kotlin.collections.HashMap
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 class TextKeyboardCache {
-    private var cache: EnumMap<KeyboardMode, HashMap<Int, Deferred<TextKeyboard>>> = EnumMap(KeyboardMode::class.java)
+    private val cache: EnumMap<KeyboardMode, SparseArrayCompat<TextKeyboard>> = EnumMap(KeyboardMode::class.java)
 
     init {
-        // Initialize all odes with an empty HashMap. As we won't remove the HashMaps anymore (only clear them), any
+        // Initialize all odes with an empty array. As we won't remove the arrays anymore (only clear them), any
         // get operations on `cache` will be automatically assumed to be not null.
         for (mode in KeyboardMode.values()) {
-            cache[mode] = hashMapOf()
+            cache[mode] = SparseArrayCompat()
         }
     }
 
@@ -49,25 +54,29 @@ class TextKeyboardCache {
     }
 
     fun clear(mode: KeyboardMode, subtype: Subtype) {
-        cache[mode]!!.remove(subtype.hashCode())?.cancel()
+        cache[mode]!![subtype.hashCode()]
+        cache[mode]!!.remove(subtype.hashCode())
     }
 
-    fun get(mode: KeyboardMode, subtype: Subtype): Deferred<TextKeyboard>? {
+    fun get(mode: KeyboardMode, subtype: Subtype): TextKeyboard? {
         return cache[mode]!![subtype.hashCode()]
     }
 
-    fun getOrElse(mode: KeyboardMode, subtype: Subtype, block: () -> Deferred<TextKeyboard>): Deferred<TextKeyboard> {
+    inline fun getOrElse(mode: KeyboardMode, subtype: Subtype, block: () -> TextKeyboard): TextKeyboard {
+        contract {
+            callsInPlace(block, InvocationKind.AT_MOST_ONCE)
+        }
         val cachedKeyboard = get(mode, subtype)
         return if (cachedKeyboard != null) {
             cachedKeyboard
         } else {
             val keyboard = block()
-            cache[mode]!![subtype.hashCode()] = keyboard
+            set(mode, subtype, keyboard)
             keyboard
         }
     }
 
-    fun set(mode: KeyboardMode, subtype: Subtype, keyboard: Deferred<TextKeyboard>) {
+    fun set(mode: KeyboardMode, subtype: Subtype, keyboard: TextKeyboard) {
         cache[mode]!![subtype.hashCode()] = keyboard
     }
 }

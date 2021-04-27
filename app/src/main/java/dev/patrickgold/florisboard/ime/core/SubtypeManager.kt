@@ -200,16 +200,11 @@ class SubtypeManager(
      * @param subtypeToModify The subtype with the new details but same id.
      */
     fun modifySubtypeWithSameId(subtypeToModify: Subtype) {
-        val subtypeList = _subtypes
-        for (subtype in subtypeList) {
-            if (subtype.id == subtypeToModify.id) {
-                subtype.locale = subtypeToModify.locale
-                subtype.currencySetName = subtypeToModify.currencySetName
-                subtype.layoutMap = subtypeToModify.layoutMap
-                break
-            }
+        val index = _subtypes.indexOfFirst { subtypeToModify.id == it.id }
+        if (index >= 0 && index < _subtypes.size) {
+            _subtypes[index] = subtypeToModify
+            syncSubtypeListToPrefs()
         }
-        syncSubtypeListToPrefs()
     }
 
     /**

@@ -36,11 +36,13 @@ import java.util.*
  * @property layoutMap The layout map to properly display the correct layout for each layout type.
  */
 data class Subtype(
-    var id: Int,
-    var locale: Locale,
-    var currencySetName: String,
-    var layoutMap: SubtypeLayoutMap,
+    val id: Int,
+    val locale: Locale,
+    val currencySetName: String,
+    val layoutMap: SubtypeLayoutMap,
 ) {
+    private val _hashCode: Int
+
     companion object {
         /**
          * Subtype to use when prefs do not contain any valid subtypes.
@@ -81,6 +83,14 @@ data class Subtype(
         }
     }
 
+    init {
+        var result = id
+        result = 31 * result + locale.hashCode()
+        result = 31 * result + currencySetName.hashCode()
+        result = 31 * result + layoutMap.hashCode()
+        _hashCode = result
+    }
+
     /**
      * Converts this object into its string representation. Format:
      *  <id>/<language_tag>/<currency_set_name>/<layout_map>
@@ -105,11 +115,7 @@ data class Subtype(
     }
 
     override fun hashCode(): Int {
-        var result = id
-        result = 31 * result + locale.hashCode()
-        result = 31 * result + currencySetName.hashCode()
-        result = 31 * result + layoutMap.hashCode()
-        return result
+        return _hashCode
     }
 }
 
@@ -124,6 +130,8 @@ data class SubtypeLayoutMap(
     val phone: String = PHONE_DEFAULT,
     val phone2: String = PHONE2_DEFAULT,
 ) {
+    @Transient private var _hashCode: Int = 0
+
     companion object {
         private const val CHARACTERS_CODE =             "c"
         private const val SYMBOLS_CODE =                "s"
@@ -176,6 +184,18 @@ data class SubtypeLayoutMap(
                 characters, symbols, symbols2, numeric, numericAdvanced, numericRow, phone, phone2
             )
         }
+    }
+
+    init {
+        var result = characters.hashCode()
+        result = 31 * result + symbols.hashCode()
+        result = 31 * result + symbols2.hashCode()
+        result = 31 * result + numeric.hashCode()
+        result = 31 * result + numericAdvanced.hashCode()
+        result = 31 * result + numericRow.hashCode()
+        result = 31 * result + phone.hashCode()
+        result = 31 * result + phone2.hashCode()
+        _hashCode = result
     }
 
     operator fun get(layoutType: LayoutType): String? {
@@ -263,15 +283,7 @@ data class SubtypeLayoutMap(
     }
 
     override fun hashCode(): Int {
-        var result = characters.hashCode()
-        result = 31 * result + symbols.hashCode()
-        result = 31 * result + symbols2.hashCode()
-        result = 31 * result + numeric.hashCode()
-        result = 31 * result + numericAdvanced.hashCode()
-        result = 31 * result + numericRow.hashCode()
-        result = 31 * result + phone.hashCode()
-        result = 31 * result + phone2.hashCode()
-        return result
+        return _hashCode
     }
 }
 

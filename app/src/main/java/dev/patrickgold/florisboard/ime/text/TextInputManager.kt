@@ -227,8 +227,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
         for (subtype in subtypes) {
             for (mode in KeyboardMode.values()) {
-                launch(Dispatchers.Default) {
-                    val keyboard = layoutManager.computeKeyboardAsync(mode, subtype, prefs)
+                launch(Dispatchers.IO) {
+                    val keyboard = layoutManager.computeKeyboardAsync(mode, subtype, prefs).await()
                     keyboards.set(mode, subtype, keyboard)
                 }
             }
@@ -405,15 +405,17 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         smartbarView?.updateSmartbarState()
     }
 
-    private fun setActiveKeyboard(mode: KeyboardMode, subtype: Subtype) = launch {
+    private fun setActiveKeyboard(mode: KeyboardMode, subtype: Subtype) = launch(Dispatchers.IO) {
         val activeKeyboard = keyboards.getOrElse(mode, subtype) {
             layoutManager.computeKeyboardAsync(
                 keyboardMode = mode,
                 subtype = subtype,
                 prefs = prefs
-            )
+            ).await()
         }
-        textInputKeyboardView?.setComputedKeyboard(activeKeyboard.await())
+        withContext(Dispatchers.Main) {
+            textInputKeyboardView?.setComputedKeyboard(activeKeyboard)
+        }
     }
 
     override fun onSubtypeChanged(newSubtype: Subtype) {
