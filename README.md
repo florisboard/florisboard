@@ -1,7 +1,7 @@
 <img align="left" width="80" height="80"
 src="fastlane/metadata/android/en-US/images/icon.png" alt="App icon">
 
-# FlorisBoard [![Crowdin](https://badges.crowdin.net/florisboard/localized.svg)](https://crowdin.florisboard.patrickgold.dev) ![FlorisBoard CI](https://github.com/florisboard/florisboard/workflows/FlorisBoard%20CI/badge.svg?event=push)
+# FlorisBoard [![Crowdin](https://badges.crowdin.net/florisboard/localized.svg)](https://crowdin.florisboard.patrickgold.dev) [![Matrix badge](https://img.shields.io/badge/chat-%23florisboard%3amatrix.org-blue)](https://matrix.to/#/#florisboard:matrix.org) ![FlorisBoard CI](https://github.com/florisboard/florisboard/workflows/FlorisBoard%20CI/badge.svg?event=push)
 
 **FlorisBoard** is a free and open-source keyboard for Android 6.0+
 devices. It aims at being modern, user-friendly and customizable while
@@ -40,7 +40,7 @@ _C. Use the APK provided in the release section of this repo_
 ### Beta [![Latest beta release](https://img.shields.io/github/v/release/florisboard/florisboard?include_prereleases)](https://github.com/florisboard/florisboard/releases)
 
 Releases on this track are also in general stable and should be ready for everyday use, though crashes and bugs are more likely to occur. Use releases from this track if you want to get new features faster and give feedback for brand-new stuff. Options to get beta releases:
-
+https://img.shields.io/badge/chat-%23florisboard%3amatrix.org-blue
 _A. IzzySoft's repo for F-Droid_:
 
 [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="64" alt="IzzySoft repo badge">](https://apt.izzysoft.de/fdroid/index/apk/dev.patrickgold.florisboard.beta)
