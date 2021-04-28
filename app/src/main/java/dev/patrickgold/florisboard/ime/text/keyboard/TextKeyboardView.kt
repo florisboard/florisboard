@@ -232,6 +232,32 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
                 true
             }
             MotionEvent.ACTION_MOVE -> {
+                val key = activeKey
+                if (key != null) {
+                    if (popupManager.isShowingExtendedPopup) {
+                        if (!popupManager.propagateMotionEvent(key, event)) {
+                            val me = MotionEvent.obtainNoHistory(event).apply { action = MotionEvent.ACTION_CANCEL }
+                            onTouchEvent(me)
+                            me.apply { action = MotionEvent.ACTION_DOWN }
+                            onTouchEvent(me)
+                            me.recycle()
+                            return true
+                        }
+                    } else {
+                        if ((event.x < key.visibleBounds.left - 0.1f * key.visibleBounds.width())
+                            || (event.x > key.visibleBounds.right + 0.1f * key.visibleBounds.width())
+                            || (event.y < key.visibleBounds.top - 0.35f * key.visibleBounds.height())
+                            || (event.y > key.visibleBounds.bottom + 0.35f * key.visibleBounds.height())
+                        ) {
+                            val me = MotionEvent.obtainNoHistory(event).apply { action = MotionEvent.ACTION_CANCEL }
+                            onTouchEvent(me)
+                            me.apply { action = MotionEvent.ACTION_DOWN }
+                            onTouchEvent(me)
+                            me.recycle()
+                            return true
+                        }
+                    }
+                }
                 invalidate()
                 true
             }

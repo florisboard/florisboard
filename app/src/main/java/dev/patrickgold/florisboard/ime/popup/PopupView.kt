@@ -48,7 +48,7 @@ class PopupView : View, ThemeManager.OnThemeUpdatedListener {
         typeface = Typeface.DEFAULT
     }
     private val threeDotsDrawable: Drawable? =
-        ContextCompat.getDrawable(context, R.drawable.ic_more_horiz)
+        ContextCompat.getDrawable(context, R.drawable.ic_more_horiz)?.mutate()
 
     val properties: Properties = Properties(
         width = resources.getDimension(R.dimen.key_width).toInt(),

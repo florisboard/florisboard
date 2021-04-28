@@ -22,7 +22,6 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat.getDrawable
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyView
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyboardView
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.EmojiKey
@@ -52,7 +51,7 @@ class PopupManager<V : View>(
     )
     private var keyPopupWidth: Int
     private var keyPopupHeight: Int
-    var keyPopupTextSize: Float = keyboardView.resources.getDimension(R.dimen.key_popup_textSize)
+    private var keyPopupTextSize: Float = keyboardView.resources.getDimension(R.dimen.key_popup_textSize)
     private var keyPopupDiffX: Int = 0
     private val popupView: PopupView
     private val popupViewExt: PopupExtendedView
@@ -82,7 +81,7 @@ class PopupManager<V : View>(
     /**
      * Helper function to create a element for the extended popup and preconfigure it.
      *
-     * @param keyView Reference to the keyView currently controlling the popup.
+     * @param key Reference to the key currently controlling the popup.
      * @param adjustedIndex The index of the key in the key data popup array.
      * @return A preconfigured extended popup element.
      */
@@ -176,10 +175,10 @@ class PopupManager<V : View>(
     }
 
     /**
-     * Shows a preview popup for the passed [key]. Ignores show requests for key views which
+     * Shows a preview popup for the passed [key]. Ignores show requests for keys which
      * key code is equal to or less than [KeyCode.SPACE].
      *
-     * @param key Reference to the keyView currently controlling the popup.
+     * @param key Reference to the key currently controlling the popup.
      */
     fun show(key: Key, keyHintMode: KeyHintMode) {
         if (key is TextKey && key.computedData.code <= KeyCode.SPACE) {
@@ -215,7 +214,7 @@ class PopupManager<V : View>(
      * is equal to or less than [KeyCode.SPACE]. An exception is made for the codes defined in
      * [exceptionsForKeyCodes], as they most likely have special keys bound to them.
      *
-     * Layout of the extended key popup: (n = keyView.data.popup.size)
+     * Layout of the extended key popup: (n = key.computedPopups.size)
      *   when n <= 5: single line, row0 only
      *     _ _ _ _ _
      *     K K K K K
@@ -228,7 +227,7 @@ class PopupManager<V : View>(
      *     K K ... K K
      *     K K ... K K
      *
-     * @param key Reference to the keyView currently controlling the popup.
+     * @param key Reference to the key currently controlling the popup.
      */
     fun extend(key: Key, keyHintMode: KeyHintMode) {
         if (key is TextKey && key.computedData.code <= KeyCode.SPACE
@@ -400,8 +399,8 @@ class PopupManager<V : View>(
      * Updates the current selected key in extended popup according to the passed [event].
      * This function does nothing if the extended popup is not showing and will return false.
      *
-     * @param key Reference to the keyView currently controlling the popup.
-     * @param event The [MotionEvent] passed from the parent keyboard view's onTouch event.
+     * @param key Reference to the key currently controlling the popup.
+     * @param event The [MotionEvent] passed from the keyboard view's onTouch event.
      * @return True if the pointer movement is within the elements bounds, false otherwise.
      */
     fun propagateMotionEvent(key: Key, event: MotionEvent): Boolean {
@@ -409,22 +408,24 @@ class PopupManager<V : View>(
             return false
         }
 
-        val kX: Float = event.x / keyPopupWidth.toFloat()
+        val x = event.x - key.visibleBounds.left
+        val y = event.y - key.visibleBounds.top
+        val kX: Float = x / keyPopupWidth.toFloat()
 
         // Check if out of boundary on y-axis
-        if (event.y < -keyPopupHeight || event.y > 0.9f * keyPopupHeight) {
+        if (y < -keyPopupHeight || y > 0.9f * keyPopupHeight) {
             return false
         }
 
         popupViewExt.properties.activeElementIndex = when {
             anchorLeft -> when {
                 // check if out of boundary on x-axis
-                event.x < keyPopupDiffX - (anchorOffset + 1) * keyPopupWidth ||
-                event.x > (keyPopupDiffX + (row0count + 1 - anchorOffset) * keyPopupWidth) -> {
+                x < keyPopupDiffX - (anchorOffset + 1) * keyPopupWidth ||
+                x > (keyPopupDiffX + (row0count + 1 - anchorOffset) * keyPopupWidth) -> {
                     return false
                 }
                 // row 1
-                event.y < 0 && row1count > 0 -> when {
+                y < 0 && row1count > 0 -> when {
                     kX >= row1count - anchorOffset -> row1count - 1
                     kX < -anchorOffset -> 0
                     kX < 0 -> kX.toInt() - 1 + anchorOffset
@@ -440,13 +441,12 @@ class PopupManager<V : View>(
             }
             anchorRight -> when {
                 // check if out of boundary on x-axis
-                event.x > key.visibleBounds.width() - keyPopupDiffX + (anchorOffset + 1) * keyPopupWidth ||
-                event.x < (key.visibleBounds.width() -
-                        keyPopupDiffX - (row0count + 1 - anchorOffset) * keyPopupWidth) -> {
+                x > key.visibleBounds.width() - keyPopupDiffX + (anchorOffset + 1) * keyPopupWidth ||
+                x < (key.visibleBounds.width() - keyPopupDiffX - (row0count + 1 - anchorOffset) * keyPopupWidth) -> {
                     return false
                 }
                 // row 1
-                event.y < 0 && row1count > 0 -> when {
+                y < 0 && row1count > 0 -> when {
                     kX >= anchorOffset -> row1count - 1
                     kX < -(row1count - 1 - anchorOffset) -> 0
                     kX < 0 -> row1count - 2 + kX.toInt() - anchorOffset
@@ -469,10 +469,9 @@ class PopupManager<V : View>(
 
     /**
      * Gets the [KeyData] of the currently active key. May be either the key of the popup preview
-     * or one of the keys in extended popup, if shown. Returns null if type parameter [T_KV]
-     * is not [KeyView].
+     * or one of the keys in extended popup, if shown. Returns null if [key] is not a subclass of [TextKey].
      *
-     * @param key Reference to the keyView currently controlling the popup.
+     * @param key Reference to the key currently controlling the popup.
      * @return The [KeyData] object of the currently active key or null.
      */
     fun getActiveKeyData(key: Key): TextKeyData? {
@@ -490,10 +489,9 @@ class PopupManager<V : View>(
 
     /**
      * Gets the [EmojiKeyData] of the currently active key. May be either the key of the popup
-     * preview or one of the keys in extended popup, if shown. Returns null if type parameter
-     * [T_KV] is not [EmojiKeyView].
+     * preview or one of the keys in extended popup, if shown. Returns null if [key] is noz a subclass of [EmojiKey].
      *
-     * @param key Reference to the keyView currently controlling the popup.
+     * @param key Reference to the key currently controlling the popup.
      * @return The [EmojiKeyData] object of the currently active key or null.
      */
     fun getActiveEmojiKeyData(key: Key): EmojiKeyData? {
@@ -519,7 +517,7 @@ class PopupManager<V : View>(
     }
 
     /**
-     * Dismisses all currently shown popups. Should be called by the parent keyboard view when it
+     * Dismisses all currently shown popups. Should be called by the keyboard view when it
      * is closing.
      */
     fun dismissAllPopups() {

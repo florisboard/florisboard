@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.popup
 
 import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
+import dev.patrickgold.florisboard.ime.text.keyboard.TextComputingEvaluator
 import kotlinx.serialization.Serializable
 
 /**
@@ -126,6 +127,7 @@ open class PopupSet<T : KeyData>(
     }
 }
 
+@Suppress("UNCHECKED_CAST")
 class MutablePopupSet<T : KeyData>(
     override var hint: T? = null,
     override var main: T? = null,
@@ -151,6 +153,32 @@ class MutablePopupSet<T : KeyData>(
                 main = it
             } else {
                 relevant.add(it)
+            }
+        }
+    }
+
+    fun merge(other: PopupSet<T>, evaluator: TextComputingEvaluator) {
+        other.relevant.forEach {
+            val data = it.computeTextKeyData(evaluator) as? T
+            if (data != null) {
+                relevant.add(data)
+            }
+        }
+        other.hint?.let {
+            if (hint == null) {
+                hint = it
+            } else {
+                relevant.add(it)
+            }
+        }
+        other.main?.let {
+            val data = it.computeTextKeyData(evaluator) as? T
+            if (data != null) {
+                if (main == null) {
+                    main = it
+                } else {
+                    relevant.add(it)
+                }
             }
         }
     }

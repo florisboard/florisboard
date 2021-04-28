@@ -113,8 +113,8 @@ class TextKey(override val data: KeyData) : Key(data) {
                         extendedPopupsDefault?.get(KeyVariation.ALL)?.get(computed.label)
                 }
                 computedPopups.apply {
-                    keySpecificPopupSet?.let { merge(it) }
-                    popupSet?.let { merge(it) }
+                    keySpecificPopupSet?.let { merge(it, evaluator) }
+                    popupSet?.let { merge(it, evaluator) }
                 }
             }
             isEnabled = evaluator.evaluateEnabled(computed)

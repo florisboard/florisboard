@@ -303,7 +303,7 @@ class BasicTextKeyData(
     }
 
     override fun toString(): String {
-        return "${BasicTextKeyData::class.simpleName} { type=$type code=$code label=\"$label\" }"
+        return "${BasicTextKeyData::class.simpleName} { type=$type code=$code label=\"$label\" groupId=$groupId }"
     }
 }
 
@@ -316,9 +316,9 @@ class AutoTextKeyData(
     override val groupId: Int = TextKeyData.GROUP_DEFAULT
 ) : TextKeyData {
     @Transient private val lower: BasicTextKeyData =
-        BasicTextKeyData(type, code, label.toLowerCase(Locale.getDefault()))
+        BasicTextKeyData(type, code, label.toLowerCase(Locale.getDefault()), groupId)
     @Transient private val upper: BasicTextKeyData =
-        BasicTextKeyData(type, code, label.toUpperCase(Locale.getDefault()))
+        BasicTextKeyData(type, code, label.toUpperCase(Locale.getDefault()), groupId)
 
     override fun computeTextKeyData(evaluator: TextComputingEvaluator): TextKeyData? {
         return if (evaluator.isSlot(this)) {
@@ -329,7 +329,7 @@ class AutoTextKeyData(
     }
 
     override fun toString(): String {
-        return "${AutoTextKeyData::class.simpleName} { type=$type code=$code label=\"$label\" }"
+        return "${AutoTextKeyData::class.simpleName} { type=$type code=$code label=\"$label\" groupId=$groupId }"
     }
 }
 
