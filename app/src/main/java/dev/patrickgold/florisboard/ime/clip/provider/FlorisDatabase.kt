@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.net.Uri
 import android.provider.BaseColumns
 import androidx.room.*
+import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import java.io.Closeable
 
@@ -103,12 +104,10 @@ data class ClipboardItem(
          * @param cloneUri Whether to store the image using [FlorisContentProvider].
          */
         fun fromClipData(data: ClipData, cloneUri: Boolean) : ClipboardItem {
-
             val type = when {
-                data.getItemAt(0)?.uri != null -> ItemType.IMAGE
-                data.getItemAt(0)?.text != null -> ItemType.TEXT
-                else -> null
-            }!!
+                data.getItemAt(0)?.uri != null && data.description.hasMimeType("image/*") -> ItemType.IMAGE
+                else -> ItemType.TEXT
+            }
 
             val uri = if (type == ItemType.IMAGE) {
                     if (data.getItemAt(0).uri.authority == FlorisContentProvider.CONTENT_URI.authority || !cloneUri){
@@ -122,7 +121,7 @@ data class ClipboardItem(
                     }
             } else { null }
 
-            val text = data.getItemAt(0).text?.toString()
+            val text = FlorisBoard.getInstanceOrNull()?.let { data.getItemAt(0).coerceToText(it).toString() } ?: "#ERROR"
             val mimeTypes = when (type) {
                 ItemType.IMAGE -> {
                     (0 until data.description.mimeTypeCount).map {
