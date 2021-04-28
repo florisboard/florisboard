@@ -403,13 +403,13 @@ class PopupManager<V : View>(
      * @param event The [MotionEvent] passed from the keyboard view's onTouch event.
      * @return True if the pointer movement is within the elements bounds, false otherwise.
      */
-    fun propagateMotionEvent(key: Key, event: MotionEvent): Boolean {
+    fun propagateMotionEvent(key: Key, event: MotionEvent, pointerIndex: Int): Boolean {
         if (!isShowingExtendedPopup) {
             return false
         }
 
-        val x = event.x - key.visibleBounds.left
-        val y = event.y - key.visibleBounds.top
+        val x = event.getX(pointerIndex) - key.visibleBounds.left
+        val y = event.getY(pointerIndex) - key.visibleBounds.top
         val kX: Float = x / keyPopupWidth.toFloat()
 
         // Check if out of boundary on y-axis

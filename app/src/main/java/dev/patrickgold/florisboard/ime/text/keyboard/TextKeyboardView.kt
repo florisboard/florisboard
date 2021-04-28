@@ -35,6 +35,9 @@ import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import dev.patrickgold.florisboard.util.cancelAll
 import dev.patrickgold.florisboard.util.postDelayed
+import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.sendBlocking
 import kotlin.math.roundToInt
 
 class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
@@ -44,6 +47,9 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         get() = PrefHelper.getDefaultInstance(context)
     private val themeManager: ThemeManager?
         get() = ThemeManager.defaultOrNull()
+
+    private val channel: Channel<MotionEvent> = Channel(16)
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main.immediate + SupervisorJob())
 
     private var computedKeyboard: TextKeyboard? = null
     private var iconSet: TextKeyboardIconSet? = null
@@ -155,6 +161,13 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         popupManager = PopupManager(this, popupLayerView)
 
         setWillNotDraw(false)
+
+        scope.launch {
+            for (event in channel) {
+                if (!isActive) break
+                onTouchEventInternal(event)
+            }
+        }
     }
 
     fun setComputingEvaluator(evaluator: TextComputingEvaluator?) {
@@ -193,121 +206,156 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener {
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
-        val florisboard = florisboard ?: return false
 
-        return when (event.actionMasked) {
+        when (event.actionMasked) {
+            MotionEvent.ACTION_DOWN,
+            MotionEvent.ACTION_POINTER_DOWN,
+            MotionEvent.ACTION_MOVE,
+            MotionEvent.ACTION_POINTER_UP,
+            MotionEvent.ACTION_UP,
+            MotionEvent.ACTION_CANCEL -> {
+                channel.sendBlocking(event)
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun onTouchEventInternal(event: MotionEvent) {
+        when (event.actionMasked) {
             MotionEvent.ACTION_DOWN,
             MotionEvent.ACTION_POINTER_DOWN -> {
-                if (activePointerId != null) {
-                    val me = MotionEvent.obtainNoHistory(event).apply { action = MotionEvent.ACTION_UP }
-                    onTouchEvent(me)
-                    me.recycle()
-                }
                 val pointerIndex = event.actionIndex
                 val pointerId = event.getPointerId(pointerIndex)
-                activePointerId = pointerId
-                val key = computedKeyboard?.getKeyForPos(
-                    event.getX(pointerIndex).roundToInt(), event.getY(pointerIndex).roundToInt()
-                )
-                if (key != null && key.isEnabled) {
-                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.down(key.computedData))
-                    if (prefs.keyboard.popupEnabled) {
-                        popupManager.show(key, KeyHintMode.DISABLED)
-                    }
-                    florisboard.keyPressVibrate()
-                    florisboard.keyPressSound(key.computedData)
-                    key.isPressed = true
-                    initialKey = key
-                    activeKey = key
-                    longPressHandler.postDelayed(300) {
-                        if (key.computedPopups.isNotEmpty()) {
-                            popupManager.extend(key, KeyHintMode.DISABLED)
-                        }
-                    }
-                } else {
-                    initialKey = null
-                    activeKey = null
+                if (activePointerId != null) {
+                    onTouchUpInternal(event, pointerIndex, pointerId)
                 }
-                invalidate()
-                true
+                onTouchDownInternal(event, pointerIndex, pointerId)
             }
             MotionEvent.ACTION_MOVE -> {
-                val key = activeKey
-                if (key != null) {
-                    if (popupManager.isShowingExtendedPopup) {
-                        if (!popupManager.propagateMotionEvent(key, event)) {
-                            val me = MotionEvent.obtainNoHistory(event).apply { action = MotionEvent.ACTION_CANCEL }
-                            onTouchEvent(me)
-                            me.apply { action = MotionEvent.ACTION_DOWN }
-                            onTouchEvent(me)
-                            me.recycle()
-                            return true
-                        }
-                    } else {
-                        if ((event.x < key.visibleBounds.left - 0.1f * key.visibleBounds.width())
-                            || (event.x > key.visibleBounds.right + 0.1f * key.visibleBounds.width())
-                            || (event.y < key.visibleBounds.top - 0.35f * key.visibleBounds.height())
-                            || (event.y > key.visibleBounds.bottom + 0.35f * key.visibleBounds.height())
-                        ) {
-                            val me = MotionEvent.obtainNoHistory(event).apply { action = MotionEvent.ACTION_CANCEL }
-                            onTouchEvent(me)
-                            me.apply { action = MotionEvent.ACTION_DOWN }
-                            onTouchEvent(me)
-                            me.recycle()
-                            return true
-                        }
+                for (pointerIndex in 0 until event.pointerCount) {
+                    val pointerId = event.getPointerId(pointerIndex)
+                    if (activePointerId == pointerId) {
+                        onTouchMoveInternal(event, pointerIndex, pointerId)
+                        break // No need to continue looping at this point as multi-touch is not supported
                     }
                 }
-                invalidate()
-                true
             }
             MotionEvent.ACTION_UP,
             MotionEvent.ACTION_POINTER_UP -> {
                 val pointerIndex = event.actionIndex
                 val pointerId = event.getPointerId(pointerIndex)
-                if (activePointerId != pointerId && event.actionMasked == MotionEvent.ACTION_POINTER_UP) {
-                    return true
+                if (activePointerId == pointerId) {
+                    onTouchUpInternal(event, pointerIndex, pointerId)
                 }
-                longPressHandler.cancelAll()
-                activeKey?.let {
-                    it.isPressed = false
-                    val retData = popupManager.getActiveKeyData(it)
-                    if (retData != null) {
-                        if (retData == it.computedData) {
-                            florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.up(it.computedData))
-                        } else {
-                            if (florisboard.textInputManager.inputEventDispatcher.isPressed(it.computedData.code)) {
-                                florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(it.computedData))
-                            }
-                            florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(retData))
-                        }
-                    } else {
-                        if (florisboard.textInputManager.inputEventDispatcher.isPressed(it.computedData.code)) {
-                            florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(it.computedData))
-                        }
-                    }
-                }
-                popupManager.hide()
-                initialKey = null
-                activeKey = null
-                activePointerId = null
-                invalidate()
-                true
             }
             MotionEvent.ACTION_CANCEL -> {
-                activeKey?.let {
-                    it.isPressed = false
+                val pointerIndex = event.actionIndex
+                val pointerId = event.getPointerId(pointerIndex)
+                onTouchCancelInternal(event, pointerIndex, pointerId)
+            }
+        }
+    }
+
+    private fun onTouchDownInternal(event: MotionEvent, pointerIndex: Int, pointerId: Int) {
+        flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "index=$pointerIndex id=$pointerId event=$event" }
+        val florisboard = florisboard ?: return
+
+        activePointerId = pointerId
+        val key = computedKeyboard?.getKeyForPos(
+            event.getX(pointerIndex).roundToInt(), event.getY(pointerIndex).roundToInt()
+        )
+        if (key != null && key.isEnabled) {
+            florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.down(key.computedData))
+            if (prefs.keyboard.popupEnabled) {
+                popupManager.show(key, KeyHintMode.DISABLED)
+            }
+            florisboard.keyPressVibrate()
+            florisboard.keyPressSound(key.computedData)
+            key.isPressed = true
+            initialKey = key
+            activeKey = key
+            longPressHandler.postDelayed(300) {
+                if (key.computedPopups.isNotEmpty()) {
+                    popupManager.extend(key, KeyHintMode.DISABLED)
+                }
+            }
+        } else {
+            initialKey = null
+            activeKey = null
+        }
+        invalidate()
+    }
+
+    private fun onTouchMoveInternal(event: MotionEvent, pointerIndex: Int, pointerId: Int) {
+        flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "index=$pointerIndex id=$pointerId event=$event" }
+        val florisboard = florisboard ?: return
+
+        val key = activeKey
+        if (key != null) {
+            if (popupManager.isShowingExtendedPopup) {
+                if (!popupManager.propagateMotionEvent(key, event, pointerIndex)) {
+                    onTouchCancelInternal(event, pointerIndex, pointerId)
+                    onTouchDownInternal(event, pointerIndex, pointerId)
+                }
+            } else {
+                if ((event.getX(pointerIndex) < key.visibleBounds.left - 0.1f * key.visibleBounds.width())
+                    || (event.getX(pointerIndex) > key.visibleBounds.right + 0.1f * key.visibleBounds.width())
+                    || (event.getY(pointerIndex) < key.visibleBounds.top - 0.35f * key.visibleBounds.height())
+                    || (event.getY(pointerIndex) > key.visibleBounds.bottom + 0.35f * key.visibleBounds.height())
+                ) {
+                    onTouchCancelInternal(event, pointerIndex, pointerId)
+                    onTouchDownInternal(event, pointerIndex, pointerId)
+                }
+            }
+        }
+        invalidate()
+    }
+
+    private fun onTouchUpInternal(event: MotionEvent, pointerIndex: Int, pointerId: Int) {
+        flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "index=$pointerIndex id=$pointerId event=$event" }
+        val florisboard = florisboard ?: return
+
+        longPressHandler.cancelAll()
+        activeKey?.let {
+            it.isPressed = false
+            val retData = popupManager.getActiveKeyData(it)
+            if (retData != null) {
+                if (retData == it.computedData) {
+                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.up(it.computedData))
+                } else {
+                    if (florisboard.textInputManager.inputEventDispatcher.isPressed(it.computedData.code)) {
+                        florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(it.computedData))
+                    }
+                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(retData))
+                }
+            } else {
+                if (florisboard.textInputManager.inputEventDispatcher.isPressed(it.computedData.code)) {
                     florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(it.computedData))
                 }
-                popupManager.hide()
-                initialKey = null
-                activeKey = null
-                activePointerId = null
-                invalidate()
-                true
             }
-            else -> false
         }
+        popupManager.hide()
+        initialKey = null
+        activeKey = null
+        activePointerId = null
+        invalidate()
+    }
+
+    private fun onTouchCancelInternal(event: MotionEvent, pointerIndex: Int, pointerId: Int) {
+        flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "index=$pointerIndex id=$pointerId event=$event" }
+        val florisboard = florisboard ?: return
+
+        longPressHandler.cancelAll()
+        activeKey?.let {
+            it.isPressed = false
+            florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(it.computedData))
+        }
+        popupManager.hide()
+        initialKey = null
+        activeKey = null
+        activePointerId = null
+        invalidate()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
