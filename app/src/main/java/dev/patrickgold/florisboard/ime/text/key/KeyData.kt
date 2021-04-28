@@ -296,7 +296,12 @@ class BasicTextKeyData(
 ) : TextKeyData {
     override fun computeTextKeyData(evaluator: TextComputingEvaluator): TextKeyData? {
         return if (evaluator.isSlot(this)) {
-            evaluator.getSlotData(this)
+            val slotData = evaluator.getSlotData(this)
+            if (slotData != null) {
+                BasicTextKeyData(slotData.type, slotData.code, slotData.label, slotData.groupId, popup)
+            } else {
+                null
+            }
         } else {
             this
         }
@@ -323,7 +328,12 @@ class AutoTextKeyData(
 
     override fun computeTextKeyData(evaluator: TextComputingEvaluator): TextKeyData? {
         return if (evaluator.isSlot(this)) {
-            evaluator.getSlotData(this)
+            val slotData = evaluator.getSlotData(this)
+            if (slotData != null) {
+                BasicTextKeyData(slotData.type, slotData.code, slotData.label, slotData.groupId, popup)
+            } else {
+                null
+            }
         } else {
             if (evaluator.evaluateCaps(this)) { upper } else { lower }
         }
