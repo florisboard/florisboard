@@ -313,12 +313,13 @@ class AutoTextKeyData(
     override val type: KeyType = KeyType.CHARACTER,
     override val code: Int = KeyCode.UNSPECIFIED,
     override val label: String = "",
-    override val groupId: Int = TextKeyData.GROUP_DEFAULT
+    override val groupId: Int = TextKeyData.GROUP_DEFAULT,
+    val popup: PopupSet<TextKeyData>? = null
 ) : TextKeyData {
     @Transient private val lower: BasicTextKeyData =
-        BasicTextKeyData(type, code, label.toLowerCase(Locale.getDefault()), groupId)
+        BasicTextKeyData(type, code, label.toLowerCase(Locale.getDefault()), groupId, popup)
     @Transient private val upper: BasicTextKeyData =
-        BasicTextKeyData(type, code, label.toUpperCase(Locale.getDefault()), groupId)
+        BasicTextKeyData(type, code, label.toUpperCase(Locale.getDefault()), groupId, popup)
 
     override fun computeTextKeyData(evaluator: TextComputingEvaluator): TextKeyData? {
         return if (evaluator.isSlot(this)) {

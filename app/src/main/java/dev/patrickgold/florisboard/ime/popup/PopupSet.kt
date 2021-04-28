@@ -175,9 +175,9 @@ class MutablePopupSet<T : KeyData>(
             val data = it.computeTextKeyData(evaluator) as? T
             if (data != null) {
                 if (main == null) {
-                    main = it
+                    main = data
                 } else {
-                    relevant.add(it)
+                    relevant.add(data)
                 }
             }
         }

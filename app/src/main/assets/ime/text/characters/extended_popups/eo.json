@@ -6,52 +6,52 @@
     "all": {
       "c": {
         "relevant": [
-          { "code":  265, "label": "ĉ" }
+          { "$": "auto_text_key", "code":  265, "label": "ĉ" }
         ]
       },
       "g": {
         "relevant": [
-          { "code":  285, "label": "ĝ" }
+          { "$": "auto_text_key", "code":  285, "label": "ĝ" }
         ]
       },
       "h": {
         "relevant": [
-          { "code":  293, "label": "ĥ" }
+          { "$": "auto_text_key", "code":  293, "label": "ĥ" }
         ]
       },
       "j": {
         "relevant": [
-          { "code":  309, "label": "ĵ" }
+          { "$": "auto_text_key", "code":  309, "label": "ĵ" }
         ]
       },
       "s": {
         "relevant": [
-          { "code":  349, "label": "ŝ" }
+          { "$": "auto_text_key", "code":  349, "label": "ŝ" }
         ]
       },
       "u": {
         "relevant": [
-          { "code":  365, "label": "ŭ" }
+          { "$": "auto_text_key", "code":  365, "label": "ŭ" }
         ]
       },
       "q": {
         "relevant": [
-          { "code":  349, "label": "ŝ" }
+          { "$": "auto_text_key", "code":  349, "label": "ŝ" }
         ]
       },
       "w": {
         "relevant": [
-          { "code":  285, "label": "ĝ" }
+          { "$": "auto_text_key", "code":  285, "label": "ĝ" }
         ]
       },
       "x": {
         "relevant": [
-          { "code":  265, "label": "ĉ" }
+          { "$": "auto_text_key", "code":  265, "label": "ĉ" }
         ]
       },
       "y": {
         "relevant": [
-          { "code":  365, "label": "ŭ" }
+          { "$": "auto_text_key", "code":  365, "label": "ŭ" }
         ]
       },
       "~right": {

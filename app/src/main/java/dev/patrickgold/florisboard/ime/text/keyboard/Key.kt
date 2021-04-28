@@ -62,7 +62,7 @@ class TextKey(override val data: KeyData) : Key(data) {
             computedData = computed
             computedPopups.clear()
             if (computed is BasicTextKeyData && computed.popup != null) {
-                computedPopups.merge(computed.popup)
+                computedPopups.merge(computed.popup, evaluator)
             }
             if (keyboardMode == KeyboardMode.CHARACTERS || keyboardMode == KeyboardMode.NUMERIC_ADVANCED ||
                 keyboardMode == KeyboardMode.SYMBOLS || keyboardMode == KeyboardMode.SYMBOLS2) {
@@ -79,9 +79,6 @@ class TextKey(override val data: KeyData) : Key(data) {
                     else -> {
                         computed.label.toLowerCase()
                     }
-                }
-                if (computed.label == ".") {
-                    val e = 1
                 }
                 val extendedPopupsDefault = evaluator.getKeyboard().extendedPopupMappingDefault
                 val extendedPopups = evaluator.getKeyboard().extendedPopupMapping
