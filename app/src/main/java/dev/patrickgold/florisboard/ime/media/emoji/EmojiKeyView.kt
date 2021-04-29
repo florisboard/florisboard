@@ -32,6 +32,7 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.text.key.EmojiKeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
+import dev.patrickgold.florisboard.ime.text.keyboard.EmojiKey
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import kotlinx.coroutines.CoroutineScope
@@ -48,7 +49,7 @@ import kotlinx.coroutines.MainScope
 @SuppressLint("ViewConstructor")
 class EmojiKeyView(
     private val emojiKeyboardView: EmojiKeyboardView,
-    val data: EmojiKeyData
+    val key: EmojiKey
 ) : androidx.appcompat.widget.AppCompatTextView(emojiKeyboardView.context), CoroutineScope by MainScope(),
     FlorisBoard.EventListener, ThemeManager.OnThemeUpdatedListener {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
@@ -64,9 +65,9 @@ class EmojiKeyView(
         setPadding(0, 0, 0, 0)
         setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.emoji_key_textSize))
 
-        triangleDrawable = ContextCompat.getDrawable(context, R.drawable.triangle_bottom_right)
+        triangleDrawable = ContextCompat.getDrawable(context, R.drawable.triangle_bottom_right)?.mutate()
 
-        text = data.asString(isForDisplay = true)
+        text = key.data.asString(isForDisplay = true)
     }
 
     override fun onAttachedToWindow() {
@@ -88,7 +89,7 @@ class EmojiKeyView(
      */
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        /*event ?: return false
+        event ?: return false
 
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
@@ -101,8 +102,8 @@ class EmojiKeyView(
                     (parent.parent as ScrollView)
                         .requestDisallowInterceptTouchEvent(true)
                     emojiKeyboardView.isScrollBlocked = true
-                    emojiKeyboardView.popupManager.show(this, KeyHintMode.DISABLED)
-                    emojiKeyboardView.popupManager.extend(this, KeyHintMode.DISABLED)
+                    emojiKeyboardView.popupManager.show(key, KeyHintMode.DISABLED)
+                    emojiKeyboardView.popupManager.extend(key, KeyHintMode.DISABLED)
                     florisboard?.keyPressVibrate()
                     florisboard?.keyPressSound()
                 }, delayMillis.toLong())
@@ -110,7 +111,7 @@ class EmojiKeyView(
             MotionEvent.ACTION_MOVE -> {
                 if (emojiKeyboardView.popupManager.isShowingExtendedPopup) {
                     val isPointerWithinBounds =
-                        emojiKeyboardView.popupManager.propagateMotionEvent(this, event)
+                        emojiKeyboardView.popupManager.propagateMotionEvent(key, event, 0)
                     if (!isPointerWithinBounds) {
                         emojiKeyboardView.dismissKeyView(this)
                     }
@@ -126,7 +127,7 @@ class EmojiKeyView(
             MotionEvent.ACTION_CANCEL -> {
                 osHandler?.removeCallbacksAndMessages(null)
                 val retData =
-                    emojiKeyboardView.popupManager.getActiveEmojiKeyData(this)
+                    emojiKeyboardView.popupManager.getActiveEmojiKeyData(key)
                 emojiKeyboardView.popupManager.hide()
                 if (event.actionMasked != MotionEvent.ACTION_CANCEL &&
                     retData != null && !isCancelled) {
@@ -141,7 +142,7 @@ class EmojiKeyView(
                     isCancelled = true
                 }
             }
-        }*/
+        }
         return true
     }
 
@@ -155,11 +156,14 @@ class EmojiKeyView(
         )
     }
 
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
+        key.visibleBounds.set(left, top, right, bottom)
+        key.touchBounds.set(left, top, right, bottom)
+    }
+
     override fun onThemeUpdated(theme: Theme) {
-        triangleDrawable?.colorFilter =
-            BlendModeColorFilterCompat.createBlendModeColorFilterCompat(
-                theme.getAttr(Theme.Attr.MEDIA_FOREGROUND_ALT).toSolidColor().color, BlendModeCompat.SRC_ATOP
-            )
+        triangleDrawable?.setTint(theme.getAttr(Theme.Attr.MEDIA_FOREGROUND_ALT).toSolidColor().color)
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -167,7 +171,7 @@ class EmojiKeyView(
 
         canvas ?: return
 
-        if (data.popup.isNotEmpty()) {
+        if (key.computedPopups.isNotEmpty()) {
             triangleDrawable?.draw(canvas)
         }
     }

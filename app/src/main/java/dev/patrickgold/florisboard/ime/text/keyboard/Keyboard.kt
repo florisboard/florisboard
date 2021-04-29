@@ -39,14 +39,14 @@ class TextKeyboard(
 
     companion object {
         fun layoutDrawableBounds(key: TextKey) {
-            layoutForegroundBounds(key, key.visibleDrawableBounds, 0.21)
+            layoutForegroundBounds(key, key.visibleDrawableBounds, 0.21, isLabel = false)
         }
 
         fun layoutLabelBounds(key: TextKey) {
-            layoutForegroundBounds(key, key.visibleLabelBounds, 0.28)
+            layoutForegroundBounds(key, key.visibleLabelBounds, 0.28, isLabel = true)
         }
 
-        private fun layoutForegroundBounds(key: TextKey, bounds: Rect, factor: Double) {
+        private fun layoutForegroundBounds(key: TextKey, bounds: Rect, factor: Double, isLabel: Boolean) {
             bounds.apply {
                 val w = key.visibleBounds.width().toDouble()
                 val h = key.visibleBounds.height().toDouble()
@@ -54,14 +54,14 @@ class TextKeyboard(
                 val yOffset: Double
                 if (w < h) {
                     xOffset = factor * w
-                    yOffset = if (key.computedData.code == KeyCode.SPACE) {
+                    yOffset = if (key.computedData.code == KeyCode.SPACE && isLabel) {
                         xOffset
                     } else {
                         (h - (w - 2.0 * xOffset)) / 2.0
                     }
                 } else {
                     yOffset = factor * h
-                    xOffset = if (key.computedData.code == KeyCode.SPACE) {
+                    xOffset = if (key.computedData.code == KeyCode.SPACE && isLabel) {
                         yOffset
                     } else {
                         (w - (h - 2.0 * yOffset)) / 2.0

@@ -173,4 +173,9 @@ class EmojiKey(override val data: KeyData) : Key(data) {
         private set
     var computedPopups: PopupSet<EmojiKeyData> = PopupSet()
         private set
+
+    fun dummyCompute() {
+        computedData = data as? EmojiKeyData ?: computedData
+        computedPopups = PopupSet(relevant = (data as? EmojiKeyData)?.popup ?: listOf())
+    }
 }
