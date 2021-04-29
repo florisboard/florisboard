@@ -35,12 +35,36 @@ interface TextKeyData : KeyData {
 
     override fun asString(isForDisplay: Boolean): String {
         return StringBuilder().run {
-            // Combining Diacritical Marks
-            // See: https://en.wikipedia.org/wiki/Combining_Diacritical_Marks
-            if (isForDisplay && code in 0x0300..0x036F) {
-                append("◌")
+            if (!isForDisplay && code == KeyCode.MULTIPLE_CODE_POINTS) {
+                if (this@TextKeyData is MultiTextKeyData) {
+                    for (codePoint in codePoints) {
+                        if (Character.isBmpCodePoint(codePoint)) {
+                            append(codePoint.toChar())
+                        } else {
+                            try {
+                                append(Character.toChars(codePoint))
+                            } catch (_: Throwable) {
+                            }
+                        }
+                    }
+                }
+            } else if (isForDisplay || code == KeyCode.URI_COMPONENT_TLD || code < KeyCode.SPACE) {
+                // Combining Diacritical Marks
+                // See: https://en.wikipedia.org/wiki/Combining_Diacritical_Marks
+                if (code in 0x0300..0x036F) {
+                    append("◌")
+                }
+                append(label)
+            } else {
+                if (Character.isBmpCodePoint(code)) {
+                    append(code.toChar())
+                } else {
+                    try {
+                        append(Character.toChars(code))
+                    } catch (_: Throwable) {
+                    }
+                }
             }
-            append(label)
             toString()
         }
     }
@@ -322,9 +346,9 @@ class AutoTextKeyData(
     val popup: PopupSet<TextKeyData>? = null
 ) : TextKeyData {
     @Transient private val lower: BasicTextKeyData =
-        BasicTextKeyData(type, code, label.toLowerCase(Locale.getDefault()), groupId, popup)
+        BasicTextKeyData(type, Character.toLowerCase(code), label.toLowerCase(Locale.getDefault()), groupId, popup)
     @Transient private val upper: BasicTextKeyData =
-        BasicTextKeyData(type, code, label.toUpperCase(Locale.getDefault()), groupId, popup)
+        BasicTextKeyData(type, Character.toUpperCase(code), label.toUpperCase(Locale.getDefault()), groupId, popup)
 
     override fun computeTextKeyData(evaluator: TextComputingEvaluator): TextKeyData? {
         return if (evaluator.isSlot(this)) {
@@ -337,6 +361,26 @@ class AutoTextKeyData(
         } else {
             if (evaluator.evaluateCaps(this)) { upper } else { lower }
         }
+    }
+
+    override fun toString(): String {
+        return "${AutoTextKeyData::class.simpleName} { type=$type code=$code label=\"$label\" groupId=$groupId }"
+    }
+}
+
+@Serializable
+@SerialName("multi_text_key")
+class MultiTextKeyData(
+    override val type: KeyType = KeyType.CHARACTER,
+    val codePoints: IntArray = intArrayOf(),
+    override val label: String = "",
+    override val groupId: Int = TextKeyData.GROUP_DEFAULT,
+    val popup: PopupSet<TextKeyData>? = null
+) : TextKeyData {
+    @Transient override val code: Int = KeyCode.MULTIPLE_CODE_POINTS
+
+    override fun computeTextKeyData(evaluator: TextComputingEvaluator): TextKeyData {
+        return this
     }
 
     override fun toString(): String {

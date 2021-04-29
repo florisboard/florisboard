@@ -36,6 +36,7 @@ class AssetManager private constructor(val applicationContext: Context) {
             polymorphic(KeyData::class) {
                 subclass(BasicTextKeyData::class, BasicTextKeyData.serializer())
                 subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
+                subclass(MultiTextKeyData::class, MultiTextKeyData.serializer())
                 subclass(EmojiKeyData::class, EmojiKeyData.serializer())
                 subclass(CaseSelector::class, CaseSelector.serializer())
                 subclass(VariationSelector::class, VariationSelector.serializer())
@@ -44,6 +45,7 @@ class AssetManager private constructor(val applicationContext: Context) {
             polymorphic(TextKeyData::class) {
                 subclass(BasicTextKeyData::class, BasicTextKeyData.serializer())
                 subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
+                subclass(MultiTextKeyData::class, MultiTextKeyData.serializer())
                 default { BasicTextKeyData.serializer() }
             }
         }

@@ -854,7 +854,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     KeyboardMode.PHONE2 -> when (data.type) {
                         KeyType.CHARACTER,
                         KeyType.NUMERIC -> {
-                            val text = data.code.toChar().toString()
+                            val text = data.asString(isForDisplay = false)
                             if (isGlidePostEffect && (CachedInput.isWordComponent(text) || text.isDigitsOnly())) {
                                 activeEditorInstance.commitText(" ")
                             }
@@ -863,7 +863,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         else -> when (data.code) {
                             KeyCode.PHONE_PAUSE,
                             KeyCode.PHONE_WAIT -> {
-                                val text = data.code.toChar().toString()
+                                val text = data.asString(isForDisplay = false)
                                 if (isGlidePostEffect && (CachedInput.isWordComponent(text) || text.isDigitsOnly())) {
                                     activeEditorInstance.commitText(" ")
                                 }
@@ -872,23 +872,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         }
                     }
                     else -> when (data.type) {
-                        KeyType.CHARACTER, KeyType.NUMERIC -> when (data.code) {
-                            KeyCode.URI_COMPONENT_TLD -> {
-                                val tld = data.label.toLowerCase(Locale.ENGLISH)
-                                activeEditorInstance.commitText(tld)
+                        KeyType.CHARACTER, KeyType.NUMERIC ->{
+                            val text = data.asString(isForDisplay = false)
+                            if (isGlidePostEffect && (CachedInput.isWordComponent(text) || text.isDigitsOnly())) {
+                                activeEditorInstance.commitText(" ")
                             }
-                            else -> {
-                                var text = data.code.toChar().toString()
-                                val locale = if (florisboard.activeSubtype.locale.language == "el") { Locale.getDefault() } else { florisboard.activeSubtype.locale }
-                                text = when (caps && activeKeyboardMode == KeyboardMode.CHARACTERS) {
-                                    true -> text.toUpperCase(locale)
-                                    false -> text
-                                }
-                                if (isGlidePostEffect && (CachedInput.isWordComponent(text) || text.isDigitsOnly())) {
-                                    activeEditorInstance.commitText(" ")
-                                }
-                                activeEditorInstance.commitText(text)
-                            }
+                            activeEditorInstance.commitText(text)
                         }
                         else -> {
                             flogError(LogTopic.KEY_EVENTS) { "Received unknown key: $data" }

@@ -98,6 +98,7 @@ object KeyCode {
     const val CURRENCY_SLOT_6 =             -806
 
     const val INTERNAL_BATCH_EDIT =         -901
+    const val MULTIPLE_CODE_POINTS =        -902
 
     const val KESHIDA =                     1600
     const val HALF_SPACE =                  8204

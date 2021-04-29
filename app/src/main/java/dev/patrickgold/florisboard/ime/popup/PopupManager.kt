@@ -181,7 +181,7 @@ class PopupManager<V : View>(
      * @param key Reference to the key currently controlling the popup.
      */
     fun show(key: Key, keyHintMode: KeyHintMode) {
-        if (key is TextKey && key.computedData.code <= KeyCode.SPACE) {
+        if (key is TextKey && key.computedData.code <= KeyCode.SPACE && key.computedData.code != KeyCode.MULTIPLE_CODE_POINTS) {
             return
         }
 
@@ -230,7 +230,7 @@ class PopupManager<V : View>(
      * @param key Reference to the key currently controlling the popup.
      */
     fun extend(key: Key, keyHintMode: KeyHintMode) {
-        if (key is TextKey && key.computedData.code <= KeyCode.SPACE
+        if (key is TextKey && key.computedData.code <= KeyCode.SPACE  && key.computedData.code != KeyCode.MULTIPLE_CODE_POINTS
             && !exceptionsForKeyCodes.contains(key.computedData.code)) {
             return
         }
