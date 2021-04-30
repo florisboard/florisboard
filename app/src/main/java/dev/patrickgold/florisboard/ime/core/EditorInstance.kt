@@ -186,7 +186,21 @@ class EditorInstance private constructor(
     fun commitText(text: String): Boolean {
         val ic = inputConnection ?: return false
         return if (isRawInputEditor || selection.isSelectionMode || !isComposingEnabled) {
-            ic.commitText(text, 1)
+            if (text.length != 1) {
+                ic.commitText(text, 1)
+            } else {
+                // TODO probably not the right place and it ignores input sometimes
+                ic.beginBatchEdit()
+                ic.finishComposingText()
+                val kClass = Class.forName("dev.patrickgold.florisboard.ime.core.ComposerHangul").kotlin
+                val composer = (kClass.objectInstance ?: kClass.java.newInstance()) as ComposerHangul
+                val previous = getTextBeforeCursor(1)
+                val (rm, finalText) = composer.getActions(previous, text[0])
+                for (i in 1..rm) deleteBackwards()
+                ic.commitText(finalText, 1)
+                ic.endBatchEdit()
+                true
+            }
         } else {
             ic.beginBatchEdit()
             val isWordComponent = CachedInput.isWordComponent(text)

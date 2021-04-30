@@ -613,6 +613,14 @@
       "preferred": {
         "characters": "qwertz"
       }
+    },
+    {
+      "id": 2900,
+      "languageTag": "ko",
+      "currencySet": "euro",
+      "preferred": {
+        "characters": "korean"
+      }
     }
   ]
 }
