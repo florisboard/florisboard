@@ -27,7 +27,7 @@ import android.widget.LinearLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.media.MediaInputManager
-import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.util.getColorFromAttr
 
 /**
@@ -68,7 +68,7 @@ class EmoticonKeyView : androidx.appcompat.widget.AppCompatTextView {
             MotionEvent.ACTION_DOWN -> {
                 setBackgroundColor(getColorFromAttr(context, R.attr.semiTransparentColor))
                 florisboard.keyPressVibrate()
-                florisboard.keyPressSound(KeyData())
+                florisboard.keyPressSound(TextKeyData.UNSPECIFIED)
             }
             MotionEvent.ACTION_UP -> {
                 setBackgroundColor(Color.TRANSPARENT)

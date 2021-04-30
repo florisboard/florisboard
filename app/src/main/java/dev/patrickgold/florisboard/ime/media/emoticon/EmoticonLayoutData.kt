@@ -17,8 +17,6 @@
 package dev.patrickgold.florisboard.ime.media.emoticon
 
 import android.content.Context
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
 typealias EmoticonLayoutDataArrangement = List<List<EmoticonKeyData>>
 data class EmoticonLayoutData(
@@ -29,7 +27,7 @@ data class EmoticonLayoutData(
 ) {
     companion object {
         fun fromJsonFile(context: Context, path: String): EmoticonLayoutData? {
-            val rawJsonData: String = try {
+            /*val rawJsonData: String = try {
                 context.assets.open(path).bufferedReader().use { it.readText() }
             } catch (e: Exception) {
                 null
@@ -38,7 +36,8 @@ data class EmoticonLayoutData(
                 .add(KotlinJsonAdapterFactory())
                 .build()
             val layoutAdapter = moshi.adapter(EmoticonLayoutData::class.java)
-            return layoutAdapter.fromJson(rawJsonData)
+            return layoutAdapter.fromJson(rawJsonData)*/
+            return null
         }
     }
 }

@@ -6,23 +6,23 @@
     "all": {
       "c": {
         "relevant": [
-          { "code":  269, "label": "č" },
-          { "code":  263, "label": "ć" }
+          { "$": "auto_text_key", "code":  269, "label": "č" },
+          { "$": "auto_text_key", "code":  263, "label": "ć" }
         ]
       },
       "d": {
         "relevant": [
-          { "code":  273, "label": "đ" }
+          { "$": "auto_text_key", "code":  273, "label": "đ" }
         ]
       },
       "s": {
         "relevant": [
-          { "code":  353, "label": "š" }
+          { "$": "auto_text_key", "code":  353, "label": "š" }
         ]
       },
       "z": {
         "relevant": [
-          { "code":  382, "label": "ž" }
+          { "$": "auto_text_key", "code":  382, "label": "ž" }
         ]
       },
       "~right": {

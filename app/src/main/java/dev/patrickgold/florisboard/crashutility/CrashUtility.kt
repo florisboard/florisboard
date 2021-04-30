@@ -65,14 +65,14 @@ abstract class CrashUtility private constructor() {
         fun install(context: Context?): Boolean {
             if (context == null) {
                 flogError(LogTopic.CRASH_UTILITY) {
-                    "install($context): Can't install crash handler with a null Context object, doing nothing!"
+                    "Can't install crash handler with a null Context object, doing nothing!"
                 }
                 return false
             }
             val oldHandler = Thread.getDefaultUncaughtExceptionHandler()
             if (oldHandler is UncaughtExceptionHandler) {
                 flogInfo(LogTopic.CRASH_UTILITY) {
-                    "install($context): Crash handler is already installed, doing nothing!"
+                    "Crash handler is already installed, doing nothing!"
                 }
             } else {
                 val application = context.applicationContext
@@ -86,16 +86,16 @@ abstract class CrashUtility private constructor() {
                             )
                         )
                         flogInfo(LogTopic.CRASH_UTILITY) {
-                            "install($context): Successfully installed crash handler for this application!"
+                            "Successfully installed crash handler for this application!"
                         }
                     } catch (e: SecurityException) {
                         flogError(LogTopic.CRASH_UTILITY) {
-                            "install($context): Failed to install crash handler, probably due to missing runtime permission 'setDefaultUncaughtExceptionHandler':\n$e"
+                            "Failed to install crash handler, probably due to missing runtime permission 'setDefaultUncaughtExceptionHandler':\n$e"
                         }
                         return false
                     } catch (e: Exception) {
                         flogError(LogTopic.CRASH_UTILITY) {
-                            "install($context): Failed to install crash handler due to an unspecified error:\n$e"
+                            "Failed to install crash handler due to an unspecified error:\n$e"
                         }
                         return false
                     }
@@ -130,17 +130,17 @@ abstract class CrashUtility private constructor() {
                                 notificationManager.createNotificationChannel(notificationChannel)
                             }
                             flogInfo(LogTopic.CRASH_UTILITY) {
-                                "install($context): Successfully created crash handler notification channel!"
+                                "Successfully created crash handler notification channel!"
                             }
                         } catch (e: Exception) {
                             flogError(LogTopic.CRASH_UTILITY) {
-                                "install($context): Failed to create crash handler notification channel due to an unspecified error:\n$e"
+                                "Failed to create crash handler notification channel due to an unspecified error:\n$e"
                             }
                         }
                     }
                 } else {
                     flogError(LogTopic.CRASH_UTILITY) {
-                        "install($context): Can't install crash handler with a null Application object, doing nothing!"
+                        "Can't install crash handler with a null Application object, doing nothing!"
                     }
                     return false
                 }

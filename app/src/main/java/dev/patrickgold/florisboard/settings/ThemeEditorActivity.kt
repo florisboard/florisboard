@@ -85,7 +85,7 @@ class ThemeEditorActivity : AppCompatActivity() {
         binding = ThemeEditorActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        layoutManager = LayoutManager(mainScope)
+        layoutManager = LayoutManager()
 
         AssetRef.fromString(intent.getStringExtra(EXTRA_THEME_REF) ?: "").onSuccess { ref ->
             editedThemeRef = ref
@@ -101,10 +101,6 @@ class ThemeEditorActivity : AppCompatActivity() {
 
         supportActionBar?.title = resources.getString(R.string.settings__theme_editor__title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        layoutManager.apply {
-            preloadComputedLayout(KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs, CurrencySet.default())
-        }
 
         buildUi()
     }
@@ -325,9 +321,9 @@ class ThemeEditorActivity : AppCompatActivity() {
             }
         }
         mainScope.launch {
-            binding.keyboardPreview.computedLayout = layoutManager.fetchComputedLayoutAsync(
-                KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs, CurrencySet.default()
-            ).await()
+            binding.keyboardPreview.setComputedKeyboard(layoutManager.computeKeyboardAsync(
+                KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs
+            ).await())
             binding.keyboardPreview.onThemeUpdated(editedTheme)
         }
         sortGroups()

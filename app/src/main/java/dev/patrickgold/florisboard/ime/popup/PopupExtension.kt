@@ -17,14 +17,15 @@
 package dev.patrickgold.florisboard.ime.popup
 
 import dev.patrickgold.florisboard.ime.extension.Asset
-import dev.patrickgold.florisboard.ime.text.key.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import kotlinx.serialization.Serializable
 
 /**
  * An object which maps each base key to its extended popups. This can be done for each
  * key variation. [KeyVariation.ALL] is always the fallback for each key.
  */
-typealias PopupMapping = Map<KeyVariation, Map<String, PopupSet<KeyData>>>
+typealias PopupMapping = Map<KeyVariation, Map<String, PopupSet<TextKeyData>>>
 
 /**
  * Class which contains an extended popup mapping to use for adding popups subtype based on the
@@ -32,13 +33,14 @@ typealias PopupMapping = Map<KeyVariation, Map<String, PopupSet<KeyData>>>
  *
  * @property mapping The mapping of the base keys to their popups. See [PopupMapping] for more info.
  */
+@Serializable
 class PopupExtension(
     override val name: String,
     override val label: String = name,
     override val authors: List<String>,
     val mapping: PopupMapping
 ) : Asset {
-    companion object : Asset.Companion<PopupExtension> {
-        override fun empty() = PopupExtension("", "", listOf(), mapOf())
+    companion object {
+        fun empty() = PopupExtension("", "", listOf(), mapOf())
     }
 }

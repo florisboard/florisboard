@@ -1,8 +1,9 @@
 
 plugins {
     id("com.android.application") version "4.1.3"
-    kotlin("android") version "1.4.30"
-    kotlin("kapt") version "1.4.30"
+    kotlin("android") version "1.5.0-RC"
+    kotlin("kapt") version "1.5.0-RC"
+    kotlin("plugin.serialization") version "1.5.0-RC"
 }
 
 android {
@@ -84,10 +85,9 @@ dependencies {
     implementation("androidx.constraintlayout", "constraintlayout", "2.0.4")
     implementation("androidx.lifecycle", "lifecycle-service", "2.2.0")
     implementation("com.google.android", "flexbox", "2.0.1") // requires jcenter as of version 2.0.1
-    implementation("com.squareup.moshi", "moshi-kotlin", "1.11.0")
-    implementation("com.squareup.moshi", "moshi-adapters", "1.11.0")
     implementation("com.google.android.material", "material", "1.3.0")
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-android", "1.4.2")
+    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.1.0")
     implementation("com.jaredrummler", "colorpicker", "1.1.0")
     implementation("com.jakewharton.timber", "timber", "4.7.1")
     implementation("com.nambimobile.widgets", "expandable-fab", "1.0.2")

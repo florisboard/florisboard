@@ -33,6 +33,11 @@ object LogTopic {
 
     const val IMS_EVENTS: FlogTopic =           1u
     const val KEY_EVENTS: FlogTopic =           2u
+
+    const val SUBTYPE_MANAGER: FlogTopic =      4u
+    const val LAYOUT_MANAGER: FlogTopic =       8u
+    const val TEXT_KEYBOARD_VIEW: FlogTopic =   16u
+
     const val GLIDE: FlogTopic =                512u
     const val CLIPBOARD: FlogTopic =            1024u
     const val CRASH_UTILITY: FlogTopic =        2048u

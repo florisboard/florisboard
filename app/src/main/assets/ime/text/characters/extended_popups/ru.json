@@ -6,12 +6,12 @@
     "all": {
       "е": {
         "relevant": [
-          { "code":  1105, "label": "ё" }
+          { "$": "auto_text_key", "code":  1105, "label": "ё" }
         ]
       },
       "ь": {
         "relevant": [
-          { "code":  1098, "label": "ъ" }
+          { "$": "auto_text_key", "code":  1098, "label": "ъ" }
         ]
       },
       "~right": {

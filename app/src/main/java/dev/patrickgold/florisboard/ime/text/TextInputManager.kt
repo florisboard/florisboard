@@ -21,7 +21,6 @@ import android.animation.ValueAnimator
 import android.view.KeyEvent
 import android.widget.LinearLayout
 import android.widget.Toast
-import android.widget.ViewFlipper
 import androidx.core.text.isDigitsOnly
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
@@ -35,17 +34,14 @@ import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.nlp.Token
 import dev.patrickgold.florisboard.ime.nlp.toStringList
-import dev.patrickgold.florisboard.ime.text.editing.EditingKeyboardView
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.*
-import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
+import dev.patrickgold.florisboard.ime.text.keyboard.*
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import kotlinx.coroutines.*
 import org.json.JSONArray
-import java.util.*
 import kotlin.math.roundToLong
 
 /**
@@ -64,6 +60,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     var isGlidePostEffect: Boolean = false
     private val florisboard = FlorisBoard.getInstance()
+    private val prefs: PrefHelper get() = florisboard.prefs
     val symbolsWithSpaceAfter: List<String>
     private val activeEditorInstance: EditorInstance
         get() = florisboard.activeEditorInstance
@@ -71,10 +68,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     lateinit var layoutManager: LayoutManager
         private set
     private var activeKeyboardMode: KeyboardMode? = null
-    private val keyboardViews = EnumMap<KeyboardMode, KeyboardView>(KeyboardMode::class.java)
-    private var editingKeyboardView: EditingKeyboardView? = null
-    private var loadingPlaceholderKeyboard: KeyboardView? = null
-    private var textViewFlipper: ViewFlipper? = null
+    val keyboards = TextKeyboardCache()
+    private var textInputKeyboardView: TextKeyboardView? = null
+    lateinit var textKeyboardIconSet: TextKeyboardIconSet
+        private set
     private var textViewGroup: LinearLayout? = null
     private val dictionaryManager: DictionaryManager = DictionaryManager.default()
     private var activeDictionary: Dictionary<String, Int>? = null
@@ -119,9 +116,98 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     init {
         florisboard.addEventListener(this)
         val data =
-            AssetManager.default().loadAssetRaw(AssetRef(AssetSource.Assets, "ime/text/symbols-with-space.json")).getOrThrow()
+            AssetManager.default().loadTextAsset(AssetRef(AssetSource.Assets, "ime/text/symbols-with-space.json")).getOrThrow()
         val json = JSONArray(data)
         this.symbolsWithSpaceAfter = List(json.length()){ json.getString(it) }
+    }
+
+    val evaluator = object : TextComputingEvaluator {
+        override fun evaluateCaps(): Boolean {
+            return caps || capsLock
+        }
+
+        override fun evaluateCaps(data: TextKeyData): Boolean {
+            return evaluateCaps() && data.code >= KeyCode.SPACE
+        }
+
+        override fun evaluateEnabled(data: TextKeyData): Boolean {
+            return when (data.code) {
+                KeyCode.CLIPBOARD_COPY,
+                KeyCode.CLIPBOARD_CUT -> {
+                    florisboard.activeEditorInstance.selection.isSelectionMode &&
+                        !florisboard.activeEditorInstance.isRawInputEditor
+                }
+                KeyCode.CLIPBOARD_PASTE -> {
+                    // such gore. checks
+                    // 1. has a clipboard item
+                    // 2. the clipboard item has any of the supported mime types of the editor OR is plain text.
+                    florisboard.florisClipboardManager?.canBePasted(
+                        florisboard.florisClipboardManager?.primaryClip
+                    ) == true
+                }
+                KeyCode.CLIPBOARD_SELECT_ALL -> {
+                    !florisboard.activeEditorInstance.isRawInputEditor
+                }
+                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
+                    prefs.clipboard.enableHistory
+                }
+                else -> true
+            }
+        }
+
+        override fun evaluateVisible(data: TextKeyData): Boolean {
+            return when (data.code) {
+                KeyCode.SWITCH_TO_TEXT_CONTEXT,
+                KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
+                    val tempUtilityKeyAction = when {
+                        prefs.keyboard.utilityKeyEnabled -> prefs.keyboard.utilityKeyAction
+                        else -> UtilityKeyAction.DISABLED
+                    }
+                    when (tempUtilityKeyAction) {
+                        UtilityKeyAction.DISABLED,
+                        UtilityKeyAction.SWITCH_LANGUAGE,
+                        UtilityKeyAction.SWITCH_KEYBOARD_APP -> false
+                        UtilityKeyAction.SWITCH_TO_EMOJIS -> true
+                        UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS -> !florisboard.shouldShowLanguageSwitch()
+                    }
+                }
+                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> prefs.clipboard.enableHistory
+                KeyCode.LANGUAGE_SWITCH -> {
+                    val tempUtilityKeyAction = when {
+                        prefs.keyboard.utilityKeyEnabled -> prefs.keyboard.utilityKeyAction
+                        else -> UtilityKeyAction.DISABLED
+                    }
+                    when (tempUtilityKeyAction) {
+                        UtilityKeyAction.DISABLED,
+                        UtilityKeyAction.SWITCH_TO_EMOJIS -> false
+                        UtilityKeyAction.SWITCH_LANGUAGE,
+                        UtilityKeyAction.SWITCH_KEYBOARD_APP -> true
+                        UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS -> florisboard.shouldShowLanguageSwitch()
+                    }
+                }
+                else -> true
+            }
+        }
+
+        override fun getActiveSubtype(): Subtype {
+            return florisboard.activeSubtype
+        }
+
+        override fun getKeyVariation(): KeyVariation {
+            return keyVariation
+        }
+
+        override fun getKeyboard(): TextKeyboard {
+            throw NotImplementedError() // Correct value must be inserted by the TextKeyboardView
+        }
+
+        override fun isSlot(data: TextKeyData): Boolean {
+            return CurrencySet.isCurrencySlot(data.code)
+        }
+
+        override fun getSlotData(data: TextKeyData): TextKeyData? {
+            return florisboard.subtypeManager.getCurrencySet(getActiveSubtype()).getSlot(data.code)
+        }
     }
 
     /**
@@ -129,9 +215,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * background).
      */
     override fun onCreate() {
-        flogInfo(LogTopic.IMS_EVENTS) { "onCreate()" }
+        flogInfo(LogTopic.IMS_EVENTS)
 
-        layoutManager = LayoutManager(this)
+        layoutManager = LayoutManager()
+        textKeyboardIconSet = TextKeyboardIconSet.new(florisboard)
         inputEventDispatcher.keyEventReceiver = this
         var subtypes = florisboard.subtypeManager.subtypes
         if (subtypes.isEmpty()) {
@@ -139,36 +226,25 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
         for (subtype in subtypes) {
             for (mode in KeyboardMode.values()) {
-                layoutManager.preloadComputedLayout(mode, subtype, florisboard.prefs, florisboard.subtypeManager.getCurrencySet(subtype))
+                keyboards.set(mode, subtype, keyboard = layoutManager.computeKeyboardAsync(mode, subtype, prefs))
             }
         }
     }
 
     override fun onCreateInputView() {
-        flogInfo(LogTopic.IMS_EVENTS) { "onCreateInputView()" }
-
-        if (keyboardViews.isNotEmpty()) {
-            keyboardViews.clear()
-        }
-    }
-
-    private suspend fun addKeyboardView(mode: KeyboardMode) {
-        val keyboardView = KeyboardView(florisboard)
-        keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(mode, florisboard.activeSubtype, florisboard.prefs, florisboard.subtypeManager.getCurrencySet(florisboard.activeSubtype)).await()
-        keyboardViews[mode] = keyboardView
-        textViewFlipper?.addView(keyboardView)
+        flogInfo(LogTopic.IMS_EVENTS)
     }
 
     /**
      * Sets up the newly registered input view.
      */
     override fun onRegisterInputView(inputView: InputView) {
-        flogInfo(LogTopic.IMS_EVENTS) { "onRegisterInputView(inputView)" }
+        flogInfo(LogTopic.IMS_EVENTS)
 
         textViewGroup = inputView.findViewById(R.id.text_input)
-        textViewFlipper = inputView.findViewById(R.id.text_input_view_flipper)
-        editingKeyboardView = inputView.findViewById(R.id.editing)
-        loadingPlaceholderKeyboard = inputView.findViewById(R.id.keyboard_preview)
+        textInputKeyboardView = inputView.findViewById(R.id.text_input_keyboard_view)
+        textInputKeyboardView?.setIconSet(textKeyboardIconSet)
+        textInputKeyboardView?.setComputingEvaluator(evaluator)
 
         launch(Dispatchers.Main) {
             val animator1 = textViewGroup?.let {
@@ -187,9 +263,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     start()
                 }
             }
-            val activeKeyboardMode = getActiveKeyboardMode()
-            addKeyboardView(activeKeyboardMode)
-            setActiveKeyboardMode(activeKeyboardMode)
+            setActiveKeyboardMode(getActiveKeyboardMode())
             animator1?.cancel()
             animator2?.cancel()
             val animator3 = textViewGroup?.let {
@@ -197,11 +271,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     duration = (((1.0f - it.alpha) / 0.6f) * 125f).roundToLong()
                     repeatCount = 0
                     start()
-                }
-            }
-            for (mode in KeyboardMode.values()) {
-                if (mode != activeKeyboardMode && mode != KeyboardMode.SMARTBAR_NUMBER_ROW) {
-                    addKeyboardView(mode)
                 }
             }
             delay(animator3?.duration ?: 1)
@@ -224,8 +293,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Cancels all coroutines and cleans up.
      */
     override fun onDestroy() {
-        flogInfo(LogTopic.IMS_EVENTS) { "onDestroy()" }
+        flogInfo(LogTopic.IMS_EVENTS)
 
+        textInputKeyboardView?.setComputingEvaluator(null)
+        keyboards.clear()
         inputEventDispatcher.keyEventReceiver = null
         inputEventDispatcher.close()
         cancel()
@@ -279,14 +350,14 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 KeyboardMode.PHONE,
                 KeyboardMode.PHONE2 -> false
                 else -> keyVariation != KeyVariation.PASSWORD &&
-                        florisboard.prefs.suggestion.enabled// &&
+                        prefs.suggestion.enabled// &&
                 //!instance.inputAttributes.flagTextAutoComplete &&
                 //!instance.inputAttributes.flagTextNoSuggestions
             }
-            isPrivateMode = florisboard.prefs.advanced.forcePrivateMode ||
+            isPrivateMode = prefs.advanced.forcePrivateMode ||
                     imeOptions.flagNoPersonalizedLearning
         }
-        if (!florisboard.prefs.correction.rememberCapsLockState) {
+        if (!prefs.correction.rememberCapsLockState) {
             capsLock = false
         }
         isGlidePostEffect = false
@@ -304,7 +375,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onWindowShown() {
-        keyboardViews[KeyboardMode.CHARACTERS]?.updateVisibility()
         smartbarView?.updateSmartbarState()
     }
 
@@ -320,20 +390,27 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     /**
      * Sets [activeKeyboardMode] and updates the [SmartbarView.isQuickActionsVisible] state.
      */
-    private fun setActiveKeyboardMode(mode: KeyboardMode) {
-        textViewFlipper?.displayedChild = textViewFlipper?.indexOfChild(when (mode) {
-            KeyboardMode.EDITING -> editingKeyboardView
-            else -> keyboardViews[mode]
-        })?.coerceAtLeast(0) ?: 0
-        keyboardViews[mode]?.updateVisibility()
-        keyboardViews[mode]?.requestLayout()
-        keyboardViews[mode]?.requestLayoutAllKeys()
+    private fun setActiveKeyboardMode(mode: KeyboardMode) = launch {
+        setActiveKeyboard(mode, florisboard.activeSubtype)
         activeKeyboardMode = mode
         isManualSelectionMode = false
         isManualSelectionModeStart = false
         isManualSelectionModeEnd = false
         smartbarView?.isQuickActionsVisible = false
         smartbarView?.updateSmartbarState()
+    }
+
+    private fun setActiveKeyboard(mode: KeyboardMode, subtype: Subtype) = launch(Dispatchers.IO) {
+        val activeKeyboard = keyboards.getOrElseAsync(mode, subtype) {
+            layoutManager.computeKeyboardAsync(
+                keyboardMode = mode,
+                subtype = subtype,
+                prefs = prefs
+            ).await()
+        }.await()
+        withContext(Dispatchers.Main) {
+            textInputKeyboardView?.setComputedKeyboard(activeKeyboard)
+        }
     }
 
     override fun onSubtypeChanged(newSubtype: Subtype) {
@@ -348,19 +425,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             if (PrefHelper.getDefaultInstance(florisboard).glide.enabled) {
                 GlideTypingManager.getInstance().setWordData(newSubtype)
             }
-            // TODO: heavy load on main thread
-            for (keyboardMode in KeyboardMode.values()) {
-                val keyboardView = keyboardViews[keyboardMode]
-                if (keyboardView != null) {
-                    keyboardView.computedLayout = layoutManager.fetchComputedLayoutAsync(
-                        keyboardMode,
-                        newSubtype,
-                        florisboard.prefs,
-                        florisboard.subtypeManager.getCurrencySet(newSubtype)
-                    ).await()
-                    keyboardView.updateVisibility()
-                }
-            }
+            setActiveKeyboard(getActiveKeyboardMode(), newSubtype)
         }
         isGlidePostEffect = false
     }
@@ -385,7 +450,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                             precedingTokens = listOf(),
                             currentToken = Token(activeEditorInstance.cachedInput.currentWord.text),
                             maxSuggestionCount = 16,
-                            allowPossiblyOffensive = !florisboard.prefs.suggestion.blockPossiblyOffensive
+                            allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive
                         ).toStringList()
                         if (BuildConfig.DEBUG) {
                             val elapsed = (System.nanoTime() - startTime) / 1000.0
@@ -413,9 +478,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     private fun updateCapsState() {
         if (!capsLock) {
-            caps = florisboard.prefs.correction.autoCapitalization &&
+            caps = prefs.correction.autoCapitalization &&
                     activeEditorInstance.cursorCapsMode != InputAttributes.CapsMode.NONE
-            keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
+            textInputKeyboardView?.notifyStateChanged()
         }
     }
 
@@ -426,32 +491,32 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     fun executeSwipeAction(swipeAction: SwipeAction) {
         val keyData = when (swipeAction) {
             SwipeAction.CYCLE_TO_PREVIOUS_KEYBOARD_MODE -> when (getActiveKeyboardMode()) {
-                KeyboardMode.CHARACTERS -> KeyData.VIEW_NUMERIC_ADVANCED
-                KeyboardMode.NUMERIC_ADVANCED -> KeyData.VIEW_SYMBOLS2
-                KeyboardMode.SYMBOLS2 -> KeyData.VIEW_SYMBOLS
-                else -> KeyData.VIEW_CHARACTERS
+                KeyboardMode.CHARACTERS -> TextKeyData.VIEW_NUMERIC_ADVANCED
+                KeyboardMode.NUMERIC_ADVANCED -> TextKeyData.VIEW_SYMBOLS2
+                KeyboardMode.SYMBOLS2 -> TextKeyData.VIEW_SYMBOLS
+                else -> TextKeyData.VIEW_CHARACTERS
             }
             SwipeAction.CYCLE_TO_NEXT_KEYBOARD_MODE -> when (getActiveKeyboardMode()) {
-                KeyboardMode.CHARACTERS -> KeyData.VIEW_SYMBOLS
-                KeyboardMode.SYMBOLS -> KeyData.VIEW_SYMBOLS2
-                KeyboardMode.SYMBOLS2 -> KeyData.VIEW_NUMERIC_ADVANCED
-                else -> KeyData.VIEW_CHARACTERS
+                KeyboardMode.CHARACTERS -> TextKeyData.VIEW_SYMBOLS
+                KeyboardMode.SYMBOLS -> TextKeyData.VIEW_SYMBOLS2
+                KeyboardMode.SYMBOLS2 -> TextKeyData.VIEW_NUMERIC_ADVANCED
+                else -> TextKeyData.VIEW_CHARACTERS
             }
-            SwipeAction.DELETE_WORD -> KeyData.DELETE_WORD
-            SwipeAction.INSERT_SPACE -> KeyData.SPACE
-            SwipeAction.MOVE_CURSOR_DOWN -> KeyData.ARROW_DOWN
-            SwipeAction.MOVE_CURSOR_UP -> KeyData.ARROW_UP
-            SwipeAction.MOVE_CURSOR_LEFT -> KeyData.ARROW_LEFT
-            SwipeAction.MOVE_CURSOR_RIGHT -> KeyData.ARROW_RIGHT
-            SwipeAction.MOVE_CURSOR_START_OF_LINE -> KeyData.MOVE_START_OF_LINE
-            SwipeAction.MOVE_CURSOR_END_OF_LINE -> KeyData.MOVE_END_OF_LINE
-            SwipeAction.MOVE_CURSOR_START_OF_PAGE -> KeyData.MOVE_START_OF_PAGE
-            SwipeAction.MOVE_CURSOR_END_OF_PAGE -> KeyData.MOVE_END_OF_PAGE
-            SwipeAction.SHIFT -> KeyData.SHIFT
-            SwipeAction.REDO -> KeyData.REDO
-            SwipeAction.UNDO -> KeyData.UNDO
-            SwipeAction.SWITCH_TO_CLIPBOARD_CONTEXT -> KeyData.SWITCH_TO_CLIPBOARD_CONTEXT
-            SwipeAction.SHOW_INPUT_METHOD_PICKER -> KeyData.SHOW_INPUT_METHOD_PICKER
+            SwipeAction.DELETE_WORD -> TextKeyData.DELETE_WORD
+            SwipeAction.INSERT_SPACE -> TextKeyData.SPACE
+            SwipeAction.MOVE_CURSOR_DOWN -> TextKeyData.ARROW_DOWN
+            SwipeAction.MOVE_CURSOR_UP -> TextKeyData.ARROW_UP
+            SwipeAction.MOVE_CURSOR_LEFT -> TextKeyData.ARROW_LEFT
+            SwipeAction.MOVE_CURSOR_RIGHT -> TextKeyData.ARROW_RIGHT
+            SwipeAction.MOVE_CURSOR_START_OF_LINE -> TextKeyData.MOVE_START_OF_LINE
+            SwipeAction.MOVE_CURSOR_END_OF_LINE -> TextKeyData.MOVE_END_OF_LINE
+            SwipeAction.MOVE_CURSOR_START_OF_PAGE -> TextKeyData.MOVE_START_OF_PAGE
+            SwipeAction.MOVE_CURSOR_END_OF_PAGE -> TextKeyData.MOVE_END_OF_PAGE
+            SwipeAction.SHIFT -> TextKeyData.SHIFT
+            SwipeAction.REDO -> TextKeyData.REDO
+            SwipeAction.UNDO -> TextKeyData.UNDO
+            SwipeAction.SWITCH_TO_CLIPBOARD_CONTEXT -> TextKeyData.SWITCH_TO_CLIPBOARD_CONTEXT
+            SwipeAction.SHOW_INPUT_METHOD_PICKER -> TextKeyData.SHOW_INPUT_METHOD_PICKER
             else -> null
         }
         if (keyData != null) {
@@ -490,11 +555,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             R.id.quick_action_open_settings -> florisboard.launchSettings()
             R.id.quick_action_one_handed_toggle -> florisboard.toggleOneHandedMode(isRight = true)
             R.id.quick_action_undo -> {
-                inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.UNDO))
+                inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.UNDO))
                 return
             }
             R.id.quick_action_redo -> {
-                inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.REDO))
+                inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.REDO))
                 return
             }
         }
@@ -556,7 +621,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * FlorisBoard internal or system-wide.
      */
     private fun handleLanguageSwitch() {
-        when (florisboard.prefs.keyboard.utilityKeyAction) {
+        when (prefs.keyboard.utilityKeyAction) {
             UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
             UtilityKeyAction.SWITCH_LANGUAGE -> florisboard.switchToNextSubtype()
             else -> florisboard.switchToNextKeyboard()
@@ -567,7 +632,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Handles a [KeyCode.SHIFT] down event.
      */
     private fun handleShiftDown(ev: InputKeyEvent) {
-        if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventDown, florisboard.prefs.keyboard.longPressDelay.toLong())) {
+        if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventDown, prefs.keyboard.longPressDelay.toLong())) {
             newCapsState = true
             caps = true
             capsLock = true
@@ -576,7 +641,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             caps = true
             capsLock = false
         }
-        keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
+        textInputKeyboardView?.notifyStateChanged()
         smartbarView?.updateCandidateSuggestionCapsState()
     }
 
@@ -585,7 +650,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     private fun handleShiftUp() {
         caps = newCapsState
-        keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
+        textInputKeyboardView?.notifyStateChanged()
         smartbarView?.updateCandidateSuggestionCapsState()
     }
 
@@ -595,7 +660,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private fun handleShiftCancel() {
         caps = false
         capsLock = false
-        keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
+        textInputKeyboardView?.notifyStateChanged()
         smartbarView?.updateCandidateSuggestionCapsState()
     }
 
@@ -608,7 +673,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             newCapsState = true
             caps = true
             capsLock = true
-            keyboardViews[activeKeyboardMode]?.invalidateAllKeys()
+            textInputKeyboardView?.notifyStateChanged()
             smartbarView?.updateCandidateSuggestionCapsState()
         }
     }
@@ -618,11 +683,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * enabled by the user.
      */
     private fun handleSpace(ev: InputKeyEvent) {
-        if (florisboard.prefs.keyboard.spaceBarSwitchesToCharacters && getActiveKeyboardMode() != KeyboardMode.CHARACTERS) {
+        if (prefs.keyboard.spaceBarSwitchesToCharacters && getActiveKeyboardMode() != KeyboardMode.CHARACTERS) {
             setActiveKeyboardMode(KeyboardMode.CHARACTERS)
         }
-        if (florisboard.prefs.correction.doubleSpacePeriod) {
-            if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventUp, florisboard.prefs.keyboard.longPressDelay.toLong())) {
+        if (prefs.correction.doubleSpacePeriod) {
+            if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventUp, prefs.keyboard.longPressDelay.toLong())) {
                 val text = activeEditorInstance.getTextBeforeCursor(2)
                 if (text.length == 2 && !text.matches("""[.!?‽\s][\s]""".toRegex())) {
                     activeEditorInstance.deleteBackwards()
@@ -714,20 +779,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         } else {
             isManualSelectionMode = !isManualSelectionMode
             // Must call to update UI properly
-            editingKeyboardView?.onUpdateSelection()
+            //editingKeyboardView?.onUpdateSelection()
         }
         isGlidePostEffect = false
     }
 
-    /**
-     * Adjusts a given key data for caps state and returns the correct reference.
-     */
-    private fun getAdjustedKeyData(keyData: KeyData): KeyData {
-        return if (caps && keyData is FlorisKeyData && keyData.shift != null) { keyData.shift!! } else { keyData }
-    }
-
     override fun onInputKeyDown(ev: InputKeyEvent) {
-        val data = getAdjustedKeyData(ev.data)
+        val data = ev.data
         when (data.code) {
             KeyCode.INTERNAL_BATCH_EDIT -> {
                 florisboard.beginInternalBatchEdit()
@@ -740,7 +798,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onInputKeyUp(ev: InputKeyEvent) {
-        val data = getAdjustedKeyData(ev.data)
+        val data = ev.data
         when (data.code) {
             KeyCode.ARROW_DOWN,
             KeyCode.ARROW_LEFT,
@@ -795,7 +853,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     KeyboardMode.PHONE2 -> when (data.type) {
                         KeyType.CHARACTER,
                         KeyType.NUMERIC -> {
-                            val text = data.code.toChar().toString()
+                            val text = data.asString(isForDisplay = false)
                             if (isGlidePostEffect && (CachedInput.isWordComponent(text) || text.isDigitsOnly())) {
                                 activeEditorInstance.commitText(" ")
                             }
@@ -804,7 +862,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         else -> when (data.code) {
                             KeyCode.PHONE_PAUSE,
                             KeyCode.PHONE_WAIT -> {
-                                val text = data.code.toChar().toString()
+                                val text = data.asString(isForDisplay = false)
                                 if (isGlidePostEffect && (CachedInput.isWordComponent(text) || text.isDigitsOnly())) {
                                     activeEditorInstance.commitText(" ")
                                 }
@@ -813,26 +871,15 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         }
                     }
                     else -> when (data.type) {
-                        KeyType.CHARACTER, KeyType.NUMERIC -> when (data.code) {
-                            KeyCode.URI_COMPONENT_TLD -> {
-                                val tld = data.label.toLowerCase(Locale.ENGLISH)
-                                activeEditorInstance.commitText(tld)
+                        KeyType.CHARACTER, KeyType.NUMERIC ->{
+                            val text = data.asString(isForDisplay = false)
+                            if (isGlidePostEffect && (CachedInput.isWordComponent(text) || text.isDigitsOnly())) {
+                                activeEditorInstance.commitText(" ")
                             }
-                            else -> {
-                                var text = data.code.toChar().toString()
-                                val locale = if (florisboard.activeSubtype.locale.language == "el") { Locale.getDefault() } else { florisboard.activeSubtype.locale }
-                                text = when (caps && activeKeyboardMode == KeyboardMode.CHARACTERS) {
-                                    true -> text.toUpperCase(locale)
-                                    false -> text
-                                }
-                                if (isGlidePostEffect && (CachedInput.isWordComponent(text) || text.isDigitsOnly())) {
-                                    activeEditorInstance.commitText(" ")
-                                }
-                                activeEditorInstance.commitText(text)
-                            }
+                            activeEditorInstance.commitText(text)
                         }
                         else -> {
-                            flogError(LogTopic.KEY_EVENTS) { "sendKeyPress(keyData): Received unknown key: $data" }
+                            flogError(LogTopic.KEY_EVENTS) { "Received unknown key: $data" }
                         }
                     }
                 }
@@ -853,7 +900,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onInputKeyCancel(ev: InputKeyEvent) {
-        val data = getAdjustedKeyData(ev.data)
+        val data = ev.data
         when (data.code) {
             KeyCode.SHIFT -> handleShiftCancel()
         }

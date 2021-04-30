@@ -6,41 +6,41 @@
     "all": {
       "α": {
         "relevant": [
-          { "code":  940, "label": "ά" }
+          { "$": "auto_text_key", "code":  940, "label": "ά" }
         ]
       },
       "ε": {
         "relevant": [
-          { "code":  941, "label": "έ" }
+          { "$": "auto_text_key", "code":  941, "label": "έ" }
         ]
       },
       "η": {
         "relevant": [
-          { "code":  942, "label": "ή" }
+          { "$": "auto_text_key", "code":  942, "label": "ή" }
         ]
       },
       "ι": {
         "relevant": [
-          { "code":  912, "label": "ΐ" },
-          { "code":  970, "label": "ϊ" },
-          { "code":  943, "label": "ί" }
+          { "$": "auto_text_key", "code":  912, "label": "ΐ" },
+          { "$": "auto_text_key", "code":  970, "label": "ϊ" },
+          { "$": "auto_text_key", "code":  943, "label": "ί" }
         ]
       },
       "ο": {
         "relevant": [
-          { "code":  972, "label": "ό" }
+          { "$": "auto_text_key", "code":  972, "label": "ό" }
         ]
       },
       "υ": {
         "relevant": [
-          { "code":  944, "label": "ΰ" },
-          { "code":  971, "label": "ϋ" },
-          { "code":  973, "label": "ύ" }
+          { "$": "auto_text_key", "code":  944, "label": "ΰ" },
+          { "$": "auto_text_key", "code":  971, "label": "ϋ" },
+          { "$": "auto_text_key", "code":  973, "label": "ύ" }
         ]
       },
       "ω": {
         "relevant": [
-          { "code":  974, "label": "ώ" }
+          { "$": "auto_text_key", "code":  974, "label": "ώ" }
         ]
       },
       "~right": {

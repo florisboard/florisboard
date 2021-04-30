@@ -103,30 +103,30 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
 
         mainScope.launch(Dispatchers.Default) {
             florisboard?.let {
-                val layout = florisboard.textInputManager.layoutManager.fetchComputedLayoutAsync(
+                val layout = florisboard.textInputManager.layoutManager.computeKeyboardAsync(
                     KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW,
                     Subtype.DEFAULT,
-                    prefs,
-                    florisboard.subtypeManager.getCurrencySet(Subtype.DEFAULT)
+                    prefs
                 ).await()
                 withContext(Dispatchers.Main) {
-                    binding.clipboardCursorRow.computedLayout = layout
-                    binding.clipboardCursorRow.updateVisibility()
+                    binding.clipboardCursorRow.setComputingEvaluator(florisboard.textInputManager.evaluator)
+                    binding.clipboardCursorRow.setIconSet(florisboard.textInputManager.textKeyboardIconSet)
+                    binding.clipboardCursorRow.setComputedKeyboard(layout)
                 }
             }
         }
 
         mainScope.launch(Dispatchers.Default) {
             florisboard?.let {
-                val layout = florisboard.textInputManager.layoutManager.fetchComputedLayoutAsync(
+                val layout = florisboard.textInputManager.layoutManager.computeKeyboardAsync(
                     KeyboardMode.SMARTBAR_NUMBER_ROW,
                     Subtype.DEFAULT,
-                    prefs,
-                    florisboard.subtypeManager.getCurrencySet(Subtype.DEFAULT)
+                    prefs
                 ).await()
                 withContext(Dispatchers.Main) {
-                    binding.numberRow.computedLayout = layout
-                    binding.numberRow.updateVisibility()
+                    binding.numberRow.setComputingEvaluator(florisboard.textInputManager.evaluator)
+                    binding.numberRow.setIconSet(florisboard.textInputManager.textKeyboardIconSet)
+                    binding.numberRow.setComputedKeyboard(layout)
                 }
             }
         }
@@ -219,7 +219,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
      * editor instance, etc. Passes the evaluated attributes to [configureFeatureVisibility].
      */
     fun updateSmartbarState() {
-        binding.clipboardCursorRow.updateVisibility()
+        //binding.clipboardCursorRow.updateVisibility()
         binding.candidates.updateDisplaySettings(prefs.suggestion.displayMode, prefs.suggestion.clipboardContentTimeout * 1_000)
         when (florisboard) {
             null -> configureFeatureVisibility(
@@ -266,6 +266,8 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                 }
             )
         }
+        binding.clipboardCursorRow.notifyStateChanged()
+        binding.numberRow.notifyStateChanged()
     }
 
     fun onPrimaryClipChanged() {
