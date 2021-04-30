@@ -14,11 +14,11 @@
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
     <!-- Media strings -->
-    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Φατσούλες</string>
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Εικονίδια Emoji</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Εικονίδια emoticon</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Εικονίδια smiley &amp; Συναισθήματα</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Φατσούλες &amp; Συναισθήματα</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Άνθρωποι &amp; Σώμα</string>
     <string name="emoji__category__animals_nature" comment="Emoji category name">Ζώα &amp; Φύση</string>
     <string name="emoji__category__food_drink" comment="Emoji category name">Φαγητό &amp; Ποτό</string>
@@ -157,10 +157,10 @@
     <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">Ενεργοποιημένο (Προτεραιότητα των υπονοούμενων)</string>
     <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">Ενεργοποιημένο (Προτεραιότητα του τονισμού)</string>
     <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">Ενεργοποιημένο (Έξυπνη προτεραιοποίηση)</string>
-    <string name="pref__keyboard__utility_key_action__switch_to_emojis" comment="Preference value">Εναλλαγή σε φατσούλες</string>
+    <string name="pref__keyboard__utility_key_action__switch_to_emojis" comment="Preference value">Εναλλαγή σε emoji</string>
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Εναλλαγή γλώσσας</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Εναλλαγή εφαρμογής πληκτρολογίου</string>
-    <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Δυναμικό: Εναλλαγή σε φατσούλες / Εναλλαγή γλώσσας</string>
+    <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Δυναμικό: Εναλλαγή σε emojis / Εναλλαγή γλώσσας</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Πολλαπλασιαστής μεγέθους γραμματοσειράς (πορτραίτο)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Πολλαπλασιαστής μεγέθους γραμματοσειράς (τοπίο)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Διάταξη</string>
@@ -187,6 +187,7 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Ήχος κατά το πάτημα πλήκτρου</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Ένταση ήχου κατά το πάτημα πλήκτρου</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Δόνηση κατά το πάτημα πλήκτρου</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Διάρκεια δόνησης κατά το πάτημα κλειδιού</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Ένταση δόνησης κατά το πάτημα πλήκτρου</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Εμφάνιση κατά το πάτημα πλήκτρου</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Επιπλέον εμφάνιση πλήκτρου όταν πατήσετε ένα πλήκτρο</string>
@@ -223,7 +224,10 @@
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Μετακίνηση κέρσορα στο τέλος της γραμμής</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Μετακίνηση κέρσορα στην αρχή της σελίδας</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Μετακίνηση κέρσορα στο τέλος της σελίδας</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Άνοιγμα διαχειριστή προχείρου/ιστορικού</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Εναλλαγή κεφαλαίων</string>
+    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Επανάληψη</string>
+    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Αναίρεση</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Εμφάνιση επιλογέα μεθόδου εισαγωγής</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Εναλλαγή στο προηγούμενο πληκτρολόγιο</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Εναλλαγή στον προηγούμενο υποτύπο</string>
@@ -310,9 +314,7 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Η ρύθμιση ολοκληρώθηκε!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Αναφορά σφάλματος FlorisBoard</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Συγγνώμη για την ταλαιπωρία, άλλα το FlorisBoard έχει κρασάρει εξαιτίας ενός απρόβλεπτου σφάλματος.\n\nΕάν επιθυμείτε να αναφέρετε αυτό το σφάλμα, πατήστε στο πλήκτρο \"Αντιγραφή στο πρόχειρο\", έπειτα στο πλήκτρο \"Άνοιγμα αναφοράς προβλήματος\". Συμπληρώστε την αναφορά προβλήματος και αντιγράψτε το αρχείο καταγραφής. Αυτό βοηθάει στο να γίνει το FlorisBoard καλύτερο και πιο σταθερό για όλους. Σας ευχαριστώ!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Αντιγραφή στο πρόχειρο</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Άνοιγμα φόρμας αναφοράς προβλήματος (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Κλείσιμο</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Αναφορές σφάλματος FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Το FlorisBoard έχει σταματήσει να λειτουργεί…</string>
@@ -327,4 +329,21 @@
     <string name="clip__delete_item">Διαγραφή</string>
     <string name="clip__paste_item">Επικόλληση</string>
     <string name="clip__cant_paste">Η εφαρμογή αυτή δεν επιτρέπει την επικόλληση του περιεχομένου.</string>
+    <string name="pref__clipboard__clipboard_category__label">Πρόχειρο</string>
+    <string name="pref__clipboard__use_internal_clipboard___label">Χρήση εσωτερικού προχείρου</string>
+    <string name="pref__clipboard__use_internal_clipboard_title__summary">Χρήση εσωτερικού προχείρου αντί του συστημικού</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Συγχρονισμός από συστημικό πρόχειρο</string>
+    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Οι ενημερώσεις του συστημικού προχείρου, ενημερώνουν και το πρόχειρο Floris</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Συγχρονισμός στο συστημικό πρόχειρο</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Οι ενημερώσεις του προχείρου Floris, ενημερώνουν και το συστημικό πρόχειρο</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Ενεργοποίηση ιστορικού του προχείρου</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Διατήρηση στοιχείων προχείρου</string>
+    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Εκκαθάριση παλιών στοιχείων</string>
+    <string name="pref__clipboard__clean_up_old_after__label">Εκκαθάριση παλιών στοιχείων έπειτα από</string>
+    <string name="pref__unit_minutes">" λεπτά"</string>
+    <string name="pref__clipboard__limit_history_size__label">Περιορισμός μεγέθους ιστορικού</string>
+    <string name="pref__clipboard__max_history_size__label">Μέγ. μέγεθος ιστορικού</string>
+    <string name="pref__unit_items">" στοιχεία"</string>
+    <!-- glide strings -->
+    <string name="pref__glide_preview_refresh_delay">Προεπισκόπηση καθυστέρησης ανανέωσης</string>
 </resources>

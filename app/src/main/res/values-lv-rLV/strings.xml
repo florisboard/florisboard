@@ -199,6 +199,7 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Taustiņa piespiešanas skaņa</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Taustiņa piespiešanas skaņas skaļums</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Trīcēt, kad tiek nospiesta poga</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Trīcēšanas ilgums, kad tiek nospiesta poga</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Trīcēšanas stiprums, kad tiek nospiesta poga</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Uznirstošā lodziņa redzamība</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Rādīt uznirstošo lodziņu, kad tiek nospiests taustiņš</string>
@@ -332,9 +333,10 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Iestatīšana pabeigta!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard kļūdu ziņojums</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Atvainojamies par neērtībām, bet FlorisBoard ir avarējis neparedzētas kļūdas dēļ.\n\nJa ir vēlme ziņot par šo kļūdu, jāspiež uz \"Ievietot starpliktuvē\", tad uz \"Atvērt nepilnību pieteikumu\" pogas. Jāaizpilda nepilnību pieteikums un jāielīmē starpliktuvē esošie žurnāla ieraksti. Tas palīdz padarīt FlorisBoard labāku un noturīgāku ikvienam. Paldies!</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Atvainojamies par neērtībām, bet FlorsBoard avarēja neparedzētas kļūdas dēļ.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Ja ir vēlme ziņot par šo kļūdu, vispirms jāpārliecinās, vai GitHub pieteikumu ceļrādī par šādu avāriju jau ir ziņots.\nJa nē, starpliktuvē jāievieto izveidotais avārijas žurnāls un jāatver jauns pieteikums. Jāizmanto \"%s\" veidne un jānorāda apraksts, darbības atkārtošanai un beigās jāielīmē avārijas žurnāls. Tas palīdz padarīt FlorisBoard labāku un noturīgāku ikvienam. Paldies!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Ielikt starpliktuvē</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Atvērt kļūdu ziņojuma veidni (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Atvērt pieteikumu ceļrādi (GitHub.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Aizvērt</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard kļūdu ziņojumi</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard pārstāja darboties…</string>
@@ -350,6 +352,22 @@
     <string name="clip__paste_item">Ielīmēt</string>
     <string name="clip__back_to_text_input">Atgriezties pie teksta ievades</string>
     <string name="clip__cant_paste">Pašreizējā lietotne neļauj ielīmēt šo saturu.</string>
+    <string name="pref__clipboard__clipboard_category__label">Starpliktuve</string>
+    <string name="pref__clipboard__use_internal_clipboard___label">Izmantot iekšējo starpliktuvi</string>
+    <string name="pref__clipboard__use_internal_clipboard_title__summary">Izmantot iekšējo, nevis sistēmas starpliktuvi</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Sinhronizēt no sistēmas starpliktuves</string>
+    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Sistēmas starpliktuves izmaiņas atjauninās arī Floris starpliktuvi</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Sinhronizēt uz sistēmas starpliktuvi</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris starpliktuves izmaiņas atjauninās arī sistēmas starpliktuvi</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Iespējot starpliktuves vēsturi</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Paturēt starpliktuves vienumus</string>
+    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Noņemt vecos vienumus</string>
+    <string name="pref__clipboard__clean_up_old_after__label">Noņemt vecos vienumus pēc</string>
+    <string name="pref__unit_minutes">" minūtēm"</string>
+    <string name="pref__clipboard__limit_history_size__label">Ierobežot vēstures lielumu</string>
+    <string name="pref__clipboard__max_history_size__label">Lielākais pieļaujamais vēstures lielums</string>
+    <string name="pref__unit_items">" vienumi"</string>
+    <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Slīdēšanas pēdu izzušanas laiks</string>
     <string name="pref__glide_preview_refresh_delay">Priekšskatīt atsvaidzināšanas aizkavi</string>
     <string name="pref__glide__show_preview">Rādīt priekšskatījumu slīdošās rakstīšanas laikā</string>

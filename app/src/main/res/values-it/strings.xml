@@ -199,6 +199,7 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Suono pressione tasti</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volume del suono alla pressione dei tasti</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibrazione alla pressione dei tasti</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Intensità della vibrazione alla pressione dei tasti</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Intensità della vibrazione alla pressione dei tasti</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Visibilità Popup</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Mostra popup quando si preme un tasto</string>
@@ -240,6 +241,8 @@
     <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Sposta il cursore all\'inizio della pagina</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Sposta il cursore alla fine della pagina</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
+    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Ripristina</string>
+    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Annulla</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Mostra il selettore del metodo di digitazione</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Passa alla tastiera precedente</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Vai allo stile di input precedente</string>
@@ -326,9 +329,10 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Installazione terminata!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Segnalazione errore</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Ci dispiace per l\'inconveniente, ma FlorisBoard è crashato a causa di un errore inaspettato.\n\nSe desideri inviare questo errore allora clicca su \"copia negli appunti\", e poi \"apri segnalazione errore\". Compila la segnalazione e incolla il log. Questo ci aiuta a migliorare FlorisBoard e a renderla più stabile per tutti. Grazie!</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Ci dispiace per l\'inconveniente, ma FlorisBoard si è chiuso a causa di un errore inaspettato.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Se desideri segnalare questo errore, prima controlla se è già stato segnalato nel centro problemi su GitHub.\nSe non lo è, copia il registro di \'interruzione generato e apri un nuovo problema. Usa il modello \"%s\" e compila la descrizione, i passi per riprodurre il problema, e incolla il registro di interruzione generato alla fine. Questo aiuta a migliorare FlorisBoard e a renderlo più stabile per tutti. Grazie!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copia negli appunti</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Apri modulo di segnalazione bug (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Apri il centro problemi (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Chiudi</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Segnalazioni di errore di FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard ha smesso di funzionare…</string>
@@ -344,6 +348,22 @@
     <string name="clip__paste_item">Incolla</string>
     <string name="clip__back_to_text_input">Torna all\'immissione di testo</string>
     <string name="clip__cant_paste">Questa app non permette di incollare questo contenuto.</string>
+    <string name="pref__clipboard__clipboard_category__label">Appunti</string>
+    <string name="pref__clipboard__use_internal_clipboard___label">Usa gli appunti integrati</string>
+    <string name="pref__clipboard__use_internal_clipboard_title__summary">Usa gli appunti integrati invece degli appunti di sistema</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Sincronizza dagli appunti di sistema</string>
+    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Gli aggiornamenti degli appunti di sistema aggiornano anche gli appunti di Floris</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronizza verso gli appunti di sistema</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Gli aggiornamenti degli appunti di Floris aggiornano anche gli appunti di sistema</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Attiva la cronologia degli appunti</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Conserva gli appunti</string>
+    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Cancella gli appunti vecchi</string>
+    <string name="pref__clipboard__clean_up_old_after__label">Cancella gli appunti vecchi di</string>
+    <string name="pref__unit_minutes">" minuti"</string>
+    <string name="pref__clipboard__limit_history_size__label">Limita le dimensioni della cronologia</string>
+    <string name="pref__clipboard__max_history_size__label">Dimensione massima della cronologia</string>
+    <string name="pref__unit_items">" elementi"</string>
+    <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Tempo di dissolvenza del percorso di scorrimento</string>
     <string name="pref__glide_preview_refresh_delay">Ritardo di aggiornamento dell\'anteprima</string>
     <string name="pref__glide__show_preview">Mostra l\'anteprima durante la digitazione a scorrimento</string>

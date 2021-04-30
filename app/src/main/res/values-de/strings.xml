@@ -199,6 +199,7 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Ton bei Tastendruck</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Lautstärke der Tastendrucktöne</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibration bei Tastendruck</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Vibration bei Tastendruck</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Vibrationsstärke bei Tastendruck</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Pop-Up Sichtbarkeit</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Pop-Up bei Tastendruck anzeigen</string>
@@ -331,9 +332,10 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Einrichtung abgeschlossen!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard Fehlermeldung</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Wir bitten die Unannehmlichkeiten zu entschuldigen, aber FlorisBoard wurde wegen eines Fehlers unerwartet geschlossen.\n\nWenn Sie diesen Fehler melden möchten, klicken Sie auf \"In die Zwischenablage kopieren\" und danach auf \"Fehlermeldung erstellen\". Füllen Sie die Fehlermeldung aus und fügen Sie das Protokoll ein. Mit Ihrer Hilfe kann FlorisBoard besser und stabiler für alle werden. Vielen Dank!</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Entschuldigung für die Unannehmlichkeiten, aber FlorisBoard ist aufgrund eines unerwarteten Fehlers abgestürzt.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Wenn sie diesen Fehler melden möchten, checken sie als erstes die Issue Tracker bei Github, ob der Fehler noch nicht gemeldet wurde. \nlf Wenn nicht, dann kopieren sie den generierten Fehler-log und erstellen sie einen neuen Issue. Benutzen sie diese \"%s\" Vorlage und füllen sie die Beschreibung aus, die Schritte zur Reproduzieren und fügen sie die generierte Fehler-log am Ende ein. Dies hilft FlorisBoard besser und noch Stabiler zu machen für alle. Dankeschön!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">In die Zwischenablage kopieren</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Fehler melden (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Öffne \"Issue Tracker\" (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Schließen</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard Fehlermeldungen</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard funktioniert nicht mehr…</string>
@@ -349,6 +351,22 @@
     <string name="clip__paste_item">Einfügen</string>
     <string name="clip__back_to_text_input">Zurück zur Texteingabe</string>
     <string name="clip__cant_paste">Diese App erlaubt kein Einfügen aus der Zwischenablage.</string>
+    <string name="pref__clipboard__clipboard_category__label">Zwischenablage</string>
+    <string name="pref__clipboard__use_internal_clipboard___label">Interne Zwischenablage nutzen</string>
+    <string name="pref__clipboard__use_internal_clipboard_title__summary">Eine interne Zwischenablage anstelle der Systemzwischenablage verwenden</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Von Systemzwischenablage synchronisieren</string>
+    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Aktualisierungen der Systemzwischenablage aktualisieren auch die Floris Zwischenablage</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Zur Systemzwischenablage synchronisieren</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Aktualisierungen der Floris Zwischenablage aktualisieren auch die Systemzwischenablage</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Verlauf für Zwischenablage aktivieren</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Elemente der Zwischenablage merken</string>
+    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Alte Einträge bereinigen</string>
+    <string name="pref__clipboard__clean_up_old_after__label">Alte Einträge bereinigen nach</string>
+    <string name="pref__unit_minutes">" Minuten"</string>
+    <string name="pref__clipboard__limit_history_size__label">Verlaufsgröße beschränken</string>
+    <string name="pref__clipboard__max_history_size__label">Maximale Verlaufsgröße</string>
+    <string name="pref__unit_items">" Elemente"</string>
+    <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Ausblendzeit vom Spurbewegung</string>
     <string name="pref__glide_preview_refresh_delay">Verzögerung der Vorschau</string>
     <string name="pref__glide__show_preview">Vorschau während des Gleitens anzeigen</string>

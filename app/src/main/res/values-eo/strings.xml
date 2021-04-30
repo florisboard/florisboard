@@ -163,4 +163,5 @@
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopii al tondejo</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Fermi</string>
     <!-- clipboard strings -->
+    <!-- glide strings -->
 </resources>

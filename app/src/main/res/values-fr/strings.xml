@@ -199,6 +199,7 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Tonalité des touches</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volume sonore des touches</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibrer à chaque touche pressée</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Durée de la vibration lors de la pression d\'une touche</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Force de vibration lors de l\'appui sur une touche</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Visibilité des pop-ups</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Afficher un pop-up lorsque vous appuyez sur une touche</string>
@@ -331,9 +332,10 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Configuration terminée !</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Rapport d\'erreur de FlorisBoard</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Désolé pour le dérangement, mais FlorisBoard a planté à cause d\'une erreur inattendue.\n\nSi vous souhaitez signaler cette erreur, cliquez sur \"Copier dans le presse-papiers\", puis sur le bouton \"Ouvrir le rapport de bug\". Remplissez le rapport de bug et collez le journal. Cela permet de rendre FlorisBoard meilleur et plus stable pour tout le monde. Merci !</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Désolé pour le désagrément, mais FlorisBoard a crashé en raison d\'une erreur inattendue.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Si vous souhaitez signaler cette erreur, vérifier avant tout si votre problème n\'a pas déjà été signalé sur le tracker d\'erreur de github.\nSi ce n\'est pas le cas, copiez le journal d\'erreur généré et ouvrez une nouvelle issue. Utilisez le modèle \"%s\" et remplissez la description, les étapes de reproduction puis collez le journal d\'erreur généré à la fin. Ceci contribue à améliorer FlorisBoard et à le rendre plus stable pour tous. Merci de votre aide!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copier dans le presse-papiers</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Ouvrir le formulaire de rapport de bug (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Ouvrir le tracker d\'erreur (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Fermer</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Rapports d\'erreur de FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard a cessé de fonctionner…</string>
@@ -349,6 +351,22 @@
     <string name="clip__paste_item">Coller</string>
     <string name="clip__back_to_text_input">Retour à la saisie de texte</string>
     <string name="clip__cant_paste">Cette app ne permet pas de coller ce contenu.</string>
+    <string name="pref__clipboard__clipboard_category__label">Presse-papier</string>
+    <string name="pref__clipboard__use_internal_clipboard___label">Utiliser le presse-papier interne</string>
+    <string name="pref__clipboard__use_internal_clipboard_title__summary">Utiliser un presse-papier interne plutôt que celui du système</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Synchroniser depuis le presse-papier système</string>
+    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Le presse-papier du système met aussi à jour le presse-papier de Floris</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Synchroniser vers le presse-papier système</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Le presse-papier Floris met aussi à jour le presse-papier du système</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Activer l\'historique du presse-papier</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Conserver les éléments du presse-papier</string>
+    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Nettoyer les vieux éléments</string>
+    <string name="pref__clipboard__clean_up_old_after__label">Nettoyer les vieux éléments après</string>
+    <string name="pref__unit_minutes">" minutes"</string>
+    <string name="pref__clipboard__limit_history_size__label">Taille limite de l\'historique</string>
+    <string name="pref__clipboard__max_history_size__label">Taille maximale de l\'historique</string>
+    <string name="pref__unit_items">" éléments"</string>
+    <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Temps de fondu du parcours de glissement</string>
     <string name="pref__glide_preview_refresh_delay">Délai d\'actualisation de l\'aperçu</string>
     <string name="pref__glide__show_preview">Afficher l\'aperçu lors de la saisie en glissant</string>

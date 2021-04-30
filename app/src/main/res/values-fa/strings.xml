@@ -199,6 +199,7 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">صدای فشردن کلید</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">میزان صدای فشردن کلید</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">لرزش هنگام فشردن کلید</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">مدت زمان لرزش با فشردن دکمه</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">قدرت لرزش هنگام فشردن کلید</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">نمایش پاپ‌آپ</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">نمایش پاپآپ وقتی کلیدی را می فشارید</string>
@@ -331,9 +332,10 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">نصب تمام شد!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">گزارش خطای فلوریس بورد</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">با عرض پوزش برای این مشکل ، اما فلوریس بورد به دلیلی غیرمنتظره ای متوفق شده است.\n\n اگر می خواهید این خطا را گزارش کنید ، روی \"کپی در کلیپ بورد\" کلیک کنید ، سپس بر روی دکمه \"باز کردن گزارش اشکال\" کلیک کنید. گزارش اشکال را پر کرده و گزارش را وارد کنید. این امر به بهتر و پایدارتر شدن فلوریس بورد برای همه کمک می کند. متشکرم!</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">با عرض پوزش برای این مشکل به وجود آمده، اما فلوریس بورد به یک دلیل پیش‌بینی نشده، متوقف شد.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">اگر شما دوست دارید که این خطا را گزارش کنید، لطفا اول به صفحه ایرادات ردیابی شده را در گیت هاب ما سری بزنید و از اینکه این گزارش از قبل ارائه نشده مطمعن شوید.\nاگر که گزارشی نبود، لاگ تولید شده پس از متوقف شدن را کپی کنید و یک گزارش ایراد جدید را بسازید. از نمونه \"%s\" استفاده کنید و توضیحات، مراحل بازتولید، و لاگ تولید شده پس از متوقف شدن را در نهایت درج کنید. این به فلوریس بورد کمک شایانی در بهتر شدن و پایدار تر شدن آن برای همه می کند. بسیار از شما متشکریم!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">کپی در حافطه موقت</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">باز کردن گزارش خطا توسط (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">بازکردن ایرادات ردیابی شده (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">بستن</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">گزارش های خطای فلوریس بورد</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">فلوریس بورد کار خود را متوقف کرده است…</string>
@@ -349,6 +351,22 @@
     <string name="clip__paste_item">چسباندن</string>
     <string name="clip__back_to_text_input">بازگشت به ورودی متن</string>
     <string name="clip__cant_paste">این برنامه اجازه چسباندن این محتوا را نمی دهد.</string>
+    <string name="pref__clipboard__clipboard_category__label">کلیپ‌بورد</string>
+    <string name="pref__clipboard__use_internal_clipboard___label">استفاده از کلیپ‌بورد داخلی</string>
+    <string name="pref__clipboard__use_internal_clipboard_title__summary">استفاده از کلیپ‌بورد داخل برنامه بجای کلیپ‌بورد سیستم</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">هماهنگ سازی از کلیپ‌بورد سیستم</string>
+    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">بروز شدن اطلاعات کلیپ‌بورد سیستم، کلیپ‌بورد فلوریس کیبورد را نیز بروز می کند</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">هماهنگ سازی به کلیپ‌بورد سیستم</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">بروز شدن اطلاعات کلیپ‌بورد فلوریس کیبورد، کلیپ‌بورد سیستم را نیز بروز می کند</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">فعالسازی تاریخچه کلیپ‌بورد</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">بازیابی موارد کلیپ‌بورد</string>
+    <string name="pref__clipboard__clean_up_old_clipboard_items__label">پاکسازی موارد قدیمی</string>
+    <string name="pref__clipboard__clean_up_old_after__label">پاکسازی موارد قدیمی بعد از</string>
+    <string name="pref__unit_minutes">" دقیقه"</string>
+    <string name="pref__clipboard__limit_history_size__label">محدود کردن اندازه تاریخچه</string>
+    <string name="pref__clipboard__max_history_size__label">حداکثر اندازه تاریخچه</string>
+    <string name="pref__unit_items">" مورد"</string>
+    <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">مدت زمان محو شدن دنباله پروازی</string>
     <string name="pref__glide_preview_refresh_delay">پیشنمایش تاخیر در تازه‌سازی</string>
     <string name="pref__glide__show_preview">مشاهده پیشنمایش هنگام دنباله نویسی</string>

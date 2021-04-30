@@ -199,6 +199,7 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Som ao pressionar uma tecla</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volume do som ao pressionar uma tecla</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibrar ao pressionar uma tecla</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Duração da vibração ao pressionar uma tecla</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Força da vibração ao pressionar uma tecla</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Visibilidade do PopUp</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Mostrar popup quando pressionar uma tecla</string>
@@ -331,9 +332,10 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Configuração concluída!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Relatório de erro do FlorisBoard</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Desculpe pelo inconveniente, mas o FlorisBoard travou devido a um erro inesperado.\n\nSe deseja reportar esse erro, clique em \"Copiar para a área de transferência\", em seguida, no botão \"Abrir relatório de bug\". Preencha o relatório do bug e cole o registro. Isso ajuda a tornar o FlorisBoard melhor e mais estável para todos. Obrigado!</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Desculpe pelo inconveniente, mas o FlorisBoard travou devido a um erro inesperado.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Se você deseja relatar esse erro, primeiro verifique o issue tracker (rastreador de problemas) no GitHub para conferir se o seu travamento ainda não foi relatado.\nSe ainda não, copie o registro de travamento gerado e abra um novo issue. Use o modelo \"%s\" e preencha a descrição, as etapas para reproduzir e cole o registro de travamento gerado no final. Isso ajuda a tornar o FlorisBoard melhor e mais estável para todos. Obrigado!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copiar para a área de transferência</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Abrir relatório de bug no (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Abrir issue tracker (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Fechar</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Relatórios de erros do FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard parou de funcionar…</string>
@@ -349,6 +351,22 @@
     <string name="clip__paste_item">Colar</string>
     <string name="clip__back_to_text_input">Voltar para a entrada de texto</string>
     <string name="clip__cant_paste">Este aplicativo não permite colar esse conteúdo.</string>
+    <string name="pref__clipboard__clipboard_category__label">Área de transferência</string>
+    <string name="pref__clipboard__use_internal_clipboard___label">Usar área de transferência interna</string>
+    <string name="pref__clipboard__use_internal_clipboard_title__summary">Use uma área de transferência interna em vez da área de transferência do sistema</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Sincronizar a partir da área de transferência do sistema</string>
+    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Atualizações da área de transferência do sistema também atualizam a área de transferência do Floris</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronizar com a área de transferência do sistema</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Atualizações da área de transferência do Floris também atualizam a área de transferência do sistema</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Ativar histórico da área de transferência</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Reter itens da área de transferência</string>
+    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Limpar itens antigos</string>
+    <string name="pref__clipboard__clean_up_old_after__label">Limpar itens antigos depois</string>
+    <string name="pref__unit_minutes">" minutos"</string>
+    <string name="pref__clipboard__limit_history_size__label">Limitar o tamanho do histórico</string>
+    <string name="pref__clipboard__max_history_size__label">Tamanho máximo do histórico</string>
+    <string name="pref__unit_items">" itens"</string>
+    <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Tempo de desaparecimento da trilha de deslizamento</string>
     <string name="pref__glide_preview_refresh_delay">Atraso de atualização da pré-visualização</string>
     <string name="pref__glide__show_preview">Mostrar pré-visualização durante a digitação deslizante</string>

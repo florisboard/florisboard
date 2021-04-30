@@ -3,11 +3,11 @@
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Пауза</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Изчакване</string>
-    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Икона с три точки. Ако е видима, означава, че при по-продължително натискане могат да се използват повече букви.</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Икона с три точки. Ако е видима, означава, че при задържане на клавиш могат да бъдат използвани повече букви.</string>
     <!-- One-handed strings -->
-    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Излиза от режим за работа с една ръка.</string>
-    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Премества клавиатурата вляво.</string>
-    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Премества клавиатурата вдясно.</string>
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Излиза от режима за работа с една ръка.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Премества клавиатурата отляво.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Премества клавиатурата отдясно.</string>
     <!-- Private mode info dialog strings -->
     <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Поверителен режим</string>
     <!--
@@ -28,15 +28,15 @@
     <string name="emoji__category__symbols" comment="Emoji category name">Символи</string>
     <string name="emoji__category__flags" comment="Emoji category name">Знамена</string>
     <!-- Smartbar strings -->
-    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Превключва бързи действия. При докосване, превключва между предложения за думи и бутони за бързи действия.</string>
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Превключва бързите действия. При докосване превключва между предложения за въвеждане и бутони за бързи действия.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Излиза от режима за редактиране на текст.</string>
     <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Превключва режим за работа с една ръка.</string>
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Отваря настройките.</string>
     <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Влиза в режим за редактиране на текст.</string>
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Влиза в режим за въвеждане на медия.</string>
     <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Бутон за отменяне, който връща последното действие</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Бутон за повтаряне, който връща последната отмяна</string>
-    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Ако се вижда, означава, че е активен поверителен режим. При докосване показва информация за него.</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Бутон за повтаряне, който връща последното отменено действие</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Ако се вижда, означава че е включен поверителния режим. При докосване показва информация за този режим.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Настройки</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Още настройки</string>
@@ -199,6 +199,7 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Звук при докосване на клавиш</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Сила на звука при докосване на клавиш</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Вибрация при докосване на клавиш</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Продължителност на вибрацията при докосване на клавиш</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Сила на вибрацията при докосване на клавиш</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Изскачащ прозорец</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Показване на изскачащ прозорец при докосване на клавиш</string>
@@ -226,6 +227,8 @@
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Жестове с клавиша за интервал</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Други жестове и прагове на жеста</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Без действие</string>
+    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Предишен режим на клавиатура</string>
+    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Следващ режим на клавиатура</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Прецизно изтриване на символи</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Изтриване на текущата дума</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Прецизно изтриване на думи</string>
@@ -329,9 +332,10 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Настройката завърши!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Отчет за грешка на FlorisBoard</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Извинете за неудобството, но FlorisBoard се срина поради неочаквана грешка.\n\nАко искате да съобщите за нея, докоснете „Копиране в буфера“, след това „Отваряне на доклад за грешка“. Попълнете доклада за грешки и го поставете. Така ще допринесете за подобряване на FlorisBoard за всички потребители! Благодарим ви!</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Извинявайте за неудобството, но поради непредвидена грешка FlorisBoard се срина.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">При желание от ваша страна да съобщите за възникналата грешка първо проверете системата за дефекти в GitHub дали подобна вече не е докладвана.\nАко не е, копирайте генерирания журнал на грешката и направете нов долкад за нея, използвайки шаблона \"%s\". Попълнете описанието, стъпките за възпроизвеждане и накрая поставете копирания журнал.\nПо този начин помагате да направим приложението FlorisBoard по-стабилно за всички. Благодарим ви!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Копиране в буфера</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Отваряне на формуляр за доклад за грешка (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Система за дефекти (github)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Затваряне</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Доклади за грешки на FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard спря да работи…</string>
@@ -347,6 +351,22 @@
     <string name="clip__paste_item">Поставяне</string>
     <string name="clip__back_to_text_input">Към въвеждане на текст</string>
     <string name="clip__cant_paste">Приложението не поддържа поставяне на такова съдържание.</string>
+    <string name="pref__clipboard__clipboard_category__label">Междинна памет</string>
+    <string name="pref__clipboard__use_internal_clipboard___label">Междинна памет</string>
+    <string name="pref__clipboard__use_internal_clipboard_title__summary">Използване на междинната памет на приложението вместо системната</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Внасяне от системната междинна памет</string>
+    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Промените в системната памет се отразяват в тази на приложението</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Изнасяне в системната междинна памет</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Промените в междинната памет на приложението се отразяват в системната</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Пазене на история</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Запазване на елементите от междинната памет</string>
+    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Премахване на стари елементи</string>
+    <string name="pref__clipboard__clean_up_old_after__label">Премахване на старите елементи след</string>
+    <string name="pref__unit_minutes">" минути"</string>
+    <string name="pref__clipboard__limit_history_size__label">Ограничаване на броя</string>
+    <string name="pref__clipboard__max_history_size__label">Максимален брой елементи</string>
+    <string name="pref__unit_items">" елемента"</string>
+    <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Време за избледняване на следата</string>
     <string name="pref__glide_preview_refresh_delay">Опресняване на прегледа</string>
     <string name="pref__glide__show_preview">Преглед при въвеждане чрез плъзгане</string>
