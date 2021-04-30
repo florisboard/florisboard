@@ -196,7 +196,7 @@ class EditorInstance private constructor(
                 val composer = (kClass.objectInstance ?: kClass.java.newInstance()) as ComposerHangul
                 val previous = getTextBeforeCursor(1)
                 val (rm, finalText) = composer.getActions(previous, text[0])
-                for (i in 1..rm) deleteBackwards()
+                ic.deleteSurroundingText(rm, 0)
                 ic.commitText(finalText, 1)
                 ic.endBatchEdit()
                 true
