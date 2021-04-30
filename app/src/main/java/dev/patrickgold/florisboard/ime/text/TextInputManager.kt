@@ -42,7 +42,6 @@ import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import kotlinx.coroutines.*
 import org.json.JSONArray
-import java.util.*
 import kotlin.math.roundToLong
 
 /**

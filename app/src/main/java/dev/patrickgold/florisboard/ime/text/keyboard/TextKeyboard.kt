@@ -17,16 +17,12 @@
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.graphics.Rect
+import dev.patrickgold.florisboard.ime.keyboard.Keyboard
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.popup.PopupMapping
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import kotlin.math.abs
 import kotlin.math.roundToInt
-
-abstract class Keyboard {
-    abstract fun getKeyForPos(pointerX: Int, pointerY: Int): Key?
-
-    abstract fun keys(): Iterator<Key>
-}
 
 class TextKeyboard(
     val arrangement: Array<Array<TextKey>>,
@@ -84,8 +80,8 @@ class TextKeyboard(
         return null
     }
 
-    fun layout(keyboardView: TextKeyboardView) {
-        if (arrangement.isEmpty()) return
+    override fun layout(keyboardView: KeyboardView) {
+        if (arrangement.isEmpty() || keyboardView !is TextKeyboardView) return
 
         val desiredTouchBounds = keyboardView.desiredKey.touchBounds
         val desiredVisibleBounds = keyboardView.desiredKey.visibleBounds

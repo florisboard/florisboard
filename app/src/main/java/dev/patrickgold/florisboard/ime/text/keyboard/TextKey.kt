@@ -16,29 +16,11 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
-import android.graphics.Rect
+import dev.patrickgold.florisboard.ime.keyboard.Key
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.popup.MutablePopupSet
 import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.*
-
-abstract class Key(open val data: KeyData) {
-    open var isEnabled: Boolean = true
-    open var isPressed: Boolean = false
-    open var isVisible: Boolean = true
-
-    open val touchBounds: Rect = Rect()
-    open val visibleBounds: Rect = Rect()
-    open val visibleDrawableBounds: Rect = Rect()
-    open val visibleLabelBounds: Rect = Rect()
-
-    open var flayShrink: Double = 0.0
-    open var flayGrow: Double = 0.0
-    open var flayWidthFactor: Double = 0.0
-
-    open var label: String? = null
-    open var hintedLabel: String? = null
-    open var foregroundDrawableId: Int? = null
-}
 
 class TextKey(override val data: KeyData) : Key(data) {
     var computedData: TextKeyData = TextKeyData.UNSPECIFIED
@@ -167,17 +149,5 @@ class TextKey(override val data: KeyData) : Key(data) {
                 }
             }
         }
-    }
-}
-
-class EmojiKey(override val data: KeyData) : Key(data) {
-    var computedData: EmojiKeyData = EmojiKeyData(listOf())
-        private set
-    var computedPopups: PopupSet<EmojiKeyData> = PopupSet()
-        private set
-
-    fun dummyCompute() {
-        computedData = data as? EmojiKeyData ?: computedData
-        computedPopups = PopupSet(relevant = (data as? EmojiKeyData)?.popup ?: listOf())
     }
 }

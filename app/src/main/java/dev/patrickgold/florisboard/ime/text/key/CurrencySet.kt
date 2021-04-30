@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.text.key
 
+import dev.patrickgold.florisboard.ime.text.keyboard.BasicTextKeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import kotlinx.serialization.Serializable
 import kotlin.math.abs
 

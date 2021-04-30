@@ -17,7 +17,9 @@
 package dev.patrickgold.florisboard.ime.text.layout
 
 import dev.patrickgold.florisboard.ime.extension.Asset
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.*
+import dev.patrickgold.florisboard.ime.text.keyboard.BasicTextKeyData
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -39,46 +41,46 @@ data class Layout(
             direction = "ltr",
             arrangement = listOf(
                 listOf(
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0)
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0)
                 ),
                 listOf(
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0)
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0)
                 ),
                 listOf(
-                    AutoTextKeyData(code = KeyCode.SHIFT, type = KeyType.MODIFIER, label = "shift"),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = KeyCode.DELETE, type = KeyType.ENTER_EDITING, label = "delete")
+                    BasicTextKeyData(code = KeyCode.SHIFT, type = KeyType.MODIFIER, label = "shift"),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = KeyCode.DELETE, type = KeyType.ENTER_EDITING, label = "delete")
                 ),
                 listOf(
-                    AutoTextKeyData(code = KeyCode.VIEW_SYMBOLS, type = KeyType.SYSTEM_GUI, label = "view_symbols"),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = KeyCode.SPACE, label = "space"),
-                    AutoTextKeyData(code = 0),
-                    AutoTextKeyData(code = KeyCode.ENTER, type = KeyType.ENTER_EDITING, label = "enter")
+                    BasicTextKeyData(code = KeyCode.VIEW_SYMBOLS, type = KeyType.SYSTEM_GUI, label = "view_symbols"),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = KeyCode.SPACE, label = "space"),
+                    BasicTextKeyData(code = 0),
+                    BasicTextKeyData(code = KeyCode.ENTER, type = KeyType.ENTER_EDITING, label = "enter")
                 )
             )
         )

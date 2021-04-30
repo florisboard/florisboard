@@ -27,7 +27,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.text.keyboard.Key
+import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.ViewLayoutUtils

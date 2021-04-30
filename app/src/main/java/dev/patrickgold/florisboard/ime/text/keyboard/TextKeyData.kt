@@ -14,18 +14,14 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.key
+package dev.patrickgold.florisboard.ime.text.keyboard
 
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.popup.PopupSet
-import dev.patrickgold.florisboard.ime.text.keyboard.TextComputingEvaluator
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyType
 import kotlinx.serialization.*
 import java.util.*
-
-interface KeyData {
-    fun computeTextKeyData(evaluator: TextComputingEvaluator): TextKeyData?
-
-    fun asString(isForDisplay: Boolean): String
-}
 
 interface TextKeyData : KeyData {
     val type: KeyType
@@ -385,75 +381,5 @@ class MultiTextKeyData(
 
     override fun toString(): String {
         return "${AutoTextKeyData::class.simpleName} { type=$type code=$code label=\"$label\" groupId=$groupId }"
-    }
-}
-
-/**
- * Data class for a single emoji (with possible emoji variants in [popup]).
- *
- * @property codePoints The code points of the emoji.
- * @property asString The name of the emoji.
- * @property popup List of possible variants of the emoji.
- */
-@Serializable
-@SerialName("emoji_key")
-class EmojiKeyData(
-    val codePoints: List<Int>,
-    val label: String = "",
-    val popup: MutableList<EmojiKeyData> = mutableListOf()
-) : KeyData {
-    override fun computeTextKeyData(evaluator: TextComputingEvaluator): TextKeyData? {
-        return null
-    }
-
-    override fun asString(isForDisplay: Boolean): String {
-        var ret = ""
-        for (codePoint in codePoints) {
-            ret += String(Character.toChars(codePoint))
-        }
-        return ret
-    }
-
-    override fun toString(): String {
-        return "EmojiKeyData"// { code=$code label=\"$label\" }"
-    }
-}
-
-@Serializable
-@SerialName("case_selector")
-class CaseSelector(
-    val lower: KeyData,
-    val upper: KeyData
-) : KeyData {
-    override fun computeTextKeyData(evaluator: TextComputingEvaluator): TextKeyData? {
-        return (if (evaluator.evaluateCaps()) { upper } else { lower }).computeTextKeyData(evaluator)
-    }
-
-    override fun asString(isForDisplay: Boolean): String {
-        return ""
-    }
-}
-
-@Serializable
-@SerialName("variation_selector")
-data class VariationSelector(
-    val default: KeyData,
-    val email: KeyData? = null,
-    val normal: KeyData? = null,
-    val password: KeyData? = null,
-    val uri: KeyData? = null,
-) : KeyData {
-    override fun computeTextKeyData(evaluator: TextComputingEvaluator): TextKeyData? {
-        return when (evaluator.getKeyVariation()) {
-            KeyVariation.ALL -> default
-            KeyVariation.EMAIL_ADDRESS -> email ?: default
-            KeyVariation.NORMAL -> normal ?: default
-            KeyVariation.PASSWORD -> password ?: default
-            KeyVariation.URI -> uri ?: default
-        }.computeTextKeyData(evaluator)
-    }
-
-    override fun asString(isForDisplay: Boolean): String {
-        return ""
     }
 }

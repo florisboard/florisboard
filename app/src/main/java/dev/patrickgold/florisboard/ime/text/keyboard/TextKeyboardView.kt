@@ -16,44 +16,29 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.PaintDrawable
 import android.os.Handler
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.View
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.core.*
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.popup.PopupManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.theme.Theme
-import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import dev.patrickgold.florisboard.util.cancelAll
 import dev.patrickgold.florisboard.util.postDelayed
-import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.sendBlocking
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener, SwipeGesture.Listener {
-    private val florisboard: FlorisBoard?
-        get() = FlorisBoard.getInstanceOrNull()
-    private val prefs: PrefHelper
-        get() = PrefHelper.getDefaultInstance(context)
-    private val themeManager: ThemeManager?
-        get() = ThemeManager.defaultOrNull()
-
-    private val channel: Channel<MotionEvent> = Channel(16)
-    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main.immediate + SupervisorJob())
-
+class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
     private var computedKeyboard: TextKeyboard? = null
     private var iconSet: TextKeyboardIconSet? = null
 
@@ -158,6 +143,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener, SwipeGesture
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         context.obtainStyledAttributes(attrs, R.styleable.TextKeyboardView).apply {
             isPreviewMode = getBoolean(R.styleable.TextKeyboardView_isPreviewKeyboard, false)
+            isTouchable = !isPreviewMode
             isSmartbarKeyboardView = getBoolean(R.styleable.TextKeyboardView_isSmartbarKeyboard, false)
             isLoadingPlaceholderKeyboard = getBoolean(R.styleable.TextKeyboardView_isLoadingPlaceholderKeyboard, false)
             recycle()
@@ -170,13 +156,6 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener, SwipeGesture
         popupManager = PopupManager(this, popupLayerView)
 
         setWillNotDraw(false)
-
-        scope.launch {
-            for (event in channel) {
-                if (!isActive) break
-                onTouchEventInternal(event)
-            }
-        }
     }
 
     fun setComputingEvaluator(evaluator: TextComputingEvaluator?) {
@@ -201,37 +180,12 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener, SwipeGesture
         invalidate()
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        themeManager?.registerOnThemeUpdatedListener(this)
-    }
-
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        themeManager?.unregisterOnThemeUpdatedListener(this)
         cachedTheme = null
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        event ?: return false
-        if (isPreviewMode) return false
-
-        when (event.actionMasked) {
-            MotionEvent.ACTION_DOWN,
-            MotionEvent.ACTION_POINTER_DOWN,
-            MotionEvent.ACTION_MOVE,
-            MotionEvent.ACTION_POINTER_UP,
-            MotionEvent.ACTION_UP,
-            MotionEvent.ACTION_CANCEL -> {
-                channel.sendBlocking(event)
-                return true
-            }
-        }
-        return false
-    }
-
-    private fun onTouchEventInternal(event: MotionEvent) {
+    override fun onTouchEventInternal(event: MotionEvent) {
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN,
             MotionEvent.ACTION_POINTER_DOWN -> {
@@ -613,12 +567,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener, SwipeGesture
         )
     }
 
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-        onLayoutInternal()
-    }
-
-    private fun onLayoutInternal() {
+    override fun onLayoutInternal() {
         val keyboard = computedKeyboard
         if (keyboard == null) {
             flogWarning(LogTopic.TEXT_KEYBOARD_VIEW) { "Computed keyboard is null!" }

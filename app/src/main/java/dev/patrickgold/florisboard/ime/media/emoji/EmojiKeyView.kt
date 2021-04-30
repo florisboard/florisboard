@@ -25,14 +25,10 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.widget.ScrollView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.BlendModeColorFilterCompat
-import androidx.core.graphics.BlendModeCompat
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
-import dev.patrickgold.florisboard.ime.text.key.EmojiKeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
-import dev.patrickgold.florisboard.ime.text.keyboard.EmojiKey
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import kotlinx.coroutines.CoroutineScope

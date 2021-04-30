@@ -20,7 +20,6 @@ import android.content.Context
 import android.graphics.Paint
 import android.graphics.Typeface
 import androidx.core.graphics.PaintCompat
-import dev.patrickgold.florisboard.ime.text.key.EmojiKeyData
 import timber.log.Timber
 import java.io.BufferedReader
 import java.io.IOException

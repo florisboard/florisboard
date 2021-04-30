@@ -3,7 +3,7 @@ package dev.patrickgold.florisboard.ime.text.gestures
 import android.util.SparseArray
 import androidx.collection.LruCache
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.text.keyboard.Key
+import dev.patrickgold.florisboard.ime.keyboard.Key
 import java.text.Normalizer
 import java.util.*
 import kotlin.collections.HashMap

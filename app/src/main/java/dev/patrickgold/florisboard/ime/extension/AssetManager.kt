@@ -18,7 +18,14 @@ package dev.patrickgold.florisboard.ime.extension
 
 import android.content.Context
 import android.net.Uri
-import dev.patrickgold.florisboard.ime.text.key.*
+import dev.patrickgold.florisboard.ime.keyboard.CaseSelector
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.AutoTextKeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.BasicTextKeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.MultiTextKeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

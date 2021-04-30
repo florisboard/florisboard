@@ -22,12 +22,12 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat.getDrawable
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.keyboard.Key
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiKey
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyboardView
 import dev.patrickgold.florisboard.ime.text.key.*
-import dev.patrickgold.florisboard.ime.text.keyboard.EmojiKey
-import dev.patrickgold.florisboard.ime.text.keyboard.Key
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardView
+import dev.patrickgold.florisboard.ime.text.keyboard.*
 
 /**
  * Manages the creation and dismissal of key popups as well as the checks if the pointer moved

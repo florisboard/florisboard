@@ -26,11 +26,11 @@ import dev.patrickgold.florisboard.ime.core.EditorInstance
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.InputView
+import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyboardView
 import dev.patrickgold.florisboard.ime.media.emoticon.EmoticonKeyData
 import dev.patrickgold.florisboard.ime.media.emoticon.EmoticonKeyboardView
-import dev.patrickgold.florisboard.ime.text.key.EmojiKeyData
-import dev.patrickgold.florisboard.ime.text.key.TextKeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.util.*
