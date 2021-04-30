@@ -50,6 +50,7 @@ import dev.patrickgold.florisboard.ime.popup.PopupLayerView
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.*
+import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.setup.SetupActivity
@@ -422,7 +423,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         prefs.sync()
         val newIsNumberRowVisible = prefs.keyboard.numberRow
         if (isNumberRowVisible != newIsNumberRowVisible) {
-            //textInputManager.key(KeyboardMode.CHARACTERS)
+            textInputManager.keyboards.clear(KeyboardMode.CHARACTERS)
             isNumberRowVisible = newIsNumberRowVisible
         }
         themeManager.update()

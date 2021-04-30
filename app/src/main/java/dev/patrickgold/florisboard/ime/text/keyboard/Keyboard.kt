@@ -85,13 +85,17 @@ class TextKeyboard(
     }
 
     fun layout(keyboardView: TextKeyboardView) {
+        if (arrangement.isEmpty()) return
+
         val desiredTouchBounds = keyboardView.desiredKey.touchBounds
         val desiredVisibleBounds = keyboardView.desiredKey.visibleBounds
         val keyboardWidth = keyboardView.measuredWidth.toDouble()
+        val keyboardHeight = keyboardView.measuredHeight.toDouble()
         val rowMarginH = abs(desiredTouchBounds.width() - desiredVisibleBounds.width())
+        val rowMarginV = (keyboardHeight - desiredTouchBounds.height() * rowCount.toDouble()) / (rowCount - 1).coerceAtLeast(1).toDouble()
 
         for ((r, row) in rows().withIndex()) {
-            val posY = desiredTouchBounds.height() * r
+            val posY = (desiredTouchBounds.height() + rowMarginV) * r
             val availableWidth = (keyboardWidth - rowMarginH) / desiredTouchBounds.width()
             var requestedWidth = 0.0
             var shrinkSum = 0.0
@@ -115,9 +119,9 @@ class TextKeyboard(
                     }
                     key.touchBounds.apply {
                         left = posX.roundToInt()
-                        top = posY
+                        top = posY.roundToInt()
                         right = (posX + keyWidth).roundToInt()
-                        bottom = posY + desiredTouchBounds.height()
+                        bottom = (posY + desiredTouchBounds.height()).roundToInt()
                     }
                     key.visibleBounds.apply {
                         left = key.touchBounds.left + abs(desiredTouchBounds.left - desiredVisibleBounds.left) + when {
@@ -155,9 +159,9 @@ class TextKeyboard(
                     }
                     key.touchBounds.apply {
                         left = posX.roundToInt()
-                        top = posY
+                        top = posY.roundToInt()
                         right = (posX + keyWidth).roundToInt()
-                        bottom = posY + desiredTouchBounds.height()
+                        bottom = (posY + desiredTouchBounds.height()).roundToInt()
                     }
                     key.visibleBounds.apply {
                         left = key.touchBounds.left + abs(desiredTouchBounds.left - desiredVisibleBounds.left)
