@@ -29,7 +29,7 @@ abstract class Keyboard {
 }
 
 class TextKeyboard(
-    private val arrangement: Array<Array<TextKey>>,
+    val arrangement: Array<Array<TextKey>>,
     val mode: KeyboardMode,
     val extendedPopupMapping: PopupMapping?,
     val extendedPopupMappingDefault: PopupMapping?

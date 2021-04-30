@@ -246,7 +246,7 @@ class PopupManager<V : View>(
         // Determine key counts for each row
         val n = when (key) {
             is TextKey -> key.computedPopups.size(keyHintMode)
-            //is EmojiKeyView -> key.data.popup.size
+            is EmojiKey -> key.computedPopups.size(keyHintMode)
             else -> 0
         }
         when {

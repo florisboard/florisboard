@@ -771,6 +771,18 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener, SwipeGesture
     private fun onDrawComputedKeyboard(canvas: Canvas) {
         val keyboard = computedKeyboard ?: return
 
+        // SUPER JANK nyi message implementation for the editing layout
+        if (keyboard.mode == KeyboardMode.EDITING) {
+            val msg = "The Editing layout is currently not available, see #216."
+            val msg2 = "Will be re-implemented in a later stage."
+            labelPaint.apply {
+                textSize = 30.0f
+            }
+            canvas.drawText(msg, measuredWidth / 2.0f, 100.0f, labelPaint)
+            canvas.drawText(msg2, measuredWidth / 2.0f, 200.0f, labelPaint)
+            return
+        }
+
         val theme = cachedTheme ?: themeManager?.activeTheme ?: Theme.BASE_THEME
         val isBorderless = !theme.getAttr(Theme.Attr.KEY_SHOW_BORDER).toOnOff().state &&
             Color.alpha(theme.getAttr(Theme.Attr.KEY_BACKGROUND).toSolidColor().color) <= 0x0F

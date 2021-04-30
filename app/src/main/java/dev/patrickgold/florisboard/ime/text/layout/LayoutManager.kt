@@ -209,22 +209,17 @@ class LayoutManager {
 
         /*// Add hints to keys
         if (keyboardMode == KeyboardMode.CHARACTERS) {
-            val symbolsComputedArrangement = fetchComputedLayoutAsync(KeyboardMode.SYMBOLS, subtype, prefs, currencySet).await().arrangement
+            val symbolsComputedArrangement = computeKeyboardAsync(KeyboardMode.SYMBOLS, subtype, prefs).await().arrangement
             val minRow = if (prefs.keyboard.numberRow) { 1 } else { 0 }
             for ((r, row) in computedArrangement.withIndex()) {
                 if (r >= (3 + minRow) || r < minRow) {
                     continue
                 }
-                var kOffset = 0
                 val symbolRow = symbolsComputedArrangement.getOrNull(r - minRow)
                 if (symbolRow != null) {
                     for ((k, key) in row.withIndex()) {
-                        val lastKey = row.getOrNull(k - 1)
-                        if (lastKey != null && lastKey.groupId == key.groupId && key.groupId != FlorisKeyData.GROUP_DEFAULT) {
-                            kOffset++
-                        }
-                        val symbol = symbolRow.getOrNull(k - kOffset)
-                        if (r == minRow && key.type == KeyType.CHARACTER && symbol?.type == KeyType.NUMERIC) {
+                        val symbol = symbolRow.getOrNull(k)
+                        if (r == minRow && key.data == KeyType.CHARACTER && symbol?.type == KeyType.NUMERIC) {
                             key.popup.hint = symbol
                         } else if (r > minRow && key.type == KeyType.CHARACTER && symbol?.type == KeyType.CHARACTER) {
                             key.popup.hint = symbol
