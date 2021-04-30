@@ -44,6 +44,7 @@ class TextKey(override val data: KeyData) : Key(data) {
     var computedData: TextKeyData = TextKeyData.UNSPECIFIED
         private set
     val computedPopups: MutablePopupSet<TextKeyData> = MutablePopupSet()
+    var computedHint: TextKeyData? = null
 
     fun compute(evaluator: TextComputingEvaluator) {
         val keyboardMode = evaluator.getKeyboard().mode
@@ -61,6 +62,7 @@ class TextKey(override val data: KeyData) : Key(data) {
         } else {
             computedData = computed
             computedPopups.clear()
+            computedPopups.hint = computedHint?.computeTextKeyData(evaluator)
             if (computed is BasicTextKeyData && computed.popup != null) {
                 computedPopups.merge(computed.popup, evaluator)
             }

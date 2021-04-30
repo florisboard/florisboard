@@ -276,9 +276,17 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener, SwipeGesture
             event.getX(pointerIndex).roundToInt(), event.getY(pointerIndex).roundToInt()
         )
         if (key != null && key.isEnabled) {
+            var keyHintMode = KeyHintMode.DISABLED
+            if (prefs.keyboard.hintedNumberRowMode != KeyHintMode.DISABLED && key.computedPopups.hint?.type == KeyType.NUMERIC) {
+                keyHintMode = prefs.keyboard.hintedNumberRowMode
+            }
+            if (prefs.keyboard.hintedSymbolsMode != KeyHintMode.DISABLED && key.computedPopups.hint?.type == KeyType.CHARACTER) {
+                keyHintMode = prefs.keyboard.hintedSymbolsMode
+            }
+
             florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.down(key.computedData))
             if (prefs.keyboard.popupEnabled) {
-                popupManager.show(key, KeyHintMode.DISABLED)
+                popupManager.show(key, keyHintMode)
             }
             florisboard.keyPressVibrate()
             florisboard.keyPressSound(key.computedData)
@@ -318,7 +326,7 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener, SwipeGesture
                 else -> {
                     longPressHandler.postDelayed(delayMillis) {
                         if (key.computedPopups.isNotEmpty()) {
-                            popupManager.extend(key, KeyHintMode.DISABLED)
+                            popupManager.extend(key, keyHintMode)
                             florisboard.keyPressVibrate()
                             florisboard.keyPressSound(key.computedData)
                         }
@@ -902,12 +910,13 @@ class TextKeyboardView : View, ThemeManager.OnThemeUpdatedListener, SwipeGesture
 
         val hintedLabel = key.hintedLabel
         if (hintedLabel != null) {
-            labelPaint.apply {
+            hintedLabelPaint.apply {
                 color = keyForeground.toSolidColor().color
-                textSize = labelPaintTextSize
-                val centerX = key.visibleBounds.width() * 5.0f / 6.0f
-                val centerY = key.visibleBounds.height() * 1.0f / 6.0f + (hintedLabelPaint.textSize - hintedLabelPaint.descent()) / 2
-                canvas.drawText(hintedLabel, centerX, centerY, labelPaint)
+                alpha = 170
+                textSize = hintedLabelPaintTextSize
+                val centerX = key.visibleBounds.left + key.visibleBounds.width() * 5.0f / 6.0f
+                val centerY = key.visibleBounds.top + key.visibleBounds.height() * 1.0f / 6.0f + (hintedLabelPaint.textSize - hintedLabelPaint.descent()) / 2
+                canvas.drawText(hintedLabel, centerX, centerY, hintedLabelPaint)
             }
         }
 

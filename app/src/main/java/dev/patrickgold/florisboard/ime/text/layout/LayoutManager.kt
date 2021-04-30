@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.ime.text.layout
 
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
-import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.debug.flogWarning
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
@@ -27,7 +26,6 @@ import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.popup.PopupExtension
 import dev.patrickgold.florisboard.ime.popup.PopupManager
-import dev.patrickgold.florisboard.ime.popup.PopupMapping
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.*
 import kotlinx.coroutines.*
@@ -207,7 +205,7 @@ class LayoutManager {
             }
         }
 
-        /*// Add hints to keys
+        // Add hints to keys
         if (keyboardMode == KeyboardMode.CHARACTERS) {
             val symbolsComputedArrangement = computeKeyboardAsync(KeyboardMode.SYMBOLS, subtype, prefs).await().arrangement
             val minRow = if (prefs.keyboard.numberRow) { 1 } else { 0 }
@@ -218,16 +216,17 @@ class LayoutManager {
                 val symbolRow = symbolsComputedArrangement.getOrNull(r - minRow)
                 if (symbolRow != null) {
                     for ((k, key) in row.withIndex()) {
-                        val symbol = symbolRow.getOrNull(k)
-                        if (r == minRow && key.data == KeyType.CHARACTER && symbol?.type == KeyType.NUMERIC) {
-                            key.popup.hint = symbol
-                        } else if (r > minRow && key.type == KeyType.CHARACTER && symbol?.type == KeyType.CHARACTER) {
-                            key.popup.hint = symbol
+                        val symbol = symbolRow.getOrNull(k)?.data?.computeTextKeyData(DefaultTextComputingEvaluator)
+                        val type = (key.data as? TextKeyData)?.type ?: KeyType.UNSPECIFIED
+                        if (r == minRow && type == KeyType.CHARACTER && symbol?.type == KeyType.NUMERIC) {
+                            key.computedHint = symbol
+                        } else if (r > minRow && type == KeyType.CHARACTER && symbol?.type == KeyType.CHARACTER) {
+                            key.computedHint = symbol
                         }
                     }
                 }
             }
-        }*/
+        }
 
         val array = Array(computedArrangement.size) { computedArrangement[it] }
         return TextKeyboard(
