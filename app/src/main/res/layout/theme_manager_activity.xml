@@ -34,7 +34,7 @@
                     android:orientation="vertical"
                     android:theme="@style/PreferenceThemeOverlay">
 
-                    <dev.patrickgold.florisboard.ime.text.keyboard.KeyboardView
+                    <dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardView
                         android:id="@+id/keyboard_preview"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/textKeyboardView_baseHeight"
@@ -109,10 +109,11 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
+                    <com.google.android.flexbox.FlexboxLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        app:flexDirection="row"
+                        app:flexWrap="wrap">
 
                         <Button
                             android:id="@+id/theme_export_btn"
@@ -129,7 +130,7 @@
                         <View
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1.0"/>
+                            app:layout_flexGrow="1"/>
 
                         <Button
                             android:id="@+id/theme_delete_btn"
@@ -155,7 +156,7 @@
                             android:drawablePadding="8dp"
                             android:drawableTint="?colorAccent"/>
 
-                    </LinearLayout>
+                    </com.google.android.flexbox.FlexboxLayout>
 
                 </LinearLayout>
 

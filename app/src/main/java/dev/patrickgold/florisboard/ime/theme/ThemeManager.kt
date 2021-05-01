@@ -120,6 +120,7 @@ class ThemeManager private constructor(
     @SuppressLint("ResourceType")
     @Suppress("UNNECESSARY_SAFE_CALL")
     fun updateRemoteColorValues(packageName: String) {
+        return // See why: https://github.com/florisboard/florisboard/issues/763
         try {
             val pm = packageManager ?: return
             val res = pm.getResourcesForApplication(packageName)
@@ -254,25 +255,19 @@ class ThemeManager private constructor(
     }
 
     fun loadTheme(ref: AssetRef): Result<Theme> {
-        val themeJson = assetManager.loadAsset(ref, ThemeJson::class).getOrElse {
-            Timber.e(it.toString())
-            return Result.failure(it)
-        }
-        val theme = themeJson.toTheme()
-        return Result.success(theme)
+        return assetManager.loadJsonAsset(ref)
     }
 
     fun loadTheme(uri: Uri): Result<Theme> {
-        val themeJson = assetManager.loadAsset(uri, ThemeJson::class, THEME_MAX_SIZE).getOrElse {
-            Timber.e(it.toString())
-            return Result.failure(it)
-        }
-        val theme = themeJson.toTheme()
-        return Result.success(theme)
+        return assetManager.loadJsonAsset(uri, THEME_MAX_SIZE)
     }
 
     fun writeTheme(ref: AssetRef, theme: Theme): Result<Unit> {
-        return assetManager.writeAsset(ref, ThemeJson::class, ThemeJson.fromTheme(theme))
+        return assetManager.writeJsonAsset(ref, theme)
+    }
+
+    fun writeTheme(uri: Uri, theme: Theme): Result<Unit> {
+        return assetManager.writeJsonAsset(uri, theme)
     }
 
     private fun evaluateActiveThemeRef(): AssetRef? {
@@ -315,9 +310,8 @@ class ThemeManager private constructor(
     private fun indexThemeRefs() {
         indexedDayThemeRefs.clear()
         indexedNightThemeRefs.clear()
-        assetManager.listAssets(
-            AssetRef(AssetSource.Assets, THEME_PATH_REL),
-            ThemeMetaOnly::class
+        assetManager.listAssets<ThemeMetaOnly>(
+            AssetRef(AssetSource.Assets, THEME_PATH_REL)
         ).onSuccess {
             for ((ref, themeMetaOnly) in it) {
                 if (themeMetaOnly.isNightTheme) {
@@ -329,9 +323,8 @@ class ThemeManager private constructor(
         }.onFailure {
             Timber.e(it.toString())
         }
-        assetManager.listAssets(
-            AssetRef(AssetSource.Internal, THEME_PATH_REL),
-            ThemeMetaOnly::class
+        assetManager.listAssets<ThemeMetaOnly>(
+            AssetRef(AssetSource.Internal, THEME_PATH_REL)
         ).onSuccess {
             for ((ref, themeMetaOnly) in it) {
                 if (themeMetaOnly.isNightTheme) {

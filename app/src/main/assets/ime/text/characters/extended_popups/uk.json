@@ -6,7 +6,7 @@
     "all": {
       "і": {
         "relevant": [
-          { "code":  1111, "label": "ї" }
+          { "$": "auto_text_key", "code":  1111, "label": "ї" }
         ]
       },
       "~right": {

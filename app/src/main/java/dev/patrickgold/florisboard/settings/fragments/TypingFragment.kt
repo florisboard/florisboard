@@ -26,6 +26,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ListItemBinding
 import dev.patrickgold.florisboard.databinding.SettingsFragmentTypingBinding
 import dev.patrickgold.florisboard.databinding.SettingsFragmentTypingSubtypeDialogBinding
+import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeLayoutMap
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.layout.LayoutType
@@ -190,10 +191,12 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
                     phone = layoutManager.getMetaNameListFor(LayoutType.PHONE)[dialogView.phoneLayoutSpinner.selectedItemPosition],
                     phone2 = layoutManager.getMetaNameListFor(LayoutType.PHONE2)[dialogView.phone2LayoutSpinner.selectedItemPosition],
                 )
-                subtype.locale = LocaleUtils.stringToLocale(languageCode)
-                subtype.currencySetName = currencySetName
-                subtype.layoutMap = layoutMap
-                subtypeManager.modifySubtypeWithSameId(subtype)
+                subtypeManager.modifySubtypeWithSameId(Subtype(
+                    id = subtype.id,
+                    locale = LocaleUtils.stringToLocale(languageCode),
+                    currencySetName = currencySetName,
+                    layoutMap = layoutMap
+                ))
                 updateSubtypeListView()
             }
             setNeutralButton(R.string.settings__localization__subtype_delete) { _, _ ->

@@ -16,7 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.popup
 
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
+import dev.patrickgold.florisboard.ime.text.keyboard.TextComputingEvaluator
+import kotlinx.serialization.Serializable
 
 /**
  * A popup set for a single key. This set describes, if the key has a [hint] character,
@@ -32,10 +35,11 @@ import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
  * within this companion object are allowed (as long as the corresponding [hint] or [main]
  * character is *not* null).
  */
-class PopupSet<T> (
-    var hint: T? = null,
-    var main: T? = null,
-    var relevant: List<T> = listOf()
+@Serializable
+open class PopupSet<T : KeyData>(
+    open val hint: T? = null,
+    open val main: T? = null,
+    open val relevant: List<T> = listOf()
 ) : Collection<T> {
     companion object {
         const val HINT_INDEX: Int = -2
@@ -43,8 +47,7 @@ class PopupSet<T> (
     }
 
     override val size: Int
-        get() = if (hint != null) { 1 } else { 0 } + if (main != null) { 1 } else { 0 } +
-                relevant.size
+        get() = if (hint != null) { 1 } else { 0 } + if (main != null) { 1 } else { 0 } + relevant.size
 
     fun size(keyHintMode: KeyHintMode): Int {
         return if (keyHintMode == KeyHintMode.DISABLED && hint != null) {
@@ -97,27 +100,7 @@ class PopupSet<T> (
         return size == 0
     }
 
-    fun merge(other: PopupSet<T>) {
-        val tempRelevant = relevant.toMutableList()
-        tempRelevant.addAll(other.relevant)
-        other.hint?.let {
-            if (hint == null) {
-                hint = it
-            } else {
-                tempRelevant.add(it)
-            }
-        }
-        other.main?.let {
-            if (main == null) {
-                main = it
-            } else {
-                tempRelevant.add(it)
-            }
-        }
-        relevant = tempRelevant.toList()
-    }
-
-    class PopupSetIterator<T> internal constructor (
+    class PopupSetIterator<T : KeyData> internal constructor (
         private val popupSet: PopupSet<T>
     ) : Iterator<T> {
         var index = HINT_INDEX
@@ -140,6 +123,63 @@ class PopupSet<T> (
                 }
             }
             return popupSet.getOrNull(index) != null
+        }
+    }
+}
+
+@Suppress("UNCHECKED_CAST")
+class MutablePopupSet<T : KeyData>(
+    override var hint: T? = null,
+    override var main: T? = null,
+    override val relevant: ArrayList<T> = arrayListOf()
+) : PopupSet<T>(hint, main, relevant) {
+    fun clear() {
+        hint = null
+        main = null
+        relevant.clear()
+    }
+
+    fun merge(other: PopupSet<T>) {
+        relevant.addAll(other.relevant)
+        other.hint?.let {
+            if (hint == null) {
+                hint = it
+            } else {
+                relevant.add(it)
+            }
+        }
+        other.main?.let {
+            if (main == null) {
+                main = it
+            } else {
+                relevant.add(it)
+            }
+        }
+    }
+
+    fun merge(other: PopupSet<T>, evaluator: TextComputingEvaluator) {
+        other.relevant.forEach {
+            val data = it.computeTextKeyData(evaluator) as? T
+            if (data != null) {
+                relevant.add(data)
+            }
+        }
+        other.hint?.let {
+            if (hint == null) {
+                hint = it
+            } else {
+                relevant.add(it)
+            }
+        }
+        other.main?.let {
+            val data = it.computeTextKeyData(evaluator) as? T
+            if (data != null) {
+                if (main == null) {
+                    main = data
+                } else {
+                    relevant.add(data)
+                }
+            }
         }
     }
 }

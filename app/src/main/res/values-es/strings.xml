@@ -135,6 +135,7 @@
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Botón de barra inteligente</string>
     <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Distribución de pantalla completa horizontal</string>
     <string name="settings__theme__group_extractActionButton" comment="Theme group label">Botón de acción de pantalla completa horizontal</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">Rastro del gesto</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Grupo personalizado (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Color de fondo</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Color de fondo (activo)</string>
@@ -198,6 +199,7 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Sonido al presionar una tecla</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volumen del sonido al presionar una tecla</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibración al presionar una tecla</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Intensidad de la vibración al presionar una tecla</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Intensidad de la vibración al presionar una tecla</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Visibilidad de las teclas emergentes</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Ampliar al pulsar una tecla</string>
@@ -217,12 +219,16 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Al presionar dos veces en la barra espaciadora se inserta un punto seguido de un espacio</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gestos &amp; escritura deslizante</string>
     <string name="pref__glide__title" comment="Preference group title">Escritura deslizante</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Habilitar escritura por gesto</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Escriba una palabra deslizando su dedo a través de las letras</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Mostrar recorrido del gesto</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Desaparecerá después de cada palabra</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Gestos generales</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestos en la barra espaciadora</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Otros gestos / umbrales de gestos</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Sin acción</string>
+    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Cambiar al modo anterior de teclado</string>
+    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Cambiar al modo siguiente de teclado</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Eliminar caracteres con precisión</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Eliminar palabra actual</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Eliminar palabras con precisión</string>
@@ -236,7 +242,10 @@
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Mover cursor al final de la línea</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Mover cursor al inicio de la página</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Mover cursor al final de la página</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Abrir el gestor/historial del portapapeles</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Mayúsculas</string>
+    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Rehacer</string>
+    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Deshacer</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Seleccionar método de entrada</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Cambiar al teclado anterior</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Cambiar al subtipo anterior</string>
@@ -323,9 +332,10 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">¡Configuración terminada!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Informe de errores de FlorisBoard</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Sentimos las molestias, pero FlorisBoard se ha cerrado debido a un error inesperado.\n\nSi desea informar de este error, haga clic en \"Copiar al portapapeles\", y luego en el botón \"Abrir informe de errores\". Rellene el informe de errores y pegue el registro. Esto ayuda a que FlorisBoard sea mejor y más estable para todos. ¡Gracias!</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Lamentamos los inconvenientes, pero FlorisBoard se ha cerrado inesperadamente por un error.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Si deseas reportar este fallo, primero comprueba si ya ha sido reportado en el Issue Tracker en GitHub.\nSi no, copie el log del error generado y abre un Issue. Usa la plantilla \"%s\" y rellenala con tu descripción, los pasos para reproducirlo, y pega el log generado al final. Esto ayudará a mejorar FlorisBoard y hacerlo más estable para todo el mundo. ¡Gracias!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copiar al portapapeles</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Abrir formulario de reporte de errores (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Abrir issue tracker (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Cerrar</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Informes de errores de FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard ha dejado de funcionar…</string>
@@ -341,4 +351,24 @@
     <string name="clip__paste_item">Pegar</string>
     <string name="clip__back_to_text_input">Volver a la entrada de texto</string>
     <string name="clip__cant_paste">Esta aplicación no permite pegar el contenido.</string>
+    <string name="pref__clipboard__clipboard_category__label">Portapapeles</string>
+    <string name="pref__clipboard__use_internal_clipboard___label">Usar portapapeles interno</string>
+    <string name="pref__clipboard__use_internal_clipboard_title__summary">Usar portapapeles interno en vez de el portapapeles del sistema</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Sincronizar portapapeles del sistema</string>
+    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Las actualizaciones del portapapeles del sistema también actualizan el portapapeles de Floris</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronizar al portapapeles del sistema</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Las actualizaciones del portapapeles de Floris también actualizan el portapapeles del sistema</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Habilitar historial de portapapeles</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Conservar items del portapapeles</string>
+    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Limpiar ítems antiguos</string>
+    <string name="pref__clipboard__clean_up_old_after__label">Limpiar ítems antiguos después</string>
+    <string name="pref__unit_minutes">" minutos"</string>
+    <string name="pref__clipboard__limit_history_size__label">Limite de tamaño del historial</string>
+    <string name="pref__clipboard__max_history_size__label">Tamaño máximo del historial</string>
+    <string name="pref__unit_items">" ítems"</string>
+    <!-- glide strings -->
+    <string name="pref__glide_trail_fade_duration">Tiempo de desvanecimiento del gesto</string>
+    <string name="pref__glide_preview_refresh_delay">Retraso de actualización de la vista previa</string>
+    <string name="pref__glide__show_preview">Mostrar recorrido del gesto</string>
+    <string name="pref__glide_trail_max_length">Longitud máxima del recorrido del gesto</string>
 </resources>

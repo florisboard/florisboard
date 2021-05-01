@@ -6,94 +6,91 @@
     "all": {
       "a": {
         "relevant": [
-          { "code":  229, "label": "å" },
-          { "code":  225, "label": "á" },
-          { "code":  226, "label": "â" },
-          { "code":  227, "label": "ã" },
-          { "code":  257, "label": "ā" },
-          { "code":  230, "label": "æ" },
-          { "code":  228, "label": "ä" },
-          { "code":  224, "label": "à" }
+          { "$": "auto_text_key", "code":  229, "label": "å" },
+          { "$": "auto_text_key", "code":  225, "label": "á" },
+          { "$": "auto_text_key", "code":  226, "label": "â" },
+          { "$": "auto_text_key", "code":  227, "label": "ã" },
+          { "$": "auto_text_key", "code":  257, "label": "ā" },
+          { "$": "auto_text_key", "code":  230, "label": "æ" },
+          { "$": "auto_text_key", "code":  228, "label": "ä" },
+          { "$": "auto_text_key", "code":  224, "label": "à" }
         ]
       },
       "c": {
-        "main": { "code":  231, "label": "ç" },
+        "main": { "$": "auto_text_key", "code":  231, "label": "ç" },
         "relevant": [
-          { "code":  269, "label": "č" },
-          { "code":  265, "label": "ĉ" },
-          { "code":  263, "label": "ć" }
+          { "$": "auto_text_key", "code":  269, "label": "č" },
+          { "$": "auto_text_key", "code":  265, "label": "ĉ" },
+          { "$": "auto_text_key", "code":  263, "label": "ć" }
         ]
       },
       "e": {
         "relevant": [
-          { "code":  233, "label": "é" },
-          { "code":  275, "label": "ē" },
-          { "code":  281, "label": "ę" },
-          { "code":  279, "label": "ė" },
-          { "code":  234, "label": "ê" },
-          { "code":  232, "label": "è" },
-          { "code":  235, "label": "ë" }
+          { "$": "auto_text_key", "code":  233, "label": "é" },
+          { "$": "auto_text_key", "code":  275, "label": "ē" },
+          { "$": "auto_text_key", "code":  281, "label": "ę" },
+          { "$": "auto_text_key", "code":  279, "label": "ė" },
+          { "$": "auto_text_key", "code":  234, "label": "ê" },
+          { "$": "auto_text_key", "code":  232, "label": "è" },
+          { "$": "auto_text_key", "code":  235, "label": "ë" }
         ]
       },
       "r": {
-        "main": { "code":  345, "label": "ř" }
+        "main": { "$": "auto_text_key", "code":  345, "label": "ř" }
 
       },
       "g": {
-        "main": { "code":  285, "label": "ĝ" }
-
-
+        "main": { "$": "auto_text_key", "code":  285, "label": "ĝ" }
       },
       "h": {
-        "main": { "code": 293, "label": "ĥ" }
-      }
-    },
+        "main": { "$": "auto_text_key", "code": 293, "label": "ĥ" }
+      },
       "j": {
-        "main": { "code": 309, "label": "ĵ" }
+        "main": { "$": "auto_text_key", "code": 309, "label": "ĵ" }
       },
       "n": {
         "relevant": [
-          { "code":  328, "label": "ň" },
-          { "code":  241, "label": "ñ" }
+          { "$": "auto_text_key", "code":  328, "label": "ň" },
+          { "$": "auto_text_key", "code":  241, "label": "ñ" }
         ]
       },
       "o": {
-        "main": { "code":  246, "label": "ö" },
+        "main": { "$": "auto_text_key", "code":  246, "label": "ö" },
         "relevant": [
-          { "code":  333, "label": "ō" },
-          { "code":  248, "label": "ø" },
-          { "code":  243, "label": "ó" },
-          { "code":  245, "label": "õ" },
-          { "code":  242, "label": "ò" },
-          { "code":  339, "label": "œ" },
-          { "code":  244, "label": "ô" }
+          { "$": "auto_text_key", "code":  333, "label": "ō" },
+          { "$": "auto_text_key", "code":  248, "label": "ø" },
+          { "$": "auto_text_key", "code":  243, "label": "ó" },
+          { "$": "auto_text_key", "code":  245, "label": "õ" },
+          { "$": "auto_text_key", "code":  242, "label": "ò" },
+          { "$": "auto_text_key", "code":  339, "label": "œ" },
+          { "$": "auto_text_key", "code":  244, "label": "ô" }
         ]
       },
       "s": {
-        "main": { "code":  219, "label": "ș" },
+        "main": { "$": "auto_text_key", "code":  219, "label": "ș" },
         "relevant": [
-          { "code":  347, "label": "ś" },
-          { "code":  349, "label": "ŝ" },
-          { "code":  353, "label": "š" }
+          { "$": "auto_text_key", "code":  347, "label": "ś" },
+          { "$": "auto_text_key", "code":  349, "label": "ŝ" },
+          { "$": "auto_text_key", "code":  353, "label": "š" }
         ]
       },
       "u": {
-        "main": { "code":  251, "label": "û" },
+        "main": { "$": "auto_text_key", "code":  251, "label": "û" },
         "relevant": [
-          { "code":  363, "label": "ū" },
-          { "code":  249, "label": "ù" },
-          { "code":  250, "label": "ú" },
-          { "code":  252, "label": "ü" }
+          { "$": "auto_text_key", "code":  363, "label": "ū" },
+          { "$": "auto_text_key", "code":  249, "label": "ù" },
+          { "$": "auto_text_key", "code":  250, "label": "ú" },
+          { "$": "auto_text_key", "code":  252, "label": "ü" }
         ]
       },
       "y": {
         "relevant": [
-          { "code":  253, "label": "ý" }
+          { "$": "auto_text_key", "code":  253, "label": "ý" }
         ]
       },
       "z": {
         "relevant": [
-          { "code":  382, "label": "ž" }
+          { "$": "auto_text_key", "code":  382, "label": "ž" }
         ]
       },
       "~right": {
@@ -130,3 +127,4 @@
       }
     }
   }
+}

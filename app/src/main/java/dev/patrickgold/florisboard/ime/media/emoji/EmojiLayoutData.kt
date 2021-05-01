@@ -137,7 +137,7 @@ fun parseRawEmojiSpecsFile(
                             // Check if system font can render the emoji, else skip it as it makes
                             //  no include it in the emoji keyboard as it will be the default
                             //  glyph not found box.
-                            if (PaintCompat.hasGlyph(paint, key.getCodePointsAsString())) {
+                            if (PaintCompat.hasGlyph(paint, key.asString(isForDisplay = false))) {
                                 if (dataCPs.size > 1) {
                                     // Emoji COULD be an extension
                                     when (dataCPs[1]) {

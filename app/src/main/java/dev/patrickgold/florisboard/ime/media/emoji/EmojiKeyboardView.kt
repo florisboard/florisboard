@@ -59,7 +59,7 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener,
     private val uiLayouts = EnumMap<EmojiCategory, ScrollView>(EmojiCategory::class.java)
 
     var isScrollBlocked: Boolean = false
-    var popupManager = PopupManager<EmojiKeyboardView, EmojiKeyView>(this, florisboard?.popupLayerView)
+    var popupManager = PopupManager(this, florisboard?.popupLayerView)
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -157,7 +157,7 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener,
         flexboxLayout.flexWrap = FlexWrap.WRAP
         for (emojiKeyData in layouts.await()[category].orEmpty()) {
             val emojiKeyView =
-                EmojiKeyView(this@EmojiKeyboardView, emojiKeyData)
+                EmojiKeyView(this@EmojiKeyboardView, EmojiKey(emojiKeyData).also { it.dummyCompute() })
             emojiKeyView.layoutParams = FlexboxLayout.LayoutParams(
                 emojiKeyWidth, emojiKeyHeight
             )

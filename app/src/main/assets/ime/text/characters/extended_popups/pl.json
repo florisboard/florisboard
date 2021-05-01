@@ -6,49 +6,49 @@
     "all": {
       "a": {
         "relevant": [
-          { "code":  261, "label": "ą" },
-          { "code":  224, "label": "à" }
+          { "$": "auto_text_key", "code":  261, "label": "ą" },
+          { "$": "auto_text_key", "code":  224, "label": "à" }
         ]
       },
       "c": {
         "relevant": [
-          { "code":  263, "label": "ć" }
+          { "$": "auto_text_key", "code":  263, "label": "ć" }
         ]
       },
       "e": {
         "relevant": [
-          { "code":  281, "label": "ę" }
+          { "$": "auto_text_key", "code":  281, "label": "ę" }
         ]
       },
       "l": {
         "relevant": [
-          { "code":  322, "label": "ł" }
+          { "$": "auto_text_key", "code":  322, "label": "ł" }
         ]
       },
       "n": {
         "relevant": [
-          { "code":  324, "label": "ń" }
+          { "$": "auto_text_key", "code":  324, "label": "ń" }
         ]
       },
       "o": {
         "relevant": [
-          { "code":  243, "label": "ó" }
+          { "$": "auto_text_key", "code":  243, "label": "ó" }
         ]
       },
       "s": {
         "relevant": [
-          { "code":  347, "label": "ś" }
+          { "$": "auto_text_key", "code":  347, "label": "ś" }
         ]
       },
       "x": {
         "relevant": [
-          { "code":  378, "label": "ź" }
+          { "$": "auto_text_key", "code":  378, "label": "ź" }
         ]
       },
       "z": {
         "relevant": [
-          { "code":  378, "label": "ź" },
-          { "code":  380, "label": "ż" }
+          { "$": "auto_text_key", "code":  378, "label": "ź" },
+          { "$": "auto_text_key", "code":  380, "label": "ż" }
         ]
       },
       "~right": {

@@ -59,4 +59,5 @@
     <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">다음</string>
     <!-- Crash Dialog strings -->
     <!-- clipboard strings -->
+    <!-- glide strings -->
 </resources>

@@ -1,0 +1,10 @@
+- Rewrite layout logic and rendering engine (#734)
+  - This change vastly improves the ability to add new features, reduces base memory consumption, improves performance.
+  - The layout JSON files now support text keys which require multiple code points
+  - Related to #677: The base memory usage is now less for the text part, though emojis are still eating a lot of RAM (and lead to the rotating-device OOM crash)
+  - NOTE: Glide typing and adaptive themes temporarily do not work in this release, also the gestures shift+space and shift-swipe+character.
+- Fix crash when copying from AOSP calculator (#719, #761, thanks @x-yl)
+- Fix NPE in FileStorage.cloneURI (#699)
+- Fix flashing keyboard (#589)
+- Improve CrashUtility class
+- Improve IME active checking utility and code (thanks @olLenz)

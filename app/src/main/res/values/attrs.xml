@@ -14,7 +14,7 @@
         <attr name="android:defaultValue" format="integer"/>
     </declare-styleable>
 
-    <declare-styleable name="KeyboardView">
+    <declare-styleable name="TextKeyboardView">
         <attr name="isPreviewKeyboard" format="boolean"/>
         <attr name="isSmartbarKeyboard" format="boolean"/>
         <attr name="isLoadingPlaceholderKeyboard" format="boolean"/>

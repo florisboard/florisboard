@@ -25,6 +25,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import dev.patrickgold.florisboard.databinding.SetupFragmentEnableImeBinding
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.util.checkIfImeIsEnabled
 
 class EnableImeFragment : Fragment() {
     private lateinit var binding: SetupFragmentEnableImeBinding
@@ -47,7 +48,7 @@ class EnableImeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        if (FlorisBoard.checkIfImeIsEnabled(requireContext())) {
+        if (checkIfImeIsEnabled(requireContext())) {
             (activity as SetupActivity).changePositiveButtonState(true)
             binding.textAfterEnabled.visibility = View.VISIBLE
         } else {

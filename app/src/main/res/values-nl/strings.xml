@@ -199,6 +199,7 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Geluid bij toetsdruk</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Geluidsvolume bij toetsdruk</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibreren bij toetsdruk</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Trillingsduur bij toetsdruk</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Trillingssterkte bij toetsdruk</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Zichtbaarheid pop-up</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Pop-up tonen als je op een toets drukt</string>
@@ -331,9 +332,8 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Klaar!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Foutenrapport FlorisBoard</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Sorry voor het ongemak, maar FlorisBoard is gecrasht door een onverwachte fout.\n\nAls u deze fout wilt melden, klikt u op \"Kopiëren naar klembord\" en vervolgens op de \"Open bug report\"-knop. Vul het foutenrapport in en plak het logboek. Dit helpt bij het verbeteren en stabieler maken van FlorisBoard voor iedereen. Bedankt!</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Sorry voor het ongemak, maar FlorisBoard is gecrashed omwille van een onverwachte fout.</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopiëren naar klembord</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Bug-rapportformulier openen (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Sluiten</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Foutenrapporten van FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard is gestopt met werken…</string>
@@ -349,6 +349,12 @@
     <string name="clip__paste_item">Plakken</string>
     <string name="clip__back_to_text_input">Terug naar tekstinvoer</string>
     <string name="clip__cant_paste">Deze app laat niet toe om deze inhoud te plakken.</string>
+    <string name="pref__clipboard__clipboard_category__label">Klembord</string>
+    <string name="pref__clipboard__use_internal_clipboard___label">Gebruik intern klembord</string>
+    <string name="pref__clipboard__use_internal_clipboard_title__summary">Gebruik een intern klembord in plaats van het systeemklembord</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Synchroniseer met systeemklembord</string>
+    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Systeemklembord updatet ook het Floris-klembord</string>
+    <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Vervaagtijd veegspoor</string>
     <string name="pref__glide_preview_refresh_delay">Vertraging vernieuwing voorbeeld</string>
     <string name="pref__glide__show_preview">Toon voorbeeld tijdens vegend typen</string>

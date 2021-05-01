@@ -199,6 +199,7 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">دەنگ لەکاتی نووسین</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">ئاستی دەنگ</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">لەرزین لەکاتی نووسین</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">ماوەی لەرزین</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">ئاستی لەرزین</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">بچووککراوە پیت</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">پیشاندانی بچووککراوەی پیت لەکاتی نووسین</string>
@@ -226,6 +227,8 @@
     <string name="pref__gestures__space_bar_title" comment="Preference group title">ئاماژەی دوگمەی بۆشایی</string>
     <string name="pref__gestures__other_title" comment="Preference group title">ئاماژەکانی/فرمانەکانی تر</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">هیچ فرمانێک</string>
+    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">گەڕانەوە بۆ شێوازی پێشوو</string>
+    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">گەڕانەوە بۆ شێوازی دواتر</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">سڕینەوەی پیتەکان یەک بە یەک</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">سڕینەوەی ووشەی ئێستا</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">سڕینەوەی ووشەکان یەک بە یەک</string>
@@ -239,7 +242,10 @@
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">چوون بۆ کۆتایی ڕستە</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">چوون بۆ سەرەتای ڕستە</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">چوون بۆ کۆتایی ڕستە</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">کردنەوەی لەبەرگیراوەکان</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">گەورەکردن (Shift) </string>
+    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">هەنگاوێک پێشتر</string>
+    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">هەنگاوێک دواتر</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">گۆڕینی تەختەکلیل</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">گۆڕین بۆ تەختەکلیلی پێشوو</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">گۆڕین بۆ زمانی پێشوو</string>
@@ -327,9 +333,8 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">دامەزراندن کۆتایی هات!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBorad ڕاپۆرتی هەڵەی</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">بەداخەوە تەختەکلیلی FlorisBoard بەهۆی هەڵەیەکی چاوەڕوان نەکراوەوە لەکارکەوت، \n\n ئەگەر دەتەوێت ئەم هەڵەیە ڕاپۆڕت بکەیت، کرتە بکە لەسەر \"کۆپی کردن بۆ کلیپ بۆرد\"، پاشان لەسەر دوگمەی \"کردنەوەی ڕاپۆرتی هەڵە\" پڕکردنەوەی ڕاپۆرتی هەڵە  و لکاندنی تۆماربکە،  ئەمە یارمەتی دەدات لە باشترکردنی FlorisBoard  و سەقامگیرتر بۆ هەموو کەسێک سوپاس بۆ تۆ!</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">بەداخەوە، بەهۆی هەڵەیەکی لەناکاو تەختەکلیلی FlorisBoard لەکارکەوت.</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">لەبەرگرتنەوە</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">ڕاپۆرتی هەڵە بکەرەوە لەڕێی (github.com) ـەوە</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">داخستن</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBorad ڕاپۆرتی هەڵەی</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">تەختەکلیلی FlorisBoard لە کارکەوت…</string>
@@ -345,7 +350,17 @@
     <string name="clip__paste_item">دانان</string>
     <string name="clip__back_to_text_input">گەڕانەوە</string>
     <string name="clip__cant_paste">ئەم بەرنامەیە پشتگیری دانانی شتەکان ناکات.</string>
+    <string name="pref__clipboard__clipboard_category__label">لەبەرگیراوەکان (ClipBoard)</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">هێشتنەوەی شتە لەبەرگیراوەکان</string>
+    <string name="pref__clipboard__clean_up_old_clipboard_items__label">سڕینەوەی لەبەرگیراوە کۆنەکان</string>
+    <string name="pref__clipboard__clean_up_old_after__label">سڕینەوەی لبەرگیراوە کۆنەکان</string>
+    <string name="pref__unit_minutes">" خولەک"</string>
+    <string name="pref__clipboard__limit_history_size__label">سنوردارکردنی مێژووی هەڵگرتن</string>
+    <string name="pref__clipboard__max_history_size__label">زۆررین ڕێژەی هەڵگرتن</string>
+    <string name="pref__unit_items">" دانە"</string>
+    <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">ماوەی دەرکەوتن</string>
     <string name="pref__glide_preview_refresh_delay">ماوەی پیشاندان</string>
     <string name="pref__glide__show_preview">پیشاندانی هێما لەکاتی نووسین بەسەریەکەوە</string>
+    <string name="pref__glide_trail_max_length">زۆرترین ماوەی پیشاندان</string>
 </resources>

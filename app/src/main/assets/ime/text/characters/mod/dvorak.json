@@ -16,10 +16,7 @@
       { "code": -210, "label": "language_switch", "type": "system_gui" },
       { "code": -213, "label": "switch_to_media_context", "type": "system_gui" },
       { "code":   32, "label": "space" },
-      { "code":  122, "label": "z", "groupId": 2, "variation": "email_address" },
-      { "code":  122, "label": "z", "groupId": 2, "variation": "normal" },
-      { "code":  122, "label": "z", "groupId": 2, "variation": "password" },
-      { "code":  122, "label": "z", "groupId": 2, "variation": "uri" },
+      { "code":  122, "label": "z", "groupId": 2 },
       { "code":   10, "label": "enter", "groupId": 3, "type": "enter_editing" }
     ]
   ]

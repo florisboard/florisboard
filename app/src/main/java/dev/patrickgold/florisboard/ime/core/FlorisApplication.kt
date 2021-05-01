@@ -45,6 +45,7 @@ class FlorisApplication : Application(), CoroutineScope by MainScope() {
         CrashUtility.install(this)
         val prefHelper = PrefHelper.getDefaultInstance(this)
         val assetManager = AssetManager.init(this)
+        SubtypeManager.init(this, prefHelper)
         DictionaryManager.init(this)
         ThemeManager.init(this, assetManager, prefHelper)
         prefHelper.initDefaultPreferences()

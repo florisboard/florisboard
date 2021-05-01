@@ -6,8 +6,8 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
+import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.text.TextInputManager
-import dev.patrickgold.florisboard.ime.text.key.KeyView
 import kotlinx.coroutines.*
 import org.json.JSONObject
 
@@ -61,7 +61,7 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
     /**
      * Change the layout of the internal gesture classifier
      */
-    fun setLayout(keys: Sequence<KeyView>, dimensions: Dimensions) {
+    fun setLayout(keys: Sequence<Key>, dimensions: Dimensions) {
         glideTypingClassifier.setLayout(keys, FlorisBoard.getInstance().activeSubtype)
         initialDimensions.getOrPut(FlorisBoard.getInstance().activeSubtype, {
             dimensions
@@ -77,7 +77,7 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
             if (wordDataCache.isEmpty()) {
                 // FIXME: get this info from dictionary.
                 val data =
-                    AssetManager.default().loadAssetRaw(AssetRef(AssetSource.Assets, "ime/dict/data.json")).getOrThrow()
+                    AssetManager.default().loadTextAsset(AssetRef(AssetSource.Assets, "ime/dict/data.json")).getOrThrow()
                 val json = JSONObject(data)
                 wordDataCache.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
             }

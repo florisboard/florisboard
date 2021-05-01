@@ -17,10 +17,16 @@
 package dev.patrickgold.florisboard.ime.theme
 
 import android.content.Context
-import android.graphics.Canvas
 import android.graphics.Color
 import androidx.annotation.ColorInt
 import dev.patrickgold.florisboard.R
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 /**
  * Sealed class which allows for a field to have dynamic types, dependent on the configuration.
@@ -28,6 +34,7 @@ import dev.patrickgold.florisboard.R
  * while sealing this process within one class. Allows for easy addition of new theme types in the
  * future.
  */
+@Serializable(with = ThemeValueSerializer::class)
 sealed class ThemeValue {
     /**
      * This holds a reference to another [ThemeValue] by specifying a group and attribute name.
@@ -188,5 +195,17 @@ sealed class ThemeValue {
             context.resources.getString(it)
         }
         return "$themeTypeStr | $this"
+    }
+}
+
+class ThemeValueSerializer : KSerializer<ThemeValue> {
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ThemeValue", PrimitiveKind.STRING)
+
+    override fun serialize(encoder: Encoder, value: ThemeValue) {
+        encoder.encodeString(value.toString())
+    }
+
+    override fun deserialize(decoder: Decoder): ThemeValue {
+        return ThemeValue.fromString(decoder.decodeString())
     }
 }

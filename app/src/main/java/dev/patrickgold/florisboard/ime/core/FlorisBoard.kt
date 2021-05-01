@@ -38,27 +38,29 @@ import androidx.annotation.StyleRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.*
-import com.squareup.moshi.Json
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.clip.ClipboardInputManager
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.MediaInputManager
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupLayerView
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.key.CurrencySet
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.setup.SetupActivity
 import dev.patrickgold.florisboard.util.*
 import kotlinx.coroutines.launch
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.ExecutorService
@@ -121,7 +123,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
 
     var activeEditorInstance: EditorInstance = EditorInstance.default()
 
-    lateinit var subtypeManager: SubtypeManager
+    val subtypeManager: SubtypeManager get() = SubtypeManager.default()
     lateinit var activeSubtype: Subtype
     private var currentThemeIsNight: Boolean = false
     private var currentThemeResId: Int = 0
@@ -145,47 +147,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     lateinit var asyncExecutor: ExecutorService
 
     companion object {
-        private const val IME_ID: String = "dev.patrickgold.florisboard/.ime.core.FlorisBoard"
-        private const val IME_ID_BETA: String = "dev.patrickgold.florisboard.beta/dev.patrickgold.florisboard.ime.core.FlorisBoard"
-        private const val IME_ID_DEBUG: String = "dev.patrickgold.florisboard.debug/dev.patrickgold.florisboard.ime.core.FlorisBoard"
-
-        fun checkIfImeIsEnabled(context: Context): Boolean {
-            val activeImeIds = Settings.Secure.getString(
-                context.contentResolver,
-                Settings.Secure.ENABLED_INPUT_METHODS
-            ) ?: "(none)"
-            flogInfo { "List of active IMEs: $activeImeIds" }
-            return when {
-                BuildConfig.DEBUG -> {
-                    activeImeIds.split(":").contains(IME_ID_DEBUG)
-                }
-                context.packageName.endsWith(".beta") -> {
-                    activeImeIds.split(":").contains(IME_ID_BETA)
-                }
-                else -> {
-                    activeImeIds.split(":").contains(IME_ID)
-                }
-            }
-        }
-
-        fun checkIfImeIsSelected(context: Context): Boolean {
-            val selectedImeId = Settings.Secure.getString(
-                context.contentResolver,
-                Settings.Secure.DEFAULT_INPUT_METHOD
-            ) ?: "(none)"
-            flogInfo { "Selected IME: $selectedImeId" }
-            return when {
-                BuildConfig.DEBUG -> {
-                    selectedImeId == IME_ID_DEBUG
-                }
-                context.packageName.endsWith(".beta") -> {
-                    selectedImeId.split(":").contains(IME_ID_BETA)
-                }
-                else -> {
-                    selectedImeId == IME_ID
-                }
-            }
-        }
 
         @Synchronized
         fun getInstance(): FlorisBoard {
@@ -232,7 +193,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
                     .build()
             )
         }*/
-        flogInfo(LogTopic.IMS_EVENTS) { "onCreate()" }
+        flogInfo(LogTopic.IMS_EVENTS)
         serviceLifecycleDispatcher.onServicePreSuperOnCreate()
 
         imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
@@ -241,7 +202,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         prefs = PrefHelper.getDefaultInstance(this)
         prefs.initDefaultPreferences()
         prefs.sync()
-        subtypeManager = SubtypeManager(this, prefs)
         activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
 
         currentThemeIsNight = themeManager.activeTheme.isNightTheme
@@ -264,9 +224,11 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
 
     @SuppressLint("InflateParams")
     override fun onCreateInputView(): View? {
-        flogInfo(LogTopic.IMS_EVENTS) { "onCreateInputView()" }
+        flogInfo(LogTopic.IMS_EVENTS)
 
         updateThemeContext(currentThemeResId)
+
+        popupLayerView = PopupLayerView(themeContext)
 
         inputWindowView = LayoutInflater.from(themeContext).inflate(R.layout.florisboard, null) as? InputWindowView
         inputWindowView?.isHapticFeedbackEnabled = true
@@ -306,7 +268,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     }
 
     override fun onDestroy() {
-        flogInfo(LogTopic.IMS_EVENTS) { "onDestroy()" }
+        flogInfo(LogTopic.IMS_EVENTS)
         serviceLifecycleDispatcher.onServicePreSuperOnDestroy()
 
         themeManager.unregisterOnThemeUpdatedListener(this)
@@ -356,12 +318,11 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     }
 
     fun registerInputView(inputView: InputView) {
-        flogInfo(LogTopic.IMS_EVENTS) { "registerInputView($inputView)" }
+        flogInfo(LogTopic.IMS_EVENTS)
 
         window?.window?.findViewById<View>(android.R.id.content)?.let { content ->
-            popupLayerView = PopupLayerView(themeContext)
             if (content is ViewGroup) {
-                content.addView(popupLayerView)
+                popupLayerView?.let { content.addView(it) }
             }
         }
         this.inputView = inputView
@@ -374,15 +335,15 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     }
 
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
-        flogInfo(LogTopic.IMS_EVENTS) { "onStartInput($attribute, $restarting)" }
+        flogInfo(LogTopic.IMS_EVENTS)
 
         super.onStartInput(attribute, restarting)
         currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
-        flogInfo(LogTopic.IMS_EVENTS) { "onStartInputView($info, $restarting)" }
-        flogInfo(LogTopic.IMS_EVENTS) { "onStartInputView: ${info?.debugSummarize()}" }
+        flogInfo(LogTopic.IMS_EVENTS) { "restarting=$restarting"}
+        flogInfo(LogTopic.IMS_EVENTS) { info?.debugSummarize() ?: "" }
 
         super.onStartInputView(info, restarting)
         activeEditorInstance = EditorInstance.from(info, this)
@@ -393,7 +354,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
-        flogInfo(LogTopic.IMS_EVENTS) { "onFinishInputView($finishingInput)" }
+        flogInfo(LogTopic.IMS_EVENTS) { "finishingInput=$finishingInput" }
 
         if (finishingInput) {
             activeEditorInstance = EditorInstance.default()
@@ -404,7 +365,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     }
 
     override fun onFinishInput() {
-        flogInfo(LogTopic.IMS_EVENTS) { "onFinishInput()" }
+        flogInfo(LogTopic.IMS_EVENTS)
 
         currentInputConnection?.requestCursorUpdates(0)
         super.onFinishInput()
@@ -413,20 +374,19 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     override fun onWindowShown() {
         super.onWindowShown()
         if (isWindowShown) {
-            flogInfo(LogTopic.IMS_EVENTS) { "Ignoring onWindowShown()" }
+            flogInfo(LogTopic.IMS_EVENTS) { "Ignoring (is already shown)" }
             return
         } else {
-            flogInfo(LogTopic.IMS_EVENTS) { "onWindowShown()" }
+            flogInfo(LogTopic.IMS_EVENTS)
         }
         isWindowShown = true
 
         prefs.sync()
         val newIsNumberRowVisible = prefs.keyboard.numberRow
         if (isNumberRowVisible != newIsNumberRowVisible) {
-            textInputManager.layoutManager.clearLayoutCache(KeyboardMode.CHARACTERS)
+            textInputManager.keyboards.clear(KeyboardMode.CHARACTERS)
             isNumberRowVisible = newIsNumberRowVisible
         }
-        textInputManager.layoutManager.clearLayoutCache()
         themeManager.update()
         updateOneHandedPanelVisibility()
         activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
@@ -439,10 +399,10 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     override fun onWindowHidden() {
         super.onWindowHidden()
         if (!isWindowShown) {
-            flogInfo(LogTopic.IMS_EVENTS) { "Ignoring onWindowHidden()" }
+            flogInfo(LogTopic.IMS_EVENTS) { "Ignoring (is already hidden)" }
             return
         } else {
-            flogInfo(LogTopic.IMS_EVENTS) { "onWindowHidden()" }
+            flogInfo(LogTopic.IMS_EVENTS)
         }
         isWindowShown = false
 
@@ -450,7 +410,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
-        flogInfo(LogTopic.IMS_EVENTS) { "onConfigurationChanged($newConfig)" }
+        flogInfo(LogTopic.IMS_EVENTS)
         if (isInputViewShown) {
             updateOneHandedPanelVisibility()
         }
@@ -508,7 +468,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         )
 
         if (internalBatchNestingLevel == 0) {
-            flogInfo(LogTopic.IMS_EVENTS) { "onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd)" }
+            flogInfo(LogTopic.IMS_EVENTS) { "$oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd" }
             activeEditorInstance.onUpdateSelection(
                 oldSelStart, oldSelEnd,
                 newSelStart, newSelEnd,
@@ -517,7 +477,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
             eventListeners.toList().forEach { it?.onUpdateSelection() }
         } else {
             flogInfo(LogTopic.IMS_EVENTS) {
-                "onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd): caught due to internal batch level of $internalBatchNestingLevel!"
+                "$oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd: caught due to internal batch level of $internalBatchNestingLevel!"
             }
             if (internalSelectionCache.selectionCatchCount++ == 0) {
                 internalSelectionCache.oldSelStart = oldSelStart
@@ -703,10 +663,13 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     fun keyPressSound(keyData: KeyData? = null) {
         if (prefs.keyboard.soundEnabled) {
             val soundVolume = prefs.keyboard.soundVolume
-            val effect = when (keyData?.code) {
-                KeyCode.SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR
-                KeyCode.DELETE -> AudioManager.FX_KEYPRESS_DELETE
-                KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN
+            val effect = when (keyData) {
+                is TextKeyData -> when (keyData.code) {
+                    KeyCode.SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR
+                    KeyCode.DELETE -> AudioManager.FX_KEYPRESS_DELETE
+                    KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN
+                    else -> AudioManager.FX_KEYPRESS_STANDARD
+                }
                 else -> AudioManager.FX_KEYPRESS_STANDARD
             }
             if (soundVolume == -1 && prefs.keyboard.soundEnabledSystem) {
@@ -783,16 +746,19 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     }
 
     fun switchToPrevSubtype() {
+        flogInfo(LogTopic.IMS_EVENTS)
         activeSubtype = subtypeManager.switchToPrevSubtype() ?: Subtype.DEFAULT
         onSubtypeChanged(activeSubtype)
     }
 
     fun switchToNextSubtype() {
+        flogInfo(LogTopic.IMS_EVENTS)
         activeSubtype = subtypeManager.switchToNextSubtype() ?: Subtype.DEFAULT
         onSubtypeChanged(activeSubtype)
     }
 
     private fun onSubtypeChanged(newSubtype: Subtype) {
+        flogInfo(LogTopic.SUBTYPE_MANAGER) { "New subtype: $newSubtype" }
         textInputManager.onSubtypeChanged(newSubtype)
         mediaInputManager.onSubtypeChanged(newSubtype)
         clipInputManager.onSubtypeChanged(newSubtype)
@@ -803,7 +769,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
             R.id.text_input -> {
                 inputView?.mainViewFlipper?.displayedChild = 0
                 if (forceSwitchToCharacters) {
-                    textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(KeyData.VIEW_CHARACTERS))
+                    textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.VIEW_CHARACTERS))
                 }
             }
             R.id.media_input -> {
@@ -910,16 +876,17 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
      * @property defaultSubtypesLanguageCodes Helper list for Settings Subtype Spinner elements.
      * @property defaultSubtypesLanguageNames Helper list for Settings Subtype Spinner elements.
      */
+    @Serializable
     data class ImeConfig(
-        @Json(name = "package")
+        @SerialName("package")
         val packageName: String,
         val currencySets: List<CurrencySet> = listOf(),
         val defaultSubtypes: List<DefaultSubtype> = listOf()
     ) {
-        val currencySetNames: List<String>
-        val currencySetLabels: List<String>
-        val defaultSubtypesLanguageCodes: List<String>
-        val defaultSubtypesLanguageNames: List<String>
+        @Transient var currencySetNames: List<String> = listOf()
+        @Transient var currencySetLabels: List<String> = listOf()
+        @Transient var defaultSubtypesLanguageCodes: List<String> = listOf()
+        @Transient var defaultSubtypesLanguageNames: List<String> = listOf()
 
         init {
             val tmpCurrencyList = mutableListOf<Pair<String, String>>()

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Patrick Goldinger
+ * Copyright (C) 2021 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,26 +16,19 @@
 
 package dev.patrickgold.florisboard.ime.text.key
 
-import com.squareup.moshi.FromJson
-import java.util.*
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 enum class KeyVariation {
+    @SerialName("all")
     ALL,
+    @SerialName("email")
     EMAIL_ADDRESS,
+    @SerialName("normal")
     NORMAL,
+    @SerialName("password")
     PASSWORD,
+    @SerialName("uri")
     URI;
-
-    companion object {
-        fun fromString(string: String): KeyVariation {
-            return valueOf(string.toUpperCase(Locale.ENGLISH))
-        }
-    }
-}
-
-class KeyVariationAdapter {
-    @FromJson
-    fun fromJson(raw: String): KeyVariation {
-        return KeyVariation.fromString(raw)
-    }
 }

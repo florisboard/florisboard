@@ -27,6 +27,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.ViewLayoutUtils
@@ -47,7 +48,7 @@ class PopupView : View, ThemeManager.OnThemeUpdatedListener {
         typeface = Typeface.DEFAULT
     }
     private val threeDotsDrawable: Drawable? =
-        ContextCompat.getDrawable(context, R.drawable.ic_more_horiz)
+        ContextCompat.getDrawable(context, R.drawable.ic_more_horiz)?.mutate()
 
     val properties: Properties = Properties(
         width = resources.getDimension(R.dimen.key_width).toInt(),
@@ -100,11 +101,11 @@ class PopupView : View, ThemeManager.OnThemeUpdatedListener {
         }
     }
 
-    private fun applyProperties(anchor: View) {
+    private fun applyProperties(keyboardView: View, anchor: Key) {
         val anchorCoords = IntArray(2)
-        anchor.getLocationInWindow(anchorCoords)
-        val anchorX = anchorCoords[0]
-        val anchorY = anchorCoords[1] + anchor.measuredHeight
+        keyboardView.getLocationInWindow(anchorCoords)
+        val anchorX = anchorCoords[0] + anchor.visibleBounds.left
+        val anchorY = anchorCoords[1] + anchor.visibleBounds.top + anchor.visibleBounds.height()
         when (val lp = layoutParams) {
             is FrameLayout.LayoutParams -> lp.apply {
                 width = properties.width
@@ -134,8 +135,8 @@ class PopupView : View, ThemeManager.OnThemeUpdatedListener {
         }
     }
 
-    fun show(anchor: View) {
-        applyProperties(anchor)
+    fun show(keyboardView: View, anchor: Key) {
+        applyProperties(keyboardView, anchor)
         visibility = VISIBLE
         requestLayout()
         invalidate()

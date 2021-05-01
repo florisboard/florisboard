@@ -20,6 +20,7 @@ import android.content.Context
 import android.graphics.Color
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.extension.Asset
+import kotlinx.serialization.Serializable
 
 /**
  * Data class which holds a parsed theme json file. Used for loading a theme preset in Settings.
@@ -46,14 +47,15 @@ import dev.patrickgold.florisboard.ime.extension.Asset
  *     a. Recursive references will cause an infinite loop and FlorisBoard will then not react.
  *  4. If the value is of any other format, it is treated as an Other value with a raw string.
  */
+@Serializable
 open class Theme(
     override val name: String,
-    override val label: String = name,
+    override val label: String,
     override val authors: List<String>,
     val isNightTheme: Boolean = false,
     val attributes: Map<String, Map<String, ThemeValue>>
 ) : Asset {
-    companion object : Asset.Companion<Theme> {
+    companion object {
         private val VALIDATION_REGEX_THEME_LABEL = """^.+${'$'}""".toRegex()
         private val VALIDATION_REGEX_GROUP_NAME = """^[a-zA-Z]+((:[a-zA-Z0-9_~]+)|(::[a-zA-Z]+)|(:[a-zA-Z0-9_~]+:[a-zA-Z]+))?${'$'}""".toRegex()
         private val VALIDATION_REGEX_ATTR_NAME = """^[a-zA-Z]+${'$'}""".toRegex()
@@ -232,7 +234,7 @@ open class Theme(
          *
          * @return The generated empty theme.
          */
-        override fun empty(): Theme {
+        fun empty(): Theme {
             return Theme("", "", listOf(),
                 isNightTheme = true,
                 attributes = mapOf()
@@ -402,37 +404,12 @@ open class Theme(
 }
 
 /**
- * Bridge data class so Moshi can handle Theme serialization/deserialization properly.
- */
-class ThemeJson(
-    override val name: String,
-    override val label: String = name,
-    override val authors: List<String>,
-    private val isNightTheme: Boolean = false,
-    private val attributes: Map<String, Map<String, String>>
-) : Asset {
-    companion object {
-        fun fromTheme(theme: Theme): ThemeJson {
-            return with(theme) {
-                ThemeJson(name, label, authors, isNightTheme, attributes.mapValues { group ->
-                    group.component2().mapValues { entry -> entry.component2().toString() }
-                })
-            }
-        }
-    }
-    fun toTheme(): Theme {
-        return Theme(name, label, authors, isNightTheme, attributes.mapValues { group ->
-            group.component2().mapValues { entry -> ThemeValue.fromString(entry.component2()) }
-        })
-    }
-}
-
-/**
  * Data class which is used to quickly parse only the relevant meta data to
  * display a theme in a selection list.
  *
  * @see [Theme] for details regarding the attributes and the theme structure.
  */
+@Serializable
 data class ThemeMetaOnly(
     override val name: String,
     override val label: String,

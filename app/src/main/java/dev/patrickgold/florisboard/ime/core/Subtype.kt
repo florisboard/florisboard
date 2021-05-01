@@ -16,9 +16,14 @@
 
 package dev.patrickgold.florisboard.ime.core
 
-import com.squareup.moshi.Json
 import dev.patrickgold.florisboard.ime.text.layout.LayoutType
 import dev.patrickgold.florisboard.util.LocaleUtils
+import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import java.util.*
 
 /**
@@ -31,11 +36,13 @@ import java.util.*
  * @property layoutMap The layout map to properly display the correct layout for each layout type.
  */
 data class Subtype(
-    var id: Int,
-    var locale: Locale,
-    var currencySetName: String,
-    var layoutMap: SubtypeLayoutMap,
+    val id: Int,
+    val locale: Locale,
+    val currencySetName: String,
+    val layoutMap: SubtypeLayoutMap,
 ) {
+    private val _hashCode: Int
+
     companion object {
         /**
          * Subtype to use when prefs do not contain any valid subtypes.
@@ -76,6 +83,14 @@ data class Subtype(
         }
     }
 
+    init {
+        var result = id
+        result = 31 * result + locale.hashCode()
+        result = 31 * result + currencySetName.hashCode()
+        result = 31 * result + layoutMap.hashCode()
+        _hashCode = result
+    }
+
     /**
      * Converts this object into its string representation. Format:
      *  <id>/<language_tag>/<currency_set_name>/<layout_map>
@@ -83,6 +98,15 @@ data class Subtype(
     override fun toString(): String {
         val languageTag = locale.toLanguageTag()
         return "$id/$languageTag/$currencySetName/$layoutMap"
+    }
+
+    /**
+     * Converts this object into its short string representation, used for debugging. Format:
+     *  <id>/<language_tag>/<currency_set_name>
+     */
+    fun toShortString(): String {
+        val languageTag = locale.toLanguageTag()
+        return "$id/$languageTag/$currencySetName"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -100,14 +124,11 @@ data class Subtype(
     }
 
     override fun hashCode(): Int {
-        var result = id
-        result = 31 * result + locale.hashCode()
-        result = 31 * result + currencySetName.hashCode()
-        result = 31 * result + layoutMap.hashCode()
-        return result
+        return _hashCode
     }
 }
 
+@Serializable
 data class SubtypeLayoutMap(
     val characters: String = CHARACTERS_DEFAULT,
     val symbols: String = SYMBOLS_DEFAULT,
@@ -118,6 +139,8 @@ data class SubtypeLayoutMap(
     val phone: String = PHONE_DEFAULT,
     val phone2: String = PHONE2_DEFAULT,
 ) {
+    @Transient private var _hashCode: Int = 0
+
     companion object {
         private const val CHARACTERS_CODE =             "c"
         private const val SYMBOLS_CODE =                "s"
@@ -170,6 +193,18 @@ data class SubtypeLayoutMap(
                 characters, symbols, symbols2, numeric, numericAdvanced, numericRow, phone, phone2
             )
         }
+    }
+
+    init {
+        var result = characters.hashCode()
+        result = 31 * result + symbols.hashCode()
+        result = 31 * result + symbols2.hashCode()
+        result = 31 * result + numeric.hashCode()
+        result = 31 * result + numericAdvanced.hashCode()
+        result = 31 * result + numericRow.hashCode()
+        result = 31 * result + phone.hashCode()
+        result = 31 * result + phone2.hashCode()
+        _hashCode = result
     }
 
     operator fun get(layoutType: LayoutType): String? {
@@ -257,15 +292,7 @@ data class SubtypeLayoutMap(
     }
 
     override fun hashCode(): Int {
-        var result = characters.hashCode()
-        result = 31 * result + symbols.hashCode()
-        result = 31 * result + symbols2.hashCode()
-        result = 31 * result + numeric.hashCode()
-        result = 31 * result + numericAdvanced.hashCode()
-        result = 31 * result + numericRow.hashCode()
-        result = 31 * result + phone.hashCode()
-        result = 31 * result + phone2.hashCode()
-        return result
+        return _hashCode
     }
 }
 
@@ -277,11 +304,25 @@ data class SubtypeLayoutMap(
  * @property currencySetName The currency set name of this subtype. Beware its different name in json: 'currencySet'.
  * @property preferred The preferred layout map for this subtype's locale.
  */
+@Serializable
 data class DefaultSubtype(
     var id: Int,
-    @Json(name = "languageTag")
+    @Serializable(with = LocaleSerializer::class)
+    @SerialName("languageTag")
     var locale: Locale,
-    @Json(name = "currencySet")
+    @SerialName("currencySet")
     var currencySetName: String,
     var preferred: SubtypeLayoutMap
 )
+
+class LocaleSerializer : KSerializer<Locale> {
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Locale", PrimitiveKind.STRING)
+
+    override fun serialize(encoder: Encoder, value: Locale) {
+        encoder.encodeString(value.toString())
+    }
+
+    override fun deserialize(decoder: Decoder): Locale {
+        return LocaleUtils.stringToLocale(decoder.decodeString())
+    }
+}

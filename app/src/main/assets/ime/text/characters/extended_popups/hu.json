@@ -6,31 +6,31 @@
     "all": {
       "a": {
         "relevant": [
-          { "code":  225, "label": "á" }
+          { "$": "auto_text_key", "code":  225, "label": "á" }
         ]
       },
       "e": {
         "relevant": [
-          { "code":  233, "label": "é" }
+          { "$": "auto_text_key", "code":  233, "label": "é" }
         ]
       },
       "i": {
         "relevant": [
-          { "code":  237, "label": "í" }
+          { "$": "auto_text_key", "code":  237, "label": "í" }
         ]
       },
       "o": {
         "relevant": [
-          { "code":  243, "label": "ó" },
-          { "code":  246, "label": "ö" },
-          { "code":  337, "label": "ő" }
+          { "$": "auto_text_key", "code":  243, "label": "ó" },
+          { "$": "auto_text_key", "code":  246, "label": "ö" },
+          { "$": "auto_text_key", "code":  337, "label": "ő" }
         ]
       },
       "u": {
         "relevant": [
-          { "code":  250, "label": "ú" },
-          { "code":  252, "label": "ü" },
-          { "code":  369, "label": "ű" }
+          { "$": "auto_text_key", "code":  250, "label": "ú" },
+          { "$": "auto_text_key", "code":  252, "label": "ü" },
+          { "$": "auto_text_key", "code":  369, "label": "ű" }
         ]
       },
       "~right": {

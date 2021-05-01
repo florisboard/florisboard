@@ -38,9 +38,9 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
-import dev.patrickgold.florisboard.ime.extension.ExternalContentUtils
 import dev.patrickgold.florisboard.ime.text.key.CurrencySet
-import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.keyboard.*
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
@@ -51,7 +51,23 @@ import timber.log.Timber
 
 class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
     private lateinit var layoutManager: LayoutManager
-    private val themeManager: ThemeManager = ThemeManager.default()
+    private val themeManager: ThemeManager get() = ThemeManager.default()
+    private val assetManager: AssetManager get() = AssetManager.default()
+
+    private lateinit var textKeyboardIconSet: TextKeyboardIconSet
+    private val textComputingEvaluator = object : TextComputingEvaluator by DefaultTextComputingEvaluator {
+        override fun evaluateVisible(data: TextKeyData): Boolean {
+            return data.code != KeyCode.SWITCH_TO_MEDIA_CONTEXT
+        }
+
+        override fun isSlot(data: TextKeyData): Boolean {
+            return CurrencySet.isCurrencySlot(data.code)
+        }
+
+        override fun getSlotData(data: TextKeyData): TextKeyData {
+            return BasicTextKeyData(label = "$")
+        }
+    }
 
     private var key: String = ""
     private var defaultValue: String = ""
@@ -100,16 +116,13 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         if (uri == null) return@registerForActivityResult
         val selectedRef = selectedRef
         if (selectedRef != null) {
-            AssetManager.default().loadAssetRaw(selectedRef).onSuccess {
-                Timber.i(it)
-                ExternalContentUtils.writeTextToUri(this, uri, it).onSuccess {
-                    showMessage(R.string.settings__theme_manager__theme_export_success)
-                }.onFailure {
-                    showError(it)
-                }
-            }.onFailure {
-                showError(it)
-            }
+            assetManager.loadTextAsset(selectedRef).fold(
+                onSuccess = { text -> assetManager.writeTextAsset(uri, text).fold(
+                    onSuccess = { showMessage(R.string.settings__theme_manager__theme_export_success) },
+                    onFailure = { showError(it) }
+                ) },
+                onFailure = { showError(it) }
+            )
         } else {
             showError(NullPointerException("selectedRef is null!"))
         }
@@ -123,7 +136,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        layoutManager = LayoutManager(this)
+        layoutManager = LayoutManager()
 
         key = intent.getStringExtra(EXTRA_KEY) ?: ""
         defaultValue = intent.getStringExtra(EXTRA_DEFAULT_VALUE) ?: ""
@@ -148,9 +161,9 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         binding.themeEditBtn.setOnClickListener { onActionClicked(it) }
         binding.themeExportBtn.setOnClickListener { onActionClicked(it) }
 
-        layoutManager.apply {
-            preloadComputedLayout(KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs, CurrencySet.default())
-        }
+        textKeyboardIconSet = TextKeyboardIconSet.new(this)
+        binding.keyboardPreview.setIconSet(textKeyboardIconSet)
+        binding.keyboardPreview.setComputingEvaluator(textComputingEvaluator)
 
         buildUi()
     }
@@ -394,9 +407,9 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
             setCheckedRadioButton(selectId!!)
         }
         launch {
-            binding.keyboardPreview.computedLayout = layoutManager.fetchComputedLayoutAsync(
-                KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs, CurrencySet.default()
-            ).await()
+            binding.keyboardPreview.setComputedKeyboard(layoutManager.computeKeyboardAsync(
+                KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs
+            ).await())
             binding.keyboardPreview.onThemeUpdated(selectedTheme)
         }
     }

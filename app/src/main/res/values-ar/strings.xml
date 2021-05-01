@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">إيقاف مؤقت</string>
-    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">انتظار</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">انتظر</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">أيقونة ثلاث نقاط. إذا كانت ظاهرة ، تشير إلى أنه يمكن استخدام المزيد من الأحرف إذا تم الضغط عليها لفترة أطول.</string>
     <!-- One-handed strings -->
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">غلق وضع اليد الواحدة.</string>
@@ -199,6 +199,7 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">الصوت عند ضغط المفتاح</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">حجم الصوت عند ضغط المفتاح</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">إهتزاز عند ضغط المفتاح</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">إهتزاز عند الضغط على الزر</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">شدة الإهتزاز عند ضغط المفتاح</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">رؤية النافذة المنبثقة</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">إظهار النافذة المنبثقة عندما تضغط على مفتاح</string>
@@ -335,9 +336,10 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">تم إنهاء الاعداد!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">تقرير حول خطأ في FlorisBoard</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">نأسف للإزعاج ، ولكن FlorisBoard تعطل بسبب خطأ غير متوقع.\n\nإذا كنت ترغب في الإبلاغ عن هذا الخطأ ، انقر على \"نسخ إلى الحافظة\" ، ثم على الزر \"فتح تقرير الخطأ\". املأ تقرير الخطأ والصق السجل. هذا يساعد في جعل FlorisBoard أفضل وأكثر استقرارًا للجميع. شكرا جزيلا!</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">نأسف للإزعاج ، ولكن FlorisBoard تعطل بسبب خطأ غير متوقع.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">إذا كنت ترغب في الإبلاغ عن هذا الخطأ ، فتحقق أولاً من أداة تعقب المشكلات على GitHub إذا لم يتم الإبلاغ عن العطل بالفعل. \n إذا لم يتم الإبلاغ عن هذا الخطأ ، فقم بنسخ سجل التعطل الذي تم إنشاؤه وافتح مشكلة جديدة. استخدم القالب واملأ الوصف وخطوات إعادة إنتاج ولصق سجل العطل الذي تم إنشاؤه في النهاية. هذا يساعد\"%s\" في جعل FlorisBoard أفضل وأكثر استقرارًا للجميع. شكرا لك!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">نسخ إلى الحافظة</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">فتح نموذج تقرير الخطأ (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">فتح نموذج تقرير الخطأ (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">إغلاق</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">تقارير حول خطأ في FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">توقف FlorisBoard عن العمل…</string>
@@ -353,6 +355,22 @@
     <string name="clip__paste_item">لصق</string>
     <string name="clip__back_to_text_input">رجوع إلى الإدخال النصي</string>
     <string name="clip__cant_paste">هذا التطبيق لايسمح بلصق المحتويات.</string>
+    <string name="pref__clipboard__clipboard_category__label">الحافظة</string>
+    <string name="pref__clipboard__use_internal_clipboard___label">استخدم الحافظة الداخلية</string>
+    <string name="pref__clipboard__use_internal_clipboard_title__summary">استخدم الحافظة الداخلية بدلا من حافظة النظام</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">مزامنة حافظة النظام</string>
+    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">عند مزامنة حافظة النظام يتم مزامنة حافظة لوحة المفاتيح تلقائيا</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">مزامنة الى حافظة النظام</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">تحديثات حافظة لوحة المفاتيح يقوم أيضًا بتحديث حافظة النظام</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">تمكين سجل الحافظة</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">الاحتفاظ بعناصر الحافظة</string>
+    <string name="pref__clipboard__clean_up_old_clipboard_items__label">تنظيف العناصر القديمة</string>
+    <string name="pref__clipboard__clean_up_old_after__label">تنظيف العناصر القديمة بعد</string>
+    <string name="pref__unit_minutes">" دقيقة"</string>
+    <string name="pref__clipboard__limit_history_size__label">تحديد حجم السجل</string>
+    <string name="pref__clipboard__max_history_size__label">الحد الأقصى لحجم السجل</string>
+    <string name="pref__unit_items">" عناصر"</string>
+    <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">وقت تلاشي مسار الانزلاق</string>
     <string name="pref__glide_preview_refresh_delay">عرض تاخير التحديث</string>
     <string name="pref__glide__show_preview">عرض المعاينة أثناء الكتابة بالتمرير</string>

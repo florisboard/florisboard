@@ -30,7 +30,7 @@ import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyboardView
 import dev.patrickgold.florisboard.ime.media.emoticon.EmoticonKeyData
 import dev.patrickgold.florisboard.ime.media.emoticon.EmoticonKeyboardView
-import dev.patrickgold.florisboard.ime.text.key.KeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.util.*
@@ -135,8 +135,8 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
     private fun onBottomButtonEvent(view: View, event: MotionEvent?): Boolean {
         event ?: return false
         val data = when (view.id) {
-            R.id.media_input_switch_to_text_input_button -> KeyData.SWITCH_TO_TEXT_CONTEXT
-            R.id.media_input_backspace_button -> KeyData.DELETE
+            R.id.media_input_switch_to_text_input_button -> TextKeyData.SWITCH_TO_TEXT_CONTEXT
+            R.id.media_input_backspace_button -> TextKeyData.DELETE
             else -> return false
         }
         when (event.actionMasked) {
@@ -184,7 +184,7 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
      * Sends a given [emojiKeyData] to the current input editor.
      */
     fun sendEmojiKeyPress(emojiKeyData: EmojiKeyData) {
-        activeEditorInstance.commitText(emojiKeyData.getCodePointsAsString())
+        activeEditorInstance.commitText(emojiKeyData.asString(isForDisplay = false))
     }
 
     /**

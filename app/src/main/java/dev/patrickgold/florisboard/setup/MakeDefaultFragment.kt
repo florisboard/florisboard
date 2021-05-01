@@ -16,42 +16,45 @@
 
 package dev.patrickgold.florisboard.setup
 
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import dev.patrickgold.florisboard.databinding.SetupFragmentMakeDefaultBinding
-import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.util.checkIfImeIsSelected
 
 class MakeDefaultFragment : Fragment(), SetupActivity.EventListener {
     private lateinit var binding: SetupFragmentMakeDefaultBinding
-    private var osHandler: Handler? = null
+
+    private var isChangeReceiverRegistered = false
+    private val imeChangedReceiver = InputMethodChangedReceiver {
+        unregisterImeChangeReceiver()
+        updateState()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = SetupFragmentMakeDefaultBinding.inflate(inflater, container, false)
         binding.switchKeyboardButton.setOnClickListener {
+            registerImeChangeReceiver()
             (activity as SetupActivity).imm.showInputMethodPicker()
         }
 
         return binding.root
     }
 
-    private fun updateState(): Boolean {
-        return if (FlorisBoard.checkIfImeIsSelected(requireContext())) {
-            (activity as SetupActivity).changePositiveButtonState(true)
-            binding.textAfterEnabled.visibility = View.VISIBLE
-            true
-        } else {
-            (activity as SetupActivity).changePositiveButtonState(false)
-            binding.textAfterEnabled.visibility = View.INVISIBLE
-            false
-        }
+    private fun updateState() {
+        val isImeSelected = checkIfImeIsSelected(requireContext())
+
+        (activity as SetupActivity).changePositiveButtonState(isImeSelected)
+        binding.textAfterEnabled.isVisible = isImeSelected
     }
 
     override fun onResume() {
@@ -59,14 +62,25 @@ class MakeDefaultFragment : Fragment(), SetupActivity.EventListener {
         updateState()
     }
 
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        if (hasFocus && context != null) {
-            updateState()
-            if (osHandler == null) {
-                osHandler = Handler()
-            }
-            osHandler?.postDelayed({ updateState() }, 250)
-            osHandler?.postDelayed({ updateState() }, 500)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        unregisterImeChangeReceiver()
+    }
+
+    private fun unregisterImeChangeReceiver() {
+        if (isChangeReceiverRegistered) {
+            isChangeReceiverRegistered = false
+            activity?.unregisterReceiver(imeChangedReceiver)
+        }
+    }
+
+    private fun registerImeChangeReceiver() {
+        if (!isChangeReceiverRegistered) {
+            isChangeReceiverRegistered = true
+            activity?.registerReceiver(
+                imeChangedReceiver,
+                IntentFilter(Intent.ACTION_INPUT_METHOD_CHANGED)
+            )
         }
     }
 }

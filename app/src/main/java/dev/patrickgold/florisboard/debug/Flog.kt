@@ -36,7 +36,9 @@ typealias FlogLevel = UInt
 typealias FlogOutput = UInt
 
 /**
- * Logs an error message returned by [block] either to the console or to a log file.
+ * Logs an error message returned by [block] together with the automatically retrieved
+ * calling class and method name either to the console or to a log file. The class name
+ * is used for the tag, the method name prepended to the message.
  *
  * This method automatically evaluates if logging is enabled and calls [block] only
  * if a log message should be generated.
@@ -48,10 +50,12 @@ typealias FlogOutput = UInt
  *
  * @param topic The topic of this message. To specify multiple topics, use the binary
  *  OR operator. Defaults to [Flog.TOPIC_OTHER].
- * @param block The lambda expression which is called only if logging is enabled and
- *  the topics match. Must return a [String].
+ * @param block The lambda expression to evaluate the message which is appended to the
+ *  method name. Is called only if logging is enabled and the topics match. Must return
+ *  a [String]. If this argument is omitted, only the calling method name will be used
+ *  as the log message.
  */
-inline fun flogError(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String) {
+inline fun flogError(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String = { "" }) {
     contract {
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
@@ -61,7 +65,9 @@ inline fun flogError(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String) {
 }
 
 /**
- * Logs a warning message returned by [block] either to the console or to a log file.
+ * Logs a warning message returned by [block] together with the automatically retrieved
+ * calling class and method name either to the console or to a log file. The class name
+ * is used for the tag, the method name prepended to the message.
  *
  * This method automatically evaluates if logging is enabled and calls [block] only
  * if a log message should be generated.
@@ -73,10 +79,12 @@ inline fun flogError(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String) {
  *
  * @param topic The topic of this message. To specify multiple topics, use the binary
  *  OR operator. Defaults to [Flog.TOPIC_OTHER].
- * @param block The lambda expression which is called only if logging is enabled and
- *  the topics match. Must return a [String].
+ * @param block The lambda expression to evaluate the message which is appended to the
+ *  method name. Is called only if logging is enabled and the topics match. Must return
+ *  a [String]. If this argument is omitted, only the calling method name will be used
+ *  as the log message.
  */
-inline fun flogWarning(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String) {
+inline fun flogWarning(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String = { "" }) {
     contract {
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
@@ -86,7 +94,9 @@ inline fun flogWarning(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String)
 }
 
 /**
- * Logs an info message returned by [block] either to the console or to a log file.
+ * Logs a info message returned by [block] together with the automatically retrieved
+ * calling class and method name either to the console or to a log file. The class name
+ * is used for the tag, the method name prepended to the message.
  *
  * This method automatically evaluates if logging is enabled and calls [block] only
  * if a log message should be generated.
@@ -98,10 +108,12 @@ inline fun flogWarning(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String)
  *
  * @param topic The topic of this message. To specify multiple topics, use the binary
  *  OR operator. Defaults to [Flog.TOPIC_OTHER].
- * @param block The lambda expression which is called only if logging is enabled and
- *  the topics match. Must return a [String].
+ * @param block The lambda expression to evaluate the message which is appended to the
+ *  method name. Is called only if logging is enabled and the topics match. Must return
+ *  a [String]. If this argument is omitted, only the calling method name will be used
+ *  as the log message.
  */
-inline fun flogInfo(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String) {
+inline fun flogInfo(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String = { "" }) {
     contract {
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
@@ -111,7 +123,9 @@ inline fun flogInfo(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String) {
 }
 
 /**
- * Logs a debug message returned by [block] either to the console or to a log file.
+ * Logs a debug message returned by [block] together with the automatically retrieved
+ * calling class and method name either to the console or to a log file. The class name
+ * is used for the tag, the method name prepended to the message.
  *
  * This method automatically evaluates if logging is enabled and calls [block] only
  * if a log message should be generated.
@@ -123,10 +137,12 @@ inline fun flogInfo(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String) {
  *
  * @param topic The topic of this message. To specify multiple topics, use the binary
  *  OR operator. Defaults to [Flog.TOPIC_OTHER].
- * @param block The lambda expression which is called only if logging is enabled and
- *  the topics match. Must return a [String].
+ * @param block The lambda expression to evaluate the message which is appended to the
+ *  method name. Is called only if logging is enabled and the topics match. Must return
+ *  a [String]. If this argument is omitted, only the calling method name will be used
+ *  as the log message.
  */
-inline fun flogDebug(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String) {
+inline fun flogDebug(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String = { "" }) {
     contract {
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
@@ -136,7 +152,9 @@ inline fun flogDebug(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String) {
 }
 
 /**
- * Logs a wtf message returned by [block] either to the console or to a log file.
+ * Logs a wtf message returned by [block] together with the automatically retrieved
+ * calling class and method name either to the console or to a log file. The class name
+ * is used for the tag, the method name prepended to the message.
  *
  * This method automatically evaluates if logging is enabled and calls [block] only
  * if a log message should be generated.
@@ -148,10 +166,12 @@ inline fun flogDebug(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String) {
  *
  * @param topic The topic of this message. To specify multiple topics, use the binary
  *  OR operator. Defaults to [Flog.TOPIC_OTHER].
- * @param block The lambda expression which is called only if logging is enabled and
- *  the topics match. Must return a [String].
+ * @param block The lambda expression to evaluate the message which is appended to the
+ *  method name. Is called only if logging is enabled and the topics match. Must return
+ *  a [String]. If this argument is omitted, only the calling method name will be used
+ *  as the log message.
  */
-inline fun flogWtf(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String) {
+inline fun flogWtf(topic: FlogTopic = Flog.TOPIC_OTHER, block: () -> String = { "" }) {
     contract {
         callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
@@ -178,8 +198,10 @@ private infix fun UInt.isSet(flag: UInt): Boolean {
  *
  * This helper object uses some parts of the Timber library to assist in
  * logging. In particular:
- *  - [createStackElementTag] (converted to Kotlin, removed manual tagging).
- *  - [getTag] (converted to Kotlin but logic unmodified).
+ *  - [createTag] (converted to Kotlin, renamed from "createStackElementTag",
+ *     removed manual tagging).
+ *  - [getStacktraceElement] (converted to Kotlin, renamed from "getTag",
+ *     method now returns stack trace element).
  *  - [log] (only the [OUTPUT_CONSOLE] part, converted to Kotlin).
  * Timber is licensed under the Apache 2.0 license, see the repo here:
  *  https://github.com/JakeWharton/timber
@@ -209,9 +231,6 @@ object Flog {
 
     /** The maximum tag length limit. */
     private const val MAX_TAG_LENGTH: Int =         23
-
-    /** Regex for matching anonymous classes. */
-    private val ANONYMOUS_CLASS: Regex =            """(\\\$\\d+)+\$""".toRegex()
 
     private var applicationContext: WeakReference<Context> = WeakReference(null)
     private var isFloggingEnabled: Boolean = false
@@ -263,12 +282,10 @@ object Flog {
     }
 
     /**
-     * Extract the tag which should be used for the message from the `element`. By default
-     * this will use the class name without any anonymous class suffixes (e.g., `Foo$1`
-     * becomes `Foo`).
+     * Extract the tag which should be used for the message from the `element`.
      */
-    private fun createStackElementTag(element: StackTraceElement): String {
-        var tag = ANONYMOUS_CLASS.replace(element.className, "")
+    private fun createTag(element: StackTraceElement): String {
+        var tag = element.className
         tag = tag.substring(tag.lastIndexOf('.') + 1)
         // Tag length limit was removed in API 24.
         return if (tag.length <= MAX_TAG_LENGTH || Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -278,12 +295,27 @@ object Flog {
         }
     }
 
-    private fun getTag(): String {
+    private fun createMessage(element: StackTraceElement, msg: String): String {
+        return StringBuilder().run {
+            append(element.methodName)
+            append('(')
+            append(')')
+            if (msg.isNotBlank()) {
+                append(' ')
+                append('-')
+                append(' ')
+                append(msg)
+            }
+            toString()
+        }
+    }
+
+    private fun getStacktraceElement(): StackTraceElement {
         val stackTrace = Throwable().stackTrace
         check(stackTrace.size > CALL_STACK_INDEX) {
             "Synthetic stacktrace didn't have enough elements: are you using proguard?"
         }
-        return createStackElementTag(stackTrace[CALL_STACK_INDEX])
+        return stackTrace[CALL_STACK_INDEX]
     }
 
     fun log(level: FlogLevel, msg: String) {
@@ -315,13 +347,15 @@ object Flog {
     }
 
     private fun androidLog(level: FlogLevel, msg: String) {
-        val tag = getTag()
+        val ste = getStacktraceElement()
+        val tag = createTag(ste)
+        val message = createMessage(ste, msg)
         when {
-            level isSet LEVEL_ERROR ->      Log.e(tag, msg)
-            level isSet LEVEL_WARNING ->    Log.w(tag, msg)
-            level isSet LEVEL_INFO ->       Log.i(tag, msg)
-            level isSet LEVEL_DEBUG ->      Log.d(tag, msg)
-            level isSet LEVEL_WTF ->        Log.wtf(tag, msg)
+            level isSet LEVEL_ERROR ->      Log.e(tag, message)
+            level isSet LEVEL_WARNING ->    Log.w(tag, message)
+            level isSet LEVEL_INFO ->       Log.i(tag, message)
+            level isSet LEVEL_DEBUG ->      Log.d(tag, message)
+            level isSet LEVEL_WTF ->        Log.wtf(tag, message)
         }
     }
 

@@ -6,68 +6,68 @@
     "all": {
       "a": {
         "relevant": [
-          { "code":  257, "label": "ā" }
+          { "$": "auto_text_key", "code":  257, "label": "ā" }
         ]
       },
       "c": {
         "relevant": [
-          { "code":  269, "label": "č" }
+          { "$": "auto_text_key", "code":  269, "label": "č" }
         ]
       },
       "e": {
         "relevant": [
-          { "code":  275, "label": "ē" },
-          { "code":  8364, "label": "€" }
+          { "$": "auto_text_key", "code":  275, "label": "ē" },
+          { "$": "auto_text_key", "code":  8364, "label": "€" }
         ]
       },
       "g": {
         "relevant": [
-          { "code":  291, "label": "ģ" }
+          { "$": "auto_text_key", "code":  291, "label": "ģ" }
         ]
       },
       "i": {
         "relevant": [
-          { "code":  299, "label": "ī" }
+          { "$": "auto_text_key", "code":  299, "label": "ī" }
         ]
       },
       "k": {
         "relevant": [
-          { "code":  311, "label": "ķ" }
+          { "$": "auto_text_key", "code":  311, "label": "ķ" }
         ]
       },
       "l": {
         "relevant": [
-          { "code":  316, "label": "ļ" }
+          { "$": "auto_text_key", "code":  316, "label": "ļ" }
         ]
       },
       "n": {
         "relevant": [
-          { "code":  326, "label": "ņ" }
+          { "$": "auto_text_key", "code":  326, "label": "ņ" }
         ]
       },
       "o": {
         "relevant": [
-          { "code":  333, "label": "ō" }
+          { "$": "auto_text_key", "code":  333, "label": "ō" }
         ]
       },
       "r": {
         "relevant": [
-          { "code":  343, "label": "ŗ" }
+          { "$": "auto_text_key", "code":  343, "label": "ŗ" }
         ]
       },
       "s": {
         "relevant": [
-          { "code":  353, "label": "š" }
+          { "$": "auto_text_key", "code":  353, "label": "š" }
         ]
       },
       "u": {
         "relevant": [
-          { "code":  363, "label": "ū" }
+          { "$": "auto_text_key", "code":  363, "label": "ū" }
         ]
       },
       "z": {
         "relevant": [
-          { "code":  382, "label": "ž" }
+          { "$": "auto_text_key", "code":  382, "label": "ž" }
         ]
       },
       "~right": {

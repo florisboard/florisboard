@@ -5,19 +5,19 @@
   "mapping": {
     "all": {
       "a": {
-        "main": { "code": 259, "label": "ă" },
+        "main": { "$": "auto_text_key", "code": 259, "label": "ă" },
         "relevant": [
-          { "code":  226, "label": "â" }
+          { "$": "auto_text_key", "code":  226, "label": "â" }
         ]
       },
       "i": {
-        "main": { "code":  238, "label": "î" }
+        "main": { "$": "auto_text_key", "code":  238, "label": "î" }
       },
       "s": {
-        "main": {"code": 537, "label": "ș"}
+        "main": { "$": "auto_text_key", "code": 537, "label": "ș" }
       },
       "t": {
-        "main": {"code": 539, "label": "ț"}
+        "main": { "$": "auto_text_key", "code": 539, "label": "ț" }
       },
       "~right": {
         "main": { "code":   44, "label": "," },

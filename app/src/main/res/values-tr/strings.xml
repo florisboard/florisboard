@@ -123,6 +123,7 @@
     <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Lütfen sadece a-z ve/veya A-Z harflerini içeren sembol adını girin.</string>
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Lütfen sembol adını girin.</string>
     <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Bu sembol adı zaten bu grup içinde bulunuyor. Lütfen başka bir tane belirleyin.</string>
+    <string name="settings__theme__group_window" comment="Theme group label">Pencere &amp; Sistemi</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Klavye</string>
     <string name="settings__theme__group_key" comment="Theme group label">Tuş</string>
     <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Tuş (%s)</string>
@@ -155,17 +156,28 @@
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Tuşlar</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Sayı sırası</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Karakter düzeninin üstünde sayı sırasını göster</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Sayı satırı ipuçları</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Sembol ipuçları</string>
     <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">Devre dışı bırakıldı</string>
+    <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">Etkin (İpucu öncelikli)</string>
+    <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">Etkin (Aksan öncelikli)</string>
+    <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">Etkin (Akıllı önceliklendirme)</string>
+    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Yardımcı hizmetler tuşunu göster</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Boşluk tuşunun yanında ayarlanabilir yardımcı hizmetler tuşunu gösterir</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Yardımcı hizmet tuşu seçeneği</string>
     <string name="pref__keyboard__utility_key_action__switch_to_emojis" comment="Preference value">Emojilerle değiştir</string>
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Dili değiştir</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Klavye uygulamasını değiştir</string>
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Dinamik: Emojilerle değiştir / Dili değiştir</string>
+    <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Yazıtipi boyutu çarpanı (dikey)</string>
+    <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Yazıtipi boyutu çarpanı (yatay)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Yerleşim</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Tek el modu</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Kapalı</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Sağ el modu</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Sol el modu</string>
     <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Tek el modu klavye genişliği</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Yatay tam ekran giriş</string>
     <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Asla gösterme</string>
     <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Her zaman göster</string>
     <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">Dinamik olarak göster</string>
@@ -179,14 +191,18 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Ekstra uzun</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Özel</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Özel klavye yükseklik değeri</string>
+    <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Alt uzaklık (dikey)</string>
+    <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Alt uzaklık (yatay)</string>
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Tuş aralığı (dikey)</string>
     <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Tuş aralığı (yatay)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tuşa basıldığında</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Tuşa basıldığında ses</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Tuşa basıldığındaki ses düzeyi</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Tuşa basıldığında titreşim</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Tuşa basıldığındaki titreşim süresi</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Tuşa basıldığındaki titreşim gücü</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Açılır bildirim görünürlüğü</string>
+    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Bir tuşa basıldığında açılır tuşu göster</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Tuşa uzun basma gecikmesi</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Boşluk tuşuna basıldığında harf düzenine geçer</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Sembol veya sayı düzenindeyken boşluk tuşuna basmak otomatik olarak harf düzenine geri geçirir</string>
@@ -196,11 +212,16 @@
     <string name="pref__suggestion__title" comment="Preference group title">Öneriler</string>
     <string name="pref__correction__title" comment="Preference group title">Düzeltmeler</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Otomatik olarak büyük harf yap</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">İçeriğe göre kelimelerin ilk harfini büyüt</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Caps Lock durumunu hatırla</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Başka bir yazım alanına geçerken büyük harf kilidini açık tut</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Çift boşlukta nokta</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Boşluk tuşuna 2 defa basmak bir nokta ve ardından bir boşluk koyar</string>
+    <string name="settings__gestures__title" comment="Title of Gestures fragment">Jestler &amp; Kaydırarak yazma</string>
     <string name="pref__glide__title" comment="Preference group title">Süzülerek Yazma</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Süzülerek yazmayı etkinleştir</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Sözcüğün harflerinin üzerinde parmağını kaydırarak o sözcüğü yaz</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Süzülme kuyruğunu göster</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Her sözcükten sonra kaybolacaktır</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Genel kaydırma hareketleri</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Boşluk tuşu hareketleri</string>
@@ -295,10 +316,13 @@
     <string name="setup__finish_button" comment="Label of Finish button in Setup">Bitir</string>
     <string name="setup__ok_button" comment="Label of OK button in Setup">Tamam</string>
     <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Hoş geldiniz!</string>
+    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">FlorisBoard\'u denediğiniz için teşekkür ederiz! Kullanmaya başlamadan önce, her zamanki şeyleri yapmak ve sistem ayarlarından aktive etmek, tercih ettiğiniz dili/düzeni ayarlamak (vb.) zorundayız. Ama endişelenmeyin, kurulum sihirbazı bu konuda size yol gösterecek!</string>
     <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard gizliliğinize tamamen saygı duyar ve hiçbir kullanıcı verisi toplamaz. Daha fazla bilgi için:</string>
     <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">FlorisBoard’un kaynak kodu herkesin erişebileceği şekilde herkese açık, böylece FlorisBoard’un arkaplanda ne yaptığını kolayca gözden geçirebilirsiniz. Kodlara aşağıdaki linkten erişebilirsiniz.</string>
+    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Kuruluma geçmeden önce son bir şey daha var - eğer FlorisBoard ile ilgili herhangi bir hata/çökme/sorun ile karşılaşırsanız veya bir tavsiyeniz var ise - aşağıdaki bağlantıdan GitHub deposuna ulaşabilir ve sorunu bildirebilirsiniz. Bu tüm kullanıcılar için deneyimi iyileştirmemize yardımcı olacaktır!</string>
     <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Kurulumu başlatmak için <i>SONRAKİ</i> tuşuna basın.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">FlorisBoard’u Etkinleştir</string>
+    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Özel bir klavye kullanmadan önce Android bunu elle etkinleştirmenizi gerektirir. Aşağıdaki tuşa tıklayarak <i>Dil &amp; Giriş</i> ayarlarına gidin ve \'<i>FlorisBoard</i>\'u seçtiğinizden emin olun.</string>
     <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard başarılı bir şekilde aktifleştirildi. Devam etmek için <i>Sonraki</i> tuşuna basın!</string>
     <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Dil &amp; Giriş ayarlarını aç</string>
     <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">FlorisBoard’u varsayılan yap</string>
@@ -308,10 +332,10 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Kurulum tamamlandı!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard hata raporu</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Bu rahatsızlık yüzünden özür dileriz, ancak FlorisBoard bilinmeyen bir hata yüzünden çöktü.\n\nlf
-Eğer bu hatayı bildirmek isterseniz, \"Panoya Kopyala\" butonuna basın, sonra \"Hata Bildirisini Aç\" düğmesine basın. Hata bildirisini doldurun ve hata günlüğünü yapıştırın. Bunu yapmanız FlorisBoard\'ı daha kararlı ve iyi yapmamızı sağlayacaktır. Teşekkür ederiz!</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Üzgünüz, ancak FlorisBoard bilinmeyen bir hatadan dolayı çöktü.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Eğer bu hatayı bildirmek isterseniz, ilk önce GitHub üzerinden aynı hata daha önce bildirilmiş mi diye kontrol edin.\nEğer bildirilmediyse, oluşturulan hata raporunu kopyalayın ve yeni bir hata bildirimi oluşturun. \"%s\" şablonunu kullanarak açıklamayı, hangi adımların izlendiğini yazın ve en sona oluşturulan hata raporunu yapıştırın. Bu herkes için FlorisBoard\'u daha iyi ve sorunsuz yapmamıza yardımcı olacak. Teşekkürler!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Panoya kopyala</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Hata rapor formunu aç (github.com)</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Hata takibini aç (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Kapat</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard hata raporları</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard çalışmayı durdurdu…</string>
@@ -327,5 +351,24 @@ Eğer bu hatayı bildirmek isterseniz, \"Panoya Kopyala\" butonuna basın, sonra
     <string name="clip__paste_item">Yapıştır</string>
     <string name="clip__back_to_text_input">Yazma girişine geri dön</string>
     <string name="clip__cant_paste">Bu uygulama bu içeriğin yapıştırılmasına izin vermiyor.</string>
+    <string name="pref__clipboard__clipboard_category__label">Pano</string>
+    <string name="pref__clipboard__use_internal_clipboard___label">Dahili panoyu kullan</string>
+    <string name="pref__clipboard__use_internal_clipboard_title__summary">Sistem panosu yerine dahili panoyu kullan</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Sistem panosundan senkronize et</string>
+    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Sistem panosu değişimleri aynı zamanda Floris panosuna da yansır</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Sistem panosuna senkronize et</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris panosu değişimleri aynı zamanda sistem panosuna da yansır</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Pano geçmişini etkinleştir</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Pano öğelerini muhafaza et</string>
+    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Eski öğeleri temizle</string>
+    <string name="pref__clipboard__clean_up_old_after__label">Eski öğeleri temizleme süresi</string>
+    <string name="pref__unit_minutes">" dakika"</string>
+    <string name="pref__clipboard__limit_history_size__label">Geçmiş boyutunu sınırla</string>
+    <string name="pref__clipboard__max_history_size__label">En fazla geçmiş boyutu</string>
+    <string name="pref__unit_items">" öğeler"</string>
+    <!-- glide strings -->
+    <string name="pref__glide_trail_fade_duration">Kaydırma izi geçme süresi</string>
     <string name="pref__glide_preview_refresh_delay">Önizleme yenileme gecikmesi</string>
+    <string name="pref__glide__show_preview">Kaydırarak yazarken önizlemeyi göster</string>
+    <string name="pref__glide_trail_max_length">En fazla kaydırma izi uzunluğu</string>
 </resources>

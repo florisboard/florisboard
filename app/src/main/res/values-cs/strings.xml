@@ -199,11 +199,13 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Zvuk při stisku klávesy</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Hlasitost zvuku při stisku klávesy</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibrace při stisku klávesy</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Trvání vibrací při stisknutí tlačítka</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Síla vibrací na stisknutí tlačítka</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Vyskakovací Viditelnost</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Zobrazit vyskakovací okno, když stisknete klávesu</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Dlouhé zpoždění stisknutí tlačítka</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Mezerník přepne znovu do písmenného rozložení</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Stisknutím mezerníku se automaticky vrátíte z nabídky čísel/symbolů ke klasické klávesnici</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Psaní zkušenosti</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Povolit chytrou lištu</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Zobrazí se na vrchu klávesnice</string>
@@ -221,7 +223,12 @@
     <string name="pref__glide__enabled__summary" comment="Preference summary">Zadejte slovo posunutím prstu jeho písmeny</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">Zobrazit stopu tahu</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Zmizí po každém slově</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Obecná gesta</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">Gesta na mezerníku</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">Další gesta / Trvání gest</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Žádná akce</string>
+    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Mód přechodu k předchozí klávesnici</string>
+    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Mód přechodu k další klávesnici</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Smazat znaky přesně</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Smazat aktuální slovo</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Smazat slova přesně</string>
@@ -233,7 +240,13 @@
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Přesunout kurzor doprava</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Přesunout kurzor na začátek řádku</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Přesunout kurzor na konec řádku</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Přesunout kurzor na začátek stránky</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Přesunout kurzor na konec stránky</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Otevřít správce schránky / historie</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Posun</string>
+    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Vpřed</string>
+    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Zpět</string>
+    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Zobrazit výběr metody zadávání</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Přepnout na předchozí klávesnici</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Přepněte na předchozí podtyp</string>
     <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Přepněte na další podtyp</string>
@@ -315,9 +328,7 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Nastavení dokončeno!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Zpráva o chybě florisboardu</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Omlouváme se za nepříjemnosti, ale FlorisBoard se zhroutil kvůli neočekávané chybě. \n\nChcete-li tuto chybu nahlásit, klikněte na „Kopírovat do schránky“ a poté na tlačítko „Otevřít hlášení o chybě“. Vyplňte hlášení o chybě a vložte protokol. To pomáhá zlepšovat a stabilizovat FlorisBoard pro všechny. Děkuju!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopírovat do schránky</string>
-    <string name="crash_dialog__open_issue_tracker" comment="Label of Open bug report button in crash dialog">Otevřít formulář hlášení chyb (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Uzavřít</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard chybové hlášení</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard přestal fungovat…</string>
@@ -333,4 +344,6 @@
     <string name="clip__paste_item">Vložit</string>
     <string name="clip__back_to_text_input">Zpět na zadávání textu</string>
     <string name="clip__cant_paste">Tato aplikace neumožňuje vkládání daného obsahu.</string>
+    <string name="pref__clipboard__clipboard_category__label">Schránka</string>
+    <!-- glide strings -->
 </resources>
