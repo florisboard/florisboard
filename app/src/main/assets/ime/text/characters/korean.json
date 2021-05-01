@@ -6,36 +6,36 @@
   "direction": "ltr",
   "arrangement": [
     [
-      { "code": 12610, "label": "ㅂ"},
-      { "code": 12616, "label": "ㅈ"},
-      { "code": 12599, "label": "ㄷ"},
-      { "code": 12593, "label": "ㄱ"},
-      { "code": 12613, "label": "ㅅ"},
-      { "code": 12635, "label": "ㅛ"},
-      { "code": 12629, "label": "ㅕ"},
-      { "code": 12625, "label": "ㅑ"},
-      { "code": 12624, "label": "ㅐ"},
-      { "code": 12628, "label": "ㅔ"}
+      { "$": "auto_text_key", "code": 12610, "label": "ㅂ"},
+      { "$": "auto_text_key", "code": 12616, "label": "ㅈ"},
+      { "$": "auto_text_key", "code": 12599, "label": "ㄷ"},
+      { "$": "auto_text_key", "code": 12593, "label": "ㄱ"},
+      { "$": "auto_text_key", "code": 12613, "label": "ㅅ"},
+      { "$": "auto_text_key", "code": 12635, "label": "ㅛ"},
+      { "$": "auto_text_key", "code": 12629, "label": "ㅕ"},
+      { "$": "auto_text_key", "code": 12625, "label": "ㅑ"},
+      { "$": "auto_text_key", "code": 12624, "label": "ㅐ"},
+      { "$": "auto_text_key", "code": 12628, "label": "ㅔ"}
     ],
     [
-      { "code": 12609, "label": "ㅁ"},
-      { "code": 12596, "label": "ㄴ"},
-      { "code": 12615, "label": "ㅇ"},
-      { "code": 12601, "label": "ㄹ"},
-      { "code": 12622, "label": "ㅎ"},
-      { "code": 12631, "label": "ㅗ"},
-      { "code": 12627, "label": "ㅓ"},
-      { "code": 12623, "label": "ㅏ"},
-      { "code": 12643, "label": "ㅣ"}
+      { "$": "auto_text_key", "code": 12609, "label": "ㅁ"},
+      { "$": "auto_text_key", "code": 12596, "label": "ㄴ"},
+      { "$": "auto_text_key", "code": 12615, "label": "ㅇ"},
+      { "$": "auto_text_key", "code": 12601, "label": "ㄹ"},
+      { "$": "auto_text_key", "code": 12622, "label": "ㅎ"},
+      { "$": "auto_text_key", "code": 12631, "label": "ㅗ"},
+      { "$": "auto_text_key", "code": 12627, "label": "ㅓ"},
+      { "$": "auto_text_key", "code": 12623, "label": "ㅏ"},
+      { "$": "auto_text_key", "code": 12643, "label": "ㅣ"}
     ],
     [
-      { "code": 12619, "label": "ㅋ"},
-      { "code": 12620, "label": "ㅌ"},
-      { "code": 12618, "label": "ㅊ"},
-      { "code": 12621, "label": "ㅍ"},
-      { "code": 12640, "label": "ㅠ"},
-      { "code": 12636, "label": "ㅜ"},
-      { "code": 12641, "label": "ㅡ"}
+      { "$": "auto_text_key", "code": 12619, "label": "ㅋ"},
+      { "$": "auto_text_key", "code": 12620, "label": "ㅌ"},
+      { "$": "auto_text_key", "code": 12618, "label": "ㅊ"},
+      { "$": "auto_text_key", "code": 12621, "label": "ㅍ"},
+      { "$": "auto_text_key", "code": 12640, "label": "ㅠ"},
+      { "$": "auto_text_key", "code": 12636, "label": "ㅜ"},
+      { "$": "auto_text_key", "code": 12641, "label": "ㅡ"}
     ]
   ]
 }

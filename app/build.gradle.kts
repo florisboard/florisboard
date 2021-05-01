@@ -86,6 +86,7 @@ dependencies {
     implementation("androidx.lifecycle", "lifecycle-service", "2.2.0")
     implementation("com.google.android", "flexbox", "2.0.1") // requires jcenter as of version 2.0.1
     implementation("com.google.android.material", "material", "1.3.0")
+    implementation("org.jetbrains.kotlin", "kotlin-reflect", "1.3.41")
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-android", "1.4.2")
     implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.1.0")
     implementation("com.jaredrummler", "colorpicker", "1.1.0")

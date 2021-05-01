@@ -6,37 +6,37 @@
     "all": {
       "ㅂ": {
         "relevant": [
-          { "code": 12611, "label": "ㅃ" }
+          { "$": "auto_text_key", "code": 12611, "label": "ㅃ" }
         ]
       },
       "ㅈ": {
         "relevant": [
-          { "code": 12617, "label": "ㅉ" }
+          { "$": "auto_text_key", "code": 12617, "label": "ㅉ" }
         ]
       },
       "ㄷ": {
         "relevant": [
-          { "code": 12600, "label": "ㄸ" }
+          { "$": "auto_text_key", "code": 12600, "label": "ㄸ" }
         ]
       },
       "ㄱ": {
         "relevant": [
-          { "code": 12594, "label": "ㄲ" }
+          { "$": "auto_text_key", "code": 12594, "label": "ㄲ" }
         ]
       },
       "ㅅ": {
         "relevant": [
-          { "code": 12614, "label": "ㅆ" }
+          { "$": "auto_text_key", "code": 12614, "label": "ㅆ" }
         ]
       },
       "ㅐ": {
         "relevant": [
-          { "code": 12626, "label": "ㅒ" }
+          { "$": "auto_text_key", "code": 12626, "label": "ㅒ" }
         ]
       },
       "ㅔ": {
         "relevant": [
-          { "code": 12630, "label": "ㅖ" }
+          { "$": "auto_text_key", "code": 12630, "label": "ㅖ" }
         ]
       },
       "~right": {
