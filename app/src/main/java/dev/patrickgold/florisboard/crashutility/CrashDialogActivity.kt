@@ -20,6 +20,7 @@ import android.content.*
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
@@ -93,9 +94,13 @@ class CrashDialogActivity : AppCompatActivity() {
 
         binding.copyToClipboard.setOnClickListener {
             val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE)
-            if (clipboardManager != null && clipboardManager is ClipboardManager) {
+            val toastMessage: String = if (clipboardManager != null && clipboardManager is ClipboardManager) {
                 clipboardManager.setPrimaryClip(ClipData.newPlainText(errorReport, errorReport))
+                resources.getString(R.string.crash_dialog__copy_to_clipboard_success)
+            } else {
+                resources.getString(R.string.crash_dialog__copy_to_clipboard_failure)
             }
+            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
         }
 
         binding.openBugReportForm.setOnClickListener {
