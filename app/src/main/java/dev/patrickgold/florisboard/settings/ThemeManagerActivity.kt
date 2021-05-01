@@ -39,7 +39,8 @@ import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.text.key.CurrencySet
-import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.keyboard.*
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
@@ -52,6 +53,21 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
     private lateinit var layoutManager: LayoutManager
     private val themeManager: ThemeManager get() = ThemeManager.default()
     private val assetManager: AssetManager get() = AssetManager.default()
+
+    private lateinit var textKeyboardIconSet: TextKeyboardIconSet
+    private val textComputingEvaluator = object : TextComputingEvaluator by DefaultTextComputingEvaluator {
+        override fun evaluateVisible(data: TextKeyData): Boolean {
+            return data.code != KeyCode.SWITCH_TO_MEDIA_CONTEXT
+        }
+
+        override fun isSlot(data: TextKeyData): Boolean {
+            return CurrencySet.isCurrencySlot(data.code)
+        }
+
+        override fun getSlotData(data: TextKeyData): TextKeyData {
+            return BasicTextKeyData(label = "$")
+        }
+    }
 
     private var key: String = ""
     private var defaultValue: String = ""
@@ -144,6 +160,10 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         binding.themeDeleteBtn.setOnClickListener { onActionClicked(it) }
         binding.themeEditBtn.setOnClickListener { onActionClicked(it) }
         binding.themeExportBtn.setOnClickListener { onActionClicked(it) }
+
+        textKeyboardIconSet = TextKeyboardIconSet.new(this)
+        binding.keyboardPreview.setIconSet(textKeyboardIconSet)
+        binding.keyboardPreview.setComputingEvaluator(textComputingEvaluator)
 
         buildUi()
     }
