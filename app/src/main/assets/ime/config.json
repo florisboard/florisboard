@@ -617,7 +617,7 @@
     {
       "id": 2900,
       "languageTag": "ko",
-      "currencySet": "euro",
+      "currencySet": "south_korean_won",
       "preferred": {
         "characters": "korean"
       }
