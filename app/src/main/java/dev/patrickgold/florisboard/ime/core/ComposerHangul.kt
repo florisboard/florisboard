@@ -1,22 +1,20 @@
 package dev.patrickgold.florisboard.ime.core
 
-import kotlin.math.max
-
 class ComposerHangul {
     // Initial consonants, ordered for syllable creation
-    val initials = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ"
+    private val initials = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ"
     // Medial vowels, ordered for syllable creation
-    val medials = "ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ"
+    private val medials = "ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ"
     // Final consonants (including none), ordered for syllable creation
-    val finals = "_ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ"
+    private val finals = "_ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ"
 
-    val medialComp = mapOf(
+    private val medialComp = mapOf(
         'ㅗ' to listOfNotNull("ㅏㅐㅣ", "ㅘㅙㅚ"),
         'ㅜ' to listOfNotNull("ㅓㅔㅣ", "ㅝㅞㅟ"),
         'ㅡ' to listOfNotNull("ㅣ", "ㅢ"),
     )
 
-    val finalComp = mapOf(
+    private val finalComp = mapOf(
         'ㄱ' to listOfNotNull("ㅅ", "ㄳ"),
         'ㄴ' to listOfNotNull("ㅈㅎ", "ㄵㄶ"),
         'ㄹ' to listOfNotNull("ㄱㅁㅂㅅㅌㅍㅎ", "ㄺㄻㄼㄽㄾㄿㅀ"),
@@ -27,21 +25,21 @@ class ComposerHangul {
         val ret = mutableMapOf<Char, List<Char>>()
         for ((first, v) in map) {
             val (seconds, comps) = v
-            for (i in 0..seconds.length-1) {
+            for (i in seconds.indices) {
                 ret[comps[i]] = listOf(first, seconds[i])
             }
         }
         return ret
     }
 
-    val finalCompRev = reverseComp(finalComp)
-    val medialCompRev = reverseComp(medialComp)
+    private val finalCompRev = reverseComp(finalComp)
+    private val medialCompRev = reverseComp(medialComp)
 
-    fun syllable(ini: Int, med: Int, fin:Int): Char {
+    private fun syllable(ini: Int, med: Int, fin:Int): Char {
         return (ini*588 + med*28 + fin + 44032).toChar()
     }
 
-    fun syllableBlocks(syllOrd: Int): List<Int> {
+    private fun syllableBlocks(syllOrd: Int): List<Int> {
         val initial = (syllOrd-44032)/588
         val medial = (syllOrd-44032-initial*588)/28
         val fin = (syllOrd-44032)%28
@@ -50,7 +48,7 @@ class ComposerHangul {
 
     fun getActions(s: String, c: Char): Pair<Int, String> {
         // s is "at least the last 1 character of what's currently here"
-        if (s.length == 0) {
+        if (s.isEmpty()) {
             return Pair(0, ""+c)
         }
         val lastChar = s.last()
@@ -58,7 +56,7 @@ class ComposerHangul {
 
         if (lastChar in initials && c in medials) {
             return Pair(1, "${syllable(initials.indexOf(lastChar), medials.indexOf(c), 0)}")
-        } else if (44032 <= lastOrd && lastOrd <= 55203) { // syllable
+        } else if (lastOrd in 44032..55203) { // syllable
             val (ini, med, fin) = syllableBlocks(lastOrd)
 
             // underscore is a sentinel in the "finals" string
@@ -70,9 +68,9 @@ class ComposerHangul {
                 return Pair(1, "${syllable(ini, med, finals.indexOf(c))}")
 
             // if there is already a final but it is mergeable with the new char into a composed final, merge
-            if ((finals[fin] in finalComp) && c in finalComp[finals[fin]]!!.get(0)) {
+            if ((finals[fin] in finalComp) && c in finalComp[finals[fin]]!![0]) {
                 val tple = finalComp[finals[fin]]
-                return Pair(1, "${syllable(ini, med, finals.indexOf(tple!!.get(1)[tple[0].indexOf(c)]))}")
+                return Pair(1, "${syllable(ini, med, finals.indexOf(tple!![1][tple[0].indexOf(c)]))}")
             }
 
             // if there is a simple final and the new char is a medial, split the old syllable
@@ -86,7 +84,7 @@ class ComposerHangul {
             // if no final yet, and current medial can be composed with new char, merge
             if (medials[med] in medialComp && c in medialComp.getValue(medials[med])[0] && fin == 0) {
                 val tple = medialComp[medials[med]]
-                return Pair(1, "${syllable(ini, medials.indexOf(tple!!.get(1)[tple[0].indexOf(c)]), 0)}")
+                return Pair(1, "${syllable(ini, medials.indexOf(tple!![1][tple[0].indexOf(c)]), 0)}")
             }
         }
 

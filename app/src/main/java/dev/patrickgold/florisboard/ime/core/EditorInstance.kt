@@ -49,6 +49,9 @@ class EditorInstance private constructor(
     val packageName: String,
     private val editorInfo: EditorInfo
 ) {
+    private val kClass = Class.forName("dev.patrickgold.florisboard.ime.core.ComposerHangul").kotlin
+    private val composer = (kClass.objectInstance ?: kClass.java.newInstance()) as ComposerHangul
+
     val cachedInput: CachedInput = CachedInput(this)
     var contentMimeTypes: Array<out String?>? = null
     private val florisClipboardManager: FlorisClipboardManager = FlorisClipboardManager.getInstance()
@@ -192,8 +195,6 @@ class EditorInstance private constructor(
                 // TODO probably not the right place and it ignores input sometimes
                 ic.beginBatchEdit()
                 ic.finishComposingText()
-                val kClass = Class.forName("dev.patrickgold.florisboard.ime.core.ComposerHangul").kotlin
-                val composer = (kClass.objectInstance ?: kClass.java.newInstance()) as ComposerHangul
                 val previous = getTextBeforeCursor(1)
                 val (rm, finalText) = composer.getActions(previous, text[0])
                 ic.deleteSurroundingText(rm, 0)
