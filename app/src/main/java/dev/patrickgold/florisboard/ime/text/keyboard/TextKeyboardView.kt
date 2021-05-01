@@ -700,7 +700,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
         if (isPreviewMode) {
             cachedTheme = theme
             backgroundDrawable.apply {
-                paint.color = theme.getAttr(Theme.Attr.KEYBOARD_BACKGROUND).toSolidColor().color
+                setTint(theme.getAttr(Theme.Attr.KEYBOARD_BACKGROUND).toSolidColor().color)
             }
         }
         invalidate()
@@ -823,7 +823,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                 }
             )
             elevation = if (shouldShowBorder) 4.0f else 0.0f
-            paint.color = keyBackground.toSolidColor().color
+            setTint(keyBackground.toSolidColor().color)
             draw(canvas)
         }
 

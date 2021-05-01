@@ -67,7 +67,7 @@ abstract class KeyboardIconSet {
  */
 class TextKeyboardIconSet private constructor(context: Context) : KeyboardIconSet() {
     private val drawableCache: Array<Drawable?> = Array(RES_ICON_IDS.size) {
-        ContextCompat.getDrawable(context.applicationContext, RES_ICON_IDS[it])
+        ContextCompat.getDrawable(context.applicationContext, RES_ICON_IDS[it])?.mutate()
     }
 
     companion object {
