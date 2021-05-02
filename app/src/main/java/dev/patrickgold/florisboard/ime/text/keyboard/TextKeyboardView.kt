@@ -176,8 +176,10 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
     fun notifyStateChanged() {
         flogInfo(LogTopic.TEXT_KEYBOARD_VIEW)
         isRecomputingRequested = true
-        onLayoutInternal()
-        invalidate()
+        if (isMeasured) {
+            onLayoutInternal()
+            invalidate()
+        }
     }
 
     override fun onDetachedFromWindow() {
