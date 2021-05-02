@@ -37,6 +37,8 @@ abstract class KeyboardView : View, ThemeManager.OnThemeUpdatedListener {
     protected val themeManager: ThemeManager?
         get() = ThemeManager.defaultOrNull()
 
+    var isMeasured: Boolean = false
+        private set
     protected var isTouchable: Boolean = true
     protected val touchEventChannel: Channel<MotionEvent> = Channel(16)
     protected val mainScope: CoroutineScope = CoroutineScope(Dispatchers.Main.immediate + SupervisorJob())
@@ -84,6 +86,11 @@ abstract class KeyboardView : View, ThemeManager.OnThemeUpdatedListener {
     }
 
     protected abstract fun onTouchEventInternal(event: MotionEvent)
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        isMeasured = true
+    }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
