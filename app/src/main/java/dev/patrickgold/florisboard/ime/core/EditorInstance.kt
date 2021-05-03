@@ -189,10 +189,10 @@ class EditorInstance private constructor(
     fun commitText(text: String): Boolean {
         val ic = inputConnection ?: return false
         return if (isRawInputEditor || selection.isSelectionMode || !isComposingEnabled) {
+            // TODO FACTOR THIS?
             if (text.length != 1) {
                 ic.commitText(text, 1)
             } else {
-                // TODO probably not the right place and it ignores input sometimes
                 ic.beginBatchEdit()
                 ic.finishComposingText()
                 val previous = getTextBeforeCursor(1)
@@ -214,8 +214,20 @@ class EditorInstance private constructor(
                 }
                 !isPhantomSpace && isWordComponent -> {
                     ic.finishComposingText()
-                    ic.commitText(text, 1)
-                    ic.setComposingRegion(cachedInput.currentWord.start, cachedInput.currentWord.end + text.length)
+                    // TODO FACTOR THIS?
+                    if (text.length != 1) {
+                        ic.commitText(text, 1)
+                        ic.setComposingRegion(cachedInput.currentWord.start, cachedInput.currentWord.end + text.length)
+                    } else {
+                        ic.beginBatchEdit()
+                        ic.finishComposingText()
+                        val previous = getTextBeforeCursor(1)
+                        val (rm, finalText) = composer.getActions(previous, text[0])
+                        ic.deleteSurroundingText(rm, 0)
+                        ic.commitText(finalText, 1)
+                        ic.endBatchEdit()
+                        ic.setComposingRegion(cachedInput.currentWord.start, cachedInput.currentWord.end + finalText.length)
+                    }
                 }
                 else -> {
                     ic.finishComposingText()
