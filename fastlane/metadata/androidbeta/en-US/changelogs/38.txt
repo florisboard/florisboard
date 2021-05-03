@@ -1,0 +1,7 @@
+- Add "Copied to system clipboard" to crash dialog (#724)
+- Fix adaptive theme memory management (#763)
+  - Adaptive themes are now available again
+- Fix keyboard preview visual bugs (#776)
+- Fix theme manager buttons not wrapping (#777)
+- Fix Double NaN crashes (#774, #790)
+- Fix gestures (shift+space and space bar up now work again properly)
