@@ -17,12 +17,14 @@
 package dev.patrickgold.florisboard.ime.theme
 
 import android.annotation.SuppressLint
-import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Color
 import android.net.Uri
+import android.util.TypedValue
+import androidx.annotation.AttrRes
+import androidx.core.content.ContextCompat
 import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
@@ -30,6 +32,7 @@ import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.util.TimeUtil
 import timber.log.Timber
 import java.util.concurrent.CopyOnWriteArrayList
+
 
 /**
  * Core class which manages the keyboard theme. Note, that this does not affect the UI theme of the
@@ -50,12 +53,9 @@ class ThemeManager private constructor(
     var isAdaptiveThemeEnabled: Boolean = false
         private set
 
-    var remoteColorPrimary: ThemeValue.SolidColor? = null
+    var remote: RemoteColors = RemoteColors.DEFAULT
         private set
-    var remoteColorPrimaryVariant: ThemeValue.SolidColor? = null
-        private set
-    var remoteColorSecondary: ThemeValue.SolidColor? = null
-        private set
+    private val remoteCache: ArrayList<RemoteColors> = arrayListOf()
 
     companion object {
         /** The static relative path where a theme is located, regardless of the [AssetSource]. */
@@ -101,125 +101,93 @@ class ThemeManager private constructor(
         indexThemeRefs()
         val ref = evaluateActiveThemeRef()
         Timber.i(ref.toString())
-        activeTheme = AdaptiveThemeOverlay(this, if (ref == null) {
-            Theme.BASE_THEME
-        } else {
-            loadTheme(ref).getOrDefault(Theme.BASE_THEME)
-        })
+        activeTheme = AdaptiveThemeOverlay(
+            this, if (ref == null) {
+                Theme.BASE_THEME
+            } else {
+                loadTheme(ref).getOrDefault(Theme.BASE_THEME)
+            }
+        )
         Timber.i(activeTheme.label)
         notifyCallbackReceivers()
     }
 
     /**
-     * Gets the primary and ark variants of the app with given [packageName].
-     * Based on a Stock Overflow answer by adneal.
-     * Source: https://stackoverflow.com/a/27138913/6801193
+     * Gets the primary and ark variants of the app with given [remotePackageName].
+     * Based AnySoftKeyboard's way of getting remote colors:
+     *  https://github.com/AnySoftKeyboard/AnySoftKeyboard/blob/master/ime/overlay/src/main/java/com/anysoftkeyboard/overlay/OverlyDataCreatorForAndroid.java
      *
-     * @param packageName The package name from which the colors should be extracted.
+     * @param remotePackageName The package name from which the colors should be extracted.
      */
-    @SuppressLint("ResourceType")
-    @Suppress("UNNECESSARY_SAFE_CALL")
-    fun updateRemoteColorValues(packageName: String) {
-        return // See why: https://github.com/florisboard/florisboard/issues/763
+    fun updateRemoteColorValues(remotePackageName: String) {
+        if (!isAdaptiveThemeEnabled) return
         try {
+            val tempRemote = remoteCache.find { it.packageName == remotePackageName }
+            if (tempRemote != null) {
+                remote = tempRemote
+                return
+            }
+            val colorPrimary: Int?
+            val colorPrimaryVariant: Int?
+            val colorSecondary: Int?
             val pm = packageManager ?: return
-            val res = pm.getResourcesForApplication(packageName)
-            val attrs = listOf(
-                res.getIdentifier("colorPrimary", "attr", packageName),
-                android.R.attr.colorPrimary,
-                res.getIdentifier("colorPrimaryDark", "attr", packageName),
-                android.R.attr.colorPrimaryDark,
-                res.getIdentifier("colorPrimaryVariant", "attr", packageName),
-                res.getIdentifier("colorAccent", "attr", packageName),
-                android.R.attr.colorAccent,
-                res.getIdentifier("colorSecondary", "attr", packageName)
+            val remoteApp = pm.getLaunchIntentForPackage(remotePackageName)?.component ?: return
+            val activityInfo = pm.getActivityInfo(remoteApp, PackageManager.GET_META_DATA)
+            val remoteContext = applicationContext.createPackageContext(
+                remoteApp.packageName,
+                Context.CONTEXT_IGNORE_SECURITY
             )
-            val androidTheme = res.newTheme()
-            val defColor = if (activeTheme.isNightTheme) {
-                Color.BLACK
-            } else {
-                Color.WHITE
-            }
-            val themeIds = mutableListOf<Int>()
-            pm.getLaunchIntentForPackage(packageName)?.component?.let { cn ->
-                pm.getActivityInfo(cn, 0)?.let { launchActivity ->
-                    if (launchActivity.targetActivity != null) {
-                        pm.getActivityInfo(ComponentName(packageName, launchActivity.targetActivity), 0)?.let {
-                            themeIds.add(it.theme)
-                        }
-                    } else {
-                        themeIds.add(launchActivity.theme)
-                    }
-                }
-            }
-            pm.getApplicationInfo(packageName, 0)?.let { applicationInfo ->
-                themeIds.add(applicationInfo.theme)
-            }
-            remoteColorPrimary = null
-            remoteColorPrimaryVariant = null
-            remoteColorSecondary = null
-            for (themeId in themeIds) {
-                if (remoteColorPrimary != null && remoteColorPrimaryVariant != null &&
-                        remoteColorSecondary != null) {
-                    break
-                }
-                androidTheme.applyStyle(themeId, false)
-                androidTheme.obtainStyledAttributes(attrs.toIntArray()).let { a ->
-                    remoteColorPrimary = when {
-                        a.hasValue(0) -> {
-                            ThemeValue.SolidColor(a.getColor(0, defColor))
-                        }
-                        a.hasValue(1) -> {
-                            ThemeValue.SolidColor(a.getColor(1, defColor))
-                        }
-                        else -> {
-                            remoteColorPrimary
-                        }
-                    }
-                    remoteColorPrimaryVariant = when {
-                        a.hasValue(2) -> {
-                            ThemeValue.SolidColor(a.getColor(2, defColor))
-                        }
-                        a.hasValue(3) -> {
-                            ThemeValue.SolidColor(a.getColor(3, defColor))
-                        }
-                        a.hasValue(4) -> {
-                            ThemeValue.SolidColor(a.getColor(4, defColor))
-                        }
-                        else -> {
-                            remoteColorPrimaryVariant
-                        }
-                    }
-                    remoteColorSecondary = when {
-                        a.hasValue(5) -> {
-                            ThemeValue.SolidColor(a.getColor(5, defColor))
-                        }
-                        a.hasValue(6) -> {
-                            ThemeValue.SolidColor(a.getColor(6, defColor))
-                        }
-                        a.hasValue(7) -> {
-                            ThemeValue.SolidColor(a.getColor(7, defColor))
-                        }
-                        else -> {
-                            remoteColorSecondary
-                        }
-                    }
-                    a.recycle()
-                }
-            }
+            remoteContext.setTheme(activityInfo.themeResource)
+            val res = remoteContext.resources
+            val attrs = intArrayOf(
+                res.getIdentifier("colorPrimary", "attr", remotePackageName),
+                android.R.attr.colorPrimary,
+                res.getIdentifier("colorPrimaryDark", "attr", remotePackageName),
+                android.R.attr.colorPrimaryDark,
+                res.getIdentifier("colorPrimaryVariant", "attr", remotePackageName),
+                res.getIdentifier("colorAccent", "attr", remotePackageName),
+                android.R.attr.colorAccent,
+                res.getIdentifier("colorSecondary", "attr", remotePackageName)
+            )
+            val typedValue = TypedValue()
+            colorPrimary =
+                getColorFromThemeAttribute(remoteContext, typedValue, attrs[0]) ?:
+                getColorFromThemeAttribute(remoteContext, typedValue, attrs[1])
+            colorPrimaryVariant =
+                getColorFromThemeAttribute(remoteContext, typedValue, attrs[2]) ?:
+                getColorFromThemeAttribute(remoteContext, typedValue, attrs[3]) ?:
+                getColorFromThemeAttribute(remoteContext, typedValue, attrs[4])
+            colorSecondary =
+                getColorFromThemeAttribute(remoteContext, typedValue, attrs[5]) ?:
+                getColorFromThemeAttribute(remoteContext, typedValue, attrs[6]) ?:
+                getColorFromThemeAttribute(remoteContext, typedValue, attrs[7])
+            val newRemote = RemoteColors(
+                packageName = remotePackageName,
+                colorPrimary = colorPrimary?.let { ThemeValue.SolidColor(it or Color.BLACK) },
+                colorPrimaryVariant = colorPrimaryVariant?.let { ThemeValue.SolidColor(it or Color.BLACK) },
+                colorSecondary = colorSecondary?.let { ThemeValue.SolidColor(it or Color.BLACK) }
+            )
+            remoteCache.add(newRemote)
+            remote = newRemote
         } catch (e: Exception) {
+            remote = RemoteColors.DEFAULT
             e.printStackTrace()
         }
-        remoteColorPrimary?.let {
-            remoteColorPrimary = ThemeValue.SolidColor(it.color or Color.BLACK)
-        }
-        remoteColorPrimaryVariant?.let {
-            remoteColorPrimaryVariant = ThemeValue.SolidColor(it.color or Color.BLACK)
-        }
-        remoteColorSecondary?.let {
-            remoteColorSecondary = ThemeValue.SolidColor(it.color or Color.BLACK)
-        }
         notifyCallbackReceivers()
+    }
+
+    private fun getColorFromThemeAttribute(
+        context: Context, typedValue: TypedValue, @AttrRes attr: Int
+    ): Int? {
+        return if (context.theme.resolveAttribute(attr, typedValue, true)) {
+            if (typedValue.type == TypedValue.TYPE_REFERENCE) {
+                ContextCompat.getColor(context, typedValue.resourceId)
+            } else {
+                typedValue.data
+            }
+        } else {
+            null
+        }
     }
 
     /**
@@ -274,37 +242,39 @@ class ThemeManager private constructor(
         Timber.i(prefs.theme.mode.toString())
         Timber.i(prefs.theme.dayThemeRef)
         Timber.i(prefs.theme.nightThemeRef)
-        return AssetRef.fromString(when (prefs.theme.mode) {
-            ThemeMode.ALWAYS_DAY -> {
-                isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp
-                prefs.theme.dayThemeRef
-            }
-            ThemeMode.ALWAYS_NIGHT -> {
-                isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp
-                prefs.theme.nightThemeRef
-            }
-            ThemeMode.FOLLOW_SYSTEM -> if (applicationContext.resources.configuration.uiMode and
-                Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-            ) {
-                isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp
-                prefs.theme.nightThemeRef
-            } else {
-                isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp
-                prefs.theme.dayThemeRef
-            }
-            ThemeMode.FOLLOW_TIME -> {
-                val current = TimeUtil.currentLocalTime()
-                val sunrise = TimeUtil.decode(prefs.theme.sunriseTime)
-                val sunset = TimeUtil.decode(prefs.theme.sunsetTime)
-                if (TimeUtil.isNightTime(sunrise, sunset, current)) {
+        return AssetRef.fromString(
+            when (prefs.theme.mode) {
+                ThemeMode.ALWAYS_DAY -> {
+                    isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp
+                    prefs.theme.dayThemeRef
+                }
+                ThemeMode.ALWAYS_NIGHT -> {
+                    isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp
+                    prefs.theme.nightThemeRef
+                }
+                ThemeMode.FOLLOW_SYSTEM -> if (applicationContext.resources.configuration.uiMode and
+                    Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+                ) {
                     isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp
                     prefs.theme.nightThemeRef
                 } else {
                     isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp
                     prefs.theme.dayThemeRef
                 }
+                ThemeMode.FOLLOW_TIME -> {
+                    val current = TimeUtil.currentLocalTime()
+                    val sunrise = TimeUtil.decode(prefs.theme.sunriseTime)
+                    val sunset = TimeUtil.decode(prefs.theme.sunsetTime)
+                    if (TimeUtil.isNightTime(sunrise, sunset, current)) {
+                        isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp
+                        prefs.theme.nightThemeRef
+                    } else {
+                        isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp
+                        prefs.theme.dayThemeRef
+                    }
+                }
             }
-        }).onFailure { Timber.e(it) }.getOrDefault(null)
+        ).onFailure { Timber.e(it) }.getOrDefault(null)
     }
 
     private fun indexThemeRefs() {
@@ -335,6 +305,17 @@ class ThemeManager private constructor(
             }
         }.onFailure {
             Timber.e(it.toString())
+        }
+    }
+
+    data class RemoteColors(
+        val packageName: String,
+        val colorPrimary: ThemeValue.SolidColor?,
+        val colorPrimaryVariant: ThemeValue.SolidColor?,
+        val colorSecondary: ThemeValue.SolidColor?
+    ) {
+        companion object {
+            val DEFAULT = RemoteColors("undefined", null, null, null)
         }
     }
 

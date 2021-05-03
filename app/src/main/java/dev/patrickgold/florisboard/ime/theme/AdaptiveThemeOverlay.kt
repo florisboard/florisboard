@@ -34,50 +34,50 @@ class AdaptiveThemeOverlay(
                 Attr.KEY_BACKGROUND_PRESSED,
                 Attr.SMARTBAR_BACKGROUND,
                 Attr.WINDOW_NAVIGATION_BAR_COLOR -> {
-                    themeManager.remoteColorPrimaryVariant ?: super.getAttr(ref, s1, s2)
+                    themeManager.remote.colorPrimaryVariant ?: super.getAttr(ref, s1, s2)
                 }
                 Attr.KEY_FOREGROUND_PRESSED,
                 Attr.SMARTBAR_FOREGROUND -> {
-                    themeManager.remoteColorPrimaryVariant?.complimentaryTextColor() ?: super.getAttr(ref, s1, s2)
+                    themeManager.remote.colorPrimaryVariant?.complimentaryTextColor() ?: super.getAttr(ref, s1, s2)
                 }
                 Attr.SMARTBAR_FOREGROUND_ALT -> {
-                    themeManager.remoteColorPrimaryVariant?.complimentaryTextColor(true) ?: super.getAttr(ref, s1, s2)
+                    themeManager.remote.colorPrimaryVariant?.complimentaryTextColor(true) ?: super.getAttr(ref, s1, s2)
                 }
                 Attr.KEY_BACKGROUND,
                 Attr.SMARTBAR_BUTTON_BACKGROUND -> {
-                    themeManager.remoteColorPrimary ?: super.getAttr(ref, s1, s2)
+                    themeManager.remote.colorPrimary ?: super.getAttr(ref, s1, s2)
                 }
                 Attr.KEY_FOREGROUND,
                 Attr.SMARTBAR_BUTTON_FOREGROUND -> {
                     if (s1 == "shift" && s2 == "capslock") {
-                        themeManager.remoteColorSecondary ?: super.getAttr(ref, s1, s2)
+                        themeManager.remote.colorSecondary ?: super.getAttr(ref, s1, s2)
                     } else {
-                        themeManager.remoteColorPrimary?.complimentaryTextColor() ?: super.getAttr(ref, s1, s2)
+                        themeManager.remote.colorPrimary?.complimentaryTextColor() ?: super.getAttr(ref, s1, s2)
                     }
                 }
                 Attr.KEY_SHOW_BORDER -> {
-                    if (themeManager.remoteColorPrimary != null) {
+                    if (themeManager.remote.colorPrimary != null) {
                         ThemeValue.OnOff(true)
                     } else {
                         super.getAttr(ref, s1, s2)
                     }
                 }
                 Attr.WINDOW_NAVIGATION_BAR_LIGHT -> {
-                    if (themeManager.remoteColorPrimaryVariant != null) {
-                        ThemeValue.OnOff(themeManager.remoteColorPrimaryVariant?.complimentaryTextColor()?.color == Color.BLACK)
+                    if (themeManager.remote.colorPrimaryVariant != null) {
+                        ThemeValue.OnOff(themeManager.remote.colorPrimaryVariant?.complimentaryTextColor()?.color == Color.BLACK)
                     } else {
                         super.getAttr(ref, s1, s2)
                     }
                 }
                 Attr.POPUP_BACKGROUND,
                 Attr.GLIDE_TRAIL_COLOR -> {
-                    themeManager.remoteColorSecondary ?: super.getAttr(ref, s1, s2)
+                    themeManager.remote.colorSecondary ?: super.getAttr(ref, s1, s2)
                 }
                 Attr.POPUP_BACKGROUND_ACTIVE -> {
-                    themeManager.remoteColorSecondary?.complimentaryTextColor(true) ?: super.getAttr(ref, s1, s2)
+                    themeManager.remote.colorSecondary?.complimentaryTextColor(true) ?: super.getAttr(ref, s1, s2)
                 }
                 Attr.POPUP_FOREGROUND -> {
-                    themeManager.remoteColorSecondary?.complimentaryTextColor() ?: super.getAttr(ref, s1, s2)
+                    themeManager.remote.colorSecondary?.complimentaryTextColor() ?: super.getAttr(ref, s1, s2)
                 }
                 else -> super.getAttr(ref, s1, s2)
             }
