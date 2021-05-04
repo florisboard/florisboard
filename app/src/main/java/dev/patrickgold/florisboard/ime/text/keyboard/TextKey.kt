@@ -45,8 +45,16 @@ class TextKey(override val data: KeyData) : Key(data) {
         } else {
             computedData = computed
             computedPopups.clear()
-            computedPopups.hint = computedSymbolHint?.computeTextKeyData(evaluator)
-            computedPopups.merge(PopupSet(hint = computedNumericHint?.computeTextKeyData(evaluator)))
+            val symbolHint = computedSymbolHint
+            val numericHint = computedNumericHint
+            if (symbolHint != null && numericHint != null) {
+                computedPopups.hint = symbolHint.computeTextKeyData(evaluator)
+                numericHint.computeTextKeyData(evaluator)?.let { computedPopups.relevant.add(it) }
+            } else if (symbolHint != null) {
+                computedPopups.hint = symbolHint.computeTextKeyData(evaluator)
+            } else if (numericHint != null) {
+                computedPopups.hint = numericHint.computeTextKeyData(evaluator)
+            }
             if (computed is BasicTextKeyData && computed.popup != null) {
                 computedPopups.merge(computed.popup, evaluator)
             }
