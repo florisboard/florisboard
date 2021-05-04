@@ -6,16 +6,16 @@
   "direction": "ltr",
   "arrangement": [
     [
-      { "$": "auto_text_key", "code": 12610, "label": "ㅂ"},
-      { "$": "auto_text_key", "code": 12616, "label": "ㅈ"},
-      { "$": "auto_text_key", "code": 12599, "label": "ㄷ"},
-      { "$": "auto_text_key", "code": 12593, "label": "ㄱ"},
-      { "$": "auto_text_key", "code": 12613, "label": "ㅅ"},
+      { "$": "up_low_text_key", "code": 12610, "label": "ㅂ", "codeUp": 12611, "labelUp": "ㅃ" },
+      { "$": "up_low_text_key", "code": 12616, "label": "ㅈ", "codeUp": 12617, "labelUp": "ㅉ" },
+      { "$": "up_low_text_key", "code": 12599, "label": "ㄷ", "codeUp": 12600, "labelUp": "ㄸ" },
+      { "$": "up_low_text_key", "code": 12593, "label": "ㄱ", "codeUp": 12594, "labelUp": "ㄲ" },
+      { "$": "up_low_text_key", "code": 12613, "label": "ㅅ", "codeUp": 12614, "labelUp": "ㅆ" },
       { "$": "auto_text_key", "code": 12635, "label": "ㅛ"},
       { "$": "auto_text_key", "code": 12629, "label": "ㅕ"},
       { "$": "auto_text_key", "code": 12625, "label": "ㅑ"},
-      { "$": "auto_text_key", "code": 12624, "label": "ㅐ"},
-      { "$": "auto_text_key", "code": 12628, "label": "ㅔ"}
+      { "$": "up_low_text_key", "code": 12624, "label": "ㅐ", "codeUp": 12626, "labelUp": "ㅒ" },
+      { "$": "up_low_text_key", "code": 12628, "label": "ㅔ", "codeUp": 12630, "labelUp": "ㅖ" }
     ],
     [
       { "$": "auto_text_key", "code": 12609, "label": "ㅁ"},
