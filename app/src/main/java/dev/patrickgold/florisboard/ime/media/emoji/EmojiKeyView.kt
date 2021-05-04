@@ -25,6 +25,7 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.widget.ScrollView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.PrefHelper
@@ -32,7 +33,9 @@ import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
 
 /**
  * View class for managing the rendering and the events of a single emoji keyboard key.
@@ -45,7 +48,7 @@ import kotlinx.coroutines.MainScope
 @SuppressLint("ViewConstructor")
 class EmojiKeyView(
     private val emojiKeyboardView: EmojiKeyboardView,
-    val key: EmojiKey
+    key: EmojiKey
 ) : androidx.appcompat.widget.AppCompatTextView(emojiKeyboardView.context), CoroutineScope by MainScope(),
     FlorisBoard.EventListener, ThemeManager.OnThemeUpdatedListener {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
@@ -54,6 +57,12 @@ class EmojiKeyView(
     private var isCancelled: Boolean = false
     private var osHandler: Handler? = null
     private var triangleDrawable: Drawable? = null
+
+    var key: EmojiKey = key
+        set(value) {
+            field = value
+            text = value.data.asString(true)
+        }
 
     init {
         background = null
@@ -95,7 +104,7 @@ class EmojiKeyView(
                     osHandler = Handler()
                 }
                 osHandler?.postDelayed({
-                    (parent.parent as ScrollView)
+                    (parent as RecyclerView)
                         .requestDisallowInterceptTouchEvent(true)
                     emojiKeyboardView.isScrollBlocked = true
                     emojiKeyboardView.popupManager.show(key, KeyHintMode.DISABLED)
@@ -126,7 +135,8 @@ class EmojiKeyView(
                     emojiKeyboardView.popupManager.getActiveEmojiKeyData(key)
                 emojiKeyboardView.popupManager.hide()
                 if (event.actionMasked != MotionEvent.ACTION_CANCEL &&
-                    retData != null && !isCancelled) {
+                    retData != null && !isCancelled
+                ) {
                     if (!emojiKeyboardView.isScrollBlocked) {
                         florisboard?.keyPressVibrate()
                         florisboard?.keyPressSound()
