@@ -49,8 +49,7 @@ class EditorInstance private constructor(
     val packageName: String,
     private val editorInfo: EditorInfo
 ) {
-    private val kClass = Class.forName("dev.patrickgold.florisboard.ime.core.ComposerHangul").kotlin
-    private val composer = (kClass.objectInstance ?: kClass.java.newInstance()) as ComposerHangul
+    private val composer = ComposerHangul()
 
     val cachedInput: CachedInput = CachedInput(this)
     var contentMimeTypes: Array<out String?>? = null
