@@ -26,4 +26,21 @@
         app:summary="@string/pref__advanced__force_private_mode__summary"
         app:useSimpleSummaryProvider="true"/>
 
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        app:key="devtools__enabled"
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__devtools__enabled__label"
+        app:summary="@string/pref__devtools__enabled__summary"
+        app:useSimpleSummaryProvider="true"/>
+
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        app:dependency="devtools__enabled"
+        app:key="devtools__show_heap_memory_stats"
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__devtools__show_heap_memory_stats__label"
+        app:summary="@string/pref__devtools__show_heap_memory_stats__summary"
+        app:useSimpleSummaryProvider="true"/>
+
 </PreferenceScreen>
