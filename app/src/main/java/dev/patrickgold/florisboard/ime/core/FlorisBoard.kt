@@ -57,7 +57,7 @@ import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.setup.SetupActivity
 import dev.patrickgold.florisboard.util.*
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -84,6 +84,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     private val serviceLifecycleDispatcher: ServiceLifecycleDispatcher = ServiceLifecycleDispatcher(this)
     private val uiScope: LifecycleCoroutineScope
         get() = lifecycle.coroutineScope
+    private var devtoolsOverlaySyncJob: Job? = null
 
     /**
      * The theme context for the UI. Must only be used for inflating/creating Views for the keyboard UI, else the IME
@@ -393,6 +394,17 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         onSubtypeChanged(activeSubtype)
         setActiveInput(R.id.text_input)
 
+        if (prefs.devtools.enabled && prefs.devtools.showHeapMemoryStats) {
+            devtoolsOverlaySyncJob?.cancel()
+            devtoolsOverlaySyncJob = uiScope.launch(Dispatchers.Default) {
+                while (true) {
+                    if (!isActive) break
+                    withContext(Dispatchers.Main) { inputView?.invalidate() }
+                    delay(1000)
+                }
+            }
+        }
+
         eventListeners.toList().forEach { it?.onWindowShown() }
     }
 
@@ -405,6 +417,9 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
             flogInfo(LogTopic.IMS_EVENTS)
         }
         isWindowShown = false
+
+        devtoolsOverlaySyncJob?.cancel()
+        devtoolsOverlaySyncJob = null
 
         eventListeners.toList().forEach { it?.onWindowHidden() }
     }

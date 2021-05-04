@@ -18,6 +18,11 @@ package dev.patrickgold.florisboard.ime.core
 
 import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Typeface
+import android.text.TextPaint
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.view.ViewGroup
@@ -57,6 +62,13 @@ class InputView : LinearLayout {
         private set
     var oneHandedCtrlPanelEnd: ViewGroup? = null
         private set
+
+    private val overlayTextPaint: TextPaint = TextPaint().apply {
+        color = Color.GREEN
+        textAlign = Paint.Align.RIGHT
+        textSize = resources.getDimension(R.dimen.devtools_memory_overlay_textSize)
+        typeface = Typeface.MONOSPACE
+    }
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -160,5 +172,35 @@ class InputView : LinearLayout {
         return ((minBaseSize + maxBaseSize) / 2.0f).coerceAtLeast(
             resources.getDimension(R.dimen.inputView_baseHeight)
         )
+    }
+
+    override fun dispatchDraw(canvas: Canvas?) {
+        super.dispatchDraw(canvas)
+        canvas ?: return
+
+        if (prefs.devtools.enabled && prefs.devtools.showHeapMemoryStats) {
+            try {
+                // Note: the below code only gets the heap size in MB, the actual RAM usage (native or others) can be
+                //  a lot higher
+                //  Source: https://stackoverflow.com/a/19267315/6801193
+                val runtime = Runtime.getRuntime()
+                val usedMemInMB = (runtime.totalMemory() - runtime.freeMemory()) / 1048576L
+                val maxHeapSizeInMB = runtime.maxMemory() / 1048576L
+                val availHeapSizeInMB = maxHeapSizeInMB - usedMemInMB
+                val output = listOf(
+                    "heap mem:",
+                    String.format("used=%4dMB", usedMemInMB),
+                    String.format("max=%4dMB", maxHeapSizeInMB),
+                    String.format("avail=%4dMB", availHeapSizeInMB),
+                )
+                val x = measuredWidth.toFloat()
+                var y = overlayTextPaint.descent() - overlayTextPaint.ascent()
+                for (line in output) {
+                    canvas.drawText(line, x, y, overlayTextPaint)
+                    y += overlayTextPaint.descent() - overlayTextPaint.ascent()
+                }
+            } catch (_: Throwable) {
+            }
+        }
     }
 }
