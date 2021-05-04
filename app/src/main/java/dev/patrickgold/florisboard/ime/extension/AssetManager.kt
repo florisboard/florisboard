@@ -22,10 +22,7 @@ import dev.patrickgold.florisboard.ime.keyboard.CaseSelector
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
-import dev.patrickgold.florisboard.ime.text.keyboard.AutoTextKeyData
-import dev.patrickgold.florisboard.ime.text.keyboard.BasicTextKeyData
-import dev.patrickgold.florisboard.ime.text.keyboard.MultiTextKeyData
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -43,6 +40,7 @@ class AssetManager private constructor(val applicationContext: Context) {
             polymorphic(KeyData::class) {
                 subclass(BasicTextKeyData::class, BasicTextKeyData.serializer())
                 subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
+                subclass(UpLowTextKeyData::class, UpLowTextKeyData.serializer())
                 subclass(MultiTextKeyData::class, MultiTextKeyData.serializer())
                 subclass(EmojiKeyData::class, EmojiKeyData.serializer())
                 subclass(CaseSelector::class, CaseSelector.serializer())
@@ -52,6 +50,7 @@ class AssetManager private constructor(val applicationContext: Context) {
             polymorphic(TextKeyData::class) {
                 subclass(BasicTextKeyData::class, BasicTextKeyData.serializer())
                 subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
+                subclass(UpLowTextKeyData::class, UpLowTextKeyData.serializer())
                 subclass(MultiTextKeyData::class, MultiTextKeyData.serializer())
                 default { BasicTextKeyData.serializer() }
             }
