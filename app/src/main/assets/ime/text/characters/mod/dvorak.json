@@ -12,11 +12,11 @@
     ],
     [
       { "code": -202, "label": "view_symbols", "type": "system_gui" },
-      { "code":  113, "label": "q", "groupId": 1 },
+      { "$": "auto_text_key", "code":  113, "label": "q", "groupId": 1 },
       { "code": -210, "label": "language_switch", "type": "system_gui" },
       { "code": -213, "label": "switch_to_media_context", "type": "system_gui" },
       { "code":   32, "label": "space" },
-      { "code":  122, "label": "z", "groupId": 2 },
+      { "$": "auto_text_key", "code":  122, "label": "z", "groupId": 2 },
       { "code":   10, "label": "enter", "groupId": 3, "type": "enter_editing" }
     ]
   ]
