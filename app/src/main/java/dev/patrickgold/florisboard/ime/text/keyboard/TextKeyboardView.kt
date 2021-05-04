@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.*
 import android.graphics.drawable.PaintDrawable
 import android.os.Handler
@@ -117,6 +118,8 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
     }
 
     private var backgroundDrawable: PaintDrawable = PaintDrawable()
+    var fontSizeMultiplier: Double = 1.0
+        private set
     private var labelPaintTextSize: Float = resources.getDimension(R.dimen.key_textSize)
     private var labelPaintSpaceTextSize: Float = resources.getDimension(R.dimen.key_textSize)
     private var labelPaint: Paint = Paint().apply {
@@ -647,7 +650,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                 }
             }
         }
-        TextKeyboard.layoutDrawableBounds(desiredKey)
+        TextKeyboard.layoutDrawableBounds(desiredKey, 1.0)
         TextKeyboard.layoutLabelBounds(desiredKey)
 
         var spaceKey: TextKey? = null
@@ -662,13 +665,24 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
             }
         }
 
+        fontSizeMultiplier = when (resources.configuration.orientation) {
+            Configuration.ORIENTATION_PORTRAIT -> {
+                prefs.keyboard.fontSizeMultiplierPortrait.toFloat() / 100.0
+            }
+            Configuration.ORIENTATION_LANDSCAPE -> {
+                prefs.keyboard.fontSizeMultiplierLandscape.toFloat() / 100.0
+            }
+            else -> 1.0
+        }
+
         keyboard.layout(this)
 
         setTextSizeFor(
             labelPaint,
             desiredKey.visibleLabelBounds.width().toFloat(),
             desiredKey.visibleLabelBounds.height().toFloat(),
-            "X"
+            "X",
+            fontSizeMultiplier
         )
         labelPaintTextSize = labelPaint.textSize
 
@@ -677,7 +691,8 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                 labelPaint,
                 spaceKey.visibleLabelBounds.width().toFloat(),
                 spaceKey.visibleLabelBounds.height().toFloat(),
-                spaceKey.label ?: "X"
+                spaceKey.label ?: "X",
+                fontSizeMultiplier.coerceAtMost(1.0)
             )
             labelPaintSpaceTextSize = labelPaint.textSize
         }
@@ -686,7 +701,8 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
             hintedLabelPaint,
             desiredKey.visibleBounds.width() * 1.0f / 5.0f,
             desiredKey.visibleBounds.height() * 1.0f / 5.0f,
-            "X"
+            "X",
+            fontSizeMultiplier
         )
         hintedLabelPaintTextSize = hintedLabelPaint.textSize
     }
@@ -702,8 +718,9 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
      * @param boxWidth The max width for the surrounding box of [text].
      * @param boxHeight The max height for the surrounding box of [text].
      * @param text The text for which the size should be calculated.
+     * @param multiplier The factor by which the resulting text size should be multiplied with.
      */
-    private fun setTextSizeFor(boxPaint: Paint, boxWidth: Float, boxHeight: Float, text: String, multiplier: Float = 1.0f): Float {
+    private fun setTextSizeFor(boxPaint: Paint, boxWidth: Float, boxHeight: Float, text: String, multiplier: Double = 1.0): Float {
         var stage = 1
         var textSize = 0.0f
         while (stage < 3) {
@@ -719,7 +736,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                 stage++
             }
         }
-        textSize *= multiplier
+        textSize *= multiplier.toFloat()
         boxPaint.textSize = textSize
         return textSize
     }
