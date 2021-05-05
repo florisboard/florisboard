@@ -91,7 +91,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
      * service class should be used directly.
      */
     private var _themeContext: Context? = null
-    private val themeContext: Context
+    val themeContext: Context
         get() = _themeContext ?: this
 
     lateinit var prefs: PrefHelper
@@ -148,7 +148,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     lateinit var asyncExecutor: ExecutorService
 
     companion object {
-
         @Synchronized
         fun getInstance(): FlorisBoard {
             return florisboardInstance!!
