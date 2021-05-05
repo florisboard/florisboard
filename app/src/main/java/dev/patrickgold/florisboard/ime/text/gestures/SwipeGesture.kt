@@ -18,7 +18,11 @@ package dev.patrickgold.florisboard.ime.text.gestures
 
 import android.content.Context
 import android.view.MotionEvent
+import android.view.VelocityTracker
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.debug.LogTopic
+import dev.patrickgold.florisboard.debug.flogDebug
+import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import kotlin.math.abs
 import kotlin.math.atan2
 
@@ -64,8 +68,10 @@ abstract class SwipeGesture {
      */
     class Detector(private val context: Context, private val listener: Listener) {
         private var pointerDataMap: MutableMap<Int, PointerData> = mutableMapOf()
+        private var thresholdSpeed: Double = numericValue(context, VelocityThreshold.NORMAL)
         private var thresholdWidth: Double = numericValue(context, DistanceThreshold.NORMAL)
         private var unitWidth: Double = thresholdWidth / 4.0
+        private val velocityTracker: VelocityTracker = VelocityTracker.obtain()
 
         var distanceThreshold: DistanceThreshold = DistanceThreshold.NORMAL
             set(value) {
@@ -74,6 +80,10 @@ abstract class SwipeGesture {
                 unitWidth = thresholdWidth / 4.0
             }
         var velocityThreshold: VelocityThreshold = VelocityThreshold.NORMAL
+            set(value) {
+                field = value
+                thresholdSpeed = numericValue(context, value)
+            }
 
         /**
          * Method which evaluates if a given [event] is a gesture.
@@ -90,7 +100,9 @@ abstract class SwipeGesture {
                     MotionEvent.ACTION_POINTER_DOWN -> {
                         if (event.actionMasked == MotionEvent.ACTION_DOWN) {
                             resetState()
+                            velocityTracker.clear()
                         }
+                        velocityTracker.addMovement(event)
                         val pointerIndex = event.actionIndex
                         val pointerId = event.getPointerId(pointerIndex)
                         pointerDataMap[pointerId] = PointerData().apply {
@@ -101,6 +113,7 @@ abstract class SwipeGesture {
                         }
                     }
                     MotionEvent.ACTION_MOVE -> {
+                        velocityTracker.addMovement(event)
                         for (pointerIndex in 0 until event.pointerCount) {
                             val pointerId = event.getPointerId(pointerIndex)
                             pointerDataMap[pointerId]?.apply {
@@ -135,19 +148,17 @@ abstract class SwipeGesture {
                     }
                     MotionEvent.ACTION_UP,
                     MotionEvent.ACTION_POINTER_UP -> {
+                        velocityTracker.addMovement(event)
                         val pointerIndex = event.actionIndex
                         val pointerId = event.getPointerId(pointerIndex)
                         pointerDataMap.remove(pointerId)?.apply {
                             val absDiffX = event.getX(pointerIndex) - firstX
                             val absDiffY = event.getY(pointerIndex) - firstY
-                            /*val velocityThresholdNV = numericValue(velocityThreshold)
-                            val velocity =
-                                ((convertPixelsToDp(
-                                    sqrt(diffX.pow(2) + diffY.pow(2)),
-                                    context
-                                ) / event.downTime) * 10.0f.pow(8)).toInt()*/
-                            // return if ((abs(diffX) > distanceThresholdNV || abs(diffY) > distanceThresholdNV) && velocity >= velocityThresholdNV) {
-                            return if ((abs(absDiffX) > thresholdWidth || abs(absDiffY) > thresholdWidth)) {
+                            velocityTracker.computeCurrentVelocity(1000)
+                            val velocityX = ViewLayoutUtils.convertDpToPixel(velocityTracker.getXVelocity(pointerId), context)
+                            val velocityY = ViewLayoutUtils.convertDpToPixel(velocityTracker.getYVelocity(pointerId), context)
+                            flogDebug(LogTopic.GESTURES) { "Velocity: $velocityX $velocityY dp/s" }
+                            return if ((abs(absDiffX) > thresholdWidth || abs(absDiffY) > thresholdWidth) && (abs(velocityX) > thresholdSpeed || abs(velocityY) > thresholdSpeed)) {
                                 val direction = detectDirection(absDiffX.toDouble(), absDiffY.toDouble())
                                 absUnitCountX = (absDiffX / unitWidth).toInt()
                                 absUnitCountY = (absDiffY / unitWidth).toInt()

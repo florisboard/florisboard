@@ -48,7 +48,9 @@ class PrefHelper(
     private val cacheString: HashMap<String, String> = hashMapOf()
 
     val advanced = Advanced(this)
+    val clipboard = Clipboard(this)
     val correction = Correction(this)
+    val devtools = Devtools(this)
     val gestures = Gestures(this)
     val glide = Glide(this)
     val internal = Internal(this)
@@ -57,7 +59,6 @@ class PrefHelper(
     val smartbar = Smartbar(this)
     val suggestion = Suggestion(this)
     val theme = Theme(this)
-    val clipboard = Clipboard(this)
 
     /**
      * Checks the cache if an entry for [key] exists, else calls [getPrefInternal] to retrieve the
@@ -220,6 +221,23 @@ class PrefHelper(
         var rememberCapsLockState: Boolean
             get() =  prefHelper.getPref(REMEMBER_CAPS_LOCK_STATE, false)
             set(v) = prefHelper.setPref(REMEMBER_CAPS_LOCK_STATE, v)
+    }
+
+    /**
+     * Wrapper class for devtools preferences.
+     */
+    class Devtools(private val prefHelper: PrefHelper) {
+        companion object {
+            const val ENABLED =                     "devtools__enabled"
+            const val SHOW_HEAP_MEMORY_STATS =      "devtools__show_heap_memory_stats"
+        }
+
+        var enabled: Boolean
+            get() =  prefHelper.getPref(ENABLED, false)
+            set(v) = prefHelper.setPref(ENABLED, v)
+        var showHeapMemoryStats: Boolean
+            get() =  prefHelper.getPref(SHOW_HEAP_MEMORY_STATS, false)
+            set(v) = prefHelper.setPref(SHOW_HEAP_MEMORY_STATS, v)
     }
 
     /**

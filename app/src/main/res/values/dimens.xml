@@ -26,6 +26,7 @@
     <dimen name="key_numeric_textSize">12sp</dimen>
     <dimen name="key_popup_textSize">21sp</dimen>
     <dimen name="emoji_key_textSize">22sp</dimen>
+    <dimen name="devtools_memory_overlay_textSize">8sp</dimen>
 
     <dimen name="landscapeInputUi_padding">8dp</dimen>
     <dimen name="landscapeInputUi_actionButton_cornerRadius">6dp</dimen>
@@ -62,9 +63,9 @@
     <dimen name="gesture_distance_threshold_very_long">40dp</dimen>
     <dimen name="clipboard_text_item_pin_margin" >25dp</dimen>
 
-    <integer name="gesture_velocity_threshold_very_slow">50</integer>
-    <integer name="gesture_velocity_threshold_slow">60</integer>
-    <integer name="gesture_velocity_threshold_normal">70</integer>
-    <integer name="gesture_velocity_threshold_fast">80</integer>
-    <integer name="gesture_velocity_threshold_very_fast">90</integer>
+    <integer name="gesture_velocity_threshold_very_slow">8000</integer>
+    <integer name="gesture_velocity_threshold_slow">11000</integer>
+    <integer name="gesture_velocity_threshold_normal">14000</integer>
+    <integer name="gesture_velocity_threshold_fast">17000</integer>
+    <integer name="gesture_velocity_threshold_very_fast">20000</integer>
 </resources>

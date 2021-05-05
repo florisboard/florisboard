@@ -34,8 +34,8 @@ class TextKeyboard(
         get() = arrangement.size
 
     companion object {
-        fun layoutDrawableBounds(key: TextKey) {
-            layoutForegroundBounds(key, key.visibleDrawableBounds, 0.21, isLabel = false)
+        fun layoutDrawableBounds(key: TextKey, factor: Double) {
+            layoutForegroundBounds(key, key.visibleDrawableBounds, 0.21 * (1.0 / factor), isLabel = false)
         }
 
         fun layoutLabelBounds(key: TextKey) {
@@ -131,7 +131,7 @@ class TextKeyboard(
                         }
                         bottom = key.touchBounds.bottom - abs(desiredTouchBounds.bottom - desiredVisibleBounds.bottom)
                     }
-                    layoutDrawableBounds(key)
+                    layoutDrawableBounds(key, keyboardView.fontSizeMultiplier)
                     layoutLabelBounds(key)
                     posX += keyWidth
                     // After-adjust touch bounds for the row margin
@@ -165,7 +165,7 @@ class TextKeyboard(
                         right = key.touchBounds.right - abs(desiredTouchBounds.right - desiredVisibleBounds.right)
                         bottom = key.touchBounds.bottom - abs(desiredTouchBounds.bottom - desiredVisibleBounds.bottom)
                     }
-                    layoutDrawableBounds(key)
+                    layoutDrawableBounds(key, keyboardView.fontSizeMultiplier)
                     layoutLabelBounds(key)
                     posX += keyWidth
                     // After-adjust touch bounds for the row margin

@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.*
 import android.graphics.drawable.PaintDrawable
 import android.os.Handler
@@ -107,7 +108,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
     private var initSelectionStart: Int = 0
     private var initSelectionEnd: Int = 0
     private var hasTriggeredGestureMove: Boolean = false
-    private var hasTriggeredGestureUp: Boolean = false
+    private var shouldBlockNextUp: Boolean = false
     private val swipeGestureDetector = SwipeGesture.Detector(context, this)
 
     val desiredKey: TextKey = TextKey(data = TextKeyData.UNSPECIFIED)
@@ -117,6 +118,8 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
     }
 
     private var backgroundDrawable: PaintDrawable = PaintDrawable()
+    var fontSizeMultiplier: Double = 1.0
+        private set
     private var labelPaintTextSize: Float = resources.getDimension(R.dimen.key_textSize)
     private var labelPaintSpaceTextSize: Float = resources.getDimension(R.dimen.key_textSize)
     private var labelPaint: Paint = Paint().apply {
@@ -195,8 +198,10 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                 val pointerId = event.getPointerId(pointerIndex)
                 if (activePointerId != null) {
                     onTouchUpInternal(event, pointerIndex, activePointerId!!)
+                    onTouchDownInternal(event, pointerIndex, pointerId, resetInitialKey = false)
+                } else {
+                    onTouchDownInternal(event, pointerIndex, pointerId, resetInitialKey = true)
                 }
-                onTouchDownInternal(event, pointerIndex, pointerId)
             }
             MotionEvent.ACTION_MOVE -> {
                 for (pointerIndex in 0 until event.pointerCount) {
@@ -214,16 +219,35 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                 if (activePointerId == pointerId) {
                     onTouchUpInternal(event, pointerIndex, pointerId)
                 }
+                if (event.actionMasked == MotionEvent.ACTION_UP) {
+                    florisboard?.let {
+                        if (it.textInputManager.inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
+                            if (initialKey?.computedData?.code == KeyCode.SHIFT && activeKey?.computedData?.code == KeyCode.SHIFT) {
+                                it.textInputManager.inputEventDispatcher.send(InputKeyEvent.up(TextKeyData.SHIFT))
+                            } else {
+                                it.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(TextKeyData.SHIFT))
+                            }
+                        }
+                    }
+                    activePointerId = null
+                }
             }
             MotionEvent.ACTION_CANCEL -> {
                 val pointerIndex = event.actionIndex
                 val pointerId = event.getPointerId(pointerIndex)
                 onTouchCancelInternal(event, pointerIndex, pointerId)
+                florisboard?.let {
+                    if (it.textInputManager.inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
+                        it.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(TextKeyData.SHIFT))
+                    }
+                }
+                activePointerId = null
             }
         }
+        flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "initialKey: ${initialKey?.computedData?.label} activeKey: ${activeKey?.computedData?.label}" }
     }
 
-    private fun onTouchDownInternal(event: MotionEvent, pointerIndex: Int, pointerId: Int) {
+    private fun onTouchDownInternal(event: MotionEvent, pointerIndex: Int, pointerId: Int, resetInitialKey: Boolean) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "index=$pointerIndex id=$pointerId event=$event" }
         val florisboard = florisboard ?: return
 
@@ -247,7 +271,9 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
             florisboard.keyPressVibrate()
             florisboard.keyPressSound(key.computedData)
             key.isPressed = true
-            initialKey = key
+            if (resetInitialKey) {
+                initialKey = key
+            }
             activeKey = key
             val delayMillis = prefs.keyboard.longPressDelay.toLong()
             when (key.computedData.code) {
@@ -261,7 +287,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                             }
                             else -> {
                                 florisboard.executeSwipeAction(prefs.gestures.spaceBarLongPress)
-                                hasTriggeredGestureUp = true
+                                shouldBlockNextUp = true
                             }
                         }
                     }
@@ -275,7 +301,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                 }
                 KeyCode.LANGUAGE_SWITCH -> {
                     longPressHandler.postDelayed((delayMillis * 2.0).toLong()) {
-                        hasTriggeredGestureUp = true
+                        shouldBlockNextUp = true
                         florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.SHOW_INPUT_METHOD_PICKER))
                     }
                 }
@@ -293,7 +319,9 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                 swipeGestureDetector.onTouchEvent(event)
             }
         } else {
-            initialKey = null
+            if (resetInitialKey) {
+                initialKey = null
+            }
             activeKey = null
         }
         invalidate()
@@ -309,12 +337,12 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                 val alwaysTriggerOnMove = (hasTriggeredGestureMove
                     && (initialKey?.computedData?.code == KeyCode.DELETE
                     && prefs.gestures.deleteKeySwipeLeft == SwipeAction.DELETE_CHARACTERS_PRECISELY
-                    || initialKey?.computedData?.code == KeyCode.SPACE))
+                    || initialKey?.computedData?.code == KeyCode.SPACE || (initialKey?.computedData?.code == KeyCode.SHIFT && activeKey?.computedData?.code == KeyCode.SPACE)))
                 if (swipeGestureDetector.onTouchEvent(event, alwaysTriggerOnMove) || hasTriggeredGestureMove) {
                     longPressHandler.cancelAll()
                     hasTriggeredGestureMove = true
                     initialKey?.let {
-                        if (florisboard.textInputManager.inputEventDispatcher.isPressed(it.computedData.code)) {
+                        if (it.computedData.code != KeyCode.SHIFT && florisboard.textInputManager.inputEventDispatcher.isPressed(it.computedData.code)) {
                             florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(it.computedData))
                         }
                     }
@@ -324,7 +352,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
             if (popupManager.isShowingExtendedPopup) {
                 if (!popupManager.propagateMotionEvent(key, event, pointerIndex)) {
                     onTouchCancelInternal(event, pointerIndex, pointerId)
-                    onTouchDownInternal(event, pointerIndex, pointerId)
+                    onTouchDownInternal(event, pointerIndex, pointerId, resetInitialKey = false)
                 }
             } else {
                 if ((event.getX(pointerIndex) < key.visibleBounds.left - 0.1f * key.visibleBounds.width())
@@ -333,7 +361,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                     || (event.getY(pointerIndex) > key.visibleBounds.bottom + 0.35f * key.visibleBounds.height())
                 ) {
                     onTouchCancelInternal(event, pointerIndex, pointerId)
-                    onTouchDownInternal(event, pointerIndex, pointerId)
+                    onTouchDownInternal(event, pointerIndex, pointerId, resetInitialKey = false)
                 }
             }
         }
@@ -347,7 +375,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
         longPressHandler.cancelAll()
         val key = activeKey
         if (key != null) {
-            if (swipeGestureDetector.onTouchEvent(event) || hasTriggeredGestureMove || hasTriggeredGestureUp) {
+            if (swipeGestureDetector.onTouchEvent(event) || hasTriggeredGestureMove || shouldBlockNextUp) {
                 if (hasTriggeredGestureMove && initialKey?.computedData?.code == KeyCode.DELETE) {
                     florisboard.textInputManager.isGlidePostEffect = false
                     florisboard.activeEditorInstance.apply {
@@ -360,28 +388,28 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                 return
             }
             key.isPressed = false
-            val retData = popupManager.getActiveKeyData(key)
-            if (retData != null) {
-                if (retData == key.computedData) {
-                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.up(key.computedData))
+            if (activeKey?.computedData?.code != KeyCode.SHIFT) {
+                val retData = popupManager.getActiveKeyData(key)
+                if (retData != null) {
+                    if (retData == key.computedData) {
+                        florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.up(key.computedData))
+                    } else {
+                        if (florisboard.textInputManager.inputEventDispatcher.isPressed(key.computedData.code)) {
+                            florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(key.computedData))
+                        }
+                        florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(retData))
+                    }
                 } else {
                     if (florisboard.textInputManager.inputEventDispatcher.isPressed(key.computedData.code)) {
                         florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(key.computedData))
                     }
-                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(retData))
-                }
-            } else {
-                if (florisboard.textInputManager.inputEventDispatcher.isPressed(key.computedData.code)) {
-                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(key.computedData))
                 }
             }
         }
         popupManager.hide()
-        initialKey = null
-        activeKey = null
         activePointerId = null
         hasTriggeredGestureMove = false
-        hasTriggeredGestureUp = false
+        shouldBlockNextUp = false
         invalidate()
     }
 
@@ -393,40 +421,41 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
         val key = activeKey
         if (key != null) {
             key.isPressed = false
-            florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(key.computedData))
+            if (activeKey?.computedData?.code != KeyCode.SHIFT) {
+                florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(key.computedData))
+            }
         }
         popupManager.hide()
-        initialKey = null
-        activeKey = null
         activePointerId = null
         hasTriggeredGestureMove = false
-        hasTriggeredGestureUp = false
+        shouldBlockNextUp = false
         invalidate()
     }
 
     override fun onSwipe(event: SwipeGesture.Event): Boolean {
         val florisboard = florisboard ?: return false
         val initialKey = initialKey ?: return false
+        if (activePointerId != event.pointerId) return false
+        flogDebug(LogTopic.TEXT_KEYBOARD_VIEW)
 
         return when (initialKey.computedData.code) {
             KeyCode.DELETE -> handleDeleteSwipe(event)
             KeyCode.SPACE -> handleSpaceSwipe(event)
             else -> when {
+                initialKey.computedData.code == KeyCode.SHIFT && activeKey?.computedData?.code == KeyCode.SPACE &&
+                    event.type == SwipeGesture.Type.TOUCH_MOVE -> handleSpaceSwipe(event)
                 initialKey.computedData.code == KeyCode.SHIFT && activeKey?.computedData?.code != KeyCode.SHIFT &&
                     event.type == SwipeGesture.Type.TOUCH_UP -> {
-                    /*activeKeyViews[event.pointerId]?.let {
-                        florisboard?.textInputManager?.inputEventDispatcher?.send(
-                            InputKeyEvent.up(
-                                it.popupManager.getActiveKeyData(it)
-                                    ?: it.data
-                            )
+                    activeKey?.let {
+                        florisboard.textInputManager.inputEventDispatcher.send(
+                            InputKeyEvent.up(popupManager.getActiveKeyData(it) ?: it.computedData)
                         )
-                        florisboard?.textInputManager?.inputEventDispatcher?.send(InputKeyEvent.cancel(KeyData.SHIFT))
-                    }*/
+                    }
+                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(TextKeyData.SHIFT))
                     true
                 }
                 initialKey.computedData.code > KeyCode.SPACE && !popupManager.isShowingExtendedPopup -> when {
-                    !prefs.glide.enabled -> when (event.type) {
+                    !prefs.glide.enabled && !hasTriggeredGestureMove -> when (event.type) {
                         SwipeGesture.Type.TOUCH_UP -> {
                             val swipeAction = when (event.direction) {
                                 SwipeGesture.Direction.UP -> prefs.gestures.swipeUp
@@ -465,7 +494,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                             (selection.end + event.absUnitCountX + 1).coerceIn(0, selection.end),
                             selection.end
                         )
-                        hasTriggeredGestureUp = true
+                        shouldBlockNextUp = true
                     }
                     true
                 }
@@ -475,7 +504,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                         florisboard.activeEditorInstance.apply {
                             leftAppendWordToSelection()
                         }
-                        hasTriggeredGestureUp = true
+                        shouldBlockNextUp = true
                         true
                     }
                     SwipeGesture.Direction.RIGHT -> {
@@ -483,7 +512,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                         florisboard.activeEditorInstance.apply {
                             leftPopWordFromSelection()
                         }
-                        hasTriggeredGestureUp = true
+                        shouldBlockNextUp = true
                         true
                     }
                     else -> false
@@ -538,7 +567,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                     }
                     true
                 }
-                else -> false
+                else -> true // To prevent the popup display of nearby keys
             }
             SwipeGesture.Type.TOUCH_UP -> {
                 if (event.absUnitCountY.times(-1) > 6) {
@@ -621,7 +650,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                 }
             }
         }
-        TextKeyboard.layoutDrawableBounds(desiredKey)
+        TextKeyboard.layoutDrawableBounds(desiredKey, 1.0)
         TextKeyboard.layoutLabelBounds(desiredKey)
 
         var spaceKey: TextKey? = null
@@ -636,13 +665,24 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
             }
         }
 
+        fontSizeMultiplier = when (resources.configuration.orientation) {
+            Configuration.ORIENTATION_PORTRAIT -> {
+                prefs.keyboard.fontSizeMultiplierPortrait.toFloat() / 100.0
+            }
+            Configuration.ORIENTATION_LANDSCAPE -> {
+                prefs.keyboard.fontSizeMultiplierLandscape.toFloat() / 100.0
+            }
+            else -> 1.0
+        }
+
         keyboard.layout(this)
 
         setTextSizeFor(
             labelPaint,
             desiredKey.visibleLabelBounds.width().toFloat(),
             desiredKey.visibleLabelBounds.height().toFloat(),
-            "X"
+            "X",
+            fontSizeMultiplier
         )
         labelPaintTextSize = labelPaint.textSize
 
@@ -651,7 +691,8 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                 labelPaint,
                 spaceKey.visibleLabelBounds.width().toFloat(),
                 spaceKey.visibleLabelBounds.height().toFloat(),
-                spaceKey.label ?: "X"
+                spaceKey.label ?: "X",
+                fontSizeMultiplier.coerceAtMost(1.0)
             )
             labelPaintSpaceTextSize = labelPaint.textSize
         }
@@ -660,7 +701,8 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
             hintedLabelPaint,
             desiredKey.visibleBounds.width() * 1.0f / 5.0f,
             desiredKey.visibleBounds.height() * 1.0f / 5.0f,
-            "X"
+            "X",
+            fontSizeMultiplier
         )
         hintedLabelPaintTextSize = hintedLabelPaint.textSize
     }
@@ -676,8 +718,9 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
      * @param boxWidth The max width for the surrounding box of [text].
      * @param boxHeight The max height for the surrounding box of [text].
      * @param text The text for which the size should be calculated.
+     * @param multiplier The factor by which the resulting text size should be multiplied with.
      */
-    private fun setTextSizeFor(boxPaint: Paint, boxWidth: Float, boxHeight: Float, text: String, multiplier: Float = 1.0f): Float {
+    private fun setTextSizeFor(boxPaint: Paint, boxWidth: Float, boxHeight: Float, text: String, multiplier: Double = 1.0): Float {
         var stage = 1
         var textSize = 0.0f
         while (stage < 3) {
@@ -693,7 +736,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                 stage++
             }
         }
-        textSize *= multiplier
+        textSize *= multiplier.toFloat()
         boxPaint.textSize = textSize
         return textSize
     }

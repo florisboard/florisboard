@@ -1,0 +1,9 @@
+- Add Schwa symbol (ə) in Italian extended popups (#693)
+- Add developer tools: Overlay display for used heap memory (#807)
+- Icons are now auto-scale based on the set font size multiplier (#540)
+- Fix emoji key view initial memory usage (#718)
+- Fix font size multiplier not applied (#808)
+- Fix text key drawables not applying the color correctly (#778)
+- Fix bottom row keys not shifted in Dvorak layout (#805)
+- Fix Hungarian layout not containing special keys
+- Fix Arabic Letter Waw with Hamza Above not written correctly (#438)

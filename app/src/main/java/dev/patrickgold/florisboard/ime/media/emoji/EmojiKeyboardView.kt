@@ -21,13 +21,10 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.google.android.flexbox.FlexDirection
-import com.google.android.flexbox.FlexWrap
-import com.google.android.flexbox.FlexboxLayout
-import com.google.android.flexbox.JustifyContent
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.flexbox.*
 import com.google.android.material.tabs.TabLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
@@ -51,12 +48,13 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener,
 
     private var activeCategory: EmojiCategory = EmojiCategory.SMILEYS_EMOTION
     private var emojiViewFlipper: ViewFlipper
-    private val emojiKeyWidth = resources.getDimension(R.dimen.emoji_key_width).toInt()
-    private val emojiKeyHeight = resources.getDimension(R.dimen.emoji_key_height).toInt()
+    val emojiKeyWidth = resources.getDimension(R.dimen.emoji_key_width).toInt()
+    val emojiKeyHeight = resources.getDimension(R.dimen.emoji_key_height).toInt()
     private var layouts: Deferred<EmojiLayoutDataMap>
     private val mainScope = MainScope()
     private val tabLayout: TabLayout
-    private val uiLayouts = EnumMap<EmojiCategory, ScrollView>(EmojiCategory::class.java)
+    private val uiLayouts = EnumMap<EmojiCategory, RecyclerView>(EmojiCategory::class.java)
+    private val layoutAdapters = EnumMap<EmojiCategory, EmojiKeyAdapter>(EmojiCategory::class.java)
 
     var isScrollBlocked: Boolean = false
     var popupManager = PopupManager(this, florisboard?.popupLayerView)
@@ -83,18 +81,20 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener,
             ViewGroup.inflate(context, R.layout.media_input_emoji_tabs, null) as TabLayout
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                setActiveCategory(when (tab?.position) {
-                    0 -> EmojiCategory.SMILEYS_EMOTION
-                    1 -> EmojiCategory.PEOPLE_BODY
-                    2 -> EmojiCategory.ANIMALS_NATURE
-                    3 -> EmojiCategory.FOOD_DRINK
-                    4 -> EmojiCategory.TRAVEL_PLACES
-                    5 -> EmojiCategory.ACTIVITIES
-                    6 -> EmojiCategory.OBJECTS
-                    7 -> EmojiCategory.SYMBOLS
-                    8 -> EmojiCategory.FLAGS
-                    else -> EmojiCategory.SMILEYS_EMOTION
-                })
+                setActiveCategory(
+                    when (tab?.position) {
+                        0 -> EmojiCategory.SMILEYS_EMOTION
+                        1 -> EmojiCategory.PEOPLE_BODY
+                        2 -> EmojiCategory.ANIMALS_NATURE
+                        3 -> EmojiCategory.FOOD_DRINK
+                        4 -> EmojiCategory.TRAVEL_PLACES
+                        5 -> EmojiCategory.ACTIVITIES
+                        6 -> EmojiCategory.OBJECTS
+                        7 -> EmojiCategory.SYMBOLS
+                        8 -> EmojiCategory.FLAGS
+                        else -> EmojiCategory.SMILEYS_EMOTION
+                    }
+                )
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {}
@@ -118,6 +118,8 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener,
     override fun onDetachedFromWindow() {
         themeManager.unregisterOnThemeUpdatedListener(this)
         florisboard?.removeEventListener(this)
+        layoutAdapters.clear()
+        uiLayouts.clear()
         super.onDetachedFromWindow()
     }
 
@@ -127,11 +129,13 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener,
      * when it attaches a built category layout to the view hierarchy.
      */
     private suspend fun buildLayout() = withContext(Dispatchers.Default) {
+        val recycledViewPool = RecyclerView.RecycledViewPool()
+        recycledViewPool.setMaxRecycledViews(0, 64)
         for (category in EmojiCategory.values()) {
-            val scrollView = buildLayoutForCategory(category)
-            uiLayouts[category] = scrollView
+            val recyclerView = buildLayoutForCategory(category, recycledViewPool)
+            uiLayouts[category] = recyclerView
             withContext(Dispatchers.Main) {
-                emojiViewFlipper.addView(scrollView)
+                emojiViewFlipper.addView(recyclerView)
             }
         }
     }
@@ -145,48 +149,27 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener,
      */
     @SuppressLint("ClickableViewAccessibility")
     private suspend fun buildLayoutForCategory(
-        category: EmojiCategory
-    ): ScrollView = withContext(Dispatchers.Default) {
-        val scrollView = ScrollView(context)
-        scrollView.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-        val flexboxLayout = FlexboxLayout(context)
-        flexboxLayout.layoutParams =
-            LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        flexboxLayout.flexDirection = FlexDirection.ROW
-        flexboxLayout.justifyContent = JustifyContent.SPACE_BETWEEN
-        flexboxLayout.flexWrap = FlexWrap.WRAP
-        for (emojiKeyData in layouts.await()[category].orEmpty()) {
-            val emojiKeyView =
-                EmojiKeyView(this@EmojiKeyboardView, EmojiKey(emojiKeyData).also { it.dummyCompute() })
-            emojiKeyView.layoutParams = FlexboxLayout.LayoutParams(
-                emojiKeyWidth, emojiKeyHeight
-            )
-            flexboxLayout.addView(emojiKeyView)
-        }
-        // Add empty placeholder emojis at the end so the grid view. Below is an illustration how
-        // the UI looks with and without an placeholder (e = emoji):
-        //   Without placeholder        With placeholder
-        //     e e e e e e e             e e e e e e e
-        //     .............             .............
-        //     e e e e e e e             e e e e e e e
-        //        e e e e                e e e e
-        //
-        // Based on this SO's answer idea (by La Nube - Luis R. Díaz Muñiz):
-        //  https://stackoverflow.com/a/31478004/6801193
-        //
-        // 24 items are chosen here because that's probably the max items that will be shown per
-        // row, even in landscape mode.
-        for (n in 0 until 24) {
-            val gridPlaceholderView = View(context).apply {
-                layoutParams = LayoutParams(emojiKeyWidth, 0)
-            }
-            flexboxLayout.addView(gridPlaceholderView)
-        }
-        scrollView.setOnTouchListener { _, _ ->
+        category: EmojiCategory,
+        recycledViewPool: RecyclerView.RecycledViewPool
+    ): RecyclerView = withContext(Dispatchers.Default) {
+        val recyclerView = RecyclerView(context)
+        val layoutManager = FlexboxLayoutManager(context)
+        recyclerView.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        layoutManager.justifyContent = JustifyContent.SPACE_BETWEEN
+        layoutManager.flexWrap = FlexWrap.WRAP
+        recyclerView.layoutManager = layoutManager
+        recyclerView.setRecycledViewPool(recycledViewPool)
+        val adapter = EmojiKeyAdapter(
+            layouts.await()[category].orEmpty().map { data -> EmojiKey(data).also { it.dummyCompute() } },
+            this@EmojiKeyboardView
+        )
+        layoutAdapters[category] = adapter
+        recyclerView.adapter = adapter
+
+        recyclerView.setOnTouchListener { _, _ ->
             return@setOnTouchListener isScrollBlocked
         }
-        scrollView.addView(flexboxLayout)
-        return@withContext scrollView
+        return@withContext recyclerView
     }
 
     /**
@@ -195,6 +178,8 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener,
      * @param newActiveCategory The new active category.
      */
     fun setActiveCategory(newActiveCategory: EmojiCategory) {
+        // setting adapter forces recyclerview to return its views, so it can be used for new category
+        uiLayouts[activeCategory]?.adapter = layoutAdapters[activeCategory]
         emojiViewFlipper.displayedChild =
             emojiViewFlipper.indexOfChild(uiLayouts[newActiveCategory])
         activeCategory = newActiveCategory
@@ -219,9 +204,11 @@ class EmojiKeyboardView : LinearLayout, FlorisBoard.EventListener,
      * of focus and prevents the HorizontalScrollView to scroll within this MotionEvent.
      */
     fun dismissKeyView(keyView: EmojiKeyView) {
-        keyView.onTouchEvent(MotionEvent.obtain(
-            0, 0, MotionEvent.ACTION_CANCEL, 0.0f, 0.0f, 0
-        ))
+        keyView.onTouchEvent(
+            MotionEvent.obtain(
+                0, 0, MotionEvent.ACTION_CANCEL, 0.0f, 0.0f, 0
+            )
+        )
         isScrollBlocked = true
     }
 
