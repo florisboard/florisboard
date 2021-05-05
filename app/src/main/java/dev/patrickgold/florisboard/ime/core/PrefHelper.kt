@@ -51,6 +51,7 @@ class PrefHelper(
     val clipboard = Clipboard(this)
     val correction = Correction(this)
     val devtools = Devtools(this)
+    val dictionary = Dictionary(this)
     val gestures = Gestures(this)
     val glide = Glide(this)
     val internal = Internal(this)
@@ -238,6 +239,25 @@ class PrefHelper(
         var showHeapMemoryStats: Boolean
             get() =  prefHelper.getPref(SHOW_HEAP_MEMORY_STATS, false)
             set(v) = prefHelper.setPref(SHOW_HEAP_MEMORY_STATS, v)
+    }
+
+    /**
+     * Wrapper class for dictionary preferences.
+     */
+    class Dictionary(private val prefHelper: PrefHelper) {
+        companion object {
+            const val ENABLE_SYSTEM_USER_DICTIONARY =   "suggestion__enable_system_user_dictionary"
+            const val MANAGE_SYSTEM_USER_DICTIONARY =   "suggestion__manage_system_user_dictionary"
+            const val ENABLE_INTERNAL_USER_DICTIONARY = "suggestion__enable_internal_user_dictionary"
+            const val MANAGE_INTERNAL_USER_DICTIONARY = "suggestion__manage_internal_user_dictionary"
+        }
+
+        var enableSystemUserDictionary: Boolean
+            get() =  prefHelper.getPref(ENABLE_SYSTEM_USER_DICTIONARY, true)
+            set(v) = prefHelper.setPref(ENABLE_SYSTEM_USER_DICTIONARY, v)
+        var enableInternalUserDictionary: Boolean
+            get() =  prefHelper.getPref(ENABLE_INTERNAL_USER_DICTIONARY, true)
+            set(v) = prefHelper.setPref(ENABLE_INTERNAL_USER_DICTIONARY, v)
     }
 
     /**
