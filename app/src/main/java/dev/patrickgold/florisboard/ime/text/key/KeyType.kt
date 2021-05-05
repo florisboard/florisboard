@@ -23,7 +23,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import java.util.*
 
 /**
  * Enum for declaring the type of the key.
@@ -44,12 +43,12 @@ enum class KeyType {
     UNSPECIFIED;
 
     override fun toString(): String {
-        return super.toString().toLowerCase(Locale.ENGLISH)
+        return super.toString().lowercase()
     }
 
     companion object {
         fun fromString(string: String): KeyType {
-            return valueOf(string.toUpperCase(Locale.ENGLISH))
+            return valueOf(string.uppercase())
         }
     }
 }

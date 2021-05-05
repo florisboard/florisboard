@@ -61,7 +61,7 @@ class TextKey(override val data: KeyData) : Key(data) {
                         "~right"
                     }
                     else -> {
-                        computed.label.toLowerCase()
+                        computed.label.lowercase(evaluator.getActiveSubtype().locale)
                     }
                 }
                 val extendedPopupsDefault = evaluator.getKeyboard().extendedPopupMappingDefault

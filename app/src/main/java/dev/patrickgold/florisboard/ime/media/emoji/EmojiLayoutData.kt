@@ -106,7 +106,7 @@ fun parseRawEmojiSpecsFile(
                 if (line.startsWith(GROUP_IDENTIFIER, true)) {
                     // A new group begins
                     val rawGroupName = line.trim().substring(GROUP_IDENTIFIER.length)
-                    if (rawGroupName.toUpperCase(Locale.ENGLISH) == "COMPONENT") {
+                    if (rawGroupName.uppercase() == "COMPONENT") {
                         skipUntilNextGroup = true
                         continue
                     } else {
@@ -130,7 +130,7 @@ fun parseRawEmojiSpecsFile(
                         val dataC = data2[0].trim()
                         val dataQ = data2[1].trim()
                         val dataN = data[1].split(NAME_JUNK_SPLIT_REGEX)[1]
-                        if (dataQ.toLowerCase(Locale.ENGLISH) == FULLY_QUALIFIED) {
+                        if (dataQ.lowercase() == FULLY_QUALIFIED) {
                             // Only fully-qualified emojis are accepted
                             val dataCPs = dataC.split(" ")
                             val key = EmojiKeyData(listStringToListInt(dataCPs), dataN)

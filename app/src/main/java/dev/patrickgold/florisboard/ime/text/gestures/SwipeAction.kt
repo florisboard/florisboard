@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.text.gestures
 
-import java.util.*
-
 /**
  * Enum for declaring the possible actions for swipe gestures.
  */
@@ -49,11 +47,11 @@ enum class SwipeAction {
 
     companion object {
         fun fromString(string: String): SwipeAction {
-            return valueOf(string.toUpperCase(Locale.ENGLISH))
+            return valueOf(string.uppercase())
         }
     }
 
     override fun toString(): String {
-        return super.toString().toLowerCase(Locale.ENGLISH)
+        return super.toString().lowercase()
     }
 }

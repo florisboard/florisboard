@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.landscapeinput
 
-import java.util.*
-
 enum class LandscapeInputUiMode {
     DYNAMICALLY_SHOW,
     NEVER_SHOW,
@@ -25,7 +23,7 @@ enum class LandscapeInputUiMode {
 
     companion object {
         fun fromString(string: String): LandscapeInputUiMode {
-            return valueOf(string.toUpperCase(Locale.ENGLISH))
+            return valueOf(string.uppercase())
         }
     }
 }

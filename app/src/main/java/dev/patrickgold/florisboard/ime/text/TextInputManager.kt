@@ -951,8 +951,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     fun fixCase(word: String): String {
         return when {
-            capsLock -> word.toUpperCase(florisboard.activeSubtype.locale)
-            caps -> word.capitalize(florisboard.activeSubtype.locale)
+            capsLock -> word.uppercase(florisboard.activeSubtype.locale)
+            caps -> word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(florisboard.activeSubtype.locale) else it.toString() }
             else -> word
         }
     }

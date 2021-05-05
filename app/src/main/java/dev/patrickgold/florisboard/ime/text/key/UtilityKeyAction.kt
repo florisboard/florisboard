@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.text.key
 
-import java.util.*
-
 /**
  * Enum for declaring the utility key actions.
  */
@@ -30,7 +28,7 @@ enum class UtilityKeyAction {
 
     companion object {
         fun fromString(string: String): UtilityKeyAction {
-            return valueOf(string.toUpperCase(Locale.ENGLISH))
+            return valueOf(string.uppercase())
         }
     }
 }

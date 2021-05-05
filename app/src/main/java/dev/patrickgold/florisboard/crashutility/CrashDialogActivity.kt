@@ -27,7 +27,6 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.CrashDialogBinding
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.core.PrefHelper
-import java.util.*
 
 class CrashDialogActivity : AppCompatActivity() {
     private lateinit var binding: CrashDialogBinding
@@ -136,10 +135,10 @@ class CrashDialogActivity : AppCompatActivity() {
     private fun getDeviceName(): String {
         val manufacturer = Build.MANUFACTURER
         val model = Build.MODEL
-        return if (model.toLowerCase(Locale.ENGLISH).startsWith(manufacturer.toLowerCase(Locale.ENGLISH))) {
-            model.capitalize(Locale.ENGLISH)
+        return if (model.lowercase().startsWith(manufacturer.lowercase())) {
+            model.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
         } else {
-            "${manufacturer.capitalize(Locale.ENGLISH)} $model"
+            "${manufacturer.replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }} $model"
         }
     }
 

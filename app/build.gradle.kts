@@ -1,9 +1,9 @@
 
 plugins {
     id("com.android.application") version "4.2.0"
-    kotlin("android") version "1.5.0-RC"
-    kotlin("kapt") version "1.5.0-RC"
-    kotlin("plugin.serialization") version "1.5.0-RC"
+    kotlin("android") version "1.5.0"
+    kotlin("kapt") version "1.5.0"
+    kotlin("plugin.serialization") version "1.5.0"
 }
 
 android {

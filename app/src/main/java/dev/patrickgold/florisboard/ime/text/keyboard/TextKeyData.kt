@@ -342,9 +342,9 @@ class AutoTextKeyData(
     val popup: PopupSet<TextKeyData>? = null
 ) : TextKeyData {
     @Transient private val lower: BasicTextKeyData =
-        BasicTextKeyData(type, Character.toLowerCase(code), label.toLowerCase(Locale.getDefault()), groupId, popup)
+        BasicTextKeyData(type, Character.toLowerCase(code), label.lowercase(Locale.getDefault()), groupId, popup)
     @Transient private val upper: BasicTextKeyData =
-        BasicTextKeyData(type, Character.toUpperCase(code), label.toUpperCase(Locale.getDefault()), groupId, popup)
+        BasicTextKeyData(type, Character.toUpperCase(code), label.uppercase(Locale.getDefault()), groupId, popup)
 
     override fun computeTextKeyData(evaluator: TextComputingEvaluator): TextKeyData? {
         return if (evaluator.isSlot(this)) {
