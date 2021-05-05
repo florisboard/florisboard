@@ -40,7 +40,7 @@ class TypingInnerFragment : PreferenceFragmentCompat() {
                 startActivity(intent)
                 true
             }
-            PrefHelper.Dictionary.MANAGE_INTERNAL_USER_DICTIONARY -> {
+            PrefHelper.Dictionary.MANAGE_FLORIS_USER_DICTIONARY -> {
                 // NYI
                 true
             }

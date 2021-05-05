@@ -247,8 +247,8 @@
     <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Add, view, and remove entries for the system user dictionary</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Enable internal user dictionary</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Suggest words stored in the internal user dictionary</string>
-    <string name="pref__dictionary__manage_internal_user_dictionary__label" comment="Preference title">Manage internal user dictionary</string>
-    <string name="pref__dictionary__manage_internal_user_dictionary__summary" comment="Preference summary">Add, view, and remove entries for the internal user dictionary</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Manage internal user dictionary</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Add, view, and remove entries for the internal user dictionary</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalization</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalize words based on the current input context</string>
