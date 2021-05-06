@@ -227,7 +227,8 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
 
         override fun query(word: String, locale: Locale?): List<UserDictionaryEntry> {
             return queryResolver(
-                selection = "${UserDictionary.Words.WORD} LIKE '%$word%' AND (${UserDictionary.Words.LOCALE} = '$locale' OR ${UserDictionary.Words.LOCALE} = '${locale?.language}' OR ${UserDictionary.Words.LOCALE} IS NULL)",
+                selection = "${UserDictionary.Words.WORD} LIKE ? AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
+                selectionArgs = arrayOf("%$word%", locale.toString(), locale?.language.toString()),
                 sortOrder = SORT_BY_FREQ_DESC,
             )
         }
@@ -235,31 +236,34 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
         override fun queryAll(): List<UserDictionaryEntry> {
             return queryResolver(
                 selection = null,
+                selectionArgs = null,
                 sortOrder = SORT_BY_FREQ_DESC,
             )
         }
 
         override fun queryExact(word: String): List<UserDictionaryEntry> {
             return queryResolver(
-                selection = "${UserDictionary.Words.WORD} = '$word'",
+                selection = "${UserDictionary.Words.WORD} = ?",
+                selectionArgs = arrayOf(word),
                 sortOrder = null,
             )
         }
 
         override fun queryExact(word: String, locale: Locale?): List<UserDictionaryEntry> {
             return queryResolver(
-                selection = "${UserDictionary.Words.WORD} = '$word' AND (${UserDictionary.Words.LOCALE} = '$locale' OR ${UserDictionary.Words.LOCALE} = '${locale?.language}' OR ${UserDictionary.Words.LOCALE} IS NULL)",
+                selection = "${UserDictionary.Words.WORD} = ? AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
+                selectionArgs = arrayOf(word, locale.toString(), locale?.language.toString()),
                 sortOrder = null,
             )
         }
 
-        private fun queryResolver(selection: String?, sortOrder: String?): List<UserDictionaryEntry> {
+        private fun queryResolver(selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): List<UserDictionaryEntry> {
             val resolver = applicationContext.get()?.contentResolver ?: return listOf()
             val cursor = resolver.query(
                 UserDictionary.Words.CONTENT_URI,
                 PROJECTIONS,
                 selection,
-                null,
+                selectionArgs,
                 sortOrder
             ) ?: return listOf()
             return parseEntries(cursor).also { cursor.close() }
