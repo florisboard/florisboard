@@ -87,9 +87,27 @@ class DictionaryManager private constructor(context: Context) {
     }
 
     @Synchronized
+    fun florisUserDictionaryDatabase(): FlorisUserDictionaryDatabase? {
+        return if (prefs.suggestion.enabled && prefs.dictionary.enableFlorisUserDictionary) {
+            florisUserDictionaryDatabase
+        } else {
+            null
+        }
+    }
+
+    @Synchronized
     fun systemUserDictionaryDao(): UserDictionaryDao? {
         return if (prefs.suggestion.enabled && prefs.dictionary.enableSystemUserDictionary) {
             systemUserDictionaryDatabase?.userDictionaryDao()
+        } else {
+            null
+        }
+    }
+
+    @Synchronized
+    fun systemUserDictionaryDatabase(): SystemUserDictionaryDatabase? {
+        return if (prefs.suggestion.enabled && prefs.dictionary.enableSystemUserDictionary) {
+            systemUserDictionaryDatabase
         } else {
             null
         }
@@ -105,7 +123,7 @@ class DictionaryManager private constructor(context: Context) {
                     context,
                     FlorisUserDictionaryDatabase::class.java,
                     FlorisUserDictionaryDatabase.DB_FILE_NAME
-                ).build()
+                ).allowMainThreadQueries().build()
             }
             if (systemUserDictionaryDatabase == null && prefs.dictionary.enableSystemUserDictionary) {
                 systemUserDictionaryDatabase = SystemUserDictionaryDatabase(context)

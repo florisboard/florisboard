@@ -481,13 +481,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         smartbarView?.onPrimaryClipChanged()
     }
 
-    private fun queryUserDictionary(word: String, locale: Locale): List<String> {
+    private fun queryUserDictionary(word: String, locale: Locale): Set<String> {
         val florisDao = dictionaryManager.florisUserDictionaryDao()
         val systemDao = dictionaryManager.systemUserDictionaryDao()
         if (florisDao == null && systemDao == null) {
-            return listOf()
+            return setOf()
         }
-        val retList = mutableListOf<String>()
+        val retList = mutableSetOf<String>()
         if (prefs.dictionary.enableFlorisUserDictionary) {
             florisDao?.query(word, locale)?.let {
                 for (entry in it) {

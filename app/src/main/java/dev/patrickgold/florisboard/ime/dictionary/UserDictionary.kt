@@ -16,23 +16,32 @@
 
 package dev.patrickgold.florisboard.ime.dictionary
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
+import android.net.Uri
 import android.provider.UserDictionary
 import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Database
+import androidx.room.Delete
 import androidx.room.Entity
+import androidx.room.Insert
 import androidx.room.PrimaryKey
 import androidx.room.Query
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import androidx.room.Update
+import dev.patrickgold.florisboard.ime.extension.ExternalContentUtils
 import dev.patrickgold.florisboard.util.LocaleUtils
 import java.lang.ref.WeakReference
 import java.util.*
 
 private const val WORDS_TABLE = "words"
+
+private const val FREQUENCY_MIN = 1
+private const val FREQENCY_MAX = 255
 
 private const val SORT_BY_WORD_ASC = "${UserDictionary.Words.WORD} ASC"
 private const val SORT_BY_WORD_DESC = "${UserDictionary.Words.WORD} DESC"
@@ -44,7 +53,7 @@ private val PROJECTIONS: Array<String> = arrayOf(
     UserDictionary.Words.WORD,
     UserDictionary.Words.FREQUENCY,
     UserDictionary.Words.LOCALE,
-    UserDictionary.Words.SHORTCUT
+    UserDictionary.Words.SHORTCUT,
 )
 
 @Entity(tableName = WORDS_TABLE)
@@ -64,18 +73,119 @@ data class UserDictionaryEntry(
 
 @Dao
 interface UserDictionaryDao {
-    @Query("SELECT * FROM $WORDS_TABLE")
-    fun queryAll(): List<UserDictionaryEntry>
+    companion object {
+        private const val SELECT_ALL_FROM_WORDS =
+            "SELECT * FROM $WORDS_TABLE"
+        private const val LOCALE_MATCHES =
+            "(${UserDictionary.Words.LOCALE} = :locale OR ${UserDictionary.Words.LOCALE} IS NULL)"
+    }
 
-    @Query("SELECT * FROM $WORDS_TABLE WHERE ${UserDictionary.Words.WORD} LIKE :word")
+    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} LIKE '%' || :word || '%'")
     fun query(word: String): List<UserDictionaryEntry>
 
-    @Query("SELECT * FROM $WORDS_TABLE WHERE ${UserDictionary.Words.WORD} LIKE :word AND (${UserDictionary.Words.LOCALE} = :locale OR ${UserDictionary.Words.LOCALE} IS NULL)")
-    fun query(word: String, locale: Locale): List<UserDictionaryEntry>
+    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} LIKE '%' || :word || '%' AND $LOCALE_MATCHES")
+    fun query(word: String, locale: Locale?): List<UserDictionaryEntry>
+
+    @Query(SELECT_ALL_FROM_WORDS)
+    fun queryAll(): List<UserDictionaryEntry>
+
+    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word")
+    fun queryExact(word: String): List<UserDictionaryEntry>
+
+    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word AND $LOCALE_MATCHES")
+    fun queryExact(word: String, locale: Locale?): List<UserDictionaryEntry>
+
+    @Insert
+    fun insert(entry: UserDictionaryEntry)
+
+    @Update
+    fun update(entry: UserDictionaryEntry)
+
+    @Delete
+    fun delete(entry: UserDictionaryEntry)
 }
 
 interface UserDictionaryDatabase {
     fun userDictionaryDao(): UserDictionaryDao
+
+    fun reset()
+
+    fun importCombinedList(context: Context, uri: Uri): Result<Unit> {
+        return ExternalContentUtils.readFromUri(context, uri,2048) { src ->
+            var isFirstLine = true
+            src.forEachLine { line ->
+                if (isFirstLine) {
+                    // Ignore
+                    isFirstLine = false
+                } else {
+                    var word: String? = null
+                    var freq: Int? = null
+                    var locale: String? = null
+                    var shortcut: String? = null
+                    line.split(';').forEach { property ->
+                        val keyValuePair = property.split('=')
+                        if (keyValuePair.size == 2) {
+                            val key = keyValuePair[0].trim().lowercase()
+                            val value = keyValuePair[1].trim()
+                            when (key) {
+                                "w", "word" -> word = value.ifBlank { null }
+                                "f", "freq" -> runCatching { value.toInt(10) }.onSuccess {
+                                    freq = it.coerceIn(FREQUENCY_MIN, FREQENCY_MAX)
+                                }
+                                "l", "locale" -> locale = when (value) {
+                                    "all", "null", "" -> null
+                                    else -> value.ifBlank { null }
+                                }
+                                "s", "shortcut" -> shortcut = value.ifBlank { null }
+                            }
+                        }
+                    }
+                    if (word != null && freq != null) {
+                        val alreadyExistingEntries = userDictionaryDao().queryExact(
+                            word!!, locale?.let { LocaleUtils.stringToLocale(it) }
+                        )
+                        if (alreadyExistingEntries.isNotEmpty()) {
+                            userDictionaryDao().update(UserDictionaryEntry(alreadyExistingEntries[0].id, word!!, freq!!, locale, shortcut))
+                        } else {
+                            userDictionaryDao().insert(UserDictionaryEntry(0, word!!, freq!!, locale, shortcut))
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    fun exportCombinedList(context: Context, uri: Uri): Result<Unit> {
+        return ExternalContentUtils.writeToUri(context, uri) { dst ->
+            StringBuilder().apply {
+                append("dictionary=")
+                append(uri.lastPathSegment)
+                append(";date=")
+                append(System.currentTimeMillis())
+                append(";generated-by=")
+                append(context.packageName)
+                append(";version=1")
+                appendLine()
+                dst.write(toString())
+            }
+            for (entry in userDictionaryDao().queryAll()) {
+                StringBuilder().apply {
+                    append(" w=")
+                    append(entry.word)
+                    append(";f=")
+                    append(entry.freq)
+                    append(";l=")
+                    append(entry.locale) // always append locale even if null
+                    if (entry.shortcut != null) {
+                        append(";s=")
+                        append(entry.shortcut)
+                    }
+                    appendLine()
+                    dst.write(toString())
+                }
+            }
+        }
+    }
 }
 
 @Database(entities = [UserDictionaryEntry::class], version = 1)
@@ -87,15 +197,22 @@ abstract class FlorisUserDictionaryDatabase : RoomDatabase(), UserDictionaryData
 
     abstract override fun userDictionaryDao(): UserDictionaryDao
 
+    override fun reset() {
+        TODO("Not yet implemented")
+    }
+
     class Converters {
         @TypeConverter
-        fun localeToString(locale: Locale): String {
+        fun localeToString(locale: Locale?): String {
             return locale.toString()
         }
 
         @TypeConverter
-        fun stringToLocale(string: String): Locale {
-            return LocaleUtils.stringToLocale(string)
+        fun stringToLocale(string: String): Locale? {
+            return when (string) {
+                "all", "null", "" -> null
+                else ->LocaleUtils.stringToLocale(string)
+            }
         }
     }
 }
@@ -104,22 +221,46 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
     private val applicationContext: WeakReference<Context> = WeakReference(context.applicationContext ?: context)
 
     private val dao = object : UserDictionaryDao {
-        override fun queryAll(): List<UserDictionaryEntry> {
-            TODO("Not yet implemented")
-        }
-
         override fun query(word: String): List<UserDictionaryEntry> {
             TODO("Not yet implemented")
         }
 
-        override fun query(word: String, locale: Locale): List<UserDictionaryEntry> {
+        override fun query(word: String, locale: Locale?): List<UserDictionaryEntry> {
+            return queryResolver(
+                selection = "${UserDictionary.Words.WORD} LIKE '%$word%' AND (${UserDictionary.Words.LOCALE} = '$locale' OR ${UserDictionary.Words.LOCALE} = '${locale?.language}' OR ${UserDictionary.Words.LOCALE} IS NULL)",
+                sortOrder = SORT_BY_FREQ_DESC,
+            )
+        }
+
+        override fun queryAll(): List<UserDictionaryEntry> {
+            return queryResolver(
+                selection = null,
+                sortOrder = SORT_BY_FREQ_DESC,
+            )
+        }
+
+        override fun queryExact(word: String): List<UserDictionaryEntry> {
+            return queryResolver(
+                selection = "${UserDictionary.Words.WORD} = '$word'",
+                sortOrder = null,
+            )
+        }
+
+        override fun queryExact(word: String, locale: Locale?): List<UserDictionaryEntry> {
+            return queryResolver(
+                selection = "${UserDictionary.Words.WORD} = '$word' AND (${UserDictionary.Words.LOCALE} = '$locale' OR ${UserDictionary.Words.LOCALE} = '${locale?.language}' OR ${UserDictionary.Words.LOCALE} IS NULL)",
+                sortOrder = null,
+            )
+        }
+
+        private fun queryResolver(selection: String?, sortOrder: String?): List<UserDictionaryEntry> {
             val resolver = applicationContext.get()?.contentResolver ?: return listOf()
             val cursor = resolver.query(
                 UserDictionary.Words.CONTENT_URI,
                 PROJECTIONS,
-                "${UserDictionary.Words.WORD} LIKE '%$word%' AND (${UserDictionary.Words.LOCALE} = '$locale' OR ${UserDictionary.Words.LOCALE} = '${locale.language}' OR ${UserDictionary.Words.LOCALE} IS NULL)",
+                selection,
                 null,
-                SORT_BY_FREQ_DESC
+                sortOrder
             ) ?: return listOf()
             return parseEntries(cursor).also { cursor.close() }
         }
@@ -147,9 +288,41 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             }
             return retList
         }
+
+        override fun insert(entry: UserDictionaryEntry) {
+            val resolver = applicationContext.get()?.contentResolver ?: return
+            val contentValues = ContentValues(5).apply {
+                put(UserDictionary.Words.WORD, entry.word)
+                put(UserDictionary.Words.FREQUENCY, entry.freq)
+                put(UserDictionary.Words.LOCALE, entry.locale)
+                put(UserDictionary.Words.APP_ID, 0)
+                put(UserDictionary.Words.SHORTCUT, entry.shortcut)
+            }
+            resolver.insert(UserDictionary.Words.CONTENT_URI, contentValues)
+        }
+
+        override fun update(entry: UserDictionaryEntry) {
+            val resolver = applicationContext.get()?.contentResolver ?: return
+            val contentValues = ContentValues(4).apply {
+                put(UserDictionary.Words.WORD, entry.word)
+                put(UserDictionary.Words.FREQUENCY, entry.freq)
+                put(UserDictionary.Words.LOCALE, entry.locale)
+                put(UserDictionary.Words.SHORTCUT, entry.shortcut)
+            }
+            resolver.update(UserDictionary.Words.CONTENT_URI, contentValues, "${UserDictionary.Words._ID} = ${entry.id}", null)
+        }
+
+        override fun delete(entry: UserDictionaryEntry) {
+            val resolver = applicationContext.get()?.contentResolver ?: return
+            resolver.delete(UserDictionary.Words.CONTENT_URI, "${UserDictionary.Words._ID} = ${entry.id}", null)
+        }
     }
 
     override fun userDictionaryDao(): UserDictionaryDao {
         return dao
+    }
+
+    override fun reset() {
+        TODO("Not yet implemented")
     }
 }
