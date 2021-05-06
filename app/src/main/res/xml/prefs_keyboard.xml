@@ -47,6 +47,13 @@
             app:title="@string/pref__keyboard__utility_key_action__label"
             app:useSimpleSummaryProvider="true"/>
 
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="keyboard__merge_hint_popups_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__keyboard__merge_hint_popups_enabled__label"
+            android:summary="@string/pref__keyboard_merge_hint_popups_enabled__summary"/>
+
         <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="100"

@@ -82,16 +82,19 @@ class PopupManager<V : View>(
      * Helper function to create a element for the extended popup and preconfigure it.
      *
      * @param key Reference to the key currently controlling the popup.
+     * @param keyHintConfiguration The key hint configuration to use.
      * @param adjustedIndex The index of the key in the key data popup array.
      * @return A preconfigured extended popup element.
      */
     private fun createElement(
         key: Key,
+        keyHintConfiguration: KeyHintConfiguration,
         adjustedIndex: Int
     ): PopupExtendedView.Element {
         return when (key) {
             is TextKey -> {
-                when (key.computedPopups[adjustedIndex].code) {
+                val popupKey = key.computedPopups.getPopupKeys(keyHintConfiguration)[adjustedIndex]
+                when (popupKey.code) {
                     KeyCode.SETTINGS -> {
                         getDrawable(keyboardView.context, R.drawable.ic_settings)?.let {
                             PopupExtendedView.Element.Icon(it, adjustedIndex)
@@ -114,7 +117,7 @@ class PopupManager<V : View>(
                     }
                     KeyCode.URI_COMPONENT_TLD -> {
                         PopupExtendedView.Element.Tld(
-                            key.computedPopups[adjustedIndex].asString(isForDisplay = true), adjustedIndex
+                            popupKey.asString(isForDisplay = true), adjustedIndex
                         )
                     }
                     KeyCode.TOGGLE_ONE_HANDED_MODE_LEFT,
@@ -125,14 +128,15 @@ class PopupManager<V : View>(
                     }
                     else -> {
                         PopupExtendedView.Element.Label(
-                            key.computedPopups[adjustedIndex].asString(isForDisplay = true), adjustedIndex
+                            popupKey.asString(isForDisplay = true), adjustedIndex
                         )
                     }
                 }
             }
             is EmojiKey -> {
+                val popupKey = key.computedPopups.getPopupKeys(keyHintConfiguration)[adjustedIndex]
                 PopupExtendedView.Element.Label(
-                    key.computedPopups[adjustedIndex].asString(isForDisplay = true), adjustedIndex
+                    popupKey.asString(isForDisplay = true), adjustedIndex
                 )
             }
             else -> {
@@ -179,8 +183,9 @@ class PopupManager<V : View>(
      * key code is equal to or less than [KeyCode.SPACE].
      *
      * @param key Reference to the key currently controlling the popup.
+     * @param keyHintConfiguration The key hint configuration to use.
      */
-    fun show(key: Key, keyHintMode: KeyHintMode) {
+    fun show(key: Key, keyHintConfiguration: KeyHintConfiguration) {
         if (key is TextKey && key.computedData.code <= KeyCode.SPACE && key.computedData.code != KeyCode.MULTIPLE_CODE_POINTS) {
             return
         }
@@ -200,8 +205,8 @@ class PopupManager<V : View>(
             }
             labelTextSize = keyPopupTextSize
             shouldIndicateExtendedPopups = when (key) {
-                is TextKey -> key.computedPopups.size(keyHintMode) > 0
-                is EmojiKey -> key.computedPopups.isNotEmpty()
+                is TextKey -> key.computedPopups.getPopupKeys(keyHintConfiguration).isNotEmpty()
+                is EmojiKey -> key.computedPopups.getPopupKeys(keyHintConfiguration).isNotEmpty()
                 else -> false
             }
         }
@@ -228,8 +233,9 @@ class PopupManager<V : View>(
      *     K K ... K K
      *
      * @param key Reference to the key currently controlling the popup.
+     * @param keyHintConfiguration The key hint configuration to use.
      */
-    fun extend(key: Key, keyHintMode: KeyHintMode) {
+    fun extend(key: Key, keyHintConfiguration: KeyHintConfiguration) {
         if (key is TextKey && key.computedData.code <= KeyCode.SPACE  && key.computedData.code != KeyCode.MULTIPLE_CODE_POINTS
             && !exceptionsForKeyCodes.contains(key.computedData.code)) {
             return
@@ -245,8 +251,8 @@ class PopupManager<V : View>(
 
         // Determine key counts for each row
         val n = when (key) {
-            is TextKey -> key.computedPopups.size(keyHintMode)
-            is EmojiKey -> key.computedPopups.size(keyHintMode)
+            is TextKey -> key.computedPopups.getPopupKeys(keyHintConfiguration).size
+            is EmojiKey -> key.computedPopups.getPopupKeys(keyHintConfiguration).size
             else -> 0
         }
         when {
@@ -303,43 +309,38 @@ class PopupManager<V : View>(
         val uiIndices = IntRange(0, (n - 1).coerceAtLeast(0))
         if (key is TextKey) {
             popupIndices = IntArray(n) { 0 }
-            when (keyHintMode) {
-                KeyHintMode.ENABLED_ACCENT_PRIORITY -> when {
-                    key.computedPopups.main != null -> {
-                        popupIndices[initUiIndex] = PopupSet.MAIN_INDEX
-                        if (key.computedPopups.hint != null) when {
-                            initUiIndex + 1 < n -> popupIndices[initUiIndex + 1] = PopupSet.HINT_INDEX
-                            initUiIndex - 1 >= 0 -> popupIndices[initUiIndex - 1] = PopupSet.HINT_INDEX
-                        }
-                    }
-                    key.computedPopups.hint != null -> when {
-                        initUiIndex + 1 < n -> popupIndices[initUiIndex + 1] = PopupSet.HINT_INDEX
-                        initUiIndex - 1 >= 0 -> popupIndices[initUiIndex - 1] = PopupSet.HINT_INDEX
-                        else -> popupIndices[initUiIndex] = PopupSet.HINT_INDEX
+            val popupKeys = key.computedPopups.getPopupKeys(keyHintConfiguration)
+            when (popupKeys.prioritized.size) {
+                // only one key: use initial position
+                1 -> {
+                    popupIndices[initUiIndex] = PopupKeys.FIRST_PRIORITIZED
+                }
+                // two keys: use initial position and one to the right if available, otherwise one to the left
+                2 -> {
+                    popupIndices[initUiIndex] = PopupKeys.FIRST_PRIORITIZED
+                    when {
+                        initUiIndex + 1 < n -> popupIndices[initUiIndex + 1] = PopupKeys.SECOND_PRIORITIZED
+                        initUiIndex - 1 >= 0 -> popupIndices[initUiIndex - 1] = PopupKeys.SECOND_PRIORITIZED
                     }
                 }
-                KeyHintMode.ENABLED_HINT_PRIORITY -> when {
-                    key.computedPopups.hint != null -> {
-                        popupIndices[initUiIndex] = PopupSet.HINT_INDEX
-                        if (key.computedPopups.main != null) when {
-                            initUiIndex + 1 < n -> popupIndices[initUiIndex + 1] = PopupSet.MAIN_INDEX
-                            initUiIndex - 1 >= 0 -> popupIndices[initUiIndex - 1] = PopupSet.MAIN_INDEX
+                // two keys: use initial position and one to either sides if available
+                // otherwise two to the right or two to the left with decreasing priority
+                3 -> {
+                    popupIndices[initUiIndex] = PopupKeys.FIRST_PRIORITIZED
+                    when {
+                        initUiIndex + 1 < n && initUiIndex - 1 >= 0 -> {
+                            popupIndices[initUiIndex + 1] = PopupKeys.SECOND_PRIORITIZED
+                            popupIndices[initUiIndex - 1] = PopupKeys.THIRD_PRIORITIZED
+                        }
+                        initUiIndex + 2 < n -> {
+                            popupIndices[initUiIndex + 1] = PopupKeys.SECOND_PRIORITIZED
+                            popupIndices[initUiIndex + 2] = PopupKeys.THIRD_PRIORITIZED
+                        }
+                        initUiIndex - 2 >= 0 -> {
+                            popupIndices[initUiIndex - 1] = PopupKeys.SECOND_PRIORITIZED
+                            popupIndices[initUiIndex - 2] = PopupKeys.THIRD_PRIORITIZED
                         }
                     }
-                    key.computedPopups.main != null -> popupIndices[initUiIndex] = PopupSet.MAIN_INDEX
-                }
-                KeyHintMode.ENABLED_SMART_PRIORITY -> when {
-                    key.computedPopups.main != null -> {
-                        popupIndices[initUiIndex] = PopupSet.MAIN_INDEX
-                        if (key.computedPopups.hint != null) when {
-                            initUiIndex + 1 < n -> popupIndices[initUiIndex + 1] = PopupSet.HINT_INDEX
-                            initUiIndex - 1 >= 0 -> popupIndices[initUiIndex - 1] = PopupSet.HINT_INDEX
-                        }
-                    }
-                    key.computedPopups.hint != null -> popupIndices[initUiIndex] = PopupSet.HINT_INDEX
-                }
-                KeyHintMode.DISABLED -> when {
-                    key.computedPopups.main != null -> popupIndices[initUiIndex] = PopupSet.MAIN_INDEX
                 }
             }
             var offset = 0
@@ -360,7 +361,7 @@ class PopupManager<V : View>(
         for (uiIndex in uiIndices) {
             val rowIndex = if (uiIndex < row1count && row1count > 0) { 1 } else { 0 }
             popupViewExt.properties.elements[rowIndex].add(
-                createElement(key, popupIndices[uiIndex])
+                createElement(key, keyHintConfiguration, popupIndices[uiIndex])
             )
         }
 
@@ -468,17 +469,18 @@ class PopupManager<V : View>(
     }
 
     /**
-     * Gets the [KeyData] of the currently active key. May be either the key of the popup preview
+     * Gets the [TextKeyData] of the currently active key. May be either the key of the popup preview
      * or one of the keys in extended popup, if shown. Returns null if [key] is not a subclass of [TextKey].
      *
      * @param key Reference to the key currently controlling the popup.
-     * @return The [KeyData] object of the currently active key or null.
+     * @param keyHintConfiguration The key hint configuration to be used.
+     * @return The [TextKeyData] object of the currently active key or null.
      */
-    fun getActiveKeyData(key: Key): TextKeyData? {
+    fun getActiveKeyData(key: Key, keyHintConfiguration: KeyHintConfiguration): TextKeyData? {
         return if (key is TextKey) {
             val element = popupViewExt.properties.getElementOrNull()
             if (element != null) {
-                key.computedPopups.getOrNull(element.adjustedIndex) ?: key.computedData
+                key.computedPopups.getPopupKeys(keyHintConfiguration).getOrNull(element.adjustedIndex) ?: key.computedData
             } else {
                 key.computedData
             }
@@ -498,7 +500,7 @@ class PopupManager<V : View>(
         return if (key is EmojiKey) {
             val element = popupViewExt.properties.getElementOrNull()
             if (element != null) {
-                key.computedPopups.getOrNull(element.adjustedIndex) ?: key.computedData
+                key.computedPopups.getPopupKeys(HINTS_DISABLED).getOrNull(element.adjustedIndex) ?: key.computedData
             } else {
                 key.computedData
             }

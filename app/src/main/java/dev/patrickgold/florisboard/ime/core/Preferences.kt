@@ -26,6 +26,7 @@ import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.text.gestures.DistanceThreshold
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.VelocityThreshold
+import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.smartbar.CandidateView
@@ -397,6 +398,7 @@ class Preferences(
             const val KEY_SPACING_VERTICAL =                "keyboard__key_spacing_vertical"
             const val LANDSCAPE_INPUT_UI_MODE =             "keyboard__landscape_input_ui_mode"
             const val LONG_PRESS_DELAY =                    "keyboard__long_press_delay"
+            const val MERGE_HINT_POPUPS_ENABLED =           "keyboard__merge_hint_popups_enabled"
             const val NUMBER_ROW =                          "keyboard__number_row"
             const val ONE_HANDED_MODE =                     "keyboard__one_handed_mode"
             const val ONE_HANDED_MODE_SCALE_FACTOR =        "keyboard__one_handed_mode_scale_factor"
@@ -447,6 +449,9 @@ class Preferences(
         var longPressDelay: Int = 0
             get() = prefs.getPref(LONG_PRESS_DELAY, 300)
             private set
+        var mergeHintPopupsEnabled: Boolean
+            get() =  prefs.getPref(MERGE_HINT_POPUPS_ENABLED, false)
+            set(v) = prefs.setPref(MERGE_HINT_POPUPS_ENABLED, v)
         var numberRow: Boolean
             get() =  prefs.getPref(NUMBER_ROW, false)
             set(v) = prefs.setPref(NUMBER_ROW, v)
@@ -485,6 +490,10 @@ class Preferences(
         var vibrationStrength: Int = 0
             get() = prefs.getPref(VIBRATION_STRENGTH, -1)
             private set
+
+        fun getKeyHintConfiguration(): KeyHintConfiguration {
+            return KeyHintConfiguration(hintedSymbolsMode, hintedNumberRowMode, mergeHintPopupsEnabled)
+        }
     }
 
     /**

@@ -28,7 +28,8 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.Preferences
-import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
+import dev.patrickgold.florisboard.ime.text.key.HINTS_DISABLED
+import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import kotlinx.coroutines.CoroutineScope
@@ -39,8 +40,7 @@ import kotlinx.coroutines.MainScope
  *
  * @property florisboard Reference to instance of core class [FlorisBoard].
  * @property emojiKeyboardView Reference to the parent [EmojiKeyboardView].
- * @property data The data the current key represents. Is used to determine rendering and possible
- *  behaviour when events occur.
+ * @property key The current key. Is used to determine rendering and possible behaviour when events occur.
  */
 @SuppressLint("ViewConstructor")
 class EmojiKeyView(
@@ -104,8 +104,8 @@ class EmojiKeyView(
                     (parent as RecyclerView)
                         .requestDisallowInterceptTouchEvent(true)
                     emojiKeyboardView.isScrollBlocked = true
-                    emojiKeyboardView.popupManager.show(key, KeyHintMode.DISABLED)
-                    emojiKeyboardView.popupManager.extend(key, KeyHintMode.DISABLED)
+                    emojiKeyboardView.popupManager.show(key, HINTS_DISABLED)
+                    emojiKeyboardView.popupManager.extend(key, HINTS_DISABLED)
                     florisboard?.keyPressVibrate()
                     florisboard?.keyPressSound()
                 }, delayMillis.toLong())
@@ -174,7 +174,7 @@ class EmojiKeyView(
 
         canvas ?: return
 
-        if (key.computedPopups.isNotEmpty()) {
+        if (key.computedPopups.getPopupKeys(HINTS_DISABLED).isNotEmpty()) {
             triangleDrawable?.draw(canvas)
         }
     }

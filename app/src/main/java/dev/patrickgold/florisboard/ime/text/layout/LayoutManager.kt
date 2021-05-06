@@ -26,7 +26,6 @@ import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.popup.PopupExtension
 import dev.patrickgold.florisboard.ime.popup.PopupManager
-import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.*
 import kotlinx.coroutines.*
@@ -260,7 +259,7 @@ class LayoutManager {
                     key.computedSymbolHint = hintKey
                 }
                 KeyType.NUMERIC -> {
-                    key.computedNumericHint = hintKey
+                    key.computedNumberHint = hintKey
                 }
                 else -> {
                     // do nothing
