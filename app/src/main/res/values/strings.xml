@@ -257,6 +257,12 @@
     <string name="pref__correction__double_space_period__label" comment="Preference title">Double-space period</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Tapping twice on spacebar inserts a period followed by a space</string>
 
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Internal User Dictionary</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">System User Dictionary</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">For all languages</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">User dictionary imported successfully!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">User dictionary exported successfully!</string>
+
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gestures &amp; Glide typing</string>
     <string name="pref__glide__title" comment="Preference group title">Glide typing</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Enable glide typing</string>

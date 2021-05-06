@@ -22,13 +22,9 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.settings.UdmActivity
 
 class TypingInnerFragment : PreferenceFragmentCompat() {
-    companion object {
-        private const val USER_DICTIONARY_SETTINGS_INTENT_ACTION: String =
-            "android.settings.USER_DICTIONARY_SETTINGS"
-    }
-
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.prefs_typing)
     }
@@ -36,12 +32,15 @@ class TypingInnerFragment : PreferenceFragmentCompat() {
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         return when (preference?.key) {
             PrefHelper.Dictionary.MANAGE_SYSTEM_USER_DICTIONARY -> {
-                val intent = Intent(USER_DICTIONARY_SETTINGS_INTENT_ACTION)
+                val intent = Intent(context, UdmActivity::class.java)
+                intent.putExtra(UdmActivity.EXTRA_USER_DICTIONARY_TYPE, UdmActivity.USER_DICTIONARY_TYPE_SYSTEM)
                 startActivity(intent)
                 true
             }
             PrefHelper.Dictionary.MANAGE_FLORIS_USER_DICTIONARY -> {
-                // NYI
+                val intent = Intent(context, UdmActivity::class.java)
+                intent.putExtra(UdmActivity.EXTRA_USER_DICTIONARY_TYPE, UdmActivity.USER_DICTIONARY_TYPE_FLORIS)
+                startActivity(intent)
                 true
             }
             else -> super.onPreferenceTreeClick(preference)
