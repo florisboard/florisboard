@@ -236,15 +236,27 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
 
     private val dao = object : UserDictionaryDao {
         override fun query(word: String): List<UserDictionaryEntry> {
-            TODO("Not yet implemented")
+            return queryResolver(
+                selection = "${UserDictionary.Words.WORD} LIKE ?",
+                selectionArgs = arrayOf("%$word%"),
+                sortOrder = SORT_BY_FREQ_DESC,
+            )
         }
 
         override fun query(word: String, locale: Locale?): List<UserDictionaryEntry> {
-            return queryResolver(
-                selection = "${UserDictionary.Words.WORD} LIKE ? AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
-                selectionArgs = arrayOf("%$word%", locale?.toString() ?: "", locale?.language?.toString() ?: ""),
-                sortOrder = SORT_BY_FREQ_DESC,
-            )
+            return if (locale == null) {
+                queryResolver(
+                    selection = "${UserDictionary.Words.WORD} LIKE ? AND ${UserDictionary.Words.LOCALE} IS NULL",
+                    selectionArgs = arrayOf("%$word%"),
+                    sortOrder = SORT_BY_FREQ_DESC,
+                )
+            } else {
+                queryResolver(
+                    selection = "${UserDictionary.Words.WORD} LIKE ? AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
+                    selectionArgs = arrayOf("%$word%", locale.toString(), locale.language.toString()),
+                    sortOrder = SORT_BY_FREQ_DESC,
+                )
+            }
         }
 
         override fun queryAll(): List<UserDictionaryEntry> {
@@ -280,11 +292,19 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
         }
 
         override fun queryExact(word: String, locale: Locale?): List<UserDictionaryEntry> {
-            return queryResolver(
-                selection = "${UserDictionary.Words.WORD} = ? AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
-                selectionArgs = arrayOf(word, locale?.toString() ?: "", locale?.language?.toString() ?: ""),
-                sortOrder = null,
-            )
+            return if (locale == null) {
+                queryResolver(
+                    selection = "${UserDictionary.Words.WORD} = ? AND ${UserDictionary.Words.LOCALE} IS NULL",
+                    selectionArgs = arrayOf(word),
+                    sortOrder = SORT_BY_FREQ_DESC,
+                )
+            } else {
+                queryResolver(
+                    selection = "${UserDictionary.Words.WORD} LIKE ? AND ${UserDictionary.Words.LOCALE} = ?",
+                    selectionArgs = arrayOf(word, locale.toString()),
+                    sortOrder = SORT_BY_FREQ_DESC,
+                )
+            }
         }
 
         override fun queryLanguageList(): List<Locale?> {
