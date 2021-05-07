@@ -231,6 +231,7 @@ class PrefHelper(
         companion object {
             const val ENABLED =                     "devtools__enabled"
             const val SHOW_HEAP_MEMORY_STATS =      "devtools__show_heap_memory_stats"
+            const val CLEAR_UDM_INTERNAL_DATABASE = "devtools__clear_udm_internal_database"
         }
 
         var enabled: Boolean

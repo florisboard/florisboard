@@ -43,6 +43,7 @@ import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryDao
 import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryDatabase
 import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryEntry
 import dev.patrickgold.florisboard.ime.text.keyboard.*
+import dev.patrickgold.florisboard.util.LocaleUtils
 import java.util.*
 
 interface OnListItemCLickListener {
@@ -362,16 +363,7 @@ class UdmActivity : FlorisActivity<UdmActivityBinding>() {
             create()
             activeDialogWindow = show()
             activeDialogWindow?.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
-                val word = dialogBinding.word.text.toString()
-                val freq = dialogBinding.freq.text.toString()
-                val shortcut = dialogBinding.shortcut.text?.toString()?.ifBlank { null }
-                val locale = dialogBinding.locale.text?.toString()?.ifBlank { null }
-                if (word.isBlank() || freq.isBlank()) {
-                    // ERROR
-                } else {
-                    userDictionaryDao()?.insert(
-                        UserDictionaryEntry(0, word, freq.toInt(), locale, shortcut)
-                    )
+                if (processInput(dialogBinding, null)) {
                     activeDialogWindow?.dismiss()
                     activeDialogWindow = null
                     buildUi()
@@ -406,21 +398,58 @@ class UdmActivity : FlorisActivity<UdmActivityBinding>() {
             create()
             activeDialogWindow = show()
             activeDialogWindow?.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
-                val word = dialogBinding.word.text.toString()
-                val freq = dialogBinding.freq.text.toString()
-                val shortcut = dialogBinding.shortcut.text?.toString()?.ifBlank { null }
-                val locale = dialogBinding.locale.text?.toString()?.ifBlank { null }
-                if (word.isBlank() || freq.isBlank()) {
-                    // ERROR
-                } else {
-                    userDictionaryDao()?.update(
-                        UserDictionaryEntry(entry.id, word, freq.toInt(), locale, shortcut)
-                    )
+                if (processInput(dialogBinding, entry)) {
                     activeDialogWindow?.dismiss()
                     activeDialogWindow = null
                     buildUi()
                 }
             }
         }
+    }
+
+    private fun processInput(dialogBinding: UdmEntryDialogBinding, entry: UserDictionaryEntry?): Boolean {
+        val word = dialogBinding.word.text?.toString()?.ifBlank { null }
+        val freq = dialogBinding.freq.text?.toString()?.ifBlank { null }
+        val shortcut = dialogBinding.shortcut.text?.toString()?.ifBlank { null }
+        val locale = dialogBinding.locale.text?.toString()?.ifBlank { null }
+
+        var isValid = true
+        if (word == null) {
+            dialogBinding.word.error = resources.getString(R.string.settings__udm__dialog__word_error_empty)
+            isValid = false
+        } else if (word.contains(' ') || word.contains(';') || word.contains('=')) {
+            dialogBinding.word.error = resources.getString(R.string.settings__udm__dialog__word_error_invalid)
+            isValid = false
+        }
+        if (freq == null) {
+            dialogBinding.freq.error = resources.getString(R.string.settings__udm__dialog__freq_error_empty)
+            isValid = false
+        } else if (runCatching { freq.toInt(10) }.getOrNull() !in FREQUENCY_MIN..FREQUENCY_MAX) {
+            dialogBinding.freq.error = resources.getString(R.string.settings__udm__dialog__freq_error_invalid)
+            isValid = false
+        }
+        if (shortcut != null && (shortcut.contains(' ') || shortcut.contains(';') || shortcut.contains('='))) {
+            dialogBinding.shortcut.error = resources.getString(R.string.settings__udm__dialog__shortcut_error_invalid)
+            isValid = false
+        }
+        if (locale != null && (runCatching { LocaleUtils.stringToLocale(locale).isO3Language.ifBlank { null } }.getOrNull() == null)) {
+            dialogBinding.locale.error = resources.getString(R.string.settings__udm__dialog__locale_error_invalid)
+            isValid = false
+        }
+        if (isValid) {
+            val localeStr = if (locale == null) { null } else {
+                LocaleUtils.stringToLocale(locale).toString()
+            }
+            if (entry != null) {
+                userDictionaryDao()?.update(
+                    UserDictionaryEntry(entry.id, word!!, freq!!.toInt(10), localeStr, shortcut)
+                )
+            } else {
+                userDictionaryDao()?.insert(
+                    UserDictionaryEntry(0, word!!, freq!!.toInt(10), localeStr, shortcut)
+                )
+            }
+        }
+        return isValid
     }
 }

@@ -120,6 +120,9 @@ interface UserDictionaryDao {
 
     @Delete
     fun delete(entry: UserDictionaryEntry)
+
+    @Query("DELETE FROM $WORDS_TABLE")
+    fun deleteAll()
 }
 
 interface UserDictionaryDatabase {
@@ -425,6 +428,10 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
         override fun delete(entry: UserDictionaryEntry) {
             val resolver = applicationContext.get()?.contentResolver ?: return
             resolver.delete(UserDictionary.Words.CONTENT_URI, "${UserDictionary.Words._ID} = ${entry.id}", null)
+        }
+
+        override fun deleteAll() {
+            // Unsupported action
         }
     }
 
