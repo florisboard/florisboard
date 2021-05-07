@@ -494,9 +494,19 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     retList.add(entry.word)
                 }
             }
+            florisDao?.queryShortcut(word, locale)?.let {
+                for (entry in it) {
+                    retList.add(entry.word)
+                }
+            }
         }
         if (prefs.dictionary.enableSystemUserDictionary) {
             systemDao?.query(word, locale)?.let {
+                for (entry in it) {
+                    retList.add(entry.word)
+                }
+            }
+            systemDao?.queryShortcut(word, locale)?.let {
                 for (entry in it) {
                     retList.add(entry.word)
                 }

@@ -91,6 +91,12 @@ interface UserDictionaryDao {
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} LIKE '%' || :word || '%' AND $LOCALE_MATCHES")
     fun query(word: String, locale: Locale?): List<UserDictionaryEntry>
 
+    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.SHORTCUT} = :shortcut")
+    fun queryShortcut(shortcut: String): List<UserDictionaryEntry>
+
+    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.SHORTCUT} = :shortcut AND $LOCALE_MATCHES")
+    fun queryShortcut(shortcut: String, locale: Locale?): List<UserDictionaryEntry>
+
     @Query(SELECT_ALL_FROM_WORDS)
     fun queryAll(): List<UserDictionaryEntry>
 
@@ -254,6 +260,30 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
                 queryResolver(
                     selection = "${UserDictionary.Words.WORD} LIKE ? AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
                     selectionArgs = arrayOf("%$word%", locale.toString(), locale.language.toString()),
+                    sortOrder = SORT_BY_FREQ_DESC,
+                )
+            }
+        }
+
+        override fun queryShortcut(shortcut: String): List<UserDictionaryEntry> {
+            return queryResolver(
+                selection = "${UserDictionary.Words.SHORTCUT} = ?",
+                selectionArgs = arrayOf(shortcut),
+                sortOrder = SORT_BY_FREQ_DESC,
+            )
+        }
+
+        override fun queryShortcut(shortcut: String, locale: Locale?): List<UserDictionaryEntry> {
+            return if (locale == null) {
+                queryResolver(
+                    selection = "${UserDictionary.Words.SHORTCUT} = ? AND ${UserDictionary.Words.LOCALE} IS NULL",
+                    selectionArgs = arrayOf(shortcut),
+                    sortOrder = SORT_BY_FREQ_DESC,
+                )
+            } else {
+                queryResolver(
+                    selection = "${UserDictionary.Words.SHORTCUT} = ? AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
+                    selectionArgs = arrayOf(shortcut, locale.toString(), locale.language.toString()),
                     sortOrder = SORT_BY_FREQ_DESC,
                 )
             }
