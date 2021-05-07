@@ -16,28 +16,146 @@
 
 package dev.patrickgold.florisboard.settings
 
+import android.app.AlertDialog
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.UdmActivityBinding
+import dev.patrickgold.florisboard.databinding.UdmEntryDialogBinding
 import dev.patrickgold.florisboard.ime.core.FlorisActivity
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.dictionary.FREQUENCY_DEFAULT
+import dev.patrickgold.florisboard.ime.dictionary.FREQUENCY_MAX
+import dev.patrickgold.florisboard.ime.dictionary.FREQUENCY_MIN
+import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryDao
 import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryDatabase
-import dev.patrickgold.florisboard.ime.extension.AssetManager
+import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryEntry
 import dev.patrickgold.florisboard.ime.text.keyboard.*
 import java.util.*
 
+interface OnListItemCLickListener {
+    fun onListItemClick(pos: Int)
+}
+
+class LanguageEntryAdapter(
+    private val data: List<String>,
+    private val onListItemCLickListener: OnListItemCLickListener
+) : RecyclerView.Adapter<LanguageEntryAdapter.ViewHolder>() {
+
+    class ViewHolder(view: View, private val onListItemCLickListener: OnListItemCLickListener) :
+        RecyclerView.ViewHolder(view) {
+        val titleView: TextView = view.findViewById(android.R.id.title)
+        val summaryView: TextView = view.findViewById(android.R.id.summary)
+
+        init {
+            view.setOnClickListener {
+                onListItemCLickListener.onListItemClick(adapterPosition)
+            }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val listItemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.list_item, parent, false)
+
+        return ViewHolder(listItemView, onListItemCLickListener)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.titleView.text = data[position]
+    }
+
+    override fun getItemCount(): Int {
+        return data.size
+    }
+}
+
+class UserDictionaryEntryAdapter(
+    private val data: List<UserDictionaryEntry>,
+    private val onListItemCLickListener: OnListItemCLickListener
+) : RecyclerView.Adapter<UserDictionaryEntryAdapter.ViewHolder>() {
+
+    class ViewHolder(view: View, private val onListItemCLickListener: OnListItemCLickListener) :
+        RecyclerView.ViewHolder(view) {
+        val titleView: TextView = view.findViewById(android.R.id.title)
+        val summaryView: TextView = view.findViewById(android.R.id.summary)
+
+        init {
+            view.setOnClickListener {
+                onListItemCLickListener.onListItemClick(adapterPosition)
+            }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val listItemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.list_item, parent, false)
+
+        return ViewHolder(listItemView, onListItemCLickListener)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.titleView.text = data[position].word
+        val shortcut = data[position].shortcut
+        holder.summaryView.text = if (shortcut == null) {
+            String.format(
+                holder.summaryView.context.resources.getString(R.string.settings__udm__word_summary_freq),
+                data[position].freq
+            )
+        } else {
+            String.format(
+                holder.summaryView.context.resources.getString(R.string.settings__udm__word_summary_freq_shortcut),
+                data[position].freq,
+                shortcut
+            )
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return data.size
+    }
+}
+
 class UdmActivity : FlorisActivity<UdmActivityBinding>() {
     private val dictionaryManager: DictionaryManager get() = DictionaryManager.default()
-    private val assetManager: AssetManager get() = AssetManager.default()
 
     private var userDictionaryType: Int = -1
     private var currentLevel: Int = LEVEL_LANGUAGES
-    private var locale: Locale? = null
+    private var currentLocale: Locale? = null
+    private var activeDialogWindow: AlertDialog? = null
+
+    private var languageList: List<Locale?> = listOf()
+    private var wordList: List<UserDictionaryEntry> = listOf()
+
+    private val languageListItemClickListener = object : OnListItemCLickListener {
+        override fun onListItemClick(pos: Int) {
+            if (currentLevel == LEVEL_LANGUAGES) {
+                currentLocale = languageList[pos]
+                currentLevel = LEVEL_WORDS
+                buildUi()
+            }
+        }
+    }
+
+    private val wordListItemClickListener = object : OnListItemCLickListener {
+        override fun onListItemClick(pos: Int) {
+            if (currentLevel == LEVEL_WORDS) {
+                val entry = wordList[pos]
+                showEditWordDialog(entry)
+            }
+        }
+    }
 
     private val importUserDictionary = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         // If uri is null it indicates that the selection activity was cancelled (mostly by pressing the back button),
@@ -100,7 +218,7 @@ class UdmActivity : FlorisActivity<UdmActivityBinding>() {
 
         private const val LEVEL_LANGUAGES: Int = 1
         private const val LEVEL_WORDS: Int = 2
-        private const val USER_DICTIONARY_SETTINGS_INTENT_ACTION: String =
+        private const val SYSTEM_USER_DICTIONARY_SETTINGS_INTENT_ACTION: String =
             "android.settings.USER_DICTIONARY_SETTINGS"
     }
 
@@ -123,7 +241,10 @@ class UdmActivity : FlorisActivity<UdmActivityBinding>() {
 
         dictionaryManager.loadUserDictionariesIfNecessary()
 
-        binding.fabAddWord.setOnClickListener {  }
+        binding.fabAddWord.setOnClickListener { showAddWordDialog() }
+        binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        buildUi()
     }
 
     override fun onCreateBinding(): UdmActivityBinding {
@@ -132,7 +253,22 @@ class UdmActivity : FlorisActivity<UdmActivityBinding>() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.udm_extra_menu, menu)
+        if (userDictionaryType == USER_DICTIONARY_TYPE_FLORIS) {
+            menu?.findItem(R.id.udm__open_system_manager_ui)?.isVisible = false
+        }
         return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        activeDialogWindow?.dismiss()
+        activeDialogWindow = null
+        currentLocale = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        buildUi()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -149,11 +285,134 @@ class UdmActivity : FlorisActivity<UdmActivityBinding>() {
                 exportUserDictionary.launch("my-personal-dictionary.clb")
                 true
             }
+            R.id.udm__open_system_manager_ui -> {
+                startActivity(Intent(SYSTEM_USER_DICTIONARY_SETTINGS_INTENT_ACTION))
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun buildUi() {
+    override fun onBackPressed() {
+        if (currentLevel == LEVEL_WORDS) {
+            currentLevel = LEVEL_LANGUAGES
+            currentLocale = null
+            buildUi()
+        } else {
+            super.onBackPressed()
+        }
+    }
 
+    private fun userDictionaryDao(): UserDictionaryDao? {
+        return when (userDictionaryType) {
+            USER_DICTIONARY_TYPE_FLORIS -> dictionaryManager.florisUserDictionaryDao()
+            USER_DICTIONARY_TYPE_SYSTEM -> dictionaryManager.systemUserDictionaryDao()
+            else -> null
+        }
+    }
+
+    private fun buildUi() {
+        when (currentLevel) {
+            LEVEL_LANGUAGES -> {
+                languageList = userDictionaryDao()?.queryLanguageList()?.sortedBy { it?.displayLanguage } ?: listOf()
+                binding.recyclerView.adapter = LanguageEntryAdapter(
+                    languageList.map { it?.displayName ?: resources.getString(R.string.settings__udm__all_languages) },
+                    languageListItemClickListener
+                )
+            }
+            LEVEL_WORDS -> {
+                wordList = userDictionaryDao()?.queryAll(currentLocale) ?: listOf()
+                binding.recyclerView.adapter = UserDictionaryEntryAdapter(
+                    wordList,
+                    wordListItemClickListener
+                )
+            }
+        }
+    }
+
+    private fun showAddWordDialog() {
+        val dialogBinding = UdmEntryDialogBinding.inflate(layoutInflater)
+        dialogBinding.freq.setText(FREQUENCY_DEFAULT.toString())
+        dialogBinding.freqLabel.hint = String.format(
+            resources.getString(R.string.settings__udm__dialog__freq_label),
+            FREQUENCY_MIN,
+            FREQUENCY_MAX
+        )
+        if (currentLevel == LEVEL_WORDS) {
+            currentLocale?.let {
+                dialogBinding.locale.setText(it.toString())
+            }
+        }
+
+        AlertDialog.Builder(this).apply {
+            setTitle(R.string.settings__udm__dialog__title_add)
+            setCancelable(true)
+            setView(dialogBinding.root)
+            setPositiveButton(R.string.assets__action__add, null)
+            setNegativeButton(R.string.assets__action__cancel, null)
+            setOnDismissListener { activeDialogWindow = null }
+            create()
+            activeDialogWindow = show()
+            activeDialogWindow?.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
+                val word = dialogBinding.word.text.toString()
+                val freq = dialogBinding.freq.text.toString()
+                val shortcut = dialogBinding.shortcut.text?.toString()?.ifBlank { null }
+                val locale = dialogBinding.locale.text?.toString()?.ifBlank { null }
+                if (word.isBlank() || freq.isBlank()) {
+                    // ERROR
+                } else {
+                    userDictionaryDao()?.insert(
+                        UserDictionaryEntry(0, word, freq.toInt(), locale, shortcut)
+                    )
+                    activeDialogWindow?.dismiss()
+                    activeDialogWindow = null
+                    buildUi()
+                }
+            }
+        }
+    }
+
+    private fun showEditWordDialog(entry: UserDictionaryEntry) {
+        val dialogBinding = UdmEntryDialogBinding.inflate(layoutInflater)
+        dialogBinding.word.setText(entry.word)
+        dialogBinding.freq.setText(entry.freq.toString())
+        dialogBinding.freqLabel.hint = String.format(
+            resources.getString(R.string.settings__udm__dialog__freq_label),
+            FREQUENCY_MIN,
+            FREQUENCY_MAX
+        )
+        dialogBinding.shortcut.setText(entry.shortcut ?: "")
+        dialogBinding.locale.setText(entry.locale ?: "")
+
+        AlertDialog.Builder(this).apply {
+            setTitle(R.string.settings__udm__dialog__title_edit)
+            setCancelable(true)
+            setView(dialogBinding.root)
+            setPositiveButton(R.string.assets__action__apply, null)
+            setNegativeButton(R.string.assets__action__cancel, null)
+            setNeutralButton(R.string.assets__action__delete) { _, _ ->
+                userDictionaryDao()?.delete(entry)
+                buildUi()
+            }
+            setOnDismissListener { activeDialogWindow = null }
+            create()
+            activeDialogWindow = show()
+            activeDialogWindow?.getButton(AlertDialog.BUTTON_POSITIVE)?.setOnClickListener {
+                val word = dialogBinding.word.text.toString()
+                val freq = dialogBinding.freq.text.toString()
+                val shortcut = dialogBinding.shortcut.text?.toString()?.ifBlank { null }
+                val locale = dialogBinding.locale.text?.toString()?.ifBlank { null }
+                if (word.isBlank() || freq.isBlank()) {
+                    // ERROR
+                } else {
+                    userDictionaryDao()?.update(
+                        UserDictionaryEntry(entry.id, word, freq.toInt(), locale, shortcut)
+                    )
+                    activeDialogWindow?.dismiss()
+                    activeDialogWindow = null
+                    buildUi()
+                }
+            }
+        }
     }
 }

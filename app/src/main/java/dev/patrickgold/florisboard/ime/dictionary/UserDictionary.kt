@@ -40,8 +40,9 @@ import java.util.*
 
 private const val WORDS_TABLE = "words"
 
-private const val FREQUENCY_MIN = 1
-private const val FREQENCY_MAX = 255
+const val FREQUENCY_MIN = 1
+const val FREQUENCY_MAX = 255
+const val FREQUENCY_DEFAULT = 128
 
 private const val SORT_BY_WORD_ASC = "${UserDictionary.Words.WORD} ASC"
 private const val SORT_BY_WORD_DESC = "${UserDictionary.Words.WORD} DESC"
@@ -54,6 +55,10 @@ private val PROJECTIONS: Array<String> = arrayOf(
     UserDictionary.Words.FREQUENCY,
     UserDictionary.Words.LOCALE,
     UserDictionary.Words.SHORTCUT,
+)
+
+private val PROJECTIONS_LANGUAGE: Array<String> = arrayOf(
+    UserDictionary.Words.LOCALE,
 )
 
 @Entity(tableName = WORDS_TABLE)
@@ -89,11 +94,17 @@ interface UserDictionaryDao {
     @Query(SELECT_ALL_FROM_WORDS)
     fun queryAll(): List<UserDictionaryEntry>
 
+    @Query("$SELECT_ALL_FROM_WORDS WHERE (${UserDictionary.Words.LOCALE} = :locale AND :locale IS NOT NULL) OR (${UserDictionary.Words.LOCALE} IS NULL AND :locale IS NULL)")
+    fun queryAll(locale: Locale?): List<UserDictionaryEntry>
+
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word")
     fun queryExact(word: String): List<UserDictionaryEntry>
 
-    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word AND $LOCALE_MATCHES")
+    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word AND (${UserDictionary.Words.LOCALE} = :locale OR (${UserDictionary.Words.LOCALE} IS NULL AND :locale IS NULL))")
     fun queryExact(word: String, locale: Locale?): List<UserDictionaryEntry>
+
+    @Query("SELECT DISTINCT ${UserDictionary.Words.LOCALE} FROM $WORDS_TABLE")
+    fun queryLanguageList(): List<Locale?>
 
     @Insert
     fun insert(entry: UserDictionaryEntry)
@@ -130,7 +141,7 @@ interface UserDictionaryDatabase {
                             when (key) {
                                 "w", "word" -> word = value.ifBlank { null }
                                 "f", "freq" -> runCatching { value.toInt(10) }.onSuccess {
-                                    freq = it.coerceIn(FREQUENCY_MIN, FREQENCY_MAX)
+                                    freq = it.coerceIn(FREQUENCY_MIN, FREQUENCY_MAX)
                                 }
                                 "l", "locale" -> locale = when (value) {
                                     "all", "null", "" -> null
@@ -203,15 +214,18 @@ abstract class FlorisUserDictionaryDatabase : RoomDatabase(), UserDictionaryData
 
     class Converters {
         @TypeConverter
-        fun localeToString(locale: Locale?): String {
-            return locale.toString()
+        fun localeToString(locale: Locale?): String? {
+            return when (locale) {
+                null -> null
+                else -> locale.toString()
+            }
         }
 
         @TypeConverter
-        fun stringToLocale(string: String): Locale? {
+        fun stringToLocale(string: String?): Locale? {
             return when (string) {
-                "all", "null", "" -> null
-                else ->LocaleUtils.stringToLocale(string)
+                null, "all", "null", "" -> null
+                else -> LocaleUtils.stringToLocale(string)
             }
         }
     }
@@ -228,7 +242,7 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
         override fun query(word: String, locale: Locale?): List<UserDictionaryEntry> {
             return queryResolver(
                 selection = "${UserDictionary.Words.WORD} LIKE ? AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
-                selectionArgs = arrayOf("%$word%", locale.toString(), locale?.language.toString()),
+                selectionArgs = arrayOf("%$word%", locale?.toString() ?: "", locale?.language?.toString() ?: ""),
                 sortOrder = SORT_BY_FREQ_DESC,
             )
         }
@@ -239,6 +253,22 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
                 selectionArgs = null,
                 sortOrder = SORT_BY_FREQ_DESC,
             )
+        }
+
+        override fun queryAll(locale: Locale?): List<UserDictionaryEntry> {
+            return if (locale == null) {
+                queryResolver(
+                    selection = "${UserDictionary.Words.LOCALE} IS NULL",
+                    selectionArgs = null,
+                    sortOrder = SORT_BY_FREQ_DESC,
+                )
+            } else {
+                queryResolver(
+                    selection = "${UserDictionary.Words.LOCALE} = ?",
+                    selectionArgs = arrayOf(locale.toString()),
+                    sortOrder = SORT_BY_FREQ_DESC,
+                )
+            }
         }
 
         override fun queryExact(word: String): List<UserDictionaryEntry> {
@@ -252,9 +282,35 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
         override fun queryExact(word: String, locale: Locale?): List<UserDictionaryEntry> {
             return queryResolver(
                 selection = "${UserDictionary.Words.WORD} = ? AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
-                selectionArgs = arrayOf(word, locale.toString(), locale?.language.toString()),
+                selectionArgs = arrayOf(word, locale?.toString() ?: "", locale?.language?.toString() ?: ""),
                 sortOrder = null,
             )
+        }
+
+        override fun queryLanguageList(): List<Locale?> {
+            val resolver = applicationContext.get()?.contentResolver ?: return listOf()
+            val cursor = resolver.query(
+                UserDictionary.Words.CONTENT_URI,
+                PROJECTIONS_LANGUAGE,
+                null,
+                null,
+                null
+            ) ?: return listOf()
+            if (cursor.count <= 0) {
+                return listOf()
+            }
+            val localeIndex = cursor.getColumnIndex(UserDictionary.Words.LOCALE)
+            val retList = mutableSetOf<Locale?>()
+            while (cursor.moveToNext()) {
+                val localeStr = cursor.getString(localeIndex)
+                if (localeStr == null) {
+                    retList.add(null)
+                } else {
+                    retList.add(LocaleUtils.stringToLocale(localeStr))
+                }
+            }
+            cursor.close()
+            return retList.toList()
         }
 
         private fun queryResolver(selection: String?, selectionArgs: Array<out String>?, sortOrder: String?): List<UserDictionaryEntry> {

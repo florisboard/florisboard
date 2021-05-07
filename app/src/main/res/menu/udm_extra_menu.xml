@@ -17,6 +17,11 @@
                 android:id="@+id/udm__export"
                 android:orderInCategory="2"
                 android:title="@string/assets__action__export"/>
+
+            <item
+                android:id="@+id/udm__open_system_manager_ui"
+                android:orderInCategory="3"
+                android:title="@string/settings__udm__open_system_manager_ui"/>
         </menu>
 
     </item>
