@@ -28,6 +28,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dev.patrickgold.florisboard.R
@@ -74,6 +75,7 @@ class LanguageEntryAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.titleView.text = data[position]
+        holder.summaryView.isVisible = false
     }
 
     override fun getItemCount(): Int {
@@ -316,9 +318,10 @@ class UdmActivity : FlorisActivity<UdmActivityBinding>() {
             LEVEL_LANGUAGES -> {
                 languageList = userDictionaryDao()?.queryLanguageList()?.sortedBy { it?.displayLanguage } ?: listOf()
                 binding.recyclerView.adapter = LanguageEntryAdapter(
-                    languageList.map { it?.displayName ?: resources.getString(R.string.settings__udm__all_languages) },
+                    languageList.map { getDisplayNameForLocale(it) },
                     languageListItemClickListener
                 )
+                supportActionBar?.subtitle = null
             }
             LEVEL_WORDS -> {
                 wordList = userDictionaryDao()?.queryAll(currentLocale) ?: listOf()
@@ -326,8 +329,13 @@ class UdmActivity : FlorisActivity<UdmActivityBinding>() {
                     wordList,
                     wordListItemClickListener
                 )
+                supportActionBar?.subtitle = getDisplayNameForLocale(currentLocale)
             }
         }
+    }
+
+    private fun getDisplayNameForLocale(locale: Locale?): String {
+        return locale?.displayName ?: resources.getString(R.string.settings__udm__all_languages)
     }
 
     private fun showAddWordDialog() {
