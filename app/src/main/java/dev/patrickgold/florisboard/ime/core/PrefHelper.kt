@@ -51,6 +51,7 @@ class PrefHelper(
     val clipboard = Clipboard(this)
     val correction = Correction(this)
     val devtools = Devtools(this)
+    val dictionary = Dictionary(this)
     val gestures = Gestures(this)
     val glide = Glide(this)
     val internal = Internal(this)
@@ -230,6 +231,7 @@ class PrefHelper(
         companion object {
             const val ENABLED =                     "devtools__enabled"
             const val SHOW_HEAP_MEMORY_STATS =      "devtools__show_heap_memory_stats"
+            const val CLEAR_UDM_INTERNAL_DATABASE = "devtools__clear_udm_internal_database"
         }
 
         var enabled: Boolean
@@ -238,6 +240,25 @@ class PrefHelper(
         var showHeapMemoryStats: Boolean
             get() =  prefHelper.getPref(SHOW_HEAP_MEMORY_STATS, false)
             set(v) = prefHelper.setPref(SHOW_HEAP_MEMORY_STATS, v)
+    }
+
+    /**
+     * Wrapper class for dictionary preferences.
+     */
+    class Dictionary(private val prefHelper: PrefHelper) {
+        companion object {
+            const val ENABLE_SYSTEM_USER_DICTIONARY =   "suggestion__enable_system_user_dictionary"
+            const val MANAGE_SYSTEM_USER_DICTIONARY =   "suggestion__manage_system_user_dictionary"
+            const val ENABLE_FLORIS_USER_DICTIONARY =   "suggestion__enable_floris_user_dictionary"
+            const val MANAGE_FLORIS_USER_DICTIONARY =   "suggestion__manage_floris_user_dictionary"
+        }
+
+        var enableSystemUserDictionary: Boolean
+            get() =  prefHelper.getPref(ENABLE_SYSTEM_USER_DICTIONARY, true)
+            set(v) = prefHelper.setPref(ENABLE_SYSTEM_USER_DICTIONARY, v)
+        var enableFlorisUserDictionary: Boolean
+            get() =  prefHelper.getPref(ENABLE_FLORIS_USER_DICTIONARY, true)
+            set(v) = prefHelper.setPref(ENABLE_FLORIS_USER_DICTIONARY, v)
     }
 
     /**

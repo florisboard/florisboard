@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.media.emoji
 
-import java.util.*
-
 /**
  * Enum for emoji category.
  * List taken from https://unicode.org/Public/emoji/13.0/emoji-test.txt
@@ -39,7 +37,7 @@ enum class EmojiCategory {
 
     companion object {
         fun fromString(string: String): EmojiCategory {
-            return valueOf(string.replace(" & ", "_").toUpperCase(Locale.ENGLISH))
+            return valueOf(string.replace(" & ", "_").uppercase())
         }
     }
 }

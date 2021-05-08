@@ -1,9 +1,9 @@
 
 plugins {
-    id("com.android.application") version "4.1.3"
-    kotlin("android") version "1.5.0-RC"
-    kotlin("kapt") version "1.5.0-RC"
-    kotlin("plugin.serialization") version "1.5.0-RC"
+    id("com.android.application") version "4.2.0"
+    kotlin("android") version "1.5.0"
+    kotlin("kapt") version "1.5.0"
+    kotlin("plugin.serialization") version "1.5.0"
 }
 
 android {
@@ -28,6 +28,16 @@ android {
         versionName("0.3.11")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    Pair("room.schemaLocation", "$projectDir/schemas"),
+                    Pair("room.incremental", "true"),
+                    Pair("room.expandProjection", "true")
+                )
+            }
+        }
     }
 
     buildFeatures {
@@ -84,7 +94,7 @@ dependencies {
     implementation("androidx.preference", "preference-ktx", "1.1.1")
     implementation("androidx.constraintlayout", "constraintlayout", "2.0.4")
     implementation("androidx.lifecycle", "lifecycle-service", "2.2.0")
-    implementation("com.google.android", "flexbox", "2.0.1") // requires jcenter as of version 2.0.1
+    implementation("com.google.android", "flexbox", "2.0.1")
     implementation("com.google.android.material", "material", "1.3.0")
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-android", "1.4.2")
     implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.1.0")

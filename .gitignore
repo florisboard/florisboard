@@ -40,3 +40,6 @@ captures/
 # Keystore files
 *.jks
 crowdin.properties
+
+# AndroidX Room schema JSONs
+/app/schemas/

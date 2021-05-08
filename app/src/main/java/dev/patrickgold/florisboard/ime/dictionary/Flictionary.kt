@@ -21,7 +21,6 @@ import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.nlp.*
 import java.io.InputStream
-import java.util.*
 import kotlin.jvm.Throws
 
 /**
@@ -307,7 +306,7 @@ class Flictionary private constructor(
         return if (currentToken.data.isNotEmpty()) {
             val retList = languageModel.matchAllNgrams(
                 ngram = Ngram(
-                    _tokens = listOf(Token(currentToken.data.toLowerCase(Locale.ENGLISH))),
+                    _tokens = listOf(Token(currentToken.data.lowercase())),
                     _freq = -1
                 ),
                 maxEditDistance = 2,

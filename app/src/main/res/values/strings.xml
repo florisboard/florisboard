@@ -240,6 +240,15 @@
     <string translatable="false" name="pref__suggestion__display_mode__classic" comment="Preference value">Classic (3 columns)</string>
     <string translatable="false" name="pref__suggestion__display_mode__dynamic" comment="Preference value">Dynamic width</string>
     <string translatable="false" name="pref__suggestion__display_mode__dynamic_scrollable" comment="Preference value">Dynamic width &amp; scrollable</string>
+    <string name="pref__dictionary__title" comment="Preference group title">Dictionary</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Enable system user dictionary</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Suggest words stored in the system user dictionary</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Manage system user dictionary</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Add, view, and remove entries for the system user dictionary</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Enable internal user dictionary</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Suggest words stored in the internal user dictionary</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Manage internal user dictionary</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Add, view, and remove entries for the internal user dictionary</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalization</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalize words based on the current input context</string>
@@ -247,6 +256,27 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock will stay on when moving to another text field</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Double-space period</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Tapping twice on spacebar inserts a period followed by a space</string>
+
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Internal User Dictionary</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">System User Dictionary</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frequency: %d</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frequency: %d | Shortcut: %s</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">For all languages</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Open system manager UI</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">User dictionary imported successfully!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">User dictionary exported successfully!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Add word entry</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Edit word entry</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Word</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Please enter a word!</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">This word contains invalid characters.</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frequency (between %d and %d)</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Please enter a frequency value!</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Please enter a valid number within the specified bounds!</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Shortcut (optional)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">This shortcut contains invalid characters.</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Language code (optional)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">This language code does not conform to the expected syntax. The code must either be a language only (like en), a language and country (like en_US) or a language, country, and script (like en_US-script).</string>
 
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gestures &amp; Glide typing</string>
     <string name="pref__glide__title" comment="Preference group title">Glide typing</string>
@@ -314,6 +344,8 @@
     <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Tools specifically designed for debugging and troubleshooting</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Show heap memory stats</string>
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Overlays the heap memory usage and max size in the top-right corner</string>
+    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Clear internal user dictionary database</string>
+    <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Clears all words from the dictionary database table</string>
 
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">About</string>
@@ -332,6 +364,7 @@
     <string name="assets__file__name">Name</string>
     <string name="assets__file__source">Source</string>
     <string name="assets__action__add">Add</string>
+    <string name="assets__action__apply">Apply</string>
     <string name="assets__action__cancel">Cancel</string>
     <string name="assets__action__cancel_confirm_title">Confirm cancel</string>
     <string name="assets__action__cancel_confirm_message">Are you sure you want to discard any unsaved changes? This action can not be undone once executed.</string>

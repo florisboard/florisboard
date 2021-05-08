@@ -102,7 +102,7 @@ abstract class FlorisActivity<V : ViewBinding> : AppCompatActivity(), CoroutineS
                 errorDialog?.dismiss()
                 errorDialog = AlertDialog.Builder(this@FlorisActivity).run {
                     setTitle(R.string.assets__error__details)
-                    setMessage(errorThrowable.toString())
+                    setMessage(errorThrowable?.stackTraceToString())
                     setPositiveButton(android.R.string.ok, null)
                     setNeutralButton(R.string.crash_dialog__copy_to_clipboard) { _, _ ->
                         val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE)

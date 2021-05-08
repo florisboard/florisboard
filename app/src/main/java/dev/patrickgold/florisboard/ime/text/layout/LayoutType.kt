@@ -23,7 +23,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import java.util.*
 
 /**
  * Defines the type of the layout.
@@ -44,12 +43,12 @@ enum class LayoutType {
     SYMBOLS2_MOD;
 
     override fun toString(): String {
-        return super.toString().replace("_", "/").toLowerCase(Locale.ENGLISH)
+        return super.toString().replace("_", "/").lowercase()
     }
 
     companion object {
         fun fromString(string: String): LayoutType {
-            return valueOf(string.replace("/", "_").toUpperCase(Locale.ENGLISH))
+            return valueOf(string.replace("/", "_").uppercase())
         }
     }
 }

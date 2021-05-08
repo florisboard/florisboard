@@ -17,14 +17,23 @@
 package dev.patrickgold.florisboard.ime.dictionary
 
 import android.content.Context
+import androidx.room.Room
+import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import timber.log.Timber
+import java.lang.ref.WeakReference
 
 /**
  * TODO: document
  */
-class DictionaryManager private constructor(private val applicationContext: Context) {
+class DictionaryManager private constructor(context: Context) {
+    private val applicationContext: WeakReference<Context> = WeakReference(context.applicationContext ?: context)
+    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+
     private val dictionaryCache: MutableMap<String, Dictionary<String, Int>> = mutableMapOf()
+
+    private var florisUserDictionaryDatabase: FlorisUserDictionaryDatabase? = null
+    private var systemUserDictionaryDatabase: SystemUserDictionaryDatabase? = null
 
     companion object {
         private var defaultInstance: DictionaryManager? = null
@@ -53,16 +62,83 @@ class DictionaryManager private constructor(private val applicationContext: Cont
         }
         if (ref.path.endsWith(".flict")) {
             // Assume this is a Flictionary
-            Flictionary.load(applicationContext, ref).onSuccess { flict ->
-                dictionaryCache[ref.toString()] = flict
-                return Result.success(flict)
-            }.onFailure { err ->
-                Timber.i(err)
-                return Result.failure(err)
+            applicationContext.get()?.let {
+                Flictionary.load(it, ref).onSuccess { flict ->
+                    dictionaryCache[ref.toString()] = flict
+                    return Result.success(flict)
+                }.onFailure { err ->
+                    Timber.i(err)
+                    return Result.failure(err)
+                }
             }
         } else {
             return Result.failure(Exception("Unable to determine supported type for given AssetRef!"))
         }
         return Result.failure(Exception("If this message is ever thrown, something is completely broken..."))
+    }
+
+    @Synchronized
+    fun florisUserDictionaryDao(): UserDictionaryDao? {
+        return if (prefs.suggestion.enabled && prefs.dictionary.enableFlorisUserDictionary) {
+            florisUserDictionaryDatabase?.userDictionaryDao()
+        } else {
+            null
+        }
+    }
+
+    @Synchronized
+    fun florisUserDictionaryDatabase(): FlorisUserDictionaryDatabase? {
+        return if (prefs.suggestion.enabled && prefs.dictionary.enableFlorisUserDictionary) {
+            florisUserDictionaryDatabase
+        } else {
+            null
+        }
+    }
+
+    @Synchronized
+    fun systemUserDictionaryDao(): UserDictionaryDao? {
+        return if (prefs.suggestion.enabled && prefs.dictionary.enableSystemUserDictionary) {
+            systemUserDictionaryDatabase?.userDictionaryDao()
+        } else {
+            null
+        }
+    }
+
+    @Synchronized
+    fun systemUserDictionaryDatabase(): SystemUserDictionaryDatabase? {
+        return if (prefs.suggestion.enabled && prefs.dictionary.enableSystemUserDictionary) {
+            systemUserDictionaryDatabase
+        } else {
+            null
+        }
+    }
+
+    @Synchronized
+    fun loadUserDictionariesIfNecessary() {
+        val context = applicationContext.get() ?: return
+
+        if (prefs.suggestion.enabled) {
+            if (florisUserDictionaryDatabase == null && prefs.dictionary.enableFlorisUserDictionary) {
+                florisUserDictionaryDatabase = Room.databaseBuilder(
+                    context,
+                    FlorisUserDictionaryDatabase::class.java,
+                    FlorisUserDictionaryDatabase.DB_FILE_NAME
+                ).allowMainThreadQueries().build()
+            }
+            if (systemUserDictionaryDatabase == null && prefs.dictionary.enableSystemUserDictionary) {
+                systemUserDictionaryDatabase = SystemUserDictionaryDatabase(context)
+            }
+        }
+    }
+
+    @Synchronized
+    fun unloadUserDictionariesIfNecessary() {
+        if (florisUserDictionaryDatabase != null) {
+            florisUserDictionaryDatabase?.close()
+            florisUserDictionaryDatabase = null
+        }
+        if (systemUserDictionaryDatabase != null) {
+            systemUserDictionaryDatabase = null
+        }
     }
 }

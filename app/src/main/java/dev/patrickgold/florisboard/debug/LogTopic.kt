@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalUnsignedTypes::class)
-
 package dev.patrickgold.florisboard.debug
 
 /**

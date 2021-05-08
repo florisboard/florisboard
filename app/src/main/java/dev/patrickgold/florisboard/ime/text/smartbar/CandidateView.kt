@@ -40,7 +40,6 @@ import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import java.lang.ref.WeakReference
-import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.abs
 
@@ -533,12 +532,12 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
 
         companion object {
             fun fromString(string: String): DisplayMode {
-                return valueOf(string.toUpperCase(Locale.ENGLISH))
+                return valueOf(string.uppercase())
             }
         }
 
         override fun toString(): String {
-            return super.toString().toLowerCase(Locale.ENGLISH)
+            return super.toString().lowercase()
         }
     }
 }

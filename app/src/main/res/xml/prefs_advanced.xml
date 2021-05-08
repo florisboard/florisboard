@@ -43,4 +43,12 @@
         app:summary="@string/pref__devtools__show_heap_memory_stats__summary"
         app:useSimpleSummaryProvider="true"/>
 
+    <Preference
+        app:dependency="devtools__enabled"
+        app:key="devtools__clear_udm_internal_database"
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__devtools__clear_udm_internal_database__label"
+        app:summary="@string/pref__devtools__clear_udm_internal_database__summary"
+        app:useSimpleSummaryProvider="true"/>
+
 </PreferenceScreen>

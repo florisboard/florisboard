@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import kotlinx.coroutines.*
 import org.json.JSONArray
+import java.util.*
 import kotlin.math.roundToLong
 
 /**
@@ -299,6 +300,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         keyboards.clear()
         inputEventDispatcher.keyEventReceiver = null
         inputEventDispatcher.close()
+        dictionaryManager.unloadUserDictionariesIfNecessary()
         cancel()
         layoutManager.onDestroy()
         instance = null
@@ -375,6 +377,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onWindowShown() {
+        launch(Dispatchers.Default) {
+            dictionaryManager.loadUserDictionariesIfNecessary()
+        }
         smartbarView?.updateSmartbarState()
     }
 
@@ -446,12 +451,16 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 activeDictionary?.let {
                     launch(Dispatchers.Default) {
                         val startTime = System.nanoTime()
-                        val suggestions = it.getTokenPredictions(
+                        val suggestions = queryUserDictionary(
+                            activeEditorInstance.cachedInput.currentWord.text,
+                            florisboard.activeSubtype.locale
+                        ).toMutableList()
+                        suggestions.addAll(it.getTokenPredictions(
                             precedingTokens = listOf(),
                             currentToken = Token(activeEditorInstance.cachedInput.currentWord.text),
                             maxSuggestionCount = 16,
                             allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive
-                        ).toStringList()
+                        ).toStringList())
                         if (BuildConfig.DEBUG) {
                             val elapsed = (System.nanoTime() - startTime) / 1000.0
                             flogInfo { "sugg fetch time: $elapsed us" }
@@ -470,6 +479,40 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     override fun onPrimaryClipChanged() {
         smartbarView?.onPrimaryClipChanged()
+    }
+
+    private fun queryUserDictionary(word: String, locale: Locale): Set<String> {
+        val florisDao = dictionaryManager.florisUserDictionaryDao()
+        val systemDao = dictionaryManager.systemUserDictionaryDao()
+        if (florisDao == null && systemDao == null) {
+            return setOf()
+        }
+        val retList = mutableSetOf<String>()
+        if (prefs.dictionary.enableFlorisUserDictionary) {
+            florisDao?.query(word, locale)?.let {
+                for (entry in it) {
+                    retList.add(entry.word)
+                }
+            }
+            florisDao?.queryShortcut(word, locale)?.let {
+                for (entry in it) {
+                    retList.add(entry.word)
+                }
+            }
+        }
+        if (prefs.dictionary.enableSystemUserDictionary) {
+            systemDao?.query(word, locale)?.let {
+                for (entry in it) {
+                    retList.add(entry.word)
+                }
+            }
+            systemDao?.queryShortcut(word, locale)?.let {
+                for (entry in it) {
+                    retList.add(entry.word)
+                }
+            }
+        }
+        return retList
     }
 
     /**
@@ -918,8 +961,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     fun fixCase(word: String): String {
         return when {
-            capsLock -> word.toUpperCase(florisboard.activeSubtype.locale)
-            caps -> word.capitalize(florisboard.activeSubtype.locale)
+            capsLock -> word.uppercase(florisboard.activeSubtype.locale)
+            caps -> word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(florisboard.activeSubtype.locale) else it.toString() }
             else -> word
         }
     }

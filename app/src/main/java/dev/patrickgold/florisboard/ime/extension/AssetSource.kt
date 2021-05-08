@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.extension
 
-import java.util.*
-
 /**
  * Sealed class which specifies where an asset comes from. There are 3 different types, all of which
  * require a different approach on how to access the actual asset.
@@ -50,7 +48,7 @@ sealed class AssetSource {
         private val externalRegex: Regex = """^external\\(([a-z]+\\.)*[a-z]+\\)\$""".toRegex()
 
         fun fromString(str: String): Result<AssetSource> {
-            return when (val string = str.toLowerCase(Locale.ENGLISH)) {
+            return when (val string = str.lowercase()) {
                 "assets" -> Result.success(Assets)
                 "internal" -> Result.success(Internal)
                 else -> {

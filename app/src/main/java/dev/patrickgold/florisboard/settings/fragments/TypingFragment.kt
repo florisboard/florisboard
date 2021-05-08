@@ -60,7 +60,7 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
             .beginTransaction()
             .replace(
                 binding.prefsFrame.id,
-                SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_typing)
+                TypingInnerFragment()
             )
             .commit()
 
