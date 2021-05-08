@@ -2,6 +2,7 @@ package dev.patrickgold.florisboard.ime.text.gestures
 
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.Key
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 
 /**
  * Inherit this to be able to handle gesture typing. Takes in raw pointer data, and
@@ -17,7 +18,7 @@ interface GlideTypingClassifier {
     /**
      * Change the layout of the gesture classifier.
      */
-    fun setLayout(keyViews: Sequence<Key>, subtype: Subtype)
+    fun setLayout(keyViews: List<TextKey>, subtype: Subtype)
 
     /**
      * Change the word data of the gesture classifier.
@@ -38,5 +39,4 @@ interface GlideTypingClassifier {
     fun getSuggestions(maxSuggestionCount: Int, gestureCompleted: Boolean): List<String>
 
     fun clear()
-
 }
