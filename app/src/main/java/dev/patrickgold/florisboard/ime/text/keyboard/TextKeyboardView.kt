@@ -707,6 +707,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
         hintedLabelPaintTextSize = hintedLabelPaint.textSize
     }
 
+    private val baselineTextSize = resources.getDimension(R.dimen.key_textSize)
     /**
      * Automatically sets the text size of [boxPaint] for given [text] so it fits within the given
      * bounds.
@@ -721,24 +722,37 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
      * @param multiplier The factor by which the resulting text size should be multiplied with.
      */
     private fun setTextSizeFor(boxPaint: Paint, boxWidth: Float, boxHeight: Float, text: String, multiplier: Double = 1.0): Float {
-        var stage = 1
-        var textSize = 0.0f
-        while (stage < 3) {
-            if (stage == 1) {
-                textSize += 10.0f
-            } else if (stage == 2) {
-                textSize -= 1.0f
+        var size = baselineTextSize
+        boxPaint.textSize = size
+        boxPaint.getTextBounds(text, 0, text.length, tempRect)
+        val w = tempRect.width().toFloat()
+        val h = tempRect.height().toFloat()
+        val diffW = abs(boxWidth - w)
+        val diffH = abs(boxHeight - h)
+        if (w < boxWidth && h < boxHeight) {
+            // Text fits, scale up on axis which has less room
+            size *= if (diffW < diffH) {
+                1.0f + diffW / w
+            } else {
+                1.0f + diffH / h
             }
-            boxPaint.textSize = textSize
-            boxPaint.getTextBounds(text, 0, text.length, tempRect)
-            val fits = tempRect.width() < boxWidth && tempRect.height() < boxHeight
-            if (stage == 1 && !fits || stage == 2 && fits) {
-                stage++
+        } else if (w >= boxWidth && h < boxHeight) {
+            // Text does not fit on x-axis
+            size *= (1.0f - diffW / w)
+        } else if (w < boxWidth && h >= boxHeight) {
+            // Text does not fit on y-axis
+            size *= (1.0f - diffH / h)
+        } else {
+            // Text does not fit at all, scale down on axis which has most overshoot
+            size *= if (diffW < diffH) {
+                1.0f - diffH / h
+            } else {
+                1.0f - diffW / w
             }
         }
-        textSize *= multiplier.toFloat()
-        boxPaint.textSize = textSize
-        return textSize
+        size *= multiplier.toFloat()
+        boxPaint.textSize = size
+        return size
     }
 
     override fun onThemeUpdated(theme: Theme) {
