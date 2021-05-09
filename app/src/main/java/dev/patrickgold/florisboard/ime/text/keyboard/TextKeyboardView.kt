@@ -751,8 +751,6 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             fontSizeMultiplier
         )
         hintedLabelPaintTextSize = hintedLabelPaint.textSize
-
-        glideTypingManager.updateDimensions(measuredWidth.toFloat(), measuredHeight.toFloat())
     }
 
     /**

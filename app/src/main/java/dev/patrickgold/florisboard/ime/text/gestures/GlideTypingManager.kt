@@ -16,9 +16,7 @@ import org.json.JSONObject
  * with [GlideTypingClassifier].
  */
 class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainScope() {
-
     private var glideTypingClassifier = StatisticalGlideTypingClassifier()
-    private var currentDimensions: Dimensions = Dimensions(0f, 0f)
     private lateinit var prefHelper: PrefHelper
 
     companion object {
@@ -81,13 +79,6 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
         }
     }
 
-    fun updateDimensions(newWidth: Float, newHeight: Float) {
-        currentDimensions.apply {
-            width = newWidth
-            height = newHeight
-        }
-    }
-
     /**
      * Asks gesture classifier for suggestions and then passes that on to the smartbar.
      * Also commits the most confident suggestion if [commit] is set. All happens on an async executor.
@@ -123,8 +114,3 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
         }
     }
 }
-
-data class Dimensions(
-    var width: Float,
-    var height: Float
-)
