@@ -23,19 +23,16 @@ import android.os.Handler
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.MotionEvent
-import android.widget.ScrollView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
 
 /**
  * View class for managing the rendering and the events of a single emoji keyboard key.
@@ -52,7 +49,7 @@ class EmojiKeyView(
 ) : androidx.appcompat.widget.AppCompatTextView(emojiKeyboardView.context), CoroutineScope by MainScope(),
     FlorisBoard.EventListener, ThemeManager.OnThemeUpdatedListener {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
-    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+    private val prefs get() = Preferences.default()
 
     private var isCancelled: Boolean = false
     private var osHandler: Handler? = null

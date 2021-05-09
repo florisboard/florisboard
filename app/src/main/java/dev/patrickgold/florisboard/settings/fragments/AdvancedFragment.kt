@@ -21,7 +21,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
 
@@ -32,7 +32,7 @@ class AdvancedFragment : PreferenceFragmentCompat() {
 
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         return when (preference?.key) {
-            PrefHelper.Devtools.CLEAR_UDM_INTERNAL_DATABASE -> {
+            Preferences.Devtools.CLEAR_UDM_INTERNAL_DATABASE -> {
                 AlertDialog.Builder(requireContext()).apply {
                     setTitle(R.string.assets__action__delete_confirm_title)
                     setMessage(String.format(resources.getString(R.string.assets__action__delete_confirm_message), FlorisUserDictionaryDatabase.DB_FILE_NAME))

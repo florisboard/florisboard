@@ -31,7 +31,7 @@ import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsActivityBinding
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.settings.fragments.*
@@ -52,11 +52,10 @@ class SettingsMainActivity : AppCompatActivity(),
 
     lateinit var binding: SettingsActivityBinding
     lateinit var layoutManager: LayoutManager
-    private lateinit var prefs: PrefHelper
+    private val prefs get() = Preferences.default()
     val subtypeManager: SubtypeManager get() = SubtypeManager.default()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        prefs = PrefHelper.getDefaultInstance(this)
         prefs.initDefaultPreferences()
         prefs.sync()
         layoutManager = LayoutManager()

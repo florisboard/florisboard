@@ -34,10 +34,7 @@ abstract class FlorisActivity<V : ViewBinding> : AppCompatActivity(), CoroutineS
     private var _binding: V? = null
     protected val binding: V
         get() = _binding!!
-
-    private var _prefs: PrefHelper? = null
-    protected val prefs: PrefHelper
-        get() = _prefs!!
+    protected val prefs: Preferences get() = Preferences.default()
 
     private var errorDialog: AlertDialog? = null
     private var errorSnackbar: Snackbar? = null
@@ -48,7 +45,6 @@ abstract class FlorisActivity<V : ViewBinding> : AppCompatActivity(), CoroutineS
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _prefs = PrefHelper.getDefaultInstance(applicationContext)
         onCreateBinding().let {
             _binding = it
             setContentView(it.root)
@@ -59,7 +55,6 @@ abstract class FlorisActivity<V : ViewBinding> : AppCompatActivity(), CoroutineS
         super.onDestroy()
         cancel()
         _binding = null
-        _prefs = null
         errorDialog?.dismiss()
         errorDialog = null
         errorSnackbar?.dismiss()

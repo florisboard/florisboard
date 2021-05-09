@@ -1164,7 +1164,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
     }
 
     private fun initGlideClassifier(keyboard: TextKeyboard) {
-        if (isSmartbarKeyboardView || keyboard.mode != KeyboardMode.CHARACTERS) {
+        if (isSmartbarKeyboardView || isPreviewMode || keyboard.mode != KeyboardMode.CHARACTERS) {
             return
         }
         post {

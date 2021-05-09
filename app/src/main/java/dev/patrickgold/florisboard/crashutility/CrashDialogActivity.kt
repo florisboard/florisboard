@@ -26,13 +26,13 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.CrashDialogBinding
 import dev.patrickgold.florisboard.debug.*
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 
 class CrashDialogActivity : AppCompatActivity() {
     private lateinit var binding: CrashDialogBinding
     private var stacktraces: List<CrashUtility.Stacktrace> = listOf()
     private var errorReport: StringBuilder = StringBuilder()
-    private var prefs: PrefHelper? = null
+    private var prefs: Preferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +42,7 @@ class CrashDialogActivity : AppCompatActivity() {
         // We secure the PrefHelper usage here because the PrefHelper could potentially be the
         // source of the crash, thus making the crash dialog unusable if not wrapped.
         try {
-            prefs = PrefHelper.getDefaultInstance(this)
+            prefs = Preferences.default()
         } catch (_: Exception) {
         }
 
