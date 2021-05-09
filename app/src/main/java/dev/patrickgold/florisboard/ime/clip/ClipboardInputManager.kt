@@ -49,23 +49,21 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
      */
     @SuppressLint("ClickableViewAccessibility")
     override fun onRegisterInputView(inputView: InputView) {
-        launch(Dispatchers.Default) {
-            inputView.findViewById<ImageButton>(R.id.back_to_keyboard_button)
-                .setOnTouchListener { view, event -> onButtonPressEvent(view, event) }
+        inputView.findViewById<ImageButton>(R.id.back_to_keyboard_button)
+            .setOnTouchListener { view, event -> onButtonPressEvent(view, event) }
 
-            inputView.findViewById<ImageButton>(R.id.clear_clipboard_history)
-                .setOnTouchListener { view, event -> onButtonPressEvent(view, event) }
+        inputView.findViewById<ImageButton>(R.id.clear_clipboard_history)
+            .setOnTouchListener { view, event -> onButtonPressEvent(view, event) }
 
-            recyclerView = inputView.findViewById(R.id.clipboard_history_items)
+        recyclerView = inputView.findViewById(R.id.clipboard_history_items)
 
-            if (BuildConfig.DEBUG && adapter == null) {
-                error("initClipboard() not called")
-            }
-
-            recyclerView!!.adapter = adapter
-            val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            recyclerView!!.layoutManager = manager
+        if (BuildConfig.DEBUG && adapter == null) {
+            error("initClipboard() not called")
         }
+
+        recyclerView!!.adapter = adapter
+        val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView!!.layoutManager = manager
     }
 
     /**
@@ -79,7 +77,7 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
     /**
      * Returns a reference to the [ClipboardHistoryView]
      */
-    fun getClipboardHistoryView(): ClipboardHistoryView{
+    fun getClipboardHistoryView(): ClipboardHistoryView {
         return FlorisBoard.getInstance().inputView?.mainViewFlipper?.getChildAt(2) as ClipboardHistoryView
     }
 
