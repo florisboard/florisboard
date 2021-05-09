@@ -278,6 +278,10 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostrar icono de la aplicación en el launcher</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forzar modo privado</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Desactivará cualquier característica que tenga que trabajar temporalmente con sus datos de entrada</string>
+    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Habilitar herramienta de desarrollador</string>
+    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Herramientas diseñadas específicamente para depurar y detectar problemas</string>
+    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Mostrar estadísticas de memoria</string>
+    <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Sobreponer el uso de la memoria y el tamaño maximo en la esquina superior derecha</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Acerca de</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icono de la aplicación de FlorisBoard</string>
@@ -334,7 +338,9 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">Informe de errores de FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Lamentamos los inconvenientes, pero FlorisBoard se ha cerrado inesperadamente por un error.</string>
     <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Si deseas reportar este fallo, primero comprueba si ya ha sido reportado en el Issue Tracker en GitHub.\nSi no, copie el log del error generado y abre un Issue. Usa la plantilla \"%s\" y rellenala con tu descripción, los pasos para reproducirlo, y pega el log generado al final. Esto ayudará a mejorar FlorisBoard y hacerlo más estable para todo el mundo. ¡Gracias!</string>
-    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copiar al portapapeles</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copiar al portapapeles del sistema</string>
+    <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Copiado al portapapeles del sistema</string>
+    <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">No se puede copiar al portapapeles del sistema: Instancia del administrador de portapapeles no encontrada</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Abrir issue tracker (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Cerrar</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Informes de errores de FlorisBoard</string>

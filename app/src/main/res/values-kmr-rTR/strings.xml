@@ -327,7 +327,6 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Sazkirin qediya!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Raporta xeletiya FlorisBoard</string>
-    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Ji ber bibe panelê</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Bigire</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Raportên xeletiya FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorîsBoardê dest ji kar berda…</string>

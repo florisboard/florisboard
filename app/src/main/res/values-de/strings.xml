@@ -278,6 +278,7 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zeige die App in der Übersicht</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Privaten Modus erzwingen</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Wird alle Funktionen deaktivieren, die vorübergehend mit deinen Eingabedaten arbeiten</string>
+    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Entwickler-Werkzeuge ein/aus</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Über</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">App-Icon von FlorisBoard</string>
@@ -334,7 +335,8 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard Fehlermeldung</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Entschuldigung für die Unannehmlichkeiten, aber FlorisBoard ist aufgrund eines unerwarteten Fehlers abgestürzt.</string>
     <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Wenn sie diesen Fehler melden möchten, checken sie als erstes die Issue Tracker bei Github, ob der Fehler noch nicht gemeldet wurde. \nlf Wenn nicht, dann kopieren sie den generierten Fehler-log und erstellen sie einen neuen Issue. Benutzen sie diese \"%s\" Vorlage und füllen sie die Beschreibung aus, die Schritte zur Reproduzieren und fügen sie die generierte Fehler-log am Ende ein. Dies hilft FlorisBoard besser und noch Stabiler zu machen für alle. Dankeschön!</string>
-    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">In die Zwischenablage kopieren</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">In die System-Zwischenablage kopieren</string>
+    <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">In die System-Zwischenablage kopiert</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Öffne \"Issue Tracker\" (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Schließen</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard Fehlermeldungen</string>

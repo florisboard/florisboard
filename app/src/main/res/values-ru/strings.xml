@@ -210,6 +210,15 @@
     <string name="pref__smartbar__enabled__label" comment="Preference title">Активировать умную панель</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Будет показано над клавиатурой</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
+    <string name="pref__dictionary__title" comment="Preference group title">Словарь</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Использовать системный словарь пользователя</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Предлагать слова, находящиеся в системном словаре пользователя</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Управление системным словарём пользователя</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Добавление, просмотр и удаление записей в системном пользовательском словаре</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Использовать внутренний словарь пользователя</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Предлагать слова, находящиеся во внутреннем словаре пользователя</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Управление внутренним словарём пользователя</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Добавление, просмотр и удаление записей во внутреннем пользовательском словаре</string>
     <string name="pref__correction__title" comment="Preference group title">Исправления</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Заглавные автоматически</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Использовать заглавные буквы в зависимости от текущего контекста ввода</string>
@@ -217,6 +226,26 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps Lock будет оставаться при переходе на другое текстовое поле</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Замена двойного пробела</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">При двойном нажатии на пробел вставляется точка, за которой следует пробел</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Внутренний словарь пользователя</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Системный словарь пользователя</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Частота: %d</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Частота: %d | Сокращение: %s</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Для всех языков</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Открыть системный менеджер</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Словарь пользователя успешно импортирован!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Словарь пользователя успешно экспортирован!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Добавить слово</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Изменить слово</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Слово</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Введите слово!</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Слово содержит недопустимые символы.</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Частота (между %d и %d)</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Введите значение частоты!</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Введите корректное число в указанных пределах!</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Сокращение (необязательно)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Сокращение содержит недопустимые символы.</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Код языка (необязательно)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Указанный код языка не соответствует ожидаемому синтаксису. Код должен быть либо только языковым (например, ru), либо языковым с указанием страны (например, ru_RU), либо языковым с указанием страны и письменности (например, ru_RU-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Жесты и непрерывный ввод</string>
     <string name="pref__glide__title" comment="Preference group title">Непрерывный ввод</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Включить непрерывный ввод</string>
@@ -278,6 +307,12 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Показывать значок приложения на рабочем столе</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Принудительный приватный режим</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Отключит все функции, которые должны временно работать с вашими входными данными.</string>
+    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Включить инструменты разработчика</string>
+    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Инструменты, специально разработанные для отладки и устранения ошибок</string>
+    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Показывать статистику выделения памяти</string>
+    <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Показывать значения используемой выделенной памяти и максимальный использованный объём в правом верхнем углу</string>
+    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Очистить внутренний словарь пользователя</string>
+    <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Удаление всех слов из базы внутреннего пользовательского словаря</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">О приложении</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Значок приложения FlorisBoard</string>
@@ -295,6 +330,7 @@
     <string name="assets__file__name">Название</string>
     <string name="assets__file__source">Источник</string>
     <string name="assets__action__add">Добавить</string>
+    <string name="assets__action__apply">Применить</string>
     <string name="assets__action__cancel">Отмена</string>
     <string name="assets__action__cancel_confirm_title">Подтвердите отмену</string>
     <string name="assets__action__cancel_confirm_message">Отменить любые несохранённые изменения? Это действие нельзя отменить после выполнения.</string>
@@ -336,7 +372,9 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">Сообщение об ошибке FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Извините за неудобства, но в FlorisBoard произошёл сбой из-за непредвиденной ошибки.</string>
     <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Если хотите сообщить об этой ошибке, сначала проверьте трекер проблем на GitHub, не сообщалось ли уже о вашем сбое.\nЕсли нет, скопируйте сгенерированный журнал ошибки и откройте новую проблему. Используйте шаблон \"%s\" и заполните описание, шаги для воспроизведения ошибки и вставьте сгенерированный журнал в конце. Это поможет сделать FlorisBoard лучше и стабильнее для всех. Спасибо!</string>
-    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Копировать в буфер обмена</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Копировать в системный буфер обмена</string>
+    <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Скопировано в системный буфер обмена</string>
+    <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Невозможно скопировать в системный буфер обмена: компонент менеджера буфера обмена не найден</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Открыть трекер проблем (GitHub)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Закрыть</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Отчёты об ошибках FlorisBoard</string>

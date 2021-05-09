@@ -180,7 +180,6 @@
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Omogući FlorisBoard</string>
     <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Promijeni tastaturu</string>
     <!-- Crash Dialog strings -->
-    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopiraj u međuspremnik</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zatvori</string>
     <!-- clipboard strings -->
     <!-- glide strings -->

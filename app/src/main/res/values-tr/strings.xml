@@ -218,10 +218,10 @@
     <string name="pref__correction__double_space_period__label" comment="Preference title">Çift boşlukta nokta</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Boşluk tuşuna 2 defa basmak bir nokta ve ardından bir boşluk koyar</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Jestler &amp; Kaydırarak yazma</string>
-    <string name="pref__glide__title" comment="Preference group title">Süzülerek Yazma</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">Süzülerek yazmayı etkinleştir</string>
+    <string name="pref__glide__title" comment="Preference group title">Kaydırarak Yazma</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Kaydırarak yazmayı etkinleştir</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Sözcüğün harflerinin üzerinde parmağını kaydırarak o sözcüğü yaz</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">Süzülme kuyruğunu göster</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Kaydırma kuyruğunu göster</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Her sözcükten sonra kaybolacaktır</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Genel kaydırma hareketleri</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Boşluk tuşu hareketleri</string>
@@ -278,6 +278,10 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Uygulama simgesini başlatıcıda göster</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Gizli modu zorla</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Yazma verilerinizle geçici olarak çalışması gereken tüm özellikleri kapatacaktır</string>
+    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Geliştirici araçlarını etkinleştir</string>
+    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Hata ayıklama ve sorun giderme için özel tasarlanmış araçlar</string>
+    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Küme bellek istatistiklerini göster</string>
+    <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Küme bellek kullanımını ve en fazla boyutunu sağ üst köşede gösterir</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Hakkında</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard’un uygulama simgesi</string>
@@ -334,7 +338,9 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard hata raporu</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Üzgünüz, ancak FlorisBoard bilinmeyen bir hatadan dolayı çöktü.</string>
     <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Eğer bu hatayı bildirmek isterseniz, ilk önce GitHub üzerinden aynı hata daha önce bildirilmiş mi diye kontrol edin.\nEğer bildirilmediyse, oluşturulan hata raporunu kopyalayın ve yeni bir hata bildirimi oluşturun. \"%s\" şablonunu kullanarak açıklamayı, hangi adımların izlendiğini yazın ve en sona oluşturulan hata raporunu yapıştırın. Bu herkes için FlorisBoard\'u daha iyi ve sorunsuz yapmamıza yardımcı olacak. Teşekkürler!</string>
-    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Panoya kopyala</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Sistem panosuna kopyala</string>
+    <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Sistem panosuna kopyalandı</string>
+    <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Sistem panosuna kopyalanamıyor: Pano yöneticisi bulunamadı</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Hata takibini aç (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Kapat</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard hata raporları</string>

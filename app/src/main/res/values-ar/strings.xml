@@ -52,7 +52,7 @@
     <string name="settings__home__title" comment="Title of the Home fragment">مرحبا بكم في %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">لم يتم تمكين FlorisBoard في النظام وبالتالي لن يكون متاحًا كطريقة إدخال في منتقي الإدخال. انقر هنا لحل هذه المشكلة.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">لم يتم اختيار FlorisBoard كطريقة الإدخال الافتراضية. انقر هنا لحل هذه المشكلة.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">شكرا على تجربة FlorisBoard! هذا المشروع لا يزال في المرحلة ألفا وبالتالي يفتقد الميزات. إذا وجدت أي أخطاء أو تريد تقديم اقتراح ، فالرجاء مراجعة المخزن على GitHub وطرح مشكلة. هذا يساعد في جعل FlorisBoard أفضل. شكرا جزيلا!</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">شكرا على تجربة FlorisBoard! هذا المشروع لا يزال في قيد التطوير وبالتالي يفتقد بعض الميزات. إذا وجدت أي أخطاء أو تريد تقديم اقتراح ، فالرجاء مراجعة المشروع على GitHub وطرح مشكلتك. هذا يساعد في جعل FlorisBoard أفضل. شكرا جزيلا!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">اللغات وتخطيطات لوحة المفاتيح</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">يبدو أنك لم تقم بإختيار أية أنواع فرعية. كبديل، سيتم استخدام النوع الفرعي English / QWERTY!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">إضافة</string>
@@ -210,6 +210,15 @@
     <string name="pref__smartbar__enabled__label" comment="Preference title">تفعيل الشريط الذكي</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">سوف يظهر أعلى لوحة المفاتيح</string>
     <string name="pref__suggestion__title" comment="Preference group title">الإقتراحات</string>
+    <string name="pref__dictionary__title" comment="Preference group title">القاموس</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">تفعيل قاموس مستخدم النظام</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">اقترح كلمات مخزنة في قاموس مستخدم النظام</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">إدارة قاموس مستخدم النظام</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">إضافة وعرض وإزالة الإدخالات لقاموس مستخدم النظام</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">تفعيل القاموس الداخلي للمستخدم</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">اقترح كلمات مخزنة في القاموس الداخلي للمستخدم</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">إدارة قاموس الداخلي للمستخدم</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">إضافة وعرض وإزالة الإدخالات لقاموس المستخدم الداخلي</string>
     <string name="pref__correction__title" comment="Preference group title">الإصلاحات</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">استخدام الأحرف الكبيرة تلقائيًا</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">استخدام الأحرف الكبيرة في الكلمات على حسب سياق نص الإدخال الحالي</string>
@@ -217,6 +226,26 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">يضل وضع الأحرف الكبيرة قيد التشغيل عند الإنتقال إلى حقل نصي آخر</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">نقطة المسافة المزدوجة</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">الضغط مرتين على مفتاح المسافة يضيف نقطة متبوعة بمسافة</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">القاموس الداخلي للمستخدم</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">قاموس مستخدم النظام</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">التكرار: %d</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">التردد: %d | الإختصار: %s</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">لجميع اللغات</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">افتح واجهة نظام ادارة المستخدم</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">تم استيراد قاموس المستخدم بنجاح!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">تم تصدير قاموس المستخدم بنجاح!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">أضف كلمة إدخال</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">تعديل كلمة إدخال</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">كلمة</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">الرجاء إدخال كلمة!</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">تحتوي هذه الكلمة على أحرف غير صالحة.</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">التكرار (من %d الى %d)</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">الرجاء ادخال قيمة معدل التكرار!</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">الرجاء إدخال رقم صحيح ضمن الحدود المذكورة!</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">الاختصار (اختياري)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">يحتوي هذه الاختصار على أحرف غير صالحة.</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">رمز اللغة(اختياري)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">رمز اللغة هذا لا يتوافق مع بناء الجملة المتوقع. يجب أن يكون الرمز إما لغة فقط (مثل en) أو لغة وبلد (مثل en_US) أو لغة وبلد ونص (مثل en_US-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">الإيماءات و الكتابة بالتمرير</string>
     <string name="pref__glide__title" comment="Preference group title">الكتابة بالتمرير</string>
     <string name="pref__glide__enabled__label" comment="Preference title">تفعيل الكتابة بالتمرير</string>
@@ -278,6 +307,12 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">إظهار أيقونة البرنامج في صفحة الهاتف الرئيسية</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">فرض الوضع الخاص</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">سيتم تعطيل أي ميزات تعمل مؤقتًا باستعمال بيانات الإدخال الخاصة بك</string>
+    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">تفعيل أدوات المطور</string>
+    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">أدوات مصممة خصيصًا لتصحيح الأخطاء واستكشاف العلل وإصلاحها</string>
+    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">إظهار إحصائيات كومة الذاكرة</string>
+    <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">يعرض طبقة تراكبية في الزاوية العلوية اليمنى لاستخدام ذاكرة الكومة والحجم الأقصى لها</string>
+    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">مسح قاعدة بيانات القاموس الداخلي للمستخدم</string>
+    <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">يمسح كل الكلمات من جدول قاعدة بيانات القاموس</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">حول التطبيق</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">أيقونة التطبيق FlorisBoard</string>
@@ -297,6 +332,7 @@
     <string name="assets__file__name">الاسم</string>
     <string name="assets__file__source">المصدر</string>
     <string name="assets__action__add">إضافة</string>
+    <string name="assets__action__apply">تطبيق</string>
     <string name="assets__action__cancel">إلغاء</string>
     <string name="assets__action__cancel_confirm_title">تأكيد الإلغاء</string>
     <string name="assets__action__cancel_confirm_message">هل أنت متأكد أنك تريد تجاهل أي تغييرات غير محفوظة؟ لا يمكن التراجع عن هذا الإجراء بمجرد تنفيذه.</string>
@@ -338,7 +374,9 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">تقرير حول خطأ في FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">نأسف للإزعاج ، ولكن FlorisBoard تعطل بسبب خطأ غير متوقع.</string>
     <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">إذا كنت ترغب في الإبلاغ عن هذا الخطأ ، فتحقق أولاً من أداة تعقب المشكلات على GitHub إذا لم يتم الإبلاغ عن العطل بالفعل. \n إذا لم يتم الإبلاغ عن هذا الخطأ ، فقم بنسخ سجل التعطل الذي تم إنشاؤه وافتح مشكلة جديدة. استخدم القالب واملأ الوصف وخطوات إعادة إنتاج ولصق سجل العطل الذي تم إنشاؤه في النهاية. هذا يساعد\"%s\" في جعل FlorisBoard أفضل وأكثر استقرارًا للجميع. شكرا لك!</string>
-    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">نسخ إلى الحافظة</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">نسخ الى حافظة النظام</string>
+    <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">تم النسخ الى حافظة النظام</string>
+    <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">لا يمكن النسخ إلى حافظة النظام: لم يتم العثور على جلسة مدير الحافظة</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">فتح نموذج تقرير الخطأ (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">إغلاق</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">تقارير حول خطأ في FlorisBoard</string>
