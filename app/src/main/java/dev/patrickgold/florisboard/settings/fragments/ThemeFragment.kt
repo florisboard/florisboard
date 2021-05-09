@@ -22,7 +22,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.settings.components.ThemeSelectorPreference
 
@@ -34,19 +34,18 @@ class ThemeFragment : PreferenceFragmentCompat(),
     private var nightThemeRef: ThemeSelectorPreference? = null
     private var sunrisePref: Preference? = null
     private var sunsetPref: Preference? = null
-    private lateinit var prefs: PrefHelper
+    private val prefs get() = Preferences.default()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.prefs_theme)
 
-        prefs = PrefHelper.getDefaultInstance(requireContext())
         dayThemeGroup = findPreference("theme__day_group")
         nightThemeGroup = findPreference("theme__night_group")
-        dayThemeRef = findPreference(PrefHelper.Theme.DAY_THEME_REF)
-        nightThemeRef = findPreference(PrefHelper.Theme.NIGHT_THEME_REF)
-        sunrisePref = findPreference(PrefHelper.Theme.SUNRISE_TIME)
-        sunsetPref = findPreference(PrefHelper.Theme.SUNSET_TIME)
-        onSharedPreferenceChanged(prefs.shared, PrefHelper.Theme.MODE)
+        dayThemeRef = findPreference(Preferences.Theme.DAY_THEME_REF)
+        nightThemeRef = findPreference(Preferences.Theme.NIGHT_THEME_REF)
+        sunrisePref = findPreference(Preferences.Theme.SUNRISE_TIME)
+        sunsetPref = findPreference(Preferences.Theme.SUNSET_TIME)
+        onSharedPreferenceChanged(prefs.shared, Preferences.Theme.MODE)
     }
 
     private fun refreshUi() {
@@ -87,7 +86,7 @@ class ThemeFragment : PreferenceFragmentCompat(),
     override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
         prefs.sync()
         key ?: return
-        if (key == PrefHelper.Theme.MODE) {
+        if (key == Preferences.Theme.MODE) {
             refreshUi()
         }
     }

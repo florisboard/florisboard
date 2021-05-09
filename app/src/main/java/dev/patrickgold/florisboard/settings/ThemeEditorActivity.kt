@@ -32,10 +32,8 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ThemeEditorActivityBinding
 import dev.patrickgold.florisboard.databinding.ThemeEditorGroupViewBinding
 import dev.patrickgold.florisboard.databinding.ThemeEditorMetaDialogBinding
-import dev.patrickgold.florisboard.ime.core.PrefHelper
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.AssetRef
-import dev.patrickgold.florisboard.ime.text.key.CurrencySet
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
@@ -54,7 +52,6 @@ class ThemeEditorActivity : AppCompatActivity() {
     private lateinit var binding: ThemeEditorActivityBinding
     private val mainScope = MainScope()
     private lateinit var layoutManager: LayoutManager
-    private lateinit var prefs: PrefHelper
     private val themeManager: ThemeManager = ThemeManager.default()
 
     private var editedTheme: Theme = Theme.empty()
@@ -79,8 +76,6 @@ class ThemeEditorActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        prefs = PrefHelper.getDefaultInstance(this)
-
         super.onCreate(savedInstanceState)
         binding = ThemeEditorActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -322,7 +317,7 @@ class ThemeEditorActivity : AppCompatActivity() {
         }
         mainScope.launch {
             binding.keyboardPreview.setComputedKeyboard(layoutManager.computeKeyboardAsync(
-                KeyboardMode.CHARACTERS, Subtype.DEFAULT, prefs
+                KeyboardMode.CHARACTERS, Subtype.DEFAULT
             ).await())
             binding.keyboardPreview.onThemeUpdated(editedTheme)
         }

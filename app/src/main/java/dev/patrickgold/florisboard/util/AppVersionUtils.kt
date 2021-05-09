@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.util
 
 import android.content.Context
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 
 object AppVersionUtils {
     fun getRawVersionName(context: Context): String {
@@ -28,7 +28,7 @@ object AppVersionUtils {
         }
     }
 
-    fun shouldShowChangelog(context: Context, prefs: PrefHelper): Boolean {
+    fun shouldShowChangelog(context: Context, prefs: Preferences): Boolean {
         val installVersion =
             VersionName.fromString(prefs.internal.versionOnInstall) ?: VersionName.DEFAULT
         val lastChangelogVersion =
@@ -39,14 +39,14 @@ object AppVersionUtils {
         return lastChangelogVersion < currentVersion && installVersion != currentVersion
     }
 
-    fun updateVersionOnInstallAndLastUse(context: Context, prefs: PrefHelper) {
+    fun updateVersionOnInstallAndLastUse(context: Context, prefs: Preferences) {
         if (prefs.internal.versionOnInstall == VersionName.DEFAULT_RAW) {
             prefs.internal.versionOnInstall = getRawVersionName(context)
         }
         prefs.internal.versionLastUse = getRawVersionName(context)
     }
 
-    fun updateVersionLastChangelog(context: Context, prefs: PrefHelper) {
+    fun updateVersionLastChangelog(context: Context, prefs: Preferences) {
         prefs.internal.versionLastChangelog = getRawVersionName(context)
     }
 }

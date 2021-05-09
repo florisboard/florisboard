@@ -26,7 +26,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SmartbarBinding
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
@@ -46,8 +46,8 @@ import kotlin.math.roundToInt
  * needs to decide when a specific feature component is shown.
  */
 class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
-    private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
-    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+    private val florisboard = FlorisBoard.getInstanceOrNull()
+    private val prefs get() = Preferences.default()
     private val themeManager = ThemeManager.default()
     private var eventListener: WeakReference<EventListener?> = WeakReference(null)
     private val mainScope = MainScope()
@@ -105,8 +105,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
             florisboard?.let {
                 val layout = florisboard.textInputManager.layoutManager.computeKeyboardAsync(
                     KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW,
-                    Subtype.DEFAULT,
-                    prefs
+                    Subtype.DEFAULT
                 ).await()
                 withContext(Dispatchers.Main) {
                     binding.clipboardCursorRow.setComputingEvaluator(florisboard.textInputManager.evaluator)
@@ -120,8 +119,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
             florisboard?.let {
                 val layout = florisboard.textInputManager.layoutManager.computeKeyboardAsync(
                     KeyboardMode.SMARTBAR_NUMBER_ROW,
-                    Subtype.DEFAULT,
-                    prefs
+                    Subtype.DEFAULT
                 ).await()
                 withContext(Dispatchers.Main) {
                     binding.numberRow.setComputingEvaluator(florisboard.textInputManager.evaluator)

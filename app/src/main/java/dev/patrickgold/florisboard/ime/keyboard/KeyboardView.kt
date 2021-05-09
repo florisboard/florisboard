@@ -22,7 +22,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
@@ -30,12 +30,9 @@ import kotlinx.coroutines.channels.sendBlocking
 
 @Suppress("MemberVisibilityCanBePrivate")
 abstract class KeyboardView : View, ThemeManager.OnThemeUpdatedListener {
-    protected val florisboard: FlorisBoard?
-        get() = FlorisBoard.getInstanceOrNull()
-    protected val prefs: PrefHelper
-        get() = PrefHelper.getDefaultInstance(context)
-    protected val themeManager: ThemeManager?
-        get() = ThemeManager.defaultOrNull()
+    protected val florisboard get() = FlorisBoard.getInstanceOrNull()
+    protected val prefs get() = Preferences.default()
+    protected val themeManager get() = ThemeManager.defaultOrNull()
 
     var isMeasured: Boolean = false
         private set

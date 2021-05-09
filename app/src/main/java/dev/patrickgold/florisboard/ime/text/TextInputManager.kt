@@ -60,8 +60,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     FlorisBoard.EventListener, SmartbarView.EventListener {
 
     var isGlidePostEffect: Boolean = false
-    private val florisboard = FlorisBoard.getInstance()
-    private val prefs: PrefHelper get() = florisboard.prefs
+    private val florisboard get() = FlorisBoard.getInstance()
+    private val prefs get() = Preferences.default()
     val symbolsWithSpaceAfter: List<String>
     private val activeEditorInstance: EditorInstance
         get() = florisboard.activeEditorInstance
@@ -227,7 +227,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
         for (subtype in subtypes) {
             for (mode in KeyboardMode.values()) {
-                keyboards.set(mode, subtype, keyboard = layoutManager.computeKeyboardAsync(mode, subtype, prefs))
+                keyboards.set(mode, subtype, keyboard = layoutManager.computeKeyboardAsync(mode, subtype))
             }
         }
     }
@@ -409,8 +409,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         val activeKeyboard = keyboards.getOrElseAsync(mode, subtype) {
             layoutManager.computeKeyboardAsync(
                 keyboardMode = mode,
-                subtype = subtype,
-                prefs = prefs
+                subtype = subtype
             ).await()
         }.await()
         withContext(Dispatchers.Main) {
@@ -427,7 +426,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     }
                 }
             }
-            if (PrefHelper.getDefaultInstance(florisboard).glide.enabled) {
+            if (prefs.glide.enabled) {
                 GlideTypingManager.getInstance().setWordData(newSubtype)
             }
             setActiveKeyboard(getActiveKeyboardMode(), newSubtype)

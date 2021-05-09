@@ -37,7 +37,7 @@ import java.lang.ref.WeakReference
 /**
  * Helper class for an organized access to the shared preferences.
  */
-class PrefHelper(
+class Preferences(
     context: Context,
     val shared: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 ) {
@@ -130,14 +130,21 @@ class PrefHelper(
 
     companion object {
         private val OLD_SUBTYPES_REGEX = """^([\-0-9]+/[\-a-zA-Z0-9]+/[a-zA-Z_]+[;]*)+${'$'}""".toRegex()
-        private var defaultInstance: PrefHelper? = null
+        private var defaultInstance: Preferences? = null
 
         @Synchronized
-        fun getDefaultInstance(context: Context): PrefHelper {
-            if (defaultInstance == null) {
-                defaultInstance = PrefHelper(context)
-            }
-            return defaultInstance!!
+        fun initDefault(context: Context): Preferences {
+            val instance = Preferences(context.applicationContext)
+            defaultInstance = instance
+            return instance
+        }
+
+        fun default(): Preferences {
+            return defaultInstance
+                ?: throw UninitializedPropertyAccessException("""
+                    Default preferences not initialized! Make sure to call initDefault()
+                    before accessing the default preferences.
+                """.trimIndent())
         }
     }
 
@@ -185,7 +192,7 @@ class PrefHelper(
     /**
      * Wrapper class for advanced preferences.
      */
-    class Advanced(private val prefHelper: PrefHelper) {
+    class Advanced(private val prefs: Preferences) {
         companion object {
             const val SETTINGS_THEME =          "advanced__settings_theme"
             const val SHOW_APP_ICON =           "advanced__show_app_icon"
@@ -193,20 +200,20 @@ class PrefHelper(
         }
 
         var settingsTheme: String = ""
-            get() = prefHelper.getPref(SETTINGS_THEME, "auto")
+            get() = prefs.getPref(SETTINGS_THEME, "auto")
             private set
         var showAppIcon: Boolean = false
-            get() = prefHelper.getPref(SHOW_APP_ICON, true)
+            get() = prefs.getPref(SHOW_APP_ICON, true)
             private set
         var forcePrivateMode: Boolean
-            get() =  prefHelper.getPref(FORCE_PRIVATE_MODE, false)
-            set(v) = prefHelper.setPref(FORCE_PRIVATE_MODE, v)
+            get() =  prefs.getPref(FORCE_PRIVATE_MODE, false)
+            set(v) = prefs.setPref(FORCE_PRIVATE_MODE, v)
     }
 
     /**
      * Wrapper class for correction preferences.
      */
-    class Correction(private val prefHelper: PrefHelper) {
+    class Correction(private val prefs: Preferences) {
         companion object {
             const val AUTO_CAPITALIZATION =         "correction__auto_capitalization"
             const val DOUBLE_SPACE_PERIOD =         "correction__double_space_period"
@@ -214,20 +221,20 @@ class PrefHelper(
         }
 
         var autoCapitalization: Boolean
-            get() =  prefHelper.getPref(AUTO_CAPITALIZATION, true)
-            set(v) = prefHelper.setPref(AUTO_CAPITALIZATION, v)
+            get() =  prefs.getPref(AUTO_CAPITALIZATION, true)
+            set(v) = prefs.setPref(AUTO_CAPITALIZATION, v)
         var doubleSpacePeriod: Boolean
-            get() =  prefHelper.getPref(DOUBLE_SPACE_PERIOD, true)
-            set(v) = prefHelper.setPref(DOUBLE_SPACE_PERIOD, v)
+            get() =  prefs.getPref(DOUBLE_SPACE_PERIOD, true)
+            set(v) = prefs.setPref(DOUBLE_SPACE_PERIOD, v)
         var rememberCapsLockState: Boolean
-            get() =  prefHelper.getPref(REMEMBER_CAPS_LOCK_STATE, false)
-            set(v) = prefHelper.setPref(REMEMBER_CAPS_LOCK_STATE, v)
+            get() =  prefs.getPref(REMEMBER_CAPS_LOCK_STATE, false)
+            set(v) = prefs.setPref(REMEMBER_CAPS_LOCK_STATE, v)
     }
 
     /**
      * Wrapper class for devtools preferences.
      */
-    class Devtools(private val prefHelper: PrefHelper) {
+    class Devtools(private val prefs: Preferences) {
         companion object {
             const val ENABLED =                     "devtools__enabled"
             const val SHOW_HEAP_MEMORY_STATS =      "devtools__show_heap_memory_stats"
@@ -235,17 +242,17 @@ class PrefHelper(
         }
 
         var enabled: Boolean
-            get() =  prefHelper.getPref(ENABLED, false)
-            set(v) = prefHelper.setPref(ENABLED, v)
+            get() =  prefs.getPref(ENABLED, false)
+            set(v) = prefs.setPref(ENABLED, v)
         var showHeapMemoryStats: Boolean
-            get() =  prefHelper.getPref(SHOW_HEAP_MEMORY_STATS, false)
-            set(v) = prefHelper.setPref(SHOW_HEAP_MEMORY_STATS, v)
+            get() =  prefs.getPref(SHOW_HEAP_MEMORY_STATS, false)
+            set(v) = prefs.setPref(SHOW_HEAP_MEMORY_STATS, v)
     }
 
     /**
      * Wrapper class for dictionary preferences.
      */
-    class Dictionary(private val prefHelper: PrefHelper) {
+    class Dictionary(private val prefs: Preferences) {
         companion object {
             const val ENABLE_SYSTEM_USER_DICTIONARY =   "suggestion__enable_system_user_dictionary"
             const val MANAGE_SYSTEM_USER_DICTIONARY =   "suggestion__manage_system_user_dictionary"
@@ -254,17 +261,17 @@ class PrefHelper(
         }
 
         var enableSystemUserDictionary: Boolean
-            get() =  prefHelper.getPref(ENABLE_SYSTEM_USER_DICTIONARY, true)
-            set(v) = prefHelper.setPref(ENABLE_SYSTEM_USER_DICTIONARY, v)
+            get() =  prefs.getPref(ENABLE_SYSTEM_USER_DICTIONARY, true)
+            set(v) = prefs.setPref(ENABLE_SYSTEM_USER_DICTIONARY, v)
         var enableFlorisUserDictionary: Boolean
-            get() =  prefHelper.getPref(ENABLE_FLORIS_USER_DICTIONARY, true)
-            set(v) = prefHelper.setPref(ENABLE_FLORIS_USER_DICTIONARY, v)
+            get() =  prefs.getPref(ENABLE_FLORIS_USER_DICTIONARY, true)
+            set(v) = prefs.setPref(ENABLE_FLORIS_USER_DICTIONARY, v)
     }
 
     /**
      * Wrapper class for gestures preferences.
      */
-    class Gestures(private val prefHelper: PrefHelper) {
+    class Gestures(private val prefs: Preferences) {
         companion object {
             const val SWIPE_UP =                    "gestures__swipe_up"
             const val SWIPE_DOWN =                  "gestures__swipe_down"
@@ -280,44 +287,44 @@ class PrefHelper(
         }
 
         var swipeUp: SwipeAction
-            get() =  SwipeAction.fromString(prefHelper.getPref(SWIPE_UP, "no_action"))
-            set(v) = prefHelper.setPref(SWIPE_UP, v)
+            get() =  SwipeAction.fromString(prefs.getPref(SWIPE_UP, "no_action"))
+            set(v) = prefs.setPref(SWIPE_UP, v)
         var swipeDown: SwipeAction
-            get() =  SwipeAction.fromString(prefHelper.getPref(SWIPE_DOWN, "no_action"))
-            set(v) = prefHelper.setPref(SWIPE_DOWN, v)
+            get() =  SwipeAction.fromString(prefs.getPref(SWIPE_DOWN, "no_action"))
+            set(v) = prefs.setPref(SWIPE_DOWN, v)
         var swipeLeft: SwipeAction
-            get() =  SwipeAction.fromString(prefHelper.getPref(SWIPE_LEFT, "no_action"))
-            set(v) = prefHelper.setPref(SWIPE_LEFT, v)
+            get() =  SwipeAction.fromString(prefs.getPref(SWIPE_LEFT, "no_action"))
+            set(v) = prefs.setPref(SWIPE_LEFT, v)
         var swipeRight: SwipeAction
-            get() =  SwipeAction.fromString(prefHelper.getPref(SWIPE_RIGHT, "no_action"))
-            set(v) = prefHelper.setPref(SWIPE_RIGHT, v)
+            get() =  SwipeAction.fromString(prefs.getPref(SWIPE_RIGHT, "no_action"))
+            set(v) = prefs.setPref(SWIPE_RIGHT, v)
         var spaceBarLongPress: SwipeAction
-            get() =  SwipeAction.fromString(prefHelper.getPref(SPACE_BAR_LONG_PRESS, "no_action"))
-            set(v) = prefHelper.setPref(SPACE_BAR_LONG_PRESS, v)
+            get() =  SwipeAction.fromString(prefs.getPref(SPACE_BAR_LONG_PRESS, "no_action"))
+            set(v) = prefs.setPref(SPACE_BAR_LONG_PRESS, v)
         var spaceBarSwipeUp: SwipeAction
-            get() =  SwipeAction.fromString(prefHelper.getPref(SPACE_BAR_SWIPE_UP, "no_action"))
-            set(v) = prefHelper.setPref(SPACE_BAR_SWIPE_UP, v)
+            get() =  SwipeAction.fromString(prefs.getPref(SPACE_BAR_SWIPE_UP, "no_action"))
+            set(v) = prefs.setPref(SPACE_BAR_SWIPE_UP, v)
         var spaceBarSwipeLeft: SwipeAction
-            get() =  SwipeAction.fromString(prefHelper.getPref(SPACE_BAR_SWIPE_LEFT, "no_action"))
-            set(v) = prefHelper.setPref(SPACE_BAR_SWIPE_LEFT, v)
+            get() =  SwipeAction.fromString(prefs.getPref(SPACE_BAR_SWIPE_LEFT, "no_action"))
+            set(v) = prefs.setPref(SPACE_BAR_SWIPE_LEFT, v)
         var spaceBarSwipeRight: SwipeAction
-            get() =  SwipeAction.fromString(prefHelper.getPref(SPACE_BAR_SWIPE_RIGHT, "no_action"))
-            set(v) = prefHelper.setPref(SPACE_BAR_SWIPE_RIGHT, v)
+            get() =  SwipeAction.fromString(prefs.getPref(SPACE_BAR_SWIPE_RIGHT, "no_action"))
+            set(v) = prefs.setPref(SPACE_BAR_SWIPE_RIGHT, v)
         var deleteKeySwipeLeft: SwipeAction
-            get() =  SwipeAction.fromString(prefHelper.getPref(DELETE_KEY_SWIPE_LEFT, "no_action"))
-            set(v) = prefHelper.setPref(DELETE_KEY_SWIPE_LEFT, v)
+            get() =  SwipeAction.fromString(prefs.getPref(DELETE_KEY_SWIPE_LEFT, "no_action"))
+            set(v) = prefs.setPref(DELETE_KEY_SWIPE_LEFT, v)
         var swipeVelocityThreshold: VelocityThreshold
-            get() =  VelocityThreshold.fromString(prefHelper.getPref(SWIPE_VELOCITY_THRESHOLD, "normal"))
-            set(v) = prefHelper.setPref(SWIPE_VELOCITY_THRESHOLD, v)
+            get() =  VelocityThreshold.fromString(prefs.getPref(SWIPE_VELOCITY_THRESHOLD, "normal"))
+            set(v) = prefs.setPref(SWIPE_VELOCITY_THRESHOLD, v)
         var swipeDistanceThreshold: DistanceThreshold
-            get() =  DistanceThreshold.fromString(prefHelper.getPref(SWIPE_DISTANCE_THRESHOLD, "normal"))
-            set(v) = prefHelper.setPref(SWIPE_DISTANCE_THRESHOLD, v)
+            get() =  DistanceThreshold.fromString(prefs.getPref(SWIPE_DISTANCE_THRESHOLD, "normal"))
+            set(v) = prefs.setPref(SWIPE_DISTANCE_THRESHOLD, v)
     }
 
     /**
      * Wrapper class for glide preferences.
      */
-    class Glide(private val prefHelper: PrefHelper) {
+    class Glide(private val prefs: Preferences) {
         companion object {
             const val ENABLED =                     "glide__enabled"
             const val SHOW_TRAIL =                  "glide__show_trail"
@@ -328,30 +335,30 @@ class PrefHelper(
         }
 
         var enabled: Boolean
-            get() =  prefHelper.getPref(ENABLED, false)
-            set(v) = prefHelper.setPref(ENABLED, v)
+            get() =  prefs.getPref(ENABLED, false)
+            set(v) = prefs.setPref(ENABLED, v)
         var showTrail: Boolean
-            get() =  prefHelper.getPref(SHOW_TRAIL, false)
-            set(v) = prefHelper.setPref(SHOW_TRAIL, v)
+            get() =  prefs.getPref(SHOW_TRAIL, false)
+            set(v) = prefs.setPref(SHOW_TRAIL, v)
         var trailDuration: Int
-            get() =  prefHelper.getPref(TRAIL_DURATION, 200)
-            set(v) = prefHelper.setPref(TRAIL_DURATION, v)
+            get() =  prefs.getPref(TRAIL_DURATION, 200)
+            set(v) = prefs.setPref(TRAIL_DURATION, v)
         var showPreview: Boolean
-            get() = prefHelper.getPref(SHOW_PREVIEW, true)
-            set(v) = prefHelper.setPref(SHOW_PREVIEW, v)
+            get() = prefs.getPref(SHOW_PREVIEW, true)
+            set(v) = prefs.setPref(SHOW_PREVIEW, v)
         var previewRefreshDelay: Int
-            get() = prefHelper.getPref(PREVIEW_REFRESH_DELAY, 150)
-            set(v) = prefHelper.setPref(PREVIEW_REFRESH_DELAY, v)
+            get() = prefs.getPref(PREVIEW_REFRESH_DELAY, 150)
+            set(v) = prefs.setPref(PREVIEW_REFRESH_DELAY, v)
         var trailMaxLength: Int
-            get() = prefHelper.getPref(MAX_TRAIL_LENGTH, 150)
-            set(v) = prefHelper.setPref(MAX_TRAIL_LENGTH, v)
+            get() = prefs.getPref(MAX_TRAIL_LENGTH, 150)
+            set(v) = prefs.setPref(MAX_TRAIL_LENGTH, v)
     }
 
     /**
      * Wrapper class for internal preferences. A preference qualifies as an internal pref if the
      * user has no ability to control this preference's value directly (via a UI pref view).
      */
-    class Internal(private val prefHelper: PrefHelper) {
+    class Internal(private val prefs: Preferences) {
         companion object {
             const val IS_IME_SET_UP =               "internal__is_ime_set_up"
             const val VERSION_ON_INSTALL =          "internal__version_on_install"
@@ -360,23 +367,23 @@ class PrefHelper(
         }
 
         var isImeSetUp: Boolean
-            get() =  prefHelper.getPref(IS_IME_SET_UP, false)
-            set(v) = prefHelper.setPref(IS_IME_SET_UP, v)
+            get() =  prefs.getPref(IS_IME_SET_UP, false)
+            set(v) = prefs.setPref(IS_IME_SET_UP, v)
         var versionOnInstall: String
-            get() =  prefHelper.getPref(VERSION_ON_INSTALL, VersionName.DEFAULT_RAW)
-            set(v) = prefHelper.setPref(VERSION_ON_INSTALL, v)
+            get() =  prefs.getPref(VERSION_ON_INSTALL, VersionName.DEFAULT_RAW)
+            set(v) = prefs.setPref(VERSION_ON_INSTALL, v)
         var versionLastUse: String
-            get() =  prefHelper.getPref(VERSION_LAST_USE, VersionName.DEFAULT_RAW)
-            set(v) = prefHelper.setPref(VERSION_LAST_USE, v)
+            get() =  prefs.getPref(VERSION_LAST_USE, VersionName.DEFAULT_RAW)
+            set(v) = prefs.setPref(VERSION_LAST_USE, v)
         var versionLastChangelog: String
-            get() =  prefHelper.getPref(VERSION_LAST_CHANGELOG, VersionName.DEFAULT_RAW)
-            set(v) = prefHelper.setPref(VERSION_LAST_CHANGELOG, v)
+            get() =  prefs.getPref(VERSION_LAST_CHANGELOG, VersionName.DEFAULT_RAW)
+            set(v) = prefs.setPref(VERSION_LAST_CHANGELOG, v)
     }
 
     /**
      * Wrapper class for keyboard preferences.
      */
-    class Keyboard(private val prefHelper: PrefHelper) {
+    class Keyboard(private val prefs: Preferences) {
         companion object {
             const val BOTTOM_OFFSET_PORTRAIT =          "keyboard__bottom_offset_portrait"
             const val BOTTOM_OFFSET_LANDSCAPE =             "keyboard__bottom_offset_landscape"
@@ -405,115 +412,115 @@ class PrefHelper(
         }
 
         var bottomOffsetPortrait: Int = 0
-            get() = prefHelper.getPref(BOTTOM_OFFSET_PORTRAIT, 0)
+            get() = prefs.getPref(BOTTOM_OFFSET_PORTRAIT, 0)
             private set
         var bottomOffsetLandscape: Int = 0
-            get() = prefHelper.getPref(BOTTOM_OFFSET_LANDSCAPE, 0)
+            get() = prefs.getPref(BOTTOM_OFFSET_LANDSCAPE, 0)
             private set
         var fontSizeMultiplierPortrait: Int
-            get() =  prefHelper.getPref(FONT_SIZE_MULTIPLIER_PORTRAIT, 100)
-            set(v) = prefHelper.setPref(FONT_SIZE_MULTIPLIER_PORTRAIT, v)
+            get() =  prefs.getPref(FONT_SIZE_MULTIPLIER_PORTRAIT, 100)
+            set(v) = prefs.setPref(FONT_SIZE_MULTIPLIER_PORTRAIT, v)
         var fontSizeMultiplierLandscape: Int
-            get() =  prefHelper.getPref(FONT_SIZE_MULTIPLIER_LANDSCAPE, 100)
-            set(v) = prefHelper.setPref(FONT_SIZE_MULTIPLIER_LANDSCAPE, v)
+            get() =  prefs.getPref(FONT_SIZE_MULTIPLIER_LANDSCAPE, 100)
+            set(v) = prefs.setPref(FONT_SIZE_MULTIPLIER_LANDSCAPE, v)
         var heightFactor: String = ""
-            get() = prefHelper.getPref(HEIGHT_FACTOR, "normal")
+            get() = prefs.getPref(HEIGHT_FACTOR, "normal")
             private set
         var heightFactorCustom: Int
-            get() =  prefHelper.getPref(HEIGHT_FACTOR_CUSTOM, 100)
-            set(v) = prefHelper.setPref(HEIGHT_FACTOR_CUSTOM, v)
+            get() =  prefs.getPref(HEIGHT_FACTOR_CUSTOM, 100)
+            set(v) = prefs.setPref(HEIGHT_FACTOR_CUSTOM, v)
         var hintedNumberRowMode: KeyHintMode
-            get() =  KeyHintMode.fromString(prefHelper.getPref(HINTED_NUMBER_ROW_MODE, KeyHintMode.ENABLED_ACCENT_PRIORITY.toString()))
-            set(v) = prefHelper.setPref(HINTED_NUMBER_ROW_MODE, v)
+            get() =  KeyHintMode.fromString(prefs.getPref(HINTED_NUMBER_ROW_MODE, KeyHintMode.ENABLED_ACCENT_PRIORITY.toString()))
+            set(v) = prefs.setPref(HINTED_NUMBER_ROW_MODE, v)
         var hintedSymbolsMode: KeyHintMode
-            get() =  KeyHintMode.fromString(prefHelper.getPref(HINTED_SYMBOLS_MODE, KeyHintMode.ENABLED_ACCENT_PRIORITY.toString()))
-            set(v) = prefHelper.setPref(HINTED_SYMBOLS_MODE, v)
+            get() =  KeyHintMode.fromString(prefs.getPref(HINTED_SYMBOLS_MODE, KeyHintMode.ENABLED_ACCENT_PRIORITY.toString()))
+            set(v) = prefs.setPref(HINTED_SYMBOLS_MODE, v)
         var keySpacingHorizontal: Float = 2f
-            get() = prefHelper.getPref(KEY_SPACING_HORIZONTAL, 4) / 2f
+            get() = prefs.getPref(KEY_SPACING_HORIZONTAL, 4) / 2f
             private set
         var keySpacingVertical: Float = 5f
-            get() = prefHelper.getPref(KEY_SPACING_VERTICAL, 10) / 2f
+            get() = prefs.getPref(KEY_SPACING_VERTICAL, 10) / 2f
             private set
         var landscapeInputUiMode: LandscapeInputUiMode
-            get() =  LandscapeInputUiMode.fromString(prefHelper.getPref(LANDSCAPE_INPUT_UI_MODE, LandscapeInputUiMode.DYNAMICALLY_SHOW.toString()))
-            set(v) = prefHelper.setPref(LANDSCAPE_INPUT_UI_MODE, v)
+            get() =  LandscapeInputUiMode.fromString(prefs.getPref(LANDSCAPE_INPUT_UI_MODE, LandscapeInputUiMode.DYNAMICALLY_SHOW.toString()))
+            set(v) = prefs.setPref(LANDSCAPE_INPUT_UI_MODE, v)
         var longPressDelay: Int = 0
-            get() = prefHelper.getPref(LONG_PRESS_DELAY, 300)
+            get() = prefs.getPref(LONG_PRESS_DELAY, 300)
             private set
         var numberRow: Boolean
-            get() =  prefHelper.getPref(NUMBER_ROW, false)
-            set(v) = prefHelper.setPref(NUMBER_ROW, v)
+            get() =  prefs.getPref(NUMBER_ROW, false)
+            set(v) = prefs.setPref(NUMBER_ROW, v)
         var oneHandedMode: String
-            get() = prefHelper.getPref(ONE_HANDED_MODE, OneHandedMode.OFF)
-            set(value) = prefHelper.setPref(ONE_HANDED_MODE, value)
+            get() = prefs.getPref(ONE_HANDED_MODE, OneHandedMode.OFF)
+            set(value) = prefs.setPref(ONE_HANDED_MODE, value)
         var oneHandedModeScaleFactor: Int
-            get() =  prefHelper.getPref(ONE_HANDED_MODE_SCALE_FACTOR, 87)
-            set(v) = prefHelper.setPref(ONE_HANDED_MODE_SCALE_FACTOR, v)
+            get() =  prefs.getPref(ONE_HANDED_MODE_SCALE_FACTOR, 87)
+            set(v) = prefs.setPref(ONE_HANDED_MODE_SCALE_FACTOR, v)
         var popupEnabled: Boolean = false
-            get() = prefHelper.getPref(POPUP_ENABLED, true)
+            get() = prefs.getPref(POPUP_ENABLED, true)
             private set
         var soundEnabled: Boolean = false
-            get() = prefHelper.getPref(SOUND_ENABLED, true)
+            get() = prefs.getPref(SOUND_ENABLED, true)
             private set
         var soundEnabledSystem: Boolean = false
         var soundVolume: Int = 0
-            get() = prefHelper.getPref(SOUND_VOLUME, -1)
+            get() = prefs.getPref(SOUND_VOLUME, -1)
             private set
         var spaceBarSwitchesToCharacters: Boolean
-            get() =  prefHelper.getPref(SPACE_BAR_SWITCHES_TO_CHARACTERS, true)
-            set(v) = prefHelper.setPref(SPACE_BAR_SWITCHES_TO_CHARACTERS, v)
+            get() =  prefs.getPref(SPACE_BAR_SWITCHES_TO_CHARACTERS, true)
+            set(v) = prefs.setPref(SPACE_BAR_SWITCHES_TO_CHARACTERS, v)
         var utilityKeyAction: UtilityKeyAction
-            get() =  UtilityKeyAction.fromString(prefHelper.getPref(UTILITY_KEY_ACTION, UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS.toString()))
-            set(v) = prefHelper.setPref(UTILITY_KEY_ACTION, v)
+            get() =  UtilityKeyAction.fromString(prefs.getPref(UTILITY_KEY_ACTION, UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS.toString()))
+            set(v) = prefs.setPref(UTILITY_KEY_ACTION, v)
         var utilityKeyEnabled: Boolean
-            get() =  prefHelper.getPref(UTILITY_KEY_ENABLED, true)
-            set(v) = prefHelper.setPref(UTILITY_KEY_ENABLED, v)
+            get() =  prefs.getPref(UTILITY_KEY_ENABLED, true)
+            set(v) = prefs.setPref(UTILITY_KEY_ENABLED, v)
         var vibrationEnabled: Boolean = false
-            get() = prefHelper.getPref(VIBRATION_ENABLED, true)
+            get() = prefs.getPref(VIBRATION_ENABLED, true)
             private set
         var vibrationEnabledSystem: Boolean = false
         var vibrationDuration: Int = 0
-            get() = prefHelper.getPref(VIBRATION_DURATION, -1)
+            get() = prefs.getPref(VIBRATION_DURATION, -1)
             private set
         var vibrationStrength: Int = 0
-            get() = prefHelper.getPref(VIBRATION_STRENGTH, -1)
+            get() = prefs.getPref(VIBRATION_STRENGTH, -1)
             private set
     }
 
     /**
      * Wrapper class for localization preferences.
      */
-    class Localization(private val prefHelper: PrefHelper) {
+    class Localization(private val prefs: Preferences) {
         companion object {
             const val ACTIVE_SUBTYPE_ID =       "localization__active_subtype_id"
             const val SUBTYPES =                "localization__subtypes"
         }
 
         var activeSubtypeId: Int
-            get() =  prefHelper.getPref(ACTIVE_SUBTYPE_ID, Subtype.DEFAULT.id)
-            set(v) = prefHelper.setPref(ACTIVE_SUBTYPE_ID, v)
+            get() =  prefs.getPref(ACTIVE_SUBTYPE_ID, Subtype.DEFAULT.id)
+            set(v) = prefs.setPref(ACTIVE_SUBTYPE_ID, v)
         var subtypes: String
-            get() =  prefHelper.getPref(SUBTYPES, "")
-            set(v) = prefHelper.setPref(SUBTYPES, v)
+            get() =  prefs.getPref(SUBTYPES, "")
+            set(v) = prefs.setPref(SUBTYPES, v)
     }
 
     /**
      * Wrapper class for Smartbar preferences.
      */
-    class Smartbar(private val prefHelper: PrefHelper) {
+    class Smartbar(private val prefs: Preferences) {
         companion object {
             const val ENABLED =                     "smartbar__enabled"
         }
 
         var enabled: Boolean
-            get() =  prefHelper.getPref(ENABLED, true)
-            set(v) = prefHelper.setPref(ENABLED, v)
+            get() =  prefs.getPref(ENABLED, true)
+            set(v) = prefs.setPref(ENABLED, v)
     }
 
     /**
      * Wrapper class for suggestion preferences.
      */
-    class Suggestion(private val prefHelper: PrefHelper) {
+    class Suggestion(private val prefs: Preferences) {
         companion object {
             const val BLOCK_POSSIBLY_OFFENSIVE =    "suggestion__block_possibly_offensive"
             const val CLIPBOARD_CONTENT_ENABLED =   "suggestion__clipboard_content_enabled"
@@ -524,29 +531,29 @@ class PrefHelper(
         }
 
         var blockPossiblyOffensive: Boolean
-            get() =  prefHelper.getPref(BLOCK_POSSIBLY_OFFENSIVE, true)
-            set(v) = prefHelper.setPref(BLOCK_POSSIBLY_OFFENSIVE, v)
+            get() =  prefs.getPref(BLOCK_POSSIBLY_OFFENSIVE, true)
+            set(v) = prefs.setPref(BLOCK_POSSIBLY_OFFENSIVE, v)
         var clipboardContentEnabled: Boolean
-            get() =  prefHelper.getPref(CLIPBOARD_CONTENT_ENABLED, false)
-            set(v) = prefHelper.setPref(CLIPBOARD_CONTENT_ENABLED, v)
+            get() =  prefs.getPref(CLIPBOARD_CONTENT_ENABLED, false)
+            set(v) = prefs.setPref(CLIPBOARD_CONTENT_ENABLED, v)
         var clipboardContentTimeout: Int
-            get() =  prefHelper.getPref(CLIPBOARD_CONTENT_TIMEOUT, 30)
-            set(v) = prefHelper.setPref(CLIPBOARD_CONTENT_TIMEOUT, v)
+            get() =  prefs.getPref(CLIPBOARD_CONTENT_TIMEOUT, 30)
+            set(v) = prefs.setPref(CLIPBOARD_CONTENT_TIMEOUT, v)
         var displayMode: CandidateView.DisplayMode
-            get() =  CandidateView.DisplayMode.fromString(prefHelper.getPref(DISPLAY_MODE, CandidateView.DisplayMode.DYNAMIC_SCROLLABLE.toString()))
-            set(v) = prefHelper.setPref(DISPLAY_MODE, v)
+            get() =  CandidateView.DisplayMode.fromString(prefs.getPref(DISPLAY_MODE, CandidateView.DisplayMode.DYNAMIC_SCROLLABLE.toString()))
+            set(v) = prefs.setPref(DISPLAY_MODE, v)
         var enabled: Boolean
-            get() =  prefHelper.getPref(ENABLED, true)
-            set(v) = prefHelper.setPref(ENABLED, v)
+            get() =  prefs.getPref(ENABLED, true)
+            set(v) = prefs.setPref(ENABLED, v)
         var usePrevWords: Boolean
-            get() =  prefHelper.getPref(USE_PREV_WORDS, true)
-            set(v) = prefHelper.setPref(USE_PREV_WORDS, v)
+            get() =  prefs.getPref(USE_PREV_WORDS, true)
+            set(v) = prefs.setPref(USE_PREV_WORDS, v)
     }
 
     /**
      * Wrapper class for theme preferences.
      */
-    class Theme(private val prefHelper: PrefHelper) {
+    class Theme(private val prefs: Preferences) {
         companion object {
             const val MODE =                        "theme__mode"
             const val DAY_THEME_REF =               "theme__day_theme_ref"
@@ -558,32 +565,32 @@ class PrefHelper(
         }
 
         var mode: ThemeMode
-            get() =  ThemeMode.fromString(prefHelper.getPref(MODE, ThemeMode.FOLLOW_SYSTEM.toString()))
-            set(v) = prefHelper.setPref(MODE, v)
+            get() =  ThemeMode.fromString(prefs.getPref(MODE, ThemeMode.FOLLOW_SYSTEM.toString()))
+            set(v) = prefs.setPref(MODE, v)
         var dayThemeRef: String
-            get() =  prefHelper.getPref(DAY_THEME_REF, "assets:ime/theme/floris_day.json")
-            set(v) = prefHelper.setPref(DAY_THEME_REF, v)
+            get() =  prefs.getPref(DAY_THEME_REF, "assets:ime/theme/floris_day.json")
+            set(v) = prefs.setPref(DAY_THEME_REF, v)
         var dayThemeAdaptToApp: Boolean
-            get() =  prefHelper.getPref(DAY_THEME_ADAPT_TO_APP, false)
-            set(v) = prefHelper.setPref(DAY_THEME_ADAPT_TO_APP, v)
+            get() =  prefs.getPref(DAY_THEME_ADAPT_TO_APP, false)
+            set(v) = prefs.setPref(DAY_THEME_ADAPT_TO_APP, v)
         var nightThemeRef: String
-            get() =  prefHelper.getPref(NIGHT_THEME_REF, "assets:ime/theme/floris_night.json")
-            set(v) = prefHelper.setPref(NIGHT_THEME_REF, v)
+            get() =  prefs.getPref(NIGHT_THEME_REF, "assets:ime/theme/floris_night.json")
+            set(v) = prefs.setPref(NIGHT_THEME_REF, v)
         var nightThemeAdaptToApp: Boolean
-            get() =  prefHelper.getPref(NIGHT_THEME_ADAPT_TO_APP, false)
-            set(v) = prefHelper.setPref(NIGHT_THEME_ADAPT_TO_APP, v)
+            get() =  prefs.getPref(NIGHT_THEME_ADAPT_TO_APP, false)
+            set(v) = prefs.setPref(NIGHT_THEME_ADAPT_TO_APP, v)
         var sunriseTime: Int
-            get() =  prefHelper.getPref(SUNRISE_TIME, TimeUtil.encode(6, 0))
-            set(v) = prefHelper.setPref(SUNRISE_TIME, v)
+            get() =  prefs.getPref(SUNRISE_TIME, TimeUtil.encode(6, 0))
+            set(v) = prefs.setPref(SUNRISE_TIME, v)
         var sunsetTime: Int
-            get() =  prefHelper.getPref(SUNSET_TIME, TimeUtil.encode(18, 0))
-            set(v) = prefHelper.setPref(SUNSET_TIME, v)
+            get() =  prefs.getPref(SUNSET_TIME, TimeUtil.encode(18, 0))
+            set(v) = prefs.setPref(SUNSET_TIME, v)
     }
 
     /**
      * Wrapper class for clipboard preferences
      */
-    class Clipboard(private val prefHelper: PrefHelper) {
+    class Clipboard(private val prefs: Preferences) {
         companion object {
             const val ENABLE_INTERNAL    = "clipboard__enable_internal"
             const val SYNC_TO_SYSTEM     = "clipboard__sync_to_system"
@@ -596,35 +603,35 @@ class PrefHelper(
         }
 
         var enableInternal: Boolean
-            get() =  prefHelper.getPref(ENABLE_INTERNAL, false)
-            set(v) = prefHelper.setPref(ENABLE_INTERNAL, v)
+            get() =  prefs.getPref(ENABLE_INTERNAL, false)
+            set(v) = prefs.setPref(ENABLE_INTERNAL, v)
 
         var syncToSystem: Boolean
-            get() =  prefHelper.getPref(SYNC_TO_SYSTEM, false)
-            set(v) = prefHelper.setPref(SYNC_TO_SYSTEM, v)
+            get() =  prefs.getPref(SYNC_TO_SYSTEM, false)
+            set(v) = prefs.setPref(SYNC_TO_SYSTEM, v)
 
         var syncToFloris: Boolean
-            get() =  prefHelper.getPref(SYNC_TO_FLORIS, true)
-            set(v) = prefHelper.setPref(SYNC_TO_FLORIS, v)
+            get() =  prefs.getPref(SYNC_TO_FLORIS, true)
+            set(v) = prefs.setPref(SYNC_TO_FLORIS, v)
 
         var enableHistory: Boolean
-            get() =  prefHelper.getPref(ENABLE_HISTORY, false)
-            set(v) = prefHelper.setPref(ENABLE_HISTORY, v)
+            get() =  prefs.getPref(ENABLE_HISTORY, false)
+            set(v) = prefs.setPref(ENABLE_HISTORY, v)
 
         var cleanUpOld: Boolean
-            get() =  prefHelper.getPref(CLEAN_UP_OLD, false)
-            set(v) = prefHelper.setPref(CLEAN_UP_OLD, v)
+            get() =  prefs.getPref(CLEAN_UP_OLD, false)
+            set(v) = prefs.setPref(CLEAN_UP_OLD, v)
 
         var limitHistorySize: Boolean
-            get() =  prefHelper.getPref(LIMIT_HISTORY_SIZE, true)
-            set(v) = prefHelper.setPref(LIMIT_HISTORY_SIZE, v)
+            get() =  prefs.getPref(LIMIT_HISTORY_SIZE, true)
+            set(v) = prefs.setPref(LIMIT_HISTORY_SIZE, v)
 
         var cleanUpAfter: Int
-            get() =  prefHelper.getPref(CLEAN_UP_AFTER, 20)
-            set(v) = prefHelper.setPref(CLEAN_UP_AFTER, v)
+            get() =  prefs.getPref(CLEAN_UP_AFTER, 20)
+            set(v) = prefs.setPref(CLEAN_UP_AFTER, v)
 
         var maxHistorySize: Int
-            get() =  prefHelper.getPref(MAX_HISTORY_SIZE, 20)
-            set(v) = prefHelper.setPref(MAX_HISTORY_SIZE, v)
+            get() =  prefs.getPref(MAX_HISTORY_SIZE, 20)
+            set(v) = prefs.setPref(MAX_HISTORY_SIZE, v)
     }
 }

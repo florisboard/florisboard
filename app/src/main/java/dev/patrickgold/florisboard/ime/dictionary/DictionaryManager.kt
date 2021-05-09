@@ -18,7 +18,7 @@ package dev.patrickgold.florisboard.ime.dictionary
 
 import android.content.Context
 import androidx.room.Room
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import timber.log.Timber
 import java.lang.ref.WeakReference
@@ -28,7 +28,7 @@ import java.lang.ref.WeakReference
  */
 class DictionaryManager private constructor(context: Context) {
     private val applicationContext: WeakReference<Context> = WeakReference(context.applicationContext ?: context)
-    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+    private val prefs get() = Preferences.default()
 
     private val dictionaryCache: MutableMap<String, Dictionary<String, Int>> = mutableMapOf()
 

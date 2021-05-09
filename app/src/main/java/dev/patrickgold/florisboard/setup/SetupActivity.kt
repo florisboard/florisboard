@@ -29,7 +29,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SetupActivityBinding
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
 
 class SetupActivity : AppCompatActivity() {
@@ -40,12 +40,12 @@ class SetupActivity : AppCompatActivity() {
     private lateinit var adapter: ViewPagerAdapter
     private lateinit var binding: SetupActivityBinding
     lateinit var imm: InputMethodManager
-    lateinit var prefs: PrefHelper
+    lateinit var prefs: Preferences
     private var shouldFinish: Boolean = false
     private var shouldLaunchSettings: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        prefs = PrefHelper(this)
+        prefs = Preferences(this)
         prefs.initDefaultPreferences()
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 

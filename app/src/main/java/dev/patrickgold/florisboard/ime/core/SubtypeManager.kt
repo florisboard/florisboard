@@ -37,10 +37,10 @@ import kotlin.collections.ArrayList
  * @property subtypes The currently active subtypes.
  */
 class SubtypeManager(
-    private val packageName: String,
-    private val prefs: PrefHelper
+    private val packageName: String
 ) : CoroutineScope by MainScope() {
     private val assetManager get() = AssetManager.default()
+    private val prefs get() = Preferences.default()
 
     companion object {
         const val IME_CONFIG_FILE_PATH = "ime/config.json"
@@ -48,8 +48,8 @@ class SubtypeManager(
 
         private var instance: SubtypeManager? = null
 
-        fun init(context: Context, prefs: PrefHelper): SubtypeManager {
-            val defaultInstance = SubtypeManager(context.packageName, prefs)
+        fun init(context: Context): SubtypeManager {
+            val defaultInstance = SubtypeManager(context.packageName)
             instance = defaultInstance
             return defaultInstance
         }

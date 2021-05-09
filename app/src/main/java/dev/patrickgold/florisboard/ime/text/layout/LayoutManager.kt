@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.ime.text.layout
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogWarning
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
@@ -43,8 +43,8 @@ private data class LTN(
  * Class which manages layout loading and caching.
  */
 class LayoutManager {
-    private val assetManager: AssetManager
-        get() = AssetManager.default()
+    private val assetManager get() = AssetManager.default()
+    private val prefs get() = Preferences.default()
 
     private val layoutCache: HashMap<String, Deferred<Result<Layout>>> = hashMapOf()
     private val layoutCacheGuard: Mutex = Mutex(locked = false)
@@ -143,8 +143,7 @@ class LayoutManager {
         subtype: Subtype,
         main: LTN? = null,
         modifier: LTN? = null,
-        extension: LTN? = null,
-        prefs: PrefHelper
+        extension: LTN? = null
     ): TextKeyboard {
         val extendedPopupsDefault = loadExtendedPopupsAsync()
         val extendedPopups = loadExtendedPopupsAsync(subtype)
@@ -207,7 +206,7 @@ class LayoutManager {
 
         // Add hints to keys
         if (keyboardMode == KeyboardMode.CHARACTERS) {
-            val symbolsComputedArrangement = computeKeyboardAsync(KeyboardMode.SYMBOLS, subtype, prefs).await().arrangement
+            val symbolsComputedArrangement = computeKeyboardAsync(KeyboardMode.SYMBOLS, subtype).await().arrangement
             val minRow = if (prefs.keyboard.numberRow) { 1 } else { 0 }
             for ((r, row) in computedArrangement.withIndex()) {
                 if (r >= (3 + minRow) || r < minRow) {
@@ -249,8 +248,7 @@ class LayoutManager {
      */
     fun computeKeyboardAsync(
         keyboardMode: KeyboardMode,
-        subtype: Subtype,
-        prefs: PrefHelper
+        subtype: Subtype
     ): Deferred<TextKeyboard> = ioScope.async {
         var main: LTN? = null
         var modifier: LTN? = null
@@ -297,7 +295,7 @@ class LayoutManager {
             }
         }
 
-        return@async mergeLayoutsAsync(keyboardMode, subtype, main, modifier, extension, prefs)
+        return@async mergeLayoutsAsync(keyboardMode, subtype, main, modifier, extension)
     }
 
     /**
