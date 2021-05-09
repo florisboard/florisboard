@@ -1,0 +1,4 @@
+- Re-implement glide typing, should work as before in beta02 (#833)
+- Fix wrong thread crash for clipboard UI initialization (#840, thanks @X-yl)
+- Fix NaN issues in glide typing (#842, thanks @X-yl)
+- Fix KeyboardView null issue (#785)
