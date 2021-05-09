@@ -4,13 +4,17 @@ import android.util.SparseArray
 import androidx.collection.LruCache
 import androidx.core.util.set
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import java.text.Normalizer
 import java.util.*
 import kotlin.collections.HashMap
 import kotlin.math.*
+
+private fun TextKey.baseCode(): Int {
+    return (data as? TextKeyData)?.code ?: KeyCode.UNSPECIFIED
+}
 
 /**
  * Classifies gestures by comparing them with an "ideal gesture".
@@ -95,7 +99,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         keysByCharacter.clear()
         keys.clear()
         keyViews.forEach {
-            keysByCharacter[it.computedData.code] = it
+            keysByCharacter[it.baseCode()] = it
             keys.add(it)
         }
         layoutSubtype = subtype
@@ -271,7 +275,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
          * @return A list of likely words.
          */
         fun pruneByExtremities(
-            userGesture: Gesture, keys: Iterable<Key>
+            userGesture: Gesture, keys: Iterable<TextKey>
         ): ArrayList<String> {
             val remainingWords = ArrayList<String>()
             val startX = userGesture.getFirstX()
@@ -338,7 +342,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
                     else -> {
                         val firstKey = keysByCharacter[firstBaseChar.code]
                         val lastKey = keysByCharacter[lastBaseChar.code]
-                        Pair(firstKey.computedData.code, lastKey.computedData.code)
+                        Pair(firstKey.baseCode(), lastKey.baseCode())
                     }
                 }
             }
@@ -353,16 +357,16 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
              * @return A list of the n closest keys.
              */
             private fun findNClosestKeys(
-                x: Float, y: Float, n: Int, keys: Iterable<Key>
+                x: Float, y: Float, n: Int, keys: Iterable<TextKey>
             ): Iterable<Int> {
-                val keyDistances = HashMap<Key, Float>()
+                val keyDistances = HashMap<TextKey, Float>()
                 for (key in keys) {
                     val distance = Gesture.distance(key.visibleBounds.centerX().toFloat(), key.visibleBounds.centerY().toFloat(), x, y)
                     keyDistances[key] = distance
                 }
 
                 return keyDistances.entries.sortedWith { c1, c2 -> c1.value.compareTo(c2.value) }.take(n)
-                    .map { (it.key as? TextKey)?.computedData?.code ?: KeyCode.UNSPECIFIED }
+                    .map { it.key.baseCode() }
             }
         }
 
