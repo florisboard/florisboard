@@ -74,8 +74,8 @@ milestones, please refer to the [Feature roadmap](#feature-roadmap).
 
 ### Layouts
 * [x] Latin character layouts (QWERTY, QWERTZ, AZERTY, Swiss, Spanish, Norwegian, Swedish/Finnish, Icelandic, Danish,
-      Hungarian, Croatian, Polish, Romanian, Colemak, Dvorak, Turkish-Q, Turkish-F, ...)
-* [x] Non-latin character layouts (Arabic, Persian, Kurdish, Greek, Russian (JCUKEN))
+      Hungarian, Croatian, Polish, Romanian, Colemak, Dvorak, Turkish-Q, Turkish-F, and more...)
+* [x] Non-latin character layouts (Arabic, Persian, Kurdish, Greek, Russian (JCUKEN), and more...)
 * [x] Adapt to situation in app (password, url, text, etc. )
 * [x] Special character layout(s)
 * [x] Numeric layout
@@ -93,6 +93,7 @@ milestones, please refer to the [Feature roadmap](#feature-roadmap).
 * [x] Subtype selection (language/layout)
 * [x] Keyboard behaviour preferences
 * [x] Gesture preferences
+* [x] User dictionary manager (system and internal)
 
 ### Other useful features
 * [x] One-handed mode
@@ -100,6 +101,8 @@ milestones, please refer to the [Feature roadmap](#feature-roadmap).
 * [x] Clipboard manager/history
 * [x] Integrated number row / symbols in character layouts
 * [x] Gesture support
+* [x] Full support for the system user dictionary (shared dictionary
+      between all keyboards) and a private, internal user dictionary
 * [x] Full integration in IME service list of Android (xml/method)
       (integration is internal-only, because Android's default subtype
       implementation not really allows for dynamic language/layout
@@ -131,13 +134,14 @@ close as possible.
   - Next-word suggestions by training language models. Data collected here is stored locally and never leaves
     the user's device.
 
-- Module C: Extension packs (base implementation with [#162])
+- Module C: Extension packs (Implemented with [#162], reworked several times and still not stable)
   - Ability to load dictionaries (and later potentially other cool
     features too) only if needed to keep the core APK size small
   - Currently unclear how exactly this will work, but this is definitely
     a must-have feature
+  - A full implementation may come only in v0.5.0
 
-- Module D: Glide typing
+- Module D: Glide typing (Implemented with [#544])
   - Swiping over the characters will automatically convert this to a word
   - Possibly also add improvements based on the Flow keyboard
 
@@ -151,9 +155,11 @@ close as possible.
   - Theme import/export
 
 ### [v0.5.0](https://github.com/florisboard/florisboard/milestone/5)
-There's no exact roadmap yet but it is planned that the media part of
-FlorisBoard (emojis, emoticons, kaomoji) gets a rework. Also as an extension
-(requires v0.4.0/Module C) GIF support is planned.
+There's no exact roadmap yet, but these are the most important points:
+- Full layout customization in runtime
+- Extensive rework and customization of the media input (emojis, emoticons, kaomoji)
+- Better Smartbar customization
+- As an extension GIF support
 
 ### > v0.5.0
 This is completely open as of now and will gather planned features as time
@@ -166,6 +172,7 @@ Backlog (currently not assigned to any milestone):
 [#91]: https://github.com/florisboard/florisboard/pull/91
 [#162]: https://github.com/florisboard/florisboard/pull/162
 [#329]: https://github.com/florisboard/florisboard/pull/329
+[#544]: https://github.com/florisboard/florisboard/pull/544
 
 ## Contributing
 Wanna contribute to FlorisBoard? That's great to hear! There are lots of
@@ -183,8 +190,8 @@ to get more information on this topic.
   by [google](https://github.com/google)
 * [Google Material icons](https://github.com/google/material-design-icons) by
   [google](https://github.com/google)
-* [Moshi JSON library](https://github.com/square/moshi) by
-  [square](https://github.com/square)
+* [KotlinX serialization library](https://github.com/Kotlin/kotlinx.serialization) by
+  [Kotlin](https://github.com/Kotlin)
 * [ColorPicker preference](https://github.com/jaredrummler/ColorPicker) by
   [Jared Rummler](https://github.com/jaredrummler)
 * [Timber](https://github.com/JakeWharton/timber) by
@@ -194,7 +201,7 @@ to get more information on this topic.
 
 ## Usage notes for included binary dictionary files
 All binary dictionaries included within this project in
-(this)[app/src/main/assets/ime/dict) asset folder are built from various
+(this)[app/src/main/assets/ime/dict] asset folder are built from various
 sources, as stated below.
 
 ### Source 1: [wordfreq library by LuminosoInsight](https://github.com/LuminosoInsight/wordfreq):
