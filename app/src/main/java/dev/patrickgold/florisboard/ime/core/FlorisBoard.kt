@@ -49,6 +49,8 @@ import dev.patrickgold.florisboard.ime.media.MediaInputManager
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupLayerView
 import dev.patrickgold.florisboard.ime.text.TextInputManager
+import dev.patrickgold.florisboard.ime.text.composing.Appender
+import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
@@ -125,6 +127,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     var activeEditorInstance: EditorInstance = EditorInstance.default()
 
     val subtypeManager: SubtypeManager get() = SubtypeManager.default()
+    val composer: Composer get() = subtypeManager.imeConfig.composers[subtypeManager.imeConfig.composerNames.indexOf(activeSubtype.composerName)]
     lateinit var activeSubtype: Subtype
     private var currentThemeIsNight: Boolean = false
     private var currentThemeResId: Int = 0
@@ -895,15 +898,34 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     data class ImeConfig(
         @SerialName("package")
         val packageName: String,
+        @SerialName("composers")
+        val composers: List<Composer> = listOf(),
+        @SerialName("currencySets")
         val currencySets: List<CurrencySet> = listOf(),
+        @SerialName("defaultSubtypes")
         val defaultSubtypes: List<DefaultSubtype> = listOf()
     ) {
         @Transient var currencySetNames: List<String> = listOf()
         @Transient var currencySetLabels: List<String> = listOf()
+        @Transient var composerNames: List<String> = listOf()
+        @Transient var composerLabels: List<String> = listOf()
         @Transient var defaultSubtypesLanguageCodes: List<String> = listOf()
         @Transient var defaultSubtypesLanguageNames: List<String> = listOf()
 
         init {
+            val tmpComposerList = composers.map { Pair(it.name, it.label) }.toMutableList()
+            // Sort composer list alphabetically by the label of a composer
+            tmpComposerList.sortBy { it.second }
+            // Move selected composers to the top of the list
+            for (composerName in listOf("appender")) {
+                val index: Int = tmpComposerList.indexOfFirst { it.first == composerName }
+                if (index > 0) {
+                    tmpComposerList.add(0, tmpComposerList.removeAt(index))
+                }
+            }
+            composerNames = tmpComposerList.map { it.first }.toList()
+            composerLabels = tmpComposerList.map { it.second }.toList()
+
             val tmpCurrencyList = mutableListOf<Pair<String, String>>()
             for (currencySet in currencySets) {
                 tmpCurrencyList.add(Pair(currencySet.name, currencySet.label))

@@ -1,6 +1,16 @@
-package dev.patrickgold.florisboard.ime.core
+package dev.patrickgold.florisboard.ime.text.composing
 
-class ComposerHangul {
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+@SerialName("hangul-unicode")
+class HangulUnicode(
+    override val name: String,
+    override val label: String
+): Composer {
+    override val toRead: Int = 1
+
     // Initial consonants, ordered for syllable creation
     private val initials = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ"
     // Medial vowels, ordered for syllable creation
@@ -46,7 +56,7 @@ class ComposerHangul {
         return listOf(initial, medial, fin)
     }
 
-    fun getActions(s: String, c: Char): Pair<Int, String> {
+    override fun getActions(s: String, c: Char): Pair<Int, String> {
         // s is "at least the last 1 character of what's currently here"
         if (s.isEmpty()) {
             return Pair(0, ""+c)

@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.core
 
+import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.layout.LayoutType
 import dev.patrickgold.florisboard.util.LocaleUtils
 import kotlinx.serialization.*
@@ -32,12 +33,14 @@ import java.util.*
  * @property id The ID of this subtype. Although this can be any numeric value, its value
  *  typically matches the one of the [DefaultSubtype] with the same locale.
  * @property locale The locale this subtype is bound to.
+ * @property composerName The composer name to composer characters the way they should.
  * @property currencySetName The currency set name to display the correct currency symbols for this subtype.
  * @property layoutMap The layout map to properly display the correct layout for each layout type.
  */
 data class Subtype(
     val id: Int,
     val locale: Locale,
+    val composerName: String,
     val currencySetName: String,
     val layoutMap: SubtypeLayoutMap,
 ) {
@@ -50,6 +53,7 @@ data class Subtype(
         val DEFAULT = Subtype(
             id = -1,
             locale = Locale.ENGLISH,
+            composerName = "\$default",
             currencySetName = "\$default",
             layoutMap = SubtypeLayoutMap(characters = "qwerty")
         )
@@ -67,9 +71,9 @@ data class Subtype(
          */
         fun fromString(str: String): Subtype {
             val data = str.split("/")
-            if (data.size != 4) {
+            if (data.size != 5) {
                 throw InvalidPropertiesFormatException(
-                    "Given string contains more or less than 4 properties..."
+                    "Given string contains more or less than 5 properties..."
                 )
             } else {
                 val locale = LocaleUtils.stringToLocale(data[1])
@@ -77,7 +81,8 @@ data class Subtype(
                     data[0].toInt(),
                     locale,
                     data[2],
-                    SubtypeLayoutMap.fromString(data[3])
+                    data[3],
+                    SubtypeLayoutMap.fromString(data[4])
                 )
             }
         }
@@ -93,11 +98,11 @@ data class Subtype(
 
     /**
      * Converts this object into its string representation. Format:
-     *  <id>/<language_tag>/<currency_set_name>/<layout_map>
+     *  <id>/<language_tag>/<composer_name>/<currency_set_name>/<layout_map>
      */
     override fun toString(): String {
         val languageTag = locale.toLanguageTag()
-        return "$id/$languageTag/$currencySetName/$layoutMap"
+        return "$id/$languageTag/$composerName/$currencySetName/$layoutMap"
     }
 
     /**
@@ -310,6 +315,8 @@ data class DefaultSubtype(
     @Serializable(with = LocaleSerializer::class)
     @SerialName("languageTag")
     var locale: Locale,
+    @SerialName("composer")
+    var composerName: String,
     @SerialName("currencySet")
     var currencySetName: String,
     var preferred: SubtypeLayoutMap

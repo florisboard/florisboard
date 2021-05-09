@@ -117,11 +117,12 @@ class SubtypeManager(
      * @return True if the subtype was added, false otherwise. A return value of false indicates
      *  that the subtype already exists.
      */
-    fun addSubtype(locale: Locale, currencySetName: String, layoutMap: SubtypeLayoutMap): Boolean {
+    fun addSubtype(locale: Locale, composerName: String, currencySetName: String, layoutMap: SubtypeLayoutMap): Boolean {
         return addSubtype(
             Subtype(
                 (locale.hashCode() + 31 * layoutMap.hashCode() + 31 * currencySetName.hashCode()),
                 locale,
+                composerName,
                 currencySetName,
                 layoutMap
             )

@@ -35,6 +35,8 @@ import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clip.provider.ItemType
 import dev.patrickgold.florisboard.ime.text.TextInputManager
+import dev.patrickgold.florisboard.ime.text.composing.Composer
+import dev.patrickgold.florisboard.ime.text.composing.HangulUnicode
 import timber.log.Timber
 
 /**
@@ -49,8 +51,6 @@ class EditorInstance private constructor(
     val packageName: String,
     private val editorInfo: EditorInfo
 ) {
-    private val composer = ComposerHangul()
-
     val cachedInput: CachedInput = CachedInput(this)
     var contentMimeTypes: Array<out String?>? = null
     private val florisClipboardManager: FlorisClipboardManager = FlorisClipboardManager.getInstance()
@@ -186,13 +186,14 @@ class EditorInstance private constructor(
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun commitText(text: String): Boolean {
+        val composer: Composer = FlorisBoard.getInstance().composer
         val ic = inputConnection ?: return false
         fun doCommitText(text: String): Pair<Boolean, String> = if (text.length != 1) {
             Pair(ic.commitText(text, 1), text)
         } else {
             ic.beginBatchEdit()
             ic.finishComposingText()
-            val previous = getTextBeforeCursor(1)
+            val previous = getTextBeforeCursor(composer.toRead)
             val (rm, finalText) = composer.getActions(previous, text[0])
             ic.deleteSurroundingText(rm, 0)
             ic.commitText(finalText, 1)
