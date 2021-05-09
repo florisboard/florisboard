@@ -526,7 +526,7 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
 
             val width = maxX - minX
             val height = maxY - minY
-            val longestSide = max(width, height)
+            val longestSide = max(max(width, height), 0.00001f)
 
             val centroidX = (width / 2 + minX) / longestSide
             val centroidY = (height / 2 + minY) / longestSide
