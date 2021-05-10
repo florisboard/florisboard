@@ -1,0 +1,5 @@
+This version is a hotfix release which makes glide typing
+fully usable again (in v0.3.11 you couldn't glide while shift
+or caps was active).
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.12
