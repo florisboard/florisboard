@@ -10,6 +10,7 @@ import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import kotlinx.coroutines.*
 import org.json.JSONObject
+import kotlin.math.min
 
 /**
  * Handles the [GlideTypingClassifier]. Basically responsible for linking [GlideTypingGesture.Detector]
@@ -63,6 +64,7 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
     }
 
     private val wordDataCache = hashMapOf<String, Int>()
+
     /**
      * Set the word data for the internal gesture classifier
      */
@@ -71,7 +73,8 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
             if (wordDataCache.isEmpty()) {
                 // FIXME: get this info from dictionary.
                 val data =
-                    AssetManager.default().loadTextAsset(AssetRef(AssetSource.Assets, "ime/dict/data.json")).getOrThrow()
+                    AssetManager.default().loadTextAsset(AssetRef(AssetSource.Assets, "ime/dict/data.json"))
+                        .getOrThrow()
                 val json = JSONObject(data)
                 wordDataCache.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
             }
@@ -103,7 +106,10 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
                 textInputManager.isGlidePostEffect = true
                 textInputManager.smartbarView?.setCandidateSuggestionWords(
                     time,
-                    suggestions.take(maxSuggestionsToShow).map { textInputManager.fixCase(it) }
+                    suggestions.subList(
+                        1.coerceAtMost(min(commit.compareTo(false), suggestions.size)),
+                        maxSuggestionsToShow.coerceAtMost(suggestions.size)
+                    ).map { textInputManager.fixCase(it) }
                 )
                 textInputManager.smartbarView?.updateCandidateSuggestionCapsState()
                 if (commit && suggestions.isNotEmpty()) {
