@@ -140,9 +140,13 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         textInputManager = TextInputManager.getInstance()
         mediaInputManager = MediaInputManager.getInstance()
         clipInputManager = ClipboardInputManager.getInstance()
+
+        System.loadLibrary("florisboard-native")
     }
 
     lateinit var asyncExecutor: ExecutorService
+
+    external fun jniHelloWorld(): String
 
     companion object {
         @Synchronized
@@ -190,7 +194,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
                     .build()
             )
         }*/
-        flogInfo(LogTopic.IMS_EVENTS)
+        flogInfo(LogTopic.IMS_EVENTS) { jniHelloWorld() }
         serviceLifecycleDispatcher.onServicePreSuperOnCreate()
 
         imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager

@@ -83,7 +83,7 @@ open class NgramNode(
      */
     fun listSimilarWords(
         input: String,
-        list: StagedSuggestionList<String, Int>,
+        list: SuggestionList,
         word: StringBuilder,
         allowPossiblyOffensive: Boolean,
         maxEditDistance: Int,
@@ -100,9 +100,7 @@ open class NgramNode(
             || !isPossiblyOffensive)) {
             // Using shift right instead of divide by 2^(costSum) as it is mathematically the
             // same but faster.
-            if (list.canAdd(freq shr costSum)) {
-                list.add(word.toString(), freq shr costSum)
-            }
+            list.add(word.toString(), freq shr costSum)
         }
         if (pos <= -1) {
             for (childNode in higherOrderChildren) {
@@ -152,7 +150,7 @@ open class NgramNode(
         }
     }
 
-    fun listAllSameOrderWords(list: StagedSuggestionList<String, Int>, word: StringBuilder, allowPossiblyOffensive: Boolean) {
+    fun listAllSameOrderWords(list: SuggestionList, word: StringBuilder, allowPossiblyOffensive: Boolean) {
         word.append(char)
         if (isWord && ((isPossiblyOffensive && allowPossiblyOffensive) || !isPossiblyOffensive)) {
             if (list.canAdd(freq)) {
@@ -248,13 +246,13 @@ open class FlorisLanguageModel(
                     }
                     if (splitNode != null) {
                         // Input thus far is valid
-                        val wordNodes = StagedSuggestionList<String, Int>(maxTokenCount)
+                        val wordNodes = SuggestionList.new(maxTokenCount)
                         val strBuilder = StringBuilder().append(word.substring(0, word.length - 1))
                         splitNode.listAllSameOrderWords(wordNodes, strBuilder, allowPossiblyOffensive)
                         ngramList.addAll(wordNodes)
                     }
                     if (ngramList.size < maxTokenCount) {
-                        val wordNodes = StagedSuggestionList<String, Int>(maxTokenCount)
+                        val wordNodes = SuggestionList.new(maxTokenCount)
                         val strBuilder = StringBuilder()
                         currentNode.listSimilarWords(word, wordNodes, strBuilder, allowPossiblyOffensive, maxEditDistance)
                         ngramList.addAll(wordNodes)
