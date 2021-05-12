@@ -2,8 +2,7 @@ package dev.patrickgold.florisboard.ime.text.nlp
 
 import dev.patrickgold.florisboard.ime.nlp.NgramNode
 import dev.patrickgold.florisboard.ime.nlp.NgramTree
-import dev.patrickgold.florisboard.ime.nlp.StagedSuggestionList
-import dev.patrickgold.florisboard.ime.nlp.WeightedToken
+import dev.patrickgold.florisboard.ime.nlp.SuggestionList
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
@@ -49,11 +48,11 @@ class NgramNodeTest {
 
     @Test
     fun listAllSameOrderWords_returnsCorrectList_forGivenPrefix() {
-        val words = StagedSuggestionList<String, Int>(4)
+        val words = SuggestionList<String, Int>(4)
         ngramTreeToBeTested.higherOrderChildren['t'].listAllSameOrderWords(words, true)
         assertThat(
             words,
-            `is`(StagedSuggestionList<String, Int>(4).apply {
+            `is`(SuggestionList<String, Int>(4).apply {
                 add("the", 255)
                 add("them", 230)
                 add("to", 220)

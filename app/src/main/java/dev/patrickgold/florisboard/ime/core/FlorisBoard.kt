@@ -140,6 +140,8 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         textInputManager = TextInputManager.getInstance()
         mediaInputManager = MediaInputManager.getInstance()
         clipInputManager = ClipboardInputManager.getInstance()
+
+        System.loadLibrary("florisboard-native")
     }
 
     lateinit var asyncExecutor: ExecutorService

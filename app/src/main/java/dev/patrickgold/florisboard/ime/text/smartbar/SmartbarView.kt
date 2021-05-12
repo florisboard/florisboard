@@ -28,6 +28,7 @@ import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.nlp.SuggestionList
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.theme.Theme
@@ -275,7 +276,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
         }
     }
 
-    fun setCandidateSuggestionWords(suggestionInitDate: Long, suggestions: List<String>?) {
+    fun setCandidateSuggestionWords(suggestionInitDate: Long, suggestions: SuggestionList?) {
         if (suggestionInitDate > lastSuggestionInitDate) {
             lastSuggestionInitDate = suggestionInitDate
             binding.candidates.updateCandidates(suggestions)

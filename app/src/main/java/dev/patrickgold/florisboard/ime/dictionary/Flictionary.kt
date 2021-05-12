@@ -30,15 +30,15 @@ import kotlin.jvm.Throws
  * This class accepts binary dictionary files of the type "flict" as defined in here:
  * https://github.com/florisboard/dictionary-tools/blob/main/flictionary.md
  */
+/**
 class Flictionary private constructor(
     override val name: String,
     override val label: String,
     override val authors: List<String>,
     private val date: Long,
     private val version: Int,
-    private val headerStr: String,
-    override val languageModel: LanguageModel<String, Int>
-) : Dictionary<String, Int> {
+    private val headerStr: String
+) : Dictionary {
     companion object {
         private const val VERSION_0 =                           0x0
 
@@ -427,3 +427,4 @@ fun InputStream.readNext(b: ByteArray, off: Int, len: Int): Int {
     }
     return lenRead
 }
+*/

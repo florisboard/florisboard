@@ -38,10 +38,23 @@ android {
                 )
             }
         }
+
+        externalNativeBuild {
+            cmake {
+                cppFlags("-std=c++17", "-fexceptions", "-frtti")
+                arguments("-DANDROID_STL=c++_static")
+            }
+        }
     }
 
     buildFeatures {
         viewBinding = true
+    }
+
+    externalNativeBuild {
+        cmake {
+            path("src/main/cpp/CMakeLists.txt")
+        }
     }
 
     buildTypes {

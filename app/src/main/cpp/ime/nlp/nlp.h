@@ -14,11 +14,19 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.nlp
+#ifndef FLORISBOARD_NLP_H
+#define FLORISBOARD_NLP_H
 
-class TextProcessor {
-    data class Word(
-        val word: String,
-        val isPossiblyOffensive: Boolean = false
-    )
-}
+#include <string>
+
+namespace ime::nlp {
+
+typedef std::string word_t;
+typedef uint16_t freq_t;
+
+const freq_t FREQ_VALUE_MASK =          0xFF;
+const freq_t FREQ_POSSIBLY_OFFENSIVE =  0x01;
+
+} // namespace ime::nlp
+
+#endif // FLORISBOARD_NLP_H
