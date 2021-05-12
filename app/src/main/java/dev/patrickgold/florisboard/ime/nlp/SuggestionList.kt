@@ -16,10 +16,13 @@
 
 package dev.patrickgold.florisboard.ime.nlp
 
+import dev.patrickgold.florisboard.ime.core.NativeInstanceWrapper
+import dev.patrickgold.florisboard.ime.core.NativePtr
+
 @JvmInline
 value class SuggestionList private constructor(
-    private val nativePtr: NativePtr
-) : Collection<String> {
+    private val _nativePtr: NativePtr
+) : Collection<String>, NativeInstanceWrapper {
     companion object {
         fun new(maxSize: Int): SuggestionList {
             val nativePtr = nativeInitialize(maxSize)
@@ -37,18 +40,18 @@ value class SuggestionList private constructor(
     }
 
     override val size: Int
-        get() = nativeSize(nativePtr)
+        get() = nativeSize(_nativePtr)
 
     fun add(word: Word, freq: Freq): Boolean {
-        return nativeAdd(nativePtr, word, freq)
+        return nativeAdd(_nativePtr, word, freq)
     }
 
     fun clear() {
-        nativeClear(nativePtr)
+        nativeClear(_nativePtr)
     }
 
     override fun contains(element: Word): Boolean {
-        return nativeContains(nativePtr, element)
+        return nativeContains(_nativePtr, element)
     }
 
     override fun containsAll(elements: Collection<Word>): Boolean {
@@ -67,7 +70,7 @@ value class SuggestionList private constructor(
     }
 
     fun getOrNull(index: Int): Word? {
-        return nativeGetOrNull(nativePtr, index)
+        return nativeGetOrNull(_nativePtr, index)
     }
 
     override fun isEmpty(): Boolean = size <= 0
@@ -76,8 +79,12 @@ value class SuggestionList private constructor(
         return SuggestionListIterator(this)
     }
 
-    fun dispose() {
-        nativeDispose(nativePtr)
+    override fun nativePtr(): NativePtr {
+        return _nativePtr
+    }
+
+    override fun dispose() {
+        nativeDispose(_nativePtr)
     }
 
     class SuggestionListIterator internal constructor (

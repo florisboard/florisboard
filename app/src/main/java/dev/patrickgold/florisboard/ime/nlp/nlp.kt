@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.nlp
 
-typealias NativePtr = Long
 typealias Word = String
 typealias Freq = Int
 

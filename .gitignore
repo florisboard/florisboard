@@ -41,6 +41,8 @@ captures/
 *.jks
 crowdin.properties
 
+# C++
+.cxx/
+
 # AndroidX Room schema JSONs
 /app/schemas/
-/app/.cxx/

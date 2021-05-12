@@ -146,8 +146,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
 
     lateinit var asyncExecutor: ExecutorService
 
-    external fun jniHelloWorld(): String
-
     companion object {
         @Synchronized
         fun getInstance(): FlorisBoard {
@@ -194,7 +192,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
                     .build()
             )
         }*/
-        flogInfo(LogTopic.IMS_EVENTS) { jniHelloWorld() }
+        flogInfo(LogTopic.IMS_EVENTS)
         serviceLifecycleDispatcher.onServicePreSuperOnCreate()
 
         imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager

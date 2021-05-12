@@ -25,8 +25,8 @@ Java_dev_patrickgold_florisboard_ime_nlp_SuggestionList_00024Companion_nativeIni
         JNIEnv *env,
         jobject thiz,
         jint max_size) {
-    auto *stagedSuggestionList = new SuggestionList(max_size);
-    return reinterpret_cast<jlong>(stagedSuggestionList);
+    auto *suggestionList = new SuggestionList(max_size);
+    return reinterpret_cast<jlong>(suggestionList);
 }
 
 extern "C"
@@ -99,6 +99,6 @@ Java_dev_patrickgold_florisboard_ime_nlp_SuggestionList_00024Companion_nativeSiz
         JNIEnv *env,
         jobject thiz,
         jlong native_ptr) {
-    auto *stagedSuggestionList = reinterpret_cast<SuggestionList *>(native_ptr);
-    return stagedSuggestionList->size();
+    auto *suggestionList = reinterpret_cast<SuggestionList *>(native_ptr);
+    return suggestionList->size();
 }

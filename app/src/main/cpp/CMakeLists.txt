@@ -17,7 +17,6 @@ add_library(
         SHARED
 
         # Sources
-        native-lib.cpp
         dev_patrickgold_florisboard_ime_nlp_SuggestionList.cpp
 )
 
