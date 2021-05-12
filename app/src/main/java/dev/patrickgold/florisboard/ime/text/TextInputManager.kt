@@ -27,13 +27,10 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.*
-import dev.patrickgold.florisboard.ime.dictionary.Dictionary
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
-import dev.patrickgold.florisboard.ime.nlp.Token
-import dev.patrickgold.florisboard.ime.nlp.toStringList
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.*
@@ -42,7 +39,6 @@ import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import kotlinx.coroutines.*
 import org.json.JSONArray
-import java.util.*
 import kotlin.math.roundToLong
 
 /**
@@ -74,8 +70,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     lateinit var textKeyboardIconSet: TextKeyboardIconSet
         private set
     private var textViewGroup: LinearLayout? = null
-    private val dictionaryManager: DictionaryManager = DictionaryManager.default()
-    private var activeDictionary: Dictionary<String, Int>? = null
+    private val dictionaryManager: DictionaryManager get() = DictionaryManager.default()
     val inputEventDispatcher: InputEventDispatcher = InputEventDispatcher.new(
         repeatableKeyCodes = intArrayOf(
             KeyCode.ARROW_DOWN,
@@ -420,11 +415,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     override fun onSubtypeChanged(newSubtype: Subtype) {
         launch {
             if (activeEditorInstance.isComposingEnabled) {
-                withContext(Dispatchers.IO) {
-                    dictionaryManager.loadDictionary(AssetRef(AssetSource.Assets, "ime/dict/en.flict")).let {
-                        activeDictionary = it.getOrDefault(null)
-                    }
-                }
+                dictionaryManager.prepareDictionaries(newSubtype)
             }
             if (prefs.glide.enabled) {
                 GlideTypingManager.getInstance().setWordData(newSubtype)
@@ -447,27 +438,23 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         if (activeEditorInstance.isComposingEnabled && !inputEventDispatcher.isPressed(KeyCode.DELETE) && !isGlidePostEffect) {
             if (activeEditorInstance.shouldReevaluateComposingSuggestions) {
                 activeEditorInstance.shouldReevaluateComposingSuggestions = false
-                activeDictionary?.let {
-                    launch(Dispatchers.Default) {
-                        val startTime = System.nanoTime()
-                        val suggestions = queryUserDictionary(
-                            activeEditorInstance.cachedInput.currentWord.text,
-                            florisboard.activeSubtype.locale
-                        ).toMutableList()
-                        suggestions.addAll(it.getTokenPredictions(
-                            precedingTokens = listOf(),
-                            currentToken = Token(activeEditorInstance.cachedInput.currentWord.text),
-                            maxSuggestionCount = 16,
-                            allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive
-                        ).toStringList())
-                        if (BuildConfig.DEBUG) {
-                            val elapsed = (System.nanoTime() - startTime) / 1000.0
-                            flogInfo { "sugg fetch time: $elapsed us" }
-                        }
+                launch(Dispatchers.Default) {
+                    val startTime = System.nanoTime()
+                    dictionaryManager.suggest(
+                        currentWord = activeEditorInstance.cachedInput.currentWord.text,
+                        preceidingWords = listOf(),
+                        subtype = florisboard.activeSubtype,
+                        allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive,
+                        maxSuggestionCount = 16
+                    ) { suggestions ->
                         withContext(Dispatchers.Main) {
                             smartbarView?.setCandidateSuggestionWords(startTime, suggestions)
                             smartbarView?.updateCandidateSuggestionCapsState()
                         }
+                    }
+                    if (BuildConfig.DEBUG) {
+                        val elapsed = (System.nanoTime() - startTime) / 1000.0
+                        flogInfo { "sugg fetch time: $elapsed us" }
                     }
                 }
             } else {
@@ -478,40 +465,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     override fun onPrimaryClipChanged() {
         smartbarView?.onPrimaryClipChanged()
-    }
-
-    private fun queryUserDictionary(word: String, locale: Locale): Set<String> {
-        val florisDao = dictionaryManager.florisUserDictionaryDao()
-        val systemDao = dictionaryManager.systemUserDictionaryDao()
-        if (florisDao == null && systemDao == null) {
-            return setOf()
-        }
-        val retList = mutableSetOf<String>()
-        if (prefs.dictionary.enableFlorisUserDictionary) {
-            florisDao?.query(word, locale)?.let {
-                for (entry in it) {
-                    retList.add(entry.word)
-                }
-            }
-            florisDao?.queryShortcut(word, locale)?.let {
-                for (entry in it) {
-                    retList.add(entry.word)
-                }
-            }
-        }
-        if (prefs.dictionary.enableSystemUserDictionary) {
-            systemDao?.query(word, locale)?.let {
-                for (entry in it) {
-                    retList.add(entry.word)
-                }
-            }
-            systemDao?.queryShortcut(word, locale)?.let {
-                for (entry in it) {
-                    retList.add(entry.word)
-                }
-            }
-        }
-        return retList
     }
 
     /**

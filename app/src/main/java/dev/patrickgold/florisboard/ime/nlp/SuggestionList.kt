@@ -36,6 +36,8 @@ value class SuggestionList private constructor(
         external fun nativeClear(nativePtr: NativePtr)
         external fun nativeContains(nativePtr: NativePtr, element: Word): Boolean
         external fun nativeGetOrNull(nativePtr: NativePtr, index: Int): Word?
+        external fun nativeGetIsPrimaryTokenAutoInsert(nativePtr: NativePtr): Boolean
+        external fun nativeSetIsPrimaryTokenAutoInsert(nativePtr: NativePtr, v: Boolean)
         external fun nativeSize(nativePtr: NativePtr): Int
     }
 
@@ -74,6 +76,9 @@ value class SuggestionList private constructor(
     }
 
     override fun isEmpty(): Boolean = size <= 0
+
+    val isPrimaryTokenAutoInsert: Boolean
+        get() = nativeGetIsPrimaryTokenAutoInsert(_nativePtr)
 
     override fun iterator(): Iterator<Word> {
         return SuggestionListIterator(this)

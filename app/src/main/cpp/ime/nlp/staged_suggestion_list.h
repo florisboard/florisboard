@@ -37,6 +37,8 @@ public:
     bool isEmpty() const;
     size_t size() const;
 
+    bool isPrimaryTokenAutoInsert;
+
 private:
     WeightedToken** internalArray;
     size_t internalSize;

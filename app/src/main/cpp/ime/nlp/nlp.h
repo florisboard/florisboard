@@ -22,10 +22,9 @@
 namespace ime::nlp {
 
 typedef std::string word_t;
-typedef int16_t freq_t;
+typedef uint16_t freq_t;
 
-const freq_t FREQ_MIN =                 0x00;
-const freq_t FREQ_MAX =                 0xFF;
+const freq_t FREQ_VALUE_MASK =          0xFF;
 const freq_t FREQ_POSSIBLY_OFFENSIVE =  0x01;
 
 } // namespace ime::nlp

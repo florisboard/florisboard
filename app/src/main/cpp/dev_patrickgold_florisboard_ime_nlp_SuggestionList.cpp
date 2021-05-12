@@ -36,6 +36,7 @@ Java_dev_patrickgold_florisboard_ime_nlp_SuggestionList_00024Companion_nativeDis
         jobject thiz,
         jlong native_ptr) {
     auto *suggestionList = reinterpret_cast<SuggestionList *>(native_ptr);
+    suggestionList->clear();
     delete suggestionList;
 }
 
@@ -101,4 +102,20 @@ Java_dev_patrickgold_florisboard_ime_nlp_SuggestionList_00024Companion_nativeSiz
         jlong native_ptr) {
     auto *suggestionList = reinterpret_cast<SuggestionList *>(native_ptr);
     return suggestionList->size();
+}
+
+extern "C"
+JNIEXPORT jboolean JNICALL
+Java_dev_patrickgold_florisboard_ime_nlp_SuggestionList_00024Companion_nativeGetIsPrimaryTokenAutoInsert(
+        JNIEnv *env, jobject thiz, jlong native_ptr) {
+    auto *suggestionList = reinterpret_cast<SuggestionList *>(native_ptr);
+    return suggestionList->isPrimaryTokenAutoInsert;
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_dev_patrickgold_florisboard_ime_nlp_SuggestionList_00024Companion_nativeSetIsPrimaryTokenAutoInsert(
+        JNIEnv *env, jobject thiz, jlong native_ptr, jboolean v) {
+    auto *suggestionList = reinterpret_cast<SuggestionList *>(native_ptr);
+    suggestionList->isPrimaryTokenAutoInsert = v;
 }

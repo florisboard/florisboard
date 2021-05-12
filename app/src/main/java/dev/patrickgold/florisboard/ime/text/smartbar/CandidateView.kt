@@ -36,6 +36,7 @@ import androidx.core.graphics.ColorUtils
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.nlp.SuggestionList
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
@@ -100,7 +101,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         themeManager = ThemeManager.defaultOrNull()
         themeManager?.registerOnThemeUpdatedListener(this)
         florisClipboardManager = FlorisClipboardManager.getInstanceOrNull()
-        updateCandidates(candidates)
+        recomputeCandidates()
     }
 
     override fun onDetachedFromWindow() {
@@ -113,7 +114,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         velocityTracker = null
     }
 
-    fun updateCandidates(newCandidates: List<String>?) {
+    fun updateCandidates(newCandidates: SuggestionList?) {
         candidates.clear()
         if (newCandidates != null) {
             candidates.addAll(newCandidates)

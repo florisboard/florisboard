@@ -21,7 +21,7 @@
 using namespace ime::nlp;
 
 SuggestionList::SuggestionList(size_t _maxSize) :
-    maxSize(_maxSize), internalSize(0), internalArray(new WeightedToken*[_maxSize])
+    maxSize(_maxSize), internalSize(0), internalArray(new WeightedToken*[_maxSize]), isPrimaryTokenAutoInsert(false)
 {
     // Initialize the internal array to null pointers
     for (size_t n = 0; n < maxSize; n++) {
@@ -66,6 +66,7 @@ void SuggestionList::clear() {
         internalArray[n] = nullptr;
     }
     internalSize = 0;
+    isPrimaryTokenAutoInsert = false;
 }
 
 bool SuggestionList::contains(WeightedToken &element) {
