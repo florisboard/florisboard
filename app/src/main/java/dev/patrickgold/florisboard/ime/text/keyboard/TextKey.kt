@@ -26,7 +26,8 @@ class TextKey(override val data: KeyData) : Key(data) {
     var computedData: TextKeyData = TextKeyData.UNSPECIFIED
         private set
     val computedPopups: MutablePopupSet<TextKeyData> = MutablePopupSet()
-    var computedHint: TextKeyData? = null
+    var computedSymbolHint: TextKeyData? = null
+    var computedNumberHint: TextKeyData? = null
 
     fun compute(evaluator: TextComputingEvaluator) {
         val keyboardMode = evaluator.getKeyboard().mode
@@ -44,10 +45,7 @@ class TextKey(override val data: KeyData) : Key(data) {
         } else {
             computedData = computed
             computedPopups.clear()
-            computedPopups.hint = computedHint?.computeTextKeyData(evaluator)
-            if (computed is BasicTextKeyData && computed.popup != null) {
-                computedPopups.merge(computed.popup, evaluator)
-            }
+            mergePopups(computed, evaluator, computedPopups::merge)
             if (keyboardMode == KeyboardMode.CHARACTERS || keyboardMode == KeyboardMode.NUMERIC_ADVANCED ||
                 keyboardMode == KeyboardMode.SYMBOLS || keyboardMode == KeyboardMode.SYMBOLS2) {
                 val extLabel = when (computed.groupId) {
@@ -96,6 +94,24 @@ class TextKey(override val data: KeyData) : Key(data) {
                 computedPopups.apply {
                     keySpecificPopupSet?.let { merge(it, evaluator) }
                     popupSet?.let { merge(it, evaluator) }
+                }
+                val symbolHint = computedSymbolHint
+                if (symbolHint != null) {
+                    val evaluatedSymbolHint = symbolHint.computeTextKeyData(evaluator)
+                    computedPopups.symbolHint = evaluatedSymbolHint
+                    mergePopups(evaluatedSymbolHint, evaluator, computedPopups::mergeSymbolHint)
+                    val hintSpecificPopupSet = extendedPopups?.get(KeyVariation.ALL)?.get(symbolHint.label) ?:
+                            extendedPopupsDefault?.get(KeyVariation.ALL)?.get(symbolHint.label)
+                    hintSpecificPopupSet?.let { computedPopups.mergeSymbolHint(it, evaluator) }
+                }
+                val numericHint = computedNumberHint
+                if (numericHint != null) {
+                    val evaluatedNumberHint = numericHint.computeTextKeyData(evaluator)
+                    computedPopups.numberHint = evaluatedNumberHint
+                    mergePopups(evaluatedNumberHint, evaluator, computedPopups::mergeNumberHint)
+                    val hintSpecificPopupSet = extendedPopups?.get(KeyVariation.ALL)?.get(numericHint.label) ?:
+                    extendedPopupsDefault?.get(KeyVariation.ALL)?.get(numericHint.label)
+                    hintSpecificPopupSet?.let { computedPopups.mergeNumberHint(it, evaluator) }
                 }
             }
             isEnabled = evaluator.evaluateEnabled(computed)
@@ -148,6 +164,16 @@ class TextKey(override val data: KeyData) : Key(data) {
                     else -> 1.00
                 }
             }
+        }
+    }
+
+    private fun mergePopups(
+        keyData: TextKeyData?,
+        evaluator: TextComputingEvaluator,
+        merge: (popups: PopupSet<TextKeyData>, evaluator: TextComputingEvaluator) -> Unit
+    ) {
+        if (keyData is BasicTextKeyData && keyData.popup != null) {
+            merge(keyData.popup, evaluator)
         }
     }
 }

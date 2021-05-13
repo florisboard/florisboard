@@ -218,22 +218,21 @@ class LayoutManager {
         // Add hints to keys
         if (keyboardMode == KeyboardMode.CHARACTERS) {
             val symbolsComputedArrangement = computeKeyboardAsync(KeyboardMode.SYMBOLS, subtype).await().arrangement
-            val minRow = if (prefs.keyboard.numberRow) { 1 } else { 0 }
+            // number row hint always happens on first row
+            if (prefs.keyboard.hintedNumberRowMode != KeyHintMode.DISABLED) {
+                val row = computedArrangement[0]
+                val symbolRow = symbolsComputedArrangement[0]
+                addRowHints(row, symbolRow, KeyType.NUMERIC)
+            }
+            // all other symbols are added bottom-aligned
+            val rOffset = computedArrangement.size - symbolsComputedArrangement.size
             for ((r, row) in computedArrangement.withIndex()) {
-                if (r >= (3 + minRow) || r < minRow) {
+                if (r < rOffset) {
                     continue
                 }
-                val symbolRow = symbolsComputedArrangement.getOrNull(r - minRow)
+                val symbolRow = symbolsComputedArrangement.getOrNull(r - rOffset)
                 if (symbolRow != null) {
-                    for ((k, key) in row.withIndex()) {
-                        val symbol = symbolRow.getOrNull(k)?.data?.computeTextKeyData(DefaultTextComputingEvaluator)
-                        val type = (key.data as? TextKeyData)?.type ?: KeyType.UNSPECIFIED
-                        if (r == minRow && type == KeyType.CHARACTER && symbol?.type == KeyType.NUMERIC) {
-                            key.computedHint = symbol
-                        } else if (r > minRow && type == KeyType.CHARACTER && symbol?.type == KeyType.CHARACTER) {
-                            key.computedHint = symbol
-                        }
-                    }
+                    addRowHints(row, symbolRow, KeyType.CHARACTER)
                 }
             }
         }
@@ -249,6 +248,35 @@ class LayoutManager {
                 flogWarning(LogTopic.LAYOUT_MANAGER) { it.toString() }
             }.getOrNull()?.mapping
         )
+    }
+
+    private fun addRowHints(main: Array<TextKey>, hint: Array<TextKey>, hintType: KeyType) {
+        for ((k,key) in main.withIndex()) {
+            val keyData = (key.data as? TextKeyData)
+            if (keyData?.type != KeyType.CHARACTER) {
+                continue
+            }
+            val hintKey = hint.getOrNull(k)?.data?.computeTextKeyData(DefaultTextComputingEvaluator)
+            if (hintKey?.type != hintType) {
+                continue
+            }
+
+            // if hint key is identical to main key, no merging is needed
+            if (hintKey.code == keyData.code) {
+                continue
+            }
+            when (hintType) {
+                KeyType.CHARACTER -> {
+                    key.computedSymbolHint = hintKey
+                }
+                KeyType.NUMERIC -> {
+                    key.computedNumberHint = hintKey
+                }
+                else -> {
+                    // do nothing
+                }
+            }
+        }
     }
 
     /**
