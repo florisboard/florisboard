@@ -17,10 +17,12 @@ interface Composer {
 
 @Serializable
 @SerialName("appender")
-public class Appender(
-    override val name: String,
-    override val label: String
-): Composer {
+public class Appender: Composer {
+    companion object {
+        const val name = "appender"
+    }
+    override val name: String = Appender.name
+    override val label: String = "Appender"
     override val toRead: Int = 0
 
     override fun getActions(s: String, c: Char): Pair<Int, String> {

@@ -5,10 +5,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 @SerialName("hangul-unicode")
-class HangulUnicode(
-    override val name: String,
-    override val label: String
-): Composer {
+class HangulUnicode: Composer {
+    override val name: String = "hangul-unicode"
+    override val label: String = "Hangul Unicode"
     override val toRead: Int = 1
 
     // Initial consonants, ordered for syllable creation
