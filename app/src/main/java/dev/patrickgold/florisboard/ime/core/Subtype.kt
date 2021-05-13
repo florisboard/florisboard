@@ -92,6 +92,7 @@ data class Subtype(
     init {
         var result = id
         result = 31 * result + locale.hashCode()
+        result = 31 * result + composerName.hashCode()
         result = 31 * result + currencySetName.hashCode()
         result = 31 * result + layoutMap.hashCode()
         _hashCode = result
@@ -123,6 +124,7 @@ data class Subtype(
 
         if (id != other.id) return false
         if (locale != other.locale) return false
+        if (composerName != other.composerName) return false
         if (currencySetName != other.currencySetName) return false
         if (layoutMap != other.layoutMap) return false
 
