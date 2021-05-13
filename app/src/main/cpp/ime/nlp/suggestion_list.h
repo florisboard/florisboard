@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-#ifndef FLORISBOARD_STAGED_SUGGESTION_LIST_H
-#define FLORISBOARD_STAGED_SUGGESTION_LIST_H
+#ifndef FLORISBOARD_SUGGESTION_LIST_H
+#define FLORISBOARD_SUGGESTION_LIST_H
 
 #include <optional>
+#include <vector>
 #include "token.h"
 
 namespace ime::nlp {
@@ -27,24 +28,24 @@ public:
     SuggestionList(size_t _maxSize);
     ~SuggestionList();
 
-    bool add(word_t word, freq_t freq);
+    bool add(word_t &&word, freq_t &&freq);
     void clear();
-    bool contains(WeightedToken &element);
-    bool containsWord(const word_t &word);
-    WeightedToken* get(size_t index);
-    std::optional<size_t> indexOf(WeightedToken &element);
-    std::optional<size_t> indexOfWord(const word_t &word);
+    bool contains(const WeightedToken &element) const;
+    bool containsWord(const word_t &word) const;
+    const WeightedToken *get(size_t index) const;
+    std::optional<size_t> indexOf(const WeightedToken &element) const;
+    std::optional<size_t> indexOfWord(const word_t &word) const;
     bool isEmpty() const;
     size_t size() const;
 
     bool isPrimaryTokenAutoInsert;
 
 private:
-    WeightedToken** internalArray;
+    std::vector<WeightedToken> tokens;
     size_t internalSize;
     size_t maxSize;
 };
 
-}
+} // namespace ime::nlp
 
-#endif //FLORISBOARD_STAGED_SUGGESTION_LIST_H
+#endif // FLORISBOARD_SUGGESTION_LIST_H

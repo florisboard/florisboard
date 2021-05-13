@@ -5,9 +5,9 @@ add_library(
         # Headers
         nlp.h
         token.h
-        staged_suggestion_list.h
+        suggestion_list.h
 
         # Sources
         token.cpp
-        staged_suggestion_list.cpp
+        suggestion_list.cpp
 )
