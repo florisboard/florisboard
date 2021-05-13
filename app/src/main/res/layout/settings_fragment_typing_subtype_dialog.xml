@@ -40,6 +40,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"/>
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
+                android:text="@string/settings__localization__subtype_composer" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/composer_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="48dp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -108,22 +120,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingTop="8dp">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="8dp"
-                android:text="@string/settings__localization__subtype_composer" />
-
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/composer_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="48dp" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="24dp" />
 
             <TextView
                 android:layout_width="match_parent"
