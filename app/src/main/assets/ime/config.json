@@ -300,6 +300,16 @@
       }
     },
     {
+      "id": 204,
+      "languageTag": "de-DE-neobone",
+      "currencySet": "euro",
+      "preferred": {
+        "characters": "neo2",
+        "symbols": "neo2",
+        "numericRow": "neo2"
+      }
+    },
+    {
       "id": 301,
       "languageTag": "fr-FR",
       "currencySet": "euro",

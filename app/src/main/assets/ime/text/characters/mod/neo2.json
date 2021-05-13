@@ -1,0 +1,53 @@
+{
+  "type": "characters/mod",
+  "name": "neo2",
+  "label": "Neo2",
+  "authors": [ "ostrya" ],
+  "direction": "ltr",
+  "arrangement": [
+    [
+      { "code":   -1, "label": "shift", "type": "modifier" },
+      { "code":    0, "type": "placeholder" },
+      { "code":   -5, "label": "delete", "type": "enter_editing" }
+    ],
+    [
+      { "code": -202, "label": "view_symbols", "type": "system_gui" },
+      { "code": -210, "label": "language_switch", "type": "system_gui" },
+      { "code": -213, "label": "switch_to_media_context", "type": "system_gui" },
+      { "code":   32, "label": "space" },
+      { "$": "variation_selector",
+        "default":  { "code":   44, "label": ",", "groupId": 1,
+          "popup": {
+            "main": { "code":   34, "label": "\"" },
+            "relevant": [
+              { "code": 8211, "label": "–" }
+            ]
+          } },
+        "email": { "code":   64, "label": "@", "groupId": 1,
+          "popup": {
+            "relevant": [
+              { "code": 44, "label": "," }
+            ]
+          } },
+        "uri": { "code":   47, "label": "/", "groupId": 1,
+          "popup": {
+            "relevant": [
+              { "code": 44, "label": "," }
+            ]
+          } }
+      },
+      { "$": "variation_selector",
+        "default": { "code":   46, "label": ".", "groupId": 2,
+          "popup": {
+            "relevant": [
+              { "code":  183, "label": "·" },
+              { "code":   39, "label": "'" }
+            ]
+          } },
+        "email": { "code":   46, "label": ".", "groupId": 2 },
+        "uri": { "code":   46, "label": ".", "groupId": 2 }
+      },
+      { "code":   10, "label": "enter", "groupId": 3, "type": "enter_editing" }
+    ]
+  ]
+}

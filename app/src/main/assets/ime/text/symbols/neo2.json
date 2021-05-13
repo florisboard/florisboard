@@ -1,0 +1,46 @@
+{
+  "type": "symbols",
+  "name": "neo2",
+  "label": "Neo2",
+  "authors": [ "ostrya" ],
+  "direction": "ltr",
+  "modifier": "neo2",
+  "arrangement": [
+    [
+      { "code": 8230, "label": "…" },
+      { "code":   95, "label": "_" },
+      { "code":   91, "label": "[" },
+      { "code":   93, "label": "]" },
+      { "code":   94, "label": "^" },
+      { "code":   33, "label": "!" },
+      { "code":   60, "label": "<" },
+      { "code":   62, "label": ">" },
+      { "code":   61, "label": "=" },
+      { "code":   38, "label": "&" },
+      { "code":  383, "label": "ſ" }
+    ],
+    [
+      { "code":   92, "label": "\\" },
+      { "code":   47, "label": "/" },
+      { "code":  123, "label": "{" },
+      { "code":  125, "label": "}" },
+      { "code":   42, "label": "*" },
+      { "code":   63, "label": "?" },
+      { "code":   40, "label": "(" },
+      { "code":   41, "label": ")" },
+      { "code":   45, "label": "-" },
+      { "code":   58, "label": ":" },
+      { "code":   64, "label": "@" }
+    ],
+    [
+      { "code":   35, "label": "#" },
+      { "code":   36, "label": "$" },
+      { "code":  124, "label": "|" },
+      { "code":  126, "label": "~" },
+      { "code":   96, "label": "`" },
+      { "code":   43, "label": "+" },
+      { "code":   37, "label": "%" },
+      { "code":   59, "label": ";" }
+    ]
+  ]
+}
