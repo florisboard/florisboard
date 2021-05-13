@@ -129,7 +129,9 @@ class Preferences(
     }
 
     companion object {
-        private val OLD_SUBTYPES_REGEX = """^([\-0-9]+/[\-a-zA-Z0-9]+/[a-zA-Z_]+[;]*)+${'$'}""".toRegex()
+        // old settings are id/language/layout and id/language/currencySet/layout
+        // new settings have composer
+        private val OLD_SUBTYPES_REGEX = """^([\-0-9]+/[\-a-zA-Z0-9]+(/[a-zA-Z_]+)?/[a-zA-Z_]+[;]*)+${'$'}""".toRegex()
         private var defaultInstance: Preferences? = null
 
         @Synchronized

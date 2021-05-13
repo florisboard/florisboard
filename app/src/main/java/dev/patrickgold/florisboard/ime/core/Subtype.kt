@@ -72,18 +72,29 @@ data class Subtype(
          */
         fun fromString(str: String): Subtype {
             val data = str.split("/")
-            if (data.size != 5) {
-                throw InvalidPropertiesFormatException(
+            when (data.size) {
+                4 -> {
+                    val locale = LocaleUtils.stringToLocale(data[1])
+                    return Subtype(
+                        data[0].toInt(),
+                        locale,
+                        Appender.name,
+                        data[2],
+                        SubtypeLayoutMap.fromString(data[3])
+                    )
+                }
+                5 -> {
+                    val locale = LocaleUtils.stringToLocale(data[1])
+                    return Subtype(
+                        data[0].toInt(),
+                        locale,
+                        data[2],
+                        data[3],
+                        SubtypeLayoutMap.fromString(data[4])
+                    )
+                }
+                else -> throw InvalidPropertiesFormatException(
                     "Given string contains more or less than 5 properties..."
-                )
-            } else {
-                val locale = LocaleUtils.stringToLocale(data[1])
-                return Subtype(
-                    data[0].toInt(),
-                    locale,
-                    data[2],
-                    data[3],
-                    SubtypeLayoutMap.fromString(data[4])
                 )
             }
         }
