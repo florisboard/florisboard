@@ -22,7 +22,7 @@ import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
 
@@ -37,12 +37,12 @@ class KeyboardFragment : PreferenceFragmentCompat(),
         addPreferencesFromResource(R.xml.prefs_keyboard)
         sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
 
-        heightFactorCustom = findPreference(PrefHelper.Keyboard.HEIGHT_FACTOR_CUSTOM)
-        oneHandedModeScaleFactor = findPreference(PrefHelper.Keyboard.ONE_HANDED_MODE_SCALE_FACTOR)
-        utilityKeyAction = findPreference(PrefHelper.Keyboard.UTILITY_KEY_ACTION)
-        onSharedPreferenceChanged(null, PrefHelper.Keyboard.HEIGHT_FACTOR)
-        onSharedPreferenceChanged(null, PrefHelper.Keyboard.ONE_HANDED_MODE)
-        onSharedPreferenceChanged(null, PrefHelper.Keyboard.UTILITY_KEY_ENABLED)
+        heightFactorCustom = findPreference(Preferences.Keyboard.HEIGHT_FACTOR_CUSTOM)
+        oneHandedModeScaleFactor = findPreference(Preferences.Keyboard.ONE_HANDED_MODE_SCALE_FACTOR)
+        utilityKeyAction = findPreference(Preferences.Keyboard.UTILITY_KEY_ACTION)
+        onSharedPreferenceChanged(null, Preferences.Keyboard.HEIGHT_FACTOR)
+        onSharedPreferenceChanged(null, Preferences.Keyboard.ONE_HANDED_MODE)
+        onSharedPreferenceChanged(null, Preferences.Keyboard.UTILITY_KEY_ENABLED)
     }
 
     override fun onResume() {
@@ -57,13 +57,13 @@ class KeyboardFragment : PreferenceFragmentCompat(),
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
-            PrefHelper.Keyboard.HEIGHT_FACTOR -> {
+            Preferences.Keyboard.HEIGHT_FACTOR -> {
                 heightFactorCustom?.isVisible = sharedPrefs?.getString(key, "") == "custom"
             }
-            PrefHelper.Keyboard.ONE_HANDED_MODE -> {
+            Preferences.Keyboard.ONE_HANDED_MODE -> {
                 oneHandedModeScaleFactor?.isEnabled = sharedPrefs?.getString(key, "") != OneHandedMode.OFF
             }
-            PrefHelper.Keyboard.UTILITY_KEY_ENABLED -> {
+            Preferences.Keyboard.UTILITY_KEY_ENABLED -> {
                 utilityKeyAction?.isVisible = sharedPrefs?.getBoolean(key, false) == true
             }
         }

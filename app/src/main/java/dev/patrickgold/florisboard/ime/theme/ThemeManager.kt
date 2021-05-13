@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Configuration
@@ -25,7 +24,7 @@ import android.net.Uri
 import android.util.TypedValue
 import androidx.annotation.AttrRes
 import androidx.core.content.ContextCompat
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
@@ -33,16 +32,15 @@ import dev.patrickgold.florisboard.util.TimeUtil
 import timber.log.Timber
 import java.util.concurrent.CopyOnWriteArrayList
 
-
 /**
  * Core class which manages the keyboard theme. Note, that this does not affect the UI theme of the
  * Settings Activities.
  */
 class ThemeManager private constructor(
     private val applicationContext: Context,
-    private val assetManager: AssetManager,
-    private val prefs: PrefHelper
+    private val assetManager: AssetManager
 ) {
+    private val prefs get() = Preferences.default()
     private val callbackReceivers: CopyOnWriteArrayList<OnThemeUpdatedListener> = CopyOnWriteArrayList()
     private val packageManager: PackageManager? = applicationContext.packageManager
 
@@ -67,10 +65,9 @@ class ThemeManager private constructor(
 
         fun init(
             applicationContext: Context,
-            assetManager: AssetManager,
-            prefs: PrefHelper
+            assetManager: AssetManager
         ): ThemeManager {
-            val instance = ThemeManager(applicationContext, assetManager, prefs)
+            val instance = ThemeManager(applicationContext, assetManager)
             defaultInstance = instance
             return instance
         }
@@ -81,7 +78,7 @@ class ThemeManager private constructor(
                 return instance
             } else {
                 throw UninitializedPropertyAccessException(
-                    "${ThemeManager::class.simpleName} has not been initialized previously. Make sure to call init(prefs) before using default()."
+                    "${ThemeManager::class.simpleName} has not been initialized previously. Make sure to call init() before using default()."
                 )
             }
         }

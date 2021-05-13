@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:icon="@drawable/ic_more_vert"
+        android:title="@string/settings__menu"
+        app:showAsAction="always">
+
+        <menu>
+            <item
+                android:id="@+id/udm__import"
+                android:orderInCategory="1"
+                android:title="@string/assets__action__import"/>
+
+            <item
+                android:id="@+id/udm__export"
+                android:orderInCategory="2"
+                android:title="@string/assets__action__export"/>
+
+            <item
+                android:id="@+id/udm__open_system_manager_ui"
+                android:orderInCategory="3"
+                android:title="@string/settings__udm__open_system_manager_ui"/>
+        </menu>
+
+    </item>
+
+</menu>

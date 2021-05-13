@@ -66,6 +66,13 @@
             </intent-filter>
         </activity-alias>
 
+        <!-- User Dictionary Manager Activity -->
+        <activity
+            android:name="dev.patrickgold.florisboard.settings.UdmActivity"
+            android:icon="@mipmap/floris_app_icon"
+            android:label="@string/settings__title"
+            android:theme="@style/SettingsTheme"/>
+
         <!-- Theme Selector Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.settings.ThemeManagerActivity"

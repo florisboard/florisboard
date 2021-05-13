@@ -295,7 +295,6 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">ההתקנה הושלמה!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard דוח שגיאה</string>
-    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">העתקה ללוח העריכה</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">סגור</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard דוח שגיאה</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard הפסיק לעבוד…</string>

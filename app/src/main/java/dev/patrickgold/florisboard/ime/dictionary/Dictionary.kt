@@ -17,40 +17,35 @@
 package dev.patrickgold.florisboard.ime.dictionary
 
 import dev.patrickgold.florisboard.ime.extension.Asset
-import dev.patrickgold.florisboard.ime.nlp.LanguageModel
-import dev.patrickgold.florisboard.ime.nlp.MutableLanguageModel
-import dev.patrickgold.florisboard.ime.nlp.Token
-import dev.patrickgold.florisboard.ime.nlp.WeightedToken
+import dev.patrickgold.florisboard.ime.nlp.SuggestionList
+import dev.patrickgold.florisboard.ime.nlp.Word
 
 /**
  * Standardized dictionary interface for interacting with dictionaries.
  */
-interface Dictionary<T : Any, F : Comparable<F>> : Asset {
-    val languageModel: LanguageModel<T, F>
-
+interface Dictionary : Asset {
     /**
      * Gets token predictions based on the given [precedingTokens] and the [currentToken]. The
      * length of the returned list is limited to [maxSuggestionCount]. Note that the returned list
      * may at any time give back less items than [maxSuggestionCount] indicates.
      */
     fun getTokenPredictions(
-        precedingTokens: List<Token<T>>,
-        currentToken: Token<T>?,
+        precedingTokens: List<Word>,
+        currentToken: Word?,
         maxSuggestionCount: Int,
-        allowPossiblyOffensive: Boolean
-    ): List<WeightedToken<T, F>>
+        allowPossiblyOffensive: Boolean,
+        destSuggestionList: SuggestionList
+    )
 
     fun getDate(): Long
 
     fun getVersion(): Int
 }
 
-interface MutableDictionary<T : Any, F : Comparable<F>> : Dictionary<T, F> {
-    override val languageModel: MutableLanguageModel<T, F>
-
+interface MutableDictionary : Dictionary {
     fun trainTokenPredictions(
-        precedingTokens: List<Token<T>>,
-        lastToken: Token<T>
+        precedingTokens: List<Word>,
+        lastToken: Word
     )
 
     fun setDate(date: Int)

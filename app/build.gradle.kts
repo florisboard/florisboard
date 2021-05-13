@@ -1,9 +1,9 @@
 
 plugins {
-    id("com.android.application") version "4.1.3"
-    kotlin("android") version "1.5.0-RC"
-    kotlin("kapt") version "1.5.0-RC"
-    kotlin("plugin.serialization") version "1.5.0-RC"
+    id("com.android.application") version "4.2.0"
+    kotlin("android") version "1.5.0"
+    kotlin("kapt") version "1.5.0"
+    kotlin("plugin.serialization") version "1.5.0"
 }
 
 android {
@@ -24,14 +24,37 @@ android {
         applicationId = "dev.patrickgold.florisboard"
         minSdkVersion(23)
         targetSdkVersion(30)
-        versionCode(39)
-        versionName("0.3.11")
+        versionCode(43)
+        versionName("0.3.12")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    Pair("room.schemaLocation", "$projectDir/schemas"),
+                    Pair("room.incremental", "true"),
+                    Pair("room.expandProjection", "true")
+                )
+            }
+        }
+
+        externalNativeBuild {
+            cmake {
+                cppFlags("-std=c++17", "-fexceptions", "-frtti")
+                arguments("-DANDROID_STL=c++_static")
+            }
+        }
     }
 
     buildFeatures {
         viewBinding = true
+    }
+
+    externalNativeBuild {
+        cmake {
+            path("src/main/cpp/CMakeLists.txt")
+        }
     }
 
     buildTypes {
@@ -47,7 +70,7 @@ android {
         create("beta") // Needed because by default the "beta" BuildType does not exist
         named("beta").configure {
             applicationIdSuffix = ".beta"
-            versionNameSuffix = "-beta04"
+            versionNameSuffix = "-beta06"
             proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
 
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_beta")
@@ -84,7 +107,7 @@ dependencies {
     implementation("androidx.preference", "preference-ktx", "1.1.1")
     implementation("androidx.constraintlayout", "constraintlayout", "2.0.4")
     implementation("androidx.lifecycle", "lifecycle-service", "2.2.0")
-    implementation("com.google.android", "flexbox", "2.0.1") // requires jcenter as of version 2.0.1
+    implementation("com.google.android", "flexbox", "2.0.1")
     implementation("com.google.android.material", "material", "1.3.0")
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-android", "1.4.2")
     implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.1.0")

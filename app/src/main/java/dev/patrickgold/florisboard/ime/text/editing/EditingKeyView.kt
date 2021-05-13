@@ -31,7 +31,7 @@ import androidx.appcompat.widget.AppCompatImageButton
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.Theme
@@ -45,7 +45,7 @@ import dev.patrickgold.florisboard.util.postAtScheduledRate
  */
 class EditingKeyView : AppCompatImageButton, ThemeManager.OnThemeUpdatedListener {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
-    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+    private val prefs get() = Preferences.default()
     private val themeManager: ThemeManager = ThemeManager.default()
     private val data: TextKeyData = when (id) {
         R.id.arrow_down -> TextKeyData.ARROW_DOWN

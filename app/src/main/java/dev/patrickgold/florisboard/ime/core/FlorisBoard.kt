@@ -27,7 +27,6 @@ import android.media.AudioManager
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.provider.Settings
 import android.view.*
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
@@ -38,7 +37,6 @@ import androidx.annotation.StyleRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.*
-import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.clip.ClipboardInputManager
@@ -93,11 +91,10 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
      * service class should be used directly.
      */
     private var _themeContext: Context? = null
-    private val themeContext: Context
+    val themeContext: Context
         get() = _themeContext ?: this
 
-    lateinit var prefs: PrefHelper
-        private set
+    private val prefs: Preferences get() = Preferences.default()
 
     private var extractEditLayout: WeakReference<ViewGroup?> = WeakReference(null)
     var inputView: InputView? = null
@@ -146,12 +143,13 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         textInputManager = TextInputManager.getInstance()
         mediaInputManager = MediaInputManager.getInstance()
         clipInputManager = ClipboardInputManager.getInstance()
+
+        System.loadLibrary("florisboard-native")
     }
 
     lateinit var asyncExecutor: ExecutorService
 
     companion object {
-
         @Synchronized
         fun getInstance(): FlorisBoard {
             return florisboardInstance!!
@@ -203,8 +201,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         audioManager = getSystemService(Context.AUDIO_SERVICE) as? AudioManager
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
-        prefs = PrefHelper.getDefaultInstance(this)
-        prefs.initDefaultPreferences()
         prefs.sync()
         activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
 

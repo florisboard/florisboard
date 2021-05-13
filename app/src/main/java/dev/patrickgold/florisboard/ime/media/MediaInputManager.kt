@@ -161,9 +161,9 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
      */
     private fun createTabViewFor(tab: Tab): LinearLayout {
         return when (tab) {
-            Tab.EMOJI -> EmojiKeyboardView(florisboard)
-            Tab.EMOTICON -> EmoticonKeyboardView(florisboard)
-            else -> LinearLayout(florisboard).apply {
+            Tab.EMOJI -> EmojiKeyboardView(florisboard.themeContext)
+            Tab.EMOTICON -> EmoticonKeyboardView(florisboard.themeContext)
+            else -> LinearLayout(florisboard.themeContext).apply {
                 addView(TextView(context).apply {
                     text = "not yet implemented"
                 })

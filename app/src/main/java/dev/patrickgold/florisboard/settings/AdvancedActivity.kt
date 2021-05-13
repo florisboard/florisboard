@@ -23,21 +23,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.AdvancedActivityBinding
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.util.PackageManagerUtils
 
 class AdvancedActivity : AppCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener {
     private lateinit var binding: AdvancedActivityBinding
-    private lateinit var prefs: PrefHelper
+    private val prefs get() = Preferences.default()
 
     companion object {
         const val RESULT_APPLY_THEME = 0x322D
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        prefs = PrefHelper.getDefaultInstance(this)
-
         super.onCreate(savedInstanceState)
         binding = AdvancedActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -61,7 +59,7 @@ class AdvancedActivity : AppCompatActivity(),
 
     override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
         prefs.sync()
-        if (key == PrefHelper.Advanced.SETTINGS_THEME) {
+        if (key == Preferences.Advanced.SETTINGS_THEME) {
             setResult(RESULT_APPLY_THEME)
             finish()
         }

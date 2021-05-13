@@ -137,9 +137,9 @@
     <string name="settings__theme__group_extractActionButton" comment="Theme group label">Pulsante d\'azione a schermo intero orizzontale</string>
     <string name="settings__theme__group_glideTrail" comment="Theme group label">Percorso di scorrimento</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Gruppo personalizzato (%s)</string>
-    <string name="settings__theme__attr_background" comment="Theme attribute label">Colore di sfondo</string>
-    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Colore di sfondo (attivo)</string>
-    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Colore di sfondo (premuto)</string>
+    <string name="settings__theme__attr_background" comment="Theme attribute label">Colore sfondo</string>
+    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Colore sfondo (attivo)</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Colore sfondo (premuto)</string>
     <string name="settings__theme__attr_foreground" comment="Theme attribute label">Colore di testo</string>
     <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Colore di testo (alternativo)</string>
     <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Colore di testo (premuto)</string>
@@ -210,6 +210,15 @@
     <string name="pref__smartbar__enabled__label" comment="Preference title">Abilità Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Verrà mostrato in cima alla tastiera</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggerimenti</string>
+    <string name="pref__dictionary__title" comment="Preference group title">Dizionario</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Abilita il dizionario utente di sistema</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Suggerisci le parole contenute nel dizionario utente di sistema</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Gestisci il dizionario utente di sistema</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Aggiungi, visualizza e rimuovi le voci del dizionario utente di sistema</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Abilita il dizionario utente interno</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Suggerisci le parole contenute nel dizionario utente interno</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Gestisci il dizionario utente interno</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Aggiungi, visualizza e rimuovi le voci del dizionario utente interno</string>
     <string name="pref__correction__title" comment="Preference group title">Correzioni</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-maiuscolo</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Rendi maiuscole le parole in base al contesto attuale</string>
@@ -217,6 +226,26 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Il maiuscolo rimarrà attivo quando ti sposti ad un altro campo di testo</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Doppio tocco barra spaziatrice</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Doppio tocco su barra spaziatrice per mettere il punto (.) seguito da uno spazio</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Dizionario utente interno</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Dizionario utente di sistema</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frequenza: %d</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frequenza: %d | Scorciatoia: %s</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Per tutte le lingue</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Apri l\'interfaccia di gestione del sistema</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Dizionario utente importato con successo!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Dizionario utente esportato con successo!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Aggiungi una parola</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Modifica una parola</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Parola</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Per favore inserisci una parola!</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Questa parola contiene caratteri non validi.</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frequenza (tra %d e %d)</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Per favore inserisci un valore di frequenza!</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Per favore inserisci un numero valido entro i limiti specificati!</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Scorciatoia (facoltativo)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Questa scorciatoia contiene caratteri non validi.</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Codice lingua (facoltativo)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Questo codice di lingua non rispetta la sintassi richiesta. Il codice deve contenere solo la lingua (come it), la lingua e il paese (come it_IT) oppure la lingua, il paese e lo script (come it_IT-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gesti &amp; Digitazione a scorrimento</string>
     <string name="pref__glide__title" comment="Preference group title">Scrittura con swype</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Attiva digitazione a scorrimento</string>
@@ -227,6 +256,8 @@
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gesti della barra di spazio</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Altri gesti / Sogli dei gesti</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Nessuna azione</string>
+    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Passa alla modalità precedente</string>
+    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Passa alla modalità successiva</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Cancella lettere con precisione</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Cancella la parola attuale</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Cancella parole con precisione</string>
@@ -240,6 +271,7 @@
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Spazia il cursore alla fine della linea</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Sposta il cursore all\'inizio della pagina</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Sposta il cursore alla fine della pagina</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Apri gestore/cronologia appunti</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
     <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Ripristina</string>
     <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Annulla</string>
@@ -275,6 +307,12 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostra icona nel launcher</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forza la modalità privata</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Disabiliterà tutte le funzionalità che temporanemaente funzionano con i tuoi dati</string>
+    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Abilita strumenti sviluppatore</string>
+    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Strumenti specifici per il debug e la risoluzione dei problemi</string>
+    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Mostra statistiche della memoria heap</string>
+    <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Sovrapponi l\'utilizzo e la dimensione massima della memoria heap nell\'angolo in alto a destra</string>
+    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Cancella il dizionario utente interno</string>
+    <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Cancella tutte le parole dal dizionario</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Informazioni su</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icona dell\'app FlorisBoard</string>
@@ -290,6 +328,7 @@
     <string name="assets__file__name">Nome</string>
     <string name="assets__file__source">Fonte</string>
     <string name="assets__action__add">Aggiungi</string>
+    <string name="assets__action__apply">Applica</string>
     <string name="assets__action__cancel">Annulla</string>
     <string name="assets__action__cancel_confirm_title">Conferma anulla</string>
     <string name="assets__action__cancel_confirm_message">Sei sicuro di volere cancellare gli cambiamenti non salvati? Questo non può essere annullato.</string>
@@ -331,7 +370,9 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">Segnalazione errore</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Ci dispiace per l\'inconveniente, ma FlorisBoard si è chiuso a causa di un errore inaspettato.</string>
     <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Se desideri segnalare questo errore, prima controlla se è già stato segnalato nel centro problemi su GitHub.\nSe non lo è, copia il registro di \'interruzione generato e apri un nuovo problema. Usa il modello \"%s\" e compila la descrizione, i passi per riprodurre il problema, e incolla il registro di interruzione generato alla fine. Questo aiuta a migliorare FlorisBoard e a renderlo più stabile per tutti. Grazie!</string>
-    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copia negli appunti</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copia negli appunti di sistema</string>
+    <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Copiato negli appunti di sistema</string>
+    <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Impossibile copiare sugli appunti di sistema: l\'istanza del gestore appunti non è stata trovata</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Apri il centro problemi (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Chiudi</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Segnalazioni di errore di FlorisBoard</string>

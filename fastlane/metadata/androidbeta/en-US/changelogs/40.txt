@@ -1,0 +1,5 @@
+- Add support for system and internal user dictionary (#817)
+- Fix AppCompat theme crash for Huawei devices (#799, #809)
+- Fix dynamic text size infinite loop bug (#825)
+  - Possibly fixed a lot of hanging keyboard errors
+    which were reported since beta02.

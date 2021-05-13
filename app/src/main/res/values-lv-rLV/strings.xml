@@ -210,6 +210,15 @@
     <string name="pref__smartbar__enabled__label" comment="Preference title">Iespējot viedjoslu</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Tiks rādīta tastatūras augšpusē</string>
     <string name="pref__suggestion__title" comment="Preference group title">Ieteikumi</string>
+    <string name="pref__dictionary__title" comment="Preference group title">Vārdnīca</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Iespējot sistēmas lietotāja vārdnīcu</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Ieteikt vārdus, kas tiek glabāti sistēmas lietotāja vārdnīcā</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Pārvaldīt sistēmas lietotāja vārdnīcu</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Pievienot, skatīt un noņemt ierakstus sistēmas lietotāja vārdnīcā</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Iespējot iekšējo lietotāja vārdnīcu</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Ieteikt vārdus, kas tiek glabāti iekšējā lietotāja vārdnīcā</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Pārvaldīt iekšējo lietotāja vārdnīcu</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Pievienot, skatīt un noņemt ierakstus iekšējā lietotāja vārdnīcā</string>
     <string name="pref__correction__title" comment="Preference group title">Labojumi</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Sākumburta pārveidošana par lielo</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Pārveidot vārdu sākumburtus par lielajiem, balstoties uz pašreizējo ievades kopumu</string>
@@ -217,6 +226,26 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Burtslēgs paliks ieslēgts pēc pārvietošanās uz citu ievades lauku</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Divkāršas atstarpes punkts</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Divreiz piesitot atstarpes taustiņam, tiks ievietots punkts un atstarpe</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Iekšējā lietotāja vārdnīca</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Sistēmas lietotāja vārdnīca</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Biežums: %d</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Biežums: %d | Saīsne: %s</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Visām valodām</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Atvērt sistēmas pārvaldnieka lietotāja saskarni</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Lietotāja vārdnīca tika veiksmīgi ievietota.</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Lietotāja vārdnīca tika veiksmīgi izdota.</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Pievienot vārdu</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Labot vārdu</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Vārds</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Lūgums ievadīt vārdu.</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Šis vārds satur nederīgas rakstzīmes.</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Biežums (starp %d un %d)</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Lūgums ievadīt biežuma vērtību.</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Lūgums ievadīt derīgu skaitli, kas ir norādītajās robežās.</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Saīsne (pēc izvēles)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Šī saīsne satur nederīgas rakstzīmes.</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Valodas kods (pēc izvēles)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Šis valodas kods neatbilst vēlamajam veidolam. Kodam ir vai nu jāborāda tikai valoda (piemēram, en), vai valoda un valsts (piemēram, en_US), vai arī valoda, valsts un raksts (piemēram, en_US-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Kustību un slīdošā rakstīšana</string>
     <string name="pref__glide__title" comment="Preference group title">Slīdošā rakstīšana</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Iespējot slīdošo rakstīšanu</string>
@@ -278,6 +307,12 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Rādīt lietotnes ikonu palaidējā</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Piespiest izmantot slepeno stāvokli</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Tiks atspējotas visas iespējas, kam ir īslaicīgi jāapstrādā ievades dati</string>
+    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Iespējot izstrādātāju rīkus</string>
+    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Rīki, kas ir izstrādāti traucējumnovēršanai un nepilnību atklāšanai un novēršanai</string>
+    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Rādīt grēdas atmiņas statistiku</string>
+    <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Rāda grēdas atmiņas izmantojumu un lielāko iespējamo izmēru augšējā labajā stūrī</string>
+    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Iztīrīt iekšējās lietotāja vārdnīcas datubāzi</string>
+    <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Tiek izņemti visi vārdi no vārdnīcas datubāzes tabulas</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Par</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard lietotnes ikona</string>
@@ -294,6 +329,7 @@
     <string name="assets__file__name">Nosaukums</string>
     <string name="assets__file__source">Avots</string>
     <string name="assets__action__add">Pievienot</string>
+    <string name="assets__action__apply">Pielietot</string>
     <string name="assets__action__cancel">Atcelt</string>
     <string name="assets__action__cancel_confirm_title">Apstiprināt atcelšanu</string>
     <string name="assets__action__cancel_confirm_message">Vai tiešām atmest nesaglabātās izmaiņas? Šī darbība pēc izpildīšanas vairs nevar tikt atsaukta.</string>
@@ -335,7 +371,9 @@
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard kļūdu ziņojums</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Atvainojamies par neērtībām, bet FlorsBoard avarēja neparedzētas kļūdas dēļ.</string>
     <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Ja ir vēlme ziņot par šo kļūdu, vispirms jāpārliecinās, vai GitHub pieteikumu ceļrādī par šādu avāriju jau ir ziņots.\nJa nē, starpliktuvē jāievieto izveidotais avārijas žurnāls un jāatver jauns pieteikums. Jāizmanto \"%s\" veidne un jānorāda apraksts, darbības atkārtošanai un beigās jāielīmē avārijas žurnāls. Tas palīdz padarīt FlorisBoard labāku un noturīgāku ikvienam. Paldies!</string>
-    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Ielikt starpliktuvē</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Ievietot sistēmas starpliktuvē</string>
+    <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Ievietots sistēmas starpliktuvē</string>
+    <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Nav iespējams ievietot sistēmas starpliktuvē: nav atrasts starpliktuves pārvaldnieks</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Atvērt pieteikumu ceļrādi (GitHub.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Aizvērt</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard kļūdu ziņojumi</string>

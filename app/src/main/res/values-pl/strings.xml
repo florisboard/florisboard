@@ -304,7 +304,6 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Konfiguracja ukończona!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Pobierz raport o błędach</string>
-    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopiuj do schowka</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zamknij</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Raporty o błędach FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard przestał działać…</string>

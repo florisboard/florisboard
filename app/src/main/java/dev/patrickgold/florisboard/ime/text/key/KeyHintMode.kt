@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.text.key
 
-import java.util.*
-
 /**
  * Enum for the key hint modes.
  */
@@ -29,11 +27,11 @@ enum class KeyHintMode {
 
     companion object {
         fun fromString(string: String): KeyHintMode {
-            return valueOf(string.toUpperCase(Locale.ENGLISH))
+            return valueOf(string.uppercase())
         }
     }
 
     override fun toString(): String {
-        return super.toString().toLowerCase(Locale.ENGLISH)
+        return super.toString().lowercase()
     }
 }

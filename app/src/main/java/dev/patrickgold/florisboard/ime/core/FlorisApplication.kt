@@ -43,11 +43,11 @@ class FlorisApplication : Application(), CoroutineScope by MainScope() {
             flogOutputs = Flog.OUTPUT_CONSOLE
         )
         CrashUtility.install(this)
-        val prefHelper = PrefHelper.getDefaultInstance(this)
+        val prefs = Preferences.initDefault(this)
         val assetManager = AssetManager.init(this)
-        SubtypeManager.init(this, prefHelper)
+        SubtypeManager.init(this)
         DictionaryManager.init(this)
-        ThemeManager.init(this, assetManager, prefHelper)
-        prefHelper.initDefaultPreferences()
+        ThemeManager.init(this, assetManager)
+        prefs.initDefaultPreferences()
     }
 }

@@ -1,26 +1,24 @@
 package dev.patrickgold.florisboard.ime.text.gestures
 
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.core.PrefHelper
+import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
-import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.text.TextInputManager
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import kotlinx.coroutines.*
 import org.json.JSONObject
+import kotlin.math.min
 
 /**
  * Handles the [GlideTypingClassifier]. Basically responsible for linking [GlideTypingGesture.Detector]
  * with [GlideTypingClassifier].
  */
 class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainScope() {
-
     private var glideTypingClassifier = StatisticalGlideTypingClassifier()
-    private val initialDimensions: HashMap<Subtype, Dimensions> = hashMapOf()
-    private var currentDimensions: Dimensions = Dimensions(0f, 0f)
-    private lateinit var prefHelper: PrefHelper
+    private val prefs get() = Preferences.default()
 
     companion object {
         private const val MAX_SUGGESTION_COUNT = 8
@@ -29,30 +27,29 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
         fun getInstance(): GlideTypingManager {
             if (!this::glideTypingManager.isInitialized) {
                 glideTypingManager = GlideTypingManager()
-                glideTypingManager.prefHelper = FlorisBoard.getInstance().prefs
             }
             return glideTypingManager
         }
     }
 
-    override fun onGestureComplete(data: GlideTypingGesture.Detector.PointerData) {
+    override fun onGlideComplete(data: GlideTypingGesture.Detector.PointerData) {
         updateSuggestionsAsync(MAX_SUGGESTION_COUNT, true) {
             glideTypingClassifier.clear()
         }
     }
 
-    override fun onGestureCancelled() {
+    override fun onGlideCancelled() {
         glideTypingClassifier.clear()
     }
 
     private var lastTime = System.currentTimeMillis()
-    override fun onGestureAdd(point: GlideTypingGesture.Detector.Position) {
-        val normalized = GlideTypingGesture.Detector.Position(normalizeX(point.x), normalizeY(point.y))
+    override fun onGlideAddPoint(point: GlideTypingGesture.Detector.Position) {
+        val normalized = GlideTypingGesture.Detector.Position(point.x, point.y)
 
         this.glideTypingClassifier.addGesturePoint(normalized)
 
         val time = System.currentTimeMillis()
-        if (prefHelper.glide.showPreview && time - lastTime > prefHelper.glide.previewRefreshDelay) {
+        if (prefs.glide.showPreview && time - lastTime > prefs.glide.previewRefreshDelay) {
             updateSuggestionsAsync(1, false) {}
             lastTime = time
         }
@@ -61,14 +58,12 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
     /**
      * Change the layout of the internal gesture classifier
      */
-    fun setLayout(keys: Sequence<Key>, dimensions: Dimensions) {
+    fun setLayout(keys: List<TextKey>) {
         glideTypingClassifier.setLayout(keys, FlorisBoard.getInstance().activeSubtype)
-        initialDimensions.getOrPut(FlorisBoard.getInstance().activeSubtype, {
-            dimensions
-        })
     }
 
     private val wordDataCache = hashMapOf<String, Int>()
+
     /**
      * Set the word data for the internal gesture classifier
      */
@@ -77,54 +72,13 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
             if (wordDataCache.isEmpty()) {
                 // FIXME: get this info from dictionary.
                 val data =
-                    AssetManager.default().loadTextAsset(AssetRef(AssetSource.Assets, "ime/dict/data.json")).getOrThrow()
+                    AssetManager.default().loadTextAsset(AssetRef(AssetSource.Assets, "ime/dict/data.json"))
+                        .getOrThrow()
                 val json = JSONObject(data)
                 wordDataCache.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
             }
             glideTypingClassifier.setWordData(wordDataCache, subtype)
         }
-    }
-
-    fun updateDimensions(dimensions: Dimensions) {
-        this.currentDimensions = dimensions
-    }
-
-    /**
-     * To avoid constantly having to regenerate Pruners every time we switch between landscape and portrait or enable/
-     * disable one handed mode, we just normalize the x, y coordinates to the same range as the original which were
-     * active when the Pruner was created.
-     */
-    private fun normalizeX(x: Float): Float {
-        val initial = initialDimensions[FlorisBoard.getInstance().activeSubtype] ?: return x
-
-        return scaleRange(
-            x,
-            0f,
-            currentDimensions.width,
-            0f,
-            initial.width
-        )
-    }
-
-    /**
-     * To avoid constantly having to regenerate Pruners every time we switch between landscape and portrait or enable/
-     * disable one handed mode, we just normalize the x, y coordinates to the same range as the original which were
-     * active when the Pruner was created.
-     */
-    private fun normalizeY(y: Float): Float {
-        val initial = initialDimensions[FlorisBoard.getInstance().activeSubtype] ?: return y
-
-        return scaleRange(
-            y,
-            0f,
-            currentDimensions.height,
-            0f,
-            initial.height
-        )
-    }
-
-    private fun scaleRange(x: Float, oldMin: Float, oldMax: Float, newMin: Float, newMax: Float): Float {
-        return (((x - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + newMin
     }
 
     /**
@@ -151,7 +105,12 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
                 textInputManager.isGlidePostEffect = true
                 textInputManager.smartbarView?.setCandidateSuggestionWords(
                     time,
-                    suggestions.take(maxSuggestionsToShow).map { textInputManager.fixCase(it) }
+                    // FIXME
+                    /*suggestions.subList(
+                        1.coerceAtMost(min(commit.compareTo(false), suggestions.size)),
+                        maxSuggestionsToShow.coerceAtMost(suggestions.size)
+                    ).map { textInputManager.fixCase(it) }*/
+                    null
                 )
                 textInputManager.smartbarView?.updateCandidateSuggestionCapsState()
                 if (commit && suggestions.isNotEmpty()) {
@@ -162,8 +121,3 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
         }
     }
 }
-
-data class Dimensions(
-    val width: Float,
-    val height: Float
-)

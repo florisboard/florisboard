@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.text.gestures
 
-import java.util.*
-
 /**
  * Enum for declaring the distance thresholds for swipe gestures.
  */
@@ -30,11 +28,11 @@ enum class DistanceThreshold {
 
     companion object {
         fun fromString(string: String): DistanceThreshold {
-            return valueOf(string.toUpperCase(Locale.ENGLISH))
+            return valueOf(string.uppercase())
         }
     }
 
     override fun toString(): String {
-        return super.toString().toLowerCase(Locale.ENGLISH)
+        return super.toString().lowercase()
     }
 }

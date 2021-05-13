@@ -1,0 +1,7 @@
+This version brings vast improvements in the layout logic and
+memory management, adds support for user dictionaries, several
+new keyboard layouts and much more. Additionally a lot of crashes,
+bugs and more have been fixed, making FlorisBoard more stable for
+you.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.11

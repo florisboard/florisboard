@@ -27,13 +27,10 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.*
-import dev.patrickgold.florisboard.ime.dictionary.Dictionary
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
-import dev.patrickgold.florisboard.ime.nlp.Token
-import dev.patrickgold.florisboard.ime.nlp.toStringList
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.*
@@ -59,8 +56,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     FlorisBoard.EventListener, SmartbarView.EventListener {
 
     var isGlidePostEffect: Boolean = false
-    private val florisboard = FlorisBoard.getInstance()
-    private val prefs: PrefHelper get() = florisboard.prefs
+    private val florisboard get() = FlorisBoard.getInstance()
+    private val prefs get() = Preferences.default()
     val symbolsWithSpaceAfter: List<String>
     private val activeEditorInstance: EditorInstance
         get() = florisboard.activeEditorInstance
@@ -73,8 +70,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     lateinit var textKeyboardIconSet: TextKeyboardIconSet
         private set
     private var textViewGroup: LinearLayout? = null
-    private val dictionaryManager: DictionaryManager = DictionaryManager.default()
-    private var activeDictionary: Dictionary<String, Int>? = null
+    private val dictionaryManager: DictionaryManager get() = DictionaryManager.default()
     val inputEventDispatcher: InputEventDispatcher = InputEventDispatcher.new(
         repeatableKeyCodes = intArrayOf(
             KeyCode.ARROW_DOWN,
@@ -226,7 +222,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
         for (subtype in subtypes) {
             for (mode in KeyboardMode.values()) {
-                keyboards.set(mode, subtype, keyboard = layoutManager.computeKeyboardAsync(mode, subtype, prefs))
+                keyboards.set(mode, subtype, keyboard = layoutManager.computeKeyboardAsync(mode, subtype))
             }
         }
     }
@@ -299,6 +295,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         keyboards.clear()
         inputEventDispatcher.keyEventReceiver = null
         inputEventDispatcher.close()
+        dictionaryManager.unloadUserDictionariesIfNecessary()
         cancel()
         layoutManager.onDestroy()
         instance = null
@@ -375,6 +372,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onWindowShown() {
+        launch(Dispatchers.Default) {
+            dictionaryManager.loadUserDictionariesIfNecessary()
+        }
         smartbarView?.updateSmartbarState()
     }
 
@@ -404,8 +404,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         val activeKeyboard = keyboards.getOrElseAsync(mode, subtype) {
             layoutManager.computeKeyboardAsync(
                 keyboardMode = mode,
-                subtype = subtype,
-                prefs = prefs
+                subtype = subtype
             ).await()
         }.await()
         withContext(Dispatchers.Main) {
@@ -416,13 +415,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     override fun onSubtypeChanged(newSubtype: Subtype) {
         launch {
             if (activeEditorInstance.isComposingEnabled) {
-                withContext(Dispatchers.IO) {
-                    dictionaryManager.loadDictionary(AssetRef(AssetSource.Assets, "ime/dict/en.flict")).let {
-                        activeDictionary = it.getOrDefault(null)
-                    }
-                }
+                dictionaryManager.prepareDictionaries(newSubtype)
             }
-            if (PrefHelper.getDefaultInstance(florisboard).glide.enabled) {
+            if (prefs.glide.enabled) {
                 GlideTypingManager.getInstance().setWordData(newSubtype)
             }
             setActiveKeyboard(getActiveKeyboardMode(), newSubtype)
@@ -440,26 +435,26 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
         smartbarView?.updateSmartbarState()
         flogInfo(LogTopic.IMS_EVENTS) { "current word: ${activeEditorInstance.cachedInput.currentWord.text}" }
-        if (activeEditorInstance.isComposingEnabled && !inputEventDispatcher.isPressed(KeyCode.DELETE)) {
+        if (activeEditorInstance.isComposingEnabled && !inputEventDispatcher.isPressed(KeyCode.DELETE) && !isGlidePostEffect) {
             if (activeEditorInstance.shouldReevaluateComposingSuggestions) {
                 activeEditorInstance.shouldReevaluateComposingSuggestions = false
-                activeDictionary?.let {
-                    launch(Dispatchers.Default) {
-                        val startTime = System.nanoTime()
-                        val suggestions = it.getTokenPredictions(
-                            precedingTokens = listOf(),
-                            currentToken = Token(activeEditorInstance.cachedInput.currentWord.text),
-                            maxSuggestionCount = 16,
-                            allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive
-                        ).toStringList()
-                        if (BuildConfig.DEBUG) {
-                            val elapsed = (System.nanoTime() - startTime) / 1000.0
-                            flogInfo { "sugg fetch time: $elapsed us" }
-                        }
+                launch(Dispatchers.Default) {
+                    val startTime = System.nanoTime()
+                    dictionaryManager.suggest(
+                        currentWord = activeEditorInstance.cachedInput.currentWord.text,
+                        preceidingWords = listOf(),
+                        subtype = florisboard.activeSubtype,
+                        allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive,
+                        maxSuggestionCount = 16
+                    ) { suggestions ->
                         withContext(Dispatchers.Main) {
                             smartbarView?.setCandidateSuggestionWords(startTime, suggestions)
                             smartbarView?.updateCandidateSuggestionCapsState()
                         }
+                    }
+                    if (BuildConfig.DEBUG) {
+                        val elapsed = (System.nanoTime() - startTime) / 1000.0
+                        flogInfo { "sugg fetch time: $elapsed us" }
                     }
                 }
             } else {
@@ -918,8 +913,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     fun fixCase(word: String): String {
         return when {
-            capsLock -> word.toUpperCase(florisboard.activeSubtype.locale)
-            caps -> word.capitalize(florisboard.activeSubtype.locale)
+            capsLock -> word.uppercase(florisboard.activeSubtype.locale)
+            caps -> word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(florisboard.activeSubtype.locale) else it.toString() }
             else -> word
         }
     }

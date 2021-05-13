@@ -9,7 +9,7 @@ subprojects {
     repositories {
         mavenCentral()
         google()
-        jcenter()
+        jcenter() // Cannot remove jcenter as of now because flexbox depends on it
     }
 }
 

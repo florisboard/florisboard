@@ -40,8 +40,8 @@ import kotlin.math.roundToInt
  * Root view of the keyboard. Notifies [FlorisBoard] when it has been attached to a window.
  */
 class InputView : LinearLayout {
-    private var florisboard: FlorisBoard = FlorisBoard.getInstance()
-    private val prefs: PrefHelper = PrefHelper.getDefaultInstance(context)
+    private val florisboard get() = FlorisBoard.getInstance()
+    private val prefs get() = Preferences.default()
 
     var desiredInputViewHeight: Float = resources.getDimension(R.dimen.inputView_baseHeight)
         private set
@@ -136,9 +136,9 @@ class InputView : LinearLayout {
         //  adding a value to the height now will result in a bottom padding (aka offset).
         baseHeight += ViewLayoutUtils.convertDpToPixel(
             if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                florisboard.prefs.keyboard.bottomOffsetLandscape.toFloat()
+                prefs.keyboard.bottomOffsetLandscape.toFloat()
             } else {
-                florisboard.prefs.keyboard.bottomOffsetPortrait.toFloat()
+                prefs.keyboard.bottomOffsetPortrait.toFloat()
             },
             context
         )

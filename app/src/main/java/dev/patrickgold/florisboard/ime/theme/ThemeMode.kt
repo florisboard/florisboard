@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
-import java.util.*
-
 /**
  * Enum class which specifies all theme modes available. Used in the Settings to properly manage
  * different use cases when the day or night theme should be active.
@@ -30,7 +28,7 @@ enum class ThemeMode {
 
     companion object {
         fun fromString(string: String): ThemeMode {
-            return valueOf(string.toUpperCase(Locale.ENGLISH))
+            return valueOf(string.uppercase())
         }
     }
 }

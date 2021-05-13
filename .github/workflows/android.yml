@@ -16,6 +16,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
+      - name: Setup CMake and Ninja
+        uses: lukka/get-cmake@v3.20.1
       - uses: actions/cache@v2
         with:
           path: |
@@ -25,7 +27,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Build with Gradle
-        run: ./gradlew clean assemble
+        run: ./gradlew clean assembleDebug
       - uses: actions/upload-artifact@v2
         with:
           name: app-debug.apk

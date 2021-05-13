@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.MotionEvent
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -33,7 +34,7 @@ class GlideTypingGesture {
          * Method which evaluates if a given [event] is a gesture.
          * @return whether or not the event was interpreted as part of a gesture.
          */
-        fun onTouchEvent(event: MotionEvent, initialKeyCodes: MutableMap<Int, Int>): Boolean {
+        fun onTouchEvent(event: MotionEvent, initialKey: TextKey?): Boolean {
             when (event.actionMasked) {
                 MotionEvent.ACTION_DOWN,
                 MotionEvent.ACTION_POINTER_DOWN -> {
@@ -69,12 +70,12 @@ class GlideTypingGesture {
                             // evaluate whether is actually a gesture
                             val dist = pointerData.positions[0].dist(pos)
                             val time = (System.currentTimeMillis() - pointerData.startTime) + 1
-                            if (dist > keySize && (dist / time) > VELOCITY_THRESHOLD && (initialKeyCodes[pointerId] !in SWIPE_GESTURE_KEYS)) {
+                            if (dist > keySize && (dist / time) > VELOCITY_THRESHOLD && (initialKey?.computedData?.code !in SWIPE_GESTURE_KEYS)) {
                                 pointerData.isActuallyGesture = true
                                 // Let listener know all those points need to be added.
                                 pointerData.positions.take(pointerData.positions.size - 1).forEach { point ->
                                     listeners.forEach {
-                                        it.onGestureAdd(point)
+                                        it.onGlideAddPoint(point)
                                     }
                                 }
                             } else if (time > MAX_DETECT_TIME) {
@@ -84,7 +85,7 @@ class GlideTypingGesture {
                         }
 
                         if (pointerData.isActuallyGesture == true)
-                            pointerData.positions.last().let { point -> listeners.forEach { it.onGestureAdd(point) } }
+                            pointerData.positions.last().let { point -> listeners.forEach { it.onGlideAddPoint(point) } }
                     }
                     return pointerData.isActuallyGesture ?: false
                 }
@@ -95,14 +96,14 @@ class GlideTypingGesture {
                         return false
                     }
                     if (pointerData.isActuallyGesture == true) {
-                        listeners.forEach { listener -> listener.onGestureComplete(pointerData) }
+                        listeners.forEach { listener -> listener.onGlideComplete(pointerData) }
                     }
                     resetState()
                     return false
                 }
                 MotionEvent.ACTION_CANCEL -> {
                     if (pointerData.isActuallyGesture == true) {
-                        listeners.forEach { it.onGestureCancelled() }
+                        listeners.forEach { it.onGlideCancelled() }
                     }
                     resetState()
                 }
@@ -112,7 +113,11 @@ class GlideTypingGesture {
         }
 
         fun registerListener(listener: Listener) {
-            this.listeners.add(listener)
+            listeners.add(listener)
+        }
+
+        fun unregisterListener(listener: Listener) {
+            listeners.remove(listener)
         }
 
         private fun resetState() {
@@ -145,18 +150,17 @@ class GlideTypingGesture {
         /**
          * Called when a gesture is complete.
          */
-        fun onGestureComplete(data: Detector.PointerData) {}
+        fun onGlideComplete(data: Detector.PointerData) {}
 
         /**
          * Called when a point is added to a gesture.
          * Will not be called before a series of events is detected as a gesture.
          */
-        fun onGestureAdd(point: Detector.Position) {}
+        fun onGlideAddPoint(point: Detector.Position) {}
 
         /**
          * Called to cancel a gesture
          */
-        fun onGestureCancelled() {}
+        fun onGlideCancelled() {}
     }
-
 }

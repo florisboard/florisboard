@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.Configuration
 import android.graphics.*
@@ -23,11 +24,14 @@ import android.graphics.drawable.PaintDrawable
 import android.os.Handler
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.animation.AccelerateInterpolator
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.popup.PopupManager
+import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingGesture
+import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.key.*
@@ -37,9 +41,11 @@ import dev.patrickgold.florisboard.util.ViewLayoutUtils
 import dev.patrickgold.florisboard.util.cancelAll
 import dev.patrickgold.florisboard.util.postDelayed
 import kotlin.math.abs
+import kotlin.math.pow
 import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
-class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
+class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture.Listener {
     private var computedKeyboard: TextKeyboard? = null
     private var iconSet: TextKeyboardIconSet? = null
 
@@ -107,9 +113,17 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
 
     private var initSelectionStart: Int = 0
     private var initSelectionEnd: Int = 0
+    private var isGliding: Boolean = false
     private var hasTriggeredGestureMove: Boolean = false
     private var shouldBlockNextUp: Boolean = false
     private val swipeGestureDetector = SwipeGesture.Detector(context, this)
+
+    private val glideTypingDetector = GlideTypingGesture.Detector(context)
+    private val glideTypingManager: GlideTypingManager
+        get() = GlideTypingManager.getInstance()
+    private val glideDataForDrawing: MutableList<GlideTypingGesture.Detector.Position> = mutableListOf()
+    private val fadingGlide: MutableList<GlideTypingGesture.Detector.Position> = mutableListOf()
+    private var fadingGlideRadius: Float = 0.0f
 
     val desiredKey: TextKey = TextKey(data = TextKeyData.UNSPECIFIED)
 
@@ -118,12 +132,13 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
     }
 
     private var backgroundDrawable: PaintDrawable = PaintDrawable()
+    private val baselineTextSize = resources.getDimension(R.dimen.key_textSize)
     var fontSizeMultiplier: Double = 1.0
         private set
+    private val glideTrailPaint: Paint = Paint()
     private var labelPaintTextSize: Float = resources.getDimension(R.dimen.key_textSize)
     private var labelPaintSpaceTextSize: Float = resources.getDimension(R.dimen.key_textSize)
-    private var labelPaint: Paint = Paint().apply {
-        color = 0
+    private val labelPaint: Paint = Paint().apply {
         isAntiAlias = true
         isFakeBoldText = false
         textAlign = Paint.Align.CENTER
@@ -131,8 +146,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
         typeface = Typeface.DEFAULT
     }
     private var hintedLabelPaintTextSize: Float = resources.getDimension(R.dimen.key_textHintSize)
-    private var hintedLabelPaint: Paint = Paint().apply {
-        color = 0
+    private val hintedLabelPaint: Paint = Paint().apply {
         isAntiAlias = true
         isFakeBoldText = false
         textAlign = Paint.Align.CENTER
@@ -168,6 +182,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
     fun setComputedKeyboard(keyboard: TextKeyboard) {
         flogInfo(LogTopic.TEXT_KEYBOARD_VIEW) { keyboard.toString() }
         computedKeyboard = keyboard
+        initGlideClassifier(keyboard)
         notifyStateChanged()
     }
 
@@ -179,18 +194,49 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
     fun notifyStateChanged() {
         flogInfo(LogTopic.TEXT_KEYBOARD_VIEW)
         isRecomputingRequested = true
+        swipeGestureDetector.apply {
+            distanceThreshold = prefs.gestures.swipeDistanceThreshold
+            velocityThreshold = prefs.gestures.swipeVelocityThreshold
+        }
         if (isMeasured) {
             onLayoutInternal()
             invalidate()
         }
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        glideTypingDetector.let {
+            it.registerListener(this)
+            it.registerListener(glideTypingManager)
+            it.velocityThreshold = prefs.gestures.swipeVelocityThreshold
+        }
+    }
+
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         cachedTheme = null
+        glideTypingDetector.let {
+            it.unregisterListener(this)
+            it.unregisterListener(glideTypingManager)
+        }
     }
 
     override fun onTouchEventInternal(event: MotionEvent) {
+        if (prefs.glide.enabled &&
+            computedKeyboard?.mode == KeyboardMode.CHARACTERS &&
+            glideTypingDetector.onTouchEvent(event, initialKey) &&
+            event.actionMasked != MotionEvent.ACTION_UP
+        ) {
+            if (activePointerId != null) {
+                val pointerIndex = event.actionIndex
+                onTouchCancelInternal(event, pointerIndex, activePointerId!!)
+            }
+            isGliding = true
+            invalidate()
+            return
+        }
+
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN,
             MotionEvent.ACTION_POINTER_DOWN -> {
@@ -721,24 +767,37 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
      * @param multiplier The factor by which the resulting text size should be multiplied with.
      */
     private fun setTextSizeFor(boxPaint: Paint, boxWidth: Float, boxHeight: Float, text: String, multiplier: Double = 1.0): Float {
-        var stage = 1
-        var textSize = 0.0f
-        while (stage < 3) {
-            if (stage == 1) {
-                textSize += 10.0f
-            } else if (stage == 2) {
-                textSize -= 1.0f
+        var size = baselineTextSize
+        boxPaint.textSize = size
+        boxPaint.getTextBounds(text, 0, text.length, tempRect)
+        val w = tempRect.width().toFloat()
+        val h = tempRect.height().toFloat()
+        val diffW = abs(boxWidth - w)
+        val diffH = abs(boxHeight - h)
+        if (w < boxWidth && h < boxHeight) {
+            // Text fits, scale up on axis which has less room
+            size *= if (diffW < diffH) {
+                1.0f + diffW / w
+            } else {
+                1.0f + diffH / h
             }
-            boxPaint.textSize = textSize
-            boxPaint.getTextBounds(text, 0, text.length, tempRect)
-            val fits = tempRect.width() < boxWidth && tempRect.height() < boxHeight
-            if (stage == 1 && !fits || stage == 2 && fits) {
-                stage++
+        } else if (w >= boxWidth && h < boxHeight) {
+            // Text does not fit on x-axis
+            size *= (1.0f - diffW / w)
+        } else if (w < boxWidth && h >= boxHeight) {
+            // Text does not fit on y-axis
+            size *= (1.0f - diffH / h)
+        } else {
+            // Text does not fit at all, scale down on axis which has most overshoot
+            size *= if (diffW < diffH) {
+                1.0f - diffH / h
+            } else {
+                1.0f - diffW / w
             }
         }
-        textSize *= multiplier.toFloat()
-        boxPaint.textSize = textSize
-        return textSize
+        size *= multiplier.toFloat()
+        boxPaint.textSize = size
+        return size
     }
 
     override fun onThemeUpdated(theme: Theme) {
@@ -747,6 +806,12 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
             backgroundDrawable.apply {
                 paint.color = theme.getAttr(Theme.Attr.KEYBOARD_BACKGROUND).toSolidColor().color
             }
+        }
+        if (theme.getAttr(Theme.Attr.GLIDE_TRAIL_COLOR).toSolidColor().color == 0) {
+            glideTrailPaint.color = theme.getAttr(Theme.Attr.WINDOW_COLOR_PRIMARY).toSolidColor().color
+            glideTrailPaint.alpha = 32
+        } else {
+            glideTrailPaint.color = theme.getAttr(Theme.Attr.GLIDE_TRAIL_COLOR).toSolidColor().color
         }
         invalidate()
     }
@@ -1043,6 +1108,98 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener {
                     key.label = resources.getString(R.string.key__view_keshida)
                 }
             }
+        }
+    }
+
+    override fun dispatchDraw(canvas: Canvas?) {
+        super.dispatchDraw(canvas)
+
+        if (prefs.glide.enabled && prefs.glide.showTrail && !isSmartbarKeyboardView) {
+            val targetDist = 5.0f
+            val maxPoints = prefs.glide.trailMaxLength
+            val radius = 20.0f
+            // the tip of the trail will be 1px
+            val radiusReductionFactor = (1.0f /radius).pow(1.0f / maxPoints)
+            if (fadingGlideRadius > 0) {
+                drawGlideTrail(fadingGlide, maxPoints, targetDist, fadingGlideRadius, canvas, radiusReductionFactor)
+            }
+            if (isGliding && glideDataForDrawing.isNotEmpty()) {
+                drawGlideTrail(glideDataForDrawing, maxPoints, targetDist, radius, canvas, radiusReductionFactor)
+            }
+        }
+    }
+
+    private fun drawGlideTrail(
+        gestureData: MutableList<GlideTypingGesture.Detector.Position>,
+        maxPoints: Int,
+        targetDist: Float,
+        initialRadius: Float,
+        canvas: Canvas?,
+        radiusReductionFactor: Float
+    ) {
+        var radius = initialRadius
+        var drawnPoints = 0
+        var prevX = gestureData.lastOrNull()?.x ?: 0.0f
+        var prevY = gestureData.lastOrNull()?.y ?: 0.0f
+
+        outer@ for (i in gestureData.size - 1 downTo 1) {
+            val dx = prevX - gestureData[i - 1].x
+            val dy = prevY - gestureData[i - 1].y
+            val dist = sqrt(dx * dx + dy * dy)
+
+            val numPoints = (dist / targetDist).toInt()
+            for (j in 0 until numPoints) {
+                if (drawnPoints > maxPoints) break@outer
+                radius *= radiusReductionFactor
+                val intermediateX =
+                    gestureData[i].x * (1 - j.toFloat() / numPoints) + gestureData[i - 1].x * (j.toFloat() / numPoints)
+                val intermediateY =
+                    gestureData[i].y * (1 - j.toFloat() / numPoints) + gestureData[i - 1].y * (j.toFloat() / numPoints)
+                canvas?.drawCircle(intermediateX, intermediateY, radius,glideTrailPaint)
+                drawnPoints += 1
+                prevX = intermediateX
+                prevY = intermediateY
+            }
+        }
+    }
+
+    private fun initGlideClassifier(keyboard: TextKeyboard) {
+        if (isSmartbarKeyboardView || isPreviewMode || keyboard.mode != KeyboardMode.CHARACTERS) {
+            return
+        }
+        post {
+            val keys = keyboard.keys().asSequence().toList()
+            GlideTypingManager.getInstance().setLayout(keys)
+        }
+    }
+
+    override fun onGlideAddPoint(point: GlideTypingGesture.Detector.Position) {
+        if (prefs.glide.enabled) {
+            glideDataForDrawing.add(point)
+        }
+    }
+
+    override fun onGlideComplete(data: GlideTypingGesture.Detector.PointerData) {
+        onGlideCancelled()
+    }
+
+    override fun onGlideCancelled() {
+        if (prefs.glide.showTrail) {
+            fadingGlide.clear()
+            fadingGlide.addAll(glideDataForDrawing)
+
+            val animator = ValueAnimator.ofFloat(20.0f, 0.0f)
+            animator.interpolator = AccelerateInterpolator()
+            animator.duration = prefs.glide.trailDuration.toLong()
+            animator.addUpdateListener {
+                fadingGlideRadius = it.animatedValue as Float
+                invalidate()
+            }
+            animator.start()
+
+            glideDataForDrawing.clear()
+            isGliding = false
+            invalidate()
         }
     }
 }

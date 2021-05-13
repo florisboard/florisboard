@@ -71,6 +71,42 @@
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
+        app:title="@string/pref__dictionary__title">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            app:dependency="suggestion__enabled"
+            app:key="suggestion__enable_system_user_dictionary"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__dictionary__enable_system_user_dictionary__label"
+            app:summary="@string/pref__dictionary__enable_system_user_dictionary__summary"/>
+
+        <Preference
+            app:dependency="suggestion__enable_system_user_dictionary"
+            app:key="suggestion__manage_system_user_dictionary"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__dictionary__manage_system_user_dictionary__label"
+            app:summary="@string/pref__dictionary__manage_system_user_dictionary__summary"/>
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            app:dependency="suggestion__enabled"
+            app:key="suggestion__enable_floris_user_dictionary"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__dictionary__enable_internal_user_dictionary__label"
+            app:summary="@string/pref__dictionary__enable_internal_user_dictionary__summary"/>
+
+        <Preference
+            app:dependency="suggestion__enable_floris_user_dictionary"
+            app:key="suggestion__manage_floris_user_dictionary"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__dictionary__manage_floris_user_dictionary__label"
+            app:summary="@string/pref__dictionary__manage_floris_user_dictionary__summary"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
         app:title="@string/pref__correction__title">
 
         <SwitchPreferenceCompat
