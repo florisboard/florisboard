@@ -17,13 +17,19 @@
 package dev.patrickgold.florisboard.ime.text.smartbar
 
 import android.content.Context
+import android.os.Build
 import android.util.AttributeSet
+import android.util.Size
 import android.view.View
+import android.view.ViewGroup
+import android.view.inputmethod.InlineSuggestion
 import androidx.annotation.IdRes
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SmartbarBinding
+import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.Preferences
@@ -65,6 +71,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
             binding.quickActionToggle.rotation = if (v) 180.0f else 0.0f
             field = v
         }
+    private var isShowingInlineSuggestions: Boolean = false
 
     private lateinit var binding: SmartbarBinding
     private var indexedActionStartArea: MutableList<Int> = mutableListOf()
@@ -237,20 +244,24 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                     KeyboardMode.EDITING -> R.id.back_button
                     else -> R.id.quick_action_toggle
                 },
-                mainAreaId = when (florisboard.textInputManager.keyVariation) {
-                    KeyVariation.PASSWORD -> R.id.number_row
-                    else -> when (isQuickActionsVisible) {
-                        true -> R.id.quick_actions
-                        else -> when (florisboard.textInputManager.getActiveKeyboardMode()) {
-                            KeyboardMode.EDITING -> null
-                            KeyboardMode.NUMERIC,
-                            KeyboardMode.PHONE,
-                            KeyboardMode.PHONE2 -> R.id.clipboard_cursor_row
-                            else -> when {
-                                florisboard.activeEditorInstance.isComposingEnabled &&
+                mainAreaId = if (isShowingInlineSuggestions) {
+                    R.id.inline_suggestions
+                } else {
+                    when (florisboard.textInputManager.keyVariation) {
+                        KeyVariation.PASSWORD -> R.id.number_row
+                        else -> when (isQuickActionsVisible) {
+                            true -> R.id.quick_actions
+                            else -> when (florisboard.textInputManager.getActiveKeyboardMode()) {
+                                KeyboardMode.EDITING -> null
+                                KeyboardMode.NUMERIC,
+                                KeyboardMode.PHONE,
+                                KeyboardMode.PHONE2 -> R.id.clipboard_cursor_row
+                                else -> when {
+                                    florisboard.activeEditorInstance.isComposingEnabled &&
                                         florisboard.activeEditorInstance.selection.isCursorMode
                                     -> R.id.candidates
-                                else -> R.id.clipboard_cursor_row
+                                    else -> R.id.clipboard_cursor_row
+                                }
                             }
                         }
                     }
@@ -285,6 +296,38 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
 
     fun updateCandidateSuggestionCapsState() {
         //
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    fun setInlineSuggestions(list: List<InlineSuggestion>?) {
+        if (list == null) {
+            flogDebug { "Removing inline suggestions" }
+            isShowingInlineSuggestions = false
+            binding.inlineSuggestionsInner.removeAllViews()
+        } else if (list.isNotEmpty()) {
+            flogDebug { "Adding inline suggestions (${list.size})" }
+            isShowingInlineSuggestions = true
+            binding.inlineSuggestionsInner.let {
+                for (inlineSuggestion in list) {
+                    try {
+                        inlineSuggestion.inflate(
+                            context,
+                            Size(ViewGroup.LayoutParams.WRAP_CONTENT, florisboard?.inputView?.desiredInlineSuggestionsMaxHeight ?: 0),
+                            context.mainExecutor
+                        ) { view ->
+                            if (view != null) {
+                                flogDebug { "Adding inline suggestion view" }
+                                it.addView(view)
+                            } else {
+                                flogDebug { "Inline suggestion view is null" }
+                            }
+                        }
+                    } catch (e: Throwable) {
+                        flogWarning { "Failed to inflate inline suggestion: $e" }
+                    }
+                }
+            }
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

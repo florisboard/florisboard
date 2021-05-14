@@ -21,19 +21,31 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
+import android.graphics.drawable.Icon
 import android.inputmethodservice.ExtractEditText
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
 import android.os.Build
+import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.util.Size
 import android.view.*
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InlineSuggestionsRequest
+import android.view.inputmethod.InlineSuggestionsResponse
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.inline.InlinePresentationSpec
+import androidx.annotation.RequiresApi
 import androidx.annotation.StyleRes
+import androidx.autofill.inline.UiVersions
+import androidx.autofill.inline.common.ImageViewStyle
+import androidx.autofill.inline.common.TextViewStyle
+import androidx.autofill.inline.common.ViewStyle
+import androidx.autofill.inline.v1.InlineSuggestionUi
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.*
@@ -63,6 +75,7 @@ import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+
 
 /**
  * Variable which holds the current [FlorisBoard] instance. To get this instance from another
@@ -264,6 +277,88 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         return eel
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
+    /**
+     * Source for most of this method:
+     * https://cs.android.com/android/platform/superproject/+/master:development/samples/AutofillKeyboard/src/com/example/android/autofillkeyboard/AutofillImeService.java
+     */
+    override fun onCreateInlineSuggestionsRequest(uiExtras: Bundle): InlineSuggestionsRequest? {
+        return if (prefs.smartbar.enabled) {
+            flogInfo(LogTopic.IMS_EVENTS) {
+                "Creating inline suggestions request because Smartbar and inline suggestions are enabled."
+            }
+            val stylesBuilder = UiVersions.newStylesBuilder()
+            /*val style: UiVersions.Style = InlineSuggestionUi.newStyleBuilder()
+                .setSingleIconChipStyle(
+                    ViewStyle.Builder()
+                        .setBackground(
+                            Icon.createWithResource(this, R.drawable.chip_background)
+                        )
+                        .setPadding(0, 0, 0, 0)
+                        .build()
+                )
+                .setChipStyle(
+                    ViewStyle.Builder()
+                        .setBackground(
+                            Icon.createWithResource(this, R.drawable.chip_background)
+                        )
+                        .setPadding(toPixel(5 + 8), 0, toPixel(5 + 8), 0)
+                        .build()
+                )
+                .setStartIconStyle(ImageViewStyle.Builder().setLayoutMargin(0, 0, 0, 0).build())
+                .setTitleStyle(
+                    TextViewStyle.Builder()
+                        .setLayoutMargin(toPixel(4), 0, toPixel(4), 0)
+                        .setTextColor(Color.parseColor("#FF202124"))
+                        .setTextSize(16f)
+                        .build()
+                )
+                .setSubtitleStyle(
+                    TextViewStyle.Builder()
+                        .setLayoutMargin(0, 0, toPixel(4), 0)
+                        .setTextColor(Color.parseColor("#99202124")) // 60% opacity
+                        .setTextSize(14f)
+                        .build()
+                )
+                .setEndIconStyle(ImageViewStyle.Builder().setLayoutMargin(0, 0, 0, 0).build())
+                .build()*/
+            stylesBuilder.addStyle(InlineSuggestionUi.newStyleBuilder().build())
+            val stylesBundle: Bundle = stylesBuilder.build()
+
+            InlinePresentationSpec.Builder(
+                Size(
+                    inputView?.desiredInlineSuggestionsMinWidth ?: 0,
+                    inputView?.desiredInlineSuggestionsMinHeight ?: 0
+                ),
+                Size(
+                    inputView?.desiredInlineSuggestionsMaxWidth ?: 0,
+                    inputView?.desiredInlineSuggestionsMaxHeight ?: 0
+                )
+            ).let { spec ->
+                spec.setStyle(stylesBundle)
+                InlineSuggestionsRequest.Builder(listOf(spec.build())).let { request ->
+                    request.setMaxSuggestionCount(6)
+                    request.build()
+                }
+            }
+        } else {
+            flogInfo(LogTopic.IMS_EVENTS) {
+                "Ignoring inline suggestions request because Smartbar and/or inline suggestions are disabled."
+            }
+            null
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    override fun onInlineSuggestionsResponse(response: InlineSuggestionsResponse): Boolean {
+        val inlineSuggestions = response.inlineSuggestions
+        flogInfo(LogTopic.IMS_EVENTS) {
+            "Received inline suggestions response with ${inlineSuggestions.size} suggestion(s) provided."
+        }
+        textInputManager.smartbarView?.setInlineSuggestions(inlineSuggestions)
+        return true
+    }
+
     override fun onDestroy() {
         flogInfo(LogTopic.IMS_EVENTS)
         serviceLifecycleDispatcher.onServicePreSuperOnDestroy()
@@ -358,6 +453,9 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         }
 
         super.onFinishInputView(finishingInput)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            textInputManager.smartbarView?.setInlineSuggestions(null)
+        }
         eventListeners.toList().forEach { it?.onFinishInputView(finishingInput) }
     }
 

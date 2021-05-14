@@ -34,13 +34,10 @@
             android:name="dev.patrickgold.florisboard.ime.core.FlorisBoard"
             android:label="@string/floris_app_name"
             android:permission="android.permission.BIND_INPUT_METHOD">
-            <meta-data
-                android:name="android.view.im"
-                android:resource="@xml/method"/>
-
             <intent-filter>
                 <action android:name="android.view.InputMethod"/>
             </intent-filter>
+            <meta-data android:name="android.view.im" android:resource="@xml/method"/>
         </service>
 
         <!-- Settings Activity -->

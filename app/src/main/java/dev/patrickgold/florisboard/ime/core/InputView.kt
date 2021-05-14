@@ -22,9 +22,11 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
+import android.os.Build
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.util.DisplayMetrics
+import android.util.Size
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ViewFlipper
@@ -54,6 +56,15 @@ class InputView : LinearLayout {
     var heightFactor: Float = 1.0f
         private set
     var shouldGiveAdditionalSpace: Boolean = false
+        private set
+
+    var desiredInlineSuggestionsMinWidth: Int = 0
+        private set
+    var desiredInlineSuggestionsMinHeight: Int = 0
+        private set
+    var desiredInlineSuggestionsMaxWidth: Int = 0
+        private set
+    var desiredInlineSuggestionsMaxHeight: Int = 0
         private set
 
     var mainViewFlipper: ViewFlipper? = null
@@ -142,6 +153,14 @@ class InputView : LinearLayout {
             },
             context
         )
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val width = MeasureSpec.getSize(widthMeasureSpec)
+            desiredInlineSuggestionsMinWidth = width / 3
+            desiredInlineSuggestionsMinHeight = desiredSmartbarHeight.toInt()
+            desiredInlineSuggestionsMaxWidth = (width / 1.5).toInt()
+            desiredInlineSuggestionsMaxHeight = desiredSmartbarHeight.toInt()
+        }
 
         super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(baseHeight.roundToInt(), MeasureSpec.EXACTLY))
     }

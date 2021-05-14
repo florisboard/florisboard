@@ -1,6 +1,6 @@
 
 plugins {
-    id("com.android.application") version "4.2.0"
+    id("com.android.application") version "4.2.1"
     kotlin("android") version "1.5.0"
     kotlin("kapt") version "1.5.0"
     kotlin("plugin.serialization") version "1.5.0"
@@ -62,6 +62,9 @@ android {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
 
+            isDebuggable = true
+            isJniDebuggable = true
+
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_debug")
             resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_debug_round")
             resValue("string", "floris_app_name", "FlorisBoard Debug")
@@ -102,6 +105,7 @@ android {
 dependencies {
     implementation("androidx.activity", "activity-ktx", "1.2.1")
     implementation("androidx.appcompat", "appcompat", "1.2.0")
+    implementation("androidx.autofill", "autofill", "1.1.0")
     implementation("androidx.core", "core-ktx", "1.3.2")
     implementation("androidx.fragment", "fragment-ktx", "1.3.0")
     implementation("androidx.preference", "preference-ktx", "1.1.1")
