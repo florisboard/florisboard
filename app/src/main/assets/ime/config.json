@@ -317,6 +317,7 @@
     {
       "id": 204,
       "languageTag": "de-DE-neobone",
+      "composer": "appender",
       "currencySet": "euro",
       "preferred": {
         "characters": "neo2",
