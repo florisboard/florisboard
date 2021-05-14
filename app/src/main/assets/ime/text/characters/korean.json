@@ -1,7 +1,7 @@
 {
   "type": "characters",
   "name": "korean",
-  "label": "KOREAN",
+  "label": "South Korean standard",
   "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [
