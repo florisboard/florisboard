@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Patrick Goldinger
+ * Copyright (C) 2021 ostrya
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,12 @@
  * limitations under the License.
  */
 
-#ifndef FLORISBOARD_NLP_H
-#define FLORISBOARD_NLP_H
+package dev.patrickgold.florisboard.ime.text.key
 
-#include <string>
+data class KeyHintConfiguration(
+    val symbolHintMode: KeyHintMode,
+    val numberHintMode: KeyHintMode,
+    val mergeHintPopups: Boolean
+)
 
-namespace ime::nlp {
-
-typedef std::string word_t;
-typedef uint16_t freq_t;
-
-static const freq_t FREQ_VALUE_MASK =          0xFF;
-static const freq_t FREQ_POSSIBLY_OFFENSIVE =  0x01;
-
-} // namespace ime::nlp
-
-#endif // FLORISBOARD_NLP_H
+val HINTS_DISABLED: KeyHintConfiguration = KeyHintConfiguration(KeyHintMode.DISABLED, KeyHintMode.DISABLED, false)

@@ -25,7 +25,11 @@ object LocaleUtils {
         return when {
             string.contains(DELIMITER) -> {
                 val lc = string.split(DELIMITER)
-                Locale(lc[0], lc[1])
+                if (lc.size == 3) {
+                    Locale(lc[0], lc[1], lc[2])
+                } else {
+                    Locale(lc[0], lc[1])
+                }
             }
             else -> {
                 Locale(string)

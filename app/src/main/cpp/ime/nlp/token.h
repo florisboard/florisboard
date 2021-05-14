@@ -25,7 +25,8 @@ namespace ime::nlp {
 class Token {
 public:
     word_t data;
-    Token(word_t _data);
+    Token();
+    Token(word_t &&_data);
 
     friend bool operator==(const Token &t1, const Token &t2);
     friend bool operator!=(const Token &t1, const Token &t2);
@@ -34,7 +35,8 @@ public:
 class WeightedToken : public Token {
 public:
     freq_t freq;
-    WeightedToken(word_t _data, freq_t _freq);
+    WeightedToken();
+    WeightedToken(word_t &&_data, freq_t _freq);
 
     friend bool operator==(const WeightedToken &t1, const WeightedToken &t2);
     friend bool operator!=(const WeightedToken &t1, const WeightedToken &t2);
@@ -44,6 +46,6 @@ public:
     friend bool operator>=(const WeightedToken &t1, const WeightedToken &t2);
 };
 
-}
+} // namespace ime::nlp
 
 #endif // FLORISBOARD_TOKEN_H

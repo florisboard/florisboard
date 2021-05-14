@@ -15,7 +15,9 @@
  */
 
 #include <jni.h>
-#include "ime/nlp/staged_suggestion_list.h"
+#include "ime/nlp/suggestion_list.h"
+
+#pragma ide diagnostic ignored "UnusedLocalVariable"
 
 using namespace ime::nlp;
 
@@ -49,10 +51,10 @@ Java_dev_patrickgold_florisboard_ime_nlp_SuggestionList_00024Companion_nativeAdd
         jstring word,
         jint freq) {
     const char *cWord = env->GetStringUTFChars(word, nullptr);
-    const word_t stdWord = word_t(cWord);
+    word_t stdWord = word_t(cWord);
     env->ReleaseStringUTFChars(word, cWord);
     auto *suggestionList = reinterpret_cast<SuggestionList *>(native_ptr);
-    return suggestionList->add(stdWord, freq);
+    return suggestionList->add(std::move(stdWord), freq);
 }
 
 extern "C"
@@ -87,7 +89,7 @@ Java_dev_patrickgold_florisboard_ime_nlp_SuggestionList_00024Companion_nativeGet
         jlong native_ptr,
         jint index) {
     auto *suggestionList = reinterpret_cast<SuggestionList *>(native_ptr);
-    WeightedToken *weightedToken = suggestionList->get(index);
+    auto weightedToken = suggestionList->get(index);
     if (weightedToken == nullptr) {
         return nullptr;
     }

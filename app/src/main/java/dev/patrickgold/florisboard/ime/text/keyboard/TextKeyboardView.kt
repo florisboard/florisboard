@@ -302,17 +302,11 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             event.getX(pointerIndex).roundToInt(), event.getY(pointerIndex).roundToInt()
         )
         if (key != null && key.isEnabled) {
-            var keyHintMode = KeyHintMode.DISABLED
-            if (prefs.keyboard.hintedNumberRowMode != KeyHintMode.DISABLED && key.computedPopups.hint?.type == KeyType.NUMERIC) {
-                keyHintMode = prefs.keyboard.hintedNumberRowMode
-            }
-            if (prefs.keyboard.hintedSymbolsMode != KeyHintMode.DISABLED && key.computedPopups.hint?.type == KeyType.CHARACTER) {
-                keyHintMode = prefs.keyboard.hintedSymbolsMode
-            }
+            val keyHintConfiguration = prefs.keyboard.getKeyHintConfiguration()
 
             florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.down(key.computedData))
             if (prefs.keyboard.popupEnabled) {
-                popupManager.show(key, keyHintMode)
+                popupManager.show(key, keyHintConfiguration)
             }
             florisboard.keyPressVibrate()
             florisboard.keyPressSound(key.computedData)
@@ -353,8 +347,8 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 }
                 else -> {
                     longPressHandler.postDelayed(delayMillis) {
-                        if (key.computedPopups.isNotEmpty()) {
-                            popupManager.extend(key, keyHintMode)
+                        if (key.computedPopups.getPopupKeys(keyHintConfiguration).isNotEmpty()) {
+                            popupManager.extend(key, keyHintConfiguration)
                             florisboard.keyPressVibrate()
                             florisboard.keyPressSound(key.computedData)
                         }
@@ -435,7 +429,8 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             }
             key.isPressed = false
             if (activeKey?.computedData?.code != KeyCode.SHIFT) {
-                val retData = popupManager.getActiveKeyData(key)
+                val keyHintConfiguration = prefs.keyboard.getKeyHintConfiguration()
+                val retData = popupManager.getActiveKeyData(key, keyHintConfiguration)
                 if (retData != null) {
                     if (retData == key.computedData) {
                         florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.up(key.computedData))
@@ -494,7 +489,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                     event.type == SwipeGesture.Type.TOUCH_UP -> {
                     activeKey?.let {
                         florisboard.textInputManager.inputEventDispatcher.send(
-                            InputKeyEvent.up(popupManager.getActiveKeyData(it) ?: it.computedData)
+                            InputKeyEvent.up(popupManager.getActiveKeyData(it, prefs.keyboard.getKeyHintConfiguration()) ?: it.computedData)
                         )
                     }
                     florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(TextKeyData.SHIFT))
@@ -702,9 +697,10 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         var spaceKey: TextKey? = null
         if (isRecomputingRequested) {
             isRecomputingRequested = false
+            val keyHintConfiguration = prefs.keyboard.getKeyHintConfiguration()
             for (key in keyboard.keys()) {
                 key.compute(internalComputingEvaluator)
-                computeLabelsAndDrawables(key)
+                computeLabelsAndDrawables(key, keyHintConfiguration)
                 if (key.computedData.code == KeyCode.SPACE) {
                     spaceKey = key
                 }
@@ -992,7 +988,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
     /**
      * Computes the labels and drawables needed to draw the key.
      */
-    private fun computeLabelsAndDrawables(key: TextKey) {
+    private fun computeLabelsAndDrawables(key: TextKey, keyHintConfiguration: KeyHintConfiguration) {
         // Reset attributes first to avoid invalid states if not updated
         key.label = null
         key.hintedLabel = null
@@ -1003,12 +999,8 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             && data.code != KeyCode.HALF_SPACE && data.code != KeyCode.KESHIDA || data.type == KeyType.NUMERIC
         ) {
             key.label = data.asString(isForDisplay = true)
-            val hint = key.computedPopups.hint
-            if (prefs.keyboard.hintedNumberRowMode != KeyHintMode.DISABLED && hint?.type == KeyType.NUMERIC) {
-                key.hintedLabel = hint.asString(isForDisplay = true)
-            }
-            if (prefs.keyboard.hintedSymbolsMode != KeyHintMode.DISABLED && hint?.type == KeyType.CHARACTER) {
-                key.hintedLabel = hint.asString(isForDisplay = true)
+            key.computedPopups.getPopupKeys(keyHintConfiguration).hint?.asString(isForDisplay = true).let {
+                key.hintedLabel = it
             }
         } else {
             when (data.code) {
