@@ -23,6 +23,7 @@ import android.util.Size
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InlineSuggestion
+import android.widget.inline.InlineContentView
 import androidx.annotation.IdRes
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -45,6 +46,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.lang.ref.WeakReference
+import java.util.*
 import kotlin.math.roundToInt
 
 /**
@@ -299,35 +301,50 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
-    fun setInlineSuggestions(list: List<InlineSuggestion>?) {
-        if (list == null) {
-            flogDebug { "Removing inline suggestions" }
-            isShowingInlineSuggestions = false
-            binding.inlineSuggestionsInner.removeAllViews()
-        } else if (list.isNotEmpty()) {
-            flogDebug { "Adding inline suggestions (${list.size})" }
-            isShowingInlineSuggestions = true
-            binding.inlineSuggestionsInner.let {
-                for (inlineSuggestion in list) {
-                    try {
-                        inlineSuggestion.inflate(
-                            context,
-                            Size(ViewGroup.LayoutParams.WRAP_CONTENT, florisboard?.inputView?.desiredInlineSuggestionsMaxHeight ?: 0),
-                            context.mainExecutor
-                        ) { view ->
-                            if (view != null) {
-                                flogDebug { "Adding inline suggestion view" }
-                                it.addView(view)
-                            } else {
-                                flogDebug { "Inline suggestion view is null" }
-                            }
+    fun clearInlineSuggestions() {
+        updateInlineSuggestionStrip(listOf())
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    fun showInlineSuggestions(inlineSuggestions: Collection<InlineSuggestion>) {
+        if (inlineSuggestions.isEmpty()) {
+            updateInlineSuggestionStrip(listOf())
+        } else {
+            val suggestionMap: TreeMap<Int, InlineContentView?> = TreeMap()
+            for ((i, inlineSuggestion) in inlineSuggestions.withIndex()) {
+                val size = Size(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                try {
+                    inlineSuggestion.inflate(context, size, context.mainExecutor) { suggestionView ->
+                        flogDebug { "New inline suggestion view ready" }
+                        suggestionMap[i] = suggestionView
+                        if (suggestionMap.size >= inlineSuggestions.size) {
+                            updateInlineSuggestionStrip(suggestionMap.values)
                         }
-                    } catch (e: Throwable) {
-                        flogWarning { "Failed to inflate inline suggestion: $e" }
                     }
+                } catch (e: Throwable) {
+                    flogWarning { "Failed to inflate inline suggestion: $e" }
                 }
             }
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun updateInlineSuggestionStrip(suggestionViews: Collection<InlineContentView?>) {
+        flogDebug { "Updating the inline suggestion strip with ${suggestionViews.size} items" }
+        binding.inlineSuggestionsInner.removeAllViews()
+        if (suggestionViews.isEmpty()) {
+            isShowingInlineSuggestions = false
+            return
+        } else {
+            for (suggestionView in suggestionViews) {
+                if (suggestionView == null) {
+                    continue
+                }
+                binding.inlineSuggestionsInner.addView(suggestionView)
+            }
+            isShowingInlineSuggestions = true
+        }
+        updateSmartbarState()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
