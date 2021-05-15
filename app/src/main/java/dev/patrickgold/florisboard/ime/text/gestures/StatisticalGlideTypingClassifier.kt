@@ -92,9 +92,12 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
 
     override fun setLayout(keyViews: List<TextKey>, subtype: Subtype) {
         // stop duplicate calls
-        if (layoutSubtype == subtype) {
+        if (layoutSubtype == subtype && keys == keyViews) {
             return
         }
+
+        // if only layout changed but not subtype
+        val layoutChanged = layoutSubtype == subtype
 
         keysByCharacter.clear()
         keys.clear()
@@ -105,7 +108,13 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         layoutSubtype = subtype
         distanceThresholdSquared = (keyViews.first().visibleBounds.width() / 4)
         distanceThresholdSquared *= distanceThresholdSquared
-        initializePruner()
+
+        if (
+            (wordDataSubtype == layoutSubtype)
+            || layoutChanged // should force a re-initialize
+        ) {
+            initializePruner(layoutChanged)
+        }
     }
 
     override fun setWordData(words: HashMap<String, Int>, subtype: Subtype) {
@@ -118,7 +127,9 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
         this.wordFrequencies = words
 
         this.wordDataSubtype = subtype
-        initializePruner()
+        if (wordDataSubtype == layoutSubtype) {
+            initializePruner(false)
+        }
     }
 
     private val prunerCache = LruCache<Subtype, Pruner>(PRUNER_CACHE_SIZE)
@@ -127,13 +138,12 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
      * Exists because Pruner requires both word data and layout are initialized,
      * however we don't know what order they're initialized in.
      */
-    private fun initializePruner() {
-        if (this.layoutSubtype == null || this.wordDataSubtype != this.layoutSubtype) {
-            // not yet ready
-            return
-        }
+    private fun initializePruner(invalidateCache: Boolean) {
         val currentSubtype = this.layoutSubtype!!
-        val cached = prunerCache.get(currentSubtype)
+        val cached = when {
+            invalidateCache -> null
+            else -> prunerCache.get(currentSubtype)
+        }
         if (cached == null) {
             this.pruner = Pruner(PRUNING_LENGTH_THRESHOLD, this.words, keysByCharacter)
             prunerCache.put(currentSubtype, this.pruner)
@@ -361,7 +371,12 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             ): Iterable<Int> {
                 val keyDistances = HashMap<TextKey, Float>()
                 for (key in keys) {
-                    val distance = Gesture.distance(key.visibleBounds.centerX().toFloat(), key.visibleBounds.centerY().toFloat(), x, y)
+                    val distance = Gesture.distance(
+                        key.visibleBounds.centerX().toFloat(),
+                        key.visibleBounds.centerY().toFloat(),
+                        x,
+                        y
+                    )
                     keyDistances[key] = distance
                 }
 
@@ -413,26 +428,39 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
                     if (previousLetter == lc) {
                         // bottom right
                         idealGestureWithLoops.addPoint(
-                            key.visibleBounds.centerX() + key.visibleBounds.width() / 4.0f, key.visibleBounds.centerY() + key.visibleBounds.height() / 4.0f
+                            key.visibleBounds.centerX() + key.visibleBounds.width() / 4.0f,
+                            key.visibleBounds.centerY() + key.visibleBounds.height() / 4.0f
                         )
                         // top right
                         idealGestureWithLoops.addPoint(
-                            key.visibleBounds.centerX() + key.visibleBounds.width() / 4.0f, key.visibleBounds.centerY() - key.visibleBounds.height() / 4.0f
+                            key.visibleBounds.centerX() + key.visibleBounds.width() / 4.0f,
+                            key.visibleBounds.centerY() - key.visibleBounds.height() / 4.0f
                         )
                         // top left
                         idealGestureWithLoops.addPoint(
-                            key.visibleBounds.centerX() - key.visibleBounds.width() / 4.0f, key.visibleBounds.centerY() - key.visibleBounds.height() / 4.0f
+                            key.visibleBounds.centerX() - key.visibleBounds.width() / 4.0f,
+                            key.visibleBounds.centerY() - key.visibleBounds.height() / 4.0f
                         )
                         // bottom left
                         idealGestureWithLoops.addPoint(
-                            key.visibleBounds.centerX() - key.visibleBounds.width() / 4.0f, key.visibleBounds.centerY() + key.visibleBounds.height() / 4.0f
+                            key.visibleBounds.centerX() - key.visibleBounds.width() / 4.0f,
+                            key.visibleBounds.centerY() + key.visibleBounds.height() / 4.0f
                         )
                         hasLoops = true
 
-                        idealGesture.addPoint(key.visibleBounds.centerX().toFloat(), key.visibleBounds.centerY().toFloat())
+                        idealGesture.addPoint(
+                            key.visibleBounds.centerX().toFloat(),
+                            key.visibleBounds.centerY().toFloat()
+                        )
                     } else {
-                        idealGesture.addPoint(key.visibleBounds.centerX().toFloat(), key.visibleBounds.centerY().toFloat())
-                        idealGestureWithLoops.addPoint(key.visibleBounds.centerX().toFloat(), key.visibleBounds.centerY().toFloat())
+                        idealGesture.addPoint(
+                            key.visibleBounds.centerX().toFloat(),
+                            key.visibleBounds.centerY().toFloat()
+                        )
+                        idealGestureWithLoops.addPoint(
+                            key.visibleBounds.centerX().toFloat(),
+                            key.visibleBounds.centerY().toFloat()
+                        )
                     }
                     previousLetter = lc
                 }
