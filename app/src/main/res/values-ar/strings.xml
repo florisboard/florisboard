@@ -42,7 +42,7 @@
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">المزيد من الخيارات</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">المساعدة والملاحظات</string>
     <string name="settings__help" comment="General label for help buttons in Settings">مساعدة</string>
-    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">الصفحة الرئيسية</string>
+    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">الرئيسية</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">لوحة المفاتيح</string>
     <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">الكتابة</string>
     <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">المظهر</string>
@@ -52,7 +52,7 @@
     <string name="settings__home__title" comment="Title of the Home fragment">مرحبا بكم في %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">لم يتم تمكين FlorisBoard في النظام وبالتالي لن يكون متاحًا كطريقة إدخال في منتقي الإدخال. انقر هنا لحل هذه المشكلة.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">لم يتم اختيار FlorisBoard كطريقة الإدخال الافتراضية. انقر هنا لحل هذه المشكلة.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">شكرا على تجربة FlorisBoard! هذا المشروع لا يزال في قيد التطوير وبالتالي يفتقد بعض الميزات. إذا وجدت أي أخطاء أو تريد تقديم اقتراح ، فالرجاء مراجعة المشروع على GitHub وطرح مشكلتك. هذا يساعد في جعل FlorisBoard أفضل. شكرا جزيلا!</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">شكرا على تجربة FlorisBoard! هذا المشروع لا يزال قيد التطوير وبالتالي يفتقد بعض الميزات. إذا وجدت أي أخطاء أو تريد تقديم اقتراح ، فالرجاء مراجعة المشروع على GitHub وطرح مشكلتك. هذا يساعد في جعل FlorisBoard أفضل. شكرا جزيلا!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">اللغات وتخطيطات لوحة المفاتيح</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">يبدو أنك لم تقم بإختيار أية أنواع فرعية. كبديل، سيتم استخدام النوع الفرعي English / QWERTY!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">إضافة</string>
@@ -102,9 +102,9 @@
     <string name="settings__theme_editor__type_label" comment="Label of type input">نوع</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">إضافة مجموعة</string>
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">تحرير المجموعة</string>
-    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">اضافة الخاصيه</string>
+    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">إضافة خاصية</string>
     <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">تحرير الصفة</string>
-    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">تحرير اسم الثيم</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">تحرير اسم السمة</string>
     <string name="settings__theme_editor__value_type_reference" comment="Theme value type">المرجع</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">مجموعة</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">الخاصية</string>
@@ -115,8 +115,8 @@
     <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">الحالة</string>
     <string name="settings__theme_editor__value_type_other" comment="Theme value type">أخرى</string>
     <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">النص</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">معاينو قيم الثيم</string>
-    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">يرجى ادخال اسم المظهر.</string>
+    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">معاينة قيم السمة</string>
+    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">يرجى إدخال اسم المظهر.</string>
     <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">الرجاء إدخال اسم مجموعة يحتوي فقط على أحرف (a-z و / أو A-Z) ، والنقطتان (:) للتجميع الفرعي أو بالإضافة إلى الأرقام (0–9) ، والمده (~) والتسطير (_) للمفتاح ضع الكلمة المناسبة.</string>
     <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">الرجاء إدخال اسم المجموعة.</string>
     <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">اسم هذه المجموعة موجود بالفعل في هذا الموضوع. الرجاء اختيار واحد آخر.</string>
@@ -156,8 +156,8 @@
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">المفاتيح</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">صف الأعداد</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">إظهار صف الأعداد فوق تخطيط الحروف</string>
-    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">تلميح لصف الأعداد</string>
-    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">تلميح للرموز</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">تلميحات صف الأعداد</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">تلميحات للرموز</string>
     <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">معطّل</string>
     <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">مفعّل (الأولوية للتلميح)</string>
     <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">مفعّل (الأولوية للحروف الإضافية)</string>
@@ -169,9 +169,11 @@
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">تغيير اللغة</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">تبديل تطبيق لوحة المفاتيح</string>
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">ديناميكي: قم بالتبديل إلى الرموز التعبيرية / تبديل اللغة</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label">عرض ايضا الرموز المنبثقة</string>
+    <string name="pref__keyboard_merge_hint_popups_enabled__summary">أضف النوافذ المنبثقة للرمز إلى التخطيط الافتراضي</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">مضاعف حجم الخط (عمودي)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">مضاعف حجم الخط (أفقي)</string>
-    <string name="pref__keyboard__group_layout__label" comment="Preference group title">نظام التخطيط</string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">التخطيط</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">وضع اليد الواحدة</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">إيقاف</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">وضع اليد اليمنى</string>
@@ -190,7 +192,7 @@
     <string name="pref__keyboard__height_factor__tall" comment="Preference value">طويل</string>
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">طويل جدا</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">مخصص</string>
-    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">قيمة ارتفاع لوحة المفاتيح المخصصة</string>
+    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">قيمة مخصصة لأرتفاع لوحة المفاتيح</string>
     <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">الإزاحة السفلية (عمودي)</string>
     <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">الإزاحة السفلية (عمودي)</string>
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">تباعد المفاتيح (عموديًا)</string>
@@ -199,8 +201,8 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">الصوت عند ضغط المفتاح</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">حجم الصوت عند ضغط المفتاح</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">إهتزاز عند ضغط المفتاح</string>
-    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">إهتزاز عند الضغط على الزر</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">شدة الإهتزاز عند ضغط المفتاح</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">اهتزاز عند الضغط على المفتاح</string>
+    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">شدة الاهتزاز عند ضغط على المفتاح</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">رؤية النافذة المنبثقة</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">إظهار النافذة المنبثقة عندما تضغط على مفتاح</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">مدة الضغط المطوّل على المفتاح</string>
@@ -275,7 +277,7 @@
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">مفتاح التحويل</string>
     <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">إعادة</string>
     <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">تراجع</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">إظهار طريقة الإدخال</string>
+    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">إظهار مبدل طريقة الإدخال</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">التبديل إلى لوحة المفاتيح السابقة</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">التبديل إلى النوع الفرعي السابق</string>
     <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">التبديل إلى النوع الفرعي التالي</string>
@@ -286,7 +288,7 @@
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">السحب للفوق من خلال مفتاح المسافة</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">السحب لليسار من خلال مفتاح المسافة</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">السحب لليمين من خلال مفتاح المسافة</string>
-    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">الضغط المطول على شريط المسافه</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">الضغط المطول على شريط المسافة</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">السحب لليسار من خلال مفتاح الحذف</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">عتبة سرعة السحب</string>
     <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">بطيئة جداً</string>
@@ -304,13 +306,13 @@
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">إعدادات المظهر</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">فاتح</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">داكن</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">إظهار أيقونة البرنامج في صفحة الهاتف الرئيسية</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">إظهار أيقونة البرنامج في درج التطبيقات</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">فرض الوضع الخاص</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">سيتم تعطيل أي ميزات تعمل مؤقتًا باستعمال بيانات الإدخال الخاصة بك</string>
     <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">تفعيل أدوات المطور</string>
     <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">أدوات مصممة خصيصًا لتصحيح الأخطاء واستكشاف العلل وإصلاحها</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">إظهار إحصائيات كومة الذاكرة</string>
-    <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">يعرض طبقة تراكبية في الزاوية العلوية اليمنى لاستخدام ذاكرة الكومة والحجم الأقصى لها</string>
+    <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">يعرض طبقة تراكبية في الزاوية العلوية اليمنى على لوحة المفاتيح لاستخدام ذاكرة الكومة والحجم الأقصى لها</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">مسح قاعدة بيانات القاموس الداخلي للمستخدم</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">يمسح كل الكلمات من جدول قاعدة بيانات القاموس</string>
     <!-- About UI strings -->
@@ -341,7 +343,7 @@
     <string name="assets__action__delete_confirm_message">هل أنت متأكد من حذف \"%s\"؟ لا يمكن التراجع عن هذا الإجراء.</string>
     <string name="assets__action__edit">تعديل</string>
     <string name="assets__action__export">تصدير</string>
-    <string name="assets__action__import">إستيراد</string>
+    <string name="assets__action__import">استيراد</string>
     <string name="assets__action__no">كلا</string>
     <string name="assets__action__save">حفظ</string>
     <string name="assets__action__yes">موافق</string>
@@ -361,7 +363,7 @@
     <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">مصدر التعليمات البرمجية لـ FlorisBoard متاح للجميع ، لذا يمكنك بسهولة مراجعة ما يفعله FlorisBoard في الخلفية. يرجى مراجعة الرابط الخاص بالمستودع أدناه.</string>
     <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">شيء أخير قبل بدء الإعداد - إذا واجهت أي أخطاء / أعطال / مشكلات في FlorisBoard أو كان لديك طلب ميزة - توجه إلى مستودع GitHub الموجود في الرابط أدناه واطرح مشكلة. هذا يساعد في تحسين التجربة لجميع المستخدمين!</string>
     <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">لبدء الإعداد إضغط على <i>التالي</i>.</string>
-    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">تفعيل FlorisBoard</string>
+    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">قم بتفعيل FlorisBoard</string>
     <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">يتطلب Android تمكين كل لوحة مفاتيح مخصصة يدويًا قبل أن تتمكن من استخدامها. إضغط على الزر أدناه للتوجه إلى <i>اللغات و الإدخال</i> الإعدادات, ثم تأكد من إختيار \'<i>FlorisBoard</i>\'.</string>
     <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">تم تفعيل FlorisBoard بنجاح. للمواصلة إضغط على <i>التالي</i>!</string>
     <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">فتح إعدادات اللغات و الإدخال</string>

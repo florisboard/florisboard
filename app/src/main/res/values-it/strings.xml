@@ -169,6 +169,8 @@
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Cambia lingua</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Cambia app di tastiera</string>
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Dinamico: Passa agli emoji / Cambia lingua</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label">Mostra anche i popup dei simboli</string>
+    <string name="pref__keyboard_merge_hint_popups_enabled__summary">Aggiungi i popup dei simboli alla disposizione predefinita</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Moltiplicatore della dimensione del testo (ritratto)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Moltiplicatore della dimensione del testo (panorama)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>

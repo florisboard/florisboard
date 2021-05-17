@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FlorisBoard</string>
-    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pauze</string>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pauzeren</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Wacht</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Doorlooppuntjes-symbool. Geeft aan dat meer letters gebruikt kunnen worden door de toets langer in te drukken, wanneer zichtbaar.</string>
     <!-- One-handed strings -->
@@ -169,6 +169,8 @@
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Taal wijzigen</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Wissel toetsenbord</string>
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Dynamisch: Wissel naar emoji\'s / Wissel taal</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label">Toon ook symboolpop-ups</string>
+    <string name="pref__keyboard_merge_hint_popups_enabled__summary">Voeg symboolpop-ups toe aan de standaardindeling</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Factor lettergrootte (portret-modus)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Factor lettergrootte (landschapsmodus)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Indeling</string>
@@ -210,6 +212,15 @@
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schakel Slimme Balk in</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Word getoond boven het toetsenbord</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggesties</string>
+    <string name="pref__dictionary__title" comment="Preference group title">Woordenboek</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Activeer het persoonlijke woordenboek van het systeem</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Stel woorden voor uit het persoonlijke woordenboek van het systeem</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Beheer persoonlijke woordenboek van het systeem</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Voeg toe, bekijk of verwijder woorden uit het persoonlijke woordenboek van het systeem</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Schakel intern persoonlijke woordenboek in</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Stel woorden voor uit het interne persoonlijke woordenboek</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Beheer interne persoonlijke woordenboek</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Voeg toe, bekijk of verwijder woorden uit het interne persoonlijke woordenboek</string>
     <string name="pref__correction__title" comment="Preference group title">Verbeteringen</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-kapitalisatie</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Woorden kapitaliseren op basis van de huidige invoercontext</string>
@@ -217,6 +228,26 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">CapsLock blijft aan bij het verplaatsen naar een ander tekstveld</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Punt na twee spaties</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Twee keer tikken op spatiebalk voegt een punt toe gevolgd door een spatie</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Intern persoonlijk woordenboek</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Persoonlijk woordenboek van het systeem</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frequentie: %d</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frequentie: %d | Afkorting: %s</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Voor alle talen</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Open systeembeheer UI</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Persoonlijk woordenboek met succes geïmporteerd!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Persoonlijk woordenboek met succces geëxporteerd!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Woord invoeren</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Woord bewerken</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Woord</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Geef een woord in.</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Dit woord bevat ongeldige tekens.</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frequentie (tussen %d en %d)</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Geef een frequentie in.</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Geef een geldig nummer binnen het gespecifieerde bereik in.</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Afkorting (optioneel)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Deze afkorting bevat ongeldige tekens.</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Taalcode (optioneel)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Deze taalcode komt niet overeen met de verwachte syntax. De code moet ofwel enkel de taal (bv. \"en\"), een taal en een lan (bv. \"en_US\") of een taal, land en script (bv. \"en_US-script\") bevatten.</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gebaren &amp; Vegen</string>
     <string name="pref__glide__title" comment="Preference group title">Vegend typen</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Glijdend typen inschakelen</string>
@@ -282,6 +313,8 @@
     <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Hulpmiddelen specifiek voor debuggen en problemen verhelpen</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Toon heap memory stats</string>
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Toont het heap-memorygebruik en maximale grootte in de rechterbovenhoek</string>
+    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Wis database van het interne persoonlijke woordenboek</string>
+    <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Wis alle woorden van de woordenlijst in de datatabel</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Over</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">App-pictogram van FlorisBoard</string>
@@ -297,6 +330,7 @@
     <string name="assets__file__name">Naam</string>
     <string name="assets__file__source">Bron</string>
     <string name="assets__action__add">Toevoegen</string>
+    <string name="assets__action__apply">Toepassen</string>
     <string name="assets__action__cancel">Annuleren</string>
     <string name="assets__action__cancel_confirm_title">Annuleren bevestigen</string>
     <string name="assets__action__cancel_confirm_message">Weet je zeker dat je onopgeslagen wijzigingen wil verwerpen? Deze actie kan niet ongedaan gemaakt worden.</string>
@@ -337,6 +371,7 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Foutenrapport FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Sorry voor het ongemak, maar FlorisBoard is gecrashed omwille van een onverwachte fout.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Als u deze fout wilt rapporteren, kijk dan eerst in de issuetracker op GitHub of uw crash nog niet gerapporteerd is.\nAls dat niet het geval is, kopieer dan de gegenereerde crashlog en open een nieuwe issue. Gebruik het \"%s\"-sjabloon en vul de beschrijving in, de stappen om te reproduceren, en plak het gegenereerde crash log aan het eind. Dit helpt om FlorisBoard beter en stabieler te maken voor iedereen. Bedankt!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopieer naar systeemklembord</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Gekopieerd naar systeemklembord</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Kan niet kopiëren naar systeemklembord: Klembordbeheerinstantie niet gevonden</string>

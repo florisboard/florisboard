@@ -169,6 +169,8 @@
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Mudar idioma</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Mudar a aplicação de teclado</string>
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Dinâmica: mudar para emojis / mudar idioma</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label">Mostrar popup para símbolos</string>
+    <string name="pref__keyboard_merge_hint_popups_enabled__summary">Adicionar popup de símbolos à disposição padrão</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicador do tamanho do tipo de letra (vertical)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicador do tamanho do tipo de letra (horizontal)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposição</string>
@@ -210,6 +212,15 @@
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ativar barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Mostrar na parte superior do teclado</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestões</string>
+    <string name="pref__dictionary__title" comment="Preference group title">Dicionário</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Ativar dicionário do sistema</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Sugerir palavras guardadas no dicionário do sistema</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Gerir dicionários do sistema</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Adicionar, ver e remover entradas ao dicionário do sistema</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Ativar dicionário do utilizador</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Sugerir palavras guardadas no dicionário do utilizador</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Gerir dicionários do utilizador</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Adicionar, ver e remover entradas ao dicionário do utilizador</string>
     <string name="pref__correction__title" comment="Preference group title">Correções</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Maiúsculas automáticas</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Colocar letras maiúsculas tendo em conta o contexto das palavras</string>
@@ -217,6 +228,26 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Manter CapsLock quando se muda para outro campo de texto</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Duplo espaço insere ponto final</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Ao tocar 2 vezes na barra de espaços, inserir um ponto final e um espaço</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Dicionário do utilizador</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Dicionário do sistema</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frequência: %d</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frequência: %d | Atalho: %s</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Para todos os idiomas</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Abrir gestor do sistema</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Dicionário do utilizador importado com sucesso!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Dicionário do utilizador exportado com sucesso!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Adicionar palavra</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Editar palavra</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Palavra</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Introduza uma palavra!</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Esta palavra tem caracteres inválidos.</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frequência (entre %d e %d)</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Introduza um valor para a frequência!</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Introduza um número válido dentro dos limites definidos!</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Atalho (opcional)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Este atalho tem caracteres inválidos.</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Código do idioma (opcional)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">O código de idioma indicado não é coincidente com a sintaxe esperada. O código deve um idioma (pt), um idioma e um país (pt_PT) ou um idioma, um país e um script (pt_PT-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gestos e deslize</string>
     <string name="pref__glide__title" comment="Preference group title">Digitar ao deslizar</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Ativar escrita por egstos</string>
@@ -281,6 +312,8 @@
     <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Ativar ferramentas de programador</string>
     <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Ferramentas criadas para efeitos de depuração e resolução de erros</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Mostrar estatísticas de memória \'heap\'</string>
+    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Limpar base de dados do dicionário do utilizador</string>
+    <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Remover todas as palavras da base de dados do dicionário</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Sobre o FlorisBoard</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ícone do FlorisBoard</string>
@@ -296,6 +329,7 @@
     <string name="assets__file__name">Nome</string>
     <string name="assets__file__source">Fonte</string>
     <string name="assets__action__add">Adicionar</string>
+    <string name="assets__action__apply">Aplicar</string>
     <string name="assets__action__cancel">Cancelar</string>
     <string name="assets__action__cancel_confirm_title">Confirmar</string>
     <string name="assets__action__cancel_confirm_message">Tem a certeza de que deseja descartar as alterações? Esta ação não pode ser revertida.</string>

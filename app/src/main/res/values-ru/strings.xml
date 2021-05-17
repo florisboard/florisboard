@@ -169,6 +169,8 @@
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Сменить язык</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Переключить приложение клавиатуры</string>
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Динамическое: переключиться на эмодзи / переключить язык</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label">Символы в всплывающей подсказке</string>
+    <string name="pref__keyboard_merge_hint_popups_enabled__summary">Включать символы в всплывающую подсказку раскладки по умолчанию</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Мультипликатор размера шрифта (портрет)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Мультипликатор размера шрифта (ландшафт)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Внешний вид</string>

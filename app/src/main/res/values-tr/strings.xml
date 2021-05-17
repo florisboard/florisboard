@@ -169,6 +169,8 @@
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Dili değiştir</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Klavye uygulamasını değiştir</string>
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Dinamik: Emojilerle değiştir / Dili değiştir</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label">Sembol açılır pencerelerini de göster</string>
+    <string name="pref__keyboard_merge_hint_popups_enabled__summary">Sembol açılır pencerelerini varsayılan düzene ekle</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Yazıtipi boyutu çarpanı (dikey)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Yazıtipi boyutu çarpanı (yatay)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Yerleşim</string>
@@ -210,6 +212,15 @@
     <string name="pref__smartbar__enabled__label" comment="Preference title">Akıllı Çubuğu Etkinleştir</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Klavyenin üstünde gösterilir</string>
     <string name="pref__suggestion__title" comment="Preference group title">Öneriler</string>
+    <string name="pref__dictionary__title" comment="Preference group title">Sözlük</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Kullanıcı sözlüğünü etkinleştir</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Kullanıcı sözlüğünde saklanan kelimeleri öner</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Kullanıcı sözlüğünü yönet</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Kullanıcı sözlüğüne kelime ekle, çıkar veya görüntüle</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Dahili kullanıcı sözlüğünü etkinleştir</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Dahili kullanıcı sözlüğünde saklanan kelimeleri öner</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Dahili kullanıcı sözlüğünü yönet</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Dahili kullanıcı sözlüğüne kelime ekle, çıkar veya görüntüle</string>
     <string name="pref__correction__title" comment="Preference group title">Düzeltmeler</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Otomatik olarak büyük harf yap</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">İçeriğe göre kelimelerin ilk harfini büyüt</string>
@@ -217,6 +228,26 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Başka bir yazım alanına geçerken büyük harf kilidini açık tut</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Çift boşlukta nokta</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Boşluk tuşuna 2 defa basmak bir nokta ve ardından bir boşluk koyar</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Dahili Kullanıcı Sözlüğü</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Kullanıcı Sözlüğü</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Sıklık: %d</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Sıklık: %d | Kısayol: %s</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Tüm diller için</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Sistem yöneticisi arayüzünü aç</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Kullanıcı sözlüğü başarıyla içe aktarıldı!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Kullanıcı sözlüğü başarıyla dışa aktarıldı!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Yeni sözcük ekle</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Sözcüğü düzenle</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Sözcük</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Lütfen bir sözcük girin!</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Bu sözcük geçersiz karakterler içeriyor.</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Sıklık (%d ve %d arasında)</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Lütfen bir sıklık değeri girin!</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Lütfen sınırlar dahilinde geçerli bir sayı girin!</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Kısayol (seçmeli)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Bu kısayol geçersiz karakterler içeriyor.</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Dil kodu (seçmeli)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Bu dil kodu beklenen sözdizimine uymuyor. Kod ya sadece bir dil olmalı (tr gibi), ya hem dil hem de ülke kodu olmalı (tr_TR gibi), ya da hem dil hem ülke hem de betik olmalıdır (tr_TR-betik gibi).</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Jestler &amp; Kaydırarak yazma</string>
     <string name="pref__glide__title" comment="Preference group title">Kaydırarak Yazma</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Kaydırarak yazmayı etkinleştir</string>
@@ -282,6 +313,8 @@
     <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Hata ayıklama ve sorun giderme için özel tasarlanmış araçlar</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Küme bellek istatistiklerini göster</string>
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Küme bellek kullanımını ve en fazla boyutunu sağ üst köşede gösterir</string>
+    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Dahili kullanıcı sözlüğü veritabanını temizle</string>
+    <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Sözlük veritabanı tablosundaki tüm sözcükleri temizler</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Hakkında</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard’un uygulama simgesi</string>
@@ -297,6 +330,7 @@
     <string name="assets__file__name">İsim</string>
     <string name="assets__file__source">Kaynak</string>
     <string name="assets__action__add">Ekle</string>
+    <string name="assets__action__apply">Uygula</string>
     <string name="assets__action__cancel">İptal</string>
     <string name="assets__action__cancel_confirm_title">İptali onayla</string>
     <string name="assets__action__cancel_confirm_message">Kaydedilmemiş değişiklikleri iptal etmek istediğine emin misin? Bu işlem geri alınamaz.</string>

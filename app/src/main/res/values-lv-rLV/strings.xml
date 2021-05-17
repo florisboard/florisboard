@@ -169,6 +169,8 @@
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Mainīt valodu</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Mainīt tastatūras lietotni</string>
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Mainīgs: pārslēgties uz sajūtu zīmēm (emoji) / pārslēgt valodu</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label">Rādīt arī zīmju uzlecošos logus</string>
+    <string name="pref__keyboard_merge_hint_popups_enabled__summary">Pievienot zīmju izlecošos logus noklusējuma izkārtojumam</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Fonta izmēra reizinātājs (statenisks novietojums)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Fonta izmēra reizinātājs (līmenisks novietojums)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Izkārtojums</string>

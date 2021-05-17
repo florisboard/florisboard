@@ -65,6 +65,7 @@
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Διάταξη χαρακτήρων</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Πρωτεύουσα διάταξη συμβόλων</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Δευτερεύουσα διάταξη συμβόλων</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Σύνολο συναλλαγμάτων</string>
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Αριθμητική διάταξη</string>
     <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">(Προχωρημένη) αριθμητική διάταξη</string>
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Διάταξη σειράς αριθμών</string>
@@ -85,6 +86,7 @@
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Επιλεγμένο θέμα</string>
     <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Προσαρμογή χρωμάτων στην εφαρμογή</string>
     <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Τα χρώματα του θέματος προσαρμόζονται σε αυτά της τρέχουσας εφαρμογής, εάν αυτή η εφαρμογή το υποστηρίζει.</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">Πηγές της Εφαρμογής FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Εσωτερικός αποθηκευτικός χώρος</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Εξωτερικός Προμηθευτής</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Διαχειριστής Θέματος (Μέρα)</string>
@@ -107,6 +109,8 @@
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Ομάδα</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Χαρακτηριστικό</string>
     <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Συμπαγές χρώμα</string>
+    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Γραμμικό ντεγκραντέ</string>
+    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Ακτινικό ντεγκραντέ</string>
     <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Εναλλαγή</string>
     <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Κατάσταση</string>
     <string name="settings__theme_editor__value_type_other" comment="Theme value type">Άλλο</string>
@@ -131,6 +135,7 @@
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Πλήκτρο έξυπνης μπάρας</string>
     <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Διάταξη πλήρους οθόνης τοπίου</string>
     <string name="settings__theme__group_extractActionButton" comment="Theme group label">Πλήκτρο δράσης πλήρους οθόνης τοπίου</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">Διαδρομή ολίσθησης</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Προσαρμοσμένη ομάδα (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Χρώμα φόντου</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Χρώμα φόντου (ενεργό)</string>
@@ -157,10 +162,15 @@
     <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">Ενεργοποιημένο (Προτεραιότητα των υπονοούμενων)</string>
     <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">Ενεργοποιημένο (Προτεραιότητα του τονισμού)</string>
     <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">Ενεργοποιημένο (Έξυπνη προτεραιοποίηση)</string>
+    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Εμφάνιση πλήκτρου χρηστικότητας</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Εμφανίζει ένα διαμορφώσιμο πλήκτρο χρηστικότητας δίπλα στο πλήκτρο κενού</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Ενέργεια πλήκτρου χρηστικότητας</string>
     <string name="pref__keyboard__utility_key_action__switch_to_emojis" comment="Preference value">Εναλλαγή σε emoji</string>
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Εναλλαγή γλώσσας</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Εναλλαγή εφαρμογής πληκτρολογίου</string>
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Δυναμικό: Εναλλαγή σε emojis / Εναλλαγή γλώσσας</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label">Επιπλέον εμφάνιση αναδυόμενων πλήκτρων συμβόλων</string>
+    <string name="pref__keyboard_merge_hint_popups_enabled__summary">Προσθήκη των αναδυόμενων πλήκτρων συμβόλων στην προεπιλεγμένη διάταξη</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Πολλαπλασιαστής μεγέθους γραμματοσειράς (πορτραίτο)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Πολλαπλασιαστής μεγέθους γραμματοσειράς (τοπίο)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Διάταξη</string>
@@ -183,6 +193,10 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Πολύ-ψηλό</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Προσαρμοσμένο</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Προσαρμοσμένη τιμή ύψους πληκτρολογίου</string>
+    <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Μετατόπιση βάσης (πορτρέτο)</string>
+    <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Μετατόπιση βάσης (τοπίο)</string>
+    <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Απόσταση μεταξύ πλήκτρων (κάθετα)</string>
+    <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Απόσταση μεταξύ πλήκτρων (οριζόντια)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Πάτημα πλήκτρου</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Ήχος κατά το πάτημα πλήκτρου</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Ένταση ήχου κατά το πάτημα πλήκτρου</string>
@@ -193,10 +207,20 @@
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Επιπλέον εμφάνιση πλήκτρου όταν πατήσετε ένα πλήκτρο</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Καθυστέρηση παρατεταμένου πατήματος πλήκτρου</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Το πλήκτρο διαστήματος επιστρέφει στη διάταξη χαρακτήρων</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Πατώντας κενό επαναφέρεστε αυτόματα στους χαρακτήρες όταν βρίσκεστε στα σύμβολα ή στους αριθμούς</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Εμπειρία πληκτρολόγησης</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ενεργοποίηση Έξυπνης Μπάρας</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Εμφάνιση στην κορυφή του πληκτρολογίου</string>
     <string name="pref__suggestion__title" comment="Preference group title">Προτάσεις</string>
+    <string name="pref__dictionary__title" comment="Preference group title">Λεξικό</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Ενεργοποίηση λεξικού χρήστη στο σύστημα</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Προτάσεις λέξεων αποθηκευμένων στο λεξικό χρήστη στο σύστημα</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Διαχείριση λεξικού χρήστη στο σύστημα</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Προσθήκη, προβολή, και αφαίρεση εισαγωγών για το λεξικό χρήστη στο σύστημα</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Ενεργοποίηση εσωτερικού λεξικού χρήστη</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Προτάσεις λέξεων αποθηκευμένων στο εσωτερικό λεξικό χρήστη</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Διαχείριση εσωτερικού λεξικού χρήστη</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Προσθήκη, προβολή, και αφαίρεση εισαγωγών για το εσωτερικό λεξικό χρήστη</string>
     <string name="pref__correction__title" comment="Preference group title">Διορθώσεις</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Αυτόματη χρήση κεφαλαίων</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Κεφαλαιοποίηση λέξεων βάσει του παρόντος περιεχομένου εισαγωγής</string>
@@ -204,13 +228,38 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Τα κεφαλαία θα παραμείνουν ενεργοποιημένα όταν μεταβείτε σε διαφορετικό πεδίο κειμένου</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Τελεία με διπλό-κενό</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Το διπλό πάτημα του πλήκτρου διαστήματος εισάγει μία τελεία ακολουθούμενη από ένα διάστημα</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Εσωτερικό Λεξικό Χρήστη</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Λεξικό Χρήστη στο Σύστημα</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Συχνότητα: %d</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Συχνότητα: %d | Συντόμευση: %s</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Για όλες τις γλώσσες</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Άνοιγμα περιβάλλοντος διαχειριστή συστήματος</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Η εισαγωγή λεξικού χρήστη ήταν επιτυχής!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Η εξαγωγή λεξικού χρήστη ήταν επιτυχής!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Προσθήκη καταχώρισης λέξεως</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Επεξεργασία καταχώρισης λέξεως</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Λέξη</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Παρακαλώ εισάγετε μία λέξη!</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Αυτή η λέξη περιέχει μη έγκυρους χαρακτήρες.</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Συχνότητα (μεταξύ %d και %d)</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Παρακαλώ εισάγετε μία τιμή συχνότητας!</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Παρακαλώ εισάγετε έναν έγκυρο αριθμό εντός των ορισμένων ορίων!</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Συντόμευση (προαιρετική)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Αυτή η συντόμευση περιέχει μη έγκυρους χαρακτήρες.</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Κωδικός γλώσσας (προαιρετικός)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Αυτός ο κωδικός γλώσσας δεν ανταποκρίνεται στην προβλεπόμενη σύνταξη. Ο κωδικός πρέπει να είναι είτε μία γλώσσα μόνο (όπως en), είτε μία γλώσσα και μία χώρα (όπως en_US) είτε μία γλώσσα, χώρα, και κείμενο (όπως en_US-κείμενο).</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Κινήσεις &amp; Πληκτρολόγηση με ολίσθηση</string>
     <string name="pref__glide__title" comment="Preference group title">Πληκτρολόγηση με ολίσθηση</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Ενεργοποίηση πληκτρολόγησης με ολίσθηση</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Πληκτρολογήστε μία λέξη με ολίσθηση του δαχτύλου μέσα από τα γράμματά της</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Εμφάνιση διαδρομής ολίσθησης</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Θα εξαφανίζεται μετά από κάθε λέξη</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Γενικές χειρονομίες</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Χειρονομίες πλήκτρου διαστήματος</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">Άλλες κινήσεις / Όρια κινήσεων</string>
     <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Καμία ενέργεια</string>
+    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Εναλλαγή στην προηγούμενη λειτουργία πληκτρολογίου</string>
+    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Εναλλαγή στην επόμενη λειτουργία πληκτρολογίου</string>
     <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Διαγραφή χαρακτήρων με ακρίβεια</string>
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Διαγραφή της τρέχουσας λέξης</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Διαγραφή λέξεων με ακρίβεια</string>
@@ -260,6 +309,12 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Εμφάνιση του εικονιδίου της εφαρμογής στον εκκινητή</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Εξαναγκασμός ιδιωτικής λειτουργίας</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Θα απενεργοποιήσει χαρακτηριστικά που χρησιμοποιούν προσωρινά τα δεδομένα που εισάγετε</string>
+    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Ενεργοποίηση εργαλείων προγραμματιστή</string>
+    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Εργαλεία σχεδιασμένα συγκεκριμένα για αποσφαλμάτωση και επίλυση προβλημάτων</string>
+    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Εμφάνιση στατιστικών μνήμης σωρού</string>
+    <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Δημιουργεί ένα επικάλυμμα με τη χρήση της μνήμης σωρού και του μέγιστου μεγέθους στην πάνω-δεξιά γωνία</string>
+    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Διαγραφή βάσης δεδομένων εσωτερικού λεξικού χρήστη</string>
+    <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Διαγράφει όλες τις λέξεις από τον πίνακα δεδομένων του λεξικού</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Σχετικά με</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Εικονίδιο εφαρμογής του FlorisBoard</string>
@@ -275,6 +330,7 @@
     <string name="assets__file__name">Όνομα</string>
     <string name="assets__file__source">Πηγή</string>
     <string name="assets__action__add">Προσθήκη</string>
+    <string name="assets__action__apply">Εφαρμογή</string>
     <string name="assets__action__cancel">Ακύρωση</string>
     <string name="assets__action__cancel_confirm_title">Επιβεβαίωση ακύρωσης</string>
     <string name="assets__action__cancel_confirm_message">Είστε βέβαιοι ότι θέλετε να απορρίψετε τυχούσες μη αποθηκευμένες αλλαγές; Αυτή η ενέργεια δεν μπορεί να αναιρεθεί εφόσον εκτελεστεί.</string>
@@ -314,6 +370,12 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Η ρύθμιση ολοκληρώθηκε!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Αναφορά σφάλματος FlorisBoard</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Συγγνώμη για την ταλαιπωρία, αλλά το FlorisBoard έχει τερματιστεί απρόοπτα εξαιτίας ενός απρόσμενου σφάλματος.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Εάν επιθυμείτε να αναφέρετε αυτό το σφάλμα, πρώτα ελέγξτε αν το πρόβλημά σας δεν έχει ακόμα αναφερθεί στην παρακολούθηση προβλημάτων στο GitHub.\nΕάν δεν έχει αναφερθεί, αντιγράψτε την καταγραφή του τερματισμού που έχει προκύψει και ανοίξτε ένα νέο θέμα. Χρησιμοποιήστε το πρότυπο \"%s\" και συμπληρώσει την περιγραφή, τα βήματα για αναπαραγωγή, και αντιγράψτε την καταγραφή του τερματισμού στο τέλος. Αυτό βοηθάει να γίνει το FlorisBoard καλύτερο και πιο σταθερό για όλους. Ευχαριστώ!</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Αντιγραφή στο πρόχειρο συστήματος</string>
+    <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Αντιγράφηκε στο πρόχειρο συστήματος</string>
+    <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Αδυναμία αντιγραφής στο πρόχειρο συστήματος: Η πραγμάτωση διαχειριστή προχείρου δε βρέθηκε</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Άνοιγμα παρακολούθησης θεμάτων (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Κλείσιμο</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">Αναφορές σφάλματος FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">Το FlorisBoard έχει σταματήσει να λειτουργεί…</string>
@@ -327,6 +389,7 @@
     <string name="clip__pin_item">Καρφίτσωμα στοιχείου</string>
     <string name="clip__delete_item">Διαγραφή</string>
     <string name="clip__paste_item">Επικόλληση</string>
+    <string name="clip__back_to_text_input">Πίσω στην εισαγωγή κειμένου</string>
     <string name="clip__cant_paste">Η εφαρμογή αυτή δεν επιτρέπει την επικόλληση του περιεχομένου.</string>
     <string name="pref__clipboard__clipboard_category__label">Πρόχειρο</string>
     <string name="pref__clipboard__use_internal_clipboard___label">Χρήση εσωτερικού προχείρου</string>
@@ -344,5 +407,8 @@
     <string name="pref__clipboard__max_history_size__label">Μέγ. μέγεθος ιστορικού</string>
     <string name="pref__unit_items">" στοιχεία"</string>
     <!-- glide strings -->
+    <string name="pref__glide_trail_fade_duration">Διάρκεια εξασθένησης διαδρομής ολίσθησης</string>
     <string name="pref__glide_preview_refresh_delay">Προεπισκόπηση καθυστέρησης ανανέωσης</string>
+    <string name="pref__glide__show_preview">Εμφάνιση προεπισκόπησης κατά την πληκτρολόγηση με ολίσθηση</string>
+    <string name="pref__glide_trail_max_length">Μέγιστο μήκος διαδρομής ολίσθησης</string>
 </resources>

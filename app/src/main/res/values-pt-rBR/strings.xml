@@ -40,7 +40,7 @@
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Configurações</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Mais opções</string>
-    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Ajuda &amp; feedback</string>
+    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Ajuda e feedback</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Ajuda</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Início</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Teclado</string>
@@ -53,7 +53,7 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">O FlorisBoard não está ativado no sistema e, portanto, não estará disponível para ser selecionado no alternador de teclado. Clique aqui para resolver este problema.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">O FlorisBoard não foi selecionado como o teclado padrão. Clique aqui para resolver este problema.</string>
     <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Obrigado por experimentar o FlorisBoard! Este projeto ainda está em alpha e, portanto, faltando recursos. Se você encontrar algum bug ou quiser fazer uma sugestão, por favor, confira o repo no GitHub e crie um issue. Isso ajuda a tornar o FlorisBoard melhor. Obrigado!</string>
-    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Idiomas &amp; Formatos do teclado</string>
+    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Idiomas e Formatos de Teclado</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Parece que você não configurou nenhum formato de digitação. Como alternativa, será utilizado o formato Inglês/QWERTY!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Adicionar</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Adicionar formato de digitação</string>
@@ -123,7 +123,7 @@
     <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Digite um nome de atributo que contenha apenas as letras a-z e/ou A-Z.</string>
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Por favor, digite um nome para o atributo.</string>
     <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Esse nome de atributo já existe dentro deste grupo. Por favor, especifique outro.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Janela &amp; Sistema</string>
+    <string name="settings__theme__group_window" comment="Theme group label">Janela e Sistema</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Teclado</string>
     <string name="settings__theme__group_key" comment="Theme group label">Tecla</string>
     <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Tecla (%s)</string>
@@ -169,6 +169,8 @@
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Trocar idioma</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Trocar aplicativo de teclado</string>
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Dinâmico: Mudar para emojis / Trocar idioma</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label">Também mostrar popups de símbolo</string>
+    <string name="pref__keyboard_merge_hint_popups_enabled__summary">Adicionar os popups de símbolo ao layout padrão</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicador de tamanho da fonte (retrato)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicador de tamanho da fonte (paisagem)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
@@ -204,7 +206,7 @@
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Visibilidade do PopUp</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Mostrar popup quando pressionar uma tecla</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Atraso ao pressionar e segurar uma tecla</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Barra de espaço muda de volta para o layout de caracteres</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Barra de espaço alterna para o layout de caracteres</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Apertar e segurar a barra de espaço muda automaticamente para os caracteres quando em símbolos ou números</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Experiência de digitação</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ativar barra inteligente</string>
@@ -246,7 +248,7 @@
     <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Este atalho contém caracteres inválidos.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Código de idioma (opcional)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Este código de idioma não está de acordo com a sintaxe esperada. O código deve ser apenas uma língua (como en), uma língua e um país (como en_US) ou uma língua, país e script (como en_US-script).</string>
-    <string name="settings__gestures__title" comment="Title of Gestures fragment">Gestos &amp; Digitação deslizante</string>
+    <string name="settings__gestures__title" comment="Title of Gestures fragment">Gestos e Digitação deslizante</string>
     <string name="pref__glide__title" comment="Preference group title">Digitação deslizante</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Ativar digitação deslizante</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Digitar uma palavra deslizando o dedo através de suas letras</string>
@@ -358,9 +360,9 @@
     <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Uma última coisa antes de iniciar a configuração - se você encontrar alguns bugs/travamentos/problemas com o FlorisBoard ou quiser fazer alguma solicitação de recurso - vá até o repositório do GitHub vinculado abaixo e crie um issue. Isso ajuda a melhorar a experiência de todos os usuários!</string>
     <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Para iniciar a configuração, clique em <i>PRÓXIMO</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Ativar FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">O Android exige que todo teclado personalizado tenha que ser ativado manualmente antes de usá-lo. Clique no botão abaixo para ir as configurações de <i>Idioma &amp; Entrada</i>, em seguida, certifique-se de ativar o \'<i>FlorisBoard</i>\'.</string>
+    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">O Android exige que todo teclado personalizado tenha que ser ativado manualmente antes de usá-lo. Clique no botão abaixo para ir as configurações de <i>Idioma e Entrada</i>, em seguida, certifique-se de ativar o \'<i>FlorisBoard</i>\'.</string>
     <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard foi ativado com sucesso. Para continuar clique em <i>PRÓXIMO</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Abrir configurações de Idioma &amp; Entrada</string>
+    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Abrir configurações de Idioma e Entrada</string>
     <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Selecionar FlorisBoard como padrão</string>
     <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">O FlorisBoard agora está ativado em seu sistema. Para usá-lo ativamente, selecione o FlorisBoard como teclado padrão na caixa de seleção de teclado!</string>
     <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">O FlorisBoard foi selecionado como teclado padrão com sucesso!</string>

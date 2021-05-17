@@ -212,9 +212,13 @@
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
     <string name="pref__dictionary__title" comment="Preference group title">Речник</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Използване на системния потребителски речник</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Предлагат се думи от системния потребителски речник</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Управление на системния потребителски речник</string>
-    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Използване на вътрешния потребителски речник</string>
-    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Управление на вътрешния потребителски речник</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Преглед, добавяне и премахване на думи от системния потребителски речник</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Използване на потребителския речник към приложението</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Предлагат се думи от потребителския речник към приложението</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Управление на потребителския речник към приложението</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Преглед, добавяне и премахване на думи от потребителския речник към приложението</string>
     <string name="pref__correction__title" comment="Preference group title">Корекции</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Автоматични главни букви</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Думите се изписват с главни букви въз основа на текущия контекст</string>
@@ -222,11 +226,12 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Клавишът Caps Lock да остане включен при преместване в друго текстово поле</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Точка при двоен интервал</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Двукратното докосване на интервала вмъква точка, последвана от интервал</string>
-    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Вътрешен потребителски речник</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Потребителски речник към приложението</string>
     <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Системен потребителски речник</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Честота: %d</string>
     <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Честота: %d | ключова дума: %s</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">За всички езици</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Отваряне на системни настройки</string>
     <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Потребителският речник е изнесен!</string>
     <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Потребителският речник е внесен!</string>
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Добавяне на дума</string>
@@ -240,6 +245,7 @@
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Ключова дума (по избор)</string>
     <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Ключовата дума съдържа недействителни знаци.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Код на езика (по избор)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Кодът на езика не отговаря на синтаксиса. Трябва да бъде или само език (bg), или език и държава (bg_BG), или език, държава и азбука (bg_BG-cyrillic).</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Жестове и писане чрез плъзгане</string>
     <string name="pref__glide__title" comment="Preference group title">Въвеждане чрез плъзгане</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Въвеждане чрез плъзгане</string>
@@ -305,7 +311,7 @@
     <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Инструменти, в помощ при за отстраняване на дефекти</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Статистика за динамичната памет</string>
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Показва се информация за динамичната памет в горния десен ъгъл</string>
-    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Изтриване на данните за вътрешния речник</string>
+    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Изтриване на данните от речника към приложението</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Премахва всички думи от таблицата с речника</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Относно</string>

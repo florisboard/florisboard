@@ -85,7 +85,7 @@
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tema oscuro</string>
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Tema seleccionado</string>
     <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Adaptar colores a la aplicación</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Los colores del tema se adaptan a los de la aplicación actual, si la aplicación de destino lo admite.</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Los colores del teclado se adaptan a los de la aplicación actual, si la aplicación de destino lo admite.</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Activos de la aplicación FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Almacenamiento interno</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Almacenamiento externo</string>
@@ -123,9 +123,9 @@
     <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Por favor, ingresa un nombre que contenga solo las letras a-z y/o A-Z.</string>
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Por favor, introduzca un nombre al atributo.</string>
     <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Este nombre de atributo ya existe en este grupo. Por favor, escribe otro.</string>
-    <string name="settings__theme__group_window" comment="Theme group label">Ventana &amp; sistema</string>
+    <string name="settings__theme__group_window" comment="Theme group label">Ventana y sistema</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Teclado</string>
-    <string name="settings__theme__group_key" comment="Theme group label">Tecla</string>
+    <string name="settings__theme__group_key" comment="Theme group label">Teclas</string>
     <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Tecla (%s)</string>
     <string name="settings__theme__group_media" comment="Theme group label">Contexto de multimedia</string>
     <string name="settings__theme__group_oneHanded" comment="Theme group label">Una mano</string>
@@ -146,7 +146,7 @@
     <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Ver borde</string>
     <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Color principal</string>
     <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Color principal (oscuro)</string>
-    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Color principal</string>
+    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Color del énfasis</string>
     <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Color de la barra de navegación</string>
     <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Color principal de la barra de navegación en modo oscuro</string>
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Color semitransparente</string>
@@ -169,6 +169,8 @@
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Cambiar idioma</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Cambiar aplicación de teclado</string>
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Dinámico: cambiar a emojis / cambiar de idioma</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label">Mostrar también ventanas emergentes de símbolos</string>
+    <string name="pref__keyboard_merge_hint_popups_enabled__summary">Añadir las ventanas emergentes de símbolos al diseño predeterminado</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicador del tamaño de la fuente (vertical)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicador del tamaño de la fuente (horizontal)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Distribución</string>
@@ -207,19 +209,48 @@
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra de espacio cambia a la disposición de los caracteres</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Al pulsar la barra de espacio, se vuelve automáticamente a los caracteres cuando se trata de símbolos o números</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Experiencia de escritura</string>
-    <string name="pref__smartbar__enabled__label" comment="Preference title">Habilitar barra inteligente</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">Barra inteligente</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Se mostrará en la parte superior del teclado</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugerencias</string>
+    <string name="pref__dictionary__title" comment="Preference group title">Diccionario</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Habilitar diccionario personal del sistema</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Sugerir palabras almacenadas en el diccionario personal del sistema</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Administrar diccionario personal del sistema</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Añadir, ver y remover entradas para el diccionario personal del sistema</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Habilitar diccionario personal interno</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Sugerir palabras almacenadas en el diccionario personal interno</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Administrar diccionario personal interno</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Añadir, ver y remover entradas para el diccionario personal interno</string>
     <string name="pref__correction__title" comment="Preference group title">Correcciones</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Mayúsculas automáticas</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Poner en mayúsculas las palabras según el contexto de entrada actual</string>
-    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Recordar el estado de bloqueo de las mayúsculas</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Recordar bloqueo de mayúsculas</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">El bloqueo de las mayúsculas se mantendrá cuando se pase a otro campo de texto</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Punto y doble espacio</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Al presionar dos veces en la barra espaciadora se inserta un punto seguido de un espacio</string>
-    <string name="settings__gestures__title" comment="Title of Gestures fragment">Gestos &amp; escritura deslizante</string>
-    <string name="pref__glide__title" comment="Preference group title">Escritura deslizante</string>
-    <string name="pref__glide__enabled__label" comment="Preference title">Habilitar escritura por gesto</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Pulsar espacio dos veces para insertar un punto seguido de un espacio</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Diccionario personal interno</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Diccionario personal del sistema</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frecuencia: %d</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frecuencia: %d | Atajo: %s</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Para todos los idiomas</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Abrir IU del administrador del sistema</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">¡Diccionario personal importado satisfactoriamente!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">¡Diccionario personal exportado satisfactoriamente!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Añadir palabra</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Editar palabra</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Palabra</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">¡Por favor, ingresa una palabra!</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Esta palabra contiene caracteres inválidos.</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frecuencia (entre %d y %d)</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">¡Por favor, ingresa un valor de frecuencia!</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">¡Por favor, ingresa un número válido dentro de los valores especificados!</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Atajo (opcional)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Este atajo contiene caracteres inválidos.</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Código del idioma (opcional)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Este código de idioma no se ajusta a la sintaxis esperada. El código debe ser solo un idioma (como en), un idioma y país (como en_US) o un idioma, país y script (como en_US-script).</string>
+    <string name="settings__gestures__title" comment="Title of Gestures fragment">Gestos y escritura deslizante</string>
+    <string name="pref__glide__title" comment="Preference group title">Escritura por gestos</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Escritura por gestos</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Escriba una palabra deslizando su dedo a través de las letras</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">Mostrar recorrido del gesto</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Desaparecerá después de cada palabra</string>
@@ -282,6 +313,8 @@
     <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Herramientas diseñadas específicamente para depurar y detectar problemas</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Mostrar estadísticas de memoria</string>
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Sobreponer el uso de la memoria y el tamaño maximo en la esquina superior derecha</string>
+    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Eliminar palabras del diccionario interno</string>
+    <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Eliminar todas las palabras del diccionario</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Acerca de</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icono de la aplicación de FlorisBoard</string>
@@ -297,6 +330,7 @@
     <string name="assets__file__name">Nombre</string>
     <string name="assets__file__source">Fuente</string>
     <string name="assets__action__add">Agregar</string>
+    <string name="assets__action__apply">Aplicar</string>
     <string name="assets__action__cancel">Cancelar</string>
     <string name="assets__action__cancel_confirm_title">Confirmar cancelación</string>
     <string name="assets__action__cancel_confirm_message">¿Está seguro de que desea descartar los cambios no guardados? Esta acción no se puede deshacer una vez ejecutada.</string>
@@ -359,7 +393,7 @@
     <string name="clip__cant_paste">Esta aplicación no permite pegar el contenido.</string>
     <string name="pref__clipboard__clipboard_category__label">Portapapeles</string>
     <string name="pref__clipboard__use_internal_clipboard___label">Usar portapapeles interno</string>
-    <string name="pref__clipboard__use_internal_clipboard_title__summary">Usar portapapeles interno en vez de el portapapeles del sistema</string>
+    <string name="pref__clipboard__use_internal_clipboard_title__summary">Usar portapapeles interno en vez del portapapeles del sistema</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sincronizar portapapeles del sistema</string>
     <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Las actualizaciones del portapapeles del sistema también actualizan el portapapeles de Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronizar al portapapeles del sistema</string>

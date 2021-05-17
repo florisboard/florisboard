@@ -169,6 +169,8 @@
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">تغییر زبان</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">تغییر برنامه کیبورد</string>
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">متغیر: تغییر به شکلک‌ها / تغییر زبان</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label">همچنین پاپ آپ نماد ها را نشان بده</string>
+    <string name="pref__keyboard_merge_hint_popups_enabled__summary">افزودن نمادهای پاپ آپ به چیدمان پیشفرض</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">اندازه فونت چند برابری(عمودی)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">اندازه فونت چند برابری(افقی)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">چیدمان</string>

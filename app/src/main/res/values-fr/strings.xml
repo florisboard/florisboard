@@ -169,6 +169,8 @@
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Changer de langue</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Changer d\'application de clavier</string>
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Dynamique : Changer vers emojis / Changer de langue</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label">Afficher également les popups de symboles</string>
+    <string name="pref__keyboard_merge_hint_popups_enabled__summary">Ajouter les popups de symbole à la disposition par défaut</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicateur de la taille de la police (portrait)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicateur de la taille de la police (paysage)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposition</string>
@@ -216,9 +218,9 @@
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Gérer le dictionnaire d\'utilisateur système</string>
     <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Ajouter, voir et supprimer des entrées du dictionnaire d\'utilisateur système</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Activer le dictionnaire d\'utilisateur interne</string>
-    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Suggérer des mots du dictionnaire d\'utilisateur interne</string>
-    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Gérer le dictionnaire d\'utilisateur interne</string>
-    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Ajouter, voir et supprimer des entrées du dictionnaire d\'utilisateur interne</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Suggérer des mots stockés dans le dictionnaire utilisateur interne</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Gérer le dictionnaire utilisateur interne</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Ajouter, voir et supprimer des entrées du dictionnaire utilisateur interne</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalisation</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitaliser les mots en fonction du contexte de saisie actuel</string>
@@ -226,14 +228,14 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Le verrouillage des majuscules reste activé lorsque l\'on passe à un autre champ de texte</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Point de double espace</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">En tappant deux fois sur la barre espace, insère un point suivi d\'un espace</string>
-    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Dictionnaire d\'utilisateur interne</string>
-    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Dictionnaire d\'utilisateur système</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Dictionnaire utilisateur interne</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Dictionnaire utilisateur système</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Fréquence : %d</string>
     <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Fréquence : %d | Raccourci : %s</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Pour toutes les langues</string>
     <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Ouvrir l\'interface de gestion du système</string>
-    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Dictionnaire d\'utilisateur importé avec succès !</string>
-    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Dictionnaire d\'utilisateur exporté avec succès !</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Dictionnaire utilisateur importé avec succès !</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Dictionnaire utilisateur exporté avec succès !</string>
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Ajouter un mot</string>
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Modifier un mot</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Mot</string>
@@ -245,7 +247,7 @@
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Raccourci (facultatif)</string>
     <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Ce raccourci contient des caractères non valides.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Code de langue (facultatif)</string>
-    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Ce code de langue n\'est pas conforme à la syntaxe attendue. Le code doit être une langue uniquement (comme en), une langue et un pays (comme en_US) ou une langue, un pays et un script (comme en_US-script).</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Ce code de langue n\'est pas conforme à la syntaxe attendue. Le code doit être une langue uniquement (comme fr), une langue et un pays (comme fr_FR) ou une langue, un pays et un script (comme fr_FR-script).</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gestes &amp; Saisie en glissant</string>
     <string name="pref__glide__title" comment="Preference group title">Saisie en glissant</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Activer la saisie en glissant</string>
@@ -328,6 +330,7 @@
     <string name="assets__file__name">Nom</string>
     <string name="assets__file__source">Source</string>
     <string name="assets__action__add">Ajouter</string>
+    <string name="assets__action__apply">Appliquer</string>
     <string name="assets__action__cancel">Annuler</string>
     <string name="assets__action__cancel_confirm_title">Confirmer l\'annulation</string>
     <string name="assets__action__cancel_confirm_message">Êtes-vous sûrs de vouloir abandonner tout changement non sauvegardé ? Cette action ne peut être annulée après son exécution.</string>
