@@ -588,8 +588,6 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                                     TextKeyData.ARROW_LEFT, count))
                             }
                         }
-                    } else {
-                        florisboard.executeSwipeAction(prefs.gestures.spaceBarSwipeLeft)
                     }
                     true
                 }
@@ -603,19 +601,39 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                                     TextKeyData.ARROW_RIGHT, count))
                             }
                         }
-                    } else {
-                        florisboard.executeSwipeAction(prefs.gestures.spaceBarSwipeRight)
                     }
                     true
                 }
                 else -> true // To prevent the popup display of nearby keys
             }
-            SwipeGesture.Type.TOUCH_UP -> {
-                if (event.absUnitCountY.times(-1) > 6) {
-                    florisboard.executeSwipeAction(prefs.gestures.spaceBarSwipeUp)
-                    true
-                } else {
-                    false
+            SwipeGesture.Type.TOUCH_UP -> when (event.direction) {
+                SwipeGesture.Direction.LEFT -> {
+                    prefs.gestures.spaceBarSwipeLeft.let {
+                        if (it != SwipeAction.MOVE_CURSOR_LEFT) {
+                            florisboard.executeSwipeAction(it)
+                            true
+                        } else {
+                            false
+                        }
+                    }
+                }
+                SwipeGesture.Direction.RIGHT -> {
+                    prefs.gestures.spaceBarSwipeRight.let {
+                        if (it != SwipeAction.MOVE_CURSOR_RIGHT) {
+                            florisboard.executeSwipeAction(it)
+                            true
+                        } else {
+                            false
+                        }
+                    }
+                }
+                else -> {
+                    if (event.absUnitCountY < -6) {
+                        florisboard.executeSwipeAction(prefs.gestures.spaceBarSwipeUp)
+                        true
+                    } else {
+                        false
+                    }
                 }
             }
         }
