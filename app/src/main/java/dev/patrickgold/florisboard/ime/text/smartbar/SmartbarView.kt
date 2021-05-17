@@ -227,7 +227,6 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
      * editor instance, etc. Passes the evaluated attributes to [configureFeatureVisibility].
      */
     fun updateSmartbarState() {
-        //binding.clipboardCursorRow.updateVisibility()
         binding.candidates.updateDisplaySettings(prefs.suggestion.displayMode, prefs.suggestion.clipboardContentTimeout * 1_000)
         when (florisboard) {
             null -> configureFeatureVisibility(

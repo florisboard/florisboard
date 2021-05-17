@@ -491,10 +491,10 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
             isNumberRowVisible = newIsNumberRowVisible
         }
         themeManager.update()
-        updateOneHandedPanelVisibility()
         activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
         onSubtypeChanged(activeSubtype)
         setActiveInput(R.id.text_input)
+        updateOneHandedPanelVisibility()
 
         if (prefs.devtools.enabled && prefs.devtools.showHeapMemoryStats) {
             devtoolsOverlaySyncJob?.cancel()

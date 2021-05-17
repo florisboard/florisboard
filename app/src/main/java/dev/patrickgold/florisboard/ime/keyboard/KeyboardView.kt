@@ -45,6 +45,7 @@ abstract class KeyboardView : View, ThemeManager.OnThemeUpdatedListener {
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     init {
+        layoutDirection = LAYOUT_DIRECTION_LTR
         mainScope.launch {
             for (event in touchEventChannel) {
                 if (!isActive) break
