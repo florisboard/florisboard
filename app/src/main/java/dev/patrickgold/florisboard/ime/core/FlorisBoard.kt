@@ -49,8 +49,6 @@ import android.widget.FrameLayout
 import android.widget.inline.InlinePresentationSpec
 import androidx.annotation.RequiresApi
 import androidx.annotation.StyleRes
-import androidx.autofill.inline.UiVersions
-import androidx.autofill.inline.v1.InlineSuggestionUi
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.*
@@ -413,48 +411,11 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateInlineSuggestionsRequest(uiExtras: Bundle): InlineSuggestionsRequest? {
-        return if (prefs.smartbar.enabled) {
+        return if (prefs.smartbar.enabled && prefs.suggestion.api30InlineSuggestionsEnabled) {
             flogInfo(LogTopic.IMS_EVENTS) {
                 "Creating inline suggestions request because Smartbar and inline suggestions are enabled."
             }
-            val stylesBuilder = UiVersions.newStylesBuilder()
-            /*val style: UiVersions.Style = InlineSuggestionUi.newStyleBuilder()
-                .setSingleIconChipStyle(
-                    ViewStyle.Builder()
-                        .setBackground(
-                            Icon.createWithResource(this, R.drawable.chip_background)
-                        )
-                        .setPadding(0, 0, 0, 0)
-                        .build()
-                )
-                .setChipStyle(
-                    ViewStyle.Builder()
-                        .setBackground(
-                            Icon.createWithResource(this, R.drawable.chip_background)
-                        )
-                        .setPadding(toPixel(5 + 8), 0, toPixel(5 + 8), 0)
-                        .build()
-                )
-                .setStartIconStyle(ImageViewStyle.Builder().setLayoutMargin(0, 0, 0, 0).build())
-                .setTitleStyle(
-                    TextViewStyle.Builder()
-                        .setLayoutMargin(toPixel(4), 0, toPixel(4), 0)
-                        .setTextColor(Color.parseColor("#FF202124"))
-                        .setTextSize(16f)
-                        .build()
-                )
-                .setSubtitleStyle(
-                    TextViewStyle.Builder()
-                        .setLayoutMargin(0, 0, toPixel(4), 0)
-                        .setTextColor(Color.parseColor("#99202124")) // 60% opacity
-                        .setTextSize(14f)
-                        .build()
-                )
-                .setEndIconStyle(ImageViewStyle.Builder().setLayoutMargin(0, 0, 0, 0).build())
-                .build()*/
-            stylesBuilder.addStyle(InlineSuggestionUi.newStyleBuilder().build())
-            val stylesBundle: Bundle = stylesBuilder.build()
-
+            val stylesBundle = themeManager.createInlineSuggestionUiStyleBundle(themeContext)
             InlinePresentationSpec.Builder(
                 Size(
                     inputView?.desiredInlineSuggestionsMinWidth ?: 0,

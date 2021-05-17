@@ -48,7 +48,7 @@
             style="@style/SmartbarContainer">
 
             <LinearLayout
-                android:id="@+id/inline_suggestions_inner"
+                android:id="@+id/inline_suggestions_strip"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"/>

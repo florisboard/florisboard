@@ -246,25 +246,20 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                     KeyboardMode.EDITING -> R.id.back_button
                     else -> R.id.quick_action_toggle
                 },
-                mainAreaId = if (isShowingInlineSuggestions) {
-                    R.id.inline_suggestions
-                } else {
-                    when (florisboard.textInputManager.keyVariation) {
-                        KeyVariation.PASSWORD -> R.id.number_row
-                        else -> when (isQuickActionsVisible) {
-                            true -> R.id.quick_actions
-                            else -> when (florisboard.textInputManager.getActiveKeyboardMode()) {
-                                KeyboardMode.EDITING -> null
-                                KeyboardMode.NUMERIC,
-                                KeyboardMode.PHONE,
-                                KeyboardMode.PHONE2 -> R.id.clipboard_cursor_row
-                                else -> when {
-                                    florisboard.activeEditorInstance.isComposingEnabled &&
-                                        florisboard.activeEditorInstance.selection.isCursorMode
-                                    -> R.id.candidates
-                                    else -> R.id.clipboard_cursor_row
-                                }
-                            }
+                mainAreaId = when {
+                    isQuickActionsVisible -> R.id.quick_actions
+                    isShowingInlineSuggestions -> R.id.inline_suggestions
+                    florisboard.textInputManager.keyVariation == KeyVariation.PASSWORD -> R.id.number_row
+                    else -> when (florisboard.textInputManager.getActiveKeyboardMode()) {
+                        KeyboardMode.EDITING -> null
+                        KeyboardMode.NUMERIC,
+                        KeyboardMode.PHONE,
+                        KeyboardMode.PHONE2 -> R.id.clipboard_cursor_row
+                        else -> when {
+                            florisboard.activeEditorInstance.isComposingEnabled &&
+                                florisboard.activeEditorInstance.selection.isCursorMode
+                            -> R.id.candidates
+                            else -> R.id.clipboard_cursor_row
                         }
                     }
                 },
@@ -331,7 +326,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
     @RequiresApi(Build.VERSION_CODES.R)
     private fun updateInlineSuggestionStrip(suggestionViews: Collection<InlineContentView?>) {
         flogDebug { "Updating the inline suggestion strip with ${suggestionViews.size} items" }
-        binding.inlineSuggestionsInner.removeAllViews()
+        binding.inlineSuggestionsStrip.removeAllViews()
         if (suggestionViews.isEmpty()) {
             isShowingInlineSuggestions = false
             return
@@ -340,7 +335,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                 if (suggestionView == null) {
                     continue
                 }
-                binding.inlineSuggestionsInner.addView(suggestionView)
+                binding.inlineSuggestionsStrip.addView(suggestionView)
             }
             isShowingInlineSuggestions = true
         }

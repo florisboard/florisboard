@@ -229,6 +229,8 @@
     <string name="pref__smartbar__enabled__label" comment="Preference title">Enable Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Will show on top of the keyboard</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
+    <string translatable="false" name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">Inline suggestions</string>
+    <string translatable="false" name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services (password managers, ...)</string>
     <string translatable="false" name="pref__suggestion__enabled__label" comment="Preference title">[EXPERIMENTAL] Display suggestions while you type</string>
     <string translatable="false" name="pref__suggestion__enabled__summary" comment="Preference summary">Will show in the Smartbar, currently regardless of the selected subtype the dictionary language is English (US)</string>
     <string translatable="false" name="pref__suggestion__use_pref_words__label" comment="Preference title">[NOT YET INCLUDED] Next-word suggestions</string>
