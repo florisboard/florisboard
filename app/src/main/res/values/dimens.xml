@@ -71,16 +71,17 @@
     <dimen name="suggestion_chip_fg_subtitle_margin_end">4dp</dimen>
     <dimen name="suggestion_chip_fg_subtitle_margin_bottom">0dp</dimen>
 
+    <dimen name="clipboard_text_item_pin_margin" >25dp</dimen>
+
     <dimen name="gesture_distance_threshold_very_short">24dp</dimen>
     <dimen name="gesture_distance_threshold_short">28dp</dimen>
     <dimen name="gesture_distance_threshold_normal">32dp</dimen>
     <dimen name="gesture_distance_threshold_long">36dp</dimen>
     <dimen name="gesture_distance_threshold_very_long">40dp</dimen>
-    <dimen name="clipboard_text_item_pin_margin" >25dp</dimen>
 
-    <integer name="gesture_velocity_threshold_very_slow">8000</integer>
-    <integer name="gesture_velocity_threshold_slow">11000</integer>
-    <integer name="gesture_velocity_threshold_normal">14000</integer>
-    <integer name="gesture_velocity_threshold_fast">17000</integer>
-    <integer name="gesture_velocity_threshold_very_fast">20000</integer>
+    <integer name="gesture_velocity_threshold_very_slow">7000</integer>
+    <integer name="gesture_velocity_threshold_slow">10000</integer>
+    <integer name="gesture_velocity_threshold_normal">13000</integer>
+    <integer name="gesture_velocity_threshold_fast">16000</integer>
+    <integer name="gesture_velocity_threshold_very_fast">19000</integer>
 </resources>
