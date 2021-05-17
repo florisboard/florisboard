@@ -28,27 +28,27 @@
       { "code":  1508, "label": "פ" }
     ],
     [
-      { "code":  1513, "label": "ף" },
-      { "code":  1491, "label": "ך" },
-      { "code":  1490, "label": "ל" },
-      { "code":  1499, "label": "ח" },
-      { "code":  1506, "label": "י" },
-      { "code":  1497, "label": "ע" },
-      { "code":  1495, "label": "כ" },
-      { "code":  1500, "label": "ג" },
-      { "code":  1498, "label": "ד" },
-      { "code":  1507, "label": "ש" }
+      { "code":  1513, "label": "ש" },
+      { "code":  1491, "label": "ד" },
+      { "code":  1490, "label": "ג" },
+      { "code":  1499, "label": "כ" },
+      { "code":  1506, "label": "ע" },
+      { "code":  1497, "label": "י" },
+      { "code":  1495, "label": "ח" },
+      { "code":  1500, "label": "ל" },
+      { "code":  1498, "label": "ך" },
+      { "code":  1507, "label": "ף" }
     ],
     [
-      { "code":  1494, "label": "ץ" },
-      { "code":  1505, "label": "ת" },
-      { "code":  1489, "label": "צ" },
-      { "code":  1492, "label": "מ" },
+      { "code":  1494, "label": "ז" },
+      { "code":  1505, "label": "ס" },
+      { "code":  1489, "label": "ב" },
+      { "code":  1492, "label": "ה" },
       { "code":  1504, "label": "נ" },
-      { "code":  1502, "label": "ה" },
-      { "code":  1510, "label": "ב" },
-      { "code":  1514, "label": "ס" },
-      { "code":  1509, "label": "ז" }
+      { "code":  1502, "label": "מ" },
+      { "code":  1510, "label": "צ" },
+      { "code":  1514, "label": "ת" },
+      { "code":  1509, "label": "ץ" }
     ]
   ]
 }
