@@ -131,7 +131,7 @@ interface UserDictionaryDatabase {
     fun reset()
 
     fun importCombinedList(context: Context, uri: Uri): Result<Unit> {
-        return ExternalContentUtils.readFromUri(context, uri,2048) { src ->
+        return ExternalContentUtils.readFromUri(context, uri,6_192_000) { src ->
             var isFirstLine = true
             src.forEachLine { line ->
                 if (isFirstLine) {
