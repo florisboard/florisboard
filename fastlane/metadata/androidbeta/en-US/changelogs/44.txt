@@ -1,0 +1,6 @@
+- Add Autofill inline support for devices running Android 11+ (#163)
+- Add Neo2 layout (#527, thanks @ostrya)
+- Fix FlorisBoard Settings not accessible from Language & Input screen (#366)
+- Fix FlorisBoard not included in the keyboard switch cycle (#890)
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.13-beta01

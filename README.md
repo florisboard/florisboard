@@ -96,6 +96,7 @@ milestones, please refer to the [Feature roadmap](#feature-roadmap).
 * [x] User dictionary manager (system and internal)
 
 ### Other useful features
+* [x] Support for Android 11+ inline autofill API
 * [x] One-handed mode
 * [x] Clipboard/cursor tools
 * [x] Clipboard manager/history
