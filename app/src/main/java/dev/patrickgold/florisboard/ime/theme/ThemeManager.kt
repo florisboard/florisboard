@@ -317,6 +317,14 @@ class ThemeManager private constructor(
         }
     }
 
+    /**
+     * Creates a new inline suggestion UI bundle based on the attributes of the given [theme].
+     *
+     * @param context The context of the parent view/controller.
+     * @param theme The theme from which the color attributes should be fetched. Defaults to [activeTheme].
+     *
+     * @return A bundle containing all necessary attributes for the inline suggestion views to properly display.
+     */
     @SuppressLint("RestrictedApi")
     @RequiresApi(Build.VERSION_CODES.R)
     fun createInlineSuggestionUiStyleBundle(context: Context, theme: Theme = activeTheme): Bundle {

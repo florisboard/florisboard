@@ -295,11 +295,20 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
         //
     }
 
+    /**
+     * Clears the inline suggestions and triggers thw Smartbar update cycle.
+     */
     @RequiresApi(Build.VERSION_CODES.R)
     fun clearInlineSuggestions() {
         updateInlineSuggestionStrip(listOf())
     }
 
+    /**
+     * Inflates the given inline suggestions. Once all provided views are ready, the suggestions
+     * strip is updated and the Smartbar update cycle is triggered.
+     *
+     * @param inlineSuggestions A collection of inline suggestions to be inflated and shown.
+     */
     @RequiresApi(Build.VERSION_CODES.R)
     fun showInlineSuggestions(inlineSuggestions: Collection<InlineSuggestion>) {
         if (inlineSuggestions.isEmpty()) {
@@ -323,6 +332,12 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
         }
     }
 
+    /**
+     * Updates the suggestion strip with given inline content views and triggers the Smartbar
+     * update cycle.
+     *
+     * @param suggestionViews A collection of inline content views to show.
+     */
     @RequiresApi(Build.VERSION_CODES.R)
     private fun updateInlineSuggestionStrip(suggestionViews: Collection<InlineContentView?>) {
         flogDebug { "Updating the inline suggestion strip with ${suggestionViews.size} items" }
