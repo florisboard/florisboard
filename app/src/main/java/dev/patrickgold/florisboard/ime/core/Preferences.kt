@@ -531,14 +531,18 @@ class Preferences(
      */
     class Suggestion(private val prefs: Preferences) {
         companion object {
-            const val BLOCK_POSSIBLY_OFFENSIVE =    "suggestion__block_possibly_offensive"
-            const val CLIPBOARD_CONTENT_ENABLED =   "suggestion__clipboard_content_enabled"
-            const val CLIPBOARD_CONTENT_TIMEOUT =   "suggestion__clipboard_content_timeout"
-            const val DISPLAY_MODE =                "suggestion__display_mode"
-            const val ENABLED =                     "suggestion__enabled"
-            const val USE_PREV_WORDS =              "suggestion__use_prev_words"
+            const val API30_INLINE_SUGGESTIONS_ENABLED =    "suggestion__api30_inline_suggestions_enabled"
+            const val BLOCK_POSSIBLY_OFFENSIVE =            "suggestion__block_possibly_offensive"
+            const val CLIPBOARD_CONTENT_ENABLED =           "suggestion__clipboard_content_enabled"
+            const val CLIPBOARD_CONTENT_TIMEOUT =           "suggestion__clipboard_content_timeout"
+            const val DISPLAY_MODE =                        "suggestion__display_mode"
+            const val ENABLED =                             "suggestion__enabled"
+            const val USE_PREV_WORDS =                      "suggestion__use_prev_words"
         }
 
+        var api30InlineSuggestionsEnabled: Boolean
+            get() =  prefs.getPref(API30_INLINE_SUGGESTIONS_ENABLED, true)
+            set(v) = prefs.setPref(API30_INLINE_SUGGESTIONS_ENABLED, v)
         var blockPossiblyOffensive: Boolean
             get() =  prefs.getPref(BLOCK_POSSIBLY_OFFENSIVE, true)
             set(v) = prefs.setPref(BLOCK_POSSIBLY_OFFENSIVE, v)

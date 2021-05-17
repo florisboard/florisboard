@@ -16,14 +16,26 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Color
+import android.graphics.drawable.Icon
 import android.net.Uri
+import android.os.Build
+import android.os.Bundle
 import android.util.TypedValue
 import androidx.annotation.AttrRes
+import androidx.annotation.RequiresApi
+import androidx.autofill.inline.UiVersions
+import androidx.autofill.inline.common.ImageViewStyle
+import androidx.autofill.inline.common.TextViewStyle
+import androidx.autofill.inline.common.ViewStyle
+import androidx.autofill.inline.v1.InlineSuggestionUi
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
@@ -303,6 +315,82 @@ class ThemeManager private constructor(
         }.onFailure {
             Timber.e(it.toString())
         }
+    }
+
+    /**
+     * Creates a new inline suggestion UI bundle based on the attributes of the given [theme].
+     *
+     * @param context The context of the parent view/controller.
+     * @param theme The theme from which the color attributes should be fetched. Defaults to [activeTheme].
+     *
+     * @return A bundle containing all necessary attributes for the inline suggestion views to properly display.
+     */
+    @SuppressLint("RestrictedApi")
+    @RequiresApi(Build.VERSION_CODES.R)
+    fun createInlineSuggestionUiStyleBundle(context: Context, theme: Theme = activeTheme): Bundle {
+        val bgColor = theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND).toSolidColor().color
+        val fgColor = theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_FOREGROUND).toSolidColor().color
+        val bgDrawableId = R.drawable.chip_background
+        val stylesBuilder = UiVersions.newStylesBuilder()
+        val style = InlineSuggestionUi.newStyleBuilder()
+            .setSingleIconChipStyle(
+                ViewStyle.Builder()
+                    .setBackground(
+                        Icon.createWithResource(context, bgDrawableId).setTint(bgColor)
+                    )
+                    .setPadding(0, 0, 0, 0)
+                    .build()
+            )
+            .setChipStyle(
+                ViewStyle.Builder()
+                    .setBackground(
+                        Icon.createWithResource(context, bgDrawableId).setTint(bgColor)
+                    )
+                    .setPadding(
+                        context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_start).toInt(),
+                        context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_top).toInt(),
+                        context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_end).toInt(),
+                        context.resources.getDimension(R.dimen.suggestion_chip_bg_padding_bottom).toInt(),
+                    )
+                    .build()
+            )
+            .setStartIconStyle(
+                ImageViewStyle.Builder()
+                    .setLayoutMargin(0, 0, 0, 0)
+                    .build()
+            )
+            .setTitleStyle(
+                TextViewStyle.Builder()
+                    .setLayoutMargin(
+                        context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_start).toInt(),
+                        context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_top).toInt(),
+                        context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_end).toInt(),
+                        context.resources.getDimension(R.dimen.suggestion_chip_fg_title_margin_bottom).toInt(),
+                    )
+                    .setTextColor(fgColor)
+                    .setTextSize(16f)
+                    .build()
+            )
+            .setSubtitleStyle(
+                TextViewStyle.Builder()
+                    .setLayoutMargin(
+                        context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_start).toInt(),
+                        context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_top).toInt(),
+                        context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_end).toInt(),
+                        context.resources.getDimension(R.dimen.suggestion_chip_fg_subtitle_margin_bottom).toInt(),
+                    )
+                    .setTextColor(ColorUtils.setAlphaComponent(fgColor, 150))
+                    .setTextSize(14f)
+                    .build()
+            )
+            .setEndIconStyle(
+                ImageViewStyle.Builder()
+                    .setLayoutMargin(0, 0, 0, 0)
+                    .build()
+            )
+            .build()
+        stylesBuilder.addStyle(style)
+        return stylesBuilder.build()
     }
 
     data class RemoteColors(

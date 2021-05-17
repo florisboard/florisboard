@@ -56,6 +56,21 @@
 
     <dimen name="fab_margin">16dp</dimen>
 
+    <dimen name="suggestion_chip_bg_padding_start">13dp</dimen>
+    <dimen name="suggestion_chip_bg_padding_top">0dp</dimen>
+    <dimen name="suggestion_chip_bg_padding_end">13dp</dimen>
+    <dimen name="suggestion_chip_bg_padding_bottom">0dp</dimen>
+
+    <dimen name="suggestion_chip_fg_title_margin_start">4dp</dimen>
+    <dimen name="suggestion_chip_fg_title_margin_top">0dp</dimen>
+    <dimen name="suggestion_chip_fg_title_margin_end">4dp</dimen>
+    <dimen name="suggestion_chip_fg_title_margin_bottom">0dp</dimen>
+
+    <dimen name="suggestion_chip_fg_subtitle_margin_start">4dp</dimen>
+    <dimen name="suggestion_chip_fg_subtitle_margin_top">0dp</dimen>
+    <dimen name="suggestion_chip_fg_subtitle_margin_end">4dp</dimen>
+    <dimen name="suggestion_chip_fg_subtitle_margin_bottom">0dp</dimen>
+
     <dimen name="gesture_distance_threshold_very_short">24dp</dimen>
     <dimen name="gesture_distance_threshold_short">28dp</dimen>
     <dimen name="gesture_distance_threshold_normal">32dp</dimen>

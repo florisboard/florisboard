@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.settings.fragments
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -27,6 +28,9 @@ import dev.patrickgold.florisboard.settings.UdmActivity
 class TypingInnerFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.prefs_typing)
+        findPreference<Preference>(Preferences.Suggestion.API30_INLINE_SUGGESTIONS_ENABLED)?.let {
+            it.isVisible = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+        }
     }
 
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {

@@ -25,14 +25,29 @@ import android.inputmethodservice.ExtractEditText
 import android.inputmethodservice.InputMethodService
 import android.media.AudioManager
 import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.view.*
+import android.util.Size
+import android.view.ContextThemeWrapper
+import android.view.Gravity
+import android.view.HapticFeedbackConstants
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InlineSuggestionsRequest
+import android.view.inputmethod.InlineSuggestionsResponse
 import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.inline.InlinePresentationSpec
+import androidx.annotation.RequiresApi
 import androidx.annotation.StyleRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -48,14 +63,24 @@ import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupLayerView
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.key.*
+import dev.patrickgold.florisboard.ime.text.key.CurrencySet
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.setup.SetupActivity
-import dev.patrickgold.florisboard.util.*
-import kotlinx.coroutines.*
+import dev.patrickgold.florisboard.util.AppVersionUtils
+import dev.patrickgold.florisboard.util.ViewLayoutUtils
+import dev.patrickgold.florisboard.util.debugSummarize
+import dev.patrickgold.florisboard.util.findViewWithType
+import dev.patrickgold.florisboard.util.refreshLayoutOf
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -75,6 +100,9 @@ private var florisboardInstance: FlorisBoard? = null
 /**
  * Core class responsible to link together both the text and media input managers as well as
  * managing the one-handed UI.
+ *
+ * All inline suggestion code has been added based on this demo autofill IME provided by Android directly:
+ *  https://cs.android.com/android/platform/superproject/+/master:development/samples/AutofillKeyboard/src/com/example/android/autofillkeyboard/AutofillImeService.java
  */
 class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager.OnPrimaryClipChangedListener,
     ThemeManager.OnThemeUpdatedListener {
@@ -127,6 +155,10 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     private var currentThemeResId: Int = 0
     private var isNumberRowVisible: Boolean = false
     private var isWindowShown: Boolean = false
+
+    private var responseState = ResponseState.RESET
+    private var pendingResponse: Runnable? = null
+    private val handler: Handler = Handler(Looper.getMainLooper())
 
     val textInputManager: TextInputManager
     val mediaInputManager: MediaInputManager
@@ -335,6 +367,11 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         flogInfo(LogTopic.IMS_EVENTS)
 
         super.onStartInput(attribute, restarting)
+        responseState = if (responseState == ResponseState.RECEIVE_RESPONSE) {
+            ResponseState.START_INPUT
+        } else {
+            ResponseState.RESET
+        }
         currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
     }
 
@@ -355,6 +392,10 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
 
         if (finishingInput) {
             activeEditorInstance = EditorInstance.default()
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                textInputManager.smartbarView?.clearInlineSuggestions()
+            }
         }
 
         super.onFinishInputView(finishingInput)
@@ -366,6 +407,71 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
 
         currentInputConnection?.requestCursorUpdates(0)
         super.onFinishInput()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    override fun onCreateInlineSuggestionsRequest(uiExtras: Bundle): InlineSuggestionsRequest? {
+        return if (prefs.smartbar.enabled && prefs.suggestion.api30InlineSuggestionsEnabled) {
+            flogInfo(LogTopic.IMS_EVENTS) {
+                "Creating inline suggestions request because Smartbar and inline suggestions are enabled."
+            }
+            val stylesBundle = themeManager.createInlineSuggestionUiStyleBundle(themeContext)
+            InlinePresentationSpec.Builder(
+                Size(
+                    inputView?.desiredInlineSuggestionsMinWidth ?: 0,
+                    inputView?.desiredInlineSuggestionsMinHeight ?: 0
+                ),
+                Size(
+                    inputView?.desiredInlineSuggestionsMaxWidth ?: 0,
+                    inputView?.desiredInlineSuggestionsMaxHeight ?: 0
+                )
+            ).let { spec ->
+                spec.setStyle(stylesBundle)
+                InlineSuggestionsRequest.Builder(listOf(spec.build())).let { request ->
+                    request.setMaxSuggestionCount(6)
+                    request.build()
+                }
+            }
+        } else {
+            flogInfo(LogTopic.IMS_EVENTS) {
+                "Ignoring inline suggestions request because Smartbar and/or inline suggestions are disabled."
+            }
+            null
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    override fun onInlineSuggestionsResponse(response: InlineSuggestionsResponse): Boolean {
+        flogInfo(LogTopic.IMS_EVENTS) {
+            "Received inline suggestions response with ${response.inlineSuggestions.size} suggestion(s) provided."
+        }
+        textInputManager.smartbarView?.clearInlineSuggestions()
+        postPendingResponse(response)
+        return true
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun cancelPendingResponse() {
+        pendingResponse?.let {
+            handler.removeCallbacks(it)
+            pendingResponse = null
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun postPendingResponse(response: InlineSuggestionsResponse) {
+        cancelPendingResponse()
+        val inlineSuggestions = response.inlineSuggestions
+        responseState = ResponseState.RECEIVE_RESPONSE
+        pendingResponse = Runnable {
+            pendingResponse = null
+            if (responseState == ResponseState.START_INPUT && inlineSuggestions.isEmpty()) {
+                textInputManager.smartbarView?.clearInlineSuggestions()
+            } else {
+                textInputManager.smartbarView?.showInlineSuggestions(inlineSuggestions)
+            }
+            responseState = ResponseState.RESET
+        }.also { handler.post(it) }
     }
 
     override fun onWindowShown() {
@@ -871,6 +977,10 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         fun onApplyThemeAttributes() {}
         fun onPrimaryClipChanged() {}
         fun onSubtypeChanged(newSubtype: Subtype) {}
+    }
+
+    private enum class ResponseState {
+        RESET, RECEIVE_RESPONSE, START_INPUT
     }
 
     /**

@@ -14,6 +14,14 @@
         app:title="@string/pref__suggestion__title">
 
         <SwitchPreferenceCompat
+            android:defaultValue="true"
+            app:dependency="smartbar__enabled"
+            app:key="suggestion__api30_inline_suggestions_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__suggestion__api30_inline_suggestions_enabled__label"
+            app:summary="@string/pref__suggestion__api30_inline_suggestions_enabled__summary"/>
+
+        <SwitchPreferenceCompat
             android:defaultValue="false"
             android:dependency="smartbar__enabled"
             app:key="suggestion__enabled"

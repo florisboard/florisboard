@@ -43,6 +43,18 @@
             android:id="@+id/candidates"
             style="@style/SmartbarContainer"/>
 
+        <HorizontalScrollView
+            android:id="@+id/inline_suggestions"
+            style="@style/SmartbarContainer">
+
+            <LinearLayout
+                android:id="@+id/inline_suggestions_strip"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"/>
+
+        </HorizontalScrollView>
+
         <LinearLayout
             android:id="@+id/quick_actions"
             style="@style/SmartbarContainer">
