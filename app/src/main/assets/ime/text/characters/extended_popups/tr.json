@@ -11,11 +11,11 @@
         "main": { "$": "auto_text_key", "code":  287, "label": "ğ" }
       },
       "i": {
-        "main": { "$": "case_selector", "lower": { "code":  305, "label": "i" }
+        "main": { "$": "case_selector", "lower": { "code":  305, "label": "i" },
                                         "upper": { "code":  305, "label": "İ" }
       }},
       "ı": {
-        "main": { "$": "case_selector", "lower": { "code":  105, "label": "ı" }
+        "main": { "$": "case_selector", "lower": { "code":  105, "label": "ı" },
                                         "upper": { "code":  105, "label": "I" }
       }},
       "o": {
