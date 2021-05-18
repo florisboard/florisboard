@@ -53,6 +53,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.*
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.crashutility.CrashUtility
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.clip.ClipboardInputManager
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
@@ -160,20 +161,25 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     private var pendingResponse: Runnable? = null
     private val handler: Handler = Handler(Looper.getMainLooper())
 
-    val textInputManager: TextInputManager
-    val mediaInputManager: MediaInputManager
-    val clipInputManager: ClipboardInputManager
+    lateinit var textInputManager: TextInputManager
+    lateinit var mediaInputManager: MediaInputManager
+    lateinit var clipInputManager: ClipboardInputManager
 
     var isClipboardContextMenuShown = false
 
     init {
-        florisboardInstance = this
+        // MUST WRAP all code within Service init in try..catch to prevent any crash loops
+        try {
+            florisboardInstance = this
 
-        textInputManager = TextInputManager.getInstance()
-        mediaInputManager = MediaInputManager.getInstance()
-        clipInputManager = ClipboardInputManager.getInstance()
+            textInputManager = TextInputManager.getInstance()
+            mediaInputManager = MediaInputManager.getInstance()
+            clipInputManager = ClipboardInputManager.getInstance()
 
-        System.loadLibrary("florisboard-native")
+            System.loadLibrary("florisboard-native")
+        } catch (e: Exception) {
+            CrashUtility.stageException(e)
+        }
     }
 
     lateinit var asyncExecutor: ExecutorService
@@ -206,54 +212,51 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     }
 
     override fun onCreate() {
-        /*if (BuildConfig.DEBUG) {
-            StrictMode.setThreadPolicy(
-                StrictMode.ThreadPolicy.Builder()
-                    .detectDiskReads()
-                    .detectDiskWrites()
-                    .detectNetwork() // or .detectAll() for all detectable problems
-                    .penaltyLog()
-                    .build()
-            )
-            StrictMode.setVmPolicy(
-                StrictMode.VmPolicy.Builder()
-                    .detectLeakedSqlLiteObjects()
-                    .detectLeakedClosableObjects()
-                    .penaltyLog()
-                    .penaltyDeath()
-                    .build()
-            )
-        }*/
-        flogInfo(LogTopic.IMS_EVENTS)
-        serviceLifecycleDispatcher.onServicePreSuperOnCreate()
+        // MUST WRAP all code within Service onCreate() in try..catch to prevent any crash loops
+        try {
+            // Additional try..catch wrapper as the event listeners chain or the super.onCreate() method could crash
+            //  and lead to a crash loop
+            try {
+                // "Main" try..catch block
+                flogInfo(LogTopic.IMS_EVENTS)
+                serviceLifecycleDispatcher.onServicePreSuperOnCreate()
 
-        imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        audioManager = getSystemService(Context.AUDIO_SERVICE) as? AudioManager
-        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
-        prefs.sync()
-        activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
+                imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+                audioManager = getSystemService(Context.AUDIO_SERVICE) as? AudioManager
+                vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+                prefs.sync()
+                activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
 
-        currentThemeIsNight = themeManager.activeTheme.isNightTheme
-        currentThemeResId = getDayNightBaseThemeId(currentThemeIsNight)
-        isNumberRowVisible = prefs.keyboard.numberRow
-        setTheme(currentThemeResId)
-        themeManager.registerOnThemeUpdatedListener(this)
+                currentThemeIsNight = themeManager.activeTheme.isNightTheme
+                currentThemeResId = getDayNightBaseThemeId(currentThemeIsNight)
+                isNumberRowVisible = prefs.keyboard.numberRow
+                setTheme(currentThemeResId)
+                themeManager.registerOnThemeUpdatedListener(this)
 
-        AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
+                AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
 
-        asyncExecutor = Executors.newSingleThreadExecutor()
-        florisClipboardManager = FlorisClipboardManager.getInstance().also {
-            it.initialize(this)
-            it.addPrimaryClipChangedListener(this)
+                asyncExecutor = Executors.newSingleThreadExecutor()
+                florisClipboardManager = FlorisClipboardManager.getInstance().also {
+                    it.initialize(this)
+                    it.addPrimaryClipChangedListener(this)
+                }
+            } catch (e: Exception) {
+                super.onCreate() // MUST CALL even if exception thrown or crash loop is imminent
+                CrashUtility.stageException(e)
+                return
+            }
+            // Code executed here indicates no crashes occurred, so we execute the onCreate() event as normal
+            super.onCreate()
+            eventListeners.toList().forEach { it?.onCreate() }
+        } catch (e: Exception) {
+            CrashUtility.stageException(e)
         }
-
-        super.onCreate()
-        eventListeners.toList().forEach { it?.onCreate() }
     }
 
     @SuppressLint("InflateParams")
     override fun onCreateInputView(): View? {
         flogInfo(LogTopic.IMS_EVENTS)
+        CrashUtility.handleStagedButUnhandledExceptions()
 
         updateThemeContext(currentThemeResId)
 

@@ -53,6 +53,7 @@ abstract class CrashUtility private constructor() {
         private const val UNHANDLED_STACKTRACE_FILE_EXT = "stacktrace"
 
         private var lastActivityCreated: WeakReference<Activity?> = WeakReference(null)
+        private var stagedException: Throwable? = null
 
         /**
          * Installs the CrashUtility crash handler for the given package [context]. Also registers
@@ -146,6 +147,22 @@ abstract class CrashUtility private constructor() {
                 }
             }
             return true
+        }
+
+        fun stageException(e: Throwable?) {
+            if (stagedException == null) {
+                stagedException = e
+            }
+        }
+
+        @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+        fun handleStagedButUnhandledExceptions() {
+            val e = stagedException ?: return
+            val handler = Thread.getDefaultUncaughtExceptionHandler()
+            if (handler is UncaughtExceptionHandler) {
+                stagedException = null
+                handler.uncaughtException(null, e)
+            }
         }
 
         /**
@@ -362,7 +379,6 @@ abstract class CrashUtility private constructor() {
             flogInfo(LogTopic.CRASH_UTILITY) {
                 "Detected application crash, executing custom crash handler."
             }
-            thread ?: return
             throwable ?: return
             val timestamp = System.currentTimeMillis()
             val stacktrace = Log.getStackTraceString(throwable)
