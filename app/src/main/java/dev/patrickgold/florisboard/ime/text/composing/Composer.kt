@@ -17,7 +17,7 @@ interface Composer {
 
 @Serializable
 @SerialName("appender")
-public class Appender: Composer {
+public class Appender : Composer {
     companion object {
         const val name = "appender"
     }
@@ -36,7 +36,7 @@ public class WithRules(
     override val name: String,
     override val label: String,
     val rules: JsonObject
-): Composer {
+) : Composer {
     override val toRead: Int = rules.keys.toList().sortedBy { it.length }.reversed()[0].length - 1
 
     @Transient val ruleOrder: List<String> = rules.keys.toList().sortedBy { it.length }.reversed()
