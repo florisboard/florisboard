@@ -1,7 +1,7 @@
 {
   "type": "characters/extended_popups",
   "name": "ko",
-  "authors": [ "patrickgold" ],
+  "authors": [ "patrickgold", "Hayleia" ],
   "mapping": {
     "all": {
       "ㅂ": {
