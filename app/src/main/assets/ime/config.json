@@ -1,12 +1,8 @@
 {
   "package": "dev.patrickgold.florisboard",
   "composers": [
-    {
-      "$": "appender"
-    },
-    {
-      "$": "hangul-unicode"
-    }
+    { "$": "appender" },
+    { "$": "hangul-unicode" }
   ],
   "currencySets": [
     {
