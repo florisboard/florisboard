@@ -332,10 +332,19 @@ class BasicTextKeyData(
     }
 }
 
-interface UpLowTextKeyDataInternal : TextKeyData {
-    val lower: BasicTextKeyData
-    val upper: BasicTextKeyData
-    val popup: PopupSet<TextKeyData>?
+@Serializable
+@SerialName("auto_text_key")
+class AutoTextKeyData(
+    override val type: KeyType = KeyType.CHARACTER,
+    override val code: Int = KeyCode.UNSPECIFIED,
+    override val label: String = "",
+    override val groupId: Int = TextKeyData.GROUP_DEFAULT,
+    val popup: PopupSet<TextKeyData>? = null
+) : TextKeyData {
+    @Transient private val lower: BasicTextKeyData =
+        BasicTextKeyData(type, Character.toLowerCase(code), label.toLowerCase(Locale.getDefault()), groupId, popup)
+    @Transient private val upper: BasicTextKeyData =
+        BasicTextKeyData(type, Character.toUpperCase(code), label.toUpperCase(Locale.getDefault()), groupId, popup)
 
     override fun computeTextKeyData(evaluator: TextComputingEvaluator): TextKeyData? {
         return if (evaluator.isSlot(this)) {
@@ -349,48 +358,11 @@ interface UpLowTextKeyDataInternal : TextKeyData {
             if (evaluator.evaluateCaps(this)) { upper } else { lower }
         }
     }
-}
-
-@Serializable
-@SerialName("auto_text_key")
-open class AutoTextKeyData(
-    override val type: KeyType = KeyType.CHARACTER,
-    override val code: Int = KeyCode.UNSPECIFIED,
-    override val label: String = "",
-    override val groupId: Int = TextKeyData.GROUP_DEFAULT,
-    override val popup: PopupSet<TextKeyData>? = null
-) : UpLowTextKeyDataInternal {
-    @Transient override val lower: BasicTextKeyData =
-        BasicTextKeyData(type, Character.toLowerCase(code), label.toLowerCase(Locale.getDefault()), groupId, popup)
-    @Transient override val upper: BasicTextKeyData =
-        BasicTextKeyData(type, Character.toUpperCase(code), label.toUpperCase(Locale.getDefault()), groupId, popup)
 
     override fun toString(): String {
         return "${AutoTextKeyData::class.simpleName} { type=$type code=$code label=\"$label\" groupId=$groupId }"
     }
 }
-
-@Serializable
-@SerialName("up_low_text_key")
-class UpLowTextKeyData(
-    override val type: KeyType = KeyType.CHARACTER,
-    override val code: Int = KeyCode.UNSPECIFIED,
-    override val label: String = "",
-    val codeUp: Int = KeyCode.UNSPECIFIED,
-    val labelUp: String = "",
-    override val groupId: Int = TextKeyData.GROUP_DEFAULT,
-    override val popup: PopupSet<TextKeyData>? = null
-) : UpLowTextKeyDataInternal {
-    @Transient override val lower: BasicTextKeyData =
-        BasicTextKeyData(type, code, label, groupId, popup)
-    @Transient override val upper: BasicTextKeyData =
-        BasicTextKeyData(type, codeUp, labelUp, groupId, popup)
-
-    override fun toString(): String {
-        return "${UpLowTextKeyData::class.simpleName} { type=$type code=$code label=\"$label\" codeUp=$codeUp labelUp=\"$labelUp\" groupId=$groupId }"
-    }
-}
-
 
 @Serializable
 @SerialName("multi_text_key")
