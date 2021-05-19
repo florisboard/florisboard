@@ -17,7 +17,7 @@ interface Composer {
 
 @Serializable
 @SerialName("appender")
-public class Appender : Composer {
+class Appender : Composer {
     companion object {
         const val name = "appender"
     }
@@ -32,7 +32,7 @@ public class Appender : Composer {
 
 @Serializable
 @SerialName("with-rules")
-public class WithRules(
+class WithRules(
     override val name: String,
     override val label: String,
     val rules: JsonObject
