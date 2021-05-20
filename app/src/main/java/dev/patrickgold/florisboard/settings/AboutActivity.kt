@@ -32,7 +32,6 @@ import androidx.appcompat.widget.Toolbar
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.AboutActivityBinding
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
-import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.util.AppVersionUtils
 import dev.patrickgold.florisboard.util.checkIfImeIsSelected
 
@@ -49,21 +48,23 @@ class AboutActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        // Set app version string and onClickListener
+        // Set app version string
         val appVersion = "v" + AppVersionUtils.getRawVersionName(this)
         binding.appVersion.text = appVersion
-        binding.appVersion.setOnClickListener {
-            val florisBoard = FlorisBoard.getInstance()
+
+        // Set setOnLongClickListener for copying the version string
+        binding.headArea.setOnLongClickListener {
             val isImeSelected = checkIfImeIsSelected(this)
             if (isImeSelected) {
                 FlorisClipboardManager.getInstance().addNewPlaintext(appVersion)
-                Toast.makeText(florisBoard, R.string.about__version_copied__title, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, R.string.about__version_copied__title, Toast.LENGTH_LONG).show()
             } else {
                 val clipboard: ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 val clip = ClipData.newPlainText("Florisboard version", appVersion)
                 clipboard.setPrimaryClip(clip)
-                Toast.makeText(florisBoard, R.string.about__version_copied__title, Toast.LENGTH_LONG).show()
+                Toast.makeText(this, R.string.about__version_copied__title, Toast.LENGTH_LONG).show()
             }
+            true
         }
 
         // Set onClickListeners for buttons
