@@ -57,13 +57,12 @@ class AboutActivity : AppCompatActivity() {
             val isImeSelected = checkIfImeIsSelected(this)
             if (isImeSelected) {
                 FlorisClipboardManager.getInstance().addNewPlaintext(appVersion)
-                Toast.makeText(this, R.string.about__version_copied__title, Toast.LENGTH_LONG).show()
             } else {
                 val clipboard: ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 val clip = ClipData.newPlainText("Florisboard version", appVersion)
                 clipboard.setPrimaryClip(clip)
-                Toast.makeText(this, R.string.about__version_copied__title, Toast.LENGTH_LONG).show()
             }
+            Toast.makeText(this, R.string.about__version_copied__title, Toast.LENGTH_LONG).show()
             true
         }
 
