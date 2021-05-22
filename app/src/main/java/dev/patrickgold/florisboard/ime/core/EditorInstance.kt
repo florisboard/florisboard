@@ -175,6 +175,26 @@ class EditorInstance private constructor(
     }
 
     /**
+     * Internal helper, replacing a call to inputConnection.commitText with text composition in mind.
+     */
+    fun doCommitText(text: String): Pair<Boolean, String> {
+        val ic = inputConnection ?: return Pair(false, "")
+        val composer: Composer = FlorisBoard.getInstance().composer
+        return if (text.length != 1) {
+            Pair(ic.commitText(text, 1), text)
+        } else {
+            ic.beginBatchEdit()
+            ic.finishComposingText()
+            val previous = getTextBeforeCursor(composer.toRead)
+            val (rm, finalText) = composer.getActions(previous, text[0])
+            if (rm != 0) ic.deleteSurroundingText(rm, 0)
+            ic.commitText(finalText, 1)
+            ic.endBatchEdit()
+            Pair(true, finalText)
+        }
+    }
+
+    /**
      * Commits the given [text] to this editor instance and adjusts both the cursor position and
      * composing region, if any.
      *
@@ -186,20 +206,7 @@ class EditorInstance private constructor(
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun commitText(text: String): Boolean {
-        val composer: Composer = FlorisBoard.getInstance().composer
         val ic = inputConnection ?: return false
-        fun doCommitText(text: String): Pair<Boolean, String> = if (text.length != 1) {
-            Pair(ic.commitText(text, 1), text)
-        } else {
-            ic.beginBatchEdit()
-            ic.finishComposingText()
-            val previous = getTextBeforeCursor(composer.toRead)
-            val (rm, finalText) = composer.getActions(previous, text[0])
-            ic.deleteSurroundingText(rm, 0)
-            ic.commitText(finalText, 1)
-            ic.endBatchEdit()
-            Pair(true, finalText)
-        }
         return if (isRawInputEditor || selection.isSelectionMode || !isComposingEnabled) {
             doCommitText(text).first
         } else {
