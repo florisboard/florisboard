@@ -946,8 +946,8 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                     key.visibleBounds.bottom
                 }
             )
-            elevation = if (shouldShowBorder) 4.0f else 0.0f
             paint.color = keyBackground.toSolidColor().color
+            paint.setShadowLayer(if (shouldShowBorder) 4.0f else 0.0f, 0.0f, 0.0f, Color.argb(120, 0, 0, 0))
             draw(canvas)
         }
 
