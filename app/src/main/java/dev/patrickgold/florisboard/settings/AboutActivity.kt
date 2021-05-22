@@ -17,17 +17,23 @@
 package dev.patrickgold.florisboard.settings
 
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.webkit.WebView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.AboutActivityBinding
+import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.florisboard.util.AppVersionUtils
+import dev.patrickgold.florisboard.util.checkIfImeIsSelected
 
 class AboutActivity : AppCompatActivity() {
     private lateinit var binding: AboutActivityBinding
@@ -43,7 +49,22 @@ class AboutActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         // Set app version string
-        binding.appVersion.text = "v" + AppVersionUtils.getRawVersionName(this)
+        val appVersion = "v" + AppVersionUtils.getRawVersionName(this)
+        binding.appVersion.text = appVersion
+
+        // Set setOnLongClickListener for copying the version string
+        binding.headArea.setOnLongClickListener {
+            val isImeSelected = checkIfImeIsSelected(this)
+            if (isImeSelected) {
+                FlorisClipboardManager.getInstance().addNewPlaintext(appVersion)
+            } else {
+                val clipboard: ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText("Florisboard version", appVersion)
+                clipboard.setPrimaryClip(clip)
+            }
+            Toast.makeText(this, R.string.about__version_copied__title, Toast.LENGTH_LONG).show()
+            true
+        }
 
         // Set onClickListeners for buttons
         binding.privacyPolicyButton.setOnClickListener {

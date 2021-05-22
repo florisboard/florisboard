@@ -360,6 +360,8 @@
 
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open-source licenses</string>
 
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Version copied to clipboard</string>
+
     <!-- Assets strings -->
     <plurals name="assets__file__authors">
         <item quantity="one">Author</item>

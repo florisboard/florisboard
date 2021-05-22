@@ -18,30 +18,39 @@
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
-            <ImageView
-                android:id="@+id/app_icon"
-                android:background="@mipmap/floris_app_icon"
+            <LinearLayout
+                android:id="@+id/head_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="8dp"
-                android:elevation="8dp"
-                android:contentDescription="@string/about__app_icon_content_description"/>
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:background="@drawable/ripple_click">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/floris_app_name"
-                android:textSize="24sp"
-                android:textStyle="bold"/>
+                <ImageView
+                    android:id="@+id/app_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@mipmap/floris_app_icon"
+                    android:contentDescription="@string/about__app_icon_content_description"
+                    android:elevation="8dp" />
 
-            <TextView
-                android:id="@+id/app_version"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="16dp"
-                android:textSize="16sp"
-                android:textStyle="italic"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/floris_app_name"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/app_version"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="16dp"
+                    android:textSize="16sp"
+                    android:textStyle="italic" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/license_button"
