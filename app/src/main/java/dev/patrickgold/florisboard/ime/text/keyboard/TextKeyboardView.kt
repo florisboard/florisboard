@@ -752,9 +752,9 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 spaceKey.visibleLabelBounds.width().toFloat(),
                 spaceKey.visibleLabelBounds.height().toFloat(),
                 spaceKey.label ?: "X",
-                fontSizeMultiplier.coerceAtMost(1.0)
+                fontSizeMultiplier
             )
-            labelPaintSpaceTextSize = labelPaint.textSize
+            labelPaintSpaceTextSize = labelPaint.textSize.coerceAtMost(resources.getDimension(R.dimen.key_space_textSize))
         }
 
         setTextSizeFor(
