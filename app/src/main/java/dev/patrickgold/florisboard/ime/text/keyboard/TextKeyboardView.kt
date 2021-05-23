@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.graphics.*
 import android.graphics.drawable.PaintDrawable
@@ -25,6 +26,7 @@ import android.os.Handler
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.animation.AccelerateInterpolator
+import com.google.android.material.shape.MaterialShapeDrawable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.core.*
@@ -127,8 +129,9 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
     val desiredKey: TextKey = TextKey(data = TextKeyData.UNSPECIFIED)
 
-    private var keyBackgroundDrawable: PaintDrawable = PaintDrawable().apply {
-        setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
+    private var keyBackgroundDrawable: MaterialShapeDrawable = MaterialShapeDrawable().also {
+        it.setCornerSize(ViewLayoutUtils.convertDpToPixel(6.0f, context))
+        it.shadowCompatibilityMode = MaterialShapeDrawable.SHADOW_COMPAT_MODE_ALWAYS
     }
 
     private var backgroundDrawable: PaintDrawable = PaintDrawable()
@@ -840,9 +843,9 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         }
 
         if (isPreviewMode) {
-            backgroundDrawable.apply {
-                setBounds(0, 0, measuredWidth, measuredHeight)
-                draw(canvas)
+            backgroundDrawable.let {
+                it.setBounds(0, 0, measuredWidth, measuredHeight)
+                it.draw(canvas)
             }
         }
 
@@ -931,8 +934,8 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             }
         }
 
-        keyBackgroundDrawable.apply {
-            setBounds(
+        keyBackgroundDrawable.let {
+            it.setBounds(
                 key.visibleBounds.left,
                 if (isBorderless) {
                     (key.visibleBounds.top + key.visibleBounds.height() * 0.12).toInt()
@@ -946,19 +949,19 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                     key.visibleBounds.bottom
                 }
             )
-            paint.color = keyBackground.toSolidColor().color
-            paint.setShadowLayer(if (shouldShowBorder) 4.0f else 0.0f, 0.0f, 0.0f, Color.argb(120, 0, 0, 0))
-            draw(canvas)
+            it.fillColor = ColorStateList.valueOf(keyBackground.toSolidColor().color)
+            it.elevation = if (shouldShowBorder) 6.0f else 0.0f
+            it.draw(canvas)
         }
 
         val label = key.label
         if (label != null) {
-            labelPaint.apply {
-                color = keyForeground.toSolidColor().color
+            labelPaint.let {
+                it.color = keyForeground.toSolidColor().color
                 if (computedKeyboard?.mode == KeyboardMode.CHARACTERS && key.computedData.code == KeyCode.SPACE) {
-                    alpha = 120
+                    it.alpha = 120
                 }
-                textSize = when (key.computedData.code) {
+                it.textSize = when (key.computedData.code) {
                     KeyCode.SPACE -> labelPaintSpaceTextSize
                     KeyCode.VIEW_CHARACTERS,
                     KeyCode.VIEW_SYMBOLS,
@@ -968,28 +971,28 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                     else -> labelPaintTextSize
                 }
                 val centerX = key.visibleLabelBounds.exactCenterX()
-                val centerY = key.visibleLabelBounds.exactCenterY() + (labelPaint.textSize - labelPaint.descent()) / 2
+                val centerY = key.visibleLabelBounds.exactCenterY() + (it.textSize - it.descent()) / 2
                 if (label.contains("\n")) {
                     // Even if more lines may be existing only the first 2 are shown
                     val labelLines = label.split("\n")
                     val verticalAdjustment = key.visibleBounds.height() * 0.18f
-                    canvas.drawText(labelLines[0], centerX, centerY - verticalAdjustment, labelPaint)
-                    canvas.drawText(labelLines[1], centerX, centerY + verticalAdjustment, labelPaint)
+                    canvas.drawText(labelLines[0], centerX, centerY - verticalAdjustment, it)
+                    canvas.drawText(labelLines[1], centerX, centerY + verticalAdjustment, it)
                 } else {
-                    canvas.drawText(label, centerX, centerY, labelPaint)
+                    canvas.drawText(label, centerX, centerY, it)
                 }
             }
         }
 
         val hintedLabel = key.hintedLabel
         if (hintedLabel != null) {
-            hintedLabelPaint.apply {
-                color = keyForeground.toSolidColor().color
-                alpha = 170
-                textSize = hintedLabelPaintTextSize
+            hintedLabelPaint.let {
+                it.color = keyForeground.toSolidColor().color
+                it.alpha = 170
+                it.textSize = hintedLabelPaintTextSize
                 val centerX = key.visibleBounds.left + key.visibleBounds.width() * 5.0f / 6.0f
-                val centerY = key.visibleBounds.top + key.visibleBounds.height() * 1.0f / 6.0f + (hintedLabelPaint.textSize - hintedLabelPaint.descent()) / 2
-                canvas.drawText(hintedLabel, centerX, centerY, hintedLabelPaint)
+                val centerY = key.visibleBounds.top + key.visibleBounds.height() * 1.0f / 6.0f + (it.textSize - it.descent()) / 2
+                canvas.drawText(hintedLabel, centerX, centerY, it)
             }
         }
 
