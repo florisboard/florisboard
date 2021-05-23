@@ -252,19 +252,11 @@ class LayoutManager {
 
     private fun addRowHints(main: Array<TextKey>, hint: Array<TextKey>, hintType: KeyType) {
         for ((k,key) in main.withIndex()) {
-            val keyData = (key.data as? TextKeyData)
-            if (keyData?.type != KeyType.CHARACTER) {
-                continue
-            }
             val hintKey = hint.getOrNull(k)?.data?.computeTextKeyData(DefaultTextComputingEvaluator)
             if (hintKey?.type != hintType) {
                 continue
             }
 
-            // if hint key is identical to main key, no merging is needed
-            if (hintKey.code == keyData.code) {
-                continue
-            }
             when (hintType) {
                 KeyType.CHARACTER -> {
                     key.computedSymbolHint = hintKey

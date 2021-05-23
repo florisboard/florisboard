@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.popup.MutablePopupSet
+import dev.patrickgold.florisboard.ime.popup.PopupMapping
 import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.*
 
@@ -95,23 +96,8 @@ class TextKey(override val data: KeyData) : Key(data) {
                     keySpecificPopupSet?.let { merge(it, evaluator) }
                     popupSet?.let { merge(it, evaluator) }
                 }
-                val symbolHint = computedSymbolHint
-                if (symbolHint != null) {
-                    val evaluatedSymbolHint = symbolHint.computeTextKeyData(evaluator)
-                    computedPopups.symbolHint = evaluatedSymbolHint
-                    mergePopups(evaluatedSymbolHint, evaluator, computedPopups::mergeSymbolHint)
-                    val hintSpecificPopupSet = extendedPopups?.get(KeyVariation.ALL)?.get(symbolHint.label) ?:
-                            extendedPopupsDefault?.get(KeyVariation.ALL)?.get(symbolHint.label)
-                    hintSpecificPopupSet?.let { computedPopups.mergeSymbolHint(it, evaluator) }
-                }
-                val numericHint = computedNumberHint
-                if (numericHint != null) {
-                    val evaluatedNumberHint = numericHint.computeTextKeyData(evaluator)
-                    computedPopups.numberHint = evaluatedNumberHint
-                    mergePopups(evaluatedNumberHint, evaluator, computedPopups::mergeNumberHint)
-                    val hintSpecificPopupSet = extendedPopups?.get(KeyVariation.ALL)?.get(numericHint.label) ?:
-                    extendedPopupsDefault?.get(KeyVariation.ALL)?.get(numericHint.label)
-                    hintSpecificPopupSet?.let { computedPopups.mergeNumberHint(it, evaluator) }
+                if (computed.type == KeyType.CHARACTER) {
+                    addComputedHints(computed.code, evaluator, extendedPopups, extendedPopupsDefault)
                 }
             }
             isEnabled = evaluator.evaluateEnabled(computed)
@@ -163,6 +149,40 @@ class TextKey(override val data: KeyData) : Key(data) {
                     KeyCode.ENTER -> 1.56
                     else -> 1.00
                 }
+            }
+        }
+    }
+
+    private fun addComputedHints(
+        keyCode: Int,
+        evaluator: TextComputingEvaluator,
+        extendedPopups: PopupMapping?,
+        extendedPopupsDefault: PopupMapping?
+    ) {
+        val symbolHint = computedSymbolHint
+        if (symbolHint != null) {
+            val evaluatedSymbolHint = symbolHint.computeTextKeyData(evaluator)
+            if (symbolHint.code != keyCode) {
+                computedPopups.symbolHint = evaluatedSymbolHint
+                mergePopups(evaluatedSymbolHint, evaluator, computedPopups::mergeSymbolHint)
+                val hintSpecificPopupSet =
+                    extendedPopups?.get(KeyVariation.ALL)?.get(symbolHint.label) ?: extendedPopupsDefault?.get(
+                        KeyVariation.ALL
+                    )?.get(symbolHint.label)
+                hintSpecificPopupSet?.let { computedPopups.mergeSymbolHint(it, evaluator) }
+            }
+        }
+        val numericHint = computedNumberHint
+        if (numericHint != null) {
+            val evaluatedNumberHint = numericHint.computeTextKeyData(evaluator)
+            if (numericHint.code != keyCode) {
+                computedPopups.numberHint = evaluatedNumberHint
+                mergePopups(evaluatedNumberHint, evaluator, computedPopups::mergeNumberHint)
+                val hintSpecificPopupSet =
+                    extendedPopups?.get(KeyVariation.ALL)?.get(numericHint.label) ?: extendedPopupsDefault?.get(
+                        KeyVariation.ALL
+                    )?.get(numericHint.label)
+                hintSpecificPopupSet?.let { computedPopups.mergeNumberHint(it, evaluator) }
             }
         }
     }
