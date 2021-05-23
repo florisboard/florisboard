@@ -20,10 +20,10 @@
         ]
       },
       "ι": {
+        "main": { "$": "auto_text_key", "code":  943, "label": "ί" },
         "relevant": [
           { "$": "auto_text_key", "code":  912, "label": "ΐ" },
-          { "$": "auto_text_key", "code":  970, "label": "ϊ" },
-          { "$": "auto_text_key", "code":  943, "label": "ί" }
+          { "$": "auto_text_key", "code":  970, "label": "ϊ" }
         ]
       },
       "ο": {
@@ -32,10 +32,10 @@
         ]
       },
       "υ": {
+        "main": { "$": "auto_text_key", "code":  973, "label": "ύ" },
         "relevant": [
           { "$": "auto_text_key", "code":  944, "label": "ΰ" },
-          { "$": "auto_text_key", "code":  971, "label": "ϋ" },
-          { "$": "auto_text_key", "code":  973, "label": "ύ" }
+          { "$": "auto_text_key", "code":  971, "label": "ϋ" }
         ]
       },
       "ω": {
