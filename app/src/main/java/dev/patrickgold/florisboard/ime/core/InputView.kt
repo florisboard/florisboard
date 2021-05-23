@@ -134,7 +134,7 @@ class InputView : LinearLayout {
             baseTextInputHeight += additionalHeight
         }
         val smartbarDisabled = !prefs.smartbar.enabled ||
-                tim.keyVariation == KeyVariation.PASSWORD && prefs.keyboard.numberRow
+                tim.keyVariation == KeyVariation.PASSWORD && prefs.keyboard.numberRow && !prefs.suggestion.api30InlineSuggestionsEnabled
         if (smartbarDisabled) {
             baseHeight = baseTextInputHeight
             baseSmartbarHeight = 0.0f

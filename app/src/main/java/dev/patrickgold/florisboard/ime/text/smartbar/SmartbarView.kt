@@ -248,7 +248,9 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                 mainAreaId = when {
                     isQuickActionsVisible -> R.id.quick_actions
                     isShowingInlineSuggestions -> R.id.inline_suggestions
-                    florisboard.textInputManager.keyVariation == KeyVariation.PASSWORD -> R.id.number_row
+                    florisboard.textInputManager.keyVariation == KeyVariation.PASSWORD -> {
+                        if (!prefs.keyboard.numberRow) R.id.number_row else null
+                    }
                     else -> when (florisboard.textInputManager.getActiveKeyboardMode()) {
                         KeyboardMode.EDITING -> null
                         KeyboardMode.NUMERIC,
