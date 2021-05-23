@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.onehanded
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.content.res.Resources
 import android.util.AttributeSet
 import android.view.Gravity
 import android.widget.ImageButton
@@ -96,8 +97,7 @@ class OneHandedPanel : LinearLayout, ThemeManager.OnThemeUpdatedListener {
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val florisboard = florisboard ?: return super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val width = (florisboard.inputView?.measuredWidth ?: 0) *
+        val width = (Resources.getSystem().displayMetrics.widthPixels) *
             ((100 - prefs.keyboard.oneHandedModeScaleFactor) / 100.0f)
         super.onMeasure(MeasureSpec.makeMeasureSpec(width.toInt(),  MeasureSpec.EXACTLY), heightMeasureSpec)
     }
