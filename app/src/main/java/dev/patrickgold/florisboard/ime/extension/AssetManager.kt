@@ -22,10 +22,8 @@ import dev.patrickgold.florisboard.ime.keyboard.CaseSelector
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
-import dev.patrickgold.florisboard.ime.text.keyboard.AutoTextKeyData
-import dev.patrickgold.florisboard.ime.text.keyboard.BasicTextKeyData
-import dev.patrickgold.florisboard.ime.text.keyboard.MultiTextKeyData
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.text.composing.*
+import dev.patrickgold.florisboard.ime.text.keyboard.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -54,6 +52,12 @@ class AssetManager private constructor(val applicationContext: Context) {
                 subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
                 subclass(MultiTextKeyData::class, MultiTextKeyData.serializer())
                 default { BasicTextKeyData.serializer() }
+            }
+            polymorphic(Composer::class) {
+                subclass(Appender::class, Appender.serializer())
+                subclass(HangulUnicode::class, HangulUnicode.serializer())
+                subclass(WithRules::class, WithRules.serializer())
+                default { Appender.serializer() }
             }
         }
     }

@@ -35,6 +35,8 @@ import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clip.provider.ItemType
 import dev.patrickgold.florisboard.ime.text.TextInputManager
+import dev.patrickgold.florisboard.ime.text.composing.Composer
+import dev.patrickgold.florisboard.ime.text.composing.HangulUnicode
 import timber.log.Timber
 
 /**
@@ -173,6 +175,26 @@ class EditorInstance private constructor(
     }
 
     /**
+     * Internal helper, replacing a call to inputConnection.commitText with text composition in mind.
+     */
+    fun doCommitText(text: String): Pair<Boolean, String> {
+        val ic = inputConnection ?: return Pair(false, "")
+        val composer: Composer = FlorisBoard.getInstance().composer
+        return if (text.length != 1) {
+            Pair(ic.commitText(text, 1), text)
+        } else {
+            ic.beginBatchEdit()
+            ic.finishComposingText()
+            val previous = getTextBeforeCursor(composer.toRead)
+            val (rm, finalText) = composer.getActions(previous, text[0])
+            if (rm != 0) ic.deleteSurroundingText(rm, 0)
+            ic.commitText(finalText, 1)
+            ic.endBatchEdit()
+            Pair(true, finalText)
+        }
+    }
+
+    /**
      * Commits the given [text] to this editor instance and adjusts both the cursor position and
      * composing region, if any.
      *
@@ -186,7 +208,7 @@ class EditorInstance private constructor(
     fun commitText(text: String): Boolean {
         val ic = inputConnection ?: return false
         return if (isRawInputEditor || selection.isSelectionMode || !isComposingEnabled) {
-            ic.commitText(text, 1)
+            doCommitText(text).first
         } else {
             ic.beginBatchEdit()
             val isWordComponent = CachedInput.isWordComponent(text)
@@ -199,8 +221,8 @@ class EditorInstance private constructor(
                 }
                 !isPhantomSpace && isWordComponent -> {
                     ic.finishComposingText()
-                    ic.commitText(text, 1)
-                    ic.setComposingRegion(cachedInput.currentWord.start, cachedInput.currentWord.end + text.length)
+                    val finalText = doCommitText(text).second
+                    ic.setComposingRegion(cachedInput.currentWord.start, cachedInput.currentWord.end + finalText.length)
                 }
                 else -> {
                     ic.finishComposingText()
