@@ -49,6 +49,7 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
+@Suppress("UNUSED_PARAMETER")
 class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture.Listener {
     private var computedKeyboard: TextKeyboard? = null
     private var iconSet: TextKeyboardIconSet? = null
@@ -227,26 +228,29 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
     override fun onTouchEventInternal(event: MotionEvent) {
         flogDebug { "event=$event" }
         val dispatcher = florisboard?.textInputManager?.inputEventDispatcher ?: return
-        keyHintConfiguration = prefs.keyboard.getKeyHintConfiguration()
         swipeGestureDetector.onTouchEvent(event)
 
-        /*if (prefs.glide.enabled &&
-            computedKeyboard?.mode == KeyboardMode.CHARACTERS &&
-            glideTypingDetector.onTouchEvent(event, initialKey) &&
-            event.actionMasked != MotionEvent.ACTION_UP
-        ) {
-            if (activePointerId != null) {
-                val pointerIndex = event.actionIndex
-                onTouchCancelInternal(event, pointerIndex, activePointerId!!)
+        if (prefs.glide.enabled && computedKeyboard?.mode == KeyboardMode.CHARACTERS) {
+            val glidePointer = pointerMap.findById(0)
+            if (glideTypingDetector.onTouchEvent(event, glidePointer?.initialKey)) {
+                for (pointer in pointerMap) {
+                    if (pointer.activeKey != null) {
+                        onTouchCancelInternal(event, pointer)
+                    }
+                }
+                if (event.actionMasked == MotionEvent.ACTION_UP || event.actionMasked == MotionEvent.ACTION_CANCEL) {
+                    pointerMap.clear()
+                }
+                isGliding = true
+                invalidate()
+                return
             }
-            isGliding = true
-            invalidate()
-            return
-        }*/
+        }
 
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 dispatcher.send(InputKeyEvent.down(TextKeyData.INTERNAL_BATCH_EDIT))
+                keyHintConfiguration = prefs.keyboard.getKeyHintConfiguration()
                 val pointerIndex = event.actionIndex
                 val pointerId = event.getPointerId(pointerIndex)
                 val pointer = pointerMap.add(pointerId, pointerIndex)
@@ -311,7 +315,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 val pointerId = event.getPointerId(pointerIndex)
                 val pointer = pointerMap.findById(pointerId)
                 if (pointer != null) {
-                    if (swipeGestureDetector.onTouchUp(event, pointer)) {
+                    if (swipeGestureDetector.onTouchUp(event, pointer) || pointer.hasTriggeredGestureMove || pointer.shouldBlockNextUp) {
                         if (pointer.hasTriggeredGestureMove && pointer.initialKey?.computedData?.code == KeyCode.DELETE) {
                             florisboard!!.textInputManager.isGlidePostEffect = false
                             florisboard!!.activeEditorInstance.apply {
@@ -333,7 +337,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 for (pointer in pointerMap) {
                     if (pointer.id == pointerId) {
                         pointer.index = pointerIndex
-                        if (swipeGestureDetector.onTouchUp(event, pointer)) {
+                        if (swipeGestureDetector.onTouchUp(event, pointer) || pointer.hasTriggeredGestureMove || pointer.shouldBlockNextUp) {
                             if (pointer.hasTriggeredGestureMove && pointer.initialKey?.computedData?.code == KeyCode.DELETE) {
                                 florisboard!!.textInputManager.isGlidePostEffect = false
                                 florisboard!!.activeEditorInstance.apply {
@@ -515,7 +519,6 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 popupManager.hide()
             }
             pointer.activeKey = null
-            swipeGestureDetector.onTouchCancel(event, pointer)
         }
         pointer.hasTriggeredGestureMove = false
         pointer.shouldBlockNextUp = false
@@ -1282,7 +1285,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         }
 
         override fun toString(): String {
-            return "${TouchPointer::class.simpleName} { id=$id index=$index }"
+            return "${TouchPointer::class.simpleName} { id=$id, index=$index, initialKey=$initialKey, activeKey=$activeKey }"
         }
     }
 }

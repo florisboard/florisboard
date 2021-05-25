@@ -152,13 +152,13 @@ abstract class SwipeGesture {
         fun onTouchUp(event: MotionEvent, pointer: Pointer): Boolean {
             if (!isEnabled) return false
             pointerMap.findById(pointer.id)?.let { gesturePointer ->
-                pointerMap.removeById(pointer.id)
                 val absDiffX = event.getX(pointer.index) - gesturePointer.firstX
                 val absDiffY = event.getY(pointer.index) - gesturePointer.firstY
                 velocityTracker.computeCurrentVelocity(1000)
                 val velocityX = ViewLayoutUtils.convertDpToPixel(velocityTracker.getXVelocity(pointer.id), context)
                 val velocityY = ViewLayoutUtils.convertDpToPixel(velocityTracker.getYVelocity(pointer.id), context)
                 flogDebug(LogTopic.GESTURES) { "Velocity: $velocityX $velocityY dp/s" }
+                pointerMap.removeById(pointer.id)
                 return if ((abs(absDiffX) > thresholdWidth || abs(absDiffY) > thresholdWidth) && (abs(velocityX) > thresholdSpeed || abs(velocityY) > thresholdSpeed)) {
                     val direction = detectDirection(absDiffX.toDouble(), absDiffY.toDouble())
                     gesturePointer.absUnitCountX = (absDiffX / unitWidth).toInt()
