@@ -1,7 +1,7 @@
 {
   "type": "numeric_row",
-  "name": "eastern_arabic",
-  "label": "Eastern Arabic",
+  "name": "devanagari",
+  "label": "Devanagari",
   "authors": [ "yashpalgoyal1304" ],
   "direction": "ltr",
   "arrangement": [
