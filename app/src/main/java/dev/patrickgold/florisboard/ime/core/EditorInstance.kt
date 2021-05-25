@@ -135,6 +135,7 @@ class EditorInstance private constructor(
         } else {
             selection.update(newSelStart, newSelEnd)
         }
+        cachedInput.update()
         if (isPhantomSpaceActive && wasPhantomSpaceActiveLastUpdate) {
             isPhantomSpaceActive = false
         } else if (isPhantomSpaceActive && !wasPhantomSpaceActiveLastUpdate) {

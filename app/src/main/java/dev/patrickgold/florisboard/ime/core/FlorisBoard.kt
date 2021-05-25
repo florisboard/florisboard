@@ -549,9 +549,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
      */
     fun endInternalBatchEdit() {
         internalBatchNestingLevel = (internalBatchNestingLevel - 1).coerceAtLeast(0)
-        /*if (internalBatchNestingLevel == 0) {
-            activeEditorInstance.cachedInput.update()
-        }*/
     }
 
     override fun onUpdateSelection(
