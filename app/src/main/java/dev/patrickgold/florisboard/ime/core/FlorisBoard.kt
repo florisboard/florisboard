@@ -63,7 +63,6 @@ import dev.patrickgold.florisboard.ime.media.MediaInputManager
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupLayerView
 import dev.patrickgold.florisboard.ime.text.TextInputManager
-import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.CurrencySet
@@ -140,15 +139,6 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     private var vibrator: Vibrator? = null
 
     private var internalBatchNestingLevel: Int = 0
-    private val internalSelectionCache = object {
-        var selectionCatchCount: Int = 0
-        var oldSelStart: Int = -1
-        var oldSelEnd: Int = -1
-        var newSelStart: Int = -1
-        var newSelEnd: Int = -1
-        var candidatesStart: Int = -1
-        var candidatesEnd: Int = -1
-    }
 
     var activeEditorInstance: EditorInstance = EditorInstance.default()
 
@@ -559,24 +549,9 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
      */
     fun endInternalBatchEdit() {
         internalBatchNestingLevel = (internalBatchNestingLevel - 1).coerceAtLeast(0)
-        if (internalBatchNestingLevel == 0) {
-            internalSelectionCache.apply {
-                if (selectionCatchCount > 0) {
-                    onUpdateSelection(
-                        oldSelStart, oldSelEnd,
-                        newSelStart, newSelEnd,
-                        candidatesStart, candidatesEnd
-                    )
-                    selectionCatchCount = 0
-                    oldSelStart = -1
-                    oldSelEnd = -1
-                    newSelStart = -1
-                    newSelEnd = -1
-                    candidatesStart = -1
-                    candidatesEnd = -1
-                }
-            }
-        }
+        /*if (internalBatchNestingLevel == 0) {
+            activeEditorInstance.cachedInput.update()
+        }*/
     }
 
     override fun onUpdateSelection(
@@ -590,27 +565,13 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
             candidatesStart, candidatesEnd
         )
 
-        if (internalBatchNestingLevel == 0) {
-            flogInfo(LogTopic.IMS_EVENTS) { "$oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd" }
-            activeEditorInstance.onUpdateSelection(
-                oldSelStart, oldSelEnd,
-                newSelStart, newSelEnd,
-                candidatesStart, candidatesEnd
-            )
-            eventListeners.toList().forEach { it?.onUpdateSelection() }
-        } else {
-            flogInfo(LogTopic.IMS_EVENTS) {
-                "$oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd: caught due to internal batch level of $internalBatchNestingLevel!"
-            }
-            if (internalSelectionCache.selectionCatchCount++ == 0) {
-                internalSelectionCache.oldSelStart = oldSelStart
-                internalSelectionCache.oldSelEnd = oldSelEnd
-            }
-            internalSelectionCache.newSelStart = newSelStart
-            internalSelectionCache.newSelEnd = newSelEnd
-            internalSelectionCache.candidatesStart = candidatesStart
-            internalSelectionCache.candidatesEnd = candidatesEnd
-        }
+        flogInfo(LogTopic.IMS_EVENTS) { "$oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd" }
+        activeEditorInstance.onUpdateSelection(
+            oldSelStart, oldSelEnd,
+            newSelStart, newSelEnd,
+            candidatesStart, candidatesEnd
+        )
+        eventListeners.toList().forEach { it?.onUpdateSelection() }
     }
 
     override fun onThemeUpdated(theme: Theme) {

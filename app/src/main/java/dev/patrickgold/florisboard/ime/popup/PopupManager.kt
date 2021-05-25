@@ -145,6 +145,14 @@ class PopupManager<V : View>(
         }
     }
 
+    fun isSuitableForPopups(key: Key): Boolean {
+        return if (key is TextKey) {
+            key.computedData.code > KeyCode.SPACE && key.computedData.code != KeyCode.MULTIPLE_CODE_POINTS
+        } else {
+            true
+        }
+    }
+
     /**
      * Calculates all attributes required by both the normal and the extended popup, regardless of
      * the passed [key]'s code.
@@ -186,9 +194,7 @@ class PopupManager<V : View>(
      * @param keyHintConfiguration The key hint configuration to use.
      */
     fun show(key: Key, keyHintConfiguration: KeyHintConfiguration) {
-        if (key is TextKey && key.computedData.code <= KeyCode.SPACE && key.computedData.code != KeyCode.MULTIPLE_CODE_POINTS) {
-            return
-        }
+        if (!isSuitableForPopups(key)) return
 
         calc(key)
 
@@ -236,7 +242,7 @@ class PopupManager<V : View>(
      * @param keyHintConfiguration The key hint configuration to use.
      */
     fun extend(key: Key, keyHintConfiguration: KeyHintConfiguration) {
-        if (key is TextKey && key.computedData.code <= KeyCode.SPACE  && key.computedData.code != KeyCode.MULTIPLE_CODE_POINTS
+        if (key is TextKey && !isSuitableForPopups(key)
             && !exceptionsForKeyCodes.contains(key.computedData.code)) {
             return
         }
