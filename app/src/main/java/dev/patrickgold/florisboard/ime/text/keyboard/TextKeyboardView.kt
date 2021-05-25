@@ -130,7 +130,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
     private var keyBackgroundDrawable: MaterialShapeDrawable = MaterialShapeDrawable().also {
         it.setCornerSize(ViewLayoutUtils.convertDpToPixel(6.0f, context))
-        it.shadowCompatibilityMode = MaterialShapeDrawable.SHADOW_COMPAT_MODE_ALWAYS
+        //it.shadowCompatibilityMode = MaterialShapeDrawable.SHADOW_COMPAT_MODE_ALWAYS
     }
 
     private var backgroundDrawable: PaintDrawable = PaintDrawable()
@@ -1001,7 +1001,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 }
             )
             it.fillColor = ColorStateList.valueOf(keyBackground.toSolidColor().color)
-            it.elevation = if (shouldShowBorder) 6.0f else 0.0f
+            //it.elevation = if (shouldShowBorder) 6.0f else 0.0f
             it.draw(canvas)
         }
 
