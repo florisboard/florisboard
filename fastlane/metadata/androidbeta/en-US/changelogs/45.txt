@@ -1,0 +1,8 @@
+- Added Indic Numerals (#940, thanks @yashpalgoyal1304)
+- Version number can now be copied by long-pressing in the about screen (#881, thanks @Luensche)
+- Touch logic of keyboard, shift+space bar is working again (#942)
+- Crash loops from occurring after a crash (#910)
+- User dictionary max size (#898)
+- Space bar text too large (#862)
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.13-beta02
