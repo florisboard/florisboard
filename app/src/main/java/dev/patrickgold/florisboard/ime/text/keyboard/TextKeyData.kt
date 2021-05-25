@@ -67,202 +67,202 @@ interface TextKeyData : KeyData {
 
     companion object {
         /** Predefined key data for [KeyCode.ARROW_DOWN] */
-        val ARROW_DOWN = AutoTextKeyData(
+        val ARROW_DOWN = BasicTextKeyData(
             type = KeyType.NAVIGATION,
             code = KeyCode.ARROW_DOWN,
             label = "arrow_down"
         )
 
         /** Predefined key data for [KeyCode.ARROW_LEFT] */
-        val ARROW_LEFT = AutoTextKeyData(
+        val ARROW_LEFT = BasicTextKeyData(
             type = KeyType.NAVIGATION,
             code = KeyCode.ARROW_LEFT,
             label = "arrow_left"
         )
 
         /** Predefined key data for [KeyCode.ARROW_RIGHT] */
-        val ARROW_RIGHT = AutoTextKeyData(
+        val ARROW_RIGHT = BasicTextKeyData(
             type = KeyType.NAVIGATION,
             code = KeyCode.ARROW_RIGHT,
             label = "arrow_right"
         )
 
         /** Predefined key data for [KeyCode.ARROW_UP] */
-        val ARROW_UP = AutoTextKeyData(
+        val ARROW_UP = BasicTextKeyData(
             type = KeyType.NAVIGATION,
             code = KeyCode.ARROW_UP,
             label = "arrow_up"
         )
 
         /** Predefined key data for [KeyCode.CLIPBOARD_COPY] */
-        val CLIPBOARD_COPY = AutoTextKeyData(
+        val CLIPBOARD_COPY = BasicTextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.CLIPBOARD_COPY,
             label = "clipboard_copy"
         )
 
         /** Predefined key data for [KeyCode.CLIPBOARD_CUT] */
-        val CLIPBOARD_CUT = AutoTextKeyData(
+        val CLIPBOARD_CUT = BasicTextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.CLIPBOARD_CUT,
             label = "clipboard_cut"
         )
 
         /** Predefined key data for [KeyCode.CLIPBOARD_PASTE] */
-        val CLIPBOARD_PASTE = AutoTextKeyData(
+        val CLIPBOARD_PASTE = BasicTextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.CLIPBOARD_PASTE,
             label = "clipboard_paste"
         )
 
         /** Predefined key data for [KeyCode.CLIPBOARD_SELECT] */
-        val CLIPBOARD_SELECT = AutoTextKeyData(
+        val CLIPBOARD_SELECT = BasicTextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.CLIPBOARD_SELECT,
             label = "clipboard_select"
         )
 
         /** Predefined key data for [KeyCode.CLIPBOARD_SELECT_ALL] */
-        val CLIPBOARD_SELECT_ALL = AutoTextKeyData(
+        val CLIPBOARD_SELECT_ALL = BasicTextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.CLIPBOARD_SELECT_ALL,
             label = "clipboard_select_all"
         )
 
         /** Predefined key data for [KeyCode.DELETE] */
-        val DELETE = AutoTextKeyData(
+        val DELETE = BasicTextKeyData(
             type = KeyType.ENTER_EDITING,
             code = KeyCode.DELETE,
             label = "delete"
         )
 
         /** Predefined key data for [KeyCode.DELETE_WORD] */
-        val DELETE_WORD = AutoTextKeyData(
+        val DELETE_WORD = BasicTextKeyData(
             type = KeyType.ENTER_EDITING,
             code = KeyCode.DELETE_WORD,
             label = "delete_word"
         )
 
         /** Predefined key data for [KeyCode.INTERNAL_BATCH_EDIT] */
-        val INTERNAL_BATCH_EDIT = AutoTextKeyData(
+        val INTERNAL_BATCH_EDIT = BasicTextKeyData(
             type = KeyType.FUNCTION,
             code = KeyCode.INTERNAL_BATCH_EDIT,
             label = "internal_batch_edit"
         )
 
         /** Predefined key data for [KeyCode.MOVE_START_OF_LINE] */
-        val MOVE_START_OF_LINE = AutoTextKeyData(
+        val MOVE_START_OF_LINE = BasicTextKeyData(
             type = KeyType.NAVIGATION,
             code = KeyCode.MOVE_START_OF_LINE,
             label = "move_start_of_line"
         )
 
         /** Predefined key data for [KeyCode.MOVE_END_OF_LINE] */
-        val MOVE_END_OF_LINE = AutoTextKeyData(
+        val MOVE_END_OF_LINE = BasicTextKeyData(
             type = KeyType.NAVIGATION,
             code = KeyCode.MOVE_END_OF_LINE,
             label = "move_end_of_line"
         )
 
         /** Predefined key data for [KeyCode.MOVE_START_OF_PAGE] */
-        val MOVE_START_OF_PAGE = AutoTextKeyData(
+        val MOVE_START_OF_PAGE = BasicTextKeyData(
             type = KeyType.NAVIGATION,
             code = KeyCode.MOVE_START_OF_PAGE,
             label = "move_start_of_page"
         )
 
         /** Predefined key data for [KeyCode.MOVE_END_OF_PAGE] */
-        val MOVE_END_OF_PAGE = AutoTextKeyData(
+        val MOVE_END_OF_PAGE = BasicTextKeyData(
             type = KeyType.NAVIGATION,
             code = KeyCode.MOVE_END_OF_PAGE,
             label = "move_end_of_page"
         )
 
         /** Predefined key data for [KeyCode.REDO] */
-        val REDO = AutoTextKeyData(
+        val REDO = BasicTextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.REDO,
             label = "redo"
         )
 
         /** Predefined key data for [KeyCode.SHOW_INPUT_METHOD_PICKER] */
-        val SHOW_INPUT_METHOD_PICKER = AutoTextKeyData(
+        val SHOW_INPUT_METHOD_PICKER = BasicTextKeyData(
             type = KeyType.FUNCTION,
             code = KeyCode.SHOW_INPUT_METHOD_PICKER,
             label = "show_input_method_picker"
         )
 
         /** Predefined key data for [KeyCode.SWITCH_TO_TEXT_CONTEXT] */
-        val SWITCH_TO_TEXT_CONTEXT = AutoTextKeyData(
+        val SWITCH_TO_TEXT_CONTEXT = BasicTextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.SWITCH_TO_TEXT_CONTEXT,
             label = "switch_to_text_context"
         )
         /** Predefined key data for [KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT] */
-        val SWITCH_TO_CLIPBOARD_CONTEXT = AutoTextKeyData(
+        val SWITCH_TO_CLIPBOARD_CONTEXT = BasicTextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT,
             label = "switch_to_clipboard_context"
         )
 
         /** Predefined key data for [KeyCode.SHIFT] */
-        val SHIFT = AutoTextKeyData(
+        val SHIFT = BasicTextKeyData(
             type = KeyType.MODIFIER,
             code = KeyCode.SHIFT,
             label = "shift"
         )
 
         /** Predefined key data for [KeyCode.SHIFT_LOCK] */
-        val SHIFT_LOCK = AutoTextKeyData(
+        val SHIFT_LOCK = BasicTextKeyData(
             type = KeyType.MODIFIER,
             code = KeyCode.SHIFT_LOCK,
             label = "shift_lock"
         )
 
         /** Predefined key data for [KeyCode.SPACE] */
-        val SPACE = AutoTextKeyData(
+        val SPACE = BasicTextKeyData(
             type = KeyType.CHARACTER,
             code = KeyCode.SPACE,
             label = "space"
         )
 
         /** Predefined key data for [KeyCode.UNDO] */
-        val UNDO = AutoTextKeyData(
+        val UNDO = BasicTextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.UNDO,
             label = "undo"
         )
 
         /** Predefined key data for [KeyCode.UNSPECIFIED] */
-        val UNSPECIFIED = AutoTextKeyData(
+        val UNSPECIFIED = BasicTextKeyData(
             type = KeyType.UNSPECIFIED,
             code = KeyCode.UNSPECIFIED,
             label = "unspecified"
         )
 
         /** Predefined key data for [KeyCode.VIEW_CHARACTERS] */
-        val VIEW_CHARACTERS = AutoTextKeyData(
+        val VIEW_CHARACTERS = BasicTextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.VIEW_CHARACTERS,
             label = "view_characters"
         )
 
         /** Predefined key data for [KeyCode.VIEW_SYMBOLS] */
-        val VIEW_SYMBOLS = AutoTextKeyData(
+        val VIEW_SYMBOLS = BasicTextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.VIEW_SYMBOLS,
             label = "view_symbols"
         )
 
         /** Predefined key data for [KeyCode.VIEW_SYMBOLS2] */
-        val VIEW_SYMBOLS2 = AutoTextKeyData(
+        val VIEW_SYMBOLS2 = BasicTextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.VIEW_SYMBOLS2,
             label = "view_symbols2"
         )
 
         /** Predefined key data for [KeyCode.VIEW_NUMERIC_ADVANCED] */
-        val VIEW_NUMERIC_ADVANCED = AutoTextKeyData(
+        val VIEW_NUMERIC_ADVANCED = BasicTextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.VIEW_NUMERIC_ADVANCED,
             label = "view_numeric_advanced"

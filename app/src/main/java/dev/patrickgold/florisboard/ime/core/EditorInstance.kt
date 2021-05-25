@@ -36,7 +36,6 @@ import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clip.provider.ItemType
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.composing.Composer
-import dev.patrickgold.florisboard.ime.text.composing.HangulUnicode
 import timber.log.Timber
 
 /**
@@ -126,6 +125,9 @@ class EditorInstance private constructor(
         newSelStart: Int, newSelEnd: Int,
         candidatesStart: Int, candidatesEnd: Int
     ) {
+        if (newSelStart == oldSelStart && newSelEnd == oldSelEnd) {
+            return
+        }
         // The Android Framework allows that start can be greater than end in some cases. To prevent bugs in the Floris
         // input logic, we swap start and end here if this should really be the case.
         if (newSelEnd < newSelStart) {
@@ -138,7 +140,6 @@ class EditorInstance private constructor(
         } else if (isPhantomSpaceActive && !wasPhantomSpaceActiveLastUpdate) {
             wasPhantomSpaceActiveLastUpdate = true
         }
-        cachedInput.update()
         if (isComposingEnabled && candidatesStart >= 0 && candidatesEnd >= 0) {
             shouldReevaluateComposingSuggestions = true
         }
@@ -1023,8 +1024,8 @@ class CachedInput(private val editorInstance: EditorInstance) {
         private set
 
     companion object {
-        private const val CACHED_TEXT_N_CHARS_BEFORE_CURSOR: Int = 192
-        private const val CACHED_TEXT_N_CHARS_AFTER_CURSOR: Int = 64
+        private const val CACHED_TEXT_N_CHARS_BEFORE_CURSOR: Int = 128
+        private const val CACHED_TEXT_N_CHARS_AFTER_CURSOR: Int = 48
 
         private val WORD_EVAL_REGEX = """[^\p{L}\']""".toRegex()
         private val WORD_SPLIT_REGEX_EN = """((?<=$WORD_EVAL_REGEX)|(?=$WORD_EVAL_REGEX))""".toRegex()

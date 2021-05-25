@@ -17,6 +17,9 @@
 package dev.patrickgold.florisboard.ime.core
 
 import android.os.SystemClock
+import android.util.SparseArray
+import androidx.core.util.forEach
+import androidx.core.util.set
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
@@ -36,8 +39,9 @@ class InputEventDispatcher private constructor(
     private val repeatableKeyCodes: IntArray
 ) : InputKeyEventSender {
     private val channel: Channel<InputKeyEvent> = Channel(channelCapacity)
-    private val scope: CoroutineScope = CoroutineScope(defaultDispatcher + SupervisorJob())
-    private val pressedKeys: HashMap<Int, PressedKeyInfo> = hashMapOf()
+    private val mainScope: CoroutineScope = CoroutineScope(mainDispatcher + SupervisorJob())
+    private val defaultScope: CoroutineScope = CoroutineScope(defaultDispatcher + SupervisorJob())
+    private val pressedKeys: SparseArray<PressedKeyInfo> = SparseArray()
     var lastKeyEventDown: InputKeyEvent? = null
         private set
     var lastKeyEventUp: InputKeyEvent? = null
@@ -69,16 +73,26 @@ class InputEventDispatcher private constructor(
          */
         fun new(
             channelCapacity: Int = DEFAULT_CHANNEL_CAPACITY,
-            mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
+            mainDispatcher: CoroutineDispatcher = Dispatchers.Main.immediate,
             defaultDispatcher: CoroutineDispatcher = Dispatchers.Default,
             repeatableKeyCodes: IntArray = intArrayOf()
         ): InputEventDispatcher = InputEventDispatcher(
              channelCapacity, mainDispatcher, defaultDispatcher, repeatableKeyCodes.clone()
         )
+
+        private fun <T> SparseArray<T>.removeAndReturn(key: Int): T? {
+            val elem = get(key)
+            return if (elem == null) {
+                null
+            } else {
+                remove(key)
+                elem
+            }
+        }
     }
 
     init {
-        scope.launch(defaultDispatcher) {
+        defaultScope.launch {
             for (ev in channel) {
                 if (!isActive) break
                 val startTime = System.nanoTime()
@@ -87,11 +101,11 @@ class InputEventDispatcher private constructor(
                 }
                 when (ev.action) {
                     InputKeyEvent.Action.DOWN -> {
-                        if (pressedKeys.containsKey(ev.data.code)) continue
+                        if (pressedKeys.indexOfKey(ev.data.code) >= 0) continue
                         pressedKeys[ev.data.code] = PressedKeyInfo(
                             eventTimeDown = ev.eventTime,
                             repeatKeyPressJob = if (!repeatableKeyCodes.contains(ev.data.code)) { null } else {
-                                scope.launch(defaultDispatcher) {
+                                defaultScope.launch {
                                     delay(600)
                                     while (isActive) {
                                         channel.send(InputKeyEvent.repeat(ev.data))
@@ -108,7 +122,7 @@ class InputEventDispatcher private constructor(
                         }
                     }
                     InputKeyEvent.Action.DOWN_UP -> {
-                        pressedKeys.remove(ev.data.code)?.repeatKeyPressJob?.cancel()
+                        pressedKeys.removeAndReturn(ev.data.code)?.repeatKeyPressJob?.cancel()
                         withContext(mainDispatcher) {
                             keyEventReceiver?.onInputKeyDown(ev)
                             keyEventReceiver?.onInputKeyUp(ev)
@@ -119,7 +133,7 @@ class InputEventDispatcher private constructor(
                         }
                     }
                     InputKeyEvent.Action.UP -> {
-                        pressedKeys.remove(ev.data.code)?.repeatKeyPressJob?.cancel()
+                        pressedKeys.removeAndReturn(ev.data.code)?.repeatKeyPressJob?.cancel()
                         withContext(mainDispatcher) {
                             keyEventReceiver?.onInputKeyUp(ev)
                         }
@@ -128,14 +142,14 @@ class InputEventDispatcher private constructor(
                         }
                     }
                     InputKeyEvent.Action.REPEAT -> {
-                        if (pressedKeys.containsKey(ev.data.code)) {
+                        if (pressedKeys.indexOfKey(ev.data.code) >= 0) {
                             withContext(mainDispatcher) {
                                 keyEventReceiver?.onInputKeyRepeat(ev)
                             }
                         }
                     }
                     InputKeyEvent.Action.CANCEL -> {
-                        pressedKeys.remove(ev.data.code)?.repeatKeyPressJob?.cancel()
+                        pressedKeys.removeAndReturn(ev.data.code)?.repeatKeyPressJob?.cancel()
                         withContext(mainDispatcher) {
                             keyEventReceiver?.onInputKeyCancel(ev)
                         }
@@ -145,16 +159,13 @@ class InputEventDispatcher private constructor(
                     Timber.d("Time elapsed: ${(System.nanoTime() - startTime) / 1_000_000}")
                 }
             }
-            val pressedKeysIterator = pressedKeys.iterator()
-            while (pressedKeysIterator.hasNext()) {
-                pressedKeysIterator.next().value.repeatKeyPressJob?.cancel()
-                pressedKeysIterator.remove()
-            }
+            pressedKeys.forEach { _, value -> value.repeatKeyPressJob?.cancel() }
+            pressedKeys.clear()
         }
     }
 
     override fun send(ev: InputKeyEvent) {
-        scope.launch(mainDispatcher) {
+        mainScope.launch {
             channel.send(ev)
         }
     }
@@ -167,7 +178,7 @@ class InputEventDispatcher private constructor(
      * @return True if the given [code] is currently down, false otherwise.
      */
     fun isPressed(code: Int): Boolean {
-        return pressedKeys.containsKey(code)
+        return pressedKeys.indexOfKey(code) >= 0
     }
 
     /**
@@ -175,7 +186,8 @@ class InputEventDispatcher private constructor(
      */
     fun close() {
         keyEventReceiver = null
-        scope.cancel()
+        mainScope.cancel()
+        defaultScope.cancel()
     }
 
     data class PressedKeyInfo(
