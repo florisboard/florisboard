@@ -493,7 +493,7 @@ class Preferences(
             get() = prefs.getPref(VIBRATION_STRENGTH, -1)
             private set
 
-        fun getKeyHintConfiguration(): KeyHintConfiguration {
+        fun keyHintConfiguration(): KeyHintConfiguration {
             return KeyHintConfiguration(hintedSymbolsMode, hintedNumberRowMode, mergeHintPopupsEnabled)
         }
     }

@@ -73,7 +73,7 @@ import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.setup.SetupActivity
 import dev.patrickgold.florisboard.util.AppVersionUtils
-import dev.patrickgold.florisboard.util.ViewLayoutUtils
+import dev.patrickgold.florisboard.ime.view.ViewUtils
 import dev.patrickgold.florisboard.util.debugSummarize
 import dev.patrickgold.florisboard.util.findViewWithType
 import dev.patrickgold.florisboard.util.refreshLayoutOf
@@ -668,7 +668,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
      */
     private fun updateSoftInputWindowLayoutParameters() {
         val w = window?.window ?: return
-        ViewLayoutUtils.updateLayoutHeightOf(w, WindowManager.LayoutParams.MATCH_PARENT)
+        ViewUtils.updateLayoutHeightOf(w, WindowManager.LayoutParams.MATCH_PARENT)
         val inputWindowView = this.inputWindowView
         if (inputWindowView != null) {
             val layoutHeight = if (isFullscreenMode) {
@@ -677,9 +677,9 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
                 WindowManager.LayoutParams.MATCH_PARENT
             }
             val inputArea = w.findViewById<View>(android.R.id.inputArea)
-            ViewLayoutUtils.updateLayoutHeightOf(inputArea, layoutHeight)
-            ViewLayoutUtils.updateLayoutGravityOf(inputArea, Gravity.BOTTOM)
-            ViewLayoutUtils.updateLayoutHeightOf(inputWindowView, layoutHeight)
+            ViewUtils.updateLayoutHeightOf(inputArea, layoutHeight)
+            ViewUtils.updateLayoutGravityOf(inputArea, Gravity.BOTTOM)
+            ViewUtils.updateLayoutHeightOf(inputWindowView, layoutHeight)
         }
     }
 

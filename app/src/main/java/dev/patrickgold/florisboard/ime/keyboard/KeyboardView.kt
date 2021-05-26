@@ -90,10 +90,5 @@ abstract class KeyboardView : View, ThemeManager.OnThemeUpdatedListener {
         isMeasured = true
     }
 
-    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
-        super.onLayout(changed, left, top, right, bottom)
-        onLayoutInternal()
-    }
-
-    protected abstract fun onLayoutInternal()
+    abstract fun sync()
 }

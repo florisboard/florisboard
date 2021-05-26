@@ -26,7 +26,6 @@ import android.os.Build
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.util.DisplayMetrics
-import android.util.Size
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.ViewFlipper
@@ -34,7 +33,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
-import dev.patrickgold.florisboard.util.ViewLayoutUtils
+import dev.patrickgold.florisboard.ime.view.ViewUtils
 import timber.log.Timber
 import kotlin.math.roundToInt
 
@@ -145,13 +144,12 @@ class InputView : LinearLayout {
         desiredMediaKeyboardViewHeight = baseHeight
         // Add bottom offset for curved screens here. As the desired heights have already been set,
         //  adding a value to the height now will result in a bottom padding (aka offset).
-        baseHeight += ViewLayoutUtils.convertDpToPixel(
+        baseHeight += ViewUtils.dp2px(
             if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 prefs.keyboard.bottomOffsetLandscape.toFloat()
             } else {
                 prefs.keyboard.bottomOffsetPortrait.toFloat()
-            },
-            context
+            }
         )
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {

@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.util.ViewLayoutUtils
+import dev.patrickgold.florisboard.ime.view.ViewUtils
 
 class ClipboardPopupView: LinearLayout, ThemeManager.OnThemeUpdatedListener {
 
@@ -23,7 +23,7 @@ class ClipboardPopupView: LinearLayout, ThemeManager.OnThemeUpdatedListener {
     )
 
     private var backgroundDrawable: PaintDrawable = PaintDrawable().apply {
-        setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
+        setCornerRadius(ViewUtils.dp2px(6.0f))
     }
     private val themeManager: ThemeManager = ThemeManager.default()
 

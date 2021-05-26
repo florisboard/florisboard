@@ -278,6 +278,11 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
         binding.numberRow.notifyStateChanged()
     }
 
+    fun sync() {
+        binding.numberRow.sync()
+        binding.clipboardCursorRow.sync()
+    }
+
     fun onPrimaryClipChanged() {
         if (prefs.suggestion.enabled && prefs.suggestion.clipboardContentEnabled && florisboard?.activeEditorInstance?.isPrivateMode == false ) {
             florisboard.florisClipboardManager?.primaryClip?.let { binding.candidates.updateClipboardItem(it) }

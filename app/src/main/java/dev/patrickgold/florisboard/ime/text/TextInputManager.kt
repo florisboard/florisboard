@@ -241,6 +241,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         textInputKeyboardView = inputView.findViewById(R.id.text_input_keyboard_view)
         textInputKeyboardView?.setIconSet(textKeyboardIconSet)
         textInputKeyboardView?.setComputingEvaluator(evaluator)
+        textInputKeyboardView?.sync()
 
         launch(Dispatchers.Main) {
             val animator1 = textViewGroup?.let {
@@ -277,6 +278,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     fun registerSmartbarView(view: SmartbarView) {
         smartbarView = view
         smartbarView?.setEventListener(this)
+        smartbarView?.sync()
     }
 
     fun unregisterSmartbarView(view: SmartbarView) {
@@ -358,10 +360,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             capsLock = false
         }
         isGlidePostEffect = false
-        updateCapsState()
+        updateCapsState(notify = false)
         setActiveKeyboardMode(keyboardMode)
         smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
         smartbarView?.updateSmartbarState()
+        textInputKeyboardView?.notifyStateChanged()
     }
 
     /**
@@ -375,6 +378,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         launch(Dispatchers.Default) {
             dictionaryManager.loadUserDictionariesIfNecessary()
         }
+        textInputKeyboardView?.sync()
+        smartbarView?.sync()
         smartbarView?.updateSmartbarState()
     }
 
@@ -431,7 +436,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     override fun onUpdateSelection() {
         if (!inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
-            updateCapsState()
+            updateCapsState(notify = true)
         }
         smartbarView?.updateSmartbarState()
         flogInfo(LogTopic.IMS_EVENTS) { "current word: ${activeEditorInstance.cachedInput.currentWord.text}" }
@@ -471,11 +476,14 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Updates the current caps state according to the [EditorInstance.cursorCapsMode], while
      * respecting [capsLock] property and the correction.autoCapitalization preference.
      */
-    private fun updateCapsState() {
+    private fun updateCapsState(notify: Boolean) {
         if (!capsLock) {
+            val oldCaps = caps
             caps = prefs.correction.autoCapitalization &&
                     activeEditorInstance.cursorCapsMode != InputAttributes.CapsMode.NONE
-            textInputKeyboardView?.notifyStateChanged()
+            if (notify && oldCaps == caps) {
+                textInputKeyboardView?.notifyStateChanged()
+            }
         }
     }
 
@@ -881,7 +889,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             }
         }
         if (data.code != KeyCode.SHIFT && !capsLock && !inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
-            updateCapsState()
+            updateCapsState(notify = true)
         }
         if (ev.data.code > KeyCode.SPACE) {
             isGlidePostEffect = false

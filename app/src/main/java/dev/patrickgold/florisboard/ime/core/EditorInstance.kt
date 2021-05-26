@@ -649,26 +649,26 @@ class EditorInstance private constructor(
         val ic = inputConnection ?: return false
         ic.beginBatchEdit()
         val eventTime = SystemClock.uptimeMillis()
-        if (metaState and KeyEvent.META_CTRL_ON > 0) {
+        if (metaState and KeyEvent.META_CTRL_ON != 0) {
             sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
         }
-        if (metaState and KeyEvent.META_ALT_ON > 0) {
+        if (metaState and KeyEvent.META_ALT_ON != 0) {
             sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_ALT_LEFT, 0)
         }
-        if (metaState and KeyEvent.META_SHIFT_ON > 0) {
+        if (metaState and KeyEvent.META_SHIFT_ON != 0) {
             sendDownKeyEvent(eventTime, KeyEvent.KEYCODE_SHIFT_LEFT, 0)
         }
         for (n in 0 until count) {
             sendDownKeyEvent(eventTime, keyEventCode, metaState)
             sendUpKeyEvent(eventTime, keyEventCode, metaState)
         }
-        if (metaState and KeyEvent.META_SHIFT_ON > 0) {
+        if (metaState and KeyEvent.META_SHIFT_ON != 0) {
             sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_SHIFT_LEFT, 0)
         }
-        if (metaState and KeyEvent.META_ALT_ON > 0) {
+        if (metaState and KeyEvent.META_ALT_ON != 0) {
             sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_ALT_LEFT, 0)
         }
-        if (metaState and KeyEvent.META_CTRL_ON > 0) {
+        if (metaState and KeyEvent.META_CTRL_ON != 0) {
             sendUpKeyEvent(eventTime, KeyEvent.KEYCODE_CTRL_LEFT, 0)
         }
         ic.endBatchEdit()
@@ -682,16 +682,16 @@ class EditorInstance private constructor(
  */
 class ImeOptions private constructor(imeOptions: Int) {
     val action: Action = Action.fromInt(imeOptions)
-    val flagForceAscii: Boolean = imeOptions and EditorInfo.IME_FLAG_FORCE_ASCII > 0
-    val flagNavigateNext: Boolean = imeOptions and EditorInfo.IME_FLAG_NAVIGATE_NEXT > 0
-    val flagNavigatePrevious: Boolean = imeOptions and EditorInfo.IME_FLAG_NAVIGATE_PREVIOUS > 0
-    val flagNoAccessoryAction: Boolean = imeOptions and EditorInfo.IME_FLAG_NO_ACCESSORY_ACTION > 0
-    val flagNoEnterAction: Boolean = imeOptions and EditorInfo.IME_FLAG_NO_ENTER_ACTION > 0
-    val flagNoExtractUi: Boolean = imeOptions and EditorInfo.IME_FLAG_NO_EXTRACT_UI > 0
-    val flagNoFullscreen: Boolean = imeOptions and EditorInfo.IME_FLAG_NO_FULLSCREEN > 0
+    val flagForceAscii: Boolean = imeOptions and EditorInfo.IME_FLAG_FORCE_ASCII != 0
+    val flagNavigateNext: Boolean = imeOptions and EditorInfo.IME_FLAG_NAVIGATE_NEXT != 0
+    val flagNavigatePrevious: Boolean = imeOptions and EditorInfo.IME_FLAG_NAVIGATE_PREVIOUS != 0
+    val flagNoAccessoryAction: Boolean = imeOptions and EditorInfo.IME_FLAG_NO_ACCESSORY_ACTION != 0
+    val flagNoEnterAction: Boolean = imeOptions and EditorInfo.IME_FLAG_NO_ENTER_ACTION != 0
+    val flagNoExtractUi: Boolean = imeOptions and EditorInfo.IME_FLAG_NO_EXTRACT_UI != 0
+    val flagNoFullscreen: Boolean = imeOptions and EditorInfo.IME_FLAG_NO_FULLSCREEN != 0
 
     @RequiresApi(Build.VERSION_CODES.O)
-    val flagNoPersonalizedLearning: Boolean = imeOptions and EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING > 0
+    val flagNoPersonalizedLearning: Boolean = imeOptions and EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING != 0
 
     companion object {
         fun default(): ImeOptions {
@@ -792,8 +792,8 @@ class InputAttributes private constructor(inputType: Int) {
                     else -> Variation.NORMAL
                 }
                 capsMode = CapsMode.NONE
-                flagNumberDecimal = inputType and InputType.TYPE_NUMBER_FLAG_DECIMAL > 0
-                flagNumberSigned = inputType and InputType.TYPE_NUMBER_FLAG_SIGNED > 0
+                flagNumberDecimal = inputType and InputType.TYPE_NUMBER_FLAG_DECIMAL != 0
+                flagNumberSigned = inputType and InputType.TYPE_NUMBER_FLAG_SIGNED != 0
             }
             InputType.TYPE_CLASS_PHONE -> {
                 type = Type.PHONE
@@ -821,11 +821,11 @@ class InputAttributes private constructor(inputType: Int) {
                     else -> Variation.NORMAL
                 }
                 capsMode = CapsMode.fromFlags(inputType)
-                flagTextAutoComplete = inputType and InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE > 0
-                flagTextAutoCorrect = inputType and InputType.TYPE_TEXT_FLAG_AUTO_CORRECT > 0
-                flagTextImeMultiLine = inputType and InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE > 0
-                flagTextMultiLine = inputType and InputType.TYPE_TEXT_FLAG_MULTI_LINE > 0
-                flagTextNoSuggestions = inputType and InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS > 0
+                flagTextAutoComplete = inputType and InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE != 0
+                flagTextAutoCorrect = inputType and InputType.TYPE_TEXT_FLAG_AUTO_CORRECT != 0
+                flagTextImeMultiLine = inputType and InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE != 0
+                flagTextMultiLine = inputType and InputType.TYPE_TEXT_FLAG_MULTI_LINE != 0
+                flagTextNoSuggestions = inputType and InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS != 0
             }
             else -> {
                 type = Type.TEXT
@@ -878,9 +878,9 @@ class InputAttributes private constructor(inputType: Int) {
         companion object {
             fun fromFlags(flags: Int): CapsMode {
                 return when {
-                    flags and InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS > 0 -> ALL
-                    flags and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES > 0 -> SENTENCES
-                    flags and InputType.TYPE_TEXT_FLAG_CAP_WORDS > 0 -> WORDS
+                    flags and InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS != 0 -> ALL
+                    flags and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES != 0 -> SENTENCES
+                    flags and InputType.TYPE_TEXT_FLAG_CAP_WORDS != 0 -> WORDS
                     else -> NONE
                 }
             }

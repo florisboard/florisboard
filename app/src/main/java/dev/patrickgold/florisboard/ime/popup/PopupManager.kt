@@ -506,7 +506,7 @@ class PopupManager<V : View>(
         return if (key is EmojiKey) {
             val element = popupViewExt.properties.getElementOrNull()
             if (element != null) {
-                key.computedPopups.getPopupKeys(HINTS_DISABLED).getOrNull(element.adjustedIndex) ?: key.computedData
+                key.computedPopups.getPopupKeys(KeyHintConfiguration.HINTS_DISABLED).getOrNull(element.adjustedIndex) ?: key.computedData
             } else {
                 key.computedData
             }

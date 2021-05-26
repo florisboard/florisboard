@@ -30,17 +30,17 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.util.ViewLayoutUtils
+import dev.patrickgold.florisboard.ime.view.ViewUtils
 import kotlin.math.min
 
 class PopupExtendedView : View, ThemeManager.OnThemeUpdatedListener {
     private val themeManager: ThemeManager = ThemeManager.default()
 
     private val activeBackgroundDrawable: PaintDrawable = PaintDrawable().apply {
-        setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
+        setCornerRadius(ViewUtils.dp2px(6.0f))
     }
     private var backgroundDrawable: PaintDrawable = PaintDrawable().apply {
-        setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
+        setCornerRadius(ViewUtils.dp2px(6.0f))
     }
     private val labelPaint: Paint = Paint().apply {
         alpha = 255
@@ -86,7 +86,7 @@ class PopupExtendedView : View, ThemeManager.OnThemeUpdatedListener {
         layoutDirection = LAYOUT_DIRECTION_LTR
         visibility = GONE
         background = backgroundDrawable
-        elevation = ViewLayoutUtils.convertDpToPixel(4.0f, context)
+        elevation = ViewUtils.dp2px(4.0f)
     }
 
     override fun onAttachedToWindow() {
