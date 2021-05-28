@@ -24,6 +24,7 @@ import android.graphics.drawable.PaintDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.animation.AccelerateInterpolator
+import androidx.core.view.isVisible
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.core.*
@@ -54,6 +55,8 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
     // IS ONLY USED IF KEYBOARD IS IN PREVIEW MODE
     private var cachedTheme: Theme? = null
+
+    private var cachedState: TextKeyboardState = TextKeyboardState.new()
 
     private var externalComputingEvaluator: TextComputingEvaluator? = null
     private val internalComputingEvaluator = object : TextComputingEvaluator {
@@ -175,6 +178,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         swipeGestureDetector.isEnabled = !isSmartbarKeyboardView
 
         setWillNotDraw(false)
+        setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
     fun setComputingEvaluator(evaluator: TextComputingEvaluator?) {
@@ -197,11 +201,15 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         iconSet = textKeyboardIconSet
     }
 
-    fun notifyStateChanged() {
+    fun notifyStateChanged(newState: TextKeyboardState) {
         flogInfo(LogTopic.TEXT_KEYBOARD_VIEW) { computedKeyboard?.mode?.toString() ?: "" }
         if (isMeasured) {
-            computeKeyboard()
-            invalidate()
+            if (newState != cachedState) {
+                // Something within the defined interest has changed
+                    cachedState.update(newState.value)
+                computeKeyboard()
+                invalidate()
+            }
         }
     }
 
@@ -264,7 +272,6 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                     pointerMap.clear()
                 }
                 isGliding = true
-                invalidate()
                 return
             }
         }
@@ -318,7 +325,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                             pointer.longPressJob = null
                             pointer.hasTriggeredGestureMove = true
                             pointer.activeKey?.let { activeKey ->
-                                activeKey.isPressed = false
+                                activeKey.setPressed(false) { invalidate() }
                                 florisboard!!.textInputManager.inputEventDispatcher.let { dispatcher ->
                                     if (dispatcher.isPressed(activeKey.computedData.code)) {
                                         dispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
@@ -353,6 +360,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 }
             }
             MotionEvent.ACTION_UP -> {
+                dispatcher.send(InputKeyEvent.up(TextKeyData.INTERNAL_BATCH_EDIT))
                 val pointerIndex = event.actionIndex
                 val pointerId = event.getPointerId(pointerIndex)
                 for (pointer in pointerMap) {
@@ -377,7 +385,6 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                     }
                 }
                 pointerMap.clear()
-                dispatcher.send(InputKeyEvent.up(TextKeyData.INTERNAL_BATCH_EDIT))
             }
             MotionEvent.ACTION_CANCEL -> {
                 for (pointer in pointerMap) {
@@ -388,8 +395,6 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 dispatcher.send(InputKeyEvent.up(TextKeyData.INTERNAL_BATCH_EDIT))
             }
         }
-
-        invalidate()
     }
 
     private fun onTouchDownInternal(event: MotionEvent, pointer: TouchPointer) {
@@ -407,7 +412,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             }
             florisboard!!.keyPressVibrate()
             florisboard!!.keyPressSound(key.computedData)
-            key.isPressed = true
+            key.setPressed(true) { invalidate() }
             if (pointer.initialKey == null) {
                 pointer.initialKey = key
             }
@@ -489,7 +494,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         val initialKey = pointer.initialKey
         val activeKey = pointer.activeKey
         if (initialKey != null && activeKey != null) {
-            activeKey.isPressed = false
+            activeKey.setPressed(false) { invalidate() }
             florisboard!!.textInputManager.inputEventDispatcher.let { dispatcher ->
                 if (popupManager.isSuitableForPopups(activeKey)) {
                     val retData = popupManager.getActiveKeyData(activeKey, keyHintConfiguration)
@@ -532,7 +537,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
         val activeKey = pointer.activeKey
         if (activeKey != null) {
-            activeKey.isPressed = false
+            activeKey.setPressed(false) { invalidate() }
             florisboard.textInputManager.inputEventDispatcher.let { dispatcher ->
                 dispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
             }
@@ -872,24 +877,24 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+        if (!isVisible) return
         if (canvas == null) {
             flogWarning(LogTopic.TEXT_KEYBOARD_VIEW) { "Cannot draw: 'canvas' is null!" }
             return
         } else {
             flogInfo(LogTopic.TEXT_KEYBOARD_VIEW)
         }
-
         if (isPreviewMode) {
             backgroundDrawable.let {
                 it.setBounds(0, 0, measuredWidth, measuredHeight)
                 it.draw(canvas)
             }
         }
-
         onDrawComputedKeyboard(canvas)
     }
 
     private fun onDrawComputedKeyboard(canvas: Canvas) {
+        flogInfo(LogTopic.TEXT_KEYBOARD_VIEW)
         val keyboard = computedKeyboard ?: return
 
         // SUPER JANK nyi message implementation for the editing layout
@@ -950,10 +955,10 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             }
             else -> {
                 val capsSpecific = when {
-                    florisboard?.textInputManager?.capsLock == true -> {
+                    cachedState.capsLock -> {
                         "capslock"
                     }
-                    florisboard?.textInputManager?.caps == true -> {
+                    cachedState.caps -> {
                         "caps"
                     }
                     else -> {
@@ -1107,7 +1112,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 KeyCode.PHONE_PAUSE -> key.label = resources.getString(R.string.key__phone_pause)
                 KeyCode.PHONE_WAIT -> key.label = resources.getString(R.string.key__phone_wait)
                 KeyCode.SHIFT -> {
-                    key.foregroundDrawableId = when (florisboard?.textInputManager?.caps) {
+                    key.foregroundDrawableId = when (cachedState.caps) {
                         true -> R.drawable.ic_keyboard_capslock
                         else -> R.drawable.ic_keyboard_arrow_up
                     }

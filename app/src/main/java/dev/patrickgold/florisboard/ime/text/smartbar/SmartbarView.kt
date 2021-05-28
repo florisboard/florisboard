@@ -237,7 +237,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                 actionEndAreaId = null
             )
             else -> configureFeatureVisibility(
-                actionStartAreaVisible = when (florisboard.textInputManager.keyVariation) {
+                actionStartAreaVisible = when (florisboard.textInputManager.state.keyVariation) {
                     KeyVariation.PASSWORD -> false
                     else -> true
                 },
@@ -248,7 +248,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                 mainAreaId = when {
                     isQuickActionsVisible -> R.id.quick_actions
                     isShowingInlineSuggestions -> R.id.inline_suggestions
-                    florisboard.textInputManager.keyVariation == KeyVariation.PASSWORD -> {
+                    florisboard.textInputManager.state.keyVariation == KeyVariation.PASSWORD -> {
                         if (!prefs.keyboard.numberRow) R.id.number_row else null
                     }
                     else -> when (florisboard.textInputManager.getActiveKeyboardMode()) {
@@ -264,7 +264,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                         }
                     }
                 },
-                actionEndAreaVisible = when (florisboard.textInputManager.keyVariation) {
+                actionEndAreaVisible = when (florisboard.textInputManager.state.keyVariation) {
                     KeyVariation.PASSWORD -> false
                     else -> true
                 },
@@ -274,8 +274,10 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                 }
             )
         }
-        binding.clipboardCursorRow.notifyStateChanged()
-        binding.numberRow.notifyStateChanged()
+        florisboard?.let {
+            binding.clipboardCursorRow.notifyStateChanged(florisboard.textInputManager.state)
+            binding.numberRow.notifyStateChanged(florisboard.textInputManager.state)
+        }
     }
 
     fun sync() {

@@ -135,12 +135,12 @@ class EditorInstance private constructor(
         } else {
             selection.update(newSelStart, newSelEnd)
         }
-        cachedInput.update()
         if (isPhantomSpaceActive && wasPhantomSpaceActiveLastUpdate) {
             isPhantomSpaceActive = false
         } else if (isPhantomSpaceActive && !wasPhantomSpaceActiveLastUpdate) {
             wasPhantomSpaceActiveLastUpdate = true
         }
+        cachedInput.update()
         if (isComposingEnabled && candidatesStart >= 0 && candidatesEnd >= 0) {
             shouldReevaluateComposingSuggestions = true
         }
@@ -703,30 +703,18 @@ class ImeOptions private constructor(imeOptions: Int) {
         }
     }
 
-    enum class Action {
-        DONE,
-        GO,
-        NEXT,
-        NONE,
-        PREVIOUS,
-        SEARCH,
-        SEND,
-        UNSPECIFIED;
+    enum class Action(val value: Int) {
+        UNSPECIFIED(EditorInfo.IME_ACTION_UNSPECIFIED),
+        DONE(EditorInfo.IME_ACTION_DONE),
+        GO(EditorInfo.IME_ACTION_GO),
+        NEXT(EditorInfo.IME_ACTION_NEXT),
+        NONE(EditorInfo.IME_ACTION_NONE),
+        PREVIOUS(EditorInfo.IME_ACTION_PREVIOUS),
+        SEARCH(EditorInfo.IME_ACTION_SEARCH),
+        SEND(EditorInfo.IME_ACTION_SEND);
 
         companion object {
-            fun fromInt(raw: Int): Action {
-                return when (raw and EditorInfo.IME_MASK_ACTION) {
-                    EditorInfo.IME_ACTION_DONE -> DONE
-                    EditorInfo.IME_ACTION_GO -> GO
-                    EditorInfo.IME_ACTION_NEXT -> NEXT
-                    EditorInfo.IME_ACTION_NONE -> NONE
-                    EditorInfo.IME_ACTION_PREVIOUS -> PREVIOUS
-                    EditorInfo.IME_ACTION_SEARCH -> SEARCH
-                    EditorInfo.IME_ACTION_SEND -> SEND
-                    EditorInfo.IME_ACTION_UNSPECIFIED -> UNSPECIFIED
-                    else -> NONE
-                }
-            }
+            fun fromInt(int: Int): Action = values().firstOrNull { it.value == int } ?: NONE
         }
 
         fun toInt(): Int {

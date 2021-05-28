@@ -20,15 +20,19 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-enum class KeyVariation {
+enum class KeyVariation(val value: Int) {
     @SerialName("all")
-    ALL,
+    ALL(0),
     @SerialName("email")
-    EMAIL_ADDRESS,
+    EMAIL_ADDRESS(1),
     @SerialName("normal")
-    NORMAL,
+    NORMAL(2),
     @SerialName("password")
-    PASSWORD,
+    PASSWORD(3),
     @SerialName("uri")
-    URI;
+    URI(4);
+
+    companion object {
+        fun fromInt(int: Int): KeyVariation = values().firstOrNull { it.value == int } ?: ALL
+    }
 }

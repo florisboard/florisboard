@@ -33,6 +33,7 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.OverScroller
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.view.isVisible
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
@@ -290,7 +291,9 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         selectedIndex = -1
         scroller.abortAnimation()
         scrollTo(0, 0)
-        invalidate()
+        if (isVisible) {
+            invalidate()
+        }
     }
 
     override fun computeScroll() {
@@ -416,6 +419,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+        if (!isVisible) return
         canvas ?: return
         backgroundPaint.apply { color = candidateBackground.toSolidColor().color }
         dividerPaint.apply { color = ColorUtils.setAlphaComponent(dividerBackground.toSolidColor().color, 64) }
