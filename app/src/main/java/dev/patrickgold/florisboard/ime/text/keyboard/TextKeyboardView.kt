@@ -37,9 +37,9 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeGesture
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
-import dev.patrickgold.florisboard.ime.view.Pointer
-import dev.patrickgold.florisboard.ime.view.PointerMap
-import dev.patrickgold.florisboard.ime.view.ViewUtils
+import dev.patrickgold.florisboard.common.Pointer
+import dev.patrickgold.florisboard.common.PointerMap
+import dev.patrickgold.florisboard.common.ViewUtils
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -978,7 +978,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
         keyBackgroundPaint.let {
             it.color = keyBackground.toSolidColor().color
-            //it.setShadowLayer(if (shouldShowBorder) 6.0f else 0.0f, 0.0f, 0.0f, Color.BLACK)
+            //it.setShadowLayer(if (shouldShowBorder) 6.0f else 0.0f, 0.0f, 0.0f, Color.rgb(50, 50, 50))
             canvas.drawRoundRect(
                 key.visibleBounds.left.toFloat(),
                 (if (isBorderless) {

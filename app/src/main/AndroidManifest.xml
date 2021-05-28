@@ -21,7 +21,7 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
-        android:name=".ime.core.FlorisApplication"
+        android:name="dev.patrickgold.florisboard.FlorisApplication"
         android:allowBackup="false"
         android:icon="@mipmap/floris_app_icon"
         android:label="@string/floris_app_name"
@@ -31,7 +31,7 @@
 
         <!-- IME service -->
         <service
-            android:name="dev.patrickgold.florisboard.ime.core.FlorisBoard"
+            android:name="dev.patrickgold.florisboard.FlorisImeService"
             android:label="@string/floris_app_name"
             android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>

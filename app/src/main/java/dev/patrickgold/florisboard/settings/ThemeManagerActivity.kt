@@ -32,7 +32,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.forEach
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ThemeManagerActivityBinding
-import dev.patrickgold.florisboard.ime.core.FlorisActivity
+import dev.patrickgold.florisboard.common.FlorisActivity
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.AssetManager
@@ -45,7 +45,7 @@ import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeMetaOnly
-import dev.patrickgold.florisboard.ime.view.ViewUtils
+import dev.patrickgold.florisboard.common.ViewUtils
 import kotlinx.coroutines.launch
 import timber.log.Timber
 

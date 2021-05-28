@@ -22,9 +22,9 @@ import android.view.VelocityTracker
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
-import dev.patrickgold.florisboard.ime.view.Pointer
-import dev.patrickgold.florisboard.ime.view.PointerMap
-import dev.patrickgold.florisboard.ime.view.ViewUtils
+import dev.patrickgold.florisboard.common.Pointer
+import dev.patrickgold.florisboard.common.PointerMap
+import dev.patrickgold.florisboard.common.ViewUtils
 import kotlin.math.abs
 import kotlin.math.atan2
 

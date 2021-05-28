@@ -36,7 +36,7 @@ import dev.patrickgold.florisboard.databinding.ThemeEditorAttrDialogBinding
 import dev.patrickgold.florisboard.databinding.ThemeEditorAttrViewBinding
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
-import dev.patrickgold.florisboard.ime.view.ViewUtils
+import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.util.getActivity
 
 class ThemeAttrView : LinearLayout {

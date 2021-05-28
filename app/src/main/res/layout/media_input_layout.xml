@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <dev.patrickgold.florisboard.ime.core.FlorisViewFlipper
+    <dev.patrickgold.florisboard.common.FlorisViewFlipper
         android:id="@+id/media_input_view_flipper"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -35,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1"/>
-        
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/media_input_tabs"
             android:layout_width="wrap_content"
@@ -74,7 +74,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1"/>
-        
+
         <ImageButton
             android:id="@+id/media_input_backspace_button"
             android:layout_width="@dimen/media_bottom_button_width"

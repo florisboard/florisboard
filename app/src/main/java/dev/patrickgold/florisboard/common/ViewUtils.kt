@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.view
+package dev.patrickgold.florisboard.common
 
 import android.content.res.Resources
 import android.util.DisplayMetrics

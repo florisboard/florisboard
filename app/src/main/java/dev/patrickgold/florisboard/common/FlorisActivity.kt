@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.core
+package dev.patrickgold.florisboard.common
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.core.Preferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel

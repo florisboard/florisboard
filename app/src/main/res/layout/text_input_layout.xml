@@ -10,7 +10,7 @@
     <include layout="@layout/smartbar"/>
 
     <!-- KeyboardViews will be inserted in ViewFlipper below dynamically -->
-    <!--<dev.patrickgold.florisboard.ime.core.FlorisViewFlipper
+    <!--<dev.patrickgold.florisboard.app.FlorisViewFlipper
         android:id="@+id/text_input_view_flipper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
 
         <include layout="@layout/editing_layout"/>
 
-    </dev.patrickgold.florisboard.ime.core.FlorisViewFlipper>-->
+    </dev.patrickgold.florisboard.app.FlorisViewFlipper>-->
     <dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardView
         android:id="@+id/text_input_keyboard_view"
         android:layout_width="match_parent"

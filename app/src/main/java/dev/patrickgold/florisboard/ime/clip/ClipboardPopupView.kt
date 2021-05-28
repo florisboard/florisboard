@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.ime.view.ViewUtils
+import dev.patrickgold.florisboard.common.ViewUtils
 
 class ClipboardPopupView: LinearLayout, ThemeManager.OnThemeUpdatedListener {
 

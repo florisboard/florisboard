@@ -34,7 +34,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.UdmActivityBinding
 import dev.patrickgold.florisboard.databinding.UdmEntryDialogBinding
-import dev.patrickgold.florisboard.ime.core.FlorisActivity
+import dev.patrickgold.florisboard.common.FlorisActivity
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FREQUENCY_DEFAULT
 import dev.patrickgold.florisboard.ime.dictionary.FREQUENCY_MAX
