@@ -63,6 +63,7 @@ import dev.patrickgold.florisboard.ime.media.MediaInputManager
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupLayerView
 import dev.patrickgold.florisboard.ime.text.TextInputManager
+import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.CurrencySet
@@ -143,7 +144,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     var activeEditorInstance: EditorInstance = EditorInstance.default()
 
     val subtypeManager: SubtypeManager get() = SubtypeManager.default()
-    val composer: Composer get() = subtypeManager.imeConfig.composers[subtypeManager.imeConfig.composerNames.indexOf(activeSubtype.composerName)]
+    val composer: Composer get() = subtypeManager.imeConfig.composerFromName.getValue(activeSubtype.composerName)
     lateinit var activeSubtype: Subtype
     private var currentThemeIsNight: Boolean = false
     private var currentThemeResId: Int = 0
@@ -976,6 +977,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         @Transient var currencySetLabels: List<String> = listOf()
         @Transient var composerNames: List<String> = listOf()
         @Transient var composerLabels: List<String> = listOf()
+        @Transient val composerFromName: Map<String, Composer> = composers.map { it.name to it }.toMap()
         @Transient var defaultSubtypesLanguageCodes: List<String> = listOf()
         @Transient var defaultSubtypesLanguageNames: List<String> = listOf()
 
@@ -984,7 +986,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
             // Sort composer list alphabetically by the label of a composer
             tmpComposerList.sortBy { it.second }
             // Move selected composers to the top of the list
-            for (composerName in listOf("appender")) {
+            for (composerName in listOf(Appender.name)) {
                 val index: Int = tmpComposerList.indexOfFirst { it.first == composerName }
                 if (index > 0) {
                     tmpComposerList.add(0, tmpComposerList.removeAt(index))
