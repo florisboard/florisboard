@@ -272,6 +272,18 @@
       ]
     },
     {
+      "name": "vietnamese_dong",
+      "label": "Vietnamese đồng (₫)",
+      "slots": [
+        { "code": 8363, "label": "₫" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
       "name": "yen",
       "label": "Yen (¥)",
       "slots": [
@@ -750,6 +762,15 @@
       "preferred": {
         "characters": "thai_kedmanee",
         "numericRow": "thai"
+      }
+    },
+    {
+      "id": 3300,
+      "languageTag": "vi-VN",
+      "composer": "basic-telex",
+      "currencySet": "vietnamese_dong",
+      "preferred": {
+        "characters": "qwerty"
       }
     }
   ]
