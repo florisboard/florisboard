@@ -21,33 +21,33 @@ import android.content.Intent
 import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.SystemClock
-import android.text.InputType
 import android.view.InputDevice
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
-import androidx.annotation.RequiresApi
 import androidx.core.text.isDigitsOnly
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clip.provider.ItemType
+import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
+import dev.patrickgold.florisboard.ime.keyboard.InputAttributes
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import timber.log.Timber
 
 /**
- * Class which holds information relevant to an editor instance like the [cachedInput], [selection],
- * [inputAttributes], [imeOptions], etc. This class is thought to be an improved [EditorInfo]
+ * Class which holds information relevant to an editor instance like the [cachedInput],
+ * [selection] etc. This class is thought to be an improved [EditorInfo]
  * object which also holds the state of the currently focused input editor.
  */
 class EditorInstance private constructor(
     private val ims: InputMethodService?,
-    val imeOptions: ImeOptions,
-    val inputAttributes: InputAttributes,
     val packageName: String,
+    val state: KeyboardState,
     private val editorInfo: EditorInfo
 ) {
     val cachedInput: CachedInput = CachedInput(this)
@@ -57,7 +57,7 @@ class EditorInstance private constructor(
         get() {
             val ic = inputConnection ?: return InputAttributes.CapsMode.NONE
             return InputAttributes.CapsMode.fromFlags(
-                ic.getCursorCapsMode(inputAttributes.capsMode.toFlags())
+                ic.getCursorCapsMode(state.inputAttributes.capsMode.toFlags())
             )
         }
     val inputConnection: InputConnection?
@@ -73,9 +73,8 @@ class EditorInstance private constructor(
             }
         }
     var shouldReevaluateComposingSuggestions: Boolean = false
-    var isPrivateMode: Boolean = false
     val isRawInputEditor: Boolean
-        get() = inputAttributes.type == InputAttributes.Type.NULL
+        get() = state.inputAttributes.type == InputAttributes.Type.NULL
     var selection: Selection = Selection(this)
         private set
     var isPhantomSpaceActive: Boolean = false
@@ -86,22 +85,20 @@ class EditorInstance private constructor(
         fun default(): EditorInstance {
             return EditorInstance(
                 ims = null,
-                imeOptions = ImeOptions.fromImeOptionsInt(EditorInfo.IME_NULL),
-                inputAttributes = InputAttributes.fromInputTypeInt(InputType.TYPE_NULL),
                 packageName = "undefined",
+                state = KeyboardState.new(),
                 editorInfo = EditorInfo()
             )
         }
 
-        fun from(editorInfo: EditorInfo?, ims: InputMethodService?): EditorInstance {
+        fun from(editorInfo: EditorInfo?, ims: InputMethodService?, state: KeyboardState): EditorInstance {
             return if (editorInfo == null) {
                 default()
             } else {
                 EditorInstance(
                     ims = ims,
-                    imeOptions = ImeOptions.fromImeOptionsInt(editorInfo.imeOptions),
-                    inputAttributes = InputAttributes.fromInputTypeInt(editorInfo.inputType),
                     packageName = editorInfo.packageName,
+                    state = state,
                     editorInfo = editorInfo
                 ).apply {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
@@ -140,14 +137,22 @@ class EditorInstance private constructor(
         } else if (isPhantomSpaceActive && !wasPhantomSpaceActiveLastUpdate) {
             wasPhantomSpaceActiveLastUpdate = true
         }
-        cachedInput.update()
-        if (isComposingEnabled && candidatesStart >= 0 && candidatesEnd >= 0) {
-            shouldReevaluateComposingSuggestions = true
-        }
-        if (selection.isCursorMode && isComposingEnabled && !isRawInputEditor && !isPhantomSpaceActive) {
-            markComposingRegion(cachedInput.currentWord)
-        } else if (newSelStart >= 0) {
-            markComposingRegion(null)
+        if (selection.isCursorMode) {
+            cachedInput.update()
+            if (isComposingEnabled) {
+                if (candidatesStart >= 0 && candidatesEnd >= 0) {
+                    shouldReevaluateComposingSuggestions = true
+                }
+                if (!isRawInputEditor && !isPhantomSpaceActive) {
+                    markComposingRegion(cachedInput.currentWord)
+                } else if (newSelStart >= 0) {
+                    markComposingRegion(null)
+                }
+            }
+        } else {
+            if (candidatesStart >= 0 || candidatesEnd >= 0) {
+                markComposingRegion(null)
+            }
         }
     }
 
@@ -449,7 +454,7 @@ class EditorInstance private constructor(
      *
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
-    private fun markComposingRegion(region: Region?): Boolean {
+    fun markComposingRegion(region: Region?): Boolean {
         val ic = inputConnection ?: return false
         return if (region == null || !region.isValid) {
             ic.finishComposingText()
@@ -540,7 +545,7 @@ class EditorInstance private constructor(
      *
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
-    fun performEnterAction(action: ImeOptions.Action): Boolean {
+    fun performEnterAction(action: ImeOptions.EnterAction): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
         val ic = inputConnection ?: return false
@@ -673,215 +678,6 @@ class EditorInstance private constructor(
         }
         ic.endBatchEdit()
         return true
-    }
-}
-
-/**
- * Class which holds the same information as an [EditorInfo.imeOptions] int but more accessible and
- * readable.
- */
-class ImeOptions private constructor(imeOptions: Int) {
-    val action: Action = Action.fromInt(imeOptions)
-    val flagForceAscii: Boolean = imeOptions and EditorInfo.IME_FLAG_FORCE_ASCII != 0
-    val flagNavigateNext: Boolean = imeOptions and EditorInfo.IME_FLAG_NAVIGATE_NEXT != 0
-    val flagNavigatePrevious: Boolean = imeOptions and EditorInfo.IME_FLAG_NAVIGATE_PREVIOUS != 0
-    val flagNoAccessoryAction: Boolean = imeOptions and EditorInfo.IME_FLAG_NO_ACCESSORY_ACTION != 0
-    val flagNoEnterAction: Boolean = imeOptions and EditorInfo.IME_FLAG_NO_ENTER_ACTION != 0
-    val flagNoExtractUi: Boolean = imeOptions and EditorInfo.IME_FLAG_NO_EXTRACT_UI != 0
-    val flagNoFullscreen: Boolean = imeOptions and EditorInfo.IME_FLAG_NO_FULLSCREEN != 0
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    val flagNoPersonalizedLearning: Boolean = imeOptions and EditorInfo.IME_FLAG_NO_PERSONALIZED_LEARNING != 0
-
-    companion object {
-        fun default(): ImeOptions {
-            return fromImeOptionsInt(EditorInfo.IME_NULL)
-        }
-
-        fun fromImeOptionsInt(imeOptions: Int): ImeOptions {
-            return ImeOptions(imeOptions)
-        }
-    }
-
-    enum class Action(val value: Int) {
-        UNSPECIFIED(EditorInfo.IME_ACTION_UNSPECIFIED),
-        DONE(EditorInfo.IME_ACTION_DONE),
-        GO(EditorInfo.IME_ACTION_GO),
-        NEXT(EditorInfo.IME_ACTION_NEXT),
-        NONE(EditorInfo.IME_ACTION_NONE),
-        PREVIOUS(EditorInfo.IME_ACTION_PREVIOUS),
-        SEARCH(EditorInfo.IME_ACTION_SEARCH),
-        SEND(EditorInfo.IME_ACTION_SEND);
-
-        companion object {
-            fun fromInt(int: Int): Action = values().firstOrNull { it.value == int } ?: NONE
-        }
-
-        fun toInt(): Int {
-            return when (this) {
-                DONE -> EditorInfo.IME_ACTION_DONE
-                GO -> EditorInfo.IME_ACTION_GO
-                NEXT -> EditorInfo.IME_ACTION_NEXT
-                NONE -> EditorInfo.IME_ACTION_NONE
-                PREVIOUS -> EditorInfo.IME_ACTION_PREVIOUS
-                SEARCH -> EditorInfo.IME_ACTION_SEARCH
-                SEND -> EditorInfo.IME_ACTION_SEND
-                UNSPECIFIED -> EditorInfo.IME_ACTION_UNSPECIFIED
-            }
-        }
-    }
-}
-
-/**
- * Class which holds the same information as an [EditorInfo.inputType] int but more accessible and
- * readable.
- */
-class InputAttributes private constructor(inputType: Int) {
-    val type: Type
-    val variation: Variation
-    val capsMode: CapsMode
-    var flagNumberDecimal: Boolean = false
-        private set
-    var flagNumberSigned: Boolean = false
-        private set
-    var flagTextAutoComplete: Boolean = false
-        private set
-    var flagTextAutoCorrect: Boolean = false
-        private set
-    var flagTextImeMultiLine: Boolean = false
-        private set
-    var flagTextMultiLine: Boolean = false
-        private set
-    var flagTextNoSuggestions: Boolean = false
-        private set
-
-    init {
-        when (inputType and InputType.TYPE_MASK_CLASS) {
-            InputType.TYPE_NULL -> {
-                type = Type.NULL
-                variation = Variation.NORMAL
-                capsMode = CapsMode.NONE
-            }
-            InputType.TYPE_CLASS_DATETIME -> {
-                type = Type.DATETIME
-                variation = when (inputType and InputType.TYPE_MASK_VARIATION) {
-                    InputType.TYPE_DATETIME_VARIATION_DATE -> Variation.DATE
-                    InputType.TYPE_DATETIME_VARIATION_NORMAL -> Variation.NORMAL
-                    InputType.TYPE_DATETIME_VARIATION_TIME -> Variation.TIME
-                    else -> Variation.NORMAL
-                }
-                capsMode = CapsMode.NONE
-            }
-            InputType.TYPE_CLASS_NUMBER -> {
-                type = Type.NUMBER
-                variation = when (inputType and InputType.TYPE_MASK_VARIATION) {
-                    InputType.TYPE_NUMBER_VARIATION_NORMAL -> Variation.NORMAL
-                    InputType.TYPE_NUMBER_VARIATION_PASSWORD -> Variation.PASSWORD
-                    else -> Variation.NORMAL
-                }
-                capsMode = CapsMode.NONE
-                flagNumberDecimal = inputType and InputType.TYPE_NUMBER_FLAG_DECIMAL != 0
-                flagNumberSigned = inputType and InputType.TYPE_NUMBER_FLAG_SIGNED != 0
-            }
-            InputType.TYPE_CLASS_PHONE -> {
-                type = Type.PHONE
-                variation = Variation.NORMAL
-                capsMode = CapsMode.NONE
-            }
-            InputType.TYPE_CLASS_TEXT -> {
-                type = Type.TEXT
-                variation = when (inputType and InputType.TYPE_MASK_VARIATION) {
-                    InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS -> Variation.EMAIL_ADDRESS
-                    InputType.TYPE_TEXT_VARIATION_EMAIL_SUBJECT -> Variation.EMAIL_SUBJECT
-                    InputType.TYPE_TEXT_VARIATION_FILTER -> Variation.FILTER
-                    InputType.TYPE_TEXT_VARIATION_LONG_MESSAGE -> Variation.LONG_MESSAGE
-                    InputType.TYPE_TEXT_VARIATION_NORMAL -> Variation.NORMAL
-                    InputType.TYPE_TEXT_VARIATION_PASSWORD -> Variation.PASSWORD
-                    InputType.TYPE_TEXT_VARIATION_PERSON_NAME -> Variation.PERSON_NAME
-                    InputType.TYPE_TEXT_VARIATION_PHONETIC -> Variation.PHONETIC
-                    InputType.TYPE_TEXT_VARIATION_POSTAL_ADDRESS -> Variation.POSTAL_ADDRESS
-                    InputType.TYPE_TEXT_VARIATION_SHORT_MESSAGE -> Variation.SHORT_MESSAGE
-                    InputType.TYPE_TEXT_VARIATION_URI -> Variation.URI
-                    InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD -> Variation.VISIBLE_PASSWORD
-                    InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT -> Variation.WEB_EDIT_TEXT
-                    InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS -> Variation.WEB_EMAIL_ADDRESS
-                    InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD -> Variation.WEB_PASSWORD
-                    else -> Variation.NORMAL
-                }
-                capsMode = CapsMode.fromFlags(inputType)
-                flagTextAutoComplete = inputType and InputType.TYPE_TEXT_FLAG_AUTO_COMPLETE != 0
-                flagTextAutoCorrect = inputType and InputType.TYPE_TEXT_FLAG_AUTO_CORRECT != 0
-                flagTextImeMultiLine = inputType and InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE != 0
-                flagTextMultiLine = inputType and InputType.TYPE_TEXT_FLAG_MULTI_LINE != 0
-                flagTextNoSuggestions = inputType and InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS != 0
-            }
-            else -> {
-                type = Type.TEXT
-                variation = Variation.NORMAL
-                capsMode = CapsMode.NONE
-            }
-        }
-    }
-
-    companion object {
-        fun fromInputTypeInt(inputType: Int): InputAttributes {
-            return InputAttributes(inputType)
-        }
-    }
-
-    enum class Type {
-        DATETIME,
-        NULL,
-        NUMBER,
-        PHONE,
-        TEXT;
-    }
-
-    enum class Variation {
-        DATE,
-        EMAIL_ADDRESS,
-        EMAIL_SUBJECT,
-        FILTER,
-        LONG_MESSAGE,
-        NORMAL,
-        PASSWORD,
-        PERSON_NAME,
-        PHONETIC,
-        POSTAL_ADDRESS,
-        SHORT_MESSAGE,
-        TIME,
-        URI,
-        VISIBLE_PASSWORD,
-        WEB_EDIT_TEXT,
-        WEB_EMAIL_ADDRESS,
-        WEB_PASSWORD;
-    }
-
-    enum class CapsMode {
-        ALL,
-        NONE,
-        SENTENCES,
-        WORDS;
-
-        companion object {
-            fun fromFlags(flags: Int): CapsMode {
-                return when {
-                    flags and InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS != 0 -> ALL
-                    flags and InputType.TYPE_TEXT_FLAG_CAP_SENTENCES != 0 -> SENTENCES
-                    flags and InputType.TYPE_TEXT_FLAG_CAP_WORDS != 0 -> WORDS
-                    else -> NONE
-                }
-            }
-        }
-
-        fun toFlags(): Int {
-            return when (this) {
-                ALL -> InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
-                SENTENCES -> InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
-                WORDS -> InputType.TYPE_TEXT_FLAG_CAP_WORDS
-                else -> 0
-            }
-        }
     }
 }
 
@@ -1063,7 +859,7 @@ class CachedInput(private val editorInstance: EditorInstance) {
      */
     fun update() = editorInstance.run {
         val ic = inputConnection
-        if (ic == null) {
+        if (ic == null || selection.isSelectionMode) {
             offset = 0
             rawText.clear()
             expectedMaxLength = 0

@@ -116,6 +116,9 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
     }
 
     fun updateCandidates(newCandidates: SuggestionList?) {
+        if (candidates.isEmpty() && (newCandidates == null || newCandidates.isEmpty())) {
+            return // no need to recompute anything
+        }
         candidates.clear()
         if (newCandidates != null) {
             candidates.addAll(newCandidates)

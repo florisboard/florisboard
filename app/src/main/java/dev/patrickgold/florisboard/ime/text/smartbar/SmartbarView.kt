@@ -35,6 +35,8 @@ import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
+import dev.patrickgold.florisboard.ime.keyboard.updateKeyboardState
 import dev.patrickgold.florisboard.ime.nlp.SuggestionList
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
@@ -54,7 +56,7 @@ import kotlin.math.roundToInt
  * of FlorisBoard. The view automatically tries to get the current FlorisBoard instance, which it
  * needs to decide when a specific feature component is shown.
  */
-class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
+class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, ThemeManager.OnThemeUpdatedListener {
     private val florisboard = FlorisBoard.getInstanceOrNull()
     private val prefs get() = Preferences.default()
     private val themeManager = ThemeManager.default()
@@ -68,12 +70,11 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
     private var cachedActionEndAreaVisible: Boolean = false
     @IdRes private var cachedActionEndAreaId: Int? = null
 
-    var isQuickActionsVisible: Boolean = false
-        set(v) {
-            binding.quickActionToggle.rotation = if (v) 180.0f else 0.0f
-            field = v
-        }
-    private var isShowingInlineSuggestions: Boolean = false
+    private val cachedState: KeyboardState = KeyboardState.new(
+        maskOfInterest = KeyboardState.INTEREST_TEXT
+            or KeyboardState.F_IS_QUICK_ACTIONS_VISIBLE
+            or KeyboardState.F_IS_SHOWING_INLINE_SUGGESTIONS
+    )
 
     private lateinit var binding: SmartbarBinding
     private var indexedActionStartArea: MutableList<Int> = mutableListOf()
@@ -152,8 +153,7 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
         }
 
         binding.quickActionToggle.setOnClickListener {
-            isQuickActionsVisible = !isQuickActionsVisible
-            updateSmartbarState()
+            eventListener.get()?.onSmartbarQuickActionPressed(it.id)
         }
 
         configureFeatureVisibility(
@@ -222,12 +222,26 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
         }
     }
 
-    /**
-     * Updates the Smartbar UI state by looking at the current keyboard mode, key variation, active
-     * editor instance, etc. Passes the evaluated attributes to [configureFeatureVisibility].
-     */
-    fun updateSmartbarState() {
-        binding.candidates.updateDisplaySettings(prefs.suggestion.displayMode, prefs.suggestion.clipboardContentTimeout * 1_000)
+    override fun onInterceptUpdateKeyboardState(newState: KeyboardState): Boolean {
+        return true // SmartbarView is manually managing the dispatching of new states
+    }
+
+    override fun onUpdateKeyboardState(newState: KeyboardState) {
+        flogInfo(LogTopic.SMARTBAR)
+        if (newState != cachedState) {
+            cachedState.reset(newState)
+            if (this::binding.isInitialized) {
+                updateUi()
+                when (cachedMainAreaId) {
+                    R.id.clipboard_cursor_row -> binding.clipboardCursorRow.updateKeyboardState(newState)
+                    R.id.number_row -> binding.numberRow.updateKeyboardState(newState)
+                }
+            }
+        }
+    }
+
+    private fun updateUi() {
+        binding.quickActionToggle.rotation = if (cachedState.isQuickActionsVisible) 180.0f else 0.0f
         when (florisboard) {
             null -> configureFeatureVisibility(
                 actionStartAreaVisible = false,
@@ -237,18 +251,18 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                 actionEndAreaId = null
             )
             else -> configureFeatureVisibility(
-                actionStartAreaVisible = when (florisboard.textInputManager.state.keyVariation) {
+                actionStartAreaVisible = when (cachedState.keyVariation) {
                     KeyVariation.PASSWORD -> false
                     else -> true
                 },
-                actionStartAreaId = when (florisboard.textInputManager.getActiveKeyboardMode()) {
+                actionStartAreaId = when (cachedState.keyboardMode) {
                     KeyboardMode.EDITING -> R.id.back_button
                     else -> R.id.quick_action_toggle
                 },
                 mainAreaId = when {
-                    isQuickActionsVisible -> R.id.quick_actions
-                    isShowingInlineSuggestions -> R.id.inline_suggestions
-                    florisboard.textInputManager.state.keyVariation == KeyVariation.PASSWORD -> {
+                    cachedState.isQuickActionsVisible -> R.id.quick_actions
+                    cachedState.isShowingInlineSuggestions -> R.id.inline_suggestions
+                    cachedState.keyVariation == KeyVariation.PASSWORD -> {
                         if (!prefs.keyboard.numberRow) R.id.number_row else null
                     }
                     else -> when (florisboard.textInputManager.getActiveKeyboardMode()) {
@@ -264,31 +278,27 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                         }
                     }
                 },
-                actionEndAreaVisible = when (florisboard.textInputManager.state.keyVariation) {
+                actionEndAreaVisible = when (cachedState.keyVariation) {
                     KeyVariation.PASSWORD -> false
                     else -> true
                 },
                 actionEndAreaId = when {
-                    florisboard.activeEditorInstance.isPrivateMode -> R.id.private_mode_button
+                    cachedState.isPrivateMode -> R.id.private_mode_button
                     else -> null
                 }
             )
-        }
-        florisboard?.let {
-            binding.clipboardCursorRow.notifyStateChanged(florisboard.textInputManager.state)
-            binding.numberRow.notifyStateChanged(florisboard.textInputManager.state)
         }
     }
 
     fun sync() {
         binding.numberRow.sync()
         binding.clipboardCursorRow.sync()
+        binding.candidates.updateDisplaySettings(prefs.suggestion.displayMode, prefs.suggestion.clipboardContentTimeout * 1_000)
     }
 
     fun onPrimaryClipChanged() {
-        if (prefs.suggestion.enabled && prefs.suggestion.clipboardContentEnabled && florisboard?.activeEditorInstance?.isPrivateMode == false ) {
-            florisboard.florisClipboardManager?.primaryClip?.let { binding.candidates.updateClipboardItem(it) }
-            updateSmartbarState()
+        if (prefs.suggestion.enabled && prefs.suggestion.clipboardContentEnabled && !cachedState.isPrivateMode) {
+            florisboard?.florisClipboardManager?.primaryClip?.let { binding.candidates.updateClipboardItem(it) }
         }
     }
 
@@ -350,8 +360,9 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
     private fun updateInlineSuggestionStrip(suggestionViews: Collection<InlineContentView?>) {
         flogDebug { "Updating the inline suggestion strip with ${suggestionViews.size} items" }
         binding.inlineSuggestionsStrip.removeAllViews()
+        val florisboard = florisboard ?: return
         if (suggestionViews.isEmpty()) {
-            isShowingInlineSuggestions = false
+            florisboard.activeState.isQuickActionsVisible = false
             return
         } else {
             for (suggestionView in suggestionViews) {
@@ -360,9 +371,9 @@ class SmartbarView : ConstraintLayout, ThemeManager.OnThemeUpdatedListener {
                 }
                 binding.inlineSuggestionsStrip.addView(suggestionView)
             }
-            isShowingInlineSuggestions = true
+            florisboard.activeState.isQuickActionsVisible = true
         }
-        updateSmartbarState()
+        updateKeyboardState(florisboard.activeState)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

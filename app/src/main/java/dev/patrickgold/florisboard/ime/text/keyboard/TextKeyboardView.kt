@@ -40,6 +40,8 @@ import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import dev.patrickgold.florisboard.common.Pointer
 import dev.patrickgold.florisboard.common.PointerMap
 import dev.patrickgold.florisboard.common.ViewUtils
+import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -56,7 +58,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
     // IS ONLY USED IF KEYBOARD IS IN PREVIEW MODE
     private var cachedTheme: Theme? = null
 
-    private var cachedState: TextKeyboardState = TextKeyboardState.new()
+    private var cachedState: KeyboardState = KeyboardState.new(maskOfInterest = KeyboardState.INTEREST_TEXT)
 
     private var externalComputingEvaluator: TextComputingEvaluator? = null
     private val internalComputingEvaluator = object : TextComputingEvaluator {
@@ -201,12 +203,12 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         iconSet = textKeyboardIconSet
     }
 
-    fun notifyStateChanged(newState: TextKeyboardState) {
+    override fun onUpdateKeyboardState(newState: KeyboardState) {
         flogInfo(LogTopic.TEXT_KEYBOARD_VIEW) { computedKeyboard?.mode?.toString() ?: "" }
         if (isMeasured) {
             if (newState != cachedState) {
                 // Something within the defined interest has changed
-                    cachedState.update(newState.value)
+                cachedState.reset(newState)
                 computeKeyboard()
                 invalidate()
             }
@@ -610,6 +612,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                         if (abs(event.relUnitCountX) > 0) {
                             florisboard.keyPressVibrate(isMovingGestureEffect = true)
                         }
+                        markComposingRegion(null)
                         selection.updateAndNotify(
                             (selection.end + event.absUnitCountX + 1).coerceIn(0, selection.end),
                             selection.end
@@ -879,10 +882,10 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         super.onDraw(canvas)
         if (!isVisible) return
         if (canvas == null) {
-            flogWarning(LogTopic.TEXT_KEYBOARD_VIEW) { "Cannot draw: 'canvas' is null!" }
+            flogWarning(LogTopic.TEXT_KEYBOARD_VIEW) { "${computedKeyboard?.mode} Cannot draw: 'canvas' is null!" }
             return
         } else {
-            flogInfo(LogTopic.TEXT_KEYBOARD_VIEW)
+            flogInfo(LogTopic.TEXT_KEYBOARD_VIEW) { computedKeyboard?.mode.toString() }
         }
         if (isPreviewMode) {
             backgroundDrawable.let {
@@ -894,7 +897,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
     }
 
     private fun onDrawComputedKeyboard(canvas: Canvas) {
-        flogInfo(LogTopic.TEXT_KEYBOARD_VIEW)
+        flogInfo(LogTopic.TEXT_KEYBOARD_VIEW) { computedKeyboard?.mode.toString() }
         val keyboard = computedKeyboard ?: return
 
         // SUPER JANK nyi message implementation for the editing layout
@@ -1091,16 +1094,16 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                     key.foregroundDrawableId = R.drawable.ic_backspace
                 }
                 KeyCode.ENTER -> {
-                    val imeOptions = florisboard?.activeEditorInstance?.imeOptions ?: ImeOptions.default()
-                    key.foregroundDrawableId = when (imeOptions.action) {
-                        ImeOptions.Action.DONE -> R.drawable.ic_done
-                        ImeOptions.Action.GO -> R.drawable.ic_arrow_right_alt
-                        ImeOptions.Action.NEXT -> R.drawable.ic_arrow_right_alt
-                        ImeOptions.Action.NONE -> R.drawable.ic_keyboard_return
-                        ImeOptions.Action.PREVIOUS -> R.drawable.ic_arrow_right_alt
-                        ImeOptions.Action.SEARCH -> R.drawable.ic_search
-                        ImeOptions.Action.SEND -> R.drawable.ic_send
-                        ImeOptions.Action.UNSPECIFIED -> R.drawable.ic_keyboard_return
+                    val imeOptions = cachedState.imeOptions
+                    key.foregroundDrawableId = when (imeOptions.enterAction) {
+                        ImeOptions.EnterAction.DONE -> R.drawable.ic_done
+                        ImeOptions.EnterAction.GO -> R.drawable.ic_arrow_right_alt
+                        ImeOptions.EnterAction.NEXT -> R.drawable.ic_arrow_right_alt
+                        ImeOptions.EnterAction.NONE -> R.drawable.ic_keyboard_return
+                        ImeOptions.EnterAction.PREVIOUS -> R.drawable.ic_arrow_right_alt
+                        ImeOptions.EnterAction.SEARCH -> R.drawable.ic_search
+                        ImeOptions.EnterAction.SEND -> R.drawable.ic_send
+                        ImeOptions.EnterAction.UNSPECIFIED -> R.drawable.ic_keyboard_return
                     }
                     if (imeOptions.flagNoEnterAction) {
                         key.foregroundDrawableId = R.drawable.ic_keyboard_return

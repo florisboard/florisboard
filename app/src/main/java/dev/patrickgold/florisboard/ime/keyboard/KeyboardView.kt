@@ -29,7 +29,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.sendBlocking
 
 @Suppress("MemberVisibilityCanBePrivate")
-abstract class KeyboardView : View, ThemeManager.OnThemeUpdatedListener {
+abstract class KeyboardView : View, KeyboardState.OnUpdateStateListener, ThemeManager.OnThemeUpdatedListener {
     protected val florisboard get() = FlorisBoard.getInstanceOrNull()
     protected val prefs get() = Preferences.default()
     protected val themeManager get() = ThemeManager.defaultOrNull()
