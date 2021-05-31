@@ -609,6 +609,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
     private fun handleDeleteSwipe(event: SwipeGesture.Event): Boolean {
         val florisboard = florisboard ?: return false
+        if (cachedState.isRawInputEditor) return false
         val pointer = pointerMap.findById(event.pointerId) ?: return false
 
         return when (event.type) {

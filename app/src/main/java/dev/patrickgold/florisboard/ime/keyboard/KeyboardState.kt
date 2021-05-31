@@ -193,6 +193,12 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
         get() = getFlag(F_IS_PRIVATE_MODE)
         set(v) { setFlag(F_IS_PRIVATE_MODE, v) }
 
+    val isRawInputEditor: Boolean
+        get() = inputAttributes.type == InputAttributes.Type.NULL
+
+    val isRichInputEditor: Boolean
+        get() = inputAttributes.type != InputAttributes.Type.NULL
+
     var isQuickActionsVisible: Boolean
         get() = getFlag(F_IS_QUICK_ACTIONS_VISIBLE)
         set(v) { setFlag(F_IS_QUICK_ACTIONS_VISIBLE, v) }

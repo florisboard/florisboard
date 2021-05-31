@@ -47,7 +47,7 @@ import timber.log.Timber
 class EditorInstance private constructor(
     private val ims: InputMethodService?,
     val packageName: String,
-    val state: KeyboardState,
+    val activeState: KeyboardState,
     private val editorInfo: EditorInfo
 ) {
     val cachedInput: CachedInput = CachedInput(this)
@@ -57,7 +57,7 @@ class EditorInstance private constructor(
         get() {
             val ic = inputConnection ?: return InputAttributes.CapsMode.NONE
             return InputAttributes.CapsMode.fromFlags(
-                ic.getCursorCapsMode(state.inputAttributes.capsMode.toFlags())
+                ic.getCursorCapsMode(activeState.inputAttributes.capsMode.toFlags())
             )
         }
     val inputConnection: InputConnection?
@@ -66,15 +66,13 @@ class EditorInstance private constructor(
         set(v) {
             field = v
             cachedInput.reevaluate()
-            if (v && !isRawInputEditor) {
+            if (v && !activeState.isRawInputEditor) {
                 markComposingRegion(cachedInput.currentWord)
             } else {
                 markComposingRegion(null)
             }
         }
     var shouldReevaluateComposingSuggestions: Boolean = false
-    val isRawInputEditor: Boolean
-        get() = state.inputAttributes.type == InputAttributes.Type.NULL
     var selection: Selection = Selection(this)
         private set
     var isPhantomSpaceActive: Boolean = false
@@ -86,7 +84,7 @@ class EditorInstance private constructor(
             return EditorInstance(
                 ims = null,
                 packageName = "undefined",
-                state = KeyboardState.new(),
+                activeState = KeyboardState.new(),
                 editorInfo = EditorInfo()
             )
         }
@@ -98,7 +96,7 @@ class EditorInstance private constructor(
                 EditorInstance(
                     ims = ims,
                     packageName = editorInfo.packageName,
-                    state = state,
+                    activeState = state,
                     editorInfo = editorInfo
                 ).apply {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
@@ -143,7 +141,7 @@ class EditorInstance private constructor(
                 if (candidatesStart >= 0 && candidatesEnd >= 0) {
                     shouldReevaluateComposingSuggestions = true
                 }
-                if (!isRawInputEditor && !isPhantomSpaceActive) {
+                if (activeState.isRichInputEditor && !isPhantomSpaceActive) {
                     markComposingRegion(cachedInput.currentWord)
                 } else if (newSelStart >= 0) {
                     markComposingRegion(null)
@@ -165,7 +163,7 @@ class EditorInstance private constructor(
      */
     fun commitCompletion(text: String): Boolean {
         val ic = inputConnection ?: return false
-        return if (isRawInputEditor) {
+        return if (activeState.isRawInputEditor) {
             false
         } else {
             ic.beginBatchEdit()
@@ -214,7 +212,7 @@ class EditorInstance private constructor(
      */
     fun commitText(text: String): Boolean {
         val ic = inputConnection ?: return false
-        return if (isRawInputEditor || selection.isSelectionMode || !isComposingEnabled) {
+        return if (activeState.isRawInputEditor || selection.isSelectionMode || !isComposingEnabled) {
             doCommitText(text).first
         } else {
             ic.beginBatchEdit()
@@ -248,7 +246,7 @@ class EditorInstance private constructor(
      */
     fun commitGesture(text: String): Boolean {
         val ic = inputConnection ?: return false
-        return if (isRawInputEditor) {
+        return if (activeState.isRawInputEditor) {
             false
         } else {
             ic.beginBatchEdit()
@@ -331,7 +329,7 @@ class EditorInstance private constructor(
         val ic = inputConnection ?: return false
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return if (n < 1 || isRawInputEditor || !selection.isValid || !selection.isCursorMode) {
+        return if (n < 1 || activeState.isRawInputEditor || !selection.isValid || !selection.isCursorMode) {
             false
         } else {
             ic.beginBatchEdit()
@@ -369,7 +367,7 @@ class EditorInstance private constructor(
      */
     fun getTextAfterCursor(n: Int): String {
         val ic = inputConnection
-        if (ic == null || !selection.isValid || n < 1 || isRawInputEditor) {
+        if (ic == null || !selection.isValid || n < 1 || activeState.isRawInputEditor) {
             return ""
         }
         return ic.getTextAfterCursor(n, 0)?.toString() ?: ""
@@ -385,7 +383,7 @@ class EditorInstance private constructor(
      */
     fun getTextBeforeCursor(n: Int): String {
         val ic = inputConnection
-        if (ic == null || !selection.isValid || n < 1 || isRawInputEditor) {
+        if (ic == null || !selection.isValid || n < 1 || activeState.isRawInputEditor) {
             return ""
         }
         return ic.getTextBeforeCursor(n.coerceAtMost(selection.start), 0)?.toString() ?: ""
@@ -515,7 +513,7 @@ class EditorInstance private constructor(
         wasPhantomSpaceActiveLastUpdate = false
         markComposingRegion(null)
         val ic = inputConnection ?: return false
-        if (isRawInputEditor) {
+        if (activeState.isRawInputEditor) {
             sendDownUpKeyEvent(KeyEvent.KEYCODE_A, meta(ctrl = true))
         } else {
             ic.performContextMenuAction(android.R.id.selectAll)
@@ -531,7 +529,7 @@ class EditorInstance private constructor(
     fun performEnter(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return if (isRawInputEditor) {
+        return if (activeState.isRawInputEditor) {
             sendDownUpKeyEvent(KeyEvent.KEYCODE_ENTER)
         } else {
             commitText("\n")
@@ -769,7 +767,7 @@ class Selection(private val editorInstance: EditorInstance) : Region(editorInsta
      * selection change.
      */
     fun updateAndNotify(newStart: Int, newEnd: Int): Boolean {
-        return super.update(newStart, newEnd) && if (!editorInstance.isRawInputEditor) {
+        return super.update(newStart, newEnd) && if (editorInstance.activeState.isRichInputEditor) {
             editorInstance.inputConnection?.setSelection(newStart, newEnd) ?: false
         } else {
             false

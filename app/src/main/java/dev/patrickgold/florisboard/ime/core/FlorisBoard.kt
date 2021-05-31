@@ -348,7 +348,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     }
 
     override fun onUpdateExtractingVisibility(ei: EditorInfo?) {
-        isExtractViewShown = !activeEditorInstance.isRawInputEditor && when (prefs.keyboard.landscapeInputUiMode) {
+        isExtractViewShown = activeState.isRichInputEditor && when (prefs.keyboard.landscapeInputUiMode) {
             LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeState.imeOptions.flagNoExtractUi
             LandscapeInputUiMode.NEVER_SHOW -> false
             LandscapeInputUiMode.ALWAYS_SHOW -> true

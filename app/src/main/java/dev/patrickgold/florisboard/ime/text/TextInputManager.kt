@@ -128,8 +128,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             return when (data.code) {
                 KeyCode.CLIPBOARD_COPY,
                 KeyCode.CLIPBOARD_CUT -> {
-                    activeState.isSelectionMode &&
-                        !florisboard.activeEditorInstance.isRawInputEditor
+                    activeState.isSelectionMode && activeState.isRichInputEditor
                 }
                 KeyCode.CLIPBOARD_PASTE -> {
                     // such gore. checks
@@ -140,7 +139,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     ) == true
                 }
                 KeyCode.CLIPBOARD_SELECT_ALL -> {
-                    !florisboard.activeEditorInstance.isRawInputEditor
+                    activeState.isRichInputEditor
                 }
                 KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
                     prefs.clipboard.enableHistory
@@ -346,13 +345,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 KeyboardMode.NUMERIC,
                 KeyboardMode.PHONE,
                 KeyboardMode.PHONE2 -> false
-                else -> state.keyVariation != KeyVariation.PASSWORD &&
+                else -> activeState.keyVariation != KeyVariation.PASSWORD &&
                         prefs.suggestion.enabled// &&
                 //!instance.inputAttributes.flagTextAutoComplete &&
                 //!instance.inputAttributes.flagTextNoSuggestions
             }
             activeState.isPrivateMode = prefs.advanced.forcePrivateMode ||
-                    state.imeOptions.flagNoPersonalizedLearning
+                    activeState.imeOptions.flagNoPersonalizedLearning
         }
         if (!prefs.correction.rememberCapsLockState) {
             activeState.capsLock = false
