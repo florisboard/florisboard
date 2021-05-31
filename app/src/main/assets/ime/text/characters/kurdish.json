@@ -1,7 +1,7 @@
 {
   "type": "characters",
   "name": "kurdish",
-  "label": "کوردی",
+  "label": "کوردی (قوەرتی نوێ)",
   "authors": [ "GoRaN" ],
   "direction": "rtl",
   "modifier": "kurdish",
@@ -13,34 +13,46 @@
       { "code":  1608, "label": "و", "popup": {
         "main": { "code": -255, "label": "وو" }
       } },
-      { "code":  1749, "label": "ﻪ" },
-      { "code":  1585, "label": "ر" },
-
+      { "code":  1749, "label": "ﻪ", "popup": {
+        "main": { "code": 1577, "label": "ة" }
+      } },
+      { "code":  1585, "label": "ر", "popup": {
+        "main": { "code": 1685, "label": "ڕ" }
+      } },
       { "code":  1578, "label": "ت", "popup": {
         "main": { "code": 1591, "label": "ط" }
       } },
-      { "code":  1740, "label": "ی" },
-
-      { "code":  1574, "label": "ﺋ"},
-
+      { "code":  1740, "label": "ی", "popup": {
+        "main": { "code": 1742, "label": "ێ" }
+      } },
+      { "code":  1574, "label": "ﺋ", "popup": {
+        "main": { "code": 1569, "label": "ء" }
+      } },
       { "code":  1593, "label": "ع", "popup": {
         "main": { "code": 1594, "label": "غ" }
       } },
       { "code":  1734, "label": "ۆ" },
-
       { "code":  1662, "label": "پ", "popup": {
         "main": { "code": 1579, "label": "ث" }
       } }
     ],
     [
-      { "code":  1575, "label": "ا" },
+      {"code": 1575, "label": "ا"},
       { "code":  1587, "label": "س" },
       { "code":  1588, "label": "ش" },
-      { "code":  1583, "label": "د" },
-      { "code":  1601, "label": "ف" },
+      { "code":  1583, "label": "د", "popup": {
+        "main": {"code": 1584, "label": "ذ" }
+      } },
+      { "code":  1601, "label": "ف" , "popup": {
+        "main": {"code": 1700, "label": "ڤ" }
+      } },
       { "code":  1607, "label": "ھ" },
-      { "code":  1688, "label": "ژ" },
-      { "code":  1604, "label": "ل" },
+      { "code":  1688, "label": "ژ", "popup": {
+        "main": { "code": 1600, "label": "▬" }
+      } },
+      { "code":  1604, "label": "ل", "popup": {
+        "main": { "code": 1717, "label": "ڵ" }
+      } },
       { "code":  1705, "label": "ک" },
       { "code":  1711, "label": "گ" }
     ],
