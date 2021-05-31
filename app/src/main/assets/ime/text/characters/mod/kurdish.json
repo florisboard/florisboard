@@ -6,14 +6,17 @@
   "direction": "rtl",
   "arrangement": [
     [
+      { "code": 1600, "label": "kashida", "popup":
+      { "main": { "code": 8204, "label": "half_space" }
+      } },
       { "code":    0, "type": "placeholder" },
       { "code":   -5, "label": "delete", "type": "enter_editing" }
     ],
     [
       { "code": -202, "label": "view_symbols", "type": "system_gui" },
       { "$": "variation_selector",
-        "default":  { "code": 1567, "label": "؟", "groupId": 1 },
-        "password": { "code": 1548, "label": "،", "groupId": 1 },
+        "default":  { "code": 1548, "label": "،", "groupId": 1 },
+        "password": { "code": 35, "label": "#", "groupId": 1 },
         "email":    { "code":   64, "label": "@", "groupId": 1 },
         "uri":      { "code":   47, "label": "/", "groupId": 1 }
       },
