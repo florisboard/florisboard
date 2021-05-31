@@ -136,6 +136,13 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         it.isAntiAlias = true
         it.style = Paint.Style.FILL
     }
+    private var keyShadowBackgroundPaint = Paint().also {
+        it.isAntiAlias = true
+        it.style = Paint.Style.STROKE
+        it.strokeCap = Paint.Cap.ROUND
+        it.strokeWidth = 6.0f
+    }
+    private val keyBackgroundCornerSize: Float = ViewUtils.dp2px(6.0f)
 
     private var backgroundDrawable: PaintDrawable = PaintDrawable()
     private val baselineTextSize = resources.getDimension(R.dimen.key_textSize)
@@ -180,7 +187,6 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         swipeGestureDetector.isEnabled = !isSmartbarKeyboardView
 
         setWillNotDraw(false)
-        setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
     fun setComputingEvaluator(evaluator: TextComputingEvaluator?) {
@@ -875,6 +881,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         } else {
             glideTrailPaint.color = theme.getAttr(Theme.Attr.GLIDE_TRAIL_COLOR).toSolidColor().color
         }
+        keyShadowBackgroundPaint.color = Color.argb(32, 0, 0, 0)
         invalidate()
     }
 
@@ -979,24 +986,35 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             }
         }
 
+        val bgBoundsLeft = key.visibleBounds.left.toFloat()
+        val bgBoundsTop = (if (isBorderless) {
+            (key.visibleBounds.top + key.visibleBounds.height() * 0.12).toInt()
+        } else {
+            key.visibleBounds.top
+        }).toFloat()
+        val bgBoundsRight = key.visibleBounds.right.toFloat()
+        val bgBoundsBottom = (if (isBorderless) {
+            (key.visibleBounds.bottom - key.visibleBounds.height() * 0.12).toInt()
+        } else {
+            key.visibleBounds.bottom
+        }).toFloat()
+
+        if (shouldShowBorder) {
+            keyShadowBackgroundPaint.let {
+                canvas.drawRoundRect(
+                    bgBoundsLeft, bgBoundsTop, bgBoundsRight, bgBoundsBottom,
+                    keyBackgroundCornerSize,
+                    keyBackgroundCornerSize,
+                    it
+                )
+            }
+        }
         keyBackgroundPaint.let {
             it.color = keyBackground.toSolidColor().color
-            //it.setShadowLayer(if (shouldShowBorder) 6.0f else 0.0f, 0.0f, 0.0f, Color.rgb(50, 50, 50))
             canvas.drawRoundRect(
-                key.visibleBounds.left.toFloat(),
-                (if (isBorderless) {
-                    (key.visibleBounds.top + key.visibleBounds.height() * 0.12).toInt()
-                } else {
-                    key.visibleBounds.top
-                }).toFloat(),
-                key.visibleBounds.right.toFloat(),
-                (if (isBorderless) {
-                    (key.visibleBounds.bottom - key.visibleBounds.height() * 0.12).toInt()
-                } else {
-                    key.visibleBounds.bottom
-                }).toFloat(),
-                ViewUtils.dp2px(6.0f),
-                ViewUtils.dp2px(6.0f),
+                bgBoundsLeft, bgBoundsTop, bgBoundsRight, bgBoundsBottom,
+                keyBackgroundCornerSize,
+                keyBackgroundCornerSize,
                 it
             )
         }
