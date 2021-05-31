@@ -303,7 +303,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                     val activeKey = pointer.activeKey
                     if (activeKey != null && popupManager.isSuitableForPopups(activeKey)) {
                         swipeGestureDetector.onTouchCancel(event, pointer)
-                        onTouchCancelInternal(event, pointer)
+                        onTouchUpInternal(event, pointer)
                     }
                 }
                 val pointer = pointerMap.add(pointerId, pointerIndex)
