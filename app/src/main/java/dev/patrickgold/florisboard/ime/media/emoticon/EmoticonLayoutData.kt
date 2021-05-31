@@ -16,9 +16,14 @@
 
 package dev.patrickgold.florisboard.ime.media.emoticon
 
-import android.content.Context
+import dev.patrickgold.florisboard.ime.extension.AssetManager
+import dev.patrickgold.florisboard.ime.extension.AssetRef
+import dev.patrickgold.florisboard.ime.extension.AssetSource
+import kotlinx.serialization.Serializable
 
 typealias EmoticonLayoutDataArrangement = List<List<EmoticonKeyData>>
+
+@Serializable
 data class EmoticonLayoutData(
     var type: String,
     var name: String,
@@ -26,18 +31,10 @@ data class EmoticonLayoutData(
     var arrangement: EmoticonLayoutDataArrangement = listOf()
 ) {
     companion object {
-        fun fromJsonFile(context: Context, path: String): EmoticonLayoutData? {
-            /*val rawJsonData: String = try {
-                context.assets.open(path).bufferedReader().use { it.readText() }
-            } catch (e: Exception) {
-                null
-            } ?: return null
-            val moshi = Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .build()
-            val layoutAdapter = moshi.adapter(EmoticonLayoutData::class.java)
-            return layoutAdapter.fromJson(rawJsonData)*/
-            return null
+        fun fromJsonFile(path: String): EmoticonLayoutData? {
+            return AssetManager.defaultOrNull()
+                ?.loadJsonAsset<EmoticonLayoutData>(AssetRef(AssetSource.Assets, path))
+                ?.getOrNull()
         }
     }
 }
