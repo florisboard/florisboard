@@ -193,6 +193,8 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock pysyy päällä, kun siirrytään seuraavaan tekstikenttään</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Piste tuplavälilyönnillä</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Kun välilyöntiä napautetaan kahdesti, lisätään piste ja välilyönti</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Kaikille kielille</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Sana</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Eleet &amp; liukukirjoitus</string>
     <string name="pref__glide__title" comment="Preference group title">Liukukirjoitus</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Ota liukukirjoitus käyttöön</string>

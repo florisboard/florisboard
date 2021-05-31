@@ -65,6 +65,7 @@
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Символьные раскладки</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Основная символьная раскладка</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Дополнительная символьная раскладка</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Редактор</string>
     <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Настройка валют</string>
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Цифровая раскладка</string>
     <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Цифровая (расширенная) раскладка</string>
@@ -322,6 +323,7 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Политика конфиденциальности</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Исходный код</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Лицензии открытого исходного кода</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Номер версии скопирован в буфер обмена</string>
     <!-- Assets strings -->
     <plurals name="assets__file__authors">
         <item quantity="one">Автор</item>

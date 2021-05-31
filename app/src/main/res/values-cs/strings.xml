@@ -169,6 +169,8 @@
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Přepnout jazyk</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Přepnout aplikaci klávesnice</string>
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Dynamicky: Přepnout na emoji / Přepnout jazyk</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label">Ukazovat vyskakovací symboly</string>
+    <string name="pref__keyboard_merge_hint_popups_enabled__summary">Přidat vyskakovací symboly do základního rozpoložení</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplikátor velikosti písma (portrét)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplikátor velikosti písma (Krajina)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Rozložení</string>
@@ -210,6 +212,7 @@
     <string name="pref__smartbar__enabled__label" comment="Preference title">Povolit chytrou lištu</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Zobrazí se na vrchu klávesnice</string>
     <string name="pref__suggestion__title" comment="Preference group title">Návrh</string>
+    <string name="pref__dictionary__title" comment="Preference group title">Slovník</string>
     <string name="pref__correction__title" comment="Preference group title">Oprava</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatická kapitalizace</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Vydělávejte slova na základě aktuálního vstupního kontextu</string>
@@ -217,6 +220,15 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock zůstane při přesunu do jiného textového pole</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Doba dvojitého prostoru</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Poklepáním dvakrát na mezerník vloží období následuje prostor</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekvence: %d</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frekvence: %d | Zkratka: %s</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Pro všechny jazyky</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Přidat slovo</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Upravit slovo</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Slovo</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Zadejte prosím slovo!</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Toto slovo obsahuje neplatné znaky.</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frekvence (mezi %d a %d)</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gesta &amp; Glide psan</string>
     <string name="pref__glide__title" comment="Preference group title">Glide psan</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Povolit psaní tahem</string>
@@ -289,6 +301,7 @@
     <string name="assets__file__name">Název</string>
     <string name="assets__file__source">Zdroj</string>
     <string name="assets__action__add">Přidat</string>
+    <string name="assets__action__apply">Potvrdit</string>
     <string name="assets__action__cancel">Zrušit</string>
     <string name="assets__action__cancel_confirm_title">Potvrdit zrušení</string>
     <string name="assets__action__cancel_confirm_message">Opravdu chcete zahodit všechny neuložené změny? Tuto operaci nelze po provedení vrátit zpět.</string>

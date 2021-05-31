@@ -210,6 +210,9 @@
     <string name="pref__smartbar__enabled__label" comment="Preference title">Okossáv engedélyezése</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">A billentyűzet tetején fog megjelenni</string>
     <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
+    <string name="pref__dictionary__title" comment="Preference group title">Szótár</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Belső felhasználói szótár engedélyezése</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Tárolt szavak ajánlása a belső felhasználói szótárból</string>
     <string name="pref__correction__title" comment="Preference group title">Javítások</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatikusan nagy kezdőbetű</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kezdje nagybetűvel a szavakat a bemeneti környezet alapján</string>
@@ -217,6 +220,16 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock marad, ha mozog egy másik szövegmezőbe</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dupla szóköz: pont</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Ha kétszer megérinti a szóközt, beszúr egy pontot, amelyet egy szóköz követ</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Belső felhasználói szótár</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Gyakoriság: %d</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Az összes nyelvhez</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Szó</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Adjon meg egy szót!</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">A szó érvénytelen karaktereket tartalmaz.</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Gyakoriság (%d és %d között)</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Adjon meg egy gyakoriság értéket!</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Egy érvényes számot adjon meg a megadott határok között!</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Nyelvkód (opcionális)</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gesztusok és csúsztatott gépelés</string>
     <string name="pref__glide__title" comment="Preference group title">Csúsztatott gépelés</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Csúsztatott gépelés engedélyezése</string>
@@ -278,6 +291,8 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Alkalmazás megjelenítése a kezdőképernyőn</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Privát mód kényszerítése</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Minden funkciót ki fog kapcsolni ideiglenesen, amely a bemeneti adatokkal dolgozik</string>
+    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Fejlesztői eszközök engedélyezése</string>
+    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Heap memória statisztika megjelenítése</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Névjegy</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">A FlorisBoard alkalmazásikonja</string>
@@ -285,6 +300,7 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Adatvédelmi Irányelvek</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Forráskód</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Nyílt forráskódú licencek</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Verzió a vágólapra másolva</string>
     <!-- Assets strings -->
     <plurals name="assets__file__authors">
         <item quantity="one">Készítő</item>
@@ -293,6 +309,7 @@
     <string name="assets__file__name">Név</string>
     <string name="assets__file__source">Forrás</string>
     <string name="assets__action__add">Hozzáadás</string>
+    <string name="assets__action__apply">Alkalmaz</string>
     <string name="assets__action__cancel">Mégse</string>
     <string name="assets__action__cancel_confirm_title">Kilépés megerősítése</string>
     <string name="assets__action__cancel_confirm_message">Biztosan el szeretne vetni minden mentetlen változtatást? Ezt a műveletet nem lehet visszavonni.</string>
@@ -354,8 +371,8 @@
     <string name="clip__back_to_text_input">Vissza a szöveges bevitelre</string>
     <string name="clip__cant_paste">Ez az alkalmazás nem engedélyezi beilleszteni ezt a tartalmat.</string>
     <string name="pref__clipboard__clipboard_category__label">Vágólap</string>
-    <string name="pref__clipboard__use_internal_clipboard___label">Beépített vágólap használata</string>
-    <string name="pref__clipboard__use_internal_clipboard_title__summary">Beépített bágólap használata a rendszer vágólapja helyett</string>
+    <string name="pref__clipboard__use_internal_clipboard___label">Belső vágólap használata</string>
+    <string name="pref__clipboard__use_internal_clipboard_title__summary">Belső vágólap használata a rendszer vágólapja helyett</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Szinkronizálás a rendszervágólapról</string>
     <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">A rendszervágólap frissítései a Florisboard vágólapján is megjelennek</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Szinkronizálás a rendszervágólapra</string>

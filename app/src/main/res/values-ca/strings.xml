@@ -62,6 +62,16 @@
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Eliminar</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Editar el subtipus</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Local</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Disposició dels caràcters</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Disposició primària dels símbols</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Disposició secundària dels símbols</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Editor</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Conjunt de divises</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Disposició numèrica</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Disposició numèrica (avançada)</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Disposició de la fila numèrica</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Disposició primària del telèfon</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Disposició secundària del telèfon</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Aquest subtipus ja existeix!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tema del teclat</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Indefinit</string>
@@ -126,6 +136,7 @@
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Botó de barra intel·ligent</string>
     <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Disposició a pantalla completa del paisatge</string>
     <string name="settings__theme__group_extractActionButton" comment="Theme group label">Botó d\'acció de pantalla completa del paisatge</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">Llisca el camí</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Grup personalitzat (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Color de fons</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Color de fons (actiu)</string>
@@ -159,6 +170,8 @@
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Canviar l\'idioma</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Canviar l\'aplicació de teclat</string>
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Dinàmic: Canvia a emojis / Canvia d\'idioma</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label">Mostra també els símbols emergents</string>
+    <string name="pref__keyboard_merge_hint_popups_enabled__summary">Afegeix els símbols emergents a la disposició predeterminada</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicador de la mida del tipus de lletra (vertical)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicador de la mida de la lletra (horitzontal)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposició</string>
@@ -180,6 +193,15 @@
     <string name="pref__keyboard__height_factor__tall" comment="Preference value">Gran</string>
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Extra-gran</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Personalitzat</string>
+    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Valor personalitzat de l\'alçada del teclat</string>
+    <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Desplaçament inferior (vertical)</string>
+    <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Desplaçament inferior (horitzontal)</string>
+    <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Espaiat de la clau (vertical)</string>
+    <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Espaiat de la clau (horitzontal)</string>
+    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tecla premuda</string>
+    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">So en prémer la tecla</string>
+    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volum del so en prémer la tecla</string>
+    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibrar al prémer la tecla</string>
     <string name="pref__correction__title" comment="Preference group title">Correccions</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Majúscules automàtiques</string>
     <!-- About UI strings -->

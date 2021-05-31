@@ -322,6 +322,7 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Πολιτική απορρήτου</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Πηγαίος κώδικας</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Άδειες λογισμικού ανοικτού κώδικα</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Η έκδοση αντιγράφηκε στο πρόχειρο</string>
     <!-- Assets strings -->
     <plurals name="assets__file__authors">
         <item quantity="one">Συντάκτης</item>

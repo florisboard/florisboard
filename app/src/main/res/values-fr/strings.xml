@@ -65,6 +65,7 @@
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Disposition des caractères</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Disposition principale des symboles</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Disposition secondaire de symboles</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Compositeur </string>
     <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Jeu de devises</string>
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Pavé numérique</string>
     <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Pavé numérique (avancé)</string>
@@ -322,6 +323,7 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Politique de confidentialité</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Code source</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licences Open-source</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Version copiée vers le presse-papier</string>
     <!-- Assets strings -->
     <plurals name="assets__file__authors">
         <item quantity="one">Auteur</item>

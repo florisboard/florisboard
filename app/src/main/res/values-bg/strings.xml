@@ -65,6 +65,7 @@
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Подредба на клавишите</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Символи, основен изглед</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Символи, вторичен изглед</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Съставяне</string>
     <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Валути</string>
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Цифри</string>
     <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Цифри (разширено)</string>
@@ -169,6 +170,8 @@
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Превключва езика</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Избор на приложение за клавиатура</string>
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Динамично: превключва емоджи/езика</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label">Подсказки за символи</string>
+    <string name="pref__keyboard_merge_hint_popups_enabled__summary">Добавят се подсказки със символи към подразбираната подредба</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Множител на размер на шрифта (портрет)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Множител на размер на шрифта (пейзаж)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Оформление</string>
@@ -320,6 +323,7 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Политика за поверителност</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Изходен код</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Лицензи с отворен код</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Номера на изданието е копирано в междинната памет</string>
     <!-- Assets strings -->
     <plurals name="assets__file__authors">
         <item quantity="one">Автор</item>

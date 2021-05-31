@@ -65,6 +65,7 @@
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Karakter dizilimi</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Sembol birincil dizilimi</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Sembol ikincil dizilimi</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Oluşturucu</string>
     <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Para birimi ayarları</string>
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Sayısal dizilim</string>
     <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Sayısal (ileri seviye) dizilim</string>
@@ -322,6 +323,7 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Gizlilik politikası</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Kaynak kodu</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Açık kaynak lisansları</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Sürüm panoya kopyalandı</string>
     <!-- Assets strings -->
     <plurals name="assets__file__authors">
         <item quantity="one">Oluşturan</item>

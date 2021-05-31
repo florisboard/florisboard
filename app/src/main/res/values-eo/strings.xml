@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Paŭzigi</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Atendi</string>
     <!-- One-handed strings -->

@@ -5,7 +5,7 @@
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Attendi</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Icona a tre puntini.Se visibile, indica che è possibile utilizzare più lettere se premuto a lungo.</string>
     <!-- One-handed strings -->
-    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Chiudi modalità con una mano.</string>
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Chiudi modalità mano singola.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Muovi tastiera a sinistra.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Muovi tastiera a destra.</string>
     <!-- Private mode info dialog strings -->
@@ -65,6 +65,7 @@
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Disposizione caratteri</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Disposizione principale simboli</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Disposizione secondaria simboli</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Compositore</string>
     <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Imposta valuta</string>
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Disposizione numeri</string>
     <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Disposizione numeri (avanzata)</string>
@@ -264,7 +265,7 @@
     <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Cancella la parola attuale</string>
     <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Cancella parole con precisione</string>
     <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Nascondi tastiera</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Inserisci spario</string>
+    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Inserisci spazio</string>
     <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Muovi cursore su</string>
     <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Muovi cursore giù</string>
     <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Muovi cursore a sinistra</string>
@@ -322,6 +323,7 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Norme sulla privacy</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Codice sorgente</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licenze open source</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versione copiata negli appunti</string>
     <!-- Assets strings -->
     <plurals name="assets__file__authors">
         <item quantity="one">Autore</item>
@@ -396,7 +398,7 @@
     <string name="pref__clipboard__use_internal_clipboard_title__summary">Usa gli appunti integrati invece degli appunti di sistema</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sincronizza dagli appunti di sistema</string>
     <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Gli aggiornamenti degli appunti di sistema aggiornano anche gli appunti di Floris</string>
-    <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronizza verso gli appunti di sistema</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronizza con gli appunti di sistema</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Gli aggiornamenti degli appunti di Floris aggiornano anche gli appunti di sistema</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Attiva la cronologia degli appunti</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Conserva gli appunti</string>
