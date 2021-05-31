@@ -1,7 +1,7 @@
 {
   "type": "characters",
   "name": "kurdish_standard",
-  "label": "کوردی - ستاندارد",
+  "label": 	"کوردی (ق‌ڤ‌ف‌غ)",
   "authors": [ "GoRaN" ],
   "direction": "rtl",
   "modifier": "kurdish",
@@ -10,16 +10,14 @@
       { "code":  1602, "label": "ق", "popup": {
         "main": { "code": 1647, "label": "ٯ" }
       } },
-      { "code":  1700, "label": "ڤ", "popup": {
-        "main": { "code": 1701, "label": "ڥ" }
-      } },
-      { "code":  1601, "label": "ف", "popup": {
-        "main": { "code": 1698, "label": "ڢ" }
-      } },
+      { "code":  1700, "label": "ڤ" },
+      { "code":  1601, "label": "ف" },
       { "code":  1594, "label": "غ" },
       { "code":  1593, "label": "ع"},
       { "code":  1607, "label": "ھ" },
-      { "code":  1749, "label": "ﻪ" },
+      { "code":  1749, "label": "ﻪ", "popup": {
+        "main": { "code": 1577, "label": "ة" }
+      } },
 
       { "code":  1578, "label": "ت", "popup": {
         "main": { "code": 1591, "label": "ط" }
@@ -46,7 +44,9 @@
       } },
       { "code":  1585, "label": "ر" },
       { "code":  1685, "label": "ڕ" },
-      { "code":  1583, "label": "د" },
+      { "code":  1583, "label": "د", "popup": {
+        "main": {"code": 1584, "label": "ذ" }
+      } },
       { "code":  -255, "label": "وو" },
       { "code":  1608, "label": "و" },
       { "code":  1734, "label": "ۆ" },
@@ -55,8 +55,10 @@
 
     ],
     [
-      { "code": 1600, "label": "kashida", "variation": "normal" },
-      { "code":  1574, "label": "ﺋ"},
+
+      { "code":  1574, "label": "ﺋ", "popup": {
+        "main": { "code": 1569, "label": "ء" }
+      } },
 
       { "code":  1662, "label": "پ", "popup": {
         "main": { "code": 1579, "label": "ث" }
