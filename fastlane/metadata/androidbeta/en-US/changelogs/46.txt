@@ -1,0 +1,6 @@
+- Improved keyboard view rendering performance (#966)
+- Greatly reduced rapid-fire performance delays (#883)
+- Fixed keys not registering correctly, aka "being eaten" (#953)
+- Keys not showing a shadow (#901, #921)
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.13-beta03
