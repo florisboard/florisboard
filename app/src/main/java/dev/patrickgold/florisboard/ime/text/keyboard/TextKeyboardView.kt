@@ -1254,6 +1254,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
     override fun onGlideAddPoint(point: GlideTypingGesture.Detector.Position) {
         if (prefs.glide.enabled) {
             glideDataForDrawing.add(point)
+            invalidate()
         }
     }
 
