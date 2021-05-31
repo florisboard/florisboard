@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.core
+package dev.patrickgold.florisboard.common
 
 import android.content.Context
 import android.util.AttributeSet

@@ -46,7 +46,7 @@
 
         </dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel>
 
-        <dev.patrickgold.florisboard.ime.core.FlorisViewFlipper
+        <dev.patrickgold.florisboard.common.FlorisViewFlipper
             android:id="@+id/main_view_flipper"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
 
             <include layout="@layout/clipboard_layout"/>
 
-        </dev.patrickgold.florisboard.ime.core.FlorisViewFlipper>
+        </dev.patrickgold.florisboard.common.FlorisViewFlipper>
 
         <dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel
             android:id="@+id/one_handed_ctrl_panel_end"

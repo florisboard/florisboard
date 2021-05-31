@@ -153,6 +153,13 @@ class TextKey(override val data: KeyData) : Key(data) {
         }
     }
 
+    inline fun setPressed(state: Boolean, blockIfChanged: () -> Unit) {
+        if (isPressed != state) {
+            isPressed = state
+            blockIfChanged()
+        }
+    }
+
     private fun addComputedHints(
         keyCode: Int,
         evaluator: TextComputingEvaluator,

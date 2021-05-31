@@ -30,13 +30,13 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.util.ViewLayoutUtils
+import dev.patrickgold.florisboard.common.ViewUtils
 
 class PopupView : View, ThemeManager.OnThemeUpdatedListener {
     private val themeManager: ThemeManager = ThemeManager.default()
 
     private var backgroundDrawable: PaintDrawable = PaintDrawable().apply {
-        setCornerRadius(ViewLayoutUtils.convertDpToPixel(6.0f, context))
+        setCornerRadius(ViewUtils.dp2px(6.0f))
     }
     private val labelPaint: Paint = Paint().apply {
         alpha = 255
@@ -91,7 +91,7 @@ class PopupView : View, ThemeManager.OnThemeUpdatedListener {
         backgroundDrawable.apply {
             setTint(theme.getAttr(Theme.Attr.POPUP_BACKGROUND).toSolidColor().color)
         }
-        elevation = ViewLayoutUtils.convertDpToPixel(4.0f, context)
+        elevation = ViewUtils.dp2px(4.0f)
         threeDotsDrawable?.apply {
             setTint(theme.getAttr(Theme.Attr.POPUP_FOREGROUND).toSolidColor().color)
         }

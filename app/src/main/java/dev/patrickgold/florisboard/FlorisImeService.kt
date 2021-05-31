@@ -14,27 +14,17 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.key
+package dev.patrickgold.florisboard
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import dev.patrickgold.florisboard.ime.core.FlorisBoard
 
-@Serializable
-enum class KeyVariation(val value: Int) {
-    @SerialName("all")
-    ALL(0),
-    @SerialName("email")
-    EMAIL_ADDRESS(1),
-    @SerialName("normal")
-    NORMAL(2),
-    @SerialName("password")
-    PASSWORD(3),
-    @SerialName("uri")
-    URI(4);
-
-    companion object {
-        fun fromInt(int: Int) = values().firstOrNull { it.value == int } ?: ALL
-    }
-
-    fun toInt() = value
-}
+/**
+ * This class only exists to prevent accidental IME deactivation after an update
+ * of FlorisBoard to a new version when the location of the FlorisBoard class has
+ * changed. The Android Framework uses the service class path as the IME id,
+ * using this extension here makes sure it won't change ever again for the system.
+ *
+ * Important: DO NOT PUT ANY LOGIC INTO THIS CLASS. Make the necessary changes
+ *  within the FlorisBoard class instead.
+ */
+class FlorisImeService : FlorisBoard()

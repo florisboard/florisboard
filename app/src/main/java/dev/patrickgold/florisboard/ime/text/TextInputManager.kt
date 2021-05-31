@@ -31,6 +31,10 @@ import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.extension.AssetSource
+import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
+import dev.patrickgold.florisboard.ime.keyboard.InputAttributes
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
+import dev.patrickgold.florisboard.ime.keyboard.updateKeyboardState
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.*
@@ -64,7 +68,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     lateinit var layoutManager: LayoutManager
         private set
-    private var activeKeyboardMode: KeyboardMode? = null
     val keyboards = TextKeyboardCache()
     private var textInputKeyboardView: TextKeyboardView? = null
     lateinit var textKeyboardIconSet: TextKeyboardIconSet
@@ -82,14 +85,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         )
     )
 
-    var keyVariation: KeyVariation = KeyVariation.NORMAL
     internal var smartbarView: SmartbarView? = null
 
-    // Caps/Shift related properties
-    var caps: Boolean = false
-        private set
-    var capsLock: Boolean = false
-        private set
+    val activeState: KeyboardState get() = florisboard.activeState
     private var newCapsState: Boolean = false
 
     // Composing text related properties
@@ -119,7 +117,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     val evaluator = object : TextComputingEvaluator {
         override fun evaluateCaps(): Boolean {
-            return caps || capsLock
+            return activeState.caps || activeState.capsLock
         }
 
         override fun evaluateCaps(data: TextKeyData): Boolean {
@@ -130,7 +128,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             return when (data.code) {
                 KeyCode.CLIPBOARD_COPY,
                 KeyCode.CLIPBOARD_CUT -> {
-                    florisboard.activeEditorInstance.selection.isSelectionMode &&
+                    activeState.isSelectionMode &&
                         !florisboard.activeEditorInstance.isRawInputEditor
                 }
                 KeyCode.CLIPBOARD_PASTE -> {
@@ -190,7 +188,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
 
         override fun getKeyVariation(): KeyVariation {
-            return keyVariation
+            return activeState.keyVariation
         }
 
         override fun getKeyboard(): TextKeyboard {
@@ -241,6 +239,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         textInputKeyboardView = inputView.findViewById(R.id.text_input_keyboard_view)
         textInputKeyboardView?.setIconSet(textKeyboardIconSet)
         textInputKeyboardView?.setComputingEvaluator(evaluator)
+        textInputKeyboardView?.sync()
 
         launch(Dispatchers.Main) {
             val animator1 = textViewGroup?.let {
@@ -277,6 +276,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     fun registerSmartbarView(view: SmartbarView) {
         smartbarView = view
         smartbarView?.setEventListener(this)
+        smartbarView?.sync()
     }
 
     fun unregisterSmartbarView(view: SmartbarView) {
@@ -302,22 +302,22 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     /**
-     * Evaluates the [activeKeyboardMode], [keyVariation] and [EditorInstance.isComposingEnabled]
+     * Evaluates the [KeyboardState.keyboardMode], [KeyboardState.keyVariation] and [EditorInstance.isComposingEnabled]
      * property values when starting to interact with a input editor. Also resets the composing
      * texts and sets the initial caps mode accordingly.
      */
     override fun onStartInputView(instance: EditorInstance, restarting: Boolean) {
-        val keyboardMode = when (instance.inputAttributes.type) {
+        val keyboardMode = when (activeState.inputAttributes.type) {
             InputAttributes.Type.NUMBER -> {
-                keyVariation = KeyVariation.NORMAL
+                activeState.keyVariation = KeyVariation.NORMAL
                 KeyboardMode.NUMERIC
             }
             InputAttributes.Type.PHONE -> {
-                keyVariation = KeyVariation.NORMAL
+                activeState.keyVariation = KeyVariation.NORMAL
                 KeyboardMode.PHONE
             }
             InputAttributes.Type.TEXT -> {
-                keyVariation = when (instance.inputAttributes.variation) {
+                activeState.keyVariation = when (activeState.inputAttributes.variation) {
                     InputAttributes.Variation.EMAIL_ADDRESS,
                     InputAttributes.Variation.WEB_EMAIL_ADDRESS -> {
                         KeyVariation.EMAIL_ADDRESS
@@ -337,7 +337,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 KeyboardMode.CHARACTERS
             }
             else -> {
-                keyVariation = KeyVariation.NORMAL
+                activeState.keyVariation = KeyVariation.NORMAL
                 KeyboardMode.CHARACTERS
             }
         }
@@ -346,61 +346,53 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 KeyboardMode.NUMERIC,
                 KeyboardMode.PHONE,
                 KeyboardMode.PHONE2 -> false
-                else -> keyVariation != KeyVariation.PASSWORD &&
+                else -> state.keyVariation != KeyVariation.PASSWORD &&
                         prefs.suggestion.enabled// &&
                 //!instance.inputAttributes.flagTextAutoComplete &&
                 //!instance.inputAttributes.flagTextNoSuggestions
             }
-            isPrivateMode = prefs.advanced.forcePrivateMode ||
-                    imeOptions.flagNoPersonalizedLearning
+            activeState.isPrivateMode = prefs.advanced.forcePrivateMode ||
+                    state.imeOptions.flagNoPersonalizedLearning
         }
         if (!prefs.correction.rememberCapsLockState) {
-            capsLock = false
+            activeState.capsLock = false
         }
         isGlidePostEffect = false
         updateCapsState()
-        setActiveKeyboardMode(keyboardMode)
+        setActiveKeyboardMode(keyboardMode, updateState = false)
         smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
-        smartbarView?.updateSmartbarState()
-    }
-
-    /**
-     * Handle stuff when finishing to interact with a input editor.
-     */
-    override fun onFinishInputView(finishingInput: Boolean) {
-        smartbarView?.updateSmartbarState()
     }
 
     override fun onWindowShown() {
         launch(Dispatchers.Default) {
             dictionaryManager.loadUserDictionariesIfNecessary()
         }
-        smartbarView?.updateSmartbarState()
+        textInputKeyboardView?.sync()
+        smartbarView?.sync()
     }
 
     /**
-     * Gets [activeKeyboardMode].
+     * Gets the active keyboard mode.
      *
-     * @return If null [KeyboardMode.CHARACTERS], else [activeKeyboardMode].
+     * @return The active keyboard mode.
      */
     fun getActiveKeyboardMode(): KeyboardMode {
-        return activeKeyboardMode ?: KeyboardMode.CHARACTERS
+        return activeState.keyboardMode
     }
 
     /**
-     * Sets [activeKeyboardMode] and updates the [SmartbarView.isQuickActionsVisible] state.
+     * Sets the active keyboard mode and updates the [KeyboardState.isQuickActionsVisible] state.
      */
-    private fun setActiveKeyboardMode(mode: KeyboardMode) = launch {
-        setActiveKeyboard(mode, florisboard.activeSubtype)
-        activeKeyboardMode = mode
+    private fun setActiveKeyboardMode(mode: KeyboardMode, updateState: Boolean = true) = launch {
+        activeState.keyboardMode = mode
         isManualSelectionMode = false
         isManualSelectionModeStart = false
         isManualSelectionModeEnd = false
-        smartbarView?.isQuickActionsVisible = false
-        smartbarView?.updateSmartbarState()
+        activeState.isQuickActionsVisible = false
+        setActiveKeyboard(mode, florisboard.activeSubtype, updateState)
     }
 
-    private fun setActiveKeyboard(mode: KeyboardMode, subtype: Subtype) = launch(Dispatchers.IO) {
+    private fun setActiveKeyboard(mode: KeyboardMode, subtype: Subtype, updateState: Boolean = true) = launch(Dispatchers.IO) {
         val activeKeyboard = keyboards.getOrElseAsync(mode, subtype) {
             layoutManager.computeKeyboardAsync(
                 keyboardMode = mode,
@@ -409,6 +401,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }.await()
         withContext(Dispatchers.Main) {
             textInputKeyboardView?.setComputedKeyboard(activeKeyboard)
+            if (updateState) {
+                florisboard.dispatchCurrentStateToInputUi()
+            }
         }
     }
 
@@ -433,7 +428,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         if (!inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
             updateCapsState()
         }
-        smartbarView?.updateSmartbarState()
         flogInfo(LogTopic.IMS_EVENTS) { "current word: ${activeEditorInstance.cachedInput.currentWord.text}" }
         if (activeEditorInstance.isComposingEnabled && !inputEventDispatcher.isPressed(KeyCode.DELETE) && !isGlidePostEffect) {
             if (activeEditorInstance.shouldReevaluateComposingSuggestions) {
@@ -469,13 +463,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     /**
      * Updates the current caps state according to the [EditorInstance.cursorCapsMode], while
-     * respecting [capsLock] property and the correction.autoCapitalization preference.
+     * respecting [KeyboardState.capsLock] property and the correction.autoCapitalization preference.
      */
     private fun updateCapsState() {
-        if (!capsLock) {
-            caps = prefs.correction.autoCapitalization &&
+        if (!activeState.capsLock) {
+            activeState.caps = prefs.correction.autoCapitalization &&
                     activeEditorInstance.cursorCapsMode != InputAttributes.CapsMode.NONE
-            textInputKeyboardView?.notifyStateChanged()
         }
     }
 
@@ -539,8 +532,13 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     override fun onSmartbarQuickActionPressed(quickActionId: Int) {
         when (quickActionId) {
+            R.id.quick_action_toggle -> {
+                activeState.isQuickActionsVisible = !activeState.isQuickActionsVisible
+                smartbarView?.updateKeyboardState(activeState)
+                return
+            }
             R.id.quick_action_switch_to_editing_context -> {
-                if (activeKeyboardMode == KeyboardMode.EDITING) {
+                if (activeState.keyboardMode == KeyboardMode.EDITING) {
                     setActiveKeyboardMode(KeyboardMode.CHARACTERS)
                 } else {
                     setActiveKeyboardMode(KeyboardMode.EDITING)
@@ -558,8 +556,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 return
             }
         }
-        smartbarView?.isQuickActionsVisible = false
-        smartbarView?.updateSmartbarState()
+        activeState.isQuickActionsVisible = false
+        smartbarView?.updateKeyboardState(activeState)
     }
 
     /**
@@ -593,17 +591,17 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Handles a [KeyCode.ENTER] event.
      */
     private fun handleEnter() {
-        if (activeEditorInstance.imeOptions.flagNoEnterAction) {
+        if (activeState.imeOptions.flagNoEnterAction) {
             activeEditorInstance.performEnter()
         } else {
-            when (activeEditorInstance.imeOptions.action) {
-                ImeOptions.Action.DONE,
-                ImeOptions.Action.GO,
-                ImeOptions.Action.NEXT,
-                ImeOptions.Action.PREVIOUS,
-                ImeOptions.Action.SEARCH,
-                ImeOptions.Action.SEND -> {
-                    activeEditorInstance.performEnterAction(activeEditorInstance.imeOptions.action)
+            when (activeState.imeOptions.enterAction) {
+                ImeOptions.EnterAction.DONE,
+                ImeOptions.EnterAction.GO,
+                ImeOptions.EnterAction.NEXT,
+                ImeOptions.EnterAction.PREVIOUS,
+                ImeOptions.EnterAction.SEARCH,
+                ImeOptions.EnterAction.SEND -> {
+                    activeEditorInstance.performEnterAction(activeState.imeOptions.enterAction)
                 }
                 else -> activeEditorInstance.performEnter()
             }
@@ -629,34 +627,34 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private fun handleShiftDown(ev: InputKeyEvent) {
         if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventDown, prefs.keyboard.longPressDelay.toLong())) {
             newCapsState = true
-            caps = true
-            capsLock = true
+            activeState.caps = true
+            activeState.capsLock = true
         } else {
-            newCapsState = !caps
-            caps = true
-            capsLock = false
+            newCapsState = !activeState.caps
+            activeState.caps = true
+            activeState.capsLock = false
         }
-        textInputKeyboardView?.notifyStateChanged()
         smartbarView?.updateCandidateSuggestionCapsState()
+        florisboard.dispatchCurrentStateToInputUi()
     }
 
     /**
      * Handles a [KeyCode.SHIFT] up event.
      */
     private fun handleShiftUp() {
-        caps = newCapsState
-        textInputKeyboardView?.notifyStateChanged()
+        activeState.caps = newCapsState
         smartbarView?.updateCandidateSuggestionCapsState()
+        florisboard.dispatchCurrentStateToInputUi()
     }
 
     /**
      * Handles a [KeyCode.SHIFT] cancel event.
      */
     private fun handleShiftCancel() {
-        caps = false
-        capsLock = false
-        textInputKeyboardView?.notifyStateChanged()
+        activeState.caps = false
+        activeState.capsLock = false
         smartbarView?.updateCandidateSuggestionCapsState()
+        florisboard.dispatchCurrentStateToInputUi()
     }
 
     /**
@@ -666,10 +664,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         val lastKeyEvent = inputEventDispatcher.lastKeyEventDown ?: return
         if (lastKeyEvent.data.code == KeyCode.SHIFT && lastKeyEvent.action == InputKeyEvent.Action.DOWN) {
             newCapsState = true
-            caps = true
-            capsLock = true
-            textInputKeyboardView?.notifyStateChanged()
+            activeState.caps = true
+            activeState.capsLock = true
             smartbarView?.updateCandidateSuggestionCapsState()
+            florisboard.dispatchCurrentStateToInputUi()
         }
     }
 
@@ -841,7 +839,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyCode.VIEW_SYMBOLS2 -> setActiveKeyboardMode(KeyboardMode.SYMBOLS2)
             KeyCode.UNDO -> activeEditorInstance.performUndo()
             else -> {
-                when (activeKeyboardMode) {
+                when (activeState.keyboardMode) {
                     KeyboardMode.NUMERIC,
                     KeyboardMode.NUMERIC_ADVANCED,
                     KeyboardMode.PHONE,
@@ -880,13 +878,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 }
             }
         }
-        if (data.code != KeyCode.SHIFT && !capsLock && !inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
+        if (data.code != KeyCode.SHIFT && !activeState.capsLock && !inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
             updateCapsState()
         }
         if (ev.data.code > KeyCode.SPACE) {
             isGlidePostEffect = false
         }
-        smartbarView?.updateSmartbarState()
     }
 
     override fun onInputKeyRepeat(ev: InputKeyEvent) {
@@ -907,14 +904,14 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     /**
      * Changes a word to the current case.
-     * eg if [capsLock] is true, abc -> ABC
+     * eg if [KeyboardState.capsLock] is true, abc -> ABC
      *    if [caps]     is true, abc -> Abc
      *    otherwise            , abc -> abc
      */
     fun fixCase(word: String): String {
         return when {
-            capsLock -> word.uppercase(florisboard.activeSubtype.locale)
-            caps -> word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(florisboard.activeSubtype.locale) else it.toString() }
+            activeState.capsLock -> word.uppercase(florisboard.activeSubtype.locale)
+            activeState.caps -> word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(florisboard.activeSubtype.locale) else it.toString() }
             else -> word
         }
     }

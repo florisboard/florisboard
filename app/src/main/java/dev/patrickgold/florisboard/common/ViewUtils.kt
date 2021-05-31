@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2011 The Android Open Source Project
+ * Copyright (C) 2021 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +15,14 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.util
+package dev.patrickgold.florisboard.common
 
-import android.content.Context
+import android.content.res.Resources
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.Window
 import android.widget.FrameLayout
 import android.widget.LinearLayout
-
 
 /**
  * This file has been taken from the Android LatinIME project. Following modifications were done to
@@ -38,7 +38,7 @@ import android.widget.LinearLayout
  * The original source code can be found at the following location:
  *  https://android.googlesource.com/platform/packages/inputmethods/LatinIME/+/refs/heads/master/java/src/com/android/inputmethod/latin/utils/ViewLayoutUtils.java
  */
-object ViewLayoutUtils {
+object ViewUtils {
     fun updateLayoutHeightOf(window: Window, layoutHeight: Int) {
         val params = window.attributes
         if (params != null && params.height != layoutHeight) {
@@ -81,11 +81,10 @@ object ViewLayoutUtils {
      * Source: https://stackoverflow.com/a/9563438/6801193 (by Muhammad Nabeel Arif)
      *
      * @param dp A value in dp (density independent pixels) unit. Which we need to convert into pixels
-     * @param context Context to get resources and device specific display metrics
      * @return A float value to represent px equivalent to dp depending on device density
      */
-    fun convertDpToPixel(dp: Float, context: Context): Float {
-        return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+    fun dp2px(dp: Float): Float {
+        return dp * (Resources.getSystem().displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
     }
 
     /**
@@ -94,10 +93,9 @@ object ViewLayoutUtils {
      * Source: https://stackoverflow.com/a/9563438/6801193 (by Muhammad Nabeel Arif)
      *
      * @param px A value in px (pixels) unit. Which we need to convert into db
-     * @param context Context to get resources and device specific display metrics
      * @return A float value to represent dp equivalent to px value
      */
-    fun convertPixelsToDp(px: Float, context: Context): Float {
-        return px / (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+    fun px2dp(px: Float): Float {
+        return px / (Resources.getSystem().displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
     }
 }

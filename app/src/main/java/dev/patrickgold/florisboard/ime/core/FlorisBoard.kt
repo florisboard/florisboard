@@ -74,7 +74,9 @@ import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.setup.SetupActivity
 import dev.patrickgold.florisboard.util.AppVersionUtils
-import dev.patrickgold.florisboard.util.ViewLayoutUtils
+import dev.patrickgold.florisboard.common.ViewUtils
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
+import dev.patrickgold.florisboard.ime.keyboard.updateKeyboardState
 import dev.patrickgold.florisboard.util.debugSummarize
 import dev.patrickgold.florisboard.util.findViewWithType
 import dev.patrickgold.florisboard.util.refreshLayoutOf
@@ -107,7 +109,7 @@ private var florisboardInstance: FlorisBoard? = null
  * All inline suggestion code has been added based on this demo autofill IME provided by Android directly:
  *  https://cs.android.com/android/platform/superproject/+/master:development/samples/AutofillKeyboard/src/com/example/android/autofillkeyboard/AutofillImeService.java
  */
-class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager.OnPrimaryClipChangedListener,
+open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager.OnPrimaryClipChangedListener,
     ThemeManager.OnThemeUpdatedListener {
 
     private val serviceLifecycleDispatcher: ServiceLifecycleDispatcher = ServiceLifecycleDispatcher(this)
@@ -124,6 +126,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         get() = _themeContext ?: this
 
     private val prefs: Preferences get() = Preferences.default()
+    val activeState: KeyboardState = KeyboardState.new()
 
     private var extractEditLayout: WeakReference<ViewGroup?> = WeakReference(null)
     var inputView: InputView? = null
@@ -140,6 +143,15 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     private var vibrator: Vibrator? = null
 
     private var internalBatchNestingLevel: Int = 0
+    private val internalSelectionCache = object {
+        var selectionCatchCount: Int = 0
+        var oldSelStart: Int = -1
+        var oldSelEnd: Int = -1
+        var newSelStart: Int = -1
+        var newSelEnd: Int = -1
+        var candidatesStart: Int = -1
+        var candidatesEnd: Int = -1
+    }
 
     var activeEditorInstance: EditorInstance = EditorInstance.default()
 
@@ -322,7 +334,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
                 false
             } else {
                 when (prefs.keyboard.landscapeInputUiMode) {
-                    LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeEditorInstance.imeOptions.flagNoFullscreen && !activeEditorInstance.imeOptions.flagNoExtractUi
+                    LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeState.imeOptions.flagNoFullscreen && !activeState.imeOptions.flagNoExtractUi
                     LandscapeInputUiMode.NEVER_SHOW -> false
                     LandscapeInputUiMode.ALWAYS_SHOW -> true
                 }
@@ -337,7 +349,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
 
     override fun onUpdateExtractingVisibility(ei: EditorInfo?) {
         isExtractViewShown = !activeEditorInstance.isRawInputEditor && when (prefs.keyboard.landscapeInputUiMode) {
-            LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeEditorInstance.imeOptions.flagNoExtractUi
+            LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeState.imeOptions.flagNoExtractUi
             LandscapeInputUiMode.NEVER_SHOW -> false
             LandscapeInputUiMode.ALWAYS_SHOW -> true
         }
@@ -356,6 +368,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
         updateOneHandedPanelVisibility()
         themeManager.notifyCallbackReceivers()
         setActiveInput(R.id.text_input)
+        dispatchCurrentStateToInputUi()
 
         eventListeners.toList().forEach { it?.onRegisterInputView(inputView) }
     }
@@ -373,15 +386,19 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
-        flogInfo(LogTopic.IMS_EVENTS) { "restarting=$restarting"}
+        flogInfo(LogTopic.IMS_EVENTS) { "restarting=$restarting" }
         flogInfo(LogTopic.IMS_EVENTS) { info?.debugSummarize() ?: "" }
 
         super.onStartInputView(info, restarting)
-        activeEditorInstance = EditorInstance.from(info, this)
+        if (info != null) {
+            activeState.update(info)
+        }
+        activeEditorInstance = EditorInstance.from(info, this, activeState)
         themeManager.updateRemoteColorValues(activeEditorInstance.packageName)
         eventListeners.toList().forEach {
             it?.onStartInputView(activeEditorInstance, restarting)
         }
+        dispatchCurrentStateToInputUi()
     }
 
     override fun onFinishInputView(finishingInput: Boolean) {
@@ -397,6 +414,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
 
         super.onFinishInputView(finishingInput)
         eventListeners.toList().forEach { it?.onFinishInputView(finishingInput) }
+        dispatchCurrentStateToInputUi()
     }
 
     override fun onFinishInput() {
@@ -469,6 +487,10 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
             }
             responseState = ResponseState.RESET
         }.also { handler.post(it) }
+    }
+
+    fun dispatchCurrentStateToInputUi() {
+        inputView?.updateKeyboardState(activeState)
     }
 
     override fun onWindowShown() {
@@ -550,6 +572,24 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
      */
     fun endInternalBatchEdit() {
         internalBatchNestingLevel = (internalBatchNestingLevel - 1).coerceAtLeast(0)
+        if (internalBatchNestingLevel == 0) {
+            internalSelectionCache.apply {
+                if (selectionCatchCount > 0) {
+                    onUpdateSelection(
+                        oldSelStart, oldSelEnd,
+                        newSelStart, newSelEnd,
+                        candidatesStart, candidatesEnd
+                    )
+                    selectionCatchCount = 0
+                    oldSelStart = -1
+                    oldSelEnd = -1
+                    newSelStart = -1
+                    newSelEnd = -1
+                    candidatesStart = -1
+                    candidatesEnd = -1
+                }
+            }
+        }
     }
 
     override fun onUpdateSelection(
@@ -563,13 +603,27 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
             candidatesStart, candidatesEnd
         )
 
-        flogInfo(LogTopic.IMS_EVENTS) { "$oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd" }
-        activeEditorInstance.onUpdateSelection(
-            oldSelStart, oldSelEnd,
-            newSelStart, newSelEnd,
-            candidatesStart, candidatesEnd
-        )
-        eventListeners.toList().forEach { it?.onUpdateSelection() }
+        activeState.isSelectionMode = (newSelEnd - newSelStart) != 0
+        if (internalBatchNestingLevel == 0) {
+            flogInfo(LogTopic.IMS_EVENTS) { "onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd)" }
+            activeEditorInstance.onUpdateSelection(
+                oldSelStart, oldSelEnd,
+                newSelStart, newSelEnd,
+                candidatesStart, candidatesEnd
+            )
+            eventListeners.toList().forEach { it?.onUpdateSelection() }
+            dispatchCurrentStateToInputUi()
+        } else {
+            flogInfo(LogTopic.IMS_EVENTS) { "onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd): caught due to internal batch level of $internalBatchNestingLevel!" }
+            if (internalSelectionCache.selectionCatchCount++ == 0) {
+                internalSelectionCache.oldSelStart = oldSelStart
+                internalSelectionCache.oldSelEnd = oldSelEnd
+            }
+            internalSelectionCache.newSelStart = newSelStart
+            internalSelectionCache.newSelEnd = newSelEnd
+            internalSelectionCache.candidatesStart = candidatesStart
+            internalSelectionCache.candidatesEnd = candidatesEnd
+        }
     }
 
     override fun onThemeUpdated(theme: Theme) {
@@ -669,7 +723,7 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
      */
     private fun updateSoftInputWindowLayoutParameters() {
         val w = window?.window ?: return
-        ViewLayoutUtils.updateLayoutHeightOf(w, WindowManager.LayoutParams.MATCH_PARENT)
+        ViewUtils.updateLayoutHeightOf(w, WindowManager.LayoutParams.MATCH_PARENT)
         val inputWindowView = this.inputWindowView
         if (inputWindowView != null) {
             val layoutHeight = if (isFullscreenMode) {
@@ -678,9 +732,9 @@ class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager
                 WindowManager.LayoutParams.MATCH_PARENT
             }
             val inputArea = w.findViewById<View>(android.R.id.inputArea)
-            ViewLayoutUtils.updateLayoutHeightOf(inputArea, layoutHeight)
-            ViewLayoutUtils.updateLayoutGravityOf(inputArea, Gravity.BOTTOM)
-            ViewLayoutUtils.updateLayoutHeightOf(inputWindowView, layoutHeight)
+            ViewUtils.updateLayoutHeightOf(inputArea, layoutHeight)
+            ViewUtils.updateLayoutGravityOf(inputArea, Gravity.BOTTOM)
+            ViewUtils.updateLayoutHeightOf(inputWindowView, layoutHeight)
         }
     }
 

@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2021 ostrya
+ * Copyright (C) 2021 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +17,15 @@
 
 package dev.patrickgold.florisboard.ime.text.key
 
+/**
+ * Helper class for summarizing all hint preferences in one single object.
+ */
 data class KeyHintConfiguration(
     val symbolHintMode: KeyHintMode,
     val numberHintMode: KeyHintMode,
     val mergeHintPopups: Boolean
-)
-
-val HINTS_DISABLED: KeyHintConfiguration = KeyHintConfiguration(KeyHintMode.DISABLED, KeyHintMode.DISABLED, false)
+) {
+    companion object {
+        val HINTS_DISABLED = KeyHintConfiguration(KeyHintMode.DISABLED, KeyHintMode.DISABLED, false)
+    }
+}

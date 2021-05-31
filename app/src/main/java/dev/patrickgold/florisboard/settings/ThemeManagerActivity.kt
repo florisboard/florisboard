@@ -32,7 +32,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.forEach
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.ThemeManagerActivityBinding
-import dev.patrickgold.florisboard.ime.core.FlorisActivity
+import dev.patrickgold.florisboard.common.FlorisActivity
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.AssetManager
@@ -45,7 +45,7 @@ import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeMetaOnly
-import dev.patrickgold.florisboard.util.ViewLayoutUtils
+import dev.patrickgold.florisboard.common.ViewUtils
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -383,8 +383,8 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 ).apply {
-                    val marginV = ViewLayoutUtils.convertDpToPixel(8.0f, context).toInt()
-                    val marginH = ViewLayoutUtils.convertDpToPixel(16.0f, context).toInt()
+                    val marginV = ViewUtils.dp2px(8.0f).toInt()
+                    val marginH = ViewUtils.dp2px(16.0f).toInt()
                     setMargins(marginH, marginV, marginH, marginV)
                     setPadding(marginV, 0, 0, 0)
                 }

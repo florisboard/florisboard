@@ -22,9 +22,9 @@ import android.view.VelocityTracker
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
-import dev.patrickgold.florisboard.ime.view.Pointer
-import dev.patrickgold.florisboard.ime.view.PointerMap
-import dev.patrickgold.florisboard.util.ViewLayoutUtils
+import dev.patrickgold.florisboard.common.Pointer
+import dev.patrickgold.florisboard.common.PointerMap
+import dev.patrickgold.florisboard.common.ViewUtils
 import kotlin.math.abs
 import kotlin.math.atan2
 
@@ -155,8 +155,8 @@ abstract class SwipeGesture {
                 val absDiffX = event.getX(pointer.index) - gesturePointer.firstX
                 val absDiffY = event.getY(pointer.index) - gesturePointer.firstY
                 velocityTracker.computeCurrentVelocity(1000)
-                val velocityX = ViewLayoutUtils.convertDpToPixel(velocityTracker.getXVelocity(pointer.id), context)
-                val velocityY = ViewLayoutUtils.convertDpToPixel(velocityTracker.getYVelocity(pointer.id), context)
+                val velocityX = ViewUtils.dp2px(velocityTracker.getXVelocity(pointer.id))
+                val velocityY = ViewUtils.dp2px(velocityTracker.getYVelocity(pointer.id))
                 flogDebug(LogTopic.GESTURES) { "Velocity: $velocityX $velocityY dp/s" }
                 pointerMap.removeById(pointer.id)
                 return if ((abs(absDiffX) > thresholdWidth || abs(absDiffY) > thresholdWidth) && (abs(velocityX) > thresholdSpeed || abs(velocityY) > thresholdSpeed)) {
