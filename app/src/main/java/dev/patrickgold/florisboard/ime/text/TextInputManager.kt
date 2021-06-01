@@ -257,7 +257,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     start()
                 }
             }
-            setActiveKeyboardMode(getActiveKeyboardMode())
             animator1?.cancel()
             animator2?.cancel()
             val animator3 = textViewGroup?.let {

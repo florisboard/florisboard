@@ -77,10 +77,10 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
  */
 class KeyboardState private constructor(var value: ULong, var maskOfInterest: ULong) {
     companion object {
-        const val M_KEY_VARIATION: ULong =                  0x0Fu
-        const val O_KEY_VARIATION: Int =                    0
         const val M_KEYBOARD_MODE: ULong =                  0x0Fu
-        const val O_KEYBOARD_MODE: Int =                    4
+        const val O_KEYBOARD_MODE: Int =                    0
+        const val M_KEY_VARIATION: ULong =                  0x0Fu
+        const val O_KEY_VARIATION: Int =                    4
 
         const val F_CAPS: ULong =                           0x00000100u
         const val F_CAPS_LOCK: ULong =                      0x00000200u
@@ -171,7 +171,7 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
 
     var keyboardMode: KeyboardMode
         get() = KeyboardMode.fromInt(getRegion(M_KEYBOARD_MODE, O_KEYBOARD_MODE))
-        set(v) { setRegion(M_KEY_VARIATION, O_KEY_VARIATION, v.toInt()) }
+        set(v) { setRegion(M_KEYBOARD_MODE, O_KEYBOARD_MODE, v.toInt()) }
 
     var caps: Boolean
         get() = getFlag(F_CAPS)
