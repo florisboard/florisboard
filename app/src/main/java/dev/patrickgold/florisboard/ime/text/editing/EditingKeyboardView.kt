@@ -98,11 +98,11 @@ class EditingKeyboardView : ConstraintLayout, FlorisBoard.EventListener,
             }
             MeasureSpec.AT_MOST -> {
                 // Can't be bigger than...
-                (florisboard?.inputView?.desiredTextKeyboardViewHeight ?: 0.0f).coerceAtMost(heightSize)
+                (florisboard?.uiBinding?.inputView?.desiredTextKeyboardViewHeight ?: 0.0f).coerceAtMost(heightSize)
             }
             else -> {
                 // Be whatever you want
-                florisboard?.inputView?.desiredTextKeyboardViewHeight ?: 0.0f
+                florisboard?.uiBinding?.inputView?.desiredTextKeyboardViewHeight ?: 0.0f
             }
         }
 

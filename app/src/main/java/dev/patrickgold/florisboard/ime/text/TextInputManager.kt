@@ -16,14 +16,12 @@
 
 package dev.patrickgold.florisboard.ime.text
 
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.view.KeyEvent
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.databinding.FlorisboardBinding
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.*
@@ -43,7 +41,6 @@ import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import kotlinx.coroutines.*
 import org.json.JSONArray
-import kotlin.math.roundToLong
 
 /**
  * TextInputManager is responsible for managing everything which is related to text input. All of
@@ -72,7 +69,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private var textInputKeyboardView: TextKeyboardView? = null
     lateinit var textKeyboardIconSet: TextKeyboardIconSet
         private set
-    private var textViewGroup: LinearLayout? = null
     private val dictionaryManager: DictionaryManager get() = DictionaryManager.default()
     val inputEventDispatcher: InputEventDispatcher = InputEventDispatcher.new(
         repeatableKeyCodes = intArrayOf(
@@ -224,63 +220,21 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
     }
 
-    override fun onCreateInputView() {
-        flogInfo(LogTopic.IMS_EVENTS)
-    }
-
-    /**
-     * Sets up the newly registered input view.
-     */
-    override fun onRegisterInputView(inputView: InputView) {
+    override fun onInitializeInputUi(uiBinding: FlorisboardBinding) {
         flogInfo(LogTopic.IMS_EVENTS)
 
-        textViewGroup = inputView.findViewById(R.id.text_input)
-        textInputKeyboardView = inputView.findViewById(R.id.text_input_keyboard_view)
-        textInputKeyboardView?.setIconSet(textKeyboardIconSet)
-        textInputKeyboardView?.setComputingEvaluator(evaluator)
-        textInputKeyboardView?.sync()
-
-        launch(Dispatchers.Main) {
-            val animator1 = textViewGroup?.let {
-                ObjectAnimator.ofFloat(it, "alpha", 0.9f, 1.0f).apply {
-                    duration = 125
-                    repeatCount = 0
-                    start()
-                }
-            }
-            val animator2 = textViewGroup?.let {
-                ObjectAnimator.ofFloat(it, "alpha", 1.0f, 0.4f).apply {
-                    startDelay = 125
-                    duration = 500
-                    repeatCount = ValueAnimator.INFINITE
-                    repeatMode = ValueAnimator.REVERSE
-                    start()
-                }
-            }
-            animator1?.cancel()
-            animator2?.cancel()
-            val animator3 = textViewGroup?.let {
-                ObjectAnimator.ofFloat(it, "alpha", it.alpha, 1.0f).apply {
-                    duration = (((1.0f - it.alpha) / 0.6f) * 125f).roundToLong()
-                    repeatCount = 0
-                    start()
-                }
-            }
-            delay(animator3?.duration ?: 1)
-            animator3?.end()
+        textInputKeyboardView = uiBinding.text.mainKeyboardView.also {
+            it.setIconSet(textKeyboardIconSet)
+            it.setComputingEvaluator(evaluator)
+            it.sync()
         }
-    }
 
-    fun registerSmartbarView(view: SmartbarView) {
-        smartbarView = view
-        smartbarView?.setEventListener(this)
-        smartbarView?.sync()
-    }
-
-    fun unregisterSmartbarView(view: SmartbarView) {
-        if (smartbarView == view) {
-            smartbarView = null
+        smartbarView = uiBinding.text.smartbar.root.also {
+            it.setEventListener(this)
+            it.sync()
         }
+
+        setActiveKeyboardMode(getActiveKeyboardMode(), updateState = false)
     }
 
     /**
@@ -289,11 +243,18 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     override fun onDestroy() {
         flogInfo(LogTopic.IMS_EVENTS)
 
+        smartbarView?.setEventListener(null)
+        smartbarView = null
+
         textInputKeyboardView?.setComputingEvaluator(null)
+        textInputKeyboardView = null
         keyboards.clear()
+
         inputEventDispatcher.keyEventReceiver = null
         inputEventDispatcher.close()
+
         dictionaryManager.unloadUserDictionariesIfNecessary()
+
         cancel()
         layoutManager.onDestroy()
         instance = null

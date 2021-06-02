@@ -2,16 +2,17 @@
 <dev.patrickgold.florisboard.ime.core.InputWindowView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/florisboard"
+    android:id="@+id/input_window_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:layoutDirection="ltr">
+    android:layoutDirection="ltr"
+    android:hapticFeedbackEnabled="true">
 
     <dev.patrickgold.florisboard.ime.core.InputView
-        android:id="@+id/inner_input_view_container"
+        android:id="@+id/input_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -53,11 +54,11 @@
             android:layout_weight="1"
             android:measureAllChildren="false">
 
-            <include layout="@layout/text_input_layout"/>
+            <include android:id="@+id/text" layout="@layout/text_input_layout"/>
 
-            <include layout="@layout/media_input_layout"/>
+            <include android:id="@+id/media" layout="@layout/media_input_layout"/>
 
-            <include layout="@layout/clipboard_layout"/>
+            <include android:id="@+id/clipboard" layout="@layout/clipboard_layout"/>
 
         </dev.patrickgold.florisboard.common.FlorisViewFlipper>
 

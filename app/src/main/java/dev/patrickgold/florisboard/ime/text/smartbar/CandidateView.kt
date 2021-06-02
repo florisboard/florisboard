@@ -132,7 +132,7 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         recomputeCandidates()
     }
 
-    fun setEventListener(listener: SmartbarView.EventListener) {
+    fun setEventListener(listener: SmartbarView.EventListener?) {
         eventListener = WeakReference(listener)
     }
 
