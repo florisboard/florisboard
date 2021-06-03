@@ -67,18 +67,6 @@
       { "$": "auto_text_key", "code":  109, "label": "m" },
       { "$": "auto_text_key", "code":  118, "label": "v" },
       { "$": "auto_text_key", "code":   99, "label": "c" },
-      { "$": "case_selector",
-        "lower": { "code":   47, "label": "/", "popup": {
-          "relevant": [
-            { "code":   63, "label": "?" }
-          ]
-        } },
-        "upper": { "code":   63, "label": "?", "popup": {
-          "relevant": [
-            { "code":   47, "label": "/" }
-          ]
-        } }
-      },
       { "$": "auto_text_key", "code":  103, "label": "g" },
       { "$": "auto_text_key", "code":  112, "label": "p" },
       { "$": "auto_text_key", "code":  120, "label": "x" },
