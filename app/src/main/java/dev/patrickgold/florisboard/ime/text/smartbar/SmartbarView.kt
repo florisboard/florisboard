@@ -159,13 +159,7 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
             eventListener.get()?.onSmartbarQuickActionPressed(it.id)
         }
 
-        configureFeatureVisibility(
-            actionStartAreaVisible = false,
-            actionStartAreaId = null,
-            mainAreaId = null,
-            actionEndAreaVisible = false,
-            actionEndAreaId = null
-        )
+        configureFeatureVisibility()
 
         themeManager.registerOnThemeUpdatedListener(this)
     }
@@ -220,6 +214,12 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
             binding.actionEndArea.displayedChild =
                 indexedActionEndArea.indexOf(actionEndAreaId).coerceAtLeast(0)
         }
+
+        cachedActionStartAreaVisible = actionStartAreaVisible
+        cachedActionStartAreaId = actionStartAreaId
+        cachedMainAreaId = mainAreaId
+        cachedActionEndAreaVisible = actionEndAreaVisible
+        cachedActionEndAreaId = actionEndAreaId
     }
 
     override fun onInterceptUpdateKeyboardState(newState: KeyboardState): Boolean {

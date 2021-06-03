@@ -287,6 +287,8 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         updateOneHandedPanelVisibility()
 
         themeManager.requestThemeUpdate(this)
+
+        dispatchCurrentStateToInputUi()
     }
 
     /**
@@ -511,6 +513,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         }
         setActiveInput(R.id.text_input)
         updateOneHandedPanelVisibility()
+        themeManager.update()
 
         if (prefs.devtools.enabled && prefs.devtools.showHeapMemoryStats) {
             devtoolsOverlaySyncJob?.cancel()
