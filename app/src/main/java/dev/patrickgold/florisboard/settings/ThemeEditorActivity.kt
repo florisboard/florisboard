@@ -91,6 +91,8 @@ class ThemeEditorActivity : AppCompatActivity() {
 
         binding.themeNameEditBtn.setOnClickListener { showMetaEditDialog() }
 
+        binding.keyboardPreview.sync()
+
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 

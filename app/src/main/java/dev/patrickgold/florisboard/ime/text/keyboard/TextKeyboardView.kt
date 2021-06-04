@@ -161,6 +161,10 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         popupManager = PopupManager(this, popupLayerView)
         swipeGestureDetector.isEnabled = !isSmartbarKeyboardView
 
+        if (isPreviewMode) {
+            background = backgroundDrawable
+        }
+
         setWillNotDraw(false)
     }
 
@@ -806,21 +810,34 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         }
         keyboard.layout(this)
         val theme = cachedTheme ?: themeManager?.activeTheme ?: Theme.BASE_THEME
+        val isBorderless = !theme.getAttr(Theme.Attr.KEY_SHOW_BORDER).toOnOff().state
         keyboard.keys().withIndex().forEach { (n, key) ->
             getChildAt(n)?.let { rv ->
                 if (rv is TextKeyView) {
                     rv.key = key
-                    rv.layout(
-                        key.visibleBounds.left,
-                        key.visibleBounds.top,
-                        key.visibleBounds.right,
-                        key.visibleBounds.bottom
-                    )
+                    layoutRenderView(rv, key, isBorderless)
                     prepareKey(key, theme, rv)
                     rv.invalidate()
                 }
             }
         }
+    }
+
+    private fun layoutRenderView(rv: TextKeyView, key: TextKey, isBorderless: Boolean) {
+        rv.layout(
+            key.visibleBounds.left,
+            if (isBorderless) {
+                (key.visibleBounds.top + key.visibleBounds.height() * 0.12).toInt()
+            } else {
+                key.visibleBounds.top
+            },
+            key.visibleBounds.right,
+            if (isBorderless) {
+                (key.visibleBounds.bottom - key.visibleBounds.height() * 0.12).toInt()
+            } else {
+                key.visibleBounds.bottom
+            }
+        )
     }
 
     private fun prepareKey(key: TextKey, theme: Theme, renderView: TextKeyView) {
@@ -880,7 +897,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             }
         }
         renderView.let { rv ->
-            rv.elevation = if (shouldShowBorder) 6.0f else 0.0f
+            rv.elevation = if (shouldShowBorder) 4.0f else 0.0f
             rv.bgDrawable.paint.color = keyBackground.toSolidColor().color
             rv.labelPaint.let {
                 it.color = keyForeground.toSolidColor().color
@@ -965,7 +982,15 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         } else {
             glideTrailPaint.color = theme.getAttr(Theme.Attr.GLIDE_TRAIL_COLOR).toSolidColor().color
         }
-        invalidate()
+        val isBorderless = !theme.getAttr(Theme.Attr.KEY_SHOW_BORDER).toOnOff().state
+        for (n in 0 until childCount) {
+            val rv = getChildAt(n) as? TextKeyView
+            if (rv?.key != null) {
+                layoutRenderView(rv, rv.key!!, isBorderless)
+                prepareKey(rv.key!!, cachedTheme ?: themeManager?.activeTheme ?: Theme.BASE_THEME, rv)
+                rv.invalidate()
+            }
+        }
     }
 
     private fun invalidate(key: TextKey) {
@@ -976,15 +1001,6 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 rv.invalidate()
                 break
             }
-        }
-    }
-
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-        if (canvas == null || !isVisible || !isPreviewMode) return
-        backgroundDrawable.let {
-            it.setBounds(0, 0, measuredWidth, measuredHeight)
-            it.draw(canvas)
         }
     }
 

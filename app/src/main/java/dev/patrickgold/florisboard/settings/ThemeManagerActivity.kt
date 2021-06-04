@@ -164,6 +164,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         textKeyboardIconSet = TextKeyboardIconSet.new(this)
         binding.keyboardPreview.setIconSet(textKeyboardIconSet)
         binding.keyboardPreview.setComputingEvaluator(textComputingEvaluator)
+        binding.keyboardPreview.sync()
 
         buildUi()
     }
