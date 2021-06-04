@@ -230,7 +230,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
                 vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
                 prefs.sync()
                 activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
-                onSubtypeChanged(activeSubtype, false)
 
                 currentThemeIsNight = themeManager.activeTheme.isNightTheme
                 currentThemeResId = getDayNightBaseThemeId(currentThemeIsNight)
@@ -504,6 +503,8 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         if (newActiveSubtype != activeSubtype) {
             activeSubtype = newActiveSubtype
             onSubtypeChanged(activeSubtype, true)
+        } else {
+            onSubtypeChanged(activeSubtype, false)
         }
         setActiveInput(R.id.text_input)
         updateOneHandedPanelVisibility()
