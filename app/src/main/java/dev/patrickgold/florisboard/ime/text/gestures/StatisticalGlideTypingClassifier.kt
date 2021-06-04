@@ -13,7 +13,7 @@ import kotlin.collections.HashMap
 import kotlin.math.*
 
 private fun TextKey.baseCode(): Int {
-    return (computedData as? TextKeyData)?.code ?: KeyCode.UNSPECIFIED
+    return (data as? TextKeyData)?.code ?: KeyCode.UNSPECIFIED
 }
 
 /**
