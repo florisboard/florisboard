@@ -161,7 +161,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         popupManager = PopupManager(this, popupLayerView)
         swipeGestureDetector.isEnabled = !isSmartbarKeyboardView
 
-        setWillNotDraw(!isPreviewMode)
+        setWillNotDraw(false)
     }
 
     fun setComputingEvaluator(evaluator: TextComputingEvaluator?) {
