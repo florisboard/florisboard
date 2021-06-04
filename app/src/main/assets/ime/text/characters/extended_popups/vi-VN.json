@@ -26,6 +26,11 @@
           { "$": "auto_text_key", "code": 432, "label": "ư" }
         ]
       },
+      "d": {
+        "relevant": [
+          { "$":  "auto_text_key", "code": 273, "label": "đ" }
+        ]
+      },
       "~right": {
         "main": { "code":   44, "label": "," },
         "relevant": [
