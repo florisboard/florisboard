@@ -55,9 +55,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
     private var computedKeyboard: TextKeyboard? = null
     private var iconSet: TextKeyboardIconSet? = null
 
-    // IS ONLY USED IF KEYBOARD IS IN PREVIEW MODE
     private var cachedTheme: Theme? = null
-
     private var cachedState: KeyboardState = KeyboardState.new(maskOfInterest = KeyboardState.INTEREST_TEXT)
 
     private var externalComputingEvaluator: TextComputingEvaluator? = null
@@ -109,8 +107,8 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
     }
 
     internal var isSmartbarKeyboardView: Boolean = false
-    private var isPreviewMode: Boolean = false
-    private var isLoadingPlaceholderKeyboard: Boolean = false
+    internal var isPreviewMode: Boolean = false
+    internal var isLoadingPlaceholderKeyboard: Boolean = false
 
     private var keyHintConfiguration: KeyHintConfiguration = KeyHintConfiguration.HINTS_DISABLED
     private val pointerMap: PointerMap<TouchPointer> = PointerMap { TouchPointer() }
@@ -129,20 +127,11 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
     private var fadingGlideRadius: Float = 0.0f
 
     val desiredKey: TextKey = TextKey(data = TextKeyData.UNSPECIFIED)
+    private val desiredKeyView: TextKeyView = TextKeyView(context).also {
+        it.key = desiredKey
+    }
     private var keyMarginH: Int = 0
     private var keyMarginV: Int = 0
-
-    private var keyBackgroundPaint = Paint().also {
-        it.isAntiAlias = true
-        it.style = Paint.Style.FILL
-    }
-    private var keyShadowBackgroundPaint = Paint().also {
-        it.isAntiAlias = true
-        it.style = Paint.Style.STROKE
-        it.strokeCap = Paint.Cap.ROUND
-        it.strokeWidth = 6.0f
-    }
-    private val keyBackgroundCornerSize: Float = ViewUtils.dp2px(6.0f)
 
     private var backgroundDrawable: PaintDrawable = PaintDrawable()
     private val baselineTextSize = resources.getDimension(R.dimen.key_textSize)
@@ -151,21 +140,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
     private val glideTrailPaint: Paint = Paint()
     private var labelPaintTextSize: Float = resources.getDimension(R.dimen.key_textSize)
     private var labelPaintSpaceTextSize: Float = resources.getDimension(R.dimen.key_textSize)
-    private val labelPaint: Paint = Paint().also {
-        it.isAntiAlias = true
-        it.isFakeBoldText = false
-        it.textAlign = Paint.Align.CENTER
-        it.textSize = labelPaintTextSize
-        it.typeface = Typeface.DEFAULT
-    }
     private var hintedLabelPaintTextSize: Float = resources.getDimension(R.dimen.key_textHintSize)
-    private val hintedLabelPaint: Paint = Paint().also {
-        it.isAntiAlias = true
-        it.isFakeBoldText = false
-        it.textAlign = Paint.Align.CENTER
-        it.textSize = hintedLabelPaintTextSize
-        it.typeface = Typeface.MONOSPACE
-    }
     private val tempRect: Rect = Rect()
 
     constructor(context: Context) : this(context, null)
@@ -186,6 +161,10 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         popupManager = PopupManager(this, popupLayerView)
         swipeGestureDetector.isEnabled = !isSmartbarKeyboardView
 
+        if (isPreviewMode) {
+            background = backgroundDrawable
+        }
+
         setWillNotDraw(false)
     }
 
@@ -195,6 +174,17 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
     fun setComputedKeyboard(keyboard: TextKeyboard) {
         flogInfo(LogTopic.TEXT_KEYBOARD_VIEW) { keyboard.mode.toString() }
+        val renderViewDiff = keyboard.keyCount - childCount
+        if (renderViewDiff > 0) {
+            // We have more keys than render views, add abs(diff) views
+            for (n in 0 until abs(renderViewDiff)) {
+                addView(TextKeyView(context))
+            }
+        } else if (renderViewDiff < 0) {
+            // We have more render views than keys, remove abs(diff) views
+            val n = abs(renderViewDiff)
+            removeViews(childCount - n, n)
+        }
         computedKeyboard = keyboard
         initGlideClassifier(keyboard)
         if (isMeasured) {
@@ -212,7 +202,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
     override fun onUpdateKeyboardState(newState: KeyboardState) {
         flogInfo(LogTopic.TEXT_KEYBOARD_VIEW) { computedKeyboard?.mode?.toString() ?: "" }
         if (isMeasured) {
-            if (newState != cachedState) {
+            if (cachedState.isDifferentTo(newState)) {
                 // Something within the defined interest has changed
                 cachedState.reset(newState)
                 computeKeyboard()
@@ -333,7 +323,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                             pointer.longPressJob = null
                             pointer.hasTriggeredGestureMove = true
                             pointer.activeKey?.let { activeKey ->
-                                activeKey.setPressed(false) { invalidate() }
+                                activeKey.setPressed(false) { invalidate(activeKey) }
                                 florisboard!!.textInputManager.inputEventDispatcher.let { dispatcher ->
                                     if (dispatcher.isPressed(activeKey.computedData.code)) {
                                         dispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
@@ -351,6 +341,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 val pointerId = event.getPointerId(pointerIndex)
                 val pointer = pointerMap.findById(pointerId)
                 if (pointer != null) {
+                    pointer.index = pointerIndex
                     if (swipeGestureDetector.onTouchUp(event, pointer) || pointer.hasTriggeredGestureMove || pointer.shouldBlockNextUp) {
                         if (pointer.hasTriggeredGestureMove && pointer.initialKey?.computedData?.code == KeyCode.DELETE) {
                             florisboard!!.textInputManager.isGlidePostEffect = false
@@ -420,7 +411,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             }
             florisboard!!.keyPressVibrate()
             florisboard!!.keyPressSound(key.computedData)
-            key.setPressed(true) { invalidate() }
+            key.setPressed(true) { invalidate(key) }
             if (pointer.initialKey == null) {
                 pointer.initialKey = key
             }
@@ -502,7 +493,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         val initialKey = pointer.initialKey
         val activeKey = pointer.activeKey
         if (initialKey != null && activeKey != null) {
-            activeKey.setPressed(false) { invalidate() }
+            activeKey.setPressed(false) { invalidate(activeKey) }
             florisboard!!.textInputManager.inputEventDispatcher.let { dispatcher ->
                 if (popupManager.isSuitableForPopups(activeKey)) {
                     val retData = popupManager.getActiveKeyData(activeKey, keyHintConfiguration)
@@ -545,7 +536,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
         val activeKey = pointer.activeKey
         if (activeKey != null) {
-            activeKey.setPressed(false) { invalidate() }
+            activeKey.setPressed(false) { invalidate(activeKey) }
             florisboard.textInputManager.inputEventDispatcher.let { dispatcher ->
                 dispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
             }
@@ -749,7 +740,6 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         flogInfo(LogTopic.TEXT_KEYBOARD_VIEW) { computedKeyboard?.mode?.toString() ?: "" }
-        super.onLayout(changed, left, top, right, bottom)
         computeDesiredDimensions()
         computeKeyboard()
     }
@@ -793,23 +783,23 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         TextKeyboard.layoutLabelBounds(desiredKey)
 
         setTextSizeFor(
-            labelPaint,
+            desiredKeyView.labelPaint,
             desiredKey.visibleLabelBounds.width().toFloat(),
             desiredKey.visibleLabelBounds.height().toFloat(),
             "X",
             fontSizeMultiplier
         )
-        labelPaintTextSize = labelPaint.textSize
-        labelPaintSpaceTextSize = labelPaint.textSize.coerceAtMost(resources.getDimension(R.dimen.key_space_textSize))
+        labelPaintTextSize = desiredKeyView.labelPaint.textSize
+        labelPaintSpaceTextSize = desiredKeyView.labelPaint.textSize.coerceAtMost(resources.getDimension(R.dimen.key_space_textSize))
 
         setTextSizeFor(
-            hintedLabelPaint,
+            desiredKeyView.hintedLabelPaint,
             desiredKey.visibleBounds.width() * 1.0f / 5.0f,
             desiredKey.visibleBounds.height() * 1.0f / 5.0f,
             "X",
             fontSizeMultiplier
         )
-        hintedLabelPaintTextSize = hintedLabelPaint.textSize
+        hintedLabelPaintTextSize = desiredKeyView.hintedLabelPaint.textSize
     }
 
     private fun computeKeyboard() {
@@ -820,6 +810,117 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             computeLabelsAndDrawables(key, keyHintConfiguration)
         }
         keyboard.layout(this)
+        val theme = cachedTheme ?: themeManager?.activeTheme ?: Theme.BASE_THEME
+        val isBorderless = !theme.getAttr(Theme.Attr.KEY_SHOW_BORDER).toOnOff().state
+        keyboard.keys().withIndex().forEach { (n, key) ->
+            getChildAt(n)?.let { rv ->
+                if (rv is TextKeyView) {
+                    rv.key = key
+                    layoutRenderView(rv, key, isBorderless)
+                    prepareKey(key, theme, rv)
+                    rv.invalidate()
+                }
+            }
+        }
+    }
+
+    private fun layoutRenderView(rv: TextKeyView, key: TextKey, isBorderless: Boolean) {
+        rv.layout(
+            key.visibleBounds.left,
+            if (isBorderless) {
+                (key.visibleBounds.top + key.visibleBounds.height() * 0.12).toInt()
+            } else {
+                key.visibleBounds.top
+            },
+            key.visibleBounds.right,
+            if (isBorderless) {
+                (key.visibleBounds.bottom - key.visibleBounds.height() * 0.12).toInt()
+            } else {
+                key.visibleBounds.bottom
+            }
+        )
+    }
+
+    private fun prepareKey(key: TextKey, theme: Theme, renderView: TextKeyView) {
+        val keyBackground: ThemeValue
+        val keyForeground: ThemeValue
+        val shouldShowBorder: Boolean
+        val themeLabel = key.computedData.asString(isForDisplay = false)
+        when {
+            isLoadingPlaceholderKeyboard -> {
+                shouldShowBorder = theme.getAttr(Theme.Attr.KEY_SHOW_BORDER, themeLabel).toOnOff().state
+                if (key.isPressed && key.isEnabled) {
+                    keyBackground = theme.getAttr(Theme.Attr.KEY_BACKGROUND_PRESSED, themeLabel)
+                    keyForeground = theme.getAttr(Theme.Attr.KEY_FOREGROUND_PRESSED, themeLabel)
+                } else {
+                    keyBackground = if (shouldShowBorder) {
+                        theme.getAttr(Theme.Attr.KEY_BACKGROUND, themeLabel)
+                    } else {
+                        theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND, themeLabel)
+                    }
+                    keyForeground = theme.getAttr(Theme.Attr.KEY_FOREGROUND, themeLabel)
+                }
+            }
+            isSmartbarKeyboardView -> {
+                shouldShowBorder = false
+                if (key.isPressed && key.isEnabled) {
+                    keyBackground = theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND)
+                    keyForeground = theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND)
+                } else {
+                    keyBackground = theme.getAttr(Theme.Attr.SMARTBAR_BACKGROUND)
+                    keyForeground = if (!key.isEnabled) {
+                        theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND_ALT)
+                    } else {
+                        theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND)
+                    }
+                }
+            }
+            else -> {
+                val capsSpecific = when {
+                    cachedState.capsLock -> {
+                        "capslock"
+                    }
+                    cachedState.caps -> {
+                        "caps"
+                    }
+                    else -> {
+                        null
+                    }
+                }
+                shouldShowBorder = theme.getAttr(Theme.Attr.KEY_SHOW_BORDER, themeLabel, capsSpecific).toOnOff().state
+                if (key.isPressed && key.isEnabled) {
+                    keyBackground = theme.getAttr(Theme.Attr.KEY_BACKGROUND_PRESSED, themeLabel, capsSpecific)
+                    keyForeground = theme.getAttr(Theme.Attr.KEY_FOREGROUND_PRESSED, themeLabel, capsSpecific)
+                } else {
+                    keyBackground = theme.getAttr(Theme.Attr.KEY_BACKGROUND, themeLabel, capsSpecific)
+                    keyForeground = theme.getAttr(Theme.Attr.KEY_FOREGROUND, themeLabel, capsSpecific)
+                }
+            }
+        }
+        renderView.let { rv ->
+            rv.elevation = if (shouldShowBorder) 4.0f else 0.0f
+            rv.bgDrawable.paint.color = keyBackground.toSolidColor().color
+            rv.labelPaint.let {
+                it.color = keyForeground.toSolidColor().color
+                if (computedKeyboard?.mode == KeyboardMode.CHARACTERS && key.computedData.code == KeyCode.SPACE) {
+                    it.alpha = 120
+                }
+                it.textSize = when (key.computedData.code) {
+                    KeyCode.SPACE -> labelPaintSpaceTextSize
+                    KeyCode.VIEW_CHARACTERS,
+                    KeyCode.VIEW_SYMBOLS,
+                    KeyCode.VIEW_SYMBOLS2 -> labelPaintTextSize * 0.80f
+                    KeyCode.VIEW_NUMERIC,
+                    KeyCode.VIEW_NUMERIC_ADVANCED -> labelPaintTextSize * 0.55f
+                    else -> labelPaintTextSize
+                }
+            }
+            rv.hintedLabelPaint.let {
+                it.color = keyForeground.toSolidColor().color
+                it.alpha = 170
+                it.textSize = hintedLabelPaintTextSize
+            }
+        }
     }
 
     /**
@@ -882,160 +983,34 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         } else {
             glideTrailPaint.color = theme.getAttr(Theme.Attr.GLIDE_TRAIL_COLOR).toSolidColor().color
         }
-        keyShadowBackgroundPaint.color = Color.argb(32, 0, 0, 0)
-        invalidate()
-    }
-
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-        if (!isVisible) return
-        if (canvas == null) {
-            flogWarning(LogTopic.TEXT_KEYBOARD_VIEW) { "${computedKeyboard?.mode} Cannot draw: 'canvas' is null!" }
-            return
-        } else {
-            flogInfo(LogTopic.TEXT_KEYBOARD_VIEW) { computedKeyboard?.mode.toString() }
-        }
-        if (isPreviewMode) {
-            backgroundDrawable.let {
-                it.setBounds(0, 0, measuredWidth, measuredHeight)
-                it.draw(canvas)
+        val isBorderless = !theme.getAttr(Theme.Attr.KEY_SHOW_BORDER).toOnOff().state
+        for (n in 0 until childCount) {
+            val rv = getChildAt(n) as? TextKeyView
+            if (rv?.key != null) {
+                layoutRenderView(rv, rv.key!!, isBorderless)
+                prepareKey(rv.key!!, cachedTheme ?: themeManager?.activeTheme ?: Theme.BASE_THEME, rv)
+                rv.invalidate()
             }
         }
-        onDrawComputedKeyboard(canvas)
     }
 
-    private fun onDrawComputedKeyboard(canvas: Canvas) {
-        flogInfo(LogTopic.TEXT_KEYBOARD_VIEW) { computedKeyboard?.mode.toString() }
-        val keyboard = computedKeyboard ?: return
-
-        // SUPER JANK nyi message implementation for the editing layout
-        if (keyboard.mode == KeyboardMode.EDITING) {
-            val msg = "The Editing layout is currently not available, see #216."
-            val msg2 = "Will be re-implemented in a later stage."
-            labelPaint.apply {
-                textSize = 30.0f
+    private fun invalidate(key: TextKey) {
+        for (n in 0 until childCount) {
+            val rv = getChildAt(n) as? TextKeyView
+            if (rv != null && rv.key == key) {
+                prepareKey(key, cachedTheme ?: themeManager?.activeTheme ?: Theme.BASE_THEME, rv)
+                rv.invalidate()
+                break
             }
-            canvas.drawText(msg, measuredWidth / 2.0f, 100.0f, labelPaint)
-            canvas.drawText(msg2, measuredWidth / 2.0f, 200.0f, labelPaint)
-            return
-        }
-
-        val theme = cachedTheme ?: themeManager?.activeTheme ?: Theme.BASE_THEME
-        val isBorderless = !theme.getAttr(Theme.Attr.KEY_SHOW_BORDER).toOnOff().state &&
-            Color.alpha(theme.getAttr(Theme.Attr.KEY_BACKGROUND).toSolidColor().color) <= 0x0F
-        for (key in keyboard.keys()) {
-            onDrawComputedKey(canvas, key, theme, isBorderless)
         }
     }
 
-    private fun onDrawComputedKey(canvas: Canvas, key: TextKey, theme: Theme, isBorderless: Boolean) {
+    fun onDrawComputedKey(canvas: Canvas, key: TextKey, renderView: TextKeyView) {
         if (!key.isVisible) return
-
-        val keyBackground: ThemeValue
-        val keyForeground: ThemeValue
-        val shouldShowBorder: Boolean
-        val themeLabel = key.computedData.asString(isForDisplay = false)
-        when {
-            isLoadingPlaceholderKeyboard -> {
-                shouldShowBorder = theme.getAttr(Theme.Attr.KEY_SHOW_BORDER, themeLabel).toOnOff().state
-                if (key.isPressed && key.isEnabled) {
-                    keyBackground = theme.getAttr(Theme.Attr.KEY_BACKGROUND_PRESSED, themeLabel)
-                    keyForeground = theme.getAttr(Theme.Attr.KEY_FOREGROUND_PRESSED, themeLabel)
-                } else {
-                    keyBackground = if (shouldShowBorder) {
-                        theme.getAttr(Theme.Attr.KEY_BACKGROUND, themeLabel)
-                    } else {
-                        theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND, themeLabel)
-                    }
-                    keyForeground = theme.getAttr(Theme.Attr.KEY_FOREGROUND, themeLabel)
-                }
-            }
-            isSmartbarKeyboardView -> {
-                shouldShowBorder = false
-                if (key.isPressed && key.isEnabled) {
-                    keyBackground = theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND)
-                    keyForeground = theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND)
-                } else {
-                    keyBackground = theme.getAttr(Theme.Attr.SMARTBAR_BACKGROUND)
-                    keyForeground = if (!key.isEnabled) {
-                        theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND_ALT)
-                    } else {
-                        theme.getAttr(Theme.Attr.SMARTBAR_FOREGROUND)
-                    }
-                }
-            }
-            else -> {
-                val capsSpecific = when {
-                    cachedState.capsLock -> {
-                        "capslock"
-                    }
-                    cachedState.caps -> {
-                        "caps"
-                    }
-                    else -> {
-                        null
-                    }
-                }
-                shouldShowBorder = theme.getAttr(Theme.Attr.KEY_SHOW_BORDER, themeLabel, capsSpecific).toOnOff().state
-                if (key.isPressed && key.isEnabled) {
-                    keyBackground = theme.getAttr(Theme.Attr.KEY_BACKGROUND_PRESSED, themeLabel, capsSpecific)
-                    keyForeground = theme.getAttr(Theme.Attr.KEY_FOREGROUND_PRESSED, themeLabel, capsSpecific)
-                } else {
-                    keyBackground = theme.getAttr(Theme.Attr.KEY_BACKGROUND, themeLabel, capsSpecific)
-                    keyForeground = theme.getAttr(Theme.Attr.KEY_FOREGROUND, themeLabel, capsSpecific)
-                }
-            }
-        }
-
-        val bgBoundsLeft = key.visibleBounds.left.toFloat()
-        val bgBoundsTop = (if (isBorderless) {
-            (key.visibleBounds.top + key.visibleBounds.height() * 0.12).toInt()
-        } else {
-            key.visibleBounds.top
-        }).toFloat()
-        val bgBoundsRight = key.visibleBounds.right.toFloat()
-        val bgBoundsBottom = (if (isBorderless) {
-            (key.visibleBounds.bottom - key.visibleBounds.height() * 0.12).toInt()
-        } else {
-            key.visibleBounds.bottom
-        }).toFloat()
-
-        if (shouldShowBorder) {
-            keyShadowBackgroundPaint.let {
-                canvas.drawRoundRect(
-                    bgBoundsLeft, bgBoundsTop, bgBoundsRight, bgBoundsBottom,
-                    keyBackgroundCornerSize,
-                    keyBackgroundCornerSize,
-                    it
-                )
-            }
-        }
-        keyBackgroundPaint.let {
-            it.color = keyBackground.toSolidColor().color
-            canvas.drawRoundRect(
-                bgBoundsLeft, bgBoundsTop, bgBoundsRight, bgBoundsBottom,
-                keyBackgroundCornerSize,
-                keyBackgroundCornerSize,
-                it
-            )
-        }
 
         val label = key.label
         if (label != null) {
-            labelPaint.let {
-                it.color = keyForeground.toSolidColor().color
-                if (computedKeyboard?.mode == KeyboardMode.CHARACTERS && key.computedData.code == KeyCode.SPACE) {
-                    it.alpha = 120
-                }
-                it.textSize = when (key.computedData.code) {
-                    KeyCode.SPACE -> labelPaintSpaceTextSize
-                    KeyCode.VIEW_CHARACTERS,
-                    KeyCode.VIEW_SYMBOLS,
-                    KeyCode.VIEW_SYMBOLS2 -> labelPaintTextSize * 0.80f
-                    KeyCode.VIEW_NUMERIC,
-                    KeyCode.VIEW_NUMERIC_ADVANCED -> labelPaintTextSize * 0.55f
-                    else -> labelPaintTextSize
-                }
+            renderView.labelPaint.let {
                 val centerX = key.visibleLabelBounds.exactCenterX()
                 val centerY = key.visibleLabelBounds.exactCenterY() + (it.textSize - it.descent()) / 2
                 if (label.contains("\n")) {
@@ -1052,10 +1027,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
         val hintedLabel = key.hintedLabel
         if (hintedLabel != null) {
-            hintedLabelPaint.let {
-                it.color = keyForeground.toSolidColor().color
-                it.alpha = 170
-                it.textSize = hintedLabelPaintTextSize
+            renderView.hintedLabelPaint.let {
                 val centerX = key.visibleBounds.left + key.visibleBounds.width() * 5.0f / 6.0f
                 val centerY = key.visibleBounds.top + key.visibleBounds.height() * 1.0f / 6.0f + (it.textSize - it.descent()) / 2
                 canvas.drawText(hintedLabel, centerX, centerY, it)
@@ -1066,7 +1038,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         if (foregroundDrawableId != null) {
             iconSet?.withDrawable(foregroundDrawableId) {
                 bounds = key.visibleDrawableBounds
-                setTint(keyForeground.toSolidColor().color)
+                setTint(renderView.labelPaint.color)
                 draw(canvas)
             }
         }

@@ -146,8 +146,22 @@ class PopupManager<V : View>(
     }
 
     fun isSuitableForPopups(key: Key): Boolean {
+        return isSuitableForBasicPopup(key) || isSuitableForExtendedPopup(key)
+    }
+
+    private fun isSuitableForBasicPopup(key: Key): Boolean {
         return if (key is TextKey) {
-            key.computedData.code > KeyCode.SPACE && key.computedData.code != KeyCode.MULTIPLE_CODE_POINTS
+            val c = key.computedData.code
+            c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS
+        } else {
+            true
+        }
+    }
+
+    private fun isSuitableForExtendedPopup(key: Key): Boolean {
+        return if (key is TextKey) {
+            val c = key.computedData.code
+            c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS || exceptionsForKeyCodes.contains(c)
         } else {
             true
         }
@@ -194,7 +208,7 @@ class PopupManager<V : View>(
      * @param keyHintConfiguration The key hint configuration to use.
      */
     fun show(key: Key, keyHintConfiguration: KeyHintConfiguration) {
-        if (!isSuitableForPopups(key)) return
+        if (!isSuitableForBasicPopup(key)) return
 
         calc(key)
 
@@ -242,10 +256,7 @@ class PopupManager<V : View>(
      * @param keyHintConfiguration The key hint configuration to use.
      */
     fun extend(key: Key, keyHintConfiguration: KeyHintConfiguration) {
-        if (key is TextKey && !isSuitableForPopups(key)
-            && !exceptionsForKeyCodes.contains(key.computedData.code)) {
-            return
-        }
+        if (!isSuitableForExtendedPopup(key)) return
 
         if (!isShowingPopup) {
             calc(key)
@@ -424,7 +435,7 @@ class PopupManager<V : View>(
             return false
         }
 
-        popupViewExt.properties.activeElementIndex = when {
+        val newActiveElementIndex = when {
             anchorLeft -> when {
                 // check if out of boundary on x-axis
                 x < keyPopupDiffX - (anchorOffset + 1) * keyPopupWidth ||
@@ -469,7 +480,10 @@ class PopupManager<V : View>(
             }
             else -> -1
         }
-        popupViewExt.invalidate()
+        if (newActiveElementIndex != popupViewExt.properties.activeElementIndex) {
+            popupViewExt.properties.activeElementIndex = newActiveElementIndex
+            popupViewExt.invalidate()
+        }
 
         return true
     }

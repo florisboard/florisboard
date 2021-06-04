@@ -62,16 +62,6 @@ class EditorInstance private constructor(
         }
     val inputConnection: InputConnection?
         get() = ims?.currentInputConnection
-    var isComposingEnabled: Boolean = false
-        set(v) {
-            field = v
-            cachedInput.reevaluate()
-            if (v && !activeState.isRawInputEditor) {
-                markComposingRegion(cachedInput.currentWord)
-            } else {
-                markComposingRegion(null)
-            }
-        }
     var shouldReevaluateComposingSuggestions: Boolean = false
     var selection: Selection = Selection(this)
         private set
@@ -137,7 +127,7 @@ class EditorInstance private constructor(
         }
         if (selection.isCursorMode) {
             cachedInput.update()
-            if (isComposingEnabled) {
+            if (activeState.isComposingEnabled) {
                 if (candidatesStart >= 0 && candidatesEnd >= 0) {
                     shouldReevaluateComposingSuggestions = true
                 }
@@ -151,6 +141,15 @@ class EditorInstance private constructor(
             if (candidatesStart >= 0 || candidatesEnd >= 0) {
                 markComposingRegion(null)
             }
+        }
+    }
+
+    fun composingEnabledChanged() {
+        cachedInput.reevaluate()
+        if (activeState.isComposingEnabled && activeState.isRichInputEditor) {
+            markComposingRegion(cachedInput.currentWord)
+        } else {
+            markComposingRegion(null)
         }
     }
 
@@ -212,7 +211,7 @@ class EditorInstance private constructor(
      */
     fun commitText(text: String): Boolean {
         val ic = inputConnection ?: return false
-        return if (activeState.isRawInputEditor || selection.isSelectionMode || !isComposingEnabled) {
+        return if (activeState.isRawInputEditor || selection.isSelectionMode || !activeState.isComposingEnabled) {
             doCommitText(text).first
         } else {
             ic.beginBatchEdit()

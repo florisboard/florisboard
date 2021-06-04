@@ -85,6 +85,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     val activeState: KeyboardState get() = florisboard.activeState
     private var newCapsState: Boolean = false
+    private var isNumberRowVisible: Boolean = false
 
     // Composing text related properties
     var isManualSelectionMode: Boolean = false
@@ -209,6 +210,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         layoutManager = LayoutManager()
         textKeyboardIconSet = TextKeyboardIconSet.new(florisboard)
         inputEventDispatcher.keyEventReceiver = this
+        isNumberRowVisible = prefs.keyboard.numberRow
         var subtypes = florisboard.subtypeManager.subtypes
         if (subtypes.isEmpty()) {
             subtypes = listOf(Subtype.DEFAULT)
@@ -261,7 +263,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     /**
-     * Evaluates the [KeyboardState.keyboardMode], [KeyboardState.keyVariation] and [EditorInstance.isComposingEnabled]
+     * Evaluates the [KeyboardState.keyboardMode], [KeyboardState.keyVariation] and [KeyboardState.isComposingEnabled]
      * property values when starting to interact with a input editor. Also resets the composing
      * texts and sets the initial caps mode accordingly.
      */
@@ -300,25 +302,29 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 KeyboardMode.CHARACTERS
             }
         }
-        instance.apply {
-            isComposingEnabled = when (keyboardMode) {
-                KeyboardMode.NUMERIC,
-                KeyboardMode.PHONE,
-                KeyboardMode.PHONE2 -> false
-                else -> activeState.keyVariation != KeyVariation.PASSWORD &&
-                        prefs.suggestion.enabled// &&
-                //!instance.inputAttributes.flagTextAutoComplete &&
-                //!instance.inputAttributes.flagTextNoSuggestions
-            }
-            activeState.isPrivateMode = prefs.advanced.forcePrivateMode ||
-                    activeState.imeOptions.flagNoPersonalizedLearning
+        activeState.isComposingEnabled = when (keyboardMode) {
+            KeyboardMode.NUMERIC,
+            KeyboardMode.PHONE,
+            KeyboardMode.PHONE2 -> false
+            else -> activeState.keyVariation != KeyVariation.PASSWORD &&
+                    prefs.suggestion.enabled// &&
+            //!instance.inputAttributes.flagTextAutoComplete &&
+            //!instance.inputAttributes.flagTextNoSuggestions
         }
+        val newIsNumberRowVisible = prefs.keyboard.numberRow
+        if (isNumberRowVisible != newIsNumberRowVisible) {
+            keyboards.clear(KeyboardMode.CHARACTERS)
+            isNumberRowVisible = newIsNumberRowVisible
+        }
+        setActiveKeyboardMode(keyboardMode, updateState = false)
+        instance.composingEnabledChanged()
+        activeState.isPrivateMode = prefs.advanced.forcePrivateMode ||
+                activeState.imeOptions.flagNoPersonalizedLearning
         if (!prefs.correction.rememberCapsLockState) {
             activeState.capsLock = false
         }
         isGlidePostEffect = false
         updateCapsState()
-        setActiveKeyboardMode(keyboardMode, updateState = false)
         smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
     }
 
@@ -342,7 +348,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     /**
      * Sets the active keyboard mode and updates the [KeyboardState.isQuickActionsVisible] state.
      */
-    private fun setActiveKeyboardMode(mode: KeyboardMode, updateState: Boolean = true) = launch {
+    private fun setActiveKeyboardMode(mode: KeyboardMode, updateState: Boolean = true) {
         activeState.keyboardMode = mode
         isManualSelectionMode = false
         isManualSelectionModeStart = false
@@ -366,15 +372,17 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
     }
 
-    override fun onSubtypeChanged(newSubtype: Subtype) {
+    override fun onSubtypeChanged(newSubtype: Subtype, doRefreshLayouts: Boolean) {
         launch {
-            if (activeEditorInstance.isComposingEnabled) {
+            if (activeState.isComposingEnabled) {
                 dictionaryManager.prepareDictionaries(newSubtype)
             }
             if (prefs.glide.enabled) {
                 GlideTypingManager.getInstance().setWordData(newSubtype)
             }
-            setActiveKeyboard(getActiveKeyboardMode(), newSubtype)
+            if (doRefreshLayouts) {
+                setActiveKeyboard(getActiveKeyboardMode(), newSubtype)
+            }
         }
         isGlidePostEffect = false
     }
@@ -388,7 +396,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             updateCapsState()
         }
         flogInfo(LogTopic.IMS_EVENTS) { "current word: ${activeEditorInstance.cachedInput.currentWord.text}" }
-        if (activeEditorInstance.isComposingEnabled && !inputEventDispatcher.isPressed(KeyCode.DELETE) && !isGlidePostEffect) {
+        if (activeState.isComposingEnabled && !inputEventDispatcher.isPressed(KeyCode.DELETE) && !isGlidePostEffect) {
             if (activeEditorInstance.shouldReevaluateComposingSuggestions) {
                 activeEditorInstance.shouldReevaluateComposingSuggestions = false
                 launch(Dispatchers.Default) {
