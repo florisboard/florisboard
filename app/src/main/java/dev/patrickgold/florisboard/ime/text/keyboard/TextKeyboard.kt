@@ -33,6 +33,9 @@ class TextKeyboard(
     val rowCount: Int
         get() = arrangement.size
 
+    val keyCount: Int
+        get() = arrangement.sumOf { it.size }
+
     companion object {
         fun layoutDrawableBounds(key: TextKey, factor: Double) {
             layoutForegroundBounds(key, key.visibleDrawableBounds, 0.21 * (1.0 / factor), isLabel = false)

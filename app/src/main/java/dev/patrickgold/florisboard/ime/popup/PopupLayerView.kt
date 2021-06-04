@@ -45,6 +45,7 @@ class PopupLayerView : FrameLayout {
         layoutParams = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
         )
+        setWillNotDraw(true)
     }
 
     var clipboardPopupManager: ClipboardPopupManager? = null

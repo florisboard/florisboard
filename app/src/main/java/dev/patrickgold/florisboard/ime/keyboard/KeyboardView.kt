@@ -20,7 +20,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.View
+import android.view.ViewGroup
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
@@ -29,7 +29,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.sendBlocking
 
 @Suppress("MemberVisibilityCanBePrivate")
-abstract class KeyboardView : View, KeyboardState.OnUpdateStateListener, ThemeManager.OnThemeUpdatedListener {
+abstract class KeyboardView : ViewGroup, KeyboardState.OnUpdateStateListener, ThemeManager.OnThemeUpdatedListener {
     protected val florisboard get() = FlorisBoard.getInstanceOrNull()
     protected val prefs get() = Preferences.default()
     protected val themeManager get() = ThemeManager.defaultOrNull()
@@ -62,6 +62,10 @@ abstract class KeyboardView : View, KeyboardState.OnUpdateStateListener, ThemeMa
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         themeManager?.unregisterOnThemeUpdatedListener(this)
+    }
+
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        return true
     }
 
     @SuppressLint("ClickableViewAccessibility")

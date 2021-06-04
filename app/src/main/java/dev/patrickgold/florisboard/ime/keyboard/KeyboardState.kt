@@ -152,11 +152,12 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
         value = (value and (m shl o).inv()) or ((v.toULong() and m) shl o)
     }
 
-    override operator fun equals(other: Any?): Boolean {
-        if (other is KeyboardState) {
-            return (other.value and maskOfInterest) == (value and maskOfInterest)
-        }
-        return false
+    fun isEqualTo(other: KeyboardState): Boolean {
+        return (other.value and maskOfInterest) == (value and maskOfInterest)
+    }
+
+    fun isDifferentTo(other: KeyboardState): Boolean {
+        return !isEqualTo(other)
     }
 
     override fun hashCode(): Int {
