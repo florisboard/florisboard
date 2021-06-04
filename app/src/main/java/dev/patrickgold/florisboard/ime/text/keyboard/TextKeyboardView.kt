@@ -341,6 +341,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 val pointerId = event.getPointerId(pointerIndex)
                 val pointer = pointerMap.findById(pointerId)
                 if (pointer != null) {
+                    pointer.index = pointerIndex
                     if (swipeGestureDetector.onTouchUp(event, pointer) || pointer.hasTriggeredGestureMove || pointer.shouldBlockNextUp) {
                         if (pointer.hasTriggeredGestureMove && pointer.initialKey?.computedData?.code == KeyCode.DELETE) {
                             florisboard!!.textInputManager.isGlidePostEffect = false

@@ -37,7 +37,7 @@ abstract class KeyboardView : ViewGroup, KeyboardState.OnUpdateStateListener, Th
     var isMeasured: Boolean = false
         private set
     protected var isTouchable: Boolean = true
-    protected val touchEventChannel: Channel<MotionEvent> = Channel(16)
+    protected val touchEventChannel: Channel<MotionEvent> = Channel(64)
     protected val mainScope: CoroutineScope = CoroutineScope(Dispatchers.Main.immediate + SupervisorJob())
 
     constructor(context: Context) : this(context, null)

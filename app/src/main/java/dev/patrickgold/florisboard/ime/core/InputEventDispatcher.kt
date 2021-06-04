@@ -57,7 +57,7 @@ class InputEventDispatcher private constructor(
         /**
          * The default input event channel capacity to be used in [new].
          */
-        private const val DEFAULT_CHANNEL_CAPACITY: Int = 32
+        private const val DEFAULT_CHANNEL_CAPACITY: Int = 64
 
         /**
          * Creates a new [InputEventDispatcher] instance from given arguments and returns it.
