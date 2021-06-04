@@ -607,7 +607,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
                 candidatesStart, candidatesEnd
             )
             eventListeners.toList().forEach { it?.onUpdateSelection() }
-            dispatchCurrentStateToInputUi()
         } else {
             flogInfo(LogTopic.IMS_EVENTS) { "onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd): caught due to internal batch level of $internalBatchNestingLevel!" }
             if (internalSelectionCache.selectionCatchCount++ == 0) {
@@ -619,6 +618,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
             internalSelectionCache.candidatesStart = candidatesStart
             internalSelectionCache.candidatesEnd = candidatesEnd
         }
+        dispatchCurrentStateToInputUi()
     }
 
     override fun onThemeUpdated(theme: Theme) {
