@@ -68,7 +68,6 @@ import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.CurrencySet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
@@ -160,7 +159,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     lateinit var activeSubtype: Subtype
     private var currentThemeIsNight: Boolean = false
     private var currentThemeResId: Int = 0
-    private var isNumberRowVisible: Boolean = false
     private var isWindowShown: Boolean = false
 
     private var responseState = ResponseState.RESET
@@ -232,10 +230,10 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
                 vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
                 prefs.sync()
                 activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
+                onSubtypeChanged(activeSubtype, false)
 
                 currentThemeIsNight = themeManager.activeTheme.isNightTheme
                 currentThemeResId = getDayNightBaseThemeId(currentThemeIsNight)
-                isNumberRowVisible = prefs.keyboard.numberRow
                 setTheme(currentThemeResId)
                 themeManager.registerOnThemeUpdatedListener(this)
 
@@ -386,6 +384,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         flogInfo(LogTopic.IMS_EVENTS) { info?.debugSummarize() ?: "" }
 
         super.onStartInputView(info, restarting)
+        prefs.sync()
         if (info != null) {
             activeState.update(info)
             activeState.isSelectionMode = (info.initialSelEnd - info.initialSelStart) != 0
@@ -501,15 +500,10 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         isWindowShown = true
 
         prefs.sync()
-        val newIsNumberRowVisible = prefs.keyboard.numberRow
-        if (isNumberRowVisible != newIsNumberRowVisible) {
-            textInputManager.keyboards.clear(KeyboardMode.CHARACTERS)
-            isNumberRowVisible = newIsNumberRowVisible
-        }
         val newActiveSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
         if (newActiveSubtype != activeSubtype) {
             activeSubtype = newActiveSubtype
-            onSubtypeChanged(activeSubtype)
+            onSubtypeChanged(activeSubtype, true)
         }
         setActiveInput(R.id.text_input)
         updateOneHandedPanelVisibility()
@@ -884,20 +878,20 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     fun switchToPrevSubtype() {
         flogInfo(LogTopic.IMS_EVENTS)
         activeSubtype = subtypeManager.switchToPrevSubtype() ?: Subtype.DEFAULT
-        onSubtypeChanged(activeSubtype)
+        onSubtypeChanged(activeSubtype, true)
     }
 
     fun switchToNextSubtype() {
         flogInfo(LogTopic.IMS_EVENTS)
         activeSubtype = subtypeManager.switchToNextSubtype() ?: Subtype.DEFAULT
-        onSubtypeChanged(activeSubtype)
+        onSubtypeChanged(activeSubtype, true)
     }
 
-    private fun onSubtypeChanged(newSubtype: Subtype) {
+    private fun onSubtypeChanged(newSubtype: Subtype, doRefreshLayouts: Boolean) {
         flogInfo(LogTopic.SUBTYPE_MANAGER) { "New subtype: $newSubtype" }
-        textInputManager.onSubtypeChanged(newSubtype)
-        mediaInputManager.onSubtypeChanged(newSubtype)
-        clipInputManager.onSubtypeChanged(newSubtype)
+        textInputManager.onSubtypeChanged(newSubtype, doRefreshLayouts)
+        mediaInputManager.onSubtypeChanged(newSubtype, doRefreshLayouts)
+        clipInputManager.onSubtypeChanged(newSubtype, doRefreshLayouts)
     }
 
     fun setActiveInput(type: Int, forceSwitchToCharacters: Boolean = false) {
@@ -994,7 +988,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
 
         fun onApplyThemeAttributes() {}
         fun onPrimaryClipChanged() {}
-        fun onSubtypeChanged(newSubtype: Subtype) {}
+        fun onSubtypeChanged(newSubtype: Subtype, doRefreshLayouts: Boolean) {}
     }
 
     private enum class ResponseState {

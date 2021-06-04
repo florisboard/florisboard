@@ -44,6 +44,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
  *          |          | 1        |          | Is private mode
  *          |        1 |          |          | Is Smartbar quick actions visible
  *          |       1  |          |          | Is Smartbar showing inline suggestions
+ *          |      1   |          |          | Is composing enabled
  *
  * <Byte 7> | <Byte 6> | <Byte 5> | <Byte 4> | Description
  * ---------|----------|----------|----------|---------------------------------
@@ -88,6 +89,7 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
         const val F_IS_PRIVATE_MODE: ULong =                0x00008000u
         const val F_IS_QUICK_ACTIONS_VISIBLE: ULong =       0x00010000u
         const val F_IS_SHOWING_INLINE_SUGGESTIONS: ULong =  0x00020000u
+        const val F_IS_COMPOSING_ENABLED: ULong =           0x00040000u
 
         const val STATE_ALL_ZERO: ULong =                   0uL
 
@@ -166,6 +168,20 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
         return result
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as KeyboardState
+
+        if (value != other.value) return false
+        if (maskOfInterest != other.maskOfInterest) return false
+        if (imeOptions != other.imeOptions) return false
+        if (inputAttributes != other.inputAttributes) return false
+
+        return true
+    }
+
     var keyVariation: KeyVariation
         get() = KeyVariation.fromInt(getRegion(M_KEY_VARIATION, O_KEY_VARIATION))
         set(v) { setRegion(M_KEY_VARIATION, O_KEY_VARIATION, v.toInt()) }
@@ -207,6 +223,10 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
     var isShowingInlineSuggestions: Boolean
         get() = getFlag(F_IS_SHOWING_INLINE_SUGGESTIONS)
         set(v) { setFlag(F_IS_SHOWING_INLINE_SUGGESTIONS, v) }
+
+    var isComposingEnabled: Boolean
+        get() = getFlag(F_IS_COMPOSING_ENABLED)
+        set(v) { setFlag(F_IS_COMPOSING_ENABLED, v) }
 
     interface OnUpdateStateListener {
         /**

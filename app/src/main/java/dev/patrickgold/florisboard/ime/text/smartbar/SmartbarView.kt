@@ -228,7 +228,7 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
 
     override fun onUpdateKeyboardState(newState: KeyboardState) {
         flogInfo(LogTopic.SMARTBAR)
-        if (cachedState != newState) {
+        if (cachedState.isDifferentTo(newState)) {
             cachedState.reset(newState)
             updateUi()
             when (cachedMainAreaId) {
@@ -263,13 +263,13 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
                     cachedState.keyVariation == KeyVariation.PASSWORD -> {
                         if (!prefs.keyboard.numberRow) R.id.number_row else null
                     }
-                    else -> when (florisboard.textInputManager.getActiveKeyboardMode()) {
+                    else -> when (cachedState.keyboardMode) {
                         KeyboardMode.EDITING -> null
                         KeyboardMode.NUMERIC,
                         KeyboardMode.PHONE,
                         KeyboardMode.PHONE2 -> R.id.clipboard_cursor_row
                         else -> when {
-                            florisboard.activeEditorInstance.isComposingEnabled &&
+                            cachedState.isComposingEnabled &&
                                 florisboard.activeEditorInstance.selection.isCursorMode
                             -> R.id.candidates
                             else -> R.id.clipboard_cursor_row
@@ -360,7 +360,7 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
         binding.inlineSuggestionsStrip.removeAllViews()
         val florisboard = florisboard ?: return
         if (suggestionViews.isEmpty()) {
-            florisboard.activeState.isQuickActionsVisible = false
+            florisboard.activeState.isShowingInlineSuggestions = false
             return
         } else {
             for (suggestionView in suggestionViews) {
@@ -369,7 +369,7 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
                 }
                 binding.inlineSuggestionsStrip.addView(suggestionView)
             }
-            florisboard.activeState.isQuickActionsVisible = true
+            florisboard.activeState.isShowingInlineSuggestions = true
         }
         updateKeyboardState(florisboard.activeState)
     }
