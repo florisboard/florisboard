@@ -75,6 +75,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.setup.SetupActivity
 import dev.patrickgold.florisboard.util.AppVersionUtils
 import dev.patrickgold.florisboard.common.ViewUtils
+import dev.patrickgold.florisboard.databinding.FlorisboardBinding
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.keyboard.updateKeyboardState
 import dev.patrickgold.florisboard.util.debugSummarize
@@ -128,10 +129,9 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     private val prefs: Preferences get() = Preferences.default()
     val activeState: KeyboardState = KeyboardState.new()
 
-    private var extractEditLayout: WeakReference<ViewGroup?> = WeakReference(null)
-    var inputView: InputView? = null
+    var uiBinding: FlorisboardBinding? = null
         private set
-    private var inputWindowView: InputWindowView? = null
+    private var extractEditLayout: WeakReference<ViewGroup?> = WeakReference(null)
     var popupLayerView: PopupLayerView? = null
         private set
     private var eventListeners: CopyOnWriteArrayList<EventListener> = CopyOnWriteArrayList()
@@ -267,13 +267,28 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         updateThemeContext(currentThemeResId)
 
         popupLayerView = PopupLayerView(themeContext)
+        window?.window?.findViewById<View>(android.R.id.content)?.let { content ->
+            if (content is ViewGroup) {
+                content.addView(popupLayerView)
+            }
+        }
 
-        inputWindowView = LayoutInflater.from(themeContext).inflate(R.layout.florisboard, null) as? InputWindowView
-        inputWindowView?.isHapticFeedbackEnabled = true
+        uiBinding = FlorisboardBinding.inflate(LayoutInflater.from(themeContext))
 
-        eventListeners.toList().forEach { it?.onCreateInputView() }
+        eventListeners.toList().forEach { it?.onInitializeInputUi(uiBinding!!) }
 
-        return inputWindowView
+        return uiBinding!!.inputWindowView
+    }
+
+    fun initWindow() {
+        flogInfo(LogTopic.IMS_EVENTS)
+
+        updateSoftInputWindowLayoutParameters()
+        updateOneHandedPanelVisibility()
+
+        themeManager.requestThemeUpdate(this)
+
+        dispatchCurrentStateToInputUi()
     }
 
     /**
@@ -319,8 +334,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         imeManager = null
         vibrator = null
         popupLayerView = null
-        inputView = null
-        inputWindowView = null
+        uiBinding = null
         florisboardInstance = null
 
         eventListeners.toList().forEach { it?.onDestroy() }
@@ -355,24 +369,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         }
     }
 
-    fun registerInputView(inputView: InputView) {
-        flogInfo(LogTopic.IMS_EVENTS)
-
-        window?.window?.findViewById<View>(android.R.id.content)?.let { content ->
-            if (content is ViewGroup) {
-                popupLayerView?.let { content.addView(it) }
-            }
-        }
-        this.inputView = inputView
-        updateSoftInputWindowLayoutParameters()
-        updateOneHandedPanelVisibility()
-        themeManager.notifyCallbackReceivers()
-        setActiveInput(R.id.text_input)
-        dispatchCurrentStateToInputUi()
-
-        eventListeners.toList().forEach { it?.onRegisterInputView(inputView) }
-    }
-
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
         flogInfo(LogTopic.IMS_EVENTS)
 
@@ -392,6 +388,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         super.onStartInputView(info, restarting)
         if (info != null) {
             activeState.update(info)
+            activeState.isSelectionMode = (info.initialSelEnd - info.initialSelStart) != 0
         }
         activeEditorInstance = EditorInstance.from(info, this, activeState)
         themeManager.updateRemoteColorValues(activeEditorInstance.packageName)
@@ -433,12 +430,12 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
             val stylesBundle = themeManager.createInlineSuggestionUiStyleBundle(themeContext)
             InlinePresentationSpec.Builder(
                 Size(
-                    inputView?.desiredInlineSuggestionsMinWidth ?: 0,
-                    inputView?.desiredInlineSuggestionsMinHeight ?: 0
+                    uiBinding?.inputView?.desiredInlineSuggestionsMinWidth ?: 0,
+                    uiBinding?.inputView?.desiredInlineSuggestionsMinHeight ?: 0
                 ),
                 Size(
-                    inputView?.desiredInlineSuggestionsMaxWidth ?: 0,
-                    inputView?.desiredInlineSuggestionsMaxHeight ?: 0
+                    uiBinding?.inputView?.desiredInlineSuggestionsMaxWidth ?: 0,
+                    uiBinding?.inputView?.desiredInlineSuggestionsMaxHeight ?: 0
                 )
             ).let { spec ->
                 spec.setStyle(stylesBundle)
@@ -490,7 +487,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     }
 
     fun dispatchCurrentStateToInputUi() {
-        inputView?.updateKeyboardState(activeState)
+        uiBinding?.inputView?.updateKeyboardState(activeState)
     }
 
     override fun onWindowShown() {
@@ -509,18 +506,21 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
             textInputManager.keyboards.clear(KeyboardMode.CHARACTERS)
             isNumberRowVisible = newIsNumberRowVisible
         }
-        themeManager.update()
-        activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
-        onSubtypeChanged(activeSubtype)
+        val newActiveSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
+        if (newActiveSubtype != activeSubtype) {
+            activeSubtype = newActiveSubtype
+            onSubtypeChanged(activeSubtype)
+        }
         setActiveInput(R.id.text_input)
         updateOneHandedPanelVisibility()
+        themeManager.update()
 
         if (prefs.devtools.enabled && prefs.devtools.showHeapMemoryStats) {
             devtoolsOverlaySyncJob?.cancel()
             devtoolsOverlaySyncJob = uiScope.launch(Dispatchers.Default) {
                 while (true) {
                     if (!isActive) break
-                    withContext(Dispatchers.Main) { inputView?.invalidate() }
+                    withContext(Dispatchers.Main) { uiBinding?.inputView?.invalidate() }
                     delay(1000)
                 }
             }
@@ -664,8 +664,8 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         w.decorView.systemUiVisibility = flags
 
         // Update InputView theme
-        inputView?.setBackgroundColor(theme.getAttr(Theme.Attr.KEYBOARD_BACKGROUND).toSolidColor().color)
-        inputView?.invalidate()
+        uiBinding?.inputView?.setBackgroundColor(theme.getAttr(Theme.Attr.KEYBOARD_BACKGROUND).toSolidColor().color)
+        uiBinding?.inputView?.invalidate()
 
         // Update ExtractTextView theme and attributes
         extractEditLayout.get()?.let { eel ->
@@ -699,8 +699,8 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
 
     override fun onComputeInsets(outInsets: Insets?) {
         super.onComputeInsets(outInsets)
-        val inputView = this.inputView ?: return
-        val inputWindowView = this.inputWindowView ?: return
+        val inputView = uiBinding?.inputView ?: return
+        val inputWindowView = uiBinding?.inputWindowView ?: return
         // TODO: Check also if the keyboard is currently suppressed by a hardware keyboard
 
         if (!isInputViewShown) {
@@ -724,7 +724,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     private fun updateSoftInputWindowLayoutParameters() {
         val w = window?.window ?: return
         ViewUtils.updateLayoutHeightOf(w, WindowManager.LayoutParams.MATCH_PARENT)
-        val inputWindowView = this.inputWindowView
+        val inputWindowView = uiBinding?.inputWindowView
         if (inputWindowView != null) {
             val layoutHeight = if (isFullscreenMode) {
                 WindowManager.LayoutParams.WRAP_CONTENT
@@ -752,9 +752,9 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
 
             val hapticsPerformed = if (vibrationDuration < 0 && vibrationStrength < 0) {
                 if (isMovingGestureEffect && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-                    inputWindowView?.performHapticFeedback(HapticFeedbackConstants.TEXT_HANDLE_MOVE)
+                    uiBinding?.inputWindowView?.performHapticFeedback(HapticFeedbackConstants.TEXT_HANDLE_MOVE)
                 } else {
-                    inputWindowView?.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
+                    uiBinding?.inputWindowView?.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
                 }
             } else {
                 false
@@ -903,16 +903,16 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     fun setActiveInput(type: Int, forceSwitchToCharacters: Boolean = false) {
         when (type) {
             R.id.text_input -> {
-                inputView?.mainViewFlipper?.displayedChild = 0
+                uiBinding?.mainViewFlipper?.displayedChild = 0
                 if (forceSwitchToCharacters) {
                     textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.VIEW_CHARACTERS))
                 }
             }
             R.id.media_input -> {
-                inputView?.mainViewFlipper?.displayedChild = 1
+                uiBinding?.mainViewFlipper?.displayedChild = 1
             }
             R.id.clip_input -> {
-                inputView?.mainViewFlipper?.displayedChild = 2
+                uiBinding?.mainViewFlipper?.displayedChild = 2
             }
         }
         textInputManager.isGlidePostEffect = false
@@ -928,27 +928,27 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
 
     fun updateOneHandedPanelVisibility() {
         if (resources.configuration.orientation != Configuration.ORIENTATION_PORTRAIT) {
-            inputView?.oneHandedCtrlPanelStart?.visibility = View.GONE
-            inputView?.oneHandedCtrlPanelEnd?.visibility = View.GONE
+            uiBinding?.oneHandedCtrlPanelStart?.visibility = View.GONE
+            uiBinding?.oneHandedCtrlPanelEnd?.visibility = View.GONE
         } else {
             when (prefs.keyboard.oneHandedMode) {
                 OneHandedMode.OFF -> {
-                    inputView?.oneHandedCtrlPanelStart?.visibility = View.GONE
-                    inputView?.oneHandedCtrlPanelEnd?.visibility = View.GONE
+                    uiBinding?.oneHandedCtrlPanelStart?.visibility = View.GONE
+                    uiBinding?.oneHandedCtrlPanelEnd?.visibility = View.GONE
                 }
                 OneHandedMode.START -> {
-                    inputView?.oneHandedCtrlPanelStart?.visibility = View.GONE
-                    inputView?.oneHandedCtrlPanelEnd?.visibility = View.VISIBLE
+                    uiBinding?.oneHandedCtrlPanelStart?.visibility = View.GONE
+                    uiBinding?.oneHandedCtrlPanelEnd?.visibility = View.VISIBLE
                 }
                 OneHandedMode.END -> {
-                    inputView?.oneHandedCtrlPanelStart?.visibility = View.VISIBLE
-                    inputView?.oneHandedCtrlPanelEnd?.visibility = View.GONE
+                    uiBinding?.oneHandedCtrlPanelStart?.visibility = View.VISIBLE
+                    uiBinding?.oneHandedCtrlPanelEnd?.visibility = View.GONE
                 }
             }
         }
         // Delay execution so this function can return, then refresh the whole layout
         uiScope.launch {
-            refreshLayoutOf(inputView)
+            refreshLayoutOf(uiBinding?.inputView)
         }
     }
 
@@ -981,8 +981,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
 
     interface EventListener {
         fun onCreate() {}
-        fun onCreateInputView() {}
-        fun onRegisterInputView(inputView: InputView) {}
+        fun onInitializeInputUi(uiBinding: FlorisboardBinding) {}
         fun onDestroy() {}
 
         fun onStartInputView(instance: EditorInstance, restarting: Boolean) {}

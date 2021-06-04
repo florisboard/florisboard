@@ -734,7 +734,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         val desiredHeight = if (isSmartbarKeyboardView || isPreviewMode) {
             MeasureSpec.getSize(heightMeasureSpec).toFloat()
         } else {
-            (florisboard?.inputView?.desiredTextKeyboardViewHeight ?: MeasureSpec.getSize(heightMeasureSpec).toFloat())
+            (florisboard?.uiBinding?.inputView?.desiredTextKeyboardViewHeight ?: MeasureSpec.getSize(heightMeasureSpec).toFloat())
         } * if (isPreviewMode) {
             0.90f
         } else {
@@ -767,7 +767,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 isSmartbarKeyboardView -> {
                     measuredHeight
                 }
-                florisboard?.inputView?.shouldGiveAdditionalSpace == true -> {
+                florisboard?.uiBinding?.inputView?.shouldGiveAdditionalSpace == true -> {
                     (measuredHeight / (keyboard.rowCount + 0.5f).coerceAtMost(5.0f)).toInt()
                 }
                 else -> {

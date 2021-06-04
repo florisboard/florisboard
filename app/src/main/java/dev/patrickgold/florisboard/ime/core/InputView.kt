@@ -26,19 +26,16 @@ import android.os.Build
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.util.DisplayMetrics
-import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.ViewFlipper
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.common.ViewUtils
-import timber.log.Timber
 import kotlin.math.roundToInt
 
 /**
- * Root view of the keyboard. Notifies [FlorisBoard] when it has been attached to a window.
+ * Root view of the keyboard.
  */
 class InputView : LinearLayout {
     private val florisboard get() = FlorisBoard.getInstance()
@@ -66,13 +63,6 @@ class InputView : LinearLayout {
     var desiredInlineSuggestionsMaxHeight: Int = 0
         private set
 
-    var mainViewFlipper: ViewFlipper? = null
-        private set
-    var oneHandedCtrlPanelStart: ViewGroup? = null
-        private set
-    var oneHandedCtrlPanelEnd: ViewGroup? = null
-        private set
-
     private val overlayTextPaint: TextPaint = TextPaint().apply {
         color = Color.GREEN
         textAlign = Paint.Align.RIGHT
@@ -87,18 +77,6 @@ class InputView : LinearLayout {
         attrs,
         defStyleAttr
     )
-
-    override fun onAttachedToWindow() {
-        Timber.i("onAttachedToWindow()")
-
-        super.onAttachedToWindow()
-
-        mainViewFlipper = findViewById(R.id.main_view_flipper)
-        oneHandedCtrlPanelStart = findViewById(R.id.one_handed_ctrl_panel_start)
-        oneHandedCtrlPanelEnd = findViewById(R.id.one_handed_ctrl_panel_end)
-
-        florisboard.registerInputView(this)
-    }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         heightFactor = when (resources.configuration.orientation) {

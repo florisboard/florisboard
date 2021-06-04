@@ -64,7 +64,7 @@ class ClipboardHistoryView : LinearLayout, FlorisBoard.EventListener,
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val height = florisboard?.inputView?.desiredMediaKeyboardViewHeight ?: 0.0f
+        val height = florisboard?.uiBinding?.inputView?.desiredMediaKeyboardViewHeight ?: 0.0f
         super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height.roundToInt(), MeasureSpec.EXACTLY))
     }
 

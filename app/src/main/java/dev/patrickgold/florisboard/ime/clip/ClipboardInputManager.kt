@@ -3,15 +3,14 @@ package dev.patrickgold.florisboard.ime.clip
 import android.annotation.SuppressLint
 import android.view.MotionEvent
 import android.view.View
-import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.databinding.FlorisboardBinding
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
-import dev.patrickgold.florisboard.ime.core.InputView
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.BasicTextKeyData
 import kotlinx.coroutines.*
@@ -43,27 +42,23 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
         florisboard.addEventListener(this)
     }
 
-    /**
-     * Called when a new input view has been registered. Used to initialize all media-relevant
-     * views and layouts.
-     */
     @SuppressLint("ClickableViewAccessibility")
-    override fun onRegisterInputView(inputView: InputView) {
-        inputView.findViewById<ImageButton>(R.id.back_to_keyboard_button)
+    override fun onInitializeInputUi(uiBinding: FlorisboardBinding) {
+        uiBinding.clipboard.backToKeyboardButton
+            .setOnTouchListener { view, event -> onButtonPressEvent(view, event) }
+        uiBinding.clipboard.clearClipboardHistory
             .setOnTouchListener { view, event -> onButtonPressEvent(view, event) }
 
-        inputView.findViewById<ImageButton>(R.id.clear_clipboard_history)
-            .setOnTouchListener { view, event -> onButtonPressEvent(view, event) }
+        recyclerView = uiBinding.clipboard.clipboardHistoryItems.also {
+            if (BuildConfig.DEBUG && adapter == null) {
+                error("initClipboard() not called")
+            }
 
-        recyclerView = inputView.findViewById(R.id.clipboard_history_items)
-
-        if (BuildConfig.DEBUG && adapter == null) {
-            error("initClipboard() not called")
+            it.adapter = adapter
+            val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            it.layoutManager = manager
         }
 
-        recyclerView!!.adapter = adapter
-        val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        recyclerView!!.layoutManager = manager
     }
 
     /**
@@ -78,7 +73,7 @@ class ClipboardInputManager private constructor() : CoroutineScope by MainScope(
      * Returns a reference to the [ClipboardHistoryView]
      */
     fun getClipboardHistoryView(): ClipboardHistoryView {
-        return FlorisBoard.getInstance().inputView?.mainViewFlipper?.getChildAt(2) as ClipboardHistoryView
+        return florisboard.uiBinding?.mainViewFlipper?.getChildAt(2) as ClipboardHistoryView
     }
 
     /**

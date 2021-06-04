@@ -25,12 +25,10 @@ import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
 import timber.log.Timber
 
 @Suppress("unused")
-class FlorisApplication : Application(), CoroutineScope by MainScope() {
+class FlorisApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {

@@ -85,6 +85,11 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
+    override fun onFinishInflate() {
+        super.onFinishInflate()
+        binding = SmartbarBinding.bind(this)
+    }
+
     /**
      * Called by Android when this view has been attached to a window. At this point we can be
      * certain that all children have been instantiated and that we can begin working with them.
@@ -95,8 +100,6 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
         Timber.i("onAttachedToWindow()")
 
         super.onAttachedToWindow()
-
-        binding = SmartbarBinding.bind(this)
 
         for (view in binding.actionStartArea.children) {
             indexedActionStartArea.add(view.id)
@@ -156,21 +159,12 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
             eventListener.get()?.onSmartbarQuickActionPressed(it.id)
         }
 
-        configureFeatureVisibility(
-            actionStartAreaVisible = false,
-            actionStartAreaId = null,
-            mainAreaId = null,
-            actionEndAreaVisible = false,
-            actionEndAreaId = null
-        )
+        configureFeatureVisibility()
 
         themeManager.registerOnThemeUpdatedListener(this)
-
-        florisboard?.textInputManager?.registerSmartbarView(this)
     }
 
     override fun onDetachedFromWindow() {
-        florisboard?.textInputManager?.unregisterSmartbarView(this)
         themeManager.unregisterOnThemeUpdatedListener(this)
         super.onDetachedFromWindow()
     }
@@ -220,6 +214,12 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
             binding.actionEndArea.displayedChild =
                 indexedActionEndArea.indexOf(actionEndAreaId).coerceAtLeast(0)
         }
+
+        cachedActionStartAreaVisible = actionStartAreaVisible
+        cachedActionStartAreaId = actionStartAreaId
+        cachedMainAreaId = mainAreaId
+        cachedActionEndAreaVisible = actionEndAreaVisible
+        cachedActionEndAreaId = actionEndAreaId
     }
 
     override fun onInterceptUpdateKeyboardState(newState: KeyboardState): Boolean {
@@ -228,14 +228,12 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
 
     override fun onUpdateKeyboardState(newState: KeyboardState) {
         flogInfo(LogTopic.SMARTBAR)
-        if (newState != cachedState) {
+        if (cachedState != newState) {
             cachedState.reset(newState)
-            if (this::binding.isInitialized) {
-                updateUi()
-                when (cachedMainAreaId) {
-                    R.id.clipboard_cursor_row -> binding.clipboardCursorRow.updateKeyboardState(newState)
-                    R.id.number_row -> binding.numberRow.updateKeyboardState(newState)
-                }
+            updateUi()
+            when (cachedMainAreaId) {
+                R.id.clipboard_cursor_row -> binding.clipboardCursorRow.updateKeyboardState(newState)
+                R.id.number_row -> binding.numberRow.updateKeyboardState(newState)
             }
         }
     }
@@ -386,11 +384,11 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
             }
             MeasureSpec.AT_MOST -> {
                 // Can't be bigger than...
-                (florisboard?.inputView?.desiredSmartbarHeight ?: resources.getDimension(R.dimen.smartbar_baseHeight)).coerceAtMost(heightSize)
+                (florisboard?.uiBinding?.inputView?.desiredSmartbarHeight ?: resources.getDimension(R.dimen.smartbar_baseHeight)).coerceAtMost(heightSize)
             }
             else -> {
                 // Be whatever you want
-                florisboard?.inputView?.desiredSmartbarHeight ?: resources.getDimension(R.dimen.smartbar_baseHeight)
+                florisboard?.uiBinding?.inputView?.desiredSmartbarHeight ?: resources.getDimension(R.dimen.smartbar_baseHeight)
             }
         }
 
@@ -402,7 +400,7 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
         invalidate()
     }
 
-    fun setEventListener(listener: EventListener) {
+    fun setEventListener(listener: EventListener?) {
         eventListener = WeakReference(listener)
         binding.candidates.setEventListener(listener)
     }

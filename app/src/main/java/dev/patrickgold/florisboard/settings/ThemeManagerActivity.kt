@@ -182,11 +182,18 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         }
     }
 
-    override fun finish() {
+    override fun onPause() {
+        super.onPause()
         // Normally the selection should already be applied to the prefs, but just to make sure we
         // apply it here again.
         setThemeRefInPrefs(selectedRef)
+    }
+
+    override fun finish() {
         super.finish()
+        // Normally the selection should already be applied to the prefs, but just to make sure we
+        // apply it here again.
+        setThemeRefInPrefs(selectedRef)
     }
 
     private fun evaluateSelectedRef(ignorePrefs: Boolean = false): AssetRef? {
