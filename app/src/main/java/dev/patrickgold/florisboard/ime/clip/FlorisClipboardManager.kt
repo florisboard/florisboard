@@ -108,19 +108,42 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         val clipboardPrefs = prefs.clipboard
 
         if (clipboardPrefs.enableHistory) {
-            if (clipboardPrefs.limitHistorySize) {
-                var numRemoved = 0
-                while (history.size >= clipboardPrefs.maxHistorySize) {
-                    numRemoved += 1
-                    history.removeLast().data.close()
-                }
-                ClipboardInputManager.getInstance().notifyItemRangeRemoved(history.size, numRemoved)
-            }
+            val clipboardInputManager = ClipboardInputManager.getInstance()
 
-            val timed = TimedClipData(newData, System.currentTimeMillis())
-            history.addFirst(timed)
-            ClipboardInputManager.getInstance().notifyItemInserted(pins.size)
+            val historyElement = history.firstOrNull { it.data.type == ItemType.TEXT && it.data.text == newData.text }
+            if (historyElement != null) {
+                moveToTheBeginning(historyElement, newData, clipboardInputManager)
+            } else {
+                if (clipboardPrefs.limitHistorySize) {
+                    var numRemoved = 0
+                    while (history.size >= clipboardPrefs.maxHistorySize) {
+                        numRemoved += 1
+                        history.removeLast().data.close()
+                    }
+                    clipboardInputManager.notifyItemRangeRemoved(history.size, numRemoved)
+                }
+
+                createAndAddNewTimedClipData(newData)
+                clipboardInputManager.notifyItemInserted(pins.size)
+            }
         }
+    }
+
+    /**
+     * Moves a ClipboardItem to the beginning of the history by removing the old one and creating a new one
+     */
+    private fun moveToTheBeginning(
+        historyElement: TimedClipData,
+        newData: ClipboardItem,
+        clipboardInputManager: ClipboardInputManager
+    ) {
+        val elementsPosition = history.indexOf(historyElement)
+        history.remove(historyElement)
+
+        createAndAddNewTimedClipData(newData)
+
+        clipboardInputManager.notifyItemMoved(elementsPosition, 0)
+        clipboardInputManager.notifyItemChanged(0)
     }
 
     /**
@@ -341,8 +364,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
             ClipboardInputManager.getInstance().notifyItemRangeRemoved(history.size, numRemoved)
         }
 
-        val timed = TimedClipData(item, System.currentTimeMillis())
-        history.addFirst(timed)
+        createAndAddNewTimedClipData(item)
 
         clipInputManager.notifyItemMoved(adapterPos, pins.size)
         clipInputManager.notifyItemChanged(pins.size)
@@ -350,6 +372,14 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         executor.execute {
             pinsDao.delete(item)
         }
+    }
+
+    /**
+     * Creates a new TimedClipData and adds it to the history
+     */
+    private fun createAndAddNewTimedClipData(newData: ClipboardItem) {
+        val timed = TimedClipData(newData, System.currentTimeMillis())
+        history.addFirst(timed)
     }
 
     fun removeClip(pos: Int) {
