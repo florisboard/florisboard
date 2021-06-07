@@ -1,18 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">FlorisBoard</string>
     <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Tutup mode satu-tangan.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Pindahkan papan ketik ke kiri.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Pindahkan papan ketik ke kanan.</string>
     <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Mode pribadi</string>
     <!--
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
     <!-- Media strings -->
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <!-- Emoji strings -->
+    <string name="emoji__category__people_body" comment="Emoji category name">Orang &amp; Badan</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Hewan &amp; Alam</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Makanan &amp; Minuman</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Perjalanan &amp; Tempat</string>
+    <string name="emoji__category__activities" comment="Emoji category name">Aktivitas</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Obyek</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">Simbol</string>
+    <string name="emoji__category__flags" comment="Emoji category name">Bendera</string>
     <!-- Smartbar strings -->
+    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Buka pengaturan.</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Jika terlihat, menandakan bahwa mode pribadi aktif. Jika diklik, menampilkan informasi tentang mode pribadi.</string>
     <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">Pengaturan</string>
+    <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Opsi lainnya</string>
+    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Dukungan &amp; masukan</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Bantuan</string>
+    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Beranda</string>
+    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Papan Ketik</string>
+    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Mengetik</string>
+    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Tema</string>
+    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gestur</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">Default</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Default sistem</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">Selamat datang di %s</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Terima kasih telah mencoba FlorisBoard! Proyek ini masih dalam versi alpha dan karena itu banyak fitur belum ada. Jika Anda menemukan sebuah bug atau ingin memberikan saran, harap periksa repositori di GitHub dan membuat sebuah masalah (issue). Ini membantu membuat FlorisBoard lebih baik. Terima kasih!</string>
+    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Bahasa &amp; Tata letak papan ketik</string>
+    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Tambahkan</string>
+    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Terapkan</string>
+    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Batal</string>
+    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Hapus</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Tata letak karakter</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Set mata uang</string>
+    <string name="settings__theme__title" comment="Title of the Theme fragment">Tema papan ketik</string>
+    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Tidak ditetapkan</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Mode tema</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Selalu siang</string>
+    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Selalu malam</string>
+    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Ikuti sistem</string>
+    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Ikuti waktu</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Waktu matahari terbit</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Waktu matahari terbenam</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tema siang</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tema malam</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Tema yang dipilih</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">Aset Aplikasi FlorisBoard</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">Penyimpanan Internal</string>
+    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Buat tema kosong</string>
+    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Buat dari tema yang dipilih</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Kustom (berdasarkan %s)</string>
+    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Tema baru</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Tema berhasil diimpor!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Tema berhasil diekspor!</string>
+    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Sunting tema</string>
+    <string name="settings__theme_editor__name_label" comment="Label of name input">Nama</string>
+    <string name="settings__theme_editor__type_label" comment="Label of type input">Jenis</string>
+    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Tambahkan kelompok</string>
+    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Sunting kelompok</string>
+    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Tambahkan atribut</string>
+    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Sunting atribut</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Sunting nama tema</string>
+    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Kelompok</string>
+    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Atribut</string>
+    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Lainnya</string>
+    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Teka</string>
+    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Harap masukkan nama tema.</string>
+    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Harap masukkan nama kelompok.</string>
+    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Harap masukkan nama atribut yang hanya mengandung huruf a-z dan/atau A-Z.</string>
+    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Harap masukkan nama atribut.</string>
+    <string name="settings__theme__group_keyboard" comment="Theme group label">Papan ketik</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">Satu-tangan</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">Mode pribadi</string>
+    <string name="settings__theme__attr_background" comment="Theme attribute label">Warna latar belakang</string>
+    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Warna latar belakang (aktif)</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Warna utama</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Warna utama (gelap)</string>
+    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Warna bilah navigasi</string>
+    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Warna teks</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Preferensi Papan Ketik</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">Baris angka</string>
+    <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">Nonaktif</string>
+    <string name="pref__keyboard__utility_key_action__switch_to_emojis" comment="Preference value">Beralih ke emoji</string>
+    <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Beralih bahasa</string>
+    <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Beralih aplikasi papan ketik</string>
+    <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Dinamis: Beralih ke emoji / Beralih bahasa</string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">Tata letak</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Mode satu-tangan</string>
+    <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Mati</string>
+    <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Mode tangan kanan</string>
+    <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Mode tangan kiri</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">Tinggi papan ketik</string>
+    <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Ekstra-rendah</string>
+    <string name="pref__keyboard__height_factor__short" comment="Preference value">Rendah</string>
+    <string name="pref__keyboard__height_factor__normal" comment="Preference value">Normal</string>
+    <string name="pref__keyboard__height_factor__tall" comment="Preference value">Tinggi</string>
+    <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Ekstra-tinggi</string>
+    <string name="settings__typing__title" comment="Title of Typing experience fragment">Pengalaman mengetik</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">Akan tampil di atas papan ketik</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Saran</string>
+    <string name="pref__dictionary__title" comment="Preference group title">Kamus</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Kapitalisasi otomatis</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Mengetuk batang spasi dua kali memasukkan titik yang diikuti oleh sebuah spasi</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekuensi: %d</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Untuk semua bahasa</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Kamus pengguna berhasil diimpor!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Kamus pengguna berhasil diekspor!</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Kata</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Harap masukkan sebuah kata!</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Kata ini mengandung karakter yang tidak valid.</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frekuensi (diantara %d dan %d)</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Kode bahasa (opsional)</string>
+    <string name="pref__glide__enabled__summary" comment="Preference summary">Ketik sebuah kata dengan menggeser jari Anda melewati huruf-huruf nya</string>
+    <string name="pref__glide__show_trail__summary" comment="Preference summary">Akan menghilang setelah setiap kata</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Gestur umum</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestur batang spasi</string>
+    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Tidak ada tindakan</string>
+    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Hapus kata saat ini</string>
+    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Sembunyikan papan ketik</string>
+    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Masukkan spasi</string>
+    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Pindahkan kursor ke atas</string>
+    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Pindahkan kursor ke bawah</string>
+    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Pindahkan kursor ke kiri</string>
+    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Pindahkan kursor ke kanan</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Pindahkan kursor ke awal baris</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Pindahkan kursor ke akhir baris</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Pindahkan kursor ke awal halaman</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Pindahkan kursor ke akhir halaman</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Buka pengelola/riwayat papan klip</string>
+    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Beralih ke papan ketik sebelumnya</string>
+    <string name="pref__gestures__swipe_up__label" comment="Preference title">Geser ke atas</string>
+    <string name="pref__gestures__swipe_down__label" comment="Preference title">Geser ke bawah</string>
+    <string name="pref__gestures__swipe_left__label" comment="Preference title">Geser ke kiri</string>
+    <string name="pref__gestures__swipe_right__label" comment="Preference title">Geser ke kanan</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Geser batang spasi ke atas</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Geser batang spasi ke kiri</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Geser batang spasi ke kanan</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Sangat lambat</string>
+    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Lambat</string>
+    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normal</string>
+    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Cepat</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Sangat cepat</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Sangat singkat</string>
+    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Singkat</string>
+    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
+    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Panjang</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Sangat panjang</string>
+    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Tema pengaturan</string>
+    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Cerah</string>
+    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Gelap</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Tampilkan ikon aplikasi pada peluncur</string>
+    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Paksa mode pribadi</string>
+    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Aktifkan alat pengembang</string>
     <!-- About UI strings -->
+    <string name="about__title" comment="Title of About activity">Tentang</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikon aplikasi FlorisBoard</string>
+    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Kebijakan privasi</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">Kode sumber</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versi disalin ke papan klip</string>
     <!-- Assets strings -->
+    <plurals name="assets__file__authors">
+        <item quantity="other">Penulis</item>
+    </plurals>
+    <string name="assets__file__name">Nama</string>
+    <string name="assets__file__source">Sumber</string>
+    <string name="assets__action__add">Tambahkan</string>
+    <string name="assets__action__apply">Terapkan</string>
+    <string name="assets__action__cancel">Batal</string>
+    <string name="assets__action__cancel_confirm_title">Konfirmasi pembatalan</string>
+    <string name="assets__action__cancel_confirm_message">Apakah Anda yakin ingin membuang perubahan yang belum disimpan? Tindakan ini tidak dapat dibatalkan setelah dieksekusi.</string>
+    <string name="assets__action__delete">Hapus</string>
+    <string name="assets__action__delete_confirm_title">Konfirmasi penghapusan</string>
+    <string name="assets__action__delete_confirm_message">Apakah Anda yakin ingin menghapus \"%s\"? Tindakan ini tidak dapat dibatalkan setelah dieksekusi.</string>
+    <string name="assets__action__edit">Sunting</string>
+    <string name="assets__action__export">Ekspor</string>
+    <string name="assets__action__import">Impor</string>
+    <string name="assets__action__no">Tidak</string>
+    <string name="assets__action__save">Simpan</string>
+    <string name="assets__action__yes">Ya</string>
+    <string name="assets__error__details">Keterangan</string>
+    <string name="assets__error__invalid">Tidak valid</string>
+    <string name="assets__error__snackbar_message">Terjadi kesalahan</string>
     <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">Persiapan</string>
+    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Seb</string>
+    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Batal</string>
+    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Lanjut</string>
+    <string name="setup__finish_button" comment="Label of Finish button in Setup">Selesai</string>
+    <string name="setup__ok_button" comment="Label of OK button in Setup">Oke</string>
+    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Selamat datang!</string>
+    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard sepenuhnya menghormati privasi Anda dan tidak mengumpulkan data pengguna apapun. Untuk informasi lebih lanjut lihat di sini:</string>
+    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">Kode sumber FlorisBoard dapat diakses oleh siapapun, sehingga Anda dapat memeriksa apa yang FlorisBoard lakukan di belakang. Cek tautan repositori nya berikut ini.</string>
+    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Untuk memulai persiapan, klik <i>LANJUT</i>.</string>
+    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Aktifkan FlorisBoard</string>
+    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard berhasil diaktifkan. Untuk melanjutkan klik <i>LANJUT</i>!</string>
+    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Buka pengaturan Bahasa &amp; Masukan</string>
+    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Berhasil mengalihkan papan ketik default menjadi FlorisBoard!</string>
+    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Beralih papan ketik</string>
+    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Persiapan selesai!</string>
     <!-- Crash Dialog strings -->
+    <string name="crash_dialog__title" comment="Title of crash dialog">Laporan kesalahan FlorisBoard</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Salin ke papan klip sistem</string>
+    <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Disalin ke papan klip sistem</string>
+    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Tutup</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard berhenti bekerja…</string>
+    <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Ketuk untuk melihat keterangan kesalahan</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard kelihatannya berhenti bekerja berulang kali…</string>
     <!-- clipboard strings -->
+    <string name="clip__context_header">Riwayat papan klip</string>
+    <string name="clip__clear_history">Hapus riwayat</string>
+    <string name="clip__delete_item">Hapus</string>
+    <string name="clip__paste_item">Tempel</string>
+    <string name="clip__cant_paste">Aplikasi ini tidak mengizinkan untuk menempel konten ini.</string>
+    <string name="pref__clipboard__clipboard_category__label">Papan klip</string>
+    <string name="pref__clipboard__use_internal_clipboard___label">Gunakan papan klip internal</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Sinkronkan dari papan klip sistem</string>
+    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Pembaruan papan klip sistem juga memperbarui papan klip Floris</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Sinkronkan ke papan klip sistem</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Pembaruan papan klip Floris juga memperbarui papan klip sistem</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Aktifkan riwayat papan klip</string>
+    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Bersihkan item-item lama</string>
+    <string name="pref__clipboard__clean_up_old_after__label">Bersihkan item lama setelah</string>
+    <string name="pref__unit_minutes">" menit"</string>
+    <string name="pref__clipboard__limit_history_size__label">Batasi ukuran riwayat</string>
+    <string name="pref__unit_items">" item"</string>
     <!-- glide strings -->
 </resources>

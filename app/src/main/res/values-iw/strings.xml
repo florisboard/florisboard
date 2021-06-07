@@ -61,6 +61,13 @@
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">מחק</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">ערוך תת-סוג</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">שפה</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">סמלים פריסה ראשית</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">סמלים פריסה משנית</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">מחבר</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">הגדרות מטבע</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">פריסה מספרית</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">פריסה מספרית (מתקדם)</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">פריסת שורת מספרים</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">תת הסוג הזה כבר קיים!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">ערכת נושא של המקלדת</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">לא מוגדר</string>
@@ -120,6 +127,8 @@
     <string name="settings__theme__group_privateMode" comment="Theme group label">מצב פרטיות</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">שורה חכמה</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">כפתור שורה חכמה</string>
+    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">פריסת מסך מלא לרוחב</string>
+    <string name="settings__theme__group_extractActionButton" comment="Theme group label">כפתור פעולה מסך מלא לרוחב</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">קבוצה מותאמת אישית (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">צבע רקע</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">צבע רקע (מופעל)</string>
@@ -153,6 +162,7 @@
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">החלף שפה</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">החלף אפליקציית מקלדת</string>
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">דינמי: עבור לאימוג\'ים / החלף שפה</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label">הראה גם חלונות קופצים של סמל</string>
     <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">מכפלת גודל גופן (אנכי)</string>
     <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">מכפלת גודל גופן (אופקי)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">אופן תצוגה</string>
@@ -160,6 +170,9 @@
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">כבה</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">מצב ליד ימין</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">מצב לשמאליים</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">לעולם אל תציג</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">הצג תמיד</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">להציג באופן דינמי</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">גובה המקלדת</string>
     <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">קצר במיוחד</string>
     <string name="pref__keyboard__height_factor__short" comment="Preference value">קצר</string>
@@ -170,18 +183,31 @@
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">גבוה במיוחד</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">מותאם אישית</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">גובה מקלדת מותאם אישית</string>
+    <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">קיזוז תחתון (דיוקן)</string>
+    <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">ריווח מקשים (אנכי)</string>
+    <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">ריווח מקשים (אופקי)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">לחיצת מקש</string>
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">שמע בעת לחיצה על מקש</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">השמע צליל בעת לחיצה על מקש</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">הפעל רטט בעת לחיצה על מקש</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">משך הרטט בלחיצת מקש</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">עוצמת רטט בעת לחיצה על מקש</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">תצוגת חלונית</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">הצד חלונית בעת לחיצה על מקש</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">השהיית לחיצה מקש ארוכה</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">סרגל רווח עובר חזרה לפריסת התווים</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">לחיצה על סרגל הרווח מחזירה אוטומטית לתווים כאשר היא נמצאת בסמלים או במספרים</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">חווית הקלדה</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">הפעל שורה חכמה</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">יהיה ממוקם מעל המקלדת</string>
     <string name="pref__suggestion__title" comment="Preference group title">הצעות</string>
+    <string name="pref__dictionary__title" comment="Preference group title">מילון</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">אפשר מילון משתמשי מערכת</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">הצע מילים המאוחסנות במילון משתמשי המערכת</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">נהל את מילון משתמשי המערכת</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">הוסף, הצג והסר ערכים עבור מילון המשתמשים במערכת</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">אפשר מילון משתמשים פנימי</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">הצע מילים המאוחסנות במילון המשתמש הפנימי</string>
     <string name="pref__correction__title" comment="Preference group title">תיקונים</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">שימוש אוטומטי באותיות גדולות</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">הפוך אותיות לגדולות בהתחשב בהקשר של הקלט הנכוחי</string>
@@ -189,6 +215,12 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock ישאר פעיל גם כאשר תעבור לשדה טקסט אחר</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">רווח-כפול סוף משפט</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">לחיצה על מקש הרווח פעמים תכניס נקודה ואחריה רווח</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">מילון משתמשים פנימי</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">מילון משתמשי מערכת</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">מילון המשתמש יובא בהצלחה!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">מילון משתמשים מיוצא בהצלחה!</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">הוסף ערך מילים</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">ערוך הזנת מילים</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">מחוות &amp; הקלדה גולשת</string>
     <string name="pref__glide__title" comment="Preference group title">הקלדה גולשת</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">הקלד מילה באמצעות החלקה של האצבע בין האותיות</string>
@@ -209,6 +241,8 @@
     <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">הזז את הסמן לתחילת השורה</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">העבר את הסמן לסוף השורה</string>
     <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
+    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">בצע שוב</string>
+    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">ביטול</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">הצג בורר שיטות קלט</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">החלפה למקלדת הקודמת</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">החלף לתת-סוג הקודם</string>
@@ -241,6 +275,9 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">הצד את סמל האפליקציה בLauncher</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">כפה מצב פרטיות</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">יבטל כל תכולה אשר חייבת להשתמש בצורה זמנית בקלט שלך</string>
+    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">אפשר כלי מפתח</string>
+    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">כלים שתוכננו במיוחד לצורך איתור באגים ופתרון בעיות</string>
+    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">הראה נתונים סטטיסטיים של זיכרון ערימה</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">אודות</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">סמל האפליקציה של FlorisBoard</string>
@@ -248,6 +285,7 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">מדיניות פרטיות</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">קוד מקור</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">רישיונות קוד פתוח</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">הגרסה הועתקה ללוח</string>
     <!-- Assets strings -->
     <plurals name="assets__file__authors">
         <item quantity="one">יוצר</item>
@@ -258,6 +296,7 @@
     <string name="assets__file__name">שם</string>
     <string name="assets__file__source">מקור</string>
     <string name="assets__action__add">הוסף</string>
+    <string name="assets__action__apply">החל</string>
     <string name="assets__action__cancel">ביטול</string>
     <string name="assets__action__cancel_confirm_title">אשר ביטול</string>
     <string name="assets__action__cancel_confirm_message">האם אתה בטוח שברצונך לבטל שינויים שלא נשמרו? לא ניתן לבטל פעולה זו לאחר ביצועה.</string>
@@ -270,7 +309,9 @@
     <string name="assets__action__no">לא</string>
     <string name="assets__action__save">שמור</string>
     <string name="assets__action__yes">כן</string>
+    <string name="assets__error__details">פרטים</string>
     <string name="assets__error__invalid">לא תקין</string>
+    <string name="assets__error__snackbar_message">משהו השתבש</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">הגדרות</string>
     <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">הקודם</string>
@@ -295,6 +336,8 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">ההתקנה הושלמה!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard דוח שגיאה</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">מצטער על אי הנוחות, אך FlorisBoard קרס בגלל שגיאה לא צפויה.</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">העתק ללוח המערכת</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">סגור</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard דוח שגיאה</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard הפסיק לעבוד…</string>
@@ -302,5 +345,20 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">נראה שFlorisBoard מפסיק לעבוד שוב שוב…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">המקדלת הקומדת הוחזרה כדי למנוע לולאת קריסה אינסופית. לחץ כדי לראות את פרטי השגיאה</string>
     <!-- clipboard strings -->
+    <string name="clip__clear_history">נקה היסטוריה</string>
+    <string name="clip__unpin_item">ביטול הצמדה של פריט</string>
+    <string name="clip__delete_item">מחק</string>
+    <string name="clip__paste_item">הדבק</string>
+    <string name="clip__back_to_text_input">חזרה להזנת טקסט</string>
+    <string name="clip__cant_paste">אפליקציה זו אינה מאפשרת הדבקת תוכן זה.</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">אפשר היסטוריה של הלוח</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">שמור פריטי לוח</string>
+    <string name="pref__clipboard__clean_up_old_clipboard_items__label">נקה פריטים ישנים</string>
+    <string name="pref__clipboard__clean_up_old_after__label">נקה פריטים ישנים אחרי</string>
+    <string name="pref__unit_minutes">" דקות"</string>
+    <string name="pref__clipboard__limit_history_size__label">הגבל את גודל ההיסטוריה</string>
+    <string name="pref__clipboard__max_history_size__label">גודל היסטוריה מקסימלי</string>
+    <string name="pref__unit_items">" פריטים"</string>
     <!-- glide strings -->
+    <string name="pref__glide_preview_refresh_delay">תצוגה מקדימה של עיכוב רענון</string>
 </resources>

@@ -38,7 +38,7 @@
     <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">زر الإعادة لعكس آخر إلغاء</string>
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">إذا كان مرئيًا، يشير إلى أن الوضع الخاص نشط. عند النقر فوقه، يظهر معلومات حول الوضع الخاص.</string>
     <!-- Settings UI strings -->
-    <string name="settings__title" comment="Title of Settings">الاعدادات</string>
+    <string name="settings__title" comment="Title of Settings">الإعدادات</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">المزيد من الخيارات</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">المساعدة والملاحظات</string>
     <string name="settings__help" comment="General label for help buttons in Settings">مساعدة</string>

@@ -202,6 +202,20 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">So en prémer la tecla</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volum del so en prémer la tecla</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibrar al prémer la tecla</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Durada de la vibració en prémer la tecla</string>
+    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Força de vibració en prémer la tecla</string>
+    <string name="pref__keyboard__popup_visible__label" comment="Preference title">Visibilitat de la finestra emergent</string>
+    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Mostra una finestra emergent quan premeu una tecla</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Retard de la premuda de tecla llarga</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barra espaiadora canvia a la disposició de caràcters</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">En prémer la barra d\'espai, es torna automàticament als caràcters quan estan en símbols o numèrics</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">Habilita la barra intel·ligent</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">Es mostrarà a la part superior del teclat</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Suggeriments</string>
+    <string name="pref__dictionary__title" comment="Preference group title">Diccionari</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Habilita el diccionari d\'usuari del sistema</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Suggereix paraules emmagatzemades al diccionari d\'usuari del sistema</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Gestiona el diccionari d\'usuari del sistema</string>
     <string name="pref__correction__title" comment="Preference group title">Correccions</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Majúscules automàtiques</string>
     <!-- About UI strings -->

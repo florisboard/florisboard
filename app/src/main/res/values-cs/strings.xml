@@ -40,7 +40,7 @@
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Nastavení</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Více možností</string>
-    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Pomoc &amp; odezva</string>
+    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Nápověda &amp; zpětná vazba</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Nápověda</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Domov</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Klávesnice</string>
@@ -73,7 +73,7 @@
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Sekundární telefonní rozložení</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Tento podtyp již existuje!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Motiv klávesnice</string>
-    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Definován</string>
+    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nedefinováno</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Režim motivu</string>
     <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Vždy denní</string>
     <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Vždy noční</string>
@@ -108,14 +108,14 @@
     <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Odkaz</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Skupina</string>
     <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Atribut</string>
-    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Jednolitá barva</string>
+    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Plná barva</string>
     <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Lineární přechod</string>
     <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Radiální přechod</string>
     <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Přepínač</string>
     <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Stav</string>
     <string name="settings__theme_editor__value_type_other" comment="Theme value type">Ostatní</string>
     <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Text</string>
-    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Náhled této hodnoty tématu</string>
+    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Náhled této hodnoty motivu</string>
     <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Zadejte prosím název motivu.</string>
     <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Prosím, zadejte název skupiny který používá pouze písmena (a-z a/nebo A-Z), dvojtečku (:) pro podskupiny a navíc číslice (0-9), vlnovku (~) a podtržítko (_) pro název klíče.</string>
     <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Zadejte název skupiny.</string>
@@ -171,13 +171,13 @@
     <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Dynamicky: Přepnout na emoji / Přepnout jazyk</string>
     <string name="pref__keyboard__merge_hint_popups_enabled__label">Ukazovat vyskakovací symboly</string>
     <string name="pref__keyboard_merge_hint_popups_enabled__summary">Přidat vyskakovací symboly do základního rozpoložení</string>
-    <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplikátor velikosti písma (portrét)</string>
-    <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplikátor velikosti písma (Krajina)</string>
+    <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplikátor velikosti písma (na výšku)</string>
+    <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplikátor velikosti písma (na šířku)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Rozložení</string>
-    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Režim s jednou rukou</string>
-    <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Z</string>
-    <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Režim pravé ruky</string>
-    <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Režim levé ruky</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Režim jedné ruky</string>
+    <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Vypnuto</string>
+    <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Režim pro praváky</string>
+    <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Režim pro leváky</string>
     <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Šířka klávesnice v režimu jedné ruky</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Vstupní okno v celoobrazovkovém režimu na šířku</string>
     <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Nikdy nezobrazovat</string>
@@ -192,7 +192,7 @@
     <string name="pref__keyboard__height_factor__tall" comment="Preference value">Vysoká</string>
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Extra vysoká</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Vlastní</string>
-    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Vlastní hodnota výšky klávesnice</string>
+    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Hodnota vlastní výšky klávesnice</string>
     <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Spodní odsazení (na výšku)</string>
     <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Spodní odsazení (na šířku)</string>
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Mezery mezi klávesami (na výšku)</string>
@@ -201,25 +201,25 @@
     <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Zvuk při stisku klávesy</string>
     <string name="pref__keyboard__sound_volume__label" comment="Preference title">Hlasitost zvuku při stisku klávesy</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibrace při stisku klávesy</string>
-    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Trvání vibrací při stisknutí tlačítka</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Síla vibrací na stisknutí tlačítka</string>
-    <string name="pref__keyboard__popup_visible__label" comment="Preference title">Vyskakovací Viditelnost</string>
-    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Zobrazit vyskakovací okno, když stisknete klávesu</string>
-    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Dlouhé zpoždění stisknutí tlačítka</string>
+    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Trvání vibrací při stisku klávesy</string>
+    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Síla vibrací při stisku klávesy</string>
+    <string name="pref__keyboard__popup_visible__label" comment="Preference title">Viditelnost vyskakovacího okna</string>
+    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Zobrazit vyskakovací okno při stisku klávesy</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Délka dlouhého stisku</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Mezerník přepne znovu do písmenného rozložení</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Stisknutím mezerníku se automaticky vrátíte z nabídky čísel/symbolů ke klasické klávesnici</string>
-    <string name="settings__typing__title" comment="Title of Typing experience fragment">Psaní zkušenosti</string>
+    <string name="settings__typing__title" comment="Title of Typing experience fragment">Zážitek z psaní</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Povolit chytrou lištu</string>
-    <string name="pref__smartbar__enabled__summary" comment="Preference summary">Zobrazí se na vrchu klávesnice</string>
-    <string name="pref__suggestion__title" comment="Preference group title">Návrh</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">Zobrazí se v horní části klávesnice</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Návrhy</string>
     <string name="pref__dictionary__title" comment="Preference group title">Slovník</string>
     <string name="pref__correction__title" comment="Preference group title">Oprava</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatická kapitalizace</string>
-    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Vydělávejte slova na základě aktuálního vstupního kontextu</string>
-    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Pamatovat caps lock stav</string>
-    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock zůstane při přesunu do jiného textového pole</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">Doba dvojitého prostoru</string>
-    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Poklepáním dvakrát na mezerník vloží období následuje prostor</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kapitalizovat slova na základě aktuálního vstupního kontextu</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Pamatovat stav caps locku</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock zůstane aktivní při přesunu do jiného textového pole</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Tečka dovjitou mezerou</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dvojité poklepání na mezerník vloží tečku a mezeru</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekvence: %d</string>
     <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frekvence: %d | Zkratka: %s</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Pro všechny jazyky</string>
@@ -229,10 +229,10 @@
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Zadejte prosím slovo!</string>
     <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Toto slovo obsahuje neplatné znaky.</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frekvence (mezi %d a %d)</string>
-    <string name="settings__gestures__title" comment="Title of Gestures fragment">Gesta &amp; Glide psan</string>
-    <string name="pref__glide__title" comment="Preference group title">Glide psan</string>
+    <string name="settings__gestures__title" comment="Title of Gestures fragment">Gesta &amp; Psaní tahem</string>
+    <string name="pref__glide__title" comment="Preference group title">Psaní tahem</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Povolit psaní tahem</string>
-    <string name="pref__glide__enabled__summary" comment="Preference summary">Zadejte slovo posunutím prstu jeho písmeny</string>
+    <string name="pref__glide__enabled__summary" comment="Preference summary">Zadejte slovo posouváním přes jeho písmena</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">Zobrazit stopu tahu</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Zmizí po každém slově</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Obecná gesta</string>
@@ -254,50 +254,56 @@
     <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Přesunout kurzor na konec řádku</string>
     <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Přesunout kurzor na začátek stránky</string>
     <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Přesunout kurzor na konec stránky</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Otevřít správce schránky / historie</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Posun</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Otevřít správce schránky / historii</string>
+    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Přepnout shift</string>
     <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Vpřed</string>
     <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Zpět</string>
     <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Zobrazit výběr metody zadávání</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Přepnout na předchozí klávesnici</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Přepněte na předchozí podtyp</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Přepněte na další podtyp</string>
-    <string name="pref__gestures__swipe_up__label" comment="Preference title">Přejeďte nahoru</string>
-    <string name="pref__gestures__swipe_down__label" comment="Preference title">Přejet</string>
-    <string name="pref__gestures__swipe_left__label" comment="Preference title">Přejeďte doleva</string>
+    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Přepnout na předchozí podtyp</string>
+    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Přepnout na další podtyp</string>
+    <string name="pref__gestures__swipe_up__label" comment="Preference title">Přejetí nahoru</string>
+    <string name="pref__gestures__swipe_down__label" comment="Preference title">Přejetí dolů</string>
+    <string name="pref__gestures__swipe_left__label" comment="Preference title">Přejetí doleva</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Přejeďte prstem doprava</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Přejetí nahoru přes mezerník</string>
-    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Mezerník přejeďte doleva</string>
-    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Mezerník přejeďte doprava</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Přejetí vlevo přes mezerník</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Přejetí vpravo přes mezerník</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Dlouhý stisk mezerníku</string>
-    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Odstranit klíč přejeďte doleva</string>
-    <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Práh rychlosti přejetí prstem</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Velmi pomalé</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Přejetí doleva na klávese mazání</string>
+    <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Práh rychlosti přejetí</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Velmi pomalý</string>
     <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Pomalý</string>
     <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normální</string>
     <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Rychlý</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Velmi rychle</string>
-    <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Práh vzdálenosti přejetím prstem</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Velmi krátká</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Velmi rychlý</string>
+    <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Práh vzdálenosti přejetí</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Velmi krátký</string>
     <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Krátký</string>
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normální</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Dlouhý</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Dlouhý</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Upřesnit</string>
-    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Téma nastavení</string>
-    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Světlo</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tma</string>
-    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zobrazit ikonu aplikace v launcher</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Velmi dlouhý</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Pokročilé</string>
+    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Motiv nastavení</string>
+    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Světlý</string>
+    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tmavý</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zobrazit ikonu aplikace na domovské obrazovce</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Vynutit soukromý režim</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Dočasně vypne všechny funkce, které pracují se vstupními daty</string>
     <!-- About UI strings -->
-    <string name="about__title" comment="Title of About activity">O</string>
+    <string name="about__title" comment="Title of About activity">O aplikaci</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikona aplikace FlorisBoard</string>
     <string name="about__view_licenses" comment="Label of View licenses button in About">Open source licence</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Soukromí</string>
-    <string name="about__view_source_code" comment="Label of View source code button in About">Kód</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">Zdrojový kód</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open-source licence</string>
     <!-- Assets strings -->
+    <plurals name="assets__file__authors">
+        <item quantity="one">Autor</item>
+        <item quantity="few">Autoři</item>
+        <item quantity="many">Autorů</item>
+        <item quantity="other">Autorů</item>
+    </plurals>
     <string name="assets__file__name">Název</string>
     <string name="assets__file__source">Zdroj</string>
     <string name="assets__action__add">Přidat</string>
@@ -318,32 +324,32 @@
     <string name="assets__error__invalid">Neplatné</string>
     <string name="assets__error__snackbar_message">Něco se pokazilo</string>
     <!-- Setup UI strings -->
-    <string name="setup__title" comment="Title of Setup">Nastavení</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Náhled</string>
+    <string name="setup__title" comment="Title of Setup">Prvotní nastavení</string>
+    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Předchozí</string>
     <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Zrušit</string>
     <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Další</string>
     <string name="setup__finish_button" comment="Label of Finish button in Setup">Dokončit</string>
     <string name="setup__ok_button" comment="Label of OK button in Setup">OK</string>
     <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Vítejte!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Díky za vyzkoušení FlorisBoard! Než jej začnete používat, musíme udělat obvyklé věci a povolit je v nastavení systému, nastavit preferovaný jazyk/rozvržení atd.... ale bez obav - průvodce nastavením vás provede tímto!</string>
+    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Díky za vyzkoušení aplikace FlorisBoard! Než ji začnete používat, musíme ji povolit v nastavení systému, zvolit preferovaný jazyk/rozvržení atd… ale bez obav - průvodce nastavením vás tímto provede!</string>
     <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard plně respektuje vaše soukromí a neshromažďuje žádná uživatelská data. Pro více informací viz zde:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">Zdrojový kód pro FlorisBoard je veřejně přístupný pro každého, takže můžete snadno zkontrolovat, co FlorisBoard dělá na pozadí. Podívejte se na odkaz úložiště níže.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Jedna poslední věc, než začnete nastavení - pokud narazíte na nějaké chyby/pády/problémy s FlorisBoard, nebo máte požadavek na funkci - přes hlavu na GitHub úložiště google níže a soubor problém. To pomáhá při zlepšování zkušeností pro všechny uživatele!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Chcete-li spustit nastavení, klikněte na <i>další</i>.</string>
+    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">Zdrojový kód aplikace FlorisBoard je veřejně přístupný pro každého, takže můžete snadno zkontrolovat, co FlorisBoard dělá na pozadí. Podívejte se na odkaz repozitáře níže.</string>
+    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Poslední věc, než začnete s nastavováním - pokud narazíte na nějaké chyby/pády/problémy s FlorisBoard, nebo máte požadavek na funkci - navštivte repozitář na GitHubu odkazovaný níže a vytvořte issue. To pomáhá se zlepšováním zážitku pro všechny uživatele!</string>
+    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Chcete-li spustit prvotní nastavení, klikněte na <i>další</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Povolit FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android vyžaduje, abyste před použitím mohli každou vlastní klávesnici ručně povolit. Kliknutím na tlačítko níže přejděte do nabídky <i> Jazyk &amp; Zadejte </i> nastavení a nezapomeňte zkontrolovat „<i> FlorisBoard </i>“.</string>
+    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android vyžaduje ruční povolení vlastní klávesnice před jejím použitím. Kliknutím na tlačítko níže přejděte do nabídky nastavení<i> Jazyk &amp; Zadávání</i> a povolte „<i> FlorisBoard </i>“.</string>
     <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard byl úspěšně povolen. Chcete-li pokračovat, klikněte na <i>další</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Otevřený Jazyk &amp; Nastavení vstupu</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Aby FlorisBoard výchozí</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard je nyní povolen ve vašem systému. Chcete-li ji aktivně používat, přepněte na FlorisBoard výběrem v dialogu pro výběr vstupu!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Úspěšně přepnul výchozí klávesnici na FlorisBoard!</string>
+    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Otevřít nastavení Jazyk &amp; Zadávání</string>
+    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Nastavit FlorisBoard jako výchozí</string>
+    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard je nyní povolen. Chcete-li ji aktivně používat, přepněte na FlorisBoard zvolením v dialogu pro výběr vstupu!</string>
+    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Úspěšné zvolení FlorisBoard jako výchozí klávesnice!</string>
     <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Přepnout klávesnici</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Nastavení dokončeno!</string>
+    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Prvorní nastavení dokončeno!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Zpráva o chybě florisboardu</string>
-    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Uzavřít</string>
-    <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard chybové hlášení</string>
-    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard přestal fungovat…</string>
+    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zavřít</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard chybová hlášení</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard přestal pracovat…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Klepnutím zobrazíte podrobnosti o chybě</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Zdá se, že FlorisBoard přestal opakovaně pracovat…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Vrácení zpět na předchozí klávesnici pro zastavení nekonečného crash loopu. Klepnutím zobrazíte podrobnosti o chybě</string>

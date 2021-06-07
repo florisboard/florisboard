@@ -86,7 +86,10 @@
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Tekstfarve</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Tastatur præferencer</string>
     <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">Deaktiveret</string>
+    <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Skift sprog</string>
     <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Vis aldrig</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Vis altid</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">Vis dynamisk</string>
     <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Ekstra kort</string>
     <string name="pref__keyboard__height_factor__short" comment="Preference value">Kort</string>
     <string name="pref__keyboard__height_factor__normal" comment="Preference value">Normal</string>
@@ -118,6 +121,8 @@
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekvens: %d</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">For alle sprog</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Ord</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Indtast venligst et ord!</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Genvej (valgfri)</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Bevægelser &amp; Strygeskrivning</string>
     <string name="pref__glide__title" comment="Preference group title">Strygeskrivning</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Skriv ord ved at stryge fingeren igennem bogstaver</string>
@@ -133,16 +138,25 @@
     <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Flyt musen højre</string>
     <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Fortryd</string>
     <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Skift til forrige tastatur</string>
+    <string name="pref__gestures__swipe_up__label" comment="Preference title">Stryg opad</string>
+    <string name="pref__gestures__swipe_down__label" comment="Preference title">Stryg nedad</string>
+    <string name="pref__gestures__swipe_left__label" comment="Preference title">Stryg til venstre</string>
+    <string name="pref__gestures__swipe_right__label" comment="Preference title">Swipe til højre</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Space bar knalde op</string>
     <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Langsom</string>
     <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normal</string>
     <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Hurtig</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Meget hurtig</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Meget kort</string>
     <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Kort</string>
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Lang</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Meget lang</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings activity">Avanceret</string>
+    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Lys</string>
+    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Mørk</string>
     <!-- About UI strings -->
+    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privatlivspolitik</string>
     <!-- Assets strings -->
     <string name="assets__file__name">Navn</string>
     <string name="assets__action__add">Tilføj</string>
