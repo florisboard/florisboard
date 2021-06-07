@@ -45,7 +45,11 @@ _A. IzzySoft's repo for F-Droid_:
 
 [<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="64" alt="IzzySoft repo badge">](https://apt.izzysoft.de/fdroid/index/apk/dev.patrickgold.florisboard.beta)
 
-_B. Use the APK provided in the release section of this repo_
+_B. Google Play_:
+
+Follow the same steps as for the stable track, the app can then be accessed [here](https://play.google.com/store/apps/details?id=dev.patrickgold.florisboard.beta).
+
+_C. Use the APK provided in the release section of this repo_
 
 ### Giving feedback
 If you want to give feedback to FlorisBoard, there are several ways to

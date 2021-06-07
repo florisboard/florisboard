@@ -1,0 +1,6 @@
+- Added Halmak keyboard layout (#982, thanks @dessalines)
+- Keyboard rendering and performance (#992)
+- Duplicates in the clipboard view are now discarded (#991, thanks @Luensche)
+- Smartbar not showing sometimes (#987)
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.13-beta04
