@@ -110,10 +110,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         if (clipboardPrefs.enableHistory) {
             val clipboardInputManager = ClipboardInputManager.getInstance()
 
-            val historyElement = history.firstOrNull {
-                (it.data.type == ItemType.IMAGE && it.data.uri == newData.uri)
-                    || (it.data.type == ItemType.TEXT && it.data.text == newData.text)
-            }
+            val historyElement = history.firstOrNull { it.data.type == ItemType.TEXT && it.data.text == newData.text }
             if (historyElement != null) {
                 moveToTheBeginning(historyElement, newData, clipboardInputManager)
             } else {
