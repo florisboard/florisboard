@@ -29,6 +29,13 @@ import timber.log.Timber
 
 @Suppress("unused")
 class FlorisApplication : Application() {
+    init {
+        try {
+            System.loadLibrary("florisboard-native")
+        } catch (_: Exception) {
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {

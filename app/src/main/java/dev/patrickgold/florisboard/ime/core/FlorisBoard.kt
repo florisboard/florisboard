@@ -179,8 +179,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
             textInputManager = TextInputManager.getInstance()
             mediaInputManager = MediaInputManager.getInstance()
             clipInputManager = ClipboardInputManager.getInstance()
-
-            System.loadLibrary("florisboard-native")
         } catch (e: Exception) {
             CrashUtility.stageException(e)
         }

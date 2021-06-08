@@ -24,7 +24,7 @@ typealias NativePtr = Long
 /**
  * Constant value for a native null pointer.
  */
-const val NATIVE_NULLPTR: NativePtr = 0
+const val NATIVE_NULLPTR: NativePtr = 0L
 
 /**
  * Generic interface for a native instance object. Defines the basic
