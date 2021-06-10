@@ -16,6 +16,7 @@
 
 #include <jni.h>
 #include "ime/spelling//spellingdict.h"
+#include "utils/jni_utils.h"
 
 #pragma ide diagnostic ignored "UnusedLocalVariable"
 
@@ -26,13 +27,15 @@ JNIEXPORT jlong JNICALL
 Java_dev_patrickgold_florisboard_ime_spelling_SpellingDict_00024Companion_nativeInitialize(
         JNIEnv *env,
         jobject thiz,
-        jstring base_path) {
-    const char *cBasePath = env->GetStringUTFChars(base_path, nullptr);
-    std::string stdBasePath = std::string(cBasePath);
-    env->ReleaseStringUTFChars(base_path, cBasePath);
+        jstring base_path,
+        jstring aff_file_name,
+        jstring dic_file_name) {
+    auto strBasePath = utils::j2std_string(env, base_path);
+    auto strAffFileName = utils::j2std_string(env, aff_file_name);
+    auto strDicFileName = utils::j2std_string(env, dic_file_name);
 
-    std::string aff = stdBasePath + ".aff";
-    std::string dic = stdBasePath + ".dic";
+    std::string aff = strBasePath + "/" + strAffFileName;
+    std::string dic = strBasePath + "/" + strDicFileName;
     auto *spellingDict = new SpellingDict(aff, dic);
 
     return reinterpret_cast<jlong>(spellingDict);
@@ -56,12 +59,10 @@ Java_dev_patrickgold_florisboard_ime_spelling_SpellingDict_00024Companion_native
         jobject thiz,
         jlong native_ptr,
         jstring word) {
-    const char *cWord = env->GetStringUTFChars(word, nullptr);
-    const std::string stdWord = std::string(cWord);
-    env->ReleaseStringUTFChars(word, cWord);
+    auto strWord = utils::j2std_string(env, word);
 
     auto spellingDict = reinterpret_cast<SpellingDict *>(native_ptr);
-    auto result = spellingDict->spell(stdWord);
+    auto result = spellingDict->spell(strWord);
 
     return result;
 }
@@ -73,17 +74,15 @@ Java_dev_patrickgold_florisboard_ime_spelling_SpellingDict_00024Companion_native
         jobject thiz,
         jlong native_ptr,
         jstring word) {
-    const char *cWord = env->GetStringUTFChars(word, nullptr);
-    const std::string stdWord = std::string(cWord);
-    env->ReleaseStringUTFChars(word, cWord);
+    auto strWord = utils::j2std_string(env, word);
 
     auto spellingDict = reinterpret_cast<SpellingDict *>(native_ptr);
-    auto result = spellingDict->suggest(stdWord);
+    auto result = spellingDict->suggest(strWord);
 
     jclass jStringClass = env->FindClass("java/lang/String");
     jobjectArray jSuggestions = env->NewObjectArray(result.size(), jStringClass, nullptr);
     for (int n = 0; n < result.size(); n++) {
-        env->SetObjectArrayElement(jSuggestions, n, env->NewStringUTF(result[n].c_str()));
+        env->SetObjectArrayElement(jSuggestions, n, utils::std2j_string(env, result[n]));
     }
 
     return jSuggestions;

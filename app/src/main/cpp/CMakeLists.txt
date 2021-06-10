@@ -7,6 +7,7 @@ project("florisboard")
 
 set(CMAKE_CXX_STANDARD 17)
 
+add_subdirectory(utils)
 add_subdirectory(ime/nlp)
 add_subdirectory(ime/spelling)
 add_subdirectory(ime/spelling/hunspell)
@@ -37,6 +38,7 @@ target_link_libraries(
 
         # Sources
         ${log-lib}
+        utils
         ime-nlp
         ime-spelling
         ime-spelling-hunspell
