@@ -21,10 +21,8 @@ import androidx.room.Room
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.nlp.SuggestionList
 import dev.patrickgold.florisboard.ime.nlp.Word
-import dev.patrickgold.florisboard.ime.spelling.SpellingDict
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import java.lang.ref.WeakReference
@@ -42,8 +40,6 @@ class DictionaryManager private constructor(
     private val florisboard get() = FlorisBoard.getInstance()
 
     private val dictionaryCache: MutableMap<String, Dictionary> = mutableMapOf()
-
-    private val spellingDictCache: MutableMap<String, SpellingDict> = mutableMapOf()
 
     private var florisUserDictionaryDatabase: FlorisUserDictionaryDatabase? = null
     private var systemUserDictionaryDatabase: SystemUserDictionaryDatabase? = null
@@ -156,22 +152,6 @@ class DictionaryManager private constructor(
     }
 
     @Synchronized
-    fun getSpellingDict(subtype: Subtype): SpellingDict {
-        val dictFilePath = "ime/spelling/${subtype.locale}"
-        val cachedDict = spellingDictCache[dictFilePath]
-        if (cachedDict != null) {
-            return cachedDict
-        }
-        val newDict = SpellingDict.new(dictFilePath)
-        spellingDictCache[dictFilePath] = newDict
-        return newDict
-    }
-
-    fun getActiveSpellingDict(): SpellingDict {
-        return getSpellingDict(florisboard.activeSubtype)
-    }
-
-    @Synchronized
     fun loadUserDictionariesIfNecessary() {
         val context = applicationContext.get() ?: return
 
@@ -198,9 +178,5 @@ class DictionaryManager private constructor(
         if (systemUserDictionaryDatabase != null) {
             systemUserDictionaryDatabase = null
         }
-        for (spellingDict in spellingDictCache.values) {
-            spellingDict.dispose()
-        }
-        spellingDictCache.clear()
     }
 }

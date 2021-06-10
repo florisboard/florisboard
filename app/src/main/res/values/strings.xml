@@ -352,6 +352,15 @@
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Clear internal user dictionary database</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Clears all words from the dictionary database table</string>
 
+    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Spell checker settings</string>
+    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Spell checker dictionaries</string>
+    <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Use keyboard subtypes</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Use user dictionary entries</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Spell checker will look up entries from the user dictionaries</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Use names from contacts</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Spell checker will look up names from your contact list</string>
+    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage spell checker dictionaries entry">Manage spell checker dictionaries</string>
+
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">About</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">App icon of FlorisBoard</string>

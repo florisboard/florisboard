@@ -41,6 +41,10 @@ data class AssetRef(
             }
             return Result.success(AssetRef(retSource, items[1]))
         }
+
+        fun assets(path: String) = AssetRef(AssetSource.Assets, path)
+
+        fun internal(path: String) = AssetRef(AssetSource.Internal, path)
     }
 
     override fun toString(): String {

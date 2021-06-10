@@ -94,4 +94,16 @@
 
     </androidx.cardview.widget.CardView>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/spelling_card"
+        style="@style/SettingsCardView.Clickable">
+
+        <!-- TODO: create theme preview and make nice feature graphic for this card -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Spelling prefs -->"/>
+
+    </androidx.cardview.widget.CardView>
+
 </LinearLayout>

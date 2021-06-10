@@ -24,15 +24,19 @@ import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.extension.AssetManager
+import dev.patrickgold.florisboard.ime.extension.AssetRef
+import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import timber.log.Timber
 
 @Suppress("unused")
 class FlorisApplication : Application() {
-    init {
-        try {
-            System.loadLibrary("florisboard-native")
-        } catch (_: Exception) {
+    companion object {
+        init {
+            try {
+                System.loadLibrary("florisboard-native")
+            } catch (_: Exception) {
+            }
         }
     }
 
@@ -51,6 +55,7 @@ class FlorisApplication : Application() {
         CrashUtility.install(this)
         val prefs = Preferences.initDefault(this)
         val assetManager = AssetManager.init(this)
+        SpellingManager.init(this, AssetRef.assets("ime/spelling/config.json"))
         SubtypeManager.init(this)
         DictionaryManager.init(this)
         ThemeManager.init(this, assetManager)

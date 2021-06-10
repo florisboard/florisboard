@@ -18,19 +18,24 @@ package dev.patrickgold.florisboard.ime.spelling
 
 import dev.patrickgold.florisboard.common.NativeInstanceWrapper
 import dev.patrickgold.florisboard.common.NativePtr
+import dev.patrickgold.florisboard.ime.core.LocaleSerializer
+import dev.patrickgold.florisboard.ime.extension.AssetRef
 import dev.patrickgold.florisboard.ime.nlp.Word
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import java.util.*
 
 @JvmInline
 value class SpellingDict private constructor(
     private val _nativePtr: NativePtr
 ) : NativeInstanceWrapper {
     companion object {
-        fun new(path: String): SpellingDict {
-            val nativePtr = nativeInitialize(path)
+        fun new(ref: AssetRef, meta: Meta): SpellingDict {
+            val nativePtr = nativeInitialize(ref.path, meta.affFileName, meta.dicFileName)
             return SpellingDict(nativePtr)
         }
 
-        external fun nativeInitialize(path: String): NativePtr
+        external fun nativeInitialize(baseBath: String, affFileName: String, dicFileName: String): NativePtr
         external fun nativeDispose(nativePtr: NativePtr)
 
         external fun nativeSpell(nativePtr: NativePtr, word: Word): Boolean
@@ -53,4 +58,23 @@ value class SpellingDict private constructor(
     fun suggest(word: Word): Array<out String> {
         return nativeSuggest(_nativePtr, word)
     }
+
+    @Serializable
+    data class Meta(
+        @SerialName("language")
+        @Serializable(with = LocaleSerializer::class)
+        val locale: Locale,
+        @SerialName("original")
+        val originalSource: String,
+        @SerialName("aff")
+        val affFileName: String,
+        @SerialName("dic")
+        val dicFileName: String,
+        @SerialName("hyph")
+        val hyphFileName: String?,
+        @SerialName("readme")
+        val readmeFileName: String?,
+        @SerialName("license")
+        val licenseFileName: String?
+    )
 }

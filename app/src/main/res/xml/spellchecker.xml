@@ -4,11 +4,7 @@
     android:settingsActivity="dev.patrickgold.florisboard.settings.SettingsMainActivity">
 
     <subtype
-        android:label="%s"
-        android:subtypeLocale="en"/>
-
-    <subtype
-        android:label="%s"
-        android:subtypeLocale="en_US"/>
+        android:label="@string/settings__spelling__use_floris_subtypes"
+        android:subtypeLocale="zz"/>
 
 </spell-checker>

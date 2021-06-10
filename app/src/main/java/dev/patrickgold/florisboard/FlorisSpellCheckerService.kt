@@ -22,11 +22,19 @@ import android.view.textservice.TextInfo
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.ime.core.Preferences
+import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingDict
+import dev.patrickgold.florisboard.ime.spelling.SpellingManager
+import java.util.*
 
 class FlorisSpellCheckerService : SpellCheckerService() {
-    private val prefs get() = Preferences.default()
+    override fun onCreate() {
+        flogInfo(LogTopic.SPELL_EVENTS)
+
+        super.onCreate()
+    }
 
     override fun createSession(): Session {
         flogInfo(LogTopic.SPELL_EVENTS)
@@ -34,25 +42,43 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         return FlorisSpellCheckerSession()
     }
 
+    override fun onDestroy() {
+        flogInfo(LogTopic.SPELL_EVENTS)
+
+        super.onDestroy()
+    }
+
     class FlorisSpellCheckerSession : Session() {
         companion object {
+            private const val USE_FLORIS_SUBTYPES_LOCALE: String = "zz"
+
             private val DEFAULT_SUGGESTIONS_INFO = SuggestionsInfo(0, arrayOf())
             private val EMPTY_STRING_ARRAY: Array<out String> = arrayOf()
         }
 
-        private val dictionaryManager get() = DictionaryManager.default()
+        private var spellingDict: SpellingDict? = null
+        private val spellingManager get() = SpellingManager.default()
+        private val subtypeManager get() = SubtypeManager.default()
 
         override fun onCreate() {
-            flogInfo(LogTopic.SPELL_EVENTS)
+            flogInfo(LogTopic.SPELL_EVENTS) { "Session locale: $locale" }
 
-            dictionaryManager.getActiveSpellingDict() // Warm up
+            val localeToUse = when (locale) {
+                null -> Subtype.DEFAULT.locale
+                USE_FLORIS_SUBTYPES_LOCALE -> (subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT).locale
+                else -> Locale(locale)
+            }
+
+            spellingDict = spellingManager.getSpellingDict(localeToUse)
         }
 
         override fun onGetSuggestions(textInfo: TextInfo?, suggestionsLimit: Int): SuggestionsInfo {
             flogInfo(LogTopic.SPELL_EVENTS)
 
+            val spellingDict = spellingDict ?: return DEFAULT_SUGGESTIONS_INFO
+
             val word = textInfo?.text ?: return DEFAULT_SUGGESTIONS_INFO
-            val spellingDict = dictionaryManager.getActiveSpellingDict()
+            return DEFAULT_SUGGESTIONS_INFO
             val isWordOk = spellingDict.spell(word)
             return if (isWordOk) {
                 SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_IN_THE_DICTIONARY, EMPTY_STRING_ARRAY)
