@@ -44,10 +44,6 @@ class Preferences(
 ) {
     private val applicationContext: WeakReference<Context> = WeakReference(context.applicationContext)
 
-    private val cacheBoolean: HashMap<String, Boolean> = hashMapOf()
-    private val cacheInt: HashMap<String, Int> = hashMapOf()
-    private val cacheString: HashMap<String, String> = hashMapOf()
-
     val advanced = Advanced(this)
     val clipboard = Clipboard(this)
     val correction = Correction(this)
@@ -63,46 +59,20 @@ class Preferences(
     val theme = Theme(this)
 
     /**
-     * Checks the cache if an entry for [key] exists, else calls [getPrefInternal] to retrieve the
-     * value. The type is automatically derived from the given [default] value.
+     * Gets the value for given [key]. The type is automatically derived from the given [default] value.
+     *
      * @return The value for [key] or [default].
      */
     private inline fun <reified T> getPref(key: String, default: T): T {
         return when {
             false is T -> {
-                (cacheBoolean[key] ?: getPrefInternal(key, default)) as T
+                shared.getBoolean(key, default as Boolean) as T
             }
             0 is T -> {
-                (cacheInt[key] ?: getPrefInternal(key, default)) as T
+                shared.getInt(key, default as Int) as T
             }
             "" is T -> {
-                (cacheString[key] ?: getPrefInternal(key, default)) as T
-            }
-            else -> null as T
-        }
-    }
-
-    /**
-     * Fetches the value for [key] from the shared preferences, puts the value into the
-     * corresponding cache and returns it.
-     * @return The value for [key] or [default].
-     */
-    private inline fun <reified T> getPrefInternal(key: String, default: T): T {
-        return when {
-            false is T -> {
-                val value = shared.getBoolean(key, default as Boolean)
-                cacheBoolean[key] = value
-                value as T
-            }
-            0 is T -> {
-                val value = shared.getInt(key, default as Int)
-                cacheInt[key] = value
-                value as T
-            }
-            "" is T -> {
-                val value = (shared.getString(key, default as String) ?: (default as String))
-                cacheString[key] = value
-                value as T
+                (shared.getString(key, default as String) ?: (default as String)) as T
             }
             else -> null as T
         }
@@ -116,15 +86,12 @@ class Preferences(
         when {
             false is T -> {
                 shared.edit().putBoolean(key, value as Boolean).apply()
-                cacheBoolean[key] = value as Boolean
             }
             0 is T -> {
                 shared.edit().putInt(key, value as Int).apply()
-                cacheInt[key] = value as Int
             }
             "" is T -> {
                 shared.edit().putString(key, value as String).apply()
-                cacheString[key] = value as String
             }
         }
     }
@@ -176,7 +143,7 @@ class Preferences(
     /**
      * Syncs the system preference values and clears the cache.
      */
-    fun sync() {
+    fun syncSystemSettings() {
         applicationContext.get()?.let { context ->
             val contentResolver = context.contentResolver
             keyboard.soundEnabledSystem = Settings.System.getInt(
@@ -186,10 +153,6 @@ class Preferences(
                 contentResolver, Settings.System.HAPTIC_FEEDBACK_ENABLED, 0
             ) != 0
         }
-
-        cacheBoolean.clear()
-        cacheInt.clear()
-        cacheString.clear()
     }
 
     /**

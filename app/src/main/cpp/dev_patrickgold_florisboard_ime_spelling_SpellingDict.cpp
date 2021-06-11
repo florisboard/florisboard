@@ -15,7 +15,7 @@
  */
 
 #include <jni.h>
-#include "ime/spelling//spellingdict.h"
+#include "ime/spelling/spellingdict.h"
 #include "utils/jni_utils.h"
 
 #pragma ide diagnostic ignored "UnusedLocalVariable"
