@@ -95,6 +95,14 @@
             android:label="@string/settings__theme_editor__title"
             android:theme="@style/SettingsTheme"/>
 
+        <!-- Spelling Activity -->
+        <activity
+            android:name="dev.patrickgold.florisboard.settings.spelling.SpellingActivity"
+            android:icon="@mipmap/floris_app_icon"
+            android:label="@string/settings__spelling__title_overview"
+            android:roundIcon="@mipmap/floris_app_icon_round"
+            android:theme="@style/SettingsTheme"/>
+
         <!-- About Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.settings.AboutActivity"

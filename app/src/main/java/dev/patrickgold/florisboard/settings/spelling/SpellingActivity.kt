@@ -14,22 +14,24 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings
+package dev.patrickgold.florisboard.settings.spelling
 
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.common.FlorisActivity
+import dev.patrickgold.florisboard.databinding.SpellingActivityBinding
 import dev.patrickgold.florisboard.ime.extension.AssetManager
-import dev.patrickgold.florisboard.ime.text.keyboard.*
-import dev.patrickgold.florisboard.databinding.SpellingManagerActivityBinding
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 
-class SpellingManagerActivity : FlorisActivity<SpellingManagerActivityBinding>() {
+class SpellingActivity : FlorisActivity<SpellingActivityBinding>() {
     private val assetManager get() = AssetManager.default()
     private val spellingManager get() = SpellingManager.default()
+
+    private var activePage = Page.UNINITIALIZED
 
     private val importDict = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         // If uri is null it indicates that the selection activity was cancelled (mostly by pressing the back button),
@@ -68,11 +70,11 @@ class SpellingManagerActivity : FlorisActivity<SpellingManagerActivityBinding>()
         supportActionBar?.setTitle(R.string.settings__spelling__title_overview)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        //binding.fabAddWord
+        setActivePage(Page.OVERVIEW)
     }
 
-    override fun onCreateBinding(): SpellingManagerActivityBinding {
-        return SpellingManagerActivityBinding.inflate(layoutInflater)
+    override fun onCreateBinding(): SpellingActivityBinding {
+        return SpellingActivityBinding.inflate(layoutInflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -85,5 +87,32 @@ class SpellingManagerActivity : FlorisActivity<SpellingManagerActivityBinding>()
         }
     }
 
+    fun setActivePage(page: Page) {
+        if (activePage == page) return
+        activePage = page
+        val fragment = when (page) {
+            Page.UNINITIALIZED -> {
+                binding.fabAddImportDict.isVisible = false
+                return
+            }
+            Page.OVERVIEW -> {
+                binding.fabAddImportDict.isVisible = false
+                OverviewFragment()
+            }
+            Page.MANAGE_DICTIONARIES -> {
+                binding.fabAddImportDict.isVisible = true
+                OverviewFragment()
+            }
+        }
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
+    }
 
+    enum class Page {
+        UNINITIALIZED,
+        OVERVIEW,
+        MANAGE_DICTIONARIES;
+    }
 }

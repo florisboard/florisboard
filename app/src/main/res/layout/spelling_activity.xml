@@ -6,14 +6,15 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:theme="@style/SettingsTheme"
-    tools:context=".settings.SpellingManagerActivity">
+    tools:context=".settings.spelling.SpellingActivity">
 
     <include layout="@layout/toolbar" android:id="@+id/toolbar"/>
 
     <FrameLayout
+        android:layout_marginTop="?actionBarSize"
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_add_import_dict"

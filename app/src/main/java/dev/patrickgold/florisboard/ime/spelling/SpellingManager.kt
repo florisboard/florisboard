@@ -17,12 +17,16 @@
 package dev.patrickgold.florisboard.ime.spelling
 
 import android.content.Context
-import android.content.Intent
-import android.service.textservice.SpellCheckerService
+import android.view.textservice.SentenceSuggestionsInfo
+import android.view.textservice.SpellCheckerSession
+import android.view.textservice.SuggestionsInfo
+import android.view.textservice.TextServicesManager
+import dev.patrickgold.florisboard.debug.flogWarning
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
 import java.lang.ref.WeakReference
 import java.util.*
+
 
 class SpellingManager private constructor(
     val applicationContext: WeakReference<Context>,
@@ -30,6 +34,16 @@ class SpellingManager private constructor(
 ) {
     companion object {
         private var defaultInstance: SpellingManager? = null
+
+        private val STUB_LISTENER = object : SpellCheckerSession.SpellCheckerSessionListener {
+            override fun onGetSuggestions(results: Array<out SuggestionsInfo>?) {
+                // Intentionally empty
+            }
+
+            override fun onGetSentenceSuggestions(results: Array<out SentenceSuggestionsInfo>?) {
+                // Intentionally empty
+            }
+        }
 
         fun init(context: Context, configRef: AssetRef): SpellingManager {
             val applicationContext = WeakReference(context.applicationContext ?: context)
@@ -43,6 +57,9 @@ class SpellingManager private constructor(
         fun defaultOrNull() = defaultInstance
     }
 
+    private val tsm =
+        applicationContext.get()?.getSystemService(Context.TEXT_SERVICES_MANAGER_SERVICE) as? TextServicesManager
+
     private val assetManager get() = AssetManager.default()
     private val spellingDictCache: MutableMap<AssetRef, SpellingDict> = mutableMapOf()
     private val indexedSpellingDictMetas: MutableMap<AssetRef, SpellingDict.Meta> = mutableMapOf()
@@ -55,15 +72,17 @@ class SpellingManager private constructor(
         indexSpellingDicts()
     }
 
-    fun checkSpellingServiceIsFloris(): Boolean {
-        val context = applicationContext.get() ?: return false
+    fun getCurrentSpellingServiceName(): String? {
         try {
+            val session = tsm?.newSpellCheckerSession(
+                null, Locale.ENGLISH, STUB_LISTENER, false
+            ) ?: return null
+            val context = applicationContext.get() ?: return null
             val pm = context.packageManager
-            val spellingInterface = Intent(SpellCheckerService.SERVICE_INTERFACE)
-            val info = pm.resolveService(spellingInterface, 0) ?: return false
-            return info.serviceInfo.packageName == context.packageName
-        } catch (_: Exception) {
-            return false
+            return session.spellChecker.loadLabel(pm).toString()
+        } catch (e: Exception) {
+            flogWarning { e.toString() }
+            return null
         }
     }
 
