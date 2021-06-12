@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingVertical="8dp"
+    android:theme="@style/SettingsTheme"
+    android:background="?android:windowBackground">
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings__spelling__import_dict__title"
+        android:paddingHorizontal="8dp"/>
+
+    <LinearLayout
+        android:id="@+id/s1_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingVertical="8dp">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings__spelling__import_dict_s1__title"
+            android:paddingHorizontal="8dp"/>
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/s1_source_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/s2_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingVertical="8dp">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings__spelling__import_dict_s2__title"
+            android:paddingHorizontal="8dp"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:id="@+id/s2_selected_file_path"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:paddingHorizontal="8dp"/>
+
+        <Button
+            android:id="@+id/s2_select_file_btn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/assets__action__select_file"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/s3_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingVertical="8dp">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings__spelling__import_dict_s3__title"
+            android:paddingHorizontal="8dp"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="[NOTHING TO VERIFY AS OF NOW]"
+            android:paddingHorizontal="8dp"/>
+
+        <Button
+            android:id="@+id/s3_complete_btn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/assets__action__import"/>
+
+    </LinearLayout>
+
+</LinearLayout>

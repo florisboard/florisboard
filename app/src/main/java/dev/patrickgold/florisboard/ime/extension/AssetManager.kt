@@ -22,6 +22,7 @@ import dev.patrickgold.florisboard.ime.keyboard.CaseSelector
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
+import dev.patrickgold.florisboard.ime.spelling.SpellingConfig
 import dev.patrickgold.florisboard.ime.text.composing.*
 import dev.patrickgold.florisboard.ime.text.keyboard.*
 import kotlinx.serialization.decodeFromString
@@ -58,6 +59,10 @@ class AssetManager private constructor(val applicationContext: Context) {
                 subclass(HangulUnicode::class, HangulUnicode.serializer())
                 subclass(WithRules::class, WithRules.serializer())
                 default { Appender.serializer() }
+            }
+            polymorphic(SpellingConfig.ImportFormat::class) {
+                subclass(SpellingConfig.ImportFormat.Archive::class, SpellingConfig.ImportFormat.Archive.serializer())
+                subclass(SpellingConfig.ImportFormat.Raw::class, SpellingConfig.ImportFormat.Raw.serializer())
             }
         }
     }

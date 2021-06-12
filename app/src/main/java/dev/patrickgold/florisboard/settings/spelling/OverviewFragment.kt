@@ -60,6 +60,11 @@ class OverviewFragment : PreferenceFragmentCompat() {
             }
             true
         }
+
+        manageDictionariesPref.setOnPreferenceClickListener {
+            (activity as? SpellingActivity)?.setActivePage(SpellingActivity.Page.MANAGE_DICTIONARIES)
+            true
+        }
     }
 
     override fun onResume() {

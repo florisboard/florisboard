@@ -70,6 +70,12 @@ class SpellingActivity : FlorisActivity<SpellingActivityBinding>() {
         supportActionBar?.setTitle(R.string.settings__spelling__title_overview)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        binding.fabAddImportDict.setOnClickListener {
+            ImportDictionaryFragment().apply {
+                show(supportFragmentManager, null)
+            }
+        }
+
         setActivePage(Page.OVERVIEW)
     }
 
@@ -87,6 +93,13 @@ class SpellingActivity : FlorisActivity<SpellingActivityBinding>() {
         }
     }
 
+    override fun onBackPressed() {
+        when (activePage) {
+            Page.MANAGE_DICTIONARIES -> setActivePage(Page.OVERVIEW)
+            else -> super.onBackPressed()
+        }
+    }
+
     fun setActivePage(page: Page) {
         if (activePage == page) return
         activePage = page
@@ -97,11 +110,13 @@ class SpellingActivity : FlorisActivity<SpellingActivityBinding>() {
             }
             Page.OVERVIEW -> {
                 binding.fabAddImportDict.isVisible = false
+                supportActionBar?.setTitle(R.string.settings__spelling__title_overview)
                 OverviewFragment()
             }
             Page.MANAGE_DICTIONARIES -> {
                 binding.fabAddImportDict.isVisible = true
-                OverviewFragment()
+                supportActionBar?.setTitle(R.string.settings__spelling__title_manage_dictionaries)
+                ManageDictionariesFragment()
             }
         }
         supportFragmentManager

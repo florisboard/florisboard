@@ -67,8 +67,18 @@ class SpellingManager private constructor(
         get() = indexedSpellingDictMetas
 
     val config = assetManager.loadJsonAsset<SpellingConfig>(configRef).getOrDefault(SpellingConfig.default())
+    val importSourceLabels: List<String>
+    val importSourceUrls: List<String?>
 
     init {
+        config.importSources.map { it.label }.toMutableList().let {
+            it.add(0, "-")
+            importSourceLabels = it.toList()
+        }
+        config.importSources.map { it.url }.toMutableList().let {
+            it.add(0, "-")
+            importSourceUrls = it.toList()
+        }
         indexSpellingDicts()
     }
 
@@ -104,12 +114,14 @@ class SpellingManager private constructor(
         return newDict
     }
 
-    fun indexSpellingDicts() {
+    fun indexSpellingDicts(): Boolean {
         indexedSpellingDictMetas.clear()
         assetManager.listAssets<SpellingDict.Meta>(AssetRef.internal(config.basePath)).onSuccess { map ->
             for ((ref, meta) in map) {
                 indexedSpellingDictMetas[ref] = meta
             }
+            return true
         }
+        return false
     }
 }
