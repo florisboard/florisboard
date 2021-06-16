@@ -131,7 +131,7 @@ interface UserDictionaryDatabase {
     fun reset()
 
     fun importCombinedList(context: Context, uri: Uri): Result<Unit> {
-        return ExternalContentUtils.readFromUri(context, uri,6_192_000) { src ->
+        return ExternalContentUtils.readTextFromUri(context, uri,6_192_000) { src ->
             var isFirstLine = true
             src.forEachLine { line ->
                 if (isFirstLine) {
@@ -176,7 +176,7 @@ interface UserDictionaryDatabase {
     }
 
     fun exportCombinedList(context: Context, uri: Uri): Result<Unit> {
-        return ExternalContentUtils.writeToUri(context, uri) { dst ->
+        return ExternalContentUtils.writeTextToUri(context, uri) { dst ->
             StringBuilder().apply {
                 append("dictionary=")
                 append(uri.lastPathSegment)

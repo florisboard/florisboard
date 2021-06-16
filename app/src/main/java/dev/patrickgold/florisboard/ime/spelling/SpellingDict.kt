@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:OptIn(ExperimentalContracts::class)
+
 package dev.patrickgold.florisboard.ime.spelling
 
 import dev.patrickgold.florisboard.common.NativeInstanceWrapper
@@ -24,12 +26,18 @@ import dev.patrickgold.florisboard.ime.nlp.Word
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.util.*
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 @JvmInline
 value class SpellingDict private constructor(
     private val _nativePtr: NativePtr
 ) : NativeInstanceWrapper {
     companion object {
+        const val LICENSE_FILE_NAME = "LICENSE.txt"
+        const val README_FILE_NAME = "README.txt"
+
         fun new(ref: AssetRef, meta: Meta): SpellingDict {
             val nativePtr = nativeInitialize(ref.path, meta.affFileName, meta.dicFileName)
             return SpellingDict(nativePtr)
@@ -40,6 +48,13 @@ value class SpellingDict private constructor(
 
         external fun nativeSpell(nativePtr: NativePtr, word: Word): Boolean
         external fun nativeSuggest(nativePtr: NativePtr, word: Word): Array<out String>
+
+        inline fun <R> metaBuilder(block: MetaBuilder.() -> R): R {
+            contract {
+                callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+            }
+            return block(MetaBuilder())
+        }
     }
 
 
@@ -65,16 +80,54 @@ value class SpellingDict private constructor(
         @Serializable(with = LocaleSerializer::class)
         val locale: Locale,
         @SerialName("original")
-        val originalSource: String,
+        val originalSourceId: String,
         @SerialName("aff")
         val affFileName: String,
         @SerialName("dic")
         val dicFileName: String,
         @SerialName("hyph")
-        val hyphFileName: String?,
+        val hyphFileName: String? = null,
         @SerialName("readme")
-        val readmeFileName: String?,
+        val readmeFileName: String? = null,
         @SerialName("license")
-        val licenseFileName: String?
+        val licenseFileName: String? = null
     )
+
+    data class MetaBuilder(
+        var locale: Locale? = null,
+        var originalSourceId: String? = null,
+        var affFileName: String? = null,
+        var dicFileName: String? = null,
+        var hyphFileName: String? = null,
+        var readmeFileName: String? = null,
+        var licenseFileName: String? = null
+    ) {
+        fun build(): Result<Meta> {
+            return when {
+                locale == null -> Result.failure(
+                    NullPointerException("Property 'locale' is null!")
+                )
+                originalSourceId == null -> Result.failure(
+                    NullPointerException("Property 'originalSourceId' is null!")
+                )
+                affFileName == null -> Result.failure(
+                    NullPointerException("Property 'affFileName' is null!")
+                )
+                dicFileName == null -> Result.failure(
+                    NullPointerException("Property 'dicFileName' is null!")
+                )
+                else -> Result.success(
+                    Meta(
+                        locale!!,
+                        originalSourceId!!,
+                        affFileName!!,
+                        dicFileName!!,
+                        hyphFileName,
+                        readmeFileName,
+                        licenseFileName
+                    )
+                )
+            }
+        }
+    }
 }

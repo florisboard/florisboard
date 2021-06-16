@@ -16,10 +16,8 @@
 
 package dev.patrickgold.florisboard.settings.spelling
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.common.FlorisActivity
@@ -32,35 +30,6 @@ class SpellingActivity : FlorisActivity<SpellingActivityBinding>() {
     private val spellingManager get() = SpellingManager.default()
 
     private var activePage = Page.UNINITIALIZED
-
-    private val importDict = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        // If uri is null it indicates that the selection activity was cancelled (mostly by pressing the back button),
-        // so we don't display an error message here.
-        if (uri == null) return@registerForActivityResult
-        /*val toBeImportedTheme = themeManager.loadTheme(uri)
-        if (toBeImportedTheme.isSuccess) {
-            val newTheme = toBeImportedTheme.getOrNull()!!.copy(
-                name = toBeImportedTheme.getOrNull()!!.name + "_imported",
-                label = toBeImportedTheme.getOrNull()!!.label + " (Imported)"
-            )
-            val newAssetRef = AssetRef(
-                AssetSource.Internal,
-                ThemeManager.THEME_PATH_REL + "/" + newTheme.name + ".json"
-            )
-            themeManager.writeTheme(newAssetRef, newTheme).onSuccess {
-                themeManager.update()
-                selectedTheme = newTheme
-                selectedRef = newAssetRef
-                setThemeRefInPrefs(newAssetRef)
-                buildUi()
-                showMessage(R.string.settings__theme_manager__theme_import_success)
-            }.onFailure {
-                showError(it)
-            }
-        } else {
-            showError(toBeImportedTheme.exceptionOrNull()!!)
-        }*/
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

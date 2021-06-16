@@ -17,16 +17,22 @@
 package dev.patrickgold.florisboard.ime.spelling
 
 import android.content.Context
+import android.net.Uri
 import android.view.textservice.SentenceSuggestionsInfo
 import android.view.textservice.SpellCheckerSession
 import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextServicesManager
+import dev.patrickgold.florisboard.debug.flogError
+import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.debug.flogWarning
 import dev.patrickgold.florisboard.ime.extension.AssetManager
 import dev.patrickgold.florisboard.ime.extension.AssetRef
+import dev.patrickgold.florisboard.ime.extension.ExternalContentUtils
+import dev.patrickgold.florisboard.util.LocaleUtils
+import java.io.File
 import java.lang.ref.WeakReference
 import java.util.*
-
+import java.util.zip.ZipFile
 
 class SpellingManager private constructor(
     val applicationContext: WeakReference<Context>,
@@ -34,6 +40,18 @@ class SpellingManager private constructor(
 ) {
     companion object {
         private var defaultInstance: SpellingManager? = null
+
+        private const val IMPORT_ARCHIVE_MAX_SIZE: Int = 6_192_000
+        private const val IMPORT_ARCHIVE_TEMP_NAME: String = "__temp000__ime_spelling_import_archive"
+        private const val IMPORT_NEW_DICT_TEMP_NAME: String = "__temp000__ime_spelling_import_new_dict"
+
+        private const val FREE_OFFICE_DICT_INI = "dict.ini"
+        private const val FREE_OFFICE_DICT_INI_FILE_NAME_BASE = "FileNameBase="
+        private const val FREE_OFFICE_DICT_INI_SUPPORTED_LOCALES = "SupportedLocales="
+
+        const val AFF_EXT: String = "AFF"
+        const val DIC_EXT: String = "DIC"
+        const val HYPH_EXT: String = "HYPH"
 
         private val STUB_LISTENER = object : SpellCheckerSession.SpellCheckerSessionListener {
             override fun onGetSuggestions(results: Array<out SuggestionsInfo>?) {
@@ -124,4 +142,111 @@ class SpellingManager private constructor(
         }
         return false
     }
+
+    fun prepareImport(sourceId: String, archiveUri: Uri): Result<PreprocessedImport> {
+        val context = applicationContext.get() ?: return Result.failure(Exception("Context is null"))
+        return when (sourceId) {
+            "free_office" -> {
+                val tempFile = saveTempFile(archiveUri).getOrElse { return Result.failure(it) }
+                val zipFile = ZipFile(tempFile)
+                val dictIniEntry = zipFile.getEntry(FREE_OFFICE_DICT_INI) ?: return Result.failure(Exception("No dict.ini file found"))
+                var fileNameBase: String? = null
+                var supportedLocale: Locale? = null
+                zipFile.getInputStream(dictIniEntry).bufferedReader(Charsets.UTF_8).forEachLine { line ->
+                    if (line.startsWith(FREE_OFFICE_DICT_INI_FILE_NAME_BASE)) {
+                        fileNameBase = line.substring(FREE_OFFICE_DICT_INI_FILE_NAME_BASE.length)
+                    } else if (line.startsWith(FREE_OFFICE_DICT_INI_SUPPORTED_LOCALES)) {
+                        supportedLocale = LocaleUtils.stringToLocale(line.substring(FREE_OFFICE_DICT_INI_SUPPORTED_LOCALES.length))
+                    }
+                }
+                fileNameBase ?: return Result.failure(Exception("No valid file name base found"))
+                supportedLocale ?: return Result.failure(Exception("No valid supported locale found"))
+
+                val tempDictDir = File(context.cacheDir, IMPORT_NEW_DICT_TEMP_NAME)
+                tempDictDir.deleteRecursively()
+                tempDictDir.mkdirs()
+                val entries = zipFile.entries()
+                return SpellingDict.metaBuilder {
+                    locale = supportedLocale
+                    originalSourceId = sourceId
+                    while (entries.hasMoreElements()) {
+                        val entry = entries.nextElement()
+                        flogInfo { entry.name }
+                        when {
+                            entry.name == "$fileNameBase.aff" -> {
+                                val aff = File(tempDictDir, entry.name)
+                                aff.outputStream().use { output ->
+                                    zipFile.getInputStream(entry).use { input ->
+                                        input.copyTo(output)
+                                    }
+                                }
+                                affFileName = entry.name
+                            }
+                            entry.name == "$fileNameBase.dic" -> {
+                                val dic = File(tempDictDir, entry.name)
+                                dic.outputStream().use { output ->
+                                    zipFile.getInputStream(entry).use { input ->
+                                        input.copyTo(output)
+                                    }
+                                }
+                                dicFileName = entry.name
+                            }
+                            entry.name.lowercase().contains("copying") || entry.name.lowercase().contains("license") -> {
+                                val license = File(tempDictDir, SpellingDict.LICENSE_FILE_NAME)
+                                license.outputStream().use { output ->
+                                    zipFile.getInputStream(entry).use { input ->
+                                        input.copyTo(output)
+                                    }
+                                }
+                                licenseFileName = SpellingDict.LICENSE_FILE_NAME
+                            }
+                            entry.name.lowercase().contains("readme") || entry.name.lowercase().contains("description") -> {
+                                val readme = File(tempDictDir, SpellingDict.README_FILE_NAME)
+                                readme.outputStream().use { output ->
+                                    zipFile.getInputStream(entry).use { input ->
+                                        input.copyTo(output)
+                                    }
+                                }
+                                readmeFileName = SpellingDict.README_FILE_NAME
+                            }
+                        }
+                    }
+                    val meta = build().getOrElse { return@metaBuilder Result.failure(it) }
+                    Result.success(PreprocessedImport(tempDictDir, meta))
+                }
+            }
+            else -> Result.failure(NotImplementedError())
+        }
+    }
+
+    private fun saveTempFile(uri: Uri): Result<File> {
+        val context = applicationContext.get() ?: return Result.failure(Exception("Context is null"))
+        val tempFile = File(context.cacheDir, IMPORT_ARCHIVE_TEMP_NAME)
+        tempFile.deleteRecursively() // JUst to make sure we clean up old mess
+        ExternalContentUtils.readFromUri(context, uri, IMPORT_ARCHIVE_MAX_SIZE) { bis ->
+            tempFile.outputStream().use { os -> bis.copyTo(os) }
+        }.onFailure { return Result.failure(it) }
+        return Result.success(tempFile)
+    }
+
+    fun writePreprocessedImport(preprocessedImport: PreprocessedImport) {
+        val context = applicationContext.get() ?: return
+        val spellingDir = File(context.filesDir.absolutePath, config.basePath)
+        val dictName = preprocessedImport.meta.locale.toString()
+        val dict = File(spellingDir, dictName)
+        dict.deleteRecursively()
+        dict.mkdirs()
+        preprocessedImport.tempDictDir.copyRecursively(dict)
+        assetManager.writeJsonAsset(
+            AssetRef.internal("${config.basePath}/$dictName/package.json"),
+            preprocessedImport.meta
+        ).onFailure {
+            flogError { it.toString() }
+        }
+    }
+
+    data class PreprocessedImport(
+        val tempDictDir: File,
+        val meta: SpellingDict.Meta
+    )
 }

@@ -83,9 +83,58 @@
 
         <TextView
             style="@style/TextAppearance.AppCompat.Caption"
+            android:id="@+id/s3_verify_locale"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="[NOTHING TO VERIFY AS OF NOW]"
+            android:text="@string/settings__spelling__import_dict_s3__verify_files_locale"
+            android:paddingHorizontal="8dp"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:id="@+id/s3_verify_original"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings__spelling__import_dict_s3__verify_files_original"
+            android:paddingHorizontal="8dp"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:id="@+id/s3_verify_aff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings__spelling__import_dict_s3__verify_files_any"
+            android:paddingHorizontal="8dp"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:id="@+id/s3_verify_dic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings__spelling__import_dict_s3__verify_files_any"
+            android:paddingHorizontal="8dp"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:id="@+id/s3_verify_hyph"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings__spelling__import_dict_s3__verify_files_any"
+            android:paddingHorizontal="8dp"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:id="@+id/s3_verify_readme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings__spelling__import_dict_s3__verify_files_readme"
+            android:paddingHorizontal="8dp"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:id="@+id/s3_verify_license"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings__spelling__import_dict_s3__verify_files_license"
             android:paddingHorizontal="8dp"/>
 
         <Button

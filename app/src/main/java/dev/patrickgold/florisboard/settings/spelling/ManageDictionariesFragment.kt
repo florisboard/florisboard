@@ -49,6 +49,12 @@ class ManageDictionariesFragment : Fragment() {
             startActivity(browserIntent)
         }
 
+        binding.dictSourcesInfoCard.setOnClickListener {
+            DictionarySourcesInfoFragment().apply {
+                show(this@ManageDictionariesFragment.requireActivity().supportFragmentManager, null)
+            }
+        }
+
         return binding.root
     }
 

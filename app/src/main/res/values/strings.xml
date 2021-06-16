@@ -357,6 +357,7 @@
     <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Use keyboard subtypes</string>
     <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">No spell checker dictionaries currently installed. Add the first one with the \'+\'-button below!</string>
     <string name="settings__spelling__dictionary_index_invalid" comment="String for the Dictionary index invalid error card. %s will be replaced by the app name.">An error occurred while indexing the installed spell checker dictionaries. Try restarting %s or file a bug report for this.</string>
+    <string name="settings__spelling__dict_sources_info" comment="String for the Dictionary sources info.">Where do I get spell checker dictionaries?</string>
     <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Active spell checker</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">None set</string>
     <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Manage spell checker dictionaries</string>
@@ -373,6 +374,13 @@
     <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Select source</string>
     <string name="settings__spelling__import_dict_s2__title" comment="Title for the import dict sheet (step 2)">Add files to be imported</string>
     <string name="settings__spelling__import_dict_s3__title" comment="Title for the import dict sheet (step 3)">Verify import files</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_locale" comment="Text for the verify files dialog (step 3)">Locale: %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_original" comment="Text for the verify files dialog (step 3)">Original source: %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_any" comment="Text for the verify files dialog (the first %s will be replaced by a file extension, the second by a file name) (step 3)">%s file: %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_readme" comment="Text for the verify files dialog (step 3)">Readme file: %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_license" comment="Text for the verify files dialog (step 3)">License file: %s</string>
+    <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info sheet">FlorisBoard uses Hunspell as the spell checker engine, which means there is a vast amount of dictionaries available, as Hunspell is used by many other software as well. The list below shows a few hand-selected sources which the import manager supports. Download either the archive file or the dictionary files, then in the import manager choose the correct source (this is important to correctly read the archive format).</string>
+    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">if this list does not contain dictionaries for your language or dialect, you can also manually search for a Hunspell dictionary and import the \'aff\', \'dic\' and optionally the \'hyph\' file for this.</string>
 
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">About</string>

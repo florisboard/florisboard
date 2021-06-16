@@ -222,7 +222,7 @@ class AssetManager private constructor(val applicationContext: Context) {
     }
 
     fun loadTextAsset(uri: Uri, maxSize: Int): Result<String> {
-        return ExternalContentUtils.readTextFromUri(applicationContext, uri, maxSize)
+        return ExternalContentUtils.readAllTextFromUri(applicationContext, uri, maxSize)
     }
 
     inline fun <reified T> writeJsonAsset(ref: AssetRef, asset: T): Result<Unit> {
@@ -268,6 +268,6 @@ class AssetManager private constructor(val applicationContext: Context) {
     }
 
     fun writeTextAsset(uri: Uri, text: String): Result<Unit> {
-        return ExternalContentUtils.writeTextToUri(applicationContext, uri, text)
+        return ExternalContentUtils.writeAllTextToUri(applicationContext, uri, text)
     }
 }

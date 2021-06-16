@@ -15,7 +15,7 @@
             android:id="@+id/dict_index_failed_card_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/settings__home__ime_not_enabled"
+            android:text="@string/settings__spelling__dictionary_index_invalid"
             android:textColor="?textColorError"/>
 
     </androidx.cardview.widget.CardView>
@@ -28,6 +28,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings__spelling__no_dictionaries_installed"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/dict_sources_info_card"
+        style="@style/SettingsCardView.Clickable">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings__spelling__dict_sources_info"/>
 
     </androidx.cardview.widget.CardView>
 
