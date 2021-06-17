@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.extension
+package dev.patrickgold.florisboard.res
 
 /**
  * Sealed class which specifies where an asset comes from. There are 3 different types, all of which

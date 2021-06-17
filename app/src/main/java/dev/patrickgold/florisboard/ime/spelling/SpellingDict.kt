@@ -21,7 +21,7 @@ package dev.patrickgold.florisboard.ime.spelling
 import dev.patrickgold.florisboard.common.NativeInstanceWrapper
 import dev.patrickgold.florisboard.common.NativePtr
 import dev.patrickgold.florisboard.ime.core.LocaleSerializer
-import dev.patrickgold.florisboard.ime.extension.AssetRef
+import dev.patrickgold.florisboard.res.AssetRef
 import dev.patrickgold.florisboard.ime.nlp.Word
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

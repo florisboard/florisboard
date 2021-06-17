@@ -26,9 +26,9 @@ import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
-import dev.patrickgold.florisboard.ime.extension.AssetManager
-import dev.patrickgold.florisboard.ime.extension.AssetRef
-import dev.patrickgold.florisboard.ime.extension.AssetSource
+import dev.patrickgold.florisboard.res.AssetManager
+import dev.patrickgold.florisboard.res.AssetRef
+import dev.patrickgold.florisboard.res.AssetSource
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard.InputAttributes
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState

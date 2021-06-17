@@ -23,8 +23,8 @@ import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
-import dev.patrickgold.florisboard.ime.extension.AssetManager
-import dev.patrickgold.florisboard.ime.extension.AssetRef
+import dev.patrickgold.florisboard.res.AssetManager
+import dev.patrickgold.florisboard.res.AssetRef
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import timber.log.Timber

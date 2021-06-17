@@ -33,7 +33,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
-import dev.patrickgold.florisboard.ime.extension.ExternalContentUtils
+import dev.patrickgold.florisboard.res.ExternalContentUtils
 import dev.patrickgold.florisboard.util.LocaleUtils
 import java.lang.ref.WeakReference
 import java.util.*

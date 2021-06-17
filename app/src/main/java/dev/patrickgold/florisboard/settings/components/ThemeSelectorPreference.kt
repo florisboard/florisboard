@@ -26,7 +26,7 @@ import androidx.preference.Preference.OnPreferenceClickListener
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.Preferences
-import dev.patrickgold.florisboard.ime.extension.AssetRef
+import dev.patrickgold.florisboard.res.AssetRef
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.settings.ThemeManagerActivity
 

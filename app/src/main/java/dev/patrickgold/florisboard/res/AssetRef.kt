@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.extension
+package dev.patrickgold.florisboard.res
 
 /**
  * Data class which is a reference to an asset file. It indicates in which storage medium the asset

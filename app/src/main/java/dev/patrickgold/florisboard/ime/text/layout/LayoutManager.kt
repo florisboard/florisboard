@@ -21,9 +21,9 @@ import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogWarning
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.extension.AssetManager
-import dev.patrickgold.florisboard.ime.extension.AssetRef
-import dev.patrickgold.florisboard.ime.extension.AssetSource
+import dev.patrickgold.florisboard.res.AssetManager
+import dev.patrickgold.florisboard.res.AssetRef
+import dev.patrickgold.florisboard.res.AssetSource
 import dev.patrickgold.florisboard.ime.popup.PopupExtension
 import dev.patrickgold.florisboard.ime.popup.PopupManager
 import dev.patrickgold.florisboard.ime.text.key.*

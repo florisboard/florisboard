@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.dictionary
 
-import dev.patrickgold.florisboard.ime.extension.Asset
+import dev.patrickgold.florisboard.res.Asset
 import dev.patrickgold.florisboard.ime.nlp.SuggestionList
 import dev.patrickgold.florisboard.ime.nlp.Word
 

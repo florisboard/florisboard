@@ -25,9 +25,9 @@ import android.view.textservice.TextServicesManager
 import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.debug.flogWarning
-import dev.patrickgold.florisboard.ime.extension.AssetManager
-import dev.patrickgold.florisboard.ime.extension.AssetRef
-import dev.patrickgold.florisboard.ime.extension.ExternalContentUtils
+import dev.patrickgold.florisboard.res.AssetManager
+import dev.patrickgold.florisboard.res.AssetRef
+import dev.patrickgold.florisboard.res.ExternalContentUtils
 import dev.patrickgold.florisboard.util.LocaleUtils
 import java.io.File
 import java.lang.ref.WeakReference

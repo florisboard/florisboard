@@ -22,7 +22,7 @@ import androidx.core.view.isVisible
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.common.FlorisActivity
 import dev.patrickgold.florisboard.databinding.SpellingActivityBinding
-import dev.patrickgold.florisboard.ime.extension.AssetManager
+import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 
 class SpellingActivity : FlorisActivity<SpellingActivityBinding>() {

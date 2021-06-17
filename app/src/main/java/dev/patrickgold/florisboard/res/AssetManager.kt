@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.extension
+package dev.patrickgold.florisboard.res
 
 import android.content.Context
 import android.net.Uri
