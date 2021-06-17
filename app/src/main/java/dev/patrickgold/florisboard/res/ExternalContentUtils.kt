@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalContracts::class)
-
 package dev.patrickgold.florisboard.res
 
 import android.content.Context
@@ -24,7 +22,6 @@ import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
 import java.io.BufferedReader
 import java.io.BufferedWriter
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 

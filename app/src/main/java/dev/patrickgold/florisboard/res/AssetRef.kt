@@ -24,6 +24,7 @@ package dev.patrickgold.florisboard.res
  * @property path The relative path to the asset within [source]. Must not begin and end with a
  *  forward slash.
  */
+@Deprecated("This class will slowly be replaced by '.res.FlorisRef', as it unifies the Android URI type with the internal referencing system. Consider using the new type and phase out this class.")
 data class AssetRef(
     val source: AssetSource,
     val path: String
@@ -42,8 +43,20 @@ data class AssetRef(
             return Result.success(AssetRef(retSource, items[1]))
         }
 
+        @Deprecated("This class will slowly be replaced by '.res.FlorisRef', as it unifies the Android URI type with the internal referencing system. Consider using FlorisUri.assets(path)",
+            ReplaceWith(
+                "FlorisRef.assets(path)",
+                "dev.patrickgold.florisboard.res.FlorisRef"
+            )
+        )
         fun assets(path: String) = AssetRef(AssetSource.Assets, path)
 
+        @Deprecated("This class will slowly be replaced by '.res.FlorisRef', as it unifies the Android URI type with the internal referencing system. Consider using FlorisUri.internal(path)",
+            ReplaceWith(
+                "FlorisRef.internal(path)",
+                "dev.patrickgold.florisboard.res.FlorisRef"
+            )
+        )
         fun internal(path: String) = AssetRef(AssetSource.Internal, path)
     }
 

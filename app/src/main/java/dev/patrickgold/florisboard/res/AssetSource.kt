@@ -20,17 +20,20 @@ package dev.patrickgold.florisboard.res
  * Sealed class which specifies where an asset comes from. There are 3 different types, all of which
  * require a different approach on how to access the actual asset.
  */
+@Deprecated("This class will slowly be replaced by '.res.FlorisRef', as it unifies the Android URI type with the internal referencing system. Consider using the new type and phase out this class.")
 sealed class AssetSource {
     /**
      * The asset comes pre-built with the application, thus all paths must be relative to the asset
      * directory of FlorisBoard.
      */
+    @Deprecated("This class will slowly be replaced by '.res.FlorisRef', as it unifies the Android URI type with the internal referencing system. Consider using FlorisUri.assets(path)")
     object Assets : AssetSource()
 
     /**
      * The asset is saved in the internal storage of FlorisBoard, all relative paths must therefore
      * be treated as such.
      */
+    @Deprecated("This class will slowly be replaced by '.res.FlorisRef', as it unifies the Android URI type with the internal referencing system. Consider using FlorisUri.internal(path)")
     object Internal : AssetSource()
 
     /**
@@ -38,6 +41,7 @@ sealed class AssetSource {
      * data. Currently NYI.
      * TODO: Implement external extensions
      */
+    @Deprecated("This class will slowly be replaced by '.res.FlorisRef', as it unifies the Android URI type with the internal referencing system. Consider using the new type and phase out this class.")
     data class External(val packageName: String) : AssetSource() {
         override fun toString(): String {
             return super.toString()
@@ -47,6 +51,7 @@ sealed class AssetSource {
     companion object {
         private val externalRegex: Regex = """^external\\(([a-z]+\\.)*[a-z]+\\)\$""".toRegex()
 
+        @Deprecated("This class will slowly be replaced by '.res.FlorisRef', as it unifies the Android URI type with the internal referencing system. Consider using the new type and phase out this class.")
         fun fromString(str: String): Result<AssetSource> {
             return when (val string = str.lowercase()) {
                 "assets" -> Result.success(Assets)

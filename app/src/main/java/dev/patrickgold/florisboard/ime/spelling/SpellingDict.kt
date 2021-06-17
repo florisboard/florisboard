@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalContracts::class)
-
 package dev.patrickgold.florisboard.ime.spelling
 
 import dev.patrickgold.florisboard.common.NativeInstanceWrapper
@@ -26,7 +24,6 @@ import dev.patrickgold.florisboard.ime.nlp.Word
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 

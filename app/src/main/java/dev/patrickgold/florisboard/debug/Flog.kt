@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalContracts::class)
-
 package dev.patrickgold.florisboard.debug
 
 import android.content.Context
 import android.os.Build
 import android.util.Log
 import java.lang.ref.WeakReference
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
