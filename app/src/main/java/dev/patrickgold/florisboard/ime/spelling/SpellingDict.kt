@@ -21,6 +21,7 @@ import dev.patrickgold.florisboard.common.NativePtr
 import dev.patrickgold.florisboard.ime.core.LocaleSerializer
 import dev.patrickgold.florisboard.res.AssetRef
 import dev.patrickgold.florisboard.ime.nlp.Word
+import dev.patrickgold.florisboard.res.ext.ExtensionConfig
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.util.*
@@ -36,7 +37,7 @@ value class SpellingDict private constructor(
         const val README_FILE_NAME = "README.txt"
 
         fun new(ref: AssetRef, meta: Meta): SpellingDict {
-            val nativePtr = nativeInitialize(ref.path, meta.affFileName, meta.dicFileName)
+            val nativePtr = nativeInitialize(ref.path, meta.affFile, meta.dicFile)
             return SpellingDict(nativePtr)
         }
 
@@ -73,31 +74,31 @@ value class SpellingDict private constructor(
 
     @Serializable
     data class Meta(
+        override val id: String,
+        override val version: String = "v0.0.0 (imported)",
+        override val title: String = "Imported spell check dictionary.",
+        override val description: String = "Imported spell check dictionary.",
+        override val authors: List<String> = listOf(),
+        override val license: String = ExtensionConfig.CUSTOM_LICENSE_IDENTIFIER,
+        override val licenseFile: String,
+        override val readmeFile: String,
         @SerialName("language")
         @Serializable(with = LocaleSerializer::class)
         val locale: Locale,
-        @SerialName("original")
         val originalSourceId: String,
-        @SerialName("aff")
-        val affFileName: String,
-        @SerialName("dic")
-        val dicFileName: String,
-        @SerialName("hyph")
-        val hyphFileName: String? = null,
-        @SerialName("readme")
-        val readmeFileName: String? = null,
-        @SerialName("license")
-        val licenseFileName: String? = null
-    )
+        val affFile: String,
+        val dicFile: String,
+        val hyphFile: String? = null,
+    ) : ExtensionConfig
 
     data class MetaBuilder(
         var locale: Locale? = null,
         var originalSourceId: String? = null,
-        var affFileName: String? = null,
-        var dicFileName: String? = null,
-        var hyphFileName: String? = null,
-        var readmeFileName: String? = null,
-        var licenseFileName: String? = null
+        var affFile: String? = null,
+        var dicFile: String? = null,
+        var hyphFile: String? = null,
+        var readmeFile: String? = null,
+        var licenseFile: String? = null
     ) {
         fun build(): Result<Meta> {
             return when {
@@ -107,21 +108,22 @@ value class SpellingDict private constructor(
                 originalSourceId == null -> Result.failure(
                     NullPointerException("Property 'originalSourceId' is null!")
                 )
-                affFileName == null -> Result.failure(
-                    NullPointerException("Property 'affFileName' is null!")
+                affFile == null -> Result.failure(
+                    NullPointerException("Property 'affFile' is null!")
                 )
-                dicFileName == null -> Result.failure(
-                    NullPointerException("Property 'dicFileName' is null!")
+                dicFile == null -> Result.failure(
+                    NullPointerException("Property 'dicFile' is null!")
                 )
                 else -> Result.success(
                     Meta(
-                        locale!!,
-                        originalSourceId!!,
-                        affFileName!!,
-                        dicFileName!!,
-                        hyphFileName,
-                        readmeFileName,
-                        licenseFileName
+                        id = ExtensionConfig.createIdForImport("spelling", originalSourceId + locale.toString()),
+                        locale = locale!!,
+                        originalSourceId = originalSourceId!!,
+                        affFile = affFile!!,
+                        dicFile = dicFile!!,
+                        hyphFile = hyphFile,
+                        readmeFile = readmeFile ?: "",
+                        licenseFile = licenseFile ?: ""
                     )
                 )
             }

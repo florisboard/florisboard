@@ -57,25 +57,25 @@ class ImportDictionaryFragment : BottomSheetDialogFragment() {
                 binding.s3VerifyAff.text = resources.getString(
                     R.string.settings__spelling__import_dict_s3__verify_files_any,
                     SpellingManager.AFF_EXT,
-                    meta.affFileName
+                    meta.affFile
                 )
                 binding.s3VerifyDic.text = resources.getString(
                     R.string.settings__spelling__import_dict_s3__verify_files_any,
                     SpellingManager.DIC_EXT,
-                    meta.dicFileName
+                    meta.dicFile
                 )
                 binding.s3VerifyHyph.text = resources.getString(
                     R.string.settings__spelling__import_dict_s3__verify_files_any,
                     SpellingManager.HYPH_EXT,
-                    meta.hyphFileName
+                    meta.hyphFile
                 )
                 binding.s3VerifyReadme.text = resources.getString(
                     R.string.settings__spelling__import_dict_s3__verify_files_readme,
-                    meta.readmeFileName
+                    meta.readmeFile
                 )
                 binding.s3VerifyLicense.text = resources.getString(
                     R.string.settings__spelling__import_dict_s3__verify_files_license,
-                    meta.licenseFileName
+                    meta.licenseFile
                 )
             }
             binding.s3CompleteBtn.setOnClickListener {

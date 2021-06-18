@@ -180,7 +180,7 @@ class SpellingManager private constructor(
                                         input.copyTo(output)
                                     }
                                 }
-                                affFileName = entry.name
+                                affFile = entry.name
                             }
                             entry.name == "$fileNameBase.dic" -> {
                                 val dic = File(tempDictDir, entry.name)
@@ -189,7 +189,7 @@ class SpellingManager private constructor(
                                         input.copyTo(output)
                                     }
                                 }
-                                dicFileName = entry.name
+                                dicFile = entry.name
                             }
                             entry.name.lowercase().contains("copying") || entry.name.lowercase().contains("license") -> {
                                 val license = File(tempDictDir, SpellingDict.LICENSE_FILE_NAME)
@@ -198,7 +198,7 @@ class SpellingManager private constructor(
                                         input.copyTo(output)
                                     }
                                 }
-                                licenseFileName = SpellingDict.LICENSE_FILE_NAME
+                                licenseFile = SpellingDict.LICENSE_FILE_NAME
                             }
                             entry.name.lowercase().contains("readme") || entry.name.lowercase().contains("description") -> {
                                 val readme = File(tempDictDir, SpellingDict.README_FILE_NAME)
@@ -207,7 +207,7 @@ class SpellingManager private constructor(
                                         input.copyTo(output)
                                     }
                                 }
-                                readmeFileName = SpellingDict.README_FILE_NAME
+                                readmeFile = SpellingDict.README_FILE_NAME
                             }
                         }
                     }
