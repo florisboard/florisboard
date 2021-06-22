@@ -26,7 +26,7 @@ interface ExtensionConfig {
     companion object {
         const val DEFAULT_FILE_EXTENSION = "flex"
         const val DEFAULT_NAME = "extension.json"
-        const val DEFAULT_ID = "${BuildConfig.APPLICATION_ID}.content.imported.%s.%s"
+        const val DEFAULT_ID = "${BuildConfig.APPLICATION_ID}.imported.%s.%s"
 
         const val CUSTOM_LICENSE_IDENTIFIER = "@custom"
 

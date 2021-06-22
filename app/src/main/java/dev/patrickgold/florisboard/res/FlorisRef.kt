@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.res
 
+import android.content.Context
 import android.net.Uri
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -51,7 +52,7 @@ value class FlorisRef private constructor(val uri: Uri) {
          */
         fun assets(path: String) = Uri.Builder().run {
             scheme(SCHEME_FLORIS_ASSETS)
-            path(path)
+            encodedOpaquePart(path)
             FlorisRef(build())
         }
 
@@ -65,7 +66,7 @@ value class FlorisRef private constructor(val uri: Uri) {
          */
         fun cache(path: String) = Uri.Builder().run {
             scheme(SCHEME_FLORIS_CACHE)
-            path(path)
+            encodedOpaquePart(path)
             FlorisRef(build())
         }
 
@@ -79,7 +80,7 @@ value class FlorisRef private constructor(val uri: Uri) {
          */
         fun internal(path: String) = Uri.Builder().run {
             scheme(SCHEME_FLORIS_INTERNAL)
-            path(path)
+            encodedOpaquePart(path)
             FlorisRef(build())
         }
 
@@ -102,6 +103,21 @@ value class FlorisRef private constructor(val uri: Uri) {
          * @return The newly constructed reference.
          */
         fun from(str: String) = FlorisRef(Uri.parse(str))
+
+        /**
+         * Constructs a new reference from given [scheme] and [path], this can
+         * point to any destination, regardless of within FlorisBoard or not.
+         *
+         * @param scheme The scheme of this reference.
+         * @param path The relative path of this reference.
+         *
+         * @return The newly constructed reference.
+         */
+        fun from(scheme: String, path: String) = Uri.Builder().run {
+            scheme(scheme)
+            encodedOpaquePart(path)
+            FlorisRef(build())
+        }
     }
 
     /**
@@ -140,12 +156,39 @@ value class FlorisRef private constructor(val uri: Uri) {
         get() = uri.scheme ?: ""
 
     /**
-     * Returns the path of this URI, either relative or absolute depending on
-     * the use case of this reference, or an empty string if no path is
-     * specified.
+     * Returns the relative path of this URI, without a leading forward slash.
+     * Works only for assets, cache or internal references.
      */
-    val path: String
-        get() = uri.path ?: ""
+    val relativePath: String
+        get() = (uri.schemeSpecificPart ?: "").removePrefix("/")
+
+    /**
+     * Returns the absolute path on the device file storage for this reference,
+     * depending on the [context] and the [scheme].
+     *
+     * @param context The context used to get the absolute path for various directories.
+     *
+     * @return The absolute path of this reference.
+     */
+    fun absolutePath(context: Context): String {
+        return when {
+            isAssets -> relativePath
+            isCache -> "${context.cacheDir.absolutePath}/$relativePath"
+            isInternal -> "${context.filesDir.absolutePath}/$relativePath"
+            else -> uri.path ?: ""
+        }
+    }
+
+    /**
+     * Returns a new reference pointing to a sub directory(file with given [name].
+     *
+     * @param name The name of the sub file/directory.
+     *
+     * @return The newly constructed reference.
+     */
+    fun subRef(name: String): FlorisRef {
+        return from(scheme, "$relativePath/$name")
+    }
 
     /**
      * Allows this URI to be used depending on where this reference points to.
@@ -174,7 +217,7 @@ value class FlorisRef private constructor(val uri: Uri) {
         }
         when {
             isAssets -> assets(this)
-            isCache -> internal(this)
+            isCache -> cache(this)
             isInternal -> internal(this)
             else -> external(this)
         }

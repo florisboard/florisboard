@@ -25,6 +25,8 @@ import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
 import dev.patrickgold.florisboard.ime.spelling.SpellingConfig
 import dev.patrickgold.florisboard.ime.text.composing.*
 import dev.patrickgold.florisboard.ime.text.keyboard.*
+import dev.patrickgold.florisboard.res.ext.Extension
+import dev.patrickgold.florisboard.res.ext.ExtensionConfig
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -32,10 +34,16 @@ import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import timber.log.Timber
 import java.io.File
+import java.io.FileOutputStream
+import java.util.*
+import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
+import java.util.zip.ZipOutputStream
 
 class AssetManager private constructor(val applicationContext: Context) {
     private val json = Json {
         classDiscriminator = "$"
+        encodeDefaults = true
         ignoreUnknownKeys = true
         isLenient = true
         serializersModule = SerializersModule {
@@ -171,8 +179,64 @@ class AssetManager private constructor(val applicationContext: Context) {
         }
     }
 
+    inline fun <reified T> listAssets(ref: FlorisRef): Result<Map<FlorisRef, T>> {
+        val retMap = mutableMapOf<FlorisRef, T>()
+        return when {
+            /*ref.isAssets -> runCatching {
+                val list = applicationContext.assets.list(ref.path)
+                if (list != null) {
+                    for (file in list) {
+                        val fileRef = ref.copy(path = ref.path + "/" + file)
+                        val assetResult = loadJsonAsset<T>(fileRef)
+                        assetResult.onSuccess { asset ->
+                            retMap[fileRef.copy()] = asset
+                        }.onFailure { error ->
+                            Timber.e(error.toString())
+                        }
+                    }
+                }
+                retMap.toMap()
+            }
+            ref.isInternal -> {
+                val dir = File(applicationContext.filesDir.absolutePath + "/" + ref.path)
+                if (dir.isDirectory) {
+                    dir.listFiles()?.let {
+                        it.forEach { file ->
+                            if (file.isFile) {
+                                val fileRef = ref.copy(path = ref.path + "/" + file.name)
+                                val assetResult = loadJsonAsset<T>(fileRef)
+                                assetResult.onSuccess { asset ->
+                                    retMap[fileRef.copy()] = asset
+                                }.onFailure { error ->
+                                    Timber.e(error.toString())
+                                }
+                            }
+                        }
+                    }
+                }
+                Result.success(retMap.toMap())
+            }*/
+            else -> Result.success(retMap.toMap())
+        }
+    }
+
+    @Deprecated("AssetRef is deprecated, use FlorisRef instead")
     inline fun <reified T> loadJsonAsset(ref: AssetRef): Result<T> {
         return loadTextAsset(ref).fold(
+            onSuccess = { runCatching { jsonBuilder().decodeFromString(it) } },
+            onFailure = { Result.failure(it) }
+        )
+    }
+
+    inline fun <reified T> loadJsonAsset(ref: FlorisRef): Result<T> {
+        return loadTextAsset(ref).fold(
+            onSuccess = { runCatching { jsonBuilder().decodeFromString(it) } },
+            onFailure = { Result.failure(it) }
+        )
+    }
+
+    inline fun <reified T> loadJsonAsset(file: File): Result<T> {
+        return readTextFile(file).fold(
             onSuccess = { runCatching { jsonBuilder().decodeFromString(it) } },
             onFailure = { Result.failure(it) }
         )
@@ -185,6 +249,7 @@ class AssetManager private constructor(val applicationContext: Context) {
         )
     }
 
+    @Deprecated("AssetRef is deprecated, use FlorisRef instead")
     fun loadTextAsset(ref: AssetRef): Result<String> {
         return when (ref.source) {
             is AssetSource.Assets -> runCatching {
@@ -203,31 +268,46 @@ class AssetManager private constructor(val applicationContext: Context) {
         }
     }
 
-    /**
-     * Reads a given [file] and returns its content.
-     *
-     * @param file The file object.
-     * @return The contents of the file or an empty string, if the file does not exist.
-     */
-    private fun readTextFile(file: File) = runCatching {
-        val retText = StringBuilder()
-        if (file.exists()) {
-            val newLine = System.lineSeparator()
-            file.forEachLine {
-                retText.append(it)
-                retText.append(newLine)
+    fun loadTextAsset(ref: FlorisRef): Result<String> {
+        return when {
+            ref.isAssets -> runCatching {
+                applicationContext.assets.open(ref.relativePath).bufferedReader().use { it.readText() }
             }
+            ref.isInternal -> {
+                val file = File(filesDirPath(ref))
+                val contents = readTextFile(file).getOrElse { return Result.failure(it) }
+                if (contents.isBlank()) {
+                    Result.failure(Exception("File is blank!"))
+                } else {
+                    Result.success(contents)
+                }
+            }
+            else -> Result.failure(Exception("Unsupported asset ref!"))
         }
-        retText.toString()
     }
 
     fun loadTextAsset(uri: Uri, maxSize: Int): Result<String> {
         return ExternalContentUtils.readAllTextFromUri(applicationContext, uri, maxSize)
     }
 
+    @Deprecated("AssetRef is deprecated, use FlorisRef instead")
     inline fun <reified T> writeJsonAsset(ref: AssetRef, asset: T): Result<Unit> {
         return runCatching { jsonBuilder().encodeToString(asset) }.fold(
             onSuccess = { writeTextAsset(ref, it) },
+            onFailure = { Result.failure(it) }
+        )
+    }
+
+    inline fun <reified T> writeJsonAsset(ref: FlorisRef, asset: T): Result<Unit> {
+        return runCatching { jsonBuilder().encodeToString(asset) }.fold(
+            onSuccess = { writeTextAsset(ref, it) },
+            onFailure = { Result.failure(it) }
+        )
+    }
+
+    inline fun <reified T> writeJsonAsset(file: File, asset: T): Result<Unit> {
+        return runCatching { jsonBuilder().encodeToString(asset) }.fold(
+            onSuccess = { writeTextFile(file, it) },
             onFailure = { Result.failure(it) }
         )
     }
@@ -239,6 +319,7 @@ class AssetManager private constructor(val applicationContext: Context) {
         )
     }
 
+    @Deprecated("AssetRef is deprecated, use FlorisRef instead")
     fun writeTextAsset(ref: AssetRef, text: String): Result<Unit> {
         return when (ref.source) {
             AssetSource.Internal -> {
@@ -249,6 +330,30 @@ class AssetManager private constructor(val applicationContext: Context) {
         }
     }
 
+    fun writeTextAsset(ref: FlorisRef, text: String): Result<Unit> {
+        return when {
+            ref.isInternal -> {
+                val file = File(filesDirPath(ref))
+                writeTextFile(file, text)
+            }
+            else -> Result.failure(Exception("Can not write an asset in source '${ref.scheme}'"))
+        }
+    }
+
+    fun writeTextAsset(uri: Uri, text: String): Result<Unit> {
+        return ExternalContentUtils.writeAllTextToUri(applicationContext, uri, text)
+    }
+
+    /**
+     * Reads a given [file] and returns its content.
+     *
+     * @param file The file object.
+     * @return The contents of the file or an empty string, if the file does not exist.
+     */
+    fun readTextFile(file: File) = runCatching {
+        file.readText(Charsets.UTF_8)
+    }
+
     /**
      * Writes given [text] to given [file]. If the file already exists, its current content
      * will be overwritten.
@@ -257,17 +362,75 @@ class AssetManager private constructor(val applicationContext: Context) {
      * @param text The text to write to the file.
      * @return The contents of the file or an empty string, if the file does not exist.
      */
-    private fun writeTextFile(file: File, text: String) = runCatching {
-        file.parent?.let {
-            val dir = File(it)
-            if (!dir.exists()) {
-                dir.mkdirs()
-            }
-        }
+    fun writeTextFile(file: File, text: String) = runCatching {
+        file.parentFile?.mkdirs()
         file.writeText(text)
     }
 
-    fun writeTextAsset(uri: Uri, text: String): Result<Unit> {
-        return ExternalContentUtils.writeAllTextToUri(applicationContext, uri, text)
+    inline fun <reified C : ExtensionConfig> loadExtension(flexRef: FlorisRef): Result<Extension<C>> {
+        if (!flexRef.isInternal) return Result.failure(Exception("Only internal source supported!"))
+        val flexHandle = File(filesDirPath(flexRef))
+        if (!flexHandle.isFile) return Result.failure(Exception("Given ref $flexRef is not a file!"))
+        val tempDirHandle = File(applicationContext.cacheDir, UUID.randomUUID().toString())
+        tempDirHandle.deleteRecursively()
+        tempDirHandle.mkdirs()
+        return try {
+            val flexFile = ZipFile(flexHandle)
+            var config: C? = null
+            val flexEntries = flexFile.entries()
+            while (flexEntries.hasMoreElements()) {
+                val flexEntry = flexEntries.nextElement()
+                val tempFile = File(tempDirHandle, flexEntry.name)
+                flexFile.copy(flexEntry, tempFile)
+                if (flexEntry.name == ExtensionConfig.DEFAULT_NAME) {
+                    // This is the config file
+                    loadJsonAsset<C>(tempFile).onSuccess { config = it }
+                }
+            }
+            flexFile.close()
+            if (config == null) {
+                return Result.failure(Exception("No config file found for extension '$flexRef'!"))
+            }
+            return Result.success(Extension(config!!, tempDirHandle, flexHandle))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    inline fun <reified C : ExtensionConfig> writeExtension(extension: Extension<C>): Result<Unit> {
+        if (extension.flexFile == null) return Result.failure(Exception("Flex file handle is null!"))
+        extension.flexFile.parentFile?.mkdirs()
+        extension.flexFile.deleteRecursively()
+        return try {
+            // Write extension file to working dir
+            writeJsonAsset(File(extension.workingDir, ExtensionConfig.DEFAULT_NAME), extension.config)
+            val fileOut = FileOutputStream(extension.flexFile.absolutePath)
+            val zipOut = ZipOutputStream(fileOut)
+            for (workingFile in extension.workingDir.listFiles() ?: arrayOf()) {
+                zipOut.putNextEntry(ZipEntry(workingFile.name))
+                workingFile.inputStream().use { it.copyTo(zipOut) }
+                zipOut.closeEntry()
+            }
+            zipOut.close()
+            return Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    fun cacheDirPath(ref: FlorisRef): String {
+        return "${applicationContext.cacheDir.absolutePath}/${ref.relativePath}"
+    }
+
+    fun filesDirPath(ref: FlorisRef): String {
+        return "${applicationContext.filesDir.absolutePath}/${ref.relativePath}"
+    }
+
+    fun ZipFile.copy(srcEntry: ZipEntry, dstFile: File) {
+        dstFile.outputStream().use { output ->
+            this.getInputStream(srcEntry).use { input ->
+                input.copyTo(output)
+            }
+        }
     }
 }

@@ -24,9 +24,9 @@ import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.res.AssetManager
-import dev.patrickgold.florisboard.res.AssetRef
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.res.FlorisRef
 import timber.log.Timber
 
 @Suppress("unused")
@@ -55,7 +55,7 @@ class FlorisApplication : Application() {
         CrashUtility.install(this)
         val prefs = Preferences.initDefault(this)
         val assetManager = AssetManager.init(this)
-        SpellingManager.init(this, AssetRef.assets("ime/spelling/config.json"))
+        SpellingManager.init(this, FlorisRef.assets("ime/spelling/config.json"))
         SubtypeManager.init(this)
         DictionaryManager.init(this)
         ThemeManager.init(this, assetManager)

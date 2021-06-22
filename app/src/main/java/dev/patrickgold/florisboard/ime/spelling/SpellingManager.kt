@@ -22,12 +22,12 @@ import android.view.textservice.SentenceSuggestionsInfo
 import android.view.textservice.SpellCheckerSession
 import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextServicesManager
-import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.debug.flogWarning
 import dev.patrickgold.florisboard.res.AssetManager
-import dev.patrickgold.florisboard.res.AssetRef
 import dev.patrickgold.florisboard.res.ExternalContentUtils
+import dev.patrickgold.florisboard.res.FlorisRef
+import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.util.LocaleUtils
 import java.io.File
 import java.lang.ref.WeakReference
@@ -36,7 +36,7 @@ import java.util.zip.ZipFile
 
 class SpellingManager private constructor(
     val applicationContext: WeakReference<Context>,
-    configRef: AssetRef
+    configRef: FlorisRef
 ) {
     companion object {
         private var defaultInstance: SpellingManager? = null
@@ -63,7 +63,7 @@ class SpellingManager private constructor(
             }
         }
 
-        fun init(context: Context, configRef: AssetRef): SpellingManager {
+        fun init(context: Context, configRef: FlorisRef): SpellingManager {
             val applicationContext = WeakReference(context.applicationContext ?: context)
             val instance = SpellingManager(applicationContext, configRef)
             defaultInstance = instance
@@ -79,9 +79,9 @@ class SpellingManager private constructor(
         applicationContext.get()?.getSystemService(Context.TEXT_SERVICES_MANAGER_SERVICE) as? TextServicesManager
 
     private val assetManager get() = AssetManager.default()
-    private val spellingDictCache: MutableMap<AssetRef, SpellingDict> = mutableMapOf()
-    private val indexedSpellingDictMetas: MutableMap<AssetRef, SpellingDict.Meta> = mutableMapOf()
-    val indexedSpellingDicts: Map<AssetRef, SpellingDict.Meta>
+    private val spellingDictCache: MutableMap<FlorisRef, SpellingDict> = mutableMapOf()
+    private val indexedSpellingDictMetas: MutableMap<FlorisRef, SpellingDict.Meta> = mutableMapOf()
+    val indexedSpellingDicts: Map<FlorisRef, SpellingDict.Meta>
         get() = indexedSpellingDictMetas
 
     val config = assetManager.loadJsonAsset<SpellingConfig>(configRef).getOrDefault(SpellingConfig.default())
@@ -134,7 +134,7 @@ class SpellingManager private constructor(
 
     fun indexSpellingDicts(): Boolean {
         indexedSpellingDictMetas.clear()
-        assetManager.listAssets<SpellingDict.Meta>(AssetRef.internal(config.basePath)).onSuccess { map ->
+        assetManager.listAssets<SpellingDict.Meta>(FlorisRef.internal(config.basePath)).onSuccess { map ->
             for ((ref, meta) in map) {
                 indexedSpellingDictMetas[ref] = meta
             }
@@ -143,7 +143,7 @@ class SpellingManager private constructor(
         return false
     }
 
-    fun prepareImport(sourceId: String, archiveUri: Uri): Result<PreprocessedImport> {
+    fun prepareImport(sourceId: String, archiveUri: Uri): Result<Extension<SpellingDict.Meta>> {
         val context = applicationContext.get() ?: return Result.failure(Exception("Context is null"))
         return when (sourceId) {
             "free_office" -> {
@@ -212,7 +212,7 @@ class SpellingManager private constructor(
                         }
                     }
                     val meta = build().getOrElse { return@metaBuilder Result.failure(it) }
-                    Result.success(PreprocessedImport(tempDictDir, meta))
+                    Result.success(Extension(meta, tempDictDir, File(FlorisRef.internal(config.basePath).subRef("${meta.id}.flex").absolutePath(context))))
                 }
             }
             else -> Result.failure(NotImplementedError())
@@ -228,25 +228,4 @@ class SpellingManager private constructor(
         }.onFailure { return Result.failure(it) }
         return Result.success(tempFile)
     }
-
-    fun writePreprocessedImport(preprocessedImport: PreprocessedImport) {
-        val context = applicationContext.get() ?: return
-        val spellingDir = File(context.filesDir.absolutePath, config.basePath)
-        val dictName = preprocessedImport.meta.locale.toString()
-        val dict = File(spellingDir, dictName)
-        dict.deleteRecursively()
-        dict.mkdirs()
-        preprocessedImport.tempDictDir.copyRecursively(dict)
-        assetManager.writeJsonAsset(
-            AssetRef.internal("${config.basePath}/$dictName/package.json"),
-            preprocessedImport.meta
-        ).onFailure {
-            flogError { it.toString() }
-        }
-    }
-
-    data class PreprocessedImport(
-        val tempDictDir: File,
-        val meta: SpellingDict.Meta
-    )
 }

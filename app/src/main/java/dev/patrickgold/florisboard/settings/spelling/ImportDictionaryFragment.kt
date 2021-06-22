@@ -29,10 +29,12 @@ import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.databinding.SpellingSheetImportDictionaryBinding
 import dev.patrickgold.florisboard.ime.spelling.SpellingConfig
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
+import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.util.initItems
 import dev.patrickgold.florisboard.util.setOnSelectedListener
 
 class ImportDictionaryFragment : BottomSheetDialogFragment() {
+    private val assetManager get() = AssetManager.default()
     private val spellingManager get() = SpellingManager.default()
     private lateinit var binding: SpellingSheetImportDictionaryBinding
     private var selectedImportSource: SpellingConfig.ImportSource? = null
@@ -48,38 +50,40 @@ class ImportDictionaryFragment : BottomSheetDialogFragment() {
             with(preprocessed) {
                 binding.s3VerifyLocale.text = resources.getString(
                     R.string.settings__spelling__import_dict_s3__verify_files_locale,
-                    meta.locale
+                    config.locale
                 )
                 binding.s3VerifyOriginal.text = resources.getString(
                     R.string.settings__spelling__import_dict_s3__verify_files_original,
-                    meta.originalSourceId
+                    config.originalSourceId
                 )
                 binding.s3VerifyAff.text = resources.getString(
                     R.string.settings__spelling__import_dict_s3__verify_files_any,
                     SpellingManager.AFF_EXT,
-                    meta.affFile
+                    config.affFile
                 )
                 binding.s3VerifyDic.text = resources.getString(
                     R.string.settings__spelling__import_dict_s3__verify_files_any,
                     SpellingManager.DIC_EXT,
-                    meta.dicFile
+                    config.dicFile
                 )
                 binding.s3VerifyHyph.text = resources.getString(
                     R.string.settings__spelling__import_dict_s3__verify_files_any,
                     SpellingManager.HYPH_EXT,
-                    meta.hyphFile
+                    config.hyphFile
                 )
                 binding.s3VerifyReadme.text = resources.getString(
                     R.string.settings__spelling__import_dict_s3__verify_files_readme,
-                    meta.readmeFile
+                    config.readmeFile
                 )
                 binding.s3VerifyLicense.text = resources.getString(
                     R.string.settings__spelling__import_dict_s3__verify_files_license,
-                    meta.licenseFile
+                    config.licenseFile
                 )
             }
             binding.s3CompleteBtn.setOnClickListener {
-                spellingManager.writePreprocessedImport(preprocessed)
+                assetManager.writeExtension(preprocessed).onFailure { error ->
+                    (activity as? FlorisActivity<*>)?.showErrorDialog(error)
+                }
                 dismiss()
             }
         }.onFailure { error ->

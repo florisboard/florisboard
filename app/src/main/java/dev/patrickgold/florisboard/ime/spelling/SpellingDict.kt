@@ -19,8 +19,8 @@ package dev.patrickgold.florisboard.ime.spelling
 import dev.patrickgold.florisboard.common.NativeInstanceWrapper
 import dev.patrickgold.florisboard.common.NativePtr
 import dev.patrickgold.florisboard.ime.core.LocaleSerializer
-import dev.patrickgold.florisboard.res.AssetRef
 import dev.patrickgold.florisboard.ime.nlp.Word
+import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ext.ExtensionConfig
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -36,8 +36,8 @@ value class SpellingDict private constructor(
         const val LICENSE_FILE_NAME = "LICENSE.txt"
         const val README_FILE_NAME = "README.txt"
 
-        fun new(ref: AssetRef, meta: Meta): SpellingDict {
-            val nativePtr = nativeInitialize(ref.path, meta.affFile, meta.dicFile)
+        fun new(ref: FlorisRef, meta: Meta): SpellingDict {
+            val nativePtr = nativeInitialize(ref.relativePath, meta.affFile, meta.dicFile)
             return SpellingDict(nativePtr)
         }
 
@@ -76,8 +76,8 @@ value class SpellingDict private constructor(
     data class Meta(
         override val id: String,
         override val version: String = "v0.0.0 (imported)",
-        override val title: String = "Imported spell check dictionary.",
-        override val description: String = "Imported spell check dictionary.",
+        override val title: String = "Imported spell check dictionary",
+        override val description: String = "Imported spell check dictionary",
         override val authors: List<String> = listOf(),
         override val license: String = ExtensionConfig.CUSTOM_LICENSE_IDENTIFIER,
         override val licenseFile: String,
@@ -116,7 +116,7 @@ value class SpellingDict private constructor(
                 )
                 else -> Result.success(
                     Meta(
-                        id = ExtensionConfig.createIdForImport("spelling", originalSourceId + locale.toString()),
+                        id = ExtensionConfig.createIdForImport("spelling", "$originalSourceId.$locale"),
                         locale = locale!!,
                         originalSourceId = originalSourceId!!,
                         affFile = affFile!!,
