@@ -42,23 +42,28 @@ class FlorisApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
+        try {
+            if (BuildConfig.DEBUG) {
+                Timber.plant(Timber.DebugTree())
+            }
+            Flog.install(
+                applicationContext = this,
+                isFloggingEnabled = BuildConfig.DEBUG,
+                flogTopics = LogTopic.ALL,
+                flogLevels = Flog.LEVEL_ALL,
+                flogOutputs = Flog.OUTPUT_CONSOLE
+            )
+            CrashUtility.install(this)
+            val prefs = Preferences.initDefault(this)
+            val assetManager = AssetManager.init(this)
+            SpellingManager.init(this, FlorisRef.assets("ime/spelling/config.json"))
+            SubtypeManager.init(this)
+            DictionaryManager.init(this)
+            ThemeManager.init(this, assetManager)
+            prefs.initDefaultPreferences()
+        } catch (e: Exception) {
+            CrashUtility.stageException(e)
+            return
         }
-        Flog.install(
-            applicationContext = this,
-            isFloggingEnabled = BuildConfig.DEBUG,
-            flogTopics = LogTopic.ALL,
-            flogLevels = Flog.LEVEL_ALL,
-            flogOutputs = Flog.OUTPUT_CONSOLE
-        )
-        CrashUtility.install(this)
-        val prefs = Preferences.initDefault(this)
-        val assetManager = AssetManager.init(this)
-        SpellingManager.init(this, FlorisRef.assets("ime/spelling/config.json"))
-        SubtypeManager.init(this)
-        DictionaryManager.init(this)
-        ThemeManager.init(this, assetManager)
-        prefs.initDefaultPreferences()
     }
 }
