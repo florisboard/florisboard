@@ -26,9 +26,6 @@ import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 
 class SpellingActivity : FlorisActivity<SpellingActivityBinding>() {
-    private val assetManager get() = AssetManager.default()
-    private val spellingManager get() = SpellingManager.default()
-
     private var activePage = Page.UNINITIALIZED
 
     override fun onCreate(savedInstanceState: Bundle?) {

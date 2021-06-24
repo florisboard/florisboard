@@ -22,6 +22,8 @@ import android.view.textservice.SentenceSuggestionsInfo
 import android.view.textservice.SpellCheckerSession
 import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextServicesManager
+import dev.patrickgold.florisboard.debug.LogTopic
+import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.debug.flogWarning
 import dev.patrickgold.florisboard.res.AssetManager
@@ -134,13 +136,16 @@ class SpellingManager private constructor(
 
     fun indexSpellingDicts(): Boolean {
         indexedSpellingDictMetas.clear()
-        assetManager.listAssets<SpellingDict.Meta>(FlorisRef.internal(config.basePath)).onSuccess { map ->
-            for ((ref, meta) in map) {
-                indexedSpellingDictMetas[ref] = meta
+        return assetManager.listExtensions<SpellingDict.Meta>(FlorisRef.internal(config.basePath)).fold(
+            onSuccess = { map ->
+                indexedSpellingDictMetas.putAll(map)
+                true
+            },
+            onFailure = { error ->
+                flogError(LogTopic.SPELL_EVENTS) { error.toString() }
+                false
             }
-            return true
-        }
-        return false
+        )
     }
 
     fun prepareImport(sourceId: String, archiveUri: Uri): Result<Extension<SpellingDict.Meta>> {

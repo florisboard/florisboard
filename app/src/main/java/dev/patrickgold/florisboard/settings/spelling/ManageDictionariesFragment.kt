@@ -22,16 +22,62 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SpellingFragmentManageDictionariesBinding
+import dev.patrickgold.florisboard.ime.spelling.SpellingDict
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
+import dev.patrickgold.florisboard.settings.OnListItemCLickListener
+
+class SpellingDictEntryAdapter(
+    private val data: List<SpellingDict.Meta>,
+    private val onListItemCLickListener: OnListItemCLickListener
+) : RecyclerView.Adapter<SpellingDictEntryAdapter.ViewHolder>() {
+
+    class ViewHolder(view: View, private val onListItemCLickListener: OnListItemCLickListener) :
+        RecyclerView.ViewHolder(view) {
+        val titleView: TextView = view.findViewById(android.R.id.title)
+        val summaryView: TextView = view.findViewById(android.R.id.summary)
+
+        init {
+            view.setOnClickListener {
+                onListItemCLickListener.onListItemClick(adapterPosition)
+            }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val listItemView = LayoutInflater.from(parent.context)
+            .inflate(R.layout.list_item, parent, false)
+
+        return ViewHolder(listItemView, onListItemCLickListener)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.titleView.text = data[position].title
+        holder.summaryView.text = data[position].locale.toLanguageTag()
+    }
+
+    override fun getItemCount(): Int {
+        return data.size
+    }
+}
 
 class ManageDictionariesFragment : Fragment() {
     private val spellingManager get() = SpellingManager.default()
-
     private lateinit var binding: SpellingFragmentManageDictionariesBinding
+
+    private var indexedDictMetas: List<SpellingDict.Meta> = listOf()
+
+    private val dictEntryClickListener = object : OnListItemCLickListener {
+        override fun onListItemClick(pos: Int) {
+            // set active here
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SpellingFragmentManageDictionariesBinding.inflate(inflater, container, false)
@@ -55,6 +101,8 @@ class ManageDictionariesFragment : Fragment() {
             }
         }
 
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
         return binding.root
     }
 
@@ -63,6 +111,12 @@ class ManageDictionariesFragment : Fragment() {
         if (spellingManager.indexSpellingDicts()) {
             binding.dictIndexFailedCard.isVisible = false
             binding.noDictInstalledCard.isVisible = spellingManager.indexedSpellingDicts.isEmpty()
+
+            indexedDictMetas = spellingManager.indexedSpellingDicts.values.toList()
+            binding.recyclerView.adapter = SpellingDictEntryAdapter(
+                indexedDictMetas,
+                dictEntryClickListener
+            )
         } else {
             binding.dictIndexFailedCard.isVisible = true
             binding.noDictInstalledCard.isVisible = false

@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.res
 
 import android.content.Context
 import android.net.Uri
+import androidx.annotation.VisibleForTesting
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -37,9 +38,14 @@ import kotlin.contracts.contract
 @JvmInline
 value class FlorisRef private constructor(val uri: Uri) {
     companion object {
-        private const val SCHEME_FLORIS_ASSETS = "floris-assets"
-        private const val SCHEME_FLORIS_CACHE = "floris-cache"
-        private const val SCHEME_FLORIS_INTERNAL = "floris-internal"
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        internal const val SCHEME_FLORIS_ASSETS = "floris-assets"
+
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        internal const val SCHEME_FLORIS_CACHE = "floris-cache"
+
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        internal const val SCHEME_FLORIS_INTERNAL = "floris-internal"
 
         /**
          * Constructs a new [FlorisRef] pointing to a resource within the
@@ -160,7 +166,7 @@ value class FlorisRef private constructor(val uri: Uri) {
      * Works only for assets, cache or internal references.
      */
     val relativePath: String
-        get() = (uri.schemeSpecificPart ?: "").removePrefix("/")
+        get() = ((if (isExternal) { uri.path } else { uri.schemeSpecificPart } )?: "").removePrefix("/")
 
     /**
      * Returns the absolute path on the device file storage for this reference,
@@ -187,7 +193,13 @@ value class FlorisRef private constructor(val uri: Uri) {
      * @return The newly constructed reference.
      */
     fun subRef(name: String): FlorisRef {
-        return from(scheme, "$relativePath/$name")
+        return when {
+            isExternal -> from(uri.buildUpon().run {
+                appendEncodedPath(name)
+                build()
+            })
+            else -> from(scheme, "$relativePath/$name")
+        }
     }
 
     /**

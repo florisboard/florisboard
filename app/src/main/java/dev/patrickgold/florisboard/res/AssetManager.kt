@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.res
 
 import android.content.Context
 import android.net.Uri
+import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.keyboard.CaseSelector
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
@@ -237,8 +238,8 @@ class AssetManager private constructor(val applicationContext: Context) {
 
     inline fun <reified T> loadJsonAsset(file: File): Result<T> {
         return readTextFile(file).fold(
-            onSuccess = { runCatching { jsonBuilder().decodeFromString(it) } },
-            onFailure = { Result.failure(it) }
+            onSuccess = { contents -> runCatching { jsonBuilder().decodeFromString(contents) } },
+            onFailure = { error -> Result.failure(error) }
         )
     }
 
@@ -365,6 +366,37 @@ class AssetManager private constructor(val applicationContext: Context) {
     fun writeTextFile(file: File, text: String) = runCatching {
         file.parentFile?.mkdirs()
         file.writeText(text)
+    }
+
+    inline fun <reified C : ExtensionConfig> listExtensions(ref: FlorisRef): Result<Map<FlorisRef, C>> {
+        val retMap = mutableMapOf<FlorisRef, C>()
+        return when {
+            ref.isInternal -> {
+                val dir = File(ref.absolutePath(applicationContext))
+                if (dir.isDirectory) {
+                    val tempConfigFile = File.createTempFile("__config_ext_index", null)
+                    for (file in dir.listFiles() ?: arrayOf()) {
+                        if (file.isFile && file.extension == ExtensionConfig.DEFAULT_FILE_EXTENSION) {
+                            val flexFile = ZipFile(file)
+                            val configEntry = flexFile.getEntry(ExtensionConfig.DEFAULT_NAME)
+                            if (configEntry != null) {
+                                tempConfigFile.delete()
+                                flexFile.copy(configEntry, tempConfigFile)
+                                loadJsonAsset<C>(tempConfigFile).fold(
+                                    onSuccess = { config -> retMap.put(ref.subRef(file.name), config) },
+                                    onFailure = { error -> flogError { error.toString() } }
+                                )
+                            }
+                        }
+                    }
+                    tempConfigFile.delete()
+                    Result.success(retMap.toMap())
+                } else {
+                    Result.failure(Exception("Given path does not exist or is a file!"))
+                }
+            }
+            else -> Result.failure(Exception("Unsupported asset source"))
+        }
     }
 
     inline fun <reified C : ExtensionConfig> loadExtension(flexRef: FlorisRef): Result<Extension<C>> {
