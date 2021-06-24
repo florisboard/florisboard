@@ -1,9 +1,9 @@
 
 plugins {
     id("com.android.application") version "4.2.1"
-    kotlin("android") version "1.5.0"
-    kotlin("kapt") version "1.5.0"
-    kotlin("plugin.serialization") version "1.5.0"
+    kotlin("android") version "1.5.20"
+    kotlin("kapt") version "1.5.20"
+    kotlin("plugin.serialization") version "1.5.20"
 }
 
 android {
@@ -121,9 +121,11 @@ dependencies {
     implementation("androidx.room", "room-runtime", "2.2.6")
     kapt("androidx.room", "room-compiler","2.2.6")
 
-    testImplementation("junit", "junit", "4.13.1")
+    testImplementation(kotlin("test"))
+    testImplementation("androidx.test", "core", "1.3.0")
     testImplementation("org.mockito", "mockito-inline", "3.7.7")
     testImplementation("org.robolectric", "robolectric", "4.5.1")
+
     androidTestImplementation("androidx.test.ext", "junit", "1.1.2")
     androidTestImplementation("androidx.test.espresso", "espresso-core", "3.3.0")
 }
