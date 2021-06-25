@@ -31,6 +31,8 @@ import dev.patrickgold.florisboard.res.ExternalContentUtils
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.util.LocaleUtils
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import java.io.File
 import java.lang.ref.WeakReference
 import java.util.*
@@ -46,6 +48,18 @@ class SpellingManager private constructor(
         private const val IMPORT_ARCHIVE_MAX_SIZE: Int = 6_192_000
         private const val IMPORT_ARCHIVE_TEMP_NAME: String = "__temp000__ime_spelling_import_archive"
         private const val IMPORT_NEW_DICT_TEMP_NAME: String = "__temp000__ime_spelling_import_new_dict"
+
+        private const val FIREFOX_MANIFEST_JSON = "manifest.json"
+        private const val FIREFOX_DICTIONARIES_FOLDER = "dictionaries"
+
+        @Serializable
+        private data class FirefoxManifestJson(
+            @SerialName("manifest_version")
+            val manifestVersion: Int,
+            val name: String? = null,
+            val version: String? = null,
+            val dictionaries: Map<String, String>
+        )
 
         private const val FREE_OFFICE_DICT_INI = "dict.ini"
         private const val FREE_OFFICE_DICT_INI_FILE_NAME_BASE = "FileNameBase="
@@ -157,6 +171,63 @@ class SpellingManager private constructor(
     fun prepareImport(sourceId: String, archiveUri: Uri): Result<Extension<SpellingDict.Meta>> {
         val context = applicationContext.get() ?: return Result.failure(Exception("Context is null"))
         return when (sourceId) {
+            "mozilla_firefox" -> {
+                val tempFile = saveTempFile(archiveUri).getOrElse { return Result.failure(it) }
+                val zipFile = ZipFile(tempFile)
+                val manifestEntry = zipFile.getEntry(FIREFOX_MANIFEST_JSON) ?: return Result.failure(Exception("No $FIREFOX_MANIFEST_JSON file found"))
+                val manifest = zipFile.getInputStream(manifestEntry).bufferedReader(Charsets.UTF_8).use {
+                    assetManager.loadJsonAsset<FirefoxManifestJson>(it.readText())
+                }.getOrElse { return Result.failure(it) }
+
+                if (manifest.dictionaries.isEmpty()) {
+                    return Result.failure(Exception("No dictionary definitions provided!"))
+                }
+                val supportedLocale: Locale
+                val fileNameBase: String
+                manifest.dictionaries.entries.first().let {
+                    supportedLocale = LocaleUtils.stringToLocale(it.key)
+                    fileNameBase = it.value.removeSuffix(".dic")
+                }
+
+                val tempDictDir = File(context.cacheDir, IMPORT_NEW_DICT_TEMP_NAME)
+                tempDictDir.deleteRecursively()
+                tempDictDir.mkdirs()
+                val entries = zipFile.entries()
+                return SpellingDict.metaBuilder {
+                    version = manifest.version
+                    title = manifest.name
+                    locale = supportedLocale
+                    originalSourceId = sourceId
+                    while (entries.hasMoreElements()) {
+                        val entry = entries.nextElement()
+                        flogInfo { entry.name }
+                        when (entry.name) {
+                            "$fileNameBase.aff" -> {
+                                val name = entry.name.removePrefix("$FIREFOX_DICTIONARIES_FOLDER/")
+                                val aff = File(tempDictDir, name)
+                                aff.outputStream().use { output ->
+                                    zipFile.getInputStream(entry).use { input ->
+                                        input.copyTo(output)
+                                    }
+                                }
+                                affFile = name
+                            }
+                            "$fileNameBase.dic" -> {
+                                val name = entry.name.removePrefix("$FIREFOX_DICTIONARIES_FOLDER/")
+                                val dic = File(tempDictDir, name)
+                                dic.outputStream().use { output ->
+                                    zipFile.getInputStream(entry).use { input ->
+                                        input.copyTo(output)
+                                    }
+                                }
+                                dicFile = name
+                            }
+                        }
+                    }
+                    val meta = build().getOrElse { return@metaBuilder Result.failure(it) }
+                    Result.success(Extension(meta, tempDictDir, File(FlorisRef.internal(config.basePath).subRef("${meta.id}.flex").absolutePath(context))))
+                }
+            }
             "free_office" -> {
                 val tempFile = saveTempFile(archiveUri).getOrElse { return Result.failure(it) }
                 val zipFile = ZipFile(tempFile)

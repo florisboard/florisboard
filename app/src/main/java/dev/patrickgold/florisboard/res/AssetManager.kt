@@ -271,6 +271,10 @@ class AssetManager private constructor(val applicationContext: Context) {
         )
     }
 
+    inline fun <reified T> loadJsonAsset(jsonStr: String): Result<T> {
+        return runCatching { jsonBuilder().decodeFromString(jsonStr) }
+    }
+
     @Deprecated("AssetRef is deprecated, use FlorisRef instead")
     fun loadTextAsset(ref: AssetRef): Result<String> {
         return when (ref.source) {

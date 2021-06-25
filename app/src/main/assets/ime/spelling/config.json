@@ -2,8 +2,20 @@
   "basePath": "ime/spelling",
   "importSources": [
     {
+      "id": "mozilla_firefox",
+      "label": "Mozilla Firefox Add-ons",
+      "url": "https://addons.mozilla.org/firefox/language-tools/",
+      "format": {
+        "$": "archive",
+        "file": {
+          "name": "^.+\\.xpi$",
+          "isRequired": true
+        }
+      }
+    },
+    {
       "id": "libre_office",
-      "label": "LibreOffice",
+      "label": "LibreOffice [CURRENTLY UNSUPPORTED]",
       "url": "https://extensions.libreoffice.org/?Tags%5B%5D=50",
       "format": {
         "$": "archive",
@@ -15,7 +27,7 @@
     },
     {
       "id": "open_office",
-      "label": "Apache OpenOffice",
+      "label": "Apache OpenOffice [CURRENTLY UNSUPPORTED]",
       "url": "https://extensions.openoffice.org/en/search?f%5B0%5D=field_project_tags%3A157",
       "format": {
         "$": "archive",
@@ -39,7 +51,7 @@
     },
     {
       "id": "gh_wooorm",
-      "label": "GitHub collection by Titus Wormer",
+      "label": "GitHub collection by Titus Wormer [CURRENTLY UNSUPPORTED]",
       "url": "https://github.com/wooorm/dictionaries",
       "format": {
         "$": "raw",

@@ -62,7 +62,13 @@ class SpellingDictEntryAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.titleView.text = data[position].title
-        holder.summaryView.text = data[position].locale.toLanguageTag()
+        holder.summaryView.text = StringBuilder().run {
+            append(data[position].locale.toLanguageTag())
+            append(" | ")
+            append(data[position].version)
+            append(" | ")
+            append(data[position].originalSourceId)
+        }
     }
 
     override fun getItemCount(): Int {
