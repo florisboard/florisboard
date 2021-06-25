@@ -28,7 +28,7 @@ import java.io.File
  *  area for modifications to extension files.
  * @property flexFile Optional, defines where the original flex file is stored.
  */
-class Extension <C : ExtensionConfig>(
+open class Extension<C : ExtensionConfig>(
     val config: C,
     val workingDir: File,
     val flexFile: File?

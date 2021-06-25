@@ -81,7 +81,7 @@ class SpellingManager private constructor(
         applicationContext.get()?.getSystemService(Context.TEXT_SERVICES_MANAGER_SERVICE) as? TextServicesManager
 
     private val assetManager get() = AssetManager.default()
-    private val spellingDictCache: MutableMap<FlorisRef, SpellingDict> = mutableMapOf()
+    private val spellingExtCache: MutableMap<FlorisRef, SpellingExtension> = mutableMapOf()
     private val indexedSpellingDictMetas: MutableMap<FlorisRef, SpellingDict.Meta> = mutableMapOf()
     val indexedSpellingDicts: Map<FlorisRef, SpellingDict.Meta>
         get() = indexedSpellingDictMetas
@@ -124,14 +124,20 @@ class SpellingManager private constructor(
             if (it.value.locale.language == locale.language) it else null
         } ?: return null
         val ref = entry.key
-        val meta = entry.value
-        val cachedDict = spellingDictCache[ref]
-        if (cachedDict != null) {
-            return cachedDict
+        val cachedExt = spellingExtCache[ref]
+        if (cachedExt != null) {
+            return cachedExt.dict
         }
-        val newDict = SpellingDict.new(ref, meta)
-        spellingDictCache[ref] = newDict
-        return newDict
+        return assetManager.loadExtension(ref) { c: SpellingDict.Meta, w, f -> SpellingExtension(c, w, f) }.fold(
+            onSuccess = {
+                spellingExtCache[ref] = it
+                it.dict
+            },
+            onFailure = {
+                flogError { it.toString() }
+                return null
+            }
+        )
     }
 
     fun indexSpellingDicts(): Boolean {

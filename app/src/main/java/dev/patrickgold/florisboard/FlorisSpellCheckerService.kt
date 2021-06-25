@@ -78,7 +78,6 @@ class FlorisSpellCheckerService : SpellCheckerService() {
             val spellingDict = spellingDict ?: return DEFAULT_SUGGESTIONS_INFO
 
             val word = textInfo?.text ?: return DEFAULT_SUGGESTIONS_INFO
-            return DEFAULT_SUGGESTIONS_INFO
             val isWordOk = spellingDict.spell(word)
             return if (isWordOk) {
                 SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_IN_THE_DICTIONARY, EMPTY_STRING_ARRAY)

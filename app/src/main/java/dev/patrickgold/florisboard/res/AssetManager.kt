@@ -40,6 +40,8 @@ import java.util.*
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 class AssetManager private constructor(val applicationContext: Context) {
     private val json = Json {
@@ -399,13 +401,21 @@ class AssetManager private constructor(val applicationContext: Context) {
         }
     }
 
-    inline fun <reified C : ExtensionConfig> loadExtension(flexRef: FlorisRef): Result<Extension<C>> {
+    inline fun <X : Extension<C>, reified C : ExtensionConfig> loadExtension(
+        flexRef: FlorisRef,
+        loader: (config: C, workingDir: File, flexFile: File) -> X
+    ): Result<X> {
+        contract {
+            callsInPlace(loader, InvocationKind.AT_MOST_ONCE)
+        }
+
         if (!flexRef.isInternal) return Result.failure(Exception("Only internal source supported!"))
         val flexHandle = File(filesDirPath(flexRef))
         if (!flexHandle.isFile) return Result.failure(Exception("Given ref $flexRef is not a file!"))
         val tempDirHandle = File(applicationContext.cacheDir, UUID.randomUUID().toString())
         tempDirHandle.deleteRecursively()
         tempDirHandle.mkdirs()
+
         return try {
             val flexFile = ZipFile(flexHandle)
             var config: C? = null
@@ -423,13 +433,13 @@ class AssetManager private constructor(val applicationContext: Context) {
             if (config == null) {
                 return Result.failure(Exception("No config file found for extension '$flexRef'!"))
             }
-            return Result.success(Extension(config!!, tempDirHandle, flexHandle))
+            return Result.success(loader(config!!, tempDirHandle, flexHandle))
         } catch (e: Exception) {
             Result.failure(e)
         }
     }
 
-    inline fun <reified C : ExtensionConfig> writeExtension(extension: Extension<C>): Result<Unit> {
+    inline fun <X: Extension<C>, reified C : ExtensionConfig> writeExtension(extension: X): Result<Unit> {
         if (extension.flexFile == null) return Result.failure(Exception("Flex file handle is null!"))
         extension.flexFile.parentFile?.mkdirs()
         extension.flexFile.deleteRecursively()

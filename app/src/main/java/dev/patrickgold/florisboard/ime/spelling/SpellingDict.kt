@@ -18,9 +18,11 @@ package dev.patrickgold.florisboard.ime.spelling
 
 import dev.patrickgold.florisboard.common.NativeInstanceWrapper
 import dev.patrickgold.florisboard.common.NativePtr
+import dev.patrickgold.florisboard.common.NativeStr
+import dev.patrickgold.florisboard.common.toJavaString
+import dev.patrickgold.florisboard.common.toNativeStr
 import dev.patrickgold.florisboard.ime.core.LocaleSerializer
 import dev.patrickgold.florisboard.ime.nlp.Word
-import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ext.ExtensionConfig
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -36,16 +38,19 @@ value class SpellingDict private constructor(
         const val LICENSE_FILE_NAME = "LICENSE.txt"
         const val README_FILE_NAME = "README.txt"
 
-        fun new(ref: FlorisRef, meta: Meta): SpellingDict {
-            val nativePtr = nativeInitialize(ref.relativePath, meta.affFile, meta.dicFile)
+        fun new(path: String, meta: Meta): SpellingDict {
+            val nativePtr = nativeInitialize(
+                "$path/${meta.affFile}".toNativeStr(),
+                "$path/${meta.dicFile}".toNativeStr()
+            )
             return SpellingDict(nativePtr)
         }
 
-        external fun nativeInitialize(baseBath: String, affFileName: String, dicFileName: String): NativePtr
+        external fun nativeInitialize(affFilePath: NativeStr, dicFilePath: NativeStr): NativePtr
         external fun nativeDispose(nativePtr: NativePtr)
 
-        external fun nativeSpell(nativePtr: NativePtr, word: Word): Boolean
-        external fun nativeSuggest(nativePtr: NativePtr, word: Word): Array<out String>
+        external fun nativeSpell(nativePtr: NativePtr, word: NativeStr): Boolean
+        external fun nativeSuggest(nativePtr: NativePtr, word: NativeStr): Array<out NativeStr>
 
         inline fun <R> metaBuilder(block: MetaBuilder.() -> R): R {
             contract {
@@ -65,11 +70,12 @@ value class SpellingDict private constructor(
     }
 
     fun spell(word: Word): Boolean {
-        return nativeSpell(_nativePtr, word)
+        return nativeSpell(_nativePtr, word.toNativeStr())
     }
 
     fun suggest(word: Word): Array<out String> {
-        return nativeSuggest(_nativePtr, word)
+        val nativeSuggestions = nativeSuggest(_nativePtr, word.toNativeStr())
+        return Array(nativeSuggestions.size) { i -> nativeSuggestions[i].toJavaString() }
     }
 
     @Serializable
