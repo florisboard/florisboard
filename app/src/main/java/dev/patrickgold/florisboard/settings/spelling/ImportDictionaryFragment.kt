@@ -85,6 +85,7 @@ class ImportDictionaryFragment : BottomSheetDialogFragment() {
                     (activity as? FlorisActivity<*>)?.showErrorDialog(error)
                 }
                 dismiss()
+                ((activity as? FlorisActivity<*>)?.supportFragmentManager?.findFragmentByTag(ManageDictionariesFragment::class.qualifiedName) as? ManageDictionariesFragment)?.buildUi()
             }
         }.onFailure { error ->
             (activity as? FlorisActivity<*>)?.showErrorDialog(error)

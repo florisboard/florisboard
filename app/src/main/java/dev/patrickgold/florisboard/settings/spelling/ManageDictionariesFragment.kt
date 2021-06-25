@@ -23,6 +23,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,6 +32,8 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SpellingFragmentManageDictionariesBinding
 import dev.patrickgold.florisboard.ime.spelling.SpellingDict
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
+import dev.patrickgold.florisboard.res.AssetManager
+import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.settings.OnListItemCLickListener
 
 class SpellingDictEntryAdapter(
@@ -68,14 +71,25 @@ class SpellingDictEntryAdapter(
 }
 
 class ManageDictionariesFragment : Fragment() {
+    private val assetManager get() = AssetManager.default()
     private val spellingManager get() = SpellingManager.default()
     private lateinit var binding: SpellingFragmentManageDictionariesBinding
 
+    private var indexedDictRefs: List<FlorisRef> = listOf()
     private var indexedDictMetas: List<SpellingDict.Meta> = listOf()
 
     private val dictEntryClickListener = object : OnListItemCLickListener {
         override fun onListItemClick(pos: Int) {
-            // set active here
+            AlertDialog.Builder(requireContext()).apply {
+                setTitle("Delete?")
+                setCancelable(true)
+                setPositiveButton("Yes") { _, _ ->
+                    indexedDictRefs.getOrNull(pos)?.let { assetManager.deleteExtension(it) }
+                    buildUi()
+                }
+                setNegativeButton("No", null)
+                show()
+            }
         }
     }
 
@@ -108,10 +122,15 @@ class ManageDictionariesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        buildUi()
+    }
+
+    fun buildUi() {
         if (spellingManager.indexSpellingDicts()) {
             binding.dictIndexFailedCard.isVisible = false
             binding.noDictInstalledCard.isVisible = spellingManager.indexedSpellingDicts.isEmpty()
 
+            indexedDictRefs = spellingManager.indexedSpellingDicts.keys.toList()
             indexedDictMetas = spellingManager.indexedSpellingDicts.values.toList()
             binding.recyclerView.adapter = SpellingDictEntryAdapter(
                 indexedDictMetas,

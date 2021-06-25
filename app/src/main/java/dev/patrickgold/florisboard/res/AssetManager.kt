@@ -122,6 +122,25 @@ class AssetManager private constructor(val applicationContext: Context) {
         }
     }
 
+    fun deleteAsset(ref: FlorisRef): Result<Unit> {
+        return when {
+            ref.isInternal -> {
+                val file = File(ref.absolutePath(applicationContext))
+                if (file.isFile) {
+                    val success = file.delete()
+                    if (success) {
+                        Result.success(Unit)
+                    } else {
+                        Result.failure(Exception("Could not delete file."))
+                    }
+                } else {
+                    Result.failure(Exception("Provided reference is not a file."))
+                }
+            }
+            else -> Result.failure(Exception("Can not delete an asset in source '${ref.scheme}'"))
+        }
+    }
+
     fun hasAsset(ref: AssetRef): Boolean {
         return when (ref.source) {
             AssetSource.Assets -> {
@@ -458,6 +477,10 @@ class AssetManager private constructor(val applicationContext: Context) {
         } catch (e: Exception) {
             Result.failure(e)
         }
+    }
+
+    fun deleteExtension(ref: FlorisRef): Result<Unit> {
+        return deleteAsset(ref)
     }
 
     fun cacheDirPath(ref: FlorisRef): String {

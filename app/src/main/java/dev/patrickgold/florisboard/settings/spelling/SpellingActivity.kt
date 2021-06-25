@@ -87,7 +87,7 @@ class SpellingActivity : FlorisActivity<SpellingActivityBinding>() {
         }
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fragment_container, fragment)
+            .replace(R.id.fragment_container, fragment, fragment::class.qualifiedName)
             .commit()
     }
 
