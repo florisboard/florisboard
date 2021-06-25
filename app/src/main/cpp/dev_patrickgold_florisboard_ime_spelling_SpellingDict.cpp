@@ -27,8 +27,8 @@ JNIEXPORT jlong JNICALL
 Java_dev_patrickgold_florisboard_ime_spelling_SpellingDict_00024Companion_nativeInitialize(
         JNIEnv *env,
         jobject thiz,
-        jbyteArray aff_file_path,
-        jbyteArray dic_file_path) {
+        jobject aff_file_path,
+        jobject dic_file_path) {
     auto strAffFilePath = utils::j2std_string(env, aff_file_path);
     auto strDicFilePath = utils::j2std_string(env, dic_file_path);
 
@@ -54,7 +54,7 @@ Java_dev_patrickgold_florisboard_ime_spelling_SpellingDict_00024Companion_native
         JNIEnv *env,
         jobject thiz,
         jlong native_ptr,
-        jbyteArray word) {
+        jobject word) {
     auto strWord = utils::j2std_string(env, word);
 
     auto spellingDict = reinterpret_cast<SpellingDict *>(native_ptr);

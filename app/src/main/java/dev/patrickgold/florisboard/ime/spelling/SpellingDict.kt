@@ -50,7 +50,7 @@ value class SpellingDict private constructor(
         external fun nativeDispose(nativePtr: NativePtr)
 
         external fun nativeSpell(nativePtr: NativePtr, word: NativeStr): Boolean
-        external fun nativeSuggest(nativePtr: NativePtr, word: NativeStr): Array<out NativeStr>
+        external fun nativeSuggest(nativePtr: NativePtr, word: NativeStr): Array<NativeStr>
 
         inline fun <R> metaBuilder(block: MetaBuilder.() -> R): R {
             contract {
