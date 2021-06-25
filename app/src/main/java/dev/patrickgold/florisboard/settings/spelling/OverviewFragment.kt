@@ -69,8 +69,10 @@ class OverviewFragment : PreferenceFragmentCompat() {
 
     override fun onResume() {
         super.onResume()
-        activeSpellCheckerPref.summary = spellingManager.getCurrentSpellingServiceName() ?:
-            resources.getString(R.string.pref__spelling__active_spellchecker__summary_none)
+        /*activeSpellCheckerPref.summary = spellingManager.getCurrentSpellingServiceName() ?:
+            resources.getString(R.string.pref__spelling__active_spellchecker__summary_none)*/
+        activeSpellCheckerPref.summary =
+            resources.getString(R.string.pref__spelling__active_spellchecker__summary_check_in_system)
         val numInstalledDicts = spellingManager.indexedSpellingDicts.size
         manageDictionariesPref.summary = resources.getQuantityString(
             R.plurals.pref__spelling__manage_dictionaries__summary,

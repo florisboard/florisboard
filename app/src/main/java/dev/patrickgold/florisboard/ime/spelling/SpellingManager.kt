@@ -116,6 +116,7 @@ class SpellingManager private constructor(
         indexSpellingDicts()
     }
 
+    // TODO: rework or remove this
     fun getCurrentSpellingServiceName(): String? {
         try {
             val session = tsm?.newSpellCheckerSession(

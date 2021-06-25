@@ -35,7 +35,7 @@ class DictionarySourcesInfoFragment : BottomSheetDialogFragment() {
         binding = SpellingSheetDictionarySourcesInfoBinding.inflate(inflater, container, false)
 
         for (source in spellingManager.config.importSources) {
-            val listItem = ListItemBinding.inflate(inflater, binding.sourceList, false)
+            val listItem = ListItemBinding.inflate(LayoutInflater.from(binding.sourceList.context), binding.sourceList, false)
             listItem.title.text = source.label
             val url = source.url ?: continue
             listItem.summary.text = url
