@@ -27,16 +27,12 @@ JNIEXPORT jlong JNICALL
 Java_dev_patrickgold_florisboard_ime_spelling_SpellingDict_00024Companion_nativeInitialize(
         JNIEnv *env,
         jobject thiz,
-        jstring base_path,
-        jstring aff_file_name,
-        jstring dic_file_name) {
-    auto strBasePath = utils::j2std_string(env, base_path);
-    auto strAffFileName = utils::j2std_string(env, aff_file_name);
-    auto strDicFileName = utils::j2std_string(env, dic_file_name);
+        jbyteArray aff_file_path,
+        jbyteArray dic_file_path) {
+    auto strAffFilePath = utils::j2std_string(env, aff_file_path);
+    auto strDicFilePath = utils::j2std_string(env, dic_file_path);
 
-    std::string aff = strBasePath + "/" + strAffFileName;
-    std::string dic = strBasePath + "/" + strDicFileName;
-    auto *spellingDict = new SpellingDict(aff, dic);
+    auto *spellingDict = new SpellingDict(strAffFilePath, strDicFilePath);
 
     return reinterpret_cast<jlong>(spellingDict);
 }
@@ -58,7 +54,7 @@ Java_dev_patrickgold_florisboard_ime_spelling_SpellingDict_00024Companion_native
         JNIEnv *env,
         jobject thiz,
         jlong native_ptr,
-        jstring word) {
+        jbyteArray word) {
     auto strWord = utils::j2std_string(env, word);
 
     auto spellingDict = reinterpret_cast<SpellingDict *>(native_ptr);
@@ -73,14 +69,14 @@ Java_dev_patrickgold_florisboard_ime_spelling_SpellingDict_00024Companion_native
         JNIEnv *env,
         jobject thiz,
         jlong native_ptr,
-        jstring word) {
+        jobject word) {
     auto strWord = utils::j2std_string(env, word);
 
     auto spellingDict = reinterpret_cast<SpellingDict *>(native_ptr);
     auto result = spellingDict->suggest(strWord);
 
-    jclass jStringClass = env->FindClass("java/lang/String");
-    jobjectArray jSuggestions = env->NewObjectArray(result.size(), jStringClass, nullptr);
+    jclass jByteArrayClass = env->FindClass("java/nio/ByteBuffer");
+    jobjectArray jSuggestions = env->NewObjectArray(result.size(), jByteArrayClass, nullptr);
     for (int n = 0; n < result.size(); n++) {
         env->SetObjectArrayElement(jSuggestions, n, utils::std2j_string(env, result[n]));
     }

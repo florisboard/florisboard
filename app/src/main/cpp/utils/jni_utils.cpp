@@ -16,13 +16,16 @@
 
 #include "jni_utils.h"
 
-std::string utils::j2std_string(JNIEnv *env, jstring jStr) {
-    const char *cStr = env->GetStringUTFChars(jStr, nullptr);
-    std::string stdStr = std::string(cStr);
-    env->ReleaseStringUTFChars(jStr, cStr);
+std::string utils::j2std_string(JNIEnv *env, jobject jStr) {
+    auto cStr = reinterpret_cast<const char *>(env->GetDirectBufferAddress(jStr));
+    auto size = env->GetDirectBufferCapacity(jStr);
+    std::string stdStr(cStr, size);
     return stdStr;
 }
 
-jstring utils::std2j_string(JNIEnv *env, const std::string& stdStr) {
-    return env->NewStringUTF(stdStr.c_str());
+jobject utils::std2j_string(JNIEnv *env, const std::string& stdStr) {
+    size_t byteCount = stdStr.length();
+    auto cStr = stdStr.c_str();
+    auto buffer = env->NewDirectByteBuffer((void *) cStr, byteCount);
+    return buffer;
 }
