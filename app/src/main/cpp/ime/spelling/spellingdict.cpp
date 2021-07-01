@@ -18,10 +18,10 @@
 
 using namespace ime::spellcheck;
 
-SpellingDict::SpellingDict(const std::string& basePath) :
-    dictionary(std::make_unique<nuspell::Dictionary>())
+SpellingDict::SpellingDict(const std::string& basePath)
 {
-    dictionary->load_from_path(basePath);
+    auto temp = dictionary->load_from_path(basePath);
+    dictionary = std::make_unique<nuspell::Dictionary>(std::move(temp));
 }
 
 SpellingDict::~SpellingDict() = default;
