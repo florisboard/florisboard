@@ -18,18 +18,21 @@
 
 using namespace ime::spellcheck;
 
-SpellingDict::SpellingDict(const std::string& aff, const std::string& dic) :
-    hunspell(std::make_unique<Hunspell>(aff.c_str(), dic.c_str()))
-{ }
+SpellingDict::SpellingDict(const std::string& basePath) :
+    dictionary(std::make_unique<nuspell::Dictionary>())
+{
+    dictionary->load_from_path(basePath);
+}
 
 SpellingDict::~SpellingDict() = default;
 
 bool SpellingDict::spell(const std::string& word) {
-    bool result = hunspell->spell(word);
+    bool result = dictionary->spell(word);
     return result;
 }
 
 std::vector<std::string> SpellingDict::suggest(const std::string &word) {
-    auto result = hunspell->suggest(word);
+    auto result = std::vector<std::string>();
+    dictionary->suggest(word, result);
     return result;
 }

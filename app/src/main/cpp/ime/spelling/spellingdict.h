@@ -17,7 +17,7 @@
 #ifndef FLORISBOARD_SPELLINGDICT_H
 #define FLORISBOARD_SPELLINGDICT_H
 
-#include "hunspell/hunspell.hxx"
+#include "nuspell/dictionary.hxx"
 #include <string>
 #include <vector>
 
@@ -25,14 +25,14 @@ namespace ime::spellcheck {
 
 class SpellingDict {
 public:
-    SpellingDict(const std::string& aff, const std::string& dic);
+    SpellingDict(const std::string& basePath);
     ~SpellingDict();
 
     bool spell(const std::string& word);
     std::vector<std::string> suggest(const std::string& word);
 
 private:
-    std::unique_ptr<Hunspell> hunspell;
+    std::unique_ptr<nuspell::Dictionary> dictionary;
 };
 
 } // namespace ime::spellcheck

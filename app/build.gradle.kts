@@ -9,6 +9,7 @@ plugins {
 android {
     compileSdkVersion(30)
     buildToolsVersion("30.0.3")
+    ndkVersion = "22.1.7171670"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -41,8 +42,21 @@ android {
 
         externalNativeBuild {
             cmake {
-                cppFlags("-std=c++17", "-fexceptions", "-frtti")
+                cFlags("-DU_STATIC_IMPLEMENTATION=1")
+                cppFlags("-std=c++17", "-fexceptions", "-frtti", "-ffunction-sections", "-fdata-sections", "-DU_DISABLE_RENAMING=1", "-DU_STATIC_IMPLEMENTATION=1")
                 arguments("-DANDROID_STL=c++_static")
+            }
+        }
+
+        ndk {
+            abiFilters += listOf("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
+        }
+
+        sourceSets {
+            maybeCreate("main").apply {
+                jni {
+                    srcDirs("src/main/jniLibs")
+                }
             }
         }
     }
