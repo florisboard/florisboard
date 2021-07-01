@@ -42,14 +42,15 @@ android {
 
         externalNativeBuild {
             cmake {
-                cFlags("-DU_STATIC_IMPLEMENTATION=1")
-                cppFlags("-std=c++17", "-fexceptions", "-frtti", "-ffunction-sections", "-fdata-sections", "-DU_DISABLE_RENAMING=1", "-DU_STATIC_IMPLEMENTATION=1")
+                cFlags("-fvisibility=hidden", "-DU_STATIC_IMPLEMENTATION=1")
+                cppFlags("-fvisibility=hidden", "-std=c++17", "-fexceptions", "-ffunction-sections", "-fdata-sections", "-DU_DISABLE_RENAMING=1", "-DU_STATIC_IMPLEMENTATION=1")
                 arguments("-DANDROID_STL=c++_static")
             }
         }
 
         ndk {
-            abiFilters += listOf("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
+            //abiFilters += listOf("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
         }
 
         sourceSets {
