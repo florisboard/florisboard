@@ -45,7 +45,7 @@ class SpellingManager private constructor(
     companion object {
         private var defaultInstance: SpellingManager? = null
 
-        private const val IMPORT_ARCHIVE_MAX_SIZE: Int = 6_192_000
+        private const val IMPORT_ARCHIVE_MAX_SIZE: Int = 16_777_220 // 16 MiB
         private const val IMPORT_ARCHIVE_TEMP_NAME: String = "__temp000__ime_spelling_import_archive"
         private const val IMPORT_NEW_DICT_TEMP_NAME: String = "__temp000__ime_spelling_import_new_dict"
 
