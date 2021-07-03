@@ -83,7 +83,6 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
-            app:dependency="suggestion__enabled"
             app:key="suggestion__enable_system_user_dictionary"
             app:iconSpaceReserved="false"
             app:title="@string/pref__dictionary__enable_system_user_dictionary__label"
@@ -98,7 +97,6 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
-            app:dependency="suggestion__enabled"
             app:key="suggestion__enable_floris_user_dictionary"
             app:iconSpaceReserved="false"
             app:title="@string/pref__dictionary__enable_internal_user_dictionary__label"

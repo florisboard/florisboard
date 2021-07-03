@@ -109,6 +109,9 @@ interface UserDictionaryDao {
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word AND (${UserDictionary.Words.LOCALE} = :locale OR (${UserDictionary.Words.LOCALE} IS NULL AND :locale IS NULL))")
     fun queryExact(word: String, locale: Locale?): List<UserDictionaryEntry>
 
+    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word AND $LOCALE_MATCHES")
+    fun queryExactFuzzyLocale(word: String, locale: Locale?): List<UserDictionaryEntry>
+
     @Query("SELECT DISTINCT ${UserDictionary.Words.LOCALE} FROM $WORDS_TABLE")
     fun queryLanguageList(): List<Locale?>
 
@@ -333,7 +336,23 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
                 )
             } else {
                 queryResolver(
-                    selection = "${UserDictionary.Words.WORD} LIKE ? AND ${UserDictionary.Words.LOCALE} = ?",
+                    selection = "${UserDictionary.Words.WORD} = ? AND ${UserDictionary.Words.LOCALE} = ?",
+                    selectionArgs = arrayOf(word, locale.toString()),
+                    sortOrder = SORT_BY_FREQ_DESC,
+                )
+            }
+        }
+
+        override fun queryExactFuzzyLocale(word: String, locale: Locale?): List<UserDictionaryEntry> {
+            return if (locale == null) {
+                queryResolver(
+                    selection = "${UserDictionary.Words.WORD} = ? AND ${UserDictionary.Words.LOCALE} IS NULL",
+                    selectionArgs = arrayOf(word),
+                    sortOrder = SORT_BY_FREQ_DESC,
+                )
+            } else {
+                queryResolver(
+                    selection = "${UserDictionary.Words.WORD} = ? AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
                     selectionArgs = arrayOf(word, locale.toString()),
                     sortOrder = SORT_BY_FREQ_DESC,
                 )

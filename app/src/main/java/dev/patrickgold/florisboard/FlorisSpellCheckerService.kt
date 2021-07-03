@@ -21,17 +21,22 @@ import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextInfo
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogInfo
+import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
+import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingDict
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import java.util.*
 
 class FlorisSpellCheckerService : SpellCheckerService() {
+    private val dictionaryManager get() = DictionaryManager.default()
+
     override fun onCreate() {
         flogInfo(LogTopic.SPELL_EVENTS)
 
         super.onCreate()
+        dictionaryManager.loadUserDictionariesIfNecessary()
     }
 
     override fun createSession(): Session {
@@ -54,20 +59,24 @@ class FlorisSpellCheckerService : SpellCheckerService() {
             private val EMPTY_STRING_ARRAY: Array<out String> = arrayOf()
         }
 
-        private var spellingDict: SpellingDict? = null
+        private val prefs get() = Preferences.default()
+        private val dictionaryManager get() = DictionaryManager.default()
         private val spellingManager get() = SpellingManager.default()
         private val subtypeManager get() = SubtypeManager.default()
+
+        private var spellingDict: SpellingDict? = null
+        private lateinit var spellingLocale: Locale
 
         override fun onCreate() {
             flogInfo(LogTopic.SPELL_EVENTS) { "Session locale: $locale" }
 
-            val localeToUse = when (locale) {
+            spellingLocale = when (locale) {
                 null -> Subtype.DEFAULT.locale
                 USE_FLORIS_SUBTYPES_LOCALE -> (subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT).locale
                 else -> Locale(locale)
             }
 
-            spellingDict = spellingManager.getSpellingDict(localeToUse)
+            spellingDict = spellingManager.getSpellingDict(spellingLocale)
         }
 
         override fun onGetSuggestions(textInfo: TextInfo?, suggestionsLimit: Int): SuggestionsInfo {
@@ -76,12 +85,20 @@ class FlorisSpellCheckerService : SpellCheckerService() {
             val spellingDict = spellingDict ?: return DEFAULT_SUGGESTIONS_INFO
 
             val word = textInfo?.text ?: return DEFAULT_SUGGESTIONS_INFO
-            val isWordOk = spellingDict.spell(word)
+            var isWordOk = false
+            if (prefs.spelling.useUdmEntries) {
+                isWordOk = dictionaryManager.spell(word, spellingLocale)
+            }
             return if (isWordOk) {
                 SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_IN_THE_DICTIONARY, EMPTY_STRING_ARRAY)
             } else {
-                val suggestions = spellingDict.suggest(word, suggestionsLimit)
-                SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO, suggestions)
+                isWordOk = spellingDict.spell(word)
+                if (isWordOk) {
+                    SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_IN_THE_DICTIONARY, EMPTY_STRING_ARRAY)
+                } else {
+                    val suggestions = spellingDict.suggest(word, suggestionsLimit)
+                    SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO, suggestions)
+                }
             }
         }
     }
