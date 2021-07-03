@@ -21,10 +21,8 @@ import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextInfo
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogInfo
-import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
-import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingDict
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import java.util.*
@@ -73,7 +71,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         }
 
         override fun onGetSuggestions(textInfo: TextInfo?, suggestionsLimit: Int): SuggestionsInfo {
-            flogInfo(LogTopic.SPELL_EVENTS)
+            flogInfo(LogTopic.SPELL_EVENTS) { "text=${textInfo?.text}, limit=$suggestionsLimit"}
 
             val spellingDict = spellingDict ?: return DEFAULT_SUGGESTIONS_INFO
 
@@ -82,7 +80,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
             return if (isWordOk) {
                 SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_IN_THE_DICTIONARY, EMPTY_STRING_ARRAY)
             } else {
-                val suggestions = spellingDict.suggest(word)
+                val suggestions = spellingDict.suggest(word, suggestionsLimit)
                 SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO, suggestions)
             }
         }

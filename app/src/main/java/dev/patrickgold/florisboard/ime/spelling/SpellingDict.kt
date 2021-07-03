@@ -48,7 +48,7 @@ value class SpellingDict private constructor(
         external fun nativeDispose(nativePtr: NativePtr)
 
         external fun nativeSpell(nativePtr: NativePtr, word: NativeStr): Boolean
-        external fun nativeSuggest(nativePtr: NativePtr, word: NativeStr): Array<NativeStr>
+        external fun nativeSuggest(nativePtr: NativePtr, word: NativeStr, limit: Int): Array<NativeStr>
 
         inline fun <R> metaBuilder(block: MetaBuilder.() -> R): R {
             contract {
@@ -71,8 +71,8 @@ value class SpellingDict private constructor(
         return nativeSpell(_nativePtr, word.toNativeStr())
     }
 
-    fun suggest(word: Word): Array<out String> {
-        val nativeSuggestions = nativeSuggest(_nativePtr, word.toNativeStr())
+    fun suggest(word: Word, limit: Int): Array<out String> {
+        val nativeSuggestions = nativeSuggest(_nativePtr, word.toNativeStr(), limit)
         return Array(nativeSuggestions.size) { i -> nativeSuggestions[i].toJavaString() }
     }
 

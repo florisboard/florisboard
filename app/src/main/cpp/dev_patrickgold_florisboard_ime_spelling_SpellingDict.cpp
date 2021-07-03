@@ -17,6 +17,7 @@
 #include <jni.h>
 #include "ime/spelling/spellingdict.h"
 #include "utils/jni_utils.h"
+#include <algorithm>
 
 #pragma ide diagnostic ignored "UnusedLocalVariable"
 
@@ -67,15 +68,17 @@ Java_dev_patrickgold_florisboard_ime_spelling_SpellingDict_00024Companion_native
         JNIEnv *env,
         jobject thiz,
         jlong native_ptr,
-        jobject word) {
+        jobject word,
+        jint limit) {
     auto strWord = utils::j2std_string(env, word);
 
     auto spellingDict = reinterpret_cast<SpellingDict *>(native_ptr);
     auto result = spellingDict->suggest(strWord);
+    auto retSize = std::min(result.size(), (size_t)std::max(0, limit));
 
     jclass jByteArrayClass = env->FindClass("java/nio/ByteBuffer");
-    jobjectArray jSuggestions = env->NewObjectArray(result.size(), jByteArrayClass, nullptr);
-    for (int n = 0; n < result.size(); n++) {
+    jobjectArray jSuggestions = env->NewObjectArray(retSize, jByteArrayClass, nullptr);
+    for (int n = 0; n < retSize; n++) {
         env->SetObjectArrayElement(jSuggestions, n, utils::std2j_string(env, result[n]));
     }
 

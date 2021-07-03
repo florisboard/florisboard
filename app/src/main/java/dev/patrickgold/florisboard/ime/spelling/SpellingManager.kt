@@ -156,8 +156,11 @@ class SpellingManager private constructor(
     }
 
     fun indexSpellingDicts(): Boolean {
+        val context = applicationContext.get() ?: return false
         indexedSpellingDictMetas.clear()
-        return assetManager.listExtensions<SpellingDict.Meta>(FlorisRef.internal(config.basePath)).fold(
+        val ref = FlorisRef.internal(config.basePath)
+        File(ref.absolutePath(context)).mkdirs()
+        return assetManager.listExtensions<SpellingDict.Meta>(ref).fold(
             onSuccess = { map ->
                 indexedSpellingDictMetas.putAll(map)
                 true
