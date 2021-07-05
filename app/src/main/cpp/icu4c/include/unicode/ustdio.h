@@ -51,7 +51,7 @@
     wastes a lot of time and space.
  * Test stdin and stdout with the u_f* functions
  * Testing should be done for reading and writing multi-byte encodings,
-    and make sure that a character that is contained across buffer boundries
+    and make sure that a character that is contained across buffer boundaries
     works even for incomplete characters.
  * Make sure that the last character is flushed when the file/string is closed.
  * snprintf should follow the C99 standard for the return value, which is
