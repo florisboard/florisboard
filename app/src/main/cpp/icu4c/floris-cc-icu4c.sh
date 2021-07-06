@@ -11,4 +11,5 @@
     --build-dir=./build \
     --icu-src-dir=./android/icu/icu4c \
     --install-include-dir=./include \
-    --install-libs-dir=./../../jniLibs
+    --install-libs-dir=./../../jniLibs \
+    --data-filter-file=./data-feature-filter.json

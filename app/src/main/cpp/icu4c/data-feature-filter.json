@@ -1,0 +1,14 @@
+{
+  "strategy": "subtractive",
+  "featureFilters": {
+    "confusables":{ "filterType": "exclude" },
+    "curr_supplemental": { "filterType": "exclude" },
+    "curr_tree": { "filterType": "exclude" },
+    "region_tree": { "filterType": "exclude" },
+    "rbnf_tree": { "filterType": "exclude" },
+    "stringprep": { "filterType": "exclude" },
+    "unit_tree": { "filterType": "exclude" },
+    "zone_supplemental": { "filterType": "exclude" },
+    "zone_tree":{ "filterType": "exclude" }
+  }
+}
