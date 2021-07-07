@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard
 
 import android.app.Application
-import android.util.Log
 import dev.patrickgold.florisboard.crashutility.CrashUtility
 import dev.patrickgold.florisboard.debug.Flog
 import dev.patrickgold.florisboard.debug.LogTopic
@@ -29,7 +28,6 @@ import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.FlorisRef
 import timber.log.Timber
-import java.util.*
 
 @Suppress("unused")
 class FlorisApplication : Application() {
@@ -45,12 +43,6 @@ class FlorisApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         try {
-            for (locale in Locale.getAvailableLocales()) {
-                Log.d(
-                    "LOCALES",
-                    locale.getLanguage().toString() + "_" + locale.getCountry() + " [" + locale.getDisplayName() + "]"
-                )
-            }
             if (BuildConfig.DEBUG) {
                 Timber.plant(Timber.DebugTree())
             }
