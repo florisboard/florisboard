@@ -33,11 +33,13 @@ import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.util.initItems
 import dev.patrickgold.florisboard.util.setOnSelectedListener
 
-class ImportDictionaryFragment : BottomSheetDialogFragment() {
+class ImportDictionaryFragment(private val isArchive: Boolean) : BottomSheetDialogFragment() {
     private val assetManager get() = AssetManager.default()
     private val spellingManager get() = SpellingManager.default()
     private lateinit var binding: SpellingSheetImportDictionaryBinding
     private var selectedImportSource: SpellingConfig.ImportSource? = null
+    private var selectedAffUri: Uri? = null
+    private var selectedDicUri: Uri? = null
 
     private var importDict = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         // If uri is null it indicates that the selection activity was cancelled (mostly by pressing the back button),
@@ -66,11 +68,6 @@ class ImportDictionaryFragment : BottomSheetDialogFragment() {
                     SpellingManager.DIC_EXT,
                     config.dicFile
                 )
-                binding.s3VerifyHyph.text = resources.getString(
-                    R.string.settings__spelling__import_dict_s3__verify_files_any,
-                    SpellingManager.HYPH_EXT,
-                    config.hyphFile
-                )
                 binding.s3VerifyReadme.text = resources.getString(
                     R.string.settings__spelling__import_dict_s3__verify_files_readme,
                     config.readmeFile
@@ -92,6 +89,64 @@ class ImportDictionaryFragment : BottomSheetDialogFragment() {
         }
     }
 
+    private var importAff = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        // If uri is null it indicates that the selection activity was cancelled (mostly by pressing the back button),
+        // so we don't display an error message here.
+        if (uri == null) return@registerForActivityResult
+        selectedAffUri = uri
+        binding.s2SelectedAffPath.text = uri.toString()
+    }
+
+    private var importDic = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        // If uri is null it indicates that the selection activity was cancelled (mostly by pressing the back button),
+        // so we don't display an error message here.
+        if (uri == null) return@registerForActivityResult
+        selectedDicUri = uri
+        binding.s2SelectedDicPath.text = uri.toString()
+        if (selectedAffUri != null) {
+            ViewUtils.setEnabled(binding.s3Group, true)
+            spellingManager.prepareImportRaw(selectedAffUri!!, selectedDicUri!!, "el_GR").onSuccess { preprocessed ->
+                with(preprocessed) {
+                    binding.s3VerifyLocale.text = resources.getString(
+                        R.string.settings__spelling__import_dict_s3__verify_files_locale,
+                        config.locale
+                    )
+                    binding.s3VerifyOriginal.text = resources.getString(
+                        R.string.settings__spelling__import_dict_s3__verify_files_original,
+                        config.originalSourceId
+                    )
+                    binding.s3VerifyAff.text = resources.getString(
+                        R.string.settings__spelling__import_dict_s3__verify_files_any,
+                        SpellingManager.AFF_EXT,
+                        config.affFile
+                    )
+                    binding.s3VerifyDic.text = resources.getString(
+                        R.string.settings__spelling__import_dict_s3__verify_files_any,
+                        SpellingManager.DIC_EXT,
+                        config.dicFile
+                    )
+                    binding.s3VerifyReadme.text = resources.getString(
+                        R.string.settings__spelling__import_dict_s3__verify_files_readme,
+                        config.readmeFile
+                    )
+                    binding.s3VerifyLicense.text = resources.getString(
+                        R.string.settings__spelling__import_dict_s3__verify_files_license,
+                        config.licenseFile
+                    )
+                }
+                binding.s3CompleteBtn.setOnClickListener {
+                    assetManager.writeExtension(preprocessed).onFailure { error ->
+                        (activity as? FlorisActivity<*>)?.showErrorDialog(error)
+                    }
+                    dismiss()
+                    ((activity as? FlorisActivity<*>)?.supportFragmentManager?.findFragmentByTag(ManageDictionariesFragment::class.qualifiedName) as? ManageDictionariesFragment)?.buildUi()
+                }
+            }.onFailure { error ->
+                (activity as? FlorisActivity<*>)?.showErrorDialog(error)
+            }
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SpellingSheetImportDictionaryBinding.inflate(inflater, container, false)
 
@@ -99,21 +154,38 @@ class ImportDictionaryFragment : BottomSheetDialogFragment() {
         ViewUtils.setEnabled(binding.s2Group, true)
         ViewUtils.setEnabled(binding.s3Group, true)
 
-        binding.s1SourceSpinner.initItems(spellingManager.importSourceLabels)
-        binding.s1SourceSpinner.setOnSelectedListener { n ->
-            if (n <= 0 || n > spellingManager.importSourceLabels.size) {
-                selectedImportSource = null
-                ViewUtils.setEnabled(binding.s2Group, false)
-                ViewUtils.setEnabled(binding.s3Group, false)
-            } else {
-                selectedImportSource = spellingManager.config.importSources[n - 1]
-                ViewUtils.setEnabled(binding.s2Group, true)
-                ViewUtils.setEnabled(binding.s3Group, false)
+        if (isArchive) {
+            binding.s1SourceSpinner.initItems(spellingManager.importSourceLabels)
+            binding.s1SourceSpinner.setOnSelectedListener { n ->
+                if (n <= 0 || n > spellingManager.importSourceLabels.size) {
+                    selectedImportSource = null
+                    ViewUtils.setEnabled(binding.s2Group, false)
+                    ViewUtils.setEnabled(binding.s3Group, false)
+                } else {
+                    selectedImportSource = spellingManager.config.importSources[n - 1]
+                    ViewUtils.setEnabled(binding.s2Group, true)
+                    ViewUtils.setEnabled(binding.s3Group, false)
+                }
             }
+            ViewUtils.setVisible(binding.s2SelectAffBtn, false)
+            ViewUtils.setVisible(binding.s2SelectDicBtn, false)
+        } else {
+            ViewUtils.setVisible(binding.s1Group, false)
+            ViewUtils.setVisible(binding.s2SelectFileBtn, false)
+            ViewUtils.setEnabled(binding.s2Group, true)
+            ViewUtils.setEnabled(binding.s3Group, false)
         }
 
         binding.s2SelectFileBtn.setOnClickListener {
             importDict.launch("*/*")
+        }
+
+        binding.s2SelectAffBtn.setOnClickListener {
+            importAff.launch("*/*")
+        }
+
+        binding.s2SelectDicBtn.setOnClickListener {
+            importDic.launch("*/*")
         }
 
         return binding.root

@@ -45,7 +45,9 @@ class SpellingManager private constructor(
     companion object {
         private var defaultInstance: SpellingManager? = null
 
-        private const val IMPORT_ARCHIVE_MAX_SIZE: Int = 16_777_220 // 16 MiB
+        private const val SOURCE_ID_RAW: String = "raw"
+
+        private const val IMPORT_ARCHIVE_MAX_SIZE: Int = 19_073_490 // 20 MB
         private const val IMPORT_ARCHIVE_TEMP_NAME: String = "__temp000__ime_spelling_import_archive"
         private const val IMPORT_NEW_DICT_TEMP_NAME: String = "__temp000__ime_spelling_import_new_dict"
 
@@ -65,9 +67,8 @@ class SpellingManager private constructor(
         private const val FREE_OFFICE_DICT_INI_FILE_NAME_BASE = "FileNameBase="
         private const val FREE_OFFICE_DICT_INI_SUPPORTED_LOCALES = "SupportedLocales="
 
-        const val AFF_EXT: String = "AFF"
-        const val DIC_EXT: String = "DIC"
-        const val HYPH_EXT: String = "HYPH"
+        const val AFF_EXT: String = "aff"
+        const val DIC_EXT: String = "dic"
 
         private val STUB_LISTENER = object : SpellCheckerSession.SpellCheckerSessionListener {
             override fun onGetSuggestions(results: Array<out SuggestionsInfo>?) {
@@ -302,6 +303,31 @@ class SpellingManager private constructor(
                 }
             }
             else -> Result.failure(NotImplementedError())
+        }
+    }
+
+    fun prepareImportRaw(affUri: Uri, dicUri: Uri, localeStr: String): Result<Extension<SpellingDict.Meta>> {
+        val context = applicationContext.get() ?: return Result.failure(Exception("Context is null"))
+
+        val tempDictDir = File(context.cacheDir, IMPORT_NEW_DICT_TEMP_NAME)
+        tempDictDir.deleteRecursively()
+        tempDictDir.mkdirs()
+        return SpellingDict.metaBuilder {
+            title = "Manually imported dictionary"
+            locale = LocaleUtils.stringToLocale(localeStr)
+            originalSourceId = SOURCE_ID_RAW
+            affFile = "$localeStr.$AFF_EXT"
+            val affFileHandle = File(tempDictDir, affFile)
+            ExternalContentUtils.readFromUri(context, affUri, IMPORT_ARCHIVE_MAX_SIZE) { bis ->
+                affFileHandle.outputStream().use { os -> bis.copyTo(os) }
+            }.onFailure { return Result.failure(it) }
+            dicFile = "$localeStr.$DIC_EXT"
+            val dicFileHandle = File(tempDictDir, dicFile)
+            ExternalContentUtils.readFromUri(context, dicUri, IMPORT_ARCHIVE_MAX_SIZE) { bis ->
+                dicFileHandle.outputStream().use { os -> bis.copyTo(os) }
+            }.onFailure { return Result.failure(it) }
+            val meta = build().getOrElse { return@metaBuilder Result.failure(it) }
+            Result.success(Extension(meta, tempDictDir, File(FlorisRef.internal(config.basePath).subRef("${meta.id}.flex").absolutePath(context))))
         }
     }
 

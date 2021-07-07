@@ -97,7 +97,6 @@ value class SpellingDict private constructor(
         val originalSourceId: String,
         val affFile: String,
         val dicFile: String,
-        val hyphFile: String? = null,
     ) : ExtensionConfig
 
     data class MetaBuilder(
@@ -107,7 +106,6 @@ value class SpellingDict private constructor(
         var originalSourceId: String? = null,
         var affFile: String? = null,
         var dicFile: String? = null,
-        var hyphFile: String? = null,
         var readmeFile: String? = null,
         var licenseFile: String? = null
     ) {
@@ -134,7 +132,6 @@ value class SpellingDict private constructor(
                         originalSourceId = originalSourceId!!,
                         affFile = affFile!!,
                         dicFile = dicFile!!,
-                        hyphFile = hyphFile,
                         readmeFile = readmeFile ?: "",
                         licenseFile = licenseFile ?: ""
                     )

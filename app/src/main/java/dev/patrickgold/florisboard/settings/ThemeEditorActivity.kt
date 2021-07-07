@@ -103,7 +103,7 @@ class ThemeEditorActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.theme_editor_menu, menu)
+        menuInflater.inflate(R.menu.help_menu, menu)
         return true
     }
 

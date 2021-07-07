@@ -65,6 +65,34 @@
             android:layout_height="48dp"
             android:text="@string/assets__action__select_file"/>
 
+        <TextView
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:id="@+id/s2_selected_aff_path"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:paddingHorizontal="8dp"/>
+
+        <Button
+            android:id="@+id/s2_select_aff_btn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/settings__spelling__import_dict_s2__select_aff"/>
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:id="@+id/s2_selected_dic_path"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:paddingHorizontal="8dp"/>
+
+        <Button
+            android:id="@+id/s2_select_dic_btn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/settings__spelling__import_dict_s2__select_dic"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -108,14 +136,6 @@
         <TextView
             style="@style/TextAppearance.AppCompat.Caption"
             android:id="@+id/s3_verify_dic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings__spelling__import_dict_s3__verify_files_any"
-            android:paddingHorizontal="8dp"/>
-
-        <TextView
-            style="@style/TextAppearance.AppCompat.Caption"
-            android:id="@+id/s3_verify_hyph"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings__spelling__import_dict_s3__verify_files_any"

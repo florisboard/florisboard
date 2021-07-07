@@ -16,7 +16,10 @@
 
 package dev.patrickgold.florisboard.settings.spelling
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import androidx.core.view.isVisible
 import dev.patrickgold.florisboard.R
@@ -36,8 +39,13 @@ class SpellingActivity : FlorisActivity<SpellingActivityBinding>() {
         supportActionBar?.setTitle(R.string.settings__spelling__title_overview)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding.fabAddImportDict.setOnClickListener {
-            ImportDictionaryFragment().apply {
+        binding.fabOptionExtensionArchive.setOnClickListener {
+            ImportDictionaryFragment(isArchive = true).apply {
+                show(supportFragmentManager, null)
+            }
+        }
+        binding.fabOptionAffixDictionary.setOnClickListener {
+            ImportDictionaryFragment(isArchive = false).apply {
                 show(supportFragmentManager, null)
             }
         }
@@ -49,10 +57,23 @@ class SpellingActivity : FlorisActivity<SpellingActivityBinding>() {
         return SpellingActivityBinding.inflate(layoutInflater)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.help_menu, menu)
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
+                true
+            }
+            R.id.settings__help -> {
+                val browserIntent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(resources.getString(R.string.florisboard__spell_checker_wiki_url))
+                )
+                startActivity(browserIntent)
                 true
             }
             else -> super.onOptionsItemSelected(item)
