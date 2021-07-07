@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.spelling
 
+import dev.patrickgold.florisboard.common.NATIVE_NULLPTR
 import dev.patrickgold.florisboard.common.NativeInstanceWrapper
 import dev.patrickgold.florisboard.common.NativePtr
 import dev.patrickgold.florisboard.common.NativeStr
@@ -38,10 +39,14 @@ value class SpellingDict private constructor(
         const val LICENSE_FILE_NAME = "LICENSE.txt"
         const val README_FILE_NAME = "README.txt"
 
-        fun new(path: String, meta: Meta): SpellingDict {
+        fun new(path: String, meta: Meta): SpellingDict? {
             val baseName = meta.affFile.removeSuffix(".aff")
             val nativePtr = nativeInitialize("$path/$baseName".toNativeStr())
-            return SpellingDict(nativePtr)
+            return if (nativePtr == NATIVE_NULLPTR) {
+                null
+            } else {
+                SpellingDict(nativePtr)
+            }
         }
 
         external fun nativeInitialize(basePath: NativeStr): NativePtr

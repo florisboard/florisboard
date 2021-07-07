@@ -15,9 +15,9 @@
  */
 
 #include <jni.h>
+#include <algorithm>
 #include "ime/spelling/spellingdict.h"
 #include "utils/jni_utils.h"
-#include <algorithm>
 
 #pragma ide diagnostic ignored "UnusedLocalVariable"
 
@@ -31,9 +31,13 @@ Java_dev_patrickgold_florisboard_ime_spelling_SpellingDict_00024Companion_native
         jobject base_path) {
     auto strBasePath = utils::j2std_string(env, base_path);
 
-    auto *spellingDict = new SpellingDict(strBasePath);
+    auto *spellingDict = SpellingDict::load(strBasePath);
 
-    return reinterpret_cast<jlong>(spellingDict);
+    if (spellingDict == nullptr) {
+        return 0L;
+    } else {
+        return reinterpret_cast<jlong>(spellingDict);
+    }
 }
 
 extern "C"

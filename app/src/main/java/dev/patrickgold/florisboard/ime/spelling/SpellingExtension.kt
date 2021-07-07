@@ -25,10 +25,10 @@ class SpellingExtension(
     flexFile: File
 ) : Extension<SpellingDict.Meta>(config, workingDir, flexFile) {
 
-    val dict: SpellingDict = SpellingDict.new(workingDir.absolutePath, config)
+    val dict: SpellingDict? = SpellingDict.new(workingDir.absolutePath, config)
 
     override fun close() {
-        dict.dispose()
+        dict?.dispose()
         super.close()
     }
 }

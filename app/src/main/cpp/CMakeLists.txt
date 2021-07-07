@@ -17,8 +17,6 @@ add_library(ICU::data STATIC IMPORTED)
 set_property(TARGET ICU::data PROPERTY IMPORTED_LOCATION "${JNI_LIBS}/libicudata.a")
 #add_library(ICU::i18n STATIC IMPORTED)
 #set_property(TARGET ICU::i18n PROPERTY IMPORTED_LOCATION "${JNI_LIBS}/libicui18n.a")
-#add_library(ICU::io STATIC IMPORTED)
-#set_property(TARGET ICU::io PROPERTY IMPORTED_LOCATION "${JNI_LIBS}/libicuio.a")
 #add_library(ICU::tu STATIC IMPORTED)
 #set_property(TARGET ICU::tu PROPERTY IMPORTED_LOCATION "${JNI_LIBS}/libicutu.a")
 add_library(ICU::uc STATIC IMPORTED)
@@ -38,7 +36,7 @@ add_library(
         dev_patrickgold_florisboard_ime_spelling_SpellingDict.cpp
 )
 
-target_compile_options(florisboard-native PRIVATE -ffunction-sections -fdata-sections)
+target_compile_options(florisboard-native PRIVATE -ffunction-sections -fdata-sections -fexceptions)
 target_link_libraries(
         # Destination
         florisboard-native

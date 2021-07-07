@@ -1,14 +1,54 @@
 {
   "strategy": "subtractive",
   "featureFilters": {
-    "confusables":{ "filterType": "exclude" },
-    "curr_supplemental": { "filterType": "exclude" },
-    "curr_tree": { "filterType": "exclude" },
-    "region_tree": { "filterType": "exclude" },
-    "rbnf_tree": { "filterType": "exclude" },
-    "stringprep": { "filterType": "exclude" },
-    "unit_tree": { "filterType": "exclude" },
-    "zone_supplemental": { "filterType": "exclude" },
-    "zone_tree":{ "filterType": "exclude" }
+    "coll_tree": {
+      "excludelist": [
+        "en_US_POSIX"
+      ]
+    },
+    "confusables": {
+      "filterType": "exclude"
+    },
+    "curr_supplemental": {
+      "filterType": "exclude"
+    },
+    "curr_tree": {
+      "filterType": "exclude"
+    },
+    "locales_tree": {
+      "excludelist": [
+        "en_US_POSIX"
+      ]
+    },
+    "misc": {
+      "excludelist": [
+        "currencyNumericCodes",
+        "genderList"
+      ]
+    },
+    "region_tree": {
+      "filterType": "exclude"
+    },
+    "rbnf_tree": {
+      "filterType": "exclude"
+    },
+    "stringprep": {
+      "filterType": "exclude"
+    },
+    "translit": {
+      "filterType": "exclude"
+    },
+    "unames": {
+      "filterType": "exclude"
+    },
+    "unit_tree": {
+      "filterType": "exclude"
+    },
+    "zone_supplemental": {
+      "filterType": "exclude"
+    },
+    "zone_tree": {
+      "filterType": "exclude"
+    }
   }
 }

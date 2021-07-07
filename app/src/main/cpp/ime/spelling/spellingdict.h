@@ -25,8 +25,10 @@ namespace ime::spellcheck {
 
 class SpellingDict {
 public:
-    SpellingDict(const std::string& basePath);
+    SpellingDict(const nuspell::Dictionary& dict);
     ~SpellingDict();
+
+    static SpellingDict* load(const std::string& basePath);
 
     bool spell(const std::string& word);
     std::vector<std::string> suggest(const std::string& word);
