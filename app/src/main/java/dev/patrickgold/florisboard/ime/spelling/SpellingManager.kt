@@ -47,7 +47,7 @@ class SpellingManager private constructor(
 
         private const val SOURCE_ID_RAW: String = "raw"
 
-        private const val IMPORT_ARCHIVE_MAX_SIZE: Int = 19_073_490 // 20 MB
+        private const val IMPORT_ARCHIVE_MAX_SIZE: Int = 25_165_820 // 24 MiB
         private const val IMPORT_ARCHIVE_TEMP_NAME: String = "__temp000__ime_spelling_import_archive"
         private const val IMPORT_NEW_DICT_TEMP_NAME: String = "__temp000__ime_spelling_import_new_dict"
 
