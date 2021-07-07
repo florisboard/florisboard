@@ -105,7 +105,7 @@ class ImportDictionaryFragment(private val isArchive: Boolean) : BottomSheetDial
         binding.s2SelectedDicPath.text = uri.toString()
         if (selectedAffUri != null) {
             ViewUtils.setEnabled(binding.s3Group, true)
-            spellingManager.prepareImportRaw(selectedAffUri!!, selectedDicUri!!, "el_GR").onSuccess { preprocessed ->
+            spellingManager.prepareImportRaw(selectedAffUri!!, selectedDicUri!!, binding.s11LanguageCode.text.toString()).onSuccess { preprocessed ->
                 with(preprocessed) {
                     binding.s3VerifyLocale.text = resources.getString(
                         R.string.settings__spelling__import_dict_s3__verify_files_locale,
@@ -167,6 +167,7 @@ class ImportDictionaryFragment(private val isArchive: Boolean) : BottomSheetDial
                     ViewUtils.setEnabled(binding.s3Group, false)
                 }
             }
+            ViewUtils.setVisible(binding.s11Group, false)
             ViewUtils.setVisible(binding.s2SelectAffBtn, false)
             ViewUtils.setVisible(binding.s2SelectDicBtn, false)
         } else {

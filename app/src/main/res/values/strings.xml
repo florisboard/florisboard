@@ -375,6 +375,8 @@
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Spell checker will look up entries from the user dictionaries, if these are enabled</string>
     <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Import new dictionary</string>
     <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Select source</string>
+    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Select language</string>
+    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">Language code (e.g. en_US)</string>
     <string name="settings__spelling__import_dict_s2__title" comment="Title for the import dict sheet (step 2)">Add files to be imported</string>
     <string name="settings__spelling__import_dict_s2__select_aff" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Select affix file (.aff)</string>
     <string name="settings__spelling__import_dict_s2__select_dic" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Select dictionary file (.dic)</string>

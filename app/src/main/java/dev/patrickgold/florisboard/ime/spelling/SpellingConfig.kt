@@ -58,9 +58,7 @@ data class SpellingConfig(
             @SerialName("affFile")
             val affFile: FileInput,
             @SerialName("dicFile")
-            val dicFile: FileInput,
-            @SerialName("hyphFile")
-            val hyphFile: FileInput,
+            val dicFile: FileInput
         ) : ImportFormat
     }
 

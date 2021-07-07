@@ -38,6 +38,30 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/s11_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingVertical="8dp">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings__spelling__import_dict_s11__title"
+            android:paddingHorizontal="8dp"/>
+
+        <EditText
+            android:id="@+id/s11_language_code"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:hint="@string/settings__spelling__import_dict_s11__hint"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/s2_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
