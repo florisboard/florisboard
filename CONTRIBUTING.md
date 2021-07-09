@@ -41,7 +41,7 @@ syntax (it is very easy though by just looking at some other layout files).
 There are two main steps in adding new layouts, though the config step can
 be skipped if you only add a layout without a new default language support.
 
-### The config file (`app/src/main/assets/ime/config.json`)
+### The config file ([`app/src/main/assets/ime/config.json`](app/src/main/assets/ime/config.json))
 
 This file is very important, as it defines all default currency sets as
 well as all default subtypes available in the Settings Subtype UI. Note
@@ -66,7 +66,7 @@ pre-configured language.
 
 Since v0.3.10-beta05 it is possible to add custom layouts for all types.
 
-To add a new layout, head to `app/src/main/assets/ime/text` and then select
+To add a new layout, head to [`app/src/main/assets/ime/text`](app/src/main/assets/ime/text) and then select
 the correct sub-directory for the type of layout you want to add. In most cases
 this will be `characters` to add a layout like QWERTY etc.
 
@@ -74,14 +74,14 @@ For the `code` field of each key, make sure to use the UTF-8 code. An
 useful tool for finding the correct code is [unicode-table.com](https://unicode-table.com/en/).
 From there, you search for your letter and then use the HTML code, but without the `&#;`
 For internal codes of functional or UI keys, see
-`app/src/main/java/dev/patrickgold/florisboard/ime/text/key/KeyCode.kt`.
+[`app/src/main/java/dev/patrickgold/florisboard/ime/text/key/KeyCode.kt`](app/src/main/java/dev/patrickgold/florisboard/ime/text/key/KeyCode.kt).
 
 The label is equally important and should always match up with the defined
 code. If `code` and `label` don't match up, FlorisBoard won't crash but
 it will most likely lead to confusion in the key processing logic.
 
 Any accents or diacritics that should be exposed via long press can be
-added at `assets/ime/text/characters/extended_popups/<languageTag_name_here>.json`.
+added at [`app/src/main/assets/ime/text/characters/extended_popups/<languageTag_name_here>.json`](app/src/main/assets/ime/text/characters/extended_popups).
 For each key, you can add 1 main and several relevant accents. The main
 accent should be used for accents which are important for the language
 you add. The main field is used for determining if a hint or an accent
