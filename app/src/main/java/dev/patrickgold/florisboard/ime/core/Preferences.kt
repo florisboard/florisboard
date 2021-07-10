@@ -299,7 +299,6 @@ class Preferences(
             const val TRAIL_DURATION =              "glide__trail_fade_duration"
             const val SHOW_PREVIEW =                "glide__show_preview"
             const val PREVIEW_REFRESH_DELAY =       "glide__preview_refresh_delay"
-            const val MAX_TRAIL_LENGTH  =           "glide__trail_max_length"
         }
 
         var enabled: Boolean
@@ -317,9 +316,6 @@ class Preferences(
         var previewRefreshDelay: Int
             get() = prefs.getPref(PREVIEW_REFRESH_DELAY, 150)
             set(v) = prefs.setPref(PREVIEW_REFRESH_DELAY, v)
-        var trailMaxLength: Int
-            get() = prefs.getPref(MAX_TRAIL_LENGTH, 150)
-            set(v) = prefs.setPref(MAX_TRAIL_LENGTH, v)
     }
 
     /**

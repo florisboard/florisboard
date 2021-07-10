@@ -3,17 +3,17 @@ package dev.patrickgold.florisboard.ime.clip
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
-import android.os.Handler
-import android.os.Looper
 import dev.patrickgold.florisboard.ime.clip.provider.*
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.Preferences
-import dev.patrickgold.florisboard.util.cancelAll
-import dev.patrickgold.florisboard.util.postAtScheduledRate
-import timber.log.Timber
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.Closeable
 import java.util.*
-import java.util.concurrent.ExecutorService
 import kotlin.collections.ArrayDeque
 
 /**
@@ -37,9 +37,9 @@ import kotlin.collections.ArrayDeque
  *
  * [ClipboardPopupView] is the view representing a popup displayed when long pressing on a clipboard history item.
  */
-class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryClipChangedListener, Closeable {
+class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryClipChangedListener, Closeable,
+    CoroutineScope by MainScope() {
     private lateinit var pinsDao: PinnedClipboardItemDao
-    lateinit var executor: ExecutorService
 
     // Using ArrayDeque because it's "technically" the correct data structure (I think).
     // Newest stored first, oldest stored last.
@@ -48,8 +48,8 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     private var current: ClipboardItem? = null
     private var onPrimaryClipChangedListeners: ArrayList<OnPrimaryClipChangedListener> = arrayListOf()
     private lateinit var systemClipboardManager: ClipboardManager
-    private lateinit var handler: Handler
     private val prefs get() = Preferences.default()
+    private lateinit var cleanUpJob: Job
 
     data class TimedClipData(val data: ClipboardItem, val timeUTC: Long)
 
@@ -218,7 +218,8 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         val systemPrimaryClip = systemClipboardManager.primaryClip
 
         if (systemPrimaryClip?.getItemAt(0)?.text == null &&
-            systemPrimaryClip?.getItemAt(0)?.uri == null) {
+            systemPrimaryClip?.getItemAt(0)?.uri == null
+        ) {
             return
         }
 
@@ -254,7 +255,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      */
     override fun close() {
         systemClipboardManager.removePrimaryClipChangedListener(this)
-        handler.cancelAll()
+        cleanUpJob.cancel()
         instance = null
     }
 
@@ -291,13 +292,17 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
             ClipboardInputManager.getInstance().notifyItemRangeRemoved(pins.size + history.size, numToPop)
         }
         FlorisBoard.getInstance().clipInputManager.initClipboard(this.history, this.pins)
-        handler = Handler(Looper.getMainLooper())
         prefs
-        handler.postAtScheduledRate(0, INTERVAL, cleanUpClipboard)
-        executor = FlorisBoard.getInstance().asyncExecutor
-        executor.execute {
+        cleanUpJob = launch(Dispatchers.Main) {
+
+            while (true) {
+                cleanUpClipboard.run()
+                delay(INTERVAL)
+            }
+        }
+        launch(Dispatchers.IO) {
             pinsDao = PinnedItemsDatabase.getInstance().clipboardItemDao()
-            pinsDao.getAll().toCollection(this.pins)
+            pinsDao.getAll().toCollection(pins)
             FlorisContentProvider.getInstance().initIfNotAlready()
         }
     }
@@ -307,16 +312,17 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      */
     fun clearHistoryWithAnimation() {
         val clipInputManager = FlorisBoard.getInstance().clipInputManager
-        val delay = clipInputManager.clearClipboardWithAnimation(pins.size, history.size)
+        val animationDelay = clipInputManager.clearClipboardWithAnimation(pins.size, history.size)
 
-        handler.postDelayed({
+        launch(Dispatchers.Main) {
+            delay(animationDelay)
             val size = history.size
             for (item in history) {
                 item.data.close()
             }
             history.clear()
             clipInputManager.notifyItemRangeRemoved(pins.size, size)
-        }, delay)
+        }
     }
 
     fun pinClip(adapterPos: Int) {
@@ -326,7 +332,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         clipInputManager.notifyItemMoved(adapterPos, 0)
         clipInputManager.notifyItemChanged(0)
 
-        executor.execute {
+        launch(Dispatchers.IO) {
             val uid = pinsDao.insert(pin.data)
             pin.data.uid = uid
         }
@@ -369,7 +375,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         clipInputManager.notifyItemMoved(adapterPos, pins.size)
         clipInputManager.notifyItemChanged(pins.size)
 
-        executor.execute {
+        launch(Dispatchers.IO) {
             pinsDao.delete(item)
         }
     }
@@ -386,8 +392,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         when {
             pos < pins.size -> {
                 val item = pins.removeAt(pos)
-                executor.execute {
-                    Timber.d("removing pin")
+                launch(Dispatchers.IO) {
                     pinsDao.delete(item)
                 }
                 item.close()
@@ -416,7 +421,9 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
             clipItem.mimeTypes.any { clipType ->
                 if (editorType != null) {
                     compareMimeTypes(clipType, editorType)
-                }else { false }
+                } else {
+                    false
+                }
             }
         } == true
     }

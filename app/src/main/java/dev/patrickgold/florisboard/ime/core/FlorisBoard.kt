@@ -91,8 +91,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import java.lang.ref.WeakReference
 import java.util.concurrent.CopyOnWriteArrayList
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 /**
  * Variable which holds the current [FlorisBoard] instance. To get this instance from another
@@ -184,8 +182,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         }
     }
 
-    lateinit var asyncExecutor: ExecutorService
-
     companion object {
         @Synchronized
         fun getInstance(): FlorisBoard {
@@ -236,7 +232,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
 
                 AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
 
-                asyncExecutor = Executors.newSingleThreadExecutor()
                 florisClipboardManager = FlorisClipboardManager.getInstance().also {
                     it.initialize(this)
                     it.addPrimaryClipChangedListener(this)

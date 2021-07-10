@@ -9,6 +9,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import java.text.Normalizer
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.collections.HashMap
 import kotlin.math.*
 
@@ -328,13 +329,18 @@ class StatisticalGlideTypingClassifier : GlideTypingClassifier {
             for (word in words) {
                 val idealGestures = Gesture.generateIdealGestures(word, keysByCharacter)
                 for (idealGesture in idealGestures) {
-                    val wordIdealLength = idealGesture.getLength()
+                    val wordIdealLength = getCachedIdealLength(word, idealGesture)
                     if (abs(userLength - wordIdealLength) < lengthThreshold * radius) {
                         remainingWords.add(word)
                     }
                 }
             }
             return remainingWords
+        }
+
+        val cachedIdealLength = ConcurrentHashMap<String, Float>()
+        private fun getCachedIdealLength(word: String, idealGesture: Gesture): Float {
+            return cachedIdealLength.getOrPut(word, { idealGesture.getLength() })
         }
 
         companion object {
