@@ -12,4 +12,8 @@
     --icu-src-dir=./android/icu/icu4c \
     --install-include-dir=./include \
     --install-libs-dir=./../../jniLibs \
-    --data-filter-file=./data-feature-filter.json
+    --data-filter-file=./data-feature-filter.json \
+    --enable-collation=no \
+    --enable-formatting=no \
+    --enable-regex=no \
+    --enable-transliteration=no

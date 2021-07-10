@@ -1,10 +1,11 @@
 {
   "strategy": "subtractive",
   "featureFilters": {
+    "coll_ucadata": {
+      "filterType": "exclude"
+    },
     "coll_tree": {
-      "excludelist": [
-        "en_US_POSIX"
-      ]
+      "filterType": "exclude"
     },
     "confusables": {
       "filterType": "exclude"
