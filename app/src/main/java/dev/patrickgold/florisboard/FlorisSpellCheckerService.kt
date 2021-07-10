@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard
 
 import android.service.textservice.SpellCheckerService
+import android.util.LruCache
 import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextInfo
 import dev.patrickgold.florisboard.debug.LogTopic
@@ -28,6 +29,8 @@ import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingDict
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import java.util.*
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 class FlorisSpellCheckerService : SpellCheckerService() {
     private val dictionaryManager get() = DictionaryManager.default()
@@ -51,11 +54,28 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         super.onDestroy()
     }
 
-    class FlorisSpellCheckerSession : Session() {
+    private class SuggestionsCache(size: Int) {
+        val suggestionsInfoCache: LruCache<String, SuggestionsInfo> = LruCache(size)
+
+        inline fun getOrGenerate(word: String, generator: (w: String) -> SuggestionsInfo): SuggestionsInfo {
+            contract {
+                callsInPlace(generator, InvocationKind.AT_MOST_ONCE)
+            }
+            val cachedSuggestionsInfo = suggestionsInfoCache.get(word)
+            if (cachedSuggestionsInfo != null) {
+                return cachedSuggestionsInfo
+            }
+            val newSuggestionsInfo = generator(word)
+            suggestionsInfoCache.put(word, newSuggestionsInfo)
+            return newSuggestionsInfo
+        }
+    }
+
+    private class FlorisSpellCheckerSession : Session() {
         companion object {
             private const val USE_FLORIS_SUBTYPES_LOCALE: String = "zz"
+            private const val SUGGESTIONS_MAX_SIZE = 50
 
-            private val DEFAULT_SUGGESTIONS_INFO = SuggestionsInfo(0, arrayOf())
             private val EMPTY_STRING_ARRAY: Array<out String> = arrayOf()
         }
 
@@ -66,6 +86,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
 
         private var spellingDict: SpellingDict? = null
         private lateinit var spellingLocale: Locale
+        private val suggestionsCache = SuggestionsCache(SUGGESTIONS_MAX_SIZE)
 
         override fun onCreate() {
             flogInfo(LogTopic.SPELL_EVENTS) { "Session locale: $locale" }
@@ -82,22 +103,24 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         override fun onGetSuggestions(textInfo: TextInfo?, suggestionsLimit: Int): SuggestionsInfo {
             flogInfo(LogTopic.SPELL_EVENTS) { "text=${textInfo?.text}, limit=$suggestionsLimit"}
 
-            val spellingDict = spellingDict ?: return DEFAULT_SUGGESTIONS_INFO
+            val spellingDict = spellingDict ?: return SuggestionsInfo(0, EMPTY_STRING_ARRAY)
+            val word = textInfo?.text ?: return SuggestionsInfo(0, EMPTY_STRING_ARRAY)
 
-            val word = textInfo?.text ?: return DEFAULT_SUGGESTIONS_INFO
-            var isWordOk = false
-            if (prefs.spelling.useUdmEntries) {
-                isWordOk = dictionaryManager.spell(word, spellingLocale)
-            }
-            return if (isWordOk) {
-                SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_IN_THE_DICTIONARY, EMPTY_STRING_ARRAY)
-            } else {
-                isWordOk = spellingDict.spell(word)
-                if (isWordOk) {
+            return suggestionsCache.getOrGenerate(word) {
+                var isWordOk = false
+                if (prefs.spelling.useUdmEntries) {
+                    isWordOk = dictionaryManager.spell(word, spellingLocale)
+                }
+                return@getOrGenerate if (isWordOk) {
                     SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_IN_THE_DICTIONARY, EMPTY_STRING_ARRAY)
                 } else {
-                    val suggestions = spellingDict.suggest(word, suggestionsLimit)
-                    SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO, suggestions)
+                    isWordOk = spellingDict.spell(word)
+                    if (isWordOk) {
+                        SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_IN_THE_DICTIONARY, EMPTY_STRING_ARRAY)
+                    } else {
+                        val suggestions = spellingDict.suggest(word, suggestionsLimit)
+                        SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO, suggestions)
+                    }
                 }
             }
         }
