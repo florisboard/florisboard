@@ -184,6 +184,7 @@ class Preferences(
         companion object {
             const val AUTO_CAPITALIZATION =         "correction__auto_capitalization"
             const val DOUBLE_SPACE_PERIOD =         "correction__double_space_period"
+            const val MANAGE_SPELL_CHECKER =        "correction__manage_spell_checker"
             const val REMEMBER_CAPS_LOCK_STATE =    "correction__remember_caps_lock_state"
         }
 

@@ -255,6 +255,8 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Manage internal user dictionary</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Add, view, and remove entries for the internal user dictionary</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
+    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">Spell checker</string>
+    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">Manage and configure the spell checker service</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalization</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalize words based on the current input context</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Remember caps lock state</string>

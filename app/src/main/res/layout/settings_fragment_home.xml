@@ -50,6 +50,18 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/spelling_card"
+        style="@style/SettingsCardView.Clickable">
+
+        <!-- TODO: remove this card when spelling is out of experimental -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This version contains experimental support for a system spell checker service provided by FlorisBoard. You can try it out by going to Typing > Group Correction > Spell checker.\n\nNote: the spell checker currently only marks incorrect words and provides possible corrections within the text field, including those correction suggestions within the Smartbar is planned but not yet implemented!"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/repo_url_card"
         style="@style/SettingsCardView.Clickable">
 
@@ -81,18 +93,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Theme prefs -->"/>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/spelling_card"
-        style="@style/SettingsCardView.Clickable">
-
-        <!-- TODO: create theme preview and make nice feature graphic for this card -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Spelling prefs -->"/>
 
     </androidx.cardview.widget.CardView>
 
