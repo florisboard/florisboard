@@ -13,7 +13,7 @@
       { "$": "auto_text_key", "code":  116, "label": "t" },
       { "$": "auto_text_key", "code":  121, "label": "y" },
       { "$": "auto_text_key", "code":  117, "label": "u" },
-      { "$": "auto_text_key", "code":  305, "label": "ı" },
+      { "$": "auto_text_key", "code":  105, "label": "i" },
       { "$": "auto_text_key", "code":  111, "label": "o" },
       { "$": "auto_text_key", "code":  112, "label": "p" },
       { "$": "auto_text_key", "code":  251, "label": "û" }
