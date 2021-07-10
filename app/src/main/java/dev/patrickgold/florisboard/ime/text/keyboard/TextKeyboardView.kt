@@ -862,15 +862,17 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
     }
 
     private fun layoutRenderView(rv: TextKeyView, key: TextKey, isBorderless: Boolean) {
+        val shouldReduceSize = isBorderless &&
+            (key.computedData.code == KeyCode.SPACE || key.computedData.code == KeyCode.ENTER)
         rv.layout(
             key.visibleBounds.left,
-            if (isBorderless) {
+            if (shouldReduceSize) {
                 (key.visibleBounds.top + key.visibleBounds.height() * 0.12).toInt()
             } else {
                 key.visibleBounds.top
             },
             key.visibleBounds.right,
-            if (isBorderless) {
+            if (shouldReduceSize) {
                 (key.visibleBounds.bottom - key.visibleBounds.height() * 0.12).toInt()
             } else {
                 key.visibleBounds.bottom
