@@ -179,8 +179,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
             textInputManager = TextInputManager.getInstance()
             mediaInputManager = MediaInputManager.getInstance()
             clipInputManager = ClipboardInputManager.getInstance()
-
-            System.loadLibrary("florisboard-native")
         } catch (e: Exception) {
             CrashUtility.stageException(e)
         }
@@ -228,7 +226,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
                 imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
                 audioManager = getSystemService(Context.AUDIO_SERVICE) as? AudioManager
                 vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
-                prefs.sync()
+                prefs.syncSystemSettings()
                 activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
 
                 currentThemeIsNight = themeManager.activeTheme.isNightTheme
@@ -383,7 +381,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         flogInfo(LogTopic.IMS_EVENTS) { info?.debugSummarize() ?: "" }
 
         super.onStartInputView(info, restarting)
-        prefs.sync()
         if (info != null) {
             activeState.update(info)
             activeState.isSelectionMode = (info.initialSelEnd - info.initialSelStart) != 0
@@ -498,7 +495,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         }
         isWindowShown = true
 
-        prefs.sync()
+        prefs.syncSystemSettings()
         val newActiveSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
         if (newActiveSubtype != activeSubtype) {
             activeSubtype = newActiveSubtype

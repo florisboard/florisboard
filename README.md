@@ -203,21 +203,12 @@ to get more information on this topic.
   [JakeWharton](https://github.com/JakeWharton)
 * [expandable-fab](https://github.com/nambicompany/expandable-fab) by
   [Nambi](https://github.com/nambicompany)
-
-## Usage notes for included binary dictionary files
-All binary dictionaries included within this project in
-(this)[app/src/main/assets/ime/dict] asset folder are built from various
-sources, as stated below.
-
-### Source 1: [wordfreq library by LuminosoInsight](https://github.com/LuminosoInsight/wordfreq):
-`wordfreq` is a repository which provides both a Python library and raw
-data (the wordlists). Only the data has been extracted in order to build
-binary dictionary files from it. `wordfreq`'s data is licensed under the
-Creative Commons Attribution-ShareAlike 4.0 license
-(https://creativecommons.org/licenses/by-sa/4.0/).
-
-For further information on what wordfreq's data depends on, see
-(https://github.com/LuminosoInsight/wordfreq#license).
+* [ICU4C](https://github.com/unicode-org/icu) by
+  [The Unicode Consortium](https://github.com/unicode-org)
+* [Nuspell](https://github.com/nuspell/nuspell) by
+  [Nuspell](https://github.com/nuspell)
+* [TokyoCabinet (only used glob.h and glob.c)](https://github.com/white-gecko/TokyoCabinet) by
+  [Natanael Arndt](https://github.com/white-gecko)
 
 ## License
 ```

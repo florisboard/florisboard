@@ -33,7 +33,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
-import dev.patrickgold.florisboard.ime.extension.ExternalContentUtils
+import dev.patrickgold.florisboard.res.ExternalContentUtils
 import dev.patrickgold.florisboard.util.LocaleUtils
 import java.lang.ref.WeakReference
 import java.util.*
@@ -109,6 +109,9 @@ interface UserDictionaryDao {
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word AND (${UserDictionary.Words.LOCALE} = :locale OR (${UserDictionary.Words.LOCALE} IS NULL AND :locale IS NULL))")
     fun queryExact(word: String, locale: Locale?): List<UserDictionaryEntry>
 
+    @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word AND $LOCALE_MATCHES")
+    fun queryExactFuzzyLocale(word: String, locale: Locale?): List<UserDictionaryEntry>
+
     @Query("SELECT DISTINCT ${UserDictionary.Words.LOCALE} FROM $WORDS_TABLE")
     fun queryLanguageList(): List<Locale?>
 
@@ -131,7 +134,7 @@ interface UserDictionaryDatabase {
     fun reset()
 
     fun importCombinedList(context: Context, uri: Uri): Result<Unit> {
-        return ExternalContentUtils.readFromUri(context, uri,6_192_000) { src ->
+        return ExternalContentUtils.readTextFromUri(context, uri,6_192_000) { src ->
             var isFirstLine = true
             src.forEachLine { line ->
                 if (isFirstLine) {
@@ -176,7 +179,7 @@ interface UserDictionaryDatabase {
     }
 
     fun exportCombinedList(context: Context, uri: Uri): Result<Unit> {
-        return ExternalContentUtils.writeToUri(context, uri) { dst ->
+        return ExternalContentUtils.writeTextToUri(context, uri) { dst ->
             StringBuilder().apply {
                 append("dictionary=")
                 append(uri.lastPathSegment)
@@ -333,7 +336,23 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
                 )
             } else {
                 queryResolver(
-                    selection = "${UserDictionary.Words.WORD} LIKE ? AND ${UserDictionary.Words.LOCALE} = ?",
+                    selection = "${UserDictionary.Words.WORD} = ? AND ${UserDictionary.Words.LOCALE} = ?",
+                    selectionArgs = arrayOf(word, locale.toString()),
+                    sortOrder = SORT_BY_FREQ_DESC,
+                )
+            }
+        }
+
+        override fun queryExactFuzzyLocale(word: String, locale: Locale?): List<UserDictionaryEntry> {
+            return if (locale == null) {
+                queryResolver(
+                    selection = "${UserDictionary.Words.WORD} = ? AND ${UserDictionary.Words.LOCALE} IS NULL",
+                    selectionArgs = arrayOf(word),
+                    sortOrder = SORT_BY_FREQ_DESC,
+                )
+            } else {
+                queryResolver(
+                    selection = "${UserDictionary.Words.WORD} = ? AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
                     selectionArgs = arrayOf(word, locale.toString()),
                     sortOrder = SORT_BY_FREQ_DESC,
                 )

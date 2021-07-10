@@ -46,7 +46,6 @@ class SetupActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         prefs = Preferences(this)
-        prefs.initDefaultPreferences()
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
         val mode = when (prefs.advanced.settingsTheme) {

@@ -14,13 +14,10 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalContracts::class)
-
 package dev.patrickgold.florisboard.ime.keyboard
 
 import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 

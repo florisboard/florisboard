@@ -1,14 +1,15 @@
 
 plugins {
     id("com.android.application") version "4.2.1"
-    kotlin("android") version "1.5.0"
-    kotlin("kapt") version "1.5.0"
-    kotlin("plugin.serialization") version "1.5.0"
+    kotlin("android") version "1.5.20"
+    kotlin("kapt") version "1.5.20"
+    kotlin("plugin.serialization") version "1.5.20"
 }
 
 android {
     compileSdkVersion(30)
     buildToolsVersion("30.0.3")
+    ndkVersion = "22.1.7171670"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -17,7 +18,7 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
-        freeCompilerArgs = listOf("-Xallow-result-return-type", "-Xopt-in=kotlin.RequiresOptIn")
+        freeCompilerArgs = listOf("-Xallow-result-return-type", "-Xopt-in=kotlin.RequiresOptIn", "-Xopt-in=kotlin.contracts.ExperimentalContracts")
     }
 
     defaultConfig {
@@ -41,8 +42,22 @@ android {
 
         externalNativeBuild {
             cmake {
-                cppFlags("-std=c++17", "-fexceptions", "-frtti")
+                cFlags("-fvisibility=hidden", "-DU_STATIC_IMPLEMENTATION=1")
+                cppFlags("-fvisibility=hidden", "-std=c++17", "-fexceptions", "-ffunction-sections", "-fdata-sections", "-DU_DISABLE_RENAMING=1", "-DU_STATIC_IMPLEMENTATION=1")
                 arguments("-DANDROID_STL=c++_static")
+            }
+        }
+
+        ndk {
+            //abiFilters += listOf("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
+            abiFilters += listOf("armeabi-v7a", "arm64-v8a")
+        }
+
+        sourceSets {
+            maybeCreate("main").apply {
+                jni {
+                    srcDirs("src/main/jniLibs")
+                }
             }
         }
     }
@@ -121,9 +136,11 @@ dependencies {
     implementation("androidx.room", "room-runtime", "2.2.6")
     kapt("androidx.room", "room-compiler","2.2.6")
 
-    testImplementation("junit", "junit", "4.13.1")
+    testImplementation(kotlin("test"))
+    testImplementation("androidx.test", "core", "1.3.0")
     testImplementation("org.mockito", "mockito-inline", "3.7.7")
     testImplementation("org.robolectric", "robolectric", "4.5.1")
+
     androidTestImplementation("androidx.test.ext", "junit", "1.1.2")
     androidTestImplementation("androidx.test.espresso", "espresso-core", "3.3.0")
 }

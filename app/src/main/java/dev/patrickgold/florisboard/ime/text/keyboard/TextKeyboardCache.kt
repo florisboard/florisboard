@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-@file:OptIn(ExperimentalContracts::class)
-
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import androidx.collection.SparseArrayCompat
@@ -24,7 +22,6 @@ import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.core.Subtype
 import kotlinx.coroutines.*
 import java.util.*
-import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 

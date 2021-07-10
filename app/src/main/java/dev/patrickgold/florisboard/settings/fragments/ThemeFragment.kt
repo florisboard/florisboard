@@ -84,7 +84,6 @@ class ThemeFragment : PreferenceFragmentCompat(),
     }
 
     override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
-        prefs.sync()
         key ?: return
         if (key == Preferences.Theme.MODE) {
             refreshUi()

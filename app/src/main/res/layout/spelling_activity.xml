@@ -1,0 +1,55 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:theme="@style/SettingsTheme"
+    tools:context=".settings.spelling.SpellingActivity">
+
+    <include layout="@layout/toolbar" android:id="@+id/toolbar"/>
+
+    <FrameLayout
+        android:layout_marginTop="?actionBarSize"
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.nambimobile.widgets.efab.ExpandableFabLayout
+        android:id="@+id/fab_add_import_dict"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_dodgeInsetEdges="bottom">
+
+        <com.nambimobile.widgets.efab.Overlay
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:overlay_color="?android:windowBackground"/>
+        <com.nambimobile.widgets.efab.ExpandableFab
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/fab_margin"
+            app:efab_color="?colorPrimary"
+            app:efab_icon="@drawable/ic_add"
+            app:efab_closingAnimationDurationMs="250"/>
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/fab_option_extension_archive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_color="?colorPrimaryDark"
+            app:fab_icon="@drawable/ic_file_blank"
+            app:label_text="@string/settings__spelling__fab_extension_archive"/>
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/fab_option_affix_dictionary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_color="?colorPrimaryDark"
+            app:fab_icon="@drawable/ic_file"
+            app:label_text="@string/settings__spelling__fab_affix_dictionary"/>
+
+    </com.nambimobile.widgets.efab.ExpandableFabLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

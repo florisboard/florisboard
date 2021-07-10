@@ -40,6 +40,17 @@
             <meta-data android:name="android.view.im" android:resource="@xml/method"/>
         </service>
 
+        <!-- Spellchecker service -->
+        <service
+            android:name="dev.patrickgold.florisboard.FlorisSpellCheckerService"
+            android:label="@string/floris_app_name"
+            android:permission="android.permission.BIND_TEXT_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.textservice.SpellCheckerService"/>
+            </intent-filter>
+            <meta-data android:name="android.view.textservice.scs" android:resource="@xml/spellchecker"/>
+        </service>
+
         <!-- Settings Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.settings.SettingsMainActivity"
@@ -82,6 +93,14 @@
             android:name="dev.patrickgold.florisboard.settings.ThemeEditorActivity"
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/settings__theme_editor__title"
+            android:theme="@style/SettingsTheme"/>
+
+        <!-- Spelling Activity -->
+        <activity
+            android:name="dev.patrickgold.florisboard.settings.spelling.SpellingActivity"
+            android:icon="@mipmap/floris_app_icon"
+            android:label="@string/settings__spelling__title_overview"
+            android:roundIcon="@mipmap/floris_app_icon_round"
             android:theme="@style/SettingsTheme"/>
 
         <!-- About Activity -->

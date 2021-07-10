@@ -20,9 +20,12 @@ package dev.patrickgold.florisboard.common
 import android.content.res.Resources
 import android.util.DisplayMetrics
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.core.view.children
+import androidx.core.view.isVisible
 
 /**
  * This file has been taken from the Android LatinIME project. Following modifications were done to
@@ -97,5 +100,23 @@ object ViewUtils {
      */
     fun px2dp(px: Float): Float {
         return px / (Resources.getSystem().displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+    }
+
+    fun setEnabled(view: View, v: Boolean) {
+        view.isEnabled = v
+        if (view is ViewGroup) {
+            for (childView in view.children) {
+                setEnabled(childView, v)
+            }
+        }
+    }
+
+    fun setVisible(view: View, v: Boolean) {
+        view.isVisible = v
+        if (view is ViewGroup) {
+            for (childView in view.children) {
+                setVisible(childView, v)
+            }
+        }
     }
 }

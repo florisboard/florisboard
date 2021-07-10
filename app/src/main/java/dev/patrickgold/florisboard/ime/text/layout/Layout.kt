@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.text.layout
 
-import dev.patrickgold.florisboard.ime.extension.Asset
+import dev.patrickgold.florisboard.res.Asset
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.BasicTextKeyData

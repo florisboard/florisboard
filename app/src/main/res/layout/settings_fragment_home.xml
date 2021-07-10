@@ -45,17 +45,19 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="This version includes experimental support for composing suggestions, currently regardless of your selected subtype the language is English (US). Note that currently only suggestions are displayed if at least one character of a word is typed in. Next-word suggestions are planned for the next version. If you want to give feedback on this feature, you can do so on the GitHub repository, feedback is always highly appreciated :)"/>
+            android:text="Note: Preferences tagged with [NYI] are not yet implemented and thus won\'t do anything or do some basic placeholder stuff only. Please do not file a bug report for these."/>
 
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        style="@style/SettingsCardView">
+        android:id="@+id/spelling_card"
+        style="@style/SettingsCardView.Clickable">
 
+        <!-- TODO: remove this card when spelling is out of experimental -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Note: Preferences tagged with [NYI] are not yet implemented and thus won\'t do anything or do some basic placeholder stuff only. Please do not file a bug report for these."/>
+            android:text="This version contains experimental support for a system spell checker service provided by FlorisBoard. You can try it out by going to Typing > Group Correction > Spell checker.\n\nNote: the spell checker currently only marks incorrect words and provides possible corrections within the text field, including those correction suggestions within the Smartbar is planned but not yet implemented!"/>
 
     </androidx.cardview.widget.CardView>
 

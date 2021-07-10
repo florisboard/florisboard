@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<spell-checker xmlns:android="http://schemas.android.com/apk/res/android"
+    android:label="@string/floris_app_name"
+    android:settingsActivity="dev.patrickgold.florisboard.settings.SettingsMainActivity">
+
+    <subtype
+        android:label="@string/settings__spelling__use_floris_subtypes"
+        android:subtypeLocale="zz"/>
+
+</spell-checker>

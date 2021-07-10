@@ -56,8 +56,7 @@ class SettingsMainActivity : AppCompatActivity(),
     val subtypeManager: SubtypeManager get() = SubtypeManager.default()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        prefs.initDefaultPreferences()
-        prefs.sync()
+        prefs.syncSystemSettings()
         layoutManager = LayoutManager()
 
         val mode = when (prefs.advanced.settingsTheme) {

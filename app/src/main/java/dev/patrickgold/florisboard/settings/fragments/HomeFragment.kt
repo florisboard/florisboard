@@ -25,6 +25,7 @@ import android.view.ViewGroup
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsFragmentHomeBinding
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
+import dev.patrickgold.florisboard.settings.spelling.SpellingActivity
 import dev.patrickgold.florisboard.setup.SetupActivity
 import dev.patrickgold.florisboard.util.checkIfImeIsEnabled
 import dev.patrickgold.florisboard.util.checkIfImeIsSelected
@@ -63,6 +64,9 @@ class HomeFragment : SettingsMainActivity.SettingsFragment() {
         }
         binding.themeCard.setOnClickListener {
             settingsMainActivity.binding.bottomNavigation.selectedItemId = R.id.settings__navigation__theme
+        }
+        binding.spellingCard.setOnClickListener {
+            startActivity(Intent(context, SpellingActivity::class.java))
         }
 
         return binding.root

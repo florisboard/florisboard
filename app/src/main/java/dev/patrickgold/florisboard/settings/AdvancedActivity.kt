@@ -58,7 +58,6 @@ class AdvancedActivity : AppCompatActivity(),
     }
 
     override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {
-        prefs.sync()
         if (key == Preferences.Advanced.SETTINGS_THEME) {
             setResult(RESULT_APPLY_THEME)
             finish()

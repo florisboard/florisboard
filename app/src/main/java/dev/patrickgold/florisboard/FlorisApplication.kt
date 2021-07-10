@@ -23,30 +23,47 @@ import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
-import dev.patrickgold.florisboard.ime.extension.AssetManager
+import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.res.AssetManager
+import dev.patrickgold.florisboard.res.FlorisRef
 import timber.log.Timber
 
 @Suppress("unused")
 class FlorisApplication : Application() {
+    companion object {
+        init {
+            try {
+                System.loadLibrary("florisboard-native")
+            } catch (_: Exception) {
+            }
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
+        try {
+            if (BuildConfig.DEBUG) {
+                Timber.plant(Timber.DebugTree())
+            }
+            Flog.install(
+                applicationContext = this,
+                isFloggingEnabled = BuildConfig.DEBUG,
+                flogTopics = LogTopic.ALL,
+                flogLevels = Flog.LEVEL_ALL,
+                flogOutputs = Flog.OUTPUT_CONSOLE
+            )
+            CrashUtility.install(this)
+            val prefs = Preferences.initDefault(this)
+            val assetManager = AssetManager.init(this)
+            SpellingManager.init(this, FlorisRef.assets("ime/spelling/config.json"))
+            SubtypeManager.init(this)
+            DictionaryManager.init(this)
+            ThemeManager.init(this, assetManager)
+            prefs.initDefaultPreferences()
+        } catch (e: Exception) {
+            CrashUtility.stageException(e)
+            return
         }
-        Flog.install(
-            applicationContext = this,
-            isFloggingEnabled = BuildConfig.DEBUG,
-            flogTopics = LogTopic.ALL,
-            flogLevels = Flog.LEVEL_ALL,
-            flogOutputs = Flog.OUTPUT_CONSOLE
-        )
-        CrashUtility.install(this)
-        val prefs = Preferences.initDefault(this)
-        val assetManager = AssetManager.init(this)
-        SubtypeManager.init(this)
-        DictionaryManager.init(this)
-        ThemeManager.init(this, assetManager)
-        prefs.initDefaultPreferences()
     }
 }

@@ -16,12 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.dictionary
 
-import android.content.Context
-import dev.patrickgold.florisboard.ime.extension.AssetRef
-import dev.patrickgold.florisboard.ime.extension.AssetSource
 import dev.patrickgold.florisboard.ime.nlp.*
-import java.io.InputStream
-import kotlin.jvm.Throws
 
 /**
  * Class Flictionary which takes care of loading the binary asset as well as providing words for

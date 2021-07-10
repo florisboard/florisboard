@@ -44,10 +44,6 @@ class Preferences(
 ) {
     private val applicationContext: WeakReference<Context> = WeakReference(context.applicationContext)
 
-    private val cacheBoolean: HashMap<String, Boolean> = hashMapOf()
-    private val cacheInt: HashMap<String, Int> = hashMapOf()
-    private val cacheString: HashMap<String, String> = hashMapOf()
-
     val advanced = Advanced(this)
     val clipboard = Clipboard(this)
     val correction = Correction(this)
@@ -59,50 +55,25 @@ class Preferences(
     val keyboard = Keyboard(this)
     val localization = Localization(this)
     val smartbar = Smartbar(this)
+    val spelling = Spelling(this)
     val suggestion = Suggestion(this)
     val theme = Theme(this)
 
     /**
-     * Checks the cache if an entry for [key] exists, else calls [getPrefInternal] to retrieve the
-     * value. The type is automatically derived from the given [default] value.
+     * Gets the value for given [key]. The type is automatically derived from the given [default] value.
+     *
      * @return The value for [key] or [default].
      */
     private inline fun <reified T> getPref(key: String, default: T): T {
         return when {
             false is T -> {
-                (cacheBoolean[key] ?: getPrefInternal(key, default)) as T
+                shared.getBoolean(key, default as Boolean) as T
             }
             0 is T -> {
-                (cacheInt[key] ?: getPrefInternal(key, default)) as T
+                shared.getInt(key, default as Int) as T
             }
             "" is T -> {
-                (cacheString[key] ?: getPrefInternal(key, default)) as T
-            }
-            else -> null as T
-        }
-    }
-
-    /**
-     * Fetches the value for [key] from the shared preferences, puts the value into the
-     * corresponding cache and returns it.
-     * @return The value for [key] or [default].
-     */
-    private inline fun <reified T> getPrefInternal(key: String, default: T): T {
-        return when {
-            false is T -> {
-                val value = shared.getBoolean(key, default as Boolean)
-                cacheBoolean[key] = value
-                value as T
-            }
-            0 is T -> {
-                val value = shared.getInt(key, default as Int)
-                cacheInt[key] = value
-                value as T
-            }
-            "" is T -> {
-                val value = (shared.getString(key, default as String) ?: (default as String))
-                cacheString[key] = value
-                value as T
+                (shared.getString(key, default as String) ?: (default as String)) as T
             }
             else -> null as T
         }
@@ -116,15 +87,12 @@ class Preferences(
         when {
             false is T -> {
                 shared.edit().putBoolean(key, value as Boolean).apply()
-                cacheBoolean[key] = value as Boolean
             }
             0 is T -> {
                 shared.edit().putInt(key, value as Int).apply()
-                cacheInt[key] = value as Int
             }
             "" is T -> {
                 shared.edit().putString(key, value as String).apply()
-                cacheString[key] = value as String
             }
         }
     }
@@ -176,7 +144,7 @@ class Preferences(
     /**
      * Syncs the system preference values and clears the cache.
      */
-    fun sync() {
+    fun syncSystemSettings() {
         applicationContext.get()?.let { context ->
             val contentResolver = context.contentResolver
             keyboard.soundEnabledSystem = Settings.System.getInt(
@@ -186,10 +154,6 @@ class Preferences(
                 contentResolver, Settings.System.HAPTIC_FEEDBACK_ENABLED, 0
             ) != 0
         }
-
-        cacheBoolean.clear()
-        cacheInt.clear()
-        cacheString.clear()
     }
 
     /**
@@ -220,6 +184,7 @@ class Preferences(
         companion object {
             const val AUTO_CAPITALIZATION =         "correction__auto_capitalization"
             const val DOUBLE_SPACE_PERIOD =         "correction__double_space_period"
+            const val MANAGE_SPELL_CHECKER =        "correction__manage_spell_checker"
             const val REMEMBER_CAPS_LOCK_STATE =    "correction__remember_caps_lock_state"
         }
 
@@ -526,6 +491,25 @@ class Preferences(
         var enabled: Boolean
             get() =  prefs.getPref(ENABLED, true)
             set(v) = prefs.setPref(ENABLED, v)
+    }
+
+    /**
+     * Wrapper class for Spelling preferences.
+     */
+    class Spelling(private val prefs: Preferences) {
+        companion object {
+            const val ACTIVE_SPELLCHECKER =         "spelling__active_spellchecker"
+            const val MANAGE_DICTIONARIES =         "spelling__manage_dictionaries"
+            const val USE_CONTACTS =                "spelling__use_contacts"
+            const val USE_UDM_ENTRIES =             "spelling__use_udm_entries"
+        }
+
+        var useContacts: Boolean
+            get() =  prefs.getPref(USE_CONTACTS, true)
+            set(v) = prefs.setPref(USE_CONTACTS, v)
+        var useUdmEntries: Boolean
+            get() =  prefs.getPref(USE_UDM_ENTRIES, true)
+            set(v) = prefs.setPref(USE_UDM_ENTRIES, v)
     }
 
     /**

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:key="spelling__active_spellchecker"
+        app:icon="@drawable/ic_spellcheck"
+        app:title="@string/pref__spelling__active_spellchecker__label"/>
+
+    <Preference
+        app:key="spelling__manage_dictionaries"
+        app:icon="@drawable/ic_library_books"
+        app:title="@string/pref__spelling__manage_dictionaries__label"/>
+
+    <PreferenceCategory
+        app:title="@string/pref__spelling__group_fine_adjustment__title">
+
+        <SwitchPreferenceCompat
+            app:key="spelling__use_contacts"
+            app:defaultValue="true"
+            app:icon="@drawable/ic_contacts"
+            app:title="@string/pref__spelling__use_contacts__label"
+            app:summary="@string/pref__spelling__use_contacts__summary"/>
+
+        <SwitchPreferenceCompat
+            app:key="spelling__use_udm_entries"
+            app:defaultValue="true"
+            app:icon="@drawable/ic_library_books"
+            app:title="@string/pref__spelling__use_udm_entries__label"
+            app:summary="@string/pref__spelling__use_udm_entries__summary"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
