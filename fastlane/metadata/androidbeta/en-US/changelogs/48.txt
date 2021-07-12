@@ -1,0 +1,11 @@
+- Add experimental preview for integrated spell checker service (#1052)
+  You can find the spell checker by going to Settings > Typing > Spell checker.
+  There are no language restrictions, dictionaries have to be imported manually.
+  See in-app for more details. If you want to give feedback for this feature,
+  please do so in the feedback thread #1064 (https://github.com/florisboard/florisboard/issues/1064). Thank you!
+
+- Improve Clipboard and glide typing performance (#1011, thanks @X-yl)
+- Fix cut off hints in borderless themes (#1049)
+- Replaced none Kurmanci character "ı" by the correct one latin letter "i" (#1063, thanks @GoRaN909)
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.13-beta05
