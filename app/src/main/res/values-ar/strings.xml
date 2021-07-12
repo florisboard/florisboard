@@ -416,5 +416,4 @@
     <string name="pref__glide_trail_fade_duration">وقت تلاشي مسار الانزلاق</string>
     <string name="pref__glide_preview_refresh_delay">عرض تاخير التحديث</string>
     <string name="pref__glide__show_preview">عرض المعاينة أثناء الكتابة بالتمرير</string>
-    <string name="pref__glide_trail_max_length">الحد الأقصى لطول مسار الانزلاق</string>
 </resources>

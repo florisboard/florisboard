@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FlorisBoard</string>
+    <!-- One-handed strings -->
+    <!-- Private mode info dialog strings -->
+    <!--
+    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
+-->
+    <!-- Media strings -->
+    <!-- Emoji strings -->
+    <!-- Smartbar strings -->
+    <!-- Settings UI strings -->
+    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">Rechtschreibkorrektur</string>
+    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">Verwalte und konfiguriere die Rechtschreibkorrektur</string>
+    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Rechtschreibkorrektureinstellungen</string>
+    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Wörterbücher verwalten</string>
+    <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">Keine Rechtschreibkorrektur-Wörterbücher installiert. Füge erst eins mit dem \'+\'-Button unten hinzu!</string>
+    <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Aktive Rechtschreibkorrektur</string>
+    <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Keine gesetzt</string>
+    <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">Prüfe in den Systemeinstellungen</string>
+    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Verwalte Rechtschreibkorrektur-Wörterbücher</string>
+    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
+        <item quantity="one">%d installiert</item>
+        <item quantity="other">%d installiert</item>
+    </plurals>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NICHT IMPLEMENTIERT] Nutze Namen von Kontakten</string>
+    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Neues Wörterbuch importieren</string>
+    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Quelle auswählen</string>
+    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Sprachauswahl</string>
+    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">Sprachcode (e.g. de_DE)</string>
+    <!-- About UI strings -->
+    <!-- Assets strings -->
+    <string name="assets__action__no">Ne</string>
+    <string name="assets__action__select">Auswählen</string>
+    <string name="assets__action__select_dir">Verzeichnis wählen</string>
+    <string name="assets__action__select_file">Datei auswählen</string>
+    <string name="assets__action__yes">Jau</string>
+    <!-- Setup UI strings -->
+    <!-- Crash Dialog strings -->
+    <!-- clipboard strings -->
+    <!-- glide strings -->
+</resources>

@@ -412,5 +412,4 @@
     <string name="pref__glide_trail_fade_duration">Ausblendzeit vom Spurbewegung</string>
     <string name="pref__glide_preview_refresh_delay">Verzögerung der Vorschau</string>
     <string name="pref__glide__show_preview">Vorschau während des Gleitens anzeigen</string>
-    <string name="pref__glide_trail_max_length">Maximale Bewegungslänge</string>
 </resources>

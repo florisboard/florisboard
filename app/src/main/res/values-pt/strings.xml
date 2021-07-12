@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pausa</string>
-    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Aguarde</string>
-    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ícone com 3 pontos. Se mostrado, indica que pode utilizar mais letras com um toque longo.</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Aguardar</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ícone de 3 pontos. Se mostrado, indica que pode utilizar mais letras com um toque longo.</string>
     <!-- One-handed strings -->
     <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Fechar modo de uma mão.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Mover teclado para a esquerda.</string>
@@ -18,7 +18,7 @@
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emoticons</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Sorrisos e ícones emotivos</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Sorrisos e emoções</string>
     <string name="emoji__category__people_body" comment="Emoji category name">Pessoas e corpo</string>
     <string name="emoji__category__animals_nature" comment="Emoji category name">Animais e natureza</string>
     <string name="emoji__category__food_drink" comment="Emoji category name">Comida e bebida</string>
@@ -50,9 +50,9 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Padrão</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Definição do sistema</string>
     <string name="settings__home__title" comment="Title of the Home fragment">Bem-vindo a %s</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard não está ativo no sistema e por isso não pode ser utilizado como método de introdução no seletor. Toque aqui para resolver esta situação.</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard não está ativo no sistema, logo não pode ser utilizado como método de introdução no seletor. Toque aqui para resolver esta situação.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard não está selecionado como método de introdução padrão. Toque aqui para resolver esta situação.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Obrigado por testar FlorisBoard. Este projeto ainda está em fase Alfa e, naturalmente, algumas funcionalidades não estão disponíveis. Se encontrar erros ou se quiser propor sugestões, aceda ao nosso repositório GitHub. A sua ajuda permite melhorar a aplicação. Obrigado!</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Obrigado por testar FlorisBoard. Este projeto ainda está em fase alfa e, naturalmente, algumas funcionalidades não estão disponíveis. Se encontrar erros ou se quiser propor sugestões, aceda ao nosso repositório GitHub. A sua ajuda permite melhorar a aplicação. Obrigado!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Idiomas e disposições de teclado</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Parece que ainda não configurou quaisquer subtipos. Como recurso será utilizado o subtipo Inglês/QWERTY!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Adicionar</string>
@@ -63,8 +63,8 @@
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Editar subtipo</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Configuração regional</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Disposição de caracteres</string>
-    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Disposição de símbolos principais</string>
-    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Disposição de símbolos secundários</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Disposição principal de símbolos</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Disposição secundária de símbolos</string>
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Compositor</string>
     <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Conjunto de moedas</string>
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Disposição dos números</string>
@@ -86,7 +86,7 @@
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Tema noturno</string>
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Tema selecionado</string>
     <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Ajustar cores às aplicações</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">As cores do tema ajustam-se às da aplicação, se a aplicação em questão assim o permitir.</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">As cores do tema ajustam-se às da aplicação, se esta assim o permitir.</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">Dados da aplicação FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Armazenamento interno</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Fornecedor externo</string>
@@ -313,6 +313,7 @@
     <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Ativar ferramentas de programador</string>
     <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Ferramentas criadas para efeitos de depuração e resolução de erros</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Mostrar estatísticas de memória \'heap\'</string>
+    <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Sobrepõe o consumo da memória de monte e o seu máximo no canto superior direito</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Limpar base de dados do dicionário do utilizador</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Remover todas as palavras da base de dados do dicionário</string>
     <!-- About UI strings -->
@@ -411,5 +412,4 @@
     <string name="pref__glide_trail_fade_duration">Tempo para mostrar o rasto</string>
     <string name="pref__glide_preview_refresh_delay">Atraso de pré-visualização</string>
     <string name="pref__glide__show_preview">Mostrar pré-visualização ao escrever com gestos</string>
-    <string name="pref__glide_trail_max_length">Valor máximo para o rasto de deslize</string>
 </resources>

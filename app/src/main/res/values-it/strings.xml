@@ -223,6 +223,8 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Gestisci il dizionario utente interno</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Aggiungi, visualizza e rimuovi le voci del dizionario utente interno</string>
     <string name="pref__correction__title" comment="Preference group title">Correzioni</string>
+    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">Controllo ortografico</string>
+    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">Gestisci e configura il servizio di controllo ortografico</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-maiuscolo</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Rendi maiuscole le parole in base al contesto attuale</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Ricorda lo stato del maiuscolo</string>
@@ -316,6 +318,8 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Sovrapponi l\'utilizzo e la dimensione massima della memoria heap nell\'angolo in alto a destra</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Cancella il dizionario utente interno</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Cancella tutte le parole dal dizionario</string>
+    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Impostazioni controllo ortografico</string>
+    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Gestisci i dizionari</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Informazioni su</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icona dell\'app FlorisBoard</string>
@@ -412,5 +416,4 @@
     <string name="pref__glide_trail_fade_duration">Tempo di dissolvenza del percorso di scorrimento</string>
     <string name="pref__glide_preview_refresh_delay">Ritardo di aggiornamento dell\'anteprima</string>
     <string name="pref__glide__show_preview">Mostra l\'anteprima durante la digitazione a scorrimento</string>
-    <string name="pref__glide_trail_max_length">Lunghezza massima del percorso di scorrimento</string>
 </resources>

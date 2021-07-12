@@ -411,5 +411,4 @@
     <string name="pref__glide_trail_fade_duration">Tiempo de desvanecimiento del gesto</string>
     <string name="pref__glide_preview_refresh_delay">Retraso de actualización de la vista previa</string>
     <string name="pref__glide__show_preview">Mostrar recorrido del gesto</string>
-    <string name="pref__glide_trail_max_length">Longitud máxima del recorrido del gesto</string>
 </resources>

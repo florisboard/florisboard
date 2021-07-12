@@ -412,5 +412,4 @@
     <string name="pref__glide_trail_fade_duration">مدت زمان محو شدن دنباله پروازی</string>
     <string name="pref__glide_preview_refresh_delay">پیشنمایش تاخیر در تازه‌سازی</string>
     <string name="pref__glide__show_preview">مشاهده پیشنمایش هنگام دنباله نویسی</string>
-    <string name="pref__glide_trail_max_length">حداکثر طول دنباله</string>
 </resources>

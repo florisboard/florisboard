@@ -371,5 +371,4 @@
     <string name="pref__glide_trail_fade_duration">Час зникання безперервного сліду</string>
     <string name="pref__glide_preview_refresh_delay">Затримка оновлення попереднього перегляду</string>
     <string name="pref__glide__show_preview">Попередній перегляд під час безперервного вводу</string>
-    <string name="pref__glide_trail_max_length">Максимальна довжина безперервного сліду</string>
 </resources>

@@ -389,5 +389,4 @@
     <string name="pref__glide_trail_fade_duration">Nyomvonal elhalványulási ideje</string>
     <string name="pref__glide_preview_refresh_delay">Frissítési késleltetés megtekintése</string>
     <string name="pref__glide__show_preview">Előnézet megjelenítése csúsztatott gépelés közben</string>
-    <string name="pref__glide_trail_max_length">Csúszási nyumvonal maximális hossza</string>
 </resources>

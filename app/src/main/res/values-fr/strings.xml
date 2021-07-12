@@ -48,11 +48,11 @@
     <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Thème</string>
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gestes</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Par défaut</string>
-    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Défaut du système</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">Bienvenue sur %s</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Valeur par défaut du système</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">Bienvenue dans %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard n\'est pas activé dans le système et ne sera donc pas disponible comme méthode de saisie dans le sélectionneur de saisie. Cliquez ici pour résoudre ce problème.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard n\'est pas sélectionné comme méthode de saisie par défaut. Cliquez ici pour résoudre ce problème.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Merci d\'essayer FlorisBoard ! Ce projet est encore en version alpha et il lui manque donc des fonctionnalités. Si vous trouvez des bugs ou si vous voulez faire une suggestion, veuillez consulter le répertoire sur GitHub et signaler un problème. Cela permet d\'améliorer FlorisBoard. Merci pour votre aide !</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Merci d\'essayer FlorisBoard ! Ce projet est encore en version alpha et manque donc certaines fonctionnalités. Si vous trouvez des bugs ou si vous voulez faire une suggestion, allez sur le répertoire GitHub et créez un ticket. Cela permet d\'améliorer FlorisBoard. Merci pour votre aide !</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Langues &amp; Dispositions du clavier</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Il semble que vous n\'ayez pas configuré de disposition de clavier. Comme solution de repli, la disposition anglais/QWERTY sera utilisée !</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Ajouter</string>
@@ -61,39 +61,39 @@
     <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Annuler</string>
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Supprimer</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Modifier la disposition</string>
-    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Locale</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Localisation</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Disposition des caractères</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Disposition principale des symboles</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Disposition secondaire de symboles</string>
-    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Compositeur </string>
-    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Jeu de devises</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Compositeur</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Type de devises</string>
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Pavé numérique</string>
     <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Pavé numérique (avancé)</string>
-    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Disposition de la rangée de numéros</string>
-    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Disposition principale du téléphone</string>
-    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Disposition secondaire du téléphone</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Disposition de la rangée de nombres</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Disposition « téléphone » principale</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Disposition « téléphone » secondaire</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Cette disposition existe déjà !</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Thème du clavier</string>
-    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Non défini</string>
+    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Indéfini</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Mode du thème</string>
     <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Toujours clair</string>
     <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Toujours sombre</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Suivre le système</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Suivre l\'heure</string>
+    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Valeur système</string>
+    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Selon l\'heure</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Heure du lever du soleil</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Heure du coucher du soleil</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Thème clair</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Thème sombre</string>
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Thème sélectionné</string>
     <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Adapter les couleurs à l\'application</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Les couleurs du thème s\'adaptent à celles de l\'application utilisée, si cela est supporté par cette dernière.</string>
-    <string name="pref__theme__source_assets" comment="Label for the theme source field">Ressources de l\'app FlorisBoard</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Les couleurs du thème s\'adaptent à celles de l\'application utilisée, si l\'application est compatible.</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">Ressources de l’application FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">Stockage interne</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">Fournisseur externe</string>
     <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Gestionnaire du thème (clair)</string>
     <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Gestionnaire du thème (sombre)</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Créer un thème vide</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Créer depuis le thème sélectionné</string>
+    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Créer à partir le thème sélectionné</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Personnalisé (basé sur %s)</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nouveau thème</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Thème importé avec succès !</string>
@@ -112,7 +112,7 @@
     <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Couleur unie</string>
     <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Dégradé linéaire</string>
     <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Dégradé radial</string>
-    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Changer</string>
+    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Commutateur</string>
     <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">État</string>
     <string name="settings__theme_editor__value_type_other" comment="Theme value type">Autre</string>
     <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Texte</string>
@@ -120,8 +120,8 @@
     <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Veuillez entrer un nom de thème.</string>
     <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Veuillez saisir un nom de groupe qui ne contient que des lettres (a-z et/ou A-Z), des deux-points ( : ) pour le sous-groupe ou des chiffres supplémentaires (0-9), un tilde (~) et des traits de soulignement (_) pour l\'étiquette clé.</string>
     <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Veuillez entrer un nom de groupe.</string>
-    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Ce nom de groupe existe déjà au sein de ce thème. Veuillez en choisir un autre.</string>
-    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Veuillez entrer un nom d\'attribut ne contenant que les lettres a-z et/ou A-Z.</string>
+    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Ce nom de groupe existe déjà dans de ce thème. Veuillez en choisir un autre.</string>
+    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Veuillez entrer un nom d\'attribut ne contenant que les lettres entre a-z et/ou A-Z.</string>
     <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Veuillez entrer un nom d\'attribut.</string>
     <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Ce nom d\'attribut existe déjà dans ce groupe. Veuillez en spécifier un autre.</string>
     <string name="settings__theme__group_window" comment="Theme group label">Fenêtre &amp; Système</string>
@@ -130,13 +130,13 @@
     <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Touche (%s)</string>
     <string name="settings__theme__group_media" comment="Theme group label">Contexte des médias</string>
     <string name="settings__theme__group_oneHanded" comment="Theme group label">À une main</string>
-    <string name="settings__theme__group_popup" comment="Theme group label">Fenêtre contextuelle</string>
+    <string name="settings__theme__group_popup" comment="Theme group label">Pop-up</string>
     <string name="settings__theme__group_privateMode" comment="Theme group label">Mode privé</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">Barre intelligente</string>
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Bouton de la barre intelligente</string>
     <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Disposition horizontale plein écran</string>
     <string name="settings__theme__group_extractActionButton" comment="Theme group label">Bouton d\'action horizontal plein écran</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">Parcours du glissement</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">Indicateur de glissement</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Groupe personnalisé (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Couleur d\'arrière-plan</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Couleur d\'arrière-plan (lorsque actif)</string>
@@ -149,80 +149,82 @@
     <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Couleur primaire (sombre)</string>
     <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Couleur d\'accentuation</string>
     <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Couleur de la barre de navigation</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Barre de navigation avant-plan sombre</string>
+    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Avant-plan sombre de la barre de navigation</string>
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Couleur semi-transparente</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Couleur du texte</string>
-    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Attributs personnalisés (%s)</string>
+    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Attribut personnalisé (%s)</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Préférences de clavier</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Touches</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Rangée de chiffres</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Afficher la rangée de chiffres au dessus de la disposition des caractères</string>
-    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Rangée de chiffres subtile</string>
-    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Symboles subtiles</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Rangée de chiffres suggérée</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Symboles suggérés</string>
     <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">Désactivé</string>
-    <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">Activé (priorité à l\'indice)</string>
+    <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">Activé (priorité à la suggestion)</string>
     <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">Activé (priorité à l\'accent)</string>
     <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">Activé (priorité intelligente)</string>
-    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Afficher la touche d\'outils</string>
-    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Affiche une touche d\'outils configurable à côté de la barre d\'espace</string>
-    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Action de la touche d\'outils</string>
+    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Afficher la touche utilitaire</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Affiche une touche utilitaire configurable à côté de la barre d\'espace</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Action de la touche utilitaire</string>
     <string name="pref__keyboard__utility_key_action__switch_to_emojis" comment="Preference value">Passer aux emojis</string>
     <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Changer de langue</string>
     <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Changer d\'application de clavier</string>
-    <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Dynamique : Changer vers emojis / Changer de langue</string>
+    <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Dynamique : Aller aux emojis / Changer de langue</string>
     <string name="pref__keyboard__merge_hint_popups_enabled__label">Afficher également les popups de symboles</string>
     <string name="pref__keyboard_merge_hint_popups_enabled__summary">Ajouter les popups de symbole à la disposition par défaut</string>
-    <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicateur de la taille de la police (portrait)</string>
-    <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicateur de la taille de la police (paysage)</string>
+    <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Multiplicateur de taille de police (portrait)</string>
+    <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Multiplicateur de taille de police (paysage)</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Disposition</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Mode à une main</string>
     <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Désactivé</string>
     <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Mode droitier</string>
     <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Mode gaucher</string>
     <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Largeur du clavier en mode une main</string>
-    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Insertion horizontale en plein écran</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Entrée en plein écran à l\'horizontale</string>
     <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Ne jamais afficher</string>
     <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Toujours afficher</string>
-    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">Affichage dynamique</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">Afficher dynamiquement</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Hauteur du clavier</string>
-    <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Très court</string>
-    <string name="pref__keyboard__height_factor__short" comment="Preference value">Court</string>
-    <string name="pref__keyboard__height_factor__mid_short" comment="Preference value">Mi-court</string>
+    <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Très bas</string>
+    <string name="pref__keyboard__height_factor__short" comment="Preference value">Bas</string>
+    <string name="pref__keyboard__height_factor__mid_short" comment="Preference value">Moyen-bas</string>
     <string name="pref__keyboard__height_factor__normal" comment="Preference value">Normal</string>
-    <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">Mi-haut</string>
+    <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">Moyen-haut</string>
     <string name="pref__keyboard__height_factor__tall" comment="Preference value">Haut</string>
     <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Très haut</string>
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Personnalisée</string>
-    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Valeur personnalisée de la hauteur du clavier</string>
-    <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Écart en bas (portrait)</string>
-    <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Écart en bas (paysage)</string>
+    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Hauteur personnalisée du clavier</string>
+    <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Décalage du bas (portrait)</string>
+    <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Décalage du bas (paysage)</string>
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Espacement des touches (vertical)</string>
     <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Espacement des touches (horizontal)</string>
-    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Touche pressée</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Tonalité des touches</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volume sonore des touches</string>
+    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Appui sur la touche</string>
+    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Son lors de l\'appui des touches</string>
+    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volume sonore lors de l\'appui des touches</string>
     <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibrer à chaque touche pressée</string>
     <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Durée de la vibration lors de la pression d\'une touche</string>
     <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Force de vibration lors de l\'appui sur une touche</string>
-    <string name="pref__keyboard__popup_visible__label" comment="Preference title">Visibilité des pop-ups</string>
-    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Afficher un pop-up lorsque vous appuyez sur une touche</string>
+    <string name="pref__keyboard__popup_visible__label" comment="Preference title">Visibilité des pop-up</string>
+    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Afficher un pop-up à l\'appuie d\'une touche</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Délai d\'appui prolongé</string>
-    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">La barre espace permet de revenir à la disposition des caractères</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Appuyer sur la barre espace revient à la disposition des caractères</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">En appuyant sur la barre espace, revenir automatiquement aux caractères lorsqu\'on est dans les symboles ou les chiffres</string>
     <string name="settings__typing__title" comment="Title of Typing experience fragment">Expérience de saisie</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Activer la Barre Intelligente</string>
-    <string name="pref__smartbar__enabled__summary" comment="Preference summary">S\'affichera en haut du clavier</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">Sera affiché au dessus du clavier</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
     <string name="pref__dictionary__title" comment="Preference group title">Dictionnaire</string>
-    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Activer le dictionnaire d\'utilisateur système</string>
-    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Suggérer des mots du dictionnaire d\'utilisateur système</string>
-    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Gérer le dictionnaire d\'utilisateur système</string>
-    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Ajouter, voir et supprimer des entrées du dictionnaire d\'utilisateur système</string>
-    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Activer le dictionnaire d\'utilisateur interne</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Activer le dictionnaire utilisateur système</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Suggérer des mots du dictionnaire utilisateur système</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Gérer le dictionnaire utilisateur système</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Ajouter, voir et supprimer des entrées du dictionnaire utilisateur système</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Activer le dictionnaire utilisateur interne</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Suggérer des mots stockés dans le dictionnaire utilisateur interne</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Gérer le dictionnaire utilisateur interne</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Ajouter, voir et supprimer des entrées du dictionnaire utilisateur interne</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
+    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">Vérificateur d\'orthographe</string>
+    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">Configurer et gérer le service de vérification d\'orthographe</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalisation</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitaliser les mots en fonction du contexte de saisie actuel</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Se souvenir de l\'état de verrouillage des majuscules</string>
@@ -316,6 +318,38 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Afficher en superposé l\'utilisation de mémoire tas et sa taille maximale dans le coin haut droit</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Effacer la base de données du dictionnaire utilisateur interne</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Efface tous les mots de la table de la base de données du dictionnaire</string>
+    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Paramètres du vérificateur d\'orthographe</string>
+    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Gérer les dictionnaires</string>
+    <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Utiliser les sous-types de clavier</string>
+    <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">Aucun dictionnaire de vérification d’orthographe n’est installé. Ajoutez-en un avec le bouton « + » ci-dessous !</string>
+    <string name="settings__spelling__dictionary_index_invalid" comment="String for the Dictionary index invalid error card. %s will be replaced by the app name.">Une erreur est survenu lors de l\'indexage des dictionnaires de vérification d\'orthographe installés. Essayez de redémarrer %s ou créez un rapport de bug à ce sujet.</string>
+    <string name="settings__spelling__dict_sources_info" comment="String for the Dictionary sources info.">Où trouver des dictionnaires de vérification d’orthographe ?</string>
+    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Extension / Archive</string>
+    <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Affixe + Fichier dictionnaire</string>
+    <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Vérificateur d\'orthographe actif</string>
+    <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Non-défini</string>
+    <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">Vérifier dans les paramètres systèmes</string>
+    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Gérer les dictionnaires de vérification d’orthographe</string>
+    <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">Ajustement précis</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NON IMPLÉMENTÉ] Utiliser les noms des contacts</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Le vérificateur d’orthographe utilisera les noms de votre liste de contacts</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Utiliser le dictionnaire utilisateur</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Le vérificateur d\'orthographe utilisera les dictionnaires utilisateurs, si ils sont activés</string>
+    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Importer un nouveau dictionnaire</string>
+    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Sélectionner la source</string>
+    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Sélectionner la langue</string>
+    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">Code de la langue (ex. fr_FR)</string>
+    <string name="settings__spelling__import_dict_s2__title" comment="Title for the import dict sheet (step 2)">Ajouter des fichiers à importer</string>
+    <string name="settings__spelling__import_dict_s2__select_aff" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Sélectionner un fichier affix (.aff)</string>
+    <string name="settings__spelling__import_dict_s2__select_dic" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Sélectionner le fichier dictionnaire (.dic)</string>
+    <string name="settings__spelling__import_dict_s3__title" comment="Title for the import dict sheet (step 3)">Vérifier les fichiers importés</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_locale" comment="Text for the verify files dialog (step 3)">Localisation : %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_original" comment="Text for the verify files dialog (step 3)">Source d\'origine : %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_any" comment="Text for the verify files dialog (the first %s will be replaced by a file extension, the second by a file name) (step 3)">Fichier %s : %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_readme" comment="Text for the verify files dialog (step 3)">Fichier « readme » : %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_license" comment="Text for the verify files dialog (step 3)">Licence : %s</string>
+    <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info sheet">FlorisBoard utilise Nuspell comme moteur de vérification d’orthographe, il dispose donc d’un grand nombre de dictionnaire, car Hunspell est utilisé par beaucoup d’autres logiciels. La liste ci-dessous montre quelques sources sélectionnées manuellement qui sont supportés par le gestionnaire d’importation. Téléchargez soit le fichier archive, ou les fichiers du dictionnaire, puis dans le gestionnaire d’importation, choisissez la source adéquate (nécessaire pour lire le format de l’archive correctement).</string>
+    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">si la liste ne contient pas de dictionnaires pour votre langue ou dialecte, vous pouvez aussi aller chercher manuellement un dictionnaire Hunspell et importer ses fichiers « aff » et « dic ».</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">À propos</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icône de l\'application FlorisBoard</string>
@@ -344,6 +378,9 @@
     <string name="assets__action__import">Importer</string>
     <string name="assets__action__no">Non</string>
     <string name="assets__action__save">Sauvegarder</string>
+    <string name="assets__action__select">Sélectionner</string>
+    <string name="assets__action__select_dir">Sélectionner un dossier</string>
+    <string name="assets__action__select_file">Sélectionner un fichier</string>
     <string name="assets__action__yes">Oui</string>
     <string name="assets__error__details">Détails</string>
     <string name="assets__error__invalid">Invalide</string>
@@ -412,5 +449,4 @@
     <string name="pref__glide_trail_fade_duration">Temps de fondu du parcours de glissement</string>
     <string name="pref__glide_preview_refresh_delay">Délai d\'actualisation de l\'aperçu</string>
     <string name="pref__glide__show_preview">Afficher l\'aperçu lors de la saisie en glissant</string>
-    <string name="pref__glide_trail_max_length">Taille de glissement maximale</string>
 </resources>

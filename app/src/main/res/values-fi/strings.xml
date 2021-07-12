@@ -337,5 +337,4 @@
     <string name="pref__unit_items">" kohdetta"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Liu\'un jäljen häivytysaika</string>
-    <string name="pref__glide_trail_max_length">Liu\'un jäljen maksimipituus</string>
 </resources>

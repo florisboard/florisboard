@@ -412,5 +412,4 @@
     <string name="pref__glide_trail_fade_duration">Kaydırma izi geçme süresi</string>
     <string name="pref__glide_preview_refresh_delay">Önizleme yenileme gecikmesi</string>
     <string name="pref__glide__show_preview">Kaydırarak yazarken önizlemeyi göster</string>
-    <string name="pref__glide_trail_max_length">En fazla kaydırma izi uzunluğu</string>
 </resources>

@@ -412,5 +412,4 @@
     <string name="pref__glide_trail_fade_duration">Vervaagtijd veegspoor</string>
     <string name="pref__glide_preview_refresh_delay">Vertraging vernieuwing voorbeeld</string>
     <string name="pref__glide__show_preview">Toon voorbeeld tijdens vegend typen</string>
-    <string name="pref__glide_trail_max_length">Maximale lengte veegspoor</string>
 </resources>

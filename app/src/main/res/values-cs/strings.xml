@@ -61,7 +61,7 @@
     <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Zrušit</string>
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Vymazat</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Upravit podtyp</string>
-    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Místní</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Místní nastavení</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Uspořádání znaků</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Primární rozložení symbolů</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Sekundární rozložení symbolů</string>
@@ -363,5 +363,6 @@
     <string name="clip__back_to_text_input">Zpět na zadávání textu</string>
     <string name="clip__cant_paste">Tato aplikace neumožňuje vkládání daného obsahu.</string>
     <string name="pref__clipboard__clipboard_category__label">Schránka</string>
+    <string name="pref__unit_minutes">" minuty"</string>
     <!-- glide strings -->
 </resources>
