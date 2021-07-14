@@ -51,6 +51,10 @@ class SpellingManager private constructor(
         private const val IMPORT_ARCHIVE_TEMP_NAME: String = "__temp000__ime_spelling_import_archive"
         private const val IMPORT_NEW_DICT_TEMP_NAME: String = "__temp000__ime_spelling_import_new_dict"
 
+        // Possible license file names, always in lowercase
+        private val LICENSE_FILE_MATCHER =
+            """^((copying|license)|((mpl-|gpl-|lgpl-|apache-)(\d\.\d)))(\.txt|\.md)?${'$'}""".toRegex(RegexOption.IGNORE_CASE)
+
         private const val FIREFOX_MANIFEST_JSON = "manifest.json"
         private const val FIREFOX_DICTIONARIES_FOLDER = "dictionaries"
 
@@ -59,7 +63,9 @@ class SpellingManager private constructor(
             @SerialName("manifest_version")
             val manifestVersion: Int,
             val name: String? = null,
+            val description: String? = null,
             val version: String? = null,
+            val author: String? = null,
             val dictionaries: Map<String, String>
         )
 
@@ -201,6 +207,8 @@ class SpellingManager private constructor(
                 return SpellingDict.metaBuilder {
                     version = manifest.version
                     title = manifest.name
+                    description = manifest.description
+                    authors = manifest.author?.let { listOf(it) }
                     locale = supportedLocale
                     originalSourceId = sourceId
                     while (entries.hasMoreElements()) {
@@ -226,6 +234,17 @@ class SpellingManager private constructor(
                                     }
                                 }
                                 dicFile = name
+                            }
+                            else -> {
+                                if (LICENSE_FILE_MATCHER.matches(entry.name)) {
+                                    val license = File(tempDictDir, SpellingDict.LICENSE_FILE_NAME)
+                                    license.outputStream().use { output ->
+                                        zipFile.getInputStream(entry).use { input ->
+                                            input.copyTo(output)
+                                        }
+                                    }
+                                    licenseFile = SpellingDict.LICENSE_FILE_NAME
+                                }
                             }
                         }
                     }
@@ -278,7 +297,7 @@ class SpellingManager private constructor(
                                 }
                                 dicFile = entry.name
                             }
-                            entry.name.lowercase().contains("copying") || entry.name.lowercase().contains("license") -> {
+                            LICENSE_FILE_MATCHER.matches(entry.name) -> {
                                 val license = File(tempDictDir, SpellingDict.LICENSE_FILE_NAME)
                                 license.outputStream().use { output ->
                                     zipFile.getInputStream(entry).use { input ->
