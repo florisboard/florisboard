@@ -268,42 +268,46 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      * @param context Required to register as an onPrimaryClipChangedListener of ClipboardManager
      */
     fun initialize(context: Context) {
-        systemClipboardManager = (context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager)
-        systemClipboardManager.addPrimaryClipChangedListener(this)
+        try {
+            systemClipboardManager = (context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager)
+            systemClipboardManager.addPrimaryClipChangedListener(this)
 
-        val cleanUpClipboard = Runnable {
-            if (!prefs.clipboard.cleanUpOld) {
-                return@Runnable
+            val cleanUpClipboard = Runnable {
+                if (!prefs.clipboard.cleanUpOld) {
+                    return@Runnable
+                }
+
+                val currentTime = System.currentTimeMillis()
+                var numToPop = 0
+                val expiryTime = prefs.clipboard.cleanUpAfter * 60 * 1000
+                for (item in history.asReversed()) {
+                    if (item.timeUTC + expiryTime < currentTime) {
+                        numToPop += 1
+                    } else {
+                        break
+                    }
+                }
+                for (i in 0 until numToPop) {
+                    history.removeLast().data.close()
+                }
+                ClipboardInputManager.getInstance().notifyItemRangeRemoved(pins.size + history.size, numToPop)
             }
+            FlorisBoard.getInstance().clipInputManager.initClipboard(this.history, this.pins)
+            prefs
+            cleanUpJob = launch(Dispatchers.Main) {
 
-            val currentTime = System.currentTimeMillis()
-            var numToPop = 0
-            val expiryTime = prefs.clipboard.cleanUpAfter * 60 * 1000
-            for (item in history.asReversed()) {
-                if (item.timeUTC + expiryTime < currentTime) {
-                    numToPop += 1
-                } else {
-                    break
+                while (true) {
+                    cleanUpClipboard.run()
+                    delay(INTERVAL)
                 }
             }
-            for (i in 0 until numToPop) {
-                history.removeLast().data.close()
+            launch(Dispatchers.IO) {
+                pinsDao = PinnedItemsDatabase.getInstance().clipboardItemDao()
+                pinsDao.getAll().toCollection(pins)
+                FlorisContentProvider.getInstance().initIfNotAlready()
             }
-            ClipboardInputManager.getInstance().notifyItemRangeRemoved(pins.size + history.size, numToPop)
-        }
-        FlorisBoard.getInstance().clipInputManager.initClipboard(this.history, this.pins)
-        prefs
-        cleanUpJob = launch(Dispatchers.Main) {
-
-            while (true) {
-                cleanUpClipboard.run()
-                delay(INTERVAL)
-            }
-        }
-        launch(Dispatchers.IO) {
-            pinsDao = PinnedItemsDatabase.getInstance().clipboardItemDao()
-            pinsDao.getAll().toCollection(pins)
-            FlorisContentProvider.getInstance().initIfNotAlready()
+        } catch (e : Exception) {
+            e.fillInStackTrace()
         }
     }
 
