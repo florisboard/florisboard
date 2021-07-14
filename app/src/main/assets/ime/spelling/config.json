@@ -40,7 +40,7 @@
     {
       "id": "free_office",
       "label": "SoftMaker FreeOffice",
-      "url": "https://www.freeoffice.com/download/dictionaries",
+      "url": "https://www.freeoffice.com/en/download/dictionaries",
       "format": {
         "$": "archive",
         "file": {
