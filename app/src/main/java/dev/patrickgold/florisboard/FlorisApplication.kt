@@ -17,6 +17,12 @@
 package dev.patrickgold.florisboard
 
 import android.app.Application
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.Build
+import androidx.core.os.UserManagerCompat
 import dev.patrickgold.florisboard.crashutility.CrashUtility
 import dev.patrickgold.florisboard.debug.Flog
 import dev.patrickgold.florisboard.debug.LogTopic
@@ -28,6 +34,8 @@ import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.FlorisRef
 import timber.log.Timber
+import java.lang.Exception
+import java.lang.ref.WeakReference
 
 @Suppress("unused")
 class FlorisApplication : Application() {
@@ -64,6 +72,35 @@ class FlorisApplication : Application() {
         } catch (e: Exception) {
             CrashUtility.stageException(e)
             return
+        }
+
+        /*Register a receiver so user config can be applied once device protracted storage is available*/
+        if(!UserManagerCompat.isUserUnlocked(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            registerReceiver(BootComplete(), IntentFilter(Intent.ACTION_USER_UNLOCKED))
+        }
+    }
+
+    fun init() {
+        CrashUtility.install(this)
+        val prefs = Preferences.initDefault(this)
+        val assetManager = AssetManager.init(this)
+        SubtypeManager.init(this)
+        DictionaryManager.init(this)
+        ThemeManager.init(this, assetManager)
+        prefs.initDefaultPreferences()
+    }
+
+    private class BootComplete : BroadcastReceiver() {
+
+        override fun onReceive(context: Context?, intent: Intent?) {
+            if(Intent.ACTION_USER_UNLOCKED == intent?.action){
+                try {
+                    (context as FlorisApplication).unregisterReceiver(this)
+                    context.init()
+                } catch (e : Exception) {
+                    e.fillInStackTrace()
+                }
+            }
         }
     }
 }

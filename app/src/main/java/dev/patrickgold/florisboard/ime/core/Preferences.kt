@@ -18,7 +18,9 @@ package dev.patrickgold.florisboard.ime.core
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 import android.provider.Settings
+import androidx.core.os.UserManagerCompat
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
@@ -40,8 +42,12 @@ import java.lang.ref.WeakReference
  */
 class Preferences(
     context: Context,
-    val shared: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 ) {
+    var shared: SharedPreferences = if (!UserManagerCompat.isUserUnlocked(context) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+        context.createDeviceProtectedStorageContext().getSharedPreferences("shared_psfs", Context.MODE_PRIVATE)
+    else
+        PreferenceManager.getDefaultSharedPreferences(context)
+
     private val applicationContext: WeakReference<Context> = WeakReference(context.applicationContext)
 
     val advanced = Advanced(this)
@@ -58,6 +64,7 @@ class Preferences(
     val spelling = Spelling(this)
     val suggestion = Suggestion(this)
     val theme = Theme(this)
+
 
     /**
      * Gets the value for given [key]. The type is automatically derived from the given [default] value.
@@ -124,20 +131,24 @@ class Preferences(
      * they have not been initialized yet.
      */
     fun initDefaultPreferences() {
-        applicationContext.get()?.let { context ->
-            PreferenceManager.setDefaultValues(context, R.xml.prefs_advanced, true)
-            PreferenceManager.setDefaultValues(context, R.xml.prefs_gestures, true)
-            PreferenceManager.setDefaultValues(context, R.xml.prefs_keyboard, true)
-            PreferenceManager.setDefaultValues(context, R.xml.prefs_theme, true)
-            PreferenceManager.setDefaultValues(context, R.xml.prefs_typing, true)
-        }
+        try {
+            applicationContext.get()?.let { context ->
+                PreferenceManager.setDefaultValues(context, R.xml.prefs_advanced, true)
+                PreferenceManager.setDefaultValues(context, R.xml.prefs_gestures, true)
+                PreferenceManager.setDefaultValues(context, R.xml.prefs_keyboard, true)
+                PreferenceManager.setDefaultValues(context, R.xml.prefs_theme, true)
+                PreferenceManager.setDefaultValues(context, R.xml.prefs_typing, true)
+            }
 
-        //theme.dayThemeRef = "assets:ime/theme/floris_day.json"
-        //theme.nightThemeRef = "assets:ime/theme/floris_night.json"
-        //setPref(Localization.SUBTYPES, "-234/de-AT/euro/c=qwertz")
-        val subtypes = getPref(Localization.SUBTYPES, "")
-        if (subtypes.matches(OLD_SUBTYPES_REGEX)) {
-            setPref(Localization.SUBTYPES, "")
+            //theme.dayThemeRef = "assets:ime/theme/floris_day.json"
+            //theme.nightThemeRef = "assets:ime/theme/floris_night.json"
+            //setPref(Localization.SUBTYPES, "-234/de-AT/euro/c=qwertz")
+            val subtypes = getPref(Localization.SUBTYPES, "")
+            if (subtypes.matches(OLD_SUBTYPES_REGEX)) {
+                setPref(Localization.SUBTYPES, "")
+            }
+        } catch (e: Exception) {
+            e.fillInStackTrace()
         }
     }
 
