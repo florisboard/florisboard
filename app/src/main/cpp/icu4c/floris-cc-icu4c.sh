@@ -33,6 +33,7 @@
     --data-filter-file=./data-feature-filter.json \
     --enable-collation=no \
     --enable-formatting=no \
+    --enable-legacy-converters=yes \
     --enable-regex=no \
     --enable-transliteration=no
 
