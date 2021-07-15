@@ -1,0 +1,4 @@
+- Add basic support for direct boot mode (#1021, thanks @empratyush)
+- Some bug fixes and improvements for spell checking based on your feedback in #1064
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.13-beta06
