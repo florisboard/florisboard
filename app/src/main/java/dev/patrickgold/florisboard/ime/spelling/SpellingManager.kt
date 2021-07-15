@@ -216,7 +216,7 @@ class SpellingManager private constructor(
                         flogInfo { entry.name }
                         when (entry.name) {
                             "$fileNameBase.aff" -> {
-                                val name = entry.name.removePrefix("$FIREFOX_DICTIONARIES_FOLDER/")
+                                val name = entry.name.removePrefix("$FIREFOX_DICTIONARIES_FOLDER/").replace('/', '_')
                                 val aff = File(tempDictDir, name)
                                 aff.outputStream().use { output ->
                                     zipFile.getInputStream(entry).use { input ->
@@ -226,7 +226,7 @@ class SpellingManager private constructor(
                                 affFile = name
                             }
                             "$fileNameBase.dic" -> {
-                                val name = entry.name.removePrefix("$FIREFOX_DICTIONARIES_FOLDER/")
+                                val name = entry.name.removePrefix("$FIREFOX_DICTIONARIES_FOLDER/").replace('/', '_')
                                 val dic = File(tempDictDir, name)
                                 dic.outputStream().use { output ->
                                     zipFile.getInputStream(entry).use { input ->
