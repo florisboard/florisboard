@@ -125,8 +125,8 @@
             android:defaultValue="true"
             app:key="correction__auto_capitalization"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__correction__manage_spell_checker__label"
-            app:summary="@string/pref__correction__manage_spell_checker__summary"/>
+            app:title="@string/pref__correction__auto_capitalization__label"
+            app:summary="@string/pref__correction__auto_capitalization__summary"/>
 
         <SwitchPreferenceCompat
             android:defaultValue="false"

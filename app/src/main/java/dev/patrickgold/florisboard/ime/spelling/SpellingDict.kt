@@ -86,8 +86,8 @@ value class SpellingDict private constructor(
         override val id: String,
         override val version: String,
         override val title: String,
-        override val description: String = "Imported spell check dictionary",
-        override val authors: List<String> = listOf(),
+        override val description: String,
+        override val authors: List<String>,
         override val license: String = ExtensionConfig.CUSTOM_LICENSE_IDENTIFIER,
         override val licenseFile: String,
         override val readmeFile: String,
@@ -102,6 +102,8 @@ value class SpellingDict private constructor(
     data class MetaBuilder(
         var version: String? = null,
         var title: String? = null,
+        var description: String? = null,
+        var authors: List<String>? = null,
         var locale: Locale? = null,
         var originalSourceId: String? = null,
         var affFile: String? = null,
@@ -127,6 +129,8 @@ value class SpellingDict private constructor(
                     Meta(
                         version = version ?: "v0.0.0 (imported)",
                         title = title ?: "Imported spell check dictionary",
+                        description = description ?: "Imported spell check dictionary",
+                        authors = authors ?: listOf(),
                         id = ExtensionConfig.createIdForImport("spelling", "$originalSourceId.$locale"),
                         locale = locale!!,
                         originalSourceId = originalSourceId!!,
