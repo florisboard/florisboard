@@ -25,6 +25,7 @@ import android.view.InputDevice
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.ExtractedTextRequest
 import android.view.inputmethod.InputConnection
 import androidx.core.text.isDigitsOnly
 import androidx.core.view.inputmethod.InputConnectionCompat
@@ -191,8 +192,13 @@ class EditorInstance private constructor(
             ic.finishComposingText()
             val previous = getTextBeforeCursor(composer.toRead)
             val (rm, finalText) = composer.getActions(previous, text[0])
-            if (rm != 0) ic.deleteSurroundingText(rm, 0)
-            ic.commitText(finalText, 1)
+            if (rm == 0) {
+                ic.commitText(finalText, 1)
+            } else {
+                val et = ic.getExtractedText(ExtractedTextRequest(), 0)
+                ic.setComposingRegion(et.selectionStart-rm, et.selectionStart)
+                ic.setComposingText(finalText, 1)
+            }
             ic.endBatchEdit()
             Pair(true, finalText)
         }
