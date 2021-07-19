@@ -11,20 +11,14 @@ include_directories(.)
 
 ### ICU4C ###
 include_directories(icu4c/include)
-#link_directories(${CMAKE_SOURCE_DIR}/../${ANDROID_ABI})
 set(JNI_LIBS ${CMAKE_SOURCE_DIR}/../jniLibs/${ANDROID_ABI})
 add_library(ICU::data STATIC IMPORTED)
 set_property(TARGET ICU::data PROPERTY IMPORTED_LOCATION "${JNI_LIBS}/libicudata.a")
-#add_library(ICU::i18n STATIC IMPORTED)
-#set_property(TARGET ICU::i18n PROPERTY IMPORTED_LOCATION "${JNI_LIBS}/libicui18n.a")
-#add_library(ICU::tu STATIC IMPORTED)
-#set_property(TARGET ICU::tu PROPERTY IMPORTED_LOCATION "${JNI_LIBS}/libicutu.a")
 add_library(ICU::uc STATIC IMPORTED)
 set_property(TARGET ICU::uc PROPERTY IMPORTED_LOCATION "${JNI_LIBS}/libicuuc.a")
 
 ### FlorisBoard ###
 add_subdirectory(nuspell)
-add_subdirectory(glob_ndk)
 add_subdirectory(utils)
 add_subdirectory(ime/nlp)
 add_subdirectory(ime/spelling)
@@ -44,7 +38,6 @@ target_link_libraries(
         # Sources
         android
         log
-        glob_ndk
         ICU::uc
         ICU::data
         Nuspell::nuspell

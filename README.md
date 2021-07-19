@@ -207,8 +207,6 @@ to get more information on this topic.
   [The Unicode Consortium](https://github.com/unicode-org)
 * [Nuspell](https://github.com/nuspell/nuspell) by
   [Nuspell](https://github.com/nuspell)
-* [TokyoCabinet (only used glob.h and glob.c)](https://github.com/white-gecko/TokyoCabinet) by
-  [Natanael Arndt](https://github.com/white-gecko)
 
 ## License
 ```
