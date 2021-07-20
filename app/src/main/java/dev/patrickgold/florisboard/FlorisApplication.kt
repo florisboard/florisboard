@@ -23,9 +23,13 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import androidx.core.os.UserManagerCompat
+import dev.patrickgold.florisboard.common.NativeStr
+import dev.patrickgold.florisboard.common.toNativeStr
 import dev.patrickgold.florisboard.crashutility.CrashUtility
 import dev.patrickgold.florisboard.debug.Flog
 import dev.patrickgold.florisboard.debug.LogTopic
+import dev.patrickgold.florisboard.debug.flogError
+import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
@@ -34,12 +38,16 @@ import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.FlorisRef
 import timber.log.Timber
-import java.lang.Exception
-import java.lang.ref.WeakReference
+import java.io.File
+import kotlin.Exception
 
 @Suppress("unused")
 class FlorisApplication : Application() {
     companion object {
+        private const val ICU_DATA_ASSET_PATH = "icu/icudt69l.dat"
+
+        private external fun nativeInitICUData(path: NativeStr): Int
+
         init {
             try {
                 System.loadLibrary("florisboard-native")
@@ -61,6 +69,7 @@ class FlorisApplication : Application() {
                 flogLevels = Flog.LEVEL_ALL,
                 flogOutputs = Flog.OUTPUT_CONSOLE
             )
+            initICU()
             CrashUtility.install(this)
             val prefs = Preferences.initDefault(this)
             val assetManager = AssetManager.init(this)
@@ -77,6 +86,32 @@ class FlorisApplication : Application() {
         /*Register a receiver so user config can be applied once device protracted storage is available*/
         if(!UserManagerCompat.isUserUnlocked(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             registerReceiver(BootComplete(), IntentFilter(Intent.ACTION_USER_UNLOCKED))
+        }
+    }
+
+    fun initICU(): Boolean {
+        try {
+            val context = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                createDeviceProtectedStorageContext()
+            } else {
+                this
+            }
+            val androidAssetManager = context.assets ?: return false
+            val dstDataFile = File(context.cacheDir, "icudt.dat")
+            dstDataFile.outputStream().use { os ->
+                androidAssetManager.open(ICU_DATA_ASSET_PATH).use { it.copyTo(os) }
+            }
+            val status = nativeInitICUData(dstDataFile.absolutePath.toNativeStr())
+            return if (status != 0) {
+                flogError { "Native ICU data initializing failed with error code $status!" }
+                false
+            } else {
+                flogInfo { "Successfully loaded ICU data!" }
+                true
+            }
+        } catch (e: Exception) {
+            flogError { e.toString() }
+            return false
         }
     }
 

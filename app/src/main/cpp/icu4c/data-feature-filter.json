@@ -1,15 +1,6 @@
 {
   "strategy": "subtractive",
   "featureFilters": {
-    "brkitr_rules": {
-      "filterType": "exclude"
-    },
-    "brkitr_dictionaries": {
-      "filterType": "exclude"
-    },
-    "brkitr_tree": {
-      "filterType": "exclude"
-    },
     "coll_ucadata": {
       "filterType": "exclude"
     },

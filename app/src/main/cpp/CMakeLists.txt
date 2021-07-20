@@ -26,6 +26,7 @@ add_subdirectory(ime/spelling)
 add_library(
         florisboard-native
         SHARED
+        dev_patrickgold_florisboard_FlorisApplication.cpp
         dev_patrickgold_florisboard_ime_nlp_SuggestionList.cpp
         dev_patrickgold_florisboard_ime_spelling_SpellingDict.cpp
 )
