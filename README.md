@@ -119,9 +119,13 @@ milestones, please refer to the [Feature roadmap](#feature-roadmap).
 ## Feature roadmap
 This section describes the features which are planned to be implemented
 in FlorisBoard for the next major versions, modularized into sections.
-Please note that the milestone due dates are only raw estimates and will
+<!-- Please note that the milestone due dates are only raw estimates and will
 most likely be delayed back, even though I'm eager to stick to these as
-close as possible.
+close as possible. -->
+
+Note that the v0.4.0 milestone technically means all v0.3.x releases.
+As this naming convention is more confusing than useful, after the
+v0.4.0 release a new release/development cycle will be introduced.
 
 ### [v0.4.0](https://github.com/florisboard/florisboard/milestone/4)
 - Module A: Smartbar rework (Implemented with [#91])
