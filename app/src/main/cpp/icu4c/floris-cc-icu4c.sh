@@ -30,17 +30,25 @@
     --icu-src-dir=./android/icu/icu4c \
     --install-include-dir=./include \
     --install-libs-dir=./../../jniLibs \
+    --install-data-dir=./../../assets/icu \
     --data-filter-file=./data-feature-filter.json \
+    --data-packaging=archive \
     --enable-collation=no \
     --enable-formatting=no \
     --enable-legacy-converters=yes \
     --enable-regex=no \
     --enable-transliteration=no
 
+# shellcheck disable=SC2181
+if ! [ $? == 0 ]; then
+    exit
+fi
+
 ###### Clean up unused header files in include/unicode header dir ######
 
 readonly SEP=":"
 readonly NUSPELL_DIR=$(realpath ../nuspell)
+readonly JNI_BRIDGE_DIR=$(realpath ..)
 readonly UNICODE_DIR=$(realpath include/unicode)
 
 scan_file() {
@@ -76,6 +84,10 @@ scan_file() {
 req_headers=""
 
 for nsrcfile in "$NUSPELL_DIR"/*; do
+    scan_file "$nsrcfile" "req_headers"
+done
+
+for nsrcfile in "$JNI_BRIDGE_DIR"/*; do
     scan_file "$nsrcfile" "req_headers"
 done
 

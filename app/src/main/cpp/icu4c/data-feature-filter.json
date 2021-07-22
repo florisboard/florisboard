@@ -16,6 +16,9 @@
     "curr_tree": {
       "filterType": "exclude"
     },
+    "lang_tree": {
+      "filterType": "exclude"
+    },
     "locales_tree": {
       "excludelist": [
         "en_US_POSIX"
@@ -24,7 +27,16 @@
     "misc": {
       "excludelist": [
         "currencyNumericCodes",
-        "genderList"
+        "dayPeriods",
+        "genderList",
+        "metaZones",
+        "numberingSystems",
+        "pluralRanges",
+        "plurals",
+        "supplementalData",
+        "timezoneTypes",
+        "windowsZones",
+        "zoneinfo64"
       ]
     },
     "region_tree": {
