@@ -59,7 +59,7 @@ class TextKeyData(
             if (isForDisplay || code == KeyCode.URI_COMPONENT_TLD || code < KeyCode.SPACE) {
                 // Combining Diacritical Marks
                 // See: https://en.wikipedia.org/wiki/Combining_Diacritical_Marks
-                if (code in 0x0300..0x036F) {
+                if (code in 0x0300..0x036F && !label.startsWith("◌")) {
                     append("◌")
                 }
                 append(label)
@@ -305,7 +305,7 @@ class AutoTextKeyData(
             if (isForDisplay || code == KeyCode.URI_COMPONENT_TLD || code < KeyCode.SPACE) {
                 // Combining Diacritical Marks
                 // See: https://en.wikipedia.org/wiki/Combining_Diacritical_Marks
-                if (code in 0x0300..0x036F) {
+                if (code in 0x0300..0x036F && !label.startsWith("◌")) {
                     append("◌")
                 }
                 append(label)
