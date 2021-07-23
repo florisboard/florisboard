@@ -21,12 +21,10 @@ import android.content.Context
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import dev.patrickgold.florisboard.ime.clip.ClipboardPopupManager
 import dev.patrickgold.florisboard.ime.clip.ClipboardPopupView
-import timber.log.Timber
 
 /**
  * Basic helper view class which acts as a non-interactive layer view, which sits above the whole

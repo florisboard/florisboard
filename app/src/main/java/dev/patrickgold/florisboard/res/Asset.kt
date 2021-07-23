@@ -20,10 +20,6 @@ package dev.patrickgold.florisboard.res
  * Interface for an Asset to use within FlorisBoard. An asset is everything from a dictionary to a
  * keyboard layout to a extended popup mapping, etc. Assets are very important for the splitting
  * FlorisBoard's resources into assets.
- *
- * NOTE: At the current state, this is only a simple implementation idea and only PopupMappingAsset
- * partly uses it. This package and it's classes are expected to grow and gain more importance over
- * time.
  */
 interface Asset {
     /**

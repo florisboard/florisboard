@@ -16,16 +16,16 @@
 
 package dev.patrickgold.florisboard.ime.popup
 
+import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.res.Asset
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import kotlinx.serialization.Serializable
 
 /**
  * An object which maps each base key to its extended popups. This can be done for each
  * key variation. [KeyVariation.ALL] is always the fallback for each key.
  */
-typealias PopupMapping = Map<KeyVariation, Map<String, PopupSet<TextKeyData>>>
+typealias PopupMapping = Map<KeyVariation, Map<String, PopupSet<AbstractKeyData>>>
 
 /**
  * Class which contains an extended popup mapping to use for adding popups subtype based on the

@@ -23,7 +23,7 @@ import dev.patrickgold.florisboard.ime.popup.PopupSet
 class EmojiKey(override val data: KeyData) : Key(data) {
     var computedData: EmojiKeyData = EmojiKeyData(listOf())
         private set
-    var computedPopups: PopupSet<EmojiKeyData> = PopupSet()
+    var computedPopups: PopupSet<KeyData> = PopupSet()
         private set
 
     companion object {
@@ -32,6 +32,6 @@ class EmojiKey(override val data: KeyData) : Key(data) {
 
     fun dummyCompute() {
         computedData = data as? EmojiKeyData ?: computedData
-        computedPopups = PopupSet(relevant = (data as? EmojiKeyData)?.popup ?: listOf())
+        computedPopups = PopupSet(relevant = (data as? EmojiKeyData)?.popupList ?: listOf())
     }
 }

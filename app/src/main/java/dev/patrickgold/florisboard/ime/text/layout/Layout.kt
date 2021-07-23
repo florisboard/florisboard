@@ -16,10 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.text.layout
 
+import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.res.Asset
-import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.*
-import dev.patrickgold.florisboard.ime.text.keyboard.BasicTextKeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -30,7 +30,7 @@ data class Layout(
     override val authors: List<String>,
     val direction: String,
     val modifier: String? = null,
-    val arrangement: List<List<KeyData>> = listOf()
+    val arrangement: List<List<AbstractKeyData>> = listOf()
 ) : Asset {
     companion object {
         val PRE_GENERATED_LOADING_KEYBOARD = Layout(
@@ -41,46 +41,46 @@ data class Layout(
             direction = "ltr",
             arrangement = listOf(
                 listOf(
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0)
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0)
                 ),
                 listOf(
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0)
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0)
                 ),
                 listOf(
-                    BasicTextKeyData(code = KeyCode.SHIFT, type = KeyType.MODIFIER, label = "shift"),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = KeyCode.DELETE, type = KeyType.ENTER_EDITING, label = "delete")
+                    TextKeyData(code = KeyCode.SHIFT, type = KeyType.MODIFIER, label = "shift"),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = KeyCode.DELETE, type = KeyType.ENTER_EDITING, label = "delete")
                 ),
                 listOf(
-                    BasicTextKeyData(code = KeyCode.VIEW_SYMBOLS, type = KeyType.SYSTEM_GUI, label = "view_symbols"),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = KeyCode.SPACE, label = "space"),
-                    BasicTextKeyData(code = 0),
-                    BasicTextKeyData(code = KeyCode.ENTER, type = KeyType.ENTER_EDITING, label = "enter")
+                    TextKeyData(code = KeyCode.VIEW_SYMBOLS, type = KeyType.SYSTEM_GUI, label = "view_symbols"),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = KeyCode.SPACE, label = "space"),
+                    TextKeyData(code = 0),
+                    TextKeyData(code = KeyCode.ENTER, type = KeyType.ENTER_EDITING, label = "enter")
                 )
             )
         )

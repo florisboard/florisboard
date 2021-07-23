@@ -21,6 +21,7 @@ import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogWarning
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.AssetRef
 import dev.patrickgold.florisboard.res.AssetSource
@@ -252,7 +253,7 @@ class LayoutManager {
 
     private fun addRowHints(main: Array<TextKey>, hint: Array<TextKey>, hintType: KeyType) {
         for ((k,key) in main.withIndex()) {
-            val hintKey = hint.getOrNull(k)?.data?.computeTextKeyData(DefaultTextComputingEvaluator)
+            val hintKey = hint.getOrNull(k)?.data?.compute(DefaultComputingEvaluator)
             if (hintKey?.type != hintType) {
                 continue
             }

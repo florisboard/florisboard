@@ -16,11 +16,16 @@
 
 package dev.patrickgold.florisboard.ime.media.emoji
 
+import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
+import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
-import dev.patrickgold.florisboard.ime.text.keyboard.TextComputingEvaluator
+import dev.patrickgold.florisboard.ime.popup.PopupSet
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 /**
  * Data class for a single emoji (with possible emoji variants in [popup]). The JSON class identifier for this selector
@@ -34,10 +39,15 @@ import kotlinx.serialization.Serializable
 @SerialName("emoji_key")
 class EmojiKeyData(
     val codePoints: List<Int>,
-    val label: String = "",
-    val popup: MutableList<EmojiKeyData> = mutableListOf()
+    override val label: String = "",
+    val popupList: MutableList<EmojiKeyData> = mutableListOf()
 ) : KeyData {
-    override fun computeTextKeyData(evaluator: TextComputingEvaluator): TextKeyData? {
+    @Transient override val type: KeyType = KeyType.CHARACTER
+    @Transient override val code: Int = KeyCode.UNSPECIFIED
+    @Transient override val groupId: Int = KeyData.GROUP_DEFAULT
+    @Transient override val popup: PopupSet<AbstractKeyData> = PopupSet()
+
+    override fun compute(evaluator: ComputingEvaluator): TextKeyData? {
         return null
     }
 

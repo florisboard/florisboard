@@ -28,7 +28,7 @@ import android.graphics.Rect
  * @property data The base key data this key represents.This can be anything - from a basic text key to an emoji key
  *  to a complex selector.
  */
-abstract class Key(open val data: KeyData) {
+abstract class Key(open val data: AbstractKeyData) {
     /**
      * Specifies whether this key is enabled or not.
      */

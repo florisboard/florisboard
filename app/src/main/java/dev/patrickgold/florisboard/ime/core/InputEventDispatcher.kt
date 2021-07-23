@@ -21,8 +21,8 @@ import android.util.SparseArray
 import androidx.core.util.forEach
 import androidx.core.util.set
 import dev.patrickgold.florisboard.BuildConfig
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import timber.log.Timber
@@ -210,7 +210,7 @@ class InputEventDispatcher private constructor(
 data class InputKeyEvent(
     val eventTime: Long,
     val action: Action,
-    val data: TextKeyData,
+    val data: KeyData,
     val count: Int
 ) {
     companion object {
@@ -221,7 +221,7 @@ data class InputKeyEvent(
          *
          * @return The created input key event.
          */
-        fun down(keyData: TextKeyData): InputKeyEvent {
+        fun down(keyData: KeyData): InputKeyEvent {
             return InputKeyEvent(
                 eventTime = SystemClock.uptimeMillis(),
                 action = Action.DOWN,
@@ -238,7 +238,7 @@ data class InputKeyEvent(
          *
          * @return The created input key event.
          */
-        fun downUp(keyData: TextKeyData, count: Int = 1): InputKeyEvent {
+        fun downUp(keyData: KeyData, count: Int = 1): InputKeyEvent {
             return InputKeyEvent(
                 eventTime = SystemClock.uptimeMillis(),
                 action = Action.DOWN_UP,
@@ -254,7 +254,7 @@ data class InputKeyEvent(
          *
          * @return The created input key event.
          */
-        fun up(keyData: TextKeyData): InputKeyEvent {
+        fun up(keyData: KeyData): InputKeyEvent {
             return InputKeyEvent(
                 eventTime = SystemClock.uptimeMillis(),
                 action = Action.UP,
@@ -271,7 +271,7 @@ data class InputKeyEvent(
          *
          * @return The created input key event.
          */
-        fun repeat(keyData: TextKeyData, count: Int = 1): InputKeyEvent {
+        fun repeat(keyData: KeyData, count: Int = 1): InputKeyEvent {
             return InputKeyEvent(
                 eventTime = SystemClock.uptimeMillis(),
                 action = Action.REPEAT,
@@ -287,7 +287,7 @@ data class InputKeyEvent(
          *
          * @return The created input key event.
          */
-        fun cancel(keyData: TextKeyData): InputKeyEvent {
+        fun cancel(keyData: KeyData): InputKeyEvent {
             return InputKeyEvent(
                 eventTime = SystemClock.uptimeMillis(),
                 action = Action.CANCEL,

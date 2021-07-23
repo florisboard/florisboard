@@ -46,6 +46,9 @@ import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeMetaOnly
 import dev.patrickgold.florisboard.common.ViewUtils
+import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -55,17 +58,17 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
     private val assetManager: AssetManager get() = AssetManager.default()
 
     private lateinit var textKeyboardIconSet: TextKeyboardIconSet
-    private val textComputingEvaluator = object : TextComputingEvaluator by DefaultTextComputingEvaluator {
-        override fun evaluateVisible(data: TextKeyData): Boolean {
+    private val textComputingEvaluator = object : ComputingEvaluator by DefaultComputingEvaluator {
+        override fun evaluateVisible(data: KeyData): Boolean {
             return data.code != KeyCode.SWITCH_TO_MEDIA_CONTEXT
         }
 
-        override fun isSlot(data: TextKeyData): Boolean {
+        override fun isSlot(data: KeyData): Boolean {
             return CurrencySet.isCurrencySlot(data.code)
         }
 
-        override fun getSlotData(data: TextKeyData): TextKeyData {
-            return BasicTextKeyData(label = "$")
+        override fun getSlotData(data: KeyData): KeyData {
+            return TextKeyData(label = "$")
         }
     }
 

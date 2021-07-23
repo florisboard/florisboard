@@ -16,9 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.keyboard
 
+import dev.patrickgold.florisboard.ime.popup.PopupSet
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
-import dev.patrickgold.florisboard.ime.text.keyboard.TextComputingEvaluator
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -26,16 +27,16 @@ import kotlinx.serialization.Serializable
  * Basic interface for a key data object. Base for all key data objects across the IME, such as text, emojis and
  * selectors. The implementation is as abstract as possible, as different features require different implementations.
  */
-interface KeyData {
+interface AbstractKeyData {
     /**
-     * Computes a [TextKeyData] object for this key data. Returns null if no computation is possible or if the key is
+     * Computes a [KeyData] object for this key data. Returns null if no computation is possible or if the key is
      * not relevant based on the result of [evaluator].
      *
      * @param evaluator The evaluator used to retrieve different states from the parent controller.
      *
-     * @return A [TextKeyData] object or null if no computation is possible.
+     * @return A [KeyData] object or null if no computation is possible.
      */
-    fun computeTextKeyData(evaluator: TextComputingEvaluator): TextKeyData?
+    fun compute(evaluator: ComputingEvaluator): KeyData?
 
     /**
      * Returns the data described by this key as a string.
@@ -50,9 +51,53 @@ interface KeyData {
 }
 
 /**
- * Allows to select a [KeyData] based on the current caps state. Note that this type of selector only really makes
- * sense in a text context, though technically speaking it can be used anywhere, so this implementation allows for
- * any [KeyData] to be used here. The JSON class identifier for this selector is `case_selector`.
+ * Interface describing a basic key which can carry a character, an emoji, a special function etc. while being as
+ * abstract as possible.
+ *
+ * @property type The type of the key.
+ * @property code The Unicode code point of this key, or a special code from [KeyCode].
+ * @property label The label of the key. This should always be a representative string for [code].
+ * @property groupId The group which this key belongs to.
+ * @property popup The popups for ths key. Can also dynamically be provided via popup extensions.
+ */
+interface KeyData : AbstractKeyData {
+    val type: KeyType
+    val code: Int
+    val label: String
+    val groupId: Int
+    val popup: PopupSet<AbstractKeyData>?
+
+    companion object {
+        /**
+         * Constant for the default group. If not otherwise specified, any key is automatically
+         * assigned to this group.
+         */
+        const val GROUP_DEFAULT: Int = 0
+
+        /**
+         * Constant for the Left modifier key group. Any key belonging to this group will get the
+         * popups specified for "~left" in the popup mapping.
+         */
+        const val GROUP_LEFT: Int = 1
+
+        /**
+         * Constant for the right modifier key group. Any key belonging to this group will get the
+         * popups specified for "~right" in the popup mapping.
+         */
+        const val GROUP_RIGHT: Int = 2
+
+        /**
+         * Constant for the enter modifier key group. Any key belonging to this group will get the
+         * popups specified for "~enter" in the popup mapping.
+         */
+        const val GROUP_ENTER: Int = 3
+    }
+}
+
+/**
+ * Allows to select an [AbstractKeyData] based on the current caps state. Note that this type of selector only really
+ * makes sense in a text context, though technically speaking it can be used anywhere, so this implementation allows
+ * for any [AbstractKeyData] to be used here. The JSON class identifier for this selector is `case_selector`.
  *
  * Example usage in a layout JSON file:
  * ```
@@ -62,17 +107,17 @@ interface KeyData {
  * }
  * ```
  *
- * @property lower The property to use if the current caps state is lowercase.
- * @property upper The property to use if the current caps state is uppercase.
+ * @property lower The key data to use if the current caps state is lowercase.
+ * @property upper The key data to use if the current caps state is uppercase.
  */
 @Serializable
 @SerialName("case_selector")
 class CaseSelector(
-    val lower: KeyData,
-    val upper: KeyData,
-) : KeyData {
-    override fun computeTextKeyData(evaluator: TextComputingEvaluator): TextKeyData? {
-        return (if (evaluator.evaluateCaps()) { upper } else { lower }).computeTextKeyData(evaluator)
+    val lower: AbstractKeyData,
+    val upper: AbstractKeyData,
+) : AbstractKeyData {
+    override fun compute(evaluator: ComputingEvaluator): KeyData? {
+        return (if (evaluator.evaluateCaps()) { upper } else { lower }).compute(evaluator)
     }
 
     override fun asString(isForDisplay: Boolean): String {
@@ -81,9 +126,9 @@ class CaseSelector(
 }
 
 /**
- * Allows to select a [KeyData] based on the current key variation. Note that this type of selector only really makes
- * sense in a text context, though technically speaking it can be used anywhere, so this implementation allows for
- * any [KeyData] to be used here. The JSON class identifier for this selector is `variation_selector`.
+ * Allows to select an [AbstractKeyData] based on the current variation. Note that this type of selector only really
+ * makes sense in a text context, though technically speaking it can be used anywhere, so this implementation allows
+ * for any [AbstractKeyData] to be used here. The JSON class identifier for this selector is `variation_selector`.
  *
  * Example usage in a layout JSON file:
  * ```
@@ -94,8 +139,9 @@ class CaseSelector(
  * }
  * ```
  *
- * @property default The default [KeyData] which should be used in case no key variation is known or for the current
- *  key variation no override key is defined.
+ * @property default The default key data which should be used in case no key variation is known or for the current
+ *  key variation no override key is defined. Can be null, in this case this may mean the variation selector hides
+ *  the key if no direct match is present.
  * @property email The key data to use if [KeyVariation.EMAIL_ADDRESS] is the active key variation. If this value is
  *  null, [default] will be used instead.
  * @property uri The key data to use if [KeyVariation.URI] is the active key variation. If this value is null,
@@ -108,20 +154,20 @@ class CaseSelector(
 @Serializable
 @SerialName("variation_selector")
 data class VariationSelector(
-    val default: KeyData,
-    val email: KeyData? = null,
-    val uri: KeyData? = null,
-    val normal: KeyData? = null,
-    val password: KeyData? = null,
-) : KeyData {
-    override fun computeTextKeyData(evaluator: TextComputingEvaluator): TextKeyData? {
+    val default: AbstractKeyData? = null,
+    val email: AbstractKeyData? = null,
+    val uri: AbstractKeyData? = null,
+    val normal: AbstractKeyData? = null,
+    val password: AbstractKeyData? = null,
+) : AbstractKeyData {
+    override fun compute(evaluator: ComputingEvaluator): KeyData? {
         return when (evaluator.getKeyVariation()) {
             KeyVariation.ALL -> default
             KeyVariation.EMAIL_ADDRESS -> email ?: default
             KeyVariation.NORMAL -> normal ?: default
             KeyVariation.PASSWORD -> password ?: default
             KeyVariation.URI -> uri ?: default
-        }.computeTextKeyData(evaluator)
+        }?.compute(evaluator)
     }
 
     override fun asString(isForDisplay: Boolean): String {

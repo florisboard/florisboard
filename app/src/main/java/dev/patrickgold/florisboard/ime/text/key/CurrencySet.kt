@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.text.key
 
-import dev.patrickgold.florisboard.ime.text.keyboard.BasicTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import kotlinx.serialization.Serializable
 import kotlin.math.abs
@@ -44,12 +43,12 @@ class CurrencySet(
             name = "\$default",
             label = "Default",
             slots = listOf(
-                BasicTextKeyData(code =   36, label = "$"),
-                BasicTextKeyData(code =  162, label = "¢"),
-                BasicTextKeyData(code = 8364, label = "€"),
-                BasicTextKeyData(code =  163, label = "£"),
-                BasicTextKeyData(code =  165, label = "¥"),
-                BasicTextKeyData(code = 8369, label = "₱")
+                TextKeyData(code =   36, label = "$"),
+                TextKeyData(code =  162, label = "¢"),
+                TextKeyData(code = 8364, label = "€"),
+                TextKeyData(code =  163, label = "£"),
+                TextKeyData(code =  165, label = "¥"),
+                TextKeyData(code = 8369, label = "₱")
             )
         )
     }
