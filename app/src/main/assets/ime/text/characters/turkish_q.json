@@ -13,7 +13,10 @@
       { "$": "auto_text_key", "code":  116, "label": "t" },
       { "$": "auto_text_key", "code":  121, "label": "y" },
       { "$": "auto_text_key", "code":  117, "label": "u" },
-      { "$": "auto_text_key", "code":  305, "label": "ı" },
+      { "$": "case_selector",
+        "lower": { "code":  305, "label": "ı" },
+        "upper": { "code":   73, "label": "I" }
+      },
       { "$": "auto_text_key", "code":  111, "label": "o" },
       { "$": "auto_text_key", "code":  112, "label": "p" },
       { "$": "auto_text_key", "code":  287, "label": "ğ" },
@@ -30,7 +33,10 @@
       { "$": "auto_text_key", "code":  107, "label": "k" },
       { "$": "auto_text_key", "code":  108, "label": "l" },
       { "$": "auto_text_key", "code":  351, "label": "ş" },
-      { "$": "auto_text_key", "code":  105, "label": "i" }
+      { "$": "case_selector",
+        "lower": { "code":  105, "label": "i" },
+        "upper": { "code":  304, "label": "İ" }
+      }
     ],
     [
       { "$": "auto_text_key", "code":  122, "label": "z" },
