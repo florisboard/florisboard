@@ -578,18 +578,18 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         val florisboard = florisboard ?: return false
         val pointer = pointerMap.findById(event.pointerId) ?: return false
         val initialKey = pointer.initialKey ?: return false
-        val activeKey = pointer.activeKey ?: return false
+        val activeKey = pointer.activeKey
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW)
 
         return when (initialKey.computedData.code) {
             KeyCode.DELETE -> handleDeleteSwipe(event)
             KeyCode.SPACE -> handleSpaceSwipe(event)
             else -> when {
-                initialKey.computedData.code == KeyCode.SHIFT && activeKey.computedData.code == KeyCode.SPACE &&
+                initialKey.computedData.code == KeyCode.SHIFT && activeKey?.computedData?.code == KeyCode.SPACE &&
                     event.type == SwipeGesture.Type.TOUCH_MOVE -> handleSpaceSwipe(event)
-                initialKey.computedData.code == KeyCode.SHIFT && activeKey.computedData.code != KeyCode.SHIFT &&
+                initialKey.computedData.code == KeyCode.SHIFT && activeKey?.computedData?.code != KeyCode.SHIFT &&
                     event.type == SwipeGesture.Type.TOUCH_UP -> {
-                    activeKey.let {
+                    activeKey?.let {
                         florisboard.textInputManager.inputEventDispatcher.send(
                             InputKeyEvent.up(popupManager.getActiveKeyData(it, keyHintConfiguration) ?: it.computedData)
                         )
