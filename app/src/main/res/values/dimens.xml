@@ -80,9 +80,9 @@
     <dimen name="gesture_distance_threshold_long">36dp</dimen>
     <dimen name="gesture_distance_threshold_very_long">40dp</dimen>
 
-    <integer name="gesture_velocity_threshold_very_slow">7000</integer>
-    <integer name="gesture_velocity_threshold_slow">10000</integer>
-    <integer name="gesture_velocity_threshold_normal">13000</integer>
-    <integer name="gesture_velocity_threshold_fast">16000</integer>
-    <integer name="gesture_velocity_threshold_very_fast">19000</integer>
+    <integer name="gesture_velocity_threshold_very_slow">1000</integer>
+    <integer name="gesture_velocity_threshold_slow">1450</integer>
+    <integer name="gesture_velocity_threshold_normal">1900</integer>
+    <integer name="gesture_velocity_threshold_fast">2350</integer>
+    <integer name="gesture_velocity_threshold_very_fast">2800</integer>
 </resources>
