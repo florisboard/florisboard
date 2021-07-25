@@ -30,7 +30,11 @@ import dev.patrickgold.florisboard.common.PointerMap
 import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.core.*
+import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.keyboard.Keyboard
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.popup.PopupManager
@@ -62,51 +66,51 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
     private var cachedTheme: Theme? = null
     private var cachedState: KeyboardState = KeyboardState.new(maskOfInterest = KeyboardState.INTEREST_TEXT)
 
-    private var externalComputingEvaluator: TextComputingEvaluator? = null
-    private val internalComputingEvaluator = object : TextComputingEvaluator {
+    private var externalComputingEvaluator: ComputingEvaluator? = null
+    private val internalComputingEvaluator = object : ComputingEvaluator {
         override fun evaluateCaps(): Boolean {
             return externalComputingEvaluator?.evaluateCaps()
-                ?: DefaultTextComputingEvaluator.evaluateCaps()
+                ?: DefaultComputingEvaluator.evaluateCaps()
         }
 
-        override fun evaluateCaps(data: TextKeyData): Boolean {
+        override fun evaluateCaps(data: KeyData): Boolean {
             return externalComputingEvaluator?.evaluateCaps(data)
-                ?: DefaultTextComputingEvaluator.evaluateCaps(data)
+                ?: DefaultComputingEvaluator.evaluateCaps(data)
         }
 
-        override fun evaluateEnabled(data: TextKeyData): Boolean {
+        override fun evaluateEnabled(data: KeyData): Boolean {
             return externalComputingEvaluator?.evaluateEnabled(data)
-                ?: DefaultTextComputingEvaluator.evaluateEnabled(data)
+                ?: DefaultComputingEvaluator.evaluateEnabled(data)
         }
 
-        override fun evaluateVisible(data: TextKeyData): Boolean {
+        override fun evaluateVisible(data: KeyData): Boolean {
             return externalComputingEvaluator?.evaluateVisible(data)
-                ?: DefaultTextComputingEvaluator.evaluateVisible(data)
+                ?: DefaultComputingEvaluator.evaluateVisible(data)
         }
 
         override fun getActiveSubtype(): Subtype {
             return externalComputingEvaluator?.getActiveSubtype()
-                ?: DefaultTextComputingEvaluator.getActiveSubtype()
+                ?: DefaultComputingEvaluator.getActiveSubtype()
         }
 
         override fun getKeyVariation(): KeyVariation {
             return externalComputingEvaluator?.getKeyVariation()
-                ?: DefaultTextComputingEvaluator.getKeyVariation()
+                ?: DefaultComputingEvaluator.getKeyVariation()
         }
 
-        override fun getKeyboard(): TextKeyboard {
+        override fun getKeyboard(): Keyboard {
             return computedKeyboard // Purposely not calling the external evaluator!
-                ?: DefaultTextComputingEvaluator.getKeyboard()
+                ?: DefaultComputingEvaluator.getKeyboard()
         }
 
-        override fun isSlot(data: TextKeyData): Boolean {
+        override fun isSlot(data: KeyData): Boolean {
             return externalComputingEvaluator?.isSlot(data)
-                ?: DefaultTextComputingEvaluator.isSlot(data)
+                ?: DefaultComputingEvaluator.isSlot(data)
         }
 
-        override fun getSlotData(data: TextKeyData): TextKeyData? {
+        override fun getSlotData(data: KeyData): KeyData? {
             return externalComputingEvaluator?.getSlotData(data)
-                ?: DefaultTextComputingEvaluator.getSlotData(data)
+                ?: DefaultComputingEvaluator.getSlotData(data)
         }
     }
 
@@ -173,7 +177,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         setWillNotDraw(false)
     }
 
-    fun setComputingEvaluator(evaluator: TextComputingEvaluator?) {
+    fun setComputingEvaluator(evaluator: ComputingEvaluator?) {
         externalComputingEvaluator = evaluator
     }
 

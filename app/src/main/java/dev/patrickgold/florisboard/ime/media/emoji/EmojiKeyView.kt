@@ -137,7 +137,7 @@ class EmojiKeyView(
                         florisboard?.keyPressVibrate()
                         florisboard?.keyPressSound()
                     }
-                    florisboard?.mediaInputManager?.sendEmojiKeyPress(retData)
+                    (retData as? EmojiKeyData)?.let { florisboard?.mediaInputManager?.sendEmojiKeyPress(it) }
                     performClick()
                 }
                 if (event.actionMasked == MotionEvent.ACTION_CANCEL) {

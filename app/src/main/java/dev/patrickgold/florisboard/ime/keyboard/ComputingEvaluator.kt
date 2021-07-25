@@ -14,47 +14,47 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.keyboard
+package dev.patrickgold.florisboard.ime.keyboard
 
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.text.key.*
 
-interface TextComputingEvaluator {
+interface ComputingEvaluator {
     fun evaluateCaps(): Boolean
 
-    fun evaluateCaps(data: TextKeyData): Boolean
+    fun evaluateCaps(data: KeyData): Boolean
 
-    fun evaluateEnabled(data: TextKeyData): Boolean
+    fun evaluateEnabled(data: KeyData): Boolean
 
-    fun evaluateVisible(data: TextKeyData): Boolean
+    fun evaluateVisible(data: KeyData): Boolean
 
     fun getActiveSubtype(): Subtype
 
     fun getKeyVariation(): KeyVariation
 
-    fun getKeyboard(): TextKeyboard
+    fun getKeyboard(): Keyboard
 
-    fun isSlot(data: TextKeyData): Boolean
+    fun isSlot(data: KeyData): Boolean
 
-    fun getSlotData(data: TextKeyData): TextKeyData?
+    fun getSlotData(data: KeyData): KeyData?
 }
 
-object DefaultTextComputingEvaluator : TextComputingEvaluator {
+object DefaultComputingEvaluator : ComputingEvaluator {
     override fun evaluateCaps(): Boolean = false
 
-    override fun evaluateCaps(data: TextKeyData): Boolean = false
+    override fun evaluateCaps(data: KeyData): Boolean = false
 
-    override fun evaluateEnabled(data: TextKeyData): Boolean = true
+    override fun evaluateEnabled(data: KeyData): Boolean = true
 
-    override fun evaluateVisible(data: TextKeyData): Boolean = true
+    override fun evaluateVisible(data: KeyData): Boolean = true
 
     override fun getActiveSubtype(): Subtype = Subtype.DEFAULT
 
     override fun getKeyVariation(): KeyVariation = KeyVariation.NORMAL
 
-    override fun getKeyboard(): TextKeyboard = throw NotImplementedError()
+    override fun getKeyboard(): Keyboard = throw NotImplementedError()
 
-    override fun isSlot(data: TextKeyData): Boolean = false
+    override fun isSlot(data: KeyData): Boolean = false
 
-    override fun getSlotData(data: TextKeyData): TextKeyData? = null
+    override fun getSlotData(data: KeyData): KeyData? = null
 }

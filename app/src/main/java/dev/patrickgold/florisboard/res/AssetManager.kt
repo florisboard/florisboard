@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.res
 import android.content.Context
 import android.net.Uri
 import dev.patrickgold.florisboard.debug.flogError
+import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.CaseSelector
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
@@ -50,20 +51,21 @@ class AssetManager private constructor(val applicationContext: Context) {
         ignoreUnknownKeys = true
         isLenient = true
         serializersModule = SerializersModule {
-            polymorphic(KeyData::class) {
-                subclass(BasicTextKeyData::class, BasicTextKeyData.serializer())
+            polymorphic(AbstractKeyData::class) {
+                subclass(TextKeyData::class, TextKeyData.serializer())
                 subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
                 subclass(MultiTextKeyData::class, MultiTextKeyData.serializer())
                 subclass(EmojiKeyData::class, EmojiKeyData.serializer())
                 subclass(CaseSelector::class, CaseSelector.serializer())
                 subclass(VariationSelector::class, VariationSelector.serializer())
-                default { BasicTextKeyData.serializer() }
+                default { TextKeyData.serializer() }
             }
-            polymorphic(TextKeyData::class) {
-                subclass(BasicTextKeyData::class, BasicTextKeyData.serializer())
+            polymorphic(KeyData::class) {
+                subclass(TextKeyData::class, TextKeyData.serializer())
                 subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
                 subclass(MultiTextKeyData::class, MultiTextKeyData.serializer())
-                default { BasicTextKeyData.serializer() }
+                subclass(EmojiKeyData::class, EmojiKeyData.serializer())
+                default { TextKeyData.serializer() }
             }
             polymorphic(Composer::class) {
                 subclass(Appender::class, Appender.serializer())

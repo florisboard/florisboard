@@ -16,11 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.popup
 
-import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
+import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
-import dev.patrickgold.florisboard.ime.text.keyboard.BasicTextKeyData
-import dev.patrickgold.florisboard.ime.text.keyboard.TextComputingEvaluator
 import kotlinx.serialization.Serializable
 
 /**
@@ -32,7 +31,7 @@ import kotlinx.serialization.Serializable
  * The order in which these defined popups will be shown depends on the current [KeyHintConfiguration].
  */
 @Serializable
-open class PopupSet<T : KeyData>(
+open class PopupSet<T : AbstractKeyData>(
     open val main: T? = null,
     open val relevant: List<T> = listOf()
 ) {
@@ -46,7 +45,7 @@ open class PopupSet<T : KeyData>(
 }
 
 @Suppress("UNCHECKED_CAST")
-class MutablePopupSet<T : KeyData>(
+class MutablePopupSet<T : AbstractKeyData>(
     override var main: T? = null,
     override val relevant: ArrayList<T> = arrayListOf(),
     var symbolHint: T? = null,
@@ -143,27 +142,27 @@ class MutablePopupSet<T : KeyData>(
         }
     }
 
-    fun merge(other: PopupSet<T>, evaluator: TextComputingEvaluator) {
+    fun merge(other: PopupSet<AbstractKeyData>, evaluator: ComputingEvaluator) {
         mergeInternal(other, evaluator, relevant, true)
     }
 
-    fun mergeSymbolHint(hintPopups: PopupSet<T>, evaluator: TextComputingEvaluator) {
+    fun mergeSymbolHint(hintPopups: PopupSet<AbstractKeyData>, evaluator: ComputingEvaluator) {
         mergeInternal(hintPopups, evaluator, symbolPopups)
     }
 
-    fun mergeNumberHint(hintPopups: PopupSet<T>, evaluator: TextComputingEvaluator) {
+    fun mergeNumberHint(hintPopups: PopupSet<AbstractKeyData>, evaluator: ComputingEvaluator) {
         mergeInternal(hintPopups, evaluator, numberPopups)
     }
 
-    private fun mergeInternal(other: PopupSet<T>, evaluator: TextComputingEvaluator, targetList: MutableList<T>, useMain: Boolean = false) {
+    private fun mergeInternal(other: PopupSet<AbstractKeyData>, evaluator: ComputingEvaluator, targetList: MutableList<T>, useMain: Boolean = false) {
         other.relevant.forEach {
-            val data = it.computeTextKeyData(evaluator) as? T
+            val data = it.compute(evaluator) as? T
             if (data != null) {
                 targetList.add(data)
             }
         }
         other.main?.let {
-            val data = it.computeTextKeyData(evaluator) as? T
+            val data = it.compute(evaluator) as? T
             if (data != null) {
                 if (useMain && main == null) {
                     main = data

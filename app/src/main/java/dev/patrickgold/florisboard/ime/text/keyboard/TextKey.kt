@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
+import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
+import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.popup.MutablePopupSet
@@ -23,16 +25,17 @@ import dev.patrickgold.florisboard.ime.popup.PopupMapping
 import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.*
 
-class TextKey(override val data: KeyData) : Key(data) {
-    var computedData: TextKeyData = TextKeyData.UNSPECIFIED
+class TextKey(override val data: AbstractKeyData) : Key(data) {
+    var computedData: KeyData = TextKeyData.UNSPECIFIED
         private set
-    val computedPopups: MutablePopupSet<TextKeyData> = MutablePopupSet()
-    var computedSymbolHint: TextKeyData? = null
-    var computedNumberHint: TextKeyData? = null
+    val computedPopups: MutablePopupSet<KeyData> = MutablePopupSet()
+    var computedSymbolHint: KeyData? = null
+    var computedNumberHint: KeyData? = null
 
-    fun compute(evaluator: TextComputingEvaluator) {
-        val keyboardMode = evaluator.getKeyboard().mode
-        val computed = data.computeTextKeyData(evaluator)
+    fun compute(evaluator: ComputingEvaluator) {
+        val keyboard = (evaluator.getKeyboard() as? TextKeyboard)
+        val keyboardMode = keyboard?.mode ?: KeyboardMode.CHARACTERS
+        val computed = data.compute(evaluator)
 
         if (computed == null || !evaluator.evaluateVisible(computed)) {
             computedData = TextKeyData.UNSPECIFIED
@@ -50,22 +53,22 @@ class TextKey(override val data: KeyData) : Key(data) {
             if (keyboardMode == KeyboardMode.CHARACTERS || keyboardMode == KeyboardMode.NUMERIC_ADVANCED ||
                 keyboardMode == KeyboardMode.SYMBOLS || keyboardMode == KeyboardMode.SYMBOLS2) {
                 val extLabel = when (computed.groupId) {
-                    TextKeyData.GROUP_ENTER -> {
+                    KeyData.GROUP_ENTER -> {
                         "~enter"
                     }
-                    TextKeyData.GROUP_LEFT -> {
+                    KeyData.GROUP_LEFT -> {
                         "~left"
                     }
-                    TextKeyData.GROUP_RIGHT -> {
+                    KeyData.GROUP_RIGHT -> {
                         "~right"
                     }
                     else -> {
                         computed.label.lowercase(evaluator.getActiveSubtype().locale)
                     }
                 }
-                val extendedPopupsDefault = evaluator.getKeyboard().extendedPopupMappingDefault
-                val extendedPopups = evaluator.getKeyboard().extendedPopupMapping
-                var popupSet: PopupSet<TextKeyData>? = null
+                val extendedPopupsDefault = keyboard?.extendedPopupMappingDefault
+                val extendedPopups = keyboard?.extendedPopupMapping
+                var popupSet: PopupSet<AbstractKeyData>? = null
                 val kv = evaluator.getKeyVariation()
                 if (popupSet == null && kv == KeyVariation.PASSWORD) {
                     popupSet = extendedPopups?.get(KeyVariation.PASSWORD)?.get(extLabel) ?:
@@ -87,7 +90,7 @@ class TextKey(override val data: KeyData) : Key(data) {
                     popupSet = extendedPopups?.get(KeyVariation.ALL)?.get(extLabel) ?:
                         extendedPopupsDefault?.get(KeyVariation.ALL)?.get(extLabel)
                 }
-                var keySpecificPopupSet: PopupSet<TextKeyData>? = null
+                var keySpecificPopupSet: PopupSet<AbstractKeyData>? = null
                 if (extLabel != computed.label) {
                     keySpecificPopupSet = extendedPopups?.get(KeyVariation.ALL)?.get(computed.label) ?:
                         extendedPopupsDefault?.get(KeyVariation.ALL)?.get(computed.label)
@@ -162,13 +165,13 @@ class TextKey(override val data: KeyData) : Key(data) {
 
     private fun addComputedHints(
         keyCode: Int,
-        evaluator: TextComputingEvaluator,
+        evaluator: ComputingEvaluator,
         extendedPopups: PopupMapping?,
         extendedPopupsDefault: PopupMapping?
     ) {
         val symbolHint = computedSymbolHint
         if (symbolHint != null) {
-            val evaluatedSymbolHint = symbolHint.computeTextKeyData(evaluator)
+            val evaluatedSymbolHint = symbolHint.compute(evaluator)
             if (symbolHint.code != keyCode) {
                 computedPopups.symbolHint = evaluatedSymbolHint
                 mergePopups(evaluatedSymbolHint, evaluator, computedPopups::mergeSymbolHint)
@@ -181,7 +184,7 @@ class TextKey(override val data: KeyData) : Key(data) {
         }
         val numericHint = computedNumberHint
         if (numericHint != null) {
-            val evaluatedNumberHint = numericHint.computeTextKeyData(evaluator)
+            val evaluatedNumberHint = numericHint.compute(evaluator)
             if (numericHint.code != keyCode) {
                 computedPopups.numberHint = evaluatedNumberHint
                 mergePopups(evaluatedNumberHint, evaluator, computedPopups::mergeNumberHint)
@@ -195,12 +198,12 @@ class TextKey(override val data: KeyData) : Key(data) {
     }
 
     private fun mergePopups(
-        keyData: TextKeyData?,
-        evaluator: TextComputingEvaluator,
-        merge: (popups: PopupSet<TextKeyData>, evaluator: TextComputingEvaluator) -> Unit
+        keyData: KeyData?,
+        evaluator: ComputingEvaluator,
+        merge: (popups: PopupSet<AbstractKeyData>, evaluator: ComputingEvaluator) -> Unit
     ) {
-        if (keyData is BasicTextKeyData && keyData.popup != null) {
-            merge(keyData.popup, evaluator)
+        if (keyData?.popup != null) {
+            merge(keyData.popup!!, evaluator)
         }
     }
 }

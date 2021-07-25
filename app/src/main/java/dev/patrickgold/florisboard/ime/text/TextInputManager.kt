@@ -26,11 +26,14 @@ import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.AssetRef
 import dev.patrickgold.florisboard.res.AssetSource
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard.InputAttributes
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.keyboard.Keyboard
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.keyboard.updateKeyboardState
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
@@ -112,16 +115,16 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         this.symbolsWithSpaceAfter = List(json.length()){ json.getString(it) }
     }
 
-    val evaluator = object : TextComputingEvaluator {
+    val evaluator = object : ComputingEvaluator {
         override fun evaluateCaps(): Boolean {
             return activeState.caps || activeState.capsLock
         }
 
-        override fun evaluateCaps(data: TextKeyData): Boolean {
+        override fun evaluateCaps(data: KeyData): Boolean {
             return evaluateCaps() && data.code >= KeyCode.SPACE
         }
 
-        override fun evaluateEnabled(data: TextKeyData): Boolean {
+        override fun evaluateEnabled(data: KeyData): Boolean {
             return when (data.code) {
                 KeyCode.CLIPBOARD_COPY,
                 KeyCode.CLIPBOARD_CUT -> {
@@ -145,7 +148,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             }
         }
 
-        override fun evaluateVisible(data: TextKeyData): Boolean {
+        override fun evaluateVisible(data: KeyData): Boolean {
             return when (data.code) {
                 KeyCode.SWITCH_TO_TEXT_CONTEXT,
                 KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
@@ -187,15 +190,15 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             return activeState.keyVariation
         }
 
-        override fun getKeyboard(): TextKeyboard {
+        override fun getKeyboard(): Keyboard {
             throw NotImplementedError() // Correct value must be inserted by the TextKeyboardView
         }
 
-        override fun isSlot(data: TextKeyData): Boolean {
+        override fun isSlot(data: KeyData): Boolean {
             return CurrencySet.isCurrencySlot(data.code)
         }
 
-        override fun getSlotData(data: TextKeyData): TextKeyData? {
+        override fun getSlotData(data: KeyData): KeyData? {
             return florisboard.subtypeManager.getCurrencySet(getActiveSubtype()).getSlot(data.code)
         }
     }

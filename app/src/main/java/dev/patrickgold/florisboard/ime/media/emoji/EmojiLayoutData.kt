@@ -151,7 +151,7 @@ fun parseRawEmojiSpecsFile(
                                         WHITE_HAIR,
                                         BALD -> {
                                             // Emoji is extension, add it as popup to last one
-                                            lastKey?.popup?.add(key)
+                                            lastKey?.popupList?.add(key)
                                         }
                                         else -> {
                                             // Emoji is standalone

@@ -23,6 +23,7 @@ import android.view.View
 import androidx.core.content.ContextCompat.getDrawable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.keyboard.Key
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKey
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyboardView
@@ -496,7 +497,7 @@ class PopupManager<V : View>(
      * @param keyHintConfiguration The key hint configuration to be used.
      * @return The [TextKeyData] object of the currently active key or null.
      */
-    fun getActiveKeyData(key: Key, keyHintConfiguration: KeyHintConfiguration): TextKeyData? {
+    fun getActiveKeyData(key: Key, keyHintConfiguration: KeyHintConfiguration): KeyData? {
         return if (key is TextKey) {
             val element = popupViewExt.properties.getElementOrNull()
             if (element != null) {
@@ -516,7 +517,7 @@ class PopupManager<V : View>(
      * @param key Reference to the key currently controlling the popup.
      * @return The [EmojiKeyData] object of the currently active key or null.
      */
-    fun getActiveEmojiKeyData(key: Key): EmojiKeyData? {
+    fun getActiveEmojiKeyData(key: Key): KeyData? {
         return if (key is EmojiKey) {
             val element = popupViewExt.properties.getElementOrNull()
             if (element != null) {
