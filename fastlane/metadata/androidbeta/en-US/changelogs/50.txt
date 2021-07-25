@@ -1,0 +1,4 @@
+This release improves the packaging of the ICU data, thus reducing the APK size
+of FlorisBoard by 50%. Additionally several improvements and fixes are included.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.13-beta07
