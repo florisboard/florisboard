@@ -682,6 +682,15 @@
       "preferred": {
         "characters": "korean"
       }
+    },
+    {
+      "id": 3000,
+      "languageTag": "lt-LT",
+      "composer": "appender",
+      "currencySet": "euro",
+      "preferred": {
+        "characters": "qwerty"
+      }
     }
   ]
 }
