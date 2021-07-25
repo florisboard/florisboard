@@ -4,9 +4,9 @@ import android.util.SparseArray
 import androidx.collection.LruCache
 import androidx.core.util.set
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import java.text.Normalizer
 import java.util.*
 import java.util.concurrent.ConcurrentHashMap
@@ -14,7 +14,7 @@ import kotlin.collections.HashMap
 import kotlin.math.*
 
 private fun TextKey.baseCode(): Int {
-    return (data as? TextKeyData)?.code ?: KeyCode.UNSPECIFIED
+    return (data as? KeyData)?.code ?: KeyCode.UNSPECIFIED
 }
 
 /**
