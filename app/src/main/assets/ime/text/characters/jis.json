@@ -1,0 +1,197 @@
+{
+  "type": "characters",
+  "name": "jis",
+  "label": "JIS",
+  "authors": [ "Waelwindows" ],
+  "direction": "ltr",
+  "arrangement": [
+    [
+      { "$": "case_selector",
+        "lower": { "code": 12396, "label": "ぬ" },
+        "upper": { "code": 12492, "label": "ヌ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12405, "label": "ふ" },
+        "upper": { "code": 12501, "label": "フ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12354, "label": "あ" },
+        "upper": { "code": 12450, "label": "ア" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12358, "label": "う" },
+        "upper": { "code": 12454, "label": "ウ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12360, "label": "え" },
+        "upper": { "code": 12456, "label": "エ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12362, "label": "お" },
+        "upper": { "code": 12458, "label": "オ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12420, "label": "や" },
+        "upper": { "code": 12516, "label": "ヤ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12422, "label": "ゆ" },
+        "upper": { "code": 12518, "label": "ユ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12424, "label": "よ" },
+        "upper": { "code": 12520, "label": "ヨ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12431, "label": "わ" },
+        "upper": { "code": 12527, "label": "ワ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12411, "label": "ほ" },
+        "upper": { "code": 12507, "label": "ホ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12408, "label": "へ" },
+        "upper": { "code": 12504, "label": "ヘ" }
+      }
+    ],
+    [
+      { "$": "case_selector",
+        "lower": { "code": 12383, "label": "た" },
+        "upper": { "code": 12479, "label": "タ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12390, "label": "て" },
+        "upper": { "code": 12486, "label": "テ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12356, "label": "い" },
+        "upper": { "code": 12452, "label": "イ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12377, "label": "す" },
+        "upper": { "code": 12473, "label": "ス" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12363, "label": "か" },
+        "upper": { "code": 12459, "label": "カ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12435, "label": "ん" },
+        "upper": { "code": 12531, "label": "ン" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12394, "label": "な" },
+        "upper": { "code": 12490, "label": "ナ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12395, "label": "に" },
+        "upper": { "code": 12491, "label": "ニ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12425, "label": "ら" },
+        "upper": { "code": 12521, "label": "ラ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12379, "label": "せ" },
+        "upper": { "code": 12475, "label": "セ" }
+      }
+    ],
+    [
+      { "$": "case_selector",
+        "lower": { "code": 12385, "label": "ち" },
+        "upper": { "code": 12481, "label": "チ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12392, "label": "と" },
+        "upper": { "code": 12488, "label": "ト" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12375, "label": "し" },
+        "upper": { "code": 12471, "label": "シ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12399, "label": "は" },
+        "upper": { "code": 12495, "label": "ハ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12365, "label": "き" },
+        "upper": { "code": 12461, "label": "キ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12367, "label": "く" },
+        "upper": { "code": 12463, "label": "ク" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12414, "label": "ま" },
+        "upper": { "code": 12510, "label": "マ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12398, "label": "の" },
+        "upper": { "code": 12494, "label": "ノ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12426, "label": "り" },
+        "upper": { "code": 12522, "label": "リ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12428, "label": "れ" },
+        "upper": { "code": 12524, "label": "レ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12369, "label": "け" },
+        "upper": { "code": 12465, "label": "ケ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12416, "label": "む" },
+        "upper": { "code": 12512, "label": "ム" }
+      }
+    ],
+    [
+      { "$": "case_selector",
+        "lower": { "code": 12388, "label": "つ" },
+        "upper": { "code": 12484, "label": "ツ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12373, "label": "さ" },
+        "upper": { "code": 12469, "label": "サ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12381, "label": "そ" },
+        "upper": { "code": 12477, "label": "ソ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12402, "label": "ひ" },
+        "upper": { "code": 12498, "label": "ヒ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12371, "label": "こ" },
+        "upper": { "code": 12467, "label": "コ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12415, "label": "み" },
+        "upper": { "code": 12511, "label": "ミ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12418, "label": "も" },
+        "upper": { "code": 12514, "label": "モ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12397, "label": "ね" },
+        "upper": { "code": 12493, "label": "ネ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12427, "label": "る" },
+        "upper": { "code": 12523, "label": "ル" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12417, "label": "め" },
+        "upper": { "code": 12513, "label": "メ" }
+      },
+      { "$": "case_selector",
+        "lower": { "code": 12429, "label": "ろ" },
+        "upper": { "code": 12525, "label": "ロ" }
+      }
+    ]
+  ]
+}

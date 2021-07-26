@@ -691,6 +691,15 @@
       "preferred": {
         "characters": "qwerty"
       }
+    },
+    {
+      "id": 3100,
+      "languageTag": "ja",
+      "composer": "appender",
+      "currencySet": "yen",
+      "preferred": {
+        "characters": "jis"
+      }
     }
   ]
 }
