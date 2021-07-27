@@ -24,9 +24,9 @@ interface ComputingEvaluator {
 
     fun evaluateCaps(data: KeyData): Boolean
 
-    fun evaluateKanaType(): KanaType
+    fun evaluateKanaType(): KanaType = KanaType.HIRA
 
-    fun evaluateKanaSmall(): Boolean
+    fun evaluateKanaSmall(): Boolean = false
 
     fun evaluateEnabled(data: KeyData): Boolean
 

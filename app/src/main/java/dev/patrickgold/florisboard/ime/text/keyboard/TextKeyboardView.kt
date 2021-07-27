@@ -31,6 +31,7 @@ import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.KanaType
 import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
@@ -72,6 +73,10 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             return externalComputingEvaluator?.evaluateCaps()
                 ?: DefaultComputingEvaluator.evaluateCaps()
         }
+
+        override fun evaluateKanaType(): KanaType = KanaType.HIRA
+
+        override fun evaluateKanaSmall(): Boolean = false
 
         override fun evaluateCaps(data: KeyData): Boolean {
             return externalComputingEvaluator?.evaluateCaps(data)

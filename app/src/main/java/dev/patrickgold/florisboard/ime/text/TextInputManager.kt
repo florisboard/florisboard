@@ -27,6 +27,7 @@ import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.KanaType
 import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.AssetRef
 import dev.patrickgold.florisboard.res.AssetSource
@@ -123,6 +124,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         override fun evaluateCaps(data: KeyData): Boolean {
             return evaluateCaps() && data.code >= KeyCode.SPACE
         }
+
+        override fun evaluateKanaType(): KanaType = KanaType.HIRA
+
+        override fun evaluateKanaSmall(): Boolean = false
 
         override fun evaluateEnabled(data: KeyData): Boolean {
             return when (data.code) {
