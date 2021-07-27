@@ -24,6 +24,10 @@ interface ComputingEvaluator {
 
     fun evaluateCaps(data: KeyData): Boolean
 
+    fun evaluateKanaType(): KanaType
+
+    fun evaluateKanaSmall(): Boolean
+
     fun evaluateEnabled(data: KeyData): Boolean
 
     fun evaluateVisible(data: KeyData): Boolean
@@ -44,6 +48,10 @@ object DefaultComputingEvaluator : ComputingEvaluator {
 
     override fun evaluateCaps(data: KeyData): Boolean = false
 
+    override fun evaluateKanaType(): KanaType = KanaType.HIRA
+
+    override fun evaluateKanaSmall(): Boolean = false
+
     override fun evaluateEnabled(data: KeyData): Boolean = true
 
     override fun evaluateVisible(data: KeyData): Boolean = true
@@ -57,4 +65,10 @@ object DefaultComputingEvaluator : ComputingEvaluator {
     override fun isSlot(data: KeyData): Boolean = false
 
     override fun getSlotData(data: KeyData): KeyData? = null
+}
+
+enum class KanaType {
+    HIRA,
+    KATA,
+    HALF_KATA,
 }
