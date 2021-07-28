@@ -2,7 +2,8 @@
   "package": "dev.patrickgold.florisboard",
   "composers": [
     { "$": "appender" },
-    { "$": "hangul-unicode" }
+    { "$": "hangul-unicode" },
+    { "$": "kana-unicode" }
   ],
   "currencySets": [
     {
@@ -695,7 +696,7 @@
     {
       "id": 3100,
       "languageTag": "ja-JP-jis",
-      "composer": "appender",
+      "composer": "kana-unicode",
       "currencySet": "yen",
       "preferred": {
         "characters": "jis"

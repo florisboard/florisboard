@@ -74,6 +74,7 @@ class AssetManager private constructor(val applicationContext: Context) {
             polymorphic(Composer::class) {
                 subclass(Appender::class, Appender.serializer())
                 subclass(HangulUnicode::class, HangulUnicode.serializer())
+                subclass(KanaUnicode::class, KanaUnicode.serializer())
                 subclass(WithRules::class, WithRules.serializer())
                 default { Appender.serializer() }
             }
