@@ -125,7 +125,15 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             return evaluateCaps() && data.code >= KeyCode.SPACE
         }
 
-        override fun evaluateKanaType(): KanaType = KanaType.HIRA
+        override fun evaluateKanaType(): KanaType {
+            return if (activeState.capsLock) {
+                KanaType.HALF_KATA
+            } else if (activeState.caps) {
+                KanaType.KATA
+            } else {
+                KanaType.HIRA
+            }
+        }
 
         override fun evaluateKanaSmall(): Boolean = false
 

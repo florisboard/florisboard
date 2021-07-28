@@ -74,9 +74,15 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 ?: DefaultComputingEvaluator.evaluateCaps()
         }
 
-        override fun evaluateKanaType(): KanaType = KanaType.HIRA
+        override fun evaluateKanaType(): KanaType {
+            return externalComputingEvaluator?.evaluateKanaType()
+                ?: DefaultComputingEvaluator.evaluateKanaType()
+        }
 
-        override fun evaluateKanaSmall(): Boolean = false
+        override fun evaluateKanaSmall(): Boolean {
+            return externalComputingEvaluator?.evaluateKanaSmall()
+                ?: DefaultComputingEvaluator.evaluateKanaSmall()
+        }
 
         override fun evaluateCaps(data: KeyData): Boolean {
             return externalComputingEvaluator?.evaluateCaps(data)
