@@ -1,6 +1,6 @@
 {
   "type": "characters/extended_popups",
-  "name": "jis",
+  "name": "ja-JP-jis",
   "authors": [ "waelwindows" ],
   "mapping": {
     "all": {

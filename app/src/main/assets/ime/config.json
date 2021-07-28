@@ -694,7 +694,7 @@
     },
     {
       "id": 3100,
-      "languageTag": "ja",
+      "languageTag": "ja-JP-jis",
       "composer": "appender",
       "currencySet": "yen",
       "preferred": {
