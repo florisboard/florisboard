@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.core
 
 import android.content.Context
+import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.AssetRef
@@ -24,7 +25,6 @@ import dev.patrickgold.florisboard.res.AssetSource
 import dev.patrickgold.florisboard.ime.text.key.CurrencySet
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
-import java.util.*
 import kotlin.collections.ArrayList
 
 /**
@@ -118,7 +118,7 @@ class SubtypeManager(
      * @return True if the subtype was added, false otherwise. A return value of false indicates
      *  that the subtype already exists.
      */
-    fun addSubtype(locale: Locale, composerName: String, currencySetName: String, layoutMap: SubtypeLayoutMap): Boolean {
+    fun addSubtype(locale: FlorisLocale, composerName: String, currencySetName: String, layoutMap: SubtypeLayoutMap): Boolean {
         return addSubtype(
             Subtype(
                 (locale.hashCode() + 31 * layoutMap.hashCode() + 31 * currencySetName.hashCode()),
@@ -186,7 +186,7 @@ class SubtypeManager(
      * @return The default system locale or null, if no matching default system subtype could be
      *  found.
      */
-    fun getDefaultSubtypeForLocale(locale: Locale): DefaultSubtype? {
+    fun getDefaultSubtypeForLocale(locale: FlorisLocale): DefaultSubtype? {
         for (defaultSubtype in imeConfig.defaultSubtypes) {
             if (defaultSubtype.locale == locale) {
                 return defaultSubtype

@@ -13,7 +13,6 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.Closeable
-import java.util.*
 import kotlin.collections.ArrayDeque
 
 /**

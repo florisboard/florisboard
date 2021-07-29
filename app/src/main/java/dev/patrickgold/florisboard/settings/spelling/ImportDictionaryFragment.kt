@@ -52,7 +52,7 @@ class ImportDictionaryFragment(private val isArchive: Boolean) : BottomSheetDial
             with(preprocessed) {
                 binding.s3VerifyLocale.text = resources.getString(
                     R.string.settings__spelling__import_dict_s3__verify_files_locale,
-                    config.locale
+                    config.locale.languageTag()
                 )
                 binding.s3VerifyOriginal.text = resources.getString(
                     R.string.settings__spelling__import_dict_s3__verify_files_original,

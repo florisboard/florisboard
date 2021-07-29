@@ -18,7 +18,7 @@ package dev.patrickgold.florisboard.ime.dictionary
 
 import android.content.Context
 import androidx.room.Room
-import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.nlp.SuggestionList
@@ -26,7 +26,6 @@ import dev.patrickgold.florisboard.ime.nlp.Word
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import java.lang.ref.WeakReference
-import java.util.*
 
 /**
  * TODO: document
@@ -82,7 +81,7 @@ class DictionaryManager private constructor(
         // TODO: Implement this
     }
 
-    fun queryUserDictionary(word: Word, locale: Locale, destSuggestionList: SuggestionList) {
+    fun queryUserDictionary(word: Word, locale: FlorisLocale, destSuggestionList: SuggestionList) {
         val florisDao = florisUserDictionaryDao()
         val systemDao = systemUserDictionaryDao()
         if (florisDao == null && systemDao == null) {
@@ -114,7 +113,7 @@ class DictionaryManager private constructor(
         }
     }
 
-    fun spell(word: Word, locale: Locale): Boolean {
+    fun spell(word: Word, locale: FlorisLocale): Boolean {
         val florisDao = florisUserDictionaryDao()
         val systemDao = systemUserDictionaryDao()
         if (florisDao == null && systemDao == null) {

@@ -35,6 +35,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.UdmActivityBinding
 import dev.patrickgold.florisboard.databinding.UdmEntryDialogBinding
 import dev.patrickgold.florisboard.common.FlorisActivity
+import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FREQUENCY_DEFAULT
 import dev.patrickgold.florisboard.ime.dictionary.FREQUENCY_MAX
@@ -43,8 +44,6 @@ import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryDao
 import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryDatabase
 import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryEntry
 import dev.patrickgold.florisboard.ime.text.keyboard.*
-import dev.patrickgold.florisboard.util.LocaleUtils
-import java.util.*
 
 interface OnListItemCLickListener {
     fun onListItemClick(pos: Int)
@@ -135,10 +134,10 @@ class UdmActivity : FlorisActivity<UdmActivityBinding>() {
 
     private var userDictionaryType: Int = -1
     private var currentLevel: Int = LEVEL_LANGUAGES
-    private var currentLocale: Locale? = null
+    private var currentLocale: FlorisLocale? = null
     private var activeDialogWindow: AlertDialog? = null
 
-    private var languageList: List<Locale?> = listOf()
+    private var languageList: List<FlorisLocale?> = listOf()
     private var wordList: List<UserDictionaryEntry> = listOf()
 
     private val languageListItemClickListener = object : OnListItemCLickListener {
@@ -317,7 +316,7 @@ class UdmActivity : FlorisActivity<UdmActivityBinding>() {
     private fun buildUi() {
         when (currentLevel) {
             LEVEL_LANGUAGES -> {
-                languageList = userDictionaryDao()?.queryLanguageList()?.sortedBy { it?.displayLanguage } ?: listOf()
+                languageList = userDictionaryDao()?.queryLanguageList()?.sortedBy { it?.displayLanguage() } ?: listOf()
                 binding.recyclerView.adapter = LanguageEntryAdapter(
                     languageList.map { getDisplayNameForLocale(it) },
                     languageListItemClickListener
@@ -335,8 +334,8 @@ class UdmActivity : FlorisActivity<UdmActivityBinding>() {
         }
     }
 
-    private fun getDisplayNameForLocale(locale: Locale?): String {
-        return locale?.displayName ?: resources.getString(R.string.settings__udm__all_languages)
+    private fun getDisplayNameForLocale(locale: FlorisLocale?): String {
+        return locale?.displayName() ?: resources.getString(R.string.settings__udm__all_languages)
     }
 
     private fun showAddWordDialog() {
@@ -432,13 +431,13 @@ class UdmActivity : FlorisActivity<UdmActivityBinding>() {
             dialogBinding.shortcut.error = resources.getString(R.string.settings__udm__dialog__shortcut_error_invalid)
             isValid = false
         }
-        if (locale != null && (runCatching { LocaleUtils.stringToLocale(locale).isO3Language.ifBlank { null } }.getOrNull() == null)) {
+        if (locale != null && (runCatching { FlorisLocale.fromTag(locale).iso3Language.ifBlank { null } }.getOrNull() == null)) {
             dialogBinding.locale.error = resources.getString(R.string.settings__udm__dialog__locale_error_invalid)
             isValid = false
         }
         if (isValid) {
             val localeStr = if (locale == null) { null } else {
-                LocaleUtils.stringToLocale(locale).toString()
+                FlorisLocale.fromTag(locale).toString()
             }
             if (entry != null) {
                 userDictionaryDao()?.update(

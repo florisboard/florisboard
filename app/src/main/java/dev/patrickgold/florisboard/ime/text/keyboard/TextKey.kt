@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
+import dev.patrickgold.florisboard.common.lowercase
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.Key
