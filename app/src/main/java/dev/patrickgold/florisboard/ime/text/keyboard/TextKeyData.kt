@@ -16,7 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
+import dev.patrickgold.florisboard.common.FlorisLocale
+import dev.patrickgold.florisboard.common.lowercase
 import dev.patrickgold.florisboard.common.stringBuilder
+import dev.patrickgold.florisboard.common.uppercase
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
@@ -24,7 +27,6 @@ import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import kotlinx.serialization.*
-import java.util.*
 
 /**
  * Data class which describes a single key and its attributes.
@@ -288,9 +290,9 @@ class AutoTextKeyData(
     override val popup: PopupSet<AbstractKeyData>? = null
 ) : KeyData {
     @Transient private val lower: TextKeyData =
-        TextKeyData(type, Character.toLowerCase(code), label.lowercase(Locale.getDefault()), groupId, popup)
+        TextKeyData(type, Character.toLowerCase(code), label.lowercase(FlorisLocale.default()), groupId, popup)
     @Transient private val upper: TextKeyData =
-        TextKeyData(type, Character.toUpperCase(code), label.uppercase(Locale.getDefault()), groupId, popup)
+        TextKeyData(type, Character.toUpperCase(code), label.uppercase(FlorisLocale.default()), groupId, popup)
 
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
         return if (evaluator.isSlot(this)) {

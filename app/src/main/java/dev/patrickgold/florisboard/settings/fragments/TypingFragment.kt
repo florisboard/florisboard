@@ -23,6 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatSpinner
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.databinding.ListItemBinding
 import dev.patrickgold.florisboard.databinding.SettingsFragmentTypingBinding
 import dev.patrickgold.florisboard.databinding.SettingsFragmentTypingSubtypeDialogBinding
@@ -31,7 +32,6 @@ import dev.patrickgold.florisboard.ime.core.SubtypeLayoutMap
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.layout.LayoutType
 import dev.patrickgold.florisboard.settings.SettingsMainActivity
-import dev.patrickgold.florisboard.util.LocaleUtils
 import dev.patrickgold.florisboard.util.initItems
 import dev.patrickgold.florisboard.util.setOnSelectedListener
 
@@ -97,7 +97,7 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
         )
         dialogView.languageSpinner.setOnSelectedListener { pos ->
             val selectedCode = subtypeManager.imeConfig.defaultSubtypesLanguageCodes[pos]
-            val defaultSubtype = subtypeManager.getDefaultSubtypeForLocale(LocaleUtils.stringToLocale(selectedCode)) ?: return@setOnSelectedListener
+            val defaultSubtype = subtypeManager.getDefaultSubtypeForLocale(FlorisLocale.fromTag(selectedCode)) ?: return@setOnSelectedListener
             dialogView.composerSpinner.setSelection(
                 subtypeManager.imeConfig.composerNames.indexOf(defaultSubtype.composerName).coerceAtLeast(0)
             )
@@ -147,7 +147,7 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
                     phone = layoutManager.getMetaNameListFor(LayoutType.PHONE)[dialogView.phoneLayoutSpinner.selectedItemPosition],
                     phone2 = layoutManager.getMetaNameListFor(LayoutType.PHONE2)[dialogView.phone2LayoutSpinner.selectedItemPosition],
                 )
-                val success = subtypeManager.addSubtype(LocaleUtils.stringToLocale(languageCode), composerName, currencySetName, layoutMap)
+                val success = subtypeManager.addSubtype(FlorisLocale.fromTag(languageCode), composerName, currencySetName, layoutMap)
                 if (!success) {
                     dialogView.errorBox.setText(R.string.settings__localization__subtype_error_already_exists)
                     dialogView.errorBox.visibility = View.VISIBLE
@@ -166,7 +166,7 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
         dialogView.languageSpinner.initItems(
             labels = subtypeManager.imeConfig.defaultSubtypesLanguageNames,
             keys = subtypeManager.imeConfig.defaultSubtypesLanguageCodes,
-            defaultSelectedKey = subtype.locale.toString()
+            defaultSelectedKey = subtype.locale.localeTag()
         )
         dialogView.composerSpinner.initItems(
             labels = subtypeManager.imeConfig.composerLabels,
@@ -206,7 +206,7 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
                 )
                 subtypeManager.modifySubtypeWithSameId(Subtype(
                     id = subtype.id,
-                    locale = LocaleUtils.stringToLocale(languageCode),
+                    locale = FlorisLocale.fromTag(languageCode),
                     composerName = composerName,
                     currencySetName = currencySetName,
                     layoutMap = layoutMap
@@ -233,7 +233,7 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
             binding.subtypeNotConfWarning.visibility = View.GONE
             for (subtype in subtypes) {
                 val itemView = ListItemBinding.inflate(layoutInflater)
-                itemView.title.text = subtype.locale.displayName
+                itemView.title.text = subtype.locale.displayName()
                 itemView.summary.text = layoutManager.getMetaFor(LayoutType.CHARACTERS, subtype.layoutMap.characters)?.label ?: "???"
                 itemView.root.setOnClickListener { showEditSubtypeDialog(subtype.id) }
                 binding.subtypeListView.addView(itemView.root)

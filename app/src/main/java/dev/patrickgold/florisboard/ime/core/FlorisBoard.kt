@@ -1053,7 +1053,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
 
             val tmpSubtypeList = mutableListOf<Pair<String, String>>()
             for (defaultSubtype in defaultSubtypes) {
-                tmpSubtypeList.add(Pair(defaultSubtype.locale.toString(), defaultSubtype.locale.displayName))
+                tmpSubtypeList.add(Pair(defaultSubtype.locale.localeTag(), defaultSubtype.locale.displayName()))
             }
             // Sort language list alphabetically by the display name of a language
             tmpSubtypeList.sortBy { it.second }

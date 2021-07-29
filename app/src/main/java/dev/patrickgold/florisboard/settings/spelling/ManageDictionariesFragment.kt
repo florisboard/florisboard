@@ -63,7 +63,7 @@ class SpellingDictEntryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.titleView.text = data[position].title
         holder.summaryView.text = StringBuilder().run {
-            append(data[position].locale.toLanguageTag())
+            append(data[position].locale.languageTag())
             append(" | ")
             append(data[position].version)
             append(" | ")

@@ -16,18 +16,17 @@
 
 package dev.patrickgold.florisboard.ime.spelling
 
+import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.NATIVE_NULLPTR
 import dev.patrickgold.florisboard.common.NativeInstanceWrapper
 import dev.patrickgold.florisboard.common.NativePtr
 import dev.patrickgold.florisboard.common.NativeStr
 import dev.patrickgold.florisboard.common.toJavaString
 import dev.patrickgold.florisboard.common.toNativeStr
-import dev.patrickgold.florisboard.ime.core.LocaleSerializer
 import dev.patrickgold.florisboard.ime.nlp.Word
 import dev.patrickgold.florisboard.res.ext.ExtensionConfig
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.util.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -92,8 +91,8 @@ value class SpellingDict private constructor(
         override val licenseFile: String,
         override val readmeFile: String,
         @SerialName("language")
-        @Serializable(with = LocaleSerializer::class)
-        val locale: Locale,
+        @Serializable(with = FlorisLocale.Serializer::class)
+        val locale: FlorisLocale,
         val originalSourceId: String,
         val affFile: String,
         val dicFile: String,
@@ -104,7 +103,7 @@ value class SpellingDict private constructor(
         var title: String? = null,
         var description: String? = null,
         var authors: List<String>? = null,
-        var locale: Locale? = null,
+        var locale: FlorisLocale? = null,
         var originalSourceId: String? = null,
         var affFile: String? = null,
         var dicFile: String? = null,
@@ -131,7 +130,7 @@ value class SpellingDict private constructor(
                         title = title ?: "Imported spell check dictionary",
                         description = description ?: "Imported spell check dictionary",
                         authors = authors ?: listOf(),
-                        id = ExtensionConfig.createIdForImport("spelling", "$originalSourceId.$locale"),
+                        id = ExtensionConfig.createIdForImport("spelling", "$originalSourceId.${locale?.localeTag()}"),
                         locale = locale!!,
                         originalSourceId = originalSourceId!!,
                         affFile = affFile!!,
