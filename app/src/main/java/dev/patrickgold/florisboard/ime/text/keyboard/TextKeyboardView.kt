@@ -1181,7 +1181,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                             key.foregroundDrawableId = R.drawable.ic_space_bar
                         }
                         KeyboardMode.CHARACTERS -> {
-                            key.label = florisboard?.activeSubtype?.locale?.displayName
+                            key.label = florisboard?.activeSubtype?.locale?.let { it.displayName() }
                         }
                         else -> {
                         }
@@ -1289,7 +1289,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         if (prefs.glide.enabled) {
             glideDataForDrawing.add(Pair(point, System.currentTimeMillis()))
             if (glideRefreshJob == null) {
-                glideRefreshJob = launch (Dispatchers.Default){
+                glideRefreshJob = launch(Dispatchers.Main) {
                     while (true) {
                         invalidate()
                         delay(10)

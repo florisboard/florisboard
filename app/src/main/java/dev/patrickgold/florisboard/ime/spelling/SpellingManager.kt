@@ -22,6 +22,7 @@ import android.view.textservice.SentenceSuggestionsInfo
 import android.view.textservice.SpellCheckerSession
 import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextServicesManager
+import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.debug.flogInfo
@@ -30,7 +31,6 @@ import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.ExternalContentUtils
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ext.Extension
-import dev.patrickgold.florisboard.util.LocaleUtils
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.io.File
@@ -139,9 +139,9 @@ class SpellingManager private constructor(
     }
 
     @Synchronized
-    fun getSpellingDict(locale: Locale): SpellingDict? {
+    fun getSpellingDict(locale: FlorisLocale): SpellingDict? {
         val entry = indexedSpellingDictMetas.firstNotNullOfOrNull {
-            if (it.value.locale.toString() == locale.toString()) it else null
+            if (it.value.locale.localeTag() == locale.localeTag()) it else null
         } ?: indexedSpellingDictMetas.firstNotNullOfOrNull {
             if (it.value.locale.language == locale.language) it else null
         } ?: return null
@@ -193,10 +193,10 @@ class SpellingManager private constructor(
                 if (manifest.dictionaries.isEmpty()) {
                     return Result.failure(Exception("No dictionary definitions provided!"))
                 }
-                val supportedLocale: Locale
+                val supportedLocale: FlorisLocale
                 val fileNameBase: String
                 manifest.dictionaries.entries.first().let {
-                    supportedLocale = LocaleUtils.stringToLocale(it.key)
+                    supportedLocale = FlorisLocale.fromTag(it.key)
                     fileNameBase = it.value.removeSuffix(".dic")
                 }
 
@@ -257,12 +257,12 @@ class SpellingManager private constructor(
                 val zipFile = ZipFile(tempFile)
                 val dictIniEntry = zipFile.getEntry(FREE_OFFICE_DICT_INI) ?: return Result.failure(Exception("No dict.ini file found"))
                 var fileNameBase: String? = null
-                var supportedLocale: Locale? = null
+                var supportedLocale: FlorisLocale? = null
                 zipFile.getInputStream(dictIniEntry).bufferedReader(Charsets.UTF_8).forEachLine { line ->
                     if (line.startsWith(FREE_OFFICE_DICT_INI_FILE_NAME_BASE)) {
                         fileNameBase = line.substring(FREE_OFFICE_DICT_INI_FILE_NAME_BASE.length)
                     } else if (line.startsWith(FREE_OFFICE_DICT_INI_SUPPORTED_LOCALES)) {
-                        supportedLocale = LocaleUtils.stringToLocale(line.substring(FREE_OFFICE_DICT_INI_SUPPORTED_LOCALES.length))
+                        supportedLocale = FlorisLocale.fromTag(line.substring(FREE_OFFICE_DICT_INI_SUPPORTED_LOCALES.length))
                     }
                 }
                 fileNameBase ?: return Result.failure(Exception("No valid file name base found"))
@@ -333,7 +333,7 @@ class SpellingManager private constructor(
         tempDictDir.mkdirs()
         return SpellingDict.metaBuilder {
             title = "Manually imported dictionary"
-            locale = LocaleUtils.stringToLocale(localeStr)
+            locale = FlorisLocale.fromTag(localeStr)
             originalSourceId = SOURCE_ID_RAW
             affFile = "$localeStr.$AFF_EXT"
             val affFileHandle = File(tempDictDir, affFile)

@@ -20,6 +20,7 @@ import android.service.textservice.SpellCheckerService
 import android.util.LruCache
 import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextInfo
+import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.ime.core.Preferences
@@ -28,7 +29,6 @@ import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingDict
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
-import java.util.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -85,7 +85,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         private val subtypeManager get() = SubtypeManager.default()
 
         private var spellingDict: SpellingDict? = null
-        private lateinit var spellingLocale: Locale
+        private lateinit var spellingLocale: FlorisLocale
         private val suggestionsCache = SuggestionsCache(SUGGESTIONS_MAX_SIZE)
 
         override fun onCreate() {
@@ -94,7 +94,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
             spellingLocale = when (locale) {
                 null -> Subtype.DEFAULT.locale
                 USE_FLORIS_SUBTYPES_LOCALE -> (subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT).locale
-                else -> Locale(locale)
+                else -> FlorisLocale.from(locale)
             }
 
             spellingDict = spellingManager.getSpellingDict(spellingLocale)

@@ -33,10 +33,9 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import androidx.room.Update
+import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.res.ExternalContentUtils
-import dev.patrickgold.florisboard.util.LocaleUtils
 import java.lang.ref.WeakReference
-import java.util.*
 
 private const val WORDS_TABLE = "words"
 
@@ -89,31 +88,31 @@ interface UserDictionaryDao {
     fun query(word: String): List<UserDictionaryEntry>
 
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} LIKE '%' || :word || '%' AND $LOCALE_MATCHES")
-    fun query(word: String, locale: Locale?): List<UserDictionaryEntry>
+    fun query(word: String, locale: FlorisLocale?): List<UserDictionaryEntry>
 
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.SHORTCUT} = :shortcut")
     fun queryShortcut(shortcut: String): List<UserDictionaryEntry>
 
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.SHORTCUT} = :shortcut AND $LOCALE_MATCHES")
-    fun queryShortcut(shortcut: String, locale: Locale?): List<UserDictionaryEntry>
+    fun queryShortcut(shortcut: String, locale: FlorisLocale?): List<UserDictionaryEntry>
 
     @Query(SELECT_ALL_FROM_WORDS)
     fun queryAll(): List<UserDictionaryEntry>
 
     @Query("$SELECT_ALL_FROM_WORDS WHERE (${UserDictionary.Words.LOCALE} = :locale AND :locale IS NOT NULL) OR (${UserDictionary.Words.LOCALE} IS NULL AND :locale IS NULL)")
-    fun queryAll(locale: Locale?): List<UserDictionaryEntry>
+    fun queryAll(locale: FlorisLocale?): List<UserDictionaryEntry>
 
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word")
     fun queryExact(word: String): List<UserDictionaryEntry>
 
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word AND (${UserDictionary.Words.LOCALE} = :locale OR (${UserDictionary.Words.LOCALE} IS NULL AND :locale IS NULL))")
-    fun queryExact(word: String, locale: Locale?): List<UserDictionaryEntry>
+    fun queryExact(word: String, locale: FlorisLocale?): List<UserDictionaryEntry>
 
     @Query("$SELECT_ALL_FROM_WORDS WHERE ${UserDictionary.Words.WORD} = :word AND $LOCALE_MATCHES")
-    fun queryExactFuzzyLocale(word: String, locale: Locale?): List<UserDictionaryEntry>
+    fun queryExactFuzzyLocale(word: String, locale: FlorisLocale?): List<UserDictionaryEntry>
 
     @Query("SELECT DISTINCT ${UserDictionary.Words.LOCALE} FROM $WORDS_TABLE")
-    fun queryLanguageList(): List<Locale?>
+    fun queryLanguageList(): List<FlorisLocale?>
 
     @Insert
     fun insert(entry: UserDictionaryEntry)
@@ -165,7 +164,7 @@ interface UserDictionaryDatabase {
                     }
                     if (word != null && freq != null) {
                         val alreadyExistingEntries = userDictionaryDao().queryExact(
-                            word!!, locale?.let { LocaleUtils.stringToLocale(it) }
+                            word!!, locale?.let { FlorisLocale.fromTag(it) }
                         )
                         if (alreadyExistingEntries.isNotEmpty()) {
                             userDictionaryDao().update(UserDictionaryEntry(alreadyExistingEntries[0].id, word!!, freq!!, locale, shortcut))
@@ -226,18 +225,18 @@ abstract class FlorisUserDictionaryDatabase : RoomDatabase(), UserDictionaryData
 
     class Converters {
         @TypeConverter
-        fun localeToString(locale: Locale?): String? {
+        fun localeToString(locale: FlorisLocale?): String? {
             return when (locale) {
                 null -> null
-                else -> locale.toString()
+                else -> locale.localeTag()
             }
         }
 
         @TypeConverter
-        fun stringToLocale(string: String?): Locale? {
+        fun stringToLocale(string: String?): FlorisLocale? {
             return when (string) {
                 null, "all", "null", "" -> null
-                else -> LocaleUtils.stringToLocale(string)
+                else -> FlorisLocale.fromTag(string)
             }
         }
     }
@@ -255,7 +254,7 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             )
         }
 
-        override fun query(word: String, locale: Locale?): List<UserDictionaryEntry> {
+        override fun query(word: String, locale: FlorisLocale?): List<UserDictionaryEntry> {
             return if (locale == null) {
                 queryResolver(
                     selection = "${UserDictionary.Words.WORD} LIKE ? AND ${UserDictionary.Words.LOCALE} IS NULL",
@@ -265,7 +264,7 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             } else {
                 queryResolver(
                     selection = "${UserDictionary.Words.WORD} LIKE ? AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
-                    selectionArgs = arrayOf("%$word%", locale.toString(), locale.language.toString()),
+                    selectionArgs = arrayOf("%$word%", locale.localeTag(), locale.language),
                     sortOrder = SORT_BY_FREQ_DESC,
                 )
             }
@@ -279,7 +278,7 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             )
         }
 
-        override fun queryShortcut(shortcut: String, locale: Locale?): List<UserDictionaryEntry> {
+        override fun queryShortcut(shortcut: String, locale: FlorisLocale?): List<UserDictionaryEntry> {
             return if (locale == null) {
                 queryResolver(
                     selection = "${UserDictionary.Words.SHORTCUT} = ? AND ${UserDictionary.Words.LOCALE} IS NULL",
@@ -289,7 +288,7 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             } else {
                 queryResolver(
                     selection = "${UserDictionary.Words.SHORTCUT} = ? AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
-                    selectionArgs = arrayOf(shortcut, locale.toString(), locale.language.toString()),
+                    selectionArgs = arrayOf(shortcut, locale.localeTag(), locale.language),
                     sortOrder = SORT_BY_FREQ_DESC,
                 )
             }
@@ -303,7 +302,7 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             )
         }
 
-        override fun queryAll(locale: Locale?): List<UserDictionaryEntry> {
+        override fun queryAll(locale: FlorisLocale?): List<UserDictionaryEntry> {
             return if (locale == null) {
                 queryResolver(
                     selection = "${UserDictionary.Words.LOCALE} IS NULL",
@@ -313,7 +312,7 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             } else {
                 queryResolver(
                     selection = "${UserDictionary.Words.LOCALE} = ?",
-                    selectionArgs = arrayOf(locale.toString()),
+                    selectionArgs = arrayOf(locale.localeTag()),
                     sortOrder = SORT_BY_FREQ_DESC,
                 )
             }
@@ -327,7 +326,7 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             )
         }
 
-        override fun queryExact(word: String, locale: Locale?): List<UserDictionaryEntry> {
+        override fun queryExact(word: String, locale: FlorisLocale?): List<UserDictionaryEntry> {
             return if (locale == null) {
                 queryResolver(
                     selection = "${UserDictionary.Words.WORD} = ? AND ${UserDictionary.Words.LOCALE} IS NULL",
@@ -337,13 +336,13 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             } else {
                 queryResolver(
                     selection = "${UserDictionary.Words.WORD} = ? AND ${UserDictionary.Words.LOCALE} = ?",
-                    selectionArgs = arrayOf(word, locale.toString()),
+                    selectionArgs = arrayOf(word, locale.localeTag()),
                     sortOrder = SORT_BY_FREQ_DESC,
                 )
             }
         }
 
-        override fun queryExactFuzzyLocale(word: String, locale: Locale?): List<UserDictionaryEntry> {
+        override fun queryExactFuzzyLocale(word: String, locale: FlorisLocale?): List<UserDictionaryEntry> {
             return if (locale == null) {
                 queryResolver(
                     selection = "${UserDictionary.Words.WORD} = ? AND ${UserDictionary.Words.LOCALE} IS NULL",
@@ -353,13 +352,13 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
             } else {
                 queryResolver(
                     selection = "${UserDictionary.Words.WORD} = ? AND (${UserDictionary.Words.LOCALE} = ? OR ${UserDictionary.Words.LOCALE} IS NULL)",
-                    selectionArgs = arrayOf(word, locale.toString()),
+                    selectionArgs = arrayOf(word, locale.localeTag()),
                     sortOrder = SORT_BY_FREQ_DESC,
                 )
             }
         }
 
-        override fun queryLanguageList(): List<Locale?> {
+        override fun queryLanguageList(): List<FlorisLocale?> {
             val resolver = applicationContext.get()?.contentResolver ?: return listOf()
             val cursor = resolver.query(
                 UserDictionary.Words.CONTENT_URI,
@@ -372,13 +371,13 @@ class SystemUserDictionaryDatabase(context: Context) : UserDictionaryDatabase {
                 return listOf()
             }
             val localeIndex = cursor.getColumnIndex(UserDictionary.Words.LOCALE)
-            val retList = mutableSetOf<Locale?>()
+            val retList = mutableSetOf<FlorisLocale?>()
             while (cursor.moveToNext()) {
                 val localeStr = cursor.getString(localeIndex)
                 if (localeStr == null) {
                     retList.add(null)
                 } else {
-                    retList.add(LocaleUtils.stringToLocale(localeStr))
+                    retList.add(FlorisLocale.fromTag(localeStr))
                 }
             }
             cursor.close()

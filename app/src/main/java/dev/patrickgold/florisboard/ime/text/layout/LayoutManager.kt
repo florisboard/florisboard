@@ -97,7 +97,7 @@ class LayoutManager {
         } else {
             val tempRef = AssetRef(
                 source = AssetSource.Assets,
-                path = "${PopupManager.POPUP_EXTENSION_PATH_REL}/${subtype.locale.toLanguageTag()}.json"
+                path = "${PopupManager.POPUP_EXTENSION_PATH_REL}/${subtype.locale.languageTag()}.json"
             )
             ref = if (assetManager.hasAsset(tempRef)) {
                 tempRef

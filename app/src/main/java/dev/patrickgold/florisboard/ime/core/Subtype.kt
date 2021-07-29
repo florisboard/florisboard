@@ -16,16 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.core
 
+import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.ime.text.composing.Appender
-import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.layout.LayoutType
-import dev.patrickgold.florisboard.util.LocaleUtils
 import kotlinx.serialization.*
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 import java.util.*
 
 /**
@@ -40,7 +34,7 @@ import java.util.*
  */
 data class Subtype(
     val id: Int,
-    val locale: Locale,
+    val locale: FlorisLocale,
     val composerName: String,
     val currencySetName: String,
     val layoutMap: SubtypeLayoutMap,
@@ -53,7 +47,7 @@ data class Subtype(
          */
         val DEFAULT = Subtype(
             id = -1,
-            locale = Locale.ENGLISH,
+            locale = FlorisLocale.ENGLISH,
             composerName = Appender.name,
             currencySetName = "\$default",
             layoutMap = SubtypeLayoutMap(characters = "qwerty")
@@ -74,7 +68,7 @@ data class Subtype(
             val data = str.split("/")
             when (data.size) {
                 4 -> {
-                    val locale = LocaleUtils.stringToLocale(data[1])
+                    val locale = FlorisLocale.fromTag(data[1])
                     return Subtype(
                         data[0].toInt(),
                         locale,
@@ -84,7 +78,7 @@ data class Subtype(
                     )
                 }
                 5 -> {
-                    val locale = LocaleUtils.stringToLocale(data[1])
+                    val locale = FlorisLocale.fromTag(data[1])
                     return Subtype(
                         data[0].toInt(),
                         locale,
@@ -114,7 +108,7 @@ data class Subtype(
      *  <id>/<language_tag>/<composer_name>/<currency_set_name>/<layout_map>
      */
     override fun toString(): String {
-        val languageTag = locale.toLanguageTag()
+        val languageTag = locale.languageTag()
         return "$id/$languageTag/$composerName/$currencySetName/$layoutMap"
     }
 
@@ -123,7 +117,7 @@ data class Subtype(
      *  <id>/<language_tag>/<currency_set_name>
      */
     fun toShortString(): String {
-        val languageTag = locale.toLanguageTag()
+        val languageTag = locale.languageTag()
         return "$id/$languageTag/$currencySetName"
     }
 
@@ -326,24 +320,12 @@ data class SubtypeLayoutMap(
 @Serializable
 data class DefaultSubtype(
     var id: Int,
-    @Serializable(with = LocaleSerializer::class)
+    @Serializable(with = FlorisLocale.Serializer::class)
     @SerialName("languageTag")
-    var locale: Locale,
+    var locale: FlorisLocale,
     @SerialName("composer")
     var composerName: String,
     @SerialName("currencySet")
     var currencySetName: String,
     var preferred: SubtypeLayoutMap
 )
-
-class LocaleSerializer : KSerializer<Locale> {
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Locale", PrimitiveKind.STRING)
-
-    override fun serialize(encoder: Encoder, value: Locale) {
-        encoder.encodeString(value.toString())
-    }
-
-    override fun deserialize(decoder: Decoder): Locale {
-        return LocaleUtils.stringToLocale(decoder.decodeString())
-    }
-}
