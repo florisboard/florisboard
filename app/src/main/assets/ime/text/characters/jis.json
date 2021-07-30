@@ -4,6 +4,7 @@
   "label": "JIS",
   "authors": [ "Waelwindows" ],
   "direction": "ltr",
+  "modifier": "jis",
   "arrangement": [
     [
       { "$": "kana_selector",
