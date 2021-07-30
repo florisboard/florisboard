@@ -10,13 +10,6 @@ class KanaUnicode : Composer {
     override val label: String = "Kana Unicode"
     override val toRead: Int = 1
 
-    // Initial consonants, ordered for syllable creation
-    private val initials = "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ"
-    // Medial vowels, ordered for syllable creation
-    private val medials = "ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ"
-    // Final consonants (including none), ordered for syllable creation
-    private val finals = "_ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ"
-
     private val daku = mapOf(
         'う' to "ゔ",
 
@@ -153,45 +146,62 @@ class KanaUnicode : Composer {
         'ヲ' to "𛅦",
 
         'ン' to "𛅧",
+
+        'ぁ' to "あ",
+        'ぃ' to "い",
+        'ぅ' to "え",
+        'ぇ' to "う",
+        'ぉ' to "お",
+
+        'ゕ' to "か",
+        'ゖ' to "け",
+
+        'っ' to "つ",
+                   
+        'ゃ' to "や",
+        'ゅ' to "ゆ",
+        'ょ' to "よ",
+
+        'ゎ' to "わ",
+
+        'ァ' to "ア",
+        'ィ' to "イ",
+        'ゥ' to "エ",
+        'ェ' to "ウ",
+        'ォ' to "オ",
+
+        'ヵ' to "カ",
+        'ㇰ' to "ク",
+        'ヶ' to "ケ",
+
+        'ㇱ' to "シ",
+        'ㇲ' to "ス",
+
+        'ッ' to "ツ",
+        'ㇳ' to "ト",
+
+        'ㇴ' to "ヌ",
+
+        'ㇵ' to "ハ",
+        'ㇶ' to "ヒ",
+        'ㇷ' to "フ",
+        'ㇸ' to "ヘ",
+        'ㇹ' to "ホ",
+
+        'ㇺ' to "ム",
+
+        'ヤ' to "ヤ",
+        'ュ' to "ユ",
+        'ョ' to "ヨ",
+
+        'ㇻ' to "ラ",
+        'ㇼ' to "リ",
+        'ㇽ' to "ル",
+        'ㇾ' to "レ",
+        'ㇿ' to "ロ",
+
+        'ヮ' to "ワ",
     )
-
-    private val medialComp = mapOf(
-        'ㅗ' to listOfNotNull("ㅏㅐㅣ", "ㅘㅙㅚ"),
-        'ㅜ' to listOfNotNull("ㅓㅔㅣ", "ㅝㅞㅟ"),
-        'ㅡ' to listOfNotNull("ㅣ", "ㅢ"),
-    )
-
-    private val finalComp = mapOf(
-        'ㄱ' to listOfNotNull("ㅅ", "ㄳ"),
-        'ㄴ' to listOfNotNull("ㅈㅎ", "ㄵㄶ"),
-        'ㄹ' to listOfNotNull("ㄱㅁㅂㅅㅌㅍㅎ", "ㄺㄻㄼㄽㄾㄿㅀ"),
-        'ㅂ' to listOfNotNull("ㅅ", "ㅄ"),
-    )
-
-    private fun reverseComp(map: Map<Char, List<String>>): Map<Char, List<Char>> {
-        val ret = mutableMapOf<Char, List<Char>>()
-        for ((first, v) in map) {
-            val (seconds, comps) = v
-            for (i in seconds.indices) {
-                ret[comps[i]] = listOf(first, seconds[i])
-            }
-        }
-        return ret
-    }
-
-    private val finalCompRev = reverseComp(finalComp)
-    private val medialCompRev = reverseComp(medialComp)
-
-    private fun syllable(ini: Int, med: Int, fin:Int): Char {
-        return (ini*588 + med*28 + fin + 44032).toChar()
-    }
-
-    private fun syllableBlocks(syllOrd: Int): List<Int> {
-        val initial = (syllOrd-44032)/588
-        val medial = (syllOrd-44032-initial*588)/28
-        val fin = (syllOrd-44032)%28
-        return listOf(initial, medial, fin)
-    }
 
     private fun isDakuten(char: Char): Boolean {
         return char == '゙' || char == '゛' || char == 'ﾞ'
