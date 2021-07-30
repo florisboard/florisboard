@@ -1278,7 +1278,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         if (prefs.glide.enabled) {
             glideDataForDrawing.add(Pair(point, System.currentTimeMillis()))
             if (glideRefreshJob == null) {
-                glideRefreshJob = launch (Dispatchers.Default){
+                glideRefreshJob = launch(Dispatchers.Main) {
                     while (true) {
                         invalidate()
                         delay(10)
