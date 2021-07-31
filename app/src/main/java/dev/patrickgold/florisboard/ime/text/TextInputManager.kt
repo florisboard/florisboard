@@ -91,6 +91,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private var newCapsState: Boolean = false
     private var isNumberRowVisible: Boolean = false
 
+    private var newKanaState: KanaType = KanaType.HIRA
+
     // Composing text related properties
     var isManualSelectionMode: Boolean = false
     private var isManualSelectionModeStart: Boolean = false
@@ -126,13 +128,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
 
         override fun evaluateKanaType(): KanaType {
-            return if (activeState.capsLock) {
-                KanaType.HALF_KATA
-            } else if (activeState.caps) {
-                KanaType.KATA
-            } else {
-                KanaType.HIRA
-            }
+           return newKanaState
         }
 
         override fun evaluateKanaSmall(): Boolean = false
@@ -655,6 +651,42 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     /**
+     * Handles a [KeyCode.KANA_SWITCH] event
+     */
+    private fun handleKanaSwitch() {
+        when (newKanaState) {
+            KanaType.HIRA -> handleKanaKata()
+            KanaType.KATA -> handleKanaHalfKata()
+            KanaType.HALF_KATA -> handleKanaHira()
+        }
+        florisboard.dispatchCurrentStateToInputUi()
+    }
+
+    /**
+     * Handles a [KeyCode.KANA_HIRA] event
+     */
+    private fun handleKanaHira() {
+       	newKanaState = KanaType.HIRA
+        florisboard.dispatchCurrentStateToInputUi()
+    }
+
+    /**
+     * Handles a [KeyCode.KANA_KATA] event
+     */
+    private fun handleKanaKata() {
+       	newKanaState = KanaType.KATA
+        florisboard.dispatchCurrentStateToInputUi()
+    }
+
+    /**
+     * Handles a [KeyCode.KANA_HALF_KATA] event
+     */
+    private fun handleKanaHalfKata() {
+       	newKanaState = KanaType.HALF_KATA
+        florisboard.dispatchCurrentStateToInputUi()
+    }
+
+    /**
      * Handles a [KeyCode.SPACE] event. Also handles the auto-correction of two space taps if
      * enabled by the user.
      */
@@ -806,6 +838,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyCode.SETTINGS -> florisboard.launchSettings()
             KeyCode.SHIFT -> handleShiftUp()
             KeyCode.SHIFT_LOCK -> handleShiftLock()
+            KeyCode.KANA_SWITCHER -> handleKanaSwitch()
+            KeyCode.KANA_HIRA -> handleKanaHira()
+            KeyCode.KANA_KATA -> handleKanaKata()
+            KeyCode.KANA_HALF -> handleKanaHalfKata()
             KeyCode.SHOW_INPUT_METHOD_PICKER -> florisboard.imeManager?.showInputMethodPicker()
             KeyCode.SPACE -> handleSpace(ev)
             KeyCode.SWITCH_TO_MEDIA_CONTEXT -> florisboard.setActiveInput(R.id.media_input)
