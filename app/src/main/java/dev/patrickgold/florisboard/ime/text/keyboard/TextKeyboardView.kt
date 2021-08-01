@@ -1193,6 +1193,9 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
                     key.foregroundDrawableId = R.drawable.ic_assignment
                 }
+                KeyCode.KANA_SWITCHER -> {
+                    key.foregroundDrawableId = R.drawable.ic_keyboard_kana_switcher
+                }
                 KeyCode.SWITCH_TO_TEXT_CONTEXT,
                 KeyCode.VIEW_CHARACTERS -> {
                     key.label = resources.getString(R.string.key__view_characters)
