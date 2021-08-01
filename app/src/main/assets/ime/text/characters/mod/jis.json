@@ -11,15 +11,11 @@
     ],
     [
       { "code": -202, "label": "view_symbols", "type": "system_gui" },
-      { "$": "variation_selector",
-        "default":  { "code":   44, "label": ",", "groupId": 1 },
-        "email":    { "code":   64, "label": "@", "groupId": 1 },
-        "uri":      { "code":   47, "label": "/", "groupId": 1 }
-      },
+      { "code":   44, "label": "," },
       { "code":  -210, "label": "language_switch", "type": "system_gui" },
       { "code":  -213, "label": "switch_to_media_context", "type": "system_gui" },
       { "code":    32, "label": "空白" },
-      { "code": -9710, "label": "かな", "type": "system_gui" },
+      { "code": -9710, "label": "かな", "groupId": 1, "type": "system_gui" },
       { "code":    46, "label": ".", "groupId": 2 },
       { "code":    10, "label": "enter", "groupId": 3, "type": "enter_editing" }
     ]
