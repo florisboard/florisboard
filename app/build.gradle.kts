@@ -1,14 +1,14 @@
 
 plugins {
-    id("com.android.application") version "4.2.1"
+    id("com.android.application") version "7.0.0"
     kotlin("android") version "1.5.20"
     kotlin("kapt") version "1.5.20"
     kotlin("plugin.serialization") version "1.5.20"
 }
 
 android {
-    compileSdkVersion(30)
-    buildToolsVersion("30.0.3")
+    compileSdk = 30
+    buildToolsVersion = "30.0.3"
     ndkVersion = "22.1.7171670"
 
     compileOptions {
@@ -23,10 +23,10 @@ android {
 
     defaultConfig {
         applicationId = "dev.patrickgold.florisboard"
-        minSdkVersion(23)
-        targetSdkVersion(30)
-        versionCode(50)
-        versionName("0.3.13")
+        minSdk = 23
+        targetSdk = 30
+        versionCode = 50
+        versionName = "0.3.13"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -55,7 +55,7 @@ android {
 
         sourceSets {
             maybeCreate("main").apply {
-                jni {
+                jniLibs {
                     srcDirs("src/main/jniLibs")
                 }
             }
@@ -111,7 +111,7 @@ android {
         }
     }
 
-    lintOptions {
+    lint {
         isAbortOnError = false
     }
 }

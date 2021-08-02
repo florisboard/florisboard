@@ -155,8 +155,8 @@ abstract class SwipeGesture {
                 val absDiffX = event.getX(pointer.index) - gesturePointer.firstX
                 val absDiffY = event.getY(pointer.index) - gesturePointer.firstY
                 velocityTracker.computeCurrentVelocity(1000)
-                val velocityX = ViewUtils.dp2px(velocityTracker.getXVelocity(pointer.id))
-                val velocityY = ViewUtils.dp2px(velocityTracker.getYVelocity(pointer.id))
+                val velocityX = ViewUtils.px2dp(velocityTracker.getXVelocity(pointer.id))
+                val velocityY = ViewUtils.px2dp(velocityTracker.getYVelocity(pointer.id))
                 flogDebug(LogTopic.GESTURES) { "Velocity: $velocityX $velocityY dp/s" }
                 pointerMap.removeById(pointer.id)
                 return if ((abs(absDiffX) > thresholdWidth || abs(absDiffY) > thresholdWidth) && (abs(velocityX) > thresholdSpeed || abs(velocityY) > thresholdSpeed)) {
