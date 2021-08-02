@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
+import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.lowercase
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
@@ -64,7 +65,12 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                         "~right"
                     }
                     else -> {
-                        computed.label.lowercase(evaluator.getActiveSubtype().locale)
+                        val subtype = evaluator.getActiveSubtype()
+                        if (subtype.locale.language == FlorisLocale.from("ja").language) {
+                            computed.label
+                        } else {
+                            computed.label.lowercase(evaluator.getActiveSubtype().locale)
+                        }
                     }
                 }
                 val extendedPopupsDefault = keyboard?.extendedPopupMappingDefault

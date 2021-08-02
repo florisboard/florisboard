@@ -210,9 +210,9 @@
         "relevant": [
           { "code": -9711, "label": "あ" },
           { "code": -9712, "label": "ア" },
-          { "code": -9713, "label": "ｱ" },
+          { "code": -9713, "label": "ｱ" }
         ]
-      }
+      },
       "~right": {
         "main": { "code":   44, "label": "," },
         "relevant": [
