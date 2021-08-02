@@ -67,8 +67,14 @@ object DefaultComputingEvaluator : ComputingEvaluator {
     override fun getSlotData(data: KeyData): KeyData? = null
 }
 
-enum class KanaType {
-    HIRA,
-    KATA,
-    HALF_KATA,
+enum class KanaType(val value: Int) {
+    HIRA(0),
+    KATA(1),
+    HALF_KATA(2);
+
+    companion object {
+        fun fromInt(int: Int) = values().firstOrNull { it.value == int } ?: HIRA
+    }
+
+    fun toInt() = value
 }

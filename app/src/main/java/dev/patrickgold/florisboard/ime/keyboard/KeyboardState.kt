@@ -45,6 +45,8 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
  *          |        1 |          |          | Is Smartbar quick actions visible
  *          |       1  |          |          | Is Smartbar showing inline suggestions
  *          |      1   |          |          | Is composing enabled
+ *          |  11      |          |          | Kana type
+ *          | 1        |          |          | Is Kana small
  *
  * <Byte 7> | <Byte 6> | <Byte 5> | <Byte 4> | Description
  * ---------|----------|----------|----------|---------------------------------
@@ -91,11 +93,15 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
         const val F_IS_SHOWING_INLINE_SUGGESTIONS: ULong =  0x00020000u
         const val F_IS_COMPOSING_ENABLED: ULong =           0x00040000u
 
+        const val M_KANA_TYPE: ULong =                      0x03u
+        const val O_KANA_TYPE: Int =                        21
+        const val F_IS_KANA_SMALL: ULong =                  0x00800000u
+
         const val STATE_ALL_ZERO: ULong =                   0uL
 
         const val INTEREST_ALL: ULong =                     ULong.MAX_VALUE
         const val INTEREST_NONE: ULong =                    0uL
-        const val INTEREST_TEXT: ULong =                    0xFF_FF_FF_FF_00_00_FF_FFu
+        const val INTEREST_TEXT: ULong =                    0xFF_FF_FF_FF_00_FF_FF_FFu
         const val INTEREST_MEDIA: ULong =                   0x00_00_00_00_FF_00_00_00u
 
         fun new(
@@ -227,6 +233,14 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
     var isComposingEnabled: Boolean
         get() = getFlag(F_IS_COMPOSING_ENABLED)
         set(v) { setFlag(F_IS_COMPOSING_ENABLED, v) }
+
+    var kanaType: KanaType
+        get() = KanaType.fromInt(getRegion(M_KANA_TYPE, O_KANA_TYPE))
+        set(v) { setRegion(M_KANA_TYPE, O_KANA_TYPE, v.toInt()) }
+
+    var isKanaSmall: Boolean
+        get() = getFlag(F_IS_KANA_SMALL)
+        set(v) { setFlag(F_IS_KANA_SMALL, v) }
 
     interface OnUpdateStateListener {
         /**

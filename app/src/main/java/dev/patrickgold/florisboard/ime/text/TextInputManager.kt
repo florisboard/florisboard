@@ -91,8 +91,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private var newCapsState: Boolean = false
     private var isNumberRowVisible: Boolean = false
 
-    private var newKanaState: KanaType = KanaType.HIRA
-
     // Composing text related properties
     var isManualSelectionMode: Boolean = false
     private var isManualSelectionModeStart: Boolean = false
@@ -128,10 +126,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
 
         override fun evaluateKanaType(): KanaType {
-           return newKanaState
+           return activeState.kanaType
         }
 
-        override fun evaluateKanaSmall(): Boolean = false
+        override fun evaluateKanaSmall(): Boolean = activeState.isKanaSmall
 
         override fun evaluateEnabled(data: KeyData): Boolean {
             return when (data.code) {
@@ -651,22 +649,21 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     /**
-     * Handles a [KeyCode.KANA_SWITCH] event
+     * Handles a [KeyCode.KANA_SWITCHER] event
      */
     private fun handleKanaSwitch() {
-        when (newKanaState) {
+        when (activeState.kanaType) {
             KanaType.HIRA -> handleKanaKata()
             KanaType.KATA -> handleKanaHalfKata()
             KanaType.HALF_KATA -> handleKanaHira()
         }
-        florisboard.dispatchCurrentStateToInputUi()
     }
 
     /**
      * Handles a [KeyCode.KANA_HIRA] event
      */
     private fun handleKanaHira() {
-       	newKanaState = KanaType.HIRA
+       	activeState.kanaType = KanaType.HIRA
         florisboard.dispatchCurrentStateToInputUi()
     }
 
@@ -674,15 +671,15 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Handles a [KeyCode.KANA_KATA] event
      */
     private fun handleKanaKata() {
-       	newKanaState = KanaType.KATA
+        activeState.kanaType = KanaType.KATA
         florisboard.dispatchCurrentStateToInputUi()
     }
 
     /**
-     * Handles a [KeyCode.KANA_HALF_KATA] event
+     * Handles a [KeyCode.KANA_HALF] event
      */
     private fun handleKanaHalfKata() {
-       	newKanaState = KanaType.HALF_KATA
+        activeState.kanaType = KanaType.HALF_KATA
         florisboard.dispatchCurrentStateToInputUi()
     }
 
