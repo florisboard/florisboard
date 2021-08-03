@@ -17,6 +17,8 @@
 package dev.patrickgold.florisboard.settings.fragments
 
 import android.app.AlertDialog
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -234,7 +236,19 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
             for (subtype in subtypes) {
                 val itemView = ListItemBinding.inflate(layoutInflater)
                 itemView.title.text = subtype.locale.displayName()
-                itemView.summary.text = layoutManager.getMetaFor(LayoutType.CHARACTERS, subtype.layoutMap.characters)?.label ?: "???"
+                val layoutMeta = layoutManager.getMetaFor(
+                    LayoutType.CHARACTERS,
+                    subtype.layoutMap.characters
+                )
+                if (layoutMeta != null) {
+                    itemView.summary.text = layoutMeta.label
+                } else {
+                    itemView.summary.text = resources.getString(
+                        R.string.settings__localization__subtype_error_layout_not_installed,
+                        subtype.layoutMap.characters
+                    )
+                    itemView.summary.setTextColor(ColorStateList.valueOf(Color.RED))
+                }
                 itemView.root.setOnClickListener { showEditSubtypeDialog(subtype.id) }
                 binding.subtypeListView.addView(itemView.root)
             }

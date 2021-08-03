@@ -338,7 +338,7 @@ class LayoutManager {
     }
 
     fun getMetaFor(type: LayoutType, name: String): LayoutMetaOnly? {
-        return indexedLayoutRefs[type]?.first { it.second.name == name }?.second
+        return indexedLayoutRefs[type]?.firstOrNull { it.second.name == name }?.second
     }
 
     fun getMetaNameListFor(type: LayoutType): List<String> {
