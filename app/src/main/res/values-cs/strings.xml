@@ -5,7 +5,7 @@
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Počkat</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Tří-tečková ikona. Pokud je viditelná, tak se po delším podržení nabídne více písmen.</string>
     <!-- One-handed strings -->
-    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Zavřít režim jedné ruky.</string>
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Ukončit režim jedné ruky.</string>
     <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Posunout klávesnici doleva.</string>
     <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Posunout klávesnici doprava.</string>
     <!-- Private mode info dialog strings -->
@@ -19,7 +19,7 @@
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smajlíky &amp; Emoce</string>
-    <string name="emoji__category__people_body" comment="Emoji category name">Člověk &amp; Tělo</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Lidé &amp; Tělo</string>
     <string name="emoji__category__animals_nature" comment="Emoji category name">Zvířata &amp; Příroda</string>
     <string name="emoji__category__food_drink" comment="Emoji category name">Jídlo &amp; Pití</string>
     <string name="emoji__category__travel_places" comment="Emoji category name">Cestování &amp; Místa</string>
@@ -30,44 +30,44 @@
     <!-- Smartbar strings -->
     <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Přepínač rychlé akce. Pokud ho podržíte, přepne mezi návrhy na slova a tlačítky rychlé akce.</string>
     <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Opustit editor textu.</string>
-    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Přepne režim jedné ruky.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Přepnout režim jedné ruky.</string>
     <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Otevřít nastavení.</string>
     <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Přepnout na editor textu.</string>
     <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Přepnout na vkládaní médií.</string>
-    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Undo tlačítko pro vrácení poslední akce</string>
-    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Redo tlačítko pro obnovení poslední akce</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Tlačítko pro vrácení poslední akce</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Tlačítko pro obnovení poslední akce</string>
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Pokud se zobrazuje, je aktivní soukromý režim. Kliknutím zobrazí informace o soukromém režimu.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Nastavení</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Více možností</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Nápověda &amp; zpětná vazba</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Nápověda</string>
-    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Domov</string>
+    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Domů</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Klávesnice</string>
     <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Psaní</string>
     <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Motiv</string>
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gesta</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Výchozí</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Výchozí nastavení systému</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">Vítej v %s</string>
-    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBord není povolena v systému, a nebude moci být použita jako možnost psaní. Klikněte sem pro vyřešení tohoto problému.</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">Vítejte ve %s</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBord není povolena v systému a proto nemůže být použita jako metoda zadávání. Klikněte sem pro vyřešení tohoto problému.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard není vybrán jako výchozí vstupní metoda. Kliknutím sem tento problém vyřešíte.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Díky za vyzkoušení FlorisBoard! Tento projekt je stále v alfa, a proto chybí funkce. Pokud najdete nějaké chyby nebo chcete navrhnout, podívejte se na repo na Githubu a podejte problém. To pomáhá zlepšit FlorisBoard. Děkuji!</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Díky za vyzkoušení FlorisBoard! Tento projekt je stále v alfa fázi, a proto chybí některé funkce. Pokud najdete nějaké chyby nebo chcete navrhnout, podívejte se na repozitář na Githubu a vytvořte issue. Tím pomáháte zlepšit FlorisBoard. Děkuji!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Jazyky &amp; rozložení klávesnice</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Zdá se, že jste nakonfigurovali žádné podtypy. Jako fallback bude použit podtyp angličtina/QWERTY!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Přidat</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Přidat podtyp</string>
     <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Potvrdit</string>
     <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Zrušit</string>
-    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Vymazat</string>
+    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Odstranit</string>
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Upravit podtyp</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Místní nastavení</string>
-    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Uspořádání znaků</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Rozložení znaků</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Primární rozložení symbolů</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Sekundární rozložení symbolů</string>
     <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">List měn</string>
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Číselné rozložení</string>
-    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Rozšířené číselné rozložení</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Číselné rozložení (pokročilé)</string>
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Rozložení číselného řádku</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Primární telefonní rozložení</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Sekundární telefonní rozložení</string>
@@ -213,22 +213,41 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Zobrazí se v horní části klávesnice</string>
     <string name="pref__suggestion__title" comment="Preference group title">Návrhy</string>
     <string name="pref__dictionary__title" comment="Preference group title">Slovník</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Použít vlastní systémový slovník</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Nabízet slova uložená ve vlastním systémovém slovníku</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Spravovat vlastní systémový slovník</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Přidat, prohlédnout nebo upravit slova ve vlastním systémovém slovníku</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Použít vlastní interní slovník</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Nabízet slova uložená ve vlastním interním slovníku</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Spravovat vlastní interní slovník</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Přidat, prohlédnout nebo upravit slova ve vlastním interním slovníku</string>
     <string name="pref__correction__title" comment="Preference group title">Oprava</string>
+    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">Kontrola pravopisu</string>
+    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">Nastavit službu kontroly pravopisu</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatická kapitalizace</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kapitalizovat slova na základě aktuálního vstupního kontextu</string>
-    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Pamatovat stav caps locku</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Pamatovat stav CapsLocku</string>
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock zůstane aktivní při přesunu do jiného textového pole</string>
-    <string name="pref__correction__double_space_period__label" comment="Preference title">Tečka dovjitou mezerou</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Tečka dvojitou mezerou</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Dvojité poklepání na mezerník vloží tečku a mezeru</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Vlastní interní slovník</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Vlastní systémový slovník</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frekvence: %d</string>
     <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frekvence: %d | Zkratka: %s</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Pro všechny jazyky</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Vlastní slovník úspěšně importován!</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Vlastní slovník úspěšně exportován!</string>
     <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Přidat slovo</string>
     <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Upravit slovo</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Slovo</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Zadejte prosím slovo!</string>
     <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Toto slovo obsahuje neplatné znaky.</string>
     <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Frekvence (mezi %d a %d)</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Prosím zadejte hodnotu frekvence!</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Prosím zadejte platné číslo z daného rozsahu!</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Zástupce (nepovinné)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Toto slovo obsahuje neplatné znaky.</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Kód jazyka (nepovinné)</string>
     <string name="settings__gestures__title" comment="Title of Gestures fragment">Gesta &amp; Psaní tahem</string>
     <string name="pref__glide__title" comment="Preference group title">Psaní tahem</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Povolit psaní tahem</string>
@@ -290,6 +309,23 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zobrazit ikonu aplikace na domovské obrazovce</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Vynutit soukromý režim</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Dočasně vypne všechny funkce, které pracují se vstupními daty</string>
+    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Zapnout vývojářské nástroje</string>
+    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Nástroje pro debugování a řešení problémů</string>
+    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Zobrazit statistiky paměťové haldy</string>
+    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Nastavení kontroly pravopisu</string>
+    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Spravovat slovníky</string>
+    <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Použít klávesnicové podtypy</string>
+    <string name="settings__spelling__dict_sources_info" comment="String for the Dictionary sources info.">Kde najdu slovníky pro kontrolu pravopisu?</string>
+    <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Aktivní kontrola pravopisu</string>
+    <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Není nastaveno</string>
+    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Spravovat slovníky pro kontrolu pravopisu</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[ZATÍM NEPOUŽITO] Použít jména z kontaktů</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Kontrola pravopisu bude používat jména z vašeho seznamu kontaktů</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Použít slova z vlastního slovníku</string>
+    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Importovat slovník</string>
+    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Vybrat zdroj</string>
+    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Vybrat jazyk</string>
+    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">Kód jazyka (např. cs_CZ)</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">O aplikaci</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Ikona aplikace FlorisBoard</string>
@@ -297,6 +333,7 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Soukromí</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Zdrojový kód</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open-source licence</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Verze zkopírována do schránky</string>
     <!-- Assets strings -->
     <plurals name="assets__file__authors">
         <item quantity="one">Autor</item>
@@ -319,6 +356,9 @@
     <string name="assets__action__import">Importovat</string>
     <string name="assets__action__no">Ne</string>
     <string name="assets__action__save">Uložit</string>
+    <string name="assets__action__select">Vybrat</string>
+    <string name="assets__action__select_dir">Vybrat složku</string>
+    <string name="assets__action__select_file">Vybrat soubor</string>
     <string name="assets__action__yes">Ano</string>
     <string name="assets__error__details">Podrobnosti</string>
     <string name="assets__error__invalid">Neplatné</string>
@@ -347,6 +387,9 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Prvorní nastavení dokončeno!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Zpráva o chybě florisboardu</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopírovat do schránky</string>
+    <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Zkopírováno do schránky</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Nahlásit problém (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zavřít</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard chybová hlášení</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard přestal pracovat…</string>
@@ -363,6 +406,15 @@
     <string name="clip__back_to_text_input">Zpět na zadávání textu</string>
     <string name="clip__cant_paste">Tato aplikace neumožňuje vkládání daného obsahu.</string>
     <string name="pref__clipboard__clipboard_category__label">Schránka</string>
+    <string name="pref__clipboard__use_internal_clipboard___label">Použít interní schránku</string>
+    <string name="pref__clipboard__use_internal_clipboard_title__summary">Použít interní schránku místo systémové schránky</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Zapnout historii schránky</string>
+    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Mazat staré položky</string>
+    <string name="pref__clipboard__clean_up_old_after__label">Mazat staré položky po</string>
     <string name="pref__unit_minutes">" minuty"</string>
+    <string name="pref__clipboard__limit_history_size__label">Omezit velikost historie</string>
+    <string name="pref__clipboard__max_history_size__label">Max velikost historie</string>
+    <string name="pref__unit_items">" položky"</string>
     <!-- glide strings -->
+    <string name="pref__glide__show_preview">Zobrazit náhled při psaní tahem</string>
 </resources>

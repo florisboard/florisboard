@@ -73,6 +73,7 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Primäre Händyanordnung</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Sekundäre Händyanordnung</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Dieser Eingabestil ist bereits vorhanden!</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (nicht installiert)</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tastaturdesign</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nicht definiert</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Design-Modus</string>
@@ -223,6 +224,8 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Internes Benutzerwörterbuch verwalten</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Hinzufügen, ansehen und bearbeiten von Einträgen für das interne Benutzerwörterbuch</string>
     <string name="pref__correction__title" comment="Preference group title">Korrekturen</string>
+    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">Rechtschreibprüfung</string>
+    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">Verwalte und konfiguriere den Rechtschreibservice</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Autom. Groß-/Kleinschreibung</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Automatisches Großschreiben je nach aktuellem Kontext</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Status der festgestellten Umschalttaste merken</string>
@@ -316,6 +319,23 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Blende die Heap-Speicherverbrauch und der Maximal Größe in der rechte obere Ecke</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Interne Benutzerwörterbuch-Datenbank leeren</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Leert alle Wörter von der Wörterbuch-Datenbank</string>
+    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Rechtschreibprüfungseinstellungen</string>
+    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Wörterbücher verwalten</string>
+    <string name="settings__spelling__dict_sources_info" comment="String for the Dictionary sources info.">Wo bekomme ich die Rechtschreibkorrektur-Wörterbücher her?</string>
+    <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Nichts ausgewählt</string>
+    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
+        <item quantity="one">%d installiert</item>
+        <item quantity="other">%d installiert</item>
+    </plurals>
+    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Neues Wörterbuch importieren</string>
+    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Quelle auswählen</string>
+    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Sprache auswählen</string>
+    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">Sprachkürzel (z.B. \'en_US\')</string>
+    <string name="settings__spelling__import_dict_s3__title" comment="Title for the import dict sheet (step 3)">Prüfe Importdateien</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_any" comment="Text for the verify files dialog (the first %s will be replaced by a file extension, the second by a file name) (step 3)">%s Datei: %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_readme" comment="Text for the verify files dialog (step 3)">Liesmich Datei: %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_license" comment="Text for the verify files dialog (step 3)">Lizenzdatei: %s</string>
+    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">wenn diese Liste kein Wörterbuch für deine Sprache oder Dialekt enthält, kannst du manuell nach einem Hunspell-Wörterbuch suchen und die \'aff\' und \'dic\'-Dateien importieren.</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Über</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">App-Icon von FlorisBoard</string>
@@ -344,6 +364,9 @@
     <string name="assets__action__import">Importieren</string>
     <string name="assets__action__no">Nein</string>
     <string name="assets__action__save">Speichern</string>
+    <string name="assets__action__select">Auswählen</string>
+    <string name="assets__action__select_dir">Verzeichnis auswählen</string>
+    <string name="assets__action__select_file">Datei auswählen</string>
     <string name="assets__action__yes">Ja</string>
     <string name="assets__error__details">Details</string>
     <string name="assets__error__invalid">Ungültig</string>
@@ -409,7 +432,7 @@
     <string name="pref__clipboard__max_history_size__label">Maximale Verlaufsgröße</string>
     <string name="pref__unit_items">" Elemente"</string>
     <!-- glide strings -->
-    <string name="pref__glide_trail_fade_duration">Ausblendzeit vom Spurbewegung</string>
+    <string name="pref__glide_trail_fade_duration">Zeit bis zum Ausblenden der Spur</string>
     <string name="pref__glide_preview_refresh_delay">Verzögerung der Vorschau</string>
     <string name="pref__glide__show_preview">Vorschau während des Gleitens anzeigen</string>
 </resources>

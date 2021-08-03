@@ -213,7 +213,10 @@
     <string name="pref__dictionary__title" comment="Preference group title">Szótár</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Belső felhasználói szótár engedélyezése</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Tárolt szavak ajánlása a belső felhasználói szótárból</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Belső felhasználói szótár kezelése</string>
     <string name="pref__correction__title" comment="Preference group title">Javítások</string>
+    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">Helyesírás-ellenőrző</string>
+    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">Helyesírás-ellenőrző szolgáltatás kezelése és beállítása</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatikusan nagy kezdőbetű</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kezdje nagybetűvel a szavakat a bemeneti környezet alapján</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Caps lock állapot megjegyzése</string>
@@ -293,6 +296,18 @@
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Minden funkciót ki fog kapcsolni ideiglenesen, amely a bemeneti adatokkal dolgozik</string>
     <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Fejlesztői eszközök engedélyezése</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Heap memória statisztika megjelenítése</string>
+    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Szótárak kezelése</string>
+    <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Nincs beállítva</string>
+    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Helyesírás-ellenőrző szótárak kezelése</string>
+    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Új szótár importálása</string>
+    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Forrás kiválasztása</string>
+    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Nyelv választása</string>
+    <string name="settings__spelling__import_dict_s3__title" comment="Title for the import dict sheet (step 3)">Importált fájlok megerősítése</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_original" comment="Text for the verify files dialog (step 3)">Eredeti forrás: %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_any" comment="Text for the verify files dialog (the first %s will be replaced by a file extension, the second by a file name) (step 3)">%s fájl: %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_readme" comment="Text for the verify files dialog (step 3)">Readme fájl: %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_license" comment="Text for the verify files dialog (step 3)">Licencfájl: %s</string>
+    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">ha ez a lista nem tartalmazza a szótárakat a nyelvéhez, vagy a nyelvjárásához, manuálisan is kereshet egy Hunspell szótárat és importálhatja az \'aff\' és a \'dic\' fájlokat ezért.</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Névjegy</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">A FlorisBoard alkalmazásikonja</string>
@@ -321,6 +336,9 @@
     <string name="assets__action__import">Importálás</string>
     <string name="assets__action__no">Nem</string>
     <string name="assets__action__save">Mentés</string>
+    <string name="assets__action__select">Kiválasztás</string>
+    <string name="assets__action__select_dir">Könyvtár kiválasztása</string>
+    <string name="assets__action__select_file">Fájl kiválasztása</string>
     <string name="assets__action__yes">Igen</string>
     <string name="assets__error__details">Részletek</string>
     <string name="assets__error__invalid">Érvénytelen</string>
