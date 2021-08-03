@@ -293,9 +293,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
                 ClipboardInputManager.getInstance().notifyItemRangeRemoved(pins.size + history.size, numToPop)
             }
             FlorisBoard.getInstance().clipInputManager.initClipboard(this.history, this.pins)
-            prefs
             cleanUpJob = launch(Dispatchers.Main) {
-
                 while (true) {
                     cleanUpClipboard.run()
                     delay(INTERVAL)
@@ -304,7 +302,11 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
             launch(Dispatchers.IO) {
                 pinsDao = PinnedItemsDatabase.getInstance().clipboardItemDao()
                 pinsDao.getAll().toCollection(pins)
-                FlorisContentProvider.getInstance().initIfNotAlready()
+                try {
+                    FlorisContentProvider.getInstance().initIfNotAlready()
+                } catch (e: Exception) {
+                    e.fillInStackTrace()
+                }
             }
         } catch (e : Exception) {
             e.fillInStackTrace()
