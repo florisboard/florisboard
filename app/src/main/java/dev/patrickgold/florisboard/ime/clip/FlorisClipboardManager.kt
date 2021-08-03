@@ -3,6 +3,7 @@ package dev.patrickgold.florisboard.ime.clip
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
+import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.ime.clip.provider.*
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.Preferences
@@ -236,7 +237,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         } else if (prefs.clipboard.enableHistory) {
             // in the event history is enabled, and it should be updated it is updated
             if (shouldUpdateHistory) {
-                updateHistory(ClipboardItem.fromClipData(systemPrimaryClip, false))
+                updateHistory(ClipboardItem.fromClipData(systemPrimaryClip, true))
             } else {
                 shouldUpdateHistory = true
             }
