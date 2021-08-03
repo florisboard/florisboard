@@ -22,7 +22,6 @@ enum class ItemType(val value: Int) {
 
 /**
  * Represents an item on the clipboard.
- * The URI stored belongs to FlorisContentProvider, not whatever app copied the image
  *
  * If type == ItemType.IMAGE there must be a uri set
  * if type == ItemType.TEXT there must be a text set
