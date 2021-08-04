@@ -127,7 +127,7 @@ Note that the v0.4.0 milestone technically means all v0.3.x releases.
 As this naming convention is more confusing than useful, after the
 v0.4.0 release a new release/development cycle will be introduced.
 
-### [v0.4.0](https://github.com/florisboard/florisboard/milestone/4)
+### [v0.3.x](https://github.com/florisboard/florisboard/milestone/4)
 - Module A: Smartbar rework (Implemented with [#91])
   - Ability to enable/disable Smartbar (features below thus only work if
     Smartbar is enabled)
@@ -163,7 +163,7 @@ v0.4.0 release a new release/development cycle will be introduced.
   - Adapt to app theme if possible
   - Theme import/export
 
-### [v0.5.0](https://github.com/florisboard/florisboard/milestone/5)
+### [v0.4.x and further](https://github.com/florisboard/florisboard/milestone/5)
 There's no exact roadmap yet, but these are the most important points:
 - Full layout customization in runtime
 - Extensive rework and customization of the media input (emojis, emoticons, kaomoji)
