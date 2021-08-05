@@ -203,6 +203,8 @@ class KanaUnicode : Composer {
         'ヮ' to "ワ",
     )
 
+    private val smallSentinel: Char = '〒'
+
     private fun isDakuten(char: Char): Boolean {
         return char == '゙' || char == '゛' || char == 'ﾞ'
     }
@@ -218,7 +220,6 @@ class KanaUnicode : Composer {
         }
         val lastChar = s.last()
         val lastOrd = lastChar.toInt()
-        val isSmall = false
 
         if (isDakuten(c)) {
             val dakuChar = daku.get(lastChar)
@@ -234,10 +235,10 @@ class KanaUnicode : Composer {
             } else {
                 return Pair(1, ""+handakuChar)
             }
-        } else if (isSmall) {
+        } else if (c == smallSentinel) {
             val smallChar = small.get(lastChar)
             if (smallChar == null) {
-                return Pair(0, ""+c)
+                return Pair(0, "")
             } else {
                 return Pair(1, ""+smallChar)
             }
