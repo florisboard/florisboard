@@ -171,37 +171,6 @@ class KanaSelector(
 }
 
 /**
- * Allows to select an [AbstractKeyData] based on the kana size. Note that this type of selector only really
- * makes sense in a text context, though technically speaking it can be used anywhere, so this implementation allows
- * for any [AbstractKeyData] to be used here. The JSON class identifier for this selector is `kana_size_selector`.
- *
- * Example usage in a layout JSON file:
- * ```
- * { "$": "kana_size_selector",
- *   "normal": { "code": 12354, "label": "あ" },
- *   "small":  { "code": 12353, "label": "ぁ" }
- * }
- * ```
- *
- * @property normal The key data to use if the current kana size state is normal.
- * @property small The key data to use if the current kana size state is small.
- */
-@Serializable
-@SerialName("kana_size_selector")
-class KanaSizeSelector(
-    val normal: AbstractKeyData,
-    val small: AbstractKeyData?,
-) : AbstractKeyData {
-    override fun compute(evaluator: ComputingEvaluator): KeyData? {
-        return (if (evaluator.evaluateKanaSmall()) { small } else { normal })?.compute(evaluator)
-    }
-
-    override fun asString(isForDisplay: Boolean): String {
-        return ""
-    }
-}
-
-/**
  * Allows to select an [AbstractKeyData] based on the current variation. Note that this type of selector only really
  * makes sense in a text context, though technically speaking it can be used anywhere, so this implementation allows
  * for any [AbstractKeyData] to be used here. The JSON class identifier for this selector is `variation_selector`.
