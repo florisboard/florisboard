@@ -22,14 +22,20 @@ import androidx.core.text.isDigitsOnly
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.FlorisboardBinding
-import dev.patrickgold.florisboard.debug.*
+import dev.patrickgold.florisboard.debug.LogTopic
+import dev.patrickgold.florisboard.debug.flogError
+import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
-import dev.patrickgold.florisboard.ime.core.*
+import dev.patrickgold.florisboard.ime.core.CachedInput
+import dev.patrickgold.florisboard.ime.core.EditorInstance
+import dev.patrickgold.florisboard.ime.core.FlorisBoard
+import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
+import dev.patrickgold.florisboard.ime.core.InputKeyEvent
+import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
+import dev.patrickgold.florisboard.ime.core.Preferences
+import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
-import dev.patrickgold.florisboard.res.AssetManager
-import dev.patrickgold.florisboard.res.AssetRef
-import dev.patrickgold.florisboard.res.AssetSource
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard.InputAttributes
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
@@ -38,11 +44,26 @@ import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.keyboard.updateKeyboardState
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.key.*
-import dev.patrickgold.florisboard.ime.text.keyboard.*
+import dev.patrickgold.florisboard.ime.text.key.CurrencySet
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyType
+import dev.patrickgold.florisboard.ime.text.key.KeyVariation
+import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
+import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardIconSet
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
-import kotlinx.coroutines.*
+import dev.patrickgold.florisboard.res.AssetManager
+import dev.patrickgold.florisboard.res.FlorisRef
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONArray
 
 /**
@@ -110,7 +131,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     init {
         florisboard.addEventListener(this)
         val data =
-            AssetManager.default().loadTextAsset(AssetRef(AssetSource.Assets, "ime/text/symbols-with-space.json")).getOrThrow()
+            AssetManager.default().loadTextAsset(FlorisRef.assets("ime/text/symbols-with-space.json")).getOrThrow()
         val json = JSONArray(data)
         this.symbolsWithSpaceAfter = List(json.length()){ json.getString(it) }
     }

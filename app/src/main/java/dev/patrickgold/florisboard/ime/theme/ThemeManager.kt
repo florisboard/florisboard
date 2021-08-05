@@ -36,12 +36,14 @@ import androidx.autofill.inline.v1.InlineSuggestionUi
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.debug.LogTopic
+import dev.patrickgold.florisboard.debug.flogDebug
+import dev.patrickgold.florisboard.debug.flogError
+import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.res.AssetManager
-import dev.patrickgold.florisboard.res.AssetRef
-import dev.patrickgold.florisboard.res.AssetSource
+import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.util.TimeUtil
-import timber.log.Timber
 import java.util.concurrent.CopyOnWriteArrayList
 
 /**
@@ -58,8 +60,8 @@ class ThemeManager private constructor(
 
     var activeTheme: Theme = Theme.empty()
         private set
-    var indexedDayThemeRefs: MutableMap<AssetRef, ThemeMetaOnly> = mutableMapOf()
-    var indexedNightThemeRefs: MutableMap<AssetRef, ThemeMetaOnly> = mutableMapOf()
+    var indexedDayThemeRefs: MutableMap<FlorisRef, ThemeMetaOnly> = mutableMapOf()
+    var indexedNightThemeRefs: MutableMap<FlorisRef, ThemeMetaOnly> = mutableMapOf()
     var isAdaptiveThemeEnabled: Boolean = false
         private set
 
@@ -68,7 +70,7 @@ class ThemeManager private constructor(
     private val remoteCache: ArrayList<RemoteColors> = arrayListOf()
 
     companion object {
-        /** The static relative path where a theme is located, regardless of the [AssetSource]. */
+        /** The static relative path where a theme is located, regardless of the asset source. */
         const val THEME_PATH_REL: String = "ime/theme"
         /** Maximum size in bytes a theme file may have when loaded. */
         const val THEME_MAX_SIZE: Int = 512_000
@@ -109,15 +111,15 @@ class ThemeManager private constructor(
     fun update() {
         indexThemeRefs()
         val ref = evaluateActiveThemeRef()
-        Timber.i(ref.toString())
+        flogDebug(LogTopic.THEME_MANAGER) { ref.toString() }
         activeTheme = AdaptiveThemeOverlay(
-            this, if (ref == null) {
+            this, if (ref.isInvalid) {
                 Theme.BASE_THEME
             } else {
                 loadTheme(ref).getOrDefault(Theme.BASE_THEME)
             }
         )
-        Timber.i(activeTheme.label)
+        flogInfo(LogTopic.THEME_MANAGER) { activeTheme.label }
         notifyCallbackReceivers()
     }
 
@@ -180,7 +182,7 @@ class ThemeManager private constructor(
             remote = newRemote
         } catch (e: Exception) {
             remote = RemoteColors.DEFAULT
-            e.printStackTrace()
+            flogError(LogTopic.THEME_MANAGER) { e.toString() }
         }
         notifyCallbackReceivers()
     }
@@ -227,11 +229,11 @@ class ThemeManager private constructor(
         }
     }
 
-    fun deleteTheme(ref: AssetRef): Result<Unit> {
+    fun deleteTheme(ref: FlorisRef): Result<Unit> {
         return assetManager.deleteAsset(ref)
     }
 
-    fun loadTheme(ref: AssetRef): Result<Theme> {
+    fun loadTheme(ref: FlorisRef): Result<Theme> {
         return assetManager.loadJsonAsset(ref)
     }
 
@@ -239,7 +241,7 @@ class ThemeManager private constructor(
         return assetManager.loadJsonAsset(uri, THEME_MAX_SIZE)
     }
 
-    fun writeTheme(ref: AssetRef, theme: Theme): Result<Unit> {
+    fun writeTheme(ref: FlorisRef, theme: Theme): Result<Unit> {
         return assetManager.writeJsonAsset(ref, theme)
     }
 
@@ -247,11 +249,11 @@ class ThemeManager private constructor(
         return assetManager.writeJsonAsset(uri, theme)
     }
 
-    private fun evaluateActiveThemeRef(): AssetRef? {
-        Timber.i(prefs.theme.mode.toString())
-        Timber.i(prefs.theme.dayThemeRef)
-        Timber.i(prefs.theme.nightThemeRef)
-        return AssetRef.fromString(
+    private fun evaluateActiveThemeRef(): FlorisRef {
+        flogInfo(LogTopic.THEME_MANAGER) { prefs.theme.mode.toString() }
+        flogInfo(LogTopic.THEME_MANAGER) { prefs.theme.dayThemeRef }
+        flogInfo(LogTopic.THEME_MANAGER) { prefs.theme.nightThemeRef }
+        return FlorisRef.from(
             when (prefs.theme.mode) {
                 ThemeMode.ALWAYS_DAY -> {
                     isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp
@@ -283,14 +285,14 @@ class ThemeManager private constructor(
                     }
                 }
             }
-        ).onFailure { Timber.e(it) }.getOrDefault(null)
+        )
     }
 
     private fun indexThemeRefs() {
         indexedDayThemeRefs.clear()
         indexedNightThemeRefs.clear()
         assetManager.listAssets<ThemeMetaOnly>(
-            AssetRef(AssetSource.Assets, THEME_PATH_REL)
+            FlorisRef.assets(THEME_PATH_REL)
         ).onSuccess {
             for ((ref, themeMetaOnly) in it) {
                 if (themeMetaOnly.isNightTheme) {
@@ -300,10 +302,10 @@ class ThemeManager private constructor(
                 }
             }
         }.onFailure {
-            Timber.e(it.toString())
+            flogError(LogTopic.THEME_MANAGER) { it.toString() }
         }
         assetManager.listAssets<ThemeMetaOnly>(
-            AssetRef(AssetSource.Internal, THEME_PATH_REL)
+            FlorisRef.internal(THEME_PATH_REL)
         ).onSuccess {
             for ((ref, themeMetaOnly) in it) {
                 if (themeMetaOnly.isNightTheme) {
@@ -313,7 +315,7 @@ class ThemeManager private constructor(
                 }
             }
         }.onFailure {
-            Timber.e(it.toString())
+            flogError(LogTopic.THEME_MANAGER) { it.toString() }
         }
     }
 

@@ -31,13 +31,16 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.forEach
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.databinding.ThemeManagerActivityBinding
 import dev.patrickgold.florisboard.common.FlorisActivity
+import dev.patrickgold.florisboard.common.ViewUtils
+import dev.patrickgold.florisboard.databinding.ThemeManagerActivityBinding
+import dev.patrickgold.florisboard.debug.LogTopic
+import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.res.AssetManager
-import dev.patrickgold.florisboard.res.AssetRef
-import dev.patrickgold.florisboard.res.AssetSource
+import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.CurrencySet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.*
@@ -45,12 +48,9 @@ import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeMetaOnly
-import dev.patrickgold.florisboard.common.ViewUtils
-import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
-import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
-import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.res.AssetManager
+import dev.patrickgold.florisboard.res.FlorisRef
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
     private lateinit var layoutManager: LayoutManager
@@ -75,7 +75,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
     private var key: String = ""
     private var defaultValue: String = ""
     private var selectedTheme: Theme = Theme.empty()
-    private var selectedRef: AssetRef? = null
+    private var selectedRef: FlorisRef? = null
 
     private val themeEditor = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult? ->
         if (result?.resultCode == ThemeEditorActivity.RESULT_CODE_THEME_EDIT_SAVED) {
@@ -94,10 +94,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
                 name = toBeImportedTheme.getOrNull()!!.name + "_imported",
                 label = toBeImportedTheme.getOrNull()!!.label + " (Imported)"
             )
-            val newAssetRef = AssetRef(
-                AssetSource.Internal,
-                ThemeManager.THEME_PATH_REL + "/" + newTheme.name + ".json"
-            )
+            val newAssetRef = FlorisRef.internal(ThemeManager.THEME_PATH_REL + "/" + newTheme.name + ".json")
             themeManager.writeTheme(newAssetRef, newTheme).onSuccess {
                 themeManager.update()
                 selectedTheme = newTheme
@@ -200,7 +197,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         setThemeRefInPrefs(selectedRef)
     }
 
-    private fun evaluateSelectedRef(ignorePrefs: Boolean = false): AssetRef? {
+    private fun evaluateSelectedRef(ignorePrefs: Boolean = false): FlorisRef? {
         return if (ignorePrefs) {
             when (key) {
                 Preferences.Theme.DAY_THEME_REF -> themeManager.indexedDayThemeRefs.keys.firstOrNull()
@@ -208,17 +205,15 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
                 else -> null
             }
         } else {
-            AssetRef.fromString(
-                when (key) {
-                    Preferences.Theme.DAY_THEME_REF -> prefs.theme.dayThemeRef
-                    Preferences.Theme.NIGHT_THEME_REF -> prefs.theme.nightThemeRef
-                    else -> ""
-                }
-            ).getOrDefault(null)
+            FlorisRef.from(when (key) {
+                Preferences.Theme.DAY_THEME_REF -> prefs.theme.dayThemeRef
+                Preferences.Theme.NIGHT_THEME_REF -> prefs.theme.nightThemeRef
+                else -> ""
+            }).takeIf { it.isValid }
         }
     }
 
-    private fun setThemeRefInPrefs(ref: AssetRef?) {
+    private fun setThemeRefInPrefs(ref: FlorisRef?) {
         when (key) {
             Preferences.Theme.DAY_THEME_REF -> prefs.theme.dayThemeRef = ref.toString()
             Preferences.Theme.NIGHT_THEME_REF -> prefs.theme.nightThemeRef = ref.toString()
@@ -239,19 +234,20 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         selectedTheme = Theme.empty()
     }
 
-    private fun selectTheme(assetRef: AssetRef, themeMetaOnly: ThemeMetaOnly) {
+    private fun selectTheme(assetRef: FlorisRef, themeMetaOnly: ThemeMetaOnly) {
         binding.themeNameValue.text = themeMetaOnly.label
-        binding.themeSourceValue.text = resources.getString(when (assetRef.source) {
-            is AssetSource.Assets -> R.string.pref__theme__source_assets
-            is AssetSource.Internal -> R.string.pref__theme__source_internal
-            is AssetSource.External -> R.string.pref__theme__source_external
+        binding.themeSourceValue.text = resources.getString(when {
+            assetRef.isAssets -> R.string.pref__theme__source_assets
+            assetRef.isInternal -> R.string.pref__theme__source_internal
+            assetRef.isExternal -> R.string.pref__theme__source_external
+            else -> R.string.assets__error__invalid
         })
         binding.themeAuthorsLabel.text =
             resources.getQuantityText(R.plurals.assets__file__authors, themeMetaOnly.authors.size)
         binding.themeAuthorsValue.text = themeMetaOnly.authors.joinToString(", ")
-        binding.themeDeleteBtn.isEnabled = assetRef.source == AssetSource.Internal
-        binding.themeEditBtn.isEnabled = assetRef.source == AssetSource.Internal
-        selectedRef = assetRef.copy()
+        binding.themeDeleteBtn.isEnabled = assetRef.isInternal
+        binding.themeEditBtn.isEnabled = assetRef.isInternal
+        selectedRef = assetRef
         setThemeRefInPrefs(selectedRef)
         themeManager.loadTheme(assetRef).onSuccess {
             selectedTheme = it
@@ -269,11 +265,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
                     authors = listOf("@me"),
                     isNightTheme = key == Preferences.Theme.NIGHT_THEME_REF
                 )
-                val newAssetRef =
-                    AssetRef(
-                        AssetSource.Internal,
-                        ThemeManager.THEME_PATH_REL + "/" + newTheme.name + ".json"
-                    )
+                val newAssetRef = FlorisRef.internal(ThemeManager.THEME_PATH_REL + "/" + newTheme.name + ".json")
                 themeManager.writeTheme(newAssetRef, newTheme).onSuccess {
                     themeEditor.launch(
                         Intent(this, ThemeEditorActivity::class.java).apply {
@@ -281,7 +273,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
                         }
                     )
                 }.onFailure {
-                    Timber.e(it.toString())
+                    flogError(LogTopic.THEME_MANAGER) { it.toString() }
                 }
             }
             R.id.fab_option_create_from_selected -> {
@@ -296,11 +288,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
                     ),
                     authors = authorsMut.toList()
                 )
-                val newAssetRef =
-                    AssetRef(
-                        AssetSource.Internal,
-                        ThemeManager.THEME_PATH_REL + "/" + themeCopy.name + ".json"
-                    )
+                val newAssetRef = FlorisRef.internal(ThemeManager.THEME_PATH_REL + "/" + themeCopy.name + ".json")
                 themeManager.writeTheme(newAssetRef, themeCopy).onSuccess {
                     themeEditor.launch(
                         Intent(this, ThemeEditorActivity::class.java).apply {
@@ -308,15 +296,15 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
                         }
                     )
                 }.onFailure {
-                    Timber.e(it.toString())
+                    flogError(LogTopic.THEME_MANAGER) { it.toString() }
                 }
             }
             R.id.fab_option_import -> {
                 importTheme.launch("*/*")
             }
             R.id.theme_delete_btn -> {
-                val deleteRef = selectedRef?.copy()
-                if (deleteRef?.source == AssetSource.Internal) {
+                val deleteRef = selectedRef
+                if (deleteRef?.isInternal == true) {
                     val msg = String.format(
                         resources.getString(R.string.assets__action__delete_confirm_message),
                         selectedTheme.label
@@ -349,7 +337,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
             }
             R.id.theme_edit_btn -> {
                 val editRef = selectedRef
-                if (editRef?.source == AssetSource.Internal) {
+                if (editRef?.isInternal == true) {
                     themeEditor.launch(
                         Intent(this, ThemeEditorActivity::class.java).apply {
                             putExtra(ThemeEditorActivity.EXTRA_THEME_REF, editRef.toString())

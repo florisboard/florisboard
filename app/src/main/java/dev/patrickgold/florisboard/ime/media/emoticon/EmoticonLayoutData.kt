@@ -17,8 +17,7 @@
 package dev.patrickgold.florisboard.ime.media.emoticon
 
 import dev.patrickgold.florisboard.res.AssetManager
-import dev.patrickgold.florisboard.res.AssetRef
-import dev.patrickgold.florisboard.res.AssetSource
+import dev.patrickgold.florisboard.res.FlorisRef
 import kotlinx.serialization.Serializable
 
 typealias EmoticonLayoutDataArrangement = List<List<EmoticonKeyData>>
@@ -33,7 +32,7 @@ data class EmoticonLayoutData(
     companion object {
         fun fromJsonFile(path: String): EmoticonLayoutData? {
             return AssetManager.defaultOrNull()
-                ?.loadJsonAsset<EmoticonLayoutData>(AssetRef(AssetSource.Assets, path))
+                ?.loadJsonAsset<EmoticonLayoutData>(FlorisRef.assets(path))
                 ?.getOrNull()
         }
     }

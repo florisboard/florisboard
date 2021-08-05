@@ -125,23 +125,47 @@ class FlorisRefTest {
     @Test
     fun `Test scheme`() {
         assertEquals(
-            expected = FlorisRef.SCHEME_FLORIS_ASSETS,
+            expected = FlorisRef.SCHEME_FLORIS,
             actual = assetsRef.scheme,
             message = MSG_INCORRECT_RESULT_FOR_ASSETS
         )
         assertEquals(
-            expected = FlorisRef.SCHEME_FLORIS_CACHE,
+            expected = FlorisRef.SCHEME_FLORIS,
             actual = cacheRef.scheme,
             message = MSG_INCORRECT_RESULT_FOR_CACHE
         )
         assertEquals(
-            expected = FlorisRef.SCHEME_FLORIS_INTERNAL,
+            expected = FlorisRef.SCHEME_FLORIS,
             actual = internalRef.scheme,
             message = MSG_INCORRECT_RESULT_FOR_INTERNAL
         )
         assertEquals(
             expected = "content",
             actual = externalRef.scheme,
+            message = MSG_INCORRECT_RESULT_FOR_EXTERNAL
+        )
+    }
+
+    @Test
+    fun `Test authority`() {
+        assertEquals(
+            expected = FlorisRef.AUTHORITY_ASSETS,
+            actual = assetsRef.authority,
+            message = MSG_INCORRECT_RESULT_FOR_ASSETS
+        )
+        assertEquals(
+            expected = FlorisRef.AUTHORITY_CACHE,
+            actual = cacheRef.authority,
+            message = MSG_INCORRECT_RESULT_FOR_CACHE
+        )
+        assertEquals(
+            expected = FlorisRef.AUTHORITY_INTERNAL,
+            actual = internalRef.authority,
+            message = MSG_INCORRECT_RESULT_FOR_INTERNAL
+        )
+        assertEquals(
+            expected = "authority",
+            actual = externalRef.authority,
             message = MSG_INCORRECT_RESULT_FOR_EXTERNAL
         )
     }

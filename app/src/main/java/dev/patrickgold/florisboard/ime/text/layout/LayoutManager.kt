@@ -23,12 +23,11 @@ import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.res.AssetManager
-import dev.patrickgold.florisboard.res.AssetRef
-import dev.patrickgold.florisboard.res.AssetSource
 import dev.patrickgold.florisboard.ime.popup.PopupExtension
 import dev.patrickgold.florisboard.ime.popup.PopupManager
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.*
+import dev.patrickgold.florisboard.res.FlorisRef
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import java.util.*
@@ -53,7 +52,7 @@ class LayoutManager {
     private val extendedPopupsCacheGuard: Mutex = Mutex(locked = false)
     private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
-    private val indexedLayoutRefs: EnumMap<LayoutType, MutableList<Pair<AssetRef, LayoutMetaOnly>>> = EnumMap(LayoutType::class.java)
+    private val indexedLayoutRefs: EnumMap<LayoutType, MutableList<Pair<FlorisRef, LayoutMetaOnly>>> = EnumMap(LayoutType::class.java)
 
     init {
         for (type in LayoutType.values()) {
@@ -71,9 +70,9 @@ class LayoutManager {
         if (ltn == null) {
             return@async Result.failure(NullPointerException("Invalid argument value for 'ltn': null"))
         }
-        val ref = AssetRef(source = AssetSource.Assets, path = "ime/text/${ltn.type}/${ltn.name}.json")
+        val ref = FlorisRef.assets("ime/text/${ltn.type}/${ltn.name}.json")
         layoutCacheGuard.lock()
-        val cached = layoutCache[ref.path]
+        val cached = layoutCache[ref.relativePath]
         if (cached != null) {
             flogDebug(LogTopic.LAYOUT_MANAGER) { "Using cache for '$ref'" }
             layoutCacheGuard.unlock()
@@ -81,35 +80,25 @@ class LayoutManager {
         } else {
             flogDebug(LogTopic.LAYOUT_MANAGER) { "Loading '$ref'" }
             val layout = async { assetManager.loadJsonAsset<Layout>(ref) }
-            layoutCache[ref.path] = layout
+            layoutCache[ref.relativePath] = layout
             layoutCacheGuard.unlock()
             return@async layout.await()
         }
     }
 
     private fun loadExtendedPopupsAsync(subtype: Subtype? = null): Deferred<Result<PopupExtension>> = ioScope.async {
-        val ref: AssetRef
-        if (subtype == null) {
-            ref = AssetRef(
-                source = AssetSource.Assets,
-                path = "${PopupManager.POPUP_EXTENSION_PATH_REL}/\$default.json"
-            )
+        val ref: FlorisRef = if (subtype == null) {
+            FlorisRef.assets("${PopupManager.POPUP_EXTENSION_PATH_REL}/\$default.json")
         } else {
-            val tempRef = AssetRef(
-                source = AssetSource.Assets,
-                path = "${PopupManager.POPUP_EXTENSION_PATH_REL}/${subtype.locale.languageTag()}.json"
-            )
-            ref = if (assetManager.hasAsset(tempRef)) {
+            val tempRef = FlorisRef.assets("${PopupManager.POPUP_EXTENSION_PATH_REL}/${subtype.locale.languageTag()}.json")
+            if (assetManager.hasAsset(tempRef)) {
                 tempRef
             } else {
-                AssetRef(
-                    source = AssetSource.Assets,
-                    path = "${PopupManager.POPUP_EXTENSION_PATH_REL}/${subtype.locale.language}.json"
-                )
+                FlorisRef.assets("${PopupManager.POPUP_EXTENSION_PATH_REL}/${subtype.locale.language}.json")
             }
         }
         extendedPopupsCacheGuard.lock()
-        val cached = extendedPopupsCache[ref.path]
+        val cached = extendedPopupsCache[ref.relativePath]
         if (cached != null) {
             flogDebug(LogTopic.LAYOUT_MANAGER) { "Using cache for '$ref'" }
             extendedPopupsCacheGuard.unlock()
@@ -117,7 +106,7 @@ class LayoutManager {
         } else {
             flogDebug(LogTopic.LAYOUT_MANAGER) { "Loading '$ref'" }
             val extendedPopups = async { assetManager.loadJsonAsset<PopupExtension>(ref) }
-            extendedPopupsCache[ref.path] = extendedPopups
+            extendedPopupsCache[ref.relativePath] = extendedPopups
             extendedPopupsCacheGuard.unlock()
             return@async extendedPopups.await()
         }
@@ -353,7 +342,7 @@ class LayoutManager {
         for (type in LayoutType.values()) {
             indexedLayoutRefs[type]?.clear()
             assetManager.listAssets<LayoutMetaOnly>(
-                AssetRef(AssetSource.Assets, "ime/text/$type")
+                FlorisRef.assets("ime/text/$type")
             ).onSuccess { assetList ->
                 indexedLayoutRefs[type]?.let { indexedList ->
                     for ((ref, layoutMeta) in assetList) {

@@ -33,12 +33,12 @@ import dev.patrickgold.florisboard.databinding.ThemeEditorActivityBinding
 import dev.patrickgold.florisboard.databinding.ThemeEditorGroupViewBinding
 import dev.patrickgold.florisboard.databinding.ThemeEditorMetaDialogBinding
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.res.AssetRef
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
+import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.settings.components.ThemeAttrGroupView
 import dev.patrickgold.florisboard.settings.components.ThemeAttrView
 import kotlinx.coroutines.MainScope
@@ -55,7 +55,7 @@ class ThemeEditorActivity : AppCompatActivity() {
     private val themeManager: ThemeManager = ThemeManager.default()
 
     private var editedTheme: Theme = Theme.empty()
-    private var editedThemeRef: AssetRef? = null
+    private var editedThemeRef: FlorisRef? = null
     private var isSaved: Boolean = false
 
     private var themeLabel: String = ""
@@ -82,7 +82,7 @@ class ThemeEditorActivity : AppCompatActivity() {
 
         layoutManager = LayoutManager()
 
-        AssetRef.fromString(intent.getStringExtra(EXTRA_THEME_REF) ?: "").onSuccess { ref ->
+        FlorisRef.from(intent.getStringExtra(EXTRA_THEME_REF) ?: "").takeIf { it.isValid }?.let { ref ->
             editedThemeRef = ref
             themeManager.loadTheme(ref).onSuccess { theme ->
                 editedTheme = theme.copy()
