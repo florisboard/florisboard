@@ -91,6 +91,12 @@ interface KeyData : AbstractKeyData {
          * popups specified for "~enter" in the popup mapping.
          */
         const val GROUP_ENTER: Int = 3
+
+        /**
+         * Constant for the enter modifier key group. Any key belonging to this group will get the
+         * popups specified for "~kana" in the popup mapping.
+         */
+        const val GROUP_KANA: Int = 4
     }
 }
 

@@ -65,6 +65,9 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                     KeyData.GROUP_RIGHT -> {
                         "~right"
                     }
+                    KeyData.GROUP_KANA -> {
+                        "~kana"
+                    }
                     else -> {
                         val subtype = evaluator.getActiveSubtype()
                         if (subtype.locale.language == FlorisLocale.from("ja").language) {
