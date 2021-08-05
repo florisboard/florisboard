@@ -15,7 +15,7 @@
       { "code":  -210, "label": "language_switch", "type": "system_gui" },
       { "code":  -213, "label": "switch_to_media_context", "type": "system_gui" },
       { "code":    32, "label": "空白" },
-      { "code": -9710, "label": "かな", "groupId": 4, "type": "system_gui" },
+      { "code": -9710, "label": "かな", "groupId": 97, "type": "system_gui" },
       { "code": 12306, "label": "小" },
       { "code":    46, "label": ".", "groupId": 2 },
       { "code":    10, "label": "enter", "groupId": 3, "type": "enter_editing" }
