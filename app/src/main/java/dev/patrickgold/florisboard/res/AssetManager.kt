@@ -29,8 +29,13 @@ import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
 import dev.patrickgold.florisboard.ime.spelling.SpellingConfig
-import dev.patrickgold.florisboard.ime.text.composing.*
-import dev.patrickgold.florisboard.ime.text.keyboard.*
+import dev.patrickgold.florisboard.ime.text.composing.Appender
+import dev.patrickgold.florisboard.ime.text.composing.Composer
+import dev.patrickgold.florisboard.ime.text.composing.HangulUnicode
+import dev.patrickgold.florisboard.ime.text.composing.WithRules
+import dev.patrickgold.florisboard.ime.text.keyboard.AutoTextKeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.MultiTextKeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionConfig
 import kotlinx.serialization.decodeFromString
@@ -38,7 +43,6 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
-import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.util.*
@@ -109,26 +113,6 @@ class AssetManager private constructor(val applicationContext: Context) {
 
     fun jsonBuilder(): Json = json
 
-    @Deprecated("AssetRef is deprecated, use FlorisRef instead")
-    fun deleteAsset(ref: AssetRef): Result<Unit> {
-        return when (ref.source) {
-            AssetSource.Internal -> {
-                val file = File(applicationContext.filesDir.absolutePath + "/" + ref.path)
-                if (file.isFile) {
-                    val success = file.delete()
-                    if (success) {
-                        Result.success(Unit)
-                    } else {
-                        Result.failure(Exception("Could not delete file."))
-                    }
-                } else {
-                    Result.failure(Exception("Provided reference is not a file."))
-                }
-            }
-            else -> Result.failure(Exception("Can not delete an asset in source '${ref.source}'"))
-        }
-    }
-
     fun deleteAsset(ref: FlorisRef): Result<Unit> {
         return when {
             ref.isCache || ref.isInternal -> {
@@ -152,26 +136,6 @@ class AssetManager private constructor(val applicationContext: Context) {
         }
     }
 
-    @Deprecated("AssetRef is deprecated, use FlorisRef instead")
-    fun hasAsset(ref: AssetRef): Boolean {
-        return when (ref.source) {
-            AssetSource.Assets -> {
-                try {
-                    val file = File(ref.path)
-                    val list = applicationContext.assets.list(file.parent?.toString() ?: "")
-                    list?.contains(file.name) == true
-                } catch (e: Exception) {
-                    false
-                }
-            }
-            AssetSource.Internal -> {
-                val file = File(applicationContext.filesDir.absolutePath + "/" + ref.path)
-                file.exists() && file.isFile
-            }
-            else -> false
-        }
-    }
-
     fun hasAsset(ref: FlorisRef): Boolean {
         return when {
             ref.isAssets -> {
@@ -191,48 +155,6 @@ class AssetManager private constructor(val applicationContext: Context) {
         }
     }
 
-    @Deprecated("AssetRef is deprecated, use FlorisRef instead")
-    inline fun <reified T> listAssets(ref: AssetRef): Result<Map<AssetRef, T>> {
-        val retMap = mutableMapOf<AssetRef, T>()
-        return when (ref.source) {
-            AssetSource.Assets -> runCatching {
-                val list = applicationContext.assets.list(ref.path)
-                if (list != null) {
-                    for (file in list) {
-                        val fileRef = ref.copy(path = ref.path + "/" + file)
-                        val assetResult = loadJsonAsset<T>(fileRef)
-                        assetResult.onSuccess { asset ->
-                            retMap[fileRef.copy()] = asset
-                        }.onFailure { error ->
-                            Timber.e(error.toString())
-                        }
-                    }
-                }
-                retMap.toMap()
-            }
-            AssetSource.Internal -> {
-                val dir = File(applicationContext.filesDir.absolutePath + "/" + ref.path)
-                if (dir.isDirectory) {
-                    dir.listFiles()?.let {
-                        it.forEach { file ->
-                            if (file.isFile) {
-                                val fileRef = ref.copy(path = ref.path + "/" + file.name)
-                                val assetResult = loadJsonAsset<T>(fileRef)
-                                assetResult.onSuccess { asset ->
-                                    retMap[fileRef.copy()] = asset
-                                }.onFailure { error ->
-                                    Timber.e(error.toString())
-                                }
-                            }
-                        }
-                    }
-                }
-                Result.success(retMap.toMap())
-            }
-            else -> Result.success(retMap.toMap())
-        }
-    }
-
     inline fun <reified T> listAssets(ref: FlorisRef): Result<Map<FlorisRef, T>> {
         val retMap = mutableMapOf<FlorisRef, T>()
         return when {
@@ -245,7 +167,7 @@ class AssetManager private constructor(val applicationContext: Context) {
                         assetResult.onSuccess { asset ->
                             retMap[fileRef] = asset
                         }.onFailure { error ->
-                            flogError(LogTopic.LAYOUT_MANAGER) { error.toString() }
+                            flogError(LogTopic.ASSET_MANAGER) { error.toString() }
                         }
                     }
                 }
@@ -262,7 +184,7 @@ class AssetManager private constructor(val applicationContext: Context) {
                                 assetResult.onSuccess { asset ->
                                     retMap[fileRef] = asset
                                 }.onFailure { error ->
-                                    flogError(LogTopic.LAYOUT_MANAGER) { error.toString() }
+                                    flogError(LogTopic.ASSET_MANAGER) { error.toString() }
                                 }
                             }
                         }
@@ -272,14 +194,6 @@ class AssetManager private constructor(val applicationContext: Context) {
             }
             else -> resultErrStr { "Unsupported FlorisRef source!" }
         }
-    }
-
-    @Deprecated("AssetRef is deprecated, use FlorisRef instead")
-    inline fun <reified T> loadJsonAsset(ref: AssetRef): Result<T> {
-        return loadTextAsset(ref).fold(
-            onSuccess = { runCatching { jsonBuilder().decodeFromString(it) } },
-            onFailure = { Result.failure(it) }
-        )
     }
 
     inline fun <reified T> loadJsonAsset(ref: FlorisRef): Result<T> {
@@ -307,25 +221,6 @@ class AssetManager private constructor(val applicationContext: Context) {
         return runCatching { jsonBuilder().decodeFromString(jsonStr) }
     }
 
-    @Deprecated("AssetRef is deprecated, use FlorisRef instead")
-    fun loadTextAsset(ref: AssetRef): Result<String> {
-        return when (ref.source) {
-            is AssetSource.Assets -> runCatching {
-                applicationContext.assets.open(ref.path).bufferedReader().use { it.readText() }
-            }
-            is AssetSource.Internal -> {
-                val file = File(applicationContext.filesDir.absolutePath + "/" + ref.path)
-                val contents = readTextFile(file).getOrElse { return Result.failure(it) }
-                if (contents.isBlank()) {
-                    Result.failure(Exception("File is blank!"))
-                } else {
-                    Result.success(contents)
-                }
-            }
-            else -> Result.failure(Exception("Unsupported asset ref!"))
-        }
-    }
-
     fun loadTextAsset(ref: FlorisRef): Result<String> {
         return when {
             ref.isAssets -> runCatching {
@@ -348,14 +243,6 @@ class AssetManager private constructor(val applicationContext: Context) {
         return ExternalContentUtils.readAllTextFromUri(applicationContext, uri, maxSize)
     }
 
-    @Deprecated("AssetRef is deprecated, use FlorisRef instead")
-    inline fun <reified T> writeJsonAsset(ref: AssetRef, asset: T): Result<Unit> {
-        return runCatching { jsonBuilder().encodeToString(asset) }.fold(
-            onSuccess = { writeTextAsset(ref, it) },
-            onFailure = { Result.failure(it) }
-        )
-    }
-
     inline fun <reified T> writeJsonAsset(ref: FlorisRef, asset: T): Result<Unit> {
         return runCatching { jsonBuilder().encodeToString(asset) }.fold(
             onSuccess = { writeTextAsset(ref, it) },
@@ -375,17 +262,6 @@ class AssetManager private constructor(val applicationContext: Context) {
             onSuccess = { writeTextAsset(uri, it) },
             onFailure = { resultErr { it } }
         )
-    }
-
-    @Deprecated("AssetRef is deprecated, use FlorisRef instead")
-    fun writeTextAsset(ref: AssetRef, text: String): Result<Unit> {
-        return when (ref.source) {
-            AssetSource.Internal -> {
-                val file = File(applicationContext.filesDir.absolutePath + "/" + ref.path)
-                writeTextFile(file, text)
-            }
-            else -> Result.failure(Exception("Can not write an asset in source '${ref.source}'"))
-        }
     }
 
     fun writeTextAsset(ref: FlorisRef, text: String): Result<Unit> {
@@ -441,7 +317,7 @@ class AssetManager private constructor(val applicationContext: Context) {
                                 flexFile.copy(configEntry, tempConfigFile)
                                 loadJsonAsset<C>(tempConfigFile).fold(
                                     onSuccess = { config -> retMap.put(ref.subRef(file.name), config) },
-                                    onFailure = { error -> flogError { error.toString() } }
+                                    onFailure = { error -> flogError(LogTopic.ASSET_MANAGER) { error.toString() } }
                                 )
                             }
                         }
