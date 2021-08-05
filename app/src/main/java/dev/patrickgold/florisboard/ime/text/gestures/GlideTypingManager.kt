@@ -3,12 +3,15 @@ package dev.patrickgold.florisboard.ime.text.gestures
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.res.AssetManager
-import dev.patrickgold.florisboard.res.AssetRef
-import dev.patrickgold.florisboard.res.AssetSource
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
-import kotlinx.coroutines.*
+import dev.patrickgold.florisboard.res.AssetManager
+import dev.patrickgold.florisboard.res.FlorisRef
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
 /**
@@ -71,7 +74,7 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
             if (wordDataCache.isEmpty()) {
                 // FIXME: get this info from dictionary.
                 val data =
-                    AssetManager.default().loadTextAsset(AssetRef(AssetSource.Assets, "ime/dict/data.json"))
+                    AssetManager.default().loadTextAsset(FlorisRef.assets("ime/dict/data.json"))
                         .getOrThrow()
                 val json = JSONObject(data)
                 wordDataCache.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })

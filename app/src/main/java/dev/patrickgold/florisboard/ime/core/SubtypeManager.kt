@@ -20,9 +20,8 @@ import android.content.Context
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.res.AssetManager
-import dev.patrickgold.florisboard.res.AssetRef
-import dev.patrickgold.florisboard.res.AssetSource
 import dev.patrickgold.florisboard.ime.text.key.CurrencySet
+import dev.patrickgold.florisboard.res.FlorisRef
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlin.collections.ArrayList
@@ -85,7 +84,7 @@ class SubtypeManager(
      * @return The [FlorisBoard.ImeConfig] or a default config.
      */
     private fun loadImeConfig(path: String): FlorisBoard.ImeConfig {
-        return assetManager.loadJsonAsset<FlorisBoard.ImeConfig>(AssetRef(AssetSource.Assets, path)).getOrElse {
+        return assetManager.loadJsonAsset<FlorisBoard.ImeConfig>(FlorisRef.assets(path)).getOrElse {
             flogError(LogTopic.SUBTYPE_MANAGER) { "Failed to retrieve IME config: $it" }
             FlorisBoard.ImeConfig(packageName)
         }

@@ -26,8 +26,8 @@ import androidx.preference.Preference.OnPreferenceClickListener
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.Preferences
-import dev.patrickgold.florisboard.res.AssetRef
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.settings.ThemeManagerActivity
 
 /**
@@ -81,13 +81,13 @@ class ThemeSelectorPreference : Preference, SharedPreferences.OnSharedPreference
         when (key) {
             Preferences.Theme.DAY_THEME_REF -> {
                 val metaIndex = themeManager.indexedDayThemeRefs
-                AssetRef.fromString(prefs.theme.dayThemeRef).onSuccess { ref ->
+                FlorisRef.from(prefs.theme.dayThemeRef).takeIf { it.isValid }?.let { ref ->
                     metaIndex[ref]?.label?.let { return it }
                 }
             }
             Preferences.Theme.NIGHT_THEME_REF -> {
                 val metaIndex = themeManager.indexedNightThemeRefs
-                AssetRef.fromString(prefs.theme.nightThemeRef).onSuccess { ref ->
+                FlorisRef.from(prefs.theme.nightThemeRef).takeIf { it.isValid }?.let { ref ->
                     metaIndex[ref]?.label?.let { return it }
                 }
             }

@@ -37,6 +37,7 @@ object LogTopic {
     const val TEXT_KEYBOARD_VIEW: FlogTopic =   16u
     const val GESTURES: FlogTopic =             32u
     const val SMARTBAR: FlogTopic =             64u
+    const val THEME_MANAGER: FlogTopic =        128u
 
     const val GLIDE: FlogTopic =                512u
     const val CLIPBOARD: FlogTopic =            1024u
