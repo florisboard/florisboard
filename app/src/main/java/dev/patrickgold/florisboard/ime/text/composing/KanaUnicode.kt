@@ -67,6 +67,9 @@ class KanaUnicode : Composer {
         'ヰ' to "ヸ",
         'ヱ' to "ヹ",
         'ヲ' to "ヺ",
+
+        'ゝ' to "ゞ",
+        'ヽ' to "ヾ",
     )
 
     private val handaku = mapOf(
