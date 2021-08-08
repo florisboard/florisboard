@@ -216,7 +216,11 @@ class KanaUnicode : Composer {
     override fun getActions(s: String, c: Char): Pair<Int, String> {
         // s is "at least the last 1 character of what's currently here"
         if (s.isEmpty()) {
-            return Pair(0, ""+c)
+            if (c == smallSentinel) {
+                return Pair(0, "")
+            } else {
+                return Pair(0, ""+c)
+            }
         }
         val lastChar = s.last()
         val lastOrd = lastChar.toInt()
