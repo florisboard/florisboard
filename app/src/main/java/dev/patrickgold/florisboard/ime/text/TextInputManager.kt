@@ -675,7 +675,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private fun handleKanaSwitch() {
         when (activeState.kanaType) {
             KanaType.HIRA -> handleKanaKata()
-            KanaType.KATA -> handleKanaHalfKata()
+            KanaType.KATA -> handleKanaHira()
             KanaType.HALF_KATA -> handleKanaHira()
         }
     }
