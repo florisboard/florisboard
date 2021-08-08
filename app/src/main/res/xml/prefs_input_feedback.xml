@@ -1,0 +1,161 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__input_feedback__group_audio__label">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="input_feedback__audio_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__audio_enabled__label"
+            app:summary="@string/pref__input_feedback__audio_enabled__summary"/>
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="input_feedback__audio_ignore_system_settings"
+            app:dependency="input_feedback__audio_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__audio_ignore_system_settings__label"
+            app:summary="@string/pref__input_feedback__audio_ignore_system_settings__summary"/>
+
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="50"
+            app:key="input_feedback__audio_volume"
+            app:dependency="input_feedback__audio_enabled"
+            app:min="0"
+            app:max="100"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__audio_volume__label"
+            app:seekBarIncrement="1"
+            app:unit="%"/>
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="input_feedback__audio_feat_key_press"
+            app:dependency="input_feedback__audio_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__audio_feat_key_press__label"/>
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="input_feedback__audio_feat_key_long_press"
+            app:dependency="input_feedback__audio_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__audio_feat_key_long_press__label"/>
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="input_feedback__audio_feat_key_repeated_action"
+            app:dependency="input_feedback__audio_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__audio_feat_key_repeated_action__label"/>
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="input_feedback__audio_feat_gesture_swipe"
+            app:dependency="input_feedback__audio_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__audio_feat_gesture_swipe__label"/>
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="input_feedback__audio_feat_gesture_moving_swipe"
+            app:dependency="input_feedback__audio_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__audio_feat_gesture_moving_swipe__label"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:title="@string/pref__input_feedback__group_haptic__label">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="input_feedback__haptic_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__haptic_enabled__label"
+            app:summary="@string/pref__input_feedback__haptic_enabled__summary"/>
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="input_feedback__haptic_ignore_system_settings"
+            app:dependency="input_feedback__haptic_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__haptic_ignore_system_settings__label"
+            app:summary="@string/pref__input_feedback__haptic_ignore_system_settings__summary"/>
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="input_feedback__haptic_use_vibrator"
+            app:dependency="input_feedback__haptic_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__haptic_use_vibrator__label"
+            app:summary="@string/pref__input_feedback__haptic_use_vibrator__summary"/>
+
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="50"
+            app:key="input_feedback__haptic_vibration_duration"
+            app:dependency="input_feedback__haptic_use_vibrator"
+            app:min="0"
+            app:max="100"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__haptic_vibration_duration__label"
+            app:seekBarIncrement="10"
+            app:unit=" ms"/>
+
+        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+            app:allowDividerAbove="false"
+            android:defaultValue="50"
+            app:key="input_feedback__haptic_vibration_strength"
+            app:dependency="input_feedback__haptic_use_vibrator"
+            app:min="0"
+            app:max="100"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__haptic_vibration_strength__label"
+            app:seekBarIncrement="1"
+            app:unit="%"/>
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="input_feedback__haptic_feat_key_press"
+            app:dependency="input_feedback__haptic_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__haptic_feat_key_press__label"/>
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="input_feedback__haptic_feat_key_long_press"
+            app:dependency="input_feedback__haptic_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__haptic_feat_key_long_press__label"/>
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="input_feedback__haptic_feat_key_repeated_action"
+            app:dependency="input_feedback__haptic_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__haptic_feat_key_repeated_action__label"/>
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:key="input_feedback__haptic_feat_gesture_swipe"
+            app:dependency="input_feedback__haptic_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__haptic_feat_gesture_swipe__label"/>
+
+        <SwitchPreferenceCompat
+            app:defaultValue="true"
+            app:key="input_feedback__haptic_feat_gesture_moving_swipe"
+            app:dependency="input_feedback__haptic_enabled"
+            app:iconSpaceReserved="false"
+            app:title="@string/pref__input_feedback__haptic_feat_gesture_moving_swipe__label"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

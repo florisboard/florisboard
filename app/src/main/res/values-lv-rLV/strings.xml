@@ -199,11 +199,6 @@
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Taustiņu atstatums (statenisks)</string>
     <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Taustiņu atstatums (līmenisks)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Taustiņa piespiešana</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Taustiņa piespiešanas skaņa</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Taustiņa piespiešanas skaņas skaļums</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Trīcēt, kad tiek nospiesta poga</string>
-    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Trīcēšanas ilgums, kad tiek nospiesta poga</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Trīcēšanas stiprums, kad tiek nospiesta poga</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Uznirstošā lodziņa redzamība</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Rādīt uznirstošo lodziņu, kad tiek nospiests taustiņš</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Ilgas taustiņa piespiešanas aizture</string>

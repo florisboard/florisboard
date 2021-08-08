@@ -75,6 +75,7 @@ import dev.patrickgold.florisboard.setup.SetupActivity
 import dev.patrickgold.florisboard.util.AppVersionUtils
 import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.databinding.FlorisboardBinding
+import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.keyboard.updateKeyboardState
 import dev.patrickgold.florisboard.util.debugSummarize
@@ -133,11 +134,10 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         private set
     private var eventListeners: CopyOnWriteArrayList<EventListener> = CopyOnWriteArrayList()
 
-    private var audioManager: AudioManager? = null
     var imeManager: InputMethodManager? = null
+    lateinit var inputFeedbackManager: InputFeedbackManager
     var florisClipboardManager: FlorisClipboardManager? = null
     private val themeManager: ThemeManager = ThemeManager.default()
-    private var vibrator: Vibrator? = null
 
     private var internalBatchNestingLevel: Int = 0
     private val internalSelectionCache = object {
@@ -220,9 +220,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
                 serviceLifecycleDispatcher.onServicePreSuperOnCreate()
 
                 imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                audioManager = getSystemService(Context.AUDIO_SERVICE) as? AudioManager
-                vibrator = getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
-                prefs.syncSystemSettings()
+                inputFeedbackManager = InputFeedbackManager.new(this)
                 activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
 
                 currentThemeIsNight = themeManager.activeTheme.isNightTheme
@@ -320,9 +318,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
             it.close()
             florisClipboardManager = null
         }
-        audioManager = null
         imeManager = null
-        vibrator = null
         popupLayerView = null
         uiBinding = null
         florisboardInstance = null
@@ -490,7 +486,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         }
         isWindowShown = true
 
-        prefs.syncSystemSettings()
         val newActiveSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
         if (newActiveSubtype != activeSubtype) {
             activeSubtype = newActiveSubtype
@@ -722,84 +717,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
             ViewUtils.updateLayoutHeightOf(inputArea, layoutHeight)
             ViewUtils.updateLayoutGravityOf(inputArea, Gravity.BOTTOM)
             ViewUtils.updateLayoutHeightOf(inputWindowView, layoutHeight)
-        }
-    }
-
-    /**
-     * Makes a key press vibration if the user has this feature enabled in the preferences.
-     */
-    fun keyPressVibrate(isMovingGestureEffect: Boolean = false) {
-        if (prefs.keyboard.vibrationEnabled) {
-            var vibrationDuration = prefs.keyboard.vibrationDuration.toLong()
-            var vibrationStrength = prefs.keyboard.vibrationStrength
-
-            if (!prefs.keyboard.vibrationEnabledSystem && vibrationDuration < 0 && vibrationStrength < 0) {
-                return
-            }
-
-            val hapticsPerformed = if (vibrationDuration < 0 && vibrationStrength < 0) {
-                if (isMovingGestureEffect && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-                    uiBinding?.inputWindowView?.performHapticFeedback(HapticFeedbackConstants.TEXT_HANDLE_MOVE)
-                } else {
-                    uiBinding?.inputWindowView?.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
-                }
-            } else {
-                false
-            }
-
-            if (hapticsPerformed == true) {
-                return
-            }
-
-            if (vibrationDuration == -1L) {
-                vibrationDuration = 36
-            }
-            if (isMovingGestureEffect) {
-                vibrationDuration = (vibrationDuration / 8.0).toLong().coerceAtLeast(1)
-            }
-            if (vibrationStrength == -1 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrationStrength = VibrationEffect.DEFAULT_AMPLITUDE
-            } else if (vibrationStrength == -1) {
-                vibrationStrength = 36
-            }
-            if (isMovingGestureEffect && vibrationStrength > 0) {
-                vibrationStrength = (vibrationStrength / 2.0).toInt().coerceAtLeast(1)
-            } else if (isMovingGestureEffect) {
-                vibrationStrength = 8
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator?.vibrate(
-                    VibrationEffect.createOneShot(
-                        vibrationDuration, vibrationStrength
-                    )
-                )
-            } else {
-                @Suppress("DEPRECATION")
-                vibrator?.vibrate(vibrationDuration)
-            }
-        }
-    }
-
-    /**
-     * Makes a key press sound if the user has this feature enabled in the preferences.
-     */
-    fun keyPressSound(keyData: KeyData? = null) {
-        if (prefs.keyboard.soundEnabled) {
-            val soundVolume = prefs.keyboard.soundVolume
-            val effect = when (keyData) {
-                is TextKeyData -> when (keyData.code) {
-                    KeyCode.SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR
-                    KeyCode.DELETE -> AudioManager.FX_KEYPRESS_DELETE
-                    KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN
-                    else -> AudioManager.FX_KEYPRESS_STANDARD
-                }
-                else -> AudioManager.FX_KEYPRESS_STANDARD
-            }
-            if (soundVolume == -1 && prefs.keyboard.soundEnabledSystem) {
-                audioManager!!.playSoundEffect(effect)
-            } else if (soundVolume > 0) {
-                audioManager!!.playSoundEffect(effect, soundVolume / 100f)
-            }
         }
     }
 

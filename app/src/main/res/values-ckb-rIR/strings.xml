@@ -199,11 +199,6 @@
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">بۆشایی دوگمەکان (ستوونی)</string>
     <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">بۆشایی دوگمەکان (ئاسۆیی)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">کاریگەرییەکان</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">دەنگ لەکاتی نووسین</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">ئاستی دەنگ</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">لەرزین لەکاتی نووسین</string>
-    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">ماوەی لەرزین</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">ئاستی لەرزین</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">بچووککراوە پیت</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">پیشاندانی بچووککراوەی پیت لەکاتی نووسین</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">ماوەی دەست راگرتن بۆ پیتە لاوەکییەکان</string>

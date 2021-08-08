@@ -196,11 +196,6 @@
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Відстань між клавішами (вертикально)</string>
     <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Відстань між клавішами (горизонтально)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Натискання клавіші</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Звук при натисканні</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Гучність звуку при натисканні</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Вібрація при натисканні</string>
-    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Тривалість вібрації при натисканні</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Сила вібрації при натисканні</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Видимість спливаючої підказки</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Показувати спливаючу підказку при натисканні клавіші</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Затримка при натисканні</string>

@@ -172,11 +172,6 @@
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Näppäinten väli (pysty)</string>
     <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Näppäinten väli (vaaka)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Painallus</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Painikeääni</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Painikeäänen voimakkuus</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Värinä painalluksella</string>
-    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Värinän pituus painalluksella</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Värinän voimakkuus painalluksella</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Ponnahdusikkunoiden Näkyvyys</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Näytä ponnahdusikkuna, kun painat näppäintä</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Pitkän painalluksen viive</string>

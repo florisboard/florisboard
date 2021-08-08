@@ -200,11 +200,6 @@
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Tuş aralığı (dikey)</string>
     <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Tuş aralığı (yatay)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tuşa basıldığında</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Tuşa basıldığında ses</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Tuşa basıldığındaki ses düzeyi</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Tuşa basıldığında titreşim</string>
-    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Tuşa basıldığındaki titreşim süresi</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Tuşa basıldığındaki titreşim gücü</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Açılır bildirim görünürlüğü</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Bir tuşa basıldığında açılır tuşu göster</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Tuşa uzun basma gecikmesi</string>
