@@ -11,79 +11,79 @@ class KanaUnicode : Composer {
     override val toRead: Int = 1
 
     private val daku = mapOf(
-        'う' to "ゔ",
+        'う' to 'ゔ',
 
-        'か' to "が",
-        'き' to "ぎ",
-        'く' to "ぐ",
-        'け' to "げ",
-        'こ' to "ご",
+        'か' to 'が',
+        'き' to 'ぎ',
+        'く' to 'ぐ',
+        'け' to 'げ',
+        'こ' to 'ご',
 
-        'さ' to "ざ",
-        'し' to "じ",
-        'す' to "ず",
-        'せ' to "ぜ",
-        'そ' to "ぞ",
+        'さ' to 'ざ',
+        'し' to 'じ',
+        'す' to 'ず',
+        'せ' to 'ぜ',
+        'そ' to 'ぞ',
 
-        'た' to "だ",
-        'ち' to "ぢ",
-        'つ' to "づ",
-        'て' to "で",
-        'と' to "ど",
+        'た' to 'だ',
+        'ち' to 'ぢ',
+        'つ' to 'づ',
+        'て' to 'で',
+        'と' to 'ど',
 
-        'は' to "ば",
-        'ひ' to "び",
-        'ふ' to "ぶ",
-        'へ' to "べ",
-        'ほ' to "ぼ",
+        'は' to 'ば',
+        'ひ' to 'び',
+        'ふ' to 'ぶ',
+        'へ' to 'べ',
+        'ほ' to 'ぼ',
 
-        'ウ' to "ヴ",
+        'ウ' to 'ヴ',
 
-        'カ' to "ガ",
-        'キ' to "ギ",
-        'ク' to "グ",
-        'ケ' to "ゲ",
-        'コ' to "ゴ",
+        'カ' to 'ガ',
+        'キ' to 'ギ',
+        'ク' to 'グ',
+        'ケ' to 'ゲ',
+        'コ' to 'ゴ',
 
-        'サ' to "ザ",
-        'シ' to "ジ",
-        'ス' to "ズ",
-        'セ' to "ゼ",
-        'ソ' to "ゾ",
+        'サ' to 'ザ',
+        'シ' to 'ジ',
+        'ス' to 'ズ',
+        'セ' to 'ゼ',
+        'ソ' to 'ゾ',
 
-        'タ' to "ダ",
-        'チ' to "ヂ",
-        'ツ' to "ヅ",
-        'テ' to "デ",
-        'ト' to "ド",
+        'タ' to 'ダ',
+        'チ' to 'ヂ',
+        'ツ' to 'ヅ',
+        'テ' to 'デ',
+        'ト' to 'ド',
 
-        'ハ' to "バ",
-        'ヒ' to "ビ",
-        'フ' to "ブ",
-        'ヘ' to "ベ",
-        'ホ' to "ボ",
+        'ハ' to 'バ',
+        'ヒ' to 'ビ',
+        'フ' to 'ブ',
+        'ヘ' to 'ベ',
+        'ホ' to 'ボ',
 
-        'ワ' to "ヷ",
-        'ヰ' to "ヸ",
-        'ヱ' to "ヹ",
-        'ヲ' to "ヺ",
+        'ワ' to 'ヷ',
+        'ヰ' to 'ヸ',
+        'ヱ' to 'ヹ',
+        'ヲ' to 'ヺ',
 
-        'ゝ' to "ゞ",
-        'ヽ' to "ヾ",
+        'ゝ' to 'ゞ',
+        'ヽ' to 'ヾ',
     )
 
     private val handaku = mapOf(
-        'は' to "ぱ",
-        'ひ' to "ぴ",
-        'ふ' to "ぷ",
-        'へ' to "ぺ",
-        'ほ' to "ぽ",
+        'は' to 'ぱ',
+        'ひ' to 'ぴ',
+        'ふ' to 'ぷ',
+        'へ' to 'ぺ',
+        'ほ' to 'ぽ',
 
-        'ハ' to "パ",
-        'ヒ' to "ピ",
-        'フ' to "プ",
-        'ヘ' to "ペ",
-        'ホ' to "ポ",
+        'ハ' to 'パ',
+        'ヒ' to 'ピ',
+        'フ' to 'プ',
+        'ヘ' to 'ペ',
+        'ホ' to 'ポ',
     )
 
     private val small = mapOf(
@@ -149,61 +149,140 @@ class KanaUnicode : Composer {
         'ヲ' to "𛅦",
 
         'ン' to "𛅧",
+    )
 
-        'ぁ' to "あ",
-        'ぃ' to "い",
-        'ぅ' to "え",
-        'ぇ' to "う",
-        'ぉ' to "お",
+    private val reverseDaku = mapOf(
+        'ゔ' to 'う',
 
-        'ゕ' to "か",
-        'ゖ' to "け",
+        'が' to 'か',
+        'ぎ' to 'き',
+        'ぐ' to 'く',
+        'げ' to 'け',
+        'ご' to 'こ',
 
-        'っ' to "つ",
+        'ざ' to 'さ',
+        'じ' to 'し',
+        'ず' to 'す',
+        'ぜ' to 'せ',
+        'ぞ' to 'そ',
+
+        'だ' to 'た',
+        'ぢ' to 'ち',
+        'づ' to 'つ',
+        'で' to 'て',
+        'ど' to 'と',
+
+        'ば' to 'は',
+        'び' to 'ひ',
+        'ぶ' to 'ふ',
+        'べ' to 'へ',
+        'ぼ' to 'ほ',
+
+        'ヴ' to 'ウ',
+
+        'ガ' to 'カ',
+        'ギ' to 'キ',
+        'グ' to 'ク',
+        'ゲ' to 'ケ',
+        'ゴ' to 'コ',
+
+        'ザ' to 'サ',
+        'ジ' to 'シ',
+        'ズ' to 'ス',
+        'ゼ' to 'セ',
+        'ゾ' to 'ソ',
+
+        'ダ' to 'タ',
+        'ヂ' to 'チ',
+        'ヅ' to 'ツ',
+        'デ' to 'テ',
+        'ド' to 'ト',
+
+        'バ' to 'ハ',
+        'ビ' to 'ヒ',
+        'ブ' to 'フ',
+        'ベ' to 'ヘ',
+        'ボ' to 'ホ',
+
+        'ヷ' to 'ワ',
+        'ヸ' to 'ヰ',
+        'ヹ' to 'ヱ',
+        'ヺ' to 'ヲ',
+
+        'ゞ' to 'ゝ',
+        'ヾ' to 'ヽ',
+    )
+
+    private val reverseHandaku = mapOf(
+        'ぱ' to 'は',
+        'ぴ' to 'ひ',
+        'ぷ' to 'ふ',
+        'ぺ' to 'へ',
+        'ぽ' to 'ほ',
+
+        'パ' to 'ハ',
+        'ピ' to 'ヒ',
+        'プ' to 'フ',
+        'ペ' to 'ヘ',
+        'ポ' to 'ホ',
+    )
+
+    private val reverseSmall = mapOf(
+        'ぁ' to 'あ',
+        'ぃ' to 'い',
+        'ぅ' to 'え',
+        'ぇ' to 'う',
+        'ぉ' to 'お',
+
+        'ゕ' to 'か',
+        'ゖ' to 'け',
+
+        'っ' to 'つ',
                    
-        'ゃ' to "や",
-        'ゅ' to "ゆ",
-        'ょ' to "よ",
+        'ゃ' to 'や',
+        'ゅ' to 'ゆ',
+        'ょ' to 'よ',
 
-        'ゎ' to "わ",
+        'ゎ' to 'わ',
 
-        'ァ' to "ア",
-        'ィ' to "イ",
-        'ゥ' to "エ",
-        'ェ' to "ウ",
-        'ォ' to "オ",
 
-        'ヵ' to "カ",
-        'ㇰ' to "ク",
-        'ヶ' to "ケ",
+        'ァ' to 'ア',
+        'ィ' to 'イ',
+        'ゥ' to 'エ',
+        'ェ' to 'ウ',
+        'ォ' to 'オ',
 
-        'ㇱ' to "シ",
-        'ㇲ' to "ス",
+        'ヵ' to 'カ',
+        'ㇰ' to 'ク',
+        'ヶ' to 'ケ',
 
-        'ッ' to "ツ",
-        'ㇳ' to "ト",
+        'ㇱ' to 'シ',
+        'ㇲ' to 'ス',
 
-        'ㇴ' to "ヌ",
+        'ッ' to 'ツ',
+        'ㇳ' to 'ト',
 
-        'ㇵ' to "ハ",
-        'ㇶ' to "ヒ",
-        'ㇷ' to "フ",
-        'ㇸ' to "ヘ",
-        'ㇹ' to "ホ",
+        'ㇴ' to 'ヌ',
 
-        'ㇺ' to "ム",
+        'ㇵ' to 'ハ',
+        'ㇶ' to 'ヒ',
+        'ㇷ' to 'フ',
+        'ㇸ' to 'ヘ',
+        'ㇹ' to 'ホ',
 
-        'ヤ' to "ヤ",
-        'ュ' to "ユ",
-        'ョ' to "ヨ",
+        'ㇺ' to 'ム',
 
-        'ㇻ' to "ラ",
-        'ㇼ' to "リ",
-        'ㇽ' to "ル",
-        'ㇾ' to "レ",
-        'ㇿ' to "ロ",
+        'ヤ' to 'ヤ',
+        'ュ' to 'ユ',
+        'ョ' to 'ヨ',
 
-        'ヮ' to "ワ",
+        'ㇻ' to 'ラ',
+        'ㇼ' to 'リ',
+        'ㇽ' to 'ル',
+        'ㇾ' to 'レ',
+        'ㇿ' to 'ロ',
+
+        'ヮ' to 'ワ',
     )
 
     private val smallSentinel: Char = '〠'
@@ -216,6 +295,14 @@ class KanaUnicode : Composer {
         return char == '゚' || char == '゜' || char == 'ﾟ'
     }
 
+    private fun getBaseCharacter(c: Char): Char {
+        return reverseDaku.getOrElse(c) {
+            reverseHandaku.getOrElse(c) {
+                reverseSmall.getOrElse(c) { c }
+            }
+        }
+    }
+
     override fun getActions(s: String, c: Char): Pair<Int, String> {
         // s is "at least the last 1 character of what's currently here"
         if (s.isEmpty()) {
@@ -226,24 +313,26 @@ class KanaUnicode : Composer {
             }
         }
         val lastChar = s.last()
-        val lastOrd = lastChar.toInt()
 
         if (isDakuten(c)) {
-            val dakuChar = daku.get(lastChar)
+            val dakuChar = reverseDaku.getOrElse(lastChar)
+                           { daku.get(getBaseCharacter(lastChar)) }
             if (dakuChar == null) {
                 return Pair(0, ""+c)
             } else {
                 return Pair(1, ""+dakuChar)
             }
         } else if (isHandakuten(c)) {
-            val handakuChar = handaku.get(lastChar)
+            val handakuChar = reverseHandaku.getOrElse(lastChar)
+                           { handaku.get(getBaseCharacter(lastChar)) }
             if (handakuChar == null) {
                 return Pair(0, ""+c)
             } else {
                 return Pair(1, ""+handakuChar)
             }
         } else if (c == smallSentinel) {
-            val smallChar = small.get(lastChar)
+            val smallChar = reverseSmall.getOrElse(lastChar)
+                           { small.get(getBaseCharacter(lastChar)) }
             if (smallChar == null) {
                 return Pair(0, "")
             } else {
