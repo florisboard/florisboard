@@ -699,7 +699,9 @@
       "composer": "kana-unicode",
       "currencySet": "yen",
       "preferred": {
-        "characters": "jis"
+        "characters": "jis",
+        "symbols": "cjk",
+        "symbols2": "cjk"
       }
     }
   ]
