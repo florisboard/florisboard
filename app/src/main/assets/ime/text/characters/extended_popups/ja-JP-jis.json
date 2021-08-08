@@ -214,23 +214,23 @@
         ]
       },
       "~right": {
-        "main": { "code":   44, "label": "," },
+        "main": { "code": 12289, "label": "、" },
         "relevant": [
-          { "code":   38, "label": "&" },
-          { "code":   37, "label": "%" },
-          { "code":   43, "label": "+" },
-          { "code":   34, "label": "\"" },
-          { "code":   45, "label": "-" },
-          { "code":   58, "label": ":" },
-          { "code":   39, "label": "'" },
-          { "code":   64, "label": "@" },
-          { "code":   59, "label": ";" },
-          { "code":   47, "label": "/" },
-          { "code":   40, "label": "(" },
-          { "code":   41, "label": ")" },
-          { "code":   35, "label": "#" },
-          { "code":   33, "label": "!" },
-          { "code":   63, "label": "?" }
+          { "code": 65286, "label": "＆" },
+          { "code": 65285, "label": "％" },
+          { "code": 65291, "label": "＋" },
+          { "code": 65340, "label": "＼" },
+          { "code": 65293, "label": "－" },
+          { "code": 65306, "label": "：" },
+          { "code":    39, "label": "'" },
+          { "code": 65312, "label": "＠" },
+          { "code": 65307, "label": "；" },
+          { "code": 65295, "label": "／" },
+          { "code": 65288, "label": "（" },
+          { "code": 65289, "label": "）" },
+          { "code": 65283, "label": "＃" },
+          { "code": 65281, "label": "！" },
+          { "code": 65311, "label": "？" }
         ]
       }
     }
