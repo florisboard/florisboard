@@ -27,7 +27,7 @@ class GlideTypingGesture {
         companion object {
             private const val MAX_DETECT_TIME = 500
             private const val VELOCITY_THRESHOLD = 0.65
-            private val SWIPE_GESTURE_KEYS = arrayOf(KeyCode.DELETE, KeyCode.SHIFT, KeyCode.SPACE)
+            private val SWIPE_GESTURE_KEYS = arrayOf(KeyCode.DELETE, KeyCode.SHIFT, KeyCode.SPACE, KeyCode.CJK_SPACE)
         }
 
         /**

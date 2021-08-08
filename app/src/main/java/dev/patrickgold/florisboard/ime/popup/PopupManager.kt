@@ -154,7 +154,7 @@ class PopupManager<V : View>(
     private fun isSuitableForBasicPopup(key: Key): Boolean {
         return if (key is TextKey) {
             val c = key.computedData.code
-            c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS
+            c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE
         } else {
             true
         }
@@ -163,7 +163,7 @@ class PopupManager<V : View>(
     private fun isSuitableForExtendedPopup(key: Key): Boolean {
         return if (key is TextKey) {
             val c = key.computedData.code
-            c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS || exceptionsForKeyCodes.contains(c)
+            c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE || exceptionsForKeyCodes.contains(c)
         } else {
             true
         }

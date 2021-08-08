@@ -141,7 +141,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                     else -> 0.0
                 }
                 else -> when (computed.code) {
-                    KeyCode.SPACE -> 1.0
+                    KeyCode.SPACE, KeyCode.CJK_SPACE -> 1.0
                     else -> 0.0
                 }
             }
