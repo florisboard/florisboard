@@ -1,4 +1,3 @@
-
 plugins {
     id("com.android.application") version "7.0.0"
     kotlin("android") version "1.5.20"
@@ -25,7 +24,7 @@ android {
         applicationId = "dev.patrickgold.florisboard"
         minSdk = 23
         targetSdk = 30
-        versionCode = 50
+        versionCode = 51
         versionName = "0.3.13"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -88,7 +87,7 @@ android {
         create("beta") // Needed because by default the "beta" BuildType does not exist
         named("beta").configure {
             applicationIdSuffix = ".beta"
-            versionNameSuffix = "-beta07"
+            versionNameSuffix = "-beta08"
             proguardFiles.add(getDefaultProguardFile("proguard-android-optimize.txt"))
 
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_beta")
@@ -116,7 +115,6 @@ android {
     }
 }
 
-
 dependencies {
     implementation("androidx.activity", "activity-ktx", "1.2.1")
     implementation("androidx.appcompat", "appcompat", "1.2.0")
@@ -126,7 +124,7 @@ dependencies {
     implementation("androidx.preference", "preference-ktx", "1.1.1")
     implementation("androidx.constraintlayout", "constraintlayout", "2.0.4")
     implementation("androidx.lifecycle", "lifecycle-service", "2.2.0")
-    implementation("com.google.android", "flexbox", "2.0.1")
+    implementation("com.google.android.flexbox", "flexbox", "3.0.0")
     implementation("com.google.android.material", "material", "1.3.0")
     implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-android", "1.4.2")
     implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.1.0")

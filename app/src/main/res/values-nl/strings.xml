@@ -223,6 +223,8 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Beheer interne persoonlijke woordenboek</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Voeg toe, bekijk of verwijder woorden uit het interne persoonlijke woordenboek</string>
     <string name="pref__correction__title" comment="Preference group title">Verbeteringen</string>
+    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">Spellingcontrole</string>
+    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">Beheer en configureer de spellingscontrole</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-kapitalisatie</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Woorden kapitaliseren op basis van de huidige invoercontext</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Onthoud CapsLock status</string>
@@ -316,6 +318,10 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Toont het heap-memorygebruik en maximale grootte in de rechterbovenhoek</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Wis database van het interne persoonlijke woordenboek</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Wis alle woorden van de woordenlijst in de datatabel</string>
+    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Instellingen spellingcontrole</string>
+    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Beheer woordenboeken</string>
+    <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Gebruik toetsenbord subtypes</string>
+    <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">Geen woordenboeken voor spellingscontrole geïnstalleerd. Voeg de eerste toe via de \'+\'-toets!</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Over</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">App-pictogram van FlorisBoard</string>

@@ -65,6 +65,7 @@
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Disposición de caracteres</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Disposición de símbolos primarios</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Disposición de símbolos secundarios</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Compositor</string>
     <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Establecer moneda</string>
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Disposición numérica</string>
     <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Disposición numérica (avanzada)</string>
@@ -222,6 +223,8 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Administrar diccionario personal interno</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Añadir, ver y remover entradas para el diccionario personal interno</string>
     <string name="pref__correction__title" comment="Preference group title">Correcciones</string>
+    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">Corrector ortográfico</string>
+    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">Administrar y configurar el corrector ortográfico</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Mayúsculas automáticas</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Poner en mayúsculas las palabras según el contexto de entrada actual</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Recordar bloqueo de mayúsculas</string>
@@ -315,6 +318,42 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Sobreponer el uso de la memoria y el tamaño maximo en la esquina superior derecha</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Eliminar palabras del diccionario interno</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Eliminar todas las palabras del diccionario</string>
+    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Opciones del corrector ortográfico</string>
+    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Administrar diccionarios</string>
+    <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Usar subtipos de teclado</string>
+    <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">No hay diccionarios de corrección ortográfica instalados. ¡Añade uno con el botón \"+\" de abajo!</string>
+    <string name="settings__spelling__dictionary_index_invalid" comment="String for the Dictionary index invalid error card. %s will be replaced by the app name.">Ocurrió un error en la indexación de los diccionarios instalados. Intenta abrir %s de nuevo o envía un reporte del fallo si el error persiste.</string>
+    <string name="settings__spelling__dict_sources_info" comment="String for the Dictionary sources info.">¿De dónde obtengo los diccionarios de corrección ortográfica?</string>
+    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Extensión / Archivo</string>
+    <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Afijo + Archivo del diccionario</string>
+    <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Corrector ortográfico activo</string>
+    <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Ninguno escogido</string>
+    <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">Ver en ajustes del sistema</string>
+    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Administrar diccionarios de corrección ortográfica</string>
+    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
+        <item quantity="one">%d instalado</item>
+        <item quantity="other">%d instalados</item>
+    </plurals>
+    <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">Ajuste preciso</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[SIN IMPLEMENTAR] Usar nombres de contactos</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">El corrector ortográfico usará los nombres de su lista de contactos</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Utilizar entradas del diccionario de usuario</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">El corrector ortográfico buscará entradas de los diccionarios de usuario, si éstas están habilitadas</string>
+    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Importar nuevo diccionario</string>
+    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Seleccionar origen</string>
+    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Seleccione idioma</string>
+    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">Código de idioma (ej. es_ES)</string>
+    <string name="settings__spelling__import_dict_s2__title" comment="Title for the import dict sheet (step 2)">Añadir archivos a importar</string>
+    <string name="settings__spelling__import_dict_s2__select_aff" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Seleccione archivo affix (.aff)</string>
+    <string name="settings__spelling__import_dict_s2__select_dic" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Seleccione archivo de diccionario (.dic)</string>
+    <string name="settings__spelling__import_dict_s3__title" comment="Title for the import dict sheet (step 3)">Verificar archivos importados</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_locale" comment="Text for the verify files dialog (step 3)">Configuración regional: %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_original" comment="Text for the verify files dialog (step 3)">Fuente original: %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_any" comment="Text for the verify files dialog (the first %s will be replaced by a file extension, the second by a file name) (step 3)">%s archivo: %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_readme" comment="Text for the verify files dialog (step 3)">Archivo Léeme: %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_license" comment="Text for the verify files dialog (step 3)">Archivo de licencia: %s</string>
+    <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info sheet">Florisboard utiliza Nuspell como motor de correción ortográfica, lo cual implica que haya una vasta cantidad de diccionarios disponibles, de la misma manera en que Hunspell es usado por muchas otras aplicaciones también. La lista de abajo muestra algunas fuentes seleccionadas que el gestor de importaciones acepta. Descargue el archivo o los diccionarios, y luego escoja la fuente correcta (esto es importante para leer el formato de archivo correctamente).</string>
+    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">si esta lista no contiene diccionarios para su lengua o dialecto, también puede buscar manualmente un diccionario en Hunspell e importar los archivos \"aff\" y \"dic\" para esto.</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Acerca de</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Icono de la aplicación de FlorisBoard</string>
@@ -343,6 +382,9 @@
     <string name="assets__action__import">Importar</string>
     <string name="assets__action__no">No</string>
     <string name="assets__action__save">Guardar</string>
+    <string name="assets__action__select">Seleccionar</string>
+    <string name="assets__action__select_dir">Seleccionar carpeta</string>
+    <string name="assets__action__select_file">Seleccionar archivo</string>
     <string name="assets__action__yes">Si</string>
     <string name="assets__error__details">Detalles</string>
     <string name="assets__error__invalid">Inválido</string>

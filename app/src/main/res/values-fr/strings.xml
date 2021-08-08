@@ -73,6 +73,7 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Disposition « téléphone » principale</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Disposition « téléphone » secondaire</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Cette disposition existe déjà !</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (non installé)</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Thème du clavier</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Indéfini</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Mode du thème</string>

@@ -39,13 +39,16 @@ import kotlin.contracts.contract
 value class FlorisRef private constructor(val uri: Uri) {
     companion object {
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-        internal const val SCHEME_FLORIS_ASSETS = "floris-assets"
+        internal const val SCHEME_FLORIS = "florisboard"
 
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-        internal const val SCHEME_FLORIS_CACHE = "floris-cache"
+        internal const val AUTHORITY_ASSETS = "assets"
 
         @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-        internal const val SCHEME_FLORIS_INTERNAL = "floris-internal"
+        internal const val AUTHORITY_CACHE = "cache"
+
+        @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+        internal const val AUTHORITY_INTERNAL = "internal"
 
         /**
          * Constructs a new [FlorisRef] pointing to a resource within the
@@ -57,8 +60,9 @@ value class FlorisRef private constructor(val uri: Uri) {
          * @return The newly constructed reference.
          */
         fun assets(path: String) = Uri.Builder().run {
-            scheme(SCHEME_FLORIS_ASSETS)
-            encodedOpaquePart(path)
+            scheme(SCHEME_FLORIS)
+            authority(AUTHORITY_ASSETS)
+            encodedPath(path)
             FlorisRef(build())
         }
 
@@ -71,8 +75,9 @@ value class FlorisRef private constructor(val uri: Uri) {
          * @return The newly constructed reference.
          */
         fun cache(path: String) = Uri.Builder().run {
-            scheme(SCHEME_FLORIS_CACHE)
-            encodedOpaquePart(path)
+            scheme(SCHEME_FLORIS)
+            authority(AUTHORITY_CACHE)
+            encodedPath(path)
             FlorisRef(build())
         }
 
@@ -85,8 +90,9 @@ value class FlorisRef private constructor(val uri: Uri) {
          * @return The newly constructed reference.
          */
         fun internal(path: String) = Uri.Builder().run {
-            scheme(SCHEME_FLORIS_INTERNAL)
-            encodedOpaquePart(path)
+            scheme(SCHEME_FLORIS)
+            authority(AUTHORITY_INTERNAL)
+            encodedPath(path)
             FlorisRef(build())
         }
 
@@ -108,7 +114,13 @@ value class FlorisRef private constructor(val uri: Uri) {
          *
          * @return The newly constructed reference.
          */
-        fun from(str: String) = FlorisRef(Uri.parse(str))
+        fun from(str: String): FlorisRef {
+            return when {
+                str.startsWith("assets:") -> assets(str.substring(7))
+                str.startsWith("internal:") -> internal(str.substring(9))
+                else -> FlorisRef(Uri.parse(str))
+            }
+        }
 
         /**
          * Constructs a new reference from given [scheme] and [path], this can
@@ -121,38 +133,38 @@ value class FlorisRef private constructor(val uri: Uri) {
          */
         fun from(scheme: String, path: String) = Uri.Builder().run {
             scheme(scheme)
-            encodedOpaquePart(path)
+            encodedPath(path)
             FlorisRef(build())
         }
     }
 
     /**
-     * True if the scheme indicates a reference to a FlorisBoard APK asset
+     * True if the scheme and authority indicates a reference to a FlorisBoard APK asset
      * resource, false otherwise.
      */
     val isAssets: Boolean
-        get() = uri.scheme == SCHEME_FLORIS_ASSETS
+        get() = uri.scheme == SCHEME_FLORIS && uri.authority == AUTHORITY_ASSETS
 
     /**
      * True if the scheme indicates a reference to a FlorisBoard cache
      * resource, false otherwise.
      */
     val isCache: Boolean
-        get() = uri.scheme == SCHEME_FLORIS_CACHE
+        get() = uri.scheme == SCHEME_FLORIS && uri.authority == AUTHORITY_CACHE
 
     /**
      * True if the scheme indicates a reference to a FlorisBoard internal
      * storage resource, false otherwise.
      */
     val isInternal: Boolean
-        get() = uri.scheme == SCHEME_FLORIS_INTERNAL
+        get() = uri.scheme == SCHEME_FLORIS && uri.authority == AUTHORITY_INTERNAL
 
     /**
      * True if the scheme references any other external resource (URL, content
      * resolver, etc.), false otherwise.
      */
     val isExternal: Boolean
-        get() = !isAssets && !isCache && !isInternal
+        get() = uri.scheme != SCHEME_FLORIS
 
     /**
      * Returns the scheme of this URI, or an empty string if no scheme is
@@ -162,11 +174,30 @@ value class FlorisRef private constructor(val uri: Uri) {
         get() = uri.scheme ?: ""
 
     /**
+     * Returns the authority of this URI, or an empty string if no authority
+     * is specified.
+     */
+    val authority: String
+        get() = uri.authority ?: ""
+
+    /**
      * Returns the relative path of this URI, without a leading forward slash.
      * Works only for assets, cache or internal references.
      */
     val relativePath: String
-        get() = ((if (isExternal) { uri.path } else { uri.schemeSpecificPart } )?: "").removePrefix("/")
+        get() = (uri.path ?: "").removePrefix("/")
+
+    /**
+     * Returns if this URI contains data for all valid parts of a FlorisRef.
+     */
+    val isValid: Boolean
+        get() = scheme.isNotBlank() && authority.isNotBlank() && relativePath.isNotBlank()
+
+    /**
+     * Returns if this URI contains data for all valid parts of a FlorisRef.
+     */
+    val isInvalid: Boolean
+        get() = !isValid
 
     /**
      * Returns the absolute path on the device file storage for this reference,
@@ -192,15 +223,10 @@ value class FlorisRef private constructor(val uri: Uri) {
      *
      * @return The newly constructed reference.
      */
-    fun subRef(name: String): FlorisRef {
-        return when {
-            isExternal -> from(uri.buildUpon().run {
-                appendEncodedPath(name)
-                build()
-            })
-            else -> from(scheme, "$relativePath/$name")
-        }
-    }
+    fun subRef(name: String) = from(uri.buildUpon().run {
+        appendEncodedPath(name)
+        build()
+    })
 
     /**
      * Allows this URI to be used depending on where this reference points to.

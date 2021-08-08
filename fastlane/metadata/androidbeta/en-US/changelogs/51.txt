@@ -1,0 +1,4 @@
+This release fixes bugs in glide typing and gestures, as well as fixes some
+common crashes across the app.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.13-beta08
