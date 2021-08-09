@@ -4,6 +4,7 @@
   "label": "CJK",
   "authors": [ "waelwindows" ],
   "direction": "ltr",
+  "modifier": "cjk",
   "arrangement": [
     [
       { "code": 65312, "label": "＠", "popup": {

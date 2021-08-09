@@ -1,0 +1,30 @@
+{
+  "type": "symbols/mod",
+  "name": "cjk",
+  "label": "CJK",
+  "authors": [ "waelwindows" ],
+  "direction": "ltr",
+  "arrangement": [
+    [
+      { "code": -203, "label": "view_symbols2", "type": "system_gui" },
+      { "code":    0, "type": "placeholder" },
+      { "code":   -5, "label": "delete", "type": "enter_editing" }
+    ],
+    [
+      { "code": -201, "label": "view_characters", "type": "system_gui" },
+      { "code": 12289, "label": "、", "popup": {
+        "main": { "code":   44, "label": "," }
+      } },
+      { "code": -205, "label": "view_numeric_advanced", "type": "system_gui" },
+      { "code": 12288, "label": "空白" },
+      { "code": 12290, "label": "。", "popup": {
+        "main": { "code": 8230, "label": "…" },
+        "relevant": [
+          { "code": 12539, "label": "・" },
+          { "code":   46, "label": "." }
+        ]
+      } },
+      { "code":   10, "label": "enter", "groupId": 3, "type": "enter_editing" }
+    ]
+  ]
+}
