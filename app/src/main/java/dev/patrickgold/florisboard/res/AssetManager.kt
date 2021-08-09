@@ -26,6 +26,7 @@ import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.CaseSelector
 import dev.patrickgold.florisboard.ime.keyboard.KanaSelector
+import dev.patrickgold.florisboard.ime.keyboard.WidthSelector
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
@@ -68,6 +69,7 @@ class AssetManager private constructor(val applicationContext: Context) {
                 subclass(EmojiKeyData::class, EmojiKeyData.serializer())
                 subclass(CaseSelector::class, CaseSelector.serializer())
                 subclass(KanaSelector::class, KanaSelector.serializer())
+                subclass(WidthSelector::class, WidthSelector.serializer())
                 subclass(VariationSelector::class, VariationSelector.serializer())
                 default { TextKeyData.serializer() }
             }

@@ -8,250 +8,346 @@
   "arrangement": [
     [
       { "$": "kana_selector",
-        "hira":      { "code": 12396, "label": "ぬ" },
-        "kata":      { "code": 12492, "label": "ヌ" },
-        "half_kata": { "code": 65415, "label": "ﾇ" }
+        "hira": { "code": 12396, "label": "ぬ" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12492, "label": "ヌ" },
+          "half": { "code": 65415, "label": "ﾇ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12405, "label": "ふ" },
-        "kata":      { "code": 12501, "label": "フ" },
-        "half_kata": { "code": 65420, "label": "ﾌ" }
+        "hira": { "code": 12405, "label": "ふ" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12501, "label": "フ" },
+          "half": { "code": 65420, "label": "ﾌ" }
+        }
       },
       { "$": "kana_selector",
         "hira": { "code": 12354, "label": "あ" },
-        "kata": { "code": 12450, "label": "ア" },
-        "half_kata": { "code": 65393, "label": "ｱ" }
+        "kata": { "$": "width_selector",
+          "full": { "code": 12450, "label": "ア" },
+          "half": { "code": 65393, "label": "ｱ" }
+        }
       },
       { "$": "kana_selector",
         "hira": { "code": 12358, "label": "う" },
-        "kata": { "code": 12454, "label": "ウ" },
-        "half_kata": { "code": 65395, "label": "ｳ" }
+        "kata": { "$": "width_selector",
+          "full": { "code": 12454, "label": "ウ" },
+          "half": { "code": 65395, "label": "ｳ" }
+        }
       },
       { "$": "kana_selector",
         "hira": { "code": 12360, "label": "え" },
-        "kata": { "code": 12456, "label": "エ" },
-        "half_kata": { "code": 65396, "label": "ｴ" }
+        "kata": { "$": "width_selector",
+          "full": { "code": 12456, "label": "エ" },
+          "half": { "code": 65396, "label": "ｴ" }
+        }
       },
       { "$": "kana_selector",
         "hira": { "code": 12362, "label": "お" },
-        "kata": { "code": 12458, "label": "オ" },
-        "half_kata": { "code": 65397, "label": "ｵ" }
+        "kata": { "$": "width_selector",
+          "full": { "code": 12458, "label": "オ" },
+          "half": { "code": 65397, "label": "ｵ" }
+        }
       },
       { "$": "kana_selector",
         "hira": { "code": 12420, "label": "や" },
-        "kata": { "code": 12516, "label": "ヤ" },
-        "half_kata": { "code": 65428, "label": "ﾔ" }
+        "kata": { "$": "width_selector",
+          "full": { "code": 12516, "label": "ヤ" },
+          "half": { "code": 65428, "label": "ﾔ" }
+        }
       },
       { "$": "kana_selector",
         "hira": { "code": 12422, "label": "ゆ" },
-        "kata": { "code": 12518, "label": "ユ" },
-        "half_kata": { "code": 65429, "label": "ﾕ" }
+        "kata": { "$": "width_selector",
+          "full": { "code": 12518, "label": "ユ" },
+          "half": { "code": 65429, "label": "ﾕ" }
+        }
       },
       { "$": "kana_selector",
         "hira": { "code": 12424, "label": "よ" },
-        "kata": { "code": 12520, "label": "ヨ" },
-        "half_kata": { "code": 65430, "label": "ﾖ" }
+        "kata": { "$": "width_selector",
+          "full": { "code": 12520, "label": "ヨ" },
+          "half": { "code": 65430, "label": "ﾖ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12431, "label": "わ" },
-        "kata":      { "code": 12527, "label": "ワ" },
-        "half_kata": { "code": 65436, "label": "ﾜ" }
+        "hira": { "code": 12431, "label": "わ" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12527, "label": "ワ" },
+          "half": { "code": 65436, "label": "ﾜ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12411, "label": "ほ" },
-        "kata":      { "code": 12507, "label": "ホ" },
-        "half_kata": { "code": 65422, "label": "ﾎ" }
+        "hira": { "code": 12411, "label": "ほ" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12507, "label": "ホ" },
+          "half": { "code": 65422, "label": "ﾎ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12408, "label": "へ" },
-        "kata":      { "code": 12504, "label": "ヘ" },
-        "half_kata": { "code": 65421, "label": "ﾍ" }
+        "hira": { "code": 12408, "label": "へ" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12504, "label": "ヘ" },
+          "half": { "code": 65421, "label": "ﾍ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12540, "label": "ー" },
-        "kata":      { "code": 12540, "label": "ー" },
-        "half_kata": { "code": 65392, "label": "ｰ" }
+        "hira": { "code": 12540, "label": "ー" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12540, "label": "ー" },
+          "half": { "code": 65392, "label": "ｰ" }
+        }
       }
     ],
     [
       { "$": "kana_selector",
-        "hira":      { "code": 12383, "label": "た" },
-        "kata":      { "code": 12479, "label": "タ" },
-        "half_kata": { "code": 65408, "label": "ﾀ" }
+        "hira": { "code": 12383, "label": "た" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12479, "label": "タ" },
+          "half": { "code": 65408, "label": "ﾀ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12390, "label": "て" },
-        "kata":      { "code": 12486, "label": "テ" },
-        "half_kata": { "code": 65411, "label": "ﾃ" }
+        "hira": { "code": 12390, "label": "て" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12486, "label": "テ" },
+          "half": { "code": 65411, "label": "ﾃ" }
+        }
       },
       { "$": "kana_selector",
         "hira": { "code": 12356, "label": "い" },
-        "kata": { "code": 12452, "label": "イ" },
-        "half_kata": { "code": 65394, "label": "ｲ" }
+        "kata": { "$": "width_selector",
+             "full": { "code": 12452, "label": "イ" },
+             "half": { "code": 65394, "label": "ｲ" }
+         }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12377, "label": "す" },
-        "kata":      { "code": 12473, "label": "ス" },
-        "half_kata": { "code": 65405, "label": "ｽ" }
+        "hira": { "code": 12377, "label": "す" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12473, "label": "ス" },
+          "half": { "code": 65405, "label": "ｽ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12363, "label": "か" },
-        "kata":      { "code": 12459, "label": "カ" },
-        "half_kata": { "code": 65398, "label": "ｶ" }
+        "hira": { "code": 12363, "label": "か" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12459, "label": "カ" },
+          "half": { "code": 65398, "label": "ｶ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12435, "label": "ん" },
-        "kata":      { "code": 12531, "label": "ン" },
-        "half_kata": { "code": 65437, "label": "ﾝ" }
+        "hira": { "code": 12435, "label": "ん" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12531, "label": "ン" },
+          "half": { "code": 65437, "label": "ﾝ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12394, "label": "な" },
-        "kata":      { "code": 12490, "label": "ナ" },
-        "half_kata": { "code": 65413, "label": "ﾅ" }
+        "hira": { "code": 12394, "label": "な" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12490, "label": "ナ" },
+          "half": { "code": 65413, "label": "ﾅ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12395, "label": "に" },
-        "kata":      { "code": 12491, "label": "ニ" },
-        "half_kata": { "code": 65414, "label": "ﾆ" }
+        "hira": { "code": 12395, "label": "に" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12491, "label": "ニ" },
+          "half": { "code": 65414, "label": "ﾆ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12425, "label": "ら" },
-        "kata":      { "code": 12521, "label": "ラ" },
-        "half_kata": { "code": 65431, "label": "ﾗ" }
+        "hira": { "code": 12425, "label": "ら" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12521, "label": "ラ" },
+          "half": { "code": 65431, "label": "ﾗ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12379, "label": "せ" },
-        "kata":      { "code": 12475, "label": "セ" },
-        "half_kata": { "code": 65406, "label": "ｾ" }
+        "hira": { "code": 12379, "label": "せ" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12475, "label": "セ" },
+          "half": { "code": 65406, "label": "ｾ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12441, "label": "゛" },
-        "kata":      { "code": 12441, "label": "゛" },
-        "half_kata": { "code": 65438, "label": "ﾞ" }
+        "hira": { "code": 12441, "label": "゛" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12441, "label": "゛" },
+          "half": { "code": 65438, "label": "ﾞ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12442, "label": "゜" },
-        "kata":      { "code": 12442, "label": "゜" },
-        "half_kata": { "code": 65439, "label": "ﾟ" }
+        "hira": { "code": 12442, "label": "゜" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12442, "label": "゜" },
+          "half": { "code": 65439, "label": "ﾟ" }
+        }
       }
     ],
     [
       { "$": "kana_selector",
-        "hira":      { "code": 12385, "label": "ち" },
-        "kata":      { "code": 12481, "label": "チ" },
-        "half_kata": { "code": 65409, "label": "ﾁ" }
+        "hira": { "code": 12385, "label": "ち" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12481, "label": "チ" },
+          "half": { "code": 65409, "label": "ﾁ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12392, "label": "と" },
-        "kata":      { "code": 12488, "label": "ト" },
-        "half_kata": { "code": 65412, "label": "ﾄ" }
+        "hira": { "code": 12392, "label": "と" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12488, "label": "ト" },
+          "half": { "code": 65412, "label": "ﾄ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12375, "label": "し" },
-        "kata":      { "code": 12471, "label": "シ" },
-        "half_kata": { "code": 65410, "label": "ｼ" }
+        "hira": { "code": 12375, "label": "し" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12471, "label": "シ" },
+          "half": { "code": 65410, "label": "ｼ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12399, "label": "は" },
-        "kata":      { "code": 12495, "label": "ハ" },
-        "half_kata": { "code": 65418, "label": "ﾊ" }
+        "hira": { "code": 12399, "label": "は" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12495, "label": "ハ" },
+          "half": { "code": 65418, "label": "ﾊ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12365, "label": "き" },
-        "kata":      { "code": 12461, "label": "キ" },
-        "half_kata": { "code": 65399, "label": "ｷ" }
+        "hira": { "code": 12365, "label": "き" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12461, "label": "キ" },
+          "half": { "code": 65399, "label": "ｷ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12367, "label": "く" },
-        "kata":      { "code": 12463, "label": "ク" },
-        "half_kata": { "code": 65400, "label": "ｸ" }
+        "hira": { "code": 12367, "label": "く" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12463, "label": "ク" },
+          "half": { "code": 65400, "label": "ｸ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12414, "label": "ま" },
-        "kata":      { "code": 12510, "label": "マ" },
-        "half_kata": { "code": 65423, "label": "ﾏ" }
+        "hira": { "code": 12414, "label": "ま" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12510, "label": "マ" },
+          "half": { "code": 65423, "label": "ﾏ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12398, "label": "の" },
-        "kata":      { "code": 12494, "label": "ノ" },
-        "half_kata": { "code": 65417, "label": "ﾉ" }
+        "hira": { "code": 12398, "label": "の" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12494, "label": "ノ" },
+          "half": { "code": 65417, "label": "ﾉ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12426, "label": "り" },
-        "kata":      { "code": 12522, "label": "リ" },
-        "half_kata": { "code": 65432, "label": "ﾘ" }
+        "hira": { "code": 12426, "label": "り" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12522, "label": "リ" },
+          "half": { "code": 65432, "label": "ﾘ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12428, "label": "れ" },
-        "kata":      { "code": 12524, "label": "レ" },
-        "half_kata": { "code": 65434, "label": "ﾚ" }
+        "hira": { "code": 12428, "label": "れ" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12524, "label": "レ" },
+          "half": { "code": 65434, "label": "ﾚ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12369, "label": "け" },
-        "kata":      { "code": 12465, "label": "ケ" },
-        "half_kata": { "code": 65401, "label": "ｹ" }
+        "hira": { "code": 12369, "label": "け" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12465, "label": "ケ" },
+          "half": { "code": 65401, "label": "ｹ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12416, "label": "む" },
-        "kata":      { "code": 12512, "label": "ム" },
-        "half_kata": { "code": 65425, "label": "ﾑ" }
+        "hira": { "code": 12416, "label": "む" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12512, "label": "ム" },
+          "half": { "code": 65425, "label": "ﾑ" }
+        }
       }
     ],
     [
       { "$": "kana_selector",
         "hira": { "code": 12388, "label": "つ" },
-        "kata": { "code": 12484, "label": "ツ" },
-        "half_kata": { "code": 65410, "label": "ﾂ" }
+        "kata": { "$": "width_selector",
+             "full": { "code": 12484, "label": "ツ" },
+             "half": { "code": 65410, "label": "ﾂ" }
+         }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12373, "label": "さ" },
-        "kata":      { "code": 12469, "label": "サ" },
-        "half_kata": { "code": 65403, "label": "ｻ" }
+        "hira": { "code": 12373, "label": "さ" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12469, "label": "サ" },
+          "half": { "code": 65403, "label": "ｻ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12381, "label": "そ" },
-        "kata":      { "code": 12477, "label": "ソ" },
-        "half_kata": { "code": 65407, "label": "ｿ" }
+        "hira": { "code": 12381, "label": "そ" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12477, "label": "ソ" },
+          "half": { "code": 65407, "label": "ｿ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12402, "label": "ひ" },
-        "kata":      { "code": 12498, "label": "ヒ" },
-        "half_kata": { "code": 65419, "label": "ﾋ" }
+        "hira": { "code": 12402, "label": "ひ" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12498, "label": "ヒ" },
+          "half": { "code": 65419, "label": "ﾋ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12371, "label": "こ" },
-        "kata":      { "code": 12467, "label": "コ" },
-        "half_kata": { "code": 65402, "label": "ｺ" }
+        "hira": { "code": 12371, "label": "こ" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12467, "label": "コ" },
+          "half": { "code": 65402, "label": "ｺ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12415, "label": "み" },
-        "kata":      { "code": 12511, "label": "ミ" },
-        "half_kata": { "code": 65424, "label": "ﾐ" }
+        "hira": { "code": 12415, "label": "み" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12511, "label": "ミ" },
+          "half": { "code": 65424, "label": "ﾐ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12418, "label": "も" },
-        "kata":      { "code": 12514, "label": "モ" },
-        "half_kata": { "code": 65427, "label": "ﾓ" }
+        "hira": { "code": 12418, "label": "も" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12514, "label": "モ" },
+          "half": { "code": 65427, "label": "ﾓ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12397, "label": "ね" },
-        "kata":      { "code": 12493, "label": "ネ" },
-        "half_kata": { "code": 65416, "label": "ﾈ" }
+        "hira": { "code": 12397, "label": "ね" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12493, "label": "ネ" },
+          "half": { "code": 65416, "label": "ﾈ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12427, "label": "る" },
-        "kata":      { "code": 12523, "label": "ル" },
-        "half_kata": { "code": 65433, "label": "ﾙ" }
+        "hira": { "code": 12427, "label": "る" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12523, "label": "ル" },
+          "half": { "code": 65433, "label": "ﾙ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12417, "label": "め" },
-        "kata":      { "code": 12513, "label": "メ" },
-        "half_kata": { "code": 65426, "label": "ﾒ" }
+        "hira": { "code": 12417, "label": "め" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12513, "label": "メ" },
+          "half": { "code": 65426, "label": "ﾒ" }
+        }
       },
       { "$": "kana_selector",
-        "hira":      { "code": 12429, "label": "ろ" },
-        "kata":      { "code": 12525, "label": "ロ" },
-        "half_kata": { "code": 65435, "label": "ﾛ" }
+        "hira": { "code": 12429, "label": "ろ" },
+        "kata": { "$": "width_selector",
+          "full": { "code": 12525, "label": "ロ" },
+          "half": { "code": 65435, "label": "ﾛ" }
+        }
       }
     ]
   ]
