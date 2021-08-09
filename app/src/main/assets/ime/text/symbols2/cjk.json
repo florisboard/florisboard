@@ -72,17 +72,19 @@
       { "code": 65371, "label": "｛", "popup": {
         "main": { "code": 65288, "label": "（" },
         "relevant": [
-          { "code": 65375, "label": "｟" },
+          { "code":   123, "label": "{" },
           { "code": 12308, "label": "〔" },
-          { "code": 12312, "label": "〘" }
+          { "code": 12312, "label": "〘" },
+          { "code": 65375, "label": "｟" }
         ]
       } },
       { "code": 65373, "label": "｝", "popup": {
         "main": { "code": 65289, "label": "）" },
         "relevant": [
-          { "code": 65376, "label": "｠" },
+          { "code":   125, "label": "}" },
           { "code": 12309, "label": "〕" },
-          { "code": 12313, "label": "〙" }
+          { "code": 12313, "label": "〙" },
+          { "code": 65376, "label": "｠" }
         ]
       } },
       { "code": 65340, "label": "＼", "popup": {
