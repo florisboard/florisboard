@@ -91,12 +91,9 @@
           "half": { "code": 65421, "label": "ﾍ" }
         }
       },
-      { "$": "kana_selector",
-        "hira": { "code": 12540, "label": "ー" },
-        "kata": { "$": "width_selector",
+      { "$": "width_selector",
           "full": { "code": 12540, "label": "ー" },
           "half": { "code": 65392, "label": "ｰ" }
-        }
       }
     ],
     [
@@ -170,19 +167,13 @@
           "half": { "code": 65406, "label": "ｾ" }
         }
       },
-      { "$": "kana_selector",
-        "hira": { "code": 12441, "label": "゛" },
-        "kata": { "$": "width_selector",
+      { "$": "width_selector",
           "full": { "code": 12441, "label": "゛" },
           "half": { "code": 65438, "label": "ﾞ" }
-        }
       },
-      { "$": "kana_selector",
-        "hira": { "code": 12442, "label": "゜" },
-        "kata": { "$": "width_selector",
+      { "$": "width_selector",
           "full": { "code": 12442, "label": "゜" },
           "half": { "code": 65439, "label": "ﾟ" }
-        }
       }
     ],
     [
