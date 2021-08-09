@@ -10,6 +10,8 @@ class KanaUnicode : Composer {
     override val label: String = "Kana Unicode"
     override val toRead: Int = 1
 
+    public val sticky: Boolean = false
+
     private val daku = mapOf(
         'う' to 'ゔ',
 
@@ -295,11 +297,27 @@ class KanaUnicode : Composer {
         return char == '゚' || char == '゜' || char == 'ﾟ'
     }
 
+    private fun isComposingCharacter(char: Char): Boolean {
+        return char == '゙' || char == '゚' 
+    }
+
     private fun getBaseCharacter(c: Char): Char {
         return reverseDaku.getOrElse(c) {
             reverseHandaku.getOrElse(c) {
                 reverseSmall.getOrElse(c) { c }
             }
+        }
+    }
+
+    private fun <K>handleTransform(l: Char, c: Char, base: Map<Char, K>, rev: Map<Char, Char>): Pair<Int, String> {
+        val base = base.get(getBaseCharacter(l))
+        val trans = if (sticky) { base } else { rev.getOrElse(l) { base } }
+        if (l == c && isComposingCharacter(c)) {
+            return Pair(if (sticky) {0} else {1}, "")
+        } else if (trans == null) {
+            return Pair(0, ""+c)
+        } else {
+            return Pair(1, ""+trans)
         }
     }
 
@@ -315,29 +333,11 @@ class KanaUnicode : Composer {
         val lastChar = s.last()
 
         if (isDakuten(c)) {
-            val dakuChar = reverseDaku.getOrElse(lastChar)
-                           { daku.get(getBaseCharacter(lastChar)) }
-            if (dakuChar == null) {
-                return Pair(0, ""+c)
-            } else {
-                return Pair(1, ""+dakuChar)
-            }
+            return handleTransform(lastChar, c, daku, reverseDaku)
         } else if (isHandakuten(c)) {
-            val handakuChar = reverseHandaku.getOrElse(lastChar)
-                           { handaku.get(getBaseCharacter(lastChar)) }
-            if (handakuChar == null) {
-                return Pair(0, ""+c)
-            } else {
-                return Pair(1, ""+handakuChar)
-            }
+            return handleTransform(lastChar, c, handaku, reverseHandaku)
         } else if (c == smallSentinel) {
-            val smallChar = reverseSmall.getOrElse(lastChar)
-                           { small.get(getBaseCharacter(lastChar)) }
-            if (smallChar == null) {
-                return Pair(0, "")
-            } else {
-                return Pair(1, ""+smallChar)
-            }
+            return handleTransform(lastChar, c, small, reverseSmall)
         }
 
         return Pair(0, ""+c)
