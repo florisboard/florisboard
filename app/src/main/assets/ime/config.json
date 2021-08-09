@@ -701,7 +701,8 @@
       "preferred": {
         "characters": "jis",
         "symbols": "cjk",
-        "symbols2": "cjk"
+        "symbols2": "cjk",
+        "numericRow": "cjk"
       }
     }
   ]
