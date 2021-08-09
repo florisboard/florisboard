@@ -109,5 +109,5 @@ object KeyCode {
     const val KANA_SWITCHER =              -9710
     const val KANA_HIRA =                  -9711
     const val KANA_KATA =                  -9712
-    const val KANA_HALF =                  -9713
+    const val WIDTH_SWITCHER =             -9713
 }

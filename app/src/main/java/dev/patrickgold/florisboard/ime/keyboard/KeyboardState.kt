@@ -93,8 +93,8 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
         const val F_IS_SHOWING_INLINE_SUGGESTIONS: ULong =  0x00020000u
         const val F_IS_COMPOSING_ENABLED: ULong =           0x00040000u
 
-        const val M_KANA_TYPE: ULong =                      0x03u
-        const val O_KANA_TYPE: Int =                        21
+        const val F_IS_KANA_KATA: ULong =                   0x00200000u
+        const val F_IS_HALF_WIDTH: ULong =                  0x00400000u
         const val F_IS_KANA_SMALL: ULong =                  0x00800000u
 
         const val STATE_ALL_ZERO: ULong =                   0uL
@@ -234,9 +234,13 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
         get() = getFlag(F_IS_COMPOSING_ENABLED)
         set(v) { setFlag(F_IS_COMPOSING_ENABLED, v) }
 
-    var kanaType: KanaType
-        get() = KanaType.fromInt(getRegion(M_KANA_TYPE, O_KANA_TYPE))
-        set(v) { setRegion(M_KANA_TYPE, O_KANA_TYPE, v.toInt()) }
+    var isKanaKata: Boolean
+        get() = getFlag(F_IS_KANA_KATA)
+        set(v) { setFlag(F_IS_KANA_KATA, v) }
+
+    var isHalfWidth: Boolean
+        get() = getFlag(F_IS_HALF_WIDTH)
+        set(v) { setFlag(F_IS_HALF_WIDTH, v) }
 
     var isKanaSmall: Boolean
         get() = getFlag(F_IS_KANA_SMALL)

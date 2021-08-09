@@ -154,10 +154,7 @@ class KanaSelector(
     val kata: AbstractKeyData,
 ) : AbstractKeyData {
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
-        val data = when(evaluator.evaluateKanaType()) {
-            KanaType.HIRA      -> hira
-            KanaType.KATA, KanaType.HALF_KATA      -> kata
-        }
+        val data = if (evaluator.evaluateKanaKata()) { kata } else { hira }
         return data.compute(evaluator)
     }
 
@@ -189,10 +186,7 @@ class WidthSelector(
     val half: AbstractKeyData?,
 ) : AbstractKeyData {
     override fun compute(evaluator: ComputingEvaluator): KeyData? {
-        val data = when(evaluator.evaluateKanaType()) {
-            KanaType.HALF_KATA -> half
-            else -> full
-        }
+        val data = if (evaluator.evaluateHalfWidth()) { half } else { full }
         return data?.compute(evaluator)
     }
 

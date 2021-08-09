@@ -36,7 +36,6 @@ import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
-import dev.patrickgold.florisboard.ime.keyboard.KanaType
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard.InputAttributes
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
@@ -146,11 +145,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             return evaluateCaps() && data.code >= KeyCode.SPACE
         }
 
-        override fun evaluateKanaType(): KanaType {
-           return activeState.kanaType
-        }
+        override fun evaluateKanaKata(): Boolean = activeState.isKanaKata
 
         override fun evaluateKanaSmall(): Boolean = activeState.isKanaSmall
+
+        override fun evaluateHalfWidth(): Boolean = activeState.isHalfWidth
 
         override fun evaluateEnabled(data: KeyData): Boolean {
             return when (data.code) {
@@ -673,18 +672,17 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Handles a [KeyCode.KANA_SWITCHER] event
      */
     private fun handleKanaSwitch() {
-        when (activeState.kanaType) {
-            KanaType.HIRA -> handleKanaKata()
-            KanaType.KATA -> handleKanaHira()
-            KanaType.HALF_KATA -> handleKanaHira()
-        }
+        activeState.isKanaKata = !activeState.isKanaKata 
+        activeState.isHalfWidth = false
+        florisboard.dispatchCurrentStateToInputUi()
     }
 
     /**
      * Handles a [KeyCode.KANA_HIRA] event
      */
     private fun handleKanaHira() {
-       	activeState.kanaType = KanaType.HIRA
+        activeState.isKanaKata = false
+        activeState.isHalfWidth = false
         florisboard.dispatchCurrentStateToInputUi()
     }
 
@@ -692,15 +690,16 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Handles a [KeyCode.KANA_KATA] event
      */
     private fun handleKanaKata() {
-        activeState.kanaType = KanaType.KATA
+        activeState.isKanaKata = true
+        activeState.isHalfWidth = false
         florisboard.dispatchCurrentStateToInputUi()
     }
 
     /**
-     * Handles a [KeyCode.KANA_HALF] event
+     * Handles a [KeyCode.SWITCH_WIDTH] event
      */
-    private fun handleKanaHalfKata() {
-        activeState.kanaType = KanaType.HALF_KATA
+    private fun handleWidthSwitch() {
+        activeState.isHalfWidth = !activeState.isHalfWidth
         florisboard.dispatchCurrentStateToInputUi()
     }
 
@@ -859,7 +858,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyCode.KANA_SWITCHER -> handleKanaSwitch()
             KeyCode.KANA_HIRA -> handleKanaHira()
             KeyCode.KANA_KATA -> handleKanaKata()
-            KeyCode.KANA_HALF -> handleKanaHalfKata()
+            KeyCode.WIDTH_SWITCHER -> handleWidthSwitch()
             KeyCode.SHOW_INPUT_METHOD_PICKER -> florisboard.imeManager?.showInputMethodPicker()
             KeyCode.SPACE -> handleSpace(ev)
             KeyCode.SWITCH_TO_MEDIA_CONTEXT -> florisboard.setActiveInput(R.id.media_input)
