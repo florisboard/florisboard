@@ -324,7 +324,7 @@ class KanaUnicode : Composer {
     override fun getActions(s: String, c: Char): Pair<Int, String> {
         // s is "at least the last 1 character of what's currently here"
         if (s.isEmpty()) {
-            if (c == smallSentinel || isDakuten(c) || isHandakuten(c)) {
+            if (c == smallSentinel || isComposingCharacter(c)) {
                 return Pair(0, "")
             } else {
                 return Pair(0, ""+c)
