@@ -206,6 +206,12 @@
           { "code": 12799, "label": "ㇿ" }
         ]
       },
+      "゛": {
+        "main": { "code": 12443, "label": "゛" }
+      },
+      "゜": {
+        "main": { "code": 12444, "label": "゜" }
+      },
       "~kana": {
         "relevant": [
           { "code": -9711, "label": "あ" },
