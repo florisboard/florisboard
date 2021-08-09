@@ -285,7 +285,7 @@ class KanaUnicode : Composer {
         'ヮ' to 'ワ',
     )
 
-    private val smallSentinel: Char = '〠'
+    private val smallSentinel: Char = '〓'
 
     private fun isDakuten(char: Char): Boolean {
         return char == '゙' || char == '゛' || char == 'ﾞ'

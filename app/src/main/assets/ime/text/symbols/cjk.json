@@ -9,6 +9,9 @@
       { "code": 65312, "label": "＠", "popup": {
         "main": { "code":   64, "label": "@" }
       } },
+      { "code": 12306, "label": "〒", "popup": {
+        "main": { "code": 12320, "label": "〠" }
+      } },
       { "code": 65283, "label": "＃", "popup": {
         "main": { "code":   35, "label": "#" },
         "relevant": [

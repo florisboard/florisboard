@@ -105,7 +105,7 @@ object KeyCode {
 
     const val CJK_SPACE =                  12288
 
-    const val KANA_SMALL =                 12320
+    const val KANA_SMALL =                 12307
     const val KANA_SWITCHER =              -9710
     const val KANA_HIRA =                  -9711
     const val KANA_KATA =                  -9712
