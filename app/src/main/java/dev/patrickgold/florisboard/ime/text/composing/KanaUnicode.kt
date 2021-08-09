@@ -310,15 +310,19 @@ class KanaUnicode : Composer {
     }
 
     private fun <K>handleTransform(l: Char, c: Char, base: Map<Char, K>, rev: Map<Char, Char>): Pair<Int, String> {
-        val base = base.get(getBaseCharacter(l))
-        val trans = if (sticky) { base } else { rev.getOrElse(l) { base } }
-        if (l == c && isComposingCharacter(c)) {
-            return Pair(if (sticky) {0} else {1}, "")
-        } else if (trans == null) {
-            return Pair(0, ""+c)
+        val char = getBaseCharacter(l)
+        val trans = if (sticky) {
+            base.get(char)
         } else {
-            return Pair(1, ""+trans)
+            rev.getOrElse(l) { base.get(char) }
         }
+        if (trans != null) {
+            return Pair(1, ""+trans)
+        } else if (isComposingCharacter(l) && isComposingCharacter(c)) {
+            return Pair(1, if (l == c && !sticky) { "" } else { ""+c  })
+        } else {
+            return Pair(0, ""+c)
+        } 
     }
 
     override fun getActions(s: String, c: Char): Pair<Int, String> {
