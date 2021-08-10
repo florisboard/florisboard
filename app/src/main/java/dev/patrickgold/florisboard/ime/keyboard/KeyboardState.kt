@@ -45,7 +45,8 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
  *          |        1 |          |          | Is Smartbar quick actions visible
  *          |       1  |          |          | Is Smartbar showing inline suggestions
  *          |      1   |          |          | Is composing enabled
- *          |  11      |          |          | Kana type
+ *          |   1      |          |          | Is character half-width enabled
+ *          |  1       |          |          | Is Kana Kata enabled
  *          | 1        |          |          | Is Kana small
  *
  * <Byte 7> | <Byte 6> | <Byte 5> | <Byte 4> | Description
@@ -93,8 +94,8 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
         const val F_IS_SHOWING_INLINE_SUGGESTIONS: ULong =  0x00020000u
         const val F_IS_COMPOSING_ENABLED: ULong =           0x00040000u
 
-        const val F_IS_KANA_KATA: ULong =                   0x00200000u
-        const val F_IS_HALF_WIDTH: ULong =                  0x00400000u
+        const val F_IS_CHAR_HALF_WIDTH: ULong =             0x00200000u
+        const val F_IS_KANA_KATA: ULong =                   0x00400000u
         const val F_IS_KANA_SMALL: ULong =                  0x00800000u
 
         const val STATE_ALL_ZERO: ULong =                   0uL
@@ -238,9 +239,9 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
         get() = getFlag(F_IS_KANA_KATA)
         set(v) { setFlag(F_IS_KANA_KATA, v) }
 
-    var isHalfWidth: Boolean
-        get() = getFlag(F_IS_HALF_WIDTH)
-        set(v) { setFlag(F_IS_HALF_WIDTH, v) }
+    var isCharHalfWidth: Boolean
+        get() = getFlag(F_IS_CHAR_HALF_WIDTH)
+        set(v) { setFlag(F_IS_CHAR_HALF_WIDTH, v) }
 
     var isKanaSmall: Boolean
         get() = getFlag(F_IS_KANA_SMALL)

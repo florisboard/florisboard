@@ -10,7 +10,7 @@ class KanaUnicode : Composer {
     override val label: String = "Kana Unicode"
     override val toRead: Int = 1
 
-    public val sticky: Boolean = false
+    val sticky: Boolean = false
 
     private val daku = mapOf(
         'う' to 'ゔ',
@@ -99,7 +99,7 @@ class KanaUnicode : Composer {
         'け' to "ゖ",
 
         'つ' to "っ",
-                   
+
         'や' to "ゃ",
         'ゆ' to "ゅ",
         'よ' to "ょ",
@@ -240,7 +240,7 @@ class KanaUnicode : Composer {
         'ゖ' to 'け',
 
         'っ' to 'つ',
-                   
+
         'ゃ' to 'や',
         'ゅ' to 'ゆ',
         'ょ' to 'よ',
@@ -298,7 +298,7 @@ class KanaUnicode : Composer {
     }
 
     private fun isComposingCharacter(char: Char): Boolean {
-        return char == '゙' || char == '゚' 
+        return char == '゙' || char == '゚'
     }
 
     private fun getBaseCharacter(c: Char): Char {
@@ -312,38 +312,35 @@ class KanaUnicode : Composer {
     private fun <K>handleTransform(l: Char, c: Char, base: Map<Char, K>, rev: Map<Char, Char>): Pair<Int, String> {
         val char = getBaseCharacter(l)
         val trans = if (sticky) {
-            base.get(char)
+            base[char]
         } else {
-            rev.getOrElse(l) { base.get(char) }
+            rev.getOrElse(l) { base[char] }
         }
-        if (trans != null) {
-            return Pair(1, ""+trans)
+        return if (trans != null) {
+            Pair(1, ""+trans)
         } else if (isComposingCharacter(l) && isComposingCharacter(c)) {
-            return Pair(1, if (l == c && !sticky) { "" } else { ""+c  })
+            Pair(1, if (l == c && !sticky) { "" } else { ""+c  })
         } else {
-            return Pair(0, ""+c)
-        } 
+            Pair(0, ""+c)
+        }
     }
 
     override fun getActions(s: String, c: Char): Pair<Int, String> {
         // s is "at least the last 1 character of what's currently here"
         if (s.isEmpty()) {
-            if (c == smallSentinel || isComposingCharacter(c)) {
-                return Pair(0, "")
+            return if (c == smallSentinel || isComposingCharacter(c)) {
+                Pair(0, "")
             } else {
-                return Pair(0, ""+c)
+                Pair(0, ""+c)
             }
         }
         val lastChar = s.last()
 
-        if (isDakuten(c)) {
-            return handleTransform(lastChar, c, daku, reverseDaku)
-        } else if (isHandakuten(c)) {
-            return handleTransform(lastChar, c, handaku, reverseHandaku)
-        } else if (c == smallSentinel) {
-            return handleTransform(lastChar, c, small, reverseSmall)
+        return when {
+            isDakuten(c) -> handleTransform(lastChar, c, daku, reverseDaku)
+            isHandakuten(c) -> handleTransform(lastChar, c, handaku, reverseHandaku)
+            c == smallSentinel -> handleTransform(lastChar, c, small, reverseSmall)
+            else -> Pair(0, ""+c)
         }
-
-        return Pair(0, ""+c)
     }
 }

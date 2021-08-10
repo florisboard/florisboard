@@ -83,9 +83,9 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 ?: DefaultComputingEvaluator.evaluateKanaSmall()
         }
 
-        override fun evaluateHalfWidth(): Boolean {
-            return externalComputingEvaluator?.evaluateHalfWidth()
-                ?: DefaultComputingEvaluator.evaluateHalfWidth()
+        override fun evaluateCharHalfWidth(): Boolean {
+            return externalComputingEvaluator?.evaluateCharHalfWidth()
+                ?: DefaultComputingEvaluator.evaluateCharHalfWidth()
         }
 
         override fun evaluateCaps(data: KeyData): Boolean {
