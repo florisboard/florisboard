@@ -672,11 +672,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Handles a [KeyCode.KANA_SWITCHER] event
      */
     private fun handleKanaSwitch() {
-        when {
-            !activeState.isKanaKata -> handleKanaKata()
-            activeState.isKanaKata && !activeState.isCharHalfWidth -> handleKanaHalfKata()
-            else -> handleKanaHira()
-        }
+        activeState.isKanaKata = !activeState.isKanaKata
+        florisboard.dispatchCurrentStateToInputUi()
     }
 
     /**
