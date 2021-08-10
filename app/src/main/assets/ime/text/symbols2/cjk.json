@@ -154,11 +154,28 @@
       }
     ],
     [
-      { "code":   95, "label": "_" },
-      { "code":  169, "label": "©" },
-      { "code":  174, "label": "®" },
-      { "code": 8482, "label": "™" },
-      { "code": 10003, "label": "✓" },
+      { "code": 12292, "label": "〄" },
+      { "code": 12293, "label": "々" },
+      { "code": 12294, "label": "〆" },
+      { "code": 12295, "label": "〇" },
+      { "$": "kana_selector",
+        "hira": { "code": 12445, "label": "ゝ", "popup": {
+              "main": { "code": 12446, "label": "ゞ" },
+              "relevant": [
+                { "code": 12541, "label": "ヽ" },
+                { "code": 12542, "label": "ヾ" }
+              ]
+          }
+        },
+        "kata": { "code": 12541, "label": "ヽ", "popup": {
+              "main": { "code": 12542, "label": "ヾ" },
+              "relevant": [
+                { "code": 12445, "label": "ゝ" },
+                { "code": 12446, "label": "ゞ" }
+              ]
+          }
+        }
+      },
       { "$": "char_width_selector",
         "full": { "code": 65339, "label": "［", "popup": {
             "main": { "code":   91, "label": "[" },
