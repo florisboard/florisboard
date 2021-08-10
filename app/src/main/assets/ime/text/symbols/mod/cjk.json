@@ -12,18 +12,36 @@
     ],
     [
       { "code": -201, "label": "view_characters", "type": "system_gui" },
-      { "code": 12289, "label": "、", "popup": {
-        "main": { "code":   44, "label": "," }
-      } },
+      { "$": "char_width_selector",
+        "full": { "code": 12289, "label": "、", "popup": {
+            "main": { "code":   44, "label": "," }
+          }
+        },
+        "half": { "code": 65380, "label": "､", "popup": {
+            "main": { "code":   44, "label": "," }
+          }
+        }
+      },
       { "code": -205, "label": "view_numeric_advanced", "type": "system_gui" },
       { "code": 12288, "label": "空白" },
-      { "code": 12290, "label": "。", "popup": {
-        "main": { "code": 8230, "label": "…" },
-        "relevant": [
-          { "code": 12539, "label": "・" },
-          { "code":   46, "label": "." }
-        ]
-      } },
+      { "$": "char_width_selector",
+        "full": { "code": 12290, "label": "。", "popup": {
+            "main": { "code": 8230, "label": "…" },
+            "relevant": [
+              { "code": 12539, "label": "・" },
+              { "code":    46, "label": "." }
+            ]
+          }
+        },
+        "half": { "code": 65377, "label": "｡", "popup": {
+            "main": { "code": 8230, "label": "…" },
+            "relevant": [
+              { "code": 65381, "label": "･" },
+              { "code":    46, "label": "." }
+            ]
+          }
+        }
+      },
       { "code":   10, "label": "enter", "groupId": 3, "type": "enter_editing" }
     ]
   ]
