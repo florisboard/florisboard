@@ -712,6 +712,22 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     /**
+     * Handles a [KeyCode.CHAR_WIDTH_SWITCHER] event
+     */
+    private fun handleCharWidthFull() {
+        activeState.isCharHalfWidth = false
+        florisboard.dispatchCurrentStateToInputUi()
+    }
+
+    /**
+     * Handles a [KeyCode.CHAR_WIDTH_SWITCHER] event
+     */
+    private fun handleCharWidthHalf() {
+        activeState.isCharHalfWidth = true
+        florisboard.dispatchCurrentStateToInputUi()
+    }
+
+    /**
      * Handles a [KeyCode.SPACE] event. Also handles the auto-correction of two space taps if
      * enabled by the user.
      */
@@ -846,6 +862,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 handleArrow(data.code, 1)
             }
             KeyCode.CHAR_WIDTH_SWITCHER -> handleCharWidthSwitch()
+            KeyCode.CHAR_WIDTH_FULL -> handleCharWidthFull()
+            KeyCode.CHAR_WIDTH_HALF -> handleCharWidthHalf()
             KeyCode.CLEAR_CLIPBOARD_HISTORY -> florisboard.florisClipboardManager?.clearHistoryWithAnimation()
             KeyCode.CLIPBOARD_CUT -> activeEditorInstance.performClipboardCut()
             KeyCode.CLIPBOARD_COPY -> activeEditorInstance.performClipboardCopy()

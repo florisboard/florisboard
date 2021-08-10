@@ -106,6 +106,8 @@ object KeyCode {
     const val CJK_SPACE =                  12288
 
     const val CHAR_WIDTH_SWITCHER =        -9701
+    const val CHAR_WIDTH_FULL =            -9702
+    const val CHAR_WIDTH_HALF =            -9703
 
     const val KANA_SMALL =                 12307
     const val KANA_SWITCHER =              -9710
