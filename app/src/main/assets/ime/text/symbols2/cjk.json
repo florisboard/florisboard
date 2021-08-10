@@ -7,15 +7,36 @@
   "modifier": "cjk",
   "arrangement": [
     [
-      { "code": 12316, "label": "〜", "popup": {
-        "main": { "code":  126, "label": "~" }
-      } },
-      { "code": 65344, "label": "｀", "popup": {
-        "main": { "code":   96, "label": "`" }
-      } },
-      { "code": 65372, "label": "｜", "popup": {
-        "main": { "code":  124, "label": "|" }
-      } },
+      { "$": "char_width_selector",
+        "full": { "code": 12316, "label": "〜", "popup": {
+          "main": { "code":  126, "label": "~" }
+          }
+        },
+        "half": { "code":  126, "label": "~", "popup": {
+          "main": { "code": 12316, "label": "〜" }
+          }
+        }
+      },
+      { "$": "char_width_selector",
+        "full": { "code": 65344, "label": "｀", "popup": {
+          "main": { "code":   96, "label": "`" }
+          }
+        },
+        "half": { "code":   96, "label": "`", "popup": {
+          "main": { "code": 65344, "label": "｀" }
+          }
+        }
+      },
+      { "$": "char_width_selector",
+        "full": { "code": 65372, "label": "｜", "popup": {
+          "main": { "code":  124, "label": "|" }
+          }
+        },
+        "half": { "code":  124, "label": "|", "popup": {
+          "main": { "code": 65372, "label": "｜" }
+          }
+        }
+      },
       { "code": 12539, "label": "・", "popup": {
         "main": { "code": 9834, "label": "♪" },
         "relevant": [
@@ -61,35 +82,76 @@
           { "code": 8243, "label": "″" }
         ]
       } },
-      { "code": 65309, "label": "＝", "popup": {
-        "main": { "code": 8800, "label": "≠" },
-        "relevant": [
-          { "code":   61, "label": "=" },
-          { "code": 8734, "label": "∞" },
-          { "code": 8776, "label": "≈" }
-        ]
-      } },
-      { "code": 65371, "label": "｛", "popup": {
-        "main": { "code": 65288, "label": "（" },
-        "relevant": [
-          { "code":   123, "label": "{" },
-          { "code": 12308, "label": "〔" },
-          { "code": 12312, "label": "〘" },
-          { "code": 65375, "label": "｟" }
-        ]
-      } },
-      { "code": 65373, "label": "｝", "popup": {
-        "main": { "code": 65289, "label": "）" },
-        "relevant": [
-          { "code":   125, "label": "}" },
-          { "code": 12309, "label": "〕" },
-          { "code": 12313, "label": "〙" },
-          { "code": 65376, "label": "｠" }
-        ]
-      } },
-      { "code": 65340, "label": "＼", "popup": {
-        "main": { "code":   92, "label": "\\" }
-      } }
+      { "$": "char_width_selector",
+        "full":
+          { "code": 65309, "label": "＝", "popup": {
+            "main": { "code": 8800, "label": "≠" },
+            "relevant": [
+              { "code":   61, "label": "=" },
+              { "code": 8734, "label": "∞" },
+              { "code": 8776, "label": "≈" }
+            ]
+          }
+        },
+        "half":
+          { "code":   61, "label": "=", "popup": {
+            "main": { "code": 8800, "label": "≠" },
+            "relevant": [
+              { "code":   61, "label": "=" },
+              { "code": 8734, "label": "∞" },
+              { "code": 8776, "label": "≈" }
+            ]
+          }
+        }
+      },
+      { "$": "char_width_selector",
+        "full": { "code": 65371, "label": "｛", "popup": {
+            "main": { "code": 65288, "label": "（" },
+            "relevant": [
+              { "code":   123, "label": "{" },
+              { "code": 12308, "label": "〔" },
+              { "code": 12312, "label": "〘" },
+              { "code": 65375, "label": "｟" }
+            ]
+          }
+        },
+        "half": { "code":   123, "label": "{", "popup": {
+            "main": { "code": 40, "label": "(" },
+            "relevant": [
+              { "code": 65371, "label": "｛" }
+            ]
+          }
+        }
+      },
+      { "$": "char_width_selector",
+        "full": { "code": 65373, "label": "｝", "popup": {
+            "main": { "code": 65289, "label": "）" },
+            "relevant": [
+              { "code":   125, "label": "}" },
+              { "code": 12309, "label": "〕" },
+              { "code": 12313, "label": "〙" },
+              { "code": 65376, "label": "｠" }
+            ]
+          }
+        },
+        "half": { "code":   125, "label": "}", "popup": {
+            "main": { "code": 41, "label": ")" },
+            "relevant": [
+              { "code": 65373, "label": "｝" }
+            ]
+          }
+        }
+      },
+      { "$": "char_width_selector",
+        "full": { "code": 65340, "label": "＼", "popup": {
+            "main": { "code":   92, "label": "\\" }
+          }
+        },
+        "half": { "code":   92, "label": "\\", "popup": {
+            "main": { "code": 65340, "label": "＼" }
+          }
+        }
+      }
     ],
     [
       { "code":   95, "label": "_" },
@@ -97,22 +159,36 @@
       { "code":  174, "label": "®" },
       { "code": 8482, "label": "™" },
       { "code": 10003, "label": "✓" },
-      { "code": 65339, "label": "［", "popup": {
-        "main": { "code":   91, "label": "[" },
-        "relevant": [
-          { "code": 12314, "label": "〚" },
-          { "code": 12304, "label": "【" },
-          { "code": 12310, "label": "〖" }
-        ]
-      } },
-      { "code": 65341, "label": "］", "popup": {
-        "main": { "code":   93, "label": "]" },
-        "relevant": [
-          { "code": 12315, "label": "〛" },
-          { "code": 12305, "label": "】" },
-          { "code": 12311, "label": "〗" }
-        ]
-      } }
+      { "$": "char_width_selector",
+        "full": { "code": 65339, "label": "［", "popup": {
+            "main": { "code":   91, "label": "[" },
+            "relevant": [
+              { "code": 12314, "label": "〚" },
+              { "code": 12304, "label": "【" },
+              { "code": 12310, "label": "〖" }
+            ]
+          }
+        },
+        "half": { "code":   91, "label": "[", "popup": {
+            "main": { "code": 65339, "label": "［" }
+          }
+        }
+      },
+      { "$": "char_width_selector",
+        "full": { "code": 65341, "label": "］", "popup": {
+            "main": { "code":   93, "label": "]" },
+            "relevant": [
+              { "code": 12315, "label": "〛" },
+              { "code": 12305, "label": "】" },
+              { "code": 12311, "label": "〗" }
+            ]
+          }
+        },
+        "half": { "code":   93, "label": "]", "popup": {
+            "main": { "code": 65341, "label": "］" }
+          }
+        }
+      }
     ]
   ]
 }
