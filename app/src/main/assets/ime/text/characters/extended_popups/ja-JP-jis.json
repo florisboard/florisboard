@@ -220,23 +220,71 @@
         ]
       },
       "~right": {
-        "main": { "code": 12289, "label": "、" },
+        "main": { "$": "char_width_selector",
+          "full": { "code": 12289, "label": "、" },
+          "half": { "code": 65380, "label": "､" }
+        },
         "relevant": [
-          { "code": 65286, "label": "＆" },
-          { "code": 65285, "label": "％" },
-          { "code": 65291, "label": "＋" },
-          { "code": 65340, "label": "＼" },
-          { "code": 65293, "label": "－" },
-          { "code": 65306, "label": "：" },
-          { "code":    39, "label": "'" },
-          { "code": 65312, "label": "＠" },
-          { "code": 65307, "label": "；" },
-          { "code": 65295, "label": "／" },
-          { "code": 65288, "label": "（" },
-          { "code": 65289, "label": "）" },
-          { "code": 65283, "label": "＃" },
-          { "code": 65281, "label": "！" },
-          { "code": 65311, "label": "？" }
+          { "$": "char_width_selector",
+            "full": { "code": 65286, "label": "＆" },
+            "half": { "code":    38, "label": "&" }
+          },
+          { "$": "char_width_selector",
+            "full": { "code": 65285, "label": "％" },
+            "half": { "code":    37, "label": "%" }
+          },
+          { "$": "char_width_selector",
+            "full": { "code": 65291, "label": "＋" },
+            "half": { "code":    43, "label": "+" }
+          },
+          { "$": "char_width_selector",
+            "full": { "code": 65340, "label": "＼" },
+            "half": { "code":    92, "label": "\\" }
+          },
+          { "$": "char_width_selector",
+            "full": { "code": 65293, "label": "－" },
+            "half": { "code":    45, "label": "-" }
+          },
+          { "$": "char_width_selector",
+            "full": { "code": 65306, "label": "：" },
+            "half": { "code":    58, "label": ":" }
+          },
+          { "$": "char_width_selector",
+            "full": { "code": 65287, "label": "＇" },
+            "half": { "code":    39, "label": "'" }
+          },
+          { "$": "char_width_selector",
+            "full": { "code": 65312, "label": "＠" },
+            "half": { "code":    64, "label": "@" }
+          },
+          { "$": "char_width_selector",
+            "full": { "code": 65307, "label": "；" },
+            "half": { "code":    59, "label": ";" }
+          },
+          { "$": "char_width_selector",
+            "full": { "code": 65295, "label": "／" },
+            "half": { "code":    47, "label": "/" }
+          },
+          { "$": "char_width_selector",
+            "full": { "code": 65288, "label": "（" },
+            "half": { "code":    40, "label": "(" }
+          },
+          { "$": "char_width_selector",
+            "full": { "code": 65289, "label": "）" },
+            "half": { "code":    41, "label": ")" }
+          },
+          { "$": "char_width_selector",
+            "full": { "code": 65283, "label": "＃" },
+            "half": { "code":    35, "label": "#" }
+          },
+          { "$": "char_width_selector",
+            "full": { "code": 65281, "label": "！" },
+            "half": { "code":    33, "label": "!" }
+          },
+          { "$": "char_width_selector",
+            "full": { "code": 65311, "label": "？" },
+            "half": { "code":    63, "label": "?" }
+          }
         ]
       }
     }
