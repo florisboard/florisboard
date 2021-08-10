@@ -49,7 +49,8 @@ class PopupManager<V : View>(
         KeyCode.SWITCH_TO_TEXT_CONTEXT,
         KeyCode.SWITCH_TO_MEDIA_CONTEXT,
         KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT,
-        KeyCode.KANA_SWITCHER
+        KeyCode.KANA_SWITCHER,
+        KeyCode.CHAR_WIDTH_SWITCHER
     )
     private var keyPopupWidth: Int
     private var keyPopupHeight: Int
