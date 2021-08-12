@@ -504,24 +504,29 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onSmartbarBackButtonPressed() {
+        florisboard.inputFeedbackManager.keyPress()
         setActiveKeyboardMode(KeyboardMode.CHARACTERS)
     }
 
     override fun onSmartbarCandidatePressed(word: String) {
+        florisboard.inputFeedbackManager.keyPress()
         isGlidePostEffect = false
         activeEditorInstance.commitCompletion(word)
     }
 
     override fun onSmartbarClipboardCandidatePressed(clipboardItem: ClipboardItem) {
+        florisboard.inputFeedbackManager.keyPress()
         isGlidePostEffect = false
         activeEditorInstance.commitClipboardItem(clipboardItem)
     }
 
     override fun onSmartbarPrivateModeButtonClicked() {
+        florisboard.inputFeedbackManager.keyPress()
         Toast.makeText(florisboard, R.string.private_mode_dialog__title, Toast.LENGTH_LONG).show()
     }
 
     override fun onSmartbarQuickActionPressed(quickActionId: Int) {
+        florisboard.inputFeedbackManager.keyPress()
         when (quickActionId) {
             R.id.quick_action_toggle -> {
                 activeState.isQuickActionsVisible = !activeState.isQuickActionsVisible

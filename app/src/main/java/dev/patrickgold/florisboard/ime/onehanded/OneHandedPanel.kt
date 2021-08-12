@@ -58,6 +58,7 @@ class OneHandedPanel : LinearLayout, ThemeManager.OnThemeUpdatedListener {
         closeBtn = findViewWithTag("one_handed_ctrl_close")
         closeBtn?.setOnClickListener {
             florisboard?.let {
+                it.inputFeedbackManager.keyPress()
                 prefs.keyboard.oneHandedMode = OneHandedMode.OFF
                 it.updateOneHandedPanelVisibility()
             }
@@ -65,6 +66,7 @@ class OneHandedPanel : LinearLayout, ThemeManager.OnThemeUpdatedListener {
         moveBtn = findViewWithTag("one_handed_ctrl_move")
         moveBtn?.setOnClickListener {
             florisboard?.let {
+                it.inputFeedbackManager.keyPress()
                 prefs.keyboard.oneHandedMode = panelSide
                 it.updateOneHandedPanelVisibility()
             }

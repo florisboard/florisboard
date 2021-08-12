@@ -373,7 +373,7 @@ class Preferences(
             get() =  prefs.getPref(HAPTIC_IGNORE_SYSTEM_SETTINGS, false)
             set(v) = prefs.setPref(HAPTIC_IGNORE_SYSTEM_SETTINGS, v)
         var hapticUseVibrator: Boolean
-            get() =  prefs.getPref(HAPTIC_USE_VIBRATOR, false)
+            get() =  prefs.getPref(HAPTIC_USE_VIBRATOR, true)
             set(v) = prefs.setPref(HAPTIC_USE_VIBRATOR, v)
         var hapticVibrationDuration: Int
             get() =  prefs.getPref(HAPTIC_VIBRATION_DURATION, 50)

@@ -26,6 +26,7 @@ import android.provider.Settings
 import android.view.HapticFeedbackConstants
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 
 /**
  * Input feedback manager responsible to process and perform audio and haptic
@@ -42,29 +43,29 @@ class InputFeedbackManager private constructor(private val ims: InputMethodServi
     private val vibrator = ims.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
     private val contentResolver = ims.contentResolver
 
-    fun keyPress(data: KeyData) {
+    fun keyPress(data: KeyData = TextKeyData.UNSPECIFIED) {
         if (prefs.inputFeedback.audioFeatKeyPress) performAudioFeedback(data, 1.0)
         if (prefs.inputFeedback.hapticFeatKeyPress) performHapticFeedback(data, 1.0)
     }
 
-    fun keyLongPress(data: KeyData) {
-        if (prefs.inputFeedback.audioFeatKeyLongPress) performAudioFeedback(data, 0.4)
+    fun keyLongPress(data: KeyData = TextKeyData.UNSPECIFIED) {
+        if (prefs.inputFeedback.audioFeatKeyLongPress) performAudioFeedback(data, 0.7)
         if (prefs.inputFeedback.hapticFeatKeyLongPress) performHapticFeedback(data, 0.4)
     }
 
-    fun keyRepeatedAction(data: KeyData) {
-        if (prefs.inputFeedback.audioFeatKeyRepeatedAction) performAudioFeedback(data, 0.2)
-        if (prefs.inputFeedback.hapticFeatKeyRepeatedAction) performHapticFeedback(data, 0.2)
+    fun keyRepeatedAction(data: KeyData = TextKeyData.UNSPECIFIED) {
+        if (prefs.inputFeedback.audioFeatKeyRepeatedAction) performAudioFeedback(data, 0.4)
+        if (prefs.inputFeedback.hapticFeatKeyRepeatedAction) performHapticFeedback(data, 0.05)
     }
 
-    fun gestureSwipe(data: KeyData) {
-        if (prefs.inputFeedback.audioFeatGestureSwipe) performAudioFeedback(data, 0.4)
+    fun gestureSwipe(data: KeyData = TextKeyData.UNSPECIFIED) {
+        if (prefs.inputFeedback.audioFeatGestureSwipe) performAudioFeedback(data, 0.7)
         if (prefs.inputFeedback.hapticFeatGestureSwipe) performHapticFeedback(data, 0.4)
     }
 
-    fun gestureMovingSwipe(data: KeyData) {
-        if (prefs.inputFeedback.audioFeatGestureMovingSwipe) performAudioFeedback(data, 0.2)
-        if (prefs.inputFeedback.hapticFeatGestureMovingSwipe) performHapticFeedback(data, 0.2)
+    fun gestureMovingSwipe(data: KeyData = TextKeyData.UNSPECIFIED) {
+        if (prefs.inputFeedback.audioFeatGestureMovingSwipe) performAudioFeedback(data, 0.4)
+        if (prefs.inputFeedback.hapticFeatGestureMovingSwipe) performHapticFeedback(data, 0.05)
     }
 
     private fun systemPref(id: String): Boolean {

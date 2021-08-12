@@ -38,35 +38,40 @@
             app:key="input_feedback__audio_feat_key_press"
             app:dependency="input_feedback__audio_enabled"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__input_feedback__audio_feat_key_press__label"/>
+            app:title="@string/pref__input_feedback__audio_feat_key_press__label"
+            app:summary="@string/pref__input_feedback__any_feat_key_press__summary"/>
 
         <SwitchPreferenceCompat
             app:defaultValue="false"
             app:key="input_feedback__audio_feat_key_long_press"
             app:dependency="input_feedback__audio_enabled"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__input_feedback__audio_feat_key_long_press__label"/>
+            app:title="@string/pref__input_feedback__audio_feat_key_long_press__label"
+            app:summary="@string/pref__input_feedback__any_feat_key_long_press__summary"/>
 
         <SwitchPreferenceCompat
             app:defaultValue="false"
             app:key="input_feedback__audio_feat_key_repeated_action"
             app:dependency="input_feedback__audio_enabled"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__input_feedback__audio_feat_key_repeated_action__label"/>
+            app:title="@string/pref__input_feedback__audio_feat_key_repeated_action__label"
+            app:summary="@string/pref__input_feedback__any_feat_key_repeated_action__summary"/>
 
         <SwitchPreferenceCompat
             app:defaultValue="false"
             app:key="input_feedback__audio_feat_gesture_swipe"
             app:dependency="input_feedback__audio_enabled"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__input_feedback__audio_feat_gesture_swipe__label"/>
+            app:title="@string/pref__input_feedback__audio_feat_gesture_swipe__label"
+            app:summary="@string/pref__input_feedback__any_feat_gesture_swipe__summary"/>
 
         <SwitchPreferenceCompat
             app:defaultValue="false"
             app:key="input_feedback__audio_feat_gesture_moving_swipe"
             app:dependency="input_feedback__audio_enabled"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__input_feedback__audio_feat_gesture_moving_swipe__label"/>
+            app:title="@string/pref__input_feedback__audio_feat_gesture_moving_swipe__label"
+            app:summary="@string/pref__input_feedback__any_feat_gesture_moving_swipe__summary"/>
 
     </PreferenceCategory>
 
@@ -90,7 +95,7 @@
             app:summary="@string/pref__input_feedback__haptic_ignore_system_settings__summary"/>
 
         <SwitchPreferenceCompat
-            app:defaultValue="false"
+            app:defaultValue="true"
             app:key="input_feedback__haptic_use_vibrator"
             app:dependency="input_feedback__haptic_enabled"
             app:iconSpaceReserved="false"
@@ -126,35 +131,40 @@
             app:key="input_feedback__haptic_feat_key_press"
             app:dependency="input_feedback__haptic_enabled"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__input_feedback__haptic_feat_key_press__label"/>
+            app:title="@string/pref__input_feedback__haptic_feat_key_press__label"
+            app:summary="@string/pref__input_feedback__any_feat_key_press__summary"/>
 
         <SwitchPreferenceCompat
             app:defaultValue="false"
             app:key="input_feedback__haptic_feat_key_long_press"
             app:dependency="input_feedback__haptic_enabled"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__input_feedback__haptic_feat_key_long_press__label"/>
+            app:title="@string/pref__input_feedback__haptic_feat_key_long_press__label"
+            app:summary="@string/pref__input_feedback__any_feat_key_long_press__summary"/>
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
             app:key="input_feedback__haptic_feat_key_repeated_action"
             app:dependency="input_feedback__haptic_enabled"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__input_feedback__haptic_feat_key_repeated_action__label"/>
+            app:title="@string/pref__input_feedback__haptic_feat_key_repeated_action__label"
+            app:summary="@string/pref__input_feedback__any_feat_key_repeated_action__summary"/>
 
         <SwitchPreferenceCompat
             app:defaultValue="false"
             app:key="input_feedback__haptic_feat_gesture_swipe"
             app:dependency="input_feedback__haptic_enabled"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__input_feedback__haptic_feat_gesture_swipe__label"/>
+            app:title="@string/pref__input_feedback__haptic_feat_gesture_swipe__label"
+            app:summary="@string/pref__input_feedback__any_feat_gesture_swipe__summary"/>
 
         <SwitchPreferenceCompat
             app:defaultValue="true"
             app:key="input_feedback__haptic_feat_gesture_moving_swipe"
             app:dependency="input_feedback__haptic_enabled"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__input_feedback__haptic_feat_gesture_moving_swipe__label"/>
+            app:title="@string/pref__input_feedback__haptic_feat_gesture_moving_swipe__label"
+            app:summary="@string/pref__input_feedback__any_feat_gesture_moving_swipe__summary"/>
 
     </PreferenceCategory>
 
