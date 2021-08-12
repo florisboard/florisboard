@@ -535,12 +535,10 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                     }
                     popupManager.hide()
                 } else {
-                    if (dispatcher.isPressed(activeKey.computedData.code)) {
-                        if (pointer.hasTriggeredGestureMove) {
-                            dispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
-                        } else {
-                            dispatcher.send(InputKeyEvent.up(activeKey.computedData))
-                        }
+                    if (pointer.hasTriggeredGestureMove) {
+                        dispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
+                    } else {
+                        dispatcher.send(InputKeyEvent.up(activeKey.computedData))
                     }
                 }
             }
