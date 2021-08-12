@@ -180,10 +180,6 @@
     <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Dolny odstęp (układ pionowy)</string>
     <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Dolny odstęp (układ poziomy)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Naciśnięcie klawisza</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Dźwięk po naciśnięciu klawisza</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Głośność dźwięku po naciśnięciu klawisza</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Wibracja przy naciśnięciu klawisza</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Siła wibracji przy naciskaniu klawiszy</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Widoczność PopUp</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Pokaż popup po naciśnięciu klawisza</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Opóznienie długiego przytrzymania</string>

@@ -199,11 +199,6 @@
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">تباعد المفاتيح (عموديًا)</string>
     <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">تباعد المفاتيح (افقيا)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">ضغط المفتاح</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">الصوت عند ضغط المفتاح</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">حجم الصوت عند ضغط المفتاح</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">إهتزاز عند ضغط المفتاح</string>
-    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">اهتزاز عند الضغط على المفتاح</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">شدة الاهتزاز عند ضغط على المفتاح</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">رؤية النافذة المنبثقة</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">إظهار النافذة المنبثقة عندما تضغط على مفتاح</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">مدة الضغط المطوّل على المفتاح</string>

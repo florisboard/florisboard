@@ -29,6 +29,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import kotlinx.coroutines.CoroutineScope
@@ -105,8 +106,7 @@ class EmojiKeyView(
                     emojiKeyboardView.isScrollBlocked = true
                     emojiKeyboardView.popupManager.show(key, KeyHintConfiguration.HINTS_DISABLED)
                     emojiKeyboardView.popupManager.extend(key, KeyHintConfiguration.HINTS_DISABLED)
-                    florisboard?.keyPressVibrate()
-                    florisboard?.keyPressSound()
+                    florisboard?.inputFeedbackManager?.keyPress(TextKeyData.UNSPECIFIED)
                 }, delayMillis.toLong())
             }
             MotionEvent.ACTION_MOVE -> {
@@ -134,8 +134,7 @@ class EmojiKeyView(
                     retData != null && !isCancelled
                 ) {
                     if (!emojiKeyboardView.isScrollBlocked) {
-                        florisboard?.keyPressVibrate()
-                        florisboard?.keyPressSound()
+                        florisboard?.inputFeedbackManager?.keyPress(TextKeyData.UNSPECIFIED)
                     }
                     (retData as? EmojiKeyData)?.let { florisboard?.mediaInputManager?.sendEmojiKeyPress(it) }
                     performClick()

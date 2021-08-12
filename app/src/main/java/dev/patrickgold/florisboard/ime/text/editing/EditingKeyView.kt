@@ -112,8 +112,7 @@ class EditingKeyView : AppCompatImageButton, ThemeManager.OnThemeUpdatedListener
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 isKeyPressed = true
-                florisboard?.keyPressVibrate()
-                florisboard?.keyPressSound(data)
+                florisboard?.inputFeedbackManager?.keyPress(data)
                 when (data.code) {
                     KeyCode.ARROW_DOWN,
                     KeyCode.ARROW_LEFT,

@@ -196,11 +196,6 @@
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Mifteya mifteyê (emûdî)</string>
     <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Navbera mifteyê (asoyî)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Çapemeniya kilît</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Dengê li ser çapa sereke</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Dengê li ser pêlkirina mifteyan</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Li ser çapameniyê ya sereke bilerize</string>
-    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Dema ku tûşan tepandin hêza lerz</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Dema ku mifte tê tepandin hêza lerz</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">PopUp Dîtinî</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Dema pêl bişkojkê bikî popup nîşan bide</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Derengketina bişkojka bişkojka dirêj</string>

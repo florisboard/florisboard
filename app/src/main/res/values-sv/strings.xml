@@ -146,10 +146,6 @@
     <string name="pref__keyboard__height_factor__custom" comment="Preference value">Anpassat</string>
     <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Anpassad tangentbordshöjd värde</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tangenttryck</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Ljud vid tangenttryck</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volym vid tangenttryck</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibrera vid tangenttryck</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Vibrationsstyrka vid tangentryck</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Popup synlighet</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Visa popup vid tangenttryck</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Fördröjning vid långt tryck</string>

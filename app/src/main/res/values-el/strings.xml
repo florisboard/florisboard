@@ -199,11 +199,6 @@
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Απόσταση μεταξύ πλήκτρων (κάθετα)</string>
     <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Απόσταση μεταξύ πλήκτρων (οριζόντια)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Πάτημα πλήκτρου</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Ήχος κατά το πάτημα πλήκτρου</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Ένταση ήχου κατά το πάτημα πλήκτρου</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Δόνηση κατά το πάτημα πλήκτρου</string>
-    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Διάρκεια δόνησης κατά το πάτημα κλειδιού</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Ένταση δόνησης κατά το πάτημα πλήκτρου</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Εμφάνιση κατά το πάτημα πλήκτρου</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Επιπλέον εμφάνιση πλήκτρου όταν πατήσετε ένα πλήκτρο</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Καθυστέρηση παρατεταμένου πατήματος πλήκτρου</string>

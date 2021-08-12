@@ -431,8 +431,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             if (prefs.keyboard.popupEnabled && popupManager.isSuitableForPopups(key)) {
                 popupManager.show(key, keyHintConfiguration)
             }
-            florisboard!!.keyPressVibrate()
-            florisboard!!.keyPressSound(key.computedData)
+            florisboard!!.inputFeedbackManager.keyPress(key.computedData)
             key.setPressed(true) { invalidate(key) }
             if (pointer.initialKey == null) {
                 pointer.initialKey = key
@@ -458,8 +457,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                     KeyCode.SHIFT -> {
                         delay((delayMillis * 2.5f).toLong())
                         florisboard!!.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.SHIFT_LOCK))
-                        florisboard!!.keyPressVibrate()
-                        florisboard!!.keyPressSound(key.computedData)
+                        florisboard!!.inputFeedbackManager.keyLongPress(key.computedData)
                     }
                     KeyCode.LANGUAGE_SWITCH -> {
                         delay((delayMillis * 2.0f).toLong())
@@ -475,8 +473,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                             ).isNotEmpty()
                         ) {
                             popupManager.extend(key, keyHintConfiguration)
-                            florisboard!!.keyPressVibrate()
-                            florisboard!!.keyPressSound(key.computedData)
+                            florisboard!!.inputFeedbackManager.keyLongPress(key.computedData)
                         }
                     }
                 }
@@ -633,7 +630,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 SwipeAction.DELETE_CHARACTERS_PRECISELY -> {
                     florisboard.activeEditorInstance.apply {
                         if (abs(event.relUnitCountX) > 0) {
-                            florisboard.keyPressVibrate(isMovingGestureEffect = true)
+                            florisboard.inputFeedbackManager.gestureMovingSwipe(TextKeyData.DELETE)
                         }
                         markComposingRegion(null)
                         selection.updateAndNotify(
@@ -646,7 +643,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 }
                 SwipeAction.DELETE_WORDS_PRECISELY -> when (event.direction) {
                     SwipeGesture.Direction.LEFT -> {
-                        florisboard.keyPressVibrate(isMovingGestureEffect = true)
+                        florisboard.inputFeedbackManager.gestureMovingSwipe(TextKeyData.DELETE)
                         florisboard.activeEditorInstance.apply {
                             leftAppendWordToSelection()
                         }
@@ -654,7 +651,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                         true
                     }
                     SwipeGesture.Direction.RIGHT -> {
-                        florisboard.keyPressVibrate(isMovingGestureEffect = true)
+                        florisboard.inputFeedbackManager.gestureMovingSwipe(TextKeyData.DELETE)
                         florisboard.activeEditorInstance.apply {
                             leftPopWordFromSelection()
                         }
@@ -693,7 +690,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                                 it
                             }
                             if (count > 0) {
-                                florisboard.keyPressVibrate(isMovingGestureEffect = true)
+                                florisboard.inputFeedbackManager.gestureMovingSwipe(TextKeyData.SPACE)
                                 florisboard.textInputManager.inputEventDispatcher.send(
                                     InputKeyEvent.downUp(
                                         TextKeyData.ARROW_LEFT, count
@@ -713,7 +710,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                                 it
                             }
                             if (count > 0) {
-                                florisboard.keyPressVibrate(isMovingGestureEffect = true)
+                                florisboard.inputFeedbackManager.gestureMovingSwipe(TextKeyData.SPACE)
                                 florisboard.textInputManager.inputEventDispatcher.send(
                                     InputKeyEvent.downUp(
                                         TextKeyData.ARROW_RIGHT, count

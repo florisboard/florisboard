@@ -187,11 +187,6 @@
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">ריווח מקשים (אנכי)</string>
     <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">ריווח מקשים (אופקי)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">לחיצת מקש</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">שמע בעת לחיצה על מקש</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">השמע צליל בעת לחיצה על מקש</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">הפעל רטט בעת לחיצה על מקש</string>
-    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">משך הרטט בלחיצת מקש</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">עוצמת רטט בעת לחיצה על מקש</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">תצוגת חלונית</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">הצד חלונית בעת לחיצה על מקש</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">השהיית לחיצה מקש ארוכה</string>

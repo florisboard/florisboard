@@ -67,8 +67,7 @@ class EmoticonKeyView : androidx.appcompat.widget.AppCompatTextView {
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 setBackgroundColor(getColorFromAttr(context, R.attr.semiTransparentColor))
-                florisboard.keyPressVibrate()
-                florisboard.keyPressSound(TextKeyData.UNSPECIFIED)
+                florisboard.inputFeedbackManager.keyPress(TextKeyData.UNSPECIFIED)
             }
             MotionEvent.ACTION_UP -> {
                 setBackgroundColor(Color.TRANSPARENT)
