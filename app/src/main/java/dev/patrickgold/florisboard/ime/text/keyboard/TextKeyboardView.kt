@@ -792,7 +792,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 isSmartbarKeyboardView -> {
                     measuredHeight
                 }
-                florisboard?.uiBinding?.inputView?.shouldGiveAdditionalSpace == true -> {
+                florisboard?.uiBinding?.inputView?.shouldGiveAdditionalSpace == true && keyboard.mode != KeyboardMode.CHARACTERS -> {
                     (measuredHeight / (keyboard.rowCount + 0.5f).coerceAtMost(5.0f)).toInt()
                 }
                 else -> {
