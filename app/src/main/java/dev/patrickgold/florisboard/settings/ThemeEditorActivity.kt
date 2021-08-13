@@ -33,7 +33,14 @@ import dev.patrickgold.florisboard.databinding.ThemeEditorActivityBinding
 import dev.patrickgold.florisboard.databinding.ThemeEditorGroupViewBinding
 import dev.patrickgold.florisboard.databinding.ThemeEditorMetaDialogBinding
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
+import dev.patrickgold.florisboard.ime.text.key.CurrencySet
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardIconSet
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
@@ -53,6 +60,21 @@ class ThemeEditorActivity : AppCompatActivity() {
     private val mainScope = MainScope()
     private lateinit var layoutManager: LayoutManager
     private val themeManager: ThemeManager = ThemeManager.default()
+
+    private lateinit var textKeyboardIconSet: TextKeyboardIconSet
+    private val textComputingEvaluator = object : ComputingEvaluator by DefaultComputingEvaluator {
+        override fun evaluateVisible(data: KeyData): Boolean {
+            return data.code != KeyCode.SWITCH_TO_MEDIA_CONTEXT
+        }
+
+        override fun isSlot(data: KeyData): Boolean {
+            return CurrencySet.isCurrencySlot(data.code)
+        }
+
+        override fun getSlotData(data: KeyData): KeyData {
+            return TextKeyData(label = "$")
+        }
+    }
 
     private var editedTheme: Theme = Theme.empty()
     private var editedThemeRef: FlorisRef? = null
@@ -91,6 +113,9 @@ class ThemeEditorActivity : AppCompatActivity() {
 
         binding.themeNameEditBtn.setOnClickListener { showMetaEditDialog() }
 
+        textKeyboardIconSet = TextKeyboardIconSet.new(this)
+        binding.keyboardPreview.setIconSet(textKeyboardIconSet)
+        binding.keyboardPreview.setComputingEvaluator(textComputingEvaluator)
         binding.keyboardPreview.sync()
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
