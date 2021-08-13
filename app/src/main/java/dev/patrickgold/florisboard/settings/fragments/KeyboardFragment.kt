@@ -27,7 +27,6 @@ import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
-import dev.patrickgold.florisboard.settings.SettingsMainActivity
 import dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
 
 class KeyboardFragment : PreferenceFragmentCompat(),
@@ -81,7 +80,7 @@ class KeyboardFragment : PreferenceFragmentCompat(),
                 requireActivity().findViewById<View>(R.id.scroll_view)?.scrollY = 0
                 requireActivity().supportFragmentManager
                     .beginTransaction()
-                    .replace(R.id.page_frame, SettingsMainActivity.PrefFragment.createFromResource(R.xml.prefs_input_feedback))
+                    .replace(R.id.page_frame, InputFeedbackFragment())
                     .commit()
                 return true
             }

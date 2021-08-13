@@ -187,10 +187,12 @@
     <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrate for input events, dependent on system settings</string>
     <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignore system haptic settings</string>
     <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Use below preferences, even if haptic is disabled in the system</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Use vibrator directly</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Control the vibrator directly instead of using the haptic feedback API</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Trigger vibration directly</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Trigger vibration directly instead of using Android\'s haptic feedback feature set</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibration duration</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibration strength</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">This feature requires hardware amplitude control support, which is missing on your device</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">This feature requires amplitude control support, which is only available on Android 8.0 or newer</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Key press vibration</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Key long press vibration</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Key repeated action vibration</string>
