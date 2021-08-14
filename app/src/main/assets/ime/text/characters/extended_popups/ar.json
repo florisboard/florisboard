@@ -4,59 +4,21 @@
   "authors": [ "HeiWiper" ],
   "mapping": {
     "all": {
-      "ض": {
-        "relevant": [
-          { "code": 1633, "label": "١" }
-        ]
-      },
-      "ص": {
-        "relevant": [
-          { "code": 1634, "label": "٢" }
-        ]
-      },
-      "ث": {
-        "relevant": [
-          { "code": 1635, "label": "٣" }
-        ]
-      },
       "ق": {
         "relevant": [
-          { "code": 1704, "label": "ڨ" },
-          { "code": 1636, "label": "٤" }
+          { "code": 1704, "label": "ڨ" }
         ]
       },
       "ف": {
         "relevant": [
           { "code": 1701, "label": "ڥ" },
           { "code": 1700, "label": "ڤ" },
-          { "code": 1698, "label": "ڢ" },
-          { "code": 1637, "label": "٥" }
-        ]
-      },
-      "غ": {
-        "relevant": [
-          { "code": 1638, "label": "٦" }
-        ]
-      },
-      "ع": {
-        "relevant": [
-          { "code": 1639, "label": "٧" }
+          { "code": 1698, "label": "ڢ" }
         ]
       },
       "ه": {
         "relevant": [
-          { "code": 1726, "label": "ھ" },
-          { "code": 1640, "label": "٨" }
-        ]
-      },
-      "خ": {
-        "relevant": [
-          { "code": 1641, "label": "٩" }
-        ]
-      },
-      "ح": {
-        "relevant": [
-          { "code": 1632, "label": "٠" }
+          { "code": 1726, "label": "ھ" }
         ]
       },
       "ج": {
@@ -70,8 +32,8 @@
         ]
       },
       "ي": {
+        "main": { "code": 1574, "label": "ئ" },
         "relevant": [
-          { "code": 1574, "label": "ئ" },
           { "code": 1609, "label": "ى" }
         ]
       },
@@ -89,10 +51,10 @@
         ]
       },
       "ا": {
+        "main": { "code": 1571, "label": "أ" },
         "relevant": [
           { "code": 1570, "label": "آ" },
           { "code": 1569, "label": "ء" },
-          { "code": 1571, "label": "أ" },
           { "code": 1573, "label": "إ" },
           { "code": 1649, "label": "ٱ" }
         ]
@@ -104,9 +66,7 @@
         ]
       },
       "ى": {
-        "relevant": [
-          { "code": 1574, "label": "ئ" }
-        ]
+        "main": { "code": 1574, "label": "ئ" }
       },
       "ز": {
         "relevant": [
