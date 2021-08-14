@@ -470,7 +470,7 @@ class EditorInstance private constructor(
         Timber.d("performClipboardCut")
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        florisClipboardManager.addNewPlaintext(selection.text)
+        florisClipboardManager.addNewPlaintext(selection.icText)
         return sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
     }
 
@@ -484,7 +484,7 @@ class EditorInstance private constructor(
         Timber.d("performClipboardCopy")
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        florisClipboardManager.addNewPlaintext(selection.text)
+        florisClipboardManager.addNewPlaintext(selection.icText)
         return selection.updateAndNotify(selection.end, selection.end)
     }
 
@@ -760,6 +760,14 @@ class Selection(private val editorInstance: EditorInstance) : Region(editorInsta
         get() = length == 0 && isValid
     val isSelectionMode: Boolean
         get() = length != 0 && isValid
+
+    val icText: String get() = when {
+        !isValid -> ""
+        else -> when (val ic = editorInstance.inputConnection) {
+            null -> ""
+            else -> ic.getSelectedText(0).toString()
+        }
+    }
 
     /**
      * Same as [update], but also notifies the input connection linked by [editorInstance] of this
