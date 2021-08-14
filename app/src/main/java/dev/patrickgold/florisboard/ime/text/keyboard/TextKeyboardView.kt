@@ -1202,6 +1202,15 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 KeyCode.KANA_SWITCHER -> {
                     key.foregroundDrawableId = R.drawable.ic_keyboard_kana_switcher
                 }
+                KeyCode.CHAR_WIDTH_SWITCHER -> {
+                    key.foregroundDrawableId = R.drawable.ic_keyboard_char_width_switcher
+                }
+                KeyCode.CHAR_WIDTH_FULL -> {
+                    key.foregroundDrawableId = R.drawable.ic_keyboard_char_width_full
+                }
+                KeyCode.CHAR_WIDTH_HALF -> {
+                    key.foregroundDrawableId = R.drawable.ic_keyboard_char_width_half
+                }
                 KeyCode.SWITCH_TO_TEXT_CONTEXT,
                 KeyCode.VIEW_CHARACTERS -> {
                     key.label = resources.getString(R.string.key__view_characters)
