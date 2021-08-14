@@ -53,6 +53,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
             mergePopups(computed, evaluator, computedPopups::merge)
             if (keyboardMode == KeyboardMode.CHARACTERS || keyboardMode == KeyboardMode.NUMERIC_ADVANCED ||
                 keyboardMode == KeyboardMode.SYMBOLS || keyboardMode == KeyboardMode.SYMBOLS2) {
+                val computedLabel = computed.label.lowercase(evaluator.getActiveSubtype().locale)
                 val extLabel = when (computed.groupId) {
                     KeyData.GROUP_ENTER -> {
                         "~enter"
@@ -64,7 +65,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                         "~right"
                     }
                     else -> {
-                        computed.label.lowercase(evaluator.getActiveSubtype().locale)
+                        computedLabel
                     }
                 }
                 val extendedPopupsDefault = keyboard?.extendedPopupMappingDefault
@@ -92,9 +93,9 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                         extendedPopupsDefault?.get(KeyVariation.ALL)?.get(extLabel)
                 }
                 var keySpecificPopupSet: PopupSet<AbstractKeyData>? = null
-                if (extLabel != computed.label) {
-                    keySpecificPopupSet = extendedPopups?.get(KeyVariation.ALL)?.get(computed.label) ?:
-                        extendedPopupsDefault?.get(KeyVariation.ALL)?.get(computed.label)
+                if (extLabel != computedLabel) {
+                    keySpecificPopupSet = extendedPopups?.get(KeyVariation.ALL)?.get(computedLabel) ?:
+                        extendedPopupsDefault?.get(KeyVariation.ALL)?.get(computedLabel)
                 }
                 computedPopups.apply {
                     keySpecificPopupSet?.let { merge(it, evaluator) }
