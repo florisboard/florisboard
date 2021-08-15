@@ -1,0 +1,3 @@
+This release reworks the audio and haptic feedback of FlorisBoard and fixes a lot of bugs.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.13-beta09
