@@ -130,12 +130,12 @@ class PopupManager<V : View>(
                         } ?: PopupExtendedView.Element.Undefined
                     }
                     KeyCode.CHAR_WIDTH_FULL -> {
-                        getDrawable(keyboardView.context, R.drawable.ic_keyboard_char_width_full)?.let {
+                        getDrawable(keyboardView.context, R.drawable.ic_keyboard_char_width_switcher_full)?.let {
                             PopupExtendedView.Element.Icon(it, adjustedIndex)
                         } ?: PopupExtendedView.Element.Undefined
                     }
                     KeyCode.CHAR_WIDTH_HALF -> {
-                        getDrawable(keyboardView.context, R.drawable.ic_keyboard_char_width_half)?.let {
+                        getDrawable(keyboardView.context, R.drawable.ic_keyboard_char_width_switcher_half)?.let {
                             PopupExtendedView.Element.Icon(it, adjustedIndex)
                         } ?: PopupExtendedView.Element.Undefined
                     }
