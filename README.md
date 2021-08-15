@@ -117,71 +117,7 @@ milestones, please refer to the [Feature roadmap](#feature-roadmap).
 * [ ] ...
 
 ## Feature roadmap
-This section describes the features which are planned to be implemented
-in FlorisBoard for the next major versions, modularized into sections.
-<!-- Please note that the milestone due dates are only raw estimates and will
-most likely be delayed back, even though I'm eager to stick to these as
-close as possible. -->
-
-Note that the v0.4.0 milestone technically means all v0.3.x releases.
-As this naming convention is more confusing than useful, after the
-v0.4.0 release a new release/development cycle will be introduced.
-
-### [v0.3.x](https://github.com/florisboard/florisboard/milestone/4)
-- Module A: Smartbar rework (Implemented with [#91])
-  - Ability to enable/disable Smartbar (features below thus only work if
-    Smartbar is enabled)
-  - Dynamic switching between clipboard tools and word suggestions
-  - Ability to show both the number row and word suggestions at once
-  - Better icons in quick actions
-  - Complete rework of the Smartbar code base and the Smartbar layout
-    definition in XML
-
-- Module B: Composing suggestions (Phase 1: [#329])
-  - Auto-suggestion of words based of precompiled dictionaries
-  - Management of custom dictionary entries
-  - Next-word suggestions by training language models. Data collected here is stored locally and never leaves
-    the user's device.
-
-- Module C: Extension packs (Implemented with [#162], reworked several times and still not stable)
-  - Ability to load dictionaries (and later potentially other cool
-    features too) only if needed to keep the core APK size small
-  - Currently unclear how exactly this will work, but this is definitely
-    a must-have feature
-  - A full implementation may come only in v0.5.0
-
-- Module D: Glide typing (Implemented with [#544])
-  - Swiping over the characters will automatically convert this to a word
-  - Possibly also add improvements based on the Flow keyboard
-
-- Module E: Theme rework (Implemented with [#162])
-  - Themes are now based on the Asset schema
-  - Dynamic theme creation
-  - Different theme modes (`Always day`, `Always night`, `Follow system`
-    and `Follow time`)
-  - Define a separate theme both for day and night theme
-  - Adapt to app theme if possible
-  - Theme import/export
-
-### [v0.4.x and further](https://github.com/florisboard/florisboard/milestone/5)
-There's no exact roadmap yet, but these are the most important points:
-- Full layout customization in runtime
-- Extensive rework and customization of the media input (emojis, emoticons, kaomoji)
-- Better Smartbar customization
-- As an extension GIF support
-
-### > v0.5.0
-This is completely open as of now and will gather planned features as time
-passes...
-
-Backlog (currently not assigned to any milestone):
-
-- Floating keyboard
-
-[#91]: https://github.com/florisboard/florisboard/pull/91
-[#162]: https://github.com/florisboard/florisboard/pull/162
-[#329]: https://github.com/florisboard/florisboard/pull/329
-[#544]: https://github.com/florisboard/florisboard/pull/544
+See the [roadmap page](ROADMAP.md) for this.
 
 ## Contributing
 Wanna contribute to FlorisBoard? That's great to hear! There are lots of
