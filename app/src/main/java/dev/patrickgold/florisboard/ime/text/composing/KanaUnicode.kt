@@ -91,8 +91,8 @@ class KanaUnicode : Composer {
     private val small = mapOf(
         'あ' to "ぁ",
         'い' to "ぃ",
-        'え' to "ぅ",
-        'う' to "ぇ",
+        'え' to "ぇ",
+        'う' to "ぅ",
         'お' to "ぉ",
 
         'か' to "ゕ",
@@ -111,8 +111,8 @@ class KanaUnicode : Composer {
 
         'ア' to "ァ",
         'イ' to "ィ",
-        'エ' to "ゥ",
-        'ウ' to "ェ",
+        'エ' to "ェ",
+        'ウ' to "ゥ",
         'オ' to "ォ",
 
         'カ' to "ヵ",
@@ -232,8 +232,8 @@ class KanaUnicode : Composer {
     private val reverseSmall = mapOf(
         'ぁ' to 'あ',
         'ぃ' to 'い',
-        'ぅ' to 'え',
-        'ぇ' to 'う',
+        'ぅ' to 'う',
+        'ぇ' to 'え',
         'ぉ' to 'お',
 
         'ゕ' to 'か',
@@ -250,8 +250,8 @@ class KanaUnicode : Composer {
 
         'ァ' to 'ア',
         'ィ' to 'イ',
-        'ゥ' to 'エ',
-        'ェ' to 'ウ',
+        'ゥ' to 'ウ',
+        'ェ' to 'エ',
         'ォ' to 'オ',
 
         'ヵ' to 'カ',
@@ -327,20 +327,10 @@ class KanaUnicode : Composer {
 
     override fun getActions(s: String, c: Char): Pair<Int, String> {
         // s is "at least the last 1 character of what's currently here"
-        if (s.isEmpty()) {
-            return if (c == smallSentinel || isComposingCharacter(c)) {
-                Pair(0, "")
+            if (c == smallSentinel || isComposingCharacter(c)) {
+                return Pair(0, "emDaku")
             } else {
-                Pair(0, ""+c)
+                return Pair(0, "em")
             }
-        }
-        val lastChar = s.last()
-
-        return when {
-            isDakuten(c) -> handleTransform(lastChar, c, daku, reverseDaku)
-            isHandakuten(c) -> handleTransform(lastChar, c, handaku, reverseHandaku)
-            c == smallSentinel -> handleTransform(lastChar, c, small, reverseSmall)
-            else -> Pair(0, ""+c)
-        }
     }
 }
