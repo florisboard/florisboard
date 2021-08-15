@@ -24,10 +24,10 @@
       },
       { "code": -205, "label": "view_numeric_advanced", "type": "system_gui" },
       { "code": 12288, "label": "空白" },
-      { "code": -9701, "label": "char_width_switcher", "popup": {
+      { "code": -9701, "label": "char_width_switcher", "type": "system_gui", "popup": {
           "relevant": [
-            { "code": -9702, "label": "char_width_full" },
-            { "code": -9703, "label": "char_width_half" }
+            { "code": -9702, "label": "char_width_full", "type": "system_gui" },
+            { "code": -9703, "label": "char_width_half", "type": "system_gui" }
           ]
         }
       },
