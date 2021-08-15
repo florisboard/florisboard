@@ -309,7 +309,7 @@ class KanaUnicode : Composer {
         }
     }
 
-    private fun <K>handleTransform(l: Char, c: Char, base: Map<Char, K>, rev: Map<Char, Char>): Pair<Int, String> {
+    private fun <K>handleTransform(l: Char, c: Char, base: Map<Char, K>, rev: Map<Char, Char>, addOnFalse: Boolean): Pair<Int, String> {
         val char = getBaseCharacter(l)
         val trans = if (sticky) {
             base[char]
@@ -321,7 +321,7 @@ class KanaUnicode : Composer {
         } else if (isComposingCharacter(l) && isComposingCharacter(c)) {
             Pair(1, if (l == c && !sticky) { "" } else { ""+c  })
         } else {
-            Pair(0, ""+c)
+            Pair(0, if (addOnFalse) { ""+c } else { "" })
         }
     }
 
@@ -337,9 +337,9 @@ class KanaUnicode : Composer {
         val lastChar = s.last()
 
         return when {
-            isDakuten(c) -> handleTransform(lastChar, c, daku, reverseDaku)
-            isHandakuten(c) -> handleTransform(lastChar, c, handaku, reverseHandaku)
-            c == smallSentinel -> handleTransform(lastChar, c, small, reverseSmall)
+            isDakuten(c) -> handleTransform(lastChar, c, daku, reverseDaku, true)
+            isHandakuten(c) -> handleTransform(lastChar, c, handaku, reverseHandaku, true)
+            c == smallSentinel -> handleTransform(lastChar, c, small, reverseSmall, false)
             else -> Pair(0, ""+c)
         }
     }
