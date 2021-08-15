@@ -135,7 +135,7 @@ class KanaUnicode : Composer {
 
         'ム' to "ㇺ",
 
-        'ヤ' to "ヤ",
+        'ヤ' to "ャ",
         'ユ' to "ュ",
         'ヨ' to "ョ",
 
@@ -274,7 +274,7 @@ class KanaUnicode : Composer {
 
         'ㇺ' to 'ム',
 
-        'ヤ' to 'ヤ',
+        'ャ' to 'ヤ',
         'ュ' to 'ユ',
         'ョ' to 'ヨ',
 
