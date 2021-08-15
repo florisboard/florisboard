@@ -200,11 +200,6 @@
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Espacement des touches (vertical)</string>
     <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Espacement des touches (horizontal)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Appui sur la touche</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Son lors de l\'appui des touches</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volume sonore lors de l\'appui des touches</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibrer à chaque touche pressée</string>
-    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Durée de la vibration lors de la pression d\'une touche</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Force de vibration lors de l\'appui sur une touche</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Visibilité des pop-up</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Afficher un pop-up à l\'appuie d\'une touche</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Délai d\'appui prolongé</string>

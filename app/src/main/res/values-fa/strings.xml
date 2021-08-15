@@ -199,11 +199,6 @@
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">فاصله گذاری کلید (عمودی)</string>
     <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">فاصله گذاری کلید (افقی)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">فشردن کلید</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">صدای فشردن کلید</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">میزان صدای فشردن کلید</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">لرزش هنگام فشردن کلید</string>
-    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">مدت زمان لرزش با فشردن دکمه</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">قدرت لرزش هنگام فشردن کلید</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">نمایش پاپ‌آپ</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">نمایش پاپآپ وقتی کلیدی را می فشارید</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">تاخیر فشردن طولانی کلید</string>

@@ -200,11 +200,6 @@
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Platz zwischen Zeichen (vertikal)</string>
     <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Platz zwischen Zeichen (horizontal)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastendruck</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Ton bei Tastendruck</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Lautstärke der Tastendrucktöne</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibration bei Tastendruck</string>
-    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Vibration bei Tastendruck</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Vibrationsstärke bei Tastendruck</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Pop-Up Sichtbarkeit</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Pop-Up bei Tastendruck anzeigen</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Verzögerung bei langem Tastendruck</string>

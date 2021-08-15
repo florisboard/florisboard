@@ -199,11 +199,6 @@
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Toetsafstand (verticaal)</string>
     <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Toetsafstand (horizontaal)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Toetsdruk</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Geluid bij toetsdruk</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Geluidsvolume bij toetsdruk</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibreren bij toetsdruk</string>
-    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Trillingsduur bij toetsdruk</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Trillingssterkte bij toetsdruk</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Zichtbaarheid pop-up</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Pop-up tonen als je op een toets drukt</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Vertraging voor lange toetsdruk</string>

@@ -181,59 +181,10 @@
         app:iconSpaceReserved="false"
         app:title="@string/pref__keyboard__group_keypress__label">
 
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="keyboard__sound_enabled"
+        <Preference
+            app:key="keyboard__input_feedback"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__keyboard__sound_enabled__label"/>
-
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
-            app:allowDividerAbove="false"
-            android:defaultValue="-1"
-            app:systemDefaultValue="-1"
-            app:systemDefaultValueText="@string/settings__system_default"
-            app:dependency="keyboard__sound_enabled"
-            app:key="keyboard__sound_volume"
-            app:min="0"
-            app:max="100"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__keyboard__sound_volume__label"
-            app:seekBarIncrement="1"
-            app:unit="%"/>
-
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="keyboard__vibration_enabled"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__keyboard__vibration_enabled__label"/>
-
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
-            app:allowDividerAbove="false"
-            android:defaultValue="-1"
-            app:systemDefaultValue="-1"
-            app:systemDefaultValueText="@string/settings__system_default"
-            app:dependency="keyboard__vibration_enabled"
-            app:key="keyboard__vibration_strength"
-            app:min="0"
-            app:max="100"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__keyboard__vibration_strength__label"
-            app:seekBarIncrement="1"
-            app:unit="%"/>
-
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
-            app:allowDividerAbove="false"
-            android:defaultValue="-1"
-            app:systemDefaultValue="-1"
-            app:systemDefaultValueText="@string/settings__system_default"
-            app:dependency="keyboard__vibration_enabled"
-            app:key="keyboard__vibration_duration"
-            app:min="0"
-            app:max="100"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__keyboard__vibration_duration__label"
-            app:seekBarIncrement="1"
-            app:unit=" ms"/>
+            app:title="@string/settings__input_feedback__title"/>
 
         <SwitchPreferenceCompat
             android:defaultValue="true"

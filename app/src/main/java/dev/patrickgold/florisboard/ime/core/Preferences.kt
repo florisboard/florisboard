@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.ime.core
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
-import android.provider.Settings
 import androidx.core.os.UserManagerCompat
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
@@ -57,6 +56,7 @@ class Preferences(
     val dictionary = Dictionary(this)
     val gestures = Gestures(this)
     val glide = Glide(this)
+    val inputFeedback = InputFeedback(this)
     val internal = Internal(this)
     val keyboard = Keyboard(this)
     val localization = Localization(this)
@@ -149,21 +149,6 @@ class Preferences(
             }
         } catch (e: Exception) {
             e.fillInStackTrace()
-        }
-    }
-
-    /**
-     * Syncs the system preference values and clears the cache.
-     */
-    fun syncSystemSettings() {
-        applicationContext.get()?.let { context ->
-            val contentResolver = context.contentResolver
-            keyboard.soundEnabledSystem = Settings.System.getInt(
-                contentResolver, Settings.System.SOUND_EFFECTS_ENABLED, 0
-            ) != 0
-            keyboard.vibrationEnabledSystem = Settings.System.getInt(
-                contentResolver, Settings.System.HAPTIC_FEEDBACK_ENABLED, 0
-            ) != 0
         }
     }
 
@@ -333,6 +318,90 @@ class Preferences(
      * Wrapper class for internal preferences. A preference qualifies as an internal pref if the
      * user has no ability to control this preference's value directly (via a UI pref view).
      */
+    class InputFeedback(private val prefs: Preferences) {
+        companion object {
+            const val AUDIO_ENABLED =                       "input_feedback__audio_enabled"
+            const val AUDIO_IGNORE_SYSTEM_SETTINGS =        "input_feedback__audio_ignore_system_settings"
+            const val AUDIO_VOLUME =                        "input_feedback__audio_volume"
+            const val AUDIO_FEAT_KEY_PRESS =                "input_feedback__audio_feat_key_press"
+            const val AUDIO_FEAT_KEY_LONG_PRESS =           "input_feedback__audio_feat_key_long_press"
+            const val AUDIO_FEAT_KEY_REPEATED_ACTION =      "input_feedback__audio_feat_key_repeated_action"
+            const val AUDIO_FEAT_GESTURE_SWIPE =            "input_feedback__audio_feat_gesture_swipe"
+            const val AUDIO_FEAT_GESTURE_MOVING_SWIPE =     "input_feedback__audio_feat_gesture_moving_swipe"
+
+            const val HAPTIC_ENABLED =                      "input_feedback__haptic_enabled"
+            const val HAPTIC_IGNORE_SYSTEM_SETTINGS =       "input_feedback__haptic_ignore_system_settings"
+            const val HAPTIC_USE_VIBRATOR =                 "input_feedback__haptic_use_vibrator"
+            const val HAPTIC_VIBRATION_DURATION =           "input_feedback__haptic_vibration_duration"
+            const val HAPTIC_VIBRATION_STRENGTH =           "input_feedback__haptic_vibration_strength"
+            const val HAPTIC_FEAT_KEY_PRESS =               "input_feedback__haptic_feat_key_press"
+            const val HAPTIC_FEAT_KEY_LONG_PRESS =          "input_feedback__haptic_feat_key_long_press"
+            const val HAPTIC_FEAT_KEY_REPEATED_ACTION =     "input_feedback__haptic_feat_key_repeated_action"
+            const val HAPTIC_FEAT_GESTURE_SWIPE =           "input_feedback__haptic_feat_gesture_swipe"
+            const val HAPTIC_FEAT_GESTURE_MOVING_SWIPE =    "input_feedback__haptic_feat_gesture_moving_swipe"
+        }
+
+        var audioEnabled: Boolean
+            get() =  prefs.getPref(AUDIO_ENABLED, true)
+            set(v) = prefs.setPref(AUDIO_ENABLED, v)
+        var audioIgnoreSystemSettings: Boolean
+            get() =  prefs.getPref(AUDIO_IGNORE_SYSTEM_SETTINGS, false)
+            set(v) = prefs.setPref(AUDIO_IGNORE_SYSTEM_SETTINGS, v)
+        var audioVolume: Int
+            get() =  prefs.getPref(AUDIO_VOLUME, 50)
+            set(v) = prefs.setPref(AUDIO_VOLUME, v)
+        var audioFeatKeyPress: Boolean
+            get() =  prefs.getPref(AUDIO_FEAT_KEY_PRESS, true)
+            set(v) = prefs.setPref(AUDIO_FEAT_KEY_PRESS, v)
+        var audioFeatKeyLongPress: Boolean
+            get() =  prefs.getPref(AUDIO_FEAT_KEY_LONG_PRESS, false)
+            set(v) = prefs.setPref(AUDIO_FEAT_KEY_LONG_PRESS, v)
+        var audioFeatKeyRepeatedAction: Boolean
+            get() =  prefs.getPref(AUDIO_FEAT_KEY_REPEATED_ACTION, false)
+            set(v) = prefs.setPref(AUDIO_FEAT_KEY_REPEATED_ACTION, v)
+        var audioFeatGestureSwipe: Boolean
+            get() =  prefs.getPref(AUDIO_FEAT_GESTURE_SWIPE, false)
+            set(v) = prefs.setPref(AUDIO_FEAT_GESTURE_SWIPE, v)
+        var audioFeatGestureMovingSwipe: Boolean
+            get() =  prefs.getPref(AUDIO_FEAT_GESTURE_MOVING_SWIPE, false)
+            set(v) = prefs.setPref(AUDIO_FEAT_GESTURE_MOVING_SWIPE, v)
+
+        var hapticEnabled: Boolean
+            get() =  prefs.getPref(HAPTIC_ENABLED, true)
+            set(v) = prefs.setPref(HAPTIC_ENABLED, v)
+        var hapticIgnoreSystemSettings: Boolean
+            get() =  prefs.getPref(HAPTIC_IGNORE_SYSTEM_SETTINGS, false)
+            set(v) = prefs.setPref(HAPTIC_IGNORE_SYSTEM_SETTINGS, v)
+        var hapticUseVibrator: Boolean
+            get() =  prefs.getPref(HAPTIC_USE_VIBRATOR, true)
+            set(v) = prefs.setPref(HAPTIC_USE_VIBRATOR, v)
+        var hapticVibrationDuration: Int
+            get() =  prefs.getPref(HAPTIC_VIBRATION_DURATION, 50)
+            set(v) = prefs.setPref(HAPTIC_VIBRATION_DURATION, v)
+        var hapticVibrationStrength: Int
+            get() =  prefs.getPref(HAPTIC_VIBRATION_STRENGTH, 50)
+            set(v) = prefs.setPref(HAPTIC_VIBRATION_STRENGTH, v)
+        var hapticFeatKeyPress: Boolean
+            get() =  prefs.getPref(HAPTIC_FEAT_KEY_PRESS, true)
+            set(v) = prefs.setPref(HAPTIC_FEAT_KEY_PRESS, v)
+        var hapticFeatKeyLongPress: Boolean
+            get() =  prefs.getPref(HAPTIC_FEAT_KEY_LONG_PRESS, false)
+            set(v) = prefs.setPref(HAPTIC_FEAT_KEY_LONG_PRESS, v)
+        var hapticFeatKeyRepeatedAction: Boolean
+            get() =  prefs.getPref(HAPTIC_FEAT_KEY_REPEATED_ACTION, true)
+            set(v) = prefs.setPref(HAPTIC_FEAT_KEY_REPEATED_ACTION, v)
+        var hapticFeatGestureSwipe: Boolean
+            get() =  prefs.getPref(HAPTIC_FEAT_GESTURE_SWIPE, false)
+            set(v) = prefs.setPref(HAPTIC_FEAT_GESTURE_SWIPE, v)
+        var hapticFeatGestureMovingSwipe: Boolean
+            get() =  prefs.getPref(HAPTIC_FEAT_GESTURE_MOVING_SWIPE, true)
+            set(v) = prefs.setPref(HAPTIC_FEAT_GESTURE_MOVING_SWIPE, v)
+    }
+
+    /**
+     * Wrapper class for internal preferences. A preference qualifies as an internal pref if the
+     * user has no ability to control this preference's value directly (via a UI pref view).
+     */
     class Internal(private val prefs: Preferences) {
         companion object {
             const val IS_IME_SET_UP =               "internal__is_ime_set_up"
@@ -377,14 +446,9 @@ class Preferences(
             const val ONE_HANDED_MODE =                     "keyboard__one_handed_mode"
             const val ONE_HANDED_MODE_SCALE_FACTOR =        "keyboard__one_handed_mode_scale_factor"
             const val POPUP_ENABLED =                       "keyboard__popup_enabled"
-            const val SOUND_ENABLED =                       "keyboard__sound_enabled"
-            const val SOUND_VOLUME =                        "keyboard__sound_volume"
             const val SPACE_BAR_SWITCHES_TO_CHARACTERS =    "keyboard__space_bar_switches_to_characters"
             const val UTILITY_KEY_ACTION =                  "keyboard__utility_key_action"
             const val UTILITY_KEY_ENABLED =                 "keyboard__utility_key_enabled"
-            const val VIBRATION_ENABLED =                   "keyboard__vibration_enabled"
-            const val VIBRATION_DURATION =                  "keyboard__vibration_duration"
-            const val VIBRATION_STRENGTH =                  "keyboard__vibration_strength"
         }
 
         var bottomOffsetPortrait: Int = 0
@@ -438,13 +502,6 @@ class Preferences(
         var popupEnabled: Boolean = false
             get() = prefs.getPref(POPUP_ENABLED, true)
             private set
-        var soundEnabled: Boolean = false
-            get() = prefs.getPref(SOUND_ENABLED, true)
-            private set
-        var soundEnabledSystem: Boolean = false
-        var soundVolume: Int = 0
-            get() = prefs.getPref(SOUND_VOLUME, -1)
-            private set
         var spaceBarSwitchesToCharacters: Boolean
             get() =  prefs.getPref(SPACE_BAR_SWITCHES_TO_CHARACTERS, true)
             set(v) = prefs.setPref(SPACE_BAR_SWITCHES_TO_CHARACTERS, v)
@@ -454,16 +511,6 @@ class Preferences(
         var utilityKeyEnabled: Boolean
             get() =  prefs.getPref(UTILITY_KEY_ENABLED, true)
             set(v) = prefs.setPref(UTILITY_KEY_ENABLED, v)
-        var vibrationEnabled: Boolean = false
-            get() = prefs.getPref(VIBRATION_ENABLED, true)
-            private set
-        var vibrationEnabledSystem: Boolean = false
-        var vibrationDuration: Int = 0
-            get() = prefs.getPref(VIBRATION_DURATION, -1)
-            private set
-        var vibrationStrength: Int = 0
-            get() = prefs.getPref(VIBRATION_STRENGTH, -1)
-            private set
 
         fun keyHintConfiguration(): KeyHintConfiguration {
             return KeyHintConfiguration(hintedSymbolsMode, hintedNumberRowMode, mergeHintPopupsEnabled)

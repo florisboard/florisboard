@@ -20,12 +20,12 @@ import android.os.SystemClock
 import android.util.SparseArray
 import androidx.core.util.forEach
 import androidx.core.util.set
-import dev.patrickgold.florisboard.BuildConfig
+import dev.patrickgold.florisboard.debug.LogTopic
+import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
-import timber.log.Timber
 
 /**
  * The main logic point of processing input events and delegating them to the registered event receivers. Currently,
@@ -96,9 +96,7 @@ class InputEventDispatcher private constructor(
             for (ev in channel) {
                 if (!isActive) break
                 val startTime = System.nanoTime()
-                if (BuildConfig.DEBUG) {
-                    Timber.d(ev.toString())
-                }
+                flogDebug(LogTopic.KEY_EVENTS) { ev.toString() }
                 when (ev.action) {
                     InputKeyEvent.Action.DOWN -> {
                         if (pressedKeys.indexOfKey(ev.data.code) >= 0) continue
@@ -155,9 +153,7 @@ class InputEventDispatcher private constructor(
                         }
                     }
                 }
-                if (BuildConfig.DEBUG) {
-                    Timber.d("Time elapsed: ${(System.nanoTime() - startTime) / 1_000_000}")
-                }
+                flogDebug(LogTopic.KEY_EVENTS) { "Time elapsed: ${(System.nanoTime() - startTime) / 1_000_000}" }
             }
             pressedKeys.forEach { _, value -> value.repeatKeyPressJob?.cancel() }
             pressedKeys.clear()

@@ -196,11 +196,6 @@
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Gombtávolság (vízszintes)</string>
     <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Gombtávolság (függőleges)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Gombnyomás</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Hang gombnyomáskor</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Gombnyomás hangereje</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Rezgés gombnyomáskor</string>
-    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Rezgés időtartama gombnyomáskor</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Rezgés erőssége gombnyomáskor</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Nagyobb gomb megjelenítése</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Nagyobb gomb megjelenítése gombnyomáskor</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Hosszú gombnyomás késleltetése</string>

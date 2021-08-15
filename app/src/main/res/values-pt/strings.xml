@@ -199,11 +199,6 @@
     <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Espaçamento de tecla (vertical)</string>
     <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Espaçamento de tecla (horizontal)</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressão de teclas</string>
-    <string name="pref__keyboard__sound_enabled__label" comment="Preference title">Som ao premir teclas</string>
-    <string name="pref__keyboard__sound_volume__label" comment="Preference title">Volume do som ao premir teclas</string>
-    <string name="pref__keyboard__vibration_enabled__label" comment="Preference title">Vibrar ao premir teclas</string>
-    <string name="pref__keyboard__vibration_duration__label" comment="Preference title">Duração de vibração ao premir uma tecla</string>
-    <string name="pref__keyboard__vibration_strength__label" comment="Preference title">Intensidade de vibração ao premir teclas</string>
     <string name="pref__keyboard__popup_visible__label" comment="Preference title">Destaque de teclas</string>
     <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Ampliar caracteres ao premir uma tecla</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Atraso para a pressão longa de teclas</string>
