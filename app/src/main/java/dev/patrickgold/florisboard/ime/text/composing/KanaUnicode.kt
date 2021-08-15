@@ -327,20 +327,10 @@ class KanaUnicode : Composer {
 
     override fun getActions(s: String, c: Char): Pair<Int, String> {
         // s is "at least the last 1 character of what's currently here"
-        if (s.isEmpty()) {
-            return if (c == smallSentinel || isComposingCharacter(c)) {
-                Pair(0, "")
+            if (c == smallSentinel || isComposingCharacter(c)) {
+                return Pair(0, "emDaku")
             } else {
-                Pair(0, ""+c)
+                return Pair(0, "em")
             }
-        }
-        val lastChar = s.last()
-
-        return when {
-            isDakuten(c) -> handleTransform(lastChar, c, daku, reverseDaku)
-            isHandakuten(c) -> handleTransform(lastChar, c, handaku, reverseHandaku)
-            c == smallSentinel -> handleTransform(lastChar, c, small, reverseSmall)
-            else -> Pair(0, ""+c)
-        }
     }
 }
