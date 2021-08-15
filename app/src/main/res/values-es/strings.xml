@@ -44,7 +44,7 @@
     <string name="settings__help" comment="General label for help buttons in Settings">Ayuda</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Inicio</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Teclado</string>
-    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Escritura</string>
+    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Escribiendo</string>
     <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Tema</string>
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gestos</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Por defecto</string>
@@ -52,7 +52,7 @@
     <string name="settings__home__title" comment="Title of the Home fragment">Bienvenido/a a %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard no está habilitado en el sistema y por lo tanto no estará disponible como método de entrada en el selector de entrada. Haga clic aquí para resolver este problema.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard no está seleccionado como método de entrada por defecto. Haga clic aquí para resolver este problema.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">¡Gracias por probar FlorisBoard! Este proyecto está todavía en fase alpha y por lo tanto le faltan características. Si encuentras algún error o quieres hacer alguna sugerencia, por favor, comprueba el repositorio en GitHub e informa sobre la incidencia. Esto ayuda a mejorar FlorisBoard. ¡Gracias!</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">¡Gracias por probar FlorisBoard! Este proyecto está todavía en fase alfa y por lo tanto le faltan características. Si encuentras algún error o quieres hacer alguna sugerencia, por favor, visita el repositorio en GitHub e informa sobre la incidencia. Esto ayuda a mejorar FlorisBoard. ¡Gracias!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Idiomas y distribuciones de teclado</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Parece que no has configurado ningún subtipo. ¡Como alternativa se usará el subtipo Inglés/QWERTY!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Añadir</string>
@@ -73,6 +73,7 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Disposición primaria del teléfono</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Disposición secundaria del teléfono</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">¡Este subtipo ya existe!</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (no está instalado)</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tema de teclado</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Sin definir</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Tema</string>
@@ -153,6 +154,39 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Color semitransparente</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Color de texto</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Atributo personalizado (%s)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Sonidos &amp; Vibración</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Respuesta de audio / Sonidos</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Habilitar respuesta de audio</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Reproducir sonidos para eventos de entrada, dependiendo de los ajustes del sistema</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ignorar ajustes de sonido del sistema</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Usa las preferencias de abajo, incluso si el audio está deshabilitado por sistema. No funciona cuando el tono de llamada está en silencio</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Volumen de sonido para eventos de entrada</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Sonidos al presionar una tecla</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Sonidos al presionar prolongadamente</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Sonidos al presionar repetidamente</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Sonidos de gestos deslizantes</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Sonidos de gestos deslizantes con movimiento</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Respuesta táctil / Vibración</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Habilitar respuesta táctil</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrar para eventos de entrada, dependiendo de los ajustes del sistema</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignorar ajustes táctiles del sistema</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Usa las preferencias de abajo, incluso si la respuesta táctil está deshabilitada por sistema</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Vibrar directamente</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Vibrar directamente en vez de usar la vibracion del set de funciones de android</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Duración de vibración</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensidad de vibración</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Esta función requiere soporte del control de amplitud de hardware, que falta en tu dispositivo</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Esta función requiere soporte del control de amplitud, que solo es disponible en android 8.0 y posterior</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibración al presionar una tecla</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibración al presionar prolongadamente</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Vibración al presionar repetidamente</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Vibración de gestos deslizantes</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Vibración de gestos deslizantes con movimiento</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">ej. teclas, botones, pestañas de emojis</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">ej. menú emergente</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">ej. tecla borrar</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">sin implemetar</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">ej. control de deslizamiento del cursor</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Preferencias de teclado</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Teclas</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Fila de números</string>

@@ -154,6 +154,7 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Полупрозрачный цвет</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Цвет текста</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Пользовательский атрибут (%s)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Звук и вибрация</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Параметры клавиатуры</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Кнопки</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Цифровой ряд</string>

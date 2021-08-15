@@ -73,6 +73,7 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Disposizione principale telefono</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Disposizione secondaria telefono</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Questo stile di input esiste già !</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (non installato)</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tema tastiera</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Sconosciuto</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Modalità tema</string>
@@ -153,6 +154,17 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Colore semi-trasparente</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Colore del testo</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Attributo personalizzato (%s)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Suoni &amp; Vibrazione</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Feedback audio / Suoni</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Attiva feedback audio</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Riproduci dei suoni durante l\'immissione, dipende dalle impostazioni di sistema</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ignora le impostazioni audio di sistema</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Usa le preferenze in basso, anche se l\'audio è disabilitato nel sistema. Non funziona se la suoneria di sistema è mutata</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Volume dei suoni di immissione</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Suoni pressione tasti</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Suoni pressione prolungata tasti</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Suoni azioni ripetute sui tasti</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Suoni gesti di scorrimento</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Tastiera preferenze</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Tasti</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Barra numerica</string>
@@ -324,6 +336,10 @@
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Non impostato</string>
     <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">Controlla nelle impostazioni di sistema</string>
     <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Gestisci i dizionari per il controllo ortografico</string>
+    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
+        <item quantity="one">%d installato</item>
+        <item quantity="other">%d installati</item>
+    </plurals>
     <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">Perfezionamento</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">Usa i nomi dalla rubrica</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Il controllo ortografico cercherà i nomi dalla tua rubrica</string>

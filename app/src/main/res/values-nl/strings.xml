@@ -73,6 +73,7 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Telefoon primaire layout</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Telefoon secundaire layout</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Deze indeling bestaat al!</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (niet geïnstalleerd)</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Toetsenbordthema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ongedefinieerd</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Thema modus</string>
@@ -153,6 +154,15 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Semi-transparante kleur</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Tekstkleur</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Aangepast kenmerk (%s)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Geluid &amp; vibraties</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback / Geluiden</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aanraakgeluiden inschakelen</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Geluid afspelen bij invoer, afhankelijk van systeeminstellingen</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Systeemgeluidsinstellingen negeren</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Gebruik onderstaande voorkeuren ook al is het systeemgeluid uitgeschakeld. Werkt niet als de systeemringtone is gemutet</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Trillen bij toetsaanslag</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Trilsterkte</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Trillen bij toetsaanslag</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Toetsenbordvoorkeuren</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Toetsen</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Nummerrij</string>

@@ -63,24 +63,24 @@
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Benutzerdefinierten Eingabestil bearbeiten</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Gebietsschema</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Zeichenanordnung</string>
-    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Primäre Symboleanordnung</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Primäre Symbolanordnung</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Sekundäre Symbolanordnung</string>
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Verfasser</string>
     <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Währung setzen</string>
-    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Numerischeanordnung</string>
-    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">(Erweiterte) Numerischeanordnung</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Numerische Anordnung</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">(Erweiterte) Numerische Anordnung</string>
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Zahlenanordnung</string>
-    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Primäre Händyanordnung</string>
-    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Sekundäre Händyanordnung</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Primäres Wählfeld</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Sekundäres Wählfeld</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Dieser Eingabestil ist bereits vorhanden!</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (nicht installiert)</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tastaturdesign</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nicht definiert</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Design-Modus</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Dauerhafter Tagmodus</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Dauerhafter Nachtmodus</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Immer Tagmodus</string>
+    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Immer Nachtmodus</string>
     <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Systemkonform</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Zeitverlauf folgen</string>
+    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Zeit-basierend</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Sonnenaufgangszeit</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Sonnenuntergangszeit</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Helles Design</string>
@@ -102,7 +102,7 @@
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Design bearbeiten</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Name</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Typ</string>
-    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Gruppe hinzufügen</string>
+    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Neue Gruppe</string>
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Gruppe bearbeiten</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Attribute hinzufügen</string>
     <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Attribut bearbeiten</string>
@@ -137,7 +137,7 @@
     <string name="settings__theme__group_smartbarButton" comment="Theme group label">Schnellzugriffsleiste Schalter</string>
     <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Querformat Vollbild Aussehen</string>
     <string name="settings__theme__group_extractActionButton" comment="Theme group label">Querformat Vollbild Aktionsschaltfläche</string>
-    <string name="settings__theme__group_glideTrail" comment="Theme group label">Spur der Bewegung</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">Bewegungsspur</string>
     <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Benutzerdefinierte Gruppe (%s)</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Hintergrundfarbe</string>
     <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Hintergrundfarbe (aktiv)</string>
@@ -154,6 +154,27 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Halbtransparente Farbe</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Schriftfarbe</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Benutzerdefinierte Attribute (%s)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Ton &amp; Vibration</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Ton Rückmeldung / Klänge</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ton Rückmeldung aktivieren</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Töne für Eingabe Ereignisse aktivieren, abhängig von Systemeinstellungen</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Systemeinstellungen für Ton ignorieren</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Untenstehende Einstellungen nutzen, auch wenn Töne im System deaktiviert sind. Funktioniert nicht, wenn der Klingelton stumm ist</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Lautstärke für Eingabeereignisse</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Tastentöne</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Ton bei langem Tastendruck</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Ton bei wiederholten Tasten</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Swipe Ton</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Swipe Bewegungston</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptische Rückmeldung / vibrieren</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Haptische Rückmeldung aktivieren</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Bei Eingaben vibrieren, abhängig von Systemeinstellungen</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Systemeinstellungen für Vibration deaktivieren</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Untenstehende Einstellungen nutzen, auch wenn haptisches Feedback im System deaktiviert ist</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Vibration direkt auslösen</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Vibrationen direkt auslösen anstatt Feature von Android zu verwenden</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibrationsdauer</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibrationsstärke</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Tastatur-Einstellungen</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Tasten</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Zahlenreihe</string>
@@ -251,7 +272,7 @@
     <string name="pref__glide__title" comment="Preference group title">Glide Typing</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Glide Typing aktivieren</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Durch Gleiten über die Buchstaben Wort eingeben</string>
-    <string name="pref__glide__show_trail__label" comment="Preference title">Zeige Spur der Bewegung</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Zeige Bewegungsspur</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Wird jeweils nach einem Wort ausgeblendet</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Allgemeine Gesten</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Leertaste Gesten</string>
@@ -427,7 +448,7 @@
     <string name="pref__clipboard__max_history_size__label">Maximale Verlaufsgröße</string>
     <string name="pref__unit_items">" Elemente"</string>
     <!-- glide strings -->
-    <string name="pref__glide_trail_fade_duration">Zeit bis zum Ausblenden der Spur</string>
+    <string name="pref__glide_trail_fade_duration">Ausblendzeit der Spur</string>
     <string name="pref__glide_preview_refresh_delay">Verzögerung der Vorschau</string>
     <string name="pref__glide__show_preview">Vorschau während des Gleitens anzeigen</string>
 </resources>

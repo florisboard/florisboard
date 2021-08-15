@@ -154,6 +154,39 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Cor semi transparente</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Cor do texto</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Atributo personalizado (%s)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Sons e Vibração</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Resposta de Áudio / Sons</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ativar resposta de áudio</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Tocar sons para eventos de entrada, dependendo das configurações do sistema</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ignorar configurações de áudio do sistema</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Use as preferências abaixo, mesmo se o áudio estiver desativado no sistema. Não funciona quando o toque do sistema está silenciado</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Volume de som para eventos de entrada</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Sons ao pressionar a tecla</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Sons ao pressionar e segurar a tecla</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Sons de ação repetida</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Sons do gesto de deslizar</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Sons de movimento de deslizar com gestos</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Resposta Tátil / Vibração</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Ativar resposta tátil</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrar para eventos de entrada, dependendo das configurações do sistema</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignorar as configurações táteis do sistema</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Use as preferências abaixo, mesmo se a resposta tátil estiver desativada no sistema</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Ativar vibração diretamente</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Ativar vibração diretamente em vez de utilizar as definições de resposta tátil do sistema</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Duração da vibração</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensidade da vibração</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Este recurso requer suporte de controle de amplitude de hardware, que está faltando em seu dispositivo</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Este recurso requer suporte de controle de amplitude, que só está disponível no Android 8.0 ou mais recente</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibração ao pressionar tecla</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibração ao pressionar e segurar tecla</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Vibração de ação repetida da tecla</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Vibração do gesto de deslizar</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Vibração do movimento de deslizar com gestos</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">p. ex. teclas, botões, abas de emoji</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">p. ex. menu popup</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">p. ex. tecla excluir</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">não implementado</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">p. ex. deslizamento de controle do cursor</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Preferências do Teclado</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Teclas</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Linha de números</string>

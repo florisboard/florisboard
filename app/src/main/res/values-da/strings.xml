@@ -151,6 +151,7 @@
     <string name="settings__advanced__title" comment="Title of Advanced settings activity">Avanceret</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Lys</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Mørk</string>
+    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Vælg sprog</string>
     <!-- About UI strings -->
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privatlivspolitik</string>
     <!-- Assets strings -->
@@ -159,16 +160,23 @@
     <string name="assets__action__apply">Anvend</string>
     <string name="assets__action__cancel">Annullér</string>
     <string name="assets__action__cancel_confirm_title">Bekræft annullering</string>
+    <string name="assets__action__delete">Slet</string>
+    <string name="assets__action__delete_confirm_title">Bekræft sletning</string>
     <string name="assets__action__edit">Redigér</string>
     <string name="assets__action__export">Eksportér</string>
     <string name="assets__action__import">Importér</string>
     <string name="assets__action__no">Nej</string>
     <string name="assets__action__save">Gem</string>
+    <string name="assets__action__select">Vælg</string>
     <string name="assets__action__yes">Ja</string>
     <string name="assets__error__details">Detaljer</string>
+    <string name="assets__error__invalid">Ugyldig</string>
     <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">Opsætning</string>
+    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Forrige</string>
     <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Annullér</string>
     <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Næste</string>
+    <string name="setup__finish_button" comment="Label of Finish button in Setup">Afslut</string>
     <string name="setup__ok_button" comment="Label of OK button in Setup">Ok</string>
     <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Velkommen!</string>
     <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard er nu aktiveret i dit system. For aktivt at bruge det, skifte til FlorisBoard ved at vælge det i dialogboksen input selector!</string>
@@ -177,6 +185,7 @@
     <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Opsætning færdig!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard fejlrapport</string>
+    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Luk</string>
     <!-- clipboard strings -->
     <string name="clip__clear_history">Ryd historik</string>
     <string name="clip__delete_item">Slet</string>

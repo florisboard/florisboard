@@ -154,6 +154,39 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Yarı transparan renk</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Metin rengi</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Özel sembol (%s)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Ses &amp; Titreşim</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Sesli geri bildirim / Sesler</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Sesli geri bildirimi etkinleştir</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Sistem ayarlarına bağlı olarak giriş olayları için sesleri çal</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Sistem ses ayarlarını yok say</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Sistemde ses devre dışı bırakılmış olsa bile aşağıdaki tercihleri kullanın. Sistem zil sesi kapatıldığında çalışmaz</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Giriş olayları için ses seviyesi</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Tuş dokunma sesleri</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Tuş uzun dokunma sesleri</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Tekrarlı dokunma tuş sesleri</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Kaydırma jestleri sesleri</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Kaydırma jestleri hareket sesleri</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Dokunsal Geri bildirim / Titreşim</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Dokunsal geri bildirimi etkinleştir</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Sistem ayarlarına bağlı olarak giriş olayları için titreştir</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Sistem dokunsal geri bildirim ayarlarını yok say</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Sistemde dokunsal geri bildirim etkin olmasa bile aşağıdaki ayarları kullan</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Titreşimi doğrudan tetikle</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Android\'in geri bildirim özelliği yerine titreşimi doğrudan tetikle</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Titreşim süresi</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Titreşim şiddeti</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Bu özellik, cihazınızda eksik olan donanım genlik kontrol desteği gerektirir</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Bu özellik, yalnızca Android 8.0 veya daha yeni sürümlerde kullanılabilen genlik kontrolü desteği gerektirir</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Tuş dokunma titreşimi</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Tuş uzun dokunma titreşimi</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Tekrarlı tuş dokunma titreşimi</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Kaydırma jestleri tireşimi</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Kaydırma jestleri hareket titreşimi</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">örn. tuşlar, emoji sekmeleri</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">örn. açılır menü</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">örn. sil tuşu</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">uygulanmadı</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">örn. kaydırarak imleç kontrolü</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Klavye Tercihleri</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Tuşlar</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Sayı sırası</string>

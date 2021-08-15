@@ -73,6 +73,7 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">شێوازی بنەڕەتی ژمارەکان (تەلەفۆن)</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">شێوازی دووەمی ژمارەکان (تەلەفۆن)</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">ئەم زمانە پێشتر زیادکراوە لە لیستەکەدا هەیە!</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (دانەبەزێنراوە)</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">ڕووکارەکانی تەختەکلیل</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">بێ ناو</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">دۆخی ڕووکار</string>
@@ -153,6 +154,39 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">ڕەنکی نیمچە کاڵ</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">رەنگی نوسین</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">بەهای تایبەت (%s)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">ڕێکخستنی دەنگ و لەرزین</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">کاریگەری دەنگ / دەستلێدان</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">چالاککردنی کاریگەری دەنگی</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">لێدانی دەنگ بۆ فرمانەکان بەپێی ڕێکخستنی سیستەم</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">پستگوێخستنی ڕێکخستنی دەنگیی سیستەم</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">بەکارهێنانی ئەم ڕێکخستنانە تەنانەت ئەگەر دەنگ ناچالاکیش کرابوو لە ڕێکخستنەکانی سیستەمدا</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">دەنگی کاتی نووسینی هێماکان</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">دەنگی لەکاتی نووسین</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">دەنگ لەکاتی دەست ڕاگرتن</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">دەنگ لەکاتی فرمانە دووبارەکان</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">دەنگ لەکاتی ئاماژەکان</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">دەنگ لەکاتی جوڵانی ئاماژەکان</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">کاریگەری لەرزین / دەستلێدان</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">چالاککردنی کاریگەری لەرزین</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">لەرزین لەکاتی دەستلێدانی دوگمەکان بەپێی ڕێکخستنی سیستەم</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">پستگوێخستنی ڕێکخستنی لەرزینی سیستەم</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">بەکارهێنانی ئەم ڕێکخستنانە تەنانەت ئەگەر لەرزین ناچالاکیش کرابوو لە ڕێکخستنەکانی سیستەمدا</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">لەرزینەوەی ڕاستەوخۆ</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">لەرزینەوەی ڕاستەوخۆ لەجیاتی لەرینەوەی بنەڕەتی سیستەم</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">ماوەی لەرزین</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">هێزی لەرزین</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">مۆبایلەکەت پشتگری ئەم تایبەتمەندییە ناکات</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">ئەم تایبەتمەندییە تەنها لە ئەندرۆیدی ٨. ٠ و بەرەو سەر کاردەکات</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">لەرزین لەکاتی نووسین</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">لەرزین لەکاتی دەست ڕاگرتن</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">لەرزین لەکاتی فرمانە دووبارەکان</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">لەرزین لەکاتی ئاماژەکان</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">لەرزین لەکاتی جوڵانی ئاماژەکان</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">نمونە: دوگمەکان، بەشی ئیمۆجی</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">نمونە: پیتە لاوەکییەکان</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">نمونە: دوگمەی سڕینەوە</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">بەردەست نییە</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">نمونە: دەستخشاندن بۆ لای ڕاست یان چەپ</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">ڕێکخستنی تەختەکلیل</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">دوگمەکان</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">لیستی ژمارەکان</string>

@@ -55,7 +55,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard tidak dipilih sebagai metode input default. Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Terima kasih telah mencoba FlorisBoard! Proyek ini masih dalam versi alpha dan karena itu banyak fitur belum ada. Jika Anda menemukan sebuah bug atau ingin memberikan saran, harap periksa repositori di GitHub dan membuat sebuah masalah (issue). Ini membantu membuat FlorisBoard lebih baik. Terima kasih!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Bahasa &amp; Tata letak papan ketik</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Sepertinya Anda belum mengkonfigurasi subtipe apapun. Sebagai penggantinya subtipe English/QWERTY akan digunakan!</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Sepertinya Anda belum mengkonfigurasi subtipe apapun. Sebagai penggantinya subtipe Inggris/QWERTY akan digunakan!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Tambahkan</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Tambah subtipe</string>
     <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Terapkan</string>
@@ -74,6 +74,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Tata letak utama telepon</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Tata letak sekunder telepon</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Subtipe ini sudah ada!</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (tidak terpasang)</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tema papan ketik</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Tidak ditetapkan</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Mode tema</string>

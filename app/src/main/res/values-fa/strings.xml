@@ -73,6 +73,7 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">چیدمان اصلی موبایل</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">چیدمان فرعی موبایل</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">این زیرنوع درحال حاضر وجود دارد!</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (نصب نشده)</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">طرح زمینه صفحه کلید</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">تعریف نشده</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">حالت طرح‌زمینه</string>
@@ -153,6 +154,15 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">رنگ نیمه شفاف</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">رنگ متن</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">مشخصات سفارشی (%s)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">صداها &amp; لرزش</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">صدای بازخورد / صداها</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">فعالسازی صدای بازخورد</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">پخش صداهایی بخاطر رویداد های ورودی، وابسته به تنظیمات سیستم</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">چشم پوشی از تنظیمات صدای سیستم</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">استفاده از ترجیحات زیر، حتی اگر صدای سیستم غیرفعال شده باشد. وقتی که زنگ آهنگ سیستم قطع شده باشد کار نمی کند</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">میزان صدا برای رویداد های ورودی</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">صدا های فشردن کلید</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">صدا های نگه داشتن طولانی کلید</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">تنظیمات صفحه‌کلید</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">کلیدها</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">ردیف عدد</string>
@@ -218,6 +228,8 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">مدیریت لغتنامه داخلی کاربر</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">افزودن، مشاهده و حذف کردن لغات از لغتنامه داخلی کاربر</string>
     <string name="pref__correction__title" comment="Preference group title">تصحیح</string>
+    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">چک کننده نگارش</string>
+    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">مدیریت و تنظیم سرویس چک کننده نگارش</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">حرف اول بزرگ به صورت خودکار</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">بزرگ کردن حرف اول بر اساس محتوای ورودی</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">به یاد داشتن حالت caps lock</string>
@@ -311,6 +323,15 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">استفاده از حافظه هیپ را رونویسی می کند و اندازه را حداکثری می کند در گوشه بالا سمت راست</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">پاک کردن پایگاه داده لغتنامه داخلی کاربر</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">پاک کردن تمام کلمات از جدول پایگاه داده لغتنامه</string>
+    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">تنظیمات چک کننده نگارش</string>
+    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">مدیریت لغتنامه ها</string>
+    <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">استفاده از زیرنوع ها</string>
+    <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">بدون تنظیم</string>
+    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
+        <item quantity="one">%d نصب شده</item>
+        <item quantity="other">%d نصب شده</item>
+    </plurals>
+    <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">تنظیم-مناسب</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">درباره</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">آیکون برنامه فلوریس بورد</string>
@@ -339,6 +360,9 @@
     <string name="assets__action__import">واردکردن</string>
     <string name="assets__action__no">خیر</string>
     <string name="assets__action__save">ذخیره</string>
+    <string name="assets__action__select">انتخاب</string>
+    <string name="assets__action__select_dir">انتخاب مسیر</string>
+    <string name="assets__action__select_file">انتخاب فایل</string>
     <string name="assets__action__yes">بله</string>
     <string name="assets__error__details">جزئیات</string>
     <string name="assets__error__invalid">نامعتبر</string>

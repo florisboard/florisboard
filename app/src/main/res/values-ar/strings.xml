@@ -51,10 +51,10 @@
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">الإعداد الافتراضي</string>
     <string name="settings__home__title" comment="Title of the Home fragment">مرحبا بكم في %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">لم يتم تمكين FlorisBoard في النظام وبالتالي لن يكون متاحًا كطريقة إدخال في منتقي الإدخال. انقر هنا لحل هذه المشكلة.</string>
-    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">لم يتم اختيار FlorisBoard كطريقة الإدخال الافتراضية. انقر هنا لحل هذه المشكلة.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">لم يتم تعيين FlorisBoard كطريقة الإدخال الافتراضية. انقر هنا لحل هذه المشكلة.</string>
     <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">شكرا على تجربة FlorisBoard! هذا المشروع لا يزال قيد التطوير وبالتالي يفتقد بعض الميزات. إذا وجدت أي أخطاء أو تريد تقديم اقتراح ، فالرجاء مراجعة المشروع على GitHub وطرح مشكلتك. هذا يساعد في جعل FlorisBoard أفضل. شكرا جزيلا!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">اللغات وتخطيطات لوحة المفاتيح</string>
-    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">يبدو أنك لم تقم بإختيار أية أنواع فرعية. كبديل، سيتم استخدام النوع الفرعي English / QWERTY!</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">يبدو أنك لم تقم بإختيار أية أنواع إدخال فرعية. كبديل، سيتم استخدام النوع الفرعي English / QWERTY!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">إضافة</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">إضافة نوع فرعي</string>
     <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">تطبيق</string>
@@ -63,8 +63,8 @@
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">تعديل نوع فرعي</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">اللغة</string>
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">تخطيط المحارف</string>
-    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">مخطط تصميم الرموز الاساسي</string>
-    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">مخطط تصميم الرموز الثانوي</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">تخطيط الرموز الاساسي</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">تخطيط الرموز الثانوي</string>
     <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">المحرر</string>
     <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">إعدادات العملة</string>
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">تخطيط الارقام</string>
@@ -73,32 +73,33 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">التخطيط الأساسي للهاتف</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">التخطيط الثانوي للهاتف</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">هذا النوع الفرعي موجود مسبقا!</string>
-    <string name="settings__theme__title" comment="Title of the Theme fragment">مظهر لوحة المفاتيح</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (غير مثبت)</string>
+    <string name="settings__theme__title" comment="Title of the Theme fragment">ثيم لوحة المفاتيح</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">غير محدد</string>
-    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">وضع النسق</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">دائما يومي</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">وضع الثيم</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">دائما نهاري</string>
     <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">دائما ليلي</string>
     <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">اتبّاع النظام</string>
     <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">اتبّاع الوقت</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">وقت الشروق</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">وقت الغروب</string>
-    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">نسق يومي</string>
-    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">النسق ليلي</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">نسق نهاري</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">نسق ليلي</string>
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">النسق المحدد</string>
     <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">تكييف الألوان مع التطبيق</string>
-    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">تتكيف ألوان النسق مع تلك الموجودة في التطبيق الحالي ، إذا كان التطبيق المستهدف يدعم ذلك.</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">تتكيف ألوان الثيم مع تلك الموجودة في التطبيق الحالي ، إذا كان التطبيق المستهدف يدعم ذلك.</string>
     <string name="pref__theme__source_assets" comment="Label for the theme source field">أصول تطبيق FlorisBoard</string>
     <string name="pref__theme__source_internal" comment="Label for the theme source field">الذاكرة الداخلية</string>
     <string name="pref__theme__source_external" comment="Label for the theme source field">مزود خارجي</string>
-    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">مدير النسق (يومي)</string>
-    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">مدير النسق (ليلي)</string>
-    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">إنشاء نسق فارغ جديد</string>
-    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">إنشاء من النسق المحدد</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">مدير الثيم (نهاري)</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">مدير الثيم (ليلي)</string>
+    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">إنشاء ثيم فارغ جديد</string>
+    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">إنشاء من الثيم المحدد</string>
     <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">مخصص (على أساس %s)</string>
-    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">نسق جديد</string>
+    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">ثيم جديد</string>
     <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">تم استيراد الثيم بنجاح!</string>
     <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">تم تصدير الثيم بنجاح!</string>
-    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">تحرير النسق</string>
+    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">تحرير الثيم</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">اسم</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">نوع</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">إضافة مجموعة</string>
@@ -153,6 +154,39 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">لون شبه شفاف</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">لون النص</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">وصف مخصص (%s)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">الصوت والاهتزاز</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">ردود الفعل الصوتية / الأصوات</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">تمكين التاثيرات الصوتية</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">تشغيل الأصوات لأحداث الإدخال ، بناءً على إعدادات النظام</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">تجاهل إعدادات صوت النظام</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">استخدم التفضيلات أدناه ، حتى إذا تم تعطيل الصوت في النظام. لا يعمل عند كتم صوت نغمة رنين النظام</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">مستوى الصوت لأحداث الإدخال</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">أصوات الضغط على المفاتيح</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">أصوات الضغط المطول على المفاتيح</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">أصوات الضغط المتكرر على المفاتيح</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">صوت ايماءة السحب</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">صوت تحريك ايماءة السحب</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">ردود الفعل اللمسية / الاهتزاز</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">تشغيل الاهتزاز عند اللمس</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">تشغيل الأصوات لأحداث الإدخال ، بناءً على إعدادات النظام</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">تجاهل إعدادات اهتزاز النظام</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">استخدم التفضيلات أدناه ، حتى إذا تم تعطيل الاهتزاز في النظام. لا يعمل عند كتم صوت نغمة رنين النظام</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">تشفيل الاهتزاز بشكل مباشر</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">تشغيل الاهتزاز مباشرة بدلاً من استخدام مجموعة ميزات ردود الفعل اللمسية في اندرويد</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">مدة الإهتزاز</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">قوة الاهتزاز</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">تتطلب هذه الميزة دعم التحكم في مدى الأجهزة ، وهو مفقود على جهازك</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">تتطلب هذه الميزة دعم التحكم في المدى ، والذي لا يتوفر إلا على نظام اندرويد 8.0 أو أحدث</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">اهتزاز الضغط على المفتاح</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">اهتزاز الضغط المطول على المفاتيح</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">اهتزاز عند الضغط المتكرر</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">اهتزاز ايماءة السحب</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">اهتزاز التحريك لايماءة السحب</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">على سبيل المثال المفاتيح والأزرار و تبويب الرموز التعبيرية</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">على سبيل المثال القائمة المنبثقة</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">على سبيل المثال مفتاح الحذف</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">لم تنفذ</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">على سبيل المثال ايماءة السحب</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">تفضيلات لوحة المفاتيح</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">المفاتيح</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">صف الأعداد</string>

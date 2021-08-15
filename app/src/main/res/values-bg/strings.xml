@@ -73,6 +73,7 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Телефонни номера, основен изглед</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Телефонни номера, вторичен изглед</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Този подвид вече съществува!</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (не е инсталирано)</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Тема на клавиатурата</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Недефинирано</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Режим на тема</string>
@@ -153,6 +154,21 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Полупрозрачен цвят</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Цвят на текста</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Потребителски атрибут (%s)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Звук и вибрация</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Звукова обратна връзка / звуци</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Звукова обратна връзка</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Изпълняват се звуци при събития на въвеждане, зависи от системните настройки</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Пренебрегване на системните настройки за звук</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Използват се настройките по-долу даже и при изключени звуци от системата. Не работи при изключен звук на звънене</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Обратна връзка при докосване / вибрация</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Обратна връзка при докосване</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Вибриране при събития на въвеждане, зависи от системните настройки</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Пренебрегване на системните настройки за обратна връзка при докосване</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Използват се настройките по-долу даже и при изключена обратна връзка при докосване от системата</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Продължителност на вибрацията</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Сила на вибрацията</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Вибрация при докосване на клавиш</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Вибрация при задържане на клавиш</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Настройки на клавиатурата</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Клавиши</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Ред с цифрите</string>

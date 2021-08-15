@@ -154,6 +154,30 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Couleur semi-transparente</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Couleur du texte</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Attribut personnalisé (%s)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Sons &amp; Vibration</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Retour audio / Sons</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Activer le retour audio</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Jouer des sons pour les événements de saisie, dépend des réglages système</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ignorer les réglages audio du système</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Utiliser les préférences ci-dessous même si l\'audio du système est désactivé. Ne fonctionne pas quand le volume de sonnerie est désactivé</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Volume pour les événements de saisie</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Sons d\'appui court</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Sons d\'appui long</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Sons de touche répétée</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Sons de glissement de doigt</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Retour haptique / Vibration</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Activer le retour haptique</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrer pour les événements d\'entrée, en fonction des paramètres du système</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignorer les réglages haptiques système</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Utilisez les préférences ci-dessous, même si l\'haptique est désactivé dans le système</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Durée des vibrations</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensité de la vibration</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibration des touches</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibration lors d\'un appuie long</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">ex. touches, boutons, onglets emoji</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">ex. menu contextuel</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">ex. touche effacer</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">non implementé</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Préférences de clavier</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Touches</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Rangée de chiffres</string>

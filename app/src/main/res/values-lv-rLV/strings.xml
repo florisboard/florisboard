@@ -14,7 +14,7 @@
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
     <!-- Media strings -->
-    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji rakstzīmes</string>
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Sajūtu rakstzīmes</string>
     <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Sajūtu rakstzīmes</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Japāņu sajūtu zīmes (Kaomoji)</string>
     <!-- Emoji strings -->
@@ -73,6 +73,7 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Tālruņa galvenais izkārtojums</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Tālruņa papildu izkārtojums</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Šis apakšveids jau pastāv!</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (nav uzstādīts)</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tastatūras izskats</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nenoteikts</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Izskata veids</string>
@@ -153,6 +154,39 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Puscaurspīdīga krāsa</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Teksta krāsa</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Pielāgota pazīme (%s)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Skaņas un trīcēšana</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Dzirdamā atgriezeniskā saite / Skaņas</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Iespējot dzirdamo atgriezenisko saiti</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Atskaņot ievades notikumu skaņas atbilstoši sistēmas uzstādījumiem</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Neņemt vērā sistēmas skaņas uzstādījumus</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Izmantot zemāk esošos uzstādījumus, pat ja sistēmas skaņa ir atspējota. Nedarbojas, kad sistēmas zvanu skaņa ir apklusināta</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Ievades notikumu skaņu skaļums</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Taustiņu nospiešanas skaņas</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Ilgas taustiņu nospiešanas skaņas</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Taustiņa atkārtošanās skaņas</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Pavilkšanas kustību skaņas</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Pavilkšanas pārvietošanās kustības skaņas</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Sajūtu atgriezeniskā saite / Trīcēšana</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Iespējot sajūtu atgriezenisko saiti</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Trīcēšana ievades notikumiem atbilstoši sistēmas uzstādījumiem</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Neņemt vērā sistēmas sajūtu uzstādījumus</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Izmantot zemāk esošos uzstādījumus, pat ja sajūtu atgriezeniskā saite sistēmā ir atspējota</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Tieši izsaukt trīcēšanu</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Tieši izsaukt trīcēšanu, nevis izmantot Android sajūtu atgriezeniskās saites iespēju kopu</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trīcēšanas ilgums</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Trīcēšanas stiprums</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Šīs iespējas izmantošanai ir nepieciešama aparatūras starpības vadības atbalsts, kā nav šajā iekārtā</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Šīs iespējas izmantošanai ir nepieciešama starpības vadības atbalsts, kas ir pieejams tikai sākot no Android 8.0</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Taustiņa nospiešanas trīcēšana</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Ilgas taustiņa nospiešanas trīcēšana</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Taustiņa atkārtošanās darbības trīcēšana</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Pavilkšanas kustības trīcēšana</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Pavilkšanas pārvietošanās kustības trīcēšana</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">piemēram, taustiņi, pogas, sajūtu rakstzīmju cilnes</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">piemēram, izlecošā izvēlne</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">piemēram, dzēšanas taustiņš</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">nav īstenots</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">piemēram, rādītāja vadīšanas pavilkšana</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Tastatūras uzstādījumi</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Taustiņi</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Ciparu rinda</string>

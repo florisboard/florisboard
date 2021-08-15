@@ -73,6 +73,7 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Disposição principal do telefone</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Disposição secundária do telefone</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Este subtipo já existe!</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (não instalado)</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tema do teclado</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Indefinido</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Modo do tema</string>
@@ -153,6 +154,39 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Cor semi-transparente</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Cor do texto</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Atributo personalizado (%s)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Sons e vibração</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Sons e resposta táctil</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Ativar respostas de áudio</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Reproduzir sons para eventos, de acordo com as definições de sistema</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Ignorar definições de áudio do sistema</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Utilizar as preferências abaixo mesmo que o áudio esteja desativado no sistema. Não funciona se o som de toque estiver silenciado.</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Volume para os eventos de introdução</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Som ao premir as teclas</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Som na pressão longa das teclas</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Som nas repetições de teclas</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Sons de deslize</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Som para gestos de deslize</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Resposta táctil/Vibração</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Ativar resposta táctil</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrar nos eventos de introdução, de acordo com as definições do sistema</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignorar definições de resposta táctil do sistema</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Utilizar as preferências abaixo mesmo que a resposta táctil esteja desativada no sistema</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Ativar vibração diretamente</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Ativar vibração diretamente em vez de utilizar as definições de resposta táctil do sistema</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Duração da vibração</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensidade da vibração</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Esta funcionalidade necessita do suporte a controlo de amplitude do hardware, que não está disponível no seu dispositivo</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Esta funcionalidade necessita do suporte a controlo de amplitude do hardware, apenas disponível em Android 8.0 ou mais recente.</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibrar ao premir as teclas</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibrar ao premir longamente as teclas</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Vibrar na repetição das teclas</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Vibrar ao deslizar</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Vibrar nos gestos de deslize</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">por exemplo: teclas, botões e emoji</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">por exemplo: menus popup</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">por exemplo: tecla delete</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">não implementado</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">por exemplo: deslize do cursor</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Preferências do teclado</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Teclas</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Linha de números</string>
