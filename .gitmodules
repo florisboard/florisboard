@@ -1,3 +1,3 @@
-[submodule "app/src/main/cpp/icu4c/android"]
-	path = app/src/main/cpp/icu4c/android
-	url = https://github.com/patrickgold/icu4c-android
+[submodule "app/src/main/icu4c"]
+	path = app/src/main/icu4c
+	url = https://github.com/florisboard/icu4c

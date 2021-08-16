@@ -10,8 +10,8 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories(.)
 
 ### ICU4C ###
-include_directories(icu4c/include)
-set(JNI_LIBS ${CMAKE_SOURCE_DIR}/../jniLibs/${ANDROID_ABI})
+include_directories(../icu4c/prebuilt/include)
+set(JNI_LIBS ${CMAKE_SOURCE_DIR}/../icu4c/prebuilt/jniLibs/${ANDROID_ABI})
 add_library(ICU::data STATIC IMPORTED)
 set_property(TARGET ICU::data PROPERTY IMPORTED_LOCATION "${JNI_LIBS}/libicudata.a")
 add_library(ICU::uc STATIC IMPORTED)
