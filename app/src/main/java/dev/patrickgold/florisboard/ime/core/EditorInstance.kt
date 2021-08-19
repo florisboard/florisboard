@@ -105,9 +105,23 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
         if (oldSel == newSel) return
         selection.bounds = newSel
         lastReportedComposingBounds = candidates
+        if (isPhantomSpaceActive && wasPhantomSpaceActiveLastUpdate) {
+            isPhantomSpaceActive = false
+        } else if (isPhantomSpaceActive && !wasPhantomSpaceActiveLastUpdate) {
+            wasPhantomSpaceActiveLastUpdate = true
+        }
         cachedInput.reevaluateWords()
         if (selection.isCursorMode) {
-            markComposingRegion(cachedInput.currentWord)
+            if (activeState.isComposingEnabled) {
+                if (candidates.start >= 0 && candidates.end >= 0) {
+                    shouldReevaluateComposingSuggestions = true
+                }
+                if (activeState.isRichInputEditor && !isPhantomSpaceActive) {
+                    markComposingRegion(cachedInput.currentWord)
+                } else if (newSel.start >= 0) {
+                    markComposingRegion(null)
+                }
+            }
         } else {
             if (candidates.start >= 0 || candidates.end >= 0) {
                 markComposingRegion(null)
@@ -423,6 +437,7 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
                 }
             }
         }
+        selection.updateAndNotify(0, selection.end)
         return true
     }
 
@@ -473,7 +488,7 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
     fun markComposingRegion(region: Region?): Boolean {
         flogDebug(LogTopic.EDITOR_INSTANCE) { "Request to mark region: $region" }
         val ic = inputConnection ?: return false
-        return if (region == null || !region.isValid) {
+        return if (region == null || !region.isValid || !activeState.isComposingEnabled) {
             flogDebug(LogTopic.EDITOR_INSTANCE) { " Clearing composing text." }
             ic.finishComposingText()
         } else {
