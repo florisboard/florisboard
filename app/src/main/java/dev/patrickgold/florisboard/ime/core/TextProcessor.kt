@@ -33,6 +33,13 @@ object TextProcessor {
         return regex.findAll(text).map { it.range }
     }
 
+    fun detectWords(text: CharSequence, start: Int, end: Int, locale: FlorisLocale): Sequence<IntRange> {
+        val regex = wordRegexFor(locale)
+        val tStart = start.coerceAtLeast(0)
+        val tEnd = end.coerceAtMost(text.length)
+        return regex.findAll(text.slice(tStart..tEnd)).map { it.range }
+    }
+
     fun isWord(text: CharSequence, locale: FlorisLocale): Boolean {
         val regex = wordRegexFor(locale)
         return regex.matches(text)
