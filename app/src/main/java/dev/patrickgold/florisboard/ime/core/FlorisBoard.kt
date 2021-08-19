@@ -23,26 +23,22 @@ import android.content.res.Configuration
 import android.graphics.Color
 import android.inputmethodservice.ExtractEditText
 import android.inputmethodservice.InputMethodService
-import android.media.AudioManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.os.VibrationEffect
-import android.os.Vibrator
 import android.util.Size
 import android.view.ContextThemeWrapper
 import android.view.Gravity
-import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.ExtractedText
 import android.view.inputmethod.InlineSuggestionsRequest
 import android.view.inputmethod.InlineSuggestionsResponse
-import android.view.inputmethod.InputConnection
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.FrameLayout
@@ -57,7 +53,6 @@ import dev.patrickgold.florisboard.crashutility.CrashUtility
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.clip.ClipboardInputManager
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
-import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.MediaInputManager
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
@@ -67,7 +62,6 @@ import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.CurrencySet
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
@@ -150,7 +144,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         var candidatesEnd: Int = -1
     }
 
-    var activeEditorInstance: EditorInstance = EditorInstance.default()
+    lateinit var activeEditorInstance: EditorInstance
 
     val subtypeManager: SubtypeManager get() = SubtypeManager.default()
     val composer: Composer get() = subtypeManager.imeConfig.composerFromName.getValue(activeSubtype.composerName)
@@ -218,6 +212,8 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
                 // "Main" try..catch block
                 flogInfo(LogTopic.IMS_EVENTS)
                 serviceLifecycleDispatcher.onServicePreSuperOnCreate()
+
+                activeEditorInstance = EditorInstance(this, activeState)
 
                 imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
                 inputFeedbackManager = InputFeedbackManager.new(this)
@@ -347,12 +343,25 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         updateSoftInputWindowLayoutParameters()
     }
 
+    override fun onUpdateExtractedText(token: Int, text: ExtractedText?) {
+        super.onUpdateExtractedText(token, text)
+        activeEditorInstance.updateText(token, text)
+    }
+
+    override fun onUpdateExtractingViews(ei: EditorInfo?) {
+        super.onUpdateExtractingViews(ei)
+    }
+
     override fun onUpdateExtractingVisibility(ei: EditorInfo?) {
         isExtractViewShown = activeState.isRichInputEditor && when (prefs.keyboard.landscapeInputUiMode) {
             LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeState.imeOptions.flagNoExtractUi
             LandscapeInputUiMode.NEVER_SHOW -> false
             LandscapeInputUiMode.ALWAYS_SHOW -> true
         }
+    }
+
+    override fun onBindInput() {
+        activeEditorInstance.bindInput()
     }
 
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
@@ -364,7 +373,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         } else {
             ResponseState.RESET
         }
-        currentInputConnection?.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
+        activeEditorInstance.startInput(attribute)
     }
 
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
@@ -376,8 +385,8 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
             activeState.update(info)
             activeState.isSelectionMode = (info.initialSelEnd - info.initialSelStart) != 0
         }
-        activeEditorInstance = EditorInstance.from(info, this, activeState)
-        themeManager.updateRemoteColorValues(activeEditorInstance.packageName)
+        activeEditorInstance.startInputView(info)
+        themeManager.updateRemoteColorValues(activeEditorInstance.packageName ?: "")
         eventListeners.toList().forEach {
             it?.onStartInputView(activeEditorInstance, restarting)
         }
@@ -387,13 +396,12 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     override fun onFinishInputView(finishingInput: Boolean) {
         flogInfo(LogTopic.IMS_EVENTS) { "finishingInput=$finishingInput" }
 
-        if (finishingInput) {
-            activeEditorInstance = EditorInstance.default()
-        } else {
+        if (!finishingInput) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 textInputManager.smartbarView?.clearInlineSuggestions()
             }
         }
+        activeEditorInstance.finishInputView()
 
         super.onFinishInputView(finishingInput)
         eventListeners.toList().forEach { it?.onFinishInputView(finishingInput) }
@@ -403,8 +411,12 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     override fun onFinishInput() {
         flogInfo(LogTopic.IMS_EVENTS)
 
-        currentInputConnection?.requestCursorUpdates(0)
+        activeEditorInstance.finishInput()
         super.onFinishInput()
+    }
+
+    override fun onUnbindInput() {
+        activeEditorInstance.unbindInput()
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -588,7 +600,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         activeState.isSelectionMode = (newSelEnd - newSelStart) != 0
         if (internalBatchNestingLevel == 0) {
             flogInfo(LogTopic.IMS_EVENTS) { "onUpdateSelection($oldSelStart, $oldSelEnd, $newSelStart, $newSelEnd, $candidatesStart, $candidatesEnd)" }
-            activeEditorInstance.onUpdateSelection(
+            activeEditorInstance.updateSelection(
                 oldSelStart, oldSelEnd,
                 newSelStart, newSelEnd,
                 candidatesStart, candidatesEnd

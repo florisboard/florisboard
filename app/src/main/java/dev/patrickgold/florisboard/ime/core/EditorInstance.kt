@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Patrick Goldinger
+ * Copyright (C) 2021 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,10 +25,19 @@ import android.view.InputDevice
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.ExtractedText
+import android.view.inputmethod.ExtractedTextRequest
+import android.view.inputmethod.InputBinding
 import android.view.inputmethod.InputConnection
 import androidx.core.text.isDigitsOnly
 import androidx.core.view.inputmethod.InputConnectionCompat
 import androidx.core.view.inputmethod.InputContentInfoCompat
+import dev.patrickgold.florisboard.common.FlorisLocale
+import dev.patrickgold.florisboard.common.stringBuilder
+import dev.patrickgold.florisboard.debug.LogTopic
+import dev.patrickgold.florisboard.debug.flogDebug
+import dev.patrickgold.florisboard.debug.flogInfo
+import dev.patrickgold.florisboard.debug.flogWarning
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clip.provider.ItemType
@@ -37,22 +46,36 @@ import dev.patrickgold.florisboard.ime.keyboard.InputAttributes
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.composing.Composer
-import timber.log.Timber
+import dev.patrickgold.florisboard.util.debugSummarize
 
-/**
- * Class which holds information relevant to an editor instance like the [cachedInput],
- * [selection] etc. This class is thought to be an improved [EditorInfo]
- * object which also holds the state of the currently focused input editor.
- */
-class EditorInstance private constructor(
-    private val ims: InputMethodService?,
-    val packageName: String,
-    val activeState: KeyboardState,
-    private val editorInfo: EditorInfo
-) {
-    val cachedInput: CachedInput = CachedInput(this)
+class EditorInstance(private val ims: InputMethodService, private val activeState: KeyboardState) {
+    companion object {
+        private const val CAPACITY_CHARS: Int = 10000
+        private const val CAPACITY_LINES: Int = 10
+
+        private const val UNSET: Int = -1
+        private const val CURSOR_UPDATE_DISABLED: Int = 0
+    }
+
+    val cachedInput: CachedInput = CachedInput()
+    internal var extractedToken: Int = 0
+    private var lastReportedComposingBounds: Bounds = Bounds(-1, -1)
+    private var isInputBindingActive: Boolean = false
+    private val florisClipboardManager get() = FlorisClipboardManager.getInstance()
     var contentMimeTypes: Array<out String?>? = null
-    private val florisClipboardManager: FlorisClipboardManager = FlorisClipboardManager.getInstance()
+
+    var shouldReevaluateComposingSuggestions: Boolean = false
+    var isPhantomSpaceActive: Boolean = false
+        private set
+    private var wasPhantomSpaceActiveLastUpdate: Boolean = false
+
+    val inputBinding: InputBinding?
+        get() = if (isInputBindingActive) ims.currentInputBinding else null
+    val inputConnection: InputConnection?
+        get() = if (isInputBindingActive) ims.currentInputConnection else null
+    val editorInfo: EditorInfo?
+        get() = if (isInputBindingActive && ims.currentInputStarted) ims.currentInputEditorInfo else null
+
     val cursorCapsMode: InputAttributes.CapsMode
         get() {
             val ic = inputConnection ?: return InputAttributes.CapsMode.NONE
@@ -60,92 +83,96 @@ class EditorInstance private constructor(
                 ic.getCursorCapsMode(activeState.inputAttributes.capsMode.toFlags())
             )
         }
-    val inputConnection: InputConnection?
-        get() = ims?.currentInputConnection
-    var shouldReevaluateComposingSuggestions: Boolean = false
-    var selection: Selection = Selection(this)
-        private set
-    var isPhantomSpaceActive: Boolean = false
-        private set
-    private var wasPhantomSpaceActiveLastUpdate: Boolean = false
+    val packageName: String?
+        get() = editorInfo?.packageName
 
-    companion object {
-        fun default(): EditorInstance {
-            return EditorInstance(
-                ims = null,
-                packageName = "undefined",
-                activeState = KeyboardState.new(),
-                editorInfo = EditorInfo()
-            )
-        }
+    val selection: Region = Region(UNSET, UNSET)
 
-        fun from(editorInfo: EditorInfo?, ims: InputMethodService?, state: KeyboardState): EditorInstance {
-            return if (editorInfo == null) {
-                default()
-            } else {
-                EditorInstance(
-                    ims = ims,
-                    packageName = editorInfo.packageName,
-                    activeState = state,
-                    editorInfo = editorInfo
-                ).apply {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                        contentMimeTypes = editorInfo.contentMimeTypes
-                    }
-                    selection.update(editorInfo.initialSelStart, editorInfo.initialSelEnd)
-                }
-            }
-        }
-    }
-
-    init {
-        cachedInput.update()
-    }
-
-    /**
-     * Event handler which reacts to selection updates coming from the target app's editor.
-     */
-    fun onUpdateSelection(
+    fun updateSelection(
         oldSelStart: Int, oldSelEnd: Int,
         newSelStart: Int, newSelEnd: Int,
         candidatesStart: Int, candidatesEnd: Int
     ) {
-        if (newSelStart == oldSelStart && newSelEnd == oldSelEnd) {
-            return
-        }
-        // The Android Framework allows that start can be greater than end in some cases. To prevent bugs in the Floris
-        // input logic, we swap start and end here if this should really be the case.
-        if (newSelEnd < newSelStart) {
-            selection.update(newSelEnd, newSelStart)
-        } else {
-            selection.update(newSelStart, newSelEnd)
-        }
-        if (isPhantomSpaceActive && wasPhantomSpaceActiveLastUpdate) {
-            isPhantomSpaceActive = false
-        } else if (isPhantomSpaceActive && !wasPhantomSpaceActiveLastUpdate) {
-            wasPhantomSpaceActiveLastUpdate = true
-        }
+        updateSelection(
+            normalizeBounds(oldSelStart, oldSelEnd),
+            normalizeBounds(newSelStart, newSelEnd),
+            normalizeBounds(candidatesStart, candidatesEnd)
+        )
+    }
+
+    fun updateSelection(oldSel: Bounds, newSel: Bounds, candidates: Bounds) {
+        flogInfo(LogTopic.EDITOR_INSTANCE) { "oldSel=$oldSel newSel=$newSel candidates=$candidates" }
+        if (oldSel == newSel) return
+        selection.bounds = newSel
+        lastReportedComposingBounds = candidates
+        cachedInput.reevaluateWords()
         if (selection.isCursorMode) {
-            cachedInput.update()
-            if (activeState.isComposingEnabled) {
-                if (candidatesStart >= 0 && candidatesEnd >= 0) {
-                    shouldReevaluateComposingSuggestions = true
-                }
-                if (activeState.isRichInputEditor && !isPhantomSpaceActive) {
-                    markComposingRegion(cachedInput.currentWord)
-                } else if (newSelStart >= 0) {
-                    markComposingRegion(null)
-                }
-            }
+            markComposingRegion(cachedInput.currentWord)
         } else {
-            if (candidatesStart >= 0 || candidatesEnd >= 0) {
+            if (candidates.start >= 0 || candidates.end >= 0) {
                 markComposingRegion(null)
             }
         }
     }
 
+    fun updateText(token: Int, exText: ExtractedText?) {
+        flogInfo(LogTopic.EDITOR_INSTANCE) { "exText=${exText?.debugSummarize()}" }
+        if (extractedToken != token) {
+            flogWarning(LogTopic.EDITOR_INSTANCE) { "Received update text request with mismatching token, ignoring!" }
+            return
+        }
+        cachedInput.updateText(exText)
+        cachedInput.reevaluateWords()
+        if (selection.isCursorMode) {
+            markComposingRegion(cachedInput.currentWord)
+        }
+    }
+
+    fun bindInput() {
+        flogInfo(LogTopic.EDITOR_INSTANCE) { "(no args)" }
+        isInputBindingActive = true
+    }
+
+    fun startInput(ei: EditorInfo?) {
+        flogInfo(LogTopic.EDITOR_INSTANCE) { "info=${ei?.debugSummarize()}" }
+        if (ei != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            contentMimeTypes = ei.contentMimeTypes
+        }
+        val ic = inputConnection ?: return
+        ic.requestCursorUpdates(InputConnection.CURSOR_UPDATE_MONITOR)
+        val exText = ExtractedTextRequest().let { req ->
+            req.token = ++extractedToken
+            req.flags = 0
+            req.hintMaxLines = CAPACITY_LINES
+            req.hintMaxChars = CAPACITY_CHARS
+            ic.getExtractedText(req, InputConnection.GET_EXTRACTED_TEXT_MONITOR)
+        }
+        if (exText != null) {
+            updateText(extractedToken, exText)
+        }
+    }
+
+    fun startInputView(ei: EditorInfo?) {
+        flogInfo(LogTopic.EDITOR_INSTANCE) { "info=${ei?.debugSummarize()}" }
+    }
+
+    fun finishInputView() {
+        flogInfo(LogTopic.EDITOR_INSTANCE) { "(no args)" }
+    }
+
+    fun finishInput() {
+        flogInfo(LogTopic.EDITOR_INSTANCE) { "(no args)" }
+        val ic = inputConnection ?: return
+        ic.requestCursorUpdates(CURSOR_UPDATE_DISABLED)
+    }
+
+    fun unbindInput() {
+        flogInfo(LogTopic.EDITOR_INSTANCE) { "(no args)" }
+        isInputBindingActive = false
+        reset()
+    }
+
     fun composingEnabledChanged() {
-        cachedInput.reevaluate()
         if (activeState.isComposingEnabled && activeState.isRichInputEditor) {
             markComposingRegion(cachedInput.currentWord)
         } else {
@@ -215,7 +242,7 @@ class EditorInstance private constructor(
             doCommitText(text).first
         } else {
             ic.beginBatchEdit()
-            val isWordComponent = CachedInput.isWordComponent(text)
+            val isWordComponent = TextProcessor.isWord(text, FlorisLocale.ENGLISH)
             val isPhantomSpace = isPhantomSpaceActive && selection.start > 0 && getTextBeforeCursor(1) != " "
             when {
                 isPhantomSpace && isWordComponent -> {
@@ -226,7 +253,9 @@ class EditorInstance private constructor(
                 !isPhantomSpace && isWordComponent -> {
                     ic.finishComposingText()
                     val finalText = doCommitText(text).second
-                    ic.setComposingRegion(cachedInput.currentWord.start, cachedInput.currentWord.end + finalText.length)
+                    cachedInput.currentWord?.let {
+                        ic.setComposingRegion(it.start, it.end + finalText.length)
+                    }
                 }
                 else -> {
                     ic.finishComposingText()
@@ -252,7 +281,7 @@ class EditorInstance private constructor(
             ic.finishComposingText()
             if (selection.start > 0) {
                 val previous = getTextBeforeCursor(1)
-                if (CachedInput.isWordComponent(previous) ||
+                if (TextProcessor.isWord(previous, FlorisLocale.ENGLISH) ||
                     previous.isDigitsOnly() ||
                     previous in TextInputManager.getInstance().symbolsWithSpaceAfter
                 ) {
@@ -289,12 +318,12 @@ class EditorInstance private constructor(
                     flags = flags or InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
                 } else {
                     FlorisBoard.getInstance().grantUriPermission(
-                        editorInfo.packageName,
+                        editorInfo!!.packageName ?: "",
                         item.uri,
                         Intent.FLAG_GRANT_READ_URI_PERMISSION
                     )
                 }
-                InputConnectionCompat.commitContent(ic, editorInfo, inputContentInfo, flags, null)
+                InputConnectionCompat.commitContent(ic, editorInfo!!, inputContentInfo, flags, null)
             }
             ItemType.TEXT -> {
                 commitText(item.text.toString())
@@ -316,44 +345,16 @@ class EditorInstance private constructor(
     }
 
     /**
-     * Deletes [n] words before the current cursor's position.
-     * NOTE: this implementation does currently only delete currentWord. This is due to change in
-     * future versions.
+     * Executes a backward delete on this editor's text. If a text selection is active, all
+     * characters inside this selection will be removed, else only the left-most character from
+     * the cursor's position.
      *
-     * @param n The number of words to delete before the cursor. Must be greater than 0 or this
-     *  method will fail.
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
-    fun deleteWordsBeforeCursor(n: Int): Boolean {
-        val ic = inputConnection ?: return false
+    fun deleteWordBackwards(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        return if (n < 1 || activeState.isRawInputEditor || !selection.isValid || !selection.isCursorMode) {
-            false
-        } else {
-            ic.beginBatchEdit()
-            markComposingRegion(null)
-
-            try {
-                getWordsInString(
-                    cachedInput.rawText.substring(
-                        0,
-                        (selection.start - cachedInput.offset).coerceAtLeast(0)
-                    )
-                ).run {
-                    get(size - n.coerceAtLeast(0)).range
-                }.run {
-                    ic.setSelection(first + cachedInput.offset, selection.start)
-                }
-            } catch (e: Exception) {
-            }
-
-            ic.commitText("", 1)
-
-            cachedInput.update()
-            ic.endBatchEdit()
-            true
-        }
+        return sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL, meta(ctrl = true))
     }
 
     /**
@@ -389,20 +390,6 @@ class EditorInstance private constructor(
     }
 
     /**
-     * Finds all words in the given string with the correct regex for current subtype.
-     * TODO: currently only supports en-US
-     *
-     * @param string String to select words from
-     * @return Words in [string] as a List of [MatchResult]
-     */
-    private fun getWordsInString(string: String): List<MatchResult> {
-        val wordRegexPattern = "[\\p{L}]+".toRegex()
-        return wordRegexPattern.findAll(
-            string
-        ).toList()
-    }
-
-    /**
      * Adds one word on the left of selection to it.
      *
      * @return True on success, false if no new words are selected.
@@ -414,10 +401,27 @@ class EditorInstance private constructor(
         if (selection.start <= 0) {
             return false
         }
-        val stringBeforeSelection =
-            cachedInput.rawText.substring(0, (selection.start - cachedInput.offset).coerceAtLeast(0))
-        getWordsInString(stringBeforeSelection).last().range.apply {
-            selection.updateAndNotify(first + cachedInput.offset, selection.end)
+        val currentWord = cachedInput.currentWord
+        val wordsBeforeCurrent = cachedInput.wordsBeforeCurrent
+        if (currentWord != null && currentWord.isValid) {
+            if (selection.start > currentWord.start) {
+                selection.updateAndNotify(currentWord.start, selection.end)
+                return true
+            } else {
+                for (word in wordsBeforeCurrent.reversed()) {
+                    if (selection.start > word.start) {
+                        selection.updateAndNotify(word.start, selection.end)
+                        return true
+                    }
+                }
+            }
+        } else {
+            for (word in wordsBeforeCurrent.reversed()) {
+                if (selection.start > word.start) {
+                    selection.updateAndNotify(word.start, selection.end)
+                    return true
+                }
+            }
         }
         return true
     }
@@ -434,13 +438,28 @@ class EditorInstance private constructor(
         if (selection.start >= selection.end) {
             return false
         }
-        val stringInsideSelection = cachedInput.rawText.substring(
-            (selection.start - cachedInput.offset).coerceAtLeast(0),
-            (selection.end - cachedInput.offset).coerceAtLeast(0)
-        )
-        getWordsInString(stringInsideSelection).first().range.apply {
-            selection.updateAndNotify(selection.start + last + 1, selection.end)
+        val currentWord = cachedInput.currentWord
+        val wordsBeforeCurrent = cachedInput.wordsBeforeCurrent
+        if (currentWord != null && currentWord.isValid) {
+            for (word in wordsBeforeCurrent) {
+                if (selection.start < word.start) {
+                    selection.updateAndNotify(word.start, selection.end)
+                    return true
+                }
+            }
+            if (selection.start < currentWord.start) {
+                selection.updateAndNotify(currentWord.start, selection.end)
+                return true
+            }
+        } else {
+            for (word in wordsBeforeCurrent) {
+                if (selection.start < word.start) {
+                    selection.updateAndNotify(word.start, selection.end)
+                    return true
+                }
+            }
         }
+        selection.updateAndNotify(selection.end, selection.end)
         return true
     }
 
@@ -452,11 +471,21 @@ class EditorInstance private constructor(
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun markComposingRegion(region: Region?): Boolean {
+        flogDebug(LogTopic.EDITOR_INSTANCE) { "Request to mark region: $region" }
         val ic = inputConnection ?: return false
         return if (region == null || !region.isValid) {
+            flogDebug(LogTopic.EDITOR_INSTANCE) { " Clearing composing text." }
             ic.finishComposingText()
         } else {
-            ic.setComposingRegion(region.start, region.end)
+            flogDebug(LogTopic.EDITOR_INSTANCE) { " Last reported composing region: $lastReportedComposingBounds" }
+            return if (region.bounds == lastReportedComposingBounds) {
+                flogDebug(LogTopic.EDITOR_INSTANCE) { " Should mark region but is already, skipping." }
+                false
+            } else {
+                flogDebug(LogTopic.EDITOR_INSTANCE) { " Marking composing text region." }
+                lastReportedComposingBounds = region.bounds
+                ic.setComposingRegion(region.start, region.end)
+            }
         }
     }
 
@@ -467,7 +496,6 @@ class EditorInstance private constructor(
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardCut(): Boolean {
-        Timber.d("performClipboardCut")
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
         florisClipboardManager.addNewPlaintext(selection.icText)
@@ -481,7 +509,6 @@ class EditorInstance private constructor(
      * @return True on success, false if an error occurred or the input connection is invalid.
      */
     fun performClipboardCopy(): Boolean {
-        Timber.d("performClipboardCopy")
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
         florisClipboardManager.addNewPlaintext(selection.icText)
@@ -497,7 +524,6 @@ class EditorInstance private constructor(
     fun performClipboardPaste(): Boolean {
         isPhantomSpaceActive = false
         wasPhantomSpaceActiveLastUpdate = false
-        Timber.d("Before commit clip data")
         return commitClipboardItem(florisClipboardManager.primaryClip!!)
     }
 
@@ -676,274 +702,223 @@ class EditorInstance private constructor(
         ic.endBatchEdit()
         return true
     }
-}
 
-/**
- * Class which marks a region of [CachedInput.rawText] and which provides length and
- * validation fields, as well as providing an easy way to get a [text] for this region.
- */
-open class Region(
-    private val editorInstance: EditorInstance,
-    initStart: Int? = null,
-    initEnd: Int? = null
-) {
-    /** The start marker for this region. */
-    var start: Int = initStart ?: -1
-        private set
+    fun reset() {
+        selection.apply { start = UNSET; end = UNSET }
+        cachedInput.reset()
+        lastReportedComposingBounds = Bounds(-1, -1)
+    }
 
-    /** The end marker for this region. */
-    var end: Int = initEnd ?: -1
-        private set
+    internal fun normalizeBounds(start: Int, end: Int): Bounds {
+        return if (start > end) {
+            Bounds(end, start)
+        } else {
+            Bounds(start, end)
+        }
+    }
 
-    /** Returns true if the region's start and end markers are valid, false otherwise. */
-    val isValid: Boolean
-        get() = start >= 0 && end >= 0 && length >= 0
+    internal fun ExtractedText.isPartialChange() = this.partialStartOffset > -1 && this.partialEndOffset > -1
 
-    /** The length of the region. */
-    val length: Int
-        get() = end - start
+    internal fun ExtractedText.getPartialChangeBounds(): Bounds {
+        return normalizeBounds(this.partialStartOffset, this.partialEndOffset)
+    }
+
+    internal fun ExtractedText.getSelectionBounds(): Bounds {
+        return normalizeBounds(this.selectionStart, this.selectionEnd)
+    }
+
+    internal fun ExtractedText.getTextStr() = (this.text ?: "").toString()
+
+    private fun ExtractedText.debugSummarize(): String {
+        return stringBuilder {
+            append("ExtractedText:")
+            appendLine()
+            append("text=\"${this@debugSummarize.text}\"")
+            appendLine()
+            append("startOffset=${this@debugSummarize.startOffset}")
+            appendLine()
+            append("partialStartOffset=${this@debugSummarize.partialStartOffset}")
+            appendLine()
+            append("partialEndOffset=${this@debugSummarize.partialEndOffset}")
+            appendLine()
+            append("selectionStart=${this@debugSummarize.selectionStart}")
+            appendLine()
+            append("selectionEnd=${this@debugSummarize.selectionEnd}")
+            appendLine()
+        }
+    }
 
     /**
-     * Dynamically returns a portion of the [CachedInput.rawText] marked by start and end.
-     * Returns an empty string if the editorInstance is invalid or if the region is outside the
-     * scope of the cached text.
+     * Data class which specifies the bounds for a region between [start]
+     * and [end].
+     *
+     * @property start The start marker of this bounds.
+     * @property end The end marker of this bounds.
      */
-    val text: String
-        get() {
-            val eiText = editorInstance.cachedInput.rawText
-            val eiStart = (start - editorInstance.cachedInput.offset).coerceIn(0, eiText.length)
-            val eiEnd = (end - editorInstance.cachedInput.offset).coerceIn(0, eiText.length)
-            return if (!isValid || eiEnd - eiStart <= 0) {
-                ""
+    open class Bounds(var start: Int, var end: Int) {
+        operator fun component1() = start
+        operator fun component2() = end
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Bounds
+
+            if (start != other.start) return false
+            if (end != other.end) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int = 31 * start + end
+
+        override fun toString(): String = "Bounds { start=$start, end=$end }"
+    }
+
+    /**
+     * Class which marks a region of [CachedInput.rawText], which provides length, validation
+     * and text access fields.
+     */
+    inner class Region(initStart: Int, initEnd: Int) : Bounds(initStart, initEnd) {
+        /** Returns the bounds for this regions. */
+        var bounds: Bounds
+            get() = Bounds(start, end)
+            set(v) { start = v.start; end = v.end }
+
+        /** Returns true if the region's start and end markers are valid, false otherwise. */
+        val isValid: Boolean
+            get() = start >= 0 && end >= 0 && length >= 0
+
+        /** The length of the region. */
+        val length: Int
+            get() = end - start
+
+        val isCursorMode: Boolean
+            get() = length == 0 && isValid
+        val isSelectionMode: Boolean
+            get() = length != 0 && isValid
+
+        /**
+         * Returns the text marked by [start] to [end] and returns it. On
+         * failure or if the bounds are outside of the cached text, an empty
+         * string is returned.
+         */
+        val text: String
+            get() {
+                val eiText = cachedInput.rawText
+                val eiStart = (start - cachedInput.offset).coerceIn(0, eiText.length)
+                val eiEnd = (end - cachedInput.offset).coerceIn(0, eiText.length)
+                return if (!isValid || eiEnd - eiStart <= 0) { "" } else { eiText.substring(eiStart, eiEnd) }
+            }
+
+        val icText: String get() = when {
+            !isValid -> ""
+            else -> when (val ic = inputConnection) {
+                null -> ""
+                else -> ic.getSelectedText(0).toString()
+            }
+        }
+
+        /**
+         * Updates this region's [start] and [end] values.
+         *
+         * @param newStart The new start value for this region.
+         * @param newEnd The new end value for this region.
+         */
+        fun update(newStart: Int, newEnd: Int): Boolean {
+            start = newStart
+            end = newEnd
+            return true
+        }
+
+        /**
+         * Same as [update], but also notifies the input connection linked by editor instance of this
+         * selection change.
+         */
+        fun updateAndNotify(newStart: Int, newEnd: Int): Boolean {
+            return update(newStart, newEnd) && if (activeState.isRichInputEditor) {
+                inputConnection?.setSelection(newStart, newEnd) ?: false
             } else {
-                eiText.substring(eiStart, eiEnd)
-            }
-        }
-
-    /**
-     * Updates this region's [start] and [end] values.
-     *
-     * @param newStart The new start value for this region.
-     * @param newEnd The new end value for this region.
-     */
-    fun update(newStart: Int, newEnd: Int): Boolean {
-        start = newStart
-        end = newEnd
-        return true
-    }
-
-    override operator fun equals(other: Any?): Boolean {
-        return if (other is Region) {
-            start == other.start && end == other.end
-        } else {
-            super.equals(other)
-        }
-    }
-
-    override fun hashCode(): Int {
-        var result = start
-        result = 31 * result + end
-        return result
-    }
-
-    override fun toString(): String {
-        return "Region(start=$start,end=$end)"
-    }
-}
-
-/**
- * Class which holds selection attributes and returns the correct text for set selection based on
- * the text in [editorInstance].
- */
-class Selection(private val editorInstance: EditorInstance) : Region(editorInstance) {
-    val isCursorMode: Boolean
-        get() = length == 0 && isValid
-    val isSelectionMode: Boolean
-        get() = length != 0 && isValid
-
-    val icText: String get() = when {
-        !isValid -> ""
-        else -> when (val ic = editorInstance.inputConnection) {
-            null -> ""
-            else -> ic.getSelectedText(0).toString()
-        }
-    }
-
-    /**
-     * Same as [update], but also notifies the input connection linked by [editorInstance] of this
-     * selection change.
-     */
-    fun updateAndNotify(newStart: Int, newEnd: Int): Boolean {
-        return super.update(newStart, newEnd) && if (editorInstance.activeState.isRichInputEditor) {
-            editorInstance.inputConnection?.setSelection(newStart, newEnd) ?: false
-        } else {
-            false
-        }
-    }
-}
-
-/**
- * Class which holds the cached text as well as manages the parsing and evaluation of the current
- * word / words before&after the cursor.
- */
-class CachedInput(private val editorInstance: EditorInstance) {
-    private val wordsBeforeCurrent: MutableList<Region> = mutableListOf()
-    val currentWord: Region = Region(editorInstance)
-    private val wordsAfterCurrent: MutableList<Region> = mutableListOf()
-
-    /**
-     * The expected maximum length of the input text in the target app's editor. This is only the
-     * safe-to-assume value, the actual maximum value may be higher.
-     */
-    var expectedMaxLength: Int = 0
-        private set
-
-    /**
-     * The offset of the [rawText] from the selection root (index 0). This value is especially
-     * relevant if the text before the cursor is longer than [CACHED_TEXT_N_CHARS_BEFORE_CURSOR].
-     */
-    var offset: Int = 0
-        private set
-
-    /**
-     * The raw cached input text of the target app's editor. This cached value may be incomplete if
-     * the target app's editor text is bigger than [CACHED_TEXT_N_CHARS_BEFORE_CURSOR] and
-     * [CACHED_TEXT_N_CHARS_AFTER_CURSOR], but always caches the relevant text around the cursor.
-     */
-    var rawText: StringBuilder = StringBuilder()
-        private set
-
-    companion object {
-        private const val CACHED_TEXT_N_CHARS_BEFORE_CURSOR: Int = 128
-        private const val CACHED_TEXT_N_CHARS_AFTER_CURSOR: Int = 48
-
-        private val WORD_EVAL_REGEX = """[^\p{L}\']""".toRegex()
-        private val WORD_SPLIT_REGEX_EN = """((?<=$WORD_EVAL_REGEX)|(?=$WORD_EVAL_REGEX))""".toRegex()
-
-        fun isWordComponent(string: String): Boolean {
-            return !WORD_EVAL_REGEX.matches(string)
-        }
-    }
-
-    /**
-     * Returns a word region for a given index. If the given index does not point to a valid word,
-     * a region with start&end values of -1 is returned.
-     *
-     * @param index The index of the word to get. 0 is equivalent to [currentWord], a negative
-     *  index searches before the cursor and a positive index after it.
-     * @return The region for the word at [index]. Be sure to check [Region.isValid] if the returned
-     *  region is actually valid and can be used.
-     */
-    fun getWordForIndex(index: Int): Region {
-        return when {
-            index == 0 -> {
-                currentWord
-            }
-            index > 0 -> {
-                wordsAfterCurrent.getOrElse(index - 1) { Region(editorInstance) }
-            }
-            else -> {
-                wordsBeforeCurrent.getOrElse(wordsBeforeCurrent.size - index.times(-1)) { Region(editorInstance) }
+                false
             }
         }
     }
 
-    fun getWordHistory(maxCount: Int): List<String> {
-        val retList = mutableListOf<String>()
-        for ((n, region) in wordsBeforeCurrent.reversed().withIndex()) {
-            if (n == maxCount) {
-                break
+    inner class CachedInput {
+        /**
+         * The raw cached input text of the target app's editor. This cached value may be incomplete if
+         * the target app's editor text is bigger than [CAPACITY_CHARS] or [CAPACITY_LINES], but always
+         * caches the relevant text around the cursor.
+         */
+        var rawText: StringBuilder = StringBuilder(CAPACITY_CHARS)
+            private set
+
+        /**
+         * The offset of the [rawText] from the selection root (index 0).
+         */
+        var offset: Int = 0
+            private set
+
+        var wordsBeforeCurrent: MutableList<Region> = mutableListOf()
+            private set
+        var wordsAfterCurrent: MutableList<Region> = mutableListOf()
+            private set
+        var currentWord: Region? = null
+            private set
+
+        fun updateText(exText: ExtractedText?) {
+            if (exText == null) {
+                reset()
+                return
             }
-            retList.add(region.text)
-        }
-        return retList.toList()
-    }
-
-    /**
-     * Updates the [rawText] and the [offset].
-     */
-    fun update() = editorInstance.run {
-        val ic = inputConnection
-        if (ic == null || selection.isSelectionMode) {
-            offset = 0
-            rawText.clear()
-            expectedMaxLength = 0
-        } else {
-            val textBefore = getTextBeforeCursor(CACHED_TEXT_N_CHARS_BEFORE_CURSOR)
-            val textSelected = ic.getSelectedText(0) ?: ""
-            val textAfter = getTextAfterCursor(CACHED_TEXT_N_CHARS_AFTER_CURSOR)
-            offset = (selection.start - textBefore.length).coerceAtLeast(0)
-            rawText.apply {
-                clear()
-                append(textBefore)
-                append(textSelected)
-                append(textAfter)
+            val sel = exText.getSelectionBounds()
+            if (selection.bounds != sel) {
+                flogWarning { "Selection from extracted text mismatches from selection state, fixing!" }
+                selection.bounds = sel
             }
-            expectedMaxLength = offset + rawText.length
+            if (exText.isPartialChange()) {
+                val (partialStart, partialEnd) = exText.getPartialChangeBounds()
+                rawText.replace(partialStart, partialEnd, exText.getTextStr())
+            } else {
+                rawText.clear()
+                rawText.append(exText.getTextStr())
+                offset = exText.startOffset.coerceAtLeast(0)
+            }
         }
-        reevaluate()
-    }
 
-    /**
-     * Evaluates the current word as well as the words before&after the cursor in the linked editor
-     * instance based on the current cursor position and given [splitRegex] and [wordRegex].
-     *
-     * @param splitRegex The delimiter regex which should be used to split up the content text and
-     *  find words. May differ from locale to locale.
-     * @param wordRegex The word validation regex used to verify that a given substring is really a
-     *  word. May differ from locale to locale.
-     * @return True on success, false otherwise.
-     */
-    private fun reevaluate(splitRegex: Regex, wordRegex: Regex): Boolean = editorInstance.run {
-        wordsBeforeCurrent.clear()
-        currentWord.update(-1, -1)
-        wordsAfterCurrent.clear()
+        fun reevaluateWords() {
+            wordsBeforeCurrent.clear()
+            wordsAfterCurrent.clear()
+            currentWord = null
 
-        if (selection.isValid && selection.isCursorMode) {
-            val selStart = (selection.start - offset).coerceAtLeast(0)
-            val words = rawText.split(splitRegex)
-            var pos = 0
-            for (word in words) {
-                if (word.isNotEmpty() && !word.matches(wordRegex)) {
-                    if (selStart >= pos && selStart <= (pos + word.length)) {
-                        if (!editorInstance.isPhantomSpaceActive) {
-                            currentWord.update(pos + offset, pos + offset + word.length)
+            if (selection.isValid && selection.isCursorMode) {
+                val cursor = selection.start.coerceAtLeast(0)
+                for (wordRange in TextProcessor.detectWords(rawText, FlorisLocale.ENGLISH)) {
+                    val wordStart = wordRange.first + offset
+                    val wordEnd = wordRange.last + 1 + offset
+                    if (cursor in wordStart..wordEnd) {
+                        if (!isPhantomSpaceActive) {
+                            currentWord = Region(wordStart, wordEnd)
                         } else {
-                            wordsBeforeCurrent.add(Region(editorInstance, pos + offset, pos + offset + word.length))
+                            wordsBeforeCurrent.add(Region(wordStart, wordEnd))
                         }
-                    } else if (pos < selStart) {
-                        wordsBeforeCurrent.add(Region(editorInstance, pos + offset, pos + offset + word.length))
+                    } else if (wordEnd < cursor) {
+                        wordsBeforeCurrent.add(Region(wordStart, wordEnd))
                     } else {
-                        wordsAfterCurrent.add(Region(editorInstance, pos + offset, pos + offset + word.length))
+                        wordsAfterCurrent.add(Region(wordStart, wordEnd))
                     }
                 }
-                pos += word.length
             }
-            true
-        } else {
-            false
         }
-    }
 
-    /**
-     * Evaluates the current word as well as the words before&after the cursor in the linked editor
-     * instance based on the current cursor position with a separate regex for each subtype.
-     * TODO: currently only supports en-US
-     */
-    fun reevaluate() {
-        reevaluate(WORD_SPLIT_REGEX_EN, WORD_EVAL_REGEX)
-    }
+        fun reset() {
+            rawText.clear()
+            offset = 0
 
-    @Suppress("unused")
-    internal fun dump(): String {
-        return StringBuilder().run {
-            append("_\nwordsBeforeCursor = ")
-            append(wordsBeforeCurrent.joinToString(","))
-            append("\ncurrentWord = ")
-            append(currentWord.toString())
-            append("\nwordsAfterCursor = ")
-            append(wordsAfterCurrent.joinToString(","))
-            toString()
+            wordsBeforeCurrent.clear()
+            wordsAfterCurrent.clear()
+            currentWord = null
         }
     }
 }
