@@ -26,7 +26,6 @@ import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
-import dev.patrickgold.florisboard.ime.core.CachedInput
 import dev.patrickgold.florisboard.ime.core.EditorInstance
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
@@ -34,6 +33,7 @@ import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.core.TextProcessor
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
@@ -419,14 +419,15 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         if (!inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
             updateCapsState()
         }
-        flogInfo(LogTopic.IMS_EVENTS) { "current word: ${activeEditorInstance.cachedInput.currentWord.text}" }
+        val currentWord = activeEditorInstance.cachedInput.currentWord ?: return
+        flogInfo(LogTopic.IMS_EVENTS) { "current word: ${currentWord.text}" }
         if (activeState.isComposingEnabled && !inputEventDispatcher.isPressed(KeyCode.DELETE) && !isGlidePostEffect) {
             if (activeEditorInstance.shouldReevaluateComposingSuggestions) {
                 activeEditorInstance.shouldReevaluateComposingSuggestions = false
                 launch(Dispatchers.Default) {
                     val startTime = System.nanoTime()
                     dictionaryManager.suggest(
-                        currentWord = activeEditorInstance.cachedInput.currentWord.text,
+                        currentWord = currentWord.text,
                         preceidingWords = listOf(),
                         subtype = florisboard.activeSubtype,
                         allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive,
@@ -580,7 +581,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         isManualSelectionModeStart = false
         isManualSelectionModeEnd = false
         isGlidePostEffect = false
-        activeEditorInstance.deleteWordsBeforeCursor(1)
+        activeEditorInstance.deleteWordBackwards()
     }
 
     /**
@@ -758,15 +759,15 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Handles a [KeyCode.CLIPBOARD_SELECT] event.
      */
     private fun handleClipboardSelect() = activeEditorInstance.apply {
-        if (selection.isSelectionMode) {
+        isManualSelectionMode = if (selection.isSelectionMode) {
             if (isManualSelectionMode && isManualSelectionModeStart) {
                 selection.updateAndNotify(selection.start, selection.start)
             } else {
                 selection.updateAndNotify(selection.end, selection.end)
             }
-            isManualSelectionMode = false
+            false
         } else {
-            isManualSelectionMode = !isManualSelectionMode
+            !isManualSelectionMode
             // Must call to update UI properly
             //editingKeyboardView?.onUpdateSelection()
         }
@@ -843,7 +844,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         KeyType.CHARACTER,
                         KeyType.NUMERIC -> {
                             val text = data.asString(isForDisplay = false)
-                            if (isGlidePostEffect && (CachedInput.isWordComponent(text) || text.isDigitsOnly())) {
+                            if (isGlidePostEffect && (TextProcessor.isWord(text, florisboard.activeSubtype.locale) || text.isDigitsOnly())) {
                                 activeEditorInstance.commitText(" ")
                             }
                             activeEditorInstance.commitText(text)
@@ -852,7 +853,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                             KeyCode.PHONE_PAUSE,
                             KeyCode.PHONE_WAIT -> {
                                 val text = data.asString(isForDisplay = false)
-                                if (isGlidePostEffect && (CachedInput.isWordComponent(text) || text.isDigitsOnly())) {
+                                if (isGlidePostEffect && (TextProcessor.isWord(text, florisboard.activeSubtype.locale) || text.isDigitsOnly())) {
                                     activeEditorInstance.commitText(" ")
                                 }
                                 activeEditorInstance.commitText(text)
@@ -862,7 +863,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     else -> when (data.type) {
                         KeyType.CHARACTER, KeyType.NUMERIC ->{
                             val text = data.asString(isForDisplay = false)
-                            if (isGlidePostEffect && (CachedInput.isWordComponent(text) || text.isDigitsOnly())) {
+                            if (isGlidePostEffect && (TextProcessor.isWord(text, florisboard.activeSubtype.locale) || text.isDigitsOnly())) {
                                 activeEditorInstance.commitText(" ")
                             }
                             activeEditorInstance.commitText(text)

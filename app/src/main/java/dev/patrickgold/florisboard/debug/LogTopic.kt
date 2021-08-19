@@ -45,4 +45,5 @@ object LogTopic {
     const val CRASH_UTILITY: FlogTopic =        2048u
 
     const val SPELL_EVENTS: FlogTopic =         4096u
+    const val EDITOR_INSTANCE: FlogTopic =      0x00_00_20_00u
 }
