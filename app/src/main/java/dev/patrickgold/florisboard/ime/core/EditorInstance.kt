@@ -50,8 +50,10 @@ import dev.patrickgold.florisboard.util.debugSummarize
 
 class EditorInstance(private val ims: InputMethodService, private val activeState: KeyboardState) {
     companion object {
-        private const val CAPACITY_CHARS: Int = 10000
+        private const val CAPACITY_CHARS: Int = 1000
         private const val CAPACITY_LINES: Int = 10
+        private const val CACHED_N_CHARS_BEFORE_CURSOR: Int = 320
+        private const val CACHED_N_CHARS_AFTER_CURSOR: Int = 64
 
         private const val UNSET: Int = -1
         private const val CURSOR_UPDATE_DISABLED: Int = 0
@@ -896,8 +898,7 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
                 val (partialStart, partialEnd) = exText.getPartialChangeBounds()
                 rawText.replace(partialStart, partialEnd, exText.getTextStr())
             } else {
-                rawText.clear()
-                rawText.append(exText.getTextStr())
+                rawText.replace(0, rawText.length, exText.getTextStr())
                 offset = exText.startOffset.coerceAtLeast(0)
             }
         }
@@ -909,9 +910,11 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
 
             if (selection.isValid && selection.isCursorMode) {
                 val cursor = selection.start.coerceAtLeast(0)
-                for (wordRange in TextProcessor.detectWords(rawText, FlorisLocale.ENGLISH)) {
-                    val wordStart = wordRange.first + offset
-                    val wordEnd = wordRange.last + 1 + offset
+                val detectStart = (cursor - CACHED_N_CHARS_BEFORE_CURSOR - offset).coerceAtLeast(0)
+                val detectEnd = (cursor + CACHED_N_CHARS_AFTER_CURSOR - offset).coerceAtMost(rawText.length - 1)
+                for (wordRange in TextProcessor.detectWords(rawText, detectStart, detectEnd, FlorisLocale.ENGLISH)) {
+                    val wordStart = wordRange.first + offset + detectStart
+                    val wordEnd = wordRange.last + 1 + offset + detectStart
                     if (cursor in wordStart..wordEnd) {
                         if (!isPhantomSpaceActive) {
                             currentWord = Region(wordStart, wordEnd)
