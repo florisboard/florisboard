@@ -348,7 +348,7 @@ class UdmActivity : FlorisActivity<UdmActivityBinding>() {
         )
         if (currentLevel == LEVEL_WORDS) {
             currentLocale?.let {
-                dialogBinding.locale.setText(it.toString())
+                dialogBinding.locale.setText(it.localeTag())
             }
         }
 
@@ -437,7 +437,7 @@ class UdmActivity : FlorisActivity<UdmActivityBinding>() {
         }
         if (isValid) {
             val localeStr = if (locale == null) { null } else {
-                FlorisLocale.fromTag(locale).toString()
+                FlorisLocale.fromTag(locale).localeTag()
             }
             if (entry != null) {
                 userDictionaryDao()?.update(
