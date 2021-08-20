@@ -953,8 +953,8 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
             wordsAfterCurrent.clear()
             currentWord = null
 
-            if (selection.isValid && selection.isCursorMode) {
-                val cursor = selection.start.coerceAtLeast(0)
+            if (selection.isValid) {
+                val cursor = selection.end.coerceAtLeast(0)
                 val detectStart = (cursor - CACHED_N_CHARS_BEFORE_CURSOR - offset).coerceAtLeast(0)
                 val detectEnd = (cursor + CACHED_N_CHARS_AFTER_CURSOR - offset).coerceAtMost(rawText.length - 1)
                 for (wordRange in TextProcessor.detectWords(rawText, detectStart, detectEnd, FlorisLocale.ENGLISH)) {
@@ -970,6 +970,30 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
                         wordsBeforeCurrent.add(Region(wordStart, wordEnd))
                     } else {
                         wordsAfterCurrent.add(Region(wordStart, wordEnd))
+                    }
+                }
+            }
+
+            flogDebug(LogTopic.EDITOR_INSTANCE) {
+                stringBuilder {
+                    append("Words before current: ")
+                    wordsBeforeCurrent.forEach {
+                        append(it.toString())
+                        append(' ')
+                    }
+                }
+            }
+            flogDebug(LogTopic.EDITOR_INSTANCE) {
+                stringBuilder {
+                    append("Current word: $currentWord")
+                }
+            }
+            flogDebug(LogTopic.EDITOR_INSTANCE) {
+                stringBuilder {
+                    append("Words after current: ")
+                    wordsAfterCurrent.forEach {
+                        append(it.toString())
+                        append(' ')
                     }
                 }
             }
