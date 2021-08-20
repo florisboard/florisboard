@@ -631,10 +631,12 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                             florisboard.inputFeedbackManager.gestureMovingSwipe(TextKeyData.DELETE)
                         }
                         markComposingRegion(null)
-                        selection.updateAndNotify(
-                            (selection.end + event.absUnitCountX + 1).coerceIn(0, selection.end),
-                            selection.end
-                        )
+                        if (selection.isValid) {
+                            selection.updateAndNotify(
+                                (selection.end + event.absUnitCountX + 1).coerceIn(0, selection.end),
+                                selection.end
+                            )
+                        }
                     }
                     pointer.shouldBlockNextUp = true
                     true
@@ -645,7 +647,9 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                             florisboard.inputFeedbackManager.gestureMovingSwipe(TextKeyData.DELETE)
                         }
                         markComposingRegion(null)
-                        selectionSetNWordsLeft(abs(event.absUnitCountX / 2) - 1)
+                        if (selection.isValid) {
+                            selectionSetNWordsLeft(abs(event.absUnitCountX / 2) - 1)
+                        }
                     }
                     pointer.shouldBlockNextUp = true
                     true
