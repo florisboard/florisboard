@@ -16,7 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.dictionary
 
+import android.content.Context
 import dev.patrickgold.florisboard.ime.nlp.*
+import dev.patrickgold.florisboard.res.FlorisRef
+import java.io.InputStream
 
 /**
  * Class Flictionary which takes care of loading the binary asset as well as providing words for
@@ -25,14 +28,14 @@ import dev.patrickgold.florisboard.ime.nlp.*
  * This class accepts binary dictionary files of the type "flict" as defined in here:
  * https://github.com/florisboard/dictionary-tools/blob/main/flictionary.md
  */
-/**
 class Flictionary private constructor(
     override val name: String,
     override val label: String,
     override val authors: List<String>,
     private val date: Long,
     private val version: Int,
-    private val headerStr: String
+    private val headerStr: String,
+    private val languageModel: FlorisLanguageModel
 ) : Dictionary {
     companion object {
         private const val VERSION_0 =                           0x0
@@ -63,11 +66,11 @@ class Flictionary private constructor(
          * either the parsed dictionary or an exception giving information about the error which
          * occurred.
          */
-        fun load(context: Context, assetRef: AssetRef): Result<Flictionary> {
+        fun load(context: Context, assetRef: FlorisRef): Result<Flictionary> {
             val buffer = ByteArray(5000) { 0 }
             val inputStream: InputStream
-            if (assetRef.source == AssetSource.Assets) {
-                inputStream = context.assets.open(assetRef.path)
+            if (assetRef.isAssets) {
+                inputStream = context.assets.open(assetRef.relativePath)
             } else {
                 return Result.failure(Exception("Only AssetSource.Assets is currently supported!"))
             }
@@ -291,26 +294,25 @@ class Flictionary private constructor(
 
     // TODO: preceding tokens are currently ignored
     override fun getTokenPredictions(
-        precedingTokens: List<Token<String>>,
-        currentToken: Token<String>?,
+        precedingTokens: List<Word>,
+        currentToken: Word?,
         maxSuggestionCount: Int,
-        allowPossiblyOffensive: Boolean
-    ): List<WeightedToken<String, Int>> {
-        currentToken ?: return listOf()
+        allowPossiblyOffensive: Boolean,
+        destSuggestionList: SuggestionList
+    ) {
+        currentToken ?: return
 
-        return if (currentToken.data.isNotEmpty()) {
+        if (currentToken.isNotBlank()) {
             val retList = languageModel.matchAllNgrams(
                 ngram = Ngram(
-                    _tokens = listOf(Token(currentToken.data.lowercase())),
+                    _tokens = listOf(Token(currentToken.lowercase())),
                     _freq = -1
                 ),
                 maxEditDistance = 2,
                 maxTokenCount = maxSuggestionCount,
                 allowPossiblyOffensive = allowPossiblyOffensive
             )
-            retList
-        } else {
-            listOf()
+            retList.forEach { destSuggestionList.add(it.data, 128) }
         }
     }
 
@@ -422,4 +424,3 @@ fun InputStream.readNext(b: ByteArray, off: Int, len: Int): Int {
     }
     return lenRead
 }
-*/
