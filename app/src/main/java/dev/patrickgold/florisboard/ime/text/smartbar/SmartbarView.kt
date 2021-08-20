@@ -269,7 +269,8 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
                         KeyboardMode.PHONE,
                         KeyboardMode.PHONE2 -> R.id.clipboard_cursor_row
                         else -> when {
-                            cachedState.isComposingEnabled && cachedState.isCursorMode -> R.id.candidates
+                            cachedState.isComposingEnabled && cachedState.isCursorMode
+                                && cachedState.isRichInputEditor -> R.id.candidates
                             else -> R.id.clipboard_cursor_row
                         }
                     }
