@@ -480,6 +480,51 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
         return true
     }
 
+    fun selectionSetNWordsLeft(n: Int): Boolean {
+        flogDebug { "$n" }
+        isPhantomSpaceActive = false
+        wasPhantomSpaceActiveLastUpdate = false
+        if (selection.start < 0) return false
+        if (n <= 0) {
+            selection.updateAndNotify(selection.end, selection.end)
+            return true
+        }
+        var wordsSelected = 0
+        var selStart = selection.end
+        val currentWord = cachedInput.currentWord
+        val wordsBeforeCurrent = cachedInput.wordsBeforeCurrent
+        if (currentWord != null && currentWord.isValid) {
+            if (selStart > currentWord.start) {
+                selStart = currentWord.start
+                if (++wordsSelected == n) {
+                    selection.updateAndNotify(selStart, selection.end)
+                    return true
+                }
+            }
+            for (word in wordsBeforeCurrent.reversed()) {
+                if (selStart > word.start) {
+                    selStart = word.start
+                    if (++wordsSelected == n) {
+                        selection.updateAndNotify(selStart, selection.end)
+                        return true
+                    }
+                }
+            }
+        } else {
+            for (word in wordsBeforeCurrent.reversed()) {
+                if (selStart > word.start) {
+                    selStart = word.start
+                    if (++wordsSelected == n) {
+                        selection.updateAndNotify(selStart, selection.end)
+                        return true
+                    }
+                }
+            }
+        }
+        selection.updateAndNotify(0, selection.end)
+        return true
+    }
+
     /**
      * Marks a given [region] as composing and notifies the input connection.
      *
