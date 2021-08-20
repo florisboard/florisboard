@@ -70,6 +70,7 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
     var isPhantomSpaceActive: Boolean = false
         private set
     private var wasPhantomSpaceActiveLastUpdate: Boolean = false
+    var wordHistoryChangedListener: WordHistoryChangedListener? = null
 
     val inputBinding: InputBinding?
         get() = if (isInputBindingActive) ims.currentInputBinding else null
@@ -974,6 +975,10 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
                 }
             }
 
+            wordHistoryChangedListener?.onWordHistoryChanged(
+                currentWord, wordsBeforeCurrent, wordsAfterCurrent
+            )
+
             flogDebug(LogTopic.EDITOR_INSTANCE) {
                 stringBuilder {
                     append("Words before current: ")
@@ -1007,5 +1012,13 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
             wordsAfterCurrent.clear()
             currentWord = null
         }
+    }
+
+    interface WordHistoryChangedListener {
+        fun onWordHistoryChanged(
+            currentWord: Region?,
+            wordsBeforeCurrent: List<Region>,
+            wordsAfterCurrent: List<Region>
+        )
     }
 }

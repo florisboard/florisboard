@@ -78,7 +78,7 @@ import org.json.JSONArray
  * instance and the Smartbar.
  */
 class TextInputManager private constructor() : CoroutineScope by MainScope(), InputKeyEventReceiver,
-    FlorisBoard.EventListener, SmartbarView.EventListener {
+    FlorisBoard.EventListener, SmartbarView.EventListener, EditorInstance.WordHistoryChangedListener {
 
     var isGlidePostEffect: Boolean = false
     private val florisboard get() = FlorisBoard.getInstance()
@@ -235,6 +235,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         textKeyboardIconSet = TextKeyboardIconSet.new(florisboard)
         inputEventDispatcher.keyEventReceiver = this
         isNumberRowVisible = prefs.keyboard.numberRow
+        activeEditorInstance.wordHistoryChangedListener = this
         var subtypes = florisboard.subtypeManager.subtypes
         if (subtypes.isEmpty()) {
             subtypes = listOf(Subtype.DEFAULT)
@@ -280,6 +281,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         inputEventDispatcher.close()
 
         dictionaryManager.unloadUserDictionariesIfNecessary()
+
+        activeEditorInstance.wordHistoryChangedListener = null
 
         cancel()
         layoutManager.onDestroy()
@@ -399,7 +402,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     override fun onSubtypeChanged(newSubtype: Subtype, doRefreshLayouts: Boolean) {
         launch {
             if (activeState.isComposingEnabled) {
-                dictionaryManager.prepareDictionaries(newSubtype)
+                launch(Dispatchers.IO) {
+                    dictionaryManager.prepareDictionaries(newSubtype)
+                }
             }
             if (prefs.glide.enabled) {
                 GlideTypingManager.getInstance().setWordData(newSubtype)
@@ -419,32 +424,36 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         if (!inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
             updateCapsState()
         }
-        val currentWord = activeEditorInstance.cachedInput.currentWord ?: return
-        flogInfo(LogTopic.IMS_EVENTS) { "current word: ${currentWord.text}" }
+    }
+
+    override fun onWordHistoryChanged(
+        currentWord: EditorInstance.Region?,
+        wordsBeforeCurrent: List<EditorInstance.Region>,
+        wordsAfterCurrent: List<EditorInstance.Region>
+    ) {
+        if (currentWord == null || !currentWord.isValid) {
+            smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+            return
+        }
         if (activeState.isComposingEnabled && !inputEventDispatcher.isPressed(KeyCode.DELETE) && !isGlidePostEffect) {
-            if (activeEditorInstance.shouldReevaluateComposingSuggestions) {
-                activeEditorInstance.shouldReevaluateComposingSuggestions = false
-                launch(Dispatchers.Default) {
-                    val startTime = System.nanoTime()
-                    dictionaryManager.suggest(
-                        currentWord = currentWord.text,
-                        preceidingWords = listOf(),
-                        subtype = florisboard.activeSubtype,
-                        allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive,
-                        maxSuggestionCount = 16
-                    ) { suggestions ->
-                        withContext(Dispatchers.Main) {
-                            smartbarView?.setCandidateSuggestionWords(startTime, suggestions)
-                            smartbarView?.updateCandidateSuggestionCapsState()
-                        }
-                    }
-                    if (BuildConfig.DEBUG) {
-                        val elapsed = (System.nanoTime() - startTime) / 1000.0
-                        flogInfo { "sugg fetch time: $elapsed us" }
+            launch(Dispatchers.Default) {
+                val startTime = System.nanoTime()
+                dictionaryManager.suggest(
+                    currentWord = currentWord.text,
+                    preceidingWords = listOf(),
+                    subtype = florisboard.activeSubtype,
+                    allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive,
+                    maxSuggestionCount = 16
+                ) { suggestions ->
+                    withContext(Dispatchers.Main) {
+                        smartbarView?.setCandidateSuggestionWords(startTime, suggestions)
+                        smartbarView?.updateCandidateSuggestionCapsState()
                     }
                 }
-            } else {
-                smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+                if (BuildConfig.DEBUG) {
+                    val elapsed = (System.nanoTime() - startTime) / 1000.0
+                    flogInfo { "sugg fetch time: $elapsed us" }
+                }
             }
         }
     }

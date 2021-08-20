@@ -317,11 +317,12 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         imeManager = null
         popupLayerView = null
         uiBinding = null
-        florisboardInstance = null
 
         eventListeners.toList().forEach { it?.onDestroy() }
         eventListeners.clear()
         super.onDestroy()
+
+        florisboardInstance = null
     }
 
     override fun onEvaluateFullscreenMode(): Boolean {

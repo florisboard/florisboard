@@ -19,10 +19,12 @@ package dev.patrickgold.florisboard.ime.dictionary
 import android.content.Context
 import androidx.room.Room
 import dev.patrickgold.florisboard.common.FlorisLocale
+import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.nlp.SuggestionList
 import dev.patrickgold.florisboard.ime.nlp.Word
+import dev.patrickgold.florisboard.res.FlorisRef
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import java.lang.ref.WeakReference
@@ -43,6 +45,8 @@ class DictionaryManager private constructor(
     private var systemUserDictionaryDatabase: SystemUserDictionaryDatabase? = null
 
     companion object {
+        val FLORIS_EN_REF = FlorisRef.assets("ime/dict/en.flict")
+
         private var defaultInstance: DictionaryManager? = null
 
         fun init(applicationContext: Context): DictionaryManager {
@@ -73,12 +77,36 @@ class DictionaryManager private constructor(
     ) {
         val suggestions = SuggestionList.new(maxSuggestionCount)
         queryUserDictionary(currentWord, subtype.locale, suggestions)
+        loadDictionary(FLORIS_EN_REF).onSuccess {
+            it.getTokenPredictions(preceidingWords, currentWord, maxSuggestionCount, allowPossiblyOffensive, suggestions)
+        }
         block(suggestions)
         suggestions.dispose()
     }
 
+    fun loadDictionary(ref: FlorisRef): Result<Dictionary> {
+        dictionaryCache[ref.toString()]?.let {
+            return Result.success(it)
+        }
+        if (ref.relativePath.endsWith(".flict")) {
+            // Assume this is a Flictionary
+            applicationContext.get()?.let {
+                Flictionary.load(it, ref).onSuccess { flict ->
+                    dictionaryCache[ref.toString()] = flict
+                    return Result.success(flict)
+                }.onFailure { err ->
+                    flogError { err.toString() }
+                    return Result.failure(err)
+                }
+            }
+        } else {
+            return Result.failure(Exception("Unable to determine supported type for given AssetRef!"))
+        }
+        return Result.failure(Exception("If this message is ever thrown, something is completely broken..."))
+    }
+
     fun prepareDictionaries(subtype: Subtype) {
-        // TODO: Implement this
+        loadDictionary(FLORIS_EN_REF)
     }
 
     fun queryUserDictionary(word: Word, locale: FlorisLocale, destSuggestionList: SuggestionList) {
