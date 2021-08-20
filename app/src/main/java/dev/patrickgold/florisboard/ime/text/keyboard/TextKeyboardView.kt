@@ -635,28 +635,20 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                             (selection.end + event.absUnitCountX + 1).coerceIn(0, selection.end),
                             selection.end
                         )
-                        pointer.shouldBlockNextUp = true
                     }
+                    pointer.shouldBlockNextUp = true
                     true
                 }
-                SwipeAction.DELETE_WORDS_PRECISELY -> when (event.direction) {
-                    SwipeGesture.Direction.LEFT -> {
-                        florisboard.inputFeedbackManager.gestureMovingSwipe(TextKeyData.DELETE)
-                        florisboard.activeEditorInstance.apply {
-                            leftAppendWordToSelection()
+                SwipeAction.DELETE_WORDS_PRECISELY -> {
+                    florisboard.activeEditorInstance.apply {
+                        if (abs(event.relUnitCountX) > 0) {
+                            florisboard.inputFeedbackManager.gestureMovingSwipe(TextKeyData.DELETE)
                         }
-                        pointer.shouldBlockNextUp = true
-                        true
+                        markComposingRegion(null)
+                        selectionSetNWordsLeft(abs(event.absUnitCountX / 2) - 1)
                     }
-                    SwipeGesture.Direction.RIGHT -> {
-                        florisboard.inputFeedbackManager.gestureMovingSwipe(TextKeyData.DELETE)
-                        florisboard.activeEditorInstance.apply {
-                            leftPopWordFromSelection()
-                        }
-                        pointer.shouldBlockNextUp = true
-                        true
-                    }
-                    else -> false
+                    pointer.shouldBlockNextUp = true
+                    true
                 }
                 else -> false
             }
