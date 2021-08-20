@@ -34,7 +34,8 @@
             android:name="dev.patrickgold.florisboard.FlorisImeService"
             android:label="@string/floris_app_name"
             android:permission="android.permission.BIND_INPUT_METHOD"
-            android:directBootAware="true">
+            android:directBootAware="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.view.InputMethod"/>
             </intent-filter>
@@ -45,7 +46,8 @@
         <service
             android:name="dev.patrickgold.florisboard.FlorisSpellCheckerService"
             android:label="@string/floris_app_name"
-            android:permission="android.permission.BIND_TEXT_SERVICE">
+            android:permission="android.permission.BIND_TEXT_SERVICE"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.service.textservice.SpellCheckerService"/>
             </intent-filter>
@@ -68,7 +70,8 @@
             android:label="@string/floris_app_name"
             android:launchMode="singleTask"
             android:roundIcon="@mipmap/floris_app_icon_round"
-            android:targetActivity="dev.patrickgold.florisboard.setup.SetupActivity">
+            android:targetActivity="dev.patrickgold.florisboard.setup.SetupActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
