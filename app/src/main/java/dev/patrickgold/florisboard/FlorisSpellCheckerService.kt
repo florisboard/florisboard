@@ -89,8 +89,8 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         private val spellingManager get() = SpellingManager.default()
         private val subtypeManager get() = SubtypeManager.default()
 
-        private var spellingDict: SpellingDict? = null
-        private var spellingLocale: FlorisLocale? = null
+        private var cachedSpellingDict: SpellingDict? = null
+        private var cachedSpellingLocale: FlorisLocale? = null
         private val suggestionsCache = SuggestionsCache(SUGGESTIONS_MAX_SIZE)
 
         override fun onCreate() {
@@ -106,21 +106,22 @@ class FlorisSpellCheckerService : SpellCheckerService() {
                 else -> FlorisLocale.from(locale)
             }
 
-            if (evaluatedLocale != spellingLocale) {
-                spellingLocale = evaluatedLocale
-                spellingDict = spellingManager.getSpellingDict(evaluatedLocale)
+            if (evaluatedLocale != cachedSpellingLocale) {
+                cachedSpellingLocale = evaluatedLocale
+                cachedSpellingDict = spellingManager.getSpellingDict(evaluatedLocale)
                 suggestionsCache.clear()
             }
         }
 
-        override fun onGetSuggestions(textInfo: TextInfo?, suggestionsLimit: Int): SuggestionsInfo {
-            flogInfo(LogTopic.SPELL_EVENTS) { "text=${textInfo?.text}, limit=$suggestionsLimit" }
+        private fun emptySuggestionsInfo() = SuggestionsInfo(0, EMPTY_STRING_ARRAY)
 
-            setupSpellingIfNecessary()
-
-            val spellingDict = spellingDict ?: return SuggestionsInfo(0, EMPTY_STRING_ARRAY)
-            val spellingLocale = spellingLocale ?: return SuggestionsInfo(0, EMPTY_STRING_ARRAY)
-            val word = textInfo?.text ?: return SuggestionsInfo(0, EMPTY_STRING_ARRAY)
+        private fun spell(
+            textInfo: TextInfo,
+            suggestionsLimit: Int,
+            spellingDict: SpellingDict,
+            spellingLocale: FlorisLocale
+        ): SuggestionsInfo {
+            val word = textInfo.text ?: return emptySuggestionsInfo()
 
             return suggestionsCache.getOrGenerate(word) {
                 var isWordOk = false
@@ -141,6 +142,30 @@ class FlorisSpellCheckerService : SpellCheckerService() {
             }
         }
 
+        private fun spellMultiple(
+            textInfos: Array<out TextInfo>,
+            suggestionsLimit: Int,
+            spellingDict: SpellingDict,
+            spellingLocale: FlorisLocale
+        ): Array<SuggestionsInfo> {
+            return Array(textInfos.size) { n ->
+                spell(textInfos[n], suggestionsLimit, spellingDict, spellingLocale).apply {
+                    setCookieAndSequence(textInfos[n].cookie, textInfos[n].sequence)
+                }
+            }
+        }
+
+        override fun onGetSuggestions(textInfo: TextInfo?, suggestionsLimit: Int): SuggestionsInfo {
+            flogInfo(LogTopic.SPELL_EVENTS) { "text=${textInfo?.text}, limit=$suggestionsLimit" }
+
+            textInfo ?: return emptySuggestionsInfo()
+            setupSpellingIfNecessary()
+            val spellingDict = cachedSpellingDict ?: return emptySuggestionsInfo()
+            val spellingLocale = cachedSpellingLocale ?: return emptySuggestionsInfo()
+
+            return spell(textInfo, suggestionsLimit, spellingDict, spellingLocale)
+        }
+
         override fun onGetSuggestionsMultiple(
             textInfos: Array<out TextInfo>?,
             suggestionsLimit: Int,
@@ -148,8 +173,12 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         ): Array<SuggestionsInfo> {
             flogInfo(LogTopic.SPELL_EVENTS)
 
-            // TODO: implement custom solution here instead of calling the default implementation
-            return super.onGetSuggestionsMultiple(textInfos, suggestionsLimit, sequentialWords)
+            textInfos ?: return emptyArray()
+            setupSpellingIfNecessary()
+            val spellingDict = cachedSpellingDict ?: return emptyArray()
+            val spellingLocale = cachedSpellingLocale ?: return emptyArray()
+
+            return spellMultiple(textInfos, suggestionsLimit, spellingDict, spellingLocale)
         }
 
         override fun onGetSentenceSuggestionsMultiple(
