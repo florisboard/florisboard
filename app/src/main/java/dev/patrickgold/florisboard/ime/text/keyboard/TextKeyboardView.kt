@@ -1195,7 +1195,11 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                     key.foregroundDrawableId = R.drawable.ic_assignment
                 }
                 KeyCode.KANA_SWITCHER -> {
-                    key.foregroundDrawableId = R.drawable.ic_keyboard_kana_switcher
+                    key.foregroundDrawableId = if (cachedState.isKanaKata) {
+                        R.drawable.ic_keyboard_kana_switcher_kata
+                    } else {
+                        R.drawable.ic_keyboard_kana_switcher_hira
+                    }
                 }
                 KeyCode.CHAR_WIDTH_SWITCHER -> {
                     key.foregroundDrawableId = if (cachedState.isCharHalfWidth) {
