@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
+
+import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.lowercase
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
@@ -63,6 +65,9 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                     }
                     KeyData.GROUP_RIGHT -> {
                         "~right"
+                    }
+                    KeyData.GROUP_KANA -> {
+                        "~kana"
                     }
                     else -> {
                         computedLabel
@@ -132,7 +137,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                     else -> 0.0
                 }
                 else -> when (computed.code) {
-                    KeyCode.SPACE -> 1.0
+                    KeyCode.SPACE, KeyCode.CJK_SPACE -> 1.0
                     else -> 0.0
                 }
             }

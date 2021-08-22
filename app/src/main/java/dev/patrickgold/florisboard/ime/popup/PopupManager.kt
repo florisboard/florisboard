@@ -48,7 +48,9 @@ class PopupManager<V : View>(
         KeyCode.LANGUAGE_SWITCH,
         KeyCode.SWITCH_TO_TEXT_CONTEXT,
         KeyCode.SWITCH_TO_MEDIA_CONTEXT,
-        KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT
+        KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT,
+        KeyCode.KANA_SWITCHER,
+        KeyCode.CHAR_WIDTH_SWITCHER
     )
     private var keyPopupWidth: Int
     private var keyPopupHeight: Int
@@ -127,6 +129,16 @@ class PopupManager<V : View>(
                             PopupExtendedView.Element.Icon(it, adjustedIndex)
                         } ?: PopupExtendedView.Element.Undefined
                     }
+                    KeyCode.CHAR_WIDTH_FULL -> {
+                        getDrawable(keyboardView.context, R.drawable.ic_keyboard_char_width_switcher_full)?.let {
+                            PopupExtendedView.Element.Icon(it, adjustedIndex)
+                        } ?: PopupExtendedView.Element.Undefined
+                    }
+                    KeyCode.CHAR_WIDTH_HALF -> {
+                        getDrawable(keyboardView.context, R.drawable.ic_keyboard_char_width_switcher_half)?.let {
+                            PopupExtendedView.Element.Icon(it, adjustedIndex)
+                        } ?: PopupExtendedView.Element.Undefined
+                    }
                     else -> {
                         PopupExtendedView.Element.Label(
                             popupKey.asString(isForDisplay = true), adjustedIndex
@@ -153,7 +165,7 @@ class PopupManager<V : View>(
     private fun isSuitableForBasicPopup(key: Key): Boolean {
         return if (key is TextKey) {
             val c = key.computedData.code
-            c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS
+            c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE
         } else {
             true
         }
@@ -162,7 +174,7 @@ class PopupManager<V : View>(
     private fun isSuitableForExtendedPopup(key: Key): Boolean {
         return if (key is TextKey) {
             val c = key.computedData.code
-            c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS || exceptionsForKeyCodes.contains(c)
+            c > KeyCode.SPACE && c != KeyCode.MULTIPLE_CODE_POINTS && c != KeyCode.CJK_SPACE || exceptionsForKeyCodes.contains(c)
         } else {
             true
         }

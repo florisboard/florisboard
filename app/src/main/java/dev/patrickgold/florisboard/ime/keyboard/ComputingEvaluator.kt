@@ -24,6 +24,12 @@ interface ComputingEvaluator {
 
     fun evaluateCaps(data: KeyData): Boolean
 
+    fun evaluateCharHalfWidth(): Boolean = false
+
+    fun evaluateKanaKata(): Boolean = false
+
+    fun evaluateKanaSmall(): Boolean = false
+
     fun evaluateEnabled(data: KeyData): Boolean
 
     fun evaluateVisible(data: KeyData): Boolean
@@ -43,6 +49,12 @@ object DefaultComputingEvaluator : ComputingEvaluator {
     override fun evaluateCaps(): Boolean = false
 
     override fun evaluateCaps(data: KeyData): Boolean = false
+
+    override fun evaluateCharHalfWidth(): Boolean = false
+
+    override fun evaluateKanaKata(): Boolean = false
+
+    override fun evaluateKanaSmall(): Boolean = false
 
     override fun evaluateEnabled(data: KeyData): Boolean = true
 

@@ -53,14 +53,14 @@ class TextKeyboard(
                 val yOffset: Double
                 if (w < h) {
                     xOffset = factor * w
-                    yOffset = if (key.computedData.code == KeyCode.SPACE && isLabel) {
+                    yOffset = if ((key.computedData.code == KeyCode.SPACE || key.computedData.code == KeyCode.CJK_SPACE) && isLabel) {
                         xOffset
                     } else {
                         (h - (w - 2.0 * xOffset)) / 2.0
                     }
                 } else {
                     yOffset = factor * h
-                    xOffset = if (key.computedData.code == KeyCode.SPACE && isLabel) {
+                    xOffset = if ((key.computedData.code == KeyCode.SPACE || key.computedData.code == KeyCode.CJK_SPACE) && isLabel) {
                         yOffset
                     } else {
                         (w - (h - 2.0 * yOffset)) / 2.0

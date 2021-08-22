@@ -45,6 +45,9 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
  *          |        1 |          |          | Is Smartbar quick actions visible
  *          |       1  |          |          | Is Smartbar showing inline suggestions
  *          |      1   |          |          | Is composing enabled
+ *          |   1      |          |          | Is character half-width enabled
+ *          |  1       |          |          | Is Kana Kata enabled
+ *          | 1        |          |          | Is Kana small
  *
  * <Byte 7> | <Byte 6> | <Byte 5> | <Byte 4> | Description
  * ---------|----------|----------|----------|---------------------------------
@@ -91,11 +94,15 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
         const val F_IS_SHOWING_INLINE_SUGGESTIONS: ULong =  0x00020000u
         const val F_IS_COMPOSING_ENABLED: ULong =           0x00040000u
 
+        const val F_IS_CHAR_HALF_WIDTH: ULong =             0x00200000u
+        const val F_IS_KANA_KATA: ULong =                   0x00400000u
+        const val F_IS_KANA_SMALL: ULong =                  0x00800000u
+
         const val STATE_ALL_ZERO: ULong =                   0uL
 
         const val INTEREST_ALL: ULong =                     ULong.MAX_VALUE
         const val INTEREST_NONE: ULong =                    0uL
-        const val INTEREST_TEXT: ULong =                    0xFF_FF_FF_FF_00_00_FF_FFu
+        const val INTEREST_TEXT: ULong =                    0xFF_FF_FF_FF_00_FF_FF_FFu
         const val INTEREST_MEDIA: ULong =                   0x00_00_00_00_FF_00_00_00u
 
         fun new(
@@ -227,6 +234,18 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
     var isComposingEnabled: Boolean
         get() = getFlag(F_IS_COMPOSING_ENABLED)
         set(v) { setFlag(F_IS_COMPOSING_ENABLED, v) }
+
+    var isKanaKata: Boolean
+        get() = getFlag(F_IS_KANA_KATA)
+        set(v) { setFlag(F_IS_KANA_KATA, v) }
+
+    var isCharHalfWidth: Boolean
+        get() = getFlag(F_IS_CHAR_HALF_WIDTH)
+        set(v) { setFlag(F_IS_CHAR_HALF_WIDTH, v) }
+
+    var isKanaSmall: Boolean
+        get() = getFlag(F_IS_KANA_SMALL)
+        set(v) { setFlag(F_IS_KANA_SMALL, v) }
 
     interface OnUpdateStateListener {
         /**

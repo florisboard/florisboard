@@ -145,6 +145,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             return evaluateCaps() && data.code >= KeyCode.SPACE
         }
 
+        override fun evaluateCharHalfWidth(): Boolean = activeState.isCharHalfWidth
+
+        override fun evaluateKanaKata(): Boolean = activeState.isKanaKata
+
+        override fun evaluateKanaSmall(): Boolean = activeState.isKanaSmall
+
         override fun evaluateEnabled(data: KeyData): Boolean {
             return when (data.code) {
                 KeyCode.CLIPBOARD_COPY,
@@ -678,6 +684,66 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     /**
+     * Handles a [KeyCode.KANA_SWITCHER] event
+     */
+    private fun handleKanaSwitch() {
+        activeState.isKanaKata = !activeState.isKanaKata
+        activeState.isCharHalfWidth = false
+        florisboard.dispatchCurrentStateToInputUi()
+    }
+
+    /**
+     * Handles a [KeyCode.KANA_HIRA] event
+     */
+    private fun handleKanaHira() {
+        activeState.isKanaKata = false
+        activeState.isCharHalfWidth = false
+        florisboard.dispatchCurrentStateToInputUi()
+    }
+
+    /**
+     * Handles a [KeyCode.KANA_KATA] event
+     */
+    private fun handleKanaKata() {
+        activeState.isKanaKata = true
+        activeState.isCharHalfWidth = false
+        florisboard.dispatchCurrentStateToInputUi()
+    }
+
+    /**
+     * Handles a [KeyCode.KANA_HALF_KATA] event
+     */
+    private fun handleKanaHalfKata() {
+        activeState.isKanaKata = true
+        activeState.isCharHalfWidth = true
+        florisboard.dispatchCurrentStateToInputUi()
+    }
+
+    /**
+     * Handles a [KeyCode.CHAR_WIDTH_SWITCHER] event
+     */
+    private fun handleCharWidthSwitch() {
+        activeState.isCharHalfWidth = !activeState.isCharHalfWidth
+        florisboard.dispatchCurrentStateToInputUi()
+    }
+
+    /**
+     * Handles a [KeyCode.CHAR_WIDTH_SWITCHER] event
+     */
+    private fun handleCharWidthFull() {
+        activeState.isCharHalfWidth = false
+        florisboard.dispatchCurrentStateToInputUi()
+    }
+
+    /**
+     * Handles a [KeyCode.CHAR_WIDTH_SWITCHER] event
+     */
+    private fun handleCharWidthHalf() {
+        activeState.isCharHalfWidth = true
+        florisboard.dispatchCurrentStateToInputUi()
+    }
+
+    /**
      * Handles a [KeyCode.SPACE] event. Also handles the auto-correction of two space taps if
      * enabled by the user.
      */
@@ -811,6 +877,9 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             } else {
                 handleArrow(data.code, 1)
             }
+            KeyCode.CHAR_WIDTH_SWITCHER -> handleCharWidthSwitch()
+            KeyCode.CHAR_WIDTH_FULL -> handleCharWidthFull()
+            KeyCode.CHAR_WIDTH_HALF -> handleCharWidthHalf()
             KeyCode.CLEAR_CLIPBOARD_HISTORY -> florisboard.florisClipboardManager?.clearHistoryWithAnimation()
             KeyCode.CLIPBOARD_CUT -> activeEditorInstance.performClipboardCut()
             KeyCode.CLIPBOARD_COPY -> activeEditorInstance.performClipboardCopy()
@@ -829,6 +898,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyCode.SETTINGS -> florisboard.launchSettings()
             KeyCode.SHIFT -> handleShiftUp()
             KeyCode.SHIFT_LOCK -> handleShiftLock()
+            KeyCode.KANA_SWITCHER -> handleKanaSwitch()
+            KeyCode.KANA_HIRA -> handleKanaHira()
+            KeyCode.KANA_KATA -> handleKanaKata()
+            KeyCode.KANA_HALF_KATA -> handleKanaHalfKata()
             KeyCode.SHOW_INPUT_METHOD_PICKER -> florisboard.imeManager?.showInputMethodPicker()
             KeyCode.SPACE -> handleSpace(ev)
             KeyCode.SWITCH_TO_MEDIA_CONTEXT -> florisboard.setActiveInput(R.id.media_input)

@@ -52,6 +52,10 @@ class TextKeyboardIconSet private constructor(context: Context) : KeyboardIconSe
             R.drawable.ic_send,
             R.drawable.ic_sentiment_satisfied,
             R.drawable.ic_space_bar,
+            R.drawable.ic_keyboard_kana_switcher_hira,
+            R.drawable.ic_keyboard_kana_switcher_kata,
+            R.drawable.ic_keyboard_char_width_switcher_full,
+            R.drawable.ic_keyboard_char_width_switcher_half,
         )
 
         /**

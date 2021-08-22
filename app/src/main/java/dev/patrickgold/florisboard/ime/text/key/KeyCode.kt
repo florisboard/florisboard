@@ -102,4 +102,16 @@ object KeyCode {
 
     const val KESHIDA =                     1600
     const val HALF_SPACE =                  8204
+
+    const val CJK_SPACE =                  12288
+
+    const val CHAR_WIDTH_SWITCHER =        -9701
+    const val CHAR_WIDTH_FULL =            -9702
+    const val CHAR_WIDTH_HALF =            -9703
+
+    const val KANA_SMALL =                 12307
+    const val KANA_SWITCHER =              -9710
+    const val KANA_HIRA =                  -9711
+    const val KANA_KATA =                  -9712
+    const val KANA_HALF_KATA =             -9713
 }

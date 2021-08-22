@@ -73,6 +73,21 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 ?: DefaultComputingEvaluator.evaluateCaps()
         }
 
+        override fun evaluateKanaKata(): Boolean {
+            return externalComputingEvaluator?.evaluateKanaKata()
+                ?: DefaultComputingEvaluator.evaluateKanaKata()
+        }
+
+        override fun evaluateKanaSmall(): Boolean {
+            return externalComputingEvaluator?.evaluateKanaSmall()
+                ?: DefaultComputingEvaluator.evaluateKanaSmall()
+        }
+
+        override fun evaluateCharHalfWidth(): Boolean {
+            return externalComputingEvaluator?.evaluateCharHalfWidth()
+                ?: DefaultComputingEvaluator.evaluateCharHalfWidth()
+        }
+
         override fun evaluateCaps(data: KeyData): Boolean {
             return externalComputingEvaluator?.evaluateCaps(data)
                 ?: DefaultComputingEvaluator.evaluateCaps(data)
@@ -326,7 +341,8 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                         val alwaysTriggerOnMove = (pointer.hasTriggeredGestureMove
                             && (pointer.initialKey?.computedData?.code == KeyCode.DELETE
                             && prefs.gestures.deleteKeySwipeLeft == SwipeAction.DELETE_CHARACTERS_PRECISELY
-                            || pointer.initialKey?.computedData?.code == KeyCode.SPACE))
+                            || pointer.initialKey?.computedData?.code == KeyCode.SPACE
+                            || pointer.initialKey?.computedData?.code == KeyCode.CJK_SPACE))
                         if (swipeGestureDetector.onTouchMove(
                                 event,
                                 pointer,
@@ -440,7 +456,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             pointer.longPressJob = mainScope.launch {
                 val delayMillis = prefs.keyboard.longPressDelay.toLong()
                 when (key.computedData.code) {
-                    KeyCode.SPACE -> {
+                    KeyCode.SPACE, KeyCode.CJK_SPACE -> {
                         initSelectionStart = florisboard!!.activeEditorInstance.selection.start
                         initSelectionEnd = florisboard!!.activeEditorInstance.selection.end
                         delay((delayMillis * 2.5f).toLong())
@@ -578,9 +594,10 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
         return when (initialKey.computedData.code) {
             KeyCode.DELETE -> handleDeleteSwipe(event)
-            KeyCode.SPACE -> handleSpaceSwipe(event)
+            KeyCode.SPACE, KeyCode.CJK_SPACE -> handleSpaceSwipe(event)
             else -> when {
-                initialKey.computedData.code == KeyCode.SHIFT && activeKey?.computedData?.code == KeyCode.SPACE &&
+                (initialKey.computedData.code == KeyCode.SHIFT && activeKey?.computedData?.code == KeyCode.SPACE ||
+                    initialKey.computedData.code == KeyCode.SHIFT && activeKey?.computedData?.code == KeyCode.CJK_SPACE) &&
                     event.type == SwipeGesture.Type.TOUCH_MOVE -> handleSpaceSwipe(event)
                 initialKey.computedData.code == KeyCode.SHIFT && activeKey?.computedData?.code != KeyCode.SHIFT &&
                     event.type == SwipeGesture.Type.TOUCH_UP -> {
@@ -858,7 +875,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
     private fun layoutRenderView(rv: TextKeyView, key: TextKey, isBorderless: Boolean) {
         val shouldReduceSize = isBorderless &&
-            (key.computedData.code == KeyCode.SPACE || key.computedData.code == KeyCode.ENTER)
+            (key.computedData.code == KeyCode.SPACE || key.computedData.code == KeyCode.CJK_SPACE || key.computedData.code == KeyCode.ENTER)
         rv.layout(
             key.visibleBounds.left,
             if (shouldReduceSize) {
@@ -936,11 +953,11 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             rv.bgDrawable.paint.color = keyBackground.toSolidColor().color
             rv.labelPaint.let {
                 it.color = keyForeground.toSolidColor().color
-                if (computedKeyboard?.mode == KeyboardMode.CHARACTERS && key.computedData.code == KeyCode.SPACE) {
+                if (computedKeyboard?.mode == KeyboardMode.CHARACTERS && (key.computedData.code == KeyCode.SPACE || key.computedData.code == KeyCode.CJK_SPACE)) {
                     it.alpha = 120
                 }
                 it.textSize = when (key.computedData.code) {
-                    KeyCode.SPACE -> labelPaintSpaceTextSize
+                    KeyCode.SPACE, KeyCode.CJK_SPACE -> labelPaintSpaceTextSize
                     KeyCode.VIEW_CHARACTERS,
                     KeyCode.VIEW_SYMBOLS,
                     KeyCode.VIEW_SYMBOLS2 -> labelPaintTextSize * 0.80f
@@ -1095,7 +1112,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         key.foregroundDrawableId = null
 
         val data = key.computedData
-        if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE
+        if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE && data.code != KeyCode.CJK_SPACE
             && data.code != KeyCode.HALF_SPACE && data.code != KeyCode.KESHIDA || data.type == KeyType.NUMERIC
         ) {
             key.label = data.asString(isForDisplay = true)
@@ -1152,7 +1169,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                         else -> R.drawable.ic_keyboard_arrow_up
                     }
                 }
-                KeyCode.SPACE -> {
+                KeyCode.SPACE, KeyCode.CJK_SPACE -> {
                     when (computedKeyboard?.mode) {
                         KeyboardMode.NUMERIC,
                         KeyboardMode.NUMERIC_ADVANCED,
@@ -1172,6 +1189,26 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 }
                 KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
                     key.foregroundDrawableId = R.drawable.ic_assignment
+                }
+                KeyCode.KANA_SWITCHER -> {
+                    key.foregroundDrawableId = if (cachedState.isKanaKata) {
+                        R.drawable.ic_keyboard_kana_switcher_kata
+                    } else {
+                        R.drawable.ic_keyboard_kana_switcher_hira
+                    }
+                }
+                KeyCode.CHAR_WIDTH_SWITCHER -> {
+                    key.foregroundDrawableId = if (cachedState.isCharHalfWidth) {
+                        R.drawable.ic_keyboard_char_width_switcher_full
+                    } else {
+                        R.drawable.ic_keyboard_char_width_switcher_half
+                    }
+                }
+                KeyCode.CHAR_WIDTH_FULL -> {
+                    key.foregroundDrawableId = R.drawable.ic_keyboard_char_width_switcher_full
+                }
+                KeyCode.CHAR_WIDTH_HALF -> {
+                    key.foregroundDrawableId = R.drawable.ic_keyboard_char_width_switcher_half
                 }
                 KeyCode.SWITCH_TO_TEXT_CONTEXT,
                 KeyCode.VIEW_CHARACTERS -> {

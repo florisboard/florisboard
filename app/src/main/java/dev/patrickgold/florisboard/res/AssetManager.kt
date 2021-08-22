@@ -25,6 +25,8 @@ import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.CaseSelector
+import dev.patrickgold.florisboard.ime.keyboard.KanaSelector
+import dev.patrickgold.florisboard.ime.keyboard.CharWidthSelector
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
@@ -32,6 +34,7 @@ import dev.patrickgold.florisboard.ime.spelling.SpellingConfig
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.composing.HangulUnicode
+import dev.patrickgold.florisboard.ime.text.composing.KanaUnicode
 import dev.patrickgold.florisboard.ime.text.composing.WithRules
 import dev.patrickgold.florisboard.ime.text.keyboard.AutoTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.MultiTextKeyData
@@ -66,6 +69,8 @@ class AssetManager private constructor(val applicationContext: Context) {
                 subclass(EmojiKeyData::class, EmojiKeyData.serializer())
                 subclass(CaseSelector::class, CaseSelector.serializer())
                 subclass(VariationSelector::class, VariationSelector.serializer())
+                subclass(CharWidthSelector::class, CharWidthSelector.serializer())
+                subclass(KanaSelector::class, KanaSelector.serializer())
                 default { TextKeyData.serializer() }
             }
             polymorphic(KeyData::class) {
@@ -78,6 +83,7 @@ class AssetManager private constructor(val applicationContext: Context) {
             polymorphic(Composer::class) {
                 subclass(Appender::class, Appender.serializer())
                 subclass(HangulUnicode::class, HangulUnicode.serializer())
+                subclass(KanaUnicode::class, KanaUnicode.serializer())
                 subclass(WithRules::class, WithRules.serializer())
                 default { Appender.serializer() }
             }
