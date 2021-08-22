@@ -171,12 +171,12 @@
     <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrar para eventos de entrada, dependiendo de los ajustes del sistema</string>
     <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignorar ajustes táctiles del sistema</string>
     <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Usa las preferencias de abajo, incluso si la respuesta táctil está deshabilitada por sistema</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Vibrar directamente</string>
-    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Vibrar directamente en vez de usar la vibracion del set de funciones de android</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Activar vibración directamente</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Activar vibración directamente en lugar de usar la función de respuesta táctil de Android</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Duración de vibración</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensidad de vibración</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Esta función requiere soporte del control de amplitud de hardware, que falta en tu dispositivo</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Esta función requiere soporte del control de amplitud, que solo es disponible en android 8.0 y posterior</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Esta función requiere soporte de control de amplitud de hardware, el cual falta en su dispositivo</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Esta función requiere soporte de control de amplitud, el cual solo está disponible desde Android 8.0 en adelante</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibración al presionar una tecla</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibración al presionar prolongadamente</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Vibración al presionar repetidamente</string>

@@ -155,6 +155,38 @@
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Цвет текста</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Пользовательский атрибут (%s)</string>
     <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Звук и вибрация</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Аудиоотклик / звуки</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Использовать аудиоотклик</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Воспроизводить звуки при вводе в зависимости от системных настроек</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Игнорировать системные настройки аудиоотклика</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Использовать нижеприведённые настройки, даже если звук в системе отключён. Не используются, когда отключён системный рингтон.</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Громкость звука при вводе</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Звук нажатия кнопки</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Звук долгого нажатия кнопки</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Звук автоповтора ввода кнопки</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Звук жестов смахиваний</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Звук жестов перетаскивания</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Виброотклик / вибрация</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Использовать виброотклик</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Вибрирация при вводе в зависимости от системных настроек</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Игнорировать системные настройки виброотклика</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Использовать нижеприведённые настройки, даже если в системе виброотклик отключён</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Использовать вибрацию напрямую</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Использовать функцию вибрации напрямую вместо использования набора функций виброотклика Android</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Продолжительность вибрации</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Сила вибрации</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Эта функция требует аппаратной поддержки управления амплитудой, которая отсутствует на вашем устройстве</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Эта функция требует поддержки управления амплитудой, которая доступна только на Android 8.0 или новее</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Вибрация нажатия кнопки</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Вибрация долгого нажатия кнопки</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Вибрация автоповтора ввода кнопки</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Вибрация жестов смахивания</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Вибрация жестов перетаскивания</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">например, кнопки, управляющие клавиши или вкладки с эмодзи</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">например, всплывающее меню</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">например, кнопка «удалить»</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">не реализовано</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">например, жест перемещения курсора</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Параметры клавиатуры</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Кнопки</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Цифровой ряд</string>
