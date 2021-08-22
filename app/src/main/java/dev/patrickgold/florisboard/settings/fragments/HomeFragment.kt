@@ -66,7 +66,12 @@ class HomeFragment : SettingsMainActivity.SettingsFragment() {
             settingsMainActivity.binding.bottomNavigation.selectedItemId = R.id.settings__navigation__theme
         }
         binding.spellingCard.setOnClickListener {
-            startActivity(Intent(context, SpellingActivity::class.java))
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://github.com/florisboard/florisboard/releases/tag/v0.3.13")
+            ).apply {
+                startActivity(this)
+            }
         }
 
         return binding.root

@@ -53,11 +53,21 @@
         android:id="@+id/spelling_card"
         style="@style/SettingsCardView.Clickable">
 
-        <!-- TODO: remove this card when spelling is out of experimental -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="This version contains experimental support for a system spell checker service provided by FlorisBoard. You can try it out by going to Typing > Group Correction > Spell checker.\n\nNote: the spell checker currently only marks incorrect words and provides possible corrections within the text field, including those correction suggestions within the Smartbar is planned but not yet implemented!"/>
+            android:text="@string/v0313__release_notes"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/en_us_only_card"
+        style="@style/SettingsCardView">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note: Word suggestions and glide typing in this version only support English (US). Additional language support will be added in 0.3.15!"/>
 
     </androidx.cardview.widget.CardView>
 
