@@ -17,24 +17,26 @@
 package dev.patrickgold.florisboard
 
 import android.service.textservice.SpellCheckerService
-import android.util.LruCache
 import android.view.textservice.SentenceSuggestionsInfo
 import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextInfo
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogInfo
-import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
-import dev.patrickgold.florisboard.ime.spelling.SpellingDict
-import dev.patrickgold.florisboard.ime.spelling.SpellingManager
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
+import dev.patrickgold.florisboard.ime.spelling.SpellingService
+import kotlinx.coroutines.runBlocking
 
 class FlorisSpellCheckerService : SpellCheckerService() {
+    companion object {
+        private const val USE_FLORIS_SUBTYPES_LOCALE: String = "zz"
+    }
+
     private val dictionaryManager get() = DictionaryManager.default()
+    private val spellingService: SpellingService = SpellingService.globalInstance()
+    private val subtypeManager get() = SubtypeManager.default()
 
     override fun onCreate() {
         flogInfo(LogTopic.SPELL_EVENTS)
@@ -55,43 +57,8 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         super.onDestroy()
     }
 
-    private class SuggestionsCache(size: Int) {
-        val suggestionsInfoCache: LruCache<String, SuggestionsInfo> = LruCache(size)
-
-        inline fun getOrGenerate(word: String, generator: (w: String) -> SuggestionsInfo): SuggestionsInfo {
-            contract {
-                callsInPlace(generator, InvocationKind.AT_MOST_ONCE)
-            }
-            val cachedSuggestionsInfo = suggestionsInfoCache.get(word)
-            if (cachedSuggestionsInfo != null) {
-                return cachedSuggestionsInfo
-            }
-            val newSuggestionsInfo = generator(word)
-            suggestionsInfoCache.put(word, newSuggestionsInfo)
-            return newSuggestionsInfo
-        }
-
-        fun clear() {
-            suggestionsInfoCache.evictAll()
-        }
-    }
-
-    private class FlorisSpellCheckerSession : Session() {
-        companion object {
-            private const val USE_FLORIS_SUBTYPES_LOCALE: String = "zz"
-            private const val SUGGESTIONS_MAX_SIZE = 50
-
-            private val EMPTY_STRING_ARRAY: Array<out String> = arrayOf()
-        }
-
-        private val prefs get() = Preferences.default()
-        private val dictionaryManager get() = DictionaryManager.default()
-        private val spellingManager get() = SpellingManager.default()
-        private val subtypeManager get() = SubtypeManager.default()
-
-        private var cachedSpellingDict: SpellingDict? = null
+    private inner class FlorisSpellCheckerSession : Session() {
         private var cachedSpellingLocale: FlorisLocale? = null
-        private val suggestionsCache = SuggestionsCache(SUGGESTIONS_MAX_SIZE)
 
         override fun onCreate() {
             flogInfo(LogTopic.SPELL_EVENTS) { "Session locale: $locale" }
@@ -108,48 +75,20 @@ class FlorisSpellCheckerService : SpellCheckerService() {
 
             if (evaluatedLocale != cachedSpellingLocale) {
                 cachedSpellingLocale = evaluatedLocale
-                cachedSpellingDict = spellingManager.getSpellingDict(evaluatedLocale)
-                suggestionsCache.clear()
-            }
-        }
-
-        private fun emptySuggestionsInfo() = SuggestionsInfo(0, EMPTY_STRING_ARRAY)
-
-        private fun spell(
-            textInfo: TextInfo,
-            suggestionsLimit: Int,
-            spellingDict: SpellingDict,
-            spellingLocale: FlorisLocale
-        ): SuggestionsInfo {
-            val word = textInfo.text ?: return emptySuggestionsInfo()
-
-            return suggestionsCache.getOrGenerate(word) {
-                var isWordOk = false
-                if (prefs.spelling.useUdmEntries) {
-                    isWordOk = dictionaryManager.spell(word, spellingLocale)
-                }
-                return@getOrGenerate if (isWordOk) {
-                    SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_IN_THE_DICTIONARY, EMPTY_STRING_ARRAY)
-                } else {
-                    isWordOk = spellingDict.spell(word)
-                    if (isWordOk) {
-                        SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_IN_THE_DICTIONARY, EMPTY_STRING_ARRAY)
-                    } else {
-                        val suggestions = spellingDict.suggest(word, suggestionsLimit)
-                        SuggestionsInfo(SuggestionsInfo.RESULT_ATTR_LOOKS_LIKE_TYPO, suggestions)
-                    }
-                }
             }
         }
 
         private fun spellMultiple(
+            spellingLocale: FlorisLocale,
             textInfos: Array<out TextInfo>,
-            suggestionsLimit: Int,
-            spellingDict: SpellingDict,
-            spellingLocale: FlorisLocale
-        ): Array<SuggestionsInfo> {
-            return Array(textInfos.size) { n ->
-                spell(textInfos[n], suggestionsLimit, spellingDict, spellingLocale).apply {
+            suggestionsLimit: Int
+        ): Array<SuggestionsInfo> = runBlocking {
+            val retInfos = Array(textInfos.size) { n ->
+                val word = textInfos[n].text ?: ""
+                spellingService.spellAsync(spellingLocale, word, suggestionsLimit)
+            }
+            Array(textInfos.size) { n ->
+                retInfos[n].await().apply {
                     setCookieAndSequence(textInfos[n].cookie, textInfos[n].sequence)
                 }
             }
@@ -158,12 +97,11 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         override fun onGetSuggestions(textInfo: TextInfo?, suggestionsLimit: Int): SuggestionsInfo {
             flogInfo(LogTopic.SPELL_EVENTS) { "text=${textInfo?.text}, limit=$suggestionsLimit" }
 
-            textInfo ?: return emptySuggestionsInfo()
+            textInfo?.text ?: return SpellingService.emptySuggestionsInfo()
             setupSpellingIfNecessary()
-            val spellingDict = cachedSpellingDict ?: return emptySuggestionsInfo()
-            val spellingLocale = cachedSpellingLocale ?: return emptySuggestionsInfo()
+            val spellingLocale = cachedSpellingLocale ?: return SpellingService.emptySuggestionsInfo()
 
-            return spell(textInfo, suggestionsLimit, spellingDict, spellingLocale)
+            return spellingService.spell(spellingLocale, textInfo.text, suggestionsLimit)
         }
 
         override fun onGetSuggestionsMultiple(
@@ -175,10 +113,9 @@ class FlorisSpellCheckerService : SpellCheckerService() {
 
             textInfos ?: return emptyArray()
             setupSpellingIfNecessary()
-            val spellingDict = cachedSpellingDict ?: return emptyArray()
             val spellingLocale = cachedSpellingLocale ?: return emptyArray()
 
-            return spellMultiple(textInfos, suggestionsLimit, spellingDict, spellingLocale)
+            return spellMultiple(spellingLocale, textInfos, suggestionsLimit)
         }
 
         override fun onGetSentenceSuggestionsMultiple(
@@ -195,14 +132,12 @@ class FlorisSpellCheckerService : SpellCheckerService() {
             flogInfo(LogTopic.SPELL_EVENTS)
 
             super.onCancel()
-            suggestionsCache.clear()
         }
 
         override fun onClose() {
             flogInfo(LogTopic.SPELL_EVENTS)
 
             super.onClose()
-            suggestionsCache.clear()
         }
     }
 }
