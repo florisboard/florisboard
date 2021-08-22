@@ -2,7 +2,7 @@
   "type": "numeric_row",
   "name": "cjk",
   "label": "CJK",
-  "authors": [ "patrickgold" ],
+  "authors": [ "waelwindows" ],
   "direction": "ltr",
   "arrangement": [
     [
