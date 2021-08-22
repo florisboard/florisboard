@@ -678,6 +678,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     private fun handleKanaSwitch() {
         activeState.isKanaKata = !activeState.isKanaKata
+        activeState.isCharHalfWidth = false
         florisboard.dispatchCurrentStateToInputUi()
     }
 
