@@ -1,0 +1,5 @@
+This release vastly improves the performance of the spell checker, adds Japanese JIS
+(thanks @Waelwindows), re-introduces the 0.3.12-like suggestions (English (US) only)
+and fixes the delete swipe.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.13-beta10
