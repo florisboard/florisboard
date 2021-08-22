@@ -2,9 +2,7 @@
   "type": "symbols",
   "name": "cjk",
   "label": "CJK",
-  "authors": [
-    "waelwindows"
-  ],
+  "authors": [ "waelwindows" ],
   "direction": "ltr",
   "modifier": "cjk",
   "arrangement": [
