@@ -2,7 +2,7 @@
   "type": "characters",
   "name": "jis",
   "label": "JIS",
-  "authors": [ "Waelwindows" ],
+  "authors": [ "waelwindows" ],
   "direction": "ltr",
   "modifier": "jis",
   "arrangement": [
