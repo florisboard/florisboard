@@ -45,7 +45,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Note: Preferences tagged with [NYI] are not yet implemented and thus won\'t do anything or do some basic placeholder stuff only. Please do not file a bug report for these."/>
+            android:text="Preferences tagged with [NYI] are not yet implemented and thus won\'t do anything or do some basic placeholder stuff only. Please do not file a bug report for these."/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/en_us_only_card"
+        style="@style/SettingsCardView">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Word suggestions and glide typing in this version only support English (US). Additional language support will be added in 0.3.15!\n\nWord suggestions may not show up even when enabled if the FlorisBoard process has insufficient memory available (min 312MB heap size). This issue will also be addressed in 0.3.15."/>
 
     </androidx.cardview.widget.CardView>
 
@@ -57,17 +68,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/v0313__release_notes"/>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/en_us_only_card"
-        style="@style/SettingsCardView">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Note: Word suggestions and glide typing in this version only support English (US). Additional language support will be added in 0.3.15!"/>
 
     </androidx.cardview.widget.CardView>
 

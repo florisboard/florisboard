@@ -343,6 +343,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     prefs.suggestion.enabled// &&
             //!instance.inputAttributes.flagTextAutoComplete &&
             //!instance.inputAttributes.flagTextNoSuggestions
+        } && run {
+            val runtime = Runtime.getRuntime()
+            val maxHeapSizeInMB = runtime.maxMemory() / 1048576L
+            maxHeapSizeInMB >= 312
         }
         val newIsNumberRowVisible = prefs.keyboard.numberRow
         if (isNumberRowVisible != newIsNumberRowVisible) {
