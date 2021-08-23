@@ -37,16 +37,30 @@
           }
         }
       },
-      { "code": 12539, "label": "・", "popup": {
-        "main": { "code": 9834, "label": "♪" },
-        "relevant": [
-          { "code": 8226, "label": "•" },
-          { "code": 9827, "label": "♣" },
-          { "code": 9824, "label": "♠" },
-          { "code": 9829, "label": "♥" },
-          { "code": 9830, "label": "♦" }
-        ]
-      } },
+      { "$": "char_width_selector",
+        "full":
+          { "code": 12539, "label": "・", "popup": {
+            "main": { "code": 9834, "label": "♪" },
+            "relevant": [
+              { "code": 8226, "label": "•" },
+              { "code": 9827, "label": "♣" },
+              { "code": 9824, "label": "♠" },
+              { "code": 9829, "label": "♥" },
+              { "code": 9830, "label": "♦" }
+            ]
+          } },
+        "half":
+          { "code": 8226, "label": "•", "popup": {
+            "main": { "code": 9834, "label": "♪" },
+            "relevant": [
+              { "code": 12539, "label": "・" },
+              { "code": 9827, "label": "♣" },
+              { "code": 9824, "label": "♠" },
+              { "code": 9829, "label": "♥" },
+              { "code": 9830, "label": "♦" }
+            ]
+          } }
+      },
       { "code": 8730, "label": "√" },
       { "code":  960, "label": "π", "popup": {
         "main": { "code":  928, "label": "Π" },
