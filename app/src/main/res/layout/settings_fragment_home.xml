@@ -56,7 +56,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Word suggestions and glide typing in this version only support English (US). Additional language support will be added in 0.3.15!\n\nWord suggestions may not show up even when enabled if the FlorisBoard process has insufficient memory available (min 312MB heap size). This issue will also be addressed in 0.3.15."/>
+            android:text="Word suggestions and glide typing in this version only support English (US). Additional language support will be added in 0.3.15!\n\nWord suggestions may not show up even when enabled if the FlorisBoard process has insufficient heap size available (min 256 MB heap size). This issue will also be addressed in 0.3.15."/>
 
     </androidx.cardview.widget.CardView>
 

@@ -349,7 +349,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             } else {
                 val runtime = Runtime.getRuntime()
                 val maxHeapSizeInMB = runtime.maxMemory() / 1048576L
-                maxHeapSizeInMB >= 312
+                maxHeapSizeInMB >= 256
             }
         }
         val newIsNumberRowVisible = prefs.keyboard.numberRow
