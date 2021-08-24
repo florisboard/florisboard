@@ -1,0 +1,4 @@
+This release aims to fix some issues based on community feedback around
+the temporary word suggestions restrictions.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.13-beta12
