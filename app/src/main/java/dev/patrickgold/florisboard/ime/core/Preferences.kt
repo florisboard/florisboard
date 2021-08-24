@@ -202,6 +202,7 @@ class Preferences(
         companion object {
             const val ENABLED =                     "devtools__enabled"
             const val SHOW_HEAP_MEMORY_STATS =      "devtools__show_heap_memory_stats"
+            const val OVERRIDE_WS_MIN_HEAP_RES =    "devtools__override_word_suggestions_min_heap_restriction"
             const val CLEAR_UDM_INTERNAL_DATABASE = "devtools__clear_udm_internal_database"
         }
 
@@ -211,6 +212,9 @@ class Preferences(
         var showHeapMemoryStats: Boolean
             get() =  prefs.getPref(SHOW_HEAP_MEMORY_STATS, false)
             set(v) = prefs.setPref(SHOW_HEAP_MEMORY_STATS, v)
+        var overrideWordSuggestionsMinHeapRestriction: Boolean
+            get() =  prefs.getPref(OVERRIDE_WS_MIN_HEAP_RES, false)
+            set(v) = prefs.setPref(OVERRIDE_WS_MIN_HEAP_RES, v)
     }
 
     /**

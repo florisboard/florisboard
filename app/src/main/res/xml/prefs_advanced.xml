@@ -43,6 +43,15 @@
         app:summary="@string/pref__devtools__show_heap_memory_stats__summary"
         app:useSimpleSummaryProvider="true"/>
 
+    <SwitchPreferenceCompat
+        android:defaultValue="false"
+        app:dependency="devtools__enabled"
+        app:key="devtools__override_word_suggestions_min_heap_restriction"
+        app:iconSpaceReserved="false"
+        app:title="Override min heap size restriction for word suggestions"
+        app:summary="This allows you to use word suggestions even if your heap size is not intended for it and can break FlorisBoard"
+        app:useSimpleSummaryProvider="true"/>
+
     <Preference
         app:dependency="devtools__enabled"
         app:key="devtools__clear_udm_internal_database"
