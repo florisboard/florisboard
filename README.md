@@ -64,7 +64,7 @@ alt="Preview image">
 ## Implemented features
 This list contains all implemented and fully functional features
 FlorisBoard currently has to offer. For planned features and its
-milestones, please refer to the [Feature roadmap](#feature-roadmap).
+milestones, please refer to the [Feature roadmap](ROADMAP.md).
 
 ### Basics
 * [x] Implementation of the keyboard core (InputMethodService)
@@ -72,14 +72,14 @@ milestones, please refer to the [Feature roadmap](#feature-roadmap).
 * [x] Caps + Caps Lock
 * [x] Key popups
 * [x] Extended key popups (e.g. a -> á, à, ä, ...)
-* [x] Key press sound/vibration
+* [x] Audio/haptic feedback for keyboard touch interaction
 * [x] Portrait orientation support
 * [x] Landscape orientation support (needs tweaks)
 
 ### Layouts
 * [x] Latin character layouts (QWERTY, QWERTZ, AZERTY, Swiss, Spanish, Norwegian, Swedish/Finnish, Icelandic, Danish,
       Hungarian, Croatian, Polish, Romanian, Colemak, Dvorak, Turkish-Q, Turkish-F, and more...)
-* [x] Non-latin character layouts (Arabic, Persian, Kurdish, Greek, Russian (JCUKEN), and more...)
+* [x] Non-latin character layouts (Arabic, Persian, Kurdish, Greek, Russian (JCUKEN), Japanese JIS, and more...)
 * [x] Adapt to situation in app (password, url, text, etc. )
 * [x] Special character layout(s)
 * [x] Numeric layout
@@ -106,18 +106,16 @@ milestones, please refer to the [Feature roadmap](#feature-roadmap).
 * [x] Clipboard manager/history
 * [x] Integrated number row / symbols in character layouts
 * [x] Gesture support
+* [x] System-wide spell checker with spell results from FlorisBoard
 * [x] Full support for the system user dictionary (shared dictionary
       between all keyboards) and a private, internal user dictionary
 * [x] Full integration in IME service list of Android (xml/method)
       (integration is internal-only, because Android's default subtype
       implementation not really allows for dynamic language/layout
       pairs, only compile-time defined ones)
-* [ ] Description and settings reference in System Language & Input
+* [x] Description and settings reference in System Language & Input
 * [ ] (dev only) Generate well-structured documentation of code
 * [ ] ...
-
-## Feature roadmap
-See the [roadmap page](ROADMAP.md) for this.
 
 ## Contributing
 Wanna contribute to FlorisBoard? That's great to hear! There are lots of
