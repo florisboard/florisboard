@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
+  - name: Ask a question
+    url: https://github.com/florisboard/florisboard/discussions/new?category=q-a
+    about: Ask here if you have a question about FlorisBoard or need assistance
   - name: General feedback
-    url: https://github.com/florisboard/florisboard/blob/master/CONTRIBUTING.md
+    url: https://github.com/florisboard/florisboard/discussions/new?category=feedback
     about: Give general feedback about this project

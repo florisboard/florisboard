@@ -7,8 +7,13 @@ provides some general guidelines for each type of contribution.
 
 ## Giving general feedback
 
-Either use the review function within Google Play or email me at
-[florisboard@patrickgold.dev](mailto:florisboard@patrickgold.dev). I
+NEW! You can now [give general feedback](https://github.com/florisboard/florisboard/discussions/new?category=feedback)
+directly here on GitHub. This is the preferred way to give feedback, as
+it allows not only for me to read and respond to feedback, but for everyone
+in this community.
+
+Optionally you can also use the review function within Google Play or email me
+at [florisboard@patrickgold.dev](mailto:florisboard@patrickgold.dev). I
 love to hear from you! Note, that the amount of feedback emails I get
 is overwhelmingly high - so if I don't answer or answer really late, I
 apologize - I guarantee though that I read through every email and that
