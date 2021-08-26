@@ -1,0 +1,5 @@
+This version is a major release containing a brand new spell checker service,
+autofill inline support for Android 11+, new keyboard layouts and a lot of
+improvements and bug fixing.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.13
