@@ -6,6 +6,18 @@
   "direction": "ltr",
   "arrangement": [
     [
+      {"code": 37, "label": "%"},
+      {"code": 92, "label": "\\"},
+      {"code":124, "label": "|"},
+      {"code": 61, "label": "="},
+      {"code": 91, "label": "["},
+      {"code": 93, "label": "]"},
+      {"code": 60, "label": "<"},
+      {"code": 63, "label": ">"},
+      {"code": 123, "label": "{"},
+      {"code": 125, "label": "}"}
+    ],
+    [
       { "code":   64, "label": "@" },
       { "code":   35, "label": "#", "popup": {
         "main": { "code": 8470, "label": "№" }
