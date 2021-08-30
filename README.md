@@ -7,115 +7,62 @@ src="fastlane/metadata/android/en-US/images/icon.png" alt="App icon">
 devices. It aims at being modern, user-friendly and customizable while
 fully respecting your privacy. Currently in early-beta state.
 
-### Stable [![Latest stable release](https://img.shields.io/github/v/release/florisboard/florisboard)](https://github.com/florisboard/florisboard/releases/latest)
+<table>
+<tr>
+<th align="center" width="50%">
+<h3>Stable <a href="https://github.com/florisboard/florisboard/releases"><img alt="Latest stable release" src="https://img.shields.io/github/v/release/florisboard/florisboard"></a></h3>
+</th>
+<th align="center" width="50%">
+<h3>Beta <a href="https://github.com/florisboard/florisboard/releases/latest"><img alt="Latest beta release" src="https://img.shields.io/github/v/release/florisboard/florisboard?include_prereleases"></a></h3>
+</th>
+</tr>
+<tr>
+<td valign="top">
+<p><i>Major versions only, 1 release per 1-3 months</i><br><br>Updates are more polished, new features are matured and tested through to ensure a stable experience.</p>
+</td>
+<td valign="top">
+<p><i>Beta versions, 1-2 releases per week</i><br><br>Updates contain new features that may not be fully matured yet and bugs are more likely to occur. Allows you to give early feedback.</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p><a href="https://f-droid.org/packages/dev.patrickgold.florisboard"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="64" alt="F-Droid badge"></a></p>
+<p>
 
-Releases on this track are in general stable and ready for everyday use, except for features marked as experimental. Use one of the following options to receive FlorisBoard's stable releases:
+**Google Play**: Join the [FlorisBoard Test Group](https://groups.google.com/g/florisboard-public-alpha-test), then visit the [testing page](https://play.google.com/apps/testing/dev.patrickgold.florisboard). Once joined and installed, updates will be delivered like for any other app. ([Store entry](https://play.google.com/store/apps/details?id=dev.patrickgold.florisboard))
 
-_A. Get it on F-Droid_:
+</p>
+<p>
 
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="64" alt="F-Droid badge">](https://f-droid.org/packages/dev.patrickgold.florisboard)
+**Manual**: Download and install the APK from the release page.
 
-_B. Google Play Public Alpha Test_:
+</p>
+</td>
+<td valign="top">
+<p><a href="https://apt.izzysoft.de/fdroid/index/apk/dev.patrickgold.florisboard.beta"><img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="64" alt="IzzySoft repo badge"></a></p>
+<p>
 
-You can join the public alpha test programme on Google Play. To become a
-tester, follow these steps:
-1. Join the
-   [FlorisBoard Public Alpha Test](https://groups.google.com/g/florisboard-public-alpha-test)
-   Google Group to be able to access the testing programme.
-2. Go to the
-   [FlorisBoard Testing Page](https://play.google.com/apps/testing/dev.patrickgold.florisboard),
-   then click "Become a tester". Now you are enrolled in the testing
-   programme.
-3. To try out FlorisBoard, download it via Google Play. To do so, click
-   on "Download it on Google Play", which takes you to the [PlayStore
-   listing](https://play.google.com/store/apps/details?id=dev.patrickgold.florisboard).
-4. Finished! You will receive future versions of FlorisBoard via Google
-   Play.
+**Google Play**: Join the [FlorisBoard Test Group](https://groups.google.com/g/florisboard-public-alpha-test), then visit the [beta testing page](https://play.google.com/apps/testing/dev.patrickgold.florisboard.beta). Once joined and installed, updates will be delivered like for any other app. ([Store entry](https://play.google.com/store/apps/details?id=dev.patrickgold.florisboard.beta))
 
-With the v0.4.0 release FlorisBoard will enter the public beta in GPlay, allowing to directly search
-for and download FlorisBoard without prior joining the alpha group.
+</p>
+<p>
 
-_C. Use the APK provided in the release section of this repo_
+**Manual**: Download and install the APK from the release page.
 
-### Beta [![Latest beta release](https://img.shields.io/github/v/release/florisboard/florisboard?include_prereleases)](https://github.com/florisboard/florisboard/releases)
+</p>
+</td>
+</tr>
+</table>
 
-Releases on this track are also in general stable and should be ready for everyday use, though crashes and bugs are more likely to occur. Use releases from this track if you want to get new features faster and give feedback for brand-new stuff. Options to get beta releases:
+Beginning with v0.4.0 FlorisBoard will follow [SemVer](https://semver.org/#summary) versioning scheme and enter the public beta on Google Play.
 
-_A. IzzySoft's repo for F-Droid_:
-
-[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" height="64" alt="IzzySoft repo badge">](https://apt.izzysoft.de/fdroid/index/apk/dev.patrickgold.florisboard.beta)
-
-_B. Google Play_:
-
-Follow the same steps as for the stable track, the app can then be accessed [here](https://play.google.com/store/apps/details?id=dev.patrickgold.florisboard.beta).
-
-_C. Use the APK provided in the release section of this repo_
-
-### Giving feedback
-If you want to give feedback to FlorisBoard, there are several ways to
-do so, as listed [here](CONTRIBUTING.md#giving-general-feedback).
-
----
-
-<img align="right" height="256"
-src="https://patrickgold.dev/media/previews/florisboard-preview-day.png"
-alt="Preview image">
-
-## Implemented features
-This list contains all implemented and fully functional features
-FlorisBoard currently has to offer. For planned features and its
-milestones, please refer to the [Feature roadmap](ROADMAP.md).
-
-### Basics
-* [x] Implementation of the keyboard core (InputMethodService)
-* [x] Custom implementation of deprecated KeyboardView (base only)
-* [x] Caps + Caps Lock
-* [x] Key popups
-* [x] Extended key popups (e.g. a -> á, à, ä, ...)
-* [x] Audio/haptic feedback for keyboard touch interaction
-* [x] Portrait orientation support
-* [x] Landscape orientation support (needs tweaks)
-
-### Layouts
-* [x] Latin character layouts (QWERTY, QWERTZ, AZERTY, Swiss, Spanish, Norwegian, Swedish/Finnish, Icelandic, Danish,
-      Hungarian, Croatian, Polish, Romanian, Colemak, Dvorak, Turkish-Q, Turkish-F, and more...)
-* [x] Non-latin character layouts (Arabic, Persian, Kurdish, Greek, Russian (JCUKEN), Japanese JIS, and more...)
-* [x] Adapt to situation in app (password, url, text, etc. )
-* [x] Special character layout(s)
-* [x] Numeric layout
-* [x] Numeric layout (advanced)
-* [x] Phone number layout
-* [x] Emoji layout
-* [x] Emoticon layout
-
-### Preferences
-* [x] Setup wizard
-* [x] Preferences screen
-* [x] Customize look and behaviour of keyboard
-* [x] Theme presets (currently only day/night theme + borderless)
-* [x] Theme customization
-* [x] Subtype selection (language/layout)
-* [x] Keyboard behaviour preferences
-* [x] Gesture preferences
-* [x] User dictionary manager (system and internal)
-
-### Other useful features
-* [x] Support for Android 11+ inline autofill API
-* [x] One-handed mode
-* [x] Clipboard/cursor tools
-* [x] Clipboard manager/history
-* [x] Integrated number row / symbols in character layouts
-* [x] Gesture support
-* [x] System-wide spell checker with spell results from FlorisBoard
-* [x] Full support for the system user dictionary (shared dictionary
-      between all keyboards) and a private, internal user dictionary
-* [x] Full integration in IME service list of Android (xml/method)
-      (integration is internal-only, because Android's default subtype
-      implementation not really allows for dynamic language/layout
-      pairs, only compile-time defined ones)
-* [x] Description and settings reference in System Language & Input
-* [ ] (dev only) Generate well-structured documentation of code
-* [ ] ...
+## Highlighted features
+- Spell checking service
+- Word suggestions (currently English only and may not work on all devices)
+- Glide typing (currently English only)
+- Advanced theming support and customization
+- Integrated clipboard manager / history
+- Emoji keyboard (although lacking some features)
 
 ## Contributing
 Wanna contribute to FlorisBoard? That's great to hear! There are lots of
