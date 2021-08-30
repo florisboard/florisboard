@@ -703,6 +703,14 @@
         "symbols": "cjk",
         "symbols2": "cjk",
         "numericRow": "cjk"
+      },
+      {
+      "id": 3200,
+      "languageTag": "ig-NG",
+      "composer": "appender",
+      "currencySet": "nigerian_naira",
+      "preferred": {
+        "characters": "igbo"
       }
     }
   ]
