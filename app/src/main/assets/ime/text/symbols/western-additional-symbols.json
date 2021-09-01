@@ -1,7 +1,7 @@
 {
   "type": "symbols",
-  "name": "western",
-  "label": "Western",
+  "name": "western-additional-symbols",
+  "label": "Western (Additional symbols)",
   "authors": [ "patrickgold" ],
   "direction": "ltr",
   "arrangement": [
