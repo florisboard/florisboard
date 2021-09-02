@@ -68,7 +68,7 @@ Beginning with v0.4.0 FlorisBoard will follow [SemVer](https://semver.org/#summa
 Wanna contribute to FlorisBoard? That's great to hear! There are lots of
 different ways to help out. Bug reporting, making pull requests,
 translating FlorisBoard to make it more accessible, etc. For more
-information see the ![contributing guidelines](CONTRIBUTING.md). Thank
+information see the [contributing guidelines](CONTRIBUTING.md). Thank
 you for your help!
 
 ## List of permissions FlorisBoard requests
