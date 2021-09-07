@@ -79,6 +79,9 @@
           { "$": "auto_text_key", "code":  251, "label": "û" }
         ]
       },
+      "n": {
+        "main": { "$": "auto_text_key", "code":  241, "label": "ñ" }
+      },
       "~right": {
         "main": { "code":   44, "label": "," },
         "relevant": [
