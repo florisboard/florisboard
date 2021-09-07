@@ -136,6 +136,7 @@ dependencies {
     implementation("com.nambimobile.widgets", "expandable-fab", "1.0.2")
     implementation("androidx.room", "room-runtime", "2.2.6")
     kapt("androidx.room", "room-compiler","2.2.6")
+    implementation("dev.patrickgold.jetpref:jetpref-datastore-model:fbf9688a09")
 
     testImplementation(kotlin("test"))
     testImplementation("androidx.test", "core", "1.3.0")
