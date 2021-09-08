@@ -54,6 +54,15 @@
             <meta-data android:name="android.view.textservice.scs" android:resource="@xml/spellchecker"/>
         </service>
 
+        <!-- Main App Activity -->
+        <activity
+            android:name="dev.patrickgold.florisboard.app.MainAppActivity"
+            android:icon="@mipmap/floris_app_icon"
+            android:label="@string/settings__title"
+            android:launchMode="singleTask"
+            android:roundIcon="@mipmap/floris_app_icon_round"
+            android:theme="@style/SettingsTheme"/>
+
         <!-- Settings Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.oldsettings.SettingsMainActivity"

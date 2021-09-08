@@ -23,6 +23,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.MainAppActivity
 import dev.patrickgold.florisboard.databinding.SettingsFragmentHomeBinding
 import dev.patrickgold.florisboard.oldsettings.SettingsMainActivity
 import dev.patrickgold.florisboard.setup.SetupActivity
@@ -47,6 +48,11 @@ class HomeFragment : SettingsMainActivity.SettingsFragment() {
         binding.imeNotSelectedCard.setOnClickListener {
             Intent(context, SetupActivity::class.java).apply {
                 putExtra(SetupActivity.EXTRA_SHOW_SINGLE_STEP, SetupActivity.Step.MAKE_DEFAULT)
+                startActivity(this)
+            }
+        }
+        binding.newSettings.setOnClickListener {
+            Intent(context, MainAppActivity::class.java).apply {
                 startActivity(this)
             }
         }
