@@ -56,7 +56,7 @@
 
         <!-- Settings Activity -->
         <activity
-            android:name="dev.patrickgold.florisboard.settings.SettingsMainActivity"
+            android:name="dev.patrickgold.florisboard.oldsettings.SettingsMainActivity"
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/settings__title"
             android:launchMode="singleTask"
@@ -80,28 +80,28 @@
 
         <!-- User Dictionary Manager Activity -->
         <activity
-            android:name="dev.patrickgold.florisboard.settings.UdmActivity"
+            android:name="dev.patrickgold.florisboard.oldsettings.UdmActivity"
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/settings__title"
             android:theme="@style/SettingsTheme"/>
 
         <!-- Theme Selector Activity -->
         <activity
-            android:name="dev.patrickgold.florisboard.settings.ThemeManagerActivity"
+            android:name="dev.patrickgold.florisboard.oldsettings.ThemeManagerActivity"
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/settings__title"
             android:theme="@style/SettingsTheme"/>
 
         <!-- Theme Editor Activity -->
         <activity
-            android:name="dev.patrickgold.florisboard.settings.ThemeEditorActivity"
+            android:name="dev.patrickgold.florisboard.oldsettings.ThemeEditorActivity"
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/settings__theme_editor__title"
             android:theme="@style/SettingsTheme"/>
 
         <!-- Spelling Activity -->
         <activity
-            android:name="dev.patrickgold.florisboard.settings.spelling.SpellingActivity"
+            android:name="dev.patrickgold.florisboard.oldsettings.spelling.SpellingActivity"
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/settings__spelling__title_overview"
             android:roundIcon="@mipmap/floris_app_icon_round"
@@ -109,7 +109,7 @@
 
         <!-- About Activity -->
         <activity
-            android:name="dev.patrickgold.florisboard.settings.AboutActivity"
+            android:name="dev.patrickgold.florisboard.oldsettings.AboutActivity"
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/about__title"
             android:roundIcon="@mipmap/floris_app_icon_round"
@@ -117,7 +117,7 @@
 
         <!-- Advanced Activity -->
         <activity
-            android:name="dev.patrickgold.florisboard.settings.AdvancedActivity"
+            android:name="dev.patrickgold.florisboard.oldsettings.AdvancedActivity"
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/settings__advanced__title"
             android:roundIcon="@mipmap/floris_app_icon_round"

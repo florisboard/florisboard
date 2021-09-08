@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings.fragments
+package dev.patrickgold.florisboard.oldsettings.fragments
 
 import android.content.Intent
 import android.net.Uri
@@ -24,8 +24,7 @@ import android.view.View
 import android.view.ViewGroup
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SettingsFragmentHomeBinding
-import dev.patrickgold.florisboard.settings.SettingsMainActivity
-import dev.patrickgold.florisboard.settings.spelling.SpellingActivity
+import dev.patrickgold.florisboard.oldsettings.SettingsMainActivity
 import dev.patrickgold.florisboard.setup.SetupActivity
 import dev.patrickgold.florisboard.util.checkIfImeIsEnabled
 import dev.patrickgold.florisboard.util.checkIfImeIsSelected

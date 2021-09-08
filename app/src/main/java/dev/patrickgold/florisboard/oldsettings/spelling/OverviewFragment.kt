@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings.spelling
+package dev.patrickgold.florisboard.oldsettings.spelling
 
 import android.content.ActivityNotFoundException
 import android.content.ComponentName

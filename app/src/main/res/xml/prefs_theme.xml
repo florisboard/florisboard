@@ -16,13 +16,13 @@
         app:key="theme__day_group"
         app:title="@string/pref__theme__day">
 
-        <dev.patrickgold.florisboard.settings.components.ThemeSelectorPreference
+        <dev.patrickgold.florisboard.oldsettings.components.ThemeSelectorPreference
             android:defaultValue="assets:ime/theme/floris_day.json"
             app:key="theme__day_theme_ref"
             app:icon="@drawable/ic_light_mode"
             app:title="@string/pref__theme__any_theme__label"/>
 
-        <dev.patrickgold.florisboard.settings.components.TimePickerDialogPreference
+        <dev.patrickgold.florisboard.oldsettings.components.TimePickerDialogPreference
             android:defaultValue="1536"
             app:key="theme__sunrise_time"
             app:icon="@drawable/ic_schedule"
@@ -41,13 +41,13 @@
         app:key="theme__night_group"
         app:title="@string/pref__theme__night">
 
-        <dev.patrickgold.florisboard.settings.components.ThemeSelectorPreference
+        <dev.patrickgold.florisboard.oldsettings.components.ThemeSelectorPreference
             android:defaultValue="assets:ime/theme/floris_night.json"
             app:key="theme__night_theme_ref"
             app:icon="@drawable/ic_dark_mode"
             app:title="@string/pref__theme__any_theme__label"/>
 
-        <dev.patrickgold.florisboard.settings.components.TimePickerDialogPreference
+        <dev.patrickgold.florisboard.oldsettings.components.TimePickerDialogPreference
             android:defaultValue="4608"
             app:key="theme__sunset_time"
             app:icon="@drawable/ic_schedule"

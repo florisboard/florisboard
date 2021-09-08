@@ -22,7 +22,7 @@
             app:title="@string/pref__glide__show_trail__label"
             android:summary="@string/pref__glide__show_trail__summary"/>
 
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="200"
             app:dependency="glide__show_trail"
@@ -41,7 +41,7 @@
             app:key="glide__show_preview"
             app:title="@string/pref__glide__show_preview" />
 
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="150"
             app:dependency="glide__show_preview"

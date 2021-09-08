@@ -1,4 +1,4 @@
-<dev.patrickgold.florisboard.settings.components.ThemeAttrView
+<dev.patrickgold.florisboard.oldsettings.components.ThemeAttrView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -54,4 +54,4 @@
         tools:src="@drawable/ic_link"
         android:contentDescription="@string/settings__theme_editor__value_preview_content_description"/>
 
-</dev.patrickgold.florisboard.settings.components.ThemeAttrView>
+</dev.patrickgold.florisboard.oldsettings.components.ThemeAttrView>

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings.components
+package dev.patrickgold.florisboard.oldsettings.components
 
 import android.app.AlertDialog
 import android.content.Context
@@ -30,7 +30,7 @@ import dev.patrickgold.florisboard.databinding.ThemeEditorGroupDialogBinding
 import dev.patrickgold.florisboard.databinding.ThemeEditorGroupViewBinding
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
-import dev.patrickgold.florisboard.settings.ThemeEditorActivity
+import dev.patrickgold.florisboard.oldsettings.ThemeEditorActivity
 
 class ThemeAttrGroupView : LinearLayout {
     private val layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

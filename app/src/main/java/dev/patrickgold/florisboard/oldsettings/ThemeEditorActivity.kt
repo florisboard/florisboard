@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings
+package dev.patrickgold.florisboard.oldsettings
 
 import android.content.Intent
 import android.net.Uri
@@ -46,8 +46,8 @@ import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
 import dev.patrickgold.florisboard.res.FlorisRef
-import dev.patrickgold.florisboard.settings.components.ThemeAttrGroupView
-import dev.patrickgold.florisboard.settings.components.ThemeAttrView
+import dev.patrickgold.florisboard.oldsettings.components.ThemeAttrGroupView
+import dev.patrickgold.florisboard.oldsettings.components.ThemeAttrView
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 

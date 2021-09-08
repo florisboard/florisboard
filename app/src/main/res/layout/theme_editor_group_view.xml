@@ -1,4 +1,4 @@
-<dev.patrickgold.florisboard.settings.components.ThemeAttrGroupView
+<dev.patrickgold.florisboard.oldsettings.components.ThemeAttrGroupView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -44,4 +44,4 @@
 
     </LinearLayout>
 
-</dev.patrickgold.florisboard.settings.components.ThemeAttrGroupView>
+</dev.patrickgold.florisboard.oldsettings.components.ThemeAttrGroupView>

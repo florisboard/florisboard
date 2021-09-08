@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings.fragments
+package dev.patrickgold.florisboard.oldsettings.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -27,7 +27,7 @@ import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
-import dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+import dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
 
 class KeyboardFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener {

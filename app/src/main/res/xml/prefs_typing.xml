@@ -63,7 +63,7 @@
             app:title="@string/pref__suggestion__clipboard_content_enabled__label"
             app:summary="@string/pref__suggestion__clipboard_content_enabled__summary"/>
 
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="60"
             app:dependency="suggestion__clipboard_content_enabled"

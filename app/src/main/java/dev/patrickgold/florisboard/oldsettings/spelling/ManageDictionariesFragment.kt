@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings.spelling
+package dev.patrickgold.florisboard.oldsettings.spelling
 
 import android.content.Intent
 import android.net.Uri
@@ -34,7 +34,7 @@ import dev.patrickgold.florisboard.ime.spelling.SpellingDict
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.FlorisRef
-import dev.patrickgold.florisboard.settings.OnListItemCLickListener
+import dev.patrickgold.florisboard.oldsettings.OnListItemCLickListener
 
 class SpellingDictEntryAdapter(
     private val data: List<SpellingDict.Meta>,

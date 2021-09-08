@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings.components
+package dev.patrickgold.florisboard.oldsettings.components
 
 import android.app.AlertDialog
 import android.content.Context

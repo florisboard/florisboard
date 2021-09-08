@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings.components
+package dev.patrickgold.florisboard.oldsettings.components
 
 import android.app.AlertDialog
 import android.content.Context
@@ -28,7 +28,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.res.FlorisRef
-import dev.patrickgold.florisboard.settings.ThemeManagerActivity
+import dev.patrickgold.florisboard.oldsettings.ThemeManagerActivity
 
 /**
  * Custom preference which handles the theme preset selection dialog and shows a summary in the

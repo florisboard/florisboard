@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings.fragments
+package dev.patrickgold.florisboard.oldsettings.fragments
 
 import android.app.AlertDialog
 import android.content.res.ColorStateList
@@ -33,7 +33,7 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeLayoutMap
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.layout.LayoutType
-import dev.patrickgold.florisboard.settings.SettingsMainActivity
+import dev.patrickgold.florisboard.oldsettings.SettingsMainActivity
 import dev.patrickgold.florisboard.util.initItems
 import dev.patrickgold.florisboard.util.setOnSelectedListener
 

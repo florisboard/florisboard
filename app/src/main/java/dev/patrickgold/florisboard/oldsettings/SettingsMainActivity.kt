@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings
+package dev.patrickgold.florisboard.oldsettings
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -34,7 +34,7 @@ import dev.patrickgold.florisboard.databinding.SettingsActivityBinding
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
-import dev.patrickgold.florisboard.settings.fragments.*
+import dev.patrickgold.florisboard.oldsettings.fragments.*
 import dev.patrickgold.florisboard.util.AppVersionUtils
 import dev.patrickgold.florisboard.util.PackageManagerUtils
 import kotlinx.coroutines.CoroutineScope

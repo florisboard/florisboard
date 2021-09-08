@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings.fragments
+package dev.patrickgold.florisboard.oldsettings.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle

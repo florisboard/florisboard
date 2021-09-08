@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings
+package dev.patrickgold.florisboard.oldsettings
 
 import android.annotation.SuppressLint
 import android.content.ClipData

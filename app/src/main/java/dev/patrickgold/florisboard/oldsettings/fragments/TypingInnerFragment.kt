@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings.fragments
+package dev.patrickgold.florisboard.oldsettings.fragments
 
 import android.content.Intent
 import android.os.Build
@@ -23,8 +23,8 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.Preferences
-import dev.patrickgold.florisboard.settings.UdmActivity
-import dev.patrickgold.florisboard.settings.spelling.SpellingActivity
+import dev.patrickgold.florisboard.oldsettings.UdmActivity
+import dev.patrickgold.florisboard.oldsettings.spelling.SpellingActivity
 
 class TypingInnerFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

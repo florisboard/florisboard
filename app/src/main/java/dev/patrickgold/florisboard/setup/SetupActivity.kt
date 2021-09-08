@@ -30,7 +30,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.SetupActivityBinding
 import dev.patrickgold.florisboard.ime.core.Preferences
-import dev.patrickgold.florisboard.settings.SettingsMainActivity
+import dev.patrickgold.florisboard.oldsettings.SettingsMainActivity
 
 class SetupActivity : AppCompatActivity() {
     companion object {

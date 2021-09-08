@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.settings.spelling
+package dev.patrickgold.florisboard.oldsettings.spelling
 
 import android.content.Intent
 import android.net.Uri
@@ -25,8 +25,6 @@ import androidx.core.view.isVisible
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.common.FlorisActivity
 import dev.patrickgold.florisboard.databinding.SpellingActivityBinding
-import dev.patrickgold.florisboard.res.AssetManager
-import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 
 class SpellingActivity : FlorisActivity<SpellingActivityBinding>() {
     private var activePage = Page.UNINITIALIZED

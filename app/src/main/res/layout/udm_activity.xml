@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:theme="@style/SettingsTheme"
-    tools:context=".settings.UdmActivity">
+    tools:context=".oldsettings.UdmActivity">
 
     <include layout="@layout/toolbar"/>
 
