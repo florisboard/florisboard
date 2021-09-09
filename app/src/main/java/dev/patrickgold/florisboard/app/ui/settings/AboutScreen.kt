@@ -16,11 +16,12 @@
 
 package dev.patrickgold.florisboard.app.ui.settings
 
-import androidx.compose.foundation.Image
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -28,7 +29,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,12 +36,15 @@ import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.common.launchUrl
+import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
+import dev.patrickgold.florisboard.util.checkIfImeIsSelected
 import dev.patrickgold.jetpref.ui.compose.Preference
 import dev.patrickgold.jetpref.ui.compose.PreferenceScreen
 
 @Composable
 fun AboutScreen() = PreferenceScreen(::AppPrefs) {
     val context = LocalContext.current
+    val appVersion = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
 
     Row(
         modifier = Modifier
@@ -61,8 +64,24 @@ fun AboutScreen() = PreferenceScreen(::AppPrefs) {
     Preference(
         iconId = R.drawable.ic_info,
         title = stringResource(id = R.string.about__version__title),
-        summary = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
-        onClick = { /**/ },
+        summary = appVersion,
+        onClick = {
+            try {
+                val isImeSelected = checkIfImeIsSelected(context)
+                if (isImeSelected) {
+                    FlorisClipboardManager.getInstance().addNewPlaintext(appVersion)
+                } else {
+                    val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    val clip = ClipData.newPlainText("Florisboard version", appVersion)
+                    clipboard.setPrimaryClip(clip)
+                }
+                Toast.makeText(context, R.string.about__version_copied__title, Toast.LENGTH_SHORT).show()
+            } catch (e: Throwable) {
+                Toast.makeText(
+                    context, context.getString(R.string.about__version_copied__error, e.message), Toast.LENGTH_SHORT
+                ).show()
+            }
+        },
     )
     Preference(
         iconId = R.drawable.ic_history,
