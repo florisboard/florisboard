@@ -33,7 +33,9 @@ private val DarkColorPalette = darkColors(
     //secondary = Teal200
     primary = Color(0xFF4CAF50),
     primaryVariant = Color(0xFF388E3C),
-    secondary = Color(0xFFFF9800)
+    secondary = Color(0xFFFF9800),
+    background = Color.Black,
+    surface = Color(0xFF212121),
 )
 
 private val LightColorPalette = lightColors(

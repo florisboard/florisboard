@@ -430,7 +430,18 @@
 
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Open-source licenses</string>
 
+    <string name="about__version__title" comment="Preference title">Version</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Version copied to clipboard</string>
+    <string name="about__changelog__title" comment="Preference title">Changelog</string>
+    <string name="about__changelog__summary" comment="Preference summary">What\'s new</string>
+    <string name="about__repository__title" comment="Preference title">Repository (GitHub)</string>
+    <string name="about__repository__summary" comment="Preference summary">Source code, discussions, issues and info</string>
+    <string name="about__privacy_policy__title" comment="Preference title">Privacy policy</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">The privacy policy for this project</string>
+    <string name="about__project_license__title" comment="Preference title">Project license</string>
+    <string name="about__project_license__summary" comment="Preference summary (%s will insert license name)">FlorisBoard is licensed under %s</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">Third-party licenses</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">Licenses of the third-party libraries included in this app</string>
 
     <!-- Assets strings -->
     <plurals name="assets__file__authors">

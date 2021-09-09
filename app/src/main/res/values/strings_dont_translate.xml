@@ -2,6 +2,7 @@
     <string name="florisboard__repo_url" translatable="false">https://github.com/florisboard/florisboard</string>
     <string name="florisboard__issue_tracker_url" translatable="false">https://github.com/florisboard/florisboard/issues</string>
     <string name="florisboard__privacy_policy_url" translatable="false">https://gist.github.com/patrickgold/a18f1e47468d72f0868afc69d6faaf0b</string>
+    <string name="florisboard__changelog_url" translatable="false">https://github.com/florisboard/florisboard/releases/v%s</string>
     <string name="florisboard__spell_checker_wiki_url" translatable="false">https://github.com/florisboard/florisboard/wiki/System-spell-checker-service</string>
     <string name="florisboard__theme_editor_wiki_url" translatable="false">https://github.com/florisboard/florisboard/wiki/Using-the-new-Theme-Editor</string>
 

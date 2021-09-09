@@ -70,14 +70,6 @@ class HomeFragment : SettingsMainActivity.SettingsFragment() {
         binding.themeCard.setOnClickListener {
             settingsMainActivity.binding.bottomNavigation.selectedItemId = R.id.settings__navigation__theme
         }
-        binding.spellingCard.setOnClickListener {
-            Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("https://github.com/florisboard/florisboard/releases/tag/v0.3.13")
-            ).apply {
-                startActivity(this)
-            }
-        }
 
         return binding.root
     }

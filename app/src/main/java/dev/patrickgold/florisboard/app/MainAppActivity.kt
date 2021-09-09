@@ -25,9 +25,11 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dev.patrickgold.florisboard.app.ui.settings.AboutScreen
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
 
 class MainAppActivity : ComponentActivity() {
@@ -48,10 +50,10 @@ class MainAppActivity : ComponentActivity() {
         Column {
             TopAppBar(
                 title = { Text(text = "FlorisBoard") },
-                backgroundColor = MaterialTheme.colors.surface
+                backgroundColor = Color.Transparent
             )
             NavHost(navController = navController, startDestination = "home") {
-                composable("home") { Text("app prefs") }
+                composable("home") { AboutScreen() }
             }
         }
     }
