@@ -19,19 +19,26 @@ package dev.patrickgold.florisboard.app.ui.settings
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.widget.Toast
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.res.ResourcesCompat
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.AppPrefs
@@ -46,19 +53,19 @@ fun AboutScreen() = PreferenceScreen(::AppPrefs) {
     val context = LocalContext.current
     val appVersion = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
 
-    Row(
+    Column(
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .align(Alignment.CenterHorizontally)
-            .padding(top = 20.dp, bottom = 8.dp)
+            .fillMaxWidth()
+            .padding(top = 24.dp, bottom = 32.dp)
     ) {
-        // TODO: show app icon without the about screen crashing
-        //Image(
-        //    painter = painterResource(id = R.mipmap.floris_app_icon),
-        //    contentDescription = stringResource(id = R.string.about__app_icon_content_description),
-        //)
+        FlorisAppIcon()
         Text(
             text = stringResource(id = R.string.floris_app_name),
             fontSize = 24.sp,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.padding(top = 16.dp),
         )
     }
     Preference(
@@ -116,14 +123,22 @@ fun AboutScreen() = PreferenceScreen(::AppPrefs) {
 }
 
 @Composable
-private fun ProjectLicenseDialog() {
-    AlertDialog(
-        onDismissRequest = { },
-        text = { Text(text = "Hello") },
-        confirmButton = {
-            Button(onClick = { }) {
-                Text(text = stringResource(id = android.R.string.ok))
-            }
-        }
-    )
+fun FlorisAppIcon() {
+    ResourcesCompat.getDrawable(
+        LocalContext.current.resources,
+        R.mipmap.floris_app_icon, LocalContext.current.theme
+    )?.let { drawable ->
+        val bitmap = Bitmap.createBitmap(
+            drawable.intrinsicWidth, drawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+        Image(
+            bitmap = bitmap.asImageBitmap(),
+            contentDescription = "FlorisBoard App Icon",
+            modifier = Modifier.requiredSize(64.dp),
+        )
+    }
 }
