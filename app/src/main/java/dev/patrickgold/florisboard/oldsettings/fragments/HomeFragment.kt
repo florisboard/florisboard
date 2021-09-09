@@ -23,7 +23,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.MainAppActivity
+import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.databinding.SettingsFragmentHomeBinding
 import dev.patrickgold.florisboard.oldsettings.SettingsMainActivity
 import dev.patrickgold.florisboard.setup.SetupActivity
@@ -52,7 +52,7 @@ class HomeFragment : SettingsMainActivity.SettingsFragment() {
             }
         }
         binding.newSettings.setOnClickListener {
-            Intent(context, MainAppActivity::class.java).apply {
+            Intent(context, FlorisAppActivity::class.java).apply {
                 startActivity(this)
             }
         }

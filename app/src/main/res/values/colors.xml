@@ -21,4 +21,6 @@
     <color name="navigationBarColor">#000000</color><!-- Black -->
     <color name="toolbarForegroundColor">#000000</color><!-- Black -->
     <color name="windowBackground">#FAFAFA</color><!-- Gray 50 -->
+
+    <color name="floris_windowBackground">#FF000000</color><!-- Black -->
 </resources>

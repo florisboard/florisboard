@@ -32,7 +32,7 @@ import androidx.navigation.compose.rememberNavController
 import dev.patrickgold.florisboard.app.ui.settings.AboutScreen
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
 
-class MainAppActivity : ComponentActivity() {
+class FlorisAppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
