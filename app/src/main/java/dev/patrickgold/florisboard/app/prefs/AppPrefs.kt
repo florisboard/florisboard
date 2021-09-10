@@ -19,5 +19,39 @@ package dev.patrickgold.florisboard.app.prefs
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
 
 class AppPrefs : PreferenceModel("florisboard-app-prefs") {
-    //
+    val advanced = Advanced()
+    inner class Advanced {
+        val settingsTheme = string(
+            key = "advanced__settings_theme",
+            default = "auto",
+        )
+        val settingsLanguage = string(
+            key = "advanced__settings_language",
+            default = "auto",
+        )
+        val showAppIcon = boolean(
+            key = "advanced__show_app_icon",
+            default = true,
+        )
+        val forcePrivateMode = boolean(
+            key = "advanced__force_private_mode",
+            default = false,
+        )
+    }
+
+    val devtools = Devtools()
+    inner class Devtools {
+        val enabled = boolean(
+            key = "devtools__enabled",
+            default = false,
+        )
+        val showHeapMemoryStats = boolean(
+            key = "devtools__show_heap_memory_stats",
+            default = false,
+        )
+        val overrideWordSuggestionsMinHeapRestriction = boolean(
+            key = "devtools__override_word_suggestions_min_heap_restriction",
+            default = false,
+        )
+    }
 }

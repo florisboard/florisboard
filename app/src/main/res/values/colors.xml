@@ -22,5 +22,7 @@
     <color name="toolbarForegroundColor">#000000</color><!-- Black -->
     <color name="windowBackground">#FAFAFA</color><!-- Gray 50 -->
 
-    <color name="floris_windowBackground">#FF000000</color><!-- Black -->
+    <color name="floris_windowBackground">#FF101010</color><!-- Black -->
+    <color name="floris_navigationBarColor">#FF000000</color><!-- Black -->
+    <color name="floris_statusBarColor">@color/floris_windowBackground</color><!-- Black -->
 </resources>

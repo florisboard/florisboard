@@ -29,6 +29,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.patrickgold.florisboard.app.ui.Routes
+import dev.patrickgold.florisboard.app.ui.settings.AdvancedScreen
 import dev.patrickgold.florisboard.app.ui.settings.HomeScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.AboutScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.ProjectLicenseScreen
@@ -60,6 +61,9 @@ private fun AppContent() {
     ) {
         NavHost(navController = navController, startDestination = Routes.Settings.Home) {
             composable(Routes.Settings.Home) { HomeScreen() }
+
+            composable(Routes.Settings.Advanced) { AdvancedScreen() }
+
             composable(Routes.Settings.About) { AboutScreen() }
             composable(Routes.Settings.ProjectLicense) { ProjectLicenseScreen() }
             composable(Routes.Settings.ThirdPartyLicenses) { ThirdPartyLicensesScreen() }

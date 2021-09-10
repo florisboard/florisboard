@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard
 
-import android.app.Application
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -37,12 +36,13 @@ import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.FlorisRef
+import dev.patrickgold.jetpref.datastore.JetPrefApplication
 import timber.log.Timber
 import java.io.File
 import kotlin.Exception
 
 @Suppress("unused")
-class FlorisApplication : Application() {
+class FlorisApplication : JetPrefApplication() {
     companion object {
         private const val ICU_DATA_ASSET_PATH = "icu/icudt69l.dat"
 

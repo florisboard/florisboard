@@ -34,7 +34,7 @@ private val DarkColorPalette = darkColors(
     primary = Color(0xFF4CAF50),
     primaryVariant = Color(0xFF388E3C),
     secondary = Color(0xFFFF9800),
-    background = Color.Black,
+    background = Color(0xFF101010),
     surface = Color(0xFF212121),
 )
 

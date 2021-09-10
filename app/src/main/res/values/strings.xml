@@ -370,13 +370,16 @@
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Long</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Very long</string>
 
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Advanced</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Advanced</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Settings theme</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Light</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Dark</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Settings language</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Show app icon in launcher</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Force private mode</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Will disable any features which have to temporarily work with your input data</string>
+
+    <string name="settings__devtools__title" comment="Title of Devtools settings">Developer tools</string>
     <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Enable developer tools</string>
     <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Tools specifically designed for debugging and troubleshooting</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Show heap memory stats</string>

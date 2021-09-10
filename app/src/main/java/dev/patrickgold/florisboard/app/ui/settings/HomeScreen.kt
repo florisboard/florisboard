@@ -29,6 +29,11 @@ fun HomeScreen() = FlorisScreen(title = "Main", backArrowVisible = false) {
     val navController = LocalNavController.current
 
     Preference(
+        iconId = R.drawable.ic_build,
+        title = stringResource(R.string.settings__advanced__title),
+        onClick = { navController.navigate(Routes.Settings.Advanced) },
+    )
+    Preference(
         iconId = R.drawable.ic_info,
         title = stringResource(R.string.about__title),
         onClick = { navController.navigate(Routes.Settings.About) },

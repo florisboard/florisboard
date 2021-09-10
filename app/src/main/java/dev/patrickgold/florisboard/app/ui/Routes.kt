@@ -19,6 +19,9 @@ package dev.patrickgold.florisboard.app.ui
 object Routes {
     object Settings {
         const val Home = "settings"
+
+        const val Advanced = "settings/advanced"
+
         const val About = "settings/about"
         const val ProjectLicense = "settings/about/project-license"
         const val ThirdPartyLicenses = "settings/about/third-party-licenses"

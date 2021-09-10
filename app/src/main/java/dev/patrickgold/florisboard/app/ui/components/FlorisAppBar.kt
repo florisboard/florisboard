@@ -24,6 +24,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 
@@ -38,6 +39,7 @@ fun FlorisAppBar(
         title = { Text(text = title) },
         actions = actions,
         backgroundColor = Color.Transparent,
+        elevation = 0.dp,
     )
 }
 

@@ -73,7 +73,8 @@
         <item name="android:windowBackground">@color/floris_windowBackground</item>
         <item name="android:colorBackground">@color/floris_windowBackground</item>
 
-        <item name="android:navigationBarColor">@color/navigationBarColor</item>
+        <item name="android:navigationBarColor">@color/floris_navigationBarColor</item>
+        <item name="android:statusBarColor">@color/floris_statusBarColor</item>
     </style>
 
     <style name="CrashDialogTheme" parent="Theme.AppCompat.DayNight"/>
