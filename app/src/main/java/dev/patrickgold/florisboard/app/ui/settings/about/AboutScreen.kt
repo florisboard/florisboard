@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.ui.settings
+package dev.patrickgold.florisboard.app.ui.settings.about
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -41,7 +41,10 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.res.ResourcesCompat
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.prefs.AppPrefs
+import dev.patrickgold.florisboard.app.ui.Routes
+import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.launchUrl
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.florisboard.util.checkIfImeIsSelected
@@ -49,7 +52,8 @@ import dev.patrickgold.jetpref.ui.compose.Preference
 import dev.patrickgold.jetpref.ui.compose.PreferenceScreen
 
 @Composable
-fun AboutScreen() = PreferenceScreen(::AppPrefs) {
+fun AboutScreen() = FlorisScreen(title = stringResource(R.string.about__title)) {
+    val navController = LocalNavController.current
     val context = LocalContext.current
     val appVersion = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
 
@@ -62,7 +66,7 @@ fun AboutScreen() = PreferenceScreen(::AppPrefs) {
     ) {
         FlorisAppIcon()
         Text(
-            text = stringResource(id = R.string.floris_app_name),
+            text = stringResource(R.string.floris_app_name),
             fontSize = 24.sp,
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(top = 16.dp),
@@ -70,7 +74,7 @@ fun AboutScreen() = PreferenceScreen(::AppPrefs) {
     }
     Preference(
         iconId = R.drawable.ic_info,
-        title = stringResource(id = R.string.about__version__title),
+        title = stringResource(R.string.about__version__title),
         summary = appVersion,
         onClick = {
             try {
@@ -92,38 +96,38 @@ fun AboutScreen() = PreferenceScreen(::AppPrefs) {
     )
     Preference(
         iconId = R.drawable.ic_history,
-        title = stringResource(id = R.string.about__changelog__title),
-        summary = stringResource(id = R.string.about__changelog__summary),
+        title = stringResource(R.string.about__changelog__title),
+        summary = stringResource(R.string.about__changelog__summary),
         onClick = { launchUrl(context, R.string.florisboard__changelog_url, arrayOf(BuildConfig.VERSION_NAME)) },
     )
     Preference(
         iconId = R.drawable.ic_code,
-        title = stringResource(id = R.string.about__repository__title),
-        summary = stringResource(id = R.string.about__repository__summary),
+        title = stringResource(R.string.about__repository__title),
+        summary = stringResource(R.string.about__repository__summary),
         onClick = { launchUrl(context, R.string.florisboard__repo_url) },
     )
     Preference(
         iconId = R.drawable.ic_policy,
-        title = stringResource(id = R.string.about__privacy_policy__title),
-        summary = stringResource(id = R.string.about__privacy_policy__summary),
+        title = stringResource(R.string.about__privacy_policy__title),
+        summary = stringResource(R.string.about__privacy_policy__summary),
         onClick = { launchUrl(context, R.string.florisboard__privacy_policy_url) },
     )
     Preference(
         iconId = R.drawable.ic_description,
-        title = stringResource(id = R.string.about__project_license__title),
-        summary = stringResource(id = R.string.about__project_license__summary, "Apache 2.0"),
-        onClick = { /**/ },
+        title = stringResource(R.string.about__project_license__title),
+        summary = stringResource(R.string.about__project_license__summary, "Apache 2.0"),
+        onClick = { navController.navigate(Routes.Settings.ProjectLicense) },
     )
     Preference(
         iconId = R.drawable.ic_description,
         title = stringResource(id = R.string.about__third_party_licenses__title),
         summary = stringResource(id = R.string.about__third_party_licenses__summary),
-        onClick = { /**/ },
+        onClick = { navController.navigate(Routes.Settings.ThirdPartyLicenses) },
     )
 }
 
 @Composable
-fun FlorisAppIcon() {
+private fun FlorisAppIcon() {
     ResourcesCompat.getDrawable(
         LocalContext.current.resources,
         R.mipmap.floris_app_icon, LocalContext.current.theme

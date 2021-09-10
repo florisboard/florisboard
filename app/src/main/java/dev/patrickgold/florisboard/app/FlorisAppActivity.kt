@@ -19,18 +19,25 @@ package dev.patrickgold.florisboard.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dev.patrickgold.florisboard.app.ui.settings.AboutScreen
+import dev.patrickgold.florisboard.app.ui.Routes
+import dev.patrickgold.florisboard.app.ui.settings.HomeScreen
+import dev.patrickgold.florisboard.app.ui.settings.about.AboutScreen
+import dev.patrickgold.florisboard.app.ui.settings.about.ProjectLicenseScreen
+import dev.patrickgold.florisboard.app.ui.settings.about.ThirdPartyLicensesScreen
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
+
+val LocalNavController = staticCompositionLocalOf<NavController> {
+    error("LocalNavController not initialized")
+}
 
 class FlorisAppActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,18 +50,19 @@ class FlorisAppActivity : ComponentActivity() {
             }
         }
     }
+}
 
-    @Composable
-    fun AppContent() {
-        val navController = rememberNavController()
-        Column {
-            TopAppBar(
-                title = { Text(text = "FlorisBoard") },
-                backgroundColor = Color.Transparent
-            )
-            NavHost(navController = navController, startDestination = "home") {
-                composable("home") { AboutScreen() }
-            }
+@Composable
+private fun AppContent() {
+    val navController = rememberNavController()
+    CompositionLocalProvider(
+        LocalNavController provides navController,
+    ) {
+        NavHost(navController = navController, startDestination = Routes.Settings.Home) {
+            composable(Routes.Settings.Home) { HomeScreen() }
+            composable(Routes.Settings.About) { AboutScreen() }
+            composable(Routes.Settings.ProjectLicense) { ProjectLicenseScreen() }
+            composable(Routes.Settings.ThirdPartyLicenses) { ThirdPartyLicensesScreen() }
         }
     }
 }
