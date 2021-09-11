@@ -27,6 +27,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.util.AndroidVersion
 import dev.patrickgold.jetpref.ui.compose.ListPreference
 import dev.patrickgold.jetpref.ui.compose.Preference
 import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
@@ -72,6 +73,11 @@ fun AdvancedScreen() = FlorisScreen(title = stringResource(R.string.settings__ad
     SwitchPreference(
         prefs.advanced.showAppIcon,
         title = stringResource(R.string.pref__advanced__show_app_icon__label),
+        summary = when {
+            AndroidVersion.ATLEAST_Q -> stringResource(R.string.pref__advanced__show_app_icon__summary_atleast_q)
+            else -> null
+        },
+        enabledIf = { AndroidVersion.ATMOST_P },
     )
     SwitchPreference(
         prefs.advanced.forcePrivateMode,

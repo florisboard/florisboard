@@ -38,6 +38,8 @@ import dev.patrickgold.florisboard.app.ui.settings.about.AboutScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.ProjectLicenseScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.ThirdPartyLicensesScreen
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
+import dev.patrickgold.florisboard.util.AndroidVersion
+import dev.patrickgold.florisboard.util.PackageManagerUtils
 import dev.patrickgold.jetpref.datastore.preferenceModel
 
 enum class AppTheme(val id: String) {
@@ -54,12 +56,20 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
 class FlorisAppActivity : ComponentActivity() {
     val prefs by preferenceModel(::AppPrefs)
     val appTheme = mutableStateOf(AppTheme.AUTO)
+    var showAppIcon = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         prefs.advanced.settingsTheme.observe(this) {
             appTheme.value = it
         }
+        if (AndroidVersion.ATMOST_P) {
+            prefs.advanced.showAppIcon.observe(this) {
+                showAppIcon = it
+            }
+        }
+
         setContent {
             FlorisAppTheme(theme = appTheme.value) {
                 Surface(color = MaterialTheme.colors.background) {
@@ -67,6 +77,22 @@ class FlorisAppActivity : ComponentActivity() {
                     AppContent()
                 }
             }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        // App icon visibility control was restricted in Android 10.
+        // See https://developer.android.com/reference/android/content/pm/LauncherApps#getActivityList(java.lang.String,%20android.os.UserHandle)
+        if (AndroidVersion.ATMOST_P) {
+            if (showAppIcon) {
+                PackageManagerUtils.showAppIcon(this)
+            } else {
+                PackageManagerUtils.hideAppIcon(this)
+            }
+        } else {
+            PackageManagerUtils.showAppIcon(this)
         }
     }
 }

@@ -36,7 +36,6 @@ import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.oldsettings.fragments.*
 import dev.patrickgold.florisboard.util.AppVersionUtils
-import dev.patrickgold.florisboard.util.PackageManagerUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 
@@ -179,15 +178,6 @@ class SettingsMainActivity : AppCompatActivity(),
 
     override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {}
 
-    private fun updateLauncherIconStatus() {
-        // Set LauncherAlias enabled/disabled state just before destroying/pausing this activity
-        if (prefs.advanced.showAppIcon) {
-            PackageManagerUtils.showAppIcon(this)
-        } else {
-            PackageManagerUtils.hideAppIcon(this)
-        }
-    }
-
     override fun onResume() {
         prefs.shared.registerOnSharedPreferenceChangeListener(this)
         super.onResume()
@@ -195,13 +185,11 @@ class SettingsMainActivity : AppCompatActivity(),
 
     override fun onPause() {
         prefs.shared.unregisterOnSharedPreferenceChangeListener(this)
-        updateLauncherIconStatus()
         super.onPause()
     }
 
     override fun onDestroy() {
         prefs.shared.unregisterOnSharedPreferenceChangeListener(this)
-        updateLauncherIconStatus()
         super.onDestroy()
     }
 

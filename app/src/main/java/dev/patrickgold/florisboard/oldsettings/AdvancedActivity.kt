@@ -24,7 +24,6 @@ import androidx.appcompat.widget.Toolbar
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.AdvancedActivityBinding
 import dev.patrickgold.florisboard.ime.core.Preferences
-import dev.patrickgold.florisboard.util.PackageManagerUtils
 
 class AdvancedActivity : AppCompatActivity(),
     SharedPreferences.OnSharedPreferenceChangeListener {
@@ -71,16 +70,6 @@ class AdvancedActivity : AppCompatActivity(),
 
     override fun onPause() {
         prefs.shared.unregisterOnSharedPreferenceChangeListener(this)
-        updateLauncherIconStatus()
         super.onPause()
-    }
-
-    private fun updateLauncherIconStatus() {
-        // Set LauncherAlias enabled/disabled state just before destroying/pausing this activity
-        if (prefs.advanced.showAppIcon) {
-            PackageManagerUtils.showAppIcon(this)
-        } else {
-            PackageManagerUtils.hideAppIcon(this)
-        }
     }
 }
