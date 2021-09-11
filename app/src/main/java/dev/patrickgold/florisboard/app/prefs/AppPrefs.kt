@@ -16,14 +16,20 @@
 
 package dev.patrickgold.florisboard.app.prefs
 
+import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
+import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 
 class AppPrefs : PreferenceModel("florisboard-app-prefs") {
     val advanced = Advanced()
     inner class Advanced {
-        val settingsTheme = string(
+        val settingsTheme = custom(
             key = "advanced__settings_theme",
-            default = "auto",
+            default = AppTheme.AUTO,
+            serializer = object : PreferenceSerializer<AppTheme> {
+                override fun serialize(value: AppTheme) = value.id
+                override fun deserialize(value: String) = AppTheme.values().find { it.id == value }
+            }
         )
         val settingsLanguage = string(
             key = "advanced__settings_language",

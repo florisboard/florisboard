@@ -22,26 +22,33 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import dev.patrickgold.florisboard.app.ui.theme.Purple200
-import dev.patrickgold.florisboard.app.ui.theme.Purple500
-import dev.patrickgold.florisboard.app.ui.theme.Purple700
-import dev.patrickgold.florisboard.app.ui.theme.Teal200
+import dev.patrickgold.florisboard.app.AppTheme
+
+private val AmoledDarkColorPalette = darkColors(
+    primary = Green500,
+    primaryVariant = Green700,
+    secondary = Orange700,
+    secondaryVariant = Orange900,
+
+    background = Color(0xFF000000),
+    surface = Color(0xFF212121),
+)
 
 private val DarkColorPalette = darkColors(
-    //primary = Purple200,
-    //primaryVariant = Purple700,
-    //secondary = Teal200
-    primary = Color(0xFF4CAF50),
-    primaryVariant = Color(0xFF388E3C),
-    secondary = Color(0xFFFF9800),
-    background = Color(0xFF101010),
+    primary = Green500,
+    primaryVariant = Green700,
+    secondary = Orange700,
+    secondaryVariant = Orange900,
+
+    background = Color(0xFF1F1F1F),
     surface = Color(0xFF212121),
 )
 
 private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primary = Green500,
+    primaryVariant = Green700,
+    secondary = Orange700,
+    secondaryVariant = Orange900,
 
     /* Other default colors to override
     background = Color.White,
@@ -54,17 +61,24 @@ private val LightColorPalette = lightColors(
 )
 
 @Composable
-fun FlorisAppTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-    val colors = if (darkTheme) {
-        DarkColorPalette
-    } else {
-        LightColorPalette
+fun FlorisAppTheme(
+    theme: AppTheme,
+    content: @Composable () -> Unit
+) {
+    val colors = when (theme) {
+        AppTheme.AUTO -> when {
+            isSystemInDarkTheme() -> DarkColorPalette
+            else -> LightColorPalette
+        }
+        AppTheme.LIGHT -> LightColorPalette
+        AppTheme.DARK -> DarkColorPalette
+        AppTheme.AMOLED_DARK -> AmoledDarkColorPalette
     }
 
     MaterialTheme(
         colors = colors,
         typography = Typography,
         shapes = Shapes,
-        content = content
+        content = content,
     )
 }

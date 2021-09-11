@@ -60,21 +60,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="colorSuccess">@color/colorSuccess</item>
-        <item name="textColorSuccess">@color/textColorSuccess</item>
-        <item name="colorWarning">@color/colorWarning</item>
-        <item name="textColorWarning">@color/textColorWarning</item>
-        <item name="colorError">@color/colorError</item>
-        <item name="textColorError">@color/textColorError</item>
-
         <!-- IMPORTANT: the following 2 colors MUST be references and not inline colors, or older
              versions of Android will not set the window background and thus causing weird
              rendering glitches!! -->
         <item name="android:windowBackground">@color/floris_windowBackground</item>
         <item name="android:colorBackground">@color/floris_windowBackground</item>
-
-        <item name="android:navigationBarColor">@color/floris_navigationBarColor</item>
-        <item name="android:statusBarColor">@color/floris_statusBarColor</item>
     </style>
 
     <style name="CrashDialogTheme" parent="Theme.AppCompat.DayNight"/>

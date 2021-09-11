@@ -137,6 +137,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.4.0-alpha08")
     implementation("androidx.preference:preference-ktx:1.1.1") // possibly remove after settings rework
     implementation("androidx.lifecycle:lifecycle-service:2.3.1")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.18.0")
     implementation("com.google.android.flexbox:flexbox:3.0.0")
     implementation("com.google.android.material:material:1.4.0")
     implementation("com.jakewharton.timber:timber:4.7.1") // possibly remove after settings rework

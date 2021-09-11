@@ -24,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.jetpref.ui.compose.ListPreference
@@ -41,16 +42,20 @@ fun AdvancedScreen() = FlorisScreen(title = stringResource(R.string.settings__ad
         title = stringResource(R.string.pref__advanced__settings_theme__label),
         entries = listOf(
             entry(
-                key = "auto",
+                key = AppTheme.AUTO,
                 label = stringResource(R.string.settings__system_default),
             ),
             entry(
-                key = "light",
+                key = AppTheme.LIGHT,
                 label = stringResource(R.string.pref__advanced__settings_theme__light),
             ),
             entry(
-                key = "dark",
+                key = AppTheme.DARK,
                 label = stringResource(R.string.pref__advanced__settings_theme__dark),
+            ),
+            entry(
+                key = AppTheme.AMOLED_DARK,
+                label = stringResource(R.string.pref__advanced__settings_theme__amoled_dark),
             ),
         ),
     )

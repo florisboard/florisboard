@@ -23,29 +23,47 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.app.ui.Routes
+import dev.patrickgold.florisboard.app.ui.components.SystemUi
 import dev.patrickgold.florisboard.app.ui.settings.AdvancedScreen
 import dev.patrickgold.florisboard.app.ui.settings.HomeScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.AboutScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.ProjectLicenseScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.ThirdPartyLicensesScreen
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
+import dev.patrickgold.jetpref.datastore.preferenceModel
+
+enum class AppTheme(val id: String) {
+    AUTO("auto"),
+    LIGHT("light"),
+    DARK("dark"),
+    AMOLED_DARK("amoled_dark"),
+}
 
 val LocalNavController = staticCompositionLocalOf<NavController> {
     error("LocalNavController not initialized")
 }
 
 class FlorisAppActivity : ComponentActivity() {
+    val prefs by preferenceModel(::AppPrefs)
+    val appTheme = mutableStateOf(AppTheme.AUTO)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        prefs.advanced.settingsTheme.observe(this) {
+            appTheme.value = it
+        }
         setContent {
-            FlorisAppTheme {
+            FlorisAppTheme(theme = appTheme.value) {
                 Surface(color = MaterialTheme.colors.background) {
+                    SystemUi()
                     AppContent()
                 }
             }
