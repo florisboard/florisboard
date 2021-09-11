@@ -30,6 +30,7 @@ import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.databinding.SettingsActivityBinding
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
@@ -52,12 +53,13 @@ class SettingsMainActivity : AppCompatActivity(),
     lateinit var binding: SettingsActivityBinding
     lateinit var layoutManager: LayoutManager
     private val prefs get() = Preferences.default()
+    private val newPrefs by florisPreferenceModel()
     val subtypeManager: SubtypeManager get() = SubtypeManager.default()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         layoutManager = LayoutManager()
 
-        val mode = when (prefs.advanced.settingsTheme) {
+        val mode = when (newPrefs.advanced.settingsTheme.get().id) {
             "light" -> AppCompatDelegate.MODE_NIGHT_NO
             "dark" -> AppCompatDelegate.MODE_NIGHT_YES
             "auto" -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM

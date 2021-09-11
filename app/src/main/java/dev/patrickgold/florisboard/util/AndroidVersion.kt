@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.util
 
 import android.os.Build
 
+@Suppress("unused")
 object AndroidVersion {
     /** Android 7 **/
     val ATLEAST_N = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N

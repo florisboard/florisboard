@@ -21,6 +21,7 @@ import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.databinding.FlorisboardBinding
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
@@ -82,7 +83,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     var isGlidePostEffect: Boolean = false
     private val florisboard get() = FlorisBoard.getInstance()
-    private val prefs get() = Preferences.default()
+    private val oldPrefs get() = Preferences.default()
+    private val prefs by florisPreferenceModel()
     val symbolsWithSpaceAfter: List<String>
     private val activeEditorInstance: EditorInstance
         get() = florisboard.activeEditorInstance
@@ -169,7 +171,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     activeState.isRichInputEditor
                 }
                 KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
-                    prefs.clipboard.enableHistory
+                    oldPrefs.clipboard.enableHistory
                 }
                 else -> true
             }
@@ -180,7 +182,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 KeyCode.SWITCH_TO_TEXT_CONTEXT,
                 KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
                     val tempUtilityKeyAction = when {
-                        prefs.keyboard.utilityKeyEnabled -> prefs.keyboard.utilityKeyAction
+                        oldPrefs.keyboard.utilityKeyEnabled -> oldPrefs.keyboard.utilityKeyAction
                         else -> UtilityKeyAction.DISABLED
                     }
                     when (tempUtilityKeyAction) {
@@ -191,10 +193,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS -> !florisboard.shouldShowLanguageSwitch()
                     }
                 }
-                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> prefs.clipboard.enableHistory
+                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> oldPrefs.clipboard.enableHistory
                 KeyCode.LANGUAGE_SWITCH -> {
                     val tempUtilityKeyAction = when {
-                        prefs.keyboard.utilityKeyEnabled -> prefs.keyboard.utilityKeyAction
+                        oldPrefs.keyboard.utilityKeyEnabled -> oldPrefs.keyboard.utilityKeyAction
                         else -> UtilityKeyAction.DISABLED
                     }
                     when (tempUtilityKeyAction) {
@@ -240,7 +242,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         layoutManager = LayoutManager()
         textKeyboardIconSet = TextKeyboardIconSet.new(florisboard)
         inputEventDispatcher.keyEventReceiver = this
-        isNumberRowVisible = prefs.keyboard.numberRow
+        isNumberRowVisible = oldPrefs.keyboard.numberRow
         activeEditorInstance.wordHistoryChangedListener = this
         var subtypes = florisboard.subtypeManager.subtypes
         if (subtypes.isEmpty()) {
@@ -340,11 +342,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyboardMode.PHONE,
             KeyboardMode.PHONE2 -> false
             else -> activeState.keyVariation != KeyVariation.PASSWORD &&
-                    prefs.suggestion.enabled// &&
+                    oldPrefs.suggestion.enabled// &&
             //!instance.inputAttributes.flagTextAutoComplete &&
             //!instance.inputAttributes.flagTextNoSuggestions
         } && run {
-            if (prefs.devtools.overrideWordSuggestionsMinHeapRestriction) {
+            if (prefs.devtools.overrideWordSuggestionsMinHeapRestriction.get()) {
                 true
             } else {
                 val runtime = Runtime.getRuntime()
@@ -352,16 +354,16 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 maxHeapSizeInMB >= 256
             }
         }
-        val newIsNumberRowVisible = prefs.keyboard.numberRow
+        val newIsNumberRowVisible = oldPrefs.keyboard.numberRow
         if (isNumberRowVisible != newIsNumberRowVisible) {
             keyboards.clear(KeyboardMode.CHARACTERS)
             isNumberRowVisible = newIsNumberRowVisible
         }
         setActiveKeyboardMode(keyboardMode, updateState = false)
         instance.composingEnabledChanged()
-        activeState.isPrivateMode = prefs.advanced.forcePrivateMode ||
+        activeState.isPrivateMode = prefs.advanced.forcePrivateMode.get() ||
                 activeState.imeOptions.flagNoPersonalizedLearning
-        if (!prefs.correction.rememberCapsLockState) {
+        if (!oldPrefs.correction.rememberCapsLockState) {
             activeState.capsLock = false
         }
         isGlidePostEffect = false
@@ -420,7 +422,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     dictionaryManager.prepareDictionaries(newSubtype)
                 }
             }
-            if (prefs.glide.enabled) {
+            if (oldPrefs.glide.enabled) {
                 GlideTypingManager.getInstance().setWordData(newSubtype)
             }
             if (doRefreshLayouts) {
@@ -456,7 +458,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     currentWord = currentWord.text,
                     preceidingWords = listOf(),
                     subtype = florisboard.activeSubtype,
-                    allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive,
+                    allowPossiblyOffensive = !oldPrefs.suggestion.blockPossiblyOffensive,
                     maxSuggestionCount = 16
                 ) { suggestions ->
                     withContext(Dispatchers.Main) {
@@ -482,7 +484,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     private fun updateCapsState() {
         if (!activeState.capsLock) {
-            activeState.caps = prefs.correction.autoCapitalization &&
+            activeState.caps = oldPrefs.correction.autoCapitalization &&
                     activeEditorInstance.cursorCapsMode != InputAttributes.CapsMode.NONE
         }
     }
@@ -634,7 +636,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * FlorisBoard internal or system-wide.
      */
     private fun handleLanguageSwitch() {
-        when (prefs.keyboard.utilityKeyAction) {
+        when (oldPrefs.keyboard.utilityKeyAction) {
             UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
             UtilityKeyAction.SWITCH_LANGUAGE -> florisboard.switchToNextSubtype()
             else -> florisboard.switchToNextKeyboard()
@@ -645,7 +647,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Handles a [KeyCode.SHIFT] down event.
      */
     private fun handleShiftDown(ev: InputKeyEvent) {
-        if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventDown, prefs.keyboard.longPressDelay.toLong())) {
+        if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventDown, oldPrefs.keyboard.longPressDelay.toLong())) {
             newCapsState = true
             activeState.caps = true
             activeState.capsLock = true
@@ -756,11 +758,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * enabled by the user.
      */
     private fun handleSpace(ev: InputKeyEvent) {
-        if (prefs.keyboard.spaceBarSwitchesToCharacters && getActiveKeyboardMode() != KeyboardMode.CHARACTERS) {
+        if (oldPrefs.keyboard.spaceBarSwitchesToCharacters && getActiveKeyboardMode() != KeyboardMode.CHARACTERS) {
             setActiveKeyboardMode(KeyboardMode.CHARACTERS)
         }
-        if (prefs.correction.doubleSpacePeriod) {
-            if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventUp, prefs.keyboard.longPressDelay.toLong())) {
+        if (oldPrefs.correction.doubleSpacePeriod) {
+            if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventUp, oldPrefs.keyboard.longPressDelay.toLong())) {
                 val text = activeEditorInstance.getTextBeforeCursor(2)
                 if (text.length == 2 && !text.matches("""[.!?‽\s][\s]""".toRegex())) {
                     activeEditorInstance.deleteBackwards()

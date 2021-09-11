@@ -162,7 +162,7 @@ class Preferences(
             const val FORCE_PRIVATE_MODE =      "advanced__force_private_mode"
         }
 
-        var settingsTheme: String = ""
+        /*var settingsTheme: String = ""
             get() = prefs.getPref(SETTINGS_THEME, "auto")
             private set
         var showAppIcon: Boolean = false
@@ -170,7 +170,7 @@ class Preferences(
             private set
         var forcePrivateMode: Boolean
             get() =  prefs.getPref(FORCE_PRIVATE_MODE, false)
-            set(v) = prefs.setPref(FORCE_PRIVATE_MODE, v)
+            set(v) = prefs.setPref(FORCE_PRIVATE_MODE, v)*/
     }
 
     /**
@@ -206,7 +206,7 @@ class Preferences(
             const val CLEAR_UDM_INTERNAL_DATABASE = "devtools__clear_udm_internal_database"
         }
 
-        var enabled: Boolean
+        /*var enabled: Boolean
             get() =  prefs.getPref(ENABLED, false)
             set(v) = prefs.setPref(ENABLED, v)
         var showHeapMemoryStats: Boolean
@@ -214,7 +214,7 @@ class Preferences(
             set(v) = prefs.setPref(SHOW_HEAP_MEMORY_STATS, v)
         var overrideWordSuggestionsMinHeapRestriction: Boolean
             get() =  prefs.getPref(OVERRIDE_WS_MIN_HEAP_RES, false)
-            set(v) = prefs.setPref(OVERRIDE_WS_MIN_HEAP_RES, v)
+            set(v) = prefs.setPref(OVERRIDE_WS_MIN_HEAP_RES, v)*/
     }
 
     /**
