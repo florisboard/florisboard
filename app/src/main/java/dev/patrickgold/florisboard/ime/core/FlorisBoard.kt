@@ -49,6 +49,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.*
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.crashutility.CrashUtility
 import dev.patrickgold.florisboard.debug.*
@@ -66,7 +67,6 @@ import dev.patrickgold.florisboard.ime.text.key.CurrencySet
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.setup.SetupActivity
 import dev.patrickgold.florisboard.util.AppVersionUtils
 import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.databinding.FlorisboardBinding
@@ -750,11 +750,11 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     }
 
     /**
-     * Hides the IME and launches [SetupActivity].
+     * Hides the IME and launches [FlorisAppActivity].
      */
     fun launchSettings() {
         requestHideSelf(0)
-        val i = Intent(this, SetupActivity::class.java)
+        val i = Intent(this, FlorisAppActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                   Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
                   Intent.FLAG_ACTIVITY_CLEAR_TOP

@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.annotation.StringRes
+import kotlin.reflect.KClass
 
 fun launchUrl(context: Context, url: String) {
     val intent = Intent(
@@ -35,4 +36,9 @@ fun launchUrl(context: Context, @StringRes url: Int) {
 
 fun launchUrl(context: Context, @StringRes url: Int, params: Array<out String>) {
     launchUrl(context, context.getString(url, *params))
+}
+
+fun <T : Any> launchActivity(context: Context, kClass: KClass<T>) {
+    val intent = Intent(context, kClass.java)
+    context.startActivity(intent)
 }
