@@ -26,9 +26,11 @@ import androidx.compose.ui.res.stringResource
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.util.AndroidVersion
 import dev.patrickgold.jetpref.ui.compose.ListPreference
+import dev.patrickgold.jetpref.ui.compose.ListPreferenceEntry
 import dev.patrickgold.jetpref.ui.compose.Preference
 import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
 import dev.patrickgold.jetpref.ui.compose.SwitchPreference
@@ -64,11 +66,55 @@ fun AdvancedScreen() = FlorisScreen(title = stringResource(R.string.settings__ad
         prefs.advanced.settingsLanguage,
         title = stringResource(R.string.pref__advanced__settings_language__label),
         entries = listOf(
-            entry(
-                key = "auto",
-                label = stringResource(R.string.settings__system_default),
-            ),
-        ),
+            "auto",
+            "ar",
+            "bg",
+            "bs",
+            "ca",
+            "ckb-IR",
+            "cs",
+            "da",
+            "de",
+            "el",
+            "en",
+            "eo",
+            "es",
+            "fa",
+            "fi",
+            "fr",
+            "hr",
+            "hu",
+            "in",
+            "it",
+            "iw",
+            "kmr-TR",
+            "ko-KR",
+            "lv-LV",
+            "mk",
+            "nds-DE",
+            "nl",
+            "no",
+            "pl",
+            "pt",
+            "pt-BR",
+            "ru",
+            "sk",
+            "sl",
+            "sr",
+            "sv",
+            "tr",
+            "uk",
+            "zgh",
+        ).map {
+            if (it == "auto") {
+                entry(
+                    key = "auto",
+                    label = stringResource(R.string.settings__system_default),
+                )
+            } else {
+                FlorisLocale.fromTag(it).listEntry()
+            }
+        },
     )
     SwitchPreference(
         prefs.advanced.showAppIcon,
@@ -143,4 +189,8 @@ fun AdvancedScreen() = FlorisScreen(title = stringResource(R.string.settings__ad
             },
         )
     }
+}
+
+private fun FlorisLocale.listEntry(): ListPreferenceEntry<String> {
+    return entry(languageTag(), displayName(this))
 }

@@ -143,8 +143,8 @@ dependencies {
     implementation("com.jakewharton.timber:timber:4.7.1") // possibly remove after settings rework
     implementation("com.jaredrummler:colorpicker:1.1.0") // possibly remove after settings rework
     implementation("com.nambimobile.widgets:expandable-fab:1.0.2") // possibly remove after settings rework
-    implementation("dev.patrickgold.jetpref:jetpref-datastore-model:489cc52f81") // use version number after first release
-    implementation("dev.patrickgold.jetpref:jetpref-ui-compose:489cc52f81") // use version number after first release
+    implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-alpha02")
+    implementation("dev.patrickgold.jetpref:jetpref-ui-compose:0.1.0-alpha02")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
     implementation("androidx.room:room-runtime:2.3.0")

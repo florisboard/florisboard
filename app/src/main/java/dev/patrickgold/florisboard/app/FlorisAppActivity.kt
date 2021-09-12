@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.app
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -25,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -41,6 +44,7 @@ import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
 import dev.patrickgold.florisboard.util.AndroidVersion
 import dev.patrickgold.florisboard.util.PackageManagerUtils
 import dev.patrickgold.jetpref.datastore.preferenceModel
+import java.util.*
 
 enum class AppTheme(val id: String) {
     AUTO("auto"),
@@ -54,15 +58,21 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
 }
 
 class FlorisAppActivity : ComponentActivity() {
-    val prefs by preferenceModel(::AppPrefs)
-    val appTheme = mutableStateOf(AppTheme.AUTO)
-    var showAppIcon = true
+    private val prefs by preferenceModel(::AppPrefs)
+    private val appTheme = mutableStateOf(AppTheme.AUTO)
+    private var showAppIcon = true
+    private var appContext = mutableStateOf(this as Context)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         prefs.advanced.settingsTheme.observe(this) {
             appTheme.value = it
+        }
+        prefs.advanced.settingsLanguage.observe(this) {
+            val config = Configuration(resources.configuration)
+            config.setLocale(if (it == "auto") Locale.getDefault() else Locale(it))
+            appContext.value = createConfigurationContext(config)
         }
         if (AndroidVersion.ATMOST_P) {
             prefs.advanced.showAppIcon.observe(this) {
@@ -71,10 +81,12 @@ class FlorisAppActivity : ComponentActivity() {
         }
 
         setContent {
-            FlorisAppTheme(theme = appTheme.value) {
-                Surface(color = MaterialTheme.colors.background) {
-                    SystemUi()
-                    AppContent()
+            CompositionLocalProvider(LocalContext provides appContext.value) {
+                FlorisAppTheme(theme = appTheme.value) {
+                    Surface(color = MaterialTheme.colors.background) {
+                        SystemUi()
+                        AppContent()
+                    }
                 }
             }
         }

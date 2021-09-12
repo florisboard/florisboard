@@ -21,34 +21,34 @@ import android.os.Build
 @Suppress("unused")
 object AndroidVersion {
     /** Android 7 **/
-    val ATLEAST_N = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-    val ATMOST_N = Build.VERSION.SDK_INT <= Build.VERSION_CODES.N
+    inline val ATLEAST_N get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+    inline val ATMOST_N get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.N
 
     /** Android 7.1 **/
-    val ATLEAST_N_MR1 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1
-    val ATMOST_N_MR1 = Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1
+    inline val ATLEAST_N_MR1 get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1
+    inline val ATMOST_N_MR1 get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1
 
     /** Android 8 **/
-    val ATLEAST_O = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-    val ATMOST_O = Build.VERSION.SDK_INT <= Build.VERSION_CODES.O
+    inline val ATLEAST_O get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+    inline val ATMOST_O get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.O
 
     /** Android 8.1 **/
-    val ATLEAST_O_MR1 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
-    val ATMOST_O_MR1 = Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1
+    inline val ATLEAST_O_MR1 get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
+    inline val ATMOST_O_MR1 get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1
 
     /** Android 9 **/
-    val ATLEAST_P = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
-    val ATMOST_P = Build.VERSION.SDK_INT <= Build.VERSION_CODES.P
+    inline val ATLEAST_P get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.P
+    inline val ATMOST_P get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.P
 
     /** Android 10 **/
-    val ATLEAST_Q = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
-    val ATMOST_Q = Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q
+    inline val ATLEAST_Q get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
+    inline val ATMOST_Q get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q
 
     /** Android 11 **/
-    val ATLEAST_R = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
-    val ATMOST_R = Build.VERSION.SDK_INT <= Build.VERSION_CODES.R
+    inline val ATLEAST_R get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.R
+    inline val ATMOST_R get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.R
 
     /** Android 12 **/
-    val ATLEAST_S = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
-    val ATMOST_S = Build.VERSION.SDK_INT <= Build.VERSION_CODES.S
+    inline val ATLEAST_S get() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+    inline val ATMOST_S get() = Build.VERSION.SDK_INT <= Build.VERSION_CODES.S
 }
