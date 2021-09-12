@@ -63,4 +63,12 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             default = false,
         )
     }
+
+    val internal = Internal()
+    inner class Internal {
+        val homeIsBetaToolboxCollapsed = boolean(
+            key = "internal__home_is_beta_toolbox_collapsed",
+            default = false,
+        )
+    }
 }

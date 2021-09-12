@@ -20,6 +20,8 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.annotation.StringRes
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.reflect.KClass
 
 fun launchUrl(context: Context, url: String) {
@@ -38,7 +40,11 @@ fun launchUrl(context: Context, @StringRes url: Int, params: Array<out String>) 
     launchUrl(context, context.getString(url, *params))
 }
 
-fun <T : Any> launchActivity(context: Context, kClass: KClass<T>) {
+inline fun <T : Any> launchActivity(context: Context, kClass: KClass<T>, intentModifier: (Intent) -> Unit = { }) {
+    contract {
+        callsInPlace(intentModifier, InvocationKind.EXACTLY_ONCE)
+    }
     val intent = Intent(context, kClass.java)
+    intentModifier(intent)
     context.startActivity(intent)
 }
