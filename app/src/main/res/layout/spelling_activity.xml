@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:theme="@style/SettingsTheme"
-    tools:context=".settings.spelling.SpellingActivity">
+    tools:context=".oldsettings.spelling.SpellingActivity">
 
     <include layout="@layout/toolbar" android:id="@+id/toolbar"/>
 

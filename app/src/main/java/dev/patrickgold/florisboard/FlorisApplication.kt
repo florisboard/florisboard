@@ -16,13 +16,13 @@
 
 package dev.patrickgold.florisboard
 
-import android.app.Application
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.Build
+import android.content.res.Configuration
 import androidx.core.os.UserManagerCompat
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.common.NativeStr
 import dev.patrickgold.florisboard.common.toNativeStr
 import dev.patrickgold.florisboard.crashutility.CrashUtility
@@ -37,16 +37,22 @@ import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.FlorisRef
+import dev.patrickgold.florisboard.util.AndroidVersion
+import dev.patrickgold.jetpref.datastore.JetPrefApplication
 import timber.log.Timber
 import java.io.File
+import java.util.*
 import kotlin.Exception
 
 @Suppress("unused")
-class FlorisApplication : Application() {
+class FlorisApplication : JetPrefApplication() {
     companion object {
         private const val ICU_DATA_ASSET_PATH = "icu/icudt69l.dat"
 
         private external fun nativeInitICUData(path: NativeStr): Int
+
+        var systemLanguage: String = "en"
+            private set
 
         init {
             try {
@@ -71,27 +77,39 @@ class FlorisApplication : Application() {
             )
             initICU()
             CrashUtility.install(this)
-            val prefs = Preferences.initDefault(this)
+            systemLanguage = Locale.getDefault().toLanguageTag()
+            val prefs by florisPreferenceModel()
+            val oldPrefs = Preferences.initDefault(this)
             val assetManager = AssetManager.init(this)
             SpellingManager.init(this, FlorisRef.assets("ime/spelling/config.json"))
             SubtypeManager.init(this)
             DictionaryManager.init(this)
             ThemeManager.init(this, assetManager)
-            prefs.initDefaultPreferences()
+            oldPrefs.initDefaultPreferences()
         } catch (e: Exception) {
             CrashUtility.stageException(e)
             return
         }
 
         /*Register a receiver so user config can be applied once device protracted storage is available*/
-        if(!UserManagerCompat.isUserUnlocked(this) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (!UserManagerCompat.isUserUnlocked(this) && AndroidVersion.ATLEAST_N) {
             registerReceiver(BootComplete(), IntentFilter(Intent.ACTION_USER_UNLOCKED))
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        systemLanguage = if (AndroidVersion.ATLEAST_N) {
+            newConfig.locales.get(0).toLanguageTag()
+        } else {
+            @Suppress("deprecation")
+            newConfig.locale.toLanguageTag()
         }
     }
 
     fun initICU(): Boolean {
         try {
-            val context = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            val context = if (AndroidVersion.ATLEAST_N) {
                 createDeviceProtectedStorageContext()
             } else {
                 this

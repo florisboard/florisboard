@@ -49,6 +49,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.*
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisAppActivity
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.crashutility.CrashUtility
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.clip.ClipboardInputManager
@@ -65,7 +67,6 @@ import dev.patrickgold.florisboard.ime.text.key.CurrencySet
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
-import dev.patrickgold.florisboard.setup.SetupActivity
 import dev.patrickgold.florisboard.util.AppVersionUtils
 import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.databinding.FlorisboardBinding
@@ -118,7 +119,8 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     val themeContext: Context
         get() = _themeContext ?: this
 
-    private val prefs: Preferences get() = Preferences.default()
+    private val oldPrefs: Preferences get() = Preferences.default()
+    private val prefs by florisPreferenceModel()
     val activeState: KeyboardState = KeyboardState.new()
 
     var uiBinding: FlorisboardBinding? = null
@@ -212,6 +214,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
                 // "Main" try..catch block
                 flogInfo(LogTopic.IMS_EVENTS)
                 serviceLifecycleDispatcher.onServicePreSuperOnCreate()
+                serviceLifecycleDispatcher.onServicePreSuperOnStart()
 
                 activeEditorInstance = EditorInstance(this, activeState)
 
@@ -224,7 +227,14 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
                 setTheme(currentThemeResId)
                 themeManager.registerOnThemeUpdatedListener(this)
 
-                AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
+                prefs.devtools.enabled.observe(this) {
+                    setupDevtools(it && prefs.devtools.showHeapMemoryStats.get())
+                }
+                prefs.devtools.showHeapMemoryStats.observe(this) {
+                    setupDevtools(prefs.devtools.enabled.get() && it)
+                }
+
+                AppVersionUtils.updateVersionOnInstallAndLastUse(this, oldPrefs)
 
                 florisClipboardManager = FlorisClipboardManager.getInstance().also {
                     it.initialize(this)
@@ -325,12 +335,26 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         florisboardInstance = null
     }
 
+    @Synchronized
+    private fun setupDevtools(enabled: Boolean) {
+        devtoolsOverlaySyncJob?.cancel()
+        if (enabled) {
+            devtoolsOverlaySyncJob = uiScope.launch(Dispatchers.Default) {
+                while (isActive) {
+                    withContext(Dispatchers.Main) { uiBinding?.inputView?.invalidate() }
+                    delay(1000)
+                }
+            }
+        }
+        uiBinding?.inputView?.invalidate()
+    }
+
     override fun onEvaluateFullscreenMode(): Boolean {
         return resources?.configuration?.let { config ->
             if (config.orientation != Configuration.ORIENTATION_LANDSCAPE) {
                 false
             } else {
-                when (prefs.keyboard.landscapeInputUiMode) {
+                when (oldPrefs.keyboard.landscapeInputUiMode) {
                     LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeState.imeOptions.flagNoFullscreen && !activeState.imeOptions.flagNoExtractUi
                     LandscapeInputUiMode.NEVER_SHOW -> false
                     LandscapeInputUiMode.ALWAYS_SHOW -> true
@@ -354,7 +378,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     }
 
     override fun onUpdateExtractingVisibility(ei: EditorInfo?) {
-        isExtractViewShown = activeState.isRichInputEditor && when (prefs.keyboard.landscapeInputUiMode) {
+        isExtractViewShown = activeState.isRichInputEditor && when (oldPrefs.keyboard.landscapeInputUiMode) {
             LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeState.imeOptions.flagNoExtractUi
             LandscapeInputUiMode.NEVER_SHOW -> false
             LandscapeInputUiMode.ALWAYS_SHOW -> true
@@ -422,7 +446,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateInlineSuggestionsRequest(uiExtras: Bundle): InlineSuggestionsRequest? {
-        return if (prefs.smartbar.enabled && prefs.suggestion.api30InlineSuggestionsEnabled) {
+        return if (oldPrefs.smartbar.enabled && oldPrefs.suggestion.api30InlineSuggestionsEnabled) {
             flogInfo(LogTopic.IMS_EVENTS) {
                 "Creating inline suggestions request because Smartbar and inline suggestions are enabled."
             }
@@ -509,17 +533,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         setActiveInput(R.id.text_input)
         updateOneHandedPanelVisibility()
         themeManager.update()
-
-        if (prefs.devtools.enabled && prefs.devtools.showHeapMemoryStats) {
-            devtoolsOverlaySyncJob?.cancel()
-            devtoolsOverlaySyncJob = uiScope.launch(Dispatchers.Default) {
-                while (true) {
-                    if (!isActive) break
-                    withContext(Dispatchers.Main) { uiBinding?.inputView?.invalidate() }
-                    delay(1000)
-                }
-            }
-        }
 
         eventListeners.toList().forEach { it?.onWindowShown() }
     }
@@ -748,11 +761,11 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     }
 
     /**
-     * Hides the IME and launches [SetupActivity].
+     * Hides the IME and launches [FlorisAppActivity].
      */
     fun launchSettings() {
         requestHideSelf(0)
-        val i = Intent(this, SetupActivity::class.java)
+        val i = Intent(this, FlorisAppActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                   Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
                   Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -836,7 +849,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     }
 
     fun toggleOneHandedMode(isRight: Boolean) {
-        prefs.keyboard.oneHandedMode = when (prefs.keyboard.oneHandedMode) {
+        oldPrefs.keyboard.oneHandedMode = when (oldPrefs.keyboard.oneHandedMode) {
             OneHandedMode.OFF -> if (isRight) { OneHandedMode.END } else { OneHandedMode.START }
             else -> OneHandedMode.OFF
         }
@@ -848,7 +861,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
             uiBinding?.oneHandedCtrlPanelStart?.visibility = View.GONE
             uiBinding?.oneHandedCtrlPanelEnd?.visibility = View.GONE
         } else {
-            when (prefs.keyboard.oneHandedMode) {
+            when (oldPrefs.keyboard.oneHandedMode) {
                 OneHandedMode.OFF -> {
                     uiBinding?.oneHandedCtrlPanelStart?.visibility = View.GONE
                     uiBinding?.oneHandedCtrlPanelEnd?.visibility = View.GONE

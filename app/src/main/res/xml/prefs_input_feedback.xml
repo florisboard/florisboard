@@ -21,7 +21,7 @@
             app:title="@string/pref__input_feedback__audio_ignore_system_settings__label"
             app:summary="@string/pref__input_feedback__audio_ignore_system_settings__summary"/>
 
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="50"
             app:key="input_feedback__audio_volume"
@@ -102,7 +102,7 @@
             app:title="@string/pref__input_feedback__haptic_use_vibrator__label"
             app:summary="@string/pref__input_feedback__haptic_use_vibrator__summary"/>
 
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="50"
             app:key="input_feedback__haptic_vibration_duration"
@@ -114,7 +114,7 @@
             app:seekBarIncrement="1"
             app:unit=" ms"/>
 
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="50"
             app:key="input_feedback__haptic_vibration_strength"

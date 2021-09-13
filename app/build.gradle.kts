@@ -1,12 +1,12 @@
 plugins {
     id("com.android.application") version "7.0.2"
-    kotlin("android") version "1.5.20"
-    kotlin("kapt") version "1.5.20"
-    kotlin("plugin.serialization") version "1.5.20"
+    kotlin("android") version "1.5.21"
+    kotlin("kapt") version "1.5.21"
+    kotlin("plugin.serialization") version "1.5.21"
 }
 
 android {
-    compileSdk = 30
+    compileSdk = 31
     buildToolsVersion = "30.0.3"
     ndkVersion = "22.1.7171670"
 
@@ -66,6 +66,11 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.0.1"
     }
 
     externalNativeBuild {
@@ -119,23 +124,31 @@ android {
 }
 
 dependencies {
-    implementation("androidx.activity", "activity-ktx", "1.2.1")
-    implementation("androidx.appcompat", "appcompat", "1.2.0")
-    implementation("androidx.autofill", "autofill", "1.1.0")
-    implementation("androidx.core", "core-ktx", "1.3.2")
-    implementation("androidx.fragment", "fragment-ktx", "1.3.0")
-    implementation("androidx.preference", "preference-ktx", "1.1.1")
-    implementation("androidx.constraintlayout", "constraintlayout", "2.0.4")
-    implementation("androidx.lifecycle", "lifecycle-service", "2.2.0")
-    implementation("com.google.android.flexbox", "flexbox", "3.0.0")
-    implementation("com.google.android.material", "material", "1.3.0")
-    implementation("org.jetbrains.kotlinx", "kotlinx-coroutines-android", "1.4.2")
-    implementation("org.jetbrains.kotlinx", "kotlinx-serialization-json", "1.1.0")
-    implementation("com.jaredrummler", "colorpicker", "1.1.0")
-    implementation("com.jakewharton.timber", "timber", "4.7.1")
-    implementation("com.nambimobile.widgets", "expandable-fab", "1.0.2")
-    implementation("androidx.room", "room-runtime", "2.2.6")
-    kapt("androidx.room", "room-compiler","2.2.6")
+    implementation("androidx.activity:activity-compose:1.3.1")
+    implementation("androidx.activity:activity-ktx:1.3.1")
+    implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation("androidx.autofill:autofill:1.1.0")
+    implementation("androidx.compose.material:material:1.0.2")
+    implementation("androidx.compose.ui:ui:1.0.2")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.0.2")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.0") // possibly remove after settings rework
+    implementation("androidx.core:core-ktx:1.6.0")
+    implementation("androidx.fragment:fragment-ktx:1.3.6") // possibly remove after settings rework
+    implementation("androidx.navigation:navigation-compose:2.4.0-alpha08")
+    implementation("androidx.preference:preference-ktx:1.1.1") // possibly remove after settings rework
+    implementation("androidx.lifecycle:lifecycle-service:2.3.1")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.18.0")
+    implementation("com.google.android.flexbox:flexbox:3.0.0")
+    implementation("com.google.android.material:material:1.4.0")
+    implementation("com.jakewharton.timber:timber:4.7.1") // possibly remove after settings rework
+    implementation("com.jaredrummler:colorpicker:1.1.0") // possibly remove after settings rework
+    implementation("com.nambimobile.widgets:expandable-fab:1.0.2") // possibly remove after settings rework
+    implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-alpha03")
+    implementation("dev.patrickgold.jetpref:jetpref-ui-compose:0.1.0-alpha03")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
+    implementation("androidx.room:room-runtime:2.3.0")
+    kapt("androidx.room:room-compiler:2.3.0")
 
     testImplementation(kotlin("test"))
     testImplementation("androidx.test", "core", "1.3.0")

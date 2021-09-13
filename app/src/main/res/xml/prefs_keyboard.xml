@@ -54,7 +54,7 @@
             app:title="@string/pref__keyboard__merge_hint_popups_enabled__label"
             android:summary="@string/pref__keyboard_merge_hint_popups_enabled__summary"/>
 
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="100"
             app:key="keyboard__font_size_multiplier_portrait"
@@ -65,7 +65,7 @@
             app:seekBarIncrement="5"
             app:unit="%"/>
 
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="100"
             app:key="keyboard__font_size_multiplier_landscape"
@@ -91,7 +91,7 @@
             app:title="@string/pref__keyboard__one_handed_mode__label"
             app:useSimpleSummaryProvider="true"/>
 
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="87"
             app:key="keyboard__one_handed_mode_scale_factor"
@@ -120,7 +120,7 @@
             app:title="@string/pref__keyboard__height_factor__label"
             app:useSimpleSummaryProvider="true"/>
 
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="100"
             app:key="keyboard__height_factor_custom"
@@ -131,7 +131,7 @@
             app:seekBarIncrement="5"
             app:unit="%"/>
 
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="0"
             app:key="keyboard__bottom_offset_portrait"
@@ -142,7 +142,7 @@
             app:seekBarIncrement="1"
             app:unit=" dp"/>
 
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="0"
             app:key="keyboard__bottom_offset_landscape"
@@ -153,7 +153,7 @@
             app:seekBarIncrement="1"
             app:unit=" dp"/>
 
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="10"
             app:key="keyboard__key_spacing_vertical"
@@ -164,7 +164,7 @@
             app:seekBarIncrement="1"
             app:unit=" half dp"/>
 
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="4"
             app:key="keyboard__key_spacing_horizontal"
@@ -193,7 +193,7 @@
             app:title="@string/pref__keyboard__popup_visible__label"
             app:summary="@string/pref__keyboard__popup_visible__summary"/>
 
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:defaultValue="300"
             app:key="keyboard__long_press_delay"
@@ -254,7 +254,7 @@
             app:iconSpaceReserved="false"
             app:title="@string/pref__clipboard__clean_up_old_clipboard_items__label" />
 
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:dependency="clipboard__clean_up_old"
             android:defaultValue="15"
@@ -273,7 +273,7 @@
             app:iconSpaceReserved="false"
             app:title="@string/pref__clipboard__limit_history_size__label" />
 
-        <dev.patrickgold.florisboard.settings.components.DialogSeekBarPreference
+        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
             android:dependency="clipboard__limit_history_size"
             android:defaultValue="25"
