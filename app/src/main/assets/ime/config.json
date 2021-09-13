@@ -715,14 +715,16 @@
         "symbols": "cjk",
         "symbols2": "cjk",
         "numericRow": "cjk"
-      },
-      {
+      }
+    },
+    {
       "id": 3200,
       "languageTag": "th-kd",
       "composer": "appender",
       "currencySet": "thai_baht",
       "preferred": {
-        "characters": "thai_kedmanee"
+        "characters": "thai_kedmanee",
+        "numericRow": "thai"
       }
     }
   ]
