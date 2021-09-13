@@ -211,6 +211,18 @@
       ]
     },
     {
+      "name": "thai_baht",
+      "label": "Thai baht (฿)",
+      "slots": [
+        { "code": 3647, "label": "฿" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
+      ]
+    },
+    {
       "name": "turkish_lira",
       "label": "Turkish lira (₺)",
       "slots": [
@@ -703,6 +715,16 @@
         "symbols": "cjk",
         "symbols2": "cjk",
         "numericRow": "cjk"
+      }
+    },
+    {
+      "id": 3200,
+      "languageTag": "th-kd",
+      "composer": "appender",
+      "currencySet": "thai_baht",
+      "preferred": {
+        "characters": "thai_kedmanee",
+        "numericRow": "thai"
       }
     }
   ]
