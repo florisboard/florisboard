@@ -21,7 +21,7 @@ import dev.patrickgold.jetpref.datastore.model.PreferenceModel
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import dev.patrickgold.jetpref.datastore.preferenceModel
 
-fun florisPreferenceModel() = preferenceModel(::AppPrefs)
+fun florisPreferenceModel() = preferenceModel(AppPrefs::class, ::AppPrefs)
 
 class AppPrefs : PreferenceModel("florisboard-app-prefs") {
     val advanced = Advanced()

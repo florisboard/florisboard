@@ -23,7 +23,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.patrickgold.florisboard.app.prefs.AppPrefs
-import dev.patrickgold.jetpref.ui.compose.PreferenceScreen
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.jetpref.ui.compose.PreferenceLayout
 import dev.patrickgold.jetpref.ui.compose.PreferenceUiContent
 
 @Composable
@@ -39,7 +40,7 @@ fun FlorisScreen(
         bottomBar = bottomBar,
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
-            PreferenceScreen(::AppPrefs) {
+            PreferenceLayout(florisPreferenceModel()) {
                 content(this)
             }
         }

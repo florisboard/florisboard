@@ -37,7 +37,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dev.patrickgold.florisboard.app.prefs.AppPrefs
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.PreviewKeyboardField
 import dev.patrickgold.florisboard.app.ui.components.SystemUi
@@ -49,7 +49,6 @@ import dev.patrickgold.florisboard.app.ui.settings.about.ThirdPartyLicensesScree
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
 import dev.patrickgold.florisboard.util.AndroidVersion
 import dev.patrickgold.florisboard.util.PackageManagerUtils
-import dev.patrickgold.jetpref.datastore.preferenceModel
 import java.util.*
 
 enum class AppTheme(val id: String) {
@@ -64,7 +63,7 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
 }
 
 class FlorisAppActivity : ComponentActivity() {
-    private val prefs by preferenceModel(::AppPrefs)
+    private val prefs by florisPreferenceModel()
     private var appTheme by mutableStateOf(AppTheme.AUTO)
     private var showAppIcon = true
     private var appContext by mutableStateOf(this as Context)

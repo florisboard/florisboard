@@ -30,6 +30,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -54,7 +55,7 @@ fun HomeScreen() = FlorisScreen(
 ) {
     val navController = LocalNavController.current
     val context = LocalContext.current
-    val (isCollapsed, _) = prefs.internal.homeIsBetaToolboxCollapsed.observeAsState(true)
+    val isCollapsed by prefs.internal.homeIsBetaToolboxCollapsed.observeAsState(true)
 
     Card(modifier = Modifier.padding(16.dp)) {
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {

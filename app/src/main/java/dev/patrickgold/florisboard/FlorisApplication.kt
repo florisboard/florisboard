@@ -22,7 +22,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
 import androidx.core.os.UserManagerCompat
-import dev.patrickgold.florisboard.app.prefs.AppPrefs
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.common.NativeStr
 import dev.patrickgold.florisboard.common.toNativeStr
 import dev.patrickgold.florisboard.crashutility.CrashUtility
@@ -39,7 +39,6 @@ import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.util.AndroidVersion
 import dev.patrickgold.jetpref.datastore.JetPrefApplication
-import dev.patrickgold.jetpref.datastore.preferenceModel
 import timber.log.Timber
 import java.io.File
 import java.util.*
@@ -79,7 +78,7 @@ class FlorisApplication : JetPrefApplication() {
             initICU()
             CrashUtility.install(this)
             systemLanguage = Locale.getDefault().toLanguageTag()
-            val prefs by preferenceModel(::AppPrefs)
+            val prefs by florisPreferenceModel()
             val oldPrefs = Preferences.initDefault(this)
             val assetManager = AssetManager.init(this)
             SpellingManager.init(this, FlorisRef.assets("ime/spelling/config.json"))
