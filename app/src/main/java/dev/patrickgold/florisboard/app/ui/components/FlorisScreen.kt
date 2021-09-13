@@ -16,9 +16,12 @@
 
 package dev.patrickgold.florisboard.app.ui.components
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.jetpref.ui.compose.PreferenceScreen
 import dev.patrickgold.jetpref.ui.compose.PreferenceUiContent
@@ -27,14 +30,18 @@ import dev.patrickgold.jetpref.ui.compose.PreferenceUiContent
 fun FlorisScreen(
     title: String,
     backArrowVisible: Boolean = true,
+    bottomBar: @Composable () -> Unit = { },
     actions: @Composable RowScope.() -> Unit = { },
     content: PreferenceUiContent<AppPrefs>,
 ) {
     Scaffold(
         topBar = { FlorisAppBar(title, backArrowVisible, actions) },
-    ) {
-        PreferenceScreen(::AppPrefs) {
-            content(this)
+        bottomBar = bottomBar,
+    ) { innerPadding ->
+        Box(modifier = Modifier.padding(innerPadding)) {
+            PreferenceScreen(::AppPrefs) {
+                content(this)
+            }
         }
     }
 }

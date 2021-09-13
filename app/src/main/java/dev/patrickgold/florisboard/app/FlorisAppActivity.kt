@@ -21,19 +21,25 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.app.ui.Routes
+import dev.patrickgold.florisboard.app.ui.components.PreviewKeyboardField
 import dev.patrickgold.florisboard.app.ui.components.SystemUi
 import dev.patrickgold.florisboard.app.ui.settings.AdvancedScreen
 import dev.patrickgold.florisboard.app.ui.settings.HomeScreen
@@ -59,20 +65,20 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
 
 class FlorisAppActivity : ComponentActivity() {
     private val prefs by preferenceModel(::AppPrefs)
-    private val appTheme = mutableStateOf(AppTheme.AUTO)
+    private var appTheme by mutableStateOf(AppTheme.AUTO)
     private var showAppIcon = true
-    private var appContext = mutableStateOf(this as Context)
+    private var appContext by mutableStateOf(this as Context)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         prefs.advanced.settingsTheme.observe(this) {
-            appTheme.value = it
+            appTheme = it
         }
         prefs.advanced.settingsLanguage.observe(this) {
             val config = Configuration(resources.configuration)
             config.setLocale(if (it == "auto") Locale.getDefault() else Locale(it))
-            appContext.value = createConfigurationContext(config)
+            appContext = createConfigurationContext(config)
         }
         if (AndroidVersion.ATMOST_P) {
             prefs.advanced.showAppIcon.observe(this) {
@@ -80,9 +86,11 @@ class FlorisAppActivity : ComponentActivity() {
             }
         }
 
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+
         setContent {
-            CompositionLocalProvider(LocalContext provides appContext.value) {
-                FlorisAppTheme(theme = appTheme.value) {
+            CompositionLocalProvider(LocalContext provides appContext) {
+                FlorisAppTheme(theme = appTheme) {
                     Surface(color = MaterialTheme.colors.background) {
                         SystemUi()
                         AppContent()
@@ -107,6 +115,10 @@ class FlorisAppActivity : ComponentActivity() {
             PackageManagerUtils.showAppIcon(this)
         }
     }
+
+    override fun onBackPressed() {
+        // TODO: implement nav stack pop
+    }
 }
 
 @Composable
@@ -115,14 +127,21 @@ private fun AppContent() {
     CompositionLocalProvider(
         LocalNavController provides navController,
     ) {
-        NavHost(navController = navController, startDestination = Routes.Settings.Home) {
-            composable(Routes.Settings.Home) { HomeScreen() }
+        Column {
+            NavHost(
+                modifier = Modifier.weight(1.0f),
+                navController = navController,
+                startDestination = Routes.Settings.Home,
+            ) {
+                composable(Routes.Settings.Home) { HomeScreen() }
 
-            composable(Routes.Settings.Advanced) { AdvancedScreen() }
+                composable(Routes.Settings.Advanced) { AdvancedScreen() }
 
-            composable(Routes.Settings.About) { AboutScreen() }
-            composable(Routes.Settings.ProjectLicense) { ProjectLicenseScreen() }
-            composable(Routes.Settings.ThirdPartyLicenses) { ThirdPartyLicensesScreen() }
+                composable(Routes.Settings.About) { AboutScreen() }
+                composable(Routes.Settings.ProjectLicense) { ProjectLicenseScreen() }
+                composable(Routes.Settings.ThirdPartyLicenses) { ThirdPartyLicensesScreen() }
+            }
+            PreviewKeyboardField()
         }
     }
 }

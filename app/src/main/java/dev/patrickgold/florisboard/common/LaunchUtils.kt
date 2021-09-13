@@ -29,6 +29,7 @@ fun launchUrl(context: Context, url: String) {
         Intent.ACTION_VIEW,
         Uri.parse(url)
     )
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     context.startActivity(intent)
 }
 

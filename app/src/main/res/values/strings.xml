@@ -45,6 +45,7 @@
 
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Settings</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Try out your setup</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">More options</string>
     <string name="settings__menu_about" translatable="false" comment="Three-dot menu entry for About activity">@string/about__title</string>
     <string name="settings__menu_advanced" translatable="false" comment="Three-dot menu entry for Advanced activity">@string/settings__advanced__title</string>

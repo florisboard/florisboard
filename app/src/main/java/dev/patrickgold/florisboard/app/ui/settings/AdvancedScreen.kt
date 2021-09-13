@@ -16,19 +16,22 @@
 
 package dev.patrickgold.florisboard.app.ui.settings
 
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
 import dev.patrickgold.florisboard.util.AndroidVersion
+import dev.patrickgold.jetpref.ui.compose.JetPrefAlertDialog
 import dev.patrickgold.jetpref.ui.compose.ListPreference
 import dev.patrickgold.jetpref.ui.compose.ListPreferenceEntry
 import dev.patrickgold.jetpref.ui.compose.Preference
@@ -159,35 +162,27 @@ fun AdvancedScreen() = FlorisScreen(title = stringResource(R.string.settings__ad
     }
 
     if (showDialog) {
-        AlertDialog(
-            onDismissRequest = { setShowDialog(false) },
-            title = { Text(
-                text = stringResource(R.string.assets__action__delete_confirm_title)
-            ) },
-            text = { Text(
-                text = stringResource(R.string.assets__action__delete_confirm_message)
-            ) },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        DictionaryManager.default().let {
-                            it.loadUserDictionariesIfNecessary()
-                            it.florisUserDictionaryDao()?.deleteAll()
-                        }
-                        setShowDialog(false)
-                    }
-                ) {
-                    Text(stringResource(R.string.assets__action__delete))
+        JetPrefAlertDialog(
+            title = stringResource(R.string.assets__action__delete_confirm_title),
+            confirmLabel = stringResource(R.string.assets__action__delete),
+            onConfirm = {
+                DictionaryManager.default().let {
+                    it.loadUserDictionariesIfNecessary()
+                    it.florisUserDictionaryDao()?.deleteAll()
                 }
+                setShowDialog(false)
             },
-            dismissButton = {
-                Button(
-                    onClick = { setShowDialog(false) }
-                ) {
-                    Text(stringResource(R.string.assets__action__cancel))
-                }
-            },
-        )
+            dismissLabel = stringResource(R.string.assets__action__cancel),
+            onDismiss = { setShowDialog(false) },
+        ) {
+            Text(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = stringResource(
+                    R.string.assets__action__delete_confirm_message,
+                    FlorisUserDictionaryDatabase.DB_FILE_NAME,
+                )
+            )
+        }
     }
 }
 
