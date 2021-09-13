@@ -3,6 +3,7 @@ package dev.patrickgold.florisboard.ime.text.gestures
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.nlp.SuggestionList
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.res.AssetManager
@@ -13,6 +14,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import kotlin.math.min
 
 /**
  * Handles the [GlideTypingClassifier]. Basically responsible for linking [GlideTypingGesture.Detector]
@@ -105,15 +107,18 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
             withContext(Dispatchers.Main) {
                 val textInputManager = TextInputManager.getInstance()
                 textInputManager.isGlidePostEffect = true
+                val suggestionList = SuggestionList.new(1)
+                suggestions.subList(
+                    1.coerceAtMost(min(commit.compareTo(false), suggestions.size)),
+                    maxSuggestionsToShow.coerceAtMost(suggestions.size)
+                ).map { textInputManager.fixCase(it) }.forEach {
+                    suggestionList.add(it, 255)
+                }
                 textInputManager.smartbarView?.setCandidateSuggestionWords(
                     time,
-                    // FIXME
-                    /*suggestions.subList(
-                        1.coerceAtMost(min(commit.compareTo(false), suggestions.size)),
-                        maxSuggestionsToShow.coerceAtMost(suggestions.size)
-                    ).map { textInputManager.fixCase(it) }*/
-                    null
+                    suggestionList
                 )
+                suggestionList.dispose()
                 textInputManager.smartbarView?.updateCandidateSuggestionCapsState()
                 if (commit && suggestions.isNotEmpty()) {
                     textInputManager.handleGesture(suggestions.first())
