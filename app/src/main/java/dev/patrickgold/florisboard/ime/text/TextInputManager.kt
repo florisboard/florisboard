@@ -253,6 +253,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 keyboards.set(mode, subtype, keyboard = layoutManager.computeKeyboardAsync(mode, subtype))
             }
         }
+
+        prefs.advanced.forcePrivateMode.observe(florisboard) {
+            activeState.updateIsPrivate(it)
+        }
     }
 
     override fun onInitializeInputUi(uiBinding: FlorisboardBinding) {
@@ -361,8 +365,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
         setActiveKeyboardMode(keyboardMode, updateState = false)
         instance.composingEnabledChanged()
-        activeState.isPrivateMode = prefs.advanced.forcePrivateMode.get() ||
-                activeState.imeOptions.flagNoPersonalizedLearning
+        activeState.updateIsPrivate()
         if (!oldPrefs.correction.rememberCapsLockState) {
             activeState.capsLock = false
         }
@@ -1003,5 +1006,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             activeState.caps -> word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(florisboard.activeSubtype.locale.base) else it.toString() }
             else -> word
         }
+    }
+
+    private fun KeyboardState.updateIsPrivate(force: Boolean = prefs.advanced.forcePrivateMode.get()) {
+        this.isPrivateMode = force || this.imeOptions.flagNoPersonalizedLearning
+        smartbarView?.updateKeyboardState(this)
     }
 }

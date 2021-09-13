@@ -214,6 +214,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
                 // "Main" try..catch block
                 flogInfo(LogTopic.IMS_EVENTS)
                 serviceLifecycleDispatcher.onServicePreSuperOnCreate()
+                serviceLifecycleDispatcher.onServicePreSuperOnStart()
 
                 activeEditorInstance = EditorInstance(this, activeState)
 
@@ -225,6 +226,13 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
                 currentThemeResId = getDayNightBaseThemeId(currentThemeIsNight)
                 setTheme(currentThemeResId)
                 themeManager.registerOnThemeUpdatedListener(this)
+
+                prefs.devtools.enabled.observe(this) {
+                    setupDevtools(it && prefs.devtools.showHeapMemoryStats.get())
+                }
+                prefs.devtools.showHeapMemoryStats.observe(this) {
+                    setupDevtools(prefs.devtools.enabled.get() && it)
+                }
 
                 AppVersionUtils.updateVersionOnInstallAndLastUse(this, oldPrefs)
 
@@ -325,6 +333,20 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         super.onDestroy()
 
         florisboardInstance = null
+    }
+
+    @Synchronized
+    private fun setupDevtools(enabled: Boolean) {
+        devtoolsOverlaySyncJob?.cancel()
+        if (enabled) {
+            devtoolsOverlaySyncJob = uiScope.launch(Dispatchers.Default) {
+                while (isActive) {
+                    withContext(Dispatchers.Main) { uiBinding?.inputView?.invalidate() }
+                    delay(1000)
+                }
+            }
+        }
+        uiBinding?.inputView?.invalidate()
     }
 
     override fun onEvaluateFullscreenMode(): Boolean {
@@ -511,17 +533,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         setActiveInput(R.id.text_input)
         updateOneHandedPanelVisibility()
         themeManager.update()
-
-        if (prefs.devtools.enabled.get() && prefs.devtools.showHeapMemoryStats.get()) {
-            devtoolsOverlaySyncJob?.cancel()
-            devtoolsOverlaySyncJob = uiScope.launch(Dispatchers.Default) {
-                while (true) {
-                    if (!isActive) break
-                    withContext(Dispatchers.Main) { uiBinding?.inputView?.invalidate() }
-                    delay(1000)
-                }
-            }
-        }
 
         eventListeners.toList().forEach { it?.onWindowShown() }
     }
