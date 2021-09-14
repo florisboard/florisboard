@@ -47,6 +47,7 @@ import dev.patrickgold.florisboard.app.ui.settings.about.AboutScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.ProjectLicenseScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.ThirdPartyLicensesScreen
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
+import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.util.AndroidVersion
 import dev.patrickgold.florisboard.util.PackageManagerUtils
 import java.util.*
@@ -76,7 +77,7 @@ class FlorisAppActivity : ComponentActivity() {
         }
         prefs.advanced.settingsLanguage.observe(this) {
             val config = Configuration(resources.configuration)
-            config.setLocale(if (it == "auto") Locale.getDefault() else Locale(it))
+            config.setLocale(if (it == "auto") FlorisLocale.default() else FlorisLocale.fromTag(it))
             appContext = createConfigurationContext(config)
         }
         if (AndroidVersion.ATMOST_P) {
@@ -117,6 +118,10 @@ class FlorisAppActivity : ComponentActivity() {
 
     override fun onBackPressed() {
         // TODO: implement nav stack pop
+    }
+
+    private fun Configuration.setLocale(locale: FlorisLocale) {
+        return this.setLocale(locale.base)
     }
 }
 
