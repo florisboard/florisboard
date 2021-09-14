@@ -39,6 +39,7 @@
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Si está visible, indica que el modo privado está activo. Cuando se hace clic, muestra información sobre el modo privado.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Ajustes</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Pruebe su configuración</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Más opciones</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Ayuda &amp; comentarios</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Ayuda</string>
@@ -52,7 +53,7 @@
     <string name="settings__home__title" comment="Title of the Home fragment">Bienvenido/a a %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard no está habilitado en el sistema y por lo tanto no estará disponible como método de entrada en el selector de entrada. Haga clic aquí para resolver este problema.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard no está seleccionado como método de entrada por defecto. Haga clic aquí para resolver este problema.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">¡Gracias por probar FlorisBoard! Este proyecto está todavía en fase alfa y por lo tanto le faltan características. Si encuentras algún error o quieres hacer alguna sugerencia, por favor, visita el repositorio en GitHub e informa sobre la incidencia. Esto ayuda a mejorar FlorisBoard. ¡Gracias!</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">¡Gracias por usar Florisboard! Este proyecto todavía se encuentra en una temprana fase beta por lo cual aún carece de ciertas características. Si encuentra errores o quiere hacer una sugerencia, por favor dele un vistazo al repositorio en GitHub e informe sobre las incidencias. Esto ayuda a mejorar Florisboard. ¡Gracias!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Idiomas y distribuciones de teclado</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Parece que no has configurado ningún subtipo. ¡Como alternativa se usará el subtipo Inglés/QWERTY!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Añadir</string>
@@ -334,13 +335,17 @@
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Larga</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Muy larga</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Avanzado</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Avanzado</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Ajustes del tema</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Claro</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Oscuro</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Oscuro</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Idioma de ajustes</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Mostrar icono de la aplicación en el launcher</string>
+    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Habilitado siempre en Android 10+ debido a restricciones del sistema</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forzar modo privado</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Desactivará cualquier característica que tenga que trabajar temporalmente con sus datos de entrada</string>
+    <string name="settings__devtools__title" comment="Title of Devtools settings">Herramientas de desarrollador</string>
     <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Habilitar herramienta de desarrollador</string>
     <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Herramientas diseñadas específicamente para depurar y detectar problemas</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Mostrar estadísticas de memoria</string>
@@ -390,7 +395,21 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Política de privacidad</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Código fuente</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Licencias de código abierto</string>
+    <string name="about__version__title" comment="Preference title">Versión</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Versión copiada al portapapeles</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Algo salió mal: %s</string>
+    <string name="about__changelog__title" comment="Preference title">Registro de cambios</string>
+    <string name="about__changelog__summary" comment="Preference summary">Qué hay de nuevo</string>
+    <string name="about__repository__title" comment="Preference title">Repositorio (GitHub)</string>
+    <string name="about__repository__summary" comment="Preference summary">Código fuente, discusiones, problemas e informaciones</string>
+    <string name="about__privacy_policy__title" comment="Preference title">Política de privacidad</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">La política de privacidad para este proyecto</string>
+    <string name="about__project_license__title" comment="Preference title">Licencia del proyecto</string>
+    <string name="about__project_license__summary" comment="Preference summary (%s will insert license name)">FlorisBoard está licenciado bajo %s</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Error: Fallo al cargar texto de licencia.\n-&gt; Razón: %s</string>
+    <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">La referencia del gestor de activos es nula</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">Licencias de terceros</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">Licencias de las librerías de terceros incluidas en esta aplicación</string>
     <!-- Assets strings -->
     <plurals name="assets__file__authors">
         <item quantity="one">Autor</item>

@@ -52,7 +52,7 @@
     <string name="settings__home__title" comment="Title of the Home fragment">Bem-vindo a %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard não está ativo no sistema, logo não pode ser utilizado como método de introdução no seletor. Toque aqui para resolver esta situação.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard não está selecionado como método de introdução padrão. Toque aqui para resolver esta situação.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Obrigado por testar FlorisBoard. Este projeto ainda está em fase alfa e, naturalmente, algumas funcionalidades não estão disponíveis. Se encontrar erros ou se quiser propor sugestões, aceda ao nosso repositório GitHub. A sua ajuda permite melhorar a aplicação. Obrigado!</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Obrigado por utilizar FlorisBoard. Este projeto está em fase beta e, naturalmente, algumas funcionalidades não estão disponíveis. Se encontrar erros ou se quiser propor sugestões, aceda ao nosso repositório GitHub. A sua ajuda permite melhorar a aplicação. Obrigado!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Idiomas e disposições de teclado</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Parece que ainda não configurou quaisquer subtipos. Como recurso será utilizado o subtipo Inglês/QWERTY!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Adicionar</string>
@@ -334,7 +334,7 @@
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Longa</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Muito longa</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Avançado</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Avançado</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Tema das definições</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Claro</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Escuro</string>

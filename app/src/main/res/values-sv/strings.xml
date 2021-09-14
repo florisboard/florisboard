@@ -48,7 +48,6 @@
     <string name="settings__home__title" comment="Title of the Home fragment">Välkommen till %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard är inte aktiverad och kommer därför inte vara tillgänglig som inmatningsmetod i inmatningsväljaren. Tryck här för att lösa problemet.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard är inte vald som standard inmatningsmetod. Tryck här för att lösa problemet.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Tack för att du testar FlorisBoard! Detta projekt är fortfarande i alfa och saknar därför vissa funktioner. Om du hittar buggar eller vill lämna några förslag, kolla in arkivet på GitHub och rapportera ett problem. Detta hjälper FlorisBoard bli bättre. Tack!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Språk &amp; Tangentbordslayouter</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Det verkar som du inte har konfigurerat några undertyper. Undertyp Engelska/QWERTY kommer då användas!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Lägg till</string>
@@ -163,7 +162,7 @@
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Blanksteg svep vänster</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Blanksteg svep höger</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Blanksteg långtryck</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Avancerat</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Avancerat</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Temainställningar</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Ljust</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Mörkt</string>

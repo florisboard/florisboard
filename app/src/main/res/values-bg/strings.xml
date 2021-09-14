@@ -39,6 +39,7 @@
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Ако се вижда, означава че е включен поверителния режим. При докосване показва информация за този режим.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Настройки</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Изпробвайте подредбата</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Още настройки</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Помощ и обратна връзка</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Помощ</string>
@@ -52,7 +53,7 @@
     <string name="settings__home__title" comment="Title of the Home fragment">Добре дошли във %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">Клавиатурата FlorisBoard не е активна в системата и не е достъпна като метод за въвеждане. Докоснете тук, за да промените.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">Клавиатурата FlorisBoard не е избрана като метод за въвеждане по подразбиране. Докоснете тук, за да промените.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Благодарим ви, че изпробвате FlorisBoard! Проект все е още във фаза алфа и има липсващи възможности. Ако откриете грешки или искате да направите предложение прегледайте хранилището в GitHub и докладвайте дрфект. Така ще допринесете за подобряване на FlorisBoard за всички потребители!</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Благодарим ви, че използвате FlorisBoard! Проект все е още във фаза на ранна бета и има липсващи възможности. Ако откриете грешки или искате да направите предложение прегледайте хранилището в GitHub и докладвайте дрфект. Така ще допринесете за подобряване на FlorisBoard за всички потребители!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Езици и клавиатурни подредби</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Изглежда не сте настроили подвидове. По подразбиране ще се използва English/QWERTY!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Добавяне</string>
@@ -160,6 +161,10 @@
     <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Изпълняват се звуци при събития на въвеждане, зависи от системните настройки</string>
     <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Пренебрегване на системните настройки за звук</string>
     <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Използват се настройките по-долу даже и при изключени звуци от системата. Не работи при изключен звук на звънене</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Сила на звука при събития на въвеждане</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Звук при докосване на клавиш</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Звук при задържане на клавиш</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Звук при продължително задържане на клавиш</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Обратна връзка при докосване / вибрация</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Обратна връзка при докосване</string>
     <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Вибриране при събития на въвеждане, зависи от системните настройки</string>
@@ -169,6 +174,8 @@
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Сила на вибрацията</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Вибрация при докосване на клавиш</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Вибрация при задържане на клавиш</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Вибрация при продължително задържане на клавиш</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">не е разработено</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Настройки на клавиатурата</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Клавиши</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Ред с цифрите</string>
@@ -316,13 +323,16 @@
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Нормално</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Дълго</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Много дълго</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Разширени</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Разширени</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Тема на настройките</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Светла</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Тъмна</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Тъмна AMOLED</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Език на настройките</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Показване на иконата на приложението в стартовия панел</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Принуждаване на поверителен режим</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Изключват се всички функции, които временно работят с вашите входни данни</string>
+    <string name="settings__devtools__title" comment="Title of Devtools settings">Инструменти за разработка</string>
     <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Развойни инструменти</string>
     <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Използват се за отстраняване на дефекти</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Статистика за динамичната памет</string>
@@ -372,7 +382,18 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Политика за поверителност</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Изходен код</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Лицензи с отворен код</string>
+    <string name="about__version__title" comment="Preference title">Издание</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Номера на изданието е копирано в междинната памет</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Нещо се обърка: %s</string>
+    <string name="about__changelog__title" comment="Preference title">Дневник на промените</string>
+    <string name="about__changelog__summary" comment="Preference summary">Какво е новото</string>
+    <string name="about__repository__title" comment="Preference title">Хранилище (GitHub)</string>
+    <string name="about__repository__summary" comment="Preference summary">Изходен код, обсъждане, дефекти и помощ</string>
+    <string name="about__privacy_policy__title" comment="Preference title">Политика за личните данни</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">Политиката за личните данни на проекта</string>
+    <string name="about__project_license__title" comment="Preference title">Лиценз на проекта</string>
+    <string name="about__project_license__summary" comment="Preference summary (%s will insert license name)">FlorisBoard е лицензиран под %s</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Грешка при зареждане на текста на лиценза.\n-&gt; Причина: %s</string>
     <!-- Assets strings -->
     <plurals name="assets__file__authors">
         <item quantity="one">Автор</item>

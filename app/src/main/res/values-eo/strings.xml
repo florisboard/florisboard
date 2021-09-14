@@ -120,7 +120,7 @@
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Norma</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Longa</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Tre longa</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Progresinta</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Progresinta</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Agordoj etosa</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Hela</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Malhela</string>

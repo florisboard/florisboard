@@ -52,7 +52,6 @@
     <string name="settings__home__title" comment="Title of the Home fragment">Witaj w %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nie jest włączony w systemie i dlatego nie będzie dostępny jako metoda wprowadzania danych w oknie wyboru. Kliknij tutaj, aby rozwiązać ten problem.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard nie jest wybrany jako domyślna metoda wprowadzania danych. Kliknij tutaj, aby rozwiązać ten problem.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Dziękujemy za wypróbowanie FlorisBoard! Ten projekt jest wciąż w fazie alfa i dlatego brakuje w nim pewnych funkcji. Jeśli znajdziesz jakieś błędy lub chcesz coś zaproponować, sprawdź repozytorium na GitHubie i zgłoś problem. To pomoże ulepszyć FlorisBoard. Dziękujemy!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Języki i układy klawiatury</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Wygląda na to, że nie skonfigurowałeś żadnego układu. Jako alternatywa zostanie użyty układ Angielski/QWERTY!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Dodaj</string>
@@ -239,7 +238,7 @@
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normalnie</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Długo</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Bardzo długo</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Zaawansowane</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Zaawansowane</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Motyw ustawień</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Jasny</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Ciemny</string>

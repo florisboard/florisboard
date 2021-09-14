@@ -39,6 +39,7 @@
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Si visible, indique que le mode privé est actif. Lorsqu\'on clique dessus, affiche des informations à propos du mode privé.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Paramètres</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Essayez votre nouvelle configuration</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Plus d\'options</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Aide &amp; commentaires</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Aide</string>
@@ -52,7 +53,7 @@
     <string name="settings__home__title" comment="Title of the Home fragment">Bienvenue dans %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard n\'est pas activé dans le système et ne sera donc pas disponible comme méthode de saisie dans le sélectionneur de saisie. Cliquez ici pour résoudre ce problème.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard n\'est pas sélectionné comme méthode de saisie par défaut. Cliquez ici pour résoudre ce problème.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Merci d\'essayer FlorisBoard ! Ce projet est encore en version alpha et manque donc certaines fonctionnalités. Si vous trouvez des bugs ou si vous voulez faire une suggestion, allez sur le répertoire GitHub et créez un ticket. Cela permet d\'améliorer FlorisBoard. Merci pour votre aide !</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Merci d\'utiliser FlorisBoard ! Ce projet est encore en version bêta et il manque donc des fonctionnalités. Si vous trouvez des bogues ou si vous voulez faire une suggestion, consultez le dépôt sur GitHub et posez un problème. Cela contribuera à améliorer FlorisBoard. Nous vous remercions !</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Langues &amp; Dispositions du clavier</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Il semble que vous n\'ayez pas configuré de disposition de clavier. Comme solution de repli, la disposition anglais/QWERTY sera utilisée !</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Ajouter</string>
@@ -165,19 +166,28 @@
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Sons d\'appui long</string>
     <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Sons de touche répétée</string>
     <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Sons de glissement de doigt</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Sons de balayage mobile par gestes</string>
     <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Retour haptique / Vibration</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Activer le retour haptique</string>
     <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibrer pour les événements d\'entrée, en fonction des paramètres du système</string>
     <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Ignorer les réglages haptiques système</string>
     <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Utilisez les préférences ci-dessous, même si l\'haptique est désactivé dans le système</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Déclenchement direct des vibrations</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Déclenchez directement les vibrations au lieu d\'utiliser les fonctions de retour haptique d\'Android.</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Durée des vibrations</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Intensité de la vibration</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Cette fonction nécessite la prise en charge du contrôle d\'amplitude du matériel, qui n\'est pas disponible sur votre appareil.</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Cette fonction nécessite la prise en charge du contrôle d\'amplitude, qui n\'est disponible que sur Android 8.0 ou plus récent.</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibration des touches</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibration lors d\'un appuie long</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Vibration de la touche d\'action répétée</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Vibration des gestes de balayage</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Vibration des gestes de balayage</string>
     <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">ex. touches, boutons, onglets emoji</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">ex. menu contextuel</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">ex. touche effacer</string>
     <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">non implementé</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">Par exemple, le contrôle du curseur par balayage</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Préférences de clavier</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Touches</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Rangée de chiffres</string>
@@ -325,10 +335,11 @@
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normale</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Longue</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Très longue</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Avancé</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Avancé</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Thème des paramètres</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Clair</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Sombre</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED sombre</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Afficher l\'icône de l\'application dans le lanceur</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forcer le mode privé</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Désactivera toutes les fonctions qui doivent fonctionner temporairement avec vos données de saisie</string>

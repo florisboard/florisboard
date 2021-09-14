@@ -52,7 +52,6 @@
     <string name="settings__home__title" comment="Title of the Home fragment">Tervetuloa %siin</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoardia ei ole otettu järjestelmäasetuksissa käyttöön eikä sen vuoksi ole valittavissa syöttötavaksi. Klikkaa tästä ratkaistaksesi ongelman.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoardia ei ole valittu oletussyöttötavaksi. Klikkaa tästä ratkaistaksesi ongelman.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Kiitos kun koitat FlorisBoardia! Projekti on yhä alpha-vaiheessa ja sen vuoksi sovelluksesta puuttuu ominaisuuksia. Jos kohtaat bugeja tai haluat ehdottaa parannuksia, suuntaa GitHub-tietovarastoon ja lähetä viesti. Tämä auttaa FlorisBoardin kehittämisessä. Kiitos!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Kielet &amp; näppäimistöasettelut</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Näyttää siltä, ettet ole määritellyt yhtään asetteluita. Sen vuoksi käytetään toistaiseksi Englanti/QWERTY-asettelua!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Lisää</string>
@@ -243,7 +242,7 @@
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normaali</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Pitkä</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Erittäin pitkä</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Lisäasetukset</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Lisäasetukset</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Asetusten teema</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Vaalea</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tumma</string>

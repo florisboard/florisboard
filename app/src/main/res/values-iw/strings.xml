@@ -51,7 +51,6 @@
     <string name="settings__home__title" comment="Title of the Home fragment">ברוכים הבאים ל%s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard אינו מופעל במערכת ולכן לא יהיה זמין כשיטת קלט בעת בחירת סוג המלקדת. לחץ כאן כדי לפתור תקלה זו.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard אינו הוגדר כמקלדת ברירת המחדל. לחץ כאן כדי לפתור תקלה זו.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">תודה שניסיתם את FlorisBoard! פרויקט זה עדיין נמצא בגרסאת אלפא ולכן חסרות בו תכולות. אם מצאתם באגים או ברצונכם להציע הצעה, אנא בדקו את ה- repo ב- GitHub והגישו דיווח. זה עוזר לשפר את FlorisBoard. תודה!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">שפות &amp; ותצורת מקלדת</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">נראה שלא הגדרת שום תת-סוג. לכן יהיה שימוש בתת-סוג אנגלית/QWERTY!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">הוסף</string>
@@ -263,7 +262,7 @@
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">רגיל</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">ארוך</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">ארוך מאוד</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">מתקדם</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">מתקדם</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">הגדרות ערכת נושא</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">בהיר</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">כהה</string>

@@ -52,7 +52,6 @@
     <string name="settings__home__title" comment="Title of the Home fragment">Ласкаво просимо до %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard не ввімкнено в системі, тому він не буде доступним як метод вводу в меню вибору методу вводу. Натисніть сюди, щоб виправити це.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard не вибрано як стандартний метод вводу. Натисніть сюди, щоб виправити це.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Дякуємо, що спробували FlorisBoard! Цей проект все ще знаходиться в альфа-версії та не має багатьох функцій. Якщо ви знайшли будь-які помилки або маєте пропозицію, будь ласка перевірте репозиторій на GitHub та повідомте про проблему. Це допомагає покращити FlorisBoard. Дякуємо!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Мова &amp; Розкладка клавіатури</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Здається, ви не налаштували ні один підтип. Як запасний варіант буде використано підтип English/QWERTY!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Додати</string>
@@ -266,7 +265,7 @@
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Нормальний</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Довгий</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Дуже довгий</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Розширені</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Розширені</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Налаштування теми</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Світла</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Темна</string>

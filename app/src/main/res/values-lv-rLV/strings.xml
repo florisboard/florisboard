@@ -52,7 +52,7 @@
     <string name="settings__home__title" comment="Title of the Home fragment">Laipni lūgts %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nav iespējots sistēmas iestatījumos, tādēļ tā nebūs pieejama kā ievades avots atlasītājā. Klikšķināt šeit, lai atrisinātu to.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard nav atlasīts kā noklusējuma ievades veids. Klikšķināt šeit, lai to novērstu.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Paldies par FlorisBoard izmēģināšanu! Lietotne joprojām ir izstrādē, tādēļ var trūkt atsevišķas iespējas. Ja tiek atrastas nepilnības vai ir kāds ierosinājums, lūgums apskatīt GitHub glabātavu un iesniegt tur pieteikumu. Tas palīdzēs padarīt FlorisBoard labāku. Paldies!</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Paldies par FlorisBoard izmantošanu! Lietotne joprojām ir izstrādē, tādēļ var trūkt atsevišķas iespēju. Ja tiek atrastas nepilnības vai ir kāds ierosinājums, lūgums apskatīt GitHub glabātavu un iesniegt tur pieteikumu. Tas palīdzēs padarīt FlorisBoard labāku. Paldies!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Valodas un tastatūras izkārtojumi</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Izskatās, ka nav iestatīts neviens apakšveids. Tādēļ tiks izmantots Angļu/QWERTY apakšveids!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Pievienot</string>
@@ -334,7 +334,7 @@
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Vispārpieņemts</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Garš</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Ļoti garš</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Papildus</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Papildus</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Iestatījumu izskats</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Gaišs</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tumšs</string>

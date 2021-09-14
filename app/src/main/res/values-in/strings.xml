@@ -53,7 +53,7 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard tidak diaktifkan di sistem dan tidak akan tersedia sebagai metode input di pilihan input.
 Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard tidak dipilih sebagai metode input default. Klik di sini untuk menyelesaikan masalah ini.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Terima kasih telah mencoba FlorisBoard! Proyek ini masih dalam versi alpha dan karena itu banyak fitur belum ada. Jika Anda menemukan sebuah bug atau ingin memberikan saran, harap periksa repositori di GitHub dan membuat sebuah masalah (issue). Ini membantu membuat FlorisBoard lebih baik. Terima kasih!</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Terima kasih karena telah menggunakan FlorisBoard! Proyek ini masih dalam beta-awal dan karena itu masih memiliki fitur yang kurang. Jika Anda menemukan bug atau ingin membuat saran, harap periksa repo di GitHub dan buat sebuah masalah (issue). Ini membantu membuat FlorisBoard menjadi lebih baik. Terima kasih!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Bahasa &amp; Tata letak papan ketik</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Sepertinya Anda belum mengkonfigurasi subtipe apapun. Sebagai penggantinya subtipe Inggris/QWERTY akan digunakan!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Tambahkan</string>
@@ -155,6 +155,9 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Warna semi transparan</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Warna teks</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Atribut kustom (%s)</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Durasi getaran</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Kekuatan getaran</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">tidak diimplementasikan</string>
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Preferensi Papan Ketik</string>
     <string name="pref__keyboard__group_keys__label" comment="Preference group title">Tombol</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Baris angka</string>
@@ -302,7 +305,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Panjang</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Sangat panjang</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Tingkat lanjut</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Tingkat lanjut</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Tema pengaturan</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Cerah</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Gelap</string>

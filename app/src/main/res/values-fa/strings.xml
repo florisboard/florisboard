@@ -52,7 +52,7 @@
     <string name="settings__home__title" comment="Title of the Home fragment">خوش آمدید به %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">فلوریس بورد در سیستم به عنوان روش ورودی فعلا نیست و به این علت به عنوان روش ورودی قابل انتخاب نیست. برای حل این مشکل اینجا کلیک کنید.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">فلوریس بود به عنوان روش ورودی پیش فرض انتخاب نشده. برای حل این مشکل اینجا کلیک کنید.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">با تشکر از شما برای امتحان فلوریس بورد! به علت قرار داشت در مراحل آلفا بود برای همین فاقد یک سری از ویژگی های اصلی است. اگر مشکلی پیدا کردید یا می خواهید پیشنهادی ارائه دهید ، لطفاً برنامه را در GitHub مشاهده و برای مشکل issue طراحی کنید. این کار به بهتر کردن فلوریس بورد کمک می کند. با تشکر!</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">با تشکر از شما برای استفاده از فلوریس بورد! به علت قرار داشت در مراحل دسترسی زودهنگام بتا بود برای همین فاقد یک سری از ویژگی های اصلی است. اگر مشکلی پیدا کردید یا می خواهید پیشنهادی ارائه دهید ، لطفاً برنامه را در GitHub مشاهده و برای مشکل issue طراحی کنید. این کار به بهتر کردن فلوریس بورد کمک می کند. با تشکر!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">زبان ها &amp; چیدمان های صفحه کلید</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">به نظر میرسد که هیچگونه زیرگروه دیگری را انتخاب نکرده اید. به همین علت زیرگروه English/QWERTY استفاده خواهد شد!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">افزودن</string>
@@ -310,13 +310,17 @@
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">متوسط</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">طولانی</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">بسیار طولانی</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">پیشرفته</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">پیشرفته</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">تنظیمات زمینه</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">روشن</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">تاریک</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">تاریک AMOLED</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">زبان تنظیمات</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">قرار دادن آیکون برنامه در لانچر</string>
+    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">همیشه فعال شده بخاطر محدودیت های سیستم عامل های اندروید 10 به بالا</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">حالت خصوصی اجباری</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">هر ویژگی که که باید با ورودی شما کار کنند را موقتا غیرفعال می کند</string>
+    <string name="settings__devtools__title" comment="Title of Devtools settings">ابزار های توسعه دهنده</string>
     <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">فعال‌سازی ابزار های توسعه دهنده</string>
     <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">ابزار هایی که مخصوصا برای اشکال‌یابی و اشکال‌زدایی استفاده می‌شود</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">نمایش وضعیت حافظه هیپ</string>
@@ -339,7 +343,20 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">سیاست حفظ حریم خصوصی</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">کد منبع</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">مجوزهای متن باز</string>
+    <string name="about__version__title" comment="Preference title">نسخه</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">نسخه در کلیپ‌بورد کپی شد</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">اوه! مشکلی پیش آمد: %s</string>
+    <string name="about__changelog__title" comment="Preference title">لیست تغییرات</string>
+    <string name="about__changelog__summary" comment="Preference summary">تغییرات جدید</string>
+    <string name="about__repository__title" comment="Preference title">رپو (گیت هاب)</string>
+    <string name="about__repository__summary" comment="Preference summary">کد منبع، مباحثه ها، مشکلات و اطلاعات</string>
+    <string name="about__privacy_policy__title" comment="Preference title">سیاست حریم خصوصی</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">سیاست حریم خصوصی برای این پروژه</string>
+    <string name="about__project_license__title" comment="Preference title">گواهی های پروژه</string>
+    <string name="about__project_license__summary" comment="Preference summary (%s will insert license name)">فلوریس بورد زیر نظر %s دارای گواهی می باشد</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">خطا: ناتوانی در بارگذاری متن گواهی.\n-&gt; دلیل: %s</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">گواهی های شخص ثالث</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">گواهی های استفاده از کتابخانه های شخص ثالث استفاده شده در این برنامه</string>
     <!-- Assets strings -->
     <plurals name="assets__file__authors">
         <item quantity="one">سازنده</item>

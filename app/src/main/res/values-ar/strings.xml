@@ -39,6 +39,7 @@
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">إذا كان مرئيًا، يشير إلى أن الوضع الخاص نشط. عند النقر فوقه، يظهر معلومات حول الوضع الخاص.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">الإعدادات</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">قم بتجربة عداداتك</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">المزيد من الخيارات</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">المساعدة والملاحظات</string>
     <string name="settings__help" comment="General label for help buttons in Settings">مساعدة</string>
@@ -317,7 +318,7 @@
     <string name="pref__gestures__swipe_down__label" comment="Preference title">السحب للأسفل</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">السحب لليسار</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">السحب لليمين</string>
-    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">السحب للفوق من خلال مفتاح المسافة</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">السحب للأعلى من خلال مفتاح المسافة</string>
     <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">السحب لليسار من خلال مفتاح المسافة</string>
     <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">السحب لليمين من خلال مفتاح المسافة</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">الضغط المطول على شريط المسافة</string>
@@ -334,13 +335,17 @@
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">عادية</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">طويلة</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">طويلة جداً</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">إعدادات متقدمة</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">إعدادات متقدمة</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">إعدادات المظهر</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">فاتح</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">داكن</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">أسود قاتم</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">إعدادات اللغة</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">إظهار أيقونة البرنامج في درج التطبيقات</string>
+    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">ممكّن دائمًا على اندرويد 10+ فما فوق بسبب قيود النظام</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">فرض الوضع الخاص</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">سيتم تعطيل أي ميزات تعمل مؤقتًا باستعمال بيانات الإدخال الخاصة بك</string>
+    <string name="settings__devtools__title" comment="Title of Devtools settings">أدوات المطورين</string>
     <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">تفعيل أدوات المطور</string>
     <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">أدوات مصممة خصيصًا لتصحيح الأخطاء واستكشاف العلل وإصلاحها</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">إظهار إحصائيات كومة الذاكرة</string>
@@ -394,7 +399,21 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">سياسة الخصوصية</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">مصدر التعليمات البرمجية</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">تراخيص البرامج مفتوحة المصدر</string>
+    <string name="about__version__title" comment="Preference title">الإصدار</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">تم نسخ الإصدار إلى الحافظة</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">لقد حدث خطأ ما: %s</string>
+    <string name="about__changelog__title" comment="Preference title">سِجل التغييرات</string>
+    <string name="about__changelog__summary" comment="Preference summary">مالجديد</string>
+    <string name="about__repository__title" comment="Preference title">المستودع(چيتهب)</string>
+    <string name="about__repository__summary" comment="Preference summary">الكود المصدري, المناقشات, الاخطاء والمعلومات</string>
+    <string name="about__privacy_policy__title" comment="Preference title">سياسة الخصوصية</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">سياسة الخصوصية لهذا المشروع</string>
+    <string name="about__project_license__title" comment="Preference title">رخصة المشروع</string>
+    <string name="about__project_license__summary" comment="Preference summary (%s will insert license name)">هذا التطبيق هو مرخص تحت رخصة %s</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">خطأ: فشل تحميل نص الترخيص. \n-&gt; السبب: %s</string>
+    <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">مدير مرجع الأصول فارغ</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">تراخيص الأطراف الثالثة</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">تراخيص مكتبات الطرف الثالث المدرجة في هذا التطبيق</string>
     <!-- Assets strings -->
     <plurals name="assets__file__authors">
         <item quantity="zero">المؤلف</item>

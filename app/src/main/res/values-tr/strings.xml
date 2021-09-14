@@ -39,6 +39,7 @@
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Gizlilik modu aktif ise görünür. Dokunulduğunda, gizlilk modu hakkında bilgileri gösterir.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Ayarlar</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Düzeninizi deneyin</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Diğer seçenekler</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Yardım &amp; geri bildirim</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Yardım</string>
@@ -52,7 +53,7 @@
     <string name="settings__home__title" comment="Title of the Home fragment">%s\'a hoş geldiniz</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard sisteminizde etkinleştirilmediği için giriş seçeneklerinde görüntülenemez. Bu durumu düzeltmek için tıklayın.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard varsayılan giriş seçeneğiniz olarak seçilmemiş. Bu durumu düzeltmek için tıklayın.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">FlorisBoard\'u denediğiniz için teşekkür ederiz! Bu proje hala alpha aşamasında olduğundan eksik özellikler içermektedir. Herhangi bir hata bulursanız veya bir tavsiyeniz varsa, GitHub sayfamız üzerinden bildirerek FlorisBoard\'u iyileştirmemize yardımcı olabilirsiniz. Teşekkürler!</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">FlorisBoard\'u denediğiniz için teşekkür ederiz! Bu proje hala erken-beta aşamasında olduğundan eksik özellikler içermektedir. Herhangi bir hata bulursanız veya bir tavsiyeniz varsa, GitHub sayfamız üzerinden bildirerek FlorisBoard\'u iyileştirmemize yardımcı olabilirsiniz. Teşekkürler!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Diller &amp; Klavye düzenleri</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Görünüşe göre herhangi bir dil ve klavye dizilimi seçmemişsiniz. Bu yüzden varsayılan olarak İngilizce/QWERTY kullanılacaktır!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Ekle</string>
@@ -334,13 +335,17 @@
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Uzun</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Çok uzun</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Gelişmiş</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Gelişmiş</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Ayarlar teması</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Aydınlık</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Karanlık</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED Siyah</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Dili ayarla</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Uygulama simgesini başlatıcıda göster</string>
+    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sistem kısıtlamaları dolayısıyla Android 10 ve üstünde her zaman etkin</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Gizli modu zorla</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Yazma verilerinizle geçici olarak çalışması gereken tüm özellikleri kapatacaktır</string>
+    <string name="settings__devtools__title" comment="Title of Devtools settings">Geliştirici araçları</string>
     <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Geliştirici araçlarını etkinleştir</string>
     <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Hata ayıklama ve sorun giderme için özel tasarlanmış araçlar</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Küme bellek istatistiklerini göster</string>
@@ -390,7 +395,21 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Gizlilik politikası</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Kaynak kodu</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Açık kaynak lisansları</string>
+    <string name="about__version__title" comment="Preference title">Sürüm</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Sürüm panoya kopyalandı</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Bir şeyler yanlış gitti: %s</string>
+    <string name="about__changelog__title" comment="Preference title">Sürüm Notları</string>
+    <string name="about__changelog__summary" comment="Preference summary">Yenilikler</string>
+    <string name="about__repository__title" comment="Preference title">Veri havuzu (GitHub)</string>
+    <string name="about__repository__summary" comment="Preference summary">Kaynak kodu, tartışmalar, sorunlar ve bilgi</string>
+    <string name="about__privacy_policy__title" comment="Preference title">Gizlilik politikası</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">Bu proje için gizlilik politikası</string>
+    <string name="about__project_license__title" comment="Preference title">Proje lisansı</string>
+    <string name="about__project_license__summary" comment="Preference summary (%s will insert license name)">FlorisBoard %s altında lisanslanmıştır</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Hata: Lisans metini yüklenemedi. \n-&gt; Sebep: %s</string>
+    <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Öğe yöneticisi referans boş</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">Üçüncü parti lisanslar</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">Üçüncü taraf kütüphanelerin lisansları bu uygulamaya dahildir</string>
     <!-- Assets strings -->
     <plurals name="assets__file__authors">
         <item quantity="one">Oluşturan</item>

@@ -39,6 +39,7 @@
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Если используется, показывает, что активен приватный режим. При нажатии отображается информация о приватном режиме.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Настройки</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Попробуйте свои настройки</string>
     <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">Дополнительные параметры</string>
     <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Помощь и обратная связь</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Помощь</string>
@@ -52,7 +53,7 @@
     <string name="settings__home__title" comment="Title of the Home fragment">Добро пожаловать в %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard не включена в системе и поэтому не будет доступна в качестве метода ввода. Нажмите здесь, чтобы исправить эту проблему.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard не выбрана в качестве метода ввода по умолчанию. Нажмите здесь, чтобы исправить эту проблему.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Спасибо, что попробовали FlorisBoard! Этот проект все ещё находится на стадии альфа-тестирования, поэтому в нем отсутствуют некоторые функции. Если вы обнаружите какие-либо ошибки или хотите внести предложение, проверьте репозиторий на GitHub и сообщите о проблеме. Это помогает улучшить FlorisBoard. Спасибо!</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Спасибо, что используете FlorisBoard! Этот проект всё ещё находится на ранней бета-стадии, поэтому в нём отсутствуют некоторые функции. Если вы обнаружите какие-либо ошибки или хотите внести предложение, проверьте репозиторий на GitHub и сообщите о проблеме. Это помогает улучшить FlorisBoard. Спасибо!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Языки и раскладки клавиатуры</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Похоже, вы не настроили никаких раскладок. В качестве основного варианта будет использована English/QWERTY!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Добавить</string>
@@ -182,7 +183,7 @@
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Вибрация автоповтора ввода кнопки</string>
     <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Вибрация жестов смахивания</string>
     <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Вибрация жестов перетаскивания</string>
-    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">например, кнопки, управляющие клавиши или вкладки с эмодзи</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">например, кнопки, управляющие клавиши или вкладки с эмоциями</string>
     <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">например, всплывающее меню</string>
     <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">например, кнопка «удалить»</string>
     <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">не реализовано</string>
@@ -334,13 +335,17 @@
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Нормальный</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Длинный</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Очень длинный</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Дополнительные</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Дополнительные</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Настройки темы</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Светлая</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Тёмная</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Тёмная AMOLED</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Настройки языка</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Показывать значок приложения на рабочем столе</string>
+    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Всегда включено на Android 10+ из-за системных ограничений</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Принудительный приватный режим</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Отключит все функции, которые должны временно работать с вашими входными данными.</string>
+    <string name="settings__devtools__title" comment="Title of Devtools settings">Инструменты разработчика</string>
     <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Включить инструменты разработчика</string>
     <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Инструменты, специально разработанные для отладки и устранения ошибок</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Показывать статистику выделения памяти</string>
@@ -392,7 +397,20 @@
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Политика конфиденциальности</string>
     <string name="about__view_source_code" comment="Label of View source code button in About">Исходный код</string>
     <string name="about__license__title" comment="Title of Open-source licenses dialog">Лицензии открытого исходного кода</string>
+    <string name="about__version__title" comment="Preference title">Версия</string>
     <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Номер версии скопирован в буфер обмена</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Что-то пошло не так: %s</string>
+    <string name="about__changelog__title" comment="Preference title">История изменений</string>
+    <string name="about__changelog__summary" comment="Preference summary">Что нового</string>
+    <string name="about__repository__title" comment="Preference title">Репозиторий (GitHub)</string>
+    <string name="about__repository__summary" comment="Preference summary">Исходный код, обсуждения, проблемы и информация</string>
+    <string name="about__privacy_policy__title" comment="Preference title">Политика конфиденциальности</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">Политика конфиденциальности этого проекта</string>
+    <string name="about__project_license__title" comment="Preference title">Лицензия проекта</string>
+    <string name="about__project_license__summary" comment="Preference summary (%s will insert license name)">FlorisBoard лицензирован в соответствии с %s</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Ошибка: невозможно загрузить текст лицензии.\n-&gt; Причина: %s</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">Лицензии третьих сторон</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">Лицензии сторонних библиотек, используемых в данном приложении</string>
     <!-- Assets strings -->
     <plurals name="assets__file__authors">
         <item quantity="one">Автор</item>

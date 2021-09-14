@@ -52,7 +52,6 @@
     <string name="settings__home__title" comment="Title of the Home fragment">A %s üdvözli</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nincs engedélyezve a rendszerben, így nem lesz elérhető, beviteli módszerként a bevitelválasztóban. A probléma megoldásához kattintson ide.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">A FlorisBoard nincs kiválasztva alapértelmezett beviteli módszerként. A probléma megoldásához kattintson ide.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Köszönjük, hogy kipróbálta FlorisBoard-ot! Ez a projekt még mindig alfa állapotban van, ezért vannak hiányzó funkciók. Ha bármilyen hibát talál, vagy javaslatot szeretne tenni, nézze meg a GitHub tárolóját, és küldjön egy hibajelentést. Ez segít abban, hogy a FlorisBoard jobb legyen. Köszönöm!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Nyelvek és billentyűzetkiosztások</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Úgy tűnik, hogy nem állított be altípusokat. Tartalékként az angol/QWERTY lesz használva!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Hozzáadás</string>
@@ -282,7 +281,7 @@
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normál</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Hosszú</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Nagyon hosszú</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Haladó</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Haladó</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Beállítások témája</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Világos</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Sötét</string>

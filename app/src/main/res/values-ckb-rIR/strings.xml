@@ -52,7 +52,7 @@
     <string name="settings__home__title" comment="Title of the Home fragment">بەخێربێی بۆ %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">تەختەکلیلی FlorisBoard هێشتا چالاک نەکراوە لە ڕێکخستنەکانی سیستەمدا، پێویستە چالاکی بکەیت بۆ بەکارهێنان پەنجەبنێ بێرەدا.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">تەختەکلیلی FlorisBoard چالاککراوە لە ڕێکخستنەکانی سیستەمدا بەڵام هەڵنەبژێردراوە بۆ بەکارهێنان وەک تەختەکلیلی سەرەکی، پێویستە دیاریبکەیت بۆ بەکارهێنان پەنجەبنێ بێرەدا بۆ هەڵبژاردن.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">سپاس بۆ بەکارهێنانی تەختەکلیلی FlorisBoard! ئەم تەختەکلیلە هێشتا لە باری کارکردندایەوە وەشانی سەرەتاییە لەوانەیە سەرجەم تایبەتمەندییەکانی بەردەست نەبن، لەکاتی بوونی هەر کێشە و گرفتێکدا یان بۆ ناردنی سەرنج و پێشبینیەکانتان تکایە سەردانی بەشی تایبەتی پرۆژەکە بکە لە GitHub ، ئەمە ئەبێتە هۆی زیاتر بەرەوپێشبردنی تەختەکلیلەکە... سوپاس!</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">سوپاس بۆ بەکارهێنانی تەختەکلیلی FlorisBoard! ئەم تەختەکلیلە هێشتا لە باری کارکردندایەوە وەشانی سەرەتاییە لەوانەیە سەرجەم تایبەتمەندییەکانی بەردەست نەبن، لەکاتی بوونی هەر کێشە و گرفتێکدا یان بۆ ناردنی سەرنج و پێشبینیەکانتان تکایە سەردانی بەشی تایبەتی پرۆژەکە بکە لە GitHub ، ئەمە ئەبێتە هۆی زیاتر بەرەوپێشبردنی تەختەکلیلەکە... سوپاس!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">تەختەکلیل و زمانەکان</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">وا دیارە کە هیچ زمانێکی زیادە دانەنراوە بۆ نووسین، لەبەر ئەوەزمانی  زمانی ئینگلیزی(قوەرتی) بەبنەڕەتی بەکاردێت بۆ نووسین!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">زیادکردن</string>
@@ -334,7 +334,7 @@
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">بنەڕەتی</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">درێژ</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">درێژترین</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">ڕێکخستنی زیاتر</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">ڕێکخستنی زیاتر</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">ڕووکاری بەرنامەکە</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">ڕووناک</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">تاریک</string>

@@ -52,7 +52,7 @@
     <string name="settings__home__title" comment="Title of the Home fragment">Willkommen bei %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard ist in Ihrem System nicht aktiviert und kann daher nicht als Eingabemethode ausgewählt werden. Hier klicken, um dieses Problem zu lösen.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard ist nicht als Standard-Eingabemethode ausgewählt. Hier klicken, um dieses Problem zu lösen.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Vielen Dank, dass Sie FlorisBoard ausprobieren! Dieses Projekt befindet sich noch im Alpha-Entwicklungsstadium und es fehlen daher einige Funktionen. Wenn Sie Fehler finden oder Vorschläge zur Verbesserung haben, besuchen Sie unser Repository auf GitHub und erstellen Sie eine Fehlermeldung. Mit Ihrer Hilfe kann FlorisBoard noch besser werden. Vielen Dank!</string>
+    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Vielen Dank, dass Sie FlorisBoard nutzen! Dieses Projekt befindet sich noch im frühen Beta-Entwicklungsstadium und es fehlen daher einige Features. Wenn Sie Fehler finden oder Vorschläge zur Verbesserung haben, besuchen Sie unser Repository auf GitHub und erstellen sie eine Fehlermeldung. Mit Ihrer Hilfe kann FlorisBoard noch besser werden. Vielen Dank!</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Sprachen &amp; Tastatur-Layout</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Es scheinen keine benutzerdefinierten Eingabestile konfiguriert zu sein. Als Ausweichlösung wird daher der Eingabestil English/QWERTY benutzt!</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Hinzufügen</string>
@@ -322,7 +322,7 @@
     <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
     <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Lang</string>
     <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Sehr lang</string>
-    <string name="settings__advanced__title" comment="Title of Advanced settings activity">Erweitert</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Erweitert</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">App-Design</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Hell</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Dunkel</string>
