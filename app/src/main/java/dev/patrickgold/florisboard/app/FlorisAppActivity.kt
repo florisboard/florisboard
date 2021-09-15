@@ -26,6 +26,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -116,38 +117,37 @@ class FlorisAppActivity : ComponentActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        // TODO: implement nav stack pop
-    }
-
     private fun Configuration.setLocale(locale: FlorisLocale) {
         return this.setLocale(locale.base)
     }
-}
 
-@Composable
-private fun AppContent() {
-    val navController = rememberNavController()
-    CompositionLocalProvider(
-        LocalNavController provides navController,
-    ) {
-        Column {
-            NavHost(
-                modifier = Modifier.weight(1.0f),
-                navController = navController,
-                startDestination = Routes.Settings.Home,
-            ) {
-                composable(Routes.Settings.Home) { HomeScreen() }
+    @Composable
+    private fun AppContent() {
+        val navController = rememberNavController()
+        CompositionLocalProvider(
+            LocalNavController provides navController,
+        ) {
+            Column {
+                NavHost(
+                    modifier = Modifier.weight(1.0f),
+                    navController = navController,
+                    startDestination = Routes.Settings.Home,
+                ) {
+                    composable(Routes.Settings.Home) { HomeScreen() }
 
-                composable(Routes.Settings.Clipboard) { ClipboardScreen() }
+                    composable(Routes.Settings.Clipboard) { ClipboardScreen() }
 
-                composable(Routes.Settings.Advanced) { AdvancedScreen() }
+                    composable(Routes.Settings.Advanced) { AdvancedScreen() }
 
-                composable(Routes.Settings.About) { AboutScreen() }
-                composable(Routes.Settings.ProjectLicense) { ProjectLicenseScreen() }
-                composable(Routes.Settings.ThirdPartyLicenses) { ThirdPartyLicensesScreen() }
+                    composable(Routes.Settings.About) { AboutScreen() }
+                    composable(Routes.Settings.ProjectLicense) { ProjectLicenseScreen() }
+                    composable(Routes.Settings.ThirdPartyLicenses) { ThirdPartyLicensesScreen() }
+                }
+                PreviewKeyboardField()
             }
-            PreviewKeyboardField()
+        }
+        SideEffect {
+            navController.setOnBackPressedDispatcher(this.onBackPressedDispatcher)
         }
     }
 }
