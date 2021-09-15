@@ -16,8 +16,6 @@
 
 package dev.patrickgold.florisboard.app.ui.components
 
-import android.content.Context
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -46,6 +44,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.InputMethodUtils
 
 @Composable
 fun PreviewKeyboardField(
@@ -53,7 +52,6 @@ fun PreviewKeyboardField(
     hint: String = stringResource(R.string.settings__preview_keyboard),
 ) {
     val context = LocalContext.current
-    val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
 
     var hasFocus by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
@@ -83,9 +81,7 @@ fun PreviewKeyboardField(
                     )
                 }
                 IconButton(onClick = {
-                    if (inputMethodManager != null) {
-                        inputMethodManager.showInputMethodPicker()
-                    } else {
+                    if (!InputMethodUtils.showImePicker(context)) {
                         Toast.makeText(
                             context, "Error: InputMethodManager service not available!", Toast.LENGTH_SHORT
                         ).show()

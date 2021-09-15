@@ -77,8 +77,13 @@ object InputMethodUtils {
         context.startActivity(intent)
     }
 
-    fun showImePicker(context: Context) {
+    fun showImePicker(context: Context): Boolean {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-        imm?.showInputMethodPicker()
+        return if (imm != null) {
+            imm.showInputMethodPicker()
+            true
+        } else {
+            false
+        }
     }
 }
