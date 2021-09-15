@@ -13,7 +13,7 @@
       {"code": 91, "label": "["},
       {"code": 93, "label": "]"},
       {"code": 60, "label": "<"},
-      {"code": 63, "label": ">"},
+      {"code": 62, "label": ">"},
       {"code": 123, "label": "{"},
       {"code": 125, "label": "}"}
     ],
