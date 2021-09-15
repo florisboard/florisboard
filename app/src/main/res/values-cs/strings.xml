@@ -399,12 +399,11 @@
     <string name="clip__paste_item">Vložit</string>
     <string name="clip__back_to_text_input">Zpět na zadávání textu</string>
     <string name="clip__cant_paste">Tato aplikace neumožňuje vkládání daného obsahu.</string>
-    <string name="pref__clipboard__clipboard_category__label">Schránka</string>
-    <string name="pref__clipboard__use_internal_clipboard___label">Použít interní schránku</string>
-    <string name="pref__clipboard__use_internal_clipboard_title__summary">Použít interní schránku místo systémové schránky</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">Použít interní schránku</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">Použít interní schránku místo systémové schránky</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Zapnout historii schránky</string>
-    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Mazat staré položky</string>
-    <string name="pref__clipboard__clean_up_old_after__label">Mazat staré položky po</string>
+    <string name="pref__clipboard__clean_up_old__label">Mazat staré položky</string>
+    <string name="pref__clipboard__clean_up_after__label">Mazat staré položky po</string>
     <string name="pref__clipboard__limit_history_size__label">Omezit velikost historie</string>
     <string name="pref__clipboard__max_history_size__label">Max velikost historie</string>
     <!-- glide strings -->

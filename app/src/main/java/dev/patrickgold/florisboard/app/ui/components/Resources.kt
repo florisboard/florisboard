@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.ui
+package dev.patrickgold.florisboard.app.ui.components
 
-object Routes {
-    object Settings {
-        const val Home = "settings"
+import androidx.annotation.PluralsRes
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 
-        const val Clipboard = "settings/clipbpard"
-
-        const val Advanced = "settings/advanced"
-
-        const val About = "settings/about"
-        const val ProjectLicense = "settings/about/project-license"
-        const val ThirdPartyLicenses = "settings/about/third-party-licenses"
-    }
+@Composable
+fun pluralResource(
+    @PluralsRes resId: Int,
+    quantity: Int,
+    vararg formatArgs: Any? = emptyArray()
+): String {
+    return LocalContext.current.resources
+        .getQuantityString(resId, quantity, *formatArgs)
 }

@@ -50,17 +50,17 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
 
     val clipboard = Clipboard()
     inner class Clipboard {
-        val enableInternal = boolean(
-            key = "clipboard__enable_internal",
-            default = false,
-        )
-        val syncToSystem = boolean(
-            key = "clipboard__sync_to_system",
+        val useInternalClipboard = boolean(
+            key = "clipboard__use_internal_clipboard",
             default = false,
         )
         val syncToFloris = boolean(
             key = "clipboard__sync_to_floris",
             default = true,
+        )
+        val syncToSystem = boolean(
+            key = "clipboard__sync_to_system",
+            default = false,
         )
         val enableHistory = boolean(
             key = "clipboard__enable_history",

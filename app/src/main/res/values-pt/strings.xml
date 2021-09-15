@@ -463,17 +463,16 @@
     <string name="clip__paste_item">Colar</string>
     <string name="clip__back_to_text_input">Voltar para a introdução de texto</string>
     <string name="clip__cant_paste">A aplicação não permite a colagem deste conteúdo.</string>
-    <string name="pref__clipboard__clipboard_category__label">Área de transferência</string>
-    <string name="pref__clipboard__use_internal_clipboard___label">Usar área de transferência interna</string>
-    <string name="pref__clipboard__use_internal_clipboard_title__summary">Utilizar área de transferência interna e não a do sistema</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">Usar área de transferência interna</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">Utilizar área de transferência interna e não a do sistema</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sincronizar da área de transferência do sistema</string>
-    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">As atualizações à área de transferência do sistema atualizam a do Florisboard</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">As atualizações à área de transferência do sistema atualizam a do Florisboard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronizar para área de transferência do sistema</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">As atualizações à área de transferência do Florisboard atualizam a do sistema</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Ativar histórico da área de transferência</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Manter itens na área de transferência</string>
-    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Limpar itens antigos</string>
-    <string name="pref__clipboard__clean_up_old_after__label">Limpar itens antigos após</string>
+    <string name="pref__clipboard__clean_up_old__label">Limpar itens antigos</string>
+    <string name="pref__clipboard__clean_up_after__label">Limpar itens antigos após</string>
     <string name="pref__clipboard__limit_history_size__label">Limitar histórico</string>
     <string name="pref__clipboard__max_history_size__label">Tamanho máximo do histórico</string>
     <!-- glide strings -->

@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.PreviewKeyboardField
 import dev.patrickgold.florisboard.app.ui.components.SystemUi
 import dev.patrickgold.florisboard.app.ui.settings.AdvancedScreen
+import dev.patrickgold.florisboard.app.ui.settings.ClipboardScreen
 import dev.patrickgold.florisboard.app.ui.settings.HomeScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.AboutScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.ProjectLicenseScreen
@@ -137,6 +138,8 @@ private fun AppContent() {
                 startDestination = Routes.Settings.Home,
             ) {
                 composable(Routes.Settings.Home) { HomeScreen() }
+
+                composable(Routes.Settings.Clipboard) { ClipboardScreen() }
 
                 composable(Routes.Settings.Advanced) { AdvancedScreen() }
 

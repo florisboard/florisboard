@@ -461,17 +461,16 @@
     <string name="clip__paste_item">Coller</string>
     <string name="clip__back_to_text_input">Retour à la saisie de texte</string>
     <string name="clip__cant_paste">Cette app ne permet pas de coller ce contenu.</string>
-    <string name="pref__clipboard__clipboard_category__label">Presse-papier</string>
-    <string name="pref__clipboard__use_internal_clipboard___label">Utiliser le presse-papier interne</string>
-    <string name="pref__clipboard__use_internal_clipboard_title__summary">Utiliser un presse-papier interne plutôt que celui du système</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">Utiliser le presse-papier interne</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">Utiliser un presse-papier interne plutôt que celui du système</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Synchroniser depuis le presse-papier système</string>
-    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Le presse-papier du système met aussi à jour le presse-papier de Floris</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Le presse-papier du système met aussi à jour le presse-papier de Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synchroniser vers le presse-papier système</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Le presse-papier Floris met aussi à jour le presse-papier du système</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Activer l\'historique du presse-papier</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Conserver les éléments du presse-papier</string>
-    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Nettoyer les vieux éléments</string>
-    <string name="pref__clipboard__clean_up_old_after__label">Nettoyer les vieux éléments après</string>
+    <string name="pref__clipboard__clean_up_old__label">Nettoyer les vieux éléments</string>
+    <string name="pref__clipboard__clean_up_after__label">Nettoyer les vieux éléments après</string>
     <string name="pref__clipboard__limit_history_size__label">Taille limite de l\'historique</string>
     <string name="pref__clipboard__max_history_size__label">Taille maximale de l\'historique</string>
     <!-- glide strings -->

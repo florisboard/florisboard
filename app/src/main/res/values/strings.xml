@@ -523,7 +523,7 @@
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">FlorisBoard seems to stop working repeatedly…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Falling back to previous keyboard to stop infinite crash loop. Tap to view error details</string>
 
-    <!-- clipboard strings -->
+    <!-- Clipboard strings -->
     <string name="clip__context_header">Clipboard history</string>
     <string name="clip__clear_history">Clear history</string>
     <string name="clip__unpin_item">Unpin item</string>
@@ -532,17 +532,18 @@
     <string name="clip__paste_item">Paste</string>
     <string name="clip__back_to_text_input">Back to text input</string>
     <string name="clip__cant_paste">This app doesn\'t allow pasting this content.</string>
-    <string name="pref__clipboard__clipboard_category__label">Clipboard</string>
-    <string name="pref__clipboard__use_internal_clipboard___label">Use internal clipboard</string>
-    <string name="pref__clipboard__use_internal_clipboard_title__summary">Use an internal clipboard instead of the system clipboard</string>
+    <string name="settings__clipboard__title">Clipboard</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">Use internal clipboard</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">Use an internal clipboard instead of the system clipboard</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sync from system clipboard</string>
-    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">System clipboard updates also update Floris clipboard</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">System clipboard updates also update Floris clipboard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sync to system clipboard</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris clipboard updates also update system clipboard</string>
+    <string name="pref__clipboard__clipboard_history_title">Clipboard history</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Enable clipboard history</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Retain clipboard items</string>
-    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Clean up old items</string>
-    <string name="pref__clipboard__clean_up_old_after__label">Clean up old items after</string>
+    <string name="pref__clipboard__clean_up_old__label">Clean up old items</string>
+    <string name="pref__clipboard__clean_up_after__label">Clean up old items after</string>
     <string name="pref__clipboard__limit_history_size__label">Limit history size</string>
     <string name="pref__clipboard__max_history_size__label">Max history size</string>
 

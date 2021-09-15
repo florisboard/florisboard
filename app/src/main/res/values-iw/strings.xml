@@ -347,8 +347,8 @@
     <string name="clip__cant_paste">אפליקציה זו אינה מאפשרת הדבקת תוכן זה.</string>
     <string name="pref__clipboard__enable_clipboard_history__label">אפשר היסטוריה של הלוח</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">שמור פריטי לוח</string>
-    <string name="pref__clipboard__clean_up_old_clipboard_items__label">נקה פריטים ישנים</string>
-    <string name="pref__clipboard__clean_up_old_after__label">נקה פריטים ישנים אחרי</string>
+    <string name="pref__clipboard__clean_up_old__label">נקה פריטים ישנים</string>
+    <string name="pref__clipboard__clean_up_after__label">נקה פריטים ישנים אחרי</string>
     <string name="pref__clipboard__limit_history_size__label">הגבל את גודל ההיסטוריה</string>
     <string name="pref__clipboard__max_history_size__label">גודל היסטוריה מקסימלי</string>
     <!-- glide strings -->

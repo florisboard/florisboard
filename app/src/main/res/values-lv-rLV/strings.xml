@@ -465,17 +465,16 @@
     <string name="clip__paste_item">Ielīmēt</string>
     <string name="clip__back_to_text_input">Atgriezties pie teksta ievades</string>
     <string name="clip__cant_paste">Pašreizējā lietotne neļauj ielīmēt šo saturu.</string>
-    <string name="pref__clipboard__clipboard_category__label">Starpliktuve</string>
-    <string name="pref__clipboard__use_internal_clipboard___label">Izmantot iekšējo starpliktuvi</string>
-    <string name="pref__clipboard__use_internal_clipboard_title__summary">Izmantot iekšējo, nevis sistēmas starpliktuvi</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">Izmantot iekšējo starpliktuvi</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">Izmantot iekšējo, nevis sistēmas starpliktuvi</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sinhronizēt no sistēmas starpliktuves</string>
-    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Sistēmas starpliktuves izmaiņas atjauninās arī Floris starpliktuvi</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Sistēmas starpliktuves izmaiņas atjauninās arī Floris starpliktuvi</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sinhronizēt uz sistēmas starpliktuvi</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris starpliktuves izmaiņas atjauninās arī sistēmas starpliktuvi</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Iespējot starpliktuves vēsturi</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Paturēt starpliktuves vienumus</string>
-    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Noņemt vecos vienumus</string>
-    <string name="pref__clipboard__clean_up_old_after__label">Noņemt vecos vienumus pēc</string>
+    <string name="pref__clipboard__clean_up_old__label">Noņemt vecos vienumus</string>
+    <string name="pref__clipboard__clean_up_after__label">Noņemt vecos vienumus pēc</string>
     <string name="pref__clipboard__limit_history_size__label">Ierobežot vēstures lielumu</string>
     <string name="pref__clipboard__max_history_size__label">Lielākais pieļaujamais vēstures lielums</string>
     <!-- glide strings -->

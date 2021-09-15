@@ -432,17 +432,16 @@
     <string name="clip__paste_item">Einfügen</string>
     <string name="clip__back_to_text_input">Zurück zur Texteingabe</string>
     <string name="clip__cant_paste">Diese App erlaubt kein Einfügen aus der Zwischenablage.</string>
-    <string name="pref__clipboard__clipboard_category__label">Zwischenablage</string>
-    <string name="pref__clipboard__use_internal_clipboard___label">Interne Zwischenablage nutzen</string>
-    <string name="pref__clipboard__use_internal_clipboard_title__summary">Eine interne Zwischenablage anstelle der Systemzwischenablage verwenden</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">Interne Zwischenablage nutzen</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">Eine interne Zwischenablage anstelle der Systemzwischenablage verwenden</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Von Systemzwischenablage synchronisieren</string>
-    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Aktualisierungen der Systemzwischenablage aktualisieren auch die Floris Zwischenablage</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Aktualisierungen der Systemzwischenablage aktualisieren auch die Floris Zwischenablage</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Zur Systemzwischenablage synchronisieren</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Aktualisierungen der Floris Zwischenablage aktualisieren auch die Systemzwischenablage</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Verlauf für Zwischenablage aktivieren</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Elemente der Zwischenablage merken</string>
-    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Alte Einträge bereinigen</string>
-    <string name="pref__clipboard__clean_up_old_after__label">Alte Einträge bereinigen nach</string>
+    <string name="pref__clipboard__clean_up_old__label">Alte Einträge bereinigen</string>
+    <string name="pref__clipboard__clean_up_after__label">Alte Einträge bereinigen nach</string>
     <string name="pref__clipboard__limit_history_size__label">Verlaufsgröße beschränken</string>
     <string name="pref__clipboard__max_history_size__label">Maximale Verlaufsgröße</string>
     <!-- glide strings -->

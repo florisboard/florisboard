@@ -314,17 +314,16 @@
     <string name="clip__paste_item">Liitä</string>
     <string name="clip__back_to_text_input">Takaisin tekstinsyöttöön</string>
     <string name="clip__cant_paste">Sovellus ei hyväksy tämän sisällön liittämistä.</string>
-    <string name="pref__clipboard__clipboard_category__label">Leikepöytä</string>
-    <string name="pref__clipboard__use_internal_clipboard___label">Käytä sisäistä leikepöytää</string>
-    <string name="pref__clipboard__use_internal_clipboard_title__summary">Käytä järjestelmän leikepöydän sijasta sisäistä leikepöytää</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">Käytä sisäistä leikepöytää</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">Käytä järjestelmän leikepöydän sijasta sisäistä leikepöytää</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Synkronoi järjestelmän leikepöydältä</string>
-    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Järjestelmän leikepöytä päivittää myös Floriksen leikepöydän</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Järjestelmän leikepöytä päivittää myös Floriksen leikepöydän</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synkronoi järjestelmän leikepöydälle</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Floriksen leikepöytä päivittää myös järjestelmän leikepöydän</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Ota leikepöydän historia käyttöön</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Säilytä leikepöydän kohteet</string>
-    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Poista vanhat kohteet</string>
-    <string name="pref__clipboard__clean_up_old_after__label">Poista vanhat kohteet, kun on kulunut</string>
+    <string name="pref__clipboard__clean_up_old__label">Poista vanhat kohteet</string>
+    <string name="pref__clipboard__clean_up_after__label">Poista vanhat kohteet, kun on kulunut</string>
     <string name="pref__clipboard__limit_history_size__label">Rajoita historian kokoa</string>
     <string name="pref__clipboard__max_history_size__label">Historian maksimikoko</string>
     <!-- glide strings -->

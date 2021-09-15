@@ -404,17 +404,16 @@
     <string name="clip__paste_item">Plakken</string>
     <string name="clip__back_to_text_input">Terug naar tekstinvoer</string>
     <string name="clip__cant_paste">Deze app laat niet toe om deze inhoud te plakken.</string>
-    <string name="pref__clipboard__clipboard_category__label">Klembord</string>
-    <string name="pref__clipboard__use_internal_clipboard___label">Gebruik intern klembord</string>
-    <string name="pref__clipboard__use_internal_clipboard_title__summary">Gebruik een intern klembord in plaats van het systeemklembord</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">Gebruik intern klembord</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">Gebruik een intern klembord in plaats van het systeemklembord</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Synchroniseer met systeemklembord</string>
-    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Systeemklembord updatet ook het Floris-klembord</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Systeemklembord updatet ook het Floris-klembord</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Synchroniseer met systeemklembord</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris-klembord updatet ook het systeemklembord</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Schakel klembordgeschiedenis in</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Bewaar klembord-items</string>
-    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Kuis oude items op</string>
-    <string name="pref__clipboard__clean_up_old_after__label">Kuis oude items op na</string>
+    <string name="pref__clipboard__clean_up_old__label">Kuis oude items op</string>
+    <string name="pref__clipboard__clean_up_after__label">Kuis oude items op na</string>
     <string name="pref__clipboard__limit_history_size__label">Beperk geschiedenisgrootte</string>
     <string name="pref__clipboard__max_history_size__label">Maximale grootte geschiedenis</string>
     <!-- glide strings -->

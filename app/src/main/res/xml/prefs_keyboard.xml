@@ -215,14 +215,14 @@
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        android:title="@string/pref__clipboard__clipboard_category__label">
+        android:title="Clipboard">
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
             app:key="clipboard__enable_internal"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__clipboard__use_internal_clipboard___label"
-            app:summary="@string/pref__clipboard__use_internal_clipboard_title__summary"/>
+            app:title="@string/pref__clipboard__use_internal_clipboard__label"
+            app:summary="@string/pref__clipboard__use_internal_clipboard__summary"/>
 
         <SwitchPreferenceCompat
             android:dependency="clipboard__enable_internal"
@@ -230,7 +230,7 @@
             app:key="clipboard__sync_to_floris"
             app:iconSpaceReserved="false"
             app:title="@string/pref__clipboard__sync_from_system_clipboard__label"
-            app:summary="@string/pref__clipboard__keyboard_sync_from_system_clipboard__summary"/>
+            app:summary="@string/pref__clipboard__sync_from_system_clipboard__summary"/>
 
         <SwitchPreferenceCompat
             android:dependency="clipboard__enable_internal"
@@ -252,7 +252,7 @@
             android:defaultValue="true"
             app:key="clipboard__clean_up_old"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__clipboard__clean_up_old_clipboard_items__label" />
+            app:title="@string/pref__clipboard__clean_up_old__label" />
 
         <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
             app:allowDividerAbove="false"
@@ -262,7 +262,7 @@
             app:min="0"
             app:max="120"
             app:iconSpaceReserved="false"
-            app:title="@string/pref__clipboard__clean_up_old_after__label"
+            app:title="@string/pref__clipboard__clean_up_after__label"
             app:seekBarIncrement="5"
             app:unit=" minutes"/>
 

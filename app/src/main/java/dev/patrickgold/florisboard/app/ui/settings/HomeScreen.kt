@@ -97,6 +97,11 @@ fun HomeScreen() = FlorisScreen(
         }
     }
     Preference(
+        iconId = R.drawable.ic_assignment,
+        title = stringResource(R.string.settings__clipboard__title),
+        onClick = { navController.navigate(Routes.Settings.Clipboard) },
+    )
+    Preference(
         iconId = R.drawable.ic_build,
         title = stringResource(R.string.settings__advanced__title),
         onClick = { navController.navigate(Routes.Settings.Advanced) },

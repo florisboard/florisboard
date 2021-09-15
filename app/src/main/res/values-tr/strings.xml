@@ -482,17 +482,16 @@
     <string name="clip__paste_item">Yapıştır</string>
     <string name="clip__back_to_text_input">Yazma girişine geri dön</string>
     <string name="clip__cant_paste">Bu uygulama bu içeriğin yapıştırılmasına izin vermiyor.</string>
-    <string name="pref__clipboard__clipboard_category__label">Pano</string>
-    <string name="pref__clipboard__use_internal_clipboard___label">Dahili panoyu kullan</string>
-    <string name="pref__clipboard__use_internal_clipboard_title__summary">Sistem panosu yerine dahili panoyu kullan</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">Dahili panoyu kullan</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">Sistem panosu yerine dahili panoyu kullan</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sistem panosundan senkronize et</string>
-    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Sistem panosu değişimleri aynı zamanda Floris panosuna da yansır</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Sistem panosu değişimleri aynı zamanda Floris panosuna da yansır</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sistem panosuna senkronize et</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris panosu değişimleri aynı zamanda sistem panosuna da yansır</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Pano geçmişini etkinleştir</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Pano öğelerini muhafaza et</string>
-    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Eski öğeleri temizle</string>
-    <string name="pref__clipboard__clean_up_old_after__label">Eski öğeleri temizleme süresi</string>
+    <string name="pref__clipboard__clean_up_old__label">Eski öğeleri temizle</string>
+    <string name="pref__clipboard__clean_up_after__label">Eski öğeleri temizleme süresi</string>
     <string name="pref__clipboard__limit_history_size__label">Geçmiş boyutunu sınırla</string>
     <string name="pref__clipboard__max_history_size__label">En fazla geçmiş boyutu</string>
     <!-- glide strings -->

@@ -481,17 +481,16 @@
     <string name="clip__paste_item">Επικόλληση</string>
     <string name="clip__back_to_text_input">Πίσω στην εισαγωγή κειμένου</string>
     <string name="clip__cant_paste">Η εφαρμογή αυτή δεν επιτρέπει την επικόλληση του περιεχομένου.</string>
-    <string name="pref__clipboard__clipboard_category__label">Πρόχειρο</string>
-    <string name="pref__clipboard__use_internal_clipboard___label">Χρήση εσωτερικού προχείρου</string>
-    <string name="pref__clipboard__use_internal_clipboard_title__summary">Χρήση εσωτερικού προχείρου αντί του συστημικού</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">Χρήση εσωτερικού προχείρου</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">Χρήση εσωτερικού προχείρου αντί του συστημικού</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Συγχρονισμός από συστημικό πρόχειρο</string>
-    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Οι ενημερώσεις του συστημικού προχείρου, ενημερώνουν και το πρόχειρο Floris</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Οι ενημερώσεις του συστημικού προχείρου, ενημερώνουν και το πρόχειρο Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Συγχρονισμός στο συστημικό πρόχειρο</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Οι ενημερώσεις του προχείρου Floris, ενημερώνουν και το συστημικό πρόχειρο</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Ενεργοποίηση ιστορικού του προχείρου</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Διατήρηση στοιχείων προχείρου</string>
-    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Εκκαθάριση παλιών στοιχείων</string>
-    <string name="pref__clipboard__clean_up_old_after__label">Εκκαθάριση παλιών στοιχείων έπειτα από</string>
+    <string name="pref__clipboard__clean_up_old__label">Εκκαθάριση παλιών στοιχείων</string>
+    <string name="pref__clipboard__clean_up_after__label">Εκκαθάριση παλιών στοιχείων έπειτα από</string>
     <string name="pref__clipboard__limit_history_size__label">Περιορισμός μεγέθους ιστορικού</string>
     <string name="pref__clipboard__max_history_size__label">Μέγ. μέγεθος ιστορικού</string>
     <!-- glide strings -->

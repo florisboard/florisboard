@@ -432,17 +432,16 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="clip__paste_item">Tempel</string>
     <string name="clip__back_to_text_input">Kembali ke teks input</string>
     <string name="clip__cant_paste">Aplikasi ini tidak mengizinkan untuk menempel konten ini.</string>
-    <string name="pref__clipboard__clipboard_category__label">Papan klip</string>
-    <string name="pref__clipboard__use_internal_clipboard___label">Gunakan papan klip internal</string>
-    <string name="pref__clipboard__use_internal_clipboard_title__summary">Gunakan papan klip internal daripada papan klip sistem</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">Gunakan papan klip internal</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">Gunakan papan klip internal daripada papan klip sistem</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sinkronkan dari papan klip sistem</string>
-    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Pembaruan papan klip sistem juga memperbarui papan klip Floris</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Pembaruan papan klip sistem juga memperbarui papan klip Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sinkronkan ke papan klip sistem</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Pembaruan papan klip Floris juga memperbarui papan klip sistem</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Aktifkan riwayat papan klip</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Pertahankan item papan klip</string>
-    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Bersihkan item-item lama</string>
-    <string name="pref__clipboard__clean_up_old_after__label">Bersihkan item lama setelah</string>
+    <string name="pref__clipboard__clean_up_old__label">Bersihkan item-item lama</string>
+    <string name="pref__clipboard__clean_up_after__label">Bersihkan item lama setelah</string>
     <string name="pref__clipboard__limit_history_size__label">Batasi ukuran riwayat</string>
     <string name="pref__clipboard__max_history_size__label">Batas ukuran riwayat</string>
     <!-- glide strings -->

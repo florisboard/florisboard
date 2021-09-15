@@ -463,17 +463,16 @@
     <string name="clip__paste_item">Incolla</string>
     <string name="clip__back_to_text_input">Torna all\'immissione di testo</string>
     <string name="clip__cant_paste">Questa app non permette di incollare questo contenuto.</string>
-    <string name="pref__clipboard__clipboard_category__label">Appunti</string>
-    <string name="pref__clipboard__use_internal_clipboard___label">Usa gli appunti integrati</string>
-    <string name="pref__clipboard__use_internal_clipboard_title__summary">Usa gli appunti integrati invece degli appunti di sistema</string>
+    <string name="pref__clipboard__use_internal_clipboard__label">Usa gli appunti integrati</string>
+    <string name="pref__clipboard__use_internal_clipboard__summary">Usa gli appunti integrati invece degli appunti di sistema</string>
     <string name="pref__clipboard__sync_from_system_clipboard__label">Sincronizza dagli appunti di sistema</string>
-    <string name="pref__clipboard__keyboard_sync_from_system_clipboard__summary">Gli aggiornamenti degli appunti di sistema aggiornano anche gli appunti di Floris</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__summary">Gli aggiornamenti degli appunti di sistema aggiornano anche gli appunti di Floris</string>
     <string name="pref__clipboard__sync_to_system_clipboard__label">Sincronizza con gli appunti di sistema</string>
     <string name="pref__clipboard__sync_to_system_clipboard__summary">Gli aggiornamenti degli appunti di Floris aggiornano anche gli appunti di sistema</string>
     <string name="pref__clipboard__enable_clipboard_history__label">Attiva la cronologia degli appunti</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Conserva gli appunti</string>
-    <string name="pref__clipboard__clean_up_old_clipboard_items__label">Cancella gli appunti vecchi</string>
-    <string name="pref__clipboard__clean_up_old_after__label">Cancella gli appunti vecchi di</string>
+    <string name="pref__clipboard__clean_up_old__label">Cancella gli appunti vecchi</string>
+    <string name="pref__clipboard__clean_up_after__label">Cancella gli appunti vecchi di</string>
     <string name="pref__clipboard__limit_history_size__label">Limita le dimensioni della cronologia</string>
     <string name="pref__clipboard__max_history_size__label">Dimensione massima della cronologia</string>
     <!-- glide strings -->
