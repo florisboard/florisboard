@@ -31,9 +31,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.databinding.AboutActivityBinding
+import dev.patrickgold.florisboard.ime.InputMethodUtils
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.florisboard.util.AppVersionUtils
-import dev.patrickgold.florisboard.util.checkIfImeIsSelected
 
 class AboutActivity : AppCompatActivity() {
     private lateinit var binding: AboutActivityBinding
@@ -54,7 +54,7 @@ class AboutActivity : AppCompatActivity() {
 
         // Set setOnLongClickListener for copying the version string
         binding.headArea.setOnLongClickListener {
-            val isImeSelected = checkIfImeIsSelected(this)
+            val isImeSelected = InputMethodUtils.checkIsFlorisboardSelected(this)
             if (isImeSelected) {
                 FlorisClipboardManager.getInstance().addNewPlaintext(appVersion)
             } else {

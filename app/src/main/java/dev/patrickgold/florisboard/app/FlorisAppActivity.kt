@@ -50,7 +50,6 @@ import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.util.AndroidVersion
 import dev.patrickgold.florisboard.util.PackageManagerUtils
-import java.util.*
 
 enum class AppTheme(val id: String) {
     AUTO("auto"),
