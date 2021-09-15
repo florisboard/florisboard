@@ -65,12 +65,12 @@ fun ClipboardScreen() = FlorisScreen(title = stringResource(R.string.settings__c
             min = 0,
             max = 120,
             stepIncrement = 5,
-            enabledIf = { prefs.clipboard.enableHistory isEqualTo true },
+            enabledIf = { prefs.clipboard.cleanUpOld isEqualTo true },
         )
         SwitchPreference(
             prefs.clipboard.limitHistorySize,
             title = stringResource(R.string.pref__clipboard__limit_history_size__label),
-            enabledIf = { prefs.clipboard.cleanUpOld isEqualTo true },
+            enabledIf = { prefs.clipboard.enableHistory isEqualTo true },
         )
         DialogSliderPreference(
             prefs.clipboard.maxHistorySize,

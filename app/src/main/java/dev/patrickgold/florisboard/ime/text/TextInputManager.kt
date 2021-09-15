@@ -171,7 +171,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     activeState.isRichInputEditor
                 }
                 KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
-                    oldPrefs.clipboard.enableHistory
+                    prefs.clipboard.enableHistory.get()
                 }
                 else -> true
             }
@@ -193,7 +193,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS -> !florisboard.shouldShowLanguageSwitch()
                     }
                 }
-                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> oldPrefs.clipboard.enableHistory
+                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> prefs.clipboard.enableHistory.get()
                 KeyCode.LANGUAGE_SWITCH -> {
                     val tempUtilityKeyAction = when {
                         oldPrefs.keyboard.utilityKeyEnabled -> oldPrefs.keyboard.utilityKeyAction

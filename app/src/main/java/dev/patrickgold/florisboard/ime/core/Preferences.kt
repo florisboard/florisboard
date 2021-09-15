@@ -659,7 +659,7 @@ class Preferences(
             const val MAX_HISTORY_SIZE   = "clipboard__max_history_size"
         }
 
-        var enableInternal: Boolean
+        /*var enableInternal: Boolean
             get() =  prefs.getPref(ENABLE_INTERNAL, false)
             set(v) = prefs.setPref(ENABLE_INTERNAL, v)
 
@@ -689,6 +689,6 @@ class Preferences(
 
         var maxHistorySize: Int
             get() =  prefs.getPref(MAX_HISTORY_SIZE, 20)
-            set(v) = prefs.setPref(MAX_HISTORY_SIZE, v)
+            set(v) = prefs.setPref(MAX_HISTORY_SIZE, v)*/
     }
 }

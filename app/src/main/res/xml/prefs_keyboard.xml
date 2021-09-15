@@ -215,7 +215,8 @@
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        android:title="Clipboard">
+        android:title="Clipboard"
+        app:enabled="false">
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
