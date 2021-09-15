@@ -493,10 +493,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Conservar items del portapapeles</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">Limpiar ítems antiguos</string>
     <string name="pref__clipboard__clean_up_old_after__label">Limpiar ítems antiguos después</string>
-    <string name="pref__unit_minutes">" minutos"</string>
     <string name="pref__clipboard__limit_history_size__label">Limite de tamaño del historial</string>
     <string name="pref__clipboard__max_history_size__label">Tamaño máximo del historial</string>
-    <string name="pref__unit_items">" ítems"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Tiempo de desvanecimiento del gesto</string>
     <string name="pref__glide_preview_refresh_delay">Retraso de actualización de la vista previa</string>

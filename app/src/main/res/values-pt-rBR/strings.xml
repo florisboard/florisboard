@@ -493,10 +493,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Reter itens da área de transferência</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">Limpar itens antigos</string>
     <string name="pref__clipboard__clean_up_old_after__label">Limpar itens antigos depois</string>
-    <string name="pref__unit_minutes">" minutos"</string>
     <string name="pref__clipboard__limit_history_size__label">Limitar o tamanho do histórico</string>
     <string name="pref__clipboard__max_history_size__label">Tamanho máximo do histórico</string>
-    <string name="pref__unit_items">" itens"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Tempo de desaparecimento da trilha de deslizamento</string>
     <string name="pref__glide_preview_refresh_delay">Atraso de atualização da pré-visualização</string>

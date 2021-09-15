@@ -443,10 +443,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Elemente der Zwischenablage merken</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">Alte Einträge bereinigen</string>
     <string name="pref__clipboard__clean_up_old_after__label">Alte Einträge bereinigen nach</string>
-    <string name="pref__unit_minutes">" Minuten"</string>
     <string name="pref__clipboard__limit_history_size__label">Verlaufsgröße beschränken</string>
     <string name="pref__clipboard__max_history_size__label">Maximale Verlaufsgröße</string>
-    <string name="pref__unit_items">" Elemente"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Ausblendzeit der Spur</string>
     <string name="pref__glide_preview_refresh_delay">Verzögerung der Vorschau</string>

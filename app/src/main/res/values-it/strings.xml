@@ -474,10 +474,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Conserva gli appunti</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">Cancella gli appunti vecchi</string>
     <string name="pref__clipboard__clean_up_old_after__label">Cancella gli appunti vecchi di</string>
-    <string name="pref__unit_minutes">" minuti"</string>
     <string name="pref__clipboard__limit_history_size__label">Limita le dimensioni della cronologia</string>
     <string name="pref__clipboard__max_history_size__label">Dimensione massima della cronologia</string>
-    <string name="pref__unit_items">" elementi"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Tempo di dissolvenza del percorso di scorrimento</string>
     <string name="pref__glide_preview_refresh_delay">Ritardo di aggiornamento dell\'anteprima</string>

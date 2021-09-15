@@ -477,10 +477,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Запазва се хронология с елементите от междинната памет</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">Премахване на стари елементи</string>
     <string name="pref__clipboard__clean_up_old_after__label">Премахване на старите елементи след</string>
-    <string name="pref__unit_minutes">" минути"</string>
     <string name="pref__clipboard__limit_history_size__label">Ограничаване на броя</string>
     <string name="pref__clipboard__max_history_size__label">Максимален брой елементи</string>
-    <string name="pref__unit_items">" елемента"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Време за избледняване на следата</string>
     <string name="pref__glide_preview_refresh_delay">Опресняване на прегледа</string>

@@ -393,10 +393,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Vágólapelemek megtartása</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">Régi elemek törlése</string>
     <string name="pref__clipboard__clean_up_old_after__label">Régi elemek törlése ezután:</string>
-    <string name="pref__unit_minutes">" perc"</string>
     <string name="pref__clipboard__limit_history_size__label">Előzmények méretének korlátozása</string>
     <string name="pref__clipboard__max_history_size__label">Maximum előzményméret</string>
-    <string name="pref__unit_items">" elemek"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Nyomvonal elhalványulási ideje</string>
     <string name="pref__glide_preview_refresh_delay">Frissítési késleltetés megtekintése</string>

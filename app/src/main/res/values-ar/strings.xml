@@ -501,10 +501,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">الاحتفاظ بعناصر الحافظة</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">تنظيف العناصر القديمة</string>
     <string name="pref__clipboard__clean_up_old_after__label">تنظيف العناصر القديمة بعد</string>
-    <string name="pref__unit_minutes">" دقيقة"</string>
     <string name="pref__clipboard__limit_history_size__label">تحديد حجم السجل</string>
     <string name="pref__clipboard__max_history_size__label">الحد الأقصى لحجم السجل</string>
-    <string name="pref__unit_items">" عناصر"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">وقت تلاشي مسار الانزلاق</string>
     <string name="pref__glide_preview_refresh_delay">عرض تاخير التحديث</string>

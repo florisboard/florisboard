@@ -493,10 +493,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Pano öğelerini muhafaza et</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">Eski öğeleri temizle</string>
     <string name="pref__clipboard__clean_up_old_after__label">Eski öğeleri temizleme süresi</string>
-    <string name="pref__unit_minutes">" dakika"</string>
     <string name="pref__clipboard__limit_history_size__label">Geçmiş boyutunu sınırla</string>
     <string name="pref__clipboard__max_history_size__label">En fazla geçmiş boyutu</string>
-    <string name="pref__unit_items">" öğeler"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Kaydırma izi geçme süresi</string>
     <string name="pref__glide_preview_refresh_delay">Önizleme yenileme gecikmesi</string>

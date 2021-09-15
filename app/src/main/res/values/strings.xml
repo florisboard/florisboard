@@ -543,14 +543,38 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Retain clipboard items</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">Clean up old items</string>
     <string name="pref__clipboard__clean_up_old_after__label">Clean up old items after</string>
-    <string name="pref__unit_minutes">" minutes"</string>
     <string name="pref__clipboard__limit_history_size__label">Limit history size</string>
     <string name="pref__clipboard__max_history_size__label">Max history size</string>
-    <string name="pref__unit_items">" items"</string>
 
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Glide trail fade time</string>
     <string name="pref__glide_preview_refresh_delay">Preview refresh delay</string>
     <string name="pref__glide__show_preview">Show preview while glide typing</string>
+
+    <!-- Unit strings (symbols) -->
+    <string name="unit__hours__symbol" translatable="false">{v} h</string>
+    <string name="unit__minutes__symbol" translatable="false">{v} m</string>
+    <string name="unit__seconds__symbol" translatable="false">{v} s</string>
+    <string name="unit__milliseconds__symbol" translatable="false">{v} ms</string>
+    <string name="unit__percent__symbol" translatable="false">{v}%</string>
+    <string name="unit__display_pixel__symbol" translatable="false">{v} dp</string>
+
+    <!-- Unit strings (written words) -->
+    <plurals name="unit__hours__written">
+        <item quantity="one">{v} hour</item>
+        <item quantity="other">{v} hours</item>
+    </plurals>
+    <plurals name="unit__minutes__written">
+        <item quantity="one">{v} minute</item>
+        <item quantity="other">{v} minutes</item>
+    </plurals>
+    <plurals name="unit__seconds__written">
+        <item quantity="one">{v} second</item>
+        <item quantity="other">{v} seconds</item>
+    </plurals>
+    <plurals name="unit__items__written">
+        <item quantity="one">{v} item</item>
+        <item quantity="other">{v} items</item>
+    </plurals>
 
 </resources>

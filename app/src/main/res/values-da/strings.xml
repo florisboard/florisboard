@@ -189,6 +189,5 @@
     <string name="clip__clear_history">Ryd historik</string>
     <string name="clip__delete_item">Slet</string>
     <string name="clip__paste_item">Indsæt</string>
-    <string name="pref__unit_minutes">" minutter"</string>
     <!-- glide strings -->
 </resources>

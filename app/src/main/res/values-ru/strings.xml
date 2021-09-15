@@ -496,10 +496,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Сохранять буфер обмена</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">Очистить старые элементы</string>
     <string name="pref__clipboard__clean_up_old_after__label">Очистить старые элементы через</string>
-    <string name="pref__unit_minutes">" минут"</string>
     <string name="pref__clipboard__limit_history_size__label">Ограничить размер истории</string>
     <string name="pref__clipboard__max_history_size__label">Максимальный размер истории</string>
-    <string name="pref__unit_items">" элементов"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Время исчезания непрерывного следа</string>
     <string name="pref__glide_preview_refresh_delay">Задержка обновления предварительного просмотра</string>

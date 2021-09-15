@@ -69,7 +69,7 @@ object InputMethodUtils {
         }
     }
 
-    fun showSystemEnablerActivity(context: Context) {
+    fun showImeEnablerActivity(context: Context) {
         val intent = Intent()
         intent.action = Settings.ACTION_INPUT_METHOD_SETTINGS
         intent.addCategory(Intent.CATEGORY_DEFAULT)
@@ -77,7 +77,7 @@ object InputMethodUtils {
         context.startActivity(intent)
     }
 
-    fun showSystemPicker(context: Context) {
+    fun showImePicker(context: Context) {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         imm?.showInputMethodPicker()
     }

@@ -492,10 +492,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Διατήρηση στοιχείων προχείρου</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">Εκκαθάριση παλιών στοιχείων</string>
     <string name="pref__clipboard__clean_up_old_after__label">Εκκαθάριση παλιών στοιχείων έπειτα από</string>
-    <string name="pref__unit_minutes">" λεπτά"</string>
     <string name="pref__clipboard__limit_history_size__label">Περιορισμός μεγέθους ιστορικού</string>
     <string name="pref__clipboard__max_history_size__label">Μέγ. μέγεθος ιστορικού</string>
-    <string name="pref__unit_items">" στοιχεία"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Διάρκεια εξασθένησης διαδρομής ολίσθησης</string>
     <string name="pref__glide_preview_refresh_delay">Καθυστέρηση ανανέωσης προεπισκόπησης</string>

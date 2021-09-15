@@ -325,10 +325,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Säilytä leikepöydän kohteet</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">Poista vanhat kohteet</string>
     <string name="pref__clipboard__clean_up_old_after__label">Poista vanhat kohteet, kun on kulunut</string>
-    <string name="pref__unit_minutes">" minuuttia"</string>
     <string name="pref__clipboard__limit_history_size__label">Rajoita historian kokoa</string>
     <string name="pref__clipboard__max_history_size__label">Historian maksimikoko</string>
-    <string name="pref__unit_items">" kohdetta"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Liu\'un jäljen häivytysaika</string>
 </resources>

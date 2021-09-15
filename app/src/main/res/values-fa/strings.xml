@@ -440,10 +440,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">بازیابی موارد کلیپ‌بورد</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">پاکسازی موارد قدیمی</string>
     <string name="pref__clipboard__clean_up_old_after__label">پاکسازی موارد قدیمی بعد از</string>
-    <string name="pref__unit_minutes">" دقیقه"</string>
     <string name="pref__clipboard__limit_history_size__label">محدود کردن اندازه تاریخچه</string>
     <string name="pref__clipboard__max_history_size__label">حداکثر اندازه تاریخچه</string>
-    <string name="pref__unit_items">" مورد"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">مدت زمان محو شدن دنباله پروازی</string>
     <string name="pref__glide_preview_refresh_delay">پیشنمایش تاخیر در تازه‌سازی</string>

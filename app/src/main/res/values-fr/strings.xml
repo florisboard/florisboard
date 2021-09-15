@@ -472,10 +472,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Conserver les éléments du presse-papier</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">Nettoyer les vieux éléments</string>
     <string name="pref__clipboard__clean_up_old_after__label">Nettoyer les vieux éléments après</string>
-    <string name="pref__unit_minutes">" minutes"</string>
     <string name="pref__clipboard__limit_history_size__label">Taille limite de l\'historique</string>
     <string name="pref__clipboard__max_history_size__label">Taille maximale de l\'historique</string>
-    <string name="pref__unit_items">" éléments"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Temps de fondu du parcours de glissement</string>
     <string name="pref__glide_preview_refresh_delay">Délai d\'actualisation de l\'aperçu</string>

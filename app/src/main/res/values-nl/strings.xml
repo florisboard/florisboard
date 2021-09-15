@@ -415,10 +415,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Bewaar klembord-items</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">Kuis oude items op</string>
     <string name="pref__clipboard__clean_up_old_after__label">Kuis oude items op na</string>
-    <string name="pref__unit_minutes">" minuten"</string>
     <string name="pref__clipboard__limit_history_size__label">Beperk geschiedenisgrootte</string>
     <string name="pref__clipboard__max_history_size__label">Maximale grootte geschiedenis</string>
-    <string name="pref__unit_items">" items"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Vervaagtijd veegspoor</string>
     <string name="pref__glide_preview_refresh_delay">Vertraging vernieuwing voorbeeld</string>

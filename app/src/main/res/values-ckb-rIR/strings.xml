@@ -476,10 +476,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">هێشتنەوەی شتە لەبەرگیراوەکان</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">سڕینەوەی لەبەرگیراوە کۆنەکان</string>
     <string name="pref__clipboard__clean_up_old_after__label">سڕینەوەی لبەرگیراوە کۆنەکان</string>
-    <string name="pref__unit_minutes">" خولەک"</string>
     <string name="pref__clipboard__limit_history_size__label">سنوردارکردنی مێژووی هەڵگرتن</string>
     <string name="pref__clipboard__max_history_size__label">زۆررین ڕێژەی هەڵگرتن</string>
-    <string name="pref__unit_items">" دانە"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">ماوەی دەرکەوتن</string>
     <string name="pref__glide_preview_refresh_delay">ماوەی پیشاندان</string>

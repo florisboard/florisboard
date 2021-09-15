@@ -405,10 +405,8 @@
     <string name="pref__clipboard__enable_clipboard_history__label">Zapnout historii schránky</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">Mazat staré položky</string>
     <string name="pref__clipboard__clean_up_old_after__label">Mazat staré položky po</string>
-    <string name="pref__unit_minutes">" minuty"</string>
     <string name="pref__clipboard__limit_history_size__label">Omezit velikost historie</string>
     <string name="pref__clipboard__max_history_size__label">Max velikost historie</string>
-    <string name="pref__unit_items">" položky"</string>
     <!-- glide strings -->
     <string name="pref__glide__show_preview">Zobrazit náhled při psaní tahem</string>
 </resources>

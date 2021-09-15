@@ -443,10 +443,8 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__clipboard__enable_clipboard_history__summary">Pertahankan item papan klip</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">Bersihkan item-item lama</string>
     <string name="pref__clipboard__clean_up_old_after__label">Bersihkan item lama setelah</string>
-    <string name="pref__unit_minutes">" menit"</string>
     <string name="pref__clipboard__limit_history_size__label">Batasi ukuran riwayat</string>
     <string name="pref__clipboard__max_history_size__label">Batas ukuran riwayat</string>
-    <string name="pref__unit_items">" item"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Lamanya memudarnya jejak geser</string>
     <string name="pref__glide_preview_refresh_delay">Pratinjau penundaan penyegaran</string>

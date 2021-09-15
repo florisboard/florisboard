@@ -264,7 +264,7 @@
             app:iconSpaceReserved="false"
             app:title="@string/pref__clipboard__clean_up_old_after__label"
             app:seekBarIncrement="5"
-            app:unit="@string/pref__unit_minutes"/>
+            app:unit=" minutes"/>
 
         <SwitchPreferenceCompat
             android:dependency="clipboard__enable_history"
@@ -283,7 +283,7 @@
             app:iconSpaceReserved="false"
             app:title="@string/pref__clipboard__max_history_size__label"
             app:seekBarIncrement="5"
-            app:unit="@string/pref__unit_items"/>
+            app:unit=" items"/>
 
     </PreferenceCategory>
 

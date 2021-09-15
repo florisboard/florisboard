@@ -48,6 +48,42 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
     }
 
+    val clipboard = Clipboard()
+    inner class Clipboard {
+        val enableInternal = boolean(
+            key = "clipboard__enable_internal",
+            default = false,
+        )
+        val syncToSystem = boolean(
+            key = "clipboard__sync_to_system",
+            default = false,
+        )
+        val syncToFloris = boolean(
+            key = "clipboard__sync_to_floris",
+            default = true,
+        )
+        val enableHistory = boolean(
+            key = "clipboard__enable_history",
+            default = false,
+        )
+        val cleanUpOld = boolean(
+            key = "clipboard__clean_up_old",
+            default = false,
+        )
+        val cleanUpAfter = int(
+            key = "clipboard__clean_up_after",
+            default = 20,
+        )
+        val limitHistorySize = boolean(
+            key = "clipboard__limit_history_size",
+            default = true,
+        )
+        val maxHistorySize = int(
+            key = "clipboard__max_history_size",
+            default = 20,
+        )
+    }
+
     val devtools = Devtools()
     inner class Devtools {
         val enabled = boolean(

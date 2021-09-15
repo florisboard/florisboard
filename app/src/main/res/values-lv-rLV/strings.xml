@@ -476,10 +476,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Paturēt starpliktuves vienumus</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">Noņemt vecos vienumus</string>
     <string name="pref__clipboard__clean_up_old_after__label">Noņemt vecos vienumus pēc</string>
-    <string name="pref__unit_minutes">" minūtēm"</string>
     <string name="pref__clipboard__limit_history_size__label">Ierobežot vēstures lielumu</string>
     <string name="pref__clipboard__max_history_size__label">Lielākais pieļaujamais vēstures lielums</string>
-    <string name="pref__unit_items">" vienumi"</string>
     <!-- glide strings -->
     <string name="pref__glide_trail_fade_duration">Slīdēšanas pēdu izzušanas laiks</string>
     <string name="pref__glide_preview_refresh_delay">Priekšskatīt atsvaidzināšanas aizkavi</string>

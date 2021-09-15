@@ -349,10 +349,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">שמור פריטי לוח</string>
     <string name="pref__clipboard__clean_up_old_clipboard_items__label">נקה פריטים ישנים</string>
     <string name="pref__clipboard__clean_up_old_after__label">נקה פריטים ישנים אחרי</string>
-    <string name="pref__unit_minutes">" דקות"</string>
     <string name="pref__clipboard__limit_history_size__label">הגבל את גודל ההיסטוריה</string>
     <string name="pref__clipboard__max_history_size__label">גודל היסטוריה מקסימלי</string>
-    <string name="pref__unit_items">" פריטים"</string>
     <!-- glide strings -->
     <string name="pref__glide_preview_refresh_delay">תצוגה מקדימה של עיכוב רענון</string>
 </resources>
