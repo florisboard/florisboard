@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.ui.settings
+package dev.patrickgold.florisboard.app.ui.settings.advanced
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text

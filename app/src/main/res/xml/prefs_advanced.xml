@@ -1,64 +1,7 @@
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:enabled="false">
-
-    <ListPreference
-        android:defaultValue="auto"
-        app:entries="@array/pref__advanced__settings_theme__entries"
-        app:entryValues="@array/pref__advanced__settings_theme__values"
-        app:key="advanced__settings_theme"
-        app:iconSpaceReserved="false"
-        app:title="@string/pref__advanced__settings_theme__label"
-        app:useSimpleSummaryProvider="true"/>
-
-    <SwitchPreferenceCompat
-        android:defaultValue="true"
-        app:key="advanced__show_app_icon"
-        app:iconSpaceReserved="false"
-        app:title="@string/pref__advanced__show_app_icon__label"
-        app:useSimpleSummaryProvider="true"/>
-
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        app:key="advanced__force_private_mode"
-        app:iconSpaceReserved="false"
-        app:title="@string/pref__advanced__force_private_mode__label"
-        app:summary="@string/pref__advanced__force_private_mode__summary"
-        app:useSimpleSummaryProvider="true"/>
-
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        app:key="devtools__enabled"
-        app:iconSpaceReserved="false"
-        app:title="@string/pref__devtools__enabled__label"
-        app:summary="@string/pref__devtools__enabled__summary"
-        app:useSimpleSummaryProvider="true"/>
-
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        app:dependency="devtools__enabled"
-        app:key="devtools__show_heap_memory_stats"
-        app:iconSpaceReserved="false"
-        app:title="@string/pref__devtools__show_heap_memory_stats__label"
-        app:summary="@string/pref__devtools__show_heap_memory_stats__summary"
-        app:useSimpleSummaryProvider="true"/>
-
-    <SwitchPreferenceCompat
-        android:defaultValue="false"
-        app:dependency="devtools__enabled"
-        app:key="devtools__override_word_suggestions_min_heap_restriction"
-        app:iconSpaceReserved="false"
-        app:title="Override min heap size restriction for word suggestions"
-        app:summary="This allows you to use word suggestions even if your heap size is not intended for it and can break FlorisBoard"
-        app:useSimpleSummaryProvider="true"/>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
-        app:dependency="devtools__enabled"
-        app:key="devtools__clear_udm_internal_database"
-        app:iconSpaceReserved="false"
-        app:title="@string/pref__devtools__clear_udm_internal_database__label"
-        app:summary="@string/pref__devtools__clear_udm_internal_database__summary"
-        app:useSimpleSummaryProvider="true"/>
+        app:title="This screen is not available anymore in the old Settings UI. Please use the screen available in the new UI!"
+        app:iconSpaceReserved="false"/>
 
 </PreferenceScreen>

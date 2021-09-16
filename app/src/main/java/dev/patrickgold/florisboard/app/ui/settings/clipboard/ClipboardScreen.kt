@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.ui.settings
+package dev.patrickgold.florisboard.app.ui.settings.clipboard
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -22,9 +22,9 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.pluralResource
 import dev.patrickgold.jetpref.ui.compose.DialogSliderPreference
-import dev.patrickgold.jetpref.ui.compose.ExperimentalJetPrefUi
 import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
 import dev.patrickgold.jetpref.ui.compose.SwitchPreference
+import dev.patrickgold.jetpref.ui.compose.annotations.ExperimentalJetPrefUi
 
 @OptIn(ExperimentalJetPrefUi::class)
 @Composable

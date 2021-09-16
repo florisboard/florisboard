@@ -16,14 +16,54 @@
 
 package dev.patrickgold.florisboard.ime.landscapeinput
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
+import dev.patrickgold.jetpref.ui.compose.entry
+
 enum class LandscapeInputUiMode {
-    DYNAMICALLY_SHOW,
     NEVER_SHOW,
-    ALWAYS_SHOW;
+    ALWAYS_SHOW,
+    DYNAMICALLY_SHOW;
 
     companion object {
         fun fromString(string: String): LandscapeInputUiMode {
             return valueOf(string.uppercase())
+        }
+
+        @Composable
+        fun listEntries() = listOf(
+            entry(
+                key = NEVER_SHOW,
+                label = stringResource(R.string.enum__landscape_input_ui_mode__never_show),
+            ),
+            entry(
+                key = ALWAYS_SHOW,
+                label = stringResource(R.string.enum__landscape_input_ui_mode__always_show),
+            ),
+            entry(
+                key = DYNAMICALLY_SHOW,
+                label = stringResource(R.string.enum__landscape_input_ui_mode__dynamically_show),
+            ),
+        )
+    }
+
+    override fun toString(): String {
+        return super.toString().lowercase()
+    }
+
+    object Serializer : PreferenceSerializer<LandscapeInputUiMode> {
+        override fun serialize(value: LandscapeInputUiMode): String {
+            return value.toString()
+        }
+
+        override fun deserialize(value: String): LandscapeInputUiMode? {
+            return try {
+                fromString(value)
+            } catch (e: IllegalArgumentException) {
+                null
+            }
         }
     }
 }

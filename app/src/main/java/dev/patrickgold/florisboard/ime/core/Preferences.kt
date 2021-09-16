@@ -474,10 +474,10 @@ class Preferences(
             get() =  prefs.getPref(HEIGHT_FACTOR_CUSTOM, 100)
             set(v) = prefs.setPref(HEIGHT_FACTOR_CUSTOM, v)
         var hintedNumberRowMode: KeyHintMode
-            get() =  KeyHintMode.fromString(prefs.getPref(HINTED_NUMBER_ROW_MODE, KeyHintMode.ENABLED_ACCENT_PRIORITY.toString()))
+            get() =  KeyHintMode.fromString(prefs.getPref(HINTED_NUMBER_ROW_MODE, KeyHintMode.ACCENT_PRIORITY.toString()))
             set(v) = prefs.setPref(HINTED_NUMBER_ROW_MODE, v)
         var hintedSymbolsMode: KeyHintMode
-            get() =  KeyHintMode.fromString(prefs.getPref(HINTED_SYMBOLS_MODE, KeyHintMode.ENABLED_ACCENT_PRIORITY.toString()))
+            get() =  KeyHintMode.fromString(prefs.getPref(HINTED_SYMBOLS_MODE, KeyHintMode.ACCENT_PRIORITY.toString()))
             set(v) = prefs.setPref(HINTED_SYMBOLS_MODE, v)
         var keySpacingHorizontal: Float = 2f
             get() = prefs.getPref(KEY_SPACING_HORIZONTAL, 4) / 2f

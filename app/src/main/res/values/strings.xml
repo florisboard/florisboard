@@ -205,54 +205,27 @@
     <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">not implemented</string>
     <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">e.g. cursor control swipe</string>
 
-    <string name="settings__keyboard__title" comment="Title of Keyboard preferences fragment">Keyboard Preferences</string>
-    <string name="pref__keyboard__group_keys__label" comment="Preference group title">Keys</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Keyboard</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Number row</string>
-    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Show number row on top of character layout</string>
+    <string name="pref__keyboard__number_row__summary" comment="Preference summary">Show a number row above the character layout</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Hinted number row</string>
     <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Hinted symbols</string>
-    <string name="pref__keyboard__hint_mode__disabled" comment="Preference value">Disabled</string>
-    <string name="pref__keyboard__hint_mode__enabled_hint_priority" comment="Preference value">Enabled (Hint is prioritized)</string>
-    <string name="pref__keyboard__hint_mode__enabled_accent_priority" comment="Preference value">Enabled (Accent is prioritized)</string>
-    <string name="pref__keyboard__hint_mode__enabled_smart_priority" comment="Preference value">Enabled (Smart prioritization)</string>
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Show utility key</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Shows a configurable utility key next to space bar</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Utility key action</string>
-    <string name="pref__keyboard__utility_key_action__switch_to_emojis" comment="Preference value">Switch to emojis</string>
-    <string name="pref__keyboard__utility_key_action__switch_language" comment="Preference value">Switch language</string>
-    <string name="pref__keyboard__utility_key_action__switch_keyboard_app" comment="Preference value">Switch keyboard app</string>
-    <string name="pref__keyboard__utility_key_action__dynamic_switch_language_emojis" comment="Preference value">Dynamic: Switch to emojis / Switch language</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label">Also show symbol popups</string>
-    <string name="pref__keyboard_merge_hint_popups_enabled__summary">Add the symbol popups to the default layout</string>
-    <string name="pref__keyboard__font_size_multiplier_portrait__label" comment="Preference title">Font size multiplier (portrait)</string>
-    <string name="pref__keyboard__font_size_multiplier_landscape__label" comment="Preference title">Font size multiplier (landscape)</string>
+    <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Font size multiplier</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">One-handed mode</string>
-    <string name="pref__keyboard__one_handed_mode__off" comment="Preference value">Off</string>
-    <string name="pref__keyboard__one_handed_mode__right" comment="Preference value">Right-handed mode</string>
-    <string name="pref__keyboard__one_handed_mode__left" comment="Preference value">Left-handed mode</string>
     <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">One-handed mode keyboard width</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Landscape fullscreen input</string>
-    <string name="pref__keyboard__landscape_input_ui_mode__never_show" comment="Preference value">Never show</string>
-    <string name="pref__keyboard__landscape_input_ui_mode__always_show" comment="Preference value">Always show</string>
-    <string name="pref__keyboard__landscape_input_ui_mode__dynamically_show" comment="Preference value">Dynamically show</string>
     <string name="pref__keyboard__height_factor__label" comment="Preference title">Keyboard height</string>
-    <string name="pref__keyboard__height_factor__extra_short" comment="Preference value">Extra-short</string>
-    <string name="pref__keyboard__height_factor__short" comment="Preference value">Short</string>
-    <string name="pref__keyboard__height_factor__mid_short" comment="Preference value">Mid-short</string>
-    <string name="pref__keyboard__height_factor__normal" comment="Preference value">Normal</string>
-    <string name="pref__keyboard__height_factor__mid_tall" comment="Preference value">Mid-tall</string>
-    <string name="pref__keyboard__height_factor__tall" comment="Preference value">Tall</string>
-    <string name="pref__keyboard__height_factor__extra_tall" comment="Preference value">Extra-tall</string>
-    <string name="pref__keyboard__height_factor__custom" comment="Preference value">Custom</string>
-    <string name="pref__keyboard__height_factor_custom__label" comment="Preference title">Custom keyboard height value</string>
-    <string name="pref__keyboard__bottom_offset_portrait__label" comment="Preference title">Bottom offset (portrait)</string>
-    <string name="pref__keyboard__bottom_offset_landscape__label" comment="Preference title">Bottom offset (landscape)</string>
-    <string name="pref__keyboard__key_spacing_vertical__label" comment="Preference title">Key spacing (vertical)</string>
-    <string name="pref__keyboard__key_spacing_horizontal__label" comment="Preference title">Key spacing (horizontal)</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Key spacing</string>
+    <string name="pref__keyboard__bottom_offset__label" comment="Preference title">Bottom offset</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Key press</string>
-    <string name="pref__keyboard__popup_visible__label" comment="Preference title">PopUp Visibility</string>
-    <string name="pref__keyboard__popup_visible__summary" comment="Preference summary">Show popup when you press a key</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup Visibility</string>
+    <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Show popup when you press a key</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Include symbol popups in accents</string>
+    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Add the symbol popups to the default layout\'s accents</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Long key press delay</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Space bar switches back to character layout</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Pressing space bar automatically switches back to characters when in symbols or numeric</string>
@@ -551,6 +524,31 @@
     <string name="pref__glide_trail_fade_duration">Glide trail fade time</string>
     <string name="pref__glide_preview_refresh_delay">Preview refresh delay</string>
     <string name="pref__glide__show_preview">Show preview while glide typing</string>
+
+    <!-- Screen orientation strings -->
+    <string name="screen_orientation__portrait">Portrait</string>
+    <string name="screen_orientation__landscape">Landscape</string>
+    <string name="screen_orientation__vertical">Vertical</string>
+    <string name="screen_orientation__horizontal">Horizontal</string>
+
+    <!-- State strings -->
+    <string name="state__disabled">Disabled</string>
+    <string name="state__enabled">Enabled</string>
+
+    <!-- Enum label and description strings -->
+    <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Accent is prioritized</string>
+    <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Hint is prioritized</string>
+    <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Smart prioritization</string>
+    <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Never show</string>
+    <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Always show</string>
+    <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamically show</string>
+    <string name="enum__one_handed_mode__off" comment="Enum value label">Off</string>
+    <string name="enum__one_handed_mode__start" comment="Enum value label">Right-handed mode</string>
+    <string name="enum__one_handed_mode__end" comment="Enum value label">Left-handed mode</string>
+    <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Switch to emojis</string>
+    <string name="enum__utility_key_action__switch_language" comment="Enum value label">Switch language</string>
+    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Switch keyboard app</string>
+    <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dynamic: Switch to emojis / Switch language</string>
 
     <!-- Unit strings (symbols) -->
     <string name="unit__hours__symbol" translatable="false">{v} h</string>

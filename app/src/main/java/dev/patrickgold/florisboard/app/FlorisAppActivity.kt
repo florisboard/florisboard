@@ -35,19 +35,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.PreviewKeyboardField
 import dev.patrickgold.florisboard.app.ui.components.SystemUi
-import dev.patrickgold.florisboard.app.ui.settings.AdvancedScreen
-import dev.patrickgold.florisboard.app.ui.settings.ClipboardScreen
-import dev.patrickgold.florisboard.app.ui.settings.HomeScreen
-import dev.patrickgold.florisboard.app.ui.settings.about.AboutScreen
-import dev.patrickgold.florisboard.app.ui.settings.about.ProjectLicenseScreen
-import dev.patrickgold.florisboard.app.ui.settings.about.ThirdPartyLicensesScreen
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.util.AndroidVersion
@@ -128,21 +120,11 @@ class FlorisAppActivity : ComponentActivity() {
             LocalNavController provides navController,
         ) {
             Column {
-                NavHost(
+                Routes.AppNavHost(
                     modifier = Modifier.weight(1.0f),
                     navController = navController,
                     startDestination = Routes.Settings.Home,
-                ) {
-                    composable(Routes.Settings.Home) { HomeScreen() }
-
-                    composable(Routes.Settings.Clipboard) { ClipboardScreen() }
-
-                    composable(Routes.Settings.Advanced) { AdvancedScreen() }
-
-                    composable(Routes.Settings.About) { AboutScreen() }
-                    composable(Routes.Settings.ProjectLicense) { ProjectLicenseScreen() }
-                    composable(Routes.Settings.ThirdPartyLicenses) { ThirdPartyLicensesScreen() }
-                }
+                )
                 PreviewKeyboardField()
             }
         }
