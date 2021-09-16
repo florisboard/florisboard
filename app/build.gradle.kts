@@ -125,8 +125,8 @@ android {
 
 dependencies {
     implementation("androidx.activity:activity-compose:1.3.1")
-    implementation("androidx.activity:activity-ktx:1.3.1")
-    implementation("androidx.appcompat:appcompat:1.3.1")
+    implementation("androidx.activity:activity-ktx:1.3.1") // possibly remove after settings rework
+    implementation("androidx.appcompat:appcompat:1.3.1") // possibly remove after settings rework
     implementation("androidx.autofill:autofill:1.1.0")
     implementation("androidx.compose.material:material:1.1.0-alpha04")
     implementation("androidx.compose.ui:ui:1.1.0-alpha04")
@@ -136,10 +136,9 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.3.6") // possibly remove after settings rework
     implementation("androidx.navigation:navigation-compose:2.4.0-alpha08")
     implementation("androidx.preference:preference-ktx:1.1.1") // possibly remove after settings rework
-    implementation("androidx.lifecycle:lifecycle-service:2.3.1")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.18.0")
-    implementation("com.google.android.flexbox:flexbox:3.0.0")
-    implementation("com.google.android.material:material:1.4.0")
+    implementation("com.google.android.flexbox:flexbox:3.0.0") // possibly remove after settings rework
+    implementation("com.google.android.material:material:1.4.0") // possibly remove after settings rework
     implementation("com.jakewharton.timber:timber:4.7.1") // possibly remove after settings rework
     implementation("com.jaredrummler:colorpicker:1.1.0") // possibly remove after settings rework
     implementation("com.nambimobile.widgets:expandable-fab:1.0.2") // possibly remove after settings rework

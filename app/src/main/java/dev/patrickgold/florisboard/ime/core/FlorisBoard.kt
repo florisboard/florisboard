@@ -22,7 +22,6 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.inputmethodservice.ExtractEditText
-import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -73,6 +72,7 @@ import dev.patrickgold.florisboard.databinding.FlorisboardBinding
 import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.keyboard.updateKeyboardState
+import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.util.debugSummarize
 import dev.patrickgold.florisboard.util.findViewWithType
 import dev.patrickgold.florisboard.util.refreshLayoutOf
@@ -103,10 +103,10 @@ private var florisboardInstance: FlorisBoard? = null
  * All inline suggestion code has been added based on this demo autofill IME provided by Android directly:
  *  https://cs.android.com/android/platform/superproject/+/master:development/samples/AutofillKeyboard/src/com/example/android/autofillkeyboard/AutofillImeService.java
  */
-open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager.OnPrimaryClipChangedListener,
+open class FlorisBoard : LifecycleInputMethodService(),
+    FlorisClipboardManager.OnPrimaryClipChangedListener,
     ThemeManager.OnThemeUpdatedListener {
 
-    private val serviceLifecycleDispatcher: ServiceLifecycleDispatcher = ServiceLifecycleDispatcher(this)
     private val uiScope: LifecycleCoroutineScope
         get() = lifecycle.coroutineScope
     private var devtoolsOverlaySyncJob: Job? = null
@@ -197,10 +197,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         }
     }
 
-    override fun getLifecycle(): Lifecycle {
-        return serviceLifecycleDispatcher.lifecycle
-    }
-
     private fun updateThemeContext(@StyleRes themeId: Int) {
         _themeContext = ContextThemeWrapper(this, themeId)
     }
@@ -213,8 +209,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
             try {
                 // "Main" try..catch block
                 flogInfo(LogTopic.IMS_EVENTS)
-                serviceLifecycleDispatcher.onServicePreSuperOnCreate()
-                serviceLifecycleDispatcher.onServicePreSuperOnStart()
 
                 activeEditorInstance = EditorInstance(this, activeState)
 
@@ -256,6 +250,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     @SuppressLint("InflateParams")
     override fun onCreateInputView(): View? {
         flogInfo(LogTopic.IMS_EVENTS)
+        super.onCreateInputView()
         CrashUtility.handleStagedButUnhandledExceptions()
 
         updateThemeContext(currentThemeResId)
@@ -316,7 +311,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
 
     override fun onDestroy() {
         flogInfo(LogTopic.IMS_EVENTS)
-        serviceLifecycleDispatcher.onServicePreSuperOnDestroy()
 
         themeManager.unregisterOnThemeUpdatedListener(this)
         florisClipboardManager?.let {
