@@ -41,14 +41,20 @@ enum class KeyHintMode {
             entry(
                 key = ACCENT_PRIORITY,
                 label = stringResource(R.string.enum__key_hint_mode__accent_priority),
+                description = stringResource(R.string.enum__key_hint_mode__accent_priority__description),
+                showDescriptionOnlyIfSelected = true,
             ),
             entry(
                 key = HINT_PRIORITY,
                 label = stringResource(R.string.enum__key_hint_mode__hint_priority),
+                description = stringResource(R.string.enum__key_hint_mode__hint_priority__description),
+                showDescriptionOnlyIfSelected = true,
             ),
             entry(
                 key = SMART_PRIORITY,
                 label = stringResource(R.string.enum__key_hint_mode__smart_priority),
+                description = stringResource(R.string.enum__key_hint_mode__smart_priority__description),
+                showDescriptionOnlyIfSelected = true,
             ),
         )
     }
