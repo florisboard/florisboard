@@ -65,7 +65,7 @@ fun ClipboardScreen() = FlorisScreen(title = stringResource(R.string.settings__c
             min = 0,
             max = 120,
             stepIncrement = 5,
-            enabledIf = { prefs.clipboard.cleanUpOld isEqualTo true },
+            enabledIf = { prefs.clipboard.enableHistory isEqualTo true && prefs.clipboard.cleanUpOld isEqualTo true },
         )
         SwitchPreference(
             prefs.clipboard.limitHistorySize,
@@ -79,7 +79,7 @@ fun ClipboardScreen() = FlorisScreen(title = stringResource(R.string.settings__c
             min = 5,
             max = 100,
             stepIncrement = 5,
-            enabledIf = { prefs.clipboard.limitHistorySize isEqualTo true },
+            enabledIf = { prefs.clipboard.enableHistory isEqualTo true && prefs.clipboard.limitHistorySize isEqualTo true },
         )
     }
 }
