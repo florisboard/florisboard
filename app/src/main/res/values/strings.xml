@@ -46,10 +46,6 @@
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Settings</string>
     <string name="settings__preview_keyboard" comment="Hint for try your setup box">Try out your setup</string>
-    <string name="settings__menu" comment="Hint of top-right three-dot icon in Settings">More options</string>
-    <string name="settings__menu_about" translatable="false" comment="Three-dot menu entry for About activity">@string/about__title</string>
-    <string name="settings__menu_advanced" translatable="false" comment="Three-dot menu entry for Advanced activity">@string/settings__advanced__title</string>
-    <string name="settings__menu_help" comment="Three-dot menu entry for Help and Feedback web link">Help &amp; feedback</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Help</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Home</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Keyboard</string>
@@ -62,7 +58,6 @@
     <string name="settings__home__title" comment="Title of the Home fragment">Welcome to %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard is not enabled in the system and thus won\'t be available as an input method in the input picker. Click here to resolve this issue.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard is not selected as the default input method. Click here to resolve this issue.</string>
-    <string name="settings__home__contribute" comment="Contributing message shown in Home fragment">Thanks for using FlorisBoard! This project is still in early-beta and therefore missing features. If you find any bugs or want to make a suggestion, please check out the repo on GitHub and file an issue. This helps making FlorisBoard better. Thank you!</string>
 
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Languages &amp; Keyboard layouts</string>
     <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">It seems that you haven\'t configured any subtypes. As a fallback the subtype English/QWERTY will be used!</string>

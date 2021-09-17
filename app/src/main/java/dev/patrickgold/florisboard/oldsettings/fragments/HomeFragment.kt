@@ -63,12 +63,6 @@ class HomeFragment : SettingsMainActivity.SettingsFragment() {
                 startActivity(this)
             }
         }
-        binding.localizationCard.setOnClickListener {
-            settingsMainActivity.binding.bottomNavigation.selectedItemId = R.id.settings__navigation__typing
-        }
-        binding.themeCard.setOnClickListener {
-            settingsMainActivity.binding.bottomNavigation.selectedItemId = R.id.settings__navigation__theme
-        }
 
         return binding.root
     }

@@ -16,11 +16,8 @@
 
 package dev.patrickgold.florisboard.oldsettings
 
-import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -128,11 +125,6 @@ class SettingsMainActivity : AppCompatActivity(),
             .commit()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.settings_main_menu, menu)
-        return true
-    }
-
     override fun onBackPressed() {
         if (binding.bottomNavigation.selectedItemId != R.id.settings__navigation__home) {
             binding.bottomNavigation.selectedItemId = R.id.settings__navigation__home
@@ -145,18 +137,6 @@ class SettingsMainActivity : AppCompatActivity(),
         return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
-                true
-            }
-            R.id.settings__menu_help -> {
-                val browserIntent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(resources.getString(R.string.florisboard__repo_url))
-                )
-                startActivity(browserIntent)
-                true
-            }
-            R.id.settings__menu_about -> {
-                startActivity(Intent(this, AboutActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -46,16 +46,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/settings__home__contribute"/>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        style="@style/SettingsCardView">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Preferences tagged with [NYI] are not yet implemented and thus won\'t do anything or do some basic placeholder stuff only. Please do not file a bug report for these."/>
 
     </androidx.cardview.widget.CardView>
@@ -79,30 +69,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/florisboard__repo_url"/>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/localization_card"
-        style="@style/SettingsCardView.Clickable">
-
-        <!-- TODO: create lang preview and make nice feature graphic for this card -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Localization prefs -->"/>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/theme_card"
-        style="@style/SettingsCardView.Clickable">
-
-        <!-- TODO: create theme preview and make nice feature graphic for this card -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Theme prefs -->"/>
 
     </androidx.cardview.widget.CardView>
 

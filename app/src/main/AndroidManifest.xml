@@ -117,14 +117,6 @@
             android:roundIcon="@mipmap/floris_app_icon_round"
             android:theme="@style/SettingsTheme"/>
 
-        <!-- About Activity -->
-        <activity
-            android:name="dev.patrickgold.florisboard.oldsettings.AboutActivity"
-            android:icon="@mipmap/floris_app_icon"
-            android:label="@string/about__title"
-            android:roundIcon="@mipmap/floris_app_icon_round"
-            android:theme="@style/SettingsTheme"/>
-
         <!-- Setup Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.setup.SetupActivity"
