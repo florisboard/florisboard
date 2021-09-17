@@ -33,10 +33,6 @@ enum class UtilityKeyAction {
     DISABLED;
 
     companion object {
-        fun fromString(string: String): UtilityKeyAction {
-            return valueOf(string.uppercase())
-        }
-
         @Composable
         fun listEntries() = listOf(
             entry(
@@ -56,23 +52,5 @@ enum class UtilityKeyAction {
                 label = stringResource(R.string.enum__utility_key_action__dynamic_switch_language_emojis),
             ),
         )
-    }
-
-    override fun toString(): String {
-        return super.toString().lowercase()
-    }
-
-    object Serializer : PreferenceSerializer<UtilityKeyAction> {
-        override fun serialize(value: UtilityKeyAction): String {
-            return value.toString()
-        }
-
-        override fun deserialize(value: String): UtilityKeyAction? {
-            return try {
-                fromString(value)
-            } catch (e: IllegalArgumentException) {
-                null
-            }
-        }
     }
 }

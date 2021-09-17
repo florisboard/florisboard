@@ -83,27 +83,17 @@ class InputView : LinearLayout {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         heightFactor = when (resources.configuration.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> 1.0f
-            else -> if (oldPrefs.keyboard.oneHandedMode != OneHandedMode.OFF) {
-                oldPrefs.keyboard.oneHandedModeScaleFactor / 100.0f
+            else -> if (prefs.keyboard.oneHandedMode.get() != OneHandedMode.OFF) {
+                prefs.keyboard.oneHandedModeScaleFactor.get() / 100.0f
             } else {
                 1.0f
             }
-        } * when (oldPrefs.keyboard.heightFactor) {
-            "extra_short" -> 0.85f
-            "short" -> 0.90f
-            "mid_short" -> 0.95f
-            "normal" -> 1.00f
-            "mid_tall" -> 1.05f
-            "tall" -> 1.10f
-            "extra_tall" -> 1.15f
-            "custom" -> oldPrefs.keyboard.heightFactorCustom.toFloat() / 100.0f
-            else -> 1.00f
-        }
+        } * (prefs.keyboard.heightFactor.get().toFloat() / 100.0f)
         var baseHeight = calcInputViewHeight() * heightFactor
         var baseSmartbarHeight = 0.16129f * baseHeight
         var baseTextInputHeight = baseHeight - baseSmartbarHeight
         val tim = florisboard.textInputManager
-        shouldGiveAdditionalSpace = oldPrefs.keyboard.numberRow &&
+        shouldGiveAdditionalSpace = prefs.keyboard.numberRow.get() &&
                 !(tim.getActiveKeyboardMode() == KeyboardMode.NUMERIC ||
                 tim.getActiveKeyboardMode() == KeyboardMode.PHONE ||
                 tim.getActiveKeyboardMode() == KeyboardMode.PHONE2)
@@ -113,7 +103,7 @@ class InputView : LinearLayout {
             baseTextInputHeight += additionalHeight
         }
         val smartbarDisabled = !oldPrefs.smartbar.enabled ||
-                tim.activeState.keyVariation == KeyVariation.PASSWORD && oldPrefs.keyboard.numberRow && !oldPrefs.suggestion.api30InlineSuggestionsEnabled
+                tim.activeState.keyVariation == KeyVariation.PASSWORD && prefs.keyboard.numberRow.get() && !oldPrefs.suggestion.api30InlineSuggestionsEnabled
         if (smartbarDisabled) {
             baseHeight = baseTextInputHeight
             baseSmartbarHeight = 0.0f
@@ -126,9 +116,9 @@ class InputView : LinearLayout {
         //  adding a value to the height now will result in a bottom padding (aka offset).
         baseHeight += ViewUtils.dp2px(
             if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                oldPrefs.keyboard.bottomOffsetLandscape.toFloat()
+                prefs.keyboard.bottomOffsetLandscape.get().toFloat()
             } else {
-                oldPrefs.keyboard.bottomOffsetPortrait.toFloat()
+                prefs.keyboard.bottomOffsetPortrait.get().toFloat()
             }
         )
 

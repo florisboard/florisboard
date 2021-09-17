@@ -19,10 +19,10 @@ package dev.patrickgold.florisboard.app.prefs
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
+import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
-import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import dev.patrickgold.jetpref.datastore.preferenceModel
 
 fun florisPreferenceModel() = preferenceModel(AppPrefs::class, ::AppPrefs)
@@ -30,13 +30,9 @@ fun florisPreferenceModel() = preferenceModel(AppPrefs::class, ::AppPrefs)
 class AppPrefs : PreferenceModel("florisboard-app-prefs") {
     val advanced = Advanced()
     inner class Advanced {
-        val settingsTheme = custom(
+        val settingsTheme = enum(
             key = "advanced__settings_theme",
             default = AppTheme.AUTO,
-            serializer = object : PreferenceSerializer<AppTheme> {
-                override fun serialize(value: AppTheme) = value.id
-                override fun deserialize(value: String) = AppTheme.values().find { it.id == value }
-            }
         )
         val settingsLanguage = string(
             key = "advanced__settings_language",
@@ -122,28 +118,25 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "keyboard__hinted_number_row_enabled",
             default = true,
         )
-        val hintedNumberRowMode = custom(
+        val hintedNumberRowMode = enum(
             key = "keyboard__hinted_number_row_mode",
             default = KeyHintMode.SMART_PRIORITY,
-            serializer = KeyHintMode.Serializer,
         )
         val hintedSymbolsEnabled = boolean(
             key = "keyboard__hinted_symbols_enabled",
             default = true,
         )
-        val hintedSymbolsMode = custom(
+        val hintedSymbolsMode = enum(
             key = "keyboard__hinted_symbols_mode",
             default = KeyHintMode.SMART_PRIORITY,
-            serializer = KeyHintMode.Serializer,
         )
         val utilityKeyEnabled = boolean(
             key = "keyboard__utility_key_enabled",
             default = true,
         )
-        val utilityKeyAction = custom(
+        val utilityKeyAction = enum(
             key = "keyboard__utility_key_action",
             default = UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
-            serializer = UtilityKeyAction.Serializer,
         )
         val fontSizeMultiplierPortrait = int(
             key = "keyboard__font_size_multiplier_portrait",
@@ -161,10 +154,9 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "keyboard__one_handed_mode_scale_factor",
             default = 87,
         )
-        val landscapeInputUiMode = custom(
+        val landscapeInputUiMode = enum(
             key = "keyboard__landscape_input_ui_mode",
             default = LandscapeInputUiMode.DYNAMICALLY_SHOW,
-            serializer = LandscapeInputUiMode.Serializer,
         )
         val heightFactor = int(
             key = "keyboard__height_factor",
@@ -202,5 +194,19 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "keyboard__space_bar_switches_to_characters",
             default = true,
         )
+
+        fun keyHintConfiguration(): KeyHintConfiguration {
+            return KeyHintConfiguration(
+                numberHintMode = when {
+                    hintedNumberRowEnabled.get() -> hintedNumberRowMode.get()
+                    else -> KeyHintMode.DISABLED
+                },
+                symbolHintMode = when {
+                    hintedSymbolsEnabled.get() -> hintedSymbolsMode.get()
+                    else -> KeyHintMode.DISABLED
+                },
+                mergeHintPopups = mergeHintPopupsEnabled.get(),
+            )
+        }
     }
 }

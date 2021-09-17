@@ -455,7 +455,7 @@ class Preferences(
             const val UTILITY_KEY_ENABLED =                 "keyboard__utility_key_enabled"
         }
 
-        var bottomOffsetPortrait: Int = 0
+        /*var bottomOffsetPortrait: Int = 0
             get() = prefs.getPref(BOTTOM_OFFSET_PORTRAIT, 0)
             private set
         var bottomOffsetLandscape: Int = 0
@@ -518,7 +518,7 @@ class Preferences(
 
         fun keyHintConfiguration(): KeyHintConfiguration {
             return KeyHintConfiguration(hintedSymbolsMode, hintedNumberRowMode, mergeHintPopupsEnabled)
-        }
+        }*/
     }
 
     /**

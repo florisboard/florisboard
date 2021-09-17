@@ -348,7 +348,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
             if (config.orientation != Configuration.ORIENTATION_LANDSCAPE) {
                 false
             } else {
-                when (oldPrefs.keyboard.landscapeInputUiMode) {
+                when (prefs.keyboard.landscapeInputUiMode.get()) {
                     LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeState.imeOptions.flagNoFullscreen && !activeState.imeOptions.flagNoExtractUi
                     LandscapeInputUiMode.NEVER_SHOW -> false
                     LandscapeInputUiMode.ALWAYS_SHOW -> true
@@ -372,7 +372,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
     }
 
     override fun onUpdateExtractingVisibility(ei: EditorInfo?) {
-        isExtractViewShown = activeState.isRichInputEditor && when (oldPrefs.keyboard.landscapeInputUiMode) {
+        isExtractViewShown = activeState.isRichInputEditor && when (prefs.keyboard.landscapeInputUiMode.get()) {
             LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeState.imeOptions.flagNoExtractUi
             LandscapeInputUiMode.NEVER_SHOW -> false
             LandscapeInputUiMode.ALWAYS_SHOW -> true
@@ -843,10 +843,10 @@ open class FlorisBoard : LifecycleInputMethodService(),
     }
 
     fun toggleOneHandedMode(isRight: Boolean) {
-        oldPrefs.keyboard.oneHandedMode = when (oldPrefs.keyboard.oneHandedMode) {
+        prefs.keyboard.oneHandedMode.set(when (prefs.keyboard.oneHandedMode.get()) {
             OneHandedMode.OFF -> if (isRight) { OneHandedMode.END } else { OneHandedMode.START }
             else -> OneHandedMode.OFF
-        }
+        })
         updateOneHandedPanelVisibility()
     }
 
@@ -855,7 +855,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
             uiBinding?.oneHandedCtrlPanelStart?.visibility = View.GONE
             uiBinding?.oneHandedCtrlPanelEnd?.visibility = View.GONE
         } else {
-            when (oldPrefs.keyboard.oneHandedMode) {
+            when (prefs.keyboard.oneHandedMode.get()) {
                 OneHandedMode.OFF -> {
                     uiBinding?.oneHandedCtrlPanelStart?.visibility = View.GONE
                     uiBinding?.oneHandedCtrlPanelEnd?.visibility = View.GONE

@@ -28,10 +28,6 @@ enum class LandscapeInputUiMode {
     DYNAMICALLY_SHOW;
 
     companion object {
-        fun fromString(string: String): LandscapeInputUiMode {
-            return valueOf(string.uppercase())
-        }
-
         @Composable
         fun listEntries() = listOf(
             entry(
@@ -47,23 +43,5 @@ enum class LandscapeInputUiMode {
                 label = stringResource(R.string.enum__landscape_input_ui_mode__dynamically_show),
             ),
         )
-    }
-
-    override fun toString(): String {
-        return super.toString().lowercase()
-    }
-
-    object Serializer : PreferenceSerializer<LandscapeInputUiMode> {
-        override fun serialize(value: LandscapeInputUiMode): String {
-            return value.toString()
-        }
-
-        override fun deserialize(value: String): LandscapeInputUiMode? {
-            return try {
-                fromString(value)
-            } catch (e: IllegalArgumentException) {
-                null
-            }
-        }
     }
 }

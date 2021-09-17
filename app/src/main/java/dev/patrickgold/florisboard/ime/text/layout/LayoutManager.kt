@@ -16,10 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.text.layout
 
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogWarning
-import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.res.AssetManager
@@ -44,7 +44,7 @@ private data class LTN(
  */
 class LayoutManager {
     private val assetManager get() = AssetManager.default()
-    private val prefs get() = Preferences.default()
+    private val prefs by florisPreferenceModel()
 
     private val layoutCache: HashMap<String, Deferred<Result<Layout>>> = hashMapOf()
     private val layoutCacheGuard: Mutex = Mutex(locked = false)
@@ -209,7 +209,7 @@ class LayoutManager {
         if (keyboardMode == KeyboardMode.CHARACTERS) {
             val symbolsComputedArrangement = computeKeyboardAsync(KeyboardMode.SYMBOLS, subtype).await().arrangement
             // number row hint always happens on first row
-            if (prefs.keyboard.hintedNumberRowMode != KeyHintMode.DISABLED) {
+            if (prefs.keyboard.hintedNumberRowEnabled.get()) {
                 val row = computedArrangement[0]
                 val symbolRow = symbolsComputedArrangement[0]
                 addRowHints(row, symbolRow, KeyType.NUMERIC)
@@ -277,7 +277,7 @@ class LayoutManager {
 
         when (keyboardMode) {
             KeyboardMode.CHARACTERS -> {
-                if (prefs.keyboard.numberRow) {
+                if (prefs.keyboard.numberRow.get()) {
                     extension = LTN(LayoutType.NUMERIC_ROW, subtype.layoutMap.numericRow)
                 }
                 main = LTN(LayoutType.CHARACTERS, subtype.layoutMap.characters)

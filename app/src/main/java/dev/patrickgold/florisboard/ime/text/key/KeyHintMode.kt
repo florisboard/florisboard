@@ -32,10 +32,6 @@ enum class KeyHintMode {
     SMART_PRIORITY;
 
     companion object {
-        fun fromString(string: String): KeyHintMode {
-            return valueOf(string.uppercase())
-        }
-
         @Composable
         fun listEntries() = listOf(
             entry(
@@ -57,23 +53,5 @@ enum class KeyHintMode {
                 showDescriptionOnlyIfSelected = true,
             ),
         )
-    }
-
-    override fun toString(): String {
-        return super.toString().lowercase()
-    }
-
-    object Serializer : PreferenceSerializer<KeyHintMode> {
-        override fun serialize(value: KeyHintMode): String {
-            return value.toString()
-        }
-
-        override fun deserialize(value: String): KeyHintMode? {
-            return try {
-                fromString(value)
-            } catch (e: IllegalArgumentException) {
-                null
-            }
-        }
     }
 }
