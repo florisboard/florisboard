@@ -100,6 +100,83 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
     }
 
+    val inputFeedback = InputFeedback()
+    inner class InputFeedback {
+        val audioEnabled = boolean(
+            key = "input_feedback__audio_enabled",
+            default = true,
+        )
+        val audioIgnoreSystemSettings = boolean(
+            key = "input_feedback__audio_ignore_system_settings",
+            default = false,
+        )
+        val audioVolume = int(
+            key = "input_feedback__audio_volume",
+            default = 50,
+        )
+        val audioFeatKeyPress = boolean(
+            key = "input_feedback__audio_feat_key_press",
+            default = true,
+        )
+        val audioFeatKeyLongPress = boolean(
+            key = "input_feedback__audio_feat_key_long_press",
+            default = false,
+        )
+        val audioFeatKeyRepeatedAction = boolean(
+            key = "input_feedback__audio_feat_key_repeated_action",
+            default = false,
+        )
+        val audioFeatGestureSwipe = boolean(
+            key = "input_feedback__audio_feat_gesture_swipe",
+            default = false,
+        )
+        val audioFeatGestureMovingSwipe = boolean(
+            key = "input_feedback__audio_feat_gesture_moving_swipe",
+            default = false,
+        )
+
+        val hapticEnabled = boolean(
+            key = "input_feedback__haptic_enabled",
+            default = true,
+        )
+        val hapticIgnoreSystemSettings = boolean(
+            key = "input_feedback__haptic_ignore_system_settings",
+            default = false,
+        )
+        val hapticUseVibrator = boolean(
+            key = "input_feedback__haptic_use_vibrator",
+            default = true,
+        )
+        val hapticVibrationDuration = int(
+            key = "input_feedback__haptic_vibration_duration",
+            default = 50,
+        )
+        val hapticVibrationStrength = int(
+            key = "input_feedback__haptic_vibration_strength",
+            default = 50,
+        )
+        val hapticFeatKeyPress = boolean(
+            key = "input_feedback__haptic_feat_key_press",
+            default = true,
+        )
+        val hapticFeatKeyLongPress = boolean(
+            key = "input_feedback__haptic_feat_key_long_press",
+            default = false,
+        )
+        val hapticFeatKeyRepeatedAction = boolean(
+            key = "input_feedback__haptic_feat_key_repeated_action",
+            default = true,
+        )
+        val hapticFeatGestureSwipe = boolean(
+            key = "input_feedback__haptic_feat_gesture_swipe",
+            default = false,
+        )
+        val hapticFeatGestureMovingSwipe = boolean(
+            key = "input_feedback__haptic_feat_gesture_moving_swipe",
+            default = true,
+        )
+    }
+
     val internal = Internal()
     inner class Internal {
         val homeIsBetaToolboxCollapsed = boolean(

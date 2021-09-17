@@ -19,6 +19,8 @@ package dev.patrickgold.florisboard.app.ui.settings.keyboard
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
@@ -34,6 +36,8 @@ import dev.patrickgold.jetpref.ui.compose.annotations.ExperimentalJetPrefUi
 @OptIn(ExperimentalJetPrefUi::class)
 @Composable
 fun KeyboardScreen() = FlorisScreen(title = stringResource(R.string.settings__keyboard__title)) {
+    val navController = LocalNavController.current
+
     SwitchPreference(
         prefs.keyboard.numberRow,
         title = stringResource(R.string.pref__keyboard__number_row__label),
@@ -131,7 +135,7 @@ fun KeyboardScreen() = FlorisScreen(title = stringResource(R.string.settings__ke
     PreferenceGroup(title = stringResource(R.string.pref__keyboard__group_keypress__label)) {
         Preference(
             title = stringResource(R.string.settings__input_feedback__title),
-            onClick = { /* TODO */ },
+            onClick = { navController.navigate(Routes.Settings.InputFeedback) },
         )
         SwitchPreference(
             prefs.keyboard.popupEnabled,

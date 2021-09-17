@@ -24,10 +24,15 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.provider.Settings
 import android.view.HapticFeedbackConstants
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.util.AndroidVersion
 
 /**
  * Input feedback manager responsible to process and perform audio and haptic
@@ -36,6 +41,31 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 class InputFeedbackManager private constructor(private val ims: InputMethodService) {
     companion object {
         fun new(ims: InputMethodService) = InputFeedbackManager(ims)
+
+        @Composable
+        fun hasAmplitudeControl(): Boolean {
+            val vibrator = LocalContext.current.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+            return when {
+                AndroidVersion.ATLEAST_O -> vibrator?.hasAmplitudeControl() ?: false
+                else -> false
+            }
+        }
+
+        @Composable
+        fun generateVibrationStrengthErrorSummary(): String? {
+            val vibrator = LocalContext.current.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+            return when {
+                AndroidVersion.ATLEAST_O -> when {
+                    !(vibrator?.hasAmplitudeControl() ?: false) -> {
+                        stringResource(R.string.pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl)
+                    }
+                    else -> null
+                }
+                else -> {
+                    stringResource(R.string.pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version)
+                }
+            }
+        }
     }
 
     private val prefs get() = Preferences.default()

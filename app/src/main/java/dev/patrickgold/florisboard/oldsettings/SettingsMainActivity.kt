@@ -100,7 +100,7 @@ class SettingsMainActivity : AppCompatActivity(),
             }
             R.id.settings__navigation__keyboard -> {
                 supportActionBar?.setTitle(R.string.settings__keyboard__title)
-                loadFragment(KeyboardFragment())
+                loadFragment(PrefFragment.createFromResource(R.xml.prefs_keyboard))
                 true
             }
             R.id.settings__navigation__typing -> {
