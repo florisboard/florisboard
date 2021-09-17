@@ -28,8 +28,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.debug.flogDebug
-import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.util.AndroidVersion
@@ -68,35 +68,35 @@ class InputFeedbackManager private constructor(private val ims: InputMethodServi
         }
     }
 
-    private val prefs get() = Preferences.default()
+    private val prefs by florisPreferenceModel()
 
     private val audioManager = ims.getSystemService(Context.AUDIO_SERVICE) as? AudioManager
     private val vibrator = ims.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
     private val contentResolver = ims.contentResolver
 
     fun keyPress(data: KeyData = TextKeyData.UNSPECIFIED) {
-        if (prefs.inputFeedback.audioFeatKeyPress) performAudioFeedback(data, 1.0)
-        if (prefs.inputFeedback.hapticFeatKeyPress) performHapticFeedback(data, 1.0)
+        if (prefs.inputFeedback.audioFeatKeyPress.get()) performAudioFeedback(data, 1.0)
+        if (prefs.inputFeedback.hapticFeatKeyPress.get()) performHapticFeedback(data, 1.0)
     }
 
     fun keyLongPress(data: KeyData = TextKeyData.UNSPECIFIED) {
-        if (prefs.inputFeedback.audioFeatKeyLongPress) performAudioFeedback(data, 0.7)
-        if (prefs.inputFeedback.hapticFeatKeyLongPress) performHapticFeedback(data, 0.4)
+        if (prefs.inputFeedback.audioFeatKeyLongPress.get()) performAudioFeedback(data, 0.7)
+        if (prefs.inputFeedback.hapticFeatKeyLongPress.get()) performHapticFeedback(data, 0.4)
     }
 
     fun keyRepeatedAction(data: KeyData = TextKeyData.UNSPECIFIED) {
-        if (prefs.inputFeedback.audioFeatKeyRepeatedAction) performAudioFeedback(data, 0.4)
-        if (prefs.inputFeedback.hapticFeatKeyRepeatedAction) performHapticFeedback(data, 0.05)
+        if (prefs.inputFeedback.audioFeatKeyRepeatedAction.get()) performAudioFeedback(data, 0.4)
+        if (prefs.inputFeedback.hapticFeatKeyRepeatedAction.get()) performHapticFeedback(data, 0.05)
     }
 
     fun gestureSwipe(data: KeyData = TextKeyData.UNSPECIFIED) {
-        if (prefs.inputFeedback.audioFeatGestureSwipe) performAudioFeedback(data, 0.7)
-        if (prefs.inputFeedback.hapticFeatGestureSwipe) performHapticFeedback(data, 0.4)
+        if (prefs.inputFeedback.audioFeatGestureSwipe.get()) performAudioFeedback(data, 0.7)
+        if (prefs.inputFeedback.hapticFeatGestureSwipe.get()) performHapticFeedback(data, 0.4)
     }
 
     fun gestureMovingSwipe(data: KeyData = TextKeyData.UNSPECIFIED) {
-        if (prefs.inputFeedback.audioFeatGestureMovingSwipe) performAudioFeedback(data, 0.4)
-        if (prefs.inputFeedback.hapticFeatGestureMovingSwipe) performHapticFeedback(data, 0.05)
+        if (prefs.inputFeedback.audioFeatGestureMovingSwipe.get()) performAudioFeedback(data, 0.4)
+        if (prefs.inputFeedback.hapticFeatGestureMovingSwipe.get()) performHapticFeedback(data, 0.05)
     }
 
     private fun systemPref(id: String): Boolean {
@@ -106,13 +106,13 @@ class InputFeedbackManager private constructor(private val ims: InputMethodServi
 
     private fun performAudioFeedback(data: KeyData, factor: Double) {
         if (audioManager == null) return
-        if (!prefs.inputFeedback.audioEnabled) return
+        if (!prefs.inputFeedback.audioEnabled.get()) return
 
-        if (!prefs.inputFeedback.audioIgnoreSystemSettings) {
+        if (!prefs.inputFeedback.audioIgnoreSystemSettings.get()) {
             if (!systemPref(Settings.System.SOUND_EFFECTS_ENABLED)) return
         }
 
-        val volume = (prefs.inputFeedback.audioVolume * factor) / 100.0
+        val volume = (prefs.inputFeedback.audioVolume.get() * factor) / 100.0
         val effect = when (data.code) {
             KeyCode.DELETE -> AudioManager.FX_KEYPRESS_DELETE
             KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN
@@ -127,13 +127,13 @@ class InputFeedbackManager private constructor(private val ims: InputMethodServi
 
     private fun performHapticFeedback(data: KeyData, factor: Double) {
         if (vibrator == null || !vibrator.hasVibrator()) return
-        if (!prefs.inputFeedback.hapticEnabled) return
+        if (!prefs.inputFeedback.hapticEnabled.get()) return
 
-        if (!prefs.inputFeedback.hapticIgnoreSystemSettings) {
+        if (!prefs.inputFeedback.hapticIgnoreSystemSettings.get()) {
             if (!systemPref(Settings.System.HAPTIC_FEEDBACK_ENABLED)) return
         }
 
-        if (!prefs.inputFeedback.hapticUseVibrator) {
+        if (!prefs.inputFeedback.hapticUseVibrator.get()) {
             val view = ims.window?.window?.decorView ?: return
             val hfc = if (factor < 1.0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
                 HapticFeedbackConstants.TEXT_HANDLE_MOVE
@@ -148,12 +148,12 @@ class InputFeedbackManager private constructor(private val ims: InputMethodServi
             // If not performed fall back to using the vibrator directly
         }
 
-        val duration = prefs.inputFeedback.hapticVibrationDuration
+        val duration = prefs.inputFeedback.hapticVibrationDuration.get()
         if (duration != 0) {
             val effectiveDuration = (duration * factor).toLong().coerceAtLeast(1L)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val strength = when {
-                    vibrator.hasAmplitudeControl() -> prefs.inputFeedback.hapticVibrationStrength
+                    vibrator.hasAmplitudeControl() -> prefs.inputFeedback.hapticVibrationStrength.get()
                     else -> VibrationEffect.DEFAULT_AMPLITUDE
                 }
                 if (strength != 0) {

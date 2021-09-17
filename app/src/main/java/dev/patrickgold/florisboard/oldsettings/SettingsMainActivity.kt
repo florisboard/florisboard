@@ -43,7 +43,6 @@ import kotlinx.coroutines.MainScope
 internal const val FRAGMENT_TAG = "FRAGMENT_TAG"
 private const val PREF_RES_ID = "PREF_RES_ID"
 private const val SELECTED_ITEM_ID = "SELECTED_ITEM_ID"
-private const val ADVANCED_REQ_CODE = 0x145F
 
 class SettingsMainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener,
@@ -156,25 +155,11 @@ class SettingsMainActivity : AppCompatActivity(),
                 startActivity(browserIntent)
                 true
             }
-            R.id.settings__menu_advanced -> {
-                startActivityForResult(Intent(this, AdvancedActivity::class.java), ADVANCED_REQ_CODE)
-                true
-            }
             R.id.settings__menu_about -> {
                 startActivity(Intent(this, AboutActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == ADVANCED_REQ_CODE) {
-            if (resultCode == AdvancedActivity.RESULT_APPLY_THEME) {
-                recreate()
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
