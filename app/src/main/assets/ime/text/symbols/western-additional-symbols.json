@@ -6,7 +6,12 @@
   "direction": "ltr",
   "arrangement": [
     [
-      {"code": 37, "label": "%"},
+      {"code": 37, "label": "%" , "popup": {
+        "main": { "code": 8240, "label": "‰" },
+        "relevant": [
+          { "code": 8453, "label": "℅" }
+        ]
+      } },
       {"code": 92, "label": "\\"},
       {"code":124, "label": "|"},
       {"code": 61, "label": "="},
@@ -31,12 +36,7 @@
           { "code": -805, "label": "currency_slot_5" }
         ]
       } },
-      { "code":   37, "label": "%", "popup": {
-        "main": { "code": 8240, "label": "‰" },
-        "relevant": [
-          { "code": 8453, "label": "℅" }
-        ]
-      } },
+      { "code":   95, "label": "_"},
       { "code":   38, "label": "&" },
       { "code":   45, "label": "-", "popup": {
         "main": { "code":   95, "label": "_" },
