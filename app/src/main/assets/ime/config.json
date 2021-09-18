@@ -793,6 +793,15 @@
       "preferred": {
         "characters": "qwerty"
       }
+    },
+	  {
+      "id": 3400,
+      "languageTag": "ig-NG",
+      "composer": "appender",
+      "currencySet": "nigerian_naira",
+      "preferred": {
+        "characters": "igbo"
+      }
     }
   ]
 }
