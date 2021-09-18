@@ -46,7 +46,6 @@ import androidx.annotation.RequiresApi
 import androidx.annotation.StyleRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.lifecycle.*
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -107,8 +106,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
     FlorisClipboardManager.OnPrimaryClipChangedListener,
     ThemeManager.OnThemeUpdatedListener {
 
-    private val uiScope: LifecycleCoroutineScope
-        get() = lifecycle.coroutineScope
     private var devtoolsOverlaySyncJob: Job? = null
 
     /**

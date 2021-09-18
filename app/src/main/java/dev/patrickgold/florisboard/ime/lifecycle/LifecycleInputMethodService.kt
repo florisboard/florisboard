@@ -26,10 +26,12 @@ import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.ViewTreeLifecycleOwner
 import androidx.lifecycle.ViewTreeViewModelStoreOwner
+import androidx.lifecycle.coroutineScope
 import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.ViewTreeSavedStateRegistryOwner
+import kotlinx.coroutines.CoroutineScope
 
 open class LifecycleInputMethodService : InputMethodService(),
     LifecycleOwner, ViewModelStoreOwner, SavedStateRegistryOwner
@@ -37,6 +39,9 @@ open class LifecycleInputMethodService : InputMethodService(),
     private val lifecycleRegistry by lazy { LifecycleRegistry(this) }
     private val store by lazy { ViewModelStore() }
     private val savedStateRegistryController by lazy { SavedStateRegistryController.create(this) }
+
+    val uiScope: CoroutineScope
+        get() = lifecycle.coroutineScope
 
     final override fun getLifecycle(): Lifecycle {
         return lifecycleRegistry
