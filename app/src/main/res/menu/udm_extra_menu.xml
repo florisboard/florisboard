@@ -4,7 +4,6 @@
 
     <item
         android:icon="@drawable/ic_more_vert"
-        android:title="@string/settings__menu"
         app:showAsAction="always">
 
         <menu>

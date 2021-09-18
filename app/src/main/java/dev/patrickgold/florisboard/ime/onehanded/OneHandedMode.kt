@@ -16,6 +16,11 @@
 
 package dev.patrickgold.florisboard.ime.onehanded
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.jetpref.ui.compose.entry
+
 /**
  * Static object which contains all possible one-handed mode strings.
  */
@@ -23,4 +28,20 @@ object OneHandedMode {
     const val OFF: String = "off"
     const val START: String = "start"
     const val END: String = "end"
+
+    @Composable
+    fun listEntries() = listOf(
+        entry(
+            key = OFF,
+            label = stringResource(R.string.enum__one_handed_mode__off),
+        ),
+        entry(
+            key = START,
+            label = stringResource(R.string.enum__one_handed_mode__start),
+        ),
+        entry(
+            key = END,
+            label = stringResource(R.string.enum__one_handed_mode__end),
+        ),
+    )
 }

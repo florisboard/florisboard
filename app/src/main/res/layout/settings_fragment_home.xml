@@ -30,12 +30,13 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        style="@style/SettingsCardView">
+        android:id="@+id/new_settings"
+        style="@style/SettingsCardView.Clickable">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/settings__home__contribute"/>
+            android:text="Open new Settings"/>
 
     </androidx.cardview.widget.CardView>
 
@@ -61,17 +62,6 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/spelling_card"
-        style="@style/SettingsCardView.Clickable">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/v0313__release_notes"/>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
         android:id="@+id/repo_url_card"
         style="@style/SettingsCardView.Clickable">
 
@@ -79,30 +69,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/florisboard__repo_url"/>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/localization_card"
-        style="@style/SettingsCardView.Clickable">
-
-        <!-- TODO: create lang preview and make nice feature graphic for this card -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Localization prefs -->"/>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/theme_card"
-        style="@style/SettingsCardView.Clickable">
-
-        <!-- TODO: create theme preview and make nice feature graphic for this card -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Theme prefs -->"/>
 
     </androidx.cardview.widget.CardView>
 

@@ -28,6 +28,7 @@ import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.widget.LinearLayout
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
@@ -39,7 +40,8 @@ import kotlin.math.roundToInt
  */
 class InputView : LinearLayout {
     private val florisboard get() = FlorisBoard.getInstance()
-    private val prefs get() = Preferences.default()
+    private val oldPrefs get() = Preferences.default()
+    private val prefs by florisPreferenceModel()
 
     var desiredInputViewHeight: Float = resources.getDimension(R.dimen.inputView_baseHeight)
         private set
@@ -81,27 +83,17 @@ class InputView : LinearLayout {
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         heightFactor = when (resources.configuration.orientation) {
             Configuration.ORIENTATION_LANDSCAPE -> 1.0f
-            else -> if (prefs.keyboard.oneHandedMode != OneHandedMode.OFF) {
-                prefs.keyboard.oneHandedModeScaleFactor / 100.0f
+            else -> if (prefs.keyboard.oneHandedMode.get() != OneHandedMode.OFF) {
+                prefs.keyboard.oneHandedModeScaleFactor.get() / 100.0f
             } else {
                 1.0f
             }
-        } * when (prefs.keyboard.heightFactor) {
-            "extra_short" -> 0.85f
-            "short" -> 0.90f
-            "mid_short" -> 0.95f
-            "normal" -> 1.00f
-            "mid_tall" -> 1.05f
-            "tall" -> 1.10f
-            "extra_tall" -> 1.15f
-            "custom" -> prefs.keyboard.heightFactorCustom.toFloat() / 100.0f
-            else -> 1.00f
-        }
+        } * (prefs.keyboard.heightFactor.get().toFloat() / 100.0f)
         var baseHeight = calcInputViewHeight() * heightFactor
         var baseSmartbarHeight = 0.16129f * baseHeight
         var baseTextInputHeight = baseHeight - baseSmartbarHeight
         val tim = florisboard.textInputManager
-        shouldGiveAdditionalSpace = prefs.keyboard.numberRow &&
+        shouldGiveAdditionalSpace = prefs.keyboard.numberRow.get() &&
                 !(tim.getActiveKeyboardMode() == KeyboardMode.NUMERIC ||
                 tim.getActiveKeyboardMode() == KeyboardMode.PHONE ||
                 tim.getActiveKeyboardMode() == KeyboardMode.PHONE2)
@@ -110,8 +102,8 @@ class InputView : LinearLayout {
             baseHeight += additionalHeight
             baseTextInputHeight += additionalHeight
         }
-        val smartbarDisabled = !prefs.smartbar.enabled ||
-                tim.activeState.keyVariation == KeyVariation.PASSWORD && prefs.keyboard.numberRow && !prefs.suggestion.api30InlineSuggestionsEnabled
+        val smartbarDisabled = !oldPrefs.smartbar.enabled ||
+                tim.activeState.keyVariation == KeyVariation.PASSWORD && prefs.keyboard.numberRow.get() && !oldPrefs.suggestion.api30InlineSuggestionsEnabled
         if (smartbarDisabled) {
             baseHeight = baseTextInputHeight
             baseSmartbarHeight = 0.0f
@@ -124,9 +116,9 @@ class InputView : LinearLayout {
         //  adding a value to the height now will result in a bottom padding (aka offset).
         baseHeight += ViewUtils.dp2px(
             if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                prefs.keyboard.bottomOffsetLandscape.toFloat()
+                prefs.keyboard.bottomOffsetLandscape.get().toFloat()
             } else {
-                prefs.keyboard.bottomOffsetPortrait.toFloat()
+                prefs.keyboard.bottomOffsetPortrait.get().toFloat()
             }
         )
 
@@ -173,7 +165,7 @@ class InputView : LinearLayout {
         super.dispatchDraw(canvas)
         canvas ?: return
 
-        if (prefs.devtools.enabled && prefs.devtools.showHeapMemoryStats) {
+        if (prefs.devtools.enabled.get() && prefs.devtools.showHeapMemoryStats.get()) {
             try {
                 // Note: the below code only gets the heap size in MB, the actual RAM usage (native or others) can be
                 //  a lot higher

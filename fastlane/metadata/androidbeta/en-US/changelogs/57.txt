@@ -1,0 +1,5 @@
+This release brings a sneak preview to the new Settings UI and
+allows you to give feedback on it. Additionally a new Thai layout
+is added and some minor bug fixes are included.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.14-beta01

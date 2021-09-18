@@ -45,8 +45,10 @@ class WithRules(
     override fun getActions(s: String, c: Char): Pair<Int, String> {
         val str = "${s}$c"
         for (key in ruleOrder) {
-            if (str.endsWith(key)) {
-                return Pair(key.length-1, ruleMap.getValue(key))
+            if (str.lowercase().endsWith(key)) {
+                val value = ruleMap.getValue(key)
+                val firstOfKey = str.takeLast(key.length).take(1)
+                return Pair(key.length-1, if (firstOfKey.uppercase().equals(firstOfKey, false)) value.uppercase() else value)
             }
         }
         return Pair(0, "$c")

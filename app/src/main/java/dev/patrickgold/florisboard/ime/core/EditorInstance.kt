@@ -235,8 +235,13 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
             ic.finishComposingText()
             val previous = getTextBeforeCursor(composer.toRead)
             val (rm, finalText) = composer.getActions(previous, text[0])
-            if (rm != 0) ic.deleteSurroundingText(rm, 0)
-            ic.commitText(finalText, 1)
+            if (rm == 0) {
+                ic.commitText(finalText, 1)
+            } else {
+                val et = ic.getExtractedText(ExtractedTextRequest(), 0)
+                ic.setComposingRegion(et.selectionStart-rm, et.selectionStart)
+                ic.setComposingText(finalText, 1)
+            }
             ic.endBatchEdit()
             Pair(true, finalText)
         }

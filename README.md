@@ -10,10 +10,10 @@ fully respecting your privacy. Currently in early-beta state.
 <table>
 <tr>
 <th align="center" width="50%">
-<h3>Stable <a href="https://github.com/florisboard/florisboard/releases"><img alt="Latest stable release" src="https://img.shields.io/github/v/release/florisboard/florisboard"></a></h3>
+<h3>Stable <a href="https://github.com/florisboard/florisboard/releases/latest"><img alt="Latest stable release" src="https://img.shields.io/github/v/release/florisboard/florisboard"></a></h3>
 </th>
 <th align="center" width="50%">
-<h3>Beta <a href="https://github.com/florisboard/florisboard/releases/latest"><img alt="Latest beta release" src="https://img.shields.io/github/v/release/florisboard/florisboard?include_prereleases"></a></h3>
+<h3>Beta <a href="https://github.com/florisboard/florisboard/releases"><img alt="Latest beta release" src="https://img.shields.io/github/v/release/florisboard/florisboard?include_prereleases"></a></h3>
 </th>
 </tr>
 <tr>
@@ -68,7 +68,7 @@ Beginning with v0.4.0 FlorisBoard will follow [SemVer](https://semver.org/#summa
 Wanna contribute to FlorisBoard? That's great to hear! There are lots of
 different ways to help out. Bug reporting, making pull requests,
 translating FlorisBoard to make it more accessible, etc. For more
-information see the ![contributing guidelines](CONTRIBUTING.md). Thank
+information see the [contributing guidelines](CONTRIBUTING.md). Thank
 you for your help!
 
 ## List of permissions FlorisBoard requests

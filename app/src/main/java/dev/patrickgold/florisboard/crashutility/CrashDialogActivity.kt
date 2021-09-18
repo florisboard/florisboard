@@ -24,6 +24,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.prefs.AppPrefs
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.databinding.CrashDialogBinding
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.core.Preferences
@@ -32,7 +34,8 @@ class CrashDialogActivity : AppCompatActivity() {
     private lateinit var binding: CrashDialogBinding
     private var stacktraces: List<CrashUtility.Stacktrace> = listOf()
     private var errorReport: StringBuilder = StringBuilder()
-    private var prefs: Preferences? = null
+    private var oldPrefs: Preferences? = null
+    private var prefs: AppPrefs? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +45,8 @@ class CrashDialogActivity : AppCompatActivity() {
         // We secure the PrefHelper usage here because the PrefHelper could potentially be the
         // source of the crash, thus making the crash dialog unusable if not wrapped.
         try {
-            prefs = Preferences.default()
+            oldPrefs = Preferences.default()
+            prefs = florisPreferenceModel().preferenceModel
         } catch (_: Exception) {
         }
 
@@ -55,16 +59,17 @@ class CrashDialogActivity : AppCompatActivity() {
             appendLine()
             appendLine("#### Features enabled")
             appendLine("```kt")
+            val oldPrefs = oldPrefs
             val prefs = prefs
-            if (prefs != null) {
+            if (oldPrefs != null && prefs != null) {
                 try {
-                    appendLine("smartbar = ${prefs.smartbar.enabled}")
-                    appendLine("suggestions = ${prefs.suggestion.enabled}")
-                    appendLine("suggestions_clipboard = ${prefs.suggestion.clipboardContentEnabled}")
-                    appendLine("suggestions_next_word = ${prefs.suggestion.usePrevWords}")
-                    appendLine("glide = ${prefs.glide.enabled}")
-                    appendLine("clipboard_internal = ${prefs.clipboard.enableInternal}")
-                    appendLine("clipboard_history = ${prefs.clipboard.enableHistory}")
+                    appendLine("smartbar = ${oldPrefs.smartbar.enabled}")
+                    appendLine("suggestions = ${oldPrefs.suggestion.enabled}")
+                    appendLine("suggestions_clipboard = ${oldPrefs.suggestion.clipboardContentEnabled}")
+                    appendLine("suggestions_next_word = ${oldPrefs.suggestion.usePrevWords}")
+                    appendLine("glide = ${oldPrefs.glide.enabled}")
+                    appendLine("clipboard_internal = ${prefs.clipboard.useInternalClipboard.get()}")
+                    appendLine("clipboard_history = ${prefs.clipboard.enableHistory.get()}")
                 } catch (_: Exception) {
                     appendLine("error: Exception was thrown while retrieving preferences, instance not null.")
                 }

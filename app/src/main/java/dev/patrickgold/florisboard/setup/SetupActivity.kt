@@ -28,9 +28,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.databinding.SetupActivityBinding
 import dev.patrickgold.florisboard.ime.core.Preferences
-import dev.patrickgold.florisboard.settings.SettingsMainActivity
+import dev.patrickgold.florisboard.oldsettings.SettingsMainActivity
 
 class SetupActivity : AppCompatActivity() {
     companion object {
@@ -43,12 +44,13 @@ class SetupActivity : AppCompatActivity() {
     lateinit var prefs: Preferences
     private var shouldFinish: Boolean = false
     private var shouldLaunchSettings: Boolean = true
+    private val newPrefs by florisPreferenceModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         prefs = Preferences(this)
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
-        val mode = when (prefs.advanced.settingsTheme) {
+        val mode = when (newPrefs.advanced.settingsTheme.get().id) {
             "light" -> AppCompatDelegate.MODE_NIGHT_NO
             "dark" -> AppCompatDelegate.MODE_NIGHT_YES
             "auto" -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
