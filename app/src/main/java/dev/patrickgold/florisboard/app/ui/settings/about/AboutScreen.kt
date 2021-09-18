@@ -45,8 +45,8 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.launchUrl
+import dev.patrickgold.florisboard.ime.InputMethodUtils
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
-import dev.patrickgold.florisboard.util.checkIfImeIsSelected
 import dev.patrickgold.jetpref.ui.compose.Preference
 
 @Composable
@@ -76,7 +76,7 @@ fun AboutScreen() = FlorisScreen(title = stringResource(R.string.about__title)) 
         summary = appVersion,
         onClick = {
             try {
-                val isImeSelected = checkIfImeIsSelected(context)
+                val isImeSelected = InputMethodUtils.checkIsFlorisboardSelected(context)
                 if (isImeSelected) {
                     FlorisClipboardManager.getInstance().addNewPlaintext(appVersion)
                 } else {

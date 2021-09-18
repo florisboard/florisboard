@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.ui.settings
+package dev.patrickgold.florisboard.app.ui.settings.advanced
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
@@ -176,7 +173,6 @@ fun AdvancedScreen() = FlorisScreen(title = stringResource(R.string.settings__ad
             onDismiss = { setShowDialog(false) },
         ) {
             Text(
-                modifier = Modifier.padding(horizontal = 16.dp),
                 text = stringResource(
                     R.string.assets__action__delete_confirm_message,
                     FlorisUserDictionaryDatabase.DB_FILE_NAME,

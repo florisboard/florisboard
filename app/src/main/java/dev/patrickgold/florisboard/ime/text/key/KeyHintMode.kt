@@ -16,22 +16,42 @@
 
 package dev.patrickgold.florisboard.ime.text.key
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
+import dev.patrickgold.jetpref.ui.compose.entry
+
 /**
  * Enum for the key hint modes.
  */
 enum class KeyHintMode {
     DISABLED,
-    ENABLED_HINT_PRIORITY,
-    ENABLED_ACCENT_PRIORITY,
-    ENABLED_SMART_PRIORITY;
+    HINT_PRIORITY,
+    ACCENT_PRIORITY,
+    SMART_PRIORITY;
 
     companion object {
-        fun fromString(string: String): KeyHintMode {
-            return valueOf(string.uppercase())
-        }
-    }
-
-    override fun toString(): String {
-        return super.toString().lowercase()
+        @Composable
+        fun listEntries() = listOf(
+            entry(
+                key = ACCENT_PRIORITY,
+                label = stringResource(R.string.enum__key_hint_mode__accent_priority),
+                description = stringResource(R.string.enum__key_hint_mode__accent_priority__description),
+                showDescriptionOnlyIfSelected = true,
+            ),
+            entry(
+                key = HINT_PRIORITY,
+                label = stringResource(R.string.enum__key_hint_mode__hint_priority),
+                description = stringResource(R.string.enum__key_hint_mode__hint_priority__description),
+                showDescriptionOnlyIfSelected = true,
+            ),
+            entry(
+                key = SMART_PRIORITY,
+                label = stringResource(R.string.enum__key_hint_mode__smart_priority),
+                description = stringResource(R.string.enum__key_hint_mode__smart_priority__description),
+                showDescriptionOnlyIfSelected = true,
+            ),
+        )
     }
 }

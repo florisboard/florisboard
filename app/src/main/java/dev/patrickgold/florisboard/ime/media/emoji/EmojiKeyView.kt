@@ -26,8 +26,8 @@ import android.view.MotionEvent
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.Theme
@@ -49,7 +49,7 @@ class EmojiKeyView(
 ) : androidx.appcompat.widget.AppCompatTextView(emojiKeyboardView.context), CoroutineScope by MainScope(),
     FlorisBoard.EventListener, ThemeManager.OnThemeUpdatedListener {
     private val florisboard: FlorisBoard? = FlorisBoard.getInstanceOrNull()
-    private val prefs get() = Preferences.default()
+    private val prefs by florisPreferenceModel()
 
     private var isCancelled: Boolean = false
     private var osHandler: Handler? = null
@@ -96,7 +96,7 @@ class EmojiKeyView(
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
                 isCancelled = false
-                val delayMillis = prefs.keyboard.longPressDelay
+                val delayMillis = prefs.keyboard.longPressDelay.get()
                 if (osHandler == null) {
                     osHandler = Handler()
                 }

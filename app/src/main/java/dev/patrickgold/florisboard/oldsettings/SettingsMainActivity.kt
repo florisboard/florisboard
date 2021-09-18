@@ -16,11 +16,8 @@
 
 package dev.patrickgold.florisboard.oldsettings
 
-import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -43,7 +40,6 @@ import kotlinx.coroutines.MainScope
 internal const val FRAGMENT_TAG = "FRAGMENT_TAG"
 private const val PREF_RES_ID = "PREF_RES_ID"
 private const val SELECTED_ITEM_ID = "SELECTED_ITEM_ID"
-private const val ADVANCED_REQ_CODE = 0x145F
 
 class SettingsMainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener,
@@ -100,7 +96,7 @@ class SettingsMainActivity : AppCompatActivity(),
             }
             R.id.settings__navigation__keyboard -> {
                 supportActionBar?.setTitle(R.string.settings__keyboard__title)
-                loadFragment(KeyboardFragment())
+                loadFragment(PrefFragment.createFromResource(R.xml.prefs_keyboard))
                 true
             }
             R.id.settings__navigation__typing -> {
@@ -129,11 +125,6 @@ class SettingsMainActivity : AppCompatActivity(),
             .commit()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.settings_main_menu, menu)
-        return true
-    }
-
     override fun onBackPressed() {
         if (binding.bottomNavigation.selectedItemId != R.id.settings__navigation__home) {
             binding.bottomNavigation.selectedItemId = R.id.settings__navigation__home
@@ -148,33 +139,7 @@ class SettingsMainActivity : AppCompatActivity(),
                 onBackPressed()
                 true
             }
-            R.id.settings__menu_help -> {
-                val browserIntent = Intent(
-                    Intent.ACTION_VIEW,
-                    Uri.parse(resources.getString(R.string.florisboard__repo_url))
-                )
-                startActivity(browserIntent)
-                true
-            }
-            R.id.settings__menu_advanced -> {
-                startActivityForResult(Intent(this, AdvancedActivity::class.java), ADVANCED_REQ_CODE)
-                true
-            }
-            R.id.settings__menu_about -> {
-                startActivity(Intent(this, AboutActivity::class.java))
-                true
-            }
             else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == ADVANCED_REQ_CODE) {
-            if (resultCode == AdvancedActivity.RESULT_APPLY_THEME) {
-                recreate()
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
         }
     }
 

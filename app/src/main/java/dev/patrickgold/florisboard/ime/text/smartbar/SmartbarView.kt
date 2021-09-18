@@ -29,6 +29,7 @@ import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.databinding.SmartbarBinding
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
@@ -58,7 +59,8 @@ import kotlin.math.roundToInt
  */
 class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, ThemeManager.OnThemeUpdatedListener {
     private val florisboard = FlorisBoard.getInstanceOrNull()
-    private val prefs get() = Preferences.default()
+    private val oldPrefs get() = Preferences.default()
+    private val prefs by florisPreferenceModel()
     private val themeManager = ThemeManager.default()
     private var eventListener: WeakReference<EventListener?> = WeakReference(null)
     private val mainScope = MainScope()
@@ -113,7 +115,7 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
 
         binding.backButton.setOnClickListener { eventListener.get()?.onSmartbarBackButtonPressed() }
 
-        binding.candidates.updateDisplaySettings(prefs.suggestion.displayMode, prefs.suggestion.clipboardContentTimeout * 1_000)
+        binding.candidates.updateDisplaySettings(oldPrefs.suggestion.displayMode, oldPrefs.suggestion.clipboardContentTimeout * 1_000)
 
         mainScope.launch(Dispatchers.Default) {
             florisboard?.let {
@@ -261,7 +263,7 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
                     cachedState.isQuickActionsVisible -> R.id.quick_actions
                     cachedState.isShowingInlineSuggestions -> R.id.inline_suggestions
                     cachedState.keyVariation == KeyVariation.PASSWORD -> {
-                        if (!prefs.keyboard.numberRow) R.id.number_row else null
+                        if (!prefs.keyboard.numberRow.get()) R.id.number_row else null
                     }
                     else -> when (cachedState.keyboardMode) {
                         KeyboardMode.EDITING -> null
@@ -290,11 +292,11 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
     fun sync() {
         binding.numberRow.sync()
         binding.clipboardCursorRow.sync()
-        binding.candidates.updateDisplaySettings(prefs.suggestion.displayMode, prefs.suggestion.clipboardContentTimeout * 1_000)
+        binding.candidates.updateDisplaySettings(oldPrefs.suggestion.displayMode, oldPrefs.suggestion.clipboardContentTimeout * 1_000)
     }
 
     fun onPrimaryClipChanged() {
-        if (prefs.suggestion.enabled && prefs.suggestion.clipboardContentEnabled && !cachedState.isPrivateMode) {
+        if (oldPrefs.suggestion.enabled && oldPrefs.suggestion.clipboardContentEnabled && !cachedState.isPrivateMode) {
             florisboard?.florisClipboardManager?.primaryClip?.let { binding.candidates.updateClipboardItem(it) }
         }
     }

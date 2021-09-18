@@ -22,7 +22,6 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.inputmethodservice.ExtractEditText
-import android.inputmethodservice.InputMethodService
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -47,7 +46,6 @@ import androidx.annotation.RequiresApi
 import androidx.annotation.StyleRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import androidx.lifecycle.*
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -73,6 +71,7 @@ import dev.patrickgold.florisboard.databinding.FlorisboardBinding
 import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.keyboard.updateKeyboardState
+import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.util.debugSummarize
 import dev.patrickgold.florisboard.util.findViewWithType
 import dev.patrickgold.florisboard.util.refreshLayoutOf
@@ -103,12 +102,10 @@ private var florisboardInstance: FlorisBoard? = null
  * All inline suggestion code has been added based on this demo autofill IME provided by Android directly:
  *  https://cs.android.com/android/platform/superproject/+/master:development/samples/AutofillKeyboard/src/com/example/android/autofillkeyboard/AutofillImeService.java
  */
-open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardManager.OnPrimaryClipChangedListener,
+open class FlorisBoard : LifecycleInputMethodService(),
+    FlorisClipboardManager.OnPrimaryClipChangedListener,
     ThemeManager.OnThemeUpdatedListener {
 
-    private val serviceLifecycleDispatcher: ServiceLifecycleDispatcher = ServiceLifecycleDispatcher(this)
-    private val uiScope: LifecycleCoroutineScope
-        get() = lifecycle.coroutineScope
     private var devtoolsOverlaySyncJob: Job? = null
 
     /**
@@ -197,10 +194,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
         }
     }
 
-    override fun getLifecycle(): Lifecycle {
-        return serviceLifecycleDispatcher.lifecycle
-    }
-
     private fun updateThemeContext(@StyleRes themeId: Int) {
         _themeContext = ContextThemeWrapper(this, themeId)
     }
@@ -213,8 +206,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
             try {
                 // "Main" try..catch block
                 flogInfo(LogTopic.IMS_EVENTS)
-                serviceLifecycleDispatcher.onServicePreSuperOnCreate()
-                serviceLifecycleDispatcher.onServicePreSuperOnStart()
 
                 activeEditorInstance = EditorInstance(this, activeState)
 
@@ -256,6 +247,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     @SuppressLint("InflateParams")
     override fun onCreateInputView(): View? {
         flogInfo(LogTopic.IMS_EVENTS)
+        super.onCreateInputView()
         CrashUtility.handleStagedButUnhandledExceptions()
 
         updateThemeContext(currentThemeResId)
@@ -316,7 +308,6 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
 
     override fun onDestroy() {
         flogInfo(LogTopic.IMS_EVENTS)
-        serviceLifecycleDispatcher.onServicePreSuperOnDestroy()
 
         themeManager.unregisterOnThemeUpdatedListener(this)
         florisClipboardManager?.let {
@@ -354,7 +345,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
             if (config.orientation != Configuration.ORIENTATION_LANDSCAPE) {
                 false
             } else {
-                when (oldPrefs.keyboard.landscapeInputUiMode) {
+                when (prefs.keyboard.landscapeInputUiMode.get()) {
                     LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeState.imeOptions.flagNoFullscreen && !activeState.imeOptions.flagNoExtractUi
                     LandscapeInputUiMode.NEVER_SHOW -> false
                     LandscapeInputUiMode.ALWAYS_SHOW -> true
@@ -378,7 +369,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     }
 
     override fun onUpdateExtractingVisibility(ei: EditorInfo?) {
-        isExtractViewShown = activeState.isRichInputEditor && when (oldPrefs.keyboard.landscapeInputUiMode) {
+        isExtractViewShown = activeState.isRichInputEditor && when (prefs.keyboard.landscapeInputUiMode.get()) {
             LandscapeInputUiMode.DYNAMICALLY_SHOW -> !activeState.imeOptions.flagNoExtractUi
             LandscapeInputUiMode.NEVER_SHOW -> false
             LandscapeInputUiMode.ALWAYS_SHOW -> true
@@ -849,10 +840,10 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
     }
 
     fun toggleOneHandedMode(isRight: Boolean) {
-        oldPrefs.keyboard.oneHandedMode = when (oldPrefs.keyboard.oneHandedMode) {
+        prefs.keyboard.oneHandedMode.set(when (prefs.keyboard.oneHandedMode.get()) {
             OneHandedMode.OFF -> if (isRight) { OneHandedMode.END } else { OneHandedMode.START }
             else -> OneHandedMode.OFF
-        }
+        })
         updateOneHandedPanelVisibility()
     }
 
@@ -861,7 +852,7 @@ open class FlorisBoard : InputMethodService(), LifecycleOwner, FlorisClipboardMa
             uiBinding?.oneHandedCtrlPanelStart?.visibility = View.GONE
             uiBinding?.oneHandedCtrlPanelEnd?.visibility = View.GONE
         } else {
-            when (oldPrefs.keyboard.oneHandedMode) {
+            when (prefs.keyboard.oneHandedMode.get()) {
                 OneHandedMode.OFF -> {
                     uiBinding?.oneHandedCtrlPanelStart?.visibility = View.GONE
                     uiBinding?.oneHandedCtrlPanelEnd?.visibility = View.GONE

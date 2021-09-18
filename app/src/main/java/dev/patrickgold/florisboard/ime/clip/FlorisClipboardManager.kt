@@ -3,10 +3,9 @@ package dev.patrickgold.florisboard.ime.clip
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
-import dev.patrickgold.florisboard.debug.flogDebug
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.clip.provider.*
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.core.Preferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -48,7 +47,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     private var current: ClipboardItem? = null
     private var onPrimaryClipChangedListeners: ArrayList<OnPrimaryClipChangedListener> = arrayListOf()
     private lateinit var systemClipboardManager: ClipboardManager
-    private val prefs get() = Preferences.default()
+    private val prefs by florisPreferenceModel()
     private lateinit var cleanUpJob: Job
 
     data class TimedClipData(val data: ClipboardItem, val timeUTC: Long)
@@ -107,16 +106,16 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     fun updateHistory(newData: ClipboardItem) {
         val clipboardPrefs = prefs.clipboard
 
-        if (clipboardPrefs.enableHistory) {
+        if (clipboardPrefs.enableHistory.get()) {
             val clipboardInputManager = ClipboardInputManager.getInstance()
 
             val historyElement = history.firstOrNull { it.data.type == ItemType.TEXT && it.data.text == newData.text }
             if (historyElement != null) {
                 moveToTheBeginning(historyElement, newData, clipboardInputManager)
             } else {
-                if (clipboardPrefs.limitHistorySize) {
+                if (clipboardPrefs.limitHistorySize.get()) {
                     var numRemoved = 0
-                    while (history.size >= clipboardPrefs.maxHistorySize) {
+                    while (history.size >= clipboardPrefs.maxHistorySize.get()) {
                         numRemoved += 1
                         history.removeLast().data.close()
                     }
@@ -156,14 +155,14 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
      * Changes current clipboard item. WITHOUT updating the history.
      */
     fun changeCurrent(newData: ClipboardItem, closePrevious: Boolean) {
-        if (prefs.clipboard.enableInternal) {
+        if (prefs.clipboard.useInternalClipboard.get()) {
             if (closePrevious) current?.close()
             current = newData
             val isEqual = when (newData.type) {
                 ItemType.TEXT -> newData.text == systemClipboardManager.primaryClip?.getItemAt(0)?.text
                 ItemType.IMAGE -> newData.uri == systemClipboardManager.primaryClip?.getItemAt(0)?.uri
             }
-            if (prefs.clipboard.syncToSystem && !isEqual)
+            if (prefs.clipboard.syncToSystem.get() && !isEqual)
                 systemClipboardManager.setPrimaryClip(newData.toClipData())
         } else {
             shouldUpdateHistory = false
@@ -179,7 +178,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     fun addNewClip(newData: ClipboardItem) {
         updateHistory(newData)
         // If history is disabled, this new item will replace the old one and hence should be closed.
-        changeCurrent(newData, !prefs.clipboard.enableHistory)
+        changeCurrent(newData, !prefs.clipboard.enableHistory.get())
     }
 
     /**
@@ -191,7 +190,7 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
     }
 
     val primaryClip: ClipboardItem?
-        get() = if (prefs.clipboard.enableInternal) {
+        get() = if (prefs.clipboard.useInternalClipboard.get()) {
             current
         } else {
             systemClipboardManager.primaryClip?.let { ClipboardItem.fromClipData(it, false) }
@@ -228,13 +227,13 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
             ItemType.IMAGE -> internalPrimaryClip.uri == systemPrimaryClip.getItemAt(0)?.uri
             else -> false
         }
-        if (prefs.clipboard.enableInternal) {
+        if (prefs.clipboard.useInternalClipboard.get()) {
             // In the event that the internal clipboard is enabled, sync to internal clipboard is enabled
             // and the item is not already in internal clipboard, add it.
-            if (prefs.clipboard.syncToFloris && !isEqual) {
+            if (prefs.clipboard.syncToFloris.get() && !isEqual) {
                 addNewClip(ClipboardItem.fromClipData(systemPrimaryClip, true))
             }
-        } else if (prefs.clipboard.enableHistory) {
+        } else if (prefs.clipboard.enableHistory.get()) {
             // in the event history is enabled, and it should be updated it is updated
             if (shouldUpdateHistory) {
                 updateHistory(ClipboardItem.fromClipData(systemPrimaryClip, true))
@@ -273,13 +272,13 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
             systemClipboardManager.addPrimaryClipChangedListener(this)
 
             val cleanUpClipboard = Runnable {
-                if (!prefs.clipboard.cleanUpOld) {
+                if (!prefs.clipboard.cleanUpOld.get()) {
                     return@Runnable
                 }
 
                 val currentTime = System.currentTimeMillis()
                 var numToPop = 0
-                val expiryTime = prefs.clipboard.cleanUpAfter * 60 * 1000
+                val expiryTime = prefs.clipboard.cleanUpAfter.get() * 60 * 1000
                 for (item in history.asReversed()) {
                     if (item.timeUTC + expiryTime < currentTime) {
                         numToPop += 1
@@ -367,9 +366,9 @@ class FlorisClipboardManager private constructor() : ClipboardManager.OnPrimaryC
         val item = pins.removeAt(adapterPos)
 
         val clipboardPrefs = prefs.clipboard
-        if (clipboardPrefs.limitHistorySize) {
+        if (clipboardPrefs.limitHistorySize.get()) {
             var numRemoved = 0
-            while (history.size >= clipboardPrefs.maxHistorySize) {
+            while (history.size >= clipboardPrefs.maxHistorySize.get()) {
                 numRemoved += 1
                 history.removeLast().data.close()
             }

@@ -24,6 +24,7 @@ import android.view.Gravity
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.theme.Theme
@@ -32,7 +33,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeManager
 class OneHandedPanel : LinearLayout, ThemeManager.OnThemeUpdatedListener {
     private var florisboard: FlorisBoard? = null
     private var themeManager: ThemeManager? = null
-    private val prefs get() = Preferences.default()
+    private val prefs by florisPreferenceModel()
 
     private var closeBtn: ImageButton? = null
     private var moveBtn: ImageButton? = null
@@ -59,7 +60,7 @@ class OneHandedPanel : LinearLayout, ThemeManager.OnThemeUpdatedListener {
         closeBtn?.setOnClickListener {
             florisboard?.let {
                 it.inputFeedbackManager.keyPress()
-                prefs.keyboard.oneHandedMode = OneHandedMode.OFF
+                prefs.keyboard.oneHandedMode.set(OneHandedMode.OFF)
                 it.updateOneHandedPanelVisibility()
             }
         }
@@ -67,7 +68,7 @@ class OneHandedPanel : LinearLayout, ThemeManager.OnThemeUpdatedListener {
         moveBtn?.setOnClickListener {
             florisboard?.let {
                 it.inputFeedbackManager.keyPress()
-                prefs.keyboard.oneHandedMode = panelSide
+                prefs.keyboard.oneHandedMode.set(panelSide)
                 it.updateOneHandedPanelVisibility()
             }
         }
@@ -100,7 +101,7 @@ class OneHandedPanel : LinearLayout, ThemeManager.OnThemeUpdatedListener {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val width = (Resources.getSystem().displayMetrics.widthPixels) *
-            ((100 - prefs.keyboard.oneHandedModeScaleFactor) / 100.0f)
+            ((100 - prefs.keyboard.oneHandedModeScaleFactor.get()) / 100.0f)
         super.onMeasure(MeasureSpec.makeMeasureSpec(width.toInt(),  MeasureSpec.EXACTLY), heightMeasureSpec)
     }
 }

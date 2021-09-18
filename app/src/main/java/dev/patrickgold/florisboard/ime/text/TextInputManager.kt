@@ -171,7 +171,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     activeState.isRichInputEditor
                 }
                 KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
-                    oldPrefs.clipboard.enableHistory
+                    prefs.clipboard.enableHistory.get()
                 }
                 else -> true
             }
@@ -182,7 +182,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 KeyCode.SWITCH_TO_TEXT_CONTEXT,
                 KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
                     val tempUtilityKeyAction = when {
-                        oldPrefs.keyboard.utilityKeyEnabled -> oldPrefs.keyboard.utilityKeyAction
+                        prefs.keyboard.utilityKeyEnabled.get() -> prefs.keyboard.utilityKeyAction.get()
                         else -> UtilityKeyAction.DISABLED
                     }
                     when (tempUtilityKeyAction) {
@@ -193,10 +193,10 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS -> !florisboard.shouldShowLanguageSwitch()
                     }
                 }
-                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> oldPrefs.clipboard.enableHistory
+                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> prefs.clipboard.enableHistory.get()
                 KeyCode.LANGUAGE_SWITCH -> {
                     val tempUtilityKeyAction = when {
-                        oldPrefs.keyboard.utilityKeyEnabled -> oldPrefs.keyboard.utilityKeyAction
+                        prefs.keyboard.utilityKeyEnabled.get() -> prefs.keyboard.utilityKeyAction.get()
                         else -> UtilityKeyAction.DISABLED
                     }
                     when (tempUtilityKeyAction) {
@@ -242,7 +242,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         layoutManager = LayoutManager()
         textKeyboardIconSet = TextKeyboardIconSet.new(florisboard)
         inputEventDispatcher.keyEventReceiver = this
-        isNumberRowVisible = oldPrefs.keyboard.numberRow
+        isNumberRowVisible = prefs.keyboard.numberRow.get()
         activeEditorInstance.wordHistoryChangedListener = this
         var subtypes = florisboard.subtypeManager.subtypes
         if (subtypes.isEmpty()) {
@@ -358,7 +358,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 maxHeapSizeInMB >= 256
             }
         }
-        val newIsNumberRowVisible = oldPrefs.keyboard.numberRow
+        val newIsNumberRowVisible = prefs.keyboard.numberRow.get()
         if (isNumberRowVisible != newIsNumberRowVisible) {
             keyboards.clear(KeyboardMode.CHARACTERS)
             isNumberRowVisible = newIsNumberRowVisible
@@ -639,7 +639,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * FlorisBoard internal or system-wide.
      */
     private fun handleLanguageSwitch() {
-        when (oldPrefs.keyboard.utilityKeyAction) {
+        when (prefs.keyboard.utilityKeyAction.get()) {
             UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
             UtilityKeyAction.SWITCH_LANGUAGE -> florisboard.switchToNextSubtype()
             else -> florisboard.switchToNextKeyboard()
@@ -650,7 +650,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * Handles a [KeyCode.SHIFT] down event.
      */
     private fun handleShiftDown(ev: InputKeyEvent) {
-        if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventDown, oldPrefs.keyboard.longPressDelay.toLong())) {
+        if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventDown, prefs.keyboard.longPressDelay.get().toLong())) {
             newCapsState = true
             activeState.caps = true
             activeState.capsLock = true
@@ -761,11 +761,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      * enabled by the user.
      */
     private fun handleSpace(ev: InputKeyEvent) {
-        if (oldPrefs.keyboard.spaceBarSwitchesToCharacters && getActiveKeyboardMode() != KeyboardMode.CHARACTERS) {
+        if (prefs.keyboard.spaceBarSwitchesToCharacters.get() && getActiveKeyboardMode() != KeyboardMode.CHARACTERS) {
             setActiveKeyboardMode(KeyboardMode.CHARACTERS)
         }
         if (oldPrefs.correction.doubleSpacePeriod) {
-            if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventUp, oldPrefs.keyboard.longPressDelay.toLong())) {
+            if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventUp, prefs.keyboard.longPressDelay.get().toLong())) {
                 val text = activeEditorInstance.getTextBeforeCursor(2)
                 if (text.length == 2 && !text.matches("""[.!?‽\s][\s]""".toRegex())) {
                     activeEditorInstance.deleteBackwards()

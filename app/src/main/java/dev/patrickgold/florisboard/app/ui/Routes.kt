@@ -16,14 +16,59 @@
 
 package dev.patrickgold.florisboard.app.ui
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import dev.patrickgold.florisboard.app.ui.settings.HomeScreen
+import dev.patrickgold.florisboard.app.ui.settings.about.AboutScreen
+import dev.patrickgold.florisboard.app.ui.settings.about.ProjectLicenseScreen
+import dev.patrickgold.florisboard.app.ui.settings.about.ThirdPartyLicensesScreen
+import dev.patrickgold.florisboard.app.ui.settings.advanced.AdvancedScreen
+import dev.patrickgold.florisboard.app.ui.settings.clipboard.ClipboardScreen
+import dev.patrickgold.florisboard.app.ui.settings.keyboard.InputFeedbackScreen
+import dev.patrickgold.florisboard.app.ui.settings.keyboard.KeyboardScreen
+
 object Routes {
     object Settings {
         const val Home = "settings"
+
+        const val Keyboard = "settings/keyboard"
+        const val InputFeedback = "settings/keyboard/input-feedback"
+
+        const val Clipboard = "settings/clipboard"
 
         const val Advanced = "settings/advanced"
 
         const val About = "settings/about"
         const val ProjectLicense = "settings/about/project-license"
         const val ThirdPartyLicenses = "settings/about/third-party-licenses"
+    }
+
+    @Composable
+    fun AppNavHost(
+        modifier: Modifier,
+        navController: NavHostController,
+        startDestination: String,
+    ) {
+        NavHost(
+            modifier = modifier,
+            navController = navController,
+            startDestination = startDestination,
+        ) {
+            composable(Settings.Home) { HomeScreen() }
+
+            composable(Settings.Keyboard) { KeyboardScreen() }
+            composable(Settings.InputFeedback) { InputFeedbackScreen() }
+
+            composable(Settings.Clipboard) { ClipboardScreen() }
+
+            composable(Settings.Advanced) { AdvancedScreen() }
+
+            composable(Settings.About) { AboutScreen() }
+            composable(Settings.ProjectLicense) { ProjectLicenseScreen() }
+            composable(Settings.ThirdPartyLicenses) { ThirdPartyLicensesScreen() }
+        }
     }
 }

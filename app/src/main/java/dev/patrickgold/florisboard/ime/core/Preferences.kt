@@ -22,14 +22,9 @@ import android.os.Build
 import androidx.core.os.UserManagerCompat
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
-import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.text.gestures.DistanceThreshold
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.gestures.VelocityThreshold
-import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
-import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
-import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.smartbar.CandidateView
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.util.TimeUtil
@@ -49,16 +44,11 @@ class Preferences(
 
     private val applicationContext: WeakReference<Context> = WeakReference(context.applicationContext)
 
-    val advanced = Advanced(this)
-    val clipboard = Clipboard(this)
     val correction = Correction(this)
-    val devtools = Devtools(this)
     val dictionary = Dictionary(this)
     val gestures = Gestures(this)
     val glide = Glide(this)
-    val inputFeedback = InputFeedback(this)
     val internal = Internal(this)
-    val keyboard = Keyboard(this)
     val localization = Localization(this)
     val smartbar = Smartbar(this)
     val spelling = Spelling(this)
@@ -133,7 +123,6 @@ class Preferences(
     fun initDefaultPreferences() {
         try {
             applicationContext.get()?.let { context ->
-                PreferenceManager.setDefaultValues(context, R.xml.prefs_advanced, true)
                 PreferenceManager.setDefaultValues(context, R.xml.prefs_gestures, true)
                 PreferenceManager.setDefaultValues(context, R.xml.prefs_keyboard, true)
                 PreferenceManager.setDefaultValues(context, R.xml.prefs_theme, true)
@@ -150,27 +139,6 @@ class Preferences(
         } catch (e: Exception) {
             e.fillInStackTrace()
         }
-    }
-
-    /**
-     * Wrapper class for advanced preferences.
-     */
-    class Advanced(private val prefs: Preferences) {
-        companion object {
-            const val SETTINGS_THEME =          "advanced__settings_theme"
-            const val SHOW_APP_ICON =           "advanced__show_app_icon"
-            const val FORCE_PRIVATE_MODE =      "advanced__force_private_mode"
-        }
-
-        /*var settingsTheme: String = ""
-            get() = prefs.getPref(SETTINGS_THEME, "auto")
-            private set
-        var showAppIcon: Boolean = false
-            get() = prefs.getPref(SHOW_APP_ICON, true)
-            private set
-        var forcePrivateMode: Boolean
-            get() =  prefs.getPref(FORCE_PRIVATE_MODE, false)
-            set(v) = prefs.setPref(FORCE_PRIVATE_MODE, v)*/
     }
 
     /**
@@ -193,28 +161,6 @@ class Preferences(
         var rememberCapsLockState: Boolean
             get() =  prefs.getPref(REMEMBER_CAPS_LOCK_STATE, false)
             set(v) = prefs.setPref(REMEMBER_CAPS_LOCK_STATE, v)
-    }
-
-    /**
-     * Wrapper class for devtools preferences.
-     */
-    class Devtools(private val prefs: Preferences) {
-        companion object {
-            const val ENABLED =                     "devtools__enabled"
-            const val SHOW_HEAP_MEMORY_STATS =      "devtools__show_heap_memory_stats"
-            const val OVERRIDE_WS_MIN_HEAP_RES =    "devtools__override_word_suggestions_min_heap_restriction"
-            const val CLEAR_UDM_INTERNAL_DATABASE = "devtools__clear_udm_internal_database"
-        }
-
-        /*var enabled: Boolean
-            get() =  prefs.getPref(ENABLED, false)
-            set(v) = prefs.setPref(ENABLED, v)
-        var showHeapMemoryStats: Boolean
-            get() =  prefs.getPref(SHOW_HEAP_MEMORY_STATS, false)
-            set(v) = prefs.setPref(SHOW_HEAP_MEMORY_STATS, v)
-        var overrideWordSuggestionsMinHeapRestriction: Boolean
-            get() =  prefs.getPref(OVERRIDE_WS_MIN_HEAP_RES, false)
-            set(v) = prefs.setPref(OVERRIDE_WS_MIN_HEAP_RES, v)*/
     }
 
     /**
@@ -322,90 +268,6 @@ class Preferences(
      * Wrapper class for internal preferences. A preference qualifies as an internal pref if the
      * user has no ability to control this preference's value directly (via a UI pref view).
      */
-    class InputFeedback(private val prefs: Preferences) {
-        companion object {
-            const val AUDIO_ENABLED =                       "input_feedback__audio_enabled"
-            const val AUDIO_IGNORE_SYSTEM_SETTINGS =        "input_feedback__audio_ignore_system_settings"
-            const val AUDIO_VOLUME =                        "input_feedback__audio_volume"
-            const val AUDIO_FEAT_KEY_PRESS =                "input_feedback__audio_feat_key_press"
-            const val AUDIO_FEAT_KEY_LONG_PRESS =           "input_feedback__audio_feat_key_long_press"
-            const val AUDIO_FEAT_KEY_REPEATED_ACTION =      "input_feedback__audio_feat_key_repeated_action"
-            const val AUDIO_FEAT_GESTURE_SWIPE =            "input_feedback__audio_feat_gesture_swipe"
-            const val AUDIO_FEAT_GESTURE_MOVING_SWIPE =     "input_feedback__audio_feat_gesture_moving_swipe"
-
-            const val HAPTIC_ENABLED =                      "input_feedback__haptic_enabled"
-            const val HAPTIC_IGNORE_SYSTEM_SETTINGS =       "input_feedback__haptic_ignore_system_settings"
-            const val HAPTIC_USE_VIBRATOR =                 "input_feedback__haptic_use_vibrator"
-            const val HAPTIC_VIBRATION_DURATION =           "input_feedback__haptic_vibration_duration"
-            const val HAPTIC_VIBRATION_STRENGTH =           "input_feedback__haptic_vibration_strength"
-            const val HAPTIC_FEAT_KEY_PRESS =               "input_feedback__haptic_feat_key_press"
-            const val HAPTIC_FEAT_KEY_LONG_PRESS =          "input_feedback__haptic_feat_key_long_press"
-            const val HAPTIC_FEAT_KEY_REPEATED_ACTION =     "input_feedback__haptic_feat_key_repeated_action"
-            const val HAPTIC_FEAT_GESTURE_SWIPE =           "input_feedback__haptic_feat_gesture_swipe"
-            const val HAPTIC_FEAT_GESTURE_MOVING_SWIPE =    "input_feedback__haptic_feat_gesture_moving_swipe"
-        }
-
-        var audioEnabled: Boolean
-            get() =  prefs.getPref(AUDIO_ENABLED, true)
-            set(v) = prefs.setPref(AUDIO_ENABLED, v)
-        var audioIgnoreSystemSettings: Boolean
-            get() =  prefs.getPref(AUDIO_IGNORE_SYSTEM_SETTINGS, false)
-            set(v) = prefs.setPref(AUDIO_IGNORE_SYSTEM_SETTINGS, v)
-        var audioVolume: Int
-            get() =  prefs.getPref(AUDIO_VOLUME, 50)
-            set(v) = prefs.setPref(AUDIO_VOLUME, v)
-        var audioFeatKeyPress: Boolean
-            get() =  prefs.getPref(AUDIO_FEAT_KEY_PRESS, true)
-            set(v) = prefs.setPref(AUDIO_FEAT_KEY_PRESS, v)
-        var audioFeatKeyLongPress: Boolean
-            get() =  prefs.getPref(AUDIO_FEAT_KEY_LONG_PRESS, false)
-            set(v) = prefs.setPref(AUDIO_FEAT_KEY_LONG_PRESS, v)
-        var audioFeatKeyRepeatedAction: Boolean
-            get() =  prefs.getPref(AUDIO_FEAT_KEY_REPEATED_ACTION, false)
-            set(v) = prefs.setPref(AUDIO_FEAT_KEY_REPEATED_ACTION, v)
-        var audioFeatGestureSwipe: Boolean
-            get() =  prefs.getPref(AUDIO_FEAT_GESTURE_SWIPE, false)
-            set(v) = prefs.setPref(AUDIO_FEAT_GESTURE_SWIPE, v)
-        var audioFeatGestureMovingSwipe: Boolean
-            get() =  prefs.getPref(AUDIO_FEAT_GESTURE_MOVING_SWIPE, false)
-            set(v) = prefs.setPref(AUDIO_FEAT_GESTURE_MOVING_SWIPE, v)
-
-        var hapticEnabled: Boolean
-            get() =  prefs.getPref(HAPTIC_ENABLED, true)
-            set(v) = prefs.setPref(HAPTIC_ENABLED, v)
-        var hapticIgnoreSystemSettings: Boolean
-            get() =  prefs.getPref(HAPTIC_IGNORE_SYSTEM_SETTINGS, false)
-            set(v) = prefs.setPref(HAPTIC_IGNORE_SYSTEM_SETTINGS, v)
-        var hapticUseVibrator: Boolean
-            get() =  prefs.getPref(HAPTIC_USE_VIBRATOR, true)
-            set(v) = prefs.setPref(HAPTIC_USE_VIBRATOR, v)
-        var hapticVibrationDuration: Int
-            get() =  prefs.getPref(HAPTIC_VIBRATION_DURATION, 50)
-            set(v) = prefs.setPref(HAPTIC_VIBRATION_DURATION, v)
-        var hapticVibrationStrength: Int
-            get() =  prefs.getPref(HAPTIC_VIBRATION_STRENGTH, 50)
-            set(v) = prefs.setPref(HAPTIC_VIBRATION_STRENGTH, v)
-        var hapticFeatKeyPress: Boolean
-            get() =  prefs.getPref(HAPTIC_FEAT_KEY_PRESS, true)
-            set(v) = prefs.setPref(HAPTIC_FEAT_KEY_PRESS, v)
-        var hapticFeatKeyLongPress: Boolean
-            get() =  prefs.getPref(HAPTIC_FEAT_KEY_LONG_PRESS, false)
-            set(v) = prefs.setPref(HAPTIC_FEAT_KEY_LONG_PRESS, v)
-        var hapticFeatKeyRepeatedAction: Boolean
-            get() =  prefs.getPref(HAPTIC_FEAT_KEY_REPEATED_ACTION, true)
-            set(v) = prefs.setPref(HAPTIC_FEAT_KEY_REPEATED_ACTION, v)
-        var hapticFeatGestureSwipe: Boolean
-            get() =  prefs.getPref(HAPTIC_FEAT_GESTURE_SWIPE, false)
-            set(v) = prefs.setPref(HAPTIC_FEAT_GESTURE_SWIPE, v)
-        var hapticFeatGestureMovingSwipe: Boolean
-            get() =  prefs.getPref(HAPTIC_FEAT_GESTURE_MOVING_SWIPE, true)
-            set(v) = prefs.setPref(HAPTIC_FEAT_GESTURE_MOVING_SWIPE, v)
-    }
-
-    /**
-     * Wrapper class for internal preferences. A preference qualifies as an internal pref if the
-     * user has no ability to control this preference's value directly (via a UI pref view).
-     */
     class Internal(private val prefs: Preferences) {
         companion object {
             const val IS_IME_SET_UP =               "internal__is_ime_set_up"
@@ -426,99 +288,6 @@ class Preferences(
         var versionLastChangelog: String
             get() =  prefs.getPref(VERSION_LAST_CHANGELOG, VersionName.DEFAULT_RAW)
             set(v) = prefs.setPref(VERSION_LAST_CHANGELOG, v)
-    }
-
-    /**
-     * Wrapper class for keyboard preferences.
-     */
-    class Keyboard(private val prefs: Preferences) {
-        companion object {
-            const val BOTTOM_OFFSET_PORTRAIT =          "keyboard__bottom_offset_portrait"
-            const val BOTTOM_OFFSET_LANDSCAPE =             "keyboard__bottom_offset_landscape"
-            const val FONT_SIZE_MULTIPLIER_PORTRAIT =       "keyboard__font_size_multiplier_portrait"
-            const val FONT_SIZE_MULTIPLIER_LANDSCAPE =      "keyboard__font_size_multiplier_landscape"
-            const val HEIGHT_FACTOR =                       "keyboard__height_factor"
-            const val HEIGHT_FACTOR_CUSTOM =                "keyboard__height_factor_custom"
-            const val HINTED_NUMBER_ROW_MODE =              "keyboard__hinted_number_row_mode"
-            const val HINTED_SYMBOLS_MODE =                 "keyboard__hinted_symbols_mode"
-            const val KEY_SPACING_HORIZONTAL =              "keyboard__key_spacing_horizontal"
-            const val KEY_SPACING_VERTICAL =                "keyboard__key_spacing_vertical"
-            const val LANDSCAPE_INPUT_UI_MODE =             "keyboard__landscape_input_ui_mode"
-            const val LONG_PRESS_DELAY =                    "keyboard__long_press_delay"
-            const val MERGE_HINT_POPUPS_ENABLED =           "keyboard__merge_hint_popups_enabled"
-            const val NUMBER_ROW =                          "keyboard__number_row"
-            const val ONE_HANDED_MODE =                     "keyboard__one_handed_mode"
-            const val ONE_HANDED_MODE_SCALE_FACTOR =        "keyboard__one_handed_mode_scale_factor"
-            const val POPUP_ENABLED =                       "keyboard__popup_enabled"
-            const val SPACE_BAR_SWITCHES_TO_CHARACTERS =    "keyboard__space_bar_switches_to_characters"
-            const val UTILITY_KEY_ACTION =                  "keyboard__utility_key_action"
-            const val UTILITY_KEY_ENABLED =                 "keyboard__utility_key_enabled"
-        }
-
-        var bottomOffsetPortrait: Int = 0
-            get() = prefs.getPref(BOTTOM_OFFSET_PORTRAIT, 0)
-            private set
-        var bottomOffsetLandscape: Int = 0
-            get() = prefs.getPref(BOTTOM_OFFSET_LANDSCAPE, 0)
-            private set
-        var fontSizeMultiplierPortrait: Int
-            get() =  prefs.getPref(FONT_SIZE_MULTIPLIER_PORTRAIT, 100)
-            set(v) = prefs.setPref(FONT_SIZE_MULTIPLIER_PORTRAIT, v)
-        var fontSizeMultiplierLandscape: Int
-            get() =  prefs.getPref(FONT_SIZE_MULTIPLIER_LANDSCAPE, 100)
-            set(v) = prefs.setPref(FONT_SIZE_MULTIPLIER_LANDSCAPE, v)
-        var heightFactor: String = ""
-            get() = prefs.getPref(HEIGHT_FACTOR, "normal")
-            private set
-        var heightFactorCustom: Int
-            get() =  prefs.getPref(HEIGHT_FACTOR_CUSTOM, 100)
-            set(v) = prefs.setPref(HEIGHT_FACTOR_CUSTOM, v)
-        var hintedNumberRowMode: KeyHintMode
-            get() =  KeyHintMode.fromString(prefs.getPref(HINTED_NUMBER_ROW_MODE, KeyHintMode.ENABLED_ACCENT_PRIORITY.toString()))
-            set(v) = prefs.setPref(HINTED_NUMBER_ROW_MODE, v)
-        var hintedSymbolsMode: KeyHintMode
-            get() =  KeyHintMode.fromString(prefs.getPref(HINTED_SYMBOLS_MODE, KeyHintMode.ENABLED_ACCENT_PRIORITY.toString()))
-            set(v) = prefs.setPref(HINTED_SYMBOLS_MODE, v)
-        var keySpacingHorizontal: Float = 2f
-            get() = prefs.getPref(KEY_SPACING_HORIZONTAL, 4) / 2f
-            private set
-        var keySpacingVertical: Float = 5f
-            get() = prefs.getPref(KEY_SPACING_VERTICAL, 10) / 2f
-            private set
-        var landscapeInputUiMode: LandscapeInputUiMode
-            get() =  LandscapeInputUiMode.fromString(prefs.getPref(LANDSCAPE_INPUT_UI_MODE, LandscapeInputUiMode.DYNAMICALLY_SHOW.toString()))
-            set(v) = prefs.setPref(LANDSCAPE_INPUT_UI_MODE, v)
-        var longPressDelay: Int = 0
-            get() = prefs.getPref(LONG_PRESS_DELAY, 300)
-            private set
-        var mergeHintPopupsEnabled: Boolean
-            get() =  prefs.getPref(MERGE_HINT_POPUPS_ENABLED, false)
-            set(v) = prefs.setPref(MERGE_HINT_POPUPS_ENABLED, v)
-        var numberRow: Boolean
-            get() =  prefs.getPref(NUMBER_ROW, false)
-            set(v) = prefs.setPref(NUMBER_ROW, v)
-        var oneHandedMode: String
-            get() = prefs.getPref(ONE_HANDED_MODE, OneHandedMode.OFF)
-            set(value) = prefs.setPref(ONE_HANDED_MODE, value)
-        var oneHandedModeScaleFactor: Int
-            get() =  prefs.getPref(ONE_HANDED_MODE_SCALE_FACTOR, 87)
-            set(v) = prefs.setPref(ONE_HANDED_MODE_SCALE_FACTOR, v)
-        var popupEnabled: Boolean = false
-            get() = prefs.getPref(POPUP_ENABLED, true)
-            private set
-        var spaceBarSwitchesToCharacters: Boolean
-            get() =  prefs.getPref(SPACE_BAR_SWITCHES_TO_CHARACTERS, true)
-            set(v) = prefs.setPref(SPACE_BAR_SWITCHES_TO_CHARACTERS, v)
-        var utilityKeyAction: UtilityKeyAction
-            get() =  UtilityKeyAction.fromString(prefs.getPref(UTILITY_KEY_ACTION, UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS.toString()))
-            set(v) = prefs.setPref(UTILITY_KEY_ACTION, v)
-        var utilityKeyEnabled: Boolean
-            get() =  prefs.getPref(UTILITY_KEY_ENABLED, true)
-            set(v) = prefs.setPref(UTILITY_KEY_ENABLED, v)
-
-        fun keyHintConfiguration(): KeyHintConfiguration {
-            return KeyHintConfiguration(hintedSymbolsMode, hintedNumberRowMode, mergeHintPopupsEnabled)
-        }
     }
 
     /**
@@ -642,53 +411,5 @@ class Preferences(
         var sunsetTime: Int
             get() =  prefs.getPref(SUNSET_TIME, TimeUtil.encode(18, 0))
             set(v) = prefs.setPref(SUNSET_TIME, v)
-    }
-
-    /**
-     * Wrapper class for clipboard preferences
-     */
-    class Clipboard(private val prefs: Preferences) {
-        companion object {
-            const val ENABLE_INTERNAL    = "clipboard__enable_internal"
-            const val SYNC_TO_SYSTEM     = "clipboard__sync_to_system"
-            const val SYNC_TO_FLORIS     = "clipboard__sync_to_floris"
-            const val ENABLE_HISTORY     = "clipboard__enable_history"
-            const val CLEAN_UP_OLD       = "clipboard__clean_up_old"
-            const val LIMIT_HISTORY_SIZE = "clipboard__limit_history_size"
-            const val CLEAN_UP_AFTER     = "clipboard__clean_up_after"
-            const val MAX_HISTORY_SIZE   = "clipboard__max_history_size"
-        }
-
-        var enableInternal: Boolean
-            get() =  prefs.getPref(ENABLE_INTERNAL, false)
-            set(v) = prefs.setPref(ENABLE_INTERNAL, v)
-
-        var syncToSystem: Boolean
-            get() =  prefs.getPref(SYNC_TO_SYSTEM, false)
-            set(v) = prefs.setPref(SYNC_TO_SYSTEM, v)
-
-        var syncToFloris: Boolean
-            get() =  prefs.getPref(SYNC_TO_FLORIS, true)
-            set(v) = prefs.setPref(SYNC_TO_FLORIS, v)
-
-        var enableHistory: Boolean
-            get() =  prefs.getPref(ENABLE_HISTORY, false)
-            set(v) = prefs.setPref(ENABLE_HISTORY, v)
-
-        var cleanUpOld: Boolean
-            get() =  prefs.getPref(CLEAN_UP_OLD, false)
-            set(v) = prefs.setPref(CLEAN_UP_OLD, v)
-
-        var limitHistorySize: Boolean
-            get() =  prefs.getPref(LIMIT_HISTORY_SIZE, true)
-            set(v) = prefs.setPref(LIMIT_HISTORY_SIZE, v)
-
-        var cleanUpAfter: Int
-            get() =  prefs.getPref(CLEAN_UP_AFTER, 20)
-            set(v) = prefs.setPref(CLEAN_UP_AFTER, v)
-
-        var maxHistorySize: Int
-            get() =  prefs.getPref(MAX_HISTORY_SIZE, 20)
-            set(v) = prefs.setPref(MAX_HISTORY_SIZE, v)
     }
 }

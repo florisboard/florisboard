@@ -25,7 +25,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import dev.patrickgold.florisboard.databinding.SetupFragmentMakeDefaultBinding
-import dev.patrickgold.florisboard.util.checkIfImeIsSelected
+import dev.patrickgold.florisboard.ime.InputMethodUtils
 
 class MakeDefaultFragment : Fragment(), SetupActivity.EventListener {
     private lateinit var binding: SetupFragmentMakeDefaultBinding
@@ -51,7 +51,7 @@ class MakeDefaultFragment : Fragment(), SetupActivity.EventListener {
     }
 
     private fun updateState() {
-        val isImeSelected = checkIfImeIsSelected(requireContext())
+        val isImeSelected = InputMethodUtils.checkIsFlorisboardSelected(requireContext())
 
         (activity as SetupActivity).changePositiveButtonState(isImeSelected)
         binding.textAfterEnabled.isVisible = isImeSelected

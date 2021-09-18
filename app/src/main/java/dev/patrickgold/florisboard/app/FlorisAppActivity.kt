@@ -26,6 +26,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -34,23 +35,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.PreviewKeyboardField
 import dev.patrickgold.florisboard.app.ui.components.SystemUi
-import dev.patrickgold.florisboard.app.ui.settings.AdvancedScreen
-import dev.patrickgold.florisboard.app.ui.settings.HomeScreen
-import dev.patrickgold.florisboard.app.ui.settings.about.AboutScreen
-import dev.patrickgold.florisboard.app.ui.settings.about.ProjectLicenseScreen
-import dev.patrickgold.florisboard.app.ui.settings.about.ThirdPartyLicensesScreen
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.util.AndroidVersion
 import dev.patrickgold.florisboard.util.PackageManagerUtils
-import java.util.*
 
 enum class AppTheme(val id: String) {
     AUTO("auto"),
@@ -116,36 +109,27 @@ class FlorisAppActivity : ComponentActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        // TODO: implement nav stack pop
-    }
-
     private fun Configuration.setLocale(locale: FlorisLocale) {
         return this.setLocale(locale.base)
     }
-}
 
-@Composable
-private fun AppContent() {
-    val navController = rememberNavController()
-    CompositionLocalProvider(
-        LocalNavController provides navController,
-    ) {
-        Column {
-            NavHost(
-                modifier = Modifier.weight(1.0f),
-                navController = navController,
-                startDestination = Routes.Settings.Home,
-            ) {
-                composable(Routes.Settings.Home) { HomeScreen() }
-
-                composable(Routes.Settings.Advanced) { AdvancedScreen() }
-
-                composable(Routes.Settings.About) { AboutScreen() }
-                composable(Routes.Settings.ProjectLicense) { ProjectLicenseScreen() }
-                composable(Routes.Settings.ThirdPartyLicenses) { ThirdPartyLicensesScreen() }
+    @Composable
+    private fun AppContent() {
+        val navController = rememberNavController()
+        CompositionLocalProvider(
+            LocalNavController provides navController,
+        ) {
+            Column {
+                Routes.AppNavHost(
+                    modifier = Modifier.weight(1.0f),
+                    navController = navController,
+                    startDestination = Routes.Settings.Home,
+                )
+                PreviewKeyboardField()
             }
-            PreviewKeyboardField()
+        }
+        SideEffect {
+            navController.setOnBackPressedDispatcher(this.onBackPressedDispatcher)
         }
     }
 }
