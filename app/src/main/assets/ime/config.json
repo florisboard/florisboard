@@ -803,5 +803,14 @@
         "characters": "igbo"
       }
     }
+        {
+      "id": 3300,
+      "languageTag": "hoc",
+      "composer": "appender",
+      "currencySet": "indian_rupee",
+      "preferred": {
+        "characters": "warang_citi"
+      }
+    }
   ]
 }
