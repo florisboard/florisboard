@@ -1,0 +1,4 @@
+This release adds the Keyboard, Sounds & Vibrations and Clipboard screen to the new UI.
+Additionally some bugs have been fixed and Igbo layout has been added.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.14-beta02
