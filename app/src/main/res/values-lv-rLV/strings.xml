@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FlorisBoard</string>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Apturēt</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Uzgaidīt</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Trīspunkte. Ja redzama, norāda, ka vairāk rakstzīmju var tikt izmantotas, ja nospiež ilgāk.</string>
+    <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Aizvērt vienrocīgo ievadi.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Pārvietot tastatūru uz kreiso pusi.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Pārvietot tastatūru uz labo pusi.</string>
+    <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Slepenais stāvoklis</string>
+    <!--
+    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
+-->
+    <!-- Media strings -->
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Sajūtu rakstzīmes</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Sajūtu rakstzīmes</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Japāņu sajūtu zīmes (Kaomoji)</string>
+    <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smaidiņi un sajūtu rakstzīmes</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Cilvēki un ķermenis</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Dzīvnieki un daba</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Pārtika un dzērieni</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Ceļošana un vietas</string>
+    <string name="emoji__category__activities" comment="Emoji category name">Darbības</string>
+    <string name="emoji__category__objects" comment="Emoji category name">Priekšmeti</string>
+    <string name="emoji__category__symbols" comment="Emoji category name">Zīmes</string>
+    <string name="emoji__category__flags" comment="Emoji category name">Karogi</string>
+    <!-- Smartbar strings -->
+    <string name="smartbar__quick_action_toggle__alt" comment="Content description for the quick action toggle button in Smartbar">Ātro darbību pārslēgs. Kad nospiests, pārslēdzas starp vārdu ieteikumiem un ātro darbību pogām.</string>
+    <string name="smartbar__quick_action__exit_editing" comment="Content-description for the exit editing layout button in Smartbar">Iziet no teksta labošanas.</string>
+    <string name="smartbar__quick_action__one_handed_mode" comment="Content-description for the one-handed quick action in Smartbar">Pārslēgt vienrocīgās ievades stāvokli.</string>
+    <string name="smartbar__quick_action__open_settings" comment="Content-description for the settings quick action in Smartbar">Atvērt iestatījumus.</string>
+    <string name="smartbar__quick_action__switch_to_editing_context" comment="Content-description for the editing quick action in Smartbar">Pārslēgties uz teksta labošanu.</string>
+    <string name="smartbar__quick_action__switch_to_media_context" comment="Content-description for the media quick action in Smartbar">Pārslēgties uz informācijas nesēju ievades skatu.</string>
+    <string name="smartbar__quick_action__undo" comment="Content-description for the undo quick action in Smartbar">Atsaukšanas poga, lai atceltu pēdējo darbību</string>
+    <string name="smartbar__quick_action__redo" comment="Content-description for the redo quick action in Smartbar">Atatsaukšanas poga, lai atcelto pēdējo atsaukšanu</string>
+    <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Ja redzams, norāda, ka slepenais stāvoklis ir iespējots. Uzspiežot var aplūkot informāciju par slepeno stāvokli.</string>
+    <!-- Settings UI strings -->
+    <string name="settings__title" comment="Title of Settings">Iestatījumi</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Izmēģināt iestatni</string>
+    <string name="settings__help" comment="General label for help buttons in Settings">Palīdzība</string>
+    <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Sākums</string>
+    <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Tastatūra</string>
+    <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">Rakstīšana</string>
+    <string name="settings__navigation__theme" comment="Long-press hint of bottom nav item Theme in Settings">Izskats</string>
+    <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Žesti</string>
+    <string name="settings__default" comment="General string which is used when a preference has the default value set">Noklusējums</string>
+    <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Sistēmas noklusējums</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">Laipni lūgts %s</string>
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nav iespējots sistēmas iestatījumos, tādēļ tā nebūs pieejama kā ievades avots atlasītājā. Klikšķināt šeit, lai atrisinātu to.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard nav atlasīts kā noklusējuma ievades veids. Klikšķināt šeit, lai to novērstu.</string>
+    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Valodas un tastatūras izkārtojumi</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Izskatās, ka nav iestatīts neviens apakšveids. Tādēļ tiks izmantots Angļu/QWERTY apakšveids!</string>
+    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Pievienot</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Pievienot apakšveidu</string>
+    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Pielietot</string>
+    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Atcelt</string>
+    <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Izdzēst</string>
+    <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Labot apakšveidu</string>
+    <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Lokalizācija</string>
+    <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Rakstzīmju izkārtojums</string>
+    <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Zīmju galvenais izkārtojums</string>
+    <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Zīmju papildu izkārtojums</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Veidotājs</string>
+    <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Valūtu kopa</string>
+    <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Ciparzīmju izkārtojums</string>
+    <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Ciparzīmju (paplašināts) izkārtojums</string>
+    <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Ciparu rindas izkārtojums</string>
+    <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Tālruņa galvenais izkārtojums</string>
+    <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Tālruņa papildu izkārtojums</string>
+    <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Šis apakšveids jau pastāv!</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (nav uzstādīts)</string>
+    <string name="settings__theme__title" comment="Title of the Theme fragment">Tastatūras izskats</string>
+    <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nenoteikts</string>
+    <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Izskata veids</string>
+    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Vienmēr diena</string>
+    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Vienmēr nakts</string>
+    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Pielāgot sistēmai</string>
+    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Pielāgot laikam</string>
+    <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Saullēkta laikā</string>
+    <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Saulrieta laikā</string>
+    <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Dienas izskats</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nakts izskats</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Atlasītais izskats</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Pielāgot krāsas lietotnei</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Izskats tiek pielāgotas pašreizējās lietotnes krāsām, ja tā to atbalsta.</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">FlorisBoard lietotnes līdzekļi</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">Iekšējā krātuve</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">Ārējs avots</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Izskata pārvaldnieks (Diena)</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Izskata pārvaldnieks (Nakts)</string>
+    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Izveidot tukšu izskatu</string>
+    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Izveidot no atlasītā izskata</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Pielāgots (no %s)</string>
+    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Jauns izskats</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Izskats veiksmīgi ievietots!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Izskats veiksmīgi izdots!</string>
+    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Labot izskatu</string>
+    <string name="settings__theme_editor__name_label" comment="Label of name input">Nosaukums</string>
+    <string name="settings__theme_editor__type_label" comment="Label of type input">Veids</string>
+    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Pievienot kopu</string>
+    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Labot kopu</string>
+    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Pievienot pazīmi</string>
+    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Labot pazīmi</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Labot izskata nosaukumu</string>
+    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Saikne</string>
+    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Kopa</string>
+    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Pazīme</string>
+    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Tīrtoņa krāsa</string>
+    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Vienvirziena krāsu pāreja</string>
+    <string name="settings__theme_editor__value_type_rad_grad" comment="Theme value type">Apļveida krāsu pāreja</string>
+    <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Slēdzis</string>
+    <string name="settings__theme_editor__value_type_on_off_state" comment="Theme value type sub-field">Stāvoklis</string>
+    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Cits</string>
+    <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Teksts</string>
+    <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Priekšskatīt izskata vērtību</string>
+    <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Lūgums ievadīt izskata nosaukumu.</string>
+    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Jāievada kopas nosaukums, kas satur tikai burtus (a–z un/vai A–Z), kols (:) apakškopām vai papildus ciparus (0–9), tildi (~) un apakšsvītras (_) taustiņa apzīmējumam.</string>
+    <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Lūgums ievadīt kopas nosaukumu.</string>
+    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Šāds kopas nosaukums jau pastāv šajā izskatā. Lūgums izvēlēties citu.</string>
+    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Lūgums ievadīt pazīmes nosaukumu, kas satur tikai burtus a-z un/vai A-Z.</string>
+    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Lūgums ievadīt pazīmes nosaukumu.</string>
+    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Šāds pazīmes nosaukums šajā kopā jau pastāv. Lūgums norādīt citu.</string>
+    <string name="settings__theme__group_window" comment="Theme group label">Logs un sistēma</string>
+    <string name="settings__theme__group_keyboard" comment="Theme group label">Tastatūra</string>
+    <string name="settings__theme__group_key" comment="Theme group label">Taustiņš</string>
+    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Taustiņš (%s)</string>
+    <string name="settings__theme__group_media" comment="Theme group label">Informācijas nesēju kopums</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">Vienrocīgs</string>
+    <string name="settings__theme__group_popup" comment="Theme group label">Uznirstošais lodziņš</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">Slepenais stāvoklis</string>
+    <string name="settings__theme__group_smartbar" comment="Theme group label">Viedjosla</string>
+    <string name="settings__theme__group_smartbarButton" comment="Theme group label">Viedjoslas poga</string>
+    <string name="settings__theme__group_extractEditLayout" comment="Theme group label">Līmeniska pilnekrāna izkārtojums</string>
+    <string name="settings__theme__group_extractActionButton" comment="Theme group label">Līmeniska pilnekrāna izkārtojuma darbības poga</string>
+    <string name="settings__theme__group_glideTrail" comment="Theme group label">Slīdēšanas pēdas</string>
+    <string name="settings__theme__group_custom" comment="Theme group label (%s is custom group name)">Pielāgota kopa (%s)</string>
+    <string name="settings__theme__attr_background" comment="Theme attribute label">Fona krāsa</string>
+    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Fona krāsa (izmantots)</string>
+    <string name="settings__theme__attr_backgroundPressed" comment="Theme attribute label">Fona krāsa (piespiests)</string>
+    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Priekšplāna krāsa</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Fonta izmēra reizinātājs (statenisks novietojums)</string>
+    <string name="settings__theme__attr_foregroundPressed" comment="Theme attribute label">Priekšplāna krāsa (piespiests)</string>
+    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Rādīt malu</string>
+    <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Pamatkrāsa</string>
+    <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Pamatkrāsa (tumšs)</string>
+    <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Uzsvara krāsa</string>
+    <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Pārlūkošanas joslas krāsa</string>
+    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Pārlūkošanas joslas tumšs priekšplāns</string>
+    <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Puscaurspīdīga krāsa</string>
+    <string name="settings__theme__attr_textColor" comment="Theme attribute label">Teksta krāsa</string>
+    <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Pielāgota pazīme (%s)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Skaņas un trīcēšana</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Dzirdamā atgriezeniskā saite / Skaņas</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Iespējot dzirdamo atgriezenisko saiti</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Atskaņot ievades notikumu skaņas atbilstoši sistēmas uzstādījumiem</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Neņemt vērā sistēmas skaņas uzstādījumus</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Izmantot zemāk esošos uzstādījumus, pat ja sistēmas skaņa ir atspējota. Nedarbojas, kad sistēmas zvanu skaņa ir apklusināta</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Ievades notikumu skaņu skaļums</string>
+    <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Taustiņu nospiešanas skaņas</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Ilgas taustiņu nospiešanas skaņas</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Taustiņa atkārtošanās skaņas</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Pavilkšanas kustību skaņas</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Pavilkšanas pārvietošanās kustības skaņas</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Sajūtu atgriezeniskā saite / Trīcēšana</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Iespējot sajūtu atgriezenisko saiti</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Trīcēšana ievades notikumiem atbilstoši sistēmas uzstādījumiem</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Neņemt vērā sistēmas sajūtu uzstādījumus</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Izmantot zemāk esošos uzstādījumus, pat ja sajūtu atgriezeniskā saite sistēmā ir atspējota</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Tieši izsaukt trīcēšanu</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Tieši izsaukt trīcēšanu, nevis izmantot Android sajūtu atgriezeniskās saites iespēju kopu</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trīcēšanas ilgums</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Trīcēšanas stiprums</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Šīs iespējas izmantošanai ir nepieciešama aparatūras starpības vadības atbalsts, kā nav šajā iekārtā</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Šīs iespējas izmantošanai ir nepieciešama starpības vadības atbalsts, kas ir pieejams tikai sākot no Android 8.0</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Taustiņa nospiešanas trīcēšana</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Ilgas taustiņa nospiešanas trīcēšana</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Taustiņa atkārtošanās darbības trīcēšana</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Pavilkšanas kustības trīcēšana</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Pavilkšanas pārvietošanās kustības trīcēšana</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">piemēram, taustiņi, pogas, sajūtu rakstzīmju cilnes</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">piemēram, izlecošā izvēlne</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">piemēram, dzēšanas taustiņš</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">nav īstenots</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">piemēram, rādītāja vadīšanas pavilkšana</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">Ciparu rinda</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Slēpta ciparu rinda</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Slēptas rakstzīmes</string>
+    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Rādīt rīkpogu</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Tiek rādīta pielāgojama rīkpoga blakus atstarpes taustiņam</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Rīktaustiņa darbība</string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">Izkārtojums</string>
+    <string name="pref__keyboard__one_handed_mode__label" comment="Preference title">Vienrocīga ievade</string>
+    <string name="pref__keyboard__one_handed_mode_scale_factor__label" comment="Preference title">Vienrocīgās ievades tastatūras platums</string>
+    <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Līmeniska pilnekrāna ievade</string>
+    <string name="pref__keyboard__height_factor__label" comment="Preference title">Tastatūras augstums</string>
+    <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Taustiņa piespiešana</string>
+    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Ilgas taustiņa piespiešanas aizture</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Atstarpes taustiņš pārslēdz uz burtu izkārtojumu</string>
+    <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Atstarpes taustiņa nospiešana nomaina izkārtojumu no rakstzīmēm vai cipariem uz burtiem</string>
+    <string name="settings__typing__title" comment="Title of Typing experience fragment">Rakstīšanas pieredze</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">Iespējot viedjoslu</string>
+    <string name="pref__smartbar__enabled__summary" comment="Preference summary">Tiks rādīta tastatūras augšpusē</string>
+    <string name="pref__suggestion__title" comment="Preference group title">Ieteikumi</string>
+    <string name="pref__dictionary__title" comment="Preference group title">Vārdnīca</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Iespējot sistēmas lietotāja vārdnīcu</string>
+    <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Ieteikt vārdus, kas tiek glabāti sistēmas lietotāja vārdnīcā</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Pārvaldīt sistēmas lietotāja vārdnīcu</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Pievienot, skatīt un noņemt ierakstus sistēmas lietotāja vārdnīcā</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Iespējot iekšējo lietotāja vārdnīcu</string>
+    <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Ieteikt vārdus, kas tiek glabāti iekšējā lietotāja vārdnīcā</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Pārvaldīt iekšējo lietotāja vārdnīcu</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Pievienot, skatīt un noņemt ierakstus iekšējā lietotāja vārdnīcā</string>
+    <string name="pref__correction__title" comment="Preference group title">Labojumi</string>
+    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">Pareizrakstības pārbaudītājs</string>
+    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">Pārvaldīt un pielāgot pareizrakstības pārbaudītāja pakalpojumu</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Sākumburta pārveidošana par lielo</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Pārveidot vārdu sākumburtus par lielajiem, balstoties uz pašreizējo ievades kopumu</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Atcerēties burtslēga stāvokli</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Burtslēgs paliks ieslēgts pēc pārvietošanās uz citu ievades lauku</string>
+    <string name="pref__correction__double_space_period__label" comment="Preference title">Divkāršas atstarpes punkts</string>
+    <string name="pref__correction__double_space_period__summary" comment="Preference summary">Divreiz piesitot atstarpes taustiņam, tiks ievietots punkts un atstarpe</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Iekšējā lietotāja vārdnīca</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">Sistēmas lietotāja vārdnīca</string>
+    <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Biežums: %d</string>
+    <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Biežums: %d | Saīsne: %s</string>
+    <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Visām valodām</string>
+    <string name="settings__udm__open_system_manager_ui" comment="Label of the Open system manager UI menu option">Atvērt sistēmas pārvaldnieka lietotāja saskarni</string>
+    <string name="settings__udm__dictionary_import_success" comment="Message for dictionary import success">Lietotāja vārdnīca tika veiksmīgi ievietota.</string>
+    <string name="settings__udm__dictionary_export_success" comment="Message for dictionary export success">Lietotāja vārdnīca tika veiksmīgi izdota.</string>
+    <string name="settings__udm__dialog__title_add" comment="Label for the title (when in adding mode) in the user dictionary add/edit dialog">Pievienot vārdu</string>
+    <string name="settings__udm__dialog__title_edit" comment="Label for the title (when in editing mode) in the user dictionary add/edit dialog">Labot vārdu</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Vārds</string>
+    <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Lūgums ievadīt vārdu.</string>
+    <string name="settings__udm__dialog__word_error_invalid" comment="Error label for the word in the user dictionary add/edit dialog">Šis vārds satur nederīgas rakstzīmes.</string>
+    <string name="settings__udm__dialog__freq_label" comment="Label for the frequency in the user dictionary add/edit dialog. The two decimal placeholders are the minimum and maximum frequency, both inclusive.">Biežums (starp %d un %d)</string>
+    <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Lūgums ievadīt biežuma vērtību.</string>
+    <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Lūgums ievadīt derīgu skaitli, kas ir norādītajās robežās.</string>
+    <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Saīsne (pēc izvēles)</string>
+    <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Šī saīsne satur nederīgas rakstzīmes.</string>
+    <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Valodas kods (pēc izvēles)</string>
+    <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Šis valodas kods neatbilst vēlamajam veidolam. Kodam ir vai nu jāborāda tikai valoda (piemēram, en), vai valoda un valsts (piemēram, en_US), vai arī valoda, valsts un raksts (piemēram, en_US-script).</string>
+    <string name="settings__gestures__title" comment="Title of Gestures fragment">Kustību un slīdošā rakstīšana</string>
+    <string name="pref__glide__title" comment="Preference group title">Slīdošā rakstīšana</string>
+    <string name="pref__glide__enabled__label" comment="Preference title">Iespējot slīdošo rakstīšanu</string>
+    <string name="pref__glide__enabled__summary" comment="Preference summary">Rakstīt vārdu, slidinot pirkstu pa burtiem, kas to veido</string>
+    <string name="pref__glide__show_trail__label" comment="Preference title">Rādīt slīdēšanas pēdas</string>
+    <string name="pref__glide__show_trail__summary" comment="Preference summary">Izzudīs pēc katra vārda</string>
+    <string name="pref__gestures__general_title" comment="Preference group title">Vispārējas kustības</string>
+    <string name="pref__gestures__space_bar_title" comment="Preference group title">Atstarpes taustiņa kustības</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">Citas kustības / Kustību sliekšņi</string>
+    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Nav darbības</string>
+    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Pārslēgties uz iepriekšējo tastatūras veidu</string>
+    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Pārslēgties uz nākamo tastatūras veidu</string>
+    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Rūpīgi izdzēst rakstzīmes</string>
+    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Izdzēst pašreizējo vārdu</string>
+    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Rūpīgi izdzēst vārdus</string>
+    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Paslēpt tastatūru</string>
+    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Ievietot atstarpi</string>
+    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Pārvietot rādītāju uz augšu</string>
+    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Pārvietot rādītāju uz leju</string>
+    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Pārvietot rādītāju pa kreisi</string>
+    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Pārvietot rādītāju pa labi</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Pārvietot rādītāju uz līnijas sākumu</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Pārvietot rādītāju uz līnijas beigām</string>
+    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Pārvietot rādītāju uz lapas sākumu</string>
+    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Pārvietot rādītāju uz lapas beigām</string>
+    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Atvērt starpliktuves pārvaldnieku/vēsturi</string>
+    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Pārslēgšanās taustiņš</string>
+    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Atatsaukt</string>
+    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Atsaukt</string>
+    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Rādīt ievades veida atlasītāju</string>
+    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Pārslēgties uz iepriekšējo tastatūru</string>
+    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Pārslēgties uz iepriekšējo apakšveidu</string>
+    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Pārslēgties uz nākamo apakšveidu</string>
+    <string name="pref__gestures__swipe_up__label" comment="Preference title">Pavilkt uz augšu</string>
+    <string name="pref__gestures__swipe_down__label" comment="Preference title">Pavilkt uz leju</string>
+    <string name="pref__gestures__swipe_left__label" comment="Preference title">Pavilkt pa kreisi</string>
+    <string name="pref__gestures__swipe_right__label" comment="Preference title">Pavilkt pa labi</string>
+    <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Pavilkt no atstarpes taustiņa uz augšu</string>
+    <string name="pref__gestures__space_bar_swipe_left__label" comment="Preference title">Pavilkt no atstarpes taustiņa pa kreisi</string>
+    <string name="pref__gestures__space_bar_swipe_right__label" comment="Preference title">Pavilkt no atstarpes taustiņa pa labi</string>
+    <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Atstarpes taustiņa ilga piespiešana</string>
+    <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Pavilkt no izdzēšanas taustiņa pa kreisi</string>
+    <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Pavilkšanas ātruma slieksnis</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Ļoti lēns</string>
+    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Lēns</string>
+    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Vispārpieņemts</string>
+    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Ātrs</string>
+    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Ļoti ātrs</string>
+    <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Pavilkšanas attāluma slieksnis</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Ļoti īss</string>
+    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Īss</string>
+    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Vispārpieņemts</string>
+    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Garš</string>
+    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Ļoti garš</string>
+    <string name="settings__advanced__title" comment="Title of Advanced settings">Papildus</string>
+    <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Iestatījumu izskats</string>
+    <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Gaišs</string>
+    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tumšs</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">AMOLED tumšs</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Iestatījumu valoda</string>
+    <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Rādīt lietotnes ikonu palaidējā</string>
+    <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Vienmēr iespējots Android 10+ sistēmas ierobežojumu dēļ</string>
+    <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Piespiest izmantot slepeno stāvokli</string>
+    <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Tiks atspējotas visas iespējas, kam ir īslaicīgi jāapstrādā ievades dati</string>
+    <string name="settings__devtools__title" comment="Title of Devtools settings">Izstrādātāja rīki</string>
+    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Iespējot izstrādātāju rīkus</string>
+    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Rīki, kas ir izstrādāti traucējumnovēršanai un nepilnību atklāšanai un novēršanai</string>
+    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Rādīt grēdas atmiņas statistiku</string>
+    <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Rāda grēdas atmiņas izmantojumu un lielāko iespējamo izmēru augšējā labajā stūrī</string>
+    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Iztīrīt iekšējās lietotāja vārdnīcas datubāzi</string>
+    <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Tiek izņemti visi vārdi no vārdnīcas datubāzes tabulas</string>
+    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Pareizrakstības pārbaudītāja iestatījumi</string>
+    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Pārvaldīt mapes</string>
+    <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Izmantot tastatūras apakšveidus</string>
+    <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">Pašlaik nav uzstādīta neviena vārdnīca pareizrakstības pārbaudītājam. Pievienot kādu var ar zemāk esošo \"+\" pogu.</string>
+    <string name="settings__spelling__dictionary_index_invalid" comment="String for the Dictionary index invalid error card. %s will be replaced by the app name.">Notika kļūda, kamēr tika indeksētas pareizrakstības pārbaudītāja vārdnīcas. Jāmēģina pārsāknēt %s vai pieteikt nepilnību ziņojumu par šo gadījumu.</string>
+    <string name="settings__spelling__dict_sources_info" comment="String for the Dictionary sources info.">Kur iegūt vārdnīcas pareizrakstības pārbaudītājam?</string>
+    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Paplašinājums / Arhīvs</string>
+    <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Pielikuma + vārdnīcas datne</string>
+    <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Darbojošies pareizrakstības pārbaudītāji</string>
+    <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Neviens nav norādīts</string>
+    <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">Pārbaudīt sistēmas iestatījumos</string>
+    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Pārvaldīt pareizrakstības pārvaldītāju vārdnīcas</string>
+    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
+        <item quantity="zero">%d uzstādītu</item>
+        <item quantity="one">%d uzstādīta</item>
+        <item quantity="other">%d uzstādītas</item>
+    </plurals>
+    <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">Smalki pielāgojumi</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NAV IZSTRĀDĀTS] Izmantot kontaktpersonu vārdus</string>
+    <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Pareizrakstības pārbaudītājs meklēs vārdus kontaktpersonu sarakstā</string>
+    <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Izmantot lietotāja vārdnīcas ierakstus</string>
+    <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Pareizrakstības pārbaudītājs meklēs ierakstus lietotāja vārdnīcās, ja tās ir iespējotas</string>
+    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Ievietot jaunu vārdnīcu</string>
+    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Atlasīt avotu</string>
+    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Atlasīt valodu</string>
+    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">Valodas kods (piem., en_US)</string>
+    <string name="settings__spelling__import_dict_s2__title" comment="Title for the import dict sheet (step 2)">Pievienot ievietojamās datnes</string>
+    <string name="settings__spelling__import_dict_s2__select_aff" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Atlasīt pielikuma datni (.aff)</string>
+    <string name="settings__spelling__import_dict_s2__select_dic" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Atlasīt vārdnīcas datni (.dic)</string>
+    <string name="settings__spelling__import_dict_s3__title" comment="Title for the import dict sheet (step 3)">Pārskatīt ievietojamās datnes</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_locale" comment="Text for the verify files dialog (step 3)">Lokalizācija: %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_original" comment="Text for the verify files dialog (step 3)">Sākotnējais avots: %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_any" comment="Text for the verify files dialog (the first %s will be replaced by a file extension, the second by a file name) (step 3)">%s datne: %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_readme" comment="Text for the verify files dialog (step 3)">Lasimani datne: %s</string>
+    <string name="settings__spelling__import_dict_s3__verify_files_license" comment="Text for the verify files dialog (step 3)">Licences datne: %s</string>
+    <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info sheet">FlorisBoard izmanto Nuspell kā pareizrakstības pārbaudītāja dzini, kas nozīmē, ka ir pieejams plašs vārdnīcu klāsts, jo Hunspell tiek izmantots arī citās programmatūrās. Zemāk esošajā sarakstā ir norādīti daži pašrocīgi atlasīti avoti, ko ievietošanas pārvaldītājs atbalsta. Ir jālejupielādē arhīva datne vai vārdnīcas faili, pēc tam ievietošanas pārvaldītājā jānorāda pareizais avots (tas ir būtiski, lai pareizi nolasītu arhīva veidolu).</string>
+    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">ja šajā sarakstā nav vārdnīcu nepieciešamajai valodai vai izloksnei, ir iespējams pašrocīgi meklēt Hunspell vārdnīcu un ievietot \'aff\' un \'dic\' datnes.</string>
+    <!-- About UI strings -->
+    <string name="about__title" comment="Title of About activity">Par</string>
+    <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard lietotnes ikona</string>
+    <string name="about__view_licenses" comment="Label of View licenses button in About">Atvērtā pirmavota licences</string>
+    <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privātuma nosacījumi</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">Avota kods</string>
+    <string name="about__license__title" comment="Title of Open-source licenses dialog">Atvērtā pirmavota licences</string>
+    <string name="about__version__title" comment="Preference title">Laidiens</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Laidiena numurs ir ievietots starpliktuvē</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Kaut kas ir noticis nepareizi: %s</string>
+    <string name="about__changelog__title" comment="Preference title">Izmaiņu žurnāls</string>
+    <string name="about__changelog__summary" comment="Preference summary">Kas jauns?</string>
+    <string name="about__repository__title" comment="Preference title">Glabātava (GitHub)</string>
+    <string name="about__repository__summary" comment="Preference summary">Pirmkods, apspriedes, nepilnības un uzziņa</string>
+    <string name="about__privacy_policy__title" comment="Preference title">Privātuma nosacījumi</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">Šī projekta privātuma nosacījumi</string>
+    <string name="about__project_license__title" comment="Preference title">Projekta licence</string>
+    <string name="about__project_license__summary" comment="Preference summary (%s will insert license name)">FlorisBoard ir licencēts ar %s</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Kļūda: neizdevās ielādēt licences saturu.\n-&gt; Iemesls: %s</string>
+    <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Līdzekļu pārvaldītāja atsauce ir null</string>
+    <string name="about__third_party_licenses__title" comment="Preference title">Trešo pušu licences</string>
+    <string name="about__third_party_licenses__summary" comment="Preference summary">Šajā lietotnē iekļauto trešo pušu bibliotēku licences</string>
+    <!-- Assets strings -->
+    <plurals name="assets__file__authors">
+        <item quantity="zero">Autors</item>
+        <item quantity="one">Autors</item>
+        <item quantity="other">Autori</item>
+    </plurals>
+    <string name="assets__file__name">Nosaukums</string>
+    <string name="assets__file__source">Avots</string>
+    <string name="assets__action__add">Pievienot</string>
+    <string name="assets__action__apply">Pielietot</string>
+    <string name="assets__action__cancel">Atcelt</string>
+    <string name="assets__action__cancel_confirm_title">Apstiprināt atcelšanu</string>
+    <string name="assets__action__cancel_confirm_message">Vai tiešām atmest nesaglabātās izmaiņas? Šī darbība pēc izpildīšanas vairs nevar tikt atsaukta.</string>
+    <string name="assets__action__delete">Izdzēst</string>
+    <string name="assets__action__delete_confirm_title">Apstiprināt izdzēšanu</string>
+    <string name="assets__action__delete_confirm_message">Vai tiešām izdzēst \"%s\"? Šī darbība pēc izpildīšanas vairs nevar tikt atsaukta.</string>
+    <string name="assets__action__edit">Labot</string>
+    <string name="assets__action__export">Izdot</string>
+    <string name="assets__action__import">Iekļaut</string>
+    <string name="assets__action__no">Nē</string>
+    <string name="assets__action__save">Saglabāt</string>
+    <string name="assets__action__select">Atlasīt</string>
+    <string name="assets__action__select_dir">Atlasīt mapi</string>
+    <string name="assets__action__select_file">Atlasīt datni</string>
+    <string name="assets__action__yes">Jā</string>
+    <string name="assets__error__details">Izklāsts</string>
+    <string name="assets__error__invalid">Nederīgs</string>
+    <string name="assets__error__snackbar_message">Kaut kas ir noticis nepareizi</string>
+    <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">Iestatīšana</string>
+    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Iepriekšējais</string>
+    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Atcelt</string>
+    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Nākamais</string>
+    <string name="setup__finish_button" comment="Label of Finish button in Setup">Pabeigt</string>
+    <string name="setup__ok_button" comment="Label of OK button in Setup">Labi</string>
+    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Sveicināti!</string>
+    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Paldies par FlorisBoard izmēģnāšanu! Pirms to sākt izmantot, ir jāpaveic ierastais - jāiespējo sistēmas iestatījumos, jāuzstāda vēlamā valoda/izkārtojums utt… Satraukumam nav pamata - uzstādīšanas vednis vadīs cauri tam visam.</string>
+    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard pilnībā ciena Tavu privātumu un nevāc nekādus lietotāja datus. Vairāk skatīt šeit:</string>
+    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">FlorisBoard avota kods ir pieejams ikvienam, tāpēc katram ir iespēja pārskatīt, ko FlorisBoard dara fonā. Apskatīt zemāk esošo glabātuves saiti.</string>
+    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Pēdējā lieta pirms uzstādīšanas sākšanas - ja tiek piedzīvotas kādas nepilnības/avārijas/sarežģījumi FlorisBoard vai ir kāds iespēju pieprasījums - jādodas uz GitHub glabātavu, kuras saite ir zemāk, un jāiesniedz pieteikums. Tas palīdz uzlabot visu lietotāju pieredzi.</string>
+    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Lai uzsāktu iestatīšanu, spied <i>NEXT</i>.</string>
+    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Iespējot FlorisBoard</string>
+    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android ir nepieciešams katru pielāgoto tastatūru pirms izmantošanas pašrocīgi iespējot. Spied pogu zemāk, lai dotos uz <i>Valodas un ievade</i> iestatījumiem, un tad jāpārliecinās, ka \'<i>FlorisBoard</i>\' ir atzīmēts.</string>
+    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard ir veiksmīgi iespējota. Klikšķināt <i>NEXT</i>, lai turpinātu!</string>
+    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Atvērt valodas un ievades iestatījumus</string>
+    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Padarīt FlorisBoard par noklusējuma</string>
+    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard tagad ir iespējots sistēmā. Lai to izmantotu, jāpārslēdzas uz FlorisBoard, atlasot to ievades izvēles logā.</string>
+    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Noklusējuma tastatūra ir veiksmīgi nomainīta uz FlorisBoard!</string>
+    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Pārslēgt tastatūru</string>
+    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Iestatīšana pabeigta!</string>
+    <!-- Crash Dialog strings -->
+    <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard kļūdu ziņojums</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Atvainojamies par neērtībām, bet FlorsBoard avarēja neparedzētas kļūdas dēļ.</string>
+    <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Ja ir vēlme ziņot par šo kļūdu, vispirms jāpārliecinās, vai GitHub pieteikumu ceļrādī par šādu avāriju jau ir ziņots.\nJa nē, starpliktuvē jāievieto izveidotais avārijas žurnāls un jāatver jauns pieteikums. Jāizmanto \"%s\" veidne un jānorāda apraksts, darbības atkārtošanai un beigās jāielīmē avārijas žurnāls. Tas palīdz padarīt FlorisBoard labāku un noturīgāku ikvienam. Paldies!</string>
+    <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Ievietot sistēmas starpliktuvē</string>
+    <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Ievietots sistēmas starpliktuvē</string>
+    <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Nav iespējams ievietot sistēmas starpliktuvē: nav atrasts starpliktuves pārvaldnieks</string>
+    <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Atvērt pieteikumu ceļrādi (GitHub.com)</string>
+    <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Aizvērt</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard kļūdu ziņojumi</string>
+    <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard pārstāja darboties…</string>
+    <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Pieskarties, lai apskatītu kļudu izklāstu</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Izskatās, ka FlorisBoard atkārtoti pārstāj darboties…</string>
+    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Notiek atkāpšanāš uz iepriekšējo tastatūru, lai apturētu nebeidzamu avārijas cilpu. Piesist, lai apskatītu kļūdu izklāstu</string>
+    <!-- Clipboard strings -->
+    <string name="clip__context_header">Starpliktuves vēsture</string>
+    <string name="clip__clear_history">Notīrīt vēsturi</string>
+    <string name="clip__unpin_item">Atspraust vienumu</string>
+    <string name="clip__pin_item">Piespraust vienumu</string>
+    <string name="clip__delete_item">Izdzēst</string>
+    <string name="clip__paste_item">Ielīmēt</string>
+    <string name="clip__back_to_text_input">Atgriezties pie teksta ievades</string>
+    <string name="clip__cant_paste">Pašreizējā lietotne neļauj ielīmēt šo saturu.</string>
+    <string name="pref__clipboard__sync_from_system_clipboard__label">Sinhronizēt no sistēmas starpliktuves</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__label">Sinhronizēt uz sistēmas starpliktuvi</string>
+    <string name="pref__clipboard__sync_to_system_clipboard__summary">Floris starpliktuves izmaiņas atjauninās arī sistēmas starpliktuvi</string>
+    <string name="pref__clipboard__enable_clipboard_history__label">Iespējot starpliktuves vēsturi</string>
+    <string name="pref__clipboard__enable_clipboard_history__summary">Paturēt starpliktuves vienumus</string>
+    <string name="pref__clipboard__limit_history_size__label">Ierobežot vēstures lielumu</string>
+    <string name="pref__clipboard__max_history_size__label">Lielākais pieļaujamais vēstures lielums</string>
+    <!-- glide strings -->
+    <string name="pref__glide_trail_fade_duration">Slīdēšanas pēdu izzušanas laiks</string>
+    <string name="pref__glide_preview_refresh_delay">Priekšskatīt atsvaidzināšanas aizkavi</string>
+    <string name="pref__glide__show_preview">Rādīt priekšskatījumu slīdošās rakstīšanas laikā</string>
+    <!-- Screen orientation strings -->
+    <!-- State strings -->
+    <!-- Enum label and description strings -->
+    <!-- Unit strings (symbols) -->
+    <!-- Unit strings (written words) -->
+</resources>

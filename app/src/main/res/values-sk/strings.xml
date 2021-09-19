@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FlorisBoard</string>
+    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pauza</string>
+    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Počkajte</string>
+    <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Ikona s tromi bodkami. Ak je viditeľná, znamená, že po dlhšom stlačení je možné použiť viac písmen.</string>
+    <!-- One-handed strings -->
+    <string name="one_handed__close_btn_content_description" comment="Content description for the one-handed close button">Režim zatvárania jednou rukou.</string>
+    <string name="one_handed__move_start_btn_content_description" comment="Content description for the one-handed move to left button">Presuňte klávesnicu doľava.</string>
+    <string name="one_handed__move_end_btn_content_description" comment="Content description for the one-handed move to right button">Presuňte klávesnicu doprava.</string>
+    <!-- Private mode info dialog strings -->
+    <string name="private_mode_dialog__title" comment="Title of the private mode dialog">Súkromný režim</string>
+    <!--
+    <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
+-->
+    <!-- Media strings -->
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">Emoji</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">Emotívny</string>
+    <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">Kaomoji</string>
+    <!-- Emoji strings -->
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smajlíky &amp; Emócie</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">Ľudia &amp; Telo</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Zvieratá &amp; Príroda</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Potraviny a nápoje</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Cestovanie &amp; Miesta</string>
+    <!-- Smartbar strings -->
+    <!-- Settings UI strings -->
+    <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nie je v systéme povolený, a preto nebude k dispozícii, ako metóda zadávania v ponuke na výber vstupov. Kliknutím sem tento problém vyriešite.</string>
+    <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard nie je vybraný, ako predvolená metóda zadávania. Kliknutím sem tento problém vyriešite.</string>
+    <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Jazyky a rozloženie klávesnice</string>
+    <string name="settings__localization__subtype_no_subtypes_configured_warning" comment="Warning message that no subtype has been defined in the Typing fragment">Zdá sa, že ste nenakonfigurovali žiadne podtypy. Ako náhradný sa použije podtyp Angličtina/QWERTY!</string>
+    <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Pridať</string>
+    <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Pridať podtyp</string>
+    <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Aplikovať</string>
+    <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Zrušiť</string>
+    <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nočná téma</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Vybraná téma</string>
+    <string name="pref__theme__any_theme_adapt_to_app__label" comment="Label of the theme adapt to app preference">Prispôsobenie farieb aplikácii</string>
+    <string name="pref__theme__any_theme_adapt_to_app__summary" comment="Summary of the theme adapt to app preference">Farby motívu sa prispôsobia farbám v aktuálnej aplikácii, ak to cieľová aplikácia podporuje.</string>
+    <string name="pref__theme__source_assets" comment="Label for the theme source field">Aktíva aplikácie FlorisBoard</string>
+    <string name="pref__theme__source_internal" comment="Label for the theme source field">Interné úložisko</string>
+    <string name="pref__theme__source_external" comment="Label for the theme source field">Externý poskytovateľ</string>
+    <string name="settings__theme_manager__title_day" comment="Title of the theme manager activity for day theme">Manažér témy (deň)</string>
+    <string name="settings__theme_manager__title_night" comment="Title of the theme manager activity for night theme">Manažér témy (noc)</string>
+    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Vytvorenie prázdnej témy</string>
+    <string name="settings__theme_manager__create_from_selected" comment="Label of the Create from selected FAB action">Vytvorenie z vybranej témy</string>
+    <string name="settings__theme_manager__theme_custom_title" comment="Title template for a custom theme">Vlastné (na základe %s)</string>
+    <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nová téma</string>
+    <string name="settings__theme_manager__theme_import_success" comment="Message for theme import success">Téma úspešne importovaná!</string>
+    <string name="settings__theme_manager__theme_export_success" comment="Message for theme export success">Téma úspešne importovaná!</string>
+    <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Upraviť tému</string>
+    <string name="settings__theme_editor__name_label" comment="Label of name input">Názov</string>
+    <string name="settings__theme_editor__type_label" comment="Label of type input">Typ</string>
+    <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Pridať skupinu</string>
+    <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Upraviť skupinu</string>
+    <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">Pridať atribút</string>
+    <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">Upraviť atribút</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Upraviť názov témy</string>
+    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Odkaz</string>
+    <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Skupina</string>
+    <string name="settings__theme_editor__value_type_reference_attr" comment="Theme value type sub-field">Atribút</string>
+    <string name="settings__theme_editor__value_type_solid_color" comment="Theme value type">Jednofarebné</string>
+    <string name="settings__theme_editor__value_type_lin_grad" comment="Theme value type">Lineárny sklon</string>
+    <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Tento názov skupiny už v rámci tejto témy existuje. Vyberte si iný.</string>
+    <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Zadajte názov atribútu, ktorý obsahuje len písmená a-z a/alebo A-Z.</string>
+    <string name="settings__theme_editor__error_attr_name_empty" comment="Error text for an empty attribute name">Zadajte názov atribútu.</string>
+    <string name="settings__theme_editor__error_attr_name_already_exists" comment="Error text for a duplicate attribute name">Tento názov atribútu už existuje v rámci tejto skupiny. Zadajte prosím iný.</string>
+    <string name="settings__theme__group_window" comment="Theme group label">Okno &amp; Systém</string>
+    <string name="settings__theme__group_keyboard" comment="Theme group label">Klávesnica</string>
+    <string name="settings__theme__group_key" comment="Theme group label">Kľúč</string>
+    <string name="settings__theme__group_key_specific" comment="Theme group label (%s is specific modifier)">Kľúč (%s)</string>
+    <string name="settings__theme__group_media" comment="Theme group label">Mediálny kontext</string>
+    <string name="settings__theme__group_oneHanded" comment="Theme group label">Jednou rukou</string>
+    <string name="settings__theme__group_popup" comment="Theme group label">Vyskakovacie okno</string>
+    <string name="settings__theme__group_privateMode" comment="Theme group label">Súkromný režim</string>
+    <string name="settings__theme__group_smartbar" comment="Theme group label">Smartbar</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">Táto funkcia vyžaduje hardvérovú podporu riadenia amplitúdy, ktorá vo vašom zariadení chýba.</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version" comment="Preference summary">Táto funkcia vyžaduje podporu ovládania amplitúdy, ktorá je k dispozícii len v systéme Android 8.0 alebo novšom.</string>
+    <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Vibrácie pri stlačení tlačidla</string>
+    <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Vibrácie pri dlhom stlačení tlačidla</string>
+    <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Kľúčové opakované vibrácie</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_swipe__label" comment="Preference title">Vibrácie pri posúvaní gestom</string>
+    <string name="pref__input_feedback__haptic_feat_gesture_moving_swipe__label" comment="Preference title">Vibrácie pri posúvaní gestom</string>
+    <string name="pref__input_feedback__any_feat_key_press__summary" comment="Preference summary">Napr. Klávesy, tlačidlá, karty emoji</string>
+    <string name="pref__input_feedback__any_feat_key_long_press__summary" comment="Preference summary">Napr. Vyskakovanie menu</string>
+    <string name="pref__input_feedback__any_feat_key_repeated_action__summary" comment="Preference summary">Napr. Kláves delete</string>
+    <string name="pref__input_feedback__any_feat_gesture_swipe__summary" comment="Preference summary">nerealizované</string>
+    <string name="pref__input_feedback__any_feat_gesture_moving_swipe__summary" comment="Preference summary">Napr. Ovládanie kurzora potiahnutím</string>
+    <string name="pref__keyboard__number_row__label" comment="Preference title">Číselný riadok</string>
+    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Naznačený číselný rad</string>
+    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Naznačené symboly</string>
+    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Zobrazenie pomocného kľúča</string>
+    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Zobrazí konfigurovateľný pomocný kláves vedľa medzerníka</string>
+    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Akcia užitočného kľúča</string>
+    <!-- About UI strings -->
+    <!-- Assets strings -->
+    <!-- Setup UI strings -->
+    <!-- Crash Dialog strings -->
+    <!-- Clipboard strings -->
+    <!-- glide strings -->
+    <!-- Screen orientation strings -->
+    <!-- State strings -->
+    <!-- Enum label and description strings -->
+    <!-- Unit strings (symbols) -->
+    <!-- Unit strings (written words) -->
+</resources>
