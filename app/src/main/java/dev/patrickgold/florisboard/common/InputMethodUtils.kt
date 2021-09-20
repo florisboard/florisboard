@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime
+package dev.patrickgold.florisboard.common
 
 import android.content.Context
 import android.content.Intent
+import android.database.ContentObserver
 import android.provider.Settings
 import android.view.inputmethod.InputMethodManager
 import dev.patrickgold.florisboard.BuildConfig
@@ -67,6 +68,30 @@ object InputMethodUtils {
                 selectedImeId == IME_ID
             }
         }
+    }
+
+    fun startObserveIsFlorisBoardEnabled(context: Context, observer: ContentObserver) {
+        val resolver = context.contentResolver ?: return
+        resolver.registerContentObserver(
+            Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false, observer
+        )
+    }
+
+    fun stopObserveIsFlorisBoardEnabled(context: Context, observer: ContentObserver) {
+        val resolver = context.contentResolver ?: return
+        resolver.unregisterContentObserver(observer)
+    }
+
+    fun startObserveIsFlorisBoardSelected(context: Context, observer: ContentObserver) {
+        val resolver = context.contentResolver ?: return
+        resolver.registerContentObserver(
+            Settings.Secure.getUriFor(Settings.Secure.DEFAULT_INPUT_METHOD), false, observer
+        )
+    }
+
+    fun stopObserveIsFlorisBoardSelected(context: Context, observer: ContentObserver) {
+        val resolver = context.contentResolver ?: return
+        resolver.unregisterContentObserver(observer)
     }
 
     fun showImeEnablerActivity(context: Context) {

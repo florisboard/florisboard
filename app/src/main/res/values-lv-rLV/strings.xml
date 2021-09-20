@@ -402,26 +402,7 @@
     <string name="assets__error__snackbar_message">Kaut kas ir noticis nepareizi</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Iestatīšana</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Iepriekšējais</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Atcelt</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Nākamais</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Pabeigt</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">Labi</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Sveicināti!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Paldies par FlorisBoard izmēģnāšanu! Pirms to sākt izmantot, ir jāpaveic ierastais - jāiespējo sistēmas iestatījumos, jāuzstāda vēlamā valoda/izkārtojums utt… Satraukumam nav pamata - uzstādīšanas vednis vadīs cauri tam visam.</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard pilnībā ciena Tavu privātumu un nevāc nekādus lietotāja datus. Vairāk skatīt šeit:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">FlorisBoard avota kods ir pieejams ikvienam, tāpēc katram ir iespēja pārskatīt, ko FlorisBoard dara fonā. Apskatīt zemāk esošo glabātuves saiti.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Pēdējā lieta pirms uzstādīšanas sākšanas - ja tiek piedzīvotas kādas nepilnības/avārijas/sarežģījumi FlorisBoard vai ir kāds iespēju pieprasījums - jādodas uz GitHub glabātavu, kuras saite ir zemāk, un jāiesniedz pieteikums. Tas palīdz uzlabot visu lietotāju pieredzi.</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Lai uzsāktu iestatīšanu, spied <i>NEXT</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Iespējot FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android ir nepieciešams katru pielāgoto tastatūru pirms izmantošanas pašrocīgi iespējot. Spied pogu zemāk, lai dotos uz <i>Valodas un ievade</i> iestatījumiem, un tad jāpārliecinās, ka \'<i>FlorisBoard</i>\' ir atzīmēts.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard ir veiksmīgi iespējota. Klikšķināt <i>NEXT</i>, lai turpinātu!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Atvērt valodas un ievades iestatījumus</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Padarīt FlorisBoard par noklusējuma</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard tagad ir iespējots sistēmā. Lai to izmantotu, jāpārslēdzas uz FlorisBoard, atlasot to ievades izvēles logā.</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Noklusējuma tastatūra ir veiksmīgi nomainīta uz FlorisBoard!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Pārslēgt tastatūru</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Iestatīšana pabeigta!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard kļūdu ziņojums</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Atvainojamies par neērtībām, bet FlorsBoard avarēja neparedzētas kļūdas dēļ.</string>

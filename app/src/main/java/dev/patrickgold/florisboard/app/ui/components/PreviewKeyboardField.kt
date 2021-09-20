@@ -44,7 +44,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.ui.res.stringRes
-import dev.patrickgold.florisboard.ime.InputMethodUtils
+import dev.patrickgold.florisboard.common.InputMethodUtils
 
 @Composable
 fun PreviewKeyboardField(

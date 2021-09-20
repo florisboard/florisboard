@@ -399,26 +399,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="assets__error__snackbar_message">Terjadi kesalahan</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Persiapan</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Seb</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Batal</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Lanjut</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Selesai</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">Oke</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Selamat datang!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Terima kasih untuk mencoba FlorisBoard! Sebelum Anda bisa menggunakannya, kami harus melakukan hal-hal biasa dan mengaktifkannya di pengaturan sistem, menyetel bahasa/tata letak pilihan Anda, dan lain-lain… Tapi jangan khawatir - pembantu pengaturan akan memandu Anda melalui ini!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard sepenuhnya menghormati privasi Anda dan tidak mengumpulkan data pengguna apapun. Untuk informasi lebih lanjut lihat di sini:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">Kode sumber FlorisBoard dapat diakses oleh siapapun, sehingga Anda dapat memeriksa apa yang FlorisBoard lakukan di belakang. Cek tautan repositori nya berikut ini.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Satu hal terakhir sebelum Anda memulai pengaturan - jika Anda menemukan bug/gangguan/masalah dengan FlorisBoard atau Anda memiliki permintaan fitur - pergilah ke repositori GitHub yang tertaut di bawah dan ajukan masalah. Ini membantu dalam meningkatkan pengalaman untuk semua pengguna!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Untuk memulai persiapan, klik <i>LANJUT</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Aktifkan FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android mengharuskan setiap keyboard kustom harus diaktifkan secara manual sebelum Anda dapat menggunakannya. Klik tombol di bawah untuk membuka settingan <i>Bahasa &amp; masukan</i>, lalu pastikan untuk mencentang \'<i>FlorisBoard</i>\'.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard berhasil diaktifkan. Untuk melanjutkan klik <i>LANJUT</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Buka pengaturan Bahasa &amp; Masukan</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Buat FlorisBoard sebagai default</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard sekarang sudah diaktifkan di sistem Anda. Untuk menggunakannya secara aktif, beralihlah ke FlorisBoard dengan memilihnya di dialog pemilih input!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Berhasil mengalihkan papan ketik default menjadi FlorisBoard!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Beralih papan ketik</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Persiapan selesai!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Laporan kesalahan FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Maaf atas ketidaknyamanan ini, tetapi FlorisBoard mogok karena kesalahan yang tidak terduga.</string>

@@ -417,26 +417,7 @@
     <string name="assets__error__snackbar_message">لقد حدث خطأ ما</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">الإعداد</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">السابق</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">إلغاء</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">التالي</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">إنهاء</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">حسنًا</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">مرحبا!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">شكرا على تجربة FlorisBoard! قبل أن تتمكن من البدء في استخدامه ، يتعين علينا القيام بالأشياء المعتادة وذلك بتمكينه في إعدادات النظام ، وإعداد لغتك / تخطيطك المفضل ، إلخ... ولكن لا تقلق - سيرشدك معالج الإعداد خلال هذا!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">يحترم FlorisBoard خصوصيتك تمامًا ولا يجمع أي بيانات مستخدم. لمزيد من المعلومات انظر هنا:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">مصدر التعليمات البرمجية لـ FlorisBoard متاح للجميع ، لذا يمكنك بسهولة مراجعة ما يفعله FlorisBoard في الخلفية. يرجى مراجعة الرابط الخاص بالمستودع أدناه.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">شيء أخير قبل بدء الإعداد - إذا واجهت أي أخطاء / أعطال / مشكلات في FlorisBoard أو كان لديك طلب ميزة - توجه إلى مستودع GitHub الموجود في الرابط أدناه واطرح مشكلة. هذا يساعد في تحسين التجربة لجميع المستخدمين!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">لبدء الإعداد إضغط على <i>التالي</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">قم بتفعيل FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">يتطلب Android تمكين كل لوحة مفاتيح مخصصة يدويًا قبل أن تتمكن من استخدامها. إضغط على الزر أدناه للتوجه إلى <i>اللغات و الإدخال</i> الإعدادات, ثم تأكد من إختيار \'<i>FlorisBoard</i>\'.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">تم تفعيل FlorisBoard بنجاح. للمواصلة إضغط على <i>التالي</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">فتح إعدادات اللغات و الإدخال</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">جعل FlorisBoard افتراضيًا</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">تم تمكين FlorisBoard الآن في نظامك. لاستخدامه بشكل دائم ، قم بالتبديل إلى FlorisBoard عن طريق تحديده في مربع حوار محدد الإدخال!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">تم تبديل لوحة المفاتيح الإفتراضية إلى FlorisBoard بنجاح!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">تبديل لوحة المفاتيح</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">تم إنهاء الاعداد!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">تقرير حول خطأ في FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">نأسف للإزعاج ، ولكن FlorisBoard تعطل بسبب خطأ غير متوقع.</string>

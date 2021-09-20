@@ -409,26 +409,7 @@
     <string name="assets__error__snackbar_message">Algo salió mal</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Configuración</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Anterior</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Cancelar</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Siguiente</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Terminar</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">OK</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">¡Bienvenido/a!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">¡Gracias por probar FlorisBoard! Antes de que puedas empezar a usarlo, tenemos que hacer lo habitual y habilitarlo en la configuración del sistema, configurar tu idioma/distribución preferida, etc… Pero no te preocupes, ¡el asistente de configuración te guiará a través de esto!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard respeta totalmente su privacidad y no recoge ningún dato de los usuarios. Para más información vea aquí:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">El código fuente de FlorisBoard es accesible al público para cualquiera, así que puedes revisar fácilmente lo que hace FlorisBoard en segundo plano. Mira el enlace del repositorio debajo.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Una última cosa antes de empezar la configuración, si encuentras algún error, fallo o problema con FlorisBoard o tienes una petición de características, dirígete al repositorio GitHub enlazado abajo e informa sobre la incidencia. ¡Esto ayuda a mejorar la experiencia de todos los usuarios!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Para iniciar la configuración, haga clic en <i>SIGUIENTE</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Habilitar FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android requiere que cada teclado personalizado sea habilitado manualmente antes de que puedas usarlo. Haz clic en el botón de abajo para ir a la configuración de <i>Idiomas &amp; introducción de texto</i>, luego asegurate de marcar \'<i>FlorisBoard</i>\'.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard ha sido habilitado con éxito. ¡Para continuar haz clic en <i>SIGUIENTE</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Abrir Idioma &amp; introducción de texto</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Hacer a FlorisBoard el teclado por defecto</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard está ahora habilitado en tu sistema. Para usarlo activamente, ¡cambia a FlorisBoard seleccionándolo en el diálogo del selector de entrada!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">¡Cambió con éxito el teclado por defecto a FlorisBoard!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Cambiar teclado</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">¡Configuración terminada!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Informe de errores de FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Lamentamos los inconvenientes, pero FlorisBoard se ha cerrado inesperadamente por un error.</string>

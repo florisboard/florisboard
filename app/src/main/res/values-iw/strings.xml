@@ -272,26 +272,7 @@
     <string name="assets__error__snackbar_message">משהו השתבש</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">הגדרות</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">הקודם</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">ביטול</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">הבא</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">סיים</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">אישור</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">ברוכים הבאים!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">תודה שניסיתם את FlorisBoard! לפני שנתחיל להשתמש בו, יש לנו כמה דברים להגדיר במערכת, לבחור שפה מועדפת, תצורת מקשים וכו… אבל אל חשש - אנחנו נדריך אתכם לאורך כל ההתקנה!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard מכבד את פרטיותך ואינו אוסף מידע כלל על המשתמשים. למידע נוסף ראו כאן:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">קוד המקור של FlorisBoard נגיש עבור כולם, כך שאתם יכולים לבחון בקלות מה FlorisBoard עושה מאוחרי הקלעים. בדקו את הקישור ל-repo המצורף מטה.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">דבר אחד אחרון לפני שמתחילים - אם אתם נתקלים בבאגים/קריסות/תקלות עם FlorisBoard או שיש להם בקשות לתכולות - פנו אל ה-repo ב-GitHub דרך הקישור שמצורף מטה והגישו דיווח. זה עוזר לשפר את החוויה עבור כל המשתמשים שלנו!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">כדי להתחיל את ההתקנה, לחץ על <i>הבא</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">אפשר את FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">אנדרואיד דורש הפעלה ידנית של כל מקלדת המותאמת אישית על מנת שיהיה ניתן להשתמש בה. לחצו על הכפתור למטה כדי ללכת להגדות <i>שפה &amp; וקלט </i>, לאחר מכן בחרו את \'<i>FlorisBoard</i>\'.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard הופעל בהצלחה. להמשך לחץ על <i>הבא</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">פתח שפה &amp; והגדרות קלט</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">הפוך את FlorisBoard לברירת המחדל</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard פעיל כעת במערכת. על מנת להשתמש בו בצורה אקטיבית, עברו לFlorisBoard על ידי בחירתו בדיאלוג בחירת הקלט!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">מקלדת ברירת המחדל הוחלפה בהצחלה למקלדת של FlorisBoard!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">החלף מקלדת</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">ההתקנה הושלמה!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard דוח שגיאה</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">מצטער על אי הנוחות, אך FlorisBoard קרס בגלל שגיאה לא צפויה.</string>

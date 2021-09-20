@@ -347,26 +347,7 @@
     <string name="assets__error__snackbar_message">یک چیزی اشتباه پیش رفت</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">راه‌اندازی</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">قبلی</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">لغو</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">بعدی</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">پایان</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">تأیید</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">خوش آمدید!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">ممنون از اینکه فلوریس بورد را امتحان کردین! قبل از اینکه شروع به استفاده کنید، ما باید یک سری کار های همیشگی را انجام داده و برنامه را در تنظیمات دستگاه فعال کنیم، تنظیم زبان/چیدمان و… ولی نگران نباشید - تنظیم جادویی شما را در این کار راهنمایی خواد کرد!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">فلوریس بورد به طور کامل به حریم خصوصی شما احترام می گذارد و هیچ اطلاعاتی از کاربر دریافت نمی کند. برای اطلاعات بیشتر به اینجا مراجعه کنید:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">کد منبع فلوریس بورد به طور عمومی در دسترس همگان قرار دارد، پس شما می توانید به راحتی اینکه پشت صحنه فلوریس چه اتفاقی می‌افتد را مرور کنید. لینک مخزن را از زیر مشاهده کنید.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">یک تنظیم پایانی قبل از شروع - اگر شما به خطا/خراب شدنی/مشکلی با فلوریس بورد برخورد کردید یا درخواست ویژگی خاصی را دارید - به مخزن GitHub که لینکش در زیر واقع شده بروید و مشکل را استناد کنید. این به تجربه همه کاربران کمک می کند!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">برای شروع راه انداز تنظیمات روی <i>بعدی</i> کلیک کنید.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">فعال سازی فبوریس بورد</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">در اندروید برنامه های کیبورد سفارشی باید به طور دستی قبل از استفاده فعال شوند. روی دکمه زیر کلیک کنید تا به تنظیمات <i>زبان &amp; ورودی</i> بروید، بعد مطمئن شوید که <i>فلوریس بورد</i> را چک و فعال کرده‌اید.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">فلوریس بورد با موفقیت فعال شد. برای ادامه روی <i>بعدی</i> بزنید!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">باز کردن زبان &amp; تنظیمات ورودی</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">تنظیم فلوریس بورد به پیش فرض</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">هم اکنون فلوریس بورد در سیستم شما فعال شده است. برای استفاده از آن، فلوریس بورد را در بخش انتخاب روش ورودی، انتخاب کنید!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">با موفقیت کیبورد پیش فرض را به فلوریس بورد تغییر داده شد!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">تغییر صفحه‌کلید</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">نصب تمام شد!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">گزارش خطای فلوریس بورد</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">با عرض پوزش برای این مشکل به وجود آمده، اما فلوریس بورد به یک دلیل پیش‌بینی نشده، متوقف شد.</string>

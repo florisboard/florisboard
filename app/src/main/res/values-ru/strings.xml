@@ -404,26 +404,7 @@
     <string name="assets__error__snackbar_message">Что-то пошло не так</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Настройка</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Назад</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Отмена</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Далее</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Готово</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">ОК</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Добро пожаловать!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Спасибо, что попробовали FlorisBoard! Перед тем, как вы сможете начать использовать FlorisBoard, мы должны сделать обычные вещи и включить их в настройках системы, настроить предпочтительный язык/раскладку и т.д. Но не волнуйтесь, мастер настройки проведёт вас через это!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard уважает вашу конфиденциальность и не собирает никакие пользовательские данные. Подробнее здесь:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">Исходный код FlorisBoard общедоступен для каждого, поэтому вы можете легко проверить, что делает FlorisBoard в фоновом режиме. Проверьте репозиторий по ссылке ниже.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Последняя вещь перед началом настройки: если у вас возникнут какие-либо ошибки/сбои/проблемы с FlorisBoard или у появятся предложения, перейдите в репозиторий GitHub по ссылке ниже и сообщите о проблеме. Это будет полезно для всех пользователей!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Для начала настройки нажмите <i>Далее</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Включить FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android требует, чтобы каждая пользовательская клавиатура была включена вручную, прежде чем вы сможете её использовать. Нажмите кнопку ниже, чтобы перейти в <i>Настройки языка и ввода</i>, затем убедитесь, что установили флажок напротив \"<i>FlorisBoard</i>\".</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard успешно включён. Для продолжения нажмите <i>Далее</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Открыть настройки \"Язык и ввод\"</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Сделать FlorisBoard клавиатурой по умолчанию</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard теперь включён в вашей системе. Чтобы активно использовать его, переключитесь на FlorisBoard, выбрав его в диалоговом окне выбора ввода!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Клавиатура по умолчанию успешно переключена на FlorisBoard!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Переключить клавиатуру</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Установка завершена!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Сообщение об ошибке FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Извините за неудобства, но в FlorisBoard произошёл сбой из-за непредвиденной ошибки.</string>

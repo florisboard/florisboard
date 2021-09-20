@@ -183,6 +183,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "internal__home_is_beta_toolbox_collapsed",
             default = false,
         )
+        val isImeSetUp = boolean(
+            key = "internal__is_ime_set_up",
+            default = false,
+        )
     }
 
     val keyboard = Keyboard()

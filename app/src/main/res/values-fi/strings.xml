@@ -241,26 +241,7 @@
     <string name="assets__error__snackbar_message">Jokin meni pieleen</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Asennus</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Edellinen</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Peruuta</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Seuraava</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Valmis</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">OK</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Tervetuloa!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Kiitos kun otit käyttöön FlorisBoardin! Ennen kuin aloitat sen käytön, täytyy se tavalliseen tapaan ottaa käyttöön järjestelmän asetuksista, asettaa haluamasi kieli ja näppäinasettelu jne... Mutta ei huolta - ohjattu asennus opastaa sinua!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard kunnioittaa täysin yksityisyyttäsi eikä kerää mitään käyttäjädataa. Lisää tietoa täältä:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">FlorisBoardin lähdekoodi on julkisesti kaikkien saatavilla, joten voit itse arvioida mitä FlorisBoard on ohjelmoitu tekemään. Avaa tietovarasto allaolevasta linkistä.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Yksi asia ennen kuin aloitat asennuksen - jos törmäät bugeihin/ongelmiin tai sovellus kaatuu tai sinulla on toiveita lisäominaisuuksista - suuntaa GitHub-tietovarastoon allaolevasta linkistä ja lähetä uusi aihe. Tämä auttaa käyttökokemuksen parantamista kaikille käyttäjille!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Klikkaa <i>SEURAAVA</i> aloittaaksesi asennuksen.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Ota FlorisBoard käyttöön</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android vaatii, että jokainen erikseen asennettu näppäimistösovellus otetaan käyttöön manuaalisesti. Klikkaa allaolevaa painiketta avataksesi <i>Kielet ja syöttötapa</i>-asetukset ja varmista, että olet valinnut \'<i>FlorisBoardin</i>\'.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard on otettu onnistuneesti käyttöön. Klikkaa <i>SEURAAVA</i> jatkaaksesi!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Avaa Kielet ja syöttötapa-asetukset</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Käytä FlorisBoardia oletuksena</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">Florisboard on nyt otettu järjestelmän käyttöön. Käyttääksesi sitä aktiivisesti, valitse FlorisBoard syöttötavaksi valintaikkunassa!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Oletusnäppäimistö muutettu FlorisBoardiksi!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Vaihda näppäimistö</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Asennus valmis!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoardin virheraportti</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Pahoittelut, FlorisBoard kaatui odottamattoman virheen vuoksi.</string>

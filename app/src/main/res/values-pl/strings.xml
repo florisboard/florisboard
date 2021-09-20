@@ -243,26 +243,7 @@
     <string name="assets__error__invalid">Nieprawidłowy</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Konfiguracja</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Poprzedni</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Anuluj</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Dalej</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Zakończ</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">OK</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Witaj!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Dziękujemy za wypróbowanie FlorisBoard! Zanim zaczniesz go używać, musimy zrobić to, co zwykle - włączyć go w ustawieniach systemu, ustawić preferowany język/layout, itd... Ale nie martw się - kreator konfiguracji poprowadzi Cię przez to!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard w pełni szanuje Twoją prywatność i nie gromadzi żadnych danych użytkowników. Więcej informacji można znaleźć tutaj:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">Kod źródłowy FlorisBoard jest publicznie dostępny dla każdego, więc możesz łatwo sprawdzić, co FlorisBoard robi w tle. Sprawdź link do repozytorium poniżej.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Ostatnia rzecz zanim zaczniesz konfigurację - jeśli napotkasz jakiekolwiek błędy/problemy z FlorisBoard lub masz prośbę o dodanie jakiejś funkcji - przejdź do repozytorium GitHub połączonego poniżej i zgłoś problem. Pomoże to w poprawie doświadczenia dla wszystkich użytkowników!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Aby rozpocząć konfigurację, kliknij na <i>Dalej</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Włącz FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android wymaga, aby każda niestandardowa klawiatura była ręcznie włączona, zanim będzie można z niej korzystać. Kliknij poniższy przycisk, aby przejść do ustawień <i>Język &amp; Wprowadzanie</i>, a następnie upewnij się, że zaznaczyłeś \'<i>FlorisBoard</i>\'.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard został pomyślnie włączony. Aby kontynuować kliknij <i>Dalej</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Otwórz język &amp; Ustawienia wejściowe</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Ustaw klawiaturę FlorisBoard jako domyślną</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard jest teraz włączony w Twoim systemie. Aby aktywnie z niego korzystać, przełącz się na FlorisBoard, wybierając go w oknie dialogowym wyboru!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Udało się zmienić domyślną klawiaturę na FlorisBoard!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Przełącz klawiaturę</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Konfiguracja ukończona!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Pobierz raport o błędach</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zamknij</string>

@@ -322,26 +322,7 @@
     <string name="assets__error__snackbar_message">Er is iets mis gegaan</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Setup</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Vorige</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Annuleren</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Volgende</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Einde</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">OK</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Welkom!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Bedankt voor het uitproberen van FlorisBoard! Voordat u de app kan beginnen gebruiken, moeten we de gebruikelijke stappen doorlopen: inschakelen in de systeeminstellingen, instellen van uw voorkeur taal/indeling, etc. Maar geen zorgen - de setup-wizard zal u hierbij begeleiden!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard respecteert uw privacy ten volle en verzamelt geen gebruikersgegevens. Voor meer informatie, kijk hier:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">De broncode voor FlorisBoard is voor iedereen toegankelijk, zodat u gemakkelijk kan bekijken wat FlorisBoard doet op de achtergrond. Bekijk de repository link hieronder.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Nog één ding voordat u start met de setup: als u bugs/crashes/problemen tegenkomt met FlorisBoard of als u een feature wenst, ga dan naar de GitHub repository via de link hieronder en open een issue. Dit helpt bij het verbeteren van de ervaring voor alle gebruikers!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Om de setup te starten, klikt u op <i>VOLGENDE</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">FlorisBoard inschakelen</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android vereist dat elk aangepast toetsenbord handmatig moet worden ingeschakeld voordat u het kunt gebruiken. Klik op de onderstaande knop om naar de <i>Taal- &amp; Invoer</i> instellingen te gaan en selecteer vervolgens \'<i>FlorisBoard</i>\'.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard is succesvol ingeschakeld. Om door te gaan, klik op <i>VOLGENDE</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Open Taal- &amp; invoerinstellingen</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Stel FlorisBoard als standaard in</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard is nu ingeschakeld in uw systeem. Om het actief te gebruiken, schakelt u over naar FlorisBoard door het te selecteren in het dialoogvenster in de input-selector!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Met succes het standaard toetsenbord vervangen door FlorisBoard!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Toetsenbord wisselen</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Klaar!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Foutenrapport FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Sorry voor het ongemak, maar FlorisBoard is gecrashed omwille van een onverwachte fout.</string>

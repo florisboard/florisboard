@@ -303,26 +303,7 @@
     <string name="assets__error__snackbar_message">Valami rosszul sült el</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Beállítás</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Előző</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Mégse</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Következő</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Befejezés</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">OK</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Üdvözöljük!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Köszönjük, hogy kipróbálta FlorisBoard-ot! Mielőtt elkezdené használni, meg kell csinálnunk a szokásos dolgokat, engedélyeznünk kell a rendszerbeállításokban, be kell állítanunk a kívánt nyelvet/elrendezést stb.... de ne aggódjon a telepítő varázsló végigvezeti önt ezen!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">A FlorisBoard teljes mértékben tiszteletben tartja az Ön személyes adatait, és nem gyűjt felhasználói adatokat. További információkért látogassa meg:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">A FlorisBoard forráskódja bárki számára nyilvánosan elérhető, így könnyen áttekintheti, hogy mit csinál a FlorisBoard a háttérben. Nézze meg a tároló linkjét lejjebb.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Még egy utolsó dolog a beállítás megkezdése előtt - ha bármilyen hibával/összeomlással/problémával találkozik a FlorisBoard alkalmazásban, vagy ha egy funkciót szeretne kérni - menjen át az alább linkelt GitHub tárolóba, és nyújtson be egy hibajelentést. Ez segít javítani a felhasználói élményt!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">A beállítás megkezdéséhez kattintson a <i>Következő</i> gombra.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">FlorisBoard engedélyezése</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Az Android megköveteli, hogy minden egyéni billentyűzetet manuálisan engedélyezzen, mielőtt használná. Kattintson az alábbi gombra a <i>Nyelv és bemenet</i> beállításokhoz, majd jelölje be a \'<i>FlorisBoard</i> \'-ot.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">A FlorisBoard sikeresen engedélyezve lett. A folytatáshoz kattintson a <i>Következő</i> gombra!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Nyelv és bemenet beállítások megnyitása</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">FlorisBoard alapértelmezetté tétele</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard most már engedélyezve van a rendszerben. Ahhoz, hogy aktívan használja, váltson a FlorisBoard-ra annak kiválasztásával azt a bevitel választó párbeszédablakban!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Sikeresen átváltotta az alapértelmezett billentyűzetet Florisboardra!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Billentyűzet váltása</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">A beállítás kész!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard hibajelentés</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Elnézést a kellemetlenségért, de a FlorisBoard összeomlott egy váratlan hiba miatt.</string>

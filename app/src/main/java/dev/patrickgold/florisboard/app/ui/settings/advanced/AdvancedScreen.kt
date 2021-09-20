@@ -156,6 +156,12 @@ fun AdvancedScreen() = FlorisScreen(title = stringRes(R.string.settings__advance
             onClick = { setShowDialog(true) },
             enabledIf = { prefs.devtools.enabled isEqualTo true },
         )
+        Preference(
+            title = stringRes(R.string.pref__devtools__reset_flag__label, "flag_name" to "isImeSetUp"),
+            summary = stringRes(R.string.pref__devtools__reset_flag_is_ime_set_up__summary),
+            onClick = { prefs.internal.isImeSetUp.set(false) },
+            enabledIf = { prefs.devtools.enabled isEqualTo true },
+        )
     }
 
     if (showDialog) {

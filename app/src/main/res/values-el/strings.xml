@@ -408,26 +408,7 @@
     <string name="assets__error__snackbar_message">Κάτι πήγε στραβά</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Ρύθμιση</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Προηγ</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Ακύρωση</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Επόμενο</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Ολοκλήρωση</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">ΟΚ</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Καλώς ήλθατε!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Ευχαριστώ που δοκιμάζετε το FlorisBoard! Προτού μπορέσετε να ξεκινήσετε να το χρησιμοποιείτε, πρέπει να κάνουμε τα συνηθισμένα πράγματα και να το ενεργοποιήσουμε στις ρυθμίσεις συστήματος, να ορίσουμε τη προτιμώμενη γλώσσα/διάταξη, κτλ... Άλλα μην ανησυχείτε - ο βοηθός ρύθμισης θα σας καθοδηγήσει σε αυτό!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">Το FlorisBoard σέβεται πλήρως την ιδιωτικότητά σας και δε συλλέγει καθόλου δεδομένα χρήστη. Για περισσότερες πληροφορίες δείτε εδώ:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">Ο πηγαίος κώδικας του FlorisBoard είναι δημοσίως προσβάσιμος για τον καθένα, οπότε μπορείτε εύκολα να εξετάσετε τι κάνει το FlorisBoard στο παρασκήνιο. Ρίξτε μία ματιά στον σύνδεσμο αποθετηρίου, παρακάτω.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Κάτι τελευταίο προτού ξεκινήσετε τη ρύθμιση - εάν αντιμετωπίσετε προβλήματα/καταρρεύσεις/θέματα με το FlorisBoard ή εάν έχετε να προτείνετε κάποιο χαρακτηριστικό - μεταβείτε στο αποθετήριο του GitHub με τον παρακάτω σύνδεσμο και υποβάλλετε ένα θέμα. Αυτό βοηθάει στη βελτίωση της εμπειρίας για όλους τους χρήστες!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Για να ξεκινήσετε τη ρύθμιση, πατήστε<i>ΕΠΟΜΕΝΟ</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Ενεργοποίηση FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Το Android απαιτεί κάθε ειδικό πληκτρολόγιο να ενεργοποιείται χειροκίνητα πριν τη χρήση. Πατήστε το παρακάτω κουμπί για να μεταβείτε στις ρυθμίσεις <i>Γλώσσας &amp; Εισαγωγής</i>, έπειτα φροντίστε να επιλέξετε το \'<i>FlorisBoard</i>\'.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">Το FlorisBoard έχει ενεργοποιηθεί επιτυχώς. Για να συνεχίσετε πατήστε <i>ΕΠΟΜΕΝΟ</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Άνοιγμα ρυθμίσεων Γλώσσας &amp; Εισαγωγής</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Ορισμός FlorisBoard ως προεπιλογή</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">Το FlorisBoard είναι τώρα ενεργοποιημένο στο σύστημα σας. Για να το χρησιμοποιήσετε ενεργά, αλλάξτε στο FlorisBoard επιλέγοντας το στο διάλογο επιλογέα εισαγωγής!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Αλλάξατε επιτυχώς το προεπιλεγμένο πληκτρολόγιο στο FlorisBoard!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Εναλλαγή πληκτρολογίου</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Η ρύθμιση ολοκληρώθηκε!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Αναφορά σφάλματος FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Συγγνώμη για την ταλαιπωρία, αλλά το FlorisBoard έχει τερματιστεί απρόοπτα εξαιτίας ενός απρόσμενου σφάλματος.</string>

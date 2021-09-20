@@ -32,10 +32,6 @@
     <string name="about__title" comment="Title of About activity">ⵅⴼ</string>
     <!-- Assets strings -->
     <!-- Setup UI strings -->
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">ⵙⵔ</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">ⵙⵎⴷ</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">ⵡⴰⵅⵅⴰ</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">ⴱⵔⵔⴽ!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">ⵔⴳⵍ</string>
     <!-- Clipboard strings -->

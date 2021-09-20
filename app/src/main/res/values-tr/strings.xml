@@ -409,26 +409,7 @@
     <string name="assets__error__snackbar_message">Bir şeyler ters gitti</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Kurulum</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Önceki</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">İptal</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Sonraki</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Bitir</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">Tamam</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Hoş geldiniz!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">FlorisBoard\'u denediğiniz için teşekkür ederiz! Kullanmaya başlamadan önce, her zamanki şeyleri yapmak ve sistem ayarlarından aktive etmek, tercih ettiğiniz dili/düzeni ayarlamak (vb.) zorundayız. Ama endişelenmeyin, kurulum sihirbazı bu konuda size yol gösterecek!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard gizliliğinize tamamen saygı duyar ve hiçbir kullanıcı verisi toplamaz. Daha fazla bilgi için:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">FlorisBoard’un kaynak kodu herkesin erişebileceği şekilde herkese açık, böylece FlorisBoard’un arkaplanda ne yaptığını kolayca gözden geçirebilirsiniz. Kodlara aşağıdaki linkten erişebilirsiniz.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Kuruluma geçmeden önce son bir şey daha var - eğer FlorisBoard ile ilgili herhangi bir hata/çökme/sorun ile karşılaşırsanız veya bir tavsiyeniz var ise - aşağıdaki bağlantıdan GitHub deposuna ulaşabilir ve sorunu bildirebilirsiniz. Bu tüm kullanıcılar için deneyimi iyileştirmemize yardımcı olacaktır!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Kurulumu başlatmak için <i>SONRAKİ</i> tuşuna basın.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">FlorisBoard’u Etkinleştir</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Özel bir klavye kullanmadan önce Android bunu elle etkinleştirmenizi gerektirir. Aşağıdaki tuşa tıklayarak <i>Dil &amp; Giriş</i> ayarlarına gidin ve \'<i>FlorisBoard</i>\'u seçtiğinizden emin olun.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard başarılı bir şekilde aktifleştirildi. Devam etmek için <i>Sonraki</i> tuşuna basın!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Dil &amp; Giriş ayarlarını aç</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">FlorisBoard’u varsayılan yap</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard sisteminizde etkinleştirildi. Aktifçe kullanmak için giriş seçme diyaloğunda FlorisBoard’u seçerek ona geçin!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Varsayılan klavye başarılı bir şekilde FlorisBoard’a geçirildi!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Klavyeyi değiştir</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Kurulum tamamlandı!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard hata raporu</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Üzgünüz, ancak FlorisBoard bilinmeyen bir hatadan dolayı çöktü.</string>

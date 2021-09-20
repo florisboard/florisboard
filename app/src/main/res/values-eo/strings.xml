@@ -132,15 +132,7 @@
     <string name="assets__error__invalid">Nevalida</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Agordaĵo</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Antaŭa</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Nuligi</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Sekva</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Finigi</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">Bone</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Bonvenon!</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Aktivigi FlorisBoard</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Malfermi Lingvajn &amp; Enigajn agordojn</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Ŝalti klavaro</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Fermi</string>
     <!-- Clipboard strings -->

@@ -54,9 +54,6 @@
     <string name="assets__error__invalid">유효하지 않음</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">설정</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">이전</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">취소</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">다음</string>
     <!-- Crash Dialog strings -->
     <!-- Clipboard strings -->
     <!-- glide strings -->

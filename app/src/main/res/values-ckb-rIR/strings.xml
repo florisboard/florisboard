@@ -409,27 +409,7 @@
     <string name="assets__error__snackbar_message">هەڵەیەکی نەزانراو ڕوویدا</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">دامەزراندن</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">پێشتر</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">پاشگەزبونەوە</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">دواتر</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">تەواو</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">باشە</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">بەخێربێیت!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">سوپاس بۆ بەکارهێنانی تەختەکلیلی FlorisBoard! بۆ بەکارهێنانی تەختەکلیلەکەو نووسین پێی سەرەتا پێویستە دایمەزرێنت لەسەر ئامێرەکەت، بۆ چالاککردن و هەڵبژاردن بە بنەڕەتی - هەنگاو بە هەنگاو ڕێنمونی دەکرێیت!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">تەختەکلیلی FlorisBoard بەتەواوی پارێزراوە و ڕێز لە زانیاری و داتای بەکارهێنەرانی دەگرێت، بۆ زانیاری زیاتر سەردانی ئێرە بکە:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">کۆدی سەرچاوەکراوەی تەختەکلیلی FlorisBoard بەردەستە بۆ هەمووان بەگشتی، کە دەتوانرێ بزانرێت سەرچاوەکانی چیەو چۆن بەرهەم هاتووە، لەڕێی ئەو لینکەی خوارەوە ئەتوانی سەردانی بکەیت.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">پێش ئەوەی دەست بە دامەزراندنەکە بکەیت - ئەگەر تووشی هەر کێشەیەکی وەک جامبوون/تێکچون/وەستان  لەگەڵ FlorisBorad دا هەبوو یان داواکارییەکی تایبەتت هەیە - سەردانی GitHub تایبەتی ئێمە بکە کە لە خوارەوە لینک دانراوە ، ئەمە یارمەتی دەدات لە باشترکردنی ئەزموون بۆ هەموو بەکارهێنەران!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">بۆ دەستپێکردنی دامەزراندن پەنجە بنێ بە <i>دواتر</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">چالاککردنی تەختەکلیل</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">سیستەمی ئەندرۆید داوا دەکات کە هەموو تەختەکلیلێکی تایبەت بە دەستی چالاک بکرێت پێش ئەوەی بتوانیت بەکاری بهێنیت.
-کرتە لەسەر دوگمەی خوارەوە بکە بۆ ئەوەی بچیتە سەر <i> زمان و تەختەکلیل </i>، پاشان تەختەکلیلی \'<i>FlorisBoard</i>\'. چالاک بکە.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">تەختەکلیلەکە بە سەرکەوتوویی چالاککرا، بۆ بەردەوامبوون پەنجەبنێ بە <i>دواتر</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">ڕێکخستنی تەختەکلیل و زمان</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">دانان وەک تەختەکلیلی بنەڕەتی</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard ئێستا چالاککراوە لە سیستەمەکەتدا. بۆ بەکارهێنانی بنەڕەتی، بیگۆڕە بۆ FlorisBoard بە دیاریکردنی لە بەشی تەختەکلیلەکاندا.</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">تەختەکلیلی FlorisBoard بە سەرکەوتوویی هەڵبژێردا!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">گۆڕینی تەختەکلیل</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">دامەزراندن کۆتایی هات!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBorad ڕاپۆرتی هەڵەی</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">بەداخەوە، بەهۆی هەڵەیەکی لەناکاو تەختەکلیلی FlorisBoard لەکارکەوت.</string>

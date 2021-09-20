@@ -263,26 +263,7 @@
     <string name="assets__error__snackbar_message">Tiştek şaş çû</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Damezirandin</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Paşve</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Bişûndekirin</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Pêşve</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Qedandin</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">Başe</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Hûn bi xêr hatin!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Spas ji bo ceribandina FlorisBoard! Berî ku hûn dest bi karanîna wê bikin, pêdivî ye ku em tiştên asayî bikin û wê di mîhengên pergalê de çalak bikin, ziman / şêwaza weya bijarte saz bikin, hwd... Lê xeman nexwe - sêrbazê sazkirinê dê we bi vî rengî rêber bike!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard nepenîtiya we bi tevahî rêz dike û daneya bikarhênerek berhev nake. Ji bo bêtir agahdariyê li vir bibînin:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">Koda çavkaniyê ji bo FlorisBoard ji her kesî re bi gelemperî tête peyda kirin, ji ber vê yekê hûn dikarin tiştê ku FlorisBoard di paşiya paşîn de dike bi hêsanî binirxînin. Zencîreya depoyê ya li jêr binêrin.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Tiştek paşîn berî ku hûn sazkirinê dest pê bikin - heke hûn bi FlorisBoard re her çewtî / qeza / pirsgirêkek rû bidin an daxwazek weya taybetmendiyê heye - serî li depoya GitHub a li jêr ve girêdayî ye û pirsgirêkek pel bikin. Ev di çêtirkirina ezmûnê de ji bo hemî bikarhêneran dibe alîkar!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Ji bo destpêkirina sazkirinê, &lt;i&gt; PIŞTÎ &lt;/ &lt;/i&gt; bikirtînin.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Bikêrkirin FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android hewce dike ku berî ku hûn bikar neynin pêdivî ye ku her klavyeyek xwerû bi destan were çalak kirin. Bişkojka jêrîn bikirtînin da ku biçin <i> Ziman &amp; amp; Sazkirinan </i> binivîse, dûv re bila \'<i> FlorisBoard </i>\' venêrin.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard bi serkeftî hate çalak kirin. Ji bo berdewamiyê bikirtînin <i>PIŞTÎ</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Ziman Vekirî &amp; amp; Mîhengên têketinê</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">FlorisBoard wekî bixweber bikin</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard niha di pergala we de çalak e. Ji bo ku wê bi çalak bi kar bîne, bi FlorisBoard ê ve biguhere û wê di dialoga hilbijêrê têketê de hilbijêre!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Bi serkeftî klavyeya xwerû li FlorisBoardê guherand!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Switch keyboard</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Sazkirin qediya!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Raporta xeletiya FlorisBoard</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Bigire</string>
