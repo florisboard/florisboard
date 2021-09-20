@@ -36,6 +36,7 @@
       { "$": "auto_text_key", "code":  71887, "label": "𑣏" },
       { "$": "auto_text_key", "code":  71872, "label": "𑣀" },
       { "$": "auto_text_key", "code":  71885, "label": "𑣍" },
+      { "$": "auto_text_key", "code":  71888, "label": "𑣐" },
       { "$": "auto_text_key", "code":  71895, "label": "𑣗" },
       { "$": "auto_text_key", "code":  71891, "label": "𑣓" },
       { "$": "auto_text_key", "code":  71894, "label": "𑣖" }
