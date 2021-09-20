@@ -21,13 +21,13 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.res.stringRes
 import dev.patrickgold.florisboard.res.AssetManager
 
 @Composable
-fun ThirdPartyLicensesScreen() = FlorisScreen(title = stringResource(R.string.about__third_party_licenses__title)) {
+fun ThirdPartyLicensesScreen() = FlorisScreen(title = stringRes(R.string.about__third_party_licenses__title)) {
     SelectionContainer(modifier = Modifier.fillMaxWidth()) {
         val assetManager = AssetManager.defaultOrNull()
         Text(

@@ -23,25 +23,25 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.res.stringRes
 import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.FlorisRef
 
 @Composable
-fun ProjectLicenseScreen() = FlorisScreen(title = stringResource(R.string.about__project_license__title)) {
+fun ProjectLicenseScreen() = FlorisScreen(title = stringRes(R.string.about__project_license__title)) {
     SelectionContainer(modifier = Modifier.fillMaxWidth()) {
         val assetManager = AssetManager.defaultOrNull()
         val licenseText = assetManager?.loadTextAsset(
             FlorisRef.assets("license/project_license.txt")
         )?.getOrElse {
-            stringResource(R.string.about__project_license__error_license_text_failed, it.message ?: "")
-        } ?: stringResource(
+            stringRes(R.string.about__project_license__error_license_text_failed, "error_message" to (it.message ?: ""))
+        } ?: stringRes(
             id = R.string.about__project_license__error_license_text_failed,
-            stringResource(R.string.about__project_license__error_reason_asset_manager_null)
+            "error_message" to stringRes(R.string.about__project_license__error_reason_asset_manager_null)
         )
         Text(
             text = licenseText,

@@ -35,13 +35,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.res.stringRes
 import dev.patrickgold.florisboard.common.launchActivity
 import dev.patrickgold.florisboard.common.launchUrl
 import dev.patrickgold.florisboard.oldsettings.SettingsMainActivity
@@ -50,7 +50,7 @@ import dev.patrickgold.jetpref.ui.compose.Preference
 
 @Composable
 fun HomeScreen() = FlorisScreen(
-    title = stringResource(R.string.settings__home__title, stringResource(R.string.floris_app_name)),
+    title = stringRes(R.string.settings__home__title),
     backArrowVisible = false,
 ) {
     val navController = LocalNavController.current
@@ -98,22 +98,22 @@ fun HomeScreen() = FlorisScreen(
     }
     Preference(
         iconId = R.drawable.ic_keyboard,
-        title = stringResource(R.string.settings__keyboard__title),
+        title = stringRes(R.string.settings__keyboard__title),
         onClick = { navController.navigate(Routes.Settings.Keyboard) },
     )
     Preference(
         iconId = R.drawable.ic_assignment,
-        title = stringResource(R.string.settings__clipboard__title),
+        title = stringRes(R.string.settings__clipboard__title),
         onClick = { navController.navigate(Routes.Settings.Clipboard) },
     )
     Preference(
         iconId = R.drawable.ic_build,
-        title = stringResource(R.string.settings__advanced__title),
+        title = stringRes(R.string.settings__advanced__title),
         onClick = { navController.navigate(Routes.Settings.Advanced) },
     )
     Preference(
         iconId = R.drawable.ic_info,
-        title = stringResource(R.string.about__title),
+        title = stringRes(R.string.about__title),
         onClick = { navController.navigate(Routes.Settings.About) },
     )
 }

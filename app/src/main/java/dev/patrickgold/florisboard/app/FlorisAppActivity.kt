@@ -32,7 +32,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -40,6 +39,7 @@ import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.PreviewKeyboardField
 import dev.patrickgold.florisboard.app.ui.components.SystemUi
+import dev.patrickgold.florisboard.app.ui.res.ProvideLocalizedResources
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.util.AndroidVersion
@@ -60,7 +60,7 @@ class FlorisAppActivity : ComponentActivity() {
     private val prefs by florisPreferenceModel()
     private var appTheme by mutableStateOf(AppTheme.AUTO)
     private var showAppIcon = true
-    private var appContext by mutableStateOf(this as Context)
+    private var resourcesContext by mutableStateOf(this as Context)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +71,7 @@ class FlorisAppActivity : ComponentActivity() {
         prefs.advanced.settingsLanguage.observe(this) {
             val config = Configuration(resources.configuration)
             config.setLocale(if (it == "auto") FlorisLocale.default() else FlorisLocale.fromTag(it))
-            appContext = createConfigurationContext(config)
+            resourcesContext = createConfigurationContext(config)
         }
         if (AndroidVersion.ATMOST_P) {
             prefs.advanced.showAppIcon.observe(this) {
@@ -82,7 +82,7 @@ class FlorisAppActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, true)
 
         setContent {
-            CompositionLocalProvider(LocalContext provides appContext) {
+            ProvideLocalizedResources(resourcesContext) {
                 FlorisAppTheme(theme = appTheme) {
                     Surface(color = MaterialTheme.colors.background) {
                         SystemUi()
