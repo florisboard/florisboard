@@ -111,8 +111,9 @@ fun InputFeedbackScreen() = FlorisScreen(title = stringRes(R.string.settings__in
         )
         DialogSliderPreference(
             prefs.inputFeedback.hapticVibrationStrength,
-            title = stringRes(R.string.pref__input_feedback__haptic_vibration_duration__label),
-            summary = InputFeedbackManager.generateVibrationStrengthErrorSummary() ?: "{v}",
+            title = stringRes(R.string.pref__input_feedback__haptic_vibration_strength__label),
+            summary = InputFeedbackManager.generateVibrationStrengthErrorSummary() ?:
+                stringRes(R.string.unit__milliseconds__symbol),
             unit = stringRes(R.string.unit__milliseconds__symbol),
             min = 0,
             max = 100,
