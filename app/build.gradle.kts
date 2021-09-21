@@ -134,7 +134,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.0") // possibly remove after settings rework
     implementation("androidx.core:core-ktx:1.6.0")
     implementation("androidx.fragment:fragment-ktx:1.3.6") // possibly remove after settings rework
-    implementation("androidx.navigation:navigation-compose:2.4.0-alpha08")
+    implementation("androidx.navigation:navigation-compose:2.4.0-alpha09")
     implementation("androidx.preference:preference-ktx:1.1.1") // possibly remove after settings rework
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.18.0")
     implementation("com.google.android.flexbox:flexbox:3.0.0") // possibly remove after settings rework
