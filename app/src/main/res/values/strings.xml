@@ -457,7 +457,7 @@
     <string name="setup__footer__repository" comment="Repository label for URL">Repository</string>
 
     <string name="setup__enable_ime__title">Enable {app_name}</string>
-    <string name="setup__enable_ime__description">Android requires that every custom keyboard is separately enabled before you can use it. Below button will take you to the system <i>Language &amp; Input</i> Settings, then select "{app_name}".</string>
+    <string name="setup__enable_ime__description">Android requires that every custom keyboard is separately enabled before you can use it. Open the System <i>Language &amp; Input</i> Settings, there enable "{app_name}".</string>
     <string name="setup__enable_ime__open_settings_btn">Open System Settings</string>
 
     <string name="setup__select_ime__title">Select {app_name}</string>

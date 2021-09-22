@@ -146,7 +146,7 @@ class FlorisAppActivity : ComponentActivity() {
 
     @Composable
     private fun AppContent() {
-        val isImeSetUp by prefs.internal.isImeSetUp.observeAsState(true)
+        val isImeSetUp by prefs.internal.isImeSetUp.observeAsState()
         val navController = rememberNavController()
         CompositionLocalProvider(
             LocalNavController provides navController,
