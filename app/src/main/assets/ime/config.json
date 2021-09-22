@@ -802,6 +802,15 @@
       "preferred": {
         "characters": "igbo"
       }
+    },
+	  {
+      "id": 3500,
+      "languageTag": "ur-PK",
+      "composer": "appender",
+      "currencySet": "pakistani_rupee",
+      "preferred": {
+        "characters": "qwerty"
+      }
     }
   ]
 }
