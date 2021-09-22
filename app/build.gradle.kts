@@ -139,7 +139,6 @@ dependencies {
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.18.0")
     implementation("com.google.android.flexbox:flexbox:3.0.0") // possibly remove after settings rework
     implementation("com.google.android.material:material:1.4.0") // possibly remove after settings rework
-    implementation("com.jakewharton.timber:timber:4.7.1") // possibly remove after settings rework
     implementation("com.jaredrummler:colorpicker:1.1.0") // possibly remove after settings rework
     implementation("com.nambimobile.widgets:expandable-fab:1.0.2") // possibly remove after settings rework
     implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-alpha07")

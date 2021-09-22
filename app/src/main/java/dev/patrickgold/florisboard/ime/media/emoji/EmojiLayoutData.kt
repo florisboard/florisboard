@@ -20,7 +20,7 @@ import android.content.Context
 import android.graphics.Paint
 import android.graphics.Typeface
 import androidx.core.graphics.PaintCompat
-import timber.log.Timber
+import dev.patrickgold.florisboard.debug.flogError
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -173,13 +173,13 @@ fun parseRawEmojiSpecsFile(
             }
         }
     } catch (e: IOException) {
-        Timber.e("parseRawEmojiSpecsFile(): $e")
+        flogError { "parseRawEmojiSpecsFile(): $e" }
     } finally {
         if (reader != null) {
             try {
                 reader.close()
             } catch (e: IOException) {
-                Timber.e("parseRawEmojiSpecsFile(): $e")
+                flogError { "parseRawEmojiSpecsFile(): $e" }
             }
         }
     }

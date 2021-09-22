@@ -39,7 +39,6 @@ import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.util.AndroidVersion
 import dev.patrickgold.jetpref.datastore.JetPrefApplication
-import timber.log.Timber
 import java.io.File
 import java.util.*
 import kotlin.Exception
@@ -65,9 +64,6 @@ class FlorisApplication : JetPrefApplication() {
     override fun onCreate() {
         super.onCreate()
         try {
-            if (BuildConfig.DEBUG) {
-                Timber.plant(Timber.DebugTree())
-            }
             Flog.install(
                 applicationContext = this,
                 isFloggingEnabled = BuildConfig.DEBUG,
