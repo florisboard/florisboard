@@ -260,30 +260,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">Genel kaydırma hareketleri</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Boşluk tuşu hareketleri</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Diğer hareketler / Hareket eşikleri</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Eylem yok</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Önceki klavye moduna geç</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Sonraki klavye moduna geç</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Harfleri tam olarak sil</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Şu anki sözcüğü sil</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Sözcükleri tam olarak sil</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Klavyeyi gizle</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Boşluk koy</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Kürsörü yukarı kaydır</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Kürsörü aşağı kaydır</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Kürsörü sola kaydır</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Kürsörü sağa kaydır</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Kürsörü satırın başına kaydır</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Kürsörü satırın sonuna kaydır</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Kürsörü sayfanın başına kaydır</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Kürsörü sayfanın sonuna kaydır</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Pano yöneticisini/geçmişini aç</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Kaydır</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Yinele</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Geri al</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Giriş yöntemi seçicisini göster</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Önceki klavyeye geç</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Önceki alt tipe geç</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Sonraki alt tipe geç</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Yukarı kaydır</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Aşağı kaydır</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Sola kaydır</string>
@@ -294,17 +270,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Boşluk tuşu uzun basma</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Silme tuşu sola kaydırma</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Kaydırma hızı eşiği</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Çok yavaş</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Yavaş</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normal</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Hızlı</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Çok hızlı</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Kaydırma mesafesi eşiği</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Çok kısa</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Kısa</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Uzun</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Çok uzun</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Gelişmiş</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Ayarlar teması</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Aydınlık</string>

@@ -17,8 +17,8 @@
 package dev.patrickgold.florisboard.ime.onehanded
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.ui.res.stringRes
 import dev.patrickgold.jetpref.ui.compose.entry
 
 /**
@@ -33,15 +33,15 @@ object OneHandedMode {
     fun listEntries() = listOf(
         entry(
             key = OFF,
-            label = stringResource(R.string.enum__one_handed_mode__off),
+            label = stringRes(R.string.enum__one_handed_mode__off),
         ),
         entry(
             key = START,
-            label = stringResource(R.string.enum__one_handed_mode__start),
+            label = stringRes(R.string.enum__one_handed_mode__start),
         ),
         entry(
             key = END,
-            label = stringResource(R.string.enum__one_handed_mode__end),
+            label = stringRes(R.string.enum__one_handed_mode__end),
         ),
     )
 }

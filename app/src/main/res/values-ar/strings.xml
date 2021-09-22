@@ -260,30 +260,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">الإيماءات العامة</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">إيماءات شريط المسافة</string>
     <string name="pref__gestures__other_title" comment="Preference group title">إيماءات أخرى / حدود الإيماءات</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">بدون إجراء</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">التبديل إلى لوحة المفاتيح السابقة</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">التبديل الى لوحة المفاتيح التالية</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">حذف الحروف بدقة</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">حذف الكلمة الحالية</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">حذف الكلمات بدقة</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">إخفاء لوحة المفاتيح</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">إدراج مسافة</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">تحريك المؤشر إلى الأعلى</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">تحريك المؤشر إلى الأسفل</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">تحريك المؤشر إلى اليسار</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">تحريك المؤشر إلى اليمين</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">حرك المؤشر إلى بداية السطر</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">حرك المؤشر إلى نهاية السطر</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">حرك المؤشر إلى بداية الصفحة</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">حرك المؤشر إلى نهاية الصفحة</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">فتح مدير الحافظة /السجل</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">مفتاح التحويل</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">إعادة</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">تراجع</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">إظهار مبدل طريقة الإدخال</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">التبديل إلى لوحة المفاتيح السابقة</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">التبديل إلى النوع الفرعي السابق</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">التبديل إلى النوع الفرعي التالي</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">السحب للأعلى</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">السحب للأسفل</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">السحب لليسار</string>
@@ -294,17 +270,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">الضغط المطول على شريط المسافة</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">السحب لليسار من خلال مفتاح الحذف</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">عتبة سرعة السحب</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">بطيئة جداً</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">بطيئة</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">عادية</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">سريعة</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">سريعة جداً</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">عتبة مسافة السحب</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">قصيرة جداً</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">قصيرة</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">عادية</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">طويلة</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">طويلة جداً</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">إعدادات متقدمة</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">إعدادات المظهر</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">فاتح</string>

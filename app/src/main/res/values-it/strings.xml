@@ -251,30 +251,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">Gesti generali</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gesti della barra di spazio</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Altri gesti / Sogli dei gesti</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Nessuna azione</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Passa alla modalità precedente</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Passa alla modalità successiva</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Cancella lettere con precisione</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Cancella la parola attuale</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Cancella parole con precisione</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Nascondi tastiera</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Inserisci spazio</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Muovi cursore su</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Muovi cursore giù</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Muovi cursore a sinistra</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Muovi cursore a destra</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Spazia il cursore all\'inizio della linea</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Spazia il cursore alla fine della linea</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Sposta il cursore all\'inizio della pagina</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Sposta il cursore alla fine della pagina</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Apri gestore/cronologia appunti</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Ripristina</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Annulla</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Mostra il selettore del metodo di digitazione</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Passa alla tastiera precedente</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Vai allo stile di input precedente</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Vai allo stile di input successivo</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Swipe su</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Swipe giù</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Swipe a sinistra</string>
@@ -285,17 +261,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Pressione prolungata sulla barra di spazio</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Swipe a sinistra sul tasto di cancellazione all\'indietro</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Soglia di velocità dello swipe</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Molto lenta</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Lento</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normale</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Veloce</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Molto veloce</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Soglia di distanza dello swipe</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Molto corta</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Corta</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normale</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Lunga</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Molto lunga</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Avanzate</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Impostazioni tema</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Chiaro</string>

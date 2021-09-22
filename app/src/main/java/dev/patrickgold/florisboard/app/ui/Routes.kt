@@ -27,6 +27,7 @@ import dev.patrickgold.florisboard.app.ui.settings.about.ProjectLicenseScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.ThirdPartyLicensesScreen
 import dev.patrickgold.florisboard.app.ui.settings.advanced.AdvancedScreen
 import dev.patrickgold.florisboard.app.ui.settings.clipboard.ClipboardScreen
+import dev.patrickgold.florisboard.app.ui.settings.gestures.GesturesScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.InputFeedbackScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.KeyboardScreen
 import dev.patrickgold.florisboard.app.ui.setup.SetupScreen
@@ -37,6 +38,8 @@ object Routes {
 
         const val Keyboard = "settings/keyboard"
         const val InputFeedback = "settings/keyboard/input-feedback"
+
+        const val Gestures = "settings/gestures"
 
         const val Clipboard = "settings/clipboard"
 
@@ -66,6 +69,8 @@ object Routes {
 
             composable(Settings.Keyboard) { KeyboardScreen() }
             composable(Settings.InputFeedback) { InputFeedbackScreen() }
+
+            composable(Settings.Gestures) { GesturesScreen() }
 
             composable(Settings.Clipboard) { ClipboardScreen() }
 

@@ -226,30 +226,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">Algemene gebaren</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Spatiebalkgebaren</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Andere gebaren / Drempelwaardes voor gebaren</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Geen actie</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Roteer naar de vorige toetsenbordmodus</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Roteer naar de volgende toetsenbordmodus</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Tekens nauwkeurig verwijderen</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Huidige woord verwijderen</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Woorden nauwkeurig verwijderen</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Toetsenbord verbergen</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Spatie invoegen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Cursor naar boven verplaatsen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Cursor naar beneden verplaatsen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Cursor naar links verplaatsen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Cursor naar rechts verplaatsen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Cursor aan het begin van de regel plaatsen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Cursor aan het einde van de regel plaatsen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Cursor aan het begin van de pagina plaatsen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Cursor aan het einde van de pagina plaatsen</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Open klembordbeheer/geschiedenis</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Opnieuw</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Ongedaan maken</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Invoermethodekiezer weergeven</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Overschakelen naar het vorige toetsenbord</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Overschakelen naar de vorige indeling</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Overschakelen naar de volgende indeling</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Swipe omhoog</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Swipe omlaag</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Swipe naar links</string>
@@ -260,17 +236,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Spatiebalk lang indrukken</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Swipe naar links vanop de Delete-toets</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Drempelwaarde voor swipe-snelheid</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Heel langzaam</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Langzaam</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normaal</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Snel</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Heel snel</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Drempelwaarde voor swipe-afstand</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Heel kort</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Kort</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normaal</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Lang</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Heel lang</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Geavanceerd</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Thema-instellingen</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Licht</string>

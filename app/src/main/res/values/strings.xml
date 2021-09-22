@@ -284,39 +284,18 @@
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Language code (optional)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">This language code does not conform to the expected syntax. The code must either be a language only (like en), a language and country (like en_US) or a language, country, and script (like en_US-script).</string>
 
-    <string name="settings__gestures__title" comment="Title of Gestures fragment">Gestures &amp; Glide typing</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Gestures &amp; Glide typing</string>
     <string name="pref__glide__title" comment="Preference group title">Glide typing</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Enable glide typing</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Type in a word by sliding your finger through its letters</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">Show glide trail</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Will disappear after each word</string>
+    <string name="pref__glide_trail_fade_duration">Glide trail fade time</string>
+    <string name="pref__glide_preview_refresh_delay">Preview refresh delay</string>
+    <string name="pref__glide__show_preview">Show preview while glide typing</string>
     <string name="pref__gestures__general_title" comment="Preference group title">General gestures</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Space bar gestures</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Other gestures / Gesture thresholds</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">No action</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Cycle to previous keyboard mode</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Cycle to next keyboard mode</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Delete characters precisely</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Delete current word</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Delete words precisely</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Hide keyboard</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Insert space</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Move cursor up</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Move cursor down</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Move cursor left</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Move cursor right</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Move cursor to start of line</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Move cursor to end of line</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Move cursor to start of page</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Move cursor to end of page</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Open clipboard manager/history</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Redo</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Undo</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Show input method picker</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Switch to previous keyboard</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Switch to previous subtype</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Switch to next subtype</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Swipe up</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Swipe down</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Swipe left</string>
@@ -327,17 +306,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Space bar long press</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Delete key swipe left</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Swipe velocity threshold</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Very slow</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Slow</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normal</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Fast</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Very fast</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Swipe distance threshold</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Very short</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Short</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Long</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Very long</string>
 
     <string name="settings__advanced__title" comment="Title of Advanced settings">Advanced</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Settings theme</string>
@@ -509,11 +478,6 @@
     <string name="pref__clipboard__limit_history_size__label">Limit history size</string>
     <string name="pref__clipboard__max_history_size__label">Max history size</string>
 
-    <!-- glide strings -->
-    <string name="pref__glide_trail_fade_duration">Glide trail fade time</string>
-    <string name="pref__glide_preview_refresh_delay">Preview refresh delay</string>
-    <string name="pref__glide__show_preview">Show preview while glide typing</string>
-
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portrait</string>
     <string name="screen_orientation__landscape">Landscape</string>
@@ -531,12 +495,40 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">The initial character selected after long press is always the hint symbol, or the primary accent if no hint symbol is available</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Smart prioritization</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">The initial character selected after long press is dynamically decided to be either the primary accent or the hint symbol, based on the current language and layout</string>
+
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Never show</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Always show</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamically show</string>
+
     <string name="enum__one_handed_mode__off" comment="Enum value label">Off</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Right-handed mode</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Left-handed mode</string>
+
+    <string name="enum__swipe_action__no_action" comment="Enum value label">No action</string>
+    <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Cycle to previous keyboard mode</string>
+    <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Cycle to next keyboard mode</string>
+    <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Delete characters precisely</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Delete current word</string>
+    <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Delete words precisely</string>
+    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Hide keyboard</string>
+    <string name="enum__swipe_action__insert_space" comment="Enum value label">Insert space</string>
+    <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">Move cursor up</string>
+    <string name="enum__swipe_action__move_cursor_down" comment="Enum value label">Move cursor down</string>
+    <string name="enum__swipe_action__move_cursor_left" comment="Enum value label">Move cursor left</string>
+    <string name="enum__swipe_action__move_cursor_right" comment="Enum value label">Move cursor right</string>
+    <string name="enum__swipe_action__move_cursor_start_of_line" comment="Enum value label">Move cursor to start of line</string>
+    <string name="enum__swipe_action__move_cursor_end_of_line" comment="Enum value label">Move cursor to end of line</string>
+    <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Move cursor to start of page</string>
+    <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Move cursor to end of page</string>
+    <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Open clipboard manager/history</string>
+    <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
+    <string name="enum__swipe_action__redo" comment="Enum value label">Redo</string>
+    <string name="enum__swipe_action__undo" comment="Enum value label">Undo</string>
+    <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Show input method picker</string>
+    <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Switch to previous keyboard</string>
+    <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Switch to previous subtype</string>
+    <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Switch to next subtype</string>
+
     <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Switch to emojis</string>
     <string name="enum__utility_key_action__switch_language" comment="Enum value label">Switch language</string>
     <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Switch keyboard app</string>
@@ -549,6 +541,7 @@
     <string name="unit__milliseconds__symbol" translatable="false">{v} ms</string>
     <string name="unit__percent__symbol" translatable="false">{v}%</string>
     <string name="unit__display_pixel__symbol" translatable="false">{v} dp</string>
+    <string name="unit__display_pixel_per_seconds__symbol" translatable="false">{v} dp/s</string>
 
     <!-- Unit strings (written words) -->
     <plurals name="unit__hours__written">

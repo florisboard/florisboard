@@ -213,30 +213,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">Obecná gesta</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gesta na mezerníku</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Další gesta / Trvání gest</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Žádná akce</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Mód přechodu k předchozí klávesnici</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Mód přechodu k další klávesnici</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Smazat znaky přesně</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Smazat aktuální slovo</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Smazat slova přesně</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Skrýt klávesnici</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Vložit mezeru</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Přesunout kurzor nahoru</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Přesunout kurzor dolů</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Přesunout kurzor doleva</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Přesunout kurzor doprava</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Přesunout kurzor na začátek řádku</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Přesunout kurzor na konec řádku</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Přesunout kurzor na začátek stránky</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Přesunout kurzor na konec stránky</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Otevřít správce schránky / historii</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Přepnout shift</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Vpřed</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Zpět</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Zobrazit výběr metody zadávání</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Přepnout na předchozí klávesnici</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Přepnout na předchozí podtyp</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Přepnout na další podtyp</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Přejetí nahoru</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Přejetí dolů</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Přejetí doleva</string>
@@ -247,17 +223,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Dlouhý stisk mezerníku</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Přejetí doleva na klávese mazání</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Práh rychlosti přejetí</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Velmi pomalý</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Pomalý</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normální</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Rychlý</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Velmi rychlý</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Práh vzdálenosti přejetí</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Velmi krátký</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Krátký</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normální</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Dlouhý</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Velmi dlouhý</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Pokročilé</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Motiv nastavení</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Světlý</string>

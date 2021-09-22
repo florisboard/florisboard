@@ -166,23 +166,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">Gesty ogólne</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gesty klawisza spacji</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Inne gesty / Progi gestów</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Brak działań</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Precyzyjne usuwanie słów</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Usuń bieżące słowo</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Precyzyjne usuwanie słów</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Ukryj klawiaturę</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Wstaw spację</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Przesuń kursor do góry</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Przesuń kursor do dołu</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Przesuń kursor w lewo</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Przesuń kursor w prawo</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Przesuń kursor na początek linii</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Przesuń kursor na koniec linii</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Pokaż metodę wprowadzania</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Przejdź do poprzedniej klawiatury</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Przejdź do poprzedniego podtypu</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Przejście do następnego podtypu</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Przesuń w górę</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Przesuń w dół</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Przesuń w lewo</string>
@@ -193,17 +176,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Spacja długie naciśnięcie</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Klawisz Delete przesuń w lewo</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Próg prędkości przesuwania</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Bardzo wolno</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Wolno</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normalnie</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Szybko</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Bardzo szybko</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Próg długości gestu</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Bardzo krótko</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Krótko</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normalnie</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Długo</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Bardzo długo</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Zaawansowane</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Motyw ustawień</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Jasny</string>

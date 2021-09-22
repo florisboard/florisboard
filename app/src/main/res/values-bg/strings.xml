@@ -247,30 +247,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">Основни жестове</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Жестове с клавиша за интервал</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Други жестове и прагове на жеста</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Без действие</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Предишен режим на клавиатура</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Следващ режим на клавиатура</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Изтриват се символи прецизно</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Изтрива се текущата дума</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Изтриват се думи прецизно</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Клавиатурата се скрива</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Вмъква се интервал</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Курсорът се премества нагоре</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Курсорът се премества надолу</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Курсорът се премества наляво</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Курсорът се премества надясно</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Курсорът се премества в началото на реда</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Курсорът се премества в края на реда</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Курсорът се премества в началото на страницата</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Курсорът се премества в края на страницата</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Управление на междинната памет</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Възстановяване</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Отменяне</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Показват се методите за въвеждане</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Превключва се предишна клавиатура</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Превключва се предишен подвид</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Превключва се следващ подвид</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Плъзване нагоре</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Плъзване надолу</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Плъзване наляво</string>
@@ -281,17 +257,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Задържане на клавиша за интервал</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Плъзване върху клавиша за изтриване наляво</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Праг за скоростта на плъзгане</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Много бавно</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Бавно</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Нормално</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Бързо</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Много бързо</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Минимално разстояние на плъзване</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Много кратко</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Кратко</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Нормално</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Дълго</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Много дълго</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Разширени</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Тема на настройките</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Светла</string>

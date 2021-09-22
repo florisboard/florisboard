@@ -252,30 +252,6 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Gestur umum</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestur batang spasi</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Gestur lain / Gestur ambang</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Tidak ada tindakan</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Siklus ke mode keyboard sebelumnya</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Siklus ke mode keyboard selanjutnya</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Hapus karakter secara tepat</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Hapus kata saat ini</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Hapus kata secara tepat</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Sembunyikan papan ketik</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Masukkan spasi</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Pindahkan kursor ke atas</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Pindahkan kursor ke bawah</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Pindahkan kursor ke kiri</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Pindahkan kursor ke kanan</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Pindahkan kursor ke awal baris</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Pindahkan kursor ke akhir baris</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Pindahkan kursor ke awal halaman</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Pindahkan kursor ke akhir halaman</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Buka pengelola/riwayat papan klip</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Redo</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Undo</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Tampilkan pemilih metode masukan</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Beralih ke papan ketik sebelumnya</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Beralih ke subtipe sebelumnya</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Beralih ke subtipe selanjutnya</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Geser ke atas</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Geser ke bawah</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Geser ke kiri</string>
@@ -286,17 +262,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Tekan lama bilah spasi</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Tombol hapus geser ke kiri</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Ambang batas kecepatan geser</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Sangat lambat</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Lambat</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normal</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Cepat</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Sangat cepat</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Ambang jarak geser</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Sangat singkat</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Singkat</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Panjang</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Sangat panjang</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Tingkat lanjut</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Tema pengaturan</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Cerah</string>
