@@ -1,8 +1,9 @@
 plugins {
-    id("com.android.application") version "7.0.2"
-    kotlin("android") version "1.5.30"
-    kotlin("kapt") version "1.5.30"
+    id("com.android.application")
+    kotlin("android")
+    kotlin("kapt")
     kotlin("plugin.serialization") version "1.5.30"
+    id("com.google.android.gms.oss-licenses-plugin")
 }
 
 android {
