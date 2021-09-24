@@ -101,8 +101,11 @@ fun KeyboardScreen() = FlorisScreen(title = stringRes(R.string.settings__keyboar
             entries = LandscapeInputUiMode.listEntries(),
         )
         DialogSliderPreference(
-            prefs.keyboard.heightFactor,
+            primaryPref = prefs.keyboard.heightFactorPortrait,
+            secondaryPref = prefs.keyboard.heightFactorLandscape,
             title = stringRes(R.string.pref__keyboard__height_factor__label),
+            primaryLabel = stringRes(R.string.screen_orientation__portrait),
+            secondaryLabel = stringRes(R.string.screen_orientation__landscape),
             unit = stringRes(R.string.unit__percent__symbol),
             min = 50,
             max = 150,

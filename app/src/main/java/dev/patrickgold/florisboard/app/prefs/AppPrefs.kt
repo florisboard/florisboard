@@ -312,8 +312,12 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "keyboard__landscape_input_ui_mode",
             default = LandscapeInputUiMode.DYNAMICALLY_SHOW,
         )
-        val heightFactor = int(
-            key = "keyboard__height_factor",
+        val heightFactorPortrait = int(
+            key = "keyboard__height_factor_portrait",
+            default = 100,
+        )
+        val heightFactorLandscape = int(
+            key = "keyboard__height_factor_landscape",
             default = 100,
         )
         val keySpacingVertical = float(

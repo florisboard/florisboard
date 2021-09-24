@@ -82,13 +82,13 @@ class InputView : LinearLayout {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         heightFactor = when (resources.configuration.orientation) {
-            Configuration.ORIENTATION_LANDSCAPE -> 1.0f
+            Configuration.ORIENTATION_LANDSCAPE -> (prefs.keyboard.heightFactorLandscape.get().toFloat() / 100.0f)
             else -> if (prefs.keyboard.oneHandedMode.get() != OneHandedMode.OFF) {
                 prefs.keyboard.oneHandedModeScaleFactor.get() / 100.0f
             } else {
                 1.0f
-            }
-        } * (prefs.keyboard.heightFactor.get().toFloat() / 100.0f)
+            } * (prefs.keyboard.heightFactorPortrait.get().toFloat() / 100.0f)
+        }
         var baseHeight = calcInputViewHeight() * heightFactor
         var baseSmartbarHeight = 0.16129f * baseHeight
         var baseTextInputHeight = baseHeight - baseSmartbarHeight
