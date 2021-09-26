@@ -809,7 +809,8 @@
       "composer": "appender",
       "currencySet": "indian_rupee",
       "preferred": {
-        "characters": "warang_citi"
+        "characters": "warang_citi",
+        "numericRow": "warang_citi"
       }
     }
   ]
