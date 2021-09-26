@@ -22,9 +22,6 @@ import android.os.Build
 import androidx.core.os.UserManagerCompat
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.text.gestures.DistanceThreshold
-import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.gestures.VelocityThreshold
 import dev.patrickgold.florisboard.ime.text.smartbar.CandidateView
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.util.TimeUtil
@@ -46,8 +43,6 @@ class Preferences(
 
     val correction = Correction(this)
     val dictionary = Dictionary(this)
-    val gestures = Gestures(this)
-    val glide = Glide(this)
     val internal = Internal(this)
     val localization = Localization(this)
     val smartbar = Smartbar(this)
@@ -123,7 +118,6 @@ class Preferences(
     fun initDefaultPreferences() {
         try {
             applicationContext.get()?.let { context ->
-                PreferenceManager.setDefaultValues(context, R.xml.prefs_gestures, true)
                 PreferenceManager.setDefaultValues(context, R.xml.prefs_keyboard, true)
                 PreferenceManager.setDefaultValues(context, R.xml.prefs_theme, true)
                 PreferenceManager.setDefaultValues(context, R.xml.prefs_typing, true)
@@ -180,88 +174,6 @@ class Preferences(
         var enableFlorisUserDictionary: Boolean
             get() =  prefs.getPref(ENABLE_FLORIS_USER_DICTIONARY, true)
             set(v) = prefs.setPref(ENABLE_FLORIS_USER_DICTIONARY, v)
-    }
-
-    /**
-     * Wrapper class for gestures preferences.
-     */
-    class Gestures(private val prefs: Preferences) {
-        companion object {
-            const val SWIPE_UP =                    "gestures__swipe_up"
-            const val SWIPE_DOWN =                  "gestures__swipe_down"
-            const val SWIPE_LEFT =                  "gestures__swipe_left"
-            const val SWIPE_RIGHT =                 "gestures__swipe_right"
-            const val SPACE_BAR_LONG_PRESS =        "gestures__space_bar_long_press"
-            const val SPACE_BAR_SWIPE_LEFT =        "gestures__space_bar_swipe_left"
-            const val SPACE_BAR_SWIPE_RIGHT =       "gestures__space_bar_swipe_right"
-            const val SPACE_BAR_SWIPE_UP =          "gestures__space_bar_swipe_up"
-            const val DELETE_KEY_SWIPE_LEFT =       "gestures__delete_key_swipe_left"
-            const val SWIPE_VELOCITY_THRESHOLD =    "gestures__swipe_velocity_threshold"
-            const val SWIPE_DISTANCE_THRESHOLD =    "gestures__swipe_distance_threshold"
-        }
-
-        var swipeUp: SwipeAction
-            get() =  SwipeAction.fromString(prefs.getPref(SWIPE_UP, "no_action"))
-            set(v) = prefs.setPref(SWIPE_UP, v)
-        var swipeDown: SwipeAction
-            get() =  SwipeAction.fromString(prefs.getPref(SWIPE_DOWN, "no_action"))
-            set(v) = prefs.setPref(SWIPE_DOWN, v)
-        var swipeLeft: SwipeAction
-            get() =  SwipeAction.fromString(prefs.getPref(SWIPE_LEFT, "no_action"))
-            set(v) = prefs.setPref(SWIPE_LEFT, v)
-        var swipeRight: SwipeAction
-            get() =  SwipeAction.fromString(prefs.getPref(SWIPE_RIGHT, "no_action"))
-            set(v) = prefs.setPref(SWIPE_RIGHT, v)
-        var spaceBarLongPress: SwipeAction
-            get() =  SwipeAction.fromString(prefs.getPref(SPACE_BAR_LONG_PRESS, "no_action"))
-            set(v) = prefs.setPref(SPACE_BAR_LONG_PRESS, v)
-        var spaceBarSwipeUp: SwipeAction
-            get() =  SwipeAction.fromString(prefs.getPref(SPACE_BAR_SWIPE_UP, "no_action"))
-            set(v) = prefs.setPref(SPACE_BAR_SWIPE_UP, v)
-        var spaceBarSwipeLeft: SwipeAction
-            get() =  SwipeAction.fromString(prefs.getPref(SPACE_BAR_SWIPE_LEFT, "no_action"))
-            set(v) = prefs.setPref(SPACE_BAR_SWIPE_LEFT, v)
-        var spaceBarSwipeRight: SwipeAction
-            get() =  SwipeAction.fromString(prefs.getPref(SPACE_BAR_SWIPE_RIGHT, "no_action"))
-            set(v) = prefs.setPref(SPACE_BAR_SWIPE_RIGHT, v)
-        var deleteKeySwipeLeft: SwipeAction
-            get() =  SwipeAction.fromString(prefs.getPref(DELETE_KEY_SWIPE_LEFT, "no_action"))
-            set(v) = prefs.setPref(DELETE_KEY_SWIPE_LEFT, v)
-        var swipeVelocityThreshold: VelocityThreshold
-            get() =  VelocityThreshold.fromString(prefs.getPref(SWIPE_VELOCITY_THRESHOLD, "normal"))
-            set(v) = prefs.setPref(SWIPE_VELOCITY_THRESHOLD, v)
-        var swipeDistanceThreshold: DistanceThreshold
-            get() =  DistanceThreshold.fromString(prefs.getPref(SWIPE_DISTANCE_THRESHOLD, "normal"))
-            set(v) = prefs.setPref(SWIPE_DISTANCE_THRESHOLD, v)
-    }
-
-    /**
-     * Wrapper class for glide preferences.
-     */
-    class Glide(private val prefs: Preferences) {
-        companion object {
-            const val ENABLED =                     "glide__enabled"
-            const val SHOW_TRAIL =                  "glide__show_trail"
-            const val TRAIL_DURATION =              "glide__trail_fade_duration"
-            const val SHOW_PREVIEW =                "glide__show_preview"
-            const val PREVIEW_REFRESH_DELAY =       "glide__preview_refresh_delay"
-        }
-
-        var enabled: Boolean
-            get() =  prefs.getPref(ENABLED, false)
-            set(v) = prefs.setPref(ENABLED, v)
-        var showTrail: Boolean
-            get() =  prefs.getPref(SHOW_TRAIL, false)
-            set(v) = prefs.setPref(SHOW_TRAIL, v)
-        var trailDuration: Int
-            get() =  prefs.getPref(TRAIL_DURATION, 200)
-            set(v) = prefs.setPref(TRAIL_DURATION, v)
-        var showPreview: Boolean
-            get() = prefs.getPref(SHOW_PREVIEW, true)
-            set(v) = prefs.setPref(SHOW_PREVIEW, v)
-        var previewRefreshDelay: Int
-            get() = prefs.getPref(PREVIEW_REFRESH_DELAY, 150)
-            set(v) = prefs.setPref(PREVIEW_REFRESH_DELAY, v)
     }
 
     /**

@@ -27,12 +27,12 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -40,10 +40,14 @@ import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.PreviewKeyboardField
 import dev.patrickgold.florisboard.app.ui.components.SystemUi
+import dev.patrickgold.florisboard.app.ui.res.ProvideLocalizedResources
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
 import dev.patrickgold.florisboard.common.FlorisLocale
+import dev.patrickgold.florisboard.common.InputMethodUtils
+import dev.patrickgold.florisboard.common.SystemSettingsObserver
 import dev.patrickgold.florisboard.util.AndroidVersion
 import dev.patrickgold.florisboard.util.PackageManagerUtils
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 enum class AppTheme(val id: String) {
     AUTO("auto"),
@@ -56,14 +60,34 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
     error("LocalNavController not initialized")
 }
 
+val LocalIsFlorisBoardEnabled = compositionLocalOf { false }
+val LocalIsFlorisBoardSelected = compositionLocalOf { false }
+
 class FlorisAppActivity : ComponentActivity() {
     private val prefs by florisPreferenceModel()
     private var appTheme by mutableStateOf(AppTheme.AUTO)
     private var showAppIcon = true
-    private var appContext by mutableStateOf(this as Context)
+    private var resourcesContext by mutableStateOf(this as Context)
+
+    private var isFlorisBoardEnabled by mutableStateOf(false)
+    private var isFlorisBoardSelected by mutableStateOf(false)
+
+    private val isFlorisBoardEnabledObserver by lazy {
+        SystemSettingsObserver(this) {
+            isFlorisBoardEnabled = InputMethodUtils.checkIsFlorisboardEnabled(this@FlorisAppActivity)
+        }
+    }
+    private val isFlorisBoardSelectedObserver by lazy {
+        SystemSettingsObserver(this) {
+            isFlorisBoardSelected = InputMethodUtils.checkIsFlorisboardSelected(this@FlorisAppActivity)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        InputMethodUtils.startObserveIsFlorisBoardEnabled(this, isFlorisBoardEnabledObserver)
+        InputMethodUtils.startObserveIsFlorisBoardSelected(this, isFlorisBoardSelectedObserver)
 
         prefs.advanced.settingsTheme.observe(this) {
             appTheme = it
@@ -71,7 +95,7 @@ class FlorisAppActivity : ComponentActivity() {
         prefs.advanced.settingsLanguage.observe(this) {
             val config = Configuration(resources.configuration)
             config.setLocale(if (it == "auto") FlorisLocale.default() else FlorisLocale.fromTag(it))
-            appContext = createConfigurationContext(config)
+            resourcesContext = createConfigurationContext(config)
         }
         if (AndroidVersion.ATMOST_P) {
             prefs.advanced.showAppIcon.observe(this) {
@@ -82,7 +106,7 @@ class FlorisAppActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, true)
 
         setContent {
-            CompositionLocalProvider(LocalContext provides appContext) {
+            ProvideLocalizedResources(resourcesContext) {
                 FlorisAppTheme(theme = appTheme) {
                     Surface(color = MaterialTheme.colors.background) {
                         SystemUi()
@@ -109,23 +133,35 @@ class FlorisAppActivity : ComponentActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        InputMethodUtils.stopObserveIsFlorisBoardEnabled(this, isFlorisBoardEnabledObserver)
+        InputMethodUtils.stopObserveIsFlorisBoardSelected(this, isFlorisBoardSelectedObserver)
+    }
+
     private fun Configuration.setLocale(locale: FlorisLocale) {
         return this.setLocale(locale.base)
     }
 
     @Composable
     private fun AppContent() {
+        val isImeSetUp by prefs.internal.isImeSetUp.observeAsState()
         val navController = rememberNavController()
         CompositionLocalProvider(
             LocalNavController provides navController,
+            LocalIsFlorisBoardEnabled provides isFlorisBoardEnabled,
+            LocalIsFlorisBoardSelected provides isFlorisBoardSelected,
         ) {
             Column {
                 Routes.AppNavHost(
                     modifier = Modifier.weight(1.0f),
                     navController = navController,
-                    startDestination = Routes.Settings.Home,
+                    startDestination = if (isImeSetUp) { Routes.Settings.Home } else { Routes.Setup.Home },
                 )
-                PreviewKeyboardField()
+                if (isImeSetUp) {
+                    PreviewKeyboardField()
+                }
             }
         }
         SideEffect {

@@ -26,9 +26,9 @@ import android.provider.Settings
 import android.view.HapticFeedbackConstants
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.app.ui.res.stringRes
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
@@ -57,12 +57,12 @@ class InputFeedbackManager private constructor(private val ims: InputMethodServi
             return when {
                 AndroidVersion.ATLEAST_O -> when {
                     !(vibrator?.hasAmplitudeControl() ?: false) -> {
-                        stringResource(R.string.pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl)
+                        stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl)
                     }
                     else -> null
                 }
                 else -> {
-                    stringResource(R.string.pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version)
+                    stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_unsupported_android_version)
                 }
             }
         }

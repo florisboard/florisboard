@@ -260,30 +260,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">Γενικές χειρονομίες</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Χειρονομίες πλήκτρου διαστήματος</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Άλλες κινήσεις / Όρια κινήσεων</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Καμία ενέργεια</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Εναλλαγή στην προηγούμενη λειτουργία πληκτρολογίου</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Εναλλαγή στην επόμενη λειτουργία πληκτρολογίου</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Διαγραφή χαρακτήρων με ακρίβεια</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Διαγραφή της τρέχουσας λέξης</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Διαγραφή λέξεων με ακρίβεια</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Απόκρυψη πληκτρολογίου</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Εισαγωγή κενού</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Μετακίνηση κέρσορα πάνω</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Μετακίνηση κέρσορα κάτω</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Μετακίνηση κέρσορα αριστερά</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Μετακίνηση κέρσορα δεξιά</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Μετακίνηση κέρσορα στην αρχή της γραμμής</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Μετακίνηση κέρσορα στο τέλος της γραμμής</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Μετακίνηση κέρσορα στην αρχή της σελίδας</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Μετακίνηση κέρσορα στο τέλος της σελίδας</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Άνοιγμα διαχειριστή/ιστορικού προχείρου</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Εναλλαγή κεφαλαίων</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Επανάληψη</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Αναίρεση</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Εμφάνιση επιλογέα μεθόδου εισαγωγής</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Εναλλαγή στο προηγούμενο πληκτρολόγιο</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Εναλλαγή στον προηγούμενο υποτύπο</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Εναλλαγή στον επόμενο υποτύπο</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Σάρωση πάνω</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Σάρωση κάτω</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Σάρωση αριστερά</string>
@@ -294,17 +270,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Παρατεταμένο πάτημα πλήκτρου διαστήματος</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Σάρωση αριστερά στο πλήκτρο διαγραφής</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Όριο ταχύτητας σάρωσης</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Πολύ αργά</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Αργά</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Κανονικό</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Γρήγορα</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Πολύ γρήγορα</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Όριο απόστασης σάρωσης</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Πολύ σύντομο</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Σύντομο</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Κανονικό</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Μεγάλο</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Πολύ μεγάλο</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Προηγμένες επιλογές</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Θέμα ρυθμίσεων</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Φωτεινό</string>
@@ -408,26 +374,7 @@
     <string name="assets__error__snackbar_message">Κάτι πήγε στραβά</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Ρύθμιση</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Προηγ</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Ακύρωση</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Επόμενο</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Ολοκλήρωση</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">ΟΚ</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Καλώς ήλθατε!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Ευχαριστώ που δοκιμάζετε το FlorisBoard! Προτού μπορέσετε να ξεκινήσετε να το χρησιμοποιείτε, πρέπει να κάνουμε τα συνηθισμένα πράγματα και να το ενεργοποιήσουμε στις ρυθμίσεις συστήματος, να ορίσουμε τη προτιμώμενη γλώσσα/διάταξη, κτλ... Άλλα μην ανησυχείτε - ο βοηθός ρύθμισης θα σας καθοδηγήσει σε αυτό!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">Το FlorisBoard σέβεται πλήρως την ιδιωτικότητά σας και δε συλλέγει καθόλου δεδομένα χρήστη. Για περισσότερες πληροφορίες δείτε εδώ:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">Ο πηγαίος κώδικας του FlorisBoard είναι δημοσίως προσβάσιμος για τον καθένα, οπότε μπορείτε εύκολα να εξετάσετε τι κάνει το FlorisBoard στο παρασκήνιο. Ρίξτε μία ματιά στον σύνδεσμο αποθετηρίου, παρακάτω.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Κάτι τελευταίο προτού ξεκινήσετε τη ρύθμιση - εάν αντιμετωπίσετε προβλήματα/καταρρεύσεις/θέματα με το FlorisBoard ή εάν έχετε να προτείνετε κάποιο χαρακτηριστικό - μεταβείτε στο αποθετήριο του GitHub με τον παρακάτω σύνδεσμο και υποβάλλετε ένα θέμα. Αυτό βοηθάει στη βελτίωση της εμπειρίας για όλους τους χρήστες!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Για να ξεκινήσετε τη ρύθμιση, πατήστε<i>ΕΠΟΜΕΝΟ</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Ενεργοποίηση FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Το Android απαιτεί κάθε ειδικό πληκτρολόγιο να ενεργοποιείται χειροκίνητα πριν τη χρήση. Πατήστε το παρακάτω κουμπί για να μεταβείτε στις ρυθμίσεις <i>Γλώσσας &amp; Εισαγωγής</i>, έπειτα φροντίστε να επιλέξετε το \'<i>FlorisBoard</i>\'.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">Το FlorisBoard έχει ενεργοποιηθεί επιτυχώς. Για να συνεχίσετε πατήστε <i>ΕΠΟΜΕΝΟ</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Άνοιγμα ρυθμίσεων Γλώσσας &amp; Εισαγωγής</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Ορισμός FlorisBoard ως προεπιλογή</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">Το FlorisBoard είναι τώρα ενεργοποιημένο στο σύστημα σας. Για να το χρησιμοποιήσετε ενεργά, αλλάξτε στο FlorisBoard επιλέγοντας το στο διάλογο επιλογέα εισαγωγής!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Αλλάξατε επιτυχώς το προεπιλεγμένο πληκτρολόγιο στο FlorisBoard!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Εναλλαγή πληκτρολογίου</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Η ρύθμιση ολοκληρώθηκε!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Αναφορά σφάλματος FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Συγγνώμη για την ταλαιπωρία, αλλά το FlorisBoard έχει τερματιστεί απρόοπτα εξαιτίας ενός απρόσμενου σφάλματος.</string>

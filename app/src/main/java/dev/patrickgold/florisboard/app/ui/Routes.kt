@@ -27,8 +27,10 @@ import dev.patrickgold.florisboard.app.ui.settings.about.ProjectLicenseScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.ThirdPartyLicensesScreen
 import dev.patrickgold.florisboard.app.ui.settings.advanced.AdvancedScreen
 import dev.patrickgold.florisboard.app.ui.settings.clipboard.ClipboardScreen
+import dev.patrickgold.florisboard.app.ui.settings.gestures.GesturesScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.InputFeedbackScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.KeyboardScreen
+import dev.patrickgold.florisboard.app.ui.setup.SetupScreen
 
 object Routes {
     object Settings {
@@ -37,6 +39,8 @@ object Routes {
         const val Keyboard = "settings/keyboard"
         const val InputFeedback = "settings/keyboard/input-feedback"
 
+        const val Gestures = "settings/gestures"
+
         const val Clipboard = "settings/clipboard"
 
         const val Advanced = "settings/advanced"
@@ -44,6 +48,10 @@ object Routes {
         const val About = "settings/about"
         const val ProjectLicense = "settings/about/project-license"
         const val ThirdPartyLicenses = "settings/about/third-party-licenses"
+    }
+
+    object Setup {
+        const val Home = "setup"
     }
 
     @Composable
@@ -62,6 +70,8 @@ object Routes {
             composable(Settings.Keyboard) { KeyboardScreen() }
             composable(Settings.InputFeedback) { InputFeedbackScreen() }
 
+            composable(Settings.Gestures) { GesturesScreen() }
+
             composable(Settings.Clipboard) { ClipboardScreen() }
 
             composable(Settings.Advanced) { AdvancedScreen() }
@@ -69,6 +79,8 @@ object Routes {
             composable(Settings.About) { AboutScreen() }
             composable(Settings.ProjectLicense) { ProjectLicenseScreen() }
             composable(Settings.ThirdPartyLicenses) { ThirdPartyLicensesScreen() }
+
+            composable(Setup.Home) { SetupScreen() }
         }
     }
 }

@@ -19,7 +19,7 @@ package dev.patrickgold.florisboard.ime.text.gestures
 import android.content.Context
 import android.view.MotionEvent
 import android.view.VelocityTracker
-import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.common.Pointer
@@ -32,36 +32,6 @@ import kotlin.math.atan2
  * Wrapper class which holds all enums, interfaces and classes for detecting a swipe gesture.
  */
 abstract class SwipeGesture {
-    companion object {
-        /**
-         * Returns a numeric value for a given [DistanceThreshold], based on the values defined in
-         * the resources dimens.xml file.
-         */
-        fun numericValue(context: Context, of: DistanceThreshold): Double {
-            return when (of) {
-                DistanceThreshold.VERY_SHORT -> context.resources.getDimension(R.dimen.gesture_distance_threshold_very_short)
-                DistanceThreshold.SHORT -> context.resources.getDimension(R.dimen.gesture_distance_threshold_short)
-                DistanceThreshold.NORMAL -> context.resources.getDimension(R.dimen.gesture_distance_threshold_normal)
-                DistanceThreshold.LONG -> context.resources.getDimension(R.dimen.gesture_distance_threshold_long)
-                DistanceThreshold.VERY_LONG -> context.resources.getDimension(R.dimen.gesture_distance_threshold_very_long)
-            }.toDouble()
-        }
-
-        /**
-         * Returns a numeric value for a given [VelocityThreshold], based on the values defined in
-         * the resources dimens.xml file.
-         */
-        fun numericValue(context: Context, of: VelocityThreshold): Double {
-            return when (of) {
-                VelocityThreshold.VERY_SLOW -> context.resources.getInteger(R.integer.gesture_velocity_threshold_very_slow)
-                VelocityThreshold.SLOW -> context.resources.getInteger(R.integer.gesture_velocity_threshold_slow)
-                VelocityThreshold.NORMAL -> context.resources.getInteger(R.integer.gesture_velocity_threshold_normal)
-                VelocityThreshold.FAST -> context.resources.getInteger(R.integer.gesture_velocity_threshold_fast)
-                VelocityThreshold.VERY_FAST -> context.resources.getInteger(R.integer.gesture_velocity_threshold_very_fast)
-            }.toDouble()
-        }
-    }
-
     /**
      * Class which detects swipes based on given [MotionEvent]s. Only supports single-finger swipes
      * and ignores additional pointers provided, if any.
@@ -69,24 +39,11 @@ abstract class SwipeGesture {
      * @property listener The listener to report detected swipes to.
      */
     class Detector(private val context: Context, private val listener: Listener) {
+        private val prefs by florisPreferenceModel()
+
         var isEnabled: Boolean = true
         private var pointerMap: PointerMap<GesturePointer> = PointerMap { GesturePointer() }
-        private var thresholdSpeed: Double = numericValue(context, VelocityThreshold.NORMAL)
-        private var thresholdWidth: Double = numericValue(context, DistanceThreshold.NORMAL)
-        private var unitWidth: Double = thresholdWidth / 4.0
         private val velocityTracker: VelocityTracker = VelocityTracker.obtain()
-
-        var distanceThreshold: DistanceThreshold = DistanceThreshold.NORMAL
-            set(value) {
-                field = value
-                thresholdWidth = numericValue(context, value)
-                unitWidth = thresholdWidth / 4.0
-            }
-        var velocityThreshold: VelocityThreshold = VelocityThreshold.NORMAL
-            set(value) {
-                field = value
-                thresholdSpeed = numericValue(context, value)
-            }
 
         /**
          * Method which evaluates if a given [event] is a gesture.
@@ -123,6 +80,8 @@ abstract class SwipeGesture {
                 val absDiffY = event.getY(pointer.index) - gesturePointer.firstY
                 val relDiffX = event.getX(pointer.index) - gesturePointer.lastX
                 val relDiffY = event.getY(pointer.index) - gesturePointer.lastY
+                val thresholdWidth = prefs.gestures.swipeDistanceThreshold.get()
+                val unitWidth = thresholdWidth / 4.0
                 return if (alwaysTriggerOnMove || abs(relDiffX) > (thresholdWidth / 2.0) || abs(relDiffY) > (thresholdWidth / 2.0)) {
                     gesturePointer.lastX = event.getX(pointer.index)
                     gesturePointer.lastY = event.getY(pointer.index)
@@ -159,6 +118,9 @@ abstract class SwipeGesture {
                 val velocityY = ViewUtils.px2dp(velocityTracker.getYVelocity(pointer.id))
                 flogDebug(LogTopic.GESTURES) { "Velocity: $velocityX $velocityY dp/s" }
                 pointerMap.removeById(pointer.id)
+                val thresholdSpeed = prefs.gestures.swipeVelocityThreshold.get()
+                val thresholdWidth = prefs.gestures.swipeDistanceThreshold.get()
+                val unitWidth = thresholdWidth / 4.0
                 return if ((abs(absDiffX) > thresholdWidth || abs(absDiffY) > thresholdWidth) && (abs(velocityX) > thresholdSpeed || abs(velocityY) > thresholdSpeed)) {
                     val direction = detectDirection(absDiffX.toDouble(), absDiffY.toDouble())
                     gesturePointer.absUnitCountX = (absDiffX / unitWidth).toInt()

@@ -260,30 +260,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">Genel kaydırma hareketleri</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Boşluk tuşu hareketleri</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Diğer hareketler / Hareket eşikleri</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Eylem yok</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Önceki klavye moduna geç</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Sonraki klavye moduna geç</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Harfleri tam olarak sil</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Şu anki sözcüğü sil</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Sözcükleri tam olarak sil</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Klavyeyi gizle</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Boşluk koy</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Kürsörü yukarı kaydır</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Kürsörü aşağı kaydır</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Kürsörü sola kaydır</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Kürsörü sağa kaydır</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Kürsörü satırın başına kaydır</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Kürsörü satırın sonuna kaydır</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Kürsörü sayfanın başına kaydır</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Kürsörü sayfanın sonuna kaydır</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Pano yöneticisini/geçmişini aç</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Kaydır</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Yinele</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Geri al</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Giriş yöntemi seçicisini göster</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Önceki klavyeye geç</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Önceki alt tipe geç</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Sonraki alt tipe geç</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Yukarı kaydır</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Aşağı kaydır</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Sola kaydır</string>
@@ -294,17 +270,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Boşluk tuşu uzun basma</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Silme tuşu sola kaydırma</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Kaydırma hızı eşiği</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Çok yavaş</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Yavaş</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normal</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Hızlı</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Çok hızlı</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Kaydırma mesafesi eşiği</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Çok kısa</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Kısa</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Uzun</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Çok uzun</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Gelişmiş</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Ayarlar teması</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Aydınlık</string>
@@ -409,26 +375,7 @@
     <string name="assets__error__snackbar_message">Bir şeyler ters gitti</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Kurulum</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Önceki</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">İptal</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Sonraki</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Bitir</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">Tamam</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Hoş geldiniz!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">FlorisBoard\'u denediğiniz için teşekkür ederiz! Kullanmaya başlamadan önce, her zamanki şeyleri yapmak ve sistem ayarlarından aktive etmek, tercih ettiğiniz dili/düzeni ayarlamak (vb.) zorundayız. Ama endişelenmeyin, kurulum sihirbazı bu konuda size yol gösterecek!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard gizliliğinize tamamen saygı duyar ve hiçbir kullanıcı verisi toplamaz. Daha fazla bilgi için:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">FlorisBoard’un kaynak kodu herkesin erişebileceği şekilde herkese açık, böylece FlorisBoard’un arkaplanda ne yaptığını kolayca gözden geçirebilirsiniz. Kodlara aşağıdaki linkten erişebilirsiniz.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Kuruluma geçmeden önce son bir şey daha var - eğer FlorisBoard ile ilgili herhangi bir hata/çökme/sorun ile karşılaşırsanız veya bir tavsiyeniz var ise - aşağıdaki bağlantıdan GitHub deposuna ulaşabilir ve sorunu bildirebilirsiniz. Bu tüm kullanıcılar için deneyimi iyileştirmemize yardımcı olacaktır!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Kurulumu başlatmak için <i>SONRAKİ</i> tuşuna basın.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">FlorisBoard’u Etkinleştir</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Özel bir klavye kullanmadan önce Android bunu elle etkinleştirmenizi gerektirir. Aşağıdaki tuşa tıklayarak <i>Dil &amp; Giriş</i> ayarlarına gidin ve \'<i>FlorisBoard</i>\'u seçtiğinizden emin olun.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard başarılı bir şekilde aktifleştirildi. Devam etmek için <i>Sonraki</i> tuşuna basın!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Dil &amp; Giriş ayarlarını aç</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">FlorisBoard’u varsayılan yap</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard sisteminizde etkinleştirildi. Aktifçe kullanmak için giriş seçme diyaloğunda FlorisBoard’u seçerek ona geçin!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Varsayılan klavye başarılı bir şekilde FlorisBoard’a geçirildi!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Klavyeyi değiştir</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Kurulum tamamlandı!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard hata raporu</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Üzgünüz, ancak FlorisBoard bilinmeyen bir hatadan dolayı çöktü.</string>

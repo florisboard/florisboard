@@ -31,6 +31,7 @@ import dev.patrickgold.jetpref.ui.compose.PreferenceUiContent
 fun FlorisScreen(
     title: String,
     backArrowVisible: Boolean = true,
+    scrollable: Boolean = true,
     bottomBar: @Composable () -> Unit = { },
     actions: @Composable RowScope.() -> Unit = { },
     content: PreferenceUiContent<AppPrefs>,
@@ -40,7 +41,7 @@ fun FlorisScreen(
         bottomBar = bottomBar,
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
-            PreferenceLayout(florisPreferenceModel()) {
+            PreferenceLayout(florisPreferenceModel(), scrollable = scrollable) {
                 content(this)
             }
         }

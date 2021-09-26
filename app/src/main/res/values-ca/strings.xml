@@ -175,7 +175,6 @@
     <string name="pref__correction__title" comment="Preference group title">Correccions</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Majúscules automàtiques</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Paraula</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Amagar el teclat</string>
     <!-- About UI strings -->
     <!-- Assets strings -->
     <!-- Setup UI strings -->

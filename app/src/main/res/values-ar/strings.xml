@@ -260,30 +260,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">الإيماءات العامة</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">إيماءات شريط المسافة</string>
     <string name="pref__gestures__other_title" comment="Preference group title">إيماءات أخرى / حدود الإيماءات</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">بدون إجراء</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">التبديل إلى لوحة المفاتيح السابقة</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">التبديل الى لوحة المفاتيح التالية</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">حذف الحروف بدقة</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">حذف الكلمة الحالية</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">حذف الكلمات بدقة</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">إخفاء لوحة المفاتيح</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">إدراج مسافة</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">تحريك المؤشر إلى الأعلى</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">تحريك المؤشر إلى الأسفل</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">تحريك المؤشر إلى اليسار</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">تحريك المؤشر إلى اليمين</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">حرك المؤشر إلى بداية السطر</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">حرك المؤشر إلى نهاية السطر</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">حرك المؤشر إلى بداية الصفحة</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">حرك المؤشر إلى نهاية الصفحة</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">فتح مدير الحافظة /السجل</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">مفتاح التحويل</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">إعادة</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">تراجع</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">إظهار مبدل طريقة الإدخال</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">التبديل إلى لوحة المفاتيح السابقة</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">التبديل إلى النوع الفرعي السابق</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">التبديل إلى النوع الفرعي التالي</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">السحب للأعلى</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">السحب للأسفل</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">السحب لليسار</string>
@@ -294,17 +270,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">الضغط المطول على شريط المسافة</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">السحب لليسار من خلال مفتاح الحذف</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">عتبة سرعة السحب</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">بطيئة جداً</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">بطيئة</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">عادية</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">سريعة</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">سريعة جداً</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">عتبة مسافة السحب</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">قصيرة جداً</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">قصيرة</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">عادية</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">طويلة</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">طويلة جداً</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">إعدادات متقدمة</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">إعدادات المظهر</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">فاتح</string>
@@ -417,26 +383,7 @@
     <string name="assets__error__snackbar_message">لقد حدث خطأ ما</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">الإعداد</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">السابق</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">إلغاء</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">التالي</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">إنهاء</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">حسنًا</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">مرحبا!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">شكرا على تجربة FlorisBoard! قبل أن تتمكن من البدء في استخدامه ، يتعين علينا القيام بالأشياء المعتادة وذلك بتمكينه في إعدادات النظام ، وإعداد لغتك / تخطيطك المفضل ، إلخ... ولكن لا تقلق - سيرشدك معالج الإعداد خلال هذا!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">يحترم FlorisBoard خصوصيتك تمامًا ولا يجمع أي بيانات مستخدم. لمزيد من المعلومات انظر هنا:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">مصدر التعليمات البرمجية لـ FlorisBoard متاح للجميع ، لذا يمكنك بسهولة مراجعة ما يفعله FlorisBoard في الخلفية. يرجى مراجعة الرابط الخاص بالمستودع أدناه.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">شيء أخير قبل بدء الإعداد - إذا واجهت أي أخطاء / أعطال / مشكلات في FlorisBoard أو كان لديك طلب ميزة - توجه إلى مستودع GitHub الموجود في الرابط أدناه واطرح مشكلة. هذا يساعد في تحسين التجربة لجميع المستخدمين!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">لبدء الإعداد إضغط على <i>التالي</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">قم بتفعيل FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">يتطلب Android تمكين كل لوحة مفاتيح مخصصة يدويًا قبل أن تتمكن من استخدامها. إضغط على الزر أدناه للتوجه إلى <i>اللغات و الإدخال</i> الإعدادات, ثم تأكد من إختيار \'<i>FlorisBoard</i>\'.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">تم تفعيل FlorisBoard بنجاح. للمواصلة إضغط على <i>التالي</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">فتح إعدادات اللغات و الإدخال</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">جعل FlorisBoard افتراضيًا</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">تم تمكين FlorisBoard الآن في نظامك. لاستخدامه بشكل دائم ، قم بالتبديل إلى FlorisBoard عن طريق تحديده في مربع حوار محدد الإدخال!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">تم تبديل لوحة المفاتيح الإفتراضية إلى FlorisBoard بنجاح!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">تبديل لوحة المفاتيح</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">تم إنهاء الاعداد!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">تقرير حول خطأ في FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">نأسف للإزعاج ، ولكن FlorisBoard تعطل بسبب خطأ غير متوقع.</string>

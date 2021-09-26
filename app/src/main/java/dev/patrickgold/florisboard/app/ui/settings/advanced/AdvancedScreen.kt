@@ -20,10 +20,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.res.stringResource
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.res.stringRes
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
@@ -37,34 +37,34 @@ import dev.patrickgold.jetpref.ui.compose.SwitchPreference
 import dev.patrickgold.jetpref.ui.compose.entry
 
 @Composable
-fun AdvancedScreen() = FlorisScreen(title = stringResource(R.string.settings__advanced__title)) {
+fun AdvancedScreen() = FlorisScreen(title = stringRes(R.string.settings__advanced__title)) {
     val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
 
     ListPreference(
         prefs.advanced.settingsTheme,
-        title = stringResource(R.string.pref__advanced__settings_theme__label),
+        title = stringRes(R.string.pref__advanced__settings_theme__label),
         entries = listOf(
             entry(
                 key = AppTheme.AUTO,
-                label = stringResource(R.string.settings__system_default),
+                label = stringRes(R.string.settings__system_default),
             ),
             entry(
                 key = AppTheme.LIGHT,
-                label = stringResource(R.string.pref__advanced__settings_theme__light),
+                label = stringRes(R.string.pref__advanced__settings_theme__light),
             ),
             entry(
                 key = AppTheme.DARK,
-                label = stringResource(R.string.pref__advanced__settings_theme__dark),
+                label = stringRes(R.string.pref__advanced__settings_theme__dark),
             ),
             entry(
                 key = AppTheme.AMOLED_DARK,
-                label = stringResource(R.string.pref__advanced__settings_theme__amoled_dark),
+                label = stringRes(R.string.pref__advanced__settings_theme__amoled_dark),
             ),
         ),
     )
     ListPreference(
         prefs.advanced.settingsLanguage,
-        title = stringResource(R.string.pref__advanced__settings_language__label),
+        title = stringRes(R.string.pref__advanced__settings_language__label),
         entries = listOf(
             "auto",
             "ar",
@@ -109,7 +109,7 @@ fun AdvancedScreen() = FlorisScreen(title = stringResource(R.string.settings__ad
             if (it == "auto") {
                 entry(
                     key = "auto",
-                    label = stringResource(R.string.settings__system_default),
+                    label = stringRes(R.string.settings__system_default),
                 )
             } else {
                 FlorisLocale.fromTag(it).listEntry()
@@ -118,29 +118,29 @@ fun AdvancedScreen() = FlorisScreen(title = stringResource(R.string.settings__ad
     )
     SwitchPreference(
         prefs.advanced.showAppIcon,
-        title = stringResource(R.string.pref__advanced__show_app_icon__label),
+        title = stringRes(R.string.pref__advanced__show_app_icon__label),
         summary = when {
-            AndroidVersion.ATLEAST_Q -> stringResource(R.string.pref__advanced__show_app_icon__summary_atleast_q)
+            AndroidVersion.ATLEAST_Q -> stringRes(R.string.pref__advanced__show_app_icon__summary_atleast_q)
             else -> null
         },
         enabledIf = { AndroidVersion.ATMOST_P },
     )
     SwitchPreference(
         prefs.advanced.forcePrivateMode,
-        title = stringResource(R.string.pref__advanced__force_private_mode__label),
-        summary = stringResource(R.string.pref__advanced__force_private_mode__summary),
+        title = stringRes(R.string.pref__advanced__force_private_mode__label),
+        summary = stringRes(R.string.pref__advanced__force_private_mode__summary),
     )
 
-    PreferenceGroup(title = stringResource(R.string.settings__devtools__title)) {
+    PreferenceGroup(title = stringRes(R.string.settings__devtools__title)) {
         SwitchPreference(
             prefs.devtools.enabled,
-            title = stringResource(R.string.pref__devtools__enabled__label),
-            summary = stringResource(R.string.pref__devtools__enabled__summary),
+            title = stringRes(R.string.pref__devtools__enabled__label),
+            summary = stringRes(R.string.pref__devtools__enabled__summary),
         )
         SwitchPreference(
             prefs.devtools.showHeapMemoryStats,
-            title = stringResource(R.string.pref__devtools__show_heap_memory_stats__label),
-            summary = stringResource(R.string.pref__devtools__show_heap_memory_stats__summary),
+            title = stringRes(R.string.pref__devtools__show_heap_memory_stats__label),
+            summary = stringRes(R.string.pref__devtools__show_heap_memory_stats__summary),
             enabledIf = { prefs.devtools.enabled isEqualTo true },
         )
         // TODO: remove this preference once word suggestions are re-implemented in 0.3.15
@@ -151,17 +151,23 @@ fun AdvancedScreen() = FlorisScreen(title = stringResource(R.string.settings__ad
             enabledIf = { prefs.devtools.enabled isEqualTo true },
         )
         Preference(
-            title = stringResource(R.string.pref__devtools__clear_udm_internal_database__label),
-            summary = stringResource(R.string.pref__devtools__clear_udm_internal_database__summary),
+            title = stringRes(R.string.pref__devtools__clear_udm_internal_database__label),
+            summary = stringRes(R.string.pref__devtools__clear_udm_internal_database__summary),
             onClick = { setShowDialog(true) },
+            enabledIf = { prefs.devtools.enabled isEqualTo true },
+        )
+        Preference(
+            title = stringRes(R.string.pref__devtools__reset_flag__label, "flag_name" to "isImeSetUp"),
+            summary = stringRes(R.string.pref__devtools__reset_flag_is_ime_set_up__summary),
+            onClick = { prefs.internal.isImeSetUp.set(false) },
             enabledIf = { prefs.devtools.enabled isEqualTo true },
         )
     }
 
     if (showDialog) {
         JetPrefAlertDialog(
-            title = stringResource(R.string.assets__action__delete_confirm_title),
-            confirmLabel = stringResource(R.string.assets__action__delete),
+            title = stringRes(R.string.assets__action__delete_confirm_title),
+            confirmLabel = stringRes(R.string.assets__action__delete),
             onConfirm = {
                 DictionaryManager.default().let {
                     it.loadUserDictionariesIfNecessary()
@@ -169,13 +175,13 @@ fun AdvancedScreen() = FlorisScreen(title = stringResource(R.string.settings__ad
                 }
                 setShowDialog(false)
             },
-            dismissLabel = stringResource(R.string.assets__action__cancel),
+            dismissLabel = stringRes(R.string.assets__action__cancel),
             onDismiss = { setShowDialog(false) },
         ) {
             Text(
-                text = stringResource(
+                text = stringRes(
                     R.string.assets__action__delete_confirm_message,
-                    FlorisUserDictionaryDatabase.DB_FILE_NAME,
+                    "database_name" to FlorisUserDictionaryDatabase.DB_FILE_NAME,
                 )
             )
         }

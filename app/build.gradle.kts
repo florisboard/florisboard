@@ -1,8 +1,9 @@
 plugins {
-    id("com.android.application") version "7.0.2"
-    kotlin("android") version "1.5.30"
-    kotlin("kapt") version "1.5.30"
+    id("com.android.application")
+    kotlin("android")
+    kotlin("kapt")
     kotlin("plugin.serialization") version "1.5.30"
+    id("com.google.android.gms.oss-licenses-plugin")
 }
 
 android {
@@ -134,12 +135,11 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.0") // possibly remove after settings rework
     implementation("androidx.core:core-ktx:1.6.0")
     implementation("androidx.fragment:fragment-ktx:1.3.6") // possibly remove after settings rework
-    implementation("androidx.navigation:navigation-compose:2.4.0-alpha08")
+    implementation("androidx.navigation:navigation-compose:2.4.0-alpha09")
     implementation("androidx.preference:preference-ktx:1.1.1") // possibly remove after settings rework
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.18.0")
     implementation("com.google.android.flexbox:flexbox:3.0.0") // possibly remove after settings rework
     implementation("com.google.android.material:material:1.4.0") // possibly remove after settings rework
-    implementation("com.jakewharton.timber:timber:4.7.1") // possibly remove after settings rework
     implementation("com.jaredrummler:colorpicker:1.1.0") // possibly remove after settings rework
     implementation("com.nambimobile.widgets:expandable-fab:1.0.2") // possibly remove after settings rework
     implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-alpha07")
