@@ -802,8 +802,8 @@
       "preferred": {
         "characters": "igbo"
       }
-    }
-        {
+    },
+    {
       "id": 3500,
       "languageTag": "hoc",
       "composer": "appender",
