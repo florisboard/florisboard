@@ -142,8 +142,8 @@ dependencies {
     implementation("com.google.android.material:material:1.4.0") // possibly remove after settings rework
     implementation("com.jaredrummler:colorpicker:1.1.0") // possibly remove after settings rework
     implementation("com.nambimobile.widgets:expandable-fab:1.0.2") // possibly remove after settings rework
-    implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-alpha07")
-    implementation("dev.patrickgold.jetpref:jetpref-ui-compose:0.1.0-alpha07")
+    implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-alpha08")
+    implementation("dev.patrickgold.jetpref:jetpref-ui-compose:0.1.0-alpha08")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
     implementation("androidx.room:room-runtime:2.3.0")
