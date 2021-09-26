@@ -802,6 +802,16 @@
       "preferred": {
         "characters": "igbo"
       }
+    },
+    {
+      "id": 3500,
+      "languageTag": "hoc",
+      "composer": "appender",
+      "currencySet": "indian_rupee",
+      "preferred": {
+        "characters": "warang_citi",
+        "numericRow": "warang_citi"
+      }
     }
   ]
 }
