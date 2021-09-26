@@ -63,10 +63,10 @@
     <string name="settings__theme__title" comment="Title of the Theme fragment">Motyw klawiatury</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Niezdefiniowany</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Tryb motywu</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Zawsze dzienny</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Zawsze nocny</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Zgodnie z systemem</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Zgodnie z porą dnia</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Zawsze dzienny</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Zawsze nocny</string>
+    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Zgodnie z systemem</string>
+    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Zgodnie z porą dnia</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Czas wschodu słońca</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Czas zachodu słońca</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tryb dzienny</string>

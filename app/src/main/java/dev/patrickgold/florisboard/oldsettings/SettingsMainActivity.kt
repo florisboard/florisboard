@@ -106,12 +106,12 @@ class SettingsMainActivity : AppCompatActivity(),
             }
             R.id.settings__navigation__theme -> {
                 supportActionBar?.setTitle(R.string.settings__theme__title)
-                loadFragment(ThemeFragment())
+                loadFragment(PrefFragment.createFromResource(R.xml.prefs_theme))
                 true
             }
             R.id.settings__navigation__gestures -> {
                 supportActionBar?.setTitle(R.string.settings__gestures__title)
-                loadFragment(GesturesFragment())
+                loadFragment(PrefFragment.createFromResource(R.xml.prefs_gestures))
                 true
             }
             else -> false

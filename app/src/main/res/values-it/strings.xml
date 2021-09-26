@@ -75,10 +75,10 @@
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tema tastiera</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Sconosciuto</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Modalità tema</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Sempre giorno</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Sempre notte</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Seguire il sistema</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Seguire il tempo</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Sempre giorno</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Sempre notte</string>
+    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Seguire il sistema</string>
+    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Seguire il tempo</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Ora dell\'alba</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Ora del tramonto</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tema giorno</string>

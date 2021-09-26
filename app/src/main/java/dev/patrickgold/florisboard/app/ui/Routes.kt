@@ -30,11 +30,14 @@ import dev.patrickgold.florisboard.app.ui.settings.clipboard.ClipboardScreen
 import dev.patrickgold.florisboard.app.ui.settings.gestures.GesturesScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.InputFeedbackScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.KeyboardScreen
+import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeScreen
 import dev.patrickgold.florisboard.app.ui.setup.SetupScreen
 
 object Routes {
     object Settings {
         const val Home = "settings"
+
+        const val Theme = "settings/theme"
 
         const val Keyboard = "settings/keyboard"
         const val InputFeedback = "settings/keyboard/input-feedback"
@@ -66,6 +69,8 @@ object Routes {
             startDestination = startDestination,
         ) {
             composable(Settings.Home) { HomeScreen() }
+
+            composable(Settings.Theme) { ThemeScreen() }
 
             composable(Settings.Keyboard) { KeyboardScreen() }
             composable(Settings.InputFeedback) { InputFeedbackScreen() }

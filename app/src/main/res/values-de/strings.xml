@@ -75,10 +75,10 @@
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tastaturdesign</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nicht definiert</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Design-Modus</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Immer Tagmodus</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Immer Nachtmodus</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Systemkonform</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Zeit-basierend</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Immer Tagmodus</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Immer Nachtmodus</string>
+    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Systemkonform</string>
+    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Zeit-basierend</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Sonnenaufgangszeit</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Sonnenuntergangszeit</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Helles Design</string>

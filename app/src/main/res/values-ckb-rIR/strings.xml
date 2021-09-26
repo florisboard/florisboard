@@ -75,10 +75,10 @@
     <string name="settings__theme__title" comment="Title of the Theme fragment">ڕووکارەکانی تەختەکلیل</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">بێ ناو</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">دۆخی ڕووکار</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">هەمیشە ڕووناک</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">هەمیشە تاریک</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">بەپێی سیستەم</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">بەپێی کات</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">هەمیشە ڕووناک</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">هەمیشە تاریک</string>
+    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">بەپێی سیستەم</string>
+    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">بەپێی کات</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">کاتی خۆرهەڵاتن</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">کاتی خۆر ئاوابوون</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">ڕووناک</string>

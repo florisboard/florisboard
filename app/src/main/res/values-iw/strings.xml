@@ -69,10 +69,10 @@
     <string name="settings__theme__title" comment="Title of the Theme fragment">ערכת נושא של המקלדת</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">לא מוגדר</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">מצב ערכת נושא</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">תמיד בהיר</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">תמיד כהה</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">בהתאם למערכת</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">עקוב אחר הזמן</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">תמיד בהיר</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">תמיד כהה</string>
+    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">בהתאם למערכת</string>
+    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">עקוב אחר הזמן</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">זמן זריחה</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">זמן שקיעה</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">ערכת נושא למצב יום</string>

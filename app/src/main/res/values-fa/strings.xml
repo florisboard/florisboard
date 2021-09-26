@@ -74,10 +74,10 @@
     <string name="settings__theme__title" comment="Title of the Theme fragment">طرح زمینه صفحه کلید</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">تعریف نشده</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">حالت طرح‌زمینه</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">همیشه روز</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">همیشه شب</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">پیروی از سیستم</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">پیروی از زمان</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">همیشه روز</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">همیشه شب</string>
+    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">پیروی از سیستم</string>
+    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">پیروی از زمان</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">زمان طلوع</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">زمان غروب</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">طرح‌زمینه روز</string>

@@ -74,10 +74,10 @@
     <string name="settings__theme__title" comment="Title of the Theme fragment">Toetsenbordthema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ongedefinieerd</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Thema modus</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Altijd dag</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Altijd nacht</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Volg systeeminstelling</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Volg tijd</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Altijd dag</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Altijd nacht</string>
+    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Volg systeeminstelling</string>
+    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Volg tijd</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Zonsopgang</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Zonsondergang</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Dagthema</string>

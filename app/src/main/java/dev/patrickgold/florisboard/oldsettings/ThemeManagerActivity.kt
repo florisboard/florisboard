@@ -36,7 +36,6 @@ import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.databinding.ThemeManagerActivityBinding
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
-import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
@@ -147,8 +146,8 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
 
         supportActionBar?.setTitle(
             when (key) {
-                Preferences.Theme.DAY_THEME_REF -> R.string.settings__theme_manager__title_day
-                Preferences.Theme.NIGHT_THEME_REF -> R.string.settings__theme_manager__title_night
+                "theme__day_theme_ref" -> R.string.settings__theme_manager__title_day
+                "theme__night_theme_ref" -> R.string.settings__theme_manager__title_night
                 else -> R.string.settings__title
             }
         )
@@ -200,23 +199,23 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
     private fun evaluateSelectedRef(ignorePrefs: Boolean = false): FlorisRef? {
         return if (ignorePrefs) {
             when (key) {
-                Preferences.Theme.DAY_THEME_REF -> themeManager.indexedDayThemeRefs.keys.firstOrNull()
-                Preferences.Theme.NIGHT_THEME_REF -> themeManager.indexedNightThemeRefs.keys.firstOrNull()
+                "theme__day_theme_ref" -> themeManager.indexedDayThemeRefs.keys.firstOrNull()
+                "theme__night_theme_ref" -> themeManager.indexedNightThemeRefs.keys.firstOrNull()
                 else -> null
             }
         } else {
-            FlorisRef.from(when (key) {
-                Preferences.Theme.DAY_THEME_REF -> prefs.theme.dayThemeRef
-                Preferences.Theme.NIGHT_THEME_REF -> prefs.theme.nightThemeRef
-                else -> ""
-            }).takeIf { it.isValid }
+            when (key) {
+                "theme__day_theme_ref" -> prefs.theme.dayThemeRef.get()
+                "theme__night_theme_ref" -> prefs.theme.nightThemeRef.get()
+                else -> null
+            }
         }
     }
 
     private fun setThemeRefInPrefs(ref: FlorisRef?) {
         when (key) {
-            Preferences.Theme.DAY_THEME_REF -> prefs.theme.dayThemeRef = ref.toString()
-            Preferences.Theme.NIGHT_THEME_REF -> prefs.theme.nightThemeRef = ref.toString()
+            "theme__day_theme_ref" -> ref?.let { prefs.theme.dayThemeRef.set(it) }
+            "theme__night_theme_ref" -> ref?.let { prefs.theme.nightThemeRef.set(it) }
         }
     }
 
@@ -263,7 +262,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
                     name = "theme-$timestamp",
                     label = resources.getString(R.string.settings__theme_manager__theme_new_title),
                     authors = listOf("@me"),
-                    isNightTheme = key == Preferences.Theme.NIGHT_THEME_REF
+                    isNightTheme = key == "theme__night_theme_ref"
                 )
                 val newAssetRef = FlorisRef.internal(ThemeManager.THEME_PATH_REL + "/" + newTheme.name + ".json")
                 themeManager.writeTheme(newAssetRef, newTheme).onSuccess {
@@ -370,8 +369,8 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
 
     private fun buildUi() {
         val metaIndex = when (key) {
-            Preferences.Theme.DAY_THEME_REF -> themeManager.indexedDayThemeRefs
-            Preferences.Theme.NIGHT_THEME_REF -> themeManager.indexedNightThemeRefs
+            "theme__day_theme_ref" -> themeManager.indexedDayThemeRefs
+            "theme__night_theme_ref" -> themeManager.indexedNightThemeRefs
             else -> mutableMapOf()
         }
         binding.themeList.removeAllViews()

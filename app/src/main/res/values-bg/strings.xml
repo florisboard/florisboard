@@ -75,10 +75,10 @@
     <string name="settings__theme__title" comment="Title of the Theme fragment">Тема на клавиатурата</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Недефинирано</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Режим на тема</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Винаги ден</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Винаги нощ</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Според системата</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Според часа</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Винаги ден</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Винаги нощ</string>
+    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Според системата</string>
+    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Според часа</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Време на изгрев</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Време на залез</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Дневна тема</string>

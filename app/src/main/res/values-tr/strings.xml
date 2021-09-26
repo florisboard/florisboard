@@ -75,10 +75,10 @@
     <string name="settings__theme__title" comment="Title of the Theme fragment">Klavye Teması</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Tanımlanmamış</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Tema modu</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Her zaman gündüz</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Her zaman gece</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Sistem ile aynı</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Saate göre</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Her zaman gündüz</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Her zaman gece</string>
+    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Sistem ile aynı</string>
+    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Saate göre</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Gündoğumu saati</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Günbatımı saati</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Gündüz teması</string>

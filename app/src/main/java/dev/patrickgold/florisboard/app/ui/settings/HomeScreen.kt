@@ -97,6 +97,11 @@ fun HomeScreen() = FlorisScreen(
         }
     }
     Preference(
+        iconId = R.drawable.ic_palette,
+        title = stringRes(R.string.settings__theme__title),
+        onClick = { navController.navigate(Routes.Settings.Theme) },
+    )
+    Preference(
         iconId = R.drawable.ic_keyboard,
         title = stringRes(R.string.settings__keyboard__title),
         onClick = { navController.navigate(Routes.Settings.Keyboard) },

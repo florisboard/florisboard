@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.res
 import android.content.Context
 import android.net.Uri
 import androidx.annotation.VisibleForTesting
+import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -266,5 +267,15 @@ value class FlorisRef private constructor(val uri: Uri) {
      */
     override fun toString(): String {
         return uri.toString()
+    }
+
+    object Serializer : PreferenceSerializer<FlorisRef> {
+        override fun serialize(value: FlorisRef): String {
+            return value.toString()
+        }
+
+        override fun deserialize(value: String): FlorisRef {
+            return from(value)
+        }
     }
 }

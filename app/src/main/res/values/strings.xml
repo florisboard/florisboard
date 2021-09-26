@@ -81,13 +81,9 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">This subtype already exists!</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (not installed)</string>
 
-    <string name="settings__theme__title" comment="Title of the Theme fragment">Keyboard theme</string>
+    <string name="settings__theme__title" comment="Title of the Theme screen">Theme</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Undefined</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Theme mode</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Always day</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Always night</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Follow system</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Follow time</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Sunrise time</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Sunset time</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Day theme</string>
@@ -528,6 +524,11 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Switch to previous keyboard</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Switch to previous subtype</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Switch to next subtype</string>
+
+    <string name="enum__theme_mode__always_day" comment="Enum value label">Always day</string>
+    <string name="enum__theme_mode__always_night" comment="Enum value label">Always night</string>
+    <string name="enum__theme_mode__follow_system" comment="Enum value label">Follow system</string>
+    <string name="enum__theme_mode__follow_time" comment="Enum value label">Follow time</string>
 
     <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Switch to emojis</string>
     <string name="enum__utility_key_action__switch_language" comment="Enum value label">Switch language</string>

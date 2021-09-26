@@ -76,10 +76,10 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tema papan ketik</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Tidak ditetapkan</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Mode tema</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Selalu siang</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Selalu malam</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Ikuti sistem</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Ikuti waktu</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Selalu siang</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Selalu malam</string>
+    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Ikuti sistem</string>
+    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Ikuti waktu</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Waktu matahari terbit</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Waktu matahari terbenam</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Tema siang</string>
