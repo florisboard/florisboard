@@ -39,9 +39,9 @@
       { "$": "auto_text_key", "code":  71888, "label": "𑣐" },
       { "$": "auto_text_key", "code":  71895, "label": "𑣗" },
       { "$": "auto_text_key", "code":  71891, "label": "𑣓" },
-      { "code":   71894, "label": "𑣖", "popup": {
+      { "$": "auto_text_key", "code":  71894, "label": "𑣖", "popup": {
         "relevant": [
-          { "code":   71935, "label": "𑣿" }
+          { "code":  71935, "label": "𑣿" }
         ]
       } }
     ]
