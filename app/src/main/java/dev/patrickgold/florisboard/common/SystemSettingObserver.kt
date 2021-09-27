@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Patrick Goldinger
+ * Copyright (C) 2021 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,25 +14,26 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.gestures
+package dev.patrickgold.florisboard.common
 
-/**
- * Enum for declaring the velocity thresholds for swipe gestures.
- */
-enum class VelocityThreshold {
-    VERY_SLOW,
-    SLOW,
-    NORMAL,
-    FAST,
-    VERY_FAST;
+import android.content.Context
+import android.database.ContentObserver
+import android.os.Handler
 
-    companion object {
-        fun fromString(string: String): VelocityThreshold {
-            return valueOf(string.uppercase())
-        }
+fun interface OnSystemSettingsChangedListener {
+    fun onChanged()
+}
+
+class SystemSettingsObserver(
+    context: Context,
+    private val listener: OnSystemSettingsChangedListener,
+) : ContentObserver(Handler(context.mainLooper)) {
+
+    init {
+        listener.onChanged()
     }
 
-    override fun toString(): String {
-        return super.toString().lowercase()
+    override fun onChange(selfChange: Boolean) {
+        listener.onChanged()
     }
 }

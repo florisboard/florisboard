@@ -226,30 +226,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">Algemene gebaren</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Spatiebalkgebaren</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Andere gebaren / Drempelwaardes voor gebaren</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Geen actie</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Roteer naar de vorige toetsenbordmodus</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Roteer naar de volgende toetsenbordmodus</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Tekens nauwkeurig verwijderen</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Huidige woord verwijderen</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Woorden nauwkeurig verwijderen</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Toetsenbord verbergen</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Spatie invoegen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Cursor naar boven verplaatsen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Cursor naar beneden verplaatsen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Cursor naar links verplaatsen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Cursor naar rechts verplaatsen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Cursor aan het begin van de regel plaatsen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Cursor aan het einde van de regel plaatsen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Cursor aan het begin van de pagina plaatsen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Cursor aan het einde van de pagina plaatsen</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Open klembordbeheer/geschiedenis</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Opnieuw</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Ongedaan maken</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Invoermethodekiezer weergeven</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Overschakelen naar het vorige toetsenbord</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Overschakelen naar de vorige indeling</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Overschakelen naar de volgende indeling</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Swipe omhoog</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Swipe omlaag</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Swipe naar links</string>
@@ -260,17 +236,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Spatiebalk lang indrukken</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Swipe naar links vanop de Delete-toets</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Drempelwaarde voor swipe-snelheid</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Heel langzaam</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Langzaam</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normaal</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Snel</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Heel snel</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Drempelwaarde voor swipe-afstand</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Heel kort</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Kort</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normaal</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Lang</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Heel lang</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Geavanceerd</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Thema-instellingen</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Licht</string>
@@ -322,26 +288,7 @@
     <string name="assets__error__snackbar_message">Er is iets mis gegaan</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Setup</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Vorige</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Annuleren</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Volgende</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Einde</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">OK</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Welkom!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Bedankt voor het uitproberen van FlorisBoard! Voordat u de app kan beginnen gebruiken, moeten we de gebruikelijke stappen doorlopen: inschakelen in de systeeminstellingen, instellen van uw voorkeur taal/indeling, etc. Maar geen zorgen - de setup-wizard zal u hierbij begeleiden!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard respecteert uw privacy ten volle en verzamelt geen gebruikersgegevens. Voor meer informatie, kijk hier:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">De broncode voor FlorisBoard is voor iedereen toegankelijk, zodat u gemakkelijk kan bekijken wat FlorisBoard doet op de achtergrond. Bekijk de repository link hieronder.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Nog één ding voordat u start met de setup: als u bugs/crashes/problemen tegenkomt met FlorisBoard of als u een feature wenst, ga dan naar de GitHub repository via de link hieronder en open een issue. Dit helpt bij het verbeteren van de ervaring voor alle gebruikers!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Om de setup te starten, klikt u op <i>VOLGENDE</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">FlorisBoard inschakelen</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android vereist dat elk aangepast toetsenbord handmatig moet worden ingeschakeld voordat u het kunt gebruiken. Klik op de onderstaande knop om naar de <i>Taal- &amp; Invoer</i> instellingen te gaan en selecteer vervolgens \'<i>FlorisBoard</i>\'.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard is succesvol ingeschakeld. Om door te gaan, klik op <i>VOLGENDE</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Open Taal- &amp; invoerinstellingen</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Stel FlorisBoard als standaard in</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard is nu ingeschakeld in uw systeem. Om het actief te gebruiken, schakelt u over naar FlorisBoard door het te selecteren in het dialoogvenster in de input-selector!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Met succes het standaard toetsenbord vervangen door FlorisBoard!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Toetsenbord wisselen</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Klaar!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Foutenrapport FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Sorry voor het ongemak, maar FlorisBoard is gecrashed omwille van een onverwachte fout.</string>

@@ -55,7 +55,7 @@
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Default</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">System default</string>
 
-    <string name="settings__home__title" comment="Title of the Home fragment">Welcome to %s</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">Welcome to {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard is not enabled in the system and thus won\'t be available as an input method in the input picker. Click here to resolve this issue.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard is not selected as the default input method. Click here to resolve this issue.</string>
 
@@ -284,39 +284,18 @@
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Language code (optional)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">This language code does not conform to the expected syntax. The code must either be a language only (like en), a language and country (like en_US) or a language, country, and script (like en_US-script).</string>
 
-    <string name="settings__gestures__title" comment="Title of Gestures fragment">Gestures &amp; Glide typing</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Gestures &amp; Glide typing</string>
     <string name="pref__glide__title" comment="Preference group title">Glide typing</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Enable glide typing</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Type in a word by sliding your finger through its letters</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">Show glide trail</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Will disappear after each word</string>
+    <string name="pref__glide_trail_fade_duration">Glide trail fade time</string>
+    <string name="pref__glide_preview_refresh_delay">Preview refresh delay</string>
+    <string name="pref__glide__show_preview">Show preview while glide typing</string>
     <string name="pref__gestures__general_title" comment="Preference group title">General gestures</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Space bar gestures</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Other gestures / Gesture thresholds</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">No action</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Cycle to previous keyboard mode</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Cycle to next keyboard mode</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Delete characters precisely</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Delete current word</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Delete words precisely</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Hide keyboard</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Insert space</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Move cursor up</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Move cursor down</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Move cursor left</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Move cursor right</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Move cursor to start of line</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Move cursor to end of line</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Move cursor to start of page</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Move cursor to end of page</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Open clipboard manager/history</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Redo</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Undo</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Show input method picker</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Switch to previous keyboard</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Switch to previous subtype</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Switch to next subtype</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Swipe up</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Swipe down</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Swipe left</string>
@@ -327,17 +306,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Space bar long press</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Delete key swipe left</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Swipe velocity threshold</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Very slow</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Slow</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normal</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Fast</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Very fast</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Swipe distance threshold</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Very short</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Short</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Long</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Very long</string>
 
     <string name="settings__advanced__title" comment="Title of Advanced settings">Advanced</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Settings theme</string>
@@ -357,6 +326,8 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Overlays the heap memory usage and max size in the top-right corner</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Clear internal user dictionary database</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Clears all words from the dictionary database table</string>
+    <string name="pref__devtools__reset_flag__label" comment="Label of Reset flag preferences in Advanced">Reset \"{flag_name}\" flag</string>
+    <string name="pref__devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Advanced">Debug action to re-show the setup screen</string>
 
     <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Spell checker settings</string>
     <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Manage dictionaries</string>
@@ -414,8 +385,8 @@
     <string name="about__privacy_policy__title" comment="Preference title">Privacy policy</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">The privacy policy for this project</string>
     <string name="about__project_license__title" comment="Preference title">Project license</string>
-    <string name="about__project_license__summary" comment="Preference summary (%s will insert license name)">FlorisBoard is licensed under %s</string>
-    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Error: Failed to load license text.\n-&gt; Reason: %s</string>
+    <string name="about__project_license__summary" comment="Preference summary">FlorisBoard is licensed under {license_name}</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Error: Failed to load license text.\n-&gt; Reason: {error_message}</string>
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Asset manager reference is null</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Third-party licenses</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Licenses of the third-party libraries included in this app</string>
@@ -434,7 +405,7 @@
     <string name="assets__action__cancel_confirm_message">Are you sure you want to discard any unsaved changes? This action can not be undone once executed.</string>
     <string name="assets__action__delete">Delete</string>
     <string name="assets__action__delete_confirm_title">Confirm delete</string>
-    <string name="assets__action__delete_confirm_message">Are you sure you want to delete \"%s\"? This action can not be undone once executed.</string>
+    <string name="assets__action__delete_confirm_message">Are you sure you want to delete \"{database_name}\"? This action can not be undone once executed.</string>
     <string name="assets__action__edit">Edit</string>
     <string name="assets__action__export">Export</string>
     <string name="assets__action__import">Import</string>
@@ -449,31 +420,23 @@
     <string name="assets__error__snackbar_message">Something went wrong</string>
 
     <!-- Setup UI strings -->
-    <string name="setup__title" comment="Title of Setup">Setup</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Prev</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Cancel</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Next</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Finish</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">OK</string>
+    <string name="setup__title" comment="Title of Setup">Welcome!</string>
+    <string name="setup__intro_message" comment="Short intro message welcoming new users">Thanks for using {app_name}! This quick setup guides you through the required steps to use {app_name} on your device.</string>
+    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privacy policy</string>
+    <string name="setup__footer__repository" comment="Repository label for URL">Repository</string>
 
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Welcome!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Thanks for trying out FlorisBoard! Before you can start using it, we have to do the usual stuff and enable it in the system settings, set up your preferred language/layout, etc… But no worries - the setup wizard will guide you through this!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard does fully respect your privacy and does not collect any user data. For more info see here:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">The source code for FlorisBoard is publicly accessible for anyone, so you can easily review what FlorisBoard does in the background. Check out the repository link below.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">One last thing before you start the setup - if you encounter any bugs/crashes/issues with FlorisBoard or you have a feature request - head over to the GitHub repository linked below and file an issue. This helps in improving the experience for all users!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">To start the setup, click on <i>NEXT</i>.</string>
+    <string name="setup__enable_ime__title">Enable {app_name}</string>
+    <string name="setup__enable_ime__description">Android requires that every custom keyboard is separately enabled before you can use it. Open the System <i>Language &amp; Input</i> Settings, there enable "{app_name}".</string>
+    <string name="setup__enable_ime__open_settings_btn">Open System Settings</string>
 
-    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Enable FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android requires that every custom keyboard has to be manually enabled before you can use it. Click the button below to go to the <i>Language &amp; Input</i> settings, then make sure to check \'<i>FlorisBoard</i>\'.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard has been successfully enabled. To continue click <i>NEXT</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Open Language &amp; Input settings</string>
+    <string name="setup__select_ime__title">Select {app_name}</string>
+    <string name="setup__select_ime__description">{app_name} is now enabled in your system. To actively use it, switch to {app_name} by selecting it in the input selector dialog!</string>
+    <string name="setup__select_ime__switch_keyboard_btn">Switch Keyboard</string>
 
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Make FlorisBoard default</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard is now enabled in your system. To actively use it, switch to FlorisBoard by selecting it in the input selector dialog!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Successfully switched the default keyboard to FlorisBoard!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Switch keyboard</string>
-
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Setup finished!</string>
+    <string name="setup__finish_up__title">Finish Up</string>
+    <string name="setup__finish_up__description_p1">{app_name} is now enabled in the system and ready to be customized by you.</string>
+    <string name="setup__finish_up__description_p2">Should you encounter any issues, bugs, crashes or just want to make a suggestion, check out the project repository from the about screen!</string>
+    <string name="setup__finish_up__finish_btn">Start Customizing</string>
 
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard error report</string>
@@ -515,11 +478,6 @@
     <string name="pref__clipboard__limit_history_size__label">Limit history size</string>
     <string name="pref__clipboard__max_history_size__label">Max history size</string>
 
-    <!-- glide strings -->
-    <string name="pref__glide_trail_fade_duration">Glide trail fade time</string>
-    <string name="pref__glide_preview_refresh_delay">Preview refresh delay</string>
-    <string name="pref__glide__show_preview">Show preview while glide typing</string>
-
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portrait</string>
     <string name="screen_orientation__landscape">Landscape</string>
@@ -537,12 +495,40 @@
     <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">The initial character selected after long press is always the hint symbol, or the primary accent if no hint symbol is available</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Smart prioritization</string>
     <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">The initial character selected after long press is dynamically decided to be either the primary accent or the hint symbol, based on the current language and layout</string>
+
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Never show</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Always show</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamically show</string>
+
     <string name="enum__one_handed_mode__off" comment="Enum value label">Off</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Right-handed mode</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Left-handed mode</string>
+
+    <string name="enum__swipe_action__no_action" comment="Enum value label">No action</string>
+    <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Cycle to previous keyboard mode</string>
+    <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Cycle to next keyboard mode</string>
+    <string name="enum__swipe_action__delete_characters_precisely" comment="Enum value label">Delete characters precisely</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Delete current word</string>
+    <string name="enum__swipe_action__delete_words_precisely" comment="Enum value label">Delete words precisely</string>
+    <string name="enum__swipe_action__hide_keyboard" comment="Enum value label">Hide keyboard</string>
+    <string name="enum__swipe_action__insert_space" comment="Enum value label">Insert space</string>
+    <string name="enum__swipe_action__move_cursor_up" comment="Enum value label">Move cursor up</string>
+    <string name="enum__swipe_action__move_cursor_down" comment="Enum value label">Move cursor down</string>
+    <string name="enum__swipe_action__move_cursor_left" comment="Enum value label">Move cursor left</string>
+    <string name="enum__swipe_action__move_cursor_right" comment="Enum value label">Move cursor right</string>
+    <string name="enum__swipe_action__move_cursor_start_of_line" comment="Enum value label">Move cursor to start of line</string>
+    <string name="enum__swipe_action__move_cursor_end_of_line" comment="Enum value label">Move cursor to end of line</string>
+    <string name="enum__swipe_action__move_cursor_start_of_page" comment="Enum value label">Move cursor to start of page</string>
+    <string name="enum__swipe_action__move_cursor_end_of_page" comment="Enum value label">Move cursor to end of page</string>
+    <string name="enum__swipe_action__switch_to_clipboard_context" comment="Enum value label">Open clipboard manager/history</string>
+    <string name="enum__swipe_action__shift" comment="Enum value label">Shift</string>
+    <string name="enum__swipe_action__redo" comment="Enum value label">Redo</string>
+    <string name="enum__swipe_action__undo" comment="Enum value label">Undo</string>
+    <string name="enum__swipe_action__show_input_method_picker" comment="Enum value label">Show input method picker</string>
+    <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Switch to previous keyboard</string>
+    <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Switch to previous subtype</string>
+    <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Switch to next subtype</string>
+
     <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Switch to emojis</string>
     <string name="enum__utility_key_action__switch_language" comment="Enum value label">Switch language</string>
     <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Switch keyboard app</string>
@@ -555,6 +541,7 @@
     <string name="unit__milliseconds__symbol" translatable="false">{v} ms</string>
     <string name="unit__percent__symbol" translatable="false">{v}%</string>
     <string name="unit__display_pixel__symbol" translatable="false">{v} dp</string>
+    <string name="unit__display_pixel_per_seconds__symbol" translatable="false">{v} dp/s</string>
 
     <!-- Unit strings (written words) -->
     <plurals name="unit__hours__written">

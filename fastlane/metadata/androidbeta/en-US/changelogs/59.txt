@@ -1,0 +1,4 @@
+This release adds a new setup wizard, gesture preferences and third-party license screen.
+Additionally some bugs have been fixed.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.14-beta03

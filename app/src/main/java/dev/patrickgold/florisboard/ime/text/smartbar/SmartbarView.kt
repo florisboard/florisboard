@@ -47,7 +47,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.math.roundToInt
@@ -99,7 +98,7 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
      * TextInputManager, which then starts working together with this view.
      */
     override fun onAttachedToWindow() {
-        Timber.i("onAttachedToWindow()")
+        flogInfo { "onAttachedToWindow()" }
 
         super.onAttachedToWindow()
 

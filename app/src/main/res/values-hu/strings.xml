@@ -200,30 +200,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">Általános gesztusok</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Szóköz gesztusok</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Egyéb gesztusok / gesztusküszöb</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Nincs művelet</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Váltás az előző billentyűzetmódra</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Váltás a következő billentyűzetmódra</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Karakterek pontos törlése</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">A jelenlegi szó törlése</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Szavak pontos törlése</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Billentyűzet elrejtése</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Szóköz beszúrása</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Kurzor mozgatása felfelé</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Kurzor mozgatása lefelé</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Kurzor mozgatása balra</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Kurzor mozgatása jobbra</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Kurzor sor elejére helyezése</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Kurzor sor végére helyezése</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Kurzor mozgatása a lap elejére</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Kurzor mozgatása a lap végére</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Vágólapkezelő/vágólapelőzmények megnyitása</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Újra</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Visszavonás</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Bevitelválasztó megnyitása</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Váltás az előző billentyűzetre</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Váltás az előző altípusra</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Váltás a következő altípusra</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Felhúzás</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Lehúzás</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Balra húzás</string>
@@ -234,17 +210,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Szóköz hosszú lenyomása</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Törlés gomb balra húzás</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Húzás sebesség küszöb</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Nagyon lassú</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Lassú</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normál</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Gyors</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Nagyon gyors</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Húzás távolság küszöb</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Nagyon rövid</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Rövid</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normál</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Hosszú</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Nagyon hosszú</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Haladó</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Beállítások témája</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Világos</string>
@@ -303,26 +269,7 @@
     <string name="assets__error__snackbar_message">Valami rosszul sült el</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Beállítás</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Előző</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Mégse</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Következő</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Befejezés</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">OK</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Üdvözöljük!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Köszönjük, hogy kipróbálta FlorisBoard-ot! Mielőtt elkezdené használni, meg kell csinálnunk a szokásos dolgokat, engedélyeznünk kell a rendszerbeállításokban, be kell állítanunk a kívánt nyelvet/elrendezést stb.... de ne aggódjon a telepítő varázsló végigvezeti önt ezen!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">A FlorisBoard teljes mértékben tiszteletben tartja az Ön személyes adatait, és nem gyűjt felhasználói adatokat. További információkért látogassa meg:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">A FlorisBoard forráskódja bárki számára nyilvánosan elérhető, így könnyen áttekintheti, hogy mit csinál a FlorisBoard a háttérben. Nézze meg a tároló linkjét lejjebb.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Még egy utolsó dolog a beállítás megkezdése előtt - ha bármilyen hibával/összeomlással/problémával találkozik a FlorisBoard alkalmazásban, vagy ha egy funkciót szeretne kérni - menjen át az alább linkelt GitHub tárolóba, és nyújtson be egy hibajelentést. Ez segít javítani a felhasználói élményt!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">A beállítás megkezdéséhez kattintson a <i>Következő</i> gombra.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">FlorisBoard engedélyezése</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Az Android megköveteli, hogy minden egyéni billentyűzetet manuálisan engedélyezzen, mielőtt használná. Kattintson az alábbi gombra a <i>Nyelv és bemenet</i> beállításokhoz, majd jelölje be a \'<i>FlorisBoard</i> \'-ot.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">A FlorisBoard sikeresen engedélyezve lett. A folytatáshoz kattintson a <i>Következő</i> gombra!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Nyelv és bemenet beállítások megnyitása</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">FlorisBoard alapértelmezetté tétele</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard most már engedélyezve van a rendszerben. Ahhoz, hogy aktívan használja, váltson a FlorisBoard-ra annak kiválasztásával azt a bevitel választó párbeszédablakban!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Sikeresen átváltotta az alapértelmezett billentyűzetet Florisboardra!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Billentyűzet váltása</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">A beállítás kész!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard hibajelentés</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Elnézést a kellemetlenségért, de a FlorisBoard összeomlott egy váratlan hiba miatt.</string>

@@ -104,31 +104,11 @@
     <string name="pref__glide__title" comment="Preference group title">Strygeskrivning</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Skriv ord ved at stryge fingeren igennem bogstaver</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Vil forsvinde efter hvert ord</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Ingen handling</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Slet tegn præcist</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Slet nuværende ord</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Slet ord præcist</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Skjul tastatur</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Flyt musen op</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Flyt musen ned</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Flyt musen venstre</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Flyt musen højre</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Fortryd</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Skift til forrige tastatur</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Stryg opad</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Stryg nedad</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Stryg til venstre</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Swipe til højre</string>
     <string name="pref__gestures__space_bar_swipe_up__label" comment="Preference title">Space bar knalde op</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Langsom</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normal</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Hurtig</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Meget hurtig</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Meget kort</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Kort</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Lang</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Meget lang</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Avanceret</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Lys</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Mørk</string>
@@ -154,16 +134,6 @@
     <string name="assets__error__invalid">Ugyldig</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Opsætning</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Forrige</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Annullér</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Næste</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Afslut</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">Ok</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Velkommen!</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard er nu aktiveret i dit system. For aktivt at bruge det, skifte til FlorisBoard ved at vælge det i dialogboksen input selector!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Succesfuldt skiftede standardtastaturet til FlorisBoard!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Skift tastatur</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Opsætning færdig!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard fejlrapport</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Luk</string>

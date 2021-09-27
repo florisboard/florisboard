@@ -247,30 +247,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">Основни жестове</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Жестове с клавиша за интервал</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Други жестове и прагове на жеста</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Без действие</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Предишен режим на клавиатура</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Следващ режим на клавиатура</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Изтриват се символи прецизно</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Изтрива се текущата дума</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Изтриват се думи прецизно</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Клавиатурата се скрива</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Вмъква се интервал</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Курсорът се премества нагоре</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Курсорът се премества надолу</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Курсорът се премества наляво</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Курсорът се премества надясно</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Курсорът се премества в началото на реда</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Курсорът се премества в края на реда</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Курсорът се премества в началото на страницата</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Курсорът се премества в края на страницата</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Управление на междинната памет</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Възстановяване</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Отменяне</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Показват се методите за въвеждане</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Превключва се предишна клавиатура</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Превключва се предишен подвид</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Превключва се следващ подвид</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Плъзване нагоре</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Плъзване надолу</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Плъзване наляво</string>
@@ -281,17 +257,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Задържане на клавиша за интервал</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Плъзване върху клавиша за изтриване наляво</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Праг за скоростта на плъзгане</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Много бавно</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Бавно</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Нормално</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Бързо</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Много бързо</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Минимално разстояние на плъзване</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Много кратко</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Кратко</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Нормално</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Дълго</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Много дълго</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Разширени</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Тема на настройките</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Светла</string>
@@ -392,26 +358,7 @@
     <string name="assets__error__snackbar_message">Нещо се обърка</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Настройка</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Назад</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Отказ</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Напред</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Край</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">Добре</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Добре дошли!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Благодарим ви, че изпробвате FlorisBoard! Преди да можете да използвате приложението, трябва да направите обичайните неща, за да го активирате в системните настройки, да настроите предпочитания език/подредба и т.н… Но без притеснения - съветникът за настройка ще ви преведе!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard зачита изцяло вашата поверителност и не събира никакви потребителски данни. За повече информация вижте:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">Изходният код на FlorisBoard е публично достъпен за всеки, така че можете лесно да прегледате какво FlorisBoard прави зад кулисите. Вижте препратката към хранилището по-долу.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Последно, преди да започнете настройката - ако се натъкнете на дефекти/сривове/проблеми с FlorisBoard или имате заявка за функция - преминете към хранилището на GitHub, препратката е по-долу, и подайте сигнал за проблем. Така ще допринесете за подобряване на FlorisBoard за всички потребители!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">За да стартирате настройката, докоснете <i>НАПРЕД</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Включете FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android изисква всяка потребителска клавиатура да бъде ръчно включена, преди да можете да я използвате. Докоснете бутона по-долу, за да посетите настройки на <i>Език и въвеждане</i>, след това не забравяйте да поставите отметка на \'<i>FlorisBoard</i> \'.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">Клавиатурата FlorisBoard е включена. За да продължите, докоснете <i>НАПРЕД</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Отваряне на настройките Език и въвеждане</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Задайте FlorisBoard като клавиатура по подразбиране</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">Клавиатурата FlorisBoard вече е включена от системата. За да я използвате активно, превключете на FlorisBoard, като я изберете в диалоговия прозорец с методи за въвеждане!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Успешно сменихте клавиатурата си по подразбиране на FlorisBoard!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Смяна на клавиатура</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Настройката завърши!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Отчет за грешка на FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Извинявайте за неудобството, но поради непредвидена грешка FlorisBoard се срина.</string>

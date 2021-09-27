@@ -260,30 +260,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">Gestos generales</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestos en la barra espaciadora</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Otros gestos / umbrales de gestos</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Sin acción</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Cambiar al modo anterior de teclado</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Cambiar al modo siguiente de teclado</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Eliminar caracteres con precisión</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Eliminar palabra actual</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Eliminar palabras con precisión</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Ocultar teclado</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Insertar espacio</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Mover cursor hacia arriba</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Mover cursor hacia abajo</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Mover cursor a la izquierda</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Mover cursor a la derecha</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Mover cursor al inicio de la línea</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Mover cursor al final de la línea</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Mover cursor al inicio de la página</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Mover cursor al final de la página</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Abrir el gestor/historial del portapapeles</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Mayúsculas</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Rehacer</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Deshacer</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Seleccionar método de entrada</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Cambiar al teclado anterior</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Cambiar al subtipo anterior</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Cambiar al subtipo siguiente</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Deslizar hacia arriba</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Deslizar hacia abajo</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Deslizar a la izquierda</string>
@@ -294,17 +270,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Presionar por mucho tiempo la barra espaciadora</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Deslizar a la izquierda desde la tecla de borrar</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Velocidad del deslizamiento</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Muy lento</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Lento</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normal</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Rápido</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Muy rápido</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Distancia del deslizamiento</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Muy corta</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Corta</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Larga</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Muy larga</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Avanzado</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Ajustes del tema</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Claro</string>
@@ -409,26 +375,7 @@
     <string name="assets__error__snackbar_message">Algo salió mal</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Configuración</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Anterior</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Cancelar</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Siguiente</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Terminar</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">OK</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">¡Bienvenido/a!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">¡Gracias por probar FlorisBoard! Antes de que puedas empezar a usarlo, tenemos que hacer lo habitual y habilitarlo en la configuración del sistema, configurar tu idioma/distribución preferida, etc… Pero no te preocupes, ¡el asistente de configuración te guiará a través de esto!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard respeta totalmente su privacidad y no recoge ningún dato de los usuarios. Para más información vea aquí:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">El código fuente de FlorisBoard es accesible al público para cualquiera, así que puedes revisar fácilmente lo que hace FlorisBoard en segundo plano. Mira el enlace del repositorio debajo.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Una última cosa antes de empezar la configuración, si encuentras algún error, fallo o problema con FlorisBoard o tienes una petición de características, dirígete al repositorio GitHub enlazado abajo e informa sobre la incidencia. ¡Esto ayuda a mejorar la experiencia de todos los usuarios!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Para iniciar la configuración, haga clic en <i>SIGUIENTE</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Habilitar FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android requiere que cada teclado personalizado sea habilitado manualmente antes de que puedas usarlo. Haz clic en el botón de abajo para ir a la configuración de <i>Idiomas &amp; introducción de texto</i>, luego asegurate de marcar \'<i>FlorisBoard</i>\'.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard ha sido habilitado con éxito. ¡Para continuar haz clic en <i>SIGUIENTE</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Abrir Idioma &amp; introducción de texto</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Hacer a FlorisBoard el teclado por defecto</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard está ahora habilitado en tu sistema. Para usarlo activamente, ¡cambia a FlorisBoard seleccionándolo en el diálogo del selector de entrada!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">¡Cambió con éxito el teclado por defecto a FlorisBoard!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Cambiar teclado</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">¡Configuración terminada!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Informe de errores de FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Lamentamos los inconvenientes, pero FlorisBoard se ha cerrado inesperadamente por un error.</string>

@@ -17,9 +17,8 @@
 package dev.patrickgold.florisboard.ime.landscapeinput
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
+import dev.patrickgold.florisboard.app.ui.res.stringRes
 import dev.patrickgold.jetpref.ui.compose.entry
 
 enum class LandscapeInputUiMode {
@@ -32,15 +31,15 @@ enum class LandscapeInputUiMode {
         fun listEntries() = listOf(
             entry(
                 key = NEVER_SHOW,
-                label = stringResource(R.string.enum__landscape_input_ui_mode__never_show),
+                label = stringRes(R.string.enum__landscape_input_ui_mode__never_show),
             ),
             entry(
                 key = ALWAYS_SHOW,
-                label = stringResource(R.string.enum__landscape_input_ui_mode__always_show),
+                label = stringRes(R.string.enum__landscape_input_ui_mode__always_show),
             ),
             entry(
                 key = DYNAMICALLY_SHOW,
-                label = stringResource(R.string.enum__landscape_input_ui_mode__dynamically_show),
+                label = stringRes(R.string.enum__landscape_input_ui_mode__dynamically_show),
             ),
         )
     }

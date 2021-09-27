@@ -19,7 +19,6 @@ class GlideTypingGesture {
      */
     class Detector(context: Context) {
         private var pointerData: PointerData = PointerData(mutableListOf(), 0)
-        var velocityThreshold: VelocityThreshold = VelocityThreshold.NORMAL
         private val keySize = context.resources.getDimensionPixelSize(R.dimen.key_width).toDouble()
         private val listeners: ArrayList<Listener> = arrayListOf()
         private var pointerId: Int = -1

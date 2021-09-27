@@ -29,7 +29,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
       - name: Build with Gradle
-        run: ./gradlew clean assembleDebug
+        # MUST call gradlew separately because of an OSS license plugin issue.
+        # See https://github.com/google/play-services-plugins/issues/199
+        run: ./gradlew clean && ./gradlew assembleDebug
       - uses: actions/upload-artifact@v2
         with:
           name: app-debug.apk

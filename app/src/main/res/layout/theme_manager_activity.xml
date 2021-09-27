@@ -109,11 +109,9 @@
 
                     </LinearLayout>
 
-                    <com.google.android.flexbox.FlexboxLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:flexDirection="row"
-                        app:flexWrap="wrap">
+                        android:layout_height="wrap_content">
 
                         <Button
                             android:id="@+id/theme_export_btn"
@@ -127,10 +125,10 @@
                             android:drawablePadding="8dp"
                             android:drawableTint="?colorAccent"/>
 
-                        <View
+                        <Space
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            app:layout_flexGrow="1"/>
+                            android:layout_weight="1"/>
 
                         <Button
                             android:id="@+id/theme_delete_btn"
@@ -156,7 +154,7 @@
                             android:drawablePadding="8dp"
                             android:drawableTint="?colorAccent"/>
 
-                    </com.google.android.flexbox.FlexboxLayout>
+                    </LinearLayout>
 
                 </LinearLayout>
 

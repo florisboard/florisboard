@@ -184,30 +184,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">Загальні жести</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Жести пробілу</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Інші жести / Пороги жестів</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Немає дії</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Перейти до попереднього режиму клавіатури</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Перейти до наступного режиму клавіатури</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Точне видалення символів</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Видалити поточне слово</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Точне видалення слова</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Приховати клавіатуру</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Вставити пробіл</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Перемістити курсор вверх</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Перемістити курсор вниз</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Перемістити курсор вліво</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Перемістити курсор вправо</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Перемістити курсор на початок рядку</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Перемістити курсор в кінець рядку</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Перемістити курсор на початок тексту</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Перемістити курсор в кінець тексту</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Відкрити буфер обміну/історію</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Повторити</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Відмінити</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Показати вибір методу вводу</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Перемикнутись на попередню клавіатуру</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Перемкнутись на попередню розкладку</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Перемкнутись на наступну розкладку</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Провести вгору</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Провести вниз</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Провести вліво</string>
@@ -218,17 +194,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Довге натискання пробілу</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Провести вліво на кнопці видалення</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Поріг швидкості проведення</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Дуже повільно</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Повільно</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Нормально</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Швидко</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Дуже швидко</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Поріг відстані проведення</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Дуже коротко</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Коротко</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Нормальний</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Довгий</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Дуже довгий</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Розширені</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Налаштування теми</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Світла</string>
@@ -271,26 +237,7 @@
     <string name="assets__error__snackbar_message">Щось пішло не так</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Налаштування</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Назад</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Скасувати</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Далі</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Готово</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">ОК</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Ласкаво просимо!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Дякуємо, що пробуєте FlorisBoard! Перед тим, як ви почнете його використовувати, ми повинні зробити стандартні речі та увімкнути їх в налаштуваннях системі, встановити бажану мову/розкладку, тощо… Але не хвилюйтесь - майстер установки допоможе вам в цьому!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard повністю поважає вашу конфіденційність та не збирає ніякі користувацькі дані. Детальніше тут:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">Вихідний код FlorisBoard загальнодоступний для кожного, тому ви можете з легкістю перевірити, що робить FlorisBoard в фоновому режимі. Перевірте репозиторій за посиланням нижче.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Остання річ перед початком налаштування - якщо у вас виникнуть будь-які помилки/збої/проблеми з FlorisBoard або у вас є пропозиції - перейдіть в репозиторій GitHub за посиланням нижче та повідомте про вашу проблему. Це допомагає покращити досвід для усіх користувачів!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Для початку установки, натисніть <i>ДАЛІ</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Увімкнути FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android потребує, щоб кожна користувацька клавіатура була увімкнена вручну перед тим, як ви зможете використовувати її. Натисніть на кнопку нижче, щоб увійти в <i>Налаштування Мови та Введення</i>, після цього обов\'язково відзначте \'<i>FlorisBoard</i>\'.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard успішно увімкнено. Для продовження натисніть <i>ДАЛІ</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Відкрити налаштування Мови та Вводу</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Зробити FlorisBoard стандартним</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard тепер увімкнено у вашій системі. Щоб активно використовувати його, перемкніться на FlorisBoard, вибравши його в діалоговому вікні вибору методу вводу!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Клавіатура за замовчуванням успішно перемкнута на FlorisBoard!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Перемкнути клавіатуру</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Встановлення завершено!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Звіт про помилку FlorisBoard</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Зкопіювати в системний буфер обміну</string>

@@ -184,25 +184,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">Tevgerên giştî</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Tevgerên barê fezayê</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Tevgerên din / Behreyên tevgerê</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Bê çalakî</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Karakteran bi rastî jê bibe</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Peyva heyî jê dibe</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Peyvan bi rastî jê bibire</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Klavyeyê veşêre</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Cih têxê</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Nîşanek ber bi jor ve bibe</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Nîşanek berjêr bike jêr</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Nîşanek ber bi ve çepê</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Nîşanekê ber bi ve rastê</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Nîşanek biguhêze da ku ji rêzikê dest pê bike</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Nîşanek ber bi dawiya rêzikê ve bibe</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Nîşanek bibe destpêka rûpelê</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Nîşanek ber bi dawiya rûpelê ve bibe</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Hilbijêrê metoda têkerê nîşan bide</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Li klavyeya berê biguhere</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Biguhere jêrtîpa berê</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Biguhere jêrtîpa din</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Bi jorve şemitînê</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Bi xwar ve şemitînê</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Bi çepê ve şemitînê</string>
@@ -213,17 +194,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Destlêdana dirêj a bara fezayê</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Şemitîna bişkojka çepê jê bibe</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Derbenda lêvegerê şemitîn</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Pir hêdî</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Hêdî</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normal</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Lez</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Pir bilez</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Derbenda mesafeyê şemitîn</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Pir kin</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Kurt</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Dirêj</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Gelekî dirêj</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Pêşveçû</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Mijara mîhengan</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Ronî</string>
@@ -263,26 +234,7 @@
     <string name="assets__error__snackbar_message">Tiştek şaş çû</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Damezirandin</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Paşve</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Bişûndekirin</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Pêşve</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Qedandin</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">Başe</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Hûn bi xêr hatin!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Spas ji bo ceribandina FlorisBoard! Berî ku hûn dest bi karanîna wê bikin, pêdivî ye ku em tiştên asayî bikin û wê di mîhengên pergalê de çalak bikin, ziman / şêwaza weya bijarte saz bikin, hwd... Lê xeman nexwe - sêrbazê sazkirinê dê we bi vî rengî rêber bike!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard nepenîtiya we bi tevahî rêz dike û daneya bikarhênerek berhev nake. Ji bo bêtir agahdariyê li vir bibînin:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">Koda çavkaniyê ji bo FlorisBoard ji her kesî re bi gelemperî tête peyda kirin, ji ber vê yekê hûn dikarin tiştê ku FlorisBoard di paşiya paşîn de dike bi hêsanî binirxînin. Zencîreya depoyê ya li jêr binêrin.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Tiştek paşîn berî ku hûn sazkirinê dest pê bikin - heke hûn bi FlorisBoard re her çewtî / qeza / pirsgirêkek rû bidin an daxwazek weya taybetmendiyê heye - serî li depoya GitHub a li jêr ve girêdayî ye û pirsgirêkek pel bikin. Ev di çêtirkirina ezmûnê de ji bo hemî bikarhêneran dibe alîkar!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Ji bo destpêkirina sazkirinê, &lt;i&gt; PIŞTÎ &lt;/ &lt;/i&gt; bikirtînin.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Bikêrkirin FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android hewce dike ku berî ku hûn bikar neynin pêdivî ye ku her klavyeyek xwerû bi destan were çalak kirin. Bişkojka jêrîn bikirtînin da ku biçin <i> Ziman &amp; amp; Sazkirinan </i> binivîse, dûv re bila \'<i> FlorisBoard </i>\' venêrin.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard bi serkeftî hate çalak kirin. Ji bo berdewamiyê bikirtînin <i>PIŞTÎ</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Ziman Vekirî &amp; amp; Mîhengên têketinê</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">FlorisBoard wekî bixweber bikin</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard niha di pergala we de çalak e. Ji bo ku wê bi çalak bi kar bîne, bi FlorisBoard ê ve biguhere û wê di dialoga hilbijêrê têketê de hilbijêre!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Bi serkeftî klavyeya xwerû li FlorisBoardê guherand!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Switch keyboard</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Sazkirin qediya!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Raporta xeletiya FlorisBoard</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Bigire</string>

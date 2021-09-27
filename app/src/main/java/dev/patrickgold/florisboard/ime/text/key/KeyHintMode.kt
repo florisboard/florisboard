@@ -17,9 +17,8 @@
 package dev.patrickgold.florisboard.ime.text.key
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.res.stringResource
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
+import dev.patrickgold.florisboard.app.ui.res.stringRes
 import dev.patrickgold.jetpref.ui.compose.entry
 
 /**
@@ -36,20 +35,20 @@ enum class KeyHintMode {
         fun listEntries() = listOf(
             entry(
                 key = ACCENT_PRIORITY,
-                label = stringResource(R.string.enum__key_hint_mode__accent_priority),
-                description = stringResource(R.string.enum__key_hint_mode__accent_priority__description),
+                label = stringRes(R.string.enum__key_hint_mode__accent_priority),
+                description = stringRes(R.string.enum__key_hint_mode__accent_priority__description),
                 showDescriptionOnlyIfSelected = true,
             ),
             entry(
                 key = HINT_PRIORITY,
-                label = stringResource(R.string.enum__key_hint_mode__hint_priority),
-                description = stringResource(R.string.enum__key_hint_mode__hint_priority__description),
+                label = stringRes(R.string.enum__key_hint_mode__hint_priority),
+                description = stringRes(R.string.enum__key_hint_mode__hint_priority__description),
                 showDescriptionOnlyIfSelected = true,
             ),
             entry(
                 key = SMART_PRIORITY,
-                label = stringResource(R.string.enum__key_hint_mode__smart_priority),
-                description = stringResource(R.string.enum__key_hint_mode__smart_priority__description),
+                label = stringRes(R.string.enum__key_hint_mode__smart_priority),
+                description = stringRes(R.string.enum__key_hint_mode__smart_priority__description),
                 showDescriptionOnlyIfSelected = true,
             ),
         )

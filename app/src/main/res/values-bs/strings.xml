@@ -100,27 +100,7 @@
     <string name="pref__correction__double_space_period__label" comment="Preference title">Tačka sa duplim razmakom</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Generalne gestikulacije</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gestikulacije na razmaknici</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Bez akcije</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Obriši trenutnu riječ</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Sakrij tastaturu</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Unesi razmak</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Pomjeri kursor gore</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Pomjeri kursor dole</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Pomjeri kursor lijevo</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Pomjeri kursor desno</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Pomjeri kursor na početak reda</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Pomjeri kursor na kraj reda</string>
     <string name="pref__gestures__swipe_right__label" comment="Preference title">Prevuci desno</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Vrlo sporo</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Sporo</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normalno</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Brzo</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Vrlo brzo</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Vrlo kratko</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Kratko</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normalno</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Dugo</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Vrlo dugo</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Napredno</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Tema za podešavanja</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Svijetlo</string>
@@ -150,13 +130,7 @@
     <string name="assets__action__save">Spremi</string>
     <string name="assets__action__yes">Da</string>
     <!-- Setup UI strings -->
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Odustani</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Dalje</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Završi</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">OK</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Dobrodošli!</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Omogući FlorisBoard</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Promijeni tastaturu</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Zatvori</string>
     <!-- Clipboard strings -->

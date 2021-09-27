@@ -425,7 +425,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     dictionaryManager.prepareDictionaries(newSubtype)
                 }
             }
-            if (oldPrefs.glide.enabled) {
+            if (prefs.glide.enabled.get()) {
                 GlideTypingManager.getInstance().setWordData(newSubtype)
             }
             if (doRefreshLayouts) {
