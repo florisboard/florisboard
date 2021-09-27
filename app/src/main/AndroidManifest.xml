@@ -81,6 +81,7 @@
             android:launchMode="singleTask"
             android:roundIcon="@mipmap/floris_app_icon_round"
             android:targetActivity="dev.patrickgold.florisboard.app.FlorisAppActivity"
+            android:theme="@style/FlorisAppTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -114,14 +115,6 @@
             android:name="dev.patrickgold.florisboard.oldsettings.spelling.SpellingActivity"
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/settings__spelling__title_overview"
-            android:roundIcon="@mipmap/floris_app_icon_round"
-            android:theme="@style/SettingsTheme"/>
-
-        <!-- Setup Activity -->
-        <activity
-            android:name="dev.patrickgold.florisboard.setup.SetupActivity"
-            android:icon="@mipmap/floris_app_icon"
-            android:label="@string/setup__title"
             android:roundIcon="@mipmap/floris_app_icon_round"
             android:theme="@style/SettingsTheme"/>
 

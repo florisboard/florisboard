@@ -134,6 +134,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview:1.1.0-alpha04")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0") // possibly remove after settings rework
     implementation("androidx.core:core-ktx:1.6.0")
+    implementation("androidx.core:core-splashscreen:1.0.0-alpha01")
     implementation("androidx.fragment:fragment-ktx:1.3.6") // possibly remove after settings rework
     implementation("androidx.navigation:navigation-compose:2.4.0-alpha09")
     implementation("androidx.preference:preference-ktx:1.1.1") // possibly remove after settings rework
@@ -142,8 +143,8 @@ dependencies {
     implementation("com.google.android.material:material:1.4.0") // possibly remove after settings rework
     implementation("com.jaredrummler:colorpicker:1.1.0") // possibly remove after settings rework
     implementation("com.nambimobile.widgets:expandable-fab:1.0.2") // possibly remove after settings rework
-    implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-alpha08")
-    implementation("dev.patrickgold.jetpref:jetpref-ui-compose:0.1.0-alpha08")
+    implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-alpha09")
+    implementation("dev.patrickgold.jetpref:jetpref-ui-compose:0.1.0-alpha09")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
     implementation("androidx.room:room-runtime:2.3.0")
