@@ -399,6 +399,7 @@
     <string name="assets__action__cancel">Cancel</string>
     <string name="assets__action__cancel_confirm_title">Confirm cancel</string>
     <string name="assets__action__cancel_confirm_message">Are you sure you want to discard any unsaved changes? This action can not be undone once executed.</string>
+    <string name="assets__action__default">Default</string>
     <string name="assets__action__delete">Delete</string>
     <string name="assets__action__delete_confirm_title">Confirm delete</string>
     <string name="assets__action__delete_confirm_message">Are you sure you want to delete \"{database_name}\"? This action can not be undone once executed.</string>
@@ -406,6 +407,7 @@
     <string name="assets__action__export">Export</string>
     <string name="assets__action__import">Import</string>
     <string name="assets__action__no">No</string>
+    <string name="assets__action__ok">OK</string>
     <string name="assets__action__save">Save</string>
     <string name="assets__action__select">Select</string>
     <string name="assets__action__select_dir">Select directory</string>

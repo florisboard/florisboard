@@ -39,11 +39,13 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.PreviewKeyboardField
 import dev.patrickgold.florisboard.app.ui.components.SystemUi
 import dev.patrickgold.florisboard.app.ui.res.ProvideLocalizedResources
+import dev.patrickgold.florisboard.app.ui.res.stringRes
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.InputMethodUtils
@@ -51,6 +53,7 @@ import dev.patrickgold.florisboard.common.SystemSettingsObserver
 import dev.patrickgold.florisboard.util.AndroidVersion
 import dev.patrickgold.florisboard.util.PackageManagerUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.ui.compose.ProvideDefaultDialogPrefStrings
 
 enum class AppTheme(val id: String) {
     AUTO("auto"),
@@ -179,14 +182,20 @@ class FlorisAppActivity : ComponentActivity() {
             LocalIsFlorisBoardEnabled provides isFlorisBoardEnabled,
             LocalIsFlorisBoardSelected provides isFlorisBoardSelected,
         ) {
-            Column {
-                Routes.AppNavHost(
-                    modifier = Modifier.weight(1.0f),
-                    navController = navController,
-                    startDestination = if (isImeSetUp) { Routes.Settings.Home } else { Routes.Setup.Home },
-                )
-                if (isImeSetUp) {
-                    PreviewKeyboardField()
+            ProvideDefaultDialogPrefStrings(
+                confirmLabel = stringRes(R.string.assets__action__ok),
+                dismissLabel = stringRes(R.string.assets__action__cancel),
+                neutralLabel = stringRes(R.string.assets__action__default),
+            ) {
+                Column {
+                    Routes.AppNavHost(
+                        modifier = Modifier.weight(1.0f),
+                        navController = navController,
+                        startDestination = if (isImeSetUp) { Routes.Settings.Home } else { Routes.Setup.Home },
+                    )
+                    if (isImeSetUp) {
+                        PreviewKeyboardField()
+                    }
                 }
             }
         }
