@@ -22,7 +22,7 @@
       { "$": "auto_text_key", "code":  71873, "label": "𑣁" },
       { "$": "auto_text_key", "code": 71902, "label": "𑣞", "popup": {
         "relevant": [
-          { "$": "auto_text_key", "code":  71901, "label": "𑣝" } //ssu pops up for sii
+          { "$": "auto_text_key", "code":  71901, "label": "𑣝" }
         ]
       } },
       { "$": "auto_text_key", "code":  71889, "label": "𑣑" },
@@ -43,13 +43,13 @@
       { "$": "auto_text_key", "code":  71888, "label": "𑣐" },
       { "$": "auto_text_key", "code":  71895, "label": "𑣗", "popup": {
         "relevant": [
-          { "$": "auto_text_key", "code":  71903, "label": "𑣟" } //viyo pops up for bu
+          { "$": "auto_text_key", "code":  71903, "label": "𑣟" }
         ]
       } },
       { "$": "auto_text_key", "code":  71891, "label": "𑣓" },
       { "$": "auto_text_key", "code":  71894, "label": "𑣖", "popup": {
         "relevant": [
-          { "code":  71935, "label": "𑣿" } //om pops up for am
+          { "code":  71935, "label": "𑣿" }
         ]
       } }
     ]
