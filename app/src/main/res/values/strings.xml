@@ -324,6 +324,8 @@
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Clears all words from the dictionary database table</string>
     <string name="pref__devtools__reset_flag__label" comment="Label of Reset flag preferences in Advanced">Reset \"{flag_name}\" flag</string>
     <string name="pref__devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Advanced">Debug action to re-show the setup screen</string>
+    <string name="pref__devtools__test_crash_report__label" comment="Label of Test Crash Report in Advanced">Test crash report screen</string>
+    <string name="pref__devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Advanced">Debug action to purposely produce a crash</string>
 
     <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Spell checker settings</string>
     <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Manage dictionaries</string>
