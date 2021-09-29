@@ -48,10 +48,11 @@ fun String.curlyFormat(argValueFactory: (argName: String) -> String?): String {
     while (curlyOpenIndex >= 0) {
         val nextCurlyOpenIndex = sb.indexOf(CURLY_ARG_OPEN, curlyOpenIndex + 1)
         val nextCurlyCloseIndex = sb.indexOf(CURLY_ARG_CLOSE, curlyOpenIndex + 1)
-        if (nextCurlyOpenIndex < nextCurlyCloseIndex) {
+        if (nextCurlyCloseIndex < 0) break
+        if (nextCurlyOpenIndex in 0 until nextCurlyCloseIndex) {
             curlyOpenIndex = nextCurlyOpenIndex
         }
-        val argName = sb.substring(curlyOpenIndex, nextCurlyCloseIndex)
+        val argName = sb.substring(curlyOpenIndex + 1, nextCurlyCloseIndex)
         val argValue = argValueFactory(argName)
         if (argValue != null) {
             sb.replace(curlyOpenIndex, nextCurlyCloseIndex + 1, argValue)
@@ -73,6 +74,7 @@ fun String.curlyFormat(vararg args: CurlyArg): String {
 }
 
 private fun StringBuilder.formatCurlyArg(name: String, value: Any?) {
+    if (name.isBlank()) return
     val spec = "$CURLY_ARG_OPEN$name$CURLY_ARG_CLOSE"
     var index = this.lastIndexOf(spec)
     while (index >= 0) {
