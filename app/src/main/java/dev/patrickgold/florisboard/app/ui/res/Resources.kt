@@ -24,6 +24,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.res.stringResource
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.common.CurlyArg
+import dev.patrickgold.florisboard.common.curlyFormat
 
 private val LocalResourcesContext = staticCompositionLocalOf<Context> {
     error("resources context not initialized!!")
@@ -49,7 +51,7 @@ fun ProvideLocalizedResources(
 @Composable
 fun stringRes(
     @StringRes id: Int,
-    vararg args: Pair<String, Any?>,
+    vararg args: CurlyArg,
 ): String {
     val string = LocalResourcesContext.current.resources
         .getString(id)
@@ -60,7 +62,7 @@ fun stringRes(
 fun pluralsRes(
     @PluralsRes id: Int,
     quantity: Int,
-    vararg args: Pair<String, Any?>,
+    vararg args: CurlyArg,
 ): String {
     val string = LocalResourcesContext.current.resources
         .getQuantityString(id, quantity)
@@ -70,12 +72,10 @@ fun pluralsRes(
 @Composable
 private fun formatString(
     string: String,
-    args: Array<out Pair<String, Any?>>,
+    args: Array<out CurlyArg>,
 ): String {
-    var ret = string
-    ret = ret.replace("{app_name}", LocalAppNameString.current)
-    for (arg in args) {
-        ret = ret.replace("{${arg.first}}", arg.second.toString())
-    }
-    return ret
+    return string.curlyFormat(
+        "app_name" to LocalAppNameString.current,
+        *args
+    )
 }

@@ -33,3 +33,52 @@ inline fun <R> stringBuilder(builder: StringBuilder.() -> R): String {
 inline fun String.lowercase(locale: FlorisLocale): String = this.lowercase(locale.base)
 
 inline fun String.uppercase(locale: FlorisLocale): String = this.uppercase(locale.base)
+
+private const val CURLY_ARG_OPEN = '{'
+private const val CURLY_ARG_CLOSE = '}'
+
+typealias CurlyArg = Pair<String, Any?>
+
+fun String.curlyFormat(argValueFactory: (argName: String) -> String?): String {
+    contract {
+        callsInPlace(argValueFactory, InvocationKind.UNKNOWN)
+    }
+    val sb = StringBuilder(this)
+    var curlyOpenIndex = sb.indexOf(CURLY_ARG_OPEN)
+    while (curlyOpenIndex >= 0) {
+        val nextCurlyOpenIndex = sb.indexOf(CURLY_ARG_OPEN, curlyOpenIndex + 1)
+        val nextCurlyCloseIndex = sb.indexOf(CURLY_ARG_CLOSE, curlyOpenIndex + 1)
+        if (nextCurlyOpenIndex < nextCurlyCloseIndex) {
+            curlyOpenIndex = nextCurlyOpenIndex
+        }
+        val argName = sb.substring(curlyOpenIndex, nextCurlyCloseIndex)
+        val argValue = argValueFactory(argName)
+        if (argValue != null) {
+            sb.replace(curlyOpenIndex, nextCurlyCloseIndex + 1, argValue)
+        }
+        curlyOpenIndex = sb.indexOf(CURLY_ARG_OPEN, curlyOpenIndex + 1)
+    }
+    return sb.toString()
+}
+
+fun String.curlyFormat(vararg args: CurlyArg): String {
+    if (args.isEmpty()) return this
+    val sb = StringBuilder(this)
+    for ((n, arg) in args.withIndex()) {
+        val (argName, argValue) = arg
+        sb.formatCurlyArg(n.toString(), argValue)
+        sb.formatCurlyArg(argName, argValue)
+    }
+    return sb.toString()
+}
+
+private fun StringBuilder.formatCurlyArg(name: String, value: Any?) {
+    val spec = "$CURLY_ARG_OPEN$name$CURLY_ARG_CLOSE"
+    var index = this.lastIndexOf(spec)
+    while (index >= 0) {
+        val start = index
+        val end = index + spec.length
+        this.replace(start, end, value.toString())
+        index = this.lastIndexOf(spec)
+    }
+}
