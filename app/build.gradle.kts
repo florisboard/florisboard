@@ -4,6 +4,7 @@ plugins {
     kotlin("kapt")
     kotlin("plugin.serialization") version "1.5.30"
     id("com.google.android.gms.oss-licenses-plugin")
+    id("de.mannodermaus.android-junit5")
 }
 
 android {
@@ -117,11 +118,18 @@ android {
         unitTests {
             isIncludeAndroidResources = true
         }
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
     }
 
     lint {
         isAbortOnError = false
     }
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
 
 dependencies {
@@ -150,10 +158,9 @@ dependencies {
     implementation("androidx.room:room-runtime:2.3.0")
     kapt("androidx.room:room-compiler:2.3.0")
 
-    testImplementation(kotlin("test"))
-    testImplementation("androidx.test", "core", "1.3.0")
-    testImplementation("org.mockito", "mockito-inline", "3.7.7")
-    testImplementation("org.robolectric", "robolectric", "4.5.1")
+    testImplementation("io.kotest:kotest-runner-junit5:5.0.0.M2")
+    testImplementation("io.kotest:kotest-assertions-core:5.0.0.M2")
+    testImplementation("io.kotest:kotest-property:5.0.0.M2")
 
     androidTestImplementation("androidx.test.ext", "junit", "1.1.2")
     androidTestImplementation("androidx.test.espresso", "espresso-core", "3.3.0")
