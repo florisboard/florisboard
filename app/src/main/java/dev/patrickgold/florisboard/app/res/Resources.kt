@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.ui.res
+package dev.patrickgold.florisboard.app.res
 
 import android.content.Context
 import androidx.annotation.PluralsRes

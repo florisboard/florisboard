@@ -39,9 +39,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.app.ui.res.stringRes
 import dev.patrickgold.florisboard.common.launchActivity
 import dev.patrickgold.florisboard.common.launchUrl
 import dev.patrickgold.florisboard.oldsettings.SettingsMainActivity

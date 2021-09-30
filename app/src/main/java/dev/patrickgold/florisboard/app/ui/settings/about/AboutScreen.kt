@@ -41,9 +41,9 @@ import androidx.core.content.res.ResourcesCompat
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.app.ui.res.stringRes
 import dev.patrickgold.florisboard.common.InputMethodUtils
 import dev.patrickgold.florisboard.common.launchUrl
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
