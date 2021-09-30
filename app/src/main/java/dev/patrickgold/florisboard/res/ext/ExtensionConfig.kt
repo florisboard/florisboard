@@ -17,41 +17,51 @@
 package dev.patrickgold.florisboard.res.ext
 
 import dev.patrickgold.florisboard.BuildConfig
+import kotlinx.serialization.Serializable
+
+object ExtensionConfigDefaults {
+    const val FILE_EXTENSION = "flex"
+    const val NAME = "extension.json"
+    const val ID = "${BuildConfig.APPLICATION_ID}.imported.%s.%s"
+
+    fun createIdForImport(groupName: String, extensionName: String): String {
+        return String.format(ID, groupName, extensionName)
+    }
+}
 
 /**
  * Interface for an `extension.json` file, which serves as a configuration of an extension
  * package for FlorisBoard (`.flex` archive files).
+ *
+ * Files which are always read (case sensitive):
+ *  - extension.json (this file)
+ *
+ * Files which are always read (case-insensitive, can have any extension)
+ *  - README
+ *  - CHANGES / CHANGELOG / HISTORY
+ *  - LICENSE / LICENSES
+ *
+ * Should multiple files exist which match the regex, always the first match will be used.
  */
-interface ExtensionConfig {
-    companion object {
-        const val DEFAULT_FILE_EXTENSION = "flex"
-        const val DEFAULT_NAME = "extension.json"
-        const val DEFAULT_ID = "${BuildConfig.APPLICATION_ID}.imported.%s.%s"
-
-        const val CUSTOM_LICENSE_IDENTIFIER = "@custom"
-
-        fun createIdForImport(groupName: String, extensionName: String): String {
-            return String.format(DEFAULT_ID, groupName, extensionName)
-        }
-    }
-
+@Serializable
+data class ExtensionConfig<M: ExtensionModule>(
     /**
      * The unique identifier of this extension, adhering to
      * [Java™ package name standards](https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html).
      */
-    val id: String
+    val id: String,
 
     /**
      * The version of this extension.
      */
-    val version: String
+    val version: String,
 
     /**
      * The title label of the extension. This title will be shown to the user in the Settings UI.
      *
      * Recommended limit: 50 characters
      */
-    val title: String
+    val title: String,
 
     /**
      * The short description of this extension, will be shown as a summary text in the package list, as
@@ -59,30 +69,55 @@ interface ExtensionConfig {
      *
      * Recommended limit: 80 characters
      */
-    val description: String
+    val description: String? = null,
 
     /**
-     * A list of authors who actively worked on the content of this extension. Any content of string is
-     * valid, but the best practice is to use the GitHub username.
+     * The keywords for this extension. Useful for searching an extension in the extension store.
+     *
+     * Recommended limit: 30 characters / keyword
      */
-    val authors: List<String>
+    val keywords: List<String>? = null,
+
+    /**
+     * A link to the homepage of this extension or author.
+     */
+    val homepage: String? = null,
+
+    /**
+     * A link to this extension's issue tracker.
+     */
+    val issueTracker: String? = null,
+
+    /**
+     * A list of authors who actively worked on the content of this extension.
+     *
+     * Format: `Your Name <email@address.com> (www.author.com)`
+     *  - Name is required
+     *  - Email is optional, if included must be within the `<` and `>` symbols
+     *  - URL is optional, if included must be within the `(` and `)` symbols
+     *
+     * Order of the above fields is important for parsing.
+     */
+    val authors: List<String>,
 
     /**
      * A valid license identifier, according to the [SPDX license list](https://spdx.org/licenses/).
-     * Use `@custom` if you use a license that is not listed in the above list.
+     * Use an SPDX license expression if this extension has multiple licenses.
      */
-    val license: String
+    val license: String,
 
-    /**
-     * Additional optional license text file. Use a relative path to your license file.
-     */
-    val licenseFile: String
+    val module: M,
+)
 
-    /**
-     * The long description or readme file of this extension, will be shown in the expanded description.
-     * Use a relative path to the readme file.
-     *
-     * Recommended limit: 4000 characters
-     */
-    val readmeFile: String
-}
+internal data class MutableExtensionConfigImpl<M : ExtensionModule>(
+    var id: String = "",
+    var version: String = "",
+    var title: String = "",
+    var description: String = "",
+    var keywords: MutableList<String> = mutableListOf(),
+    var homepage: String = "",
+    var issueTracker: String = "",
+    var authors: MutableList<String> = mutableListOf(),
+    var license: String = "",
+    var module: M? = null,
+)
