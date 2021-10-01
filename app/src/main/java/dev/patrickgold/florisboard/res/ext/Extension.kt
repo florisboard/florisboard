@@ -16,29 +16,101 @@
 
 package dev.patrickgold.florisboard.res.ext
 
-import java.io.Closeable
-import java.io.File
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
- * An extension container holding a parsed config, a working directory file
- * object as well as a reference to the original flex file.
+ * Interface for an `extension.json` file, which serves as a configuration of an extension
+ * package for FlorisBoard (`.flex` archive files).
  *
- * @property config The parsed config of this extension.
- * @property workingDir The working directory, used as a cache and as a staging
- *  area for modifications to extension files.
- * @property flexFile Optional, defines where the original flex file is stored.
+ * Files which are always read (case sensitive):
+ *  - extension.json (this file)
+ *
+ * Files which are always read (case-insensitive, can have any extension)
+ *  - README
+ *  - CHANGES / CHANGELOG / HISTORY
+ *  - LICENSE / LICENSES
+ *
+ * Should multiple files exist which match the regex, always the first match will be used.
  */
-open class Extension<C : ExtensionConfig>(
-    val config: C,
-    val workingDir: File,
-    val flexFile: File?
-) : Closeable {
+@Serializable
+data class Extension<C : ExtensionConfig>(
+    /**
+     * The unique identifier of this extension, adhering to
+     * [Java™ package name standards](https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html).
+     */
+    val id: String,
 
     /**
-     * Closes the extension and deletes the temporary files. After invoking this
-     * method, this object and its cache files must never be touched again.
+     * The version of this extension.
      */
-    override fun close() {
-        workingDir.deleteRecursively()
-    }
-}
+    val version: String,
+
+    /**
+     * The title label of the extension. This title will be shown to the user in the Settings UI.
+     *
+     * Recommended limit: 50 characters
+     */
+    val title: String,
+
+    /**
+     * The short description of this extension, will be shown as a summary text in the package list, as
+     * well as the first paragraph of the expanded description.
+     *
+     * Recommended limit: 80 characters
+     */
+    val description: String? = null,
+
+    /**
+     * The keywords for this extension. Useful for searching an extension in the extension store.
+     *
+     * Recommended limit: 30 characters / keyword
+     */
+    val keywords: List<String>? = null,
+
+    /**
+     * A link to the homepage of this extension or author.
+     */
+    val homepage: String? = null,
+
+    /**
+     * A link to this extension's issue tracker.
+     */
+    val issueTracker: String? = null,
+
+    /**
+     * A list of authors who actively worked on the content of this extension.
+     *
+     * Format: `Your Name <email@address.com> (www.author.com)`
+     *  - Name is required
+     *  - Email is optional, if included must be within the `<` and `>` symbols
+     *  - URL is optional, if included must be within the `(` and `)` symbols
+     *
+     * Order of the above fields is important for parsing.
+     */
+    val authors: List<String>,
+
+    /**
+     * A valid license identifier, according to the [SPDX license list](https://spdx.org/licenses/).
+     * Use an SPDX license expression if this extension has multiple licenses.
+     */
+    val license: String,
+
+    @SerialName("dependsOn")
+    val dependencies: List<String>? = null,
+
+    val config: C,
+)
+
+internal data class MutableExtension<C : ExtensionConfig>(
+    var id: String = "",
+    var version: String = "",
+    var title: String = "",
+    var description: String = "",
+    var keywords: MutableList<String> = mutableListOf(),
+    var homepage: String = "",
+    var issueTracker: String = "",
+    var authors: MutableList<String> = mutableListOf(),
+    var license: String = "",
+    var config: C? = null,
+)
