@@ -18,7 +18,7 @@ package dev.patrickgold.florisboard.res.ext
 
 import dev.patrickgold.florisboard.BuildConfig
 
-object ExtensionDefaults {
+object ExtensionJsonDefaults {
     const val FILE_EXTENSION = "flex"
     const val NAME = "extension.json"
     const val ID = "${BuildConfig.APPLICATION_ID}.imported.%s.%s"
