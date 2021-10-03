@@ -16,14 +16,21 @@
 
 package dev.patrickgold.florisboard.res.ext
 
-import dev.patrickgold.florisboard.BuildConfig
+import android.content.Context
+import dev.patrickgold.florisboard.assetManager
+import dev.patrickgold.florisboard.res.FlorisRef
 
-object ExtensionJsonDefaults {
-    const val FILE_EXTENSION = "flex"
-    const val NAME = "extension.json"
-    const val ID = "${BuildConfig.APPLICATION_ID}.imported.%s.%s"
+class ExtensionManager(context: Context) {
+    private val appContext: Context = context.applicationContext
+    private val assetManager = appContext.assetManager()
 
-    fun createIdForImport(groupName: String, extensionName: String): String {
-        return String.format(ID, groupName, extensionName)
+    private val extensions: MutableMap<FlorisRef, Extension> = mutableMapOf()
+
+    init {
+        indexExtensions()
+    }
+
+    private fun indexExtensions() {
+
     }
 }

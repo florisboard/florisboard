@@ -16,4 +16,14 @@
 
 package dev.patrickgold.florisboard.res.ext
 
-interface ExtensionConfig
+import dev.patrickgold.florisboard.BuildConfig
+
+object ExtensionMetaDefaults {
+    const val FILE_EXTENSION = "flex"
+    const val NAME = "extension.json"
+    const val ID = "${BuildConfig.APPLICATION_ID}.imported.%s.%s"
+
+    fun createIdForImport(groupName: String, extensionName: String): String {
+        return String.format(ID, groupName, extensionName)
+    }
+}

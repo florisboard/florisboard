@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.res.ext
 
-import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
@@ -34,7 +33,7 @@ import kotlinx.serialization.Serializable
  * Should multiple files exist which match the regex, always the first match will be used.
  */
 @Serializable
-data class ExtensionJson<C : ExtensionConfig>(
+class ExtensionMeta(
     /**
      * The unique identifier of this extension, adhering to
      * [Java™ package name standards](https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html).
@@ -95,14 +94,9 @@ data class ExtensionJson<C : ExtensionConfig>(
      * Use an SPDX license expression if this extension has multiple licenses.
      */
     val license: String,
-
-    @SerialName("dependsOn")
-    val dependencies: List<String>? = null,
-
-    val config: C,
 )
 
-internal data class MutableExtension<C : ExtensionConfig>(
+internal data class MutableExtensionMeta(
     var id: String = "",
     var version: String = "",
     var title: String = "",
@@ -112,5 +106,4 @@ internal data class MutableExtension<C : ExtensionConfig>(
     var issueTracker: String = "",
     var authors: MutableList<String> = mutableListOf(),
     var license: String = "",
-    var config: C? = null,
 )
