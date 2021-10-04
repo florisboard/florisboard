@@ -24,7 +24,6 @@ import androidx.preference.PreferenceFragmentCompat
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.oldsettings.UdmActivity
-import dev.patrickgold.florisboard.oldsettings.spelling.SpellingActivity
 
 class TypingInnerFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
@@ -37,8 +36,8 @@ class TypingInnerFragment : PreferenceFragmentCompat() {
     override fun onPreferenceTreeClick(preference: Preference?): Boolean {
         return when (preference?.key) {
             Preferences.Correction.MANAGE_SPELL_CHECKER -> {
-                val intent = Intent(context, SpellingActivity::class.java)
-                startActivity(intent)
+                //val intent = Intent(context, SpellingActivity::class.java)
+                //startActivity(intent)
                 true
             }
             Preferences.Dictionary.MANAGE_SYSTEM_USER_DICTIONARY -> {

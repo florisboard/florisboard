@@ -23,26 +23,29 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.res.AssetManager
+import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.res.FlorisRef
 
 @Composable
 fun ProjectLicenseScreen() = FlorisScreen(title = stringRes(R.string.about__project_license__title)) {
+    val context = LocalContext.current
+    val assetManager by context.assetManager()
+
     SelectionContainer(modifier = Modifier.fillMaxWidth()) {
-        val assetManager = AssetManager.defaultOrNull()
-        val licenseText = assetManager?.loadTextAsset(
+        val licenseText = assetManager.loadTextAsset(
             FlorisRef.assets("license/project_license.txt")
-        )?.getOrElse {
+        ).getOrElse {
             stringRes(R.string.about__project_license__error_license_text_failed, "error_message" to (it.message ?: ""))
-        } ?: stringRes(
+        }/* ?: stringRes(
             id = R.string.about__project_license__error_license_text_failed,
             "error_message" to stringRes(R.string.about__project_license__error_reason_asset_manager_null)
-        )
+        )*/
         Text(
             text = licenseText,
             fontFamily = FontFamily.Monospace,

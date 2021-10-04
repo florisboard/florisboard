@@ -17,12 +17,13 @@
 package dev.patrickgold.florisboard.res.ext
 
 import android.content.Context
+import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.res.FlorisRef
 
 class ExtensionManager(context: Context) {
-    private val appContext: Context = context.applicationContext
-    private val assetManager = appContext.assetManager()
+    private val appContext by context.appContext()
+    private val assetManager by context.assetManager()
 
     private val extensions: MutableMap<FlorisRef, Extension> = mutableMapOf()
 

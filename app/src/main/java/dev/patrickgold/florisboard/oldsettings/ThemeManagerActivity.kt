@@ -31,6 +31,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.forEach
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.common.FlorisActivity
 import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.databinding.ThemeManagerActivityBinding
@@ -47,14 +48,13 @@ import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeMetaOnly
-import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.FlorisRef
 import kotlinx.coroutines.launch
 
 class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
     private lateinit var layoutManager: LayoutManager
-    private val themeManager: ThemeManager get() = ThemeManager.default()
-    private val assetManager: AssetManager get() = AssetManager.default()
+    private val themeManager get() = ThemeManager.default()
+    private val assetManager by assetManager()
 
     private lateinit var textKeyboardIconSet: TextKeyboardIconSet
     private val textComputingEvaluator = object : ComputingEvaluator by DefaultComputingEvaluator {
@@ -135,7 +135,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        layoutManager = LayoutManager()
+        layoutManager = LayoutManager(this)
 
         key = intent.getStringExtra(EXTRA_KEY) ?: ""
         defaultValue = intent.getStringExtra(EXTRA_DEFAULT_VALUE) ?: ""

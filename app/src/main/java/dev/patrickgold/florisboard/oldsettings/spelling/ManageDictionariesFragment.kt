@@ -36,7 +36,7 @@ import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.oldsettings.OnListItemCLickListener
 
-class SpellingDictEntryAdapter(
+/*class SpellingDictEntryAdapter(
     private val data: List<SpellingDict.Meta>,
     private val onListItemCLickListener: OnListItemCLickListener
 ) : RecyclerView.Adapter<SpellingDictEntryAdapter.ViewHolder>() {
@@ -147,4 +147,4 @@ class ManageDictionariesFragment : Fragment() {
             binding.noDictInstalledCard.isVisible = false
         }
     }
-}
+}*/

@@ -17,9 +17,9 @@
 package dev.patrickgold.florisboard.ime.core
 
 import android.content.Context
+import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.debug.*
-import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.ime.text.key.CurrencySet
 import dev.patrickgold.florisboard.res.FlorisRef
 import kotlinx.coroutines.CoroutineScope
@@ -36,9 +36,10 @@ import kotlin.collections.ArrayList
  * @property subtypes The currently active subtypes.
  */
 class SubtypeManager(
-    private val packageName: String
+    private val packageName: String,
+    applicationContext: Context,
 ) : CoroutineScope by MainScope() {
-    private val assetManager get() = AssetManager.default()
+    private val assetManager by applicationContext.assetManager()
     private val prefs get() = Preferences.default()
 
     companion object {
@@ -48,7 +49,7 @@ class SubtypeManager(
         private var instance: SubtypeManager? = null
 
         fun init(context: Context): SubtypeManager {
-            val defaultInstance = SubtypeManager(context.packageName)
+            val defaultInstance = SubtypeManager(context.packageName, context.applicationContext)
             instance = defaultInstance
             return defaultInstance
         }

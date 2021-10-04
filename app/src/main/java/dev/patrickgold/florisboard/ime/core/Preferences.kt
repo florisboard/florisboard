@@ -109,30 +109,6 @@ class Preferences(
     }
 
     /**
-     * Tells the [PreferenceManager] to set the defined preferences to their default values, if
-     * they have not been initialized yet.
-     */
-    fun initDefaultPreferences() {
-        try {
-            applicationContext.get()?.let { context ->
-                PreferenceManager.setDefaultValues(context, R.xml.prefs_keyboard, true)
-                PreferenceManager.setDefaultValues(context, R.xml.prefs_theme, true)
-                PreferenceManager.setDefaultValues(context, R.xml.prefs_typing, true)
-            }
-
-            //theme.dayThemeRef = "assets:ime/theme/floris_day.json"
-            //theme.nightThemeRef = "assets:ime/theme/floris_night.json"
-            //setPref(Localization.SUBTYPES, "-234/de-AT/euro/c=qwertz")
-            val subtypes = getPref(Localization.SUBTYPES, "")
-            if (subtypes.matches(OLD_SUBTYPES_REGEX)) {
-                setPref(Localization.SUBTYPES, "")
-            }
-        } catch (e: Exception) {
-            e.fillInStackTrace()
-        }
-    }
-
-    /**
      * Wrapper class for correction preferences.
      */
     class Correction(private val prefs: Preferences) {

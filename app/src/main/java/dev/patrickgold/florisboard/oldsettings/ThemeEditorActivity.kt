@@ -102,7 +102,7 @@ class ThemeEditorActivity : AppCompatActivity() {
         binding = ThemeEditorActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        layoutManager = LayoutManager()
+        layoutManager = LayoutManager(this)
 
         FlorisRef.from(intent.getStringExtra(EXTRA_THEME_REF) ?: "").takeIf { it.isValid }?.let { ref ->
             editedThemeRef = ref

@@ -33,7 +33,7 @@ import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.util.initItems
 import dev.patrickgold.florisboard.util.setOnSelectedListener
 
-class ImportDictionaryFragment(private val isArchive: Boolean) : BottomSheetDialogFragment() {
+/*class ImportDictionaryFragment(private val isArchive: Boolean) : BottomSheetDialogFragment() {
     private val assetManager get() = AssetManager.default()
     private val spellingManager get() = SpellingManager.default()
     private lateinit var binding: SpellingSheetImportDictionaryBinding
@@ -178,17 +178,17 @@ class ImportDictionaryFragment(private val isArchive: Boolean) : BottomSheetDial
         }
 
         binding.s2SelectFileBtn.setOnClickListener {
-            importDict.launch("*/*")
+            importDict.launch("**")
         }
 
         binding.s2SelectAffBtn.setOnClickListener {
-            importAff.launch("*/*")
+            importAff.launch("**")
         }
 
         binding.s2SelectDicBtn.setOnClickListener {
-            importDic.launch("*/*")
+            importDic.launch("**")
         }
 
         return binding.root
     }
-}
+}*/

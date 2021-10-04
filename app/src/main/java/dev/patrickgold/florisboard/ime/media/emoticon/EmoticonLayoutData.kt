@@ -31,9 +31,9 @@ data class EmoticonLayoutData(
 ) {
     companion object {
         fun fromJsonFile(path: String): EmoticonLayoutData? {
-            return AssetManager.defaultOrNull()
+            return null /*AssetManager.defaultOrNull()
                 ?.loadJsonAsset<EmoticonLayoutData>(FlorisRef.assets(path))
-                ?.getOrNull()
+                ?.getOrNull()*/
         }
     }
 }

@@ -16,19 +16,35 @@
 
 package dev.patrickgold.florisboard.ime.spelling
 
+import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.res.ext.Extension
+import dev.patrickgold.florisboard.res.ext.ExtensionMeta
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import java.io.File
 
-class SpellingExtension(
-    config: SpellingDict.Meta,
-    workingDir: File,
-    flexFile: File
-) : Extension<SpellingDict.Meta>(config, workingDir, flexFile) {
+@SerialName("ime:spelling-extension")
+@Serializable
+data class SpellingExtension(
+    override val meta: ExtensionMeta,
+    override val dependencies: List<String>,
+    @SerialName("language")
+    @Serializable(with = FlorisLocale.Serializer::class)
+    val locale: FlorisLocale,
+    val originalSourceId: String,
+    val affFile: String,
+    val dicFile: String,
+) : Extension() {
 
-    val dict: SpellingDict? = SpellingDict.new(workingDir.absolutePath, config)
+    @Transient var dict: SpellingDict? = null
 
-    override fun close() {
+    override fun onAfterLoad(cacheDir: File) {
+        dict = SpellingDict.new(cacheDir.absolutePath, this)
+    }
+
+    override fun onBeforeUnload(cacheDir: File) {
         dict?.dispose()
-        super.close()
+        dict = null
     }
 }

@@ -27,7 +27,7 @@ import dev.patrickgold.florisboard.common.FlorisActivity
 import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 
-class OverviewFragment : PreferenceFragmentCompat() {
+/*class OverviewFragment : PreferenceFragmentCompat() {
     private val spellingManager get() = SpellingManager.default()
 
     private val activeSpellCheckerPref: Preference by lazy {
@@ -80,4 +80,4 @@ class OverviewFragment : PreferenceFragmentCompat() {
             numInstalledDicts
         )
     }
-}
+}*/

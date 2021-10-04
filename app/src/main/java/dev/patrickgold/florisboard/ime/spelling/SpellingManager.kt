@@ -22,6 +22,7 @@ import android.view.textservice.SentenceSuggestionsInfo
 import android.view.textservice.SpellCheckerSession
 import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextServicesManager
+import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
@@ -101,10 +102,10 @@ class SpellingManager private constructor(
     private val tsm =
         applicationContext.get()?.getSystemService(Context.TEXT_SERVICES_MANAGER_SERVICE) as? TextServicesManager
 
-    private val assetManager get() = AssetManager.default()
+    private val assetManager by applicationContext.get()!!.assetManager()
     private val spellingExtCache: MutableMap<FlorisRef, SpellingExtension> = mutableMapOf()
-    private val indexedSpellingDictMetas: MutableMap<FlorisRef, SpellingDict.Meta> = mutableMapOf()
-    val indexedSpellingDicts: Map<FlorisRef, SpellingDict.Meta>
+    private val indexedSpellingDictMetas: MutableMap<FlorisRef, SpellingExtension> = mutableMapOf()
+    val indexedSpellingDicts: Map<FlorisRef, SpellingExtension>
         get() = indexedSpellingDictMetas
 
     val config = assetManager.loadJsonAsset<SpellingConfig>(configRef).getOrDefault(SpellingConfig.default())
@@ -140,7 +141,7 @@ class SpellingManager private constructor(
 
     @Synchronized
     fun getSpellingDict(locale: FlorisLocale): SpellingDict? {
-        val entry = indexedSpellingDictMetas.firstNotNullOfOrNull {
+        /*val entry = indexedSpellingDictMetas.firstNotNullOfOrNull {
             if (it.value.locale.localeTag() == locale.localeTag()) it else null
         } ?: indexedSpellingDictMetas.firstNotNullOfOrNull {
             if (it.value.locale.language == locale.language) it else null
@@ -159,11 +160,12 @@ class SpellingManager private constructor(
                 flogError { it.toString() }
                 return null
             }
-        )
+        )*/
+        return null
     }
 
     fun indexSpellingDicts(): Boolean {
-        val context = applicationContext.get() ?: return false
+        /*val context = applicationContext.get() ?: return false
         indexedSpellingDictMetas.clear()
         val ref = FlorisRef.internal(config.basePath)
         File(ref.absolutePath(context)).mkdirs()
@@ -176,10 +178,11 @@ class SpellingManager private constructor(
                 flogError(LogTopic.SPELL_EVENTS) { error.toString() }
                 false
             }
-        )
+        )*/
+        return false
     }
 
-    fun prepareImport(sourceId: String, archiveUri: Uri): Result<Extension<SpellingDict.Meta>> {
+    /*fun prepareImport(sourceId: String, archiveUri: Uri): Result<Extension<SpellingDict.Meta>> {
         val context = applicationContext.get() ?: return Result.failure(Exception("Context is null"))
         return when (sourceId) {
             "mozilla_firefox" -> {
@@ -358,5 +361,5 @@ class SpellingManager private constructor(
             tempFile.outputStream().use { os -> bis.copyTo(os) }
         }.onFailure { return Result.failure(it) }
         return Result.success(tempFile)
-    }
+    }*/
 }

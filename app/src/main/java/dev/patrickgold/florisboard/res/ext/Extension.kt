@@ -17,7 +17,12 @@
 package dev.patrickgold.florisboard.res.ext
 
 import android.content.Context
+import dev.patrickgold.florisboard.common.resultErr
+import dev.patrickgold.florisboard.common.resultOk
 import dev.patrickgold.florisboard.res.FlorisRef
+import dev.patrickgold.florisboard.res.ZipUtils
+import kotlinx.serialization.Polymorphic
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import java.io.File
 
@@ -28,8 +33,10 @@ import java.io.File
  * @property meta The parsed config of this extension.
  * @property workingDir The working directory, used as a cache and as a staging
  *  area for modifications to extension files.
- * @property flexFile Optional, defines where the original flex file is stored.
+ * @property sourceRef Optional, defines where the original flex file is stored.
  */
+@Polymorphic
+@Serializable
 abstract class Extension {
     @Transient private var workingDir: FlorisRef? = null
     @Transient private var sourceRef: FlorisRef? = null
@@ -37,15 +44,15 @@ abstract class Extension {
     abstract val meta: ExtensionMeta
     abstract val dependencies: List<String>
 
-    open fun onBeforeLoad() {
+    open fun onBeforeLoad(cacheDir: File) {
         /* Empty */
     }
 
-    open fun onAfterLoad() {
+    open fun onAfterLoad(cacheDir: File) {
         /* Empty */
     }
 
-    fun load(context: Context, force: Boolean = false) {
+    fun load(context: Context, force: Boolean = false): Result<Unit> {
         val cacheDir = File(context.cacheDir, meta.id)
         if (cacheDir.exists()) {
             if (force) {
@@ -55,25 +62,27 @@ abstract class Extension {
                 cacheDir.deleteRecursively()
             }
         }
-        onBeforeLoad()
+        val sourceRef = sourceRef ?: return resultOk()
+        onBeforeLoad(cacheDir)
         cacheDir.mkdirs()
-        // TODO: Load here
-        onAfterLoad()
+        ZipUtils.unzip(context, sourceRef, cacheDir).onFailure { return resultErr(it) }
+        onAfterLoad(cacheDir)
+        return resultOk()
     }
 
-    open fun onBeforeUnload() {
+    open fun onBeforeUnload(cacheDir: File) {
         /* Empty */
     }
 
-    open fun onAfterUnload() {
+    open fun onAfterUnload(cacheDir: File) {
         /* Empty */
     }
 
     fun unload(context: Context) {
         val cacheDir = File(context.cacheDir, meta.id)
         if (!cacheDir.exists()) return
-        onBeforeUnload()
+        onBeforeUnload(cacheDir)
         cacheDir.deleteRecursively()
-        onAfterUnload()
+        onAfterUnload(cacheDir)
     }
 }

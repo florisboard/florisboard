@@ -53,7 +53,7 @@ class SettingsMainActivity : AppCompatActivity(),
     val subtypeManager: SubtypeManager get() = SubtypeManager.default()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        layoutManager = LayoutManager()
+        layoutManager = LayoutManager(this)
 
         val mode = when (newPrefs.advanced.settingsTheme.get().id) {
             "light" -> AppCompatDelegate.MODE_NIGHT_NO

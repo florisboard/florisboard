@@ -75,11 +75,11 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
         launch(Dispatchers.Default) {
             if (wordDataCache.isEmpty()) {
                 // FIXME: get this info from dictionary.
-                val data =
-                    AssetManager.default().loadTextAsset(FlorisRef.assets("ime/dict/data.json"))
-                        .getOrThrow()
-                val json = JSONObject(data)
-                wordDataCache.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
+                //val data =
+                //    .loadTextAsset(FlorisRef.assets("ime/dict/data.json"))
+                //        .getOrThrow()
+                //val json = JSONObject(data)
+                //wordDataCache.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })
             }
             glideTypingClassifier.setWordData(wordDataCache, subtype)
         }

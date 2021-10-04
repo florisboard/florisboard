@@ -26,7 +26,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.common.FlorisActivity
 import dev.patrickgold.florisboard.databinding.SpellingActivityBinding
 
-class SpellingActivity : FlorisActivity<SpellingActivityBinding>() {
+/*class SpellingActivity : FlorisActivity<SpellingActivityBinding>() {
     private var activePage = Page.UNINITIALIZED
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,4 +115,4 @@ class SpellingActivity : FlorisActivity<SpellingActivityBinding>() {
         OVERVIEW,
         MANAGE_DICTIONARIES;
     }
-}
+}*/

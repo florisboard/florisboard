@@ -34,7 +34,7 @@ class DictionarySourcesInfoFragment : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = SpellingSheetDictionarySourcesInfoBinding.inflate(inflater, container, false)
 
-        for (source in spellingManager.config.importSources) {
+        /*for (source in spellingManager.config.importSources) {
             val listItem = ListItemBinding.inflate(LayoutInflater.from(binding.sourceList.context), binding.sourceList, false)
             listItem.title.text = source.label
             val url = source.url ?: continue
@@ -47,7 +47,7 @@ class DictionarySourcesInfoFragment : BottomSheetDialogFragment() {
                 startActivity(browserIntent)
             }
             binding.sourceList.addView(listItem.root)
-        }
+        }*/
 
         return binding.root
     }
