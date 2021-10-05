@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.spelling
+package dev.patrickgold.florisboard.ime.theme
 
 import android.content.Context
-import dev.patrickgold.florisboard.common.FlorisLocale
+import dev.patrickgold.florisboard.assetManager
+import dev.patrickgold.florisboard.ime.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
 import kotlinx.serialization.SerialName
@@ -25,27 +26,34 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import java.io.File
 
-@SerialName("ime.extension.spelling")
+@SerialName("ime.extension.theme")
 @Serializable
-data class SpellingExtension(
+class ThemeExtension(
     override val meta: ExtensionMeta,
     override val dependencies: List<String>,
-    @SerialName("language")
-    @Serializable(with = FlorisLocale.Serializer::class)
-    val locale: FlorisLocale,
-    val originalSourceId: String,
-    val affFile: String,
-    val dicFile: String,
+    val theme: ThemeExtensionConfig,
 ) : Extension() {
 
-    @Transient var dict: SpellingDict? = null
+    @Transient private var stylesheet: SnyggStylesheet? = null
 
     override fun onAfterLoad(context: Context, cacheDir: File) {
-        dict = SpellingDict.new(cacheDir.absolutePath, this)
+        val assetManager by context.assetManager()
+        val jsonStylesheet = readExtensionFile(context, theme.stylesheet)
+        if (jsonStylesheet != null) {
+            assetManager.loadJsonAsset<SnyggStylesheet>(jsonStylesheet).onSuccess {
+                stylesheet = it
+            }
+        }
     }
 
     override fun onBeforeUnload(context: Context, cacheDir: File) {
-        dict?.dispose()
-        dict = null
+        stylesheet = null
     }
 }
+
+@Serializable
+data class ThemeExtensionConfig(
+    val isNightTheme: Boolean = true,
+    val isMaterialYouAware: Boolean = false,
+    val stylesheet: String,
+)

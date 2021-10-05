@@ -44,11 +44,11 @@ abstract class Extension {
     abstract val meta: ExtensionMeta
     abstract val dependencies: List<String>
 
-    open fun onBeforeLoad(cacheDir: File) {
+    open fun onBeforeLoad(context: Context, cacheDir: File) {
         /* Empty */
     }
 
-    open fun onAfterLoad(cacheDir: File) {
+    open fun onAfterLoad(context: Context, cacheDir: File) {
         /* Empty */
     }
 
@@ -63,26 +63,41 @@ abstract class Extension {
             }
         }
         val sourceRef = sourceRef ?: return resultOk()
-        onBeforeLoad(cacheDir)
+        onBeforeLoad(context, cacheDir)
         cacheDir.mkdirs()
         ZipUtils.unzip(context, sourceRef, cacheDir).onFailure { return resultErr(it) }
-        onAfterLoad(cacheDir)
+        onAfterLoad(context, cacheDir)
         return resultOk()
     }
 
-    open fun onBeforeUnload(cacheDir: File) {
+    open fun onBeforeUnload(context: Context, cacheDir: File) {
         /* Empty */
     }
 
-    open fun onAfterUnload(cacheDir: File) {
+    open fun onAfterUnload(context: Context, cacheDir: File) {
         /* Empty */
     }
 
     fun unload(context: Context) {
         val cacheDir = File(context.cacheDir, meta.id)
         if (!cacheDir.exists()) return
-        onBeforeUnload(cacheDir)
+        onBeforeUnload(context, cacheDir)
         cacheDir.deleteRecursively()
-        onAfterUnload(cacheDir)
+        onAfterUnload(context, cacheDir)
+    }
+
+    fun readExtensionFile(context: Context, relPath: String): String? {
+        val cacheDir = File(context.cacheDir, meta.id)
+        if (cacheDir.exists() && cacheDir.isDirectory) {
+            val file = File(cacheDir, relPath)
+            if (file.exists() && file.isFile) {
+                return try {
+                    file.readText()
+                } catch (e: Exception) {
+                    null
+                }
+            }
+        }
+        return null
     }
 }

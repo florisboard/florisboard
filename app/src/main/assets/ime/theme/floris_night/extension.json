@@ -1,0 +1,16 @@
+{
+  "$": "ime.extension.theme",
+  "meta": {
+    "id": "dev.patrickgold.florisboard.theme.floris_night",
+    "version": "0.1.0",
+    "title": "Floris Night",
+    "description": "Default dark/night theme for the keyboard UI",
+    "authors": [ "patrickgold <patrick@patrickgold.dev>" ],
+    "license": "apache-2.0"
+  },
+  "theme": {
+    "isNight": true,
+    "isMaterialYouAware": false,
+    "stylesheet": "floris_night.json"
+  }
+}
