@@ -20,6 +20,12 @@ import android.content.Context
 import android.net.Uri
 import androidx.annotation.VisibleForTesting
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -36,6 +42,7 @@ import kotlin.contracts.contract
  * @property uri The underlying URI, which can be used for external references
  *  to pass along to the system.
  */
+@Serializable(with = FlorisRef.Serializer::class)
 @JvmInline
 value class FlorisRef private constructor(val uri: Uri) {
     companion object {
@@ -269,13 +276,23 @@ value class FlorisRef private constructor(val uri: Uri) {
         return uri.toString()
     }
 
-    object Serializer : PreferenceSerializer<FlorisRef> {
+    object Serializer : PreferenceSerializer<FlorisRef>, KSerializer<FlorisRef> {
+        override val descriptor = PrimitiveSerialDescriptor("FlorisRef", PrimitiveKind.STRING)
+
         override fun serialize(value: FlorisRef): String {
             return value.toString()
         }
 
+        override fun serialize(encoder: Encoder, value: FlorisRef) {
+            encoder.encodeString(value.toString())
+        }
+
         override fun deserialize(value: String): FlorisRef {
             return from(value)
+        }
+
+        override fun deserialize(decoder: Decoder): FlorisRef {
+            return from(decoder.decodeString())
         }
     }
 }

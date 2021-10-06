@@ -42,7 +42,7 @@ abstract class Extension {
     @Transient private var sourceRef: FlorisRef? = null
 
     abstract val meta: ExtensionMeta
-    abstract val dependencies: List<String>
+    abstract val dependencies: List<String>?
 
     open fun onBeforeLoad(context: Context, cacheDir: File) {
         /* Empty */

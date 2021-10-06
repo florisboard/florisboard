@@ -87,7 +87,7 @@ class ExtensionMeta(
      *
      * Order of the above fields is important for parsing.
      */
-    val authors: List<String>,
+    val authors: List<ExtensionAuthor>,
 
     /**
      * A valid license identifier, according to the [SPDX license list](https://spdx.org/licenses/).
