@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.common
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -25,12 +26,21 @@ import kotlin.contracts.contract
 import kotlin.reflect.KClass
 
 fun launchUrl(context: Context, url: String) {
+    val link = when {
+        url.startsWith("http://") ||
+            url.startsWith("https://") ||
+            url.startsWith("mailto:") -> url
+        else -> "https://$url"
+    }
     val intent = Intent(
         Intent.ACTION_VIEW,
-        Uri.parse(url)
+        Uri.parse(link)
     )
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-    context.startActivity(intent)
+    try {
+        context.startActivity(intent)
+    } catch (e: ActivityNotFoundException) {
+    }
 }
 
 fun launchUrl(context: Context, @StringRes url: Int) {
