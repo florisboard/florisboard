@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.res.ext
 
+import dev.patrickgold.florisboard.res.FlorisRef
 import kotlinx.serialization.Serializable
 
 /**
@@ -70,12 +71,12 @@ class ExtensionMeta(
     /**
      * A link to the homepage of this extension or author.
      */
-    val homepage: String? = null,
+    val homepage: FlorisRef? = null,
 
     /**
      * A link to this extension's issue tracker.
      */
-    val issueTracker: String? = null,
+    val issueTracker: FlorisRef? = null,
 
     /**
      * A list of authors who actively worked on the content of this extension.

@@ -478,7 +478,18 @@
     <string name="pref__clipboard__limit_history_size__label">Limit history size</string>
     <string name="pref__clipboard__max_history_size__label">Max history size</string>
 
-    <!-- General -->
+    <!-- Extension strings -->
+    <string name="ext__meta__authors">Authors</string>
+    <string name="ext__meta__description">Description</string>
+    <string name="ext__meta__homepage">Homepage</string>
+    <string name="ext__meta__id">ID</string>
+    <string name="ext__meta__issue_tracker">Issue tracker</string>
+    <string name="ext__meta__keywords">Keywords</string>
+    <string name="ext__meta__license">License</string>
+    <string name="ext__meta__title">Title</string>
+    <string name="ext__meta__version">Version</string>
+
+    <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">No browser app found for handling URL {url}</string>
 
     <!-- Screen orientation strings -->

@@ -199,7 +199,7 @@ value class FlorisRef private constructor(val uri: Uri) {
      * Returns if this URI contains data for all valid parts of a FlorisRef.
      */
     val isValid: Boolean
-        get() = scheme.isNotBlank() && authority.isNotBlank() && relativePath.isNotBlank()
+        get() = scheme.isNotBlank() && authority.isNotBlank()
 
     /**
      * Returns if this URI contains data for all valid parts of a FlorisRef.
@@ -295,4 +295,12 @@ value class FlorisRef private constructor(val uri: Uri) {
             return from(decoder.decodeString())
         }
     }
+}
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun FlorisRef?.isNotNullAndValid(): Boolean {
+    contract {
+        returns(true) implies (this@isNotNullAndValid != null)
+    }
+    return this != null && this.isValid
 }
