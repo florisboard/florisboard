@@ -20,17 +20,24 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.annotation.StringRes
+import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.debug.flogError
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
 
+private const val URL_HTTP_PREFIX = "http://"
+private const val URL_HTTPS_PREFIX = "https://"
+private const val URL_MAILTO_PREFIX = "mailto:"
+
 fun launchUrl(context: Context, url: String) {
     val link = when {
-        url.startsWith("http://") ||
-            url.startsWith("https://") ||
-            url.startsWith("mailto:") -> url
-        else -> "https://$url"
+        url.startsWith(URL_HTTP_PREFIX) ||
+            url.startsWith(URL_HTTPS_PREFIX) ||
+            url.startsWith(URL_MAILTO_PREFIX) -> url
+        else -> "$URL_HTTPS_PREFIX$url"
     }
     val intent = Intent(
         Intent.ACTION_VIEW,
@@ -40,6 +47,12 @@ fun launchUrl(context: Context, url: String) {
     try {
         context.startActivity(intent)
     } catch (e: ActivityNotFoundException) {
+        flogError { e.toString() }
+        Toast.makeText(
+            context,
+            context.getString(R.string.general__no_browser_app_found_for_url).curlyFormat("url" to url),
+            Toast.LENGTH_LONG,
+        ).show()
     }
 }
 
@@ -47,8 +60,8 @@ fun launchUrl(context: Context, @StringRes url: Int) {
     launchUrl(context, context.getString(url))
 }
 
-fun launchUrl(context: Context, @StringRes url: Int, params: Array<out String>) {
-    launchUrl(context, context.getString(url, *params))
+fun launchUrl(context: Context, @StringRes url: Int, vararg args: CurlyArg) {
+    launchUrl(context, context.getString(url).curlyFormat(*args))
 }
 
 inline fun <T : Any> launchActivity(context: Context, kClass: KClass<T>, intentModifier: (Intent) -> Unit = { }) {

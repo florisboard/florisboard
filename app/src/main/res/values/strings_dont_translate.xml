@@ -2,7 +2,7 @@
     <string name="florisboard__repo_url" translatable="false">https://github.com/florisboard/florisboard</string>
     <string name="florisboard__issue_tracker_url" translatable="false">https://github.com/florisboard/florisboard/issues</string>
     <string name="florisboard__privacy_policy_url" translatable="false">https://gist.github.com/patrickgold/a18f1e47468d72f0868afc69d6faaf0b</string>
-    <string name="florisboard__changelog_url" translatable="false">https://github.com/florisboard/florisboard/releases/v%s</string>
+    <string name="florisboard__changelog_url" translatable="false">https://github.com/florisboard/florisboard/releases/v{version}</string>
     <string name="florisboard__spell_checker_wiki_url" translatable="false">https://github.com/florisboard/florisboard/wiki/System-spell-checker-service</string>
     <string name="florisboard__theme_editor_wiki_url" translatable="false">https://github.com/florisboard/florisboard/wiki/Using-the-new-Theme-Editor</string>
 
@@ -19,31 +19,4 @@
     <!-- Media strings -->
     <string name="media__tab__emoticons_label" translatable="false">;-)</string>
     <string name="media__tab__kaomoji_label" translatable="false">(^-^*)/</string>
-
-    <!-- 0.3.13 release notes -->
-    <string name="v0313__release_notes" translatable="false">
-        <b>What\'s new in 0.3.13?</b>\n
-        \n
-        <ul>
-          <li>Spell checker service (Typing &gt; Group Correction &gt; Spell checker)</li>\n
-          <li>New audio/haptic feedback settings (Keyboard &gt; Group Key press &gt; Sounds &amp; vibration)</li>\n
-          <li>Inline autofill support for your password manager (Android 11+ only)</li>\n
-          <li>Japanese JIS layout (thanks @Waelwindows)</li>\n
-          <li>Support for direct boot</li>\n
-          <li>For more new features see the changelog!</li>\n
-        </ul>\n
-        \n
-        <b>What has been fixed?</b>\n
-        \n
-        <ul>
-          <li>Gestures are correctly detected again</li>\n
-          <li>Copy/cut works correctly again</li>\n
-          <li>Performance improvements</li>\n
-          <li>Keyboard settings are now accessible from the system language &amp; input screen</li>\n
-          <li>Prevent infinite crash loops if something goes wrong during keyboard initialization</li>\n
-          <li>For more fixes see the changelog!</li>\n
-        </ul>\n
-        \n
-        Exact changelog: <u>https://github.com/florisboard/florisboard/releases/tag/v0.3.13</u>
-    </string>
 </resources>

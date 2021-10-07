@@ -96,7 +96,7 @@ fun AboutScreen() = FlorisScreen(title = stringRes(R.string.about__title)) {
         iconId = R.drawable.ic_history,
         title = stringRes(R.string.about__changelog__title),
         summary = stringRes(R.string.about__changelog__summary),
-        onClick = { launchUrl(context, R.string.florisboard__changelog_url, arrayOf(BuildConfig.VERSION_NAME)) },
+        onClick = { launchUrl(context, R.string.florisboard__changelog_url, "version" to BuildConfig.VERSION_NAME) },
     )
     Preference(
         iconId = R.drawable.ic_code,

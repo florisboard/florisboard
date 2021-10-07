@@ -478,6 +478,9 @@
     <string name="pref__clipboard__limit_history_size__label">Limit history size</string>
     <string name="pref__clipboard__max_history_size__label">Max history size</string>
 
+    <!-- General -->
+    <string name="general__no_browser_app_found_for_url">No browser app found for handling URL {url}</string>
+
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Portrait</string>
     <string name="screen_orientation__landscape">Landscape</string>
