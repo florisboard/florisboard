@@ -158,9 +158,10 @@ dependencies {
     implementation("androidx.room:room-runtime:2.3.0")
     kapt("androidx.room:room-compiler:2.3.0")
 
-    testImplementation("io.kotest:kotest-runner-junit5:5.0.0.M2")
-    testImplementation("io.kotest:kotest-assertions-core:5.0.0.M2")
-    testImplementation("io.kotest:kotest-property:5.0.0.M2")
+    testImplementation("io.kotest:kotest-runner-junit5:4.6.3")
+    testImplementation("io.kotest:kotest-assertions-core:4.6.3")
+    testImplementation("io.kotest:kotest-property:4.6.3")
+    testImplementation("io.kotest.extensions:kotest-extensions-robolectric:0.4.0")
 
     androidTestImplementation("androidx.test.ext", "junit", "1.1.2")
     androidTestImplementation("androidx.test.espresso", "espresso-core", "3.3.0")

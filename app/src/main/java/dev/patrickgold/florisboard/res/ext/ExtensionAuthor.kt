@@ -27,25 +27,31 @@ import kotlinx.serialization.encoding.Encoder
 import kotlin.math.min
 
 @Serializable(with = ExtensionAuthorSerializer::class)
-class ExtensionAuthor(
+data class ExtensionAuthor(
     val name: String,
     val email: String? = null,
     val url: FlorisRef? = null,
 ) {
     companion object {
+        private val ValidationRegex = """^\s*[\p{L}\d._-][\p{L}\d\s._-]*(<[^<>]+>)?\s*(\([^()]+\))?\s*${'$'}""".toRegex()
+
         fun from(str: String): ExtensionAuthor? {
-            if (str.isBlank()) {
+            if (str.isBlank() || !ValidationRegex.matches(str)) {
                 return null
             }
-            val emailStart = str.indexOf('<').let { if (it < 0) str.length else it } + 1
-            val emailEnd = str.indexOf('>').let { if (it < 0) str.length else it } - 1
-            val urlStart = str.indexOf('(').let { if (it < 0) str.length else it } + 1
-            val urlEnd = str.indexOf(')').let { if (it < 0) str.length else it } - 1
+            val emailStart = str.indexOf('<').let { if (it < 0) str.length else (it + 1) }
+            val emailEnd = str.indexOf('>').let { if (it < 0) str.length else it }
+            val urlStart = str.indexOf('(').let { if (it < 0) str.length else (it + 1) }
+            val urlEnd = str.indexOf(')').let { if (it < 0) str.length else it }
             val nameStart = 0
-            val nameEnd = (min(emailStart, urlStart) - 2).coerceIn(str.indices)
-            val name = str.substring(nameStart..nameEnd).trim()
-            val email = str.substring(emailStart..emailEnd).trim().takeIf { it.isNotBlank() }
-            val url = str.substring(urlStart..urlEnd).trim().takeIf { it.isNotBlank() }
+            val nameEnd = if (emailStart == str.length && urlStart == str.length) {
+                str.length
+            } else {
+                (min(emailStart, urlStart) - 1)
+            }
+            val name = str.substring(nameStart, nameEnd).trim()
+            val email = str.substring(emailStart, emailEnd).trim().takeIf { it.isNotBlank() }
+            val url = str.substring(urlStart, urlEnd).trim().takeIf { it.isNotBlank() }
             return ExtensionAuthor(name, email, url?.let { FlorisRef.from(it) })
         }
 
@@ -59,7 +65,7 @@ class ExtensionAuthor(
         if (email != null && email.isNotBlank()) {
             append(" <$email>")
         }
-        if (url != null && url.isValid) {
+        if (url != null) {
             append(" ($url)")
         }
     }
