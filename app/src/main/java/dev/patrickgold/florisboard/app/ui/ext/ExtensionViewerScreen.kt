@@ -40,6 +40,7 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisHyperlinkText
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionConfig
 import dev.patrickgold.florisboard.res.FlorisRef
@@ -49,11 +50,22 @@ import dev.patrickgold.florisboard.res.ext.ExtensionMeta
 import dev.patrickgold.florisboard.res.isNotNullAndValid
 
 @Composable
-fun ExtensionViewerScreen(ext: Extension) = FlorisScreen(
+fun ExtensionViewerScreen(id: String) {
+    val context = LocalContext.current
+    val extensionManager by context.extensionManager()
+    val ext = extensionManager.getExtensionById(id)
+    if (ext != null) {
+        ViewScreen(ext)
+    } else {
+        ErrorScreen(id)
+    }
+}
+
+@Composable
+private fun ViewScreen(ext: Extension) = FlorisScreen(
     title = ext.meta.title,
 ) {
     val navController = LocalNavController.current
-    val context = LocalContext.current
 
     Column(
         modifier = Modifier.padding(horizontal = 16.dp),
@@ -112,6 +124,17 @@ fun ExtensionViewerScreen(ext: Extension) = FlorisScreen(
 }
 
 @Composable
+private fun ErrorScreen(id: String) = FlorisScreen(
+    title = stringRes(R.string.ext__error__not_found_title),
+) {
+    Column(
+        modifier = Modifier.padding(horizontal = 16.dp),
+    ) {
+        Text(stringRes(R.string.ext__error__not_found_description, "id" to id))
+    }
+}
+
+@Composable
 private fun ExtensionMetaRowSimpleText(
     label: String,
     modifier: Modifier = Modifier,
@@ -161,7 +184,7 @@ private fun ExtensionMetaRowScrollableChips(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun PreviewExtensionViewerScreen() {
+private fun PreviewExtensionViewerScreen() {
     val testExtension = ThemeExtension(
         meta = ExtensionMeta(
             id = "com.example.theme.test",
@@ -179,5 +202,5 @@ fun PreviewExtensionViewerScreen() {
         dependencies = null,
         theme = ThemeExtensionConfig(stylesheet = "test.json"),
     )
-    ExtensionViewerScreen(ext = testExtension)
+    ViewScreen(ext = testExtension)
 }

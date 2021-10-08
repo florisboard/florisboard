@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import dev.patrickgold.florisboard.app.ui.ext.ExtensionViewerScreen
 import dev.patrickgold.florisboard.app.ui.settings.HomeScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.AboutScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.ProjectLicenseScreen
@@ -30,6 +31,7 @@ import dev.patrickgold.florisboard.app.ui.settings.clipboard.ClipboardScreen
 import dev.patrickgold.florisboard.app.ui.settings.gestures.GesturesScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.InputFeedbackScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.KeyboardScreen
+import dev.patrickgold.florisboard.app.ui.settings.spelling.SpellingScreen
 import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeScreen
 import dev.patrickgold.florisboard.app.ui.setup.SetupScreen
 
@@ -41,6 +43,9 @@ object Routes {
 
         const val Keyboard = "settings/keyboard"
         const val InputFeedback = "settings/keyboard/input-feedback"
+
+        const val Spelling = "settings/spelling"
+        const val SpellingImport = "settings/spelling/import"
 
         const val Gestures = "settings/gestures"
 
@@ -55,6 +60,10 @@ object Routes {
 
     object Setup {
         const val Home = "setup"
+    }
+
+    object Ext {
+        const val View = "ext/view/{id}"
     }
 
     @Composable
@@ -75,6 +84,9 @@ object Routes {
             composable(Settings.Keyboard) { KeyboardScreen() }
             composable(Settings.InputFeedback) { InputFeedbackScreen() }
 
+            composable(Settings.Spelling) { SpellingScreen() }
+            composable(Settings.SpellingImport) { SpellingScreen() }
+
             composable(Settings.Gestures) { GesturesScreen() }
 
             composable(Settings.Clipboard) { ClipboardScreen() }
@@ -86,6 +98,11 @@ object Routes {
             composable(Settings.ThirdPartyLicenses) { ThirdPartyLicensesScreen() }
 
             composable(Setup.Home) { SetupScreen() }
+
+            composable(Ext.View) { navBackStack ->
+                val extensionId = navBackStack.arguments?.getString("id")
+                ExtensionViewerScreen(id = extensionId.toString())
+            }
         }
     }
 }

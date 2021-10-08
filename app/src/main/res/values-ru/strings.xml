@@ -280,8 +280,6 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Показывать значения используемой выделенной памяти и максимальный использованный объём в правом верхнем углу</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Очистить внутренний словарь пользователя</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Удаление всех слов из базы внутреннего пользовательского словаря</string>
-    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Настройки проверки правописания</string>
-    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Управление словарями</string>
     <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Учитывать раскладки клавиатуры</string>
     <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">Словари проверки правописания не установлены. Нажмите кнопку \"+\" внизу, чтобы установить его.</string>
     <string name="settings__spelling__dictionary_index_invalid" comment="String for the Dictionary index invalid error card. %s will be replaced by the app name.">Произошла ошибка при индексировании установленных словарей проверки правописания. Попробуйте перезапустить %s или сообщите об ошибке.</string>
@@ -291,13 +289,6 @@
     <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Включить проверку правописания</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Ничего не задано</string>
     <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">Проверьте системные настройки</string>
-    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Управление словарями</string>
-    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
-        <item quantity="one">%d установлен</item>
-        <item quantity="few">%d установлено</item>
-        <item quantity="many">%d установлено</item>
-        <item quantity="other">%d установлено</item>
-    </plurals>
     <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">Точная настройка</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NOT IMPLEMENTED] Использовать имена контактов</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Проверка правописания будет просматривать имена в вашем списке контактов</string>

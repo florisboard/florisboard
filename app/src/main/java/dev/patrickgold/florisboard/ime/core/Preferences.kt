@@ -21,7 +21,6 @@ import android.content.SharedPreferences
 import android.os.Build
 import androidx.core.os.UserManagerCompat
 import androidx.preference.PreferenceManager
-import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.text.smartbar.CandidateView
 import dev.patrickgold.florisboard.util.VersionName
 import java.lang.ref.WeakReference
@@ -44,7 +43,6 @@ class Preferences(
     val internal = Internal(this)
     val localization = Localization(this)
     val smartbar = Smartbar(this)
-    val spelling = Spelling(this)
     val suggestion = Suggestion(this)
 
 
@@ -203,25 +201,6 @@ class Preferences(
         var enabled: Boolean
             get() =  prefs.getPref(ENABLED, true)
             set(v) = prefs.setPref(ENABLED, v)
-    }
-
-    /**
-     * Wrapper class for Spelling preferences.
-     */
-    class Spelling(private val prefs: Preferences) {
-        companion object {
-            const val ACTIVE_SPELLCHECKER =         "spelling__active_spellchecker"
-            const val MANAGE_DICTIONARIES =         "spelling__manage_dictionaries"
-            const val USE_CONTACTS =                "spelling__use_contacts"
-            const val USE_UDM_ENTRIES =             "spelling__use_udm_entries"
-        }
-
-        var useContacts: Boolean
-            get() =  prefs.getPref(USE_CONTACTS, true)
-            set(v) = prefs.setPref(USE_CONTACTS, v)
-        var useUdmEntries: Boolean
-            get() =  prefs.getPref(USE_UDM_ENTRIES, true)
-            set(v) = prefs.setPref(USE_UDM_ENTRIES, v)
     }
 
     /**

@@ -250,8 +250,6 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Toont het heap-memorygebruik en maximale grootte in de rechterbovenhoek</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Wis database van het interne persoonlijke woordenboek</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Wis alle woorden van de woordenlijst in de datatabel</string>
-    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Instellingen spellingcontrole</string>
-    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Beheer woordenboeken</string>
     <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Gebruik toetsenbord subtypes</string>
     <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">Geen woordenboeken voor spellingscontrole geïnstalleerd. Voeg de eerste toe via de \'+\'-toets!</string>
     <!-- About UI strings -->

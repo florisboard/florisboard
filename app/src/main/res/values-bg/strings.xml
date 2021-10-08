@@ -274,8 +274,6 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Показва се информация за динамичната памет в горния десен ъгъл</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Изтриване на данните от речника към приложението</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Премахват се всички думи от таблицата с речника</string>
-    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Настройки на проверка на правопис</string>
-    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Управление на речници</string>
     <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Използване на подвидове на клавиатурата</string>
     <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">Липсват речници за проверка на правописа. Добавете, чрез докосване на бутона „+“</string>
     <string name="settings__spelling__dictionary_index_invalid" comment="String for the Dictionary index invalid error card. %s will be replaced by the app name.">Грешка при индексиране на добавените речници за проверка на правописа. Рестратирайте %s или докладвайте дефект.</string>
@@ -285,11 +283,6 @@
     <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Текуща услуга за проверка на правописа</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Няма избран</string>
     <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">Преглеждат се системните настройки</string>
-    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Управление на речници за проверка на правопис</string>
-    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
-        <item quantity="one">%d добавен</item>
-        <item quantity="other">%d добавени</item>
-    </plurals>
     <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">Фини настройки</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NOT IMPLEMENTED] Имена от контактите</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">При проверка на правописа се използват имената от контактите</string>

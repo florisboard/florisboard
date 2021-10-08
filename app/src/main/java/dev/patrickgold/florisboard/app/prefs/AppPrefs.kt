@@ -373,6 +373,18 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         }
     }
 
+    val spelling = Spelling()
+    inner class Spelling {
+        val useContacts = boolean(
+            key = "spelling__use_contacts",
+            default = true,
+        )
+        val useUdmEntries = boolean(
+            key = "spelling__use_udm_entries",
+            default = true,
+        )
+    }
+
     val theme = Theme()
     inner class Theme {
         val mode = enum(

@@ -110,14 +110,6 @@
             android:label="@string/settings__theme_editor__title"
             android:theme="@style/SettingsTheme"/>
 
-        <!-- Spelling Activity -->
-        <activity
-            android:name="dev.patrickgold.florisboard.oldsettings.spelling.SpellingActivity"
-            android:icon="@mipmap/floris_app_icon"
-            android:label="@string/settings__spelling__title_overview"
-            android:roundIcon="@mipmap/floris_app_icon_round"
-            android:theme="@style/SettingsTheme"/>
-
         <!-- Crash Dialog Activity -->
         <activity
             android:name="dev.patrickgold.florisboard.crashutility.CrashDialogActivity"

@@ -34,4 +34,8 @@ class ExtensionManager(context: Context) {
     private fun indexExtensions() {
 
     }
+
+    fun getExtensionById(id: String): Extension? {
+        return null
+    }
 }

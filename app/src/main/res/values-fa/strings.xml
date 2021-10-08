@@ -254,14 +254,8 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">استفاده از حافظه هیپ را رونویسی می کند و اندازه را حداکثری می کند در گوشه بالا سمت راست</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">پاک کردن پایگاه داده لغتنامه داخلی کاربر</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">پاک کردن تمام کلمات از جدول پایگاه داده لغتنامه</string>
-    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">تنظیمات چک کننده نگارش</string>
-    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">مدیریت لغتنامه ها</string>
     <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">استفاده از زیرنوع ها</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">بدون تنظیم</string>
-    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
-        <item quantity="one">%d نصب شده</item>
-        <item quantity="other">%d نصب شده</item>
-    </plurals>
     <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">تنظیم-مناسب</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">درباره</string>

@@ -220,9 +220,7 @@
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Minden funkciót ki fog kapcsolni ideiglenesen, amely a bemeneti adatokkal dolgozik</string>
     <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Fejlesztői eszközök engedélyezése</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Heap memória statisztika megjelenítése</string>
-    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Szótárak kezelése</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Nincs beállítva</string>
-    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Helyesírás-ellenőrző szótárak kezelése</string>
     <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Új szótár importálása</string>
     <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Forrás kiválasztása</string>
     <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Nyelv választása</string>

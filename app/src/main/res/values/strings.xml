@@ -221,9 +221,10 @@
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Space bar switches back to character layout</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Pressing space bar automatically switches back to characters when in symbols or numeric</string>
 
-    <string name="settings__typing__title" comment="Title of Typing experience fragment">Typing experience</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Enable Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Will show on top of the keyboard</string>
+
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Typing experience</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
     <string translatable="false" name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">Inline suggestions</string>
     <string translatable="false" name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services (password managers, ...)</string>
@@ -327,27 +328,22 @@
     <string name="pref__devtools__test_crash_report__label" comment="Label of Test Crash Report in Advanced">Test crash report screen</string>
     <string name="pref__devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Advanced">Debug action to purposely produce a crash</string>
 
-    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Spell checker settings</string>
-    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Manage dictionaries</string>
+    <string name="settings__spelling__title" comment="Title of the Spelling screen">Spell checker</string>
     <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Use keyboard subtypes</string>
     <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">No spell checker dictionaries currently installed. Add the first one with the \'+\'-button below!</string>
     <string name="settings__spelling__dictionary_index_invalid" comment="String for the Dictionary index invalid error card. %s will be replaced by the app name.">An error occurred while indexing the installed spell checker dictionaries. Try restarting %s or file a bug report for this.</string>
     <string name="settings__spelling__dict_sources_info" comment="String for the Dictionary sources info.">Where do I get spell checker dictionaries?</string>
     <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Extension / Archive</string>
     <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Affix + Dictionary file</string>
-    <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Active spell checker</string>
+    <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">System spell checker</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">None set</string>
     <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">Check in system settings</string>
-    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Manage spell checker dictionaries</string>
-    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
-        <item quantity="one">%d installed</item>
-        <item quantity="other">%d installed</item>
-    </plurals>
     <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">Fine-adjustment</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NOT IMPLEMENTED] Use names from contacts</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Spell checker will look up names from your contact list</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Use user dictionary entries</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Spell checker will look up entries from the user dictionaries, if these are enabled</string>
+    <string name="pref__spelling__group_installed_dictionaries__title" comment="Title of Installed dictionaries sub-group">Installed dictionaries</string>
     <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Import new dictionary</string>
     <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Select source</string>
     <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Select language</string>
@@ -488,6 +484,8 @@
     <string name="ext__meta__license">License</string>
     <string name="ext__meta__title">Title</string>
     <string name="ext__meta__version">Version</string>
+    <string name="ext__error__not_found_title">Extension not found</string>
+    <string name="ext__error__not_found_description">No extension with ID "{id}" could be found.</string>
 
     <!-- General strings -->
     <string name="general__no_browser_app_found_for_url">No browser app found for handling URL {url}</string>

@@ -288,8 +288,6 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Δημιουργεί ένα επικάλυμμα με τη χρήση της μνήμης σωρού και του μέγιστου μεγέθους στην πάνω-δεξιά γωνία</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Διαγραφή βάσης δεδομένων εσωτερικού λεξικού χρήστη</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Διαγράφει όλες τις λέξεις από τον πίνακα δεδομένων του λεξικού</string>
-    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Ρυθμίσεις ορθογραφικού ελέγχου</string>
-    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Διαχείριση λεξικών</string>
     <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Χρήση υποτύπων πληκτρολογίου</string>
     <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">Δεν υπάρχουν εγκατεστημένα λεξικά ορθογραφικού ελέγχου. Προσθέστε το πρώτο με το \'+\'-πλήκτρο πιο κάτω!</string>
     <string name="settings__spelling__dictionary_index_invalid" comment="String for the Dictionary index invalid error card. %s will be replaced by the app name.">Ένα σφάλμα παρουσιάστηκε κατά την ευρετηρίαση των εγκατεστημένων λεξικών. Δοκιμάστε να επανεκκινήσετε το %s ή να υποβάλλετε μία αναφορά προβλήματος για αυτό.</string>
@@ -299,11 +297,6 @@
     <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Ενεργός ορθογραφικός έλεγχος</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Κανένα ορισμένο</string>
     <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">Ελέγχος στις ρυθμίσεις συστήματος</string>
-    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Διαχείριση λεξικών ορθογραφικού ελέγχου</string>
-    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
-        <item quantity="one">%d εγκατεστημένο</item>
-        <item quantity="other">%d εγκατεστημένα</item>
-    </plurals>
     <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">Μικρό-ρύθμιση</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[ΜΗ ΕΦΑΡΜΟΣΜΈΝΟ] Χρήση ονομάτων από τις επαφές</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Ο ορθογραφικός έλεγχος θα ψάξει ονόματα από τη λίστα επαφών</string>

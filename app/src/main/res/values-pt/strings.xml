@@ -286,8 +286,6 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Sobrepõe o consumo da memória de monte e o seu máximo no canto superior direito</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Limpar base de dados do dicionário do utilizador</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Remover todas as palavras da base de dados do dicionário</string>
-    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Definições de verificação ortográfica</string>
-    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Gerir dicionários</string>
     <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Utilizar subtipos de teclado</string>
     <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">Ainda não instalou dicionários. Pode adicionar dicionários com o botão + abaixo!</string>
     <string name="settings__spelling__dictionary_index_invalid" comment="String for the Dictionary index invalid error card. %s will be replaced by the app name.">Ocorreu um erro ao indexar os dicionários instalados. Experimente reiniciar %s ou submeta um relatório de erro.</string>
@@ -297,11 +295,6 @@
     <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Dicionário ativo</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Nada definido</string>
     <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">Verifique as definições do sistema</string>
-    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Gerir dicionários de verificação ortográfica</string>
-    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
-        <item quantity="one">%d instalado</item>
-        <item quantity="other">%d instalados</item>
-    </plurals>
     <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">Ajustes</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NÃO IMPLEMENTADO] Utilizar nome dos contactos</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">A verificação ortográfica irá analisar a sua lista de contactos</string>

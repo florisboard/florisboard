@@ -288,8 +288,6 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">يعرض طبقة تراكبية في الزاوية العلوية اليمنى على لوحة المفاتيح لاستخدام ذاكرة الكومة والحجم الأقصى لها</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">مسح قاعدة بيانات القاموس الداخلي للمستخدم</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">يمسح كل الكلمات من جدول قاعدة بيانات القاموس</string>
-    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">إعدادات المدقق الإملائي</string>
-    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">إدارة القواميس</string>
     <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">استخدم الأنواع الفرعية للوحة المفاتيح</string>
     <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">لا توجد قواميس مدقق إملائي مثبتة حاليًا. أضف أول واحد بالزر \"+\" أدناه!</string>
     <string name="settings__spelling__dictionary_index_invalid" comment="String for the Dictionary index invalid error card. %s will be replaced by the app name.">حدث خطأ أثناء فهرسة قواميس المدقق الإملائي المثبتة. حاول إعادة تشغيل %s أو تقديم تقرير خطأ لهذا الغرض.</string>
@@ -299,15 +297,6 @@
     <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">المدقق الإملائي النشط</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">لا شيء محدد</string>
     <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">تحقق في إعدادات النظام</string>
-    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">إدارة القواميس و المدقق الإملائي</string>
-    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
-        <item quantity="zero">%d مثبت</item>
-        <item quantity="one">%d مثبت</item>
-        <item quantity="two">%d مثبت</item>
-        <item quantity="few">%d مثبت</item>
-        <item quantity="many">%d مثبت</item>
-        <item quantity="other">%d مثبت</item>
-    </plurals>
     <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">تعديلات دقيقة</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[لم يتم التنفيذ] استخدم أسماء من جهات الاتصال</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">سيقوم المدقق الإملائي بالبحث عن الأسماء من قائمة جهات الاتصال الخاصة بك</string>

@@ -41,6 +41,7 @@ import dev.patrickgold.florisboard.ime.text.composing.WithRules
 import dev.patrickgold.florisboard.ime.text.keyboard.AutoTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.MultiTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.res.ext.Extension
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -89,6 +90,7 @@ class AssetManager(context: Context) {
             }
             polymorphic(Extension::class) {
                 subclass(SpellingExtension::class, SpellingExtension.serializer())
+                subclass(ThemeExtension::class, ThemeExtension.serializer())
             }
         }
     }

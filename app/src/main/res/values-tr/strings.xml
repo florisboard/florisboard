@@ -288,8 +288,6 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Küme bellek kullanımını ve en fazla boyutunu sağ üst köşede gösterir</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Dahili kullanıcı sözlüğü veritabanını temizle</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Sözlük veritabanı tablosundaki tüm sözcükleri temizler</string>
-    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Yazım denetleyicisi ayarları</string>
-    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Sözlükleri yönet</string>
     <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Klavye alt türlerini kullan</string>
     <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">Hiç bir yazım denetleme sözlüğü yüklü değil. Aşağıdaki \'+\' tuşunu kullanarak ilkini ekleyin!</string>
     <string name="settings__spelling__dictionary_index_invalid" comment="String for the Dictionary index invalid error card. %s will be replaced by the app name.">Yüklü yazım denetleme sözlüklerini dizinlerken bir hata oluştu. %s \'u baştan başlatmayı deneyin veya bir hata raporu oluşturun.</string>
@@ -299,11 +297,6 @@
     <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Yazım denetleyici kullan</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Hiçbiri ayarlanmadı</string>
     <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">Sistem ayarlarından kontrol edin</string>
-    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Yazım denetleme sözlüklerini yönet</string>
-    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
-        <item quantity="one">%d yüklendi</item>
-        <item quantity="other">%d yüklendi</item>
-    </plurals>
     <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">İnce ayar</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[HENÜZ UYGULANMAMIŞ] Rehberdeki isimleri kullan</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Yazım denetleyici rehberinizdeki isimlere bakacak</string>

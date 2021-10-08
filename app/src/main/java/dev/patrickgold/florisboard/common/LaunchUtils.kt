@@ -39,10 +39,7 @@ fun launchUrl(context: Context, url: String) {
             url.startsWith(URL_MAILTO_PREFIX) -> url
         else -> "$URL_HTTPS_PREFIX$url"
     }
-    val intent = Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse(link)
-    )
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     try {
         context.startActivity(intent)
@@ -68,7 +65,26 @@ inline fun <T : Any> launchActivity(context: Context, kClass: KClass<T>, intentM
     contract {
         callsInPlace(intentModifier, InvocationKind.EXACTLY_ONCE)
     }
-    val intent = Intent(context, kClass.java)
-    intentModifier(intent)
-    context.startActivity(intent)
+    try {
+        val intent = Intent(context, kClass.java)
+        intentModifier(intent)
+        context.startActivity(intent)
+    } catch (e: ActivityNotFoundException) {
+        flogError { e.toString() }
+        Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
+    }
+}
+
+inline fun launchActivity(context: Context, intentModifier: (Intent) -> Unit) {
+    contract {
+        callsInPlace(intentModifier, InvocationKind.EXACTLY_ONCE)
+    }
+    try {
+        val intent = Intent()
+        intentModifier(intent)
+        context.startActivity(intent)
+    } catch (e: ActivityNotFoundException) {
+        flogError { e.toString() }
+        Toast.makeText(context, e.localizedMessage, Toast.LENGTH_LONG).show()
+    }
 }

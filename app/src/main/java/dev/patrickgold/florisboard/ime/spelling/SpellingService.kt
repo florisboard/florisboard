@@ -18,8 +18,8 @@ package dev.patrickgold.florisboard.ime.spelling
 
 import android.util.LruCache
 import android.view.textservice.SuggestionsInfo
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
@@ -64,7 +64,7 @@ class SpellingService {
     }
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-    private val prefs get() = Preferences.default()
+    private val prefs by florisPreferenceModel()
     private val dictionaryManager get() = DictionaryManager.default()
     private val spellingManager get() = SpellingManager.default()
 
@@ -93,7 +93,7 @@ class SpellingService {
         val suggestionsCache = getSuggestionsCache(locale)
         return suggestionsCache.getOrGenerateAsync(word) { spellingDict ->
             var isWordOk = false
-            if (prefs.spelling.useUdmEntries) {
+            if (prefs.spelling.useUdmEntries.get()) {
                 isWordOk = dictionaryManager.spell(word, locale)
             }
             return@getOrGenerateAsync if (isWordOk) {
