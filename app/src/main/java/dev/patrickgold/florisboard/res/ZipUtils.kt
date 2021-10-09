@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.res
 
 import android.content.Context
+import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.common.resultErr
 import dev.patrickgold.florisboard.common.resultErrStr
 import dev.patrickgold.florisboard.common.resultOk
@@ -25,6 +26,40 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 
 object ZipUtils {
+    fun readFileFromArchive(context: Context, zipRef: FlorisRef, relPath: String): Result<String> {
+        val assetManager by context.assetManager()
+        return when {
+            zipRef.isAssets -> {
+                assetManager.loadTextAsset(zipRef.subRef(relPath))
+            }
+            zipRef.isCache || zipRef.isInternal -> {
+                val flexHandle = File(zipRef.absolutePath(context))
+                if (!flexHandle.isFile) return resultErrStr("Given ref $zipRef is not a file!")
+                try {
+                    val flexFile = ZipFile(flexHandle)
+                    val flexEntries = flexFile.entries()
+                    var fileContents: String? = null
+                    while (flexEntries.hasMoreElements()) {
+                        val flexEntry = flexEntries.nextElement()
+                        if (flexEntry.name == relPath) {
+                            fileContents = flexFile.getInputStream(flexEntry).bufferedReader().use { it.readText() }
+                            break
+                        }
+                    }
+                    flexFile.close()
+                    if (fileContents == null) {
+                        resultErrStr("Failed to load requested file $relPath")
+                    } else {
+                        resultOk(fileContents)
+                    }
+                } catch (e: Exception) {
+                    resultErr(e)
+                }
+            }
+            else -> resultErrStr("Unsupported source!")
+        }
+    }
+
     fun unzip(context: Context, srcRef: FlorisRef, dstRef: FlorisRef): Result<Unit> {
         return unzip(context, srcRef, File(dstRef.absolutePath(context)))
     }

@@ -29,7 +29,7 @@ import java.io.File
 @Serializable
 data class SpellingExtension(
     override val meta: ExtensionMeta,
-    override val dependencies: List<String>?,
+    override val dependencies: List<String>? = null,
     @SerialName("language")
     @Serializable(with = FlorisLocale.Serializer::class)
     val locale: FlorisLocale,

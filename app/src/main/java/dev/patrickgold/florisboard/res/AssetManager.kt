@@ -32,7 +32,6 @@ import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
 import dev.patrickgold.florisboard.ime.spelling.SpellingConfig
-import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.composing.HangulUnicode
@@ -41,11 +40,10 @@ import dev.patrickgold.florisboard.ime.text.composing.WithRules
 import dev.patrickgold.florisboard.ime.text.keyboard.AutoTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.MultiTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.ime.theme.ThemeExtension
-import dev.patrickgold.florisboard.res.ext.Extension
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonBuilder
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import java.io.File
@@ -53,7 +51,7 @@ import java.io.File
 class AssetManager(context: Context) {
     val appContext by context.appContext()
 
-    private val json = Json {
+    val jsonConfig = Json {
         classDiscriminator = "$"
         encodeDefaults = true
         ignoreUnknownKeys = true
@@ -88,14 +86,12 @@ class AssetManager(context: Context) {
                 subclass(SpellingConfig.ImportFormat.Archive::class, SpellingConfig.ImportFormat.Archive.serializer())
                 subclass(SpellingConfig.ImportFormat.Raw::class, SpellingConfig.ImportFormat.Raw.serializer())
             }
-            polymorphic(Extension::class) {
-                subclass(SpellingExtension::class, SpellingExtension.serializer())
-                subclass(ThemeExtension::class, ThemeExtension.serializer())
-            }
         }
     }
 
-    fun jsonBuilder(): Json = json
+    fun jsonConfig(action: JsonBuilder.() -> Unit) = Json(jsonConfig) {
+        this.action()
+    }
 
     fun deleteAsset(ref: FlorisRef): Result<Unit> {
         return when {
@@ -139,6 +135,7 @@ class AssetManager(context: Context) {
         }
     }
 
+    @Deprecated(message = "listAssets is deprecated in favor of list/listFiles/listDirs")
     inline fun <reified T> listAssets(ref: FlorisRef): Result<Map<FlorisRef, T>> {
         val retMap = mutableMapOf<FlorisRef, T>()
         return when {
@@ -180,29 +177,66 @@ class AssetManager(context: Context) {
         }
     }
 
-    inline fun <reified T> loadJsonAsset(ref: FlorisRef): Result<T> {
+    fun list(ref: FlorisRef) = list(ref, files = true, dirs = true)
+
+    fun listFiles(ref: FlorisRef) = list(ref, files = true, dirs = false)
+
+    fun listDirs(ref: FlorisRef) = list(ref, files = false, dirs = true)
+
+    private fun list(ref: FlorisRef, files: Boolean, dirs: Boolean) = runCatching<List<FlorisRef>> {
+        when {
+            !files && !dirs -> listOf()
+            ref.isAssets -> {
+                appContext.assets.list(ref.relativePath)?.mapNotNull { fileName ->
+                    val subList = appContext.assets.list("${ref.relativePath}/$fileName") ?: return@mapNotNull null
+                    when {
+                        files && dirs || files && subList.isEmpty() || dirs && subList.isNotEmpty() -> {
+                            ref.subRef(fileName)
+                        }
+                        else -> null
+                    }
+                } ?: listOf()
+            }
+            ref.isCache || ref.isInternal -> {
+                val dir = File(ref.absolutePath(appContext))
+                if (dir.isDirectory) {
+                    when {
+                        files && dirs -> dir.listFiles()?.toList()
+                        files -> dir.listFiles()?.filter { it.isFile }
+                        dirs -> dir.listFiles()?.filter { it.isDirectory }
+                        else -> null
+                    }!!.map { ref.subRef(it.name) }
+                } else {
+                    listOf()
+                }
+            }
+            else -> error("Unsupported FlorisRef source!")
+        }
+    }
+
+    inline fun <reified T> loadJsonAsset(ref: FlorisRef, jsonConfig: Json = this.jsonConfig): Result<T> {
         return loadTextAsset(ref).fold(
-            onSuccess = { runCatching { jsonBuilder().decodeFromString(it) } },
+            onSuccess = { runCatching { jsonConfig.decodeFromString(it) } },
             onFailure = { resultErr(it) }
         )
     }
 
-    inline fun <reified T> loadJsonAsset(file: File): Result<T> {
+    inline fun <reified T> loadJsonAsset(file: File, jsonConfig: Json = this.jsonConfig): Result<T> {
         return readTextFile(file).fold(
-            onSuccess = { runCatching { jsonBuilder().decodeFromString(it) } },
+            onSuccess = { runCatching { jsonConfig.decodeFromString(it) } },
             onFailure = { resultErr(it) }
         )
     }
 
-    inline fun <reified T> loadJsonAsset(uri: Uri, maxSize: Int): Result<T> {
+    inline fun <reified T> loadJsonAsset(uri: Uri, maxSize: Int, jsonConfig: Json = this.jsonConfig): Result<T> {
         return loadTextAsset(uri, maxSize).fold(
-            onSuccess = { runCatching { jsonBuilder().decodeFromString(it) } },
+            onSuccess = { runCatching { jsonConfig.decodeFromString(it) } },
             onFailure = { resultErr(it) }
         )
     }
 
-    inline fun <reified T> loadJsonAsset(jsonStr: String): Result<T> {
-        return runCatching { jsonBuilder().decodeFromString(jsonStr) }
+    inline fun <reified T> loadJsonAsset(jsonStr: String, jsonConfig: Json = this.jsonConfig): Result<T> {
+        return runCatching { jsonConfig.decodeFromString(jsonStr) }
     }
 
     fun loadTextAsset(ref: FlorisRef): Result<String> {
@@ -227,22 +261,22 @@ class AssetManager(context: Context) {
         return ExternalContentUtils.readAllTextFromUri(appContext, uri, maxSize)
     }
 
-    inline fun <reified T> writeJsonAsset(ref: FlorisRef, asset: T): Result<Unit> {
-        return runCatching { jsonBuilder().encodeToString(asset) }.fold(
+    inline fun <reified T> writeJsonAsset(ref: FlorisRef, asset: T, jsonConfig: Json = this.jsonConfig): Result<Unit> {
+        return runCatching { jsonConfig.encodeToString(asset) }.fold(
             onSuccess = { writeTextAsset(ref, it) },
             onFailure = { resultErr(it) }
         )
     }
 
-    inline fun <reified T> writeJsonAsset(file: File, asset: T): Result<Unit> {
-        return runCatching { jsonBuilder().encodeToString(asset) }.fold(
+    inline fun <reified T> writeJsonAsset(file: File, asset: T, jsonConfig: Json = this.jsonConfig): Result<Unit> {
+        return runCatching { jsonConfig.encodeToString(asset) }.fold(
             onSuccess = { writeTextFile(file, it) },
             onFailure = { resultErr(it) }
         )
     }
 
-    inline fun <reified T> writeJsonAsset(uri: Uri, asset: T): Result<Unit> {
-        return runCatching { jsonBuilder().encodeToString(asset) }.fold(
+    inline fun <reified T> writeJsonAsset(uri: Uri, asset: T, jsonConfig: Json = this.jsonConfig): Result<Unit> {
+        return runCatching { jsonConfig.encodeToString(asset) }.fold(
             onSuccess = { writeTextAsset(uri, it) },
             onFailure = { resultErr(it) }
         )

@@ -19,12 +19,15 @@ package dev.patrickgold.florisboard.app.ui.settings.spelling
 import android.content.ComponentName
 import android.content.Intent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.ext.ExtensionList
 import dev.patrickgold.florisboard.common.launchActivity
+import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.jetpref.ui.compose.Preference
 import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
 import dev.patrickgold.jetpref.ui.compose.SwitchPreference
@@ -33,8 +36,8 @@ import dev.patrickgold.jetpref.ui.compose.annotations.ExperimentalJetPrefUi
 @OptIn(ExperimentalJetPrefUi::class)
 @Composable
 fun SpellingScreen() = FlorisScreen(title = stringRes(R.string.settings__spelling__title)) {
-    val navController = LocalNavController.current
     val context = LocalContext.current
+    val extensionManager by context.extensionManager()
 
     Preference(
         title = stringRes(R.string.pref__spelling__active_spellchecker__label),
@@ -65,6 +68,11 @@ fun SpellingScreen() = FlorisScreen(title = stringRes(R.string.settings__spellin
     }
 
     PreferenceGroup(title = stringRes(R.string.pref__spelling__group_installed_dictionaries__title)) {
-        //
+        val spellingDicts by extensionManager.index.themes.observeAsState()
+        if (spellingDicts != null && spellingDicts!!.isNotEmpty()) {
+            ExtensionList(extList = spellingDicts!!)
+        } else {
+
+        }
     }
 }

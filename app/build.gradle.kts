@@ -138,6 +138,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.3.1") // possibly remove after settings rework
     implementation("androidx.autofill:autofill:1.1.0")
     implementation("androidx.compose.material:material:1.1.0-alpha05")
+    implementation("androidx.compose.runtime:runtime-livedata:1.1.0-alpha05")
     implementation("androidx.compose.ui:ui:1.1.0-alpha05")
     implementation("androidx.compose.ui:ui-tooling-preview:1.1.0-alpha05")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0") // possibly remove after settings rework

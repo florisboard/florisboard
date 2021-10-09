@@ -30,7 +30,7 @@ import java.io.File
 @Serializable
 class ThemeExtension(
     override val meta: ExtensionMeta,
-    override val dependencies: List<String>?,
+    override val dependencies: List<String>? = null,
     val theme: ThemeExtensionConfig,
 ) : Extension() {
 

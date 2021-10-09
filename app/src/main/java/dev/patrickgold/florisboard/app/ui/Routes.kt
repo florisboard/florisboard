@@ -34,7 +34,9 @@ import dev.patrickgold.florisboard.app.ui.settings.keyboard.KeyboardScreen
 import dev.patrickgold.florisboard.app.ui.settings.spelling.SpellingScreen
 import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeScreen
 import dev.patrickgold.florisboard.app.ui.setup.SetupScreen
+import dev.patrickgold.florisboard.common.curlyFormat
 
+@Suppress("FunctionName")
 object Routes {
     object Settings {
         const val Home = "settings"
@@ -64,6 +66,7 @@ object Routes {
 
     object Ext {
         const val View = "ext/view/{id}"
+        fun View(id: String) = View.curlyFormat("id" to id)
     }
 
     @Composable
