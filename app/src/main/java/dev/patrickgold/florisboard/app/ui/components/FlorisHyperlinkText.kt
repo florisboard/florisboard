@@ -25,12 +25,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import dev.patrickgold.florisboard.common.launchUrl
-import dev.patrickgold.florisboard.res.FlorisRef
 
 @Composable
 fun FlorisHyperlinkText(
     text: String,
-    url: FlorisRef,
+    url: String,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     color: Color = MaterialTheme.colors.primary,
@@ -40,7 +39,7 @@ fun FlorisHyperlinkText(
     Text(
         modifier = modifier
             .clickable(enabled = enabled) {
-                launchUrl(context, url.toString())
+                launchUrl(context, url)
             },
         text = text,
         color = color,

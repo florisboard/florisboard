@@ -34,7 +34,7 @@ value class SpellingDict private constructor(
         const val README_FILE_NAME = "README.txt"
 
         fun new(path: String, ext: SpellingExtension): SpellingDict? {
-            val baseName = ext.affFile.removeSuffix(".aff")
+            val baseName = ext.spelling.affFile.removeSuffix(".aff")
             val nativePtr = nativeInitialize("$path/$baseName".toNativeStr())
             return if (nativePtr == NATIVE_NULLPTR) {
                 null

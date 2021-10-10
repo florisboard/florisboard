@@ -1,12 +1,8 @@
 package dev.patrickgold.florisboard.res.ext
 
-import android.app.Application
-import dev.patrickgold.florisboard.res.FlorisRef
 import io.kotest.core.spec.style.FreeSpec
-import io.kotest.extensions.robolectric.RobolectricTest
 import io.kotest.matchers.shouldBe
 
-@RobolectricTest(application = Application::class)
 class ExtensionAuthorTest : FreeSpec({
     val validAuthorPairs = listOf(
         "Jane Doe" to ExtensionAuthor(name = "Jane Doe"),
@@ -14,8 +10,8 @@ class ExtensionAuthorTest : FreeSpec({
         "__jane__" to ExtensionAuthor(name = "__jane__"),
         "jane.doe" to ExtensionAuthor(name = "jane.doe"),
         "Jane Doe <jane.doe@gmail.com>" to ExtensionAuthor(name = "Jane Doe", email = "jane.doe@gmail.com"),
-        "Jane Doe (jane-doe.com)" to ExtensionAuthor(name = "Jane Doe", url = FlorisRef.from("jane-doe.com")),
-        "Jane Doe <jane.doe@gmail.com> (jane-doe.com)" to ExtensionAuthor(name = "Jane Doe", email = "jane.doe@gmail.com", url = FlorisRef.from("jane-doe.com")),
+        "Jane Doe (jane-doe.com)" to ExtensionAuthor(name = "Jane Doe", url = "jane-doe.com"),
+        "Jane Doe <jane.doe@gmail.com> (jane-doe.com)" to ExtensionAuthor(name = "Jane Doe", email = "jane.doe@gmail.com", url = "jane-doe.com"),
     )
 
     "Test ExtensionAuthor.from()" - {

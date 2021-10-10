@@ -19,7 +19,9 @@ package dev.patrickgold.florisboard.ime.spelling
 import android.content.Context
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.res.ext.Extension
+import dev.patrickgold.florisboard.res.ext.ExtensionEditor
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
+import dev.patrickgold.florisboard.res.ext.ExtensionMetaEditor
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -30,12 +32,7 @@ import java.io.File
 data class SpellingExtension(
     override val meta: ExtensionMeta,
     override val dependencies: List<String>? = null,
-    @SerialName("language")
-    @Serializable(with = FlorisLocale.Serializer::class)
-    val locale: FlorisLocale,
-    val originalSourceId: String,
-    val affFile: String,
-    val dicFile: String,
+    val spelling: SpellingExtensionConfig,
 ) : Extension() {
 
     @Transient var dict: SpellingDict? = null
@@ -47,5 +44,55 @@ data class SpellingExtension(
     override fun onBeforeUnload(context: Context, cacheDir: File) {
         dict?.dispose()
         dict = null
+    }
+
+    override fun edit() = SpellingExtensionEditor(
+        meta.edit(),
+        spelling.edit(),
+    )
+}
+
+internal data class SpellingExtensionEditor(
+    override val meta: ExtensionMetaEditor,
+    val spelling: SpellingExtensionConfigEditor
+) : ExtensionEditor {
+    fun build() = runCatching {
+        SpellingExtension(
+            meta = meta.build().getOrThrow(),
+            spelling = spelling.build().getOrThrow(),
+        )
+    }
+}
+
+@Serializable
+data class SpellingExtensionConfig(
+    @SerialName("language")
+    @Serializable(with = FlorisLocale.Serializer::class)
+    val locale: FlorisLocale,
+    val originalSourceId: String? = null,
+    val affFile: String,
+    val dicFile: String,
+) {
+    internal fun edit() = SpellingExtensionConfigEditor(
+        locale.toString(), originalSourceId ?: "", affFile, dicFile
+    )
+}
+
+internal data class SpellingExtensionConfigEditor(
+    var locale: String,
+    var originalSourceId: String,
+    var affFile: String,
+    var dicFile: String,
+) {
+    fun build() = runCatching {
+        val config = SpellingExtensionConfig(
+            locale.trim().let { FlorisLocale.from(it) },
+            originalSourceId.trim().ifBlank { null },
+            affFile.trim(),
+            dicFile.trim(),
+        )
+        check(config.affFile.isNotBlank()) { "Spelling extension aff file path cannot be blank" }
+        check(config.dicFile.isNotBlank()) { "Spelling extension dic file path cannot be blank" }
+        return@runCatching config
     }
 }

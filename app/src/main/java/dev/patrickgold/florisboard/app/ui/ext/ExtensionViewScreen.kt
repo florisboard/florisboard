@@ -47,10 +47,9 @@ import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionAuthor
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
-import dev.patrickgold.florisboard.res.isNotNullAndValid
 
 @Composable
-fun ExtensionViewerScreen(id: String) {
+fun ExtensionViewScreen(id: String) {
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
     val ext = extensionManager.getExtensionById(id)
@@ -74,7 +73,7 @@ private fun ViewScreen(ext: Extension) = FlorisScreen(
         Spacer(modifier = Modifier.height(16.dp))
         ExtensionMetaRowScrollableChips(
             label = stringRes(R.string.ext__meta__authors),
-            showDividerAbove = false
+            showDividerAbove = false,
         ) {
             for ((n, author) in ext.meta.authors.withIndex()) {
                 if (n > 0) {
@@ -99,18 +98,18 @@ private fun ViewScreen(ext: Extension) = FlorisScreen(
                 }
             }
         }
-        if (ext.meta.homepage.isNotNullAndValid()) {
+        if (!ext.meta.homepage.isNullOrBlank()) {
             ExtensionMetaRowSimpleText(label = stringRes(R.string.ext__meta__homepage)) {
                 FlorisHyperlinkText(
-                    text = ext.meta.homepage!!.authority,
+                    text = FlorisRef.from(ext.meta.homepage!!).authority,
                     url = ext.meta.homepage!!,
                 )
             }
         }
-        if (ext.meta.issueTracker.isNotNullAndValid()) {
+        if (!ext.meta.issueTracker.isNullOrBlank()) {
             ExtensionMetaRowSimpleText(label = stringRes(R.string.ext__meta__issue_tracker)) {
                 FlorisHyperlinkText(
-                    text = ext.meta.issueTracker!!.authority,
+                    text = FlorisRef.from(ext.meta.issueTracker!!).authority,
                     url = ext.meta.issueTracker!!,
                 )
             }
@@ -192,8 +191,8 @@ private fun PreviewExtensionViewerScreen() {
             title = "Test theme",
             description = "This is a test theme to preview the extension viewer screen UI.",
             keywords = listOf("Beach", "Sea", "Sun"),
-            homepage = FlorisRef.from("https://example.com"),
-            issueTracker = FlorisRef.from("https://git.example.com/issues"),
+            homepage = "https://example.com",
+            issueTracker = "https://git.example.com/issues",
             authors = listOf(
                 "Max Mustermann <max.mustermann@example.com> (maxmustermann.example.com)",
             ).map { ExtensionAuthor.fromOrTakeRaw(it) },

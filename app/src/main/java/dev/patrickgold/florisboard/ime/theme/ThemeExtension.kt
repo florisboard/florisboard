@@ -20,6 +20,7 @@ import android.content.Context
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.ime.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.res.ext.Extension
+import dev.patrickgold.florisboard.res.ext.ExtensionEditor
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -28,7 +29,7 @@ import java.io.File
 
 @SerialName("ime.extension.theme")
 @Serializable
-class ThemeExtension(
+data class ThemeExtension(
     override val meta: ExtensionMeta,
     override val dependencies: List<String>? = null,
     val theme: ThemeExtensionConfig,
@@ -48,6 +49,10 @@ class ThemeExtension(
 
     override fun onBeforeUnload(context: Context, cacheDir: File) {
         stylesheet = null
+    }
+
+    override fun edit(): ExtensionEditor {
+        TODO("Not yet implemented")
     }
 }
 

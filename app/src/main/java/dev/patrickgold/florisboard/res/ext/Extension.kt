@@ -100,4 +100,10 @@ abstract class Extension {
         }
         return null
     }
+
+    internal abstract fun edit(): ExtensionEditor
+}
+
+internal interface ExtensionEditor {
+    val meta: ExtensionMetaEditor
 }

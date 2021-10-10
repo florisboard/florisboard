@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import dev.patrickgold.florisboard.app.ui.ext.ExtensionViewerScreen
+import dev.patrickgold.florisboard.app.ui.ext.ExtensionViewScreen
 import dev.patrickgold.florisboard.app.ui.settings.HomeScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.AboutScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.ProjectLicenseScreen
@@ -104,7 +104,7 @@ object Routes {
 
             composable(Ext.View) { navBackStack ->
                 val extensionId = navBackStack.arguments?.getString("id")
-                ExtensionViewerScreen(id = extensionId.toString())
+                ExtensionViewScreen(id = extensionId.toString())
             }
         }
     }

@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.res.ext
 
-import dev.patrickgold.florisboard.res.FlorisRef
 import kotlinx.serialization.Serializable
 
 /**
@@ -34,7 +33,7 @@ import kotlinx.serialization.Serializable
  * Should multiple files exist which match the regex, always the first match will be used.
  */
 @Serializable
-class ExtensionMeta(
+data class ExtensionMeta(
     /**
      * The unique identifier of this extension, adhering to
      * [Java™ package name standards](https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html).
@@ -71,12 +70,12 @@ class ExtensionMeta(
     /**
      * A link to the homepage of this extension or author.
      */
-    val homepage: FlorisRef? = null,
+    val homepage: String? = null,
 
     /**
      * A link to this extension's issue tracker.
      */
-    val issueTracker: FlorisRef? = null,
+    val issueTracker: String? = null,
 
     /**
      * A list of authors who actively worked on the content of this extension.
@@ -95,9 +94,14 @@ class ExtensionMeta(
      * Use an SPDX license expression if this extension has multiple licenses.
      */
     val license: String,
-)
+) {
+    internal fun edit() = ExtensionMetaEditor(
+        id, version, title, description ?: "", keywords?.toMutableList() ?: mutableListOf(),
+        homepage ?: "", issueTracker ?: "", authors.map { it.edit() }.toMutableList(), license
+    )
+}
 
-internal data class MutableExtensionMeta(
+internal data class ExtensionMetaEditor(
     var id: String = "",
     var version: String = "",
     var title: String = "",
@@ -105,6 +109,26 @@ internal data class MutableExtensionMeta(
     var keywords: MutableList<String> = mutableListOf(),
     var homepage: String = "",
     var issueTracker: String = "",
-    var authors: MutableList<String> = mutableListOf(),
+    var authors: MutableList<ExtensionAuthorEditor> = mutableListOf(),
     var license: String = "",
-)
+) {
+    fun build() = runCatching {
+        val meta = ExtensionMeta(
+            id.trim(),
+            version.trim(),
+            title.trim(),
+            description.trim().ifBlank { null },
+            keywords.mapNotNull { it.trim().ifBlank { null } }.ifEmpty { null },
+            homepage.trim().ifBlank { null },
+            issueTracker.trim().ifBlank { null },
+            authors.map { it.build().getOrThrow() },
+            license.trim(),
+        )
+        check(meta.id.isNotBlank()) { "Extension ID cannot be blank" }
+        check(meta.version.isNotBlank()) { "Extension version string cannot be blank" }
+        check(meta.title.isNotBlank()) { "Extension title cannot be blank" }
+        check(meta.authors.isNotEmpty()) { "At least one extension author must be defined" }
+        check(meta.license.isNotBlank()) { "Extension license identifier cannot be blank" }
+        return@runCatching meta
+    }
+}

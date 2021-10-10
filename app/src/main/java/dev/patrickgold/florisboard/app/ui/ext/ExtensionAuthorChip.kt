@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.ui.components.FlorisChip
 import dev.patrickgold.florisboard.common.launchUrl
-import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ext.ExtensionAuthor
 import dev.patrickgold.jetpref.ui.compose.JetPrefAlertDialog
 
@@ -116,7 +115,7 @@ private fun PreviewChipNameAndUrl() {
     val author = ExtensionAuthor(
         name = "Jane Doe",
         email = null,
-        url = FlorisRef.from("jane-doe.example.com"),
+        url = "jane-doe.example.com",
     )
     ExtensionAuthorChip(author)
 }

@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.res.ext
 
 import dev.patrickgold.florisboard.common.stringBuilder
-import dev.patrickgold.florisboard.res.FlorisRef
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -30,7 +29,7 @@ import kotlin.math.min
 data class ExtensionAuthor(
     val name: String,
     val email: String? = null,
-    val url: FlorisRef? = null,
+    val url: String? = null,
 ) {
     companion object {
         private val ValidationRegex = """^\s*[\p{L}\d._-][\p{L}\d\s._-]*(<[^<>]+>)?\s*(\([^()]+\))?\s*${'$'}""".toRegex()
@@ -52,7 +51,7 @@ data class ExtensionAuthor(
             val name = str.substring(nameStart, nameEnd).trim()
             val email = str.substring(emailStart, emailEnd).trim().takeIf { it.isNotBlank() }
             val url = str.substring(urlStart, urlEnd).trim().takeIf { it.isNotBlank() }
-            return ExtensionAuthor(name, email, url?.let { FlorisRef.from(it) })
+            return ExtensionAuthor(name, email, url)
         }
 
         fun fromOrTakeRaw(str: String): ExtensionAuthor {
@@ -60,14 +59,32 @@ data class ExtensionAuthor(
         }
     }
 
+    internal fun edit() = ExtensionAuthorEditor(name, email ?: "", url ?: "")
+
     override fun toString() = stringBuilder {
         append(name)
         if (email != null && email.isNotBlank()) {
             append(" <$email>")
         }
-        if (url != null) {
+        if (url != null && url.isNotBlank()) {
             append(" ($url)")
         }
+    }
+}
+
+internal data class ExtensionAuthorEditor(
+    var name: String = "",
+    var email: String = "",
+    var url: String = "",
+) {
+    fun build() = runCatching {
+        val author = ExtensionAuthor(
+            name.trim(),
+            email.trim().ifBlank { null },
+            url.trim().ifBlank { null },
+        )
+        check(author.name.isNotBlank()) { "Extension author name cannot be blank" }
+        return@runCatching author
     }
 }
 
