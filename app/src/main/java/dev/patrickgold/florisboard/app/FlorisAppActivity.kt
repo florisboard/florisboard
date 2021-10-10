@@ -38,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -193,8 +194,11 @@ class FlorisAppActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = if (isImeSetUp) { Routes.Settings.Home } else { Routes.Setup.Home },
                     )
-                    if (isImeSetUp) {
-                        PreviewKeyboardField()
+                    val navBackStackEntry by navController.currentBackStackEntryAsState()
+                    when (navBackStackEntry?.destination?.route) {
+                        Routes.Setup.Home, Routes.Settings.About, Routes.Settings.ProjectLicense,
+                        Routes.Settings.ThirdPartyLicenses -> {}
+                        else -> PreviewKeyboardField()
                     }
                 }
             }

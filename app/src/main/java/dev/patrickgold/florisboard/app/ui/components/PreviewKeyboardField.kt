@@ -94,7 +94,7 @@ fun PreviewKeyboardField(
                 }
             }
         },
-        keyboardOptions = KeyboardOptions(autoCorrect = false),
+        keyboardOptions = KeyboardOptions(autoCorrect = true),
         singleLine = true,
         shape = RectangleShape,
         colors = TextFieldDefaults.textFieldColors(
