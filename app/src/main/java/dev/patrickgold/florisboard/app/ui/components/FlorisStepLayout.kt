@@ -16,6 +16,13 @@
 
 package dev.patrickgold.florisboard.app.ui.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -29,6 +36,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -54,7 +62,11 @@ data class FlorisStep(
     val content: @Composable FlorisStepLayoutScope.() -> Unit,
 )
 
-class FlorisStepLayoutScope(columnScope: ColumnScope) : ColumnScope by columnScope {
+class FlorisStepLayoutScope(
+    columnScope: ColumnScope,
+    private val primaryColor: Color,
+) : ColumnScope by columnScope {
+
     @Composable
     fun StepText(
         text: String,
@@ -77,6 +89,9 @@ class FlorisStepLayoutScope(columnScope: ColumnScope) : ColumnScope by columnSco
             modifier = modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 16.dp),
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = primaryColor,
+            ),
             onClick = onClick,
         ) {
             Text(text = label)
@@ -132,13 +147,14 @@ fun FlorisStepLayout(
     stepState: FlorisStepState,
     steps: List<FlorisStep>,
     modifier: Modifier = Modifier,
+    primaryColor: Color = MaterialTheme.colors.primary,
     header: @Composable FlorisStepLayoutScope.() -> Unit = { },
     footer: @Composable FlorisStepLayoutScope.() -> Unit = { },
 ) {
     Column(
         modifier = modifier.fillMaxSize()
     ) {
-        val scope = FlorisStepLayoutScope(this)
+        val scope = FlorisStepLayoutScope(this, primaryColor)
         header(scope)
         for (step in steps) {
             key(step.id) {
@@ -146,8 +162,9 @@ fun FlorisStepLayout(
                     ownStepId = step.id,
                     stepState = stepState,
                     title = step.title,
+                    primaryColor = primaryColor,
                 ) {
-                    step.content(FlorisStepLayoutScope(this))
+                    step.content(FlorisStepLayoutScope(this, primaryColor))
                 }
             }
         }
@@ -155,47 +172,49 @@ fun FlorisStepLayout(
     }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun ColumnScope.Step(
     ownStepId: Int,
     stepState: FlorisStepState,
     title: String,
+    primaryColor: Color,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val currentStepId by stepState.getCurrent()
     val autoStepId by stepState.getCurrentAuto()
     val backgroundColor = when (ownStepId) {
-        currentStepId -> MaterialTheme.colors.primary
+        currentStepId -> primaryColor
         else -> MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
     }
-    if (ownStepId == currentStepId) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1.0f),
-        ) {
-            StepHeader(
-                backgroundColor = backgroundColor,
-                step = ownStepId,
-                title = title,
-            )
-            Box(modifier = Modifier.padding(start = 56.dp)) {
-                Column(modifier = Modifier.fillMaxSize()) {
-                    content()
-                }
-            }
-        }
-    } else {
-        val modifier = when {
+    StepHeader(
+        modifier = when {
             ownStepId <= autoStepId -> Modifier.clickable { stepState.setCurrentManual(ownStepId) }
             else -> Modifier.alpha(ContentAlpha.disabled)
+        },
+        backgroundColor = backgroundColor,
+        step = ownStepId,
+        title = title,
+    )
+    val contentVisible = ownStepId == currentStepId
+    val animSpec = spring<Float>(stiffness = Spring.StiffnessMedium)
+    val weight by animateFloatAsState(
+        targetValue = if (contentVisible) 1.0f else 0.00001f,
+        animationSpec = animSpec,
+    )
+    AnimatedVisibility(
+        modifier = Modifier
+            .fillMaxWidth()
+            .weight(weight),
+        visible = contentVisible,
+        enter = fadeIn(animationSpec = animSpec),
+        exit = fadeOut(animationSpec = animSpec),
+    ) {
+        Box(modifier = Modifier.padding(start = 56.dp)) {
+            Column(modifier = Modifier.fillMaxSize()) {
+                content()
+            }
         }
-        StepHeader(
-            modifier = modifier,
-            backgroundColor = backgroundColor,
-            step = ownStepId,
-            title = title,
-        )
     }
 }
 
