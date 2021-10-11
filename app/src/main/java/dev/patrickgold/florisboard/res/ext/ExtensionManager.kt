@@ -26,6 +26,9 @@ import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ZipUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import java.io.File
@@ -39,6 +42,8 @@ class ExtensionManager(context: Context) {
     private val appContext by context.appContext()
     private val assetManager by context.assetManager()
 
+    private val ioScope = CoroutineScope(Dispatchers.IO)
+
     private val jsonConfig = assetManager.jsonConfig {
         serializersModule = SerializersModule {
             polymorphic(Extension::class) {
@@ -50,11 +55,9 @@ class ExtensionManager(context: Context) {
 
     val index = Index()
 
-    init {
-        indexExtensions()
-    }
+    init { indexExtensions() }
 
-    private fun indexExtensions() {
+    private fun indexExtensions() = ioScope.launch {
         index.spellingDicts.postValue(listExtensions(IME_SPELLING_PATH))
         index.themes.postValue(listExtensions(IME_THEME_PATH))
     }
@@ -92,6 +95,13 @@ class ExtensionManager(context: Context) {
         return retList
     }
 
+    fun import(ext: Extension) {
+
+    }
+
+    fun writeExtension(ext: Extension) = runCatching {
+    }
+
     fun getExtensionById(id: String): Extension? {
         index.spellingDicts.value?.find { it.meta.id == id }?.let { return it }
         index.themes.value?.find { it.meta.id == id }?.let { return it }
@@ -99,7 +109,7 @@ class ExtensionManager(context: Context) {
     }
 
     inner class Index {
-        val spellingDicts: MutableLiveData<List<SpellingExtension>> = MutableLiveData()
-        val themes: MutableLiveData<List<ThemeExtension>> = MutableLiveData()
+        val spellingDicts = MutableLiveData<List<SpellingExtension>>()
+        val themes = MutableLiveData<List<ThemeExtension>>()
     }
 }

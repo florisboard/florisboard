@@ -18,12 +18,17 @@ package dev.patrickgold.florisboard.app.ui.settings.spelling
 
 import android.content.ComponentName
 import android.content.Intent
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
+import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionList
 import dev.patrickgold.florisboard.common.launchActivity
@@ -35,7 +40,20 @@ import dev.patrickgold.jetpref.ui.compose.annotations.ExperimentalJetPrefUi
 
 @OptIn(ExperimentalJetPrefUi::class)
 @Composable
-fun SpellingScreen() = FlorisScreen(title = stringRes(R.string.settings__spelling__title)) {
+fun SpellingScreen() = FlorisScreen(
+    title = stringRes(R.string.settings__spelling__title),
+    floatingActionButton = {
+        val navController = LocalNavController.current
+        FloatingActionButton(
+            onClick = { navController.navigate(Routes.Settings.ImportSpellingArchive) },
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_add),
+                contentDescription = "Add dictionary",
+            )
+        }
+    },
+) {
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
 

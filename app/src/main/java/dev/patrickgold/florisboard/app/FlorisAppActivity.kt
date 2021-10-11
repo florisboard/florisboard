@@ -23,6 +23,8 @@ import android.view.View
 import android.view.ViewTreeObserver
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -174,6 +176,7 @@ class FlorisAppActivity : ComponentActivity() {
         return this.setLocale(locale.base)
     }
 
+    @OptIn(ExperimentalAnimationApi::class)
     @Composable
     private fun AppContent() {
         val isImeSetUp by prefs.internal.isImeSetUp.observeAsState()
@@ -195,10 +198,14 @@ class FlorisAppActivity : ComponentActivity() {
                         startDestination = if (isImeSetUp) { Routes.Settings.Home } else { Routes.Setup.Home },
                     )
                     val navBackStackEntry by navController.currentBackStackEntryAsState()
-                    when (navBackStackEntry?.destination?.route) {
+                    val previewVisible = when (navBackStackEntry?.destination?.route) {
                         Routes.Setup.Home, Routes.Settings.About, Routes.Settings.ProjectLicense,
-                        Routes.Settings.ThirdPartyLicenses -> {}
-                        else -> PreviewKeyboardField()
+                        Routes.Settings.ThirdPartyLicenses, Routes.Settings.ImportSpellingArchive,
+                        Routes.Settings.ImportSpellingAffDic -> false
+                        else -> true
+                    }
+                    AnimatedVisibility(visible = previewVisible) {
+                        PreviewKeyboardField()
                     }
                 }
             }

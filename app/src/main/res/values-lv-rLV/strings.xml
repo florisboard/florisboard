@@ -293,19 +293,6 @@
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Pareizrakstības pārbaudītājs meklēs vārdus kontaktpersonu sarakstā</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Izmantot lietotāja vārdnīcas ierakstus</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Pareizrakstības pārbaudītājs meklēs ierakstus lietotāja vārdnīcās, ja tās ir iespējotas</string>
-    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Ievietot jaunu vārdnīcu</string>
-    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Atlasīt avotu</string>
-    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Atlasīt valodu</string>
-    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">Valodas kods (piem., en_US)</string>
-    <string name="settings__spelling__import_dict_s2__title" comment="Title for the import dict sheet (step 2)">Pievienot ievietojamās datnes</string>
-    <string name="settings__spelling__import_dict_s2__select_aff" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Atlasīt pielikuma datni (.aff)</string>
-    <string name="settings__spelling__import_dict_s2__select_dic" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Atlasīt vārdnīcas datni (.dic)</string>
-    <string name="settings__spelling__import_dict_s3__title" comment="Title for the import dict sheet (step 3)">Pārskatīt ievietojamās datnes</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_locale" comment="Text for the verify files dialog (step 3)">Lokalizācija: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_original" comment="Text for the verify files dialog (step 3)">Sākotnējais avots: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_any" comment="Text for the verify files dialog (the first %s will be replaced by a file extension, the second by a file name) (step 3)">%s datne: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_readme" comment="Text for the verify files dialog (step 3)">Lasimani datne: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_license" comment="Text for the verify files dialog (step 3)">Licences datne: %s</string>
     <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info sheet">FlorisBoard izmanto Nuspell kā pareizrakstības pārbaudītāja dzini, kas nozīmē, ka ir pieejams plašs vārdnīcu klāsts, jo Hunspell tiek izmantots arī citās programmatūrās. Zemāk esošajā sarakstā ir norādīti daži pašrocīgi atlasīti avoti, ko ievietošanas pārvaldītājs atbalsta. Ir jālejupielādē arhīva datne vai vārdnīcas faili, pēc tam ievietošanas pārvaldītājā jānorāda pareizais avots (tas ir būtiski, lai pareizi nolasītu arhīva veidolu).</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">ja šajā sarakstā nav vārdnīcu nepieciešamajai valodai vai izloksnei, ir iespējams pašrocīgi meklēt Hunspell vārdnīcu un ievietot \'aff\' un \'dic\' datnes.</string>
     <!-- About UI strings -->

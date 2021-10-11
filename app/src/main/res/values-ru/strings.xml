@@ -294,19 +294,6 @@
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Проверка правописания будет просматривать имена в вашем списке контактов</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Использовать записи из словаря пользователя</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Проверка правописания будеть использовать записи из пользовательских словарей, если они существуют</string>
-    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Импорт нового словаря</string>
-    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Выбор источника</string>
-    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Выбор языка</string>
-    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">Код языка (например, en_US)</string>
-    <string name="settings__spelling__import_dict_s2__title" comment="Title for the import dict sheet (step 2)">Добавление файлов для импорта</string>
-    <string name="settings__spelling__import_dict_s2__select_aff" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Выбор файла affix (.aff)</string>
-    <string name="settings__spelling__import_dict_s2__select_dic" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Выбор файла словаря (.dic)</string>
-    <string name="settings__spelling__import_dict_s3__title" comment="Title for the import dict sheet (step 3)">Проверка импортируемых файлов</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_locale" comment="Text for the verify files dialog (step 3)">Язык: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_original" comment="Text for the verify files dialog (step 3)">Источник: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_any" comment="Text for the verify files dialog (the first %s will be replaced by a file extension, the second by a file name) (step 3)">%s файл: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_readme" comment="Text for the verify files dialog (step 3)">Информационный файл: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_license" comment="Text for the verify files dialog (step 3)">Файл лицензии: %s</string>
     <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info sheet">FlorisBoard использует Nuspell в качестве средства проверки орфографии. Это означает, что доступно огромное количество словарей, так как Hunspell используется и многими другими программами. В списке ниже показано несколько выбранных вручную источников, которые поддерживает менеджер импорта. Загрузите файл архива или файлы словаря, затем при импортировании укажите правильный источник (это важно для правильного чтения формата архива).</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">если в данном списке нет словарей для вашего языка или диалекта, вы можете самостоятельно найти требуемый словарь Hunspell и импортировать его файлы \"aff \" и \"dic\".</string>
     <!-- About UI strings -->

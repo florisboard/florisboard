@@ -302,19 +302,6 @@
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">پێشنیارکردنی لیستی ناوەکان لەکاتی نووسیندا</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">زیادکراوەکانی فەرهەنگی تایبەت</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">پێشنیارکردنی ئەو ووشانەی بەرکارهێنەر خۆی زیادیکردووە بۆ ناو فەرهەنگی تایبەت</string>
-    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">هێنانی فەرهەنگی نوێ</string>
-    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">سەرچاوە دیاریبکە</string>
-    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">زمان دیاریبکە</string>
-    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">کۆدی زمان (نمونە: en_US)</string>
-    <string name="settings__spelling__import_dict_s2__title" comment="Title for the import dict sheet (step 2)">فایلە زیادکراوەکان دەهێنرێن</string>
-    <string name="settings__spelling__import_dict_s2__select_aff" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">فایلی affix دیاریبکە (.aff)</string>
-    <string name="settings__spelling__import_dict_s2__select_dic" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">فایلی فەرهەنگ دیاریبکە (.dic)</string>
-    <string name="settings__spelling__import_dict_s3__title" comment="Title for the import dict sheet (step 3)">پشکنینی فایلە هێنراوەکان</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_locale" comment="Text for the verify files dialog (step 3)">زمان: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_original" comment="Text for the verify files dialog (step 3)">سەرچاوەی فایل: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_any" comment="Text for the verify files dialog (the first %s will be replaced by a file extension, the second by a file name) (step 3)">%s فایل: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_readme" comment="Text for the verify files dialog (step 3)">فایلی فێرکاری: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_license" comment="Text for the verify files dialog (step 3)">فایلی مۆڵەتی: %s</string>
     <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info sheet">FlorisBoard Nuspell بەکاردەهێنێت وەک بزوێنەری پشکنەری هەڵە، واتە بڕێکی زۆر لە فەرهەنگەکان بەردەستن، چونکە هونسپڵ لەلایەن چەندین نەرمەواڵەی ترەوە بەکاردێت. لیستەکەی خوارەوە چەند سەرچاوەیەکی دەست نیشانکراو پیشان دەدات کە بەڕێوەبەری هاوردەکە پشتگیری دەکات. داگرتن یان فایلی ئەرشیف یان فایلەکانی فەرهەنگ، پاشان لە بەڕێوەبەری هاوردەکردن سەرچاوەی دروست هەڵبژێرە (ئەمە گرنگە بۆ خوێندنەوەی دروستی فۆرماتی ئەرشیف).</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">ئەگەر ئەم لیستە فەرهەنگی بۆ زمان یان دیالێکتەکەت تێدا نەبێت، هەروەها دەتوانیت بە دەستی بگەڕێیت بۆ فەرهەنگێکی Hunspell و فایلی \'aff\' و \'dic\' بۆ ئەمە هاوردە بکەیت.</string>
     <!-- About UI strings -->

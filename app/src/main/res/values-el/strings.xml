@@ -302,19 +302,6 @@
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Ο ορθογραφικός έλεγχος θα ψάξει ονόματα από τη λίστα επαφών</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Χρήση καταχωρήσεων λεξικού χρήστη</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Ο ορθογραφικός έλεγχος θα ψάξει τις καταχωρήσεις από το λεξικό χρήστη, εάν αυτές είναι ενεργές</string>
-    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Εισαγωγή νέου λεξικού</string>
-    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Επιλογή πηγής</string>
-    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Επιλογή γλώσσας</string>
-    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">Κωδικός γλώσσας (π.χ. en_US)</string>
-    <string name="settings__spelling__import_dict_s2__title" comment="Title for the import dict sheet (step 2)">Προσθήκη αρχείων προς εισαγωγή</string>
-    <string name="settings__spelling__import_dict_s2__select_aff" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Επιλογή αρχείου προσφύματος (.aff)</string>
-    <string name="settings__spelling__import_dict_s2__select_dic" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Επιλογή αρχείου λεξικού (.dic)</string>
-    <string name="settings__spelling__import_dict_s3__title" comment="Title for the import dict sheet (step 3)">Επαλήθευση των αρχείων εισαγωγής</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_locale" comment="Text for the verify files dialog (step 3)">Τοποθεσία: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_original" comment="Text for the verify files dialog (step 3)">Αρχική πηγή: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_any" comment="Text for the verify files dialog (the first %s will be replaced by a file extension, the second by a file name) (step 3)">%s αρχείο: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_readme" comment="Text for the verify files dialog (step 3)">Αρχείο readme: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_license" comment="Text for the verify files dialog (step 3)">Αρχείο άδειας: %s</string>
     <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info sheet">Το FlorisBoard χρησιμοποιεί το Nuspell ως μηχανή ορθογραφικού ελέγχου, το οποίο σημαίνει πως υπάρχει ένας τεράστιος αριθμός διαθέσιμων λεξικών, καθώς το Hunspell χρησιμοποιείται από πολλά άλλα προγράμματα επίσης. Η παρακάτω λίστα δείχνει μερικές επιλεγμένες πηγές τις οποίες ο διαχειριστής εισαγωγής υποστηρίζει. Κατεβάστε είτε το αρχειοθετημένο αρχείο είτε τα αρχεία του λεξικού, έπειτα στο διαχειριστή εισαγωγής επιλέξτε τη σωστή πηγή (είναι σημαντικό να διαβάσετε σωστά τη μορφή του αρχείου).</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">εάν αυτή η λίστα δεν περιέχει λεξικά για τη γλώσσα ή διάλεκτό σας, μπορείτε επίσης να αναζητήσετε χειροκίνητα κάποιο λεξικό Hunspell και να εισάγετε τα \'aff\' και \'dic\' αρχεία για αυτό.</string>
     <!-- About UI strings -->

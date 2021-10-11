@@ -22,30 +22,26 @@ import android.view.textservice.SentenceSuggestionsInfo
 import android.view.textservice.SpellCheckerSession
 import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextServicesManager
+import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.debug.LogTopic
-import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.debug.flogWarning
-import dev.patrickgold.florisboard.res.AssetManager
+import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.res.ExternalContentUtils
 import dev.patrickgold.florisboard.res.FlorisRef
-import dev.patrickgold.florisboard.res.ext.Extension
+import dev.patrickgold.florisboard.res.ext.ExtensionAuthor
+import dev.patrickgold.florisboard.res.ext.ExtensionAuthorEditor
+import dev.patrickgold.florisboard.res.ext.ExtensionMetaDefaults
+import dev.patrickgold.florisboard.res.ext.ExtensionMetaEditor
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.io.File
-import java.lang.ref.WeakReference
 import java.util.*
 import java.util.zip.ZipFile
 
-class SpellingManager private constructor(
-    val applicationContext: WeakReference<Context>,
-    configRef: FlorisRef
-) {
+class SpellingManager(context: Context) {
     companion object {
-        private var defaultInstance: SpellingManager? = null
-
         private const val SOURCE_ID_RAW: String = "raw"
 
         private const val IMPORT_ARCHIVE_MAX_SIZE: Int = 25_165_820 // 24 MiB
@@ -86,29 +82,17 @@ class SpellingManager private constructor(
                 // Intentionally empty
             }
         }
-
-        fun init(context: Context, configRef: FlorisRef): SpellingManager {
-            val applicationContext = WeakReference(context.applicationContext ?: context)
-            val instance = SpellingManager(applicationContext, configRef)
-            defaultInstance = instance
-            return instance
-        }
-
-        fun default() = defaultInstance!!
-
-        fun defaultOrNull() = defaultInstance
     }
 
+    private val appContext by context.appContext()
+    private val extensionManager by context.extensionManager()
     private val tsm =
-        applicationContext.get()?.getSystemService(Context.TEXT_SERVICES_MANAGER_SERVICE) as? TextServicesManager
+        appContext.getSystemService(Context.TEXT_SERVICES_MANAGER_SERVICE) as? TextServicesManager
 
-    private val assetManager by applicationContext.get()!!.assetManager()
+    private val assetManager by appContext.assetManager()
     private val spellingExtCache: MutableMap<FlorisRef, SpellingExtension> = mutableMapOf()
-    private val indexedSpellingDictMetas: MutableMap<FlorisRef, SpellingExtension> = mutableMapOf()
-    val indexedSpellingDicts: Map<FlorisRef, SpellingExtension>
-        get() = indexedSpellingDictMetas
 
-    val config = assetManager.loadJsonAsset<SpellingConfig>(configRef).getOrDefault(SpellingConfig.default())
+    val config = assetManager.loadJsonAsset<SpellingConfig>(FlorisRef.assets("ime/spelling/config.json")).getOrDefault(SpellingConfig.default())
     val importSourceLabels: List<String>
     val importSourceUrls: List<String?>
 
@@ -121,7 +105,6 @@ class SpellingManager private constructor(
             it.add(0, "-")
             importSourceUrls = it.toList()
         }
-        indexSpellingDicts()
     }
 
     // TODO: rework or remove this
@@ -130,8 +113,7 @@ class SpellingManager private constructor(
             val session = tsm?.newSpellCheckerSession(
                 null, Locale.ENGLISH, STUB_LISTENER, false
             ) ?: return null
-            val context = applicationContext.get() ?: return null
-            val pm = context.packageManager
+            val pm = appContext.packageManager
             return session.spellChecker.loadLabel(pm).toString()
         } catch (e: Exception) {
             flogWarning { e.toString() }
@@ -164,37 +146,18 @@ class SpellingManager private constructor(
         return null
     }
 
-    fun indexSpellingDicts(): Boolean {
-        /*val context = applicationContext.get() ?: return false
-        indexedSpellingDictMetas.clear()
-        val ref = FlorisRef.internal(config.basePath)
-        File(ref.absolutePath(context)).mkdirs()
-        return assetManager.listExtensions<SpellingDict.Meta>(ref).fold(
-            onSuccess = { map ->
-                indexedSpellingDictMetas.putAll(map)
-                true
-            },
-            onFailure = { error ->
-                flogError(LogTopic.SPELL_EVENTS) { error.toString() }
-                false
-            }
-        )*/
-        return false
-    }
-
-    /*fun prepareImport(sourceId: String, archiveUri: Uri): Result<Extension<SpellingDict.Meta>> {
-        val context = applicationContext.get() ?: return Result.failure(Exception("Context is null"))
-        return when (sourceId) {
+    fun prepareImport(sourceId: String, archiveUri: Uri) = runCatching<SpellingExtensionEditor> {
+        when (sourceId) {
             "mozilla_firefox" -> {
-                val tempFile = saveTempFile(archiveUri).getOrElse { return Result.failure(it) }
+                val tempFile = saveTempFile(archiveUri).getOrThrow()
                 val zipFile = ZipFile(tempFile)
-                val manifestEntry = zipFile.getEntry(FIREFOX_MANIFEST_JSON) ?: return Result.failure(Exception("No $FIREFOX_MANIFEST_JSON file found"))
+                val manifestEntry = zipFile.getEntry(FIREFOX_MANIFEST_JSON) ?: error("No $FIREFOX_MANIFEST_JSON file found")
                 val manifest = zipFile.getInputStream(manifestEntry).bufferedReader(Charsets.UTF_8).use {
                     assetManager.loadJsonAsset<FirefoxManifestJson>(it.readText())
-                }.getOrElse { return Result.failure(it) }
+                }.getOrThrow()
 
                 if (manifest.dictionaries.isEmpty()) {
-                    return Result.failure(Exception("No dictionary definitions provided!"))
+                    error("No dictionary definitions provided!")
                 }
                 val supportedLocale: FlorisLocale
                 val fileNameBase: String
@@ -203,62 +166,68 @@ class SpellingManager private constructor(
                     fileNameBase = it.value.removeSuffix(".dic")
                 }
 
-                val tempDictDir = File(context.cacheDir, IMPORT_NEW_DICT_TEMP_NAME)
+                val tempDictDir = File(appContext.cacheDir, IMPORT_NEW_DICT_TEMP_NAME)
                 tempDictDir.deleteRecursively()
                 tempDictDir.mkdirs()
                 val entries = zipFile.entries()
-                return SpellingDict.metaBuilder {
-                    version = manifest.version
-                    title = manifest.name
-                    description = manifest.description
-                    authors = manifest.author?.let { listOf(it) }
-                    locale = supportedLocale
-                    originalSourceId = sourceId
-                    while (entries.hasMoreElements()) {
-                        val entry = entries.nextElement()
-                        flogInfo { entry.name }
-                        when (entry.name) {
-                            "$fileNameBase.aff" -> {
-                                val name = entry.name.removePrefix("$FIREFOX_DICTIONARIES_FOLDER/").replace('/', '_')
-                                val aff = File(tempDictDir, name)
-                                aff.outputStream().use { output ->
-                                    zipFile.getInputStream(entry).use { input ->
-                                        input.copyTo(output)
-                                    }
-                                }
-                                affFile = name
-                            }
-                            "$fileNameBase.dic" -> {
-                                val name = entry.name.removePrefix("$FIREFOX_DICTIONARIES_FOLDER/").replace('/', '_')
-                                val dic = File(tempDictDir, name)
-                                dic.outputStream().use { output ->
-                                    zipFile.getInputStream(entry).use { input ->
-                                        input.copyTo(output)
-                                    }
-                                }
-                                dicFile = name
-                            }
-                            else -> {
-                                if (LICENSE_FILE_MATCHER.matches(entry.name)) {
-                                    val license = File(tempDictDir, SpellingDict.LICENSE_FILE_NAME)
-                                    license.outputStream().use { output ->
+                val extensionEditor = SpellingExtensionEditor(
+                    meta = ExtensionMetaEditor(
+                        id = ExtensionMetaDefaults.createIdForImport("spelling"),
+                        version = manifest.version ?: "0.0.0",
+                        title = manifest.name ?: "Imported spelling dict",
+                        description = manifest.description ?: "",
+                        authors = manifest.author?.let { mutableListOf(ExtensionAuthor.fromOrTakeRaw(it).edit()) }
+                            ?: mutableListOf(ExtensionAuthorEditor(name = "Unknown")),
+                        license = "unknown",
+                    ),
+                    workingDir = tempDictDir,
+                    spelling = SpellingExtensionConfigEditor().apply {
+                        locale = supportedLocale.toString()
+                        originalSourceId = sourceId
+                        while (entries.hasMoreElements()) {
+                            val entry = entries.nextElement()
+                            flogInfo { entry.name }
+                            when (entry.name) {
+                                "$fileNameBase.aff" -> {
+                                    val name = entry.name.removePrefix("$FIREFOX_DICTIONARIES_FOLDER/").replace('/', '_')
+                                    val aff = File(tempDictDir, name)
+                                    aff.outputStream().use { output ->
                                         zipFile.getInputStream(entry).use { input ->
                                             input.copyTo(output)
                                         }
                                     }
-                                    licenseFile = SpellingDict.LICENSE_FILE_NAME
+                                    affFile = name
+                                }
+                                "$fileNameBase.dic" -> {
+                                    val name = entry.name.removePrefix("$FIREFOX_DICTIONARIES_FOLDER/").replace('/', '_')
+                                    val dic = File(tempDictDir, name)
+                                    dic.outputStream().use { output ->
+                                        zipFile.getInputStream(entry).use { input ->
+                                            input.copyTo(output)
+                                        }
+                                    }
+                                    dicFile = name
+                                }
+                                else -> {
+                                    if (LICENSE_FILE_MATCHER.matches(entry.name)) {
+                                        val license = File(tempDictDir, SpellingDict.LICENSE_FILE_NAME)
+                                        license.outputStream().use { output ->
+                                            zipFile.getInputStream(entry).use { input ->
+                                                input.copyTo(output)
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                    val meta = build().getOrElse { return@metaBuilder Result.failure(it) }
-                    Result.success(Extension(meta, tempDictDir, File(FlorisRef.internal(config.basePath).subRef("${meta.id}.flex").absolutePath(context))))
-                }
+                )
+                extensionEditor
             }
             "free_office" -> {
-                val tempFile = saveTempFile(archiveUri).getOrElse { return Result.failure(it) }
+                val tempFile = saveTempFile(archiveUri).getOrThrow()
                 val zipFile = ZipFile(tempFile)
-                val dictIniEntry = zipFile.getEntry(FREE_OFFICE_DICT_INI) ?: return Result.failure(Exception("No dict.ini file found"))
+                val dictIniEntry = zipFile.getEntry(FREE_OFFICE_DICT_INI) ?: error("No dict.ini file found")
                 var fileNameBase: String? = null
                 var supportedLocale: FlorisLocale? = null
                 zipFile.getInputStream(dictIniEntry).bufferedReader(Charsets.UTF_8).forEachLine { line ->
@@ -268,66 +237,76 @@ class SpellingManager private constructor(
                         supportedLocale = FlorisLocale.fromTag(line.substring(FREE_OFFICE_DICT_INI_SUPPORTED_LOCALES.length))
                     }
                 }
-                fileNameBase ?: return Result.failure(Exception("No valid file name base found"))
-                supportedLocale ?: return Result.failure(Exception("No valid supported locale found"))
+                fileNameBase ?: error("No valid file name base found")
+                supportedLocale ?: error("No valid supported locale found")
 
-                val tempDictDir = File(context.cacheDir, IMPORT_NEW_DICT_TEMP_NAME)
+                val tempDictDir = File(appContext.cacheDir, IMPORT_NEW_DICT_TEMP_NAME)
                 tempDictDir.deleteRecursively()
                 tempDictDir.mkdirs()
                 val entries = zipFile.entries()
-                return SpellingDict.metaBuilder {
-                    locale = supportedLocale
-                    originalSourceId = sourceId
-                    while (entries.hasMoreElements()) {
-                        val entry = entries.nextElement()
-                        flogInfo { entry.name }
-                        when {
-                            entry.name == "$fileNameBase.aff" -> {
-                                val aff = File(tempDictDir, entry.name)
-                                aff.outputStream().use { output ->
-                                    zipFile.getInputStream(entry).use { input ->
-                                        input.copyTo(output)
+                val extensionEditor = SpellingExtensionEditor(
+                    meta = ExtensionMetaEditor(
+                        id = ExtensionMetaDefaults.createIdForImport("spelling"),
+                        version = "0.0.0",
+                        title = "LibreOffice import",
+                        authors = mutableListOf(ExtensionAuthorEditor(name = "Unknown")),
+                        license = "unknown",
+                    ),
+                    workingDir = tempDictDir,
+                    spelling = SpellingExtensionConfigEditor().apply {
+                        locale = supportedLocale.toString()
+                        originalSourceId = sourceId
+                        while (entries.hasMoreElements()) {
+                            val entry = entries.nextElement()
+                            flogInfo { entry.name }
+                            when {
+                                entry.name == "$fileNameBase.aff" -> {
+                                    val aff = File(tempDictDir, entry.name)
+                                    aff.outputStream().use { output ->
+                                        zipFile.getInputStream(entry).use { input ->
+                                            input.copyTo(output)
+                                        }
                                     }
+                                    affFile = entry.name
                                 }
-                                affFile = entry.name
-                            }
-                            entry.name == "$fileNameBase.dic" -> {
-                                val dic = File(tempDictDir, entry.name)
-                                dic.outputStream().use { output ->
-                                    zipFile.getInputStream(entry).use { input ->
-                                        input.copyTo(output)
+                                entry.name == "$fileNameBase.dic" -> {
+                                    val dic = File(tempDictDir, entry.name)
+                                    dic.outputStream().use { output ->
+                                        zipFile.getInputStream(entry).use { input ->
+                                            input.copyTo(output)
+                                        }
                                     }
+                                    dicFile = entry.name
                                 }
-                                dicFile = entry.name
-                            }
-                            LICENSE_FILE_MATCHER.matches(entry.name) -> {
-                                val license = File(tempDictDir, SpellingDict.LICENSE_FILE_NAME)
-                                license.outputStream().use { output ->
-                                    zipFile.getInputStream(entry).use { input ->
-                                        input.copyTo(output)
+                                LICENSE_FILE_MATCHER.matches(entry.name) -> {
+                                    val license = File(tempDictDir, SpellingDict.LICENSE_FILE_NAME)
+                                    license.outputStream().use { output ->
+                                        zipFile.getInputStream(entry).use { input ->
+                                            input.copyTo(output)
+                                        }
                                     }
+                                    //licenseFile = SpellingDict.LICENSE_FILE_NAME
                                 }
-                                licenseFile = SpellingDict.LICENSE_FILE_NAME
-                            }
-                            entry.name.lowercase().contains("readme") || entry.name.lowercase().contains("description") -> {
-                                val readme = File(tempDictDir, SpellingDict.README_FILE_NAME)
-                                readme.outputStream().use { output ->
-                                    zipFile.getInputStream(entry).use { input ->
-                                        input.copyTo(output)
+                                entry.name.lowercase().contains("readme") || entry.name.lowercase().contains("description") -> {
+                                    val readme = File(tempDictDir, SpellingDict.README_FILE_NAME)
+                                    readme.outputStream().use { output ->
+                                        zipFile.getInputStream(entry).use { input ->
+                                            input.copyTo(output)
+                                        }
                                     }
+                                    //readmeFile = SpellingDict.README_FILE_NAME
                                 }
-                                readmeFile = SpellingDict.README_FILE_NAME
                             }
                         }
                     }
-                    val meta = build().getOrElse { return@metaBuilder Result.failure(it) }
-                    Result.success(Extension(meta, tempDictDir, File(FlorisRef.internal(config.basePath).subRef("${meta.id}.flex").absolutePath(context))))
-                }
+                )
+                extensionEditor
             }
-            else -> Result.failure(NotImplementedError())
+            else -> error("Unsupported source!")
         }
     }
 
+    /*
     fun prepareImportRaw(affUri: Uri, dicUri: Uri, localeStr: String): Result<Extension<SpellingDict.Meta>> {
         val context = applicationContext.get() ?: return Result.failure(Exception("Context is null"))
 
@@ -351,15 +330,14 @@ class SpellingManager private constructor(
             val meta = build().getOrElse { return@metaBuilder Result.failure(it) }
             Result.success(Extension(meta, tempDictDir, File(FlorisRef.internal(config.basePath).subRef("${meta.id}.flex").absolutePath(context))))
         }
-    }
-
-    private fun saveTempFile(uri: Uri): Result<File> {
-        val context = applicationContext.get() ?: return Result.failure(Exception("Context is null"))
-        val tempFile = File(context.cacheDir, IMPORT_ARCHIVE_TEMP_NAME)
-        tempFile.deleteRecursively() // JUst to make sure we clean up old mess
-        ExternalContentUtils.readFromUri(context, uri, IMPORT_ARCHIVE_MAX_SIZE) { bis ->
-            tempFile.outputStream().use { os -> bis.copyTo(os) }
-        }.onFailure { return Result.failure(it) }
-        return Result.success(tempFile)
     }*/
+
+    private fun saveTempFile(uri: Uri) = runCatching<File> {
+        val tempFile = File(appContext.cacheDir, IMPORT_ARCHIVE_TEMP_NAME)
+        tempFile.deleteRecursively() // Just to make sure we clean up old mess
+        ExternalContentUtils.readFromUri(appContext, uri, IMPORT_ARCHIVE_MAX_SIZE) { bis ->
+            tempFile.outputStream().use { os -> bis.copyTo(os) }
+        }.getOrThrow()
+        tempFile
+    }
 }

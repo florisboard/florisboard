@@ -74,17 +74,15 @@ fun SetupScreen() = FlorisScreen(
             !isFlorisBoardSelected -> Step.SelectIme
             else -> Step.FinishUp
         }
-        FlorisStepState.new(initStep)
+        FlorisStepState.new(init = initStep)
     }
 
     SideEffect {
-        stepState.setCurrentAuto(
-            when {
-                !isFlorisBoardEnabled -> Step.EnableIme
-                !isFlorisBoardSelected -> Step.SelectIme
-                else -> Step.FinishUp
-            }
-        )
+        stepState.setCurrentAuto(when {
+            !isFlorisBoardEnabled -> Step.EnableIme
+            !isFlorisBoardSelected -> Step.SelectIme
+            else -> Step.FinishUp
+        })
     }
 
     FlorisStepLayout(

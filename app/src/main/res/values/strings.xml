@@ -344,19 +344,18 @@
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Use user dictionary entries</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Spell checker will look up entries from the user dictionaries, if these are enabled</string>
     <string name="pref__spelling__group_installed_dictionaries__title" comment="Title of Installed dictionaries sub-group">Installed dictionaries</string>
-    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Import new dictionary</string>
-    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Select source</string>
-    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Select language</string>
-    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">Language code (e.g. en_US)</string>
-    <string name="settings__spelling__import_dict_s2__title" comment="Title for the import dict sheet (step 2)">Add files to be imported</string>
-    <string name="settings__spelling__import_dict_s2__select_aff" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Select affix file (.aff)</string>
-    <string name="settings__spelling__import_dict_s2__select_dic" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Select dictionary file (.dic)</string>
-    <string name="settings__spelling__import_dict_s3__title" comment="Title for the import dict sheet (step 3)">Verify import files</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_locale" comment="Text for the verify files dialog (step 3)">Locale: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_original" comment="Text for the verify files dialog (step 3)">Original source: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_any" comment="Text for the verify files dialog (the first %s will be replaced by a file extension, the second by a file name) (step 3)">%s file: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_readme" comment="Text for the verify files dialog (step 3)">Readme file: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_license" comment="Text for the verify files dialog (step 3)">License file: %s</string>
+    <string name="settings__spelling__import__title" comment="Title for the import screen">Import new dictionary</string>
+    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Select source</string>
+    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">Select the source from where you downloaded the third-party extension. This helps in correctly parsing the non-FlorisBoard extension format and converting it into a FlorisBoard one.</string>
+    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Import archive</string>
+    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">Now import the archive by choosing the file in the file picker dialog.</string>
+    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Select language</string>
+    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Language code (e.g. en_US)</string>
+    <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">Import affix/dictionary files</string>
+    <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">Select affix file (.aff)</string>
+    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Select dictionary file (.dic)</string>
+    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Verify import</string>
+    <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">Verify that the below metadata is correct. If something is incorrect, you can switch back to a previous step and re-select the source / re-import the archive.</string>
     <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info sheet">FlorisBoard uses Nuspell as the spell checker engine, which means there is a vast amount of dictionaries available, as Hunspell is used by many other software as well. The list below shows a few hand-selected sources which the import manager supports. Download either the archive file or the dictionary files, then in the import manager choose the correct source (this is important to correctly read the archive format).</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">if this list does not contain dictionaries for your language or dialect, you can also manually search for a Hunspell dictionary and import the \'aff\' and \'dic\' file for this.</string>
 

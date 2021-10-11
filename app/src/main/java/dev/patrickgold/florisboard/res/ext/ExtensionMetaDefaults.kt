@@ -16,14 +16,15 @@
 
 package dev.patrickgold.florisboard.res.ext
 
-import dev.patrickgold.florisboard.BuildConfig
+import dev.patrickgold.florisboard.common.curlyFormat
 
 object ExtensionMetaDefaults {
     const val FILE_EXTENSION = "flex"
     const val NAME = "extension.json"
-    const val ID = "${BuildConfig.APPLICATION_ID}.imported.%s.%s"
+    const val ID = "local.imported.{groupName}.{extensionName}"
 
-    fun createIdForImport(groupName: String, extensionName: String): String {
-        return String.format(ID, groupName, extensionName)
-    }
+    fun createIdForImport(
+        groupName: String,
+        extensionName: String = System.currentTimeMillis().toString(),
+    ) = ID.curlyFormat("groupName" to groupName, "extensionName" to extensionName)
 }

@@ -53,7 +53,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
 data class FlorisStep(
@@ -71,11 +73,13 @@ class FlorisStepLayoutScope(
     fun StepText(
         text: String,
         modifier: Modifier = Modifier,
+        fontStyle: FontStyle = FontStyle.Normal,
     ) {
         Text(
             modifier = modifier,
             text = text,
             textAlign = TextAlign.Justify,
+            fontStyle = fontStyle,
         )
     }
 
@@ -187,16 +191,17 @@ private fun ColumnScope.Step(
         currentStepId -> primaryColor
         else -> MaterialTheme.colors.onSurface.copy(alpha = 0.12f)
     }
+    val contentVisible = ownStepId == currentStepId
     StepHeader(
         modifier = when {
-            ownStepId <= autoStepId -> Modifier.clickable { stepState.setCurrentManual(ownStepId) }
+            ownStepId <= autoStepId -> Modifier
+                .clickable(enabled = !contentVisible) { stepState.setCurrentManual(ownStepId) }
             else -> Modifier.alpha(ContentAlpha.disabled)
         },
         backgroundColor = backgroundColor,
         step = ownStepId,
         title = title,
     )
-    val contentVisible = ownStepId == currentStepId
     val animSpec = spring<Float>(stiffness = Spring.StiffnessMedium)
     val weight by animateFloatAsState(
         targetValue = if (contentVisible) 1.0f else 0.00001f,
@@ -253,8 +258,10 @@ private fun StepHeader(
                 .background(backgroundColor),
         ) {
             Text(
-                modifier = Modifier.align(Alignment.Center),
+                modifier = Modifier.align(Alignment.Center).padding(horizontal = 16.dp),
                 text = title,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
                 color = contentColor,
             )
         }

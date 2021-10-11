@@ -33,9 +33,9 @@ import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
+import dev.patrickgold.florisboard.ime.spelling.SpellingService
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.res.AssetManager
-import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ext.ExtensionManager
 import dev.patrickgold.florisboard.util.AndroidVersion
 import dev.patrickgold.jetpref.datastore.JetPrefApplication
@@ -57,8 +57,12 @@ class FlorisApplication : JetPrefApplication() {
         }
     }
 
-    lateinit var assetManager: AssetManager
-    lateinit var extensionManager: ExtensionManager
+    val prefs by florisPreferenceModel()
+
+    val assetManager by lazy { AssetManager(this) }
+    val extensionManager by lazy { ExtensionManager(this) }
+    val spellingManager by lazy { SpellingManager(this) }
+    val spellingService by lazy { SpellingService(this) }
 
     override fun onCreate() {
         super.onCreate()
@@ -73,12 +77,7 @@ class FlorisApplication : JetPrefApplication() {
             initICU()
             CrashUtility.install(this)
 
-            assetManager = AssetManager(this)
-            extensionManager = ExtensionManager(this)
-
-            val prefs by florisPreferenceModel()
             Preferences.initDefault(this)
-            SpellingManager.init(this, FlorisRef.assets("ime/spelling/config.json"))
             SubtypeManager.init(this)
             DictionaryManager.init(this)
             ThemeManager.init(this, assetManager)
@@ -140,15 +139,22 @@ private fun Context.florisApplication(): FlorisApplication {
     }
 }
 
-fun Context.appContext(): Lazy<Context> = lazy {
+fun Context.appContext() = lazy {
     this.florisApplication()
 }
 
-fun Context.assetManager(): Lazy<AssetManager> = lazy {
+fun Context.assetManager() = lazy {
     this.florisApplication().assetManager
 }
 
-fun Context.extensionManager(): Lazy<ExtensionManager> = lazy {
+fun Context.extensionManager() = lazy {
     this.florisApplication().extensionManager
 }
 
+fun Context.spellingManager() = lazy {
+    this.florisApplication().spellingManager
+}
+
+fun Context.spellingService() = lazy {
+    this.florisApplication().spellingService
+}

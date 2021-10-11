@@ -48,13 +48,15 @@ data class SpellingExtension(
 
     override fun edit() = SpellingExtensionEditor(
         meta.edit(),
+        workingDir,
         spelling.edit(),
     )
 }
 
-internal data class SpellingExtensionEditor(
+data class SpellingExtensionEditor(
     override val meta: ExtensionMetaEditor,
-    val spelling: SpellingExtensionConfigEditor
+    override var workingDir: File?,
+    val spelling: SpellingExtensionConfigEditor,
 ) : ExtensionEditor {
     fun build() = runCatching {
         SpellingExtension(
@@ -73,16 +75,16 @@ data class SpellingExtensionConfig(
     val affFile: String,
     val dicFile: String,
 ) {
-    internal fun edit() = SpellingExtensionConfigEditor(
+    fun edit() = SpellingExtensionConfigEditor(
         locale.toString(), originalSourceId ?: "", affFile, dicFile
     )
 }
 
-internal data class SpellingExtensionConfigEditor(
-    var locale: String,
-    var originalSourceId: String,
-    var affFile: String,
-    var dicFile: String,
+data class SpellingExtensionConfigEditor(
+    var locale: String = "",
+    var originalSourceId: String = "",
+    var affFile: String = "",
+    var dicFile: String = "",
 ) {
     fun build() = runCatching {
         val config = SpellingExtensionConfig(

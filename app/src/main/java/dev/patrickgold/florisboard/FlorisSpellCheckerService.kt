@@ -35,7 +35,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
     }
 
     private val dictionaryManager get() = DictionaryManager.default()
-    private val spellingService: SpellingService = SpellingService.globalInstance()
+    private val spellingService by spellingService()
     private val subtypeManager get() = SubtypeManager.default()
 
     override fun onCreate() {

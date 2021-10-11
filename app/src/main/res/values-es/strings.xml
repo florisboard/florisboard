@@ -302,19 +302,6 @@
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">El corrector ortográfico usará los nombres de su lista de contactos</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Utilizar entradas del diccionario de usuario</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">El corrector ortográfico buscará entradas de los diccionarios de usuario, si éstas están habilitadas</string>
-    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Importar nuevo diccionario</string>
-    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Seleccionar origen</string>
-    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Seleccione idioma</string>
-    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">Código de idioma (ej. es_ES)</string>
-    <string name="settings__spelling__import_dict_s2__title" comment="Title for the import dict sheet (step 2)">Añadir archivos a importar</string>
-    <string name="settings__spelling__import_dict_s2__select_aff" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Seleccione archivo affix (.aff)</string>
-    <string name="settings__spelling__import_dict_s2__select_dic" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Seleccione archivo de diccionario (.dic)</string>
-    <string name="settings__spelling__import_dict_s3__title" comment="Title for the import dict sheet (step 3)">Verificar archivos importados</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_locale" comment="Text for the verify files dialog (step 3)">Configuración regional: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_original" comment="Text for the verify files dialog (step 3)">Fuente original: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_any" comment="Text for the verify files dialog (the first %s will be replaced by a file extension, the second by a file name) (step 3)">%s archivo: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_readme" comment="Text for the verify files dialog (step 3)">Archivo Léeme: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_license" comment="Text for the verify files dialog (step 3)">Archivo de licencia: %s</string>
     <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info sheet">Florisboard utiliza Nuspell como motor de correción ortográfica, lo cual implica que haya una vasta cantidad de diccionarios disponibles, de la misma manera en que Hunspell es usado por muchas otras aplicaciones también. La lista de abajo muestra algunas fuentes seleccionadas que el gestor de importaciones acepta. Descargue el archivo o los diccionarios, y luego escoja la fuente correcta (esto es importante para leer el formato de archivo correctamente).</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">si esta lista no contiene diccionarios para su lengua o dialecto, también puede buscar manualmente un diccionario en Hunspell e importar los archivos \"aff\" y \"dic\" para esto.</string>
     <!-- About UI strings -->

@@ -38,8 +38,8 @@ import java.io.File
 @Polymorphic
 @Serializable
 abstract class Extension {
-    @Transient private var workingDir: FlorisRef? = null
-    @Transient private var sourceRef: FlorisRef? = null
+    @Transient var workingDir: File? = null
+    @Transient var sourceRef: FlorisRef? = null
 
     abstract val meta: ExtensionMeta
     abstract val dependencies: List<String>?
@@ -101,9 +101,10 @@ abstract class Extension {
         return null
     }
 
-    internal abstract fun edit(): ExtensionEditor
+    abstract fun edit(): ExtensionEditor
 }
 
-internal interface ExtensionEditor {
+interface ExtensionEditor {
     val meta: ExtensionMetaEditor
+    val workingDir: File?
 }

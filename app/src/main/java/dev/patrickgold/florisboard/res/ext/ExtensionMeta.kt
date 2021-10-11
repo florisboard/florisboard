@@ -95,13 +95,13 @@ data class ExtensionMeta(
      */
     val license: String,
 ) {
-    internal fun edit() = ExtensionMetaEditor(
+    fun edit() = ExtensionMetaEditor(
         id, version, title, description ?: "", keywords?.toMutableList() ?: mutableListOf(),
         homepage ?: "", issueTracker ?: "", authors.map { it.edit() }.toMutableList(), license
     )
 }
 
-internal data class ExtensionMetaEditor(
+data class ExtensionMetaEditor(
     var id: String = "",
     var version: String = "",
     var title: String = "",

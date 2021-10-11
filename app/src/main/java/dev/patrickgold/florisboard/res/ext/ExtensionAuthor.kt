@@ -59,7 +59,7 @@ data class ExtensionAuthor(
         }
     }
 
-    internal fun edit() = ExtensionAuthorEditor(name, email ?: "", url ?: "")
+    fun edit() = ExtensionAuthorEditor(name, email ?: "", url ?: "")
 
     override fun toString() = stringBuilder {
         append(name)
@@ -72,7 +72,7 @@ data class ExtensionAuthor(
     }
 }
 
-internal data class ExtensionAuthorEditor(
+data class ExtensionAuthorEditor(
     var name: String = "",
     var email: String = "",
     var url: String = "",

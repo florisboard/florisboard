@@ -17,10 +17,6 @@
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Keine gesetzt</string>
     <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">Prüfe in den Systemeinstellungen</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NICHT IMPLEMENTIERT] Nutze Namen von Kontakten</string>
-    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Neues Wörterbuch importieren</string>
-    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Quelle auswählen</string>
-    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Sprachauswahl</string>
-    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">Sprachcode (e.g. de_DE)</string>
     <!-- About UI strings -->
     <!-- Assets strings -->
     <string name="assets__action__no">Ne</string>

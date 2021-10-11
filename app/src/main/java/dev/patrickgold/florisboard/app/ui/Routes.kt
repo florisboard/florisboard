@@ -31,6 +31,7 @@ import dev.patrickgold.florisboard.app.ui.settings.clipboard.ClipboardScreen
 import dev.patrickgold.florisboard.app.ui.settings.gestures.GesturesScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.InputFeedbackScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.KeyboardScreen
+import dev.patrickgold.florisboard.app.ui.settings.spelling.ImportSpellingArchiveScreen
 import dev.patrickgold.florisboard.app.ui.settings.spelling.SpellingScreen
 import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeScreen
 import dev.patrickgold.florisboard.app.ui.setup.SetupScreen
@@ -47,7 +48,8 @@ object Routes {
         const val InputFeedback = "settings/keyboard/input-feedback"
 
         const val Spelling = "settings/spelling"
-        const val SpellingImport = "settings/spelling/import"
+        const val ImportSpellingArchive = "settings/spelling/import-archive"
+        const val ImportSpellingAffDic = "settings/spelling/import-aff-dic"
 
         const val Gestures = "settings/gestures"
 
@@ -88,7 +90,7 @@ object Routes {
             composable(Settings.InputFeedback) { InputFeedbackScreen() }
 
             composable(Settings.Spelling) { SpellingScreen() }
-            composable(Settings.SpellingImport) { SpellingScreen() }
+            composable(Settings.ImportSpellingArchive) { ImportSpellingArchiveScreen() }
 
             composable(Settings.Gestures) { GesturesScreen() }
 
