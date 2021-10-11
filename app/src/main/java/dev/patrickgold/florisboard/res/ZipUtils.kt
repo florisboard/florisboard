@@ -18,67 +18,72 @@ package dev.patrickgold.florisboard.res
 
 import android.content.Context
 import dev.patrickgold.florisboard.assetManager
-import dev.patrickgold.florisboard.common.resultErr
-import dev.patrickgold.florisboard.common.resultErrStr
-import dev.patrickgold.florisboard.common.resultOk
 import java.io.File
+import java.io.FileOutputStream
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
+import java.util.zip.ZipOutputStream
 
 object ZipUtils {
-    fun readFileFromArchive(context: Context, zipRef: FlorisRef, relPath: String): Result<String> {
+    fun readFileFromArchive(context: Context, zipRef: FlorisRef, relPath: String) = runCatching<String> {
         val assetManager by context.assetManager()
-        return when {
+        when {
             zipRef.isAssets -> {
-                assetManager.loadTextAsset(zipRef.subRef(relPath))
+                assetManager.loadTextAsset(zipRef.subRef(relPath)).getOrThrow()
             }
             zipRef.isCache || zipRef.isInternal -> {
                 val flexHandle = File(zipRef.absolutePath(context))
-                if (!flexHandle.isFile) return resultErrStr("Given ref $zipRef is not a file!")
-                try {
-                    val flexFile = ZipFile(flexHandle)
-                    val flexEntries = flexFile.entries()
-                    var fileContents: String? = null
-                    while (flexEntries.hasMoreElements()) {
-                        val flexEntry = flexEntries.nextElement()
-                        if (flexEntry.name == relPath) {
-                            fileContents = flexFile.getInputStream(flexEntry).bufferedReader().use { it.readText() }
-                            break
+                check(flexHandle.isFile) { "Given ref $zipRef is not a file!" }
+                var fileContents: String? = null
+                ZipFile(flexHandle).use { flexFile ->
+                    flexFile.getEntry(relPath)?.let { flexEntry ->
+                        fileContents = flexFile.getInputStream(flexEntry).bufferedReader().use { it.readText() }
+                    }
+                }
+                fileContents ?: error("Failed to load requested file $relPath")
+            }
+            else -> error("Unsupported source!")
+        }
+    }
+
+    fun zip(context: Context, srcRef: FlorisRef, dstRef: FlorisRef) =
+        zip(context, File(srcRef.absolutePath(context)), dstRef)
+
+    fun zip(context: Context, srcDir: File, dstRef: FlorisRef) = runCatching {
+        check(srcDir.exists() && srcDir.isDirectory) { "Cannot zip standalone file." }
+        when {
+            dstRef.isCache || dstRef.isInternal -> {
+                val flexFile = File(dstRef.absolutePath(context))
+                flexFile.delete()
+                flexFile.parentFile?.mkdirs()
+                FileOutputStream(flexFile).use { fileOut ->
+                    ZipOutputStream(fileOut).use { zipOut ->
+                        for (file in srcDir.listFiles() ?: arrayOf()) {
+                            zipOut.putNextEntry(ZipEntry(file.name))
+                            file.inputStream().use { it.copyTo(zipOut) }
+                            zipOut.closeEntry()
                         }
                     }
-                    flexFile.close()
-                    if (fileContents == null) {
-                        resultErrStr("Failed to load requested file $relPath")
-                    } else {
-                        resultOk(fileContents)
-                    }
-                } catch (e: Exception) {
-                    resultErr(e)
                 }
             }
-            else -> resultErrStr("Unsupported source!")
+            else -> error("Unsupported destination!")
         }
     }
 
-    fun unzip(context: Context, srcRef: FlorisRef, dstRef: FlorisRef): Result<Unit> {
-        return unzip(context, srcRef, File(dstRef.absolutePath(context)))
-    }
+    fun unzip(context: Context, srcRef: FlorisRef, dstRef: FlorisRef) =
+        unzip(context, srcRef, File(dstRef.absolutePath(context)))
 
-    fun unzip(context: Context, srcRef: FlorisRef, dstDir: File): Result<Unit> {
-        if (dstDir.exists() && dstDir.isFile) {
-            return resultErrStr("Cannot unzip into file.")
-        } else {
-            dstDir.mkdirs()
-        }
-        return when {
+    fun unzip(context: Context, srcRef: FlorisRef, dstDir: File) = runCatching {
+        check(dstDir.exists() && dstDir.isDirectory) { "Cannot unzip into file." }
+        dstDir.mkdirs()
+        when {
             srcRef.isAssets -> {
-                FileUtils.copy(context, srcRef, dstDir)
+                FileUtils.copy(context, srcRef, dstDir).getOrThrow()
             }
             srcRef.isCache || srcRef.isInternal -> {
                 val flexHandle = File(srcRef.absolutePath(context))
-                if (!flexHandle.isFile) return resultErrStr("Given ref $srcRef is not a file!")
-                try {
-                    val flexFile = ZipFile(flexHandle)
+                check(flexHandle.isFile) { "Given ref $srcRef is not a file!" }
+                ZipFile(flexHandle).use { flexFile ->
                     val flexEntries = flexFile.entries()
                     while (flexEntries.hasMoreElements()) {
                         val flexEntry = flexEntries.nextElement()
@@ -89,13 +94,9 @@ object ZipUtils {
                             flexFile.copy(flexEntry, tempFile)
                         }
                     }
-                    flexFile.close()
-                    resultOk()
-                } catch (e: Exception) {
-                    resultErr(e)
                 }
             }
-            else -> resultErrStr("Unsupported source!")
+            else -> error("Unsupported source!")
         }
     }
 
