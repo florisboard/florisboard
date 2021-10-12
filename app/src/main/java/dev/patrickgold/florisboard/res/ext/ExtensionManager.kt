@@ -17,10 +17,12 @@
 package dev.patrickgold.florisboard.res.ext
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
+import android.os.FileObserver
+import androidx.lifecycle.LiveData
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.debug.LogTopic
+import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
@@ -29,6 +31,8 @@ import dev.patrickgold.florisboard.res.ZipUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import java.io.File
@@ -41,10 +45,15 @@ class ExtensionManager(context: Context) {
 
     private val appContext by context.appContext()
     private val assetManager by context.assetManager()
-
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
+    val spellingDicts = ExtensionIndex(SpellingExtension.serializer(), IME_SPELLING_PATH)
+    val themes = ExtensionIndex(ThemeExtension.serializer(), IME_THEME_PATH)
+
+    @OptIn(ExperimentalSerializationApi::class)
     private val jsonConfig = assetManager.jsonConfig {
+        prettyPrint = true
+        prettyPrintIndent = "  "
         serializersModule = SerializersModule {
             polymorphic(Extension::class) {
                 subclass(SpellingExtension::class, SpellingExtension.serializer())
@@ -53,63 +62,122 @@ class ExtensionManager(context: Context) {
         }
     }
 
-    val index = Index()
-
-    init { indexExtensions() }
-
-    private fun indexExtensions() = ioScope.launch {
-        index.spellingDicts.postValue(listExtensions(IME_SPELLING_PATH))
-        index.themes.postValue(listExtensions(IME_THEME_PATH))
-    }
-
-    private inline fun <reified T : Extension> listExtensions(path: String): List<T> {
-        val retList = mutableListOf<T>()
-        assetManager.listDirs(FlorisRef.assets(path)).onSuccess { extRefs ->
-            for (extRef in extRefs) {
-                val fileRef = extRef.subRef(ExtensionMetaDefaults.NAME)
-                val assetResult = assetManager.loadJsonAsset<T>(fileRef, jsonConfig)
-                assetResult.onSuccess { asset ->
-                    retList.add(asset)
-                }.onFailure { error ->
-                    flogError(LogTopic.ASSET_MANAGER) { error.toString() }
-                }
-            }
+    fun import(ext: Extension) = runCatching {
+        val extFileName = ExtensionMetaDefaults.createFlexName(ext.meta.id)
+        val relGroupPath = when (ext) {
+            is SpellingExtension -> "ime/spelling"
+            is ThemeExtension -> "ime/theme"
+            else -> error("Unknown extension type")
         }
-        assetManager.listFiles(FlorisRef.internal(path)).onSuccess { extRefs ->
-            for (extRef in extRefs) {
-                val fileRef = File(extRef.absolutePath(appContext))
-                if (!fileRef.name.endsWith(ExtensionMetaDefaults.FILE_EXTENSION)) {
-                    continue
-                }
-                val fileContents = ZipUtils.readFileFromArchive(appContext, extRef, ExtensionMetaDefaults.NAME)
-                fileContents.onSuccess { metaStr ->
-                    val assetResult = assetManager.loadJsonAsset<T>(metaStr, jsonConfig)
-                    assetResult.onSuccess { asset ->
-                        retList.add(asset)
-                    }.onFailure { error ->
-                        flogError(LogTopic.ASSET_MANAGER) { error.toString() }
-                    }
-                }
-            }
-        }
-        return retList
+        ext.sourceRef = FlorisRef.internal(relGroupPath).subRef(extFileName)
+        assetManager.writeJsonAsset(File(ext.workingDir!!, ExtensionMetaDefaults.NAME), ext, jsonConfig).getOrThrow()
+        writeExtension(ext).getOrThrow()
+        ext.unload(appContext)
+        ext.workingDir = null
     }
 
-    fun import(ext: Extension) {
-
-    }
-
-    fun writeExtension(ext: Extension) = runCatching {
+    private fun writeExtension(ext: Extension) = runCatching {
+        val workingDir = ext.workingDir ?: error("No working dir specified")
+        val sourceRef = ext.sourceRef ?: error("No source ref specified")
+        ZipUtils.zip(appContext, workingDir, sourceRef).getOrThrow()
     }
 
     fun getExtensionById(id: String): Extension? {
-        index.spellingDicts.value?.find { it.meta.id == id }?.let { return it }
-        index.themes.value?.find { it.meta.id == id }?.let { return it }
+        spellingDicts.value?.find { it.meta.id == id }?.let { return it }
+        themes.value?.find { it.meta.id == id }?.let { return it }
         return null
     }
 
-    inner class Index {
-        val spellingDicts = MutableLiveData<List<SpellingExtension>>()
-        val themes = MutableLiveData<List<ThemeExtension>>()
+    inner class ExtensionIndex<T : Extension>(
+        private val serializer: KSerializer<T>,
+        modulePath: String,
+    ) : LiveData<List<T>>() {
+
+        private val assetsModuleRef = FlorisRef.assets(modulePath)
+        private val internalModuleRef = FlorisRef.internal(modulePath)
+        private val internalModuleDir = internalModuleRef.absoluteFile(appContext)
+
+        private var staticExtensions = listOf<T>()
+        private val fileObserver = object : FileObserver(
+            internalModuleDir, CLOSE_WRITE or DELETE or MOVED_FROM or MOVED_TO,
+        ) {
+            override fun onEvent(event: Int, path: String?) {
+                flogDebug(LogTopic.EXT_INDEXING) { "FileObserver.onEvent { event=$event path=$path }" }
+                if (path == null) return
+                ioScope.launch {
+                    refresh()
+                }
+            }
+        }
+
+        init {
+            ioScope.launch {
+                internalModuleDir.mkdirs()
+                staticExtensions = indexAssetsModule()
+                refresh()
+                fileObserver.startWatching()
+            }
+        }
+
+        private fun refresh() {
+            val dynamicExtensions = staticExtensions + indexInternalModule()
+            postValue(dynamicExtensions)
+        }
+
+        private fun indexAssetsModule(): List<T> {
+            val list = mutableListOf<T>()
+            assetManager.listDirs(assetsModuleRef).fold(
+                onSuccess = { extRefs ->
+                    for (extRef in extRefs) {
+                        val fileRef = extRef.subRef(ExtensionMetaDefaults.NAME)
+                        assetManager.loadJsonAsset(fileRef, serializer, jsonConfig).fold(
+                            onSuccess = { ext ->
+                                list.add(ext)
+                            },
+                            onFailure = { error ->
+                                flogError { error.toString() }
+                            },
+                        )
+                    }
+                },
+                onFailure = { error ->
+                    flogError { error.toString() }
+                },
+            )
+            return list.toList()
+        }
+
+        private fun indexInternalModule(): List<T> {
+            val list = mutableListOf<T>()
+            assetManager.listFiles(internalModuleRef).fold(
+                onSuccess = { extRefs ->
+                    for (extRef in extRefs) {
+                        val fileRef = extRef.absoluteFile(appContext)
+                        if (!fileRef.name.endsWith(ExtensionMetaDefaults.FILE_EXTENSION)) {
+                            continue
+                        }
+                        ZipUtils.readFileFromArchive(appContext, extRef, ExtensionMetaDefaults.NAME).fold(
+                            onSuccess = { metaStr ->
+                                assetManager.loadJsonAsset(metaStr, serializer, jsonConfig).fold(
+                                    onSuccess = { ext ->
+                                        list.add(ext)
+                                    },
+                                    onFailure = { error ->
+                                        flogError { error.toString() }
+                                    },
+                                )
+                            },
+                            onFailure = { error ->
+                                flogError { error.toString() }
+                            },
+                        )
+                    }
+                },
+                onFailure = { error ->
+                    flogError { error.toString() }
+                },
+            )
+            return list.toList()
+        }
     }
 }

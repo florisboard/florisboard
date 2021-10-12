@@ -40,6 +40,7 @@ import dev.patrickgold.florisboard.ime.text.composing.WithRules
 import dev.patrickgold.florisboard.ime.text.keyboard.AutoTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.MultiTextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -148,7 +149,7 @@ class AssetManager(context: Context) {
                         assetResult.onSuccess { asset ->
                             retMap[fileRef] = asset
                         }.onFailure { error ->
-                            flogError(LogTopic.ASSET_MANAGER) { error.toString() }
+                            flogError(LogTopic.FILE_IO) { error.toString() }
                         }
                     }
                 }
@@ -165,7 +166,7 @@ class AssetManager(context: Context) {
                                 assetResult.onSuccess { asset ->
                                     retMap[fileRef] = asset
                                 }.onFailure { error ->
-                                    flogError(LogTopic.ASSET_MANAGER) { error.toString() }
+                                    flogError(LogTopic.FILE_IO) { error.toString() }
                                 }
                             }
                         }
@@ -198,7 +199,7 @@ class AssetManager(context: Context) {
                 } ?: listOf()
             }
             ref.isCache || ref.isInternal -> {
-                val dir = File(ref.absolutePath(appContext))
+                val dir = ref.absoluteFile(appContext)
                 if (dir.isDirectory) {
                     when {
                         files && dirs -> dir.listFiles()?.toList()
@@ -221,6 +222,15 @@ class AssetManager(context: Context) {
         )
     }
 
+    fun <T> loadJsonAsset(
+        ref: FlorisRef,
+        serializer: KSerializer<T>,
+        jsonConfig: Json = this.jsonConfig,
+    ) = runCatching<T> {
+        val jsonStr = loadTextAsset(ref).getOrThrow()
+        jsonConfig.decodeFromString(serializer, jsonStr)
+    }
+
     inline fun <reified T> loadJsonAsset(file: File, jsonConfig: Json = this.jsonConfig): Result<T> {
         return readTextFile(file).fold(
             onSuccess = { runCatching { jsonConfig.decodeFromString(it) } },
@@ -237,6 +247,14 @@ class AssetManager(context: Context) {
 
     inline fun <reified T> loadJsonAsset(jsonStr: String, jsonConfig: Json = this.jsonConfig): Result<T> {
         return runCatching { jsonConfig.decodeFromString(jsonStr) }
+    }
+
+    fun <T> loadJsonAsset(
+        jsonStr: String,
+        serializer: KSerializer<T>,
+        jsonConfig: Json = this.jsonConfig,
+    ) = runCatching<T> {
+        jsonConfig.decodeFromString(serializer, jsonStr)
     }
 
     fun loadTextAsset(ref: FlorisRef): Result<String> {

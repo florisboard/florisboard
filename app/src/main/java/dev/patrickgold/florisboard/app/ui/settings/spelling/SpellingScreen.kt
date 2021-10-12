@@ -86,11 +86,11 @@ fun SpellingScreen() = FlorisScreen(
     }
 
     PreferenceGroup(title = stringRes(R.string.pref__spelling__group_installed_dictionaries__title)) {
-        val spellingDicts by extensionManager.index.themes.observeAsState()
+        val spellingDicts by extensionManager.spellingDicts.observeAsState()
         if (spellingDicts != null && spellingDicts!!.isNotEmpty()) {
             ExtensionList(extList = spellingDicts!!)
         } else {
-
+            Preference(title = "no dicts found")
         }
     }
 }

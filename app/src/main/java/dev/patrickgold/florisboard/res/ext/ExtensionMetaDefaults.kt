@@ -27,4 +27,8 @@ object ExtensionMetaDefaults {
         groupName: String,
         extensionName: String = System.currentTimeMillis().toString(),
     ) = ID.curlyFormat("groupName" to groupName, "extensionName" to extensionName)
+
+    fun createFlexName(
+        id: String,
+    ) = "$id.$FILE_EXTENSION"
 }

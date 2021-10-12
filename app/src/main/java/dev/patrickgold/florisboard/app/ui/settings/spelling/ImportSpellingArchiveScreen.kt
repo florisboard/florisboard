@@ -41,6 +41,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisDropdownMenu
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
@@ -65,6 +66,7 @@ fun ImportSpellingArchiveScreen() = FlorisScreen(
     title = stringRes(R.string.settings__spelling__import__title),
     scrollable = false,
 ) {
+    val navController = LocalNavController.current
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
     val spellingManager by context.spellingManager()
@@ -76,6 +78,7 @@ fun ImportSpellingArchiveScreen() = FlorisScreen(
     var importArchiveUri by remember { mutableStateOf<Uri?>(null) }
     var importArchiveEditor by remember { mutableStateOf<SpellingExtensionEditor?>(null) }
     var importArchiveError by remember { mutableStateOf<Throwable?>(null) }
+    var writeExtError by remember { mutableStateOf<Throwable?>(null) }
     var errorDialogVisible by remember { mutableStateOf(false) }
     val importArchiveLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
@@ -90,11 +93,13 @@ fun ImportSpellingArchiveScreen() = FlorisScreen(
                     importArchiveUri = uri
                     importArchiveEditor = it
                     importArchiveError = null
+                    writeExtError = null
                 },
                 onFailure = {
                     importArchiveUri = null
                     importArchiveEditor = null
                     importArchiveError = it
+                    writeExtError = null
                 },
             )
         },
@@ -184,8 +189,24 @@ fun ImportSpellingArchiveScreen() = FlorisScreen(
                     text = "TODO: add verify view",
                     fontStyle = FontStyle.Italic,
                 )
+                if (writeExtError != null) {
+                    ErrorCard(
+                        onActionClick = { errorDialogVisible = true }
+                    )
+                }
                 StepButton(
-                    onClick = { extensionManager.import(importArchiveEditor!!.build().getOrThrow()) },
+                    onClick = {
+                        runCatching {
+                            extensionManager.import(importArchiveEditor!!.build().getOrThrow()).getOrThrow()
+                        }.fold(
+                            onSuccess = {
+                                navController.popBackStack()
+                            },
+                            onFailure = {
+                                writeExtError = it
+                            },
+                        )
+                    },
                     label = stringRes(R.string.assets__action__import),
                 )
             },
@@ -200,6 +221,12 @@ fun ImportSpellingArchiveScreen() = FlorisScreen(
             if (importArchiveError != null) {
                 Text(
                     text = importArchiveError.toString(),
+                    style = MaterialTheme.typography.body2,
+                )
+            }
+            if (writeExtError != null) {
+                Text(
+                    text = writeExtError.toString(),
                     style = MaterialTheme.typography.body2,
                 )
             }

@@ -26,6 +26,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import java.io.File
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -225,6 +226,18 @@ value class FlorisRef private constructor(val uri: Uri) {
     }
 
     /**
+     * Returns the absolute file on the device file storage for this reference,
+     * depending on the [context] and the [scheme].
+     *
+     * @param context The context used to get the absolute file for various directories.
+     *
+     * @return The absolute file of this reference.
+     */
+    fun absoluteFile(context: Context): File {
+        return File(absolutePath(context))
+    }
+
+    /**
      * Returns a new reference pointing to a sub directory(file with given [name].
      *
      * @param name The name of the sub file/directory.
@@ -295,12 +308,4 @@ value class FlorisRef private constructor(val uri: Uri) {
             return from(decoder.decodeString())
         }
     }
-}
-
-@Suppress("NOTHING_TO_INLINE")
-inline fun FlorisRef?.isNotNullAndValid(): Boolean {
-    contract {
-        returns(true) implies (this@isNotNullAndValid != null)
-    }
-    return this != null && this.isValid
 }

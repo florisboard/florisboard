@@ -27,7 +27,9 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import java.io.File
 
-@SerialName("ime.extension.theme")
+private const val SERIAL_TYPE = "ime.extension.theme"
+
+@SerialName(SERIAL_TYPE)
 @Serializable
 data class ThemeExtension(
     override val meta: ExtensionMeta,
@@ -36,6 +38,8 @@ data class ThemeExtension(
 ) : Extension() {
 
     @Transient private var stylesheet: SnyggStylesheet? = null
+
+    override fun serialType() = SERIAL_TYPE
 
     override fun onAfterLoad(context: Context, cacheDir: File) {
         val assetManager by context.assetManager()

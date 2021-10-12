@@ -44,6 +44,8 @@ abstract class Extension {
     abstract val meta: ExtensionMeta
     abstract val dependencies: List<String>?
 
+    abstract fun serialType(): String
+
     open fun onBeforeLoad(context: Context, cacheDir: File) {
         /* Empty */
     }

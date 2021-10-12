@@ -27,7 +27,9 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import java.io.File
 
-@SerialName("ime.extension.spelling")
+private const val SERIAL_TYPE = "ime.extension.spelling"
+
+@SerialName(SERIAL_TYPE)
 @Serializable
 data class SpellingExtension(
     override val meta: ExtensionMeta,
@@ -36,6 +38,8 @@ data class SpellingExtension(
 ) : Extension() {
 
     @Transient var dict: SpellingDict? = null
+
+    override fun serialType() = SERIAL_TYPE
 
     override fun onAfterLoad(context: Context, cacheDir: File) {
         dict = SpellingDict.new(cacheDir.absolutePath, this)
@@ -62,7 +66,9 @@ data class SpellingExtensionEditor(
         SpellingExtension(
             meta = meta.build().getOrThrow(),
             spelling = spelling.build().getOrThrow(),
-        )
+        ).also {
+            it.workingDir = workingDir
+        }
     }
 }
 
@@ -76,7 +82,7 @@ data class SpellingExtensionConfig(
     val dicFile: String,
 ) {
     fun edit() = SpellingExtensionConfigEditor(
-        locale.toString(), originalSourceId ?: "", affFile, dicFile
+        locale.languageTag(), originalSourceId ?: "", affFile, dicFile
     )
 }
 
