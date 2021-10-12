@@ -294,7 +294,6 @@
     <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Dicionário + \'Affix\'</string>
     <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Dicionário ativo</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Nada definido</string>
-    <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">Verifique as definições do sistema</string>
     <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">Ajustes</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NÃO IMPLEMENTADO] Utilizar nome dos contactos</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">A verificação ortográfica irá analisar a sua lista de contactos</string>

@@ -54,6 +54,7 @@ class ExtensionManager(context: Context) {
     private val jsonConfig = assetManager.jsonConfig {
         prettyPrint = true
         prettyPrintIndent = "  "
+        encodeDefaults = false
         serializersModule = SerializersModule {
             polymorphic(Extension::class) {
                 subclass(SpellingExtension::class, SpellingExtension.serializer())
@@ -63,14 +64,14 @@ class ExtensionManager(context: Context) {
     }
 
     fun import(ext: Extension) = runCatching {
-        val extFileName = ExtensionMetaDefaults.createFlexName(ext.meta.id)
+        val extFileName = ExtensionDefaults.createFlexName(ext.meta.id)
         val relGroupPath = when (ext) {
             is SpellingExtension -> "ime/spelling"
             is ThemeExtension -> "ime/theme"
             else -> error("Unknown extension type")
         }
         ext.sourceRef = FlorisRef.internal(relGroupPath).subRef(extFileName)
-        assetManager.writeJsonAsset(File(ext.workingDir!!, ExtensionMetaDefaults.NAME), ext, jsonConfig).getOrThrow()
+        assetManager.writeJsonAsset(File(ext.workingDir!!, ExtensionDefaults.MANIFEST_FILE_NAME), ext, jsonConfig).getOrThrow()
         writeExtension(ext).getOrThrow()
         ext.unload(appContext)
         ext.workingDir = null
@@ -86,6 +87,15 @@ class ExtensionManager(context: Context) {
         spellingDicts.value?.find { it.meta.id == id }?.let { return it }
         themes.value?.find { it.meta.id == id }?.let { return it }
         return null
+    }
+
+    fun canDelete(ext: Extension): Boolean {
+        return ext.sourceRef?.isInternal == true
+    }
+
+    fun delete(ext: Extension) = runCatching {
+        check(canDelete(ext)) { "Cannot delete extension!" }
+        assetManager.delete(ext.sourceRef!!)
     }
 
     inner class ExtensionIndex<T : Extension>(
@@ -129,9 +139,10 @@ class ExtensionManager(context: Context) {
             assetManager.listDirs(assetsModuleRef).fold(
                 onSuccess = { extRefs ->
                     for (extRef in extRefs) {
-                        val fileRef = extRef.subRef(ExtensionMetaDefaults.NAME)
+                        val fileRef = extRef.subRef(ExtensionDefaults.MANIFEST_FILE_NAME)
                         assetManager.loadJsonAsset(fileRef, serializer, jsonConfig).fold(
                             onSuccess = { ext ->
+                                ext.sourceRef = extRef
                                 list.add(ext)
                             },
                             onFailure = { error ->
@@ -153,13 +164,14 @@ class ExtensionManager(context: Context) {
                 onSuccess = { extRefs ->
                     for (extRef in extRefs) {
                         val fileRef = extRef.absoluteFile(appContext)
-                        if (!fileRef.name.endsWith(ExtensionMetaDefaults.FILE_EXTENSION)) {
+                        if (!fileRef.name.endsWith(ExtensionDefaults.FILE_EXTENSION)) {
                             continue
                         }
-                        ZipUtils.readFileFromArchive(appContext, extRef, ExtensionMetaDefaults.NAME).fold(
+                        ZipUtils.readFileFromArchive(appContext, extRef, ExtensionDefaults.MANIFEST_FILE_NAME).fold(
                             onSuccess = { metaStr ->
                                 assetManager.loadJsonAsset(metaStr, serializer, jsonConfig).fold(
                                     onSuccess = { ext ->
+                                        ext.sourceRef = extRef
                                         list.add(ext)
                                     },
                                     onFailure = { error ->

@@ -18,26 +18,20 @@ package dev.patrickgold.florisboard.ime.spelling
 
 import android.content.Context
 import android.net.Uri
-import android.view.textservice.SentenceSuggestionsInfo
-import android.view.textservice.SpellCheckerSession
-import android.view.textservice.SuggestionsInfo
-import android.view.textservice.TextServicesManager
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.debug.flogInfo
-import dev.patrickgold.florisboard.debug.flogWarning
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.res.ExternalContentUtils
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ext.ExtensionAuthor
 import dev.patrickgold.florisboard.res.ext.ExtensionAuthorEditor
-import dev.patrickgold.florisboard.res.ext.ExtensionMetaDefaults
+import dev.patrickgold.florisboard.res.ext.ExtensionDefaults
 import dev.patrickgold.florisboard.res.ext.ExtensionMetaEditor
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.io.File
-import java.util.*
 import java.util.zip.ZipFile
 
 class SpellingManager(context: Context) {
@@ -72,22 +66,10 @@ class SpellingManager(context: Context) {
 
         const val AFF_EXT: String = "aff"
         const val DIC_EXT: String = "dic"
-
-        private val STUB_LISTENER = object : SpellCheckerSession.SpellCheckerSessionListener {
-            override fun onGetSuggestions(results: Array<out SuggestionsInfo>?) {
-                // Intentionally empty
-            }
-
-            override fun onGetSentenceSuggestions(results: Array<out SentenceSuggestionsInfo>?) {
-                // Intentionally empty
-            }
-        }
     }
 
     private val appContext by context.appContext()
     private val extensionManager by context.extensionManager()
-    private val tsm =
-        appContext.getSystemService(Context.TEXT_SERVICES_MANAGER_SERVICE) as? TextServicesManager
 
     private val assetManager by appContext.assetManager()
     private val spellingExtCache: MutableMap<FlorisRef, SpellingExtension> = mutableMapOf()
@@ -104,20 +86,6 @@ class SpellingManager(context: Context) {
         config.importSources.map { it.url }.toMutableList().let {
             it.add(0, "-")
             importSourceUrls = it.toList()
-        }
-    }
-
-    // TODO: rework or remove this
-    fun getCurrentSpellingServiceName(): String? {
-        try {
-            val session = tsm?.newSpellCheckerSession(
-                null, Locale.ENGLISH, STUB_LISTENER, false
-            ) ?: return null
-            val pm = appContext.packageManager
-            return session.spellChecker.loadLabel(pm).toString()
-        } catch (e: Exception) {
-            flogWarning { e.toString() }
-            return null
         }
     }
 
@@ -172,7 +140,7 @@ class SpellingManager(context: Context) {
                 val entries = zipFile.entries()
                 val extensionEditor = SpellingExtensionEditor(
                     meta = ExtensionMetaEditor(
-                        id = ExtensionMetaDefaults.createIdForImport("spelling"),
+                        id = ExtensionDefaults.createIdForImport("spelling"),
                         version = manifest.version ?: "0.0.0",
                         title = manifest.name ?: "Imported spelling dict",
                         description = manifest.description ?: "",
@@ -246,7 +214,7 @@ class SpellingManager(context: Context) {
                 val entries = zipFile.entries()
                 val extensionEditor = SpellingExtensionEditor(
                     meta = ExtensionMetaEditor(
-                        id = ExtensionMetaDefaults.createIdForImport("spelling"),
+                        id = ExtensionDefaults.createIdForImport("spelling"),
                         version = "0.0.0",
                         title = "LibreOffice import",
                         authors = mutableListOf(ExtensionAuthorEditor(name = "Unknown")),

@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionList
 import dev.patrickgold.florisboard.common.launchActivity
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.util.AndroidSettingsSecure
 import dev.patrickgold.jetpref.ui.compose.Preference
 import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
 import dev.patrickgold.jetpref.ui.compose.SwitchPreference
@@ -57,8 +58,24 @@ fun SpellingScreen() = FlorisScreen(
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
 
+    val currentSpellCheckerId by AndroidSettingsSecure.observeAsState("selected_spell_checker")
+    val spellCheckerEnabled by AndroidSettingsSecure.observeAsState("spell_checker_enabled")
     Preference(
         title = stringRes(R.string.pref__spelling__active_spellchecker__label),
+        summary = when {
+            spellCheckerEnabled == "0" -> {
+                stringRes(R.string.pref__spelling__active_spellchecker__summary_disabled)
+            }
+            currentSpellCheckerId == null -> {
+                stringRes(R.string.pref__spelling__active_spellchecker__summary_none)
+            }
+            currentSpellCheckerId!!.startsWith("${context.packageName}/") -> {
+                stringRes(R.string.floris_app_name)
+            }
+            else -> {
+                stringRes(R.string.pref__spelling__active_spellchecker__summary_non_fb_set, "spell_checker_name" to currentSpellCheckerId)
+            }
+        },
         onClick = {
             val componentToLaunch = ComponentName(
                 "com.android.settings",

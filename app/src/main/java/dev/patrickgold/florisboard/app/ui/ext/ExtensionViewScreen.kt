@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material.Button
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -65,6 +66,8 @@ private fun ViewScreen(ext: Extension) = FlorisScreen(
     title = ext.meta.title,
 ) {
     val navController = LocalNavController.current
+    val context = LocalContext.current
+    val extensionManager by context.extensionManager()
 
     Column(
         modifier = Modifier.padding(horizontal = 16.dp),
@@ -118,6 +121,14 @@ private fun ViewScreen(ext: Extension) = FlorisScreen(
             // TODO: display human-readable License name instead of
             //  SPDX identifier
             Text(text = ext.meta.license)
+        }
+        if (extensionManager.canDelete(ext)) {
+            Button(onClick = {
+                extensionManager.delete(ext)
+                navController.popBackStack()
+            }) {
+                Text(text = stringRes(R.string.assets__action__delete))
+            }
         }
     }
 }

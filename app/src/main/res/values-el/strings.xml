@@ -296,7 +296,6 @@
     <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Πρόθυμα + Αρχείο λεξικού</string>
     <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Ενεργός ορθογραφικός έλεγχος</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Κανένα ορισμένο</string>
-    <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">Ελέγχος στις ρυθμίσεις συστήματος</string>
     <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">Μικρό-ρύθμιση</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[ΜΗ ΕΦΑΡΜΟΣΜΈΝΟ] Χρήση ονομάτων από τις επαφές</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Ο ορθογραφικός έλεγχος θα ψάξει ονόματα από τη λίστα επαφών</string>

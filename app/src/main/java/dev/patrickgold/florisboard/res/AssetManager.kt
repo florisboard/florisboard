@@ -94,6 +94,7 @@ class AssetManager(context: Context) {
         this.action()
     }
 
+    @Deprecated(message = "deleteAsset is deprecated in favor of delete")
     fun deleteAsset(ref: FlorisRef): Result<Unit> {
         return when {
             ref.isCache || ref.isInternal -> {
@@ -114,6 +115,15 @@ class AssetManager(context: Context) {
                 }
             }
             else -> resultErrStr("Can not delete an asset in source '${ref.scheme}'.")
+        }
+    }
+
+    fun delete(ref: FlorisRef) = runCatching {
+        when {
+            ref.isCache || ref.isInternal -> {
+                ref.absoluteFile(appContext).delete()
+            }
+            else -> error("Can not delete directory/file in location '${ref.scheme}'.")
         }
     }
 
