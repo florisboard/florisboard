@@ -95,6 +95,7 @@ class ExtensionManager(context: Context) {
 
     fun delete(ext: Extension) = runCatching {
         check(canDelete(ext)) { "Cannot delete extension!" }
+        ext.unload(appContext)
         assetManager.delete(ext.sourceRef!!)
     }
 

@@ -21,6 +21,7 @@ import androidx.annotation.RequiresApi
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
+import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
@@ -375,6 +376,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
 
     val spelling = Spelling()
     inner class Spelling {
+        val languageMode = enum(
+            key = "spelling__language_mode",
+            default = SpellingLanguageMode.USE_KEYBOARD_SUBTYPES,
+        )
         val useContacts = boolean(
             key = "spelling__use_contacts",
             default = true,

@@ -33,7 +33,9 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionList
 import dev.patrickgold.florisboard.common.launchActivity
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
 import dev.patrickgold.florisboard.util.AndroidSettingsSecure
+import dev.patrickgold.jetpref.ui.compose.ListPreference
 import dev.patrickgold.jetpref.ui.compose.Preference
 import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
 import dev.patrickgold.jetpref.ui.compose.SwitchPreference
@@ -55,6 +57,7 @@ fun SpellingScreen() = FlorisScreen(
         }
     },
 ) {
+    val navController = LocalNavController.current
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
 
@@ -88,8 +91,17 @@ fun SpellingScreen() = FlorisScreen(
             }
         },
     )
+    Preference(
+        title = stringRes(R.string.settings__spelling__dict_sources_info),
+        onClick = { navController.navigate(Routes.Settings.SpellingInfo) },
+    )
 
-    PreferenceGroup(title = stringRes(R.string.pref__spelling__group_fine_adjustment__title)) {
+    PreferenceGroup(title = stringRes(R.string.pref__spelling__group_spellchecker_config__title)) {
+        ListPreference(
+            prefs.spelling.languageMode,
+            title = stringRes(R.string.pref__spelling__language_mode__label),
+            entries = SpellingLanguageMode.listEntries(),
+        )
         SwitchPreference(
             prefs.spelling.useContacts,
             title = stringRes(R.string.pref__spelling__use_contacts__label),

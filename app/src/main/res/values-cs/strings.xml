@@ -234,7 +234,6 @@
     <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Zapnout vývojářské nástroje</string>
     <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Nástroje pro debugování a řešení problémů</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Zobrazit statistiky paměťové haldy</string>
-    <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Použít klávesnicové podtypy</string>
     <string name="settings__spelling__dict_sources_info" comment="String for the Dictionary sources info.">Kde najdu slovníky pro kontrolu pravopisu?</string>
     <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Aktivní kontrola pravopisu</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Není nastaveno</string>

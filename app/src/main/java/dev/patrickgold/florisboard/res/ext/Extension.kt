@@ -46,6 +46,8 @@ abstract class Extension {
 
     abstract fun serialType(): String
 
+    fun isLoaded() = workingDir != null
+
     open fun onBeforeLoad(context: Context, cacheDir: File) {
         /* Empty */
     }
@@ -64,10 +66,11 @@ abstract class Extension {
                 cacheDir.deleteRecursively()
             }
         }
+        cacheDir.mkdirs()
         val sourceRef = sourceRef ?: return resultOk()
         onBeforeLoad(context, cacheDir)
-        cacheDir.mkdirs()
         ZipUtils.unzip(context, sourceRef, cacheDir).onFailure { return resultErr(it) }
+        workingDir = cacheDir
         onAfterLoad(context, cacheDir)
         return resultOk()
     }
@@ -81,10 +84,11 @@ abstract class Extension {
     }
 
     fun unload(context: Context) {
-        val cacheDir = File(context.cacheDir, meta.id)
+        val cacheDir = workingDir ?: File(context.cacheDir, meta.id)
         if (!cacheDir.exists()) return
         onBeforeUnload(context, cacheDir)
         cacheDir.deleteRecursively()
+        workingDir = null
         onAfterUnload(context, cacheDir)
     }
 

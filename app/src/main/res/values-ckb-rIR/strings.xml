@@ -288,15 +288,12 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">پیشاندانی زانیاری لەسەر ڕێژەی بیرگەی کاتی بەکارهاتوو</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">لابردنی فەرهەنگی تایبەتی بەکارهێنەر</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">سڕینەوەی ووشە زیادکراوەکانی فەرهەنگی تایبەتی بەکارهێنەر</string>
-    <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">بەکارهێنانی ناوی تەختەکلیل</string>
     <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">لە ئێستادا هیچ فەرهەنگێک بۆ ڕاستکردنەوەی هەڵەی ڕێنووسی دانەبەزێنراوە، بۆ زیادکردنی فەرهەنگ پەنجە بنێ بە دوگمەی \'+\' دا!</string>
-    <string name="settings__spelling__dictionary_index_invalid" comment="String for the Dictionary index invalid error card. %s will be replaced by the app name.">هەڵەیەک ڕوویدا لەکاتی ڕیزکردنی فایلی فەرهەنگەکاندا هەوڵبدە %s دووبارە ئیش پێ بکەیتەوە.</string>
     <string name="settings__spelling__dict_sources_info" comment="String for the Dictionary sources info.">لەکوێوە فەرهەنگی پشکنینی ڕاستکردنەوەی هەڵەی ڕێنووس بەدەست بێنم؟</string>
     <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">زیادکراو / ئەرشیف</string>
     <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">فایلی Affix + فەرهەنگ</string>
     <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">ڕاستکردنەوەی هەڵەی ڕێنووس</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">هەڵنەبژێردراوە</string>
-    <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">ڕێکخستنی دیاریکردن</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[بەردەست‌نیە] پێشنیارکردنی ناوەکان</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">پێشنیارکردنی لیستی ناوەکان لەکاتی نووسیندا</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">زیادکراوەکانی فەرهەنگی تایبەت</string>

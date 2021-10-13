@@ -21,6 +21,8 @@ import android.net.Uri
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.common.FlorisLocale
+import dev.patrickgold.florisboard.debug.flogDebug
+import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.res.ExternalContentUtils
@@ -72,7 +74,6 @@ class SpellingManager(context: Context) {
     private val extensionManager by context.extensionManager()
 
     private val assetManager by appContext.assetManager()
-    private val spellingExtCache: MutableMap<FlorisRef, SpellingExtension> = mutableMapOf()
 
     val config = assetManager.loadJsonAsset<SpellingConfig>(FlorisRef.assets("ime/spelling/config.json")).getOrDefault(SpellingConfig.default())
     val importSourceLabels: List<String>
@@ -91,27 +92,17 @@ class SpellingManager(context: Context) {
 
     @Synchronized
     fun getSpellingDict(locale: FlorisLocale): SpellingDict? {
-        /*val entry = indexedSpellingDictMetas.firstNotNullOfOrNull {
-            if (it.value.locale.localeTag() == locale.localeTag()) it else null
-        } ?: indexedSpellingDictMetas.firstNotNullOfOrNull {
-            if (it.value.locale.language == locale.language) it else null
+        flogDebug { locale.toString() }
+        val dicts = extensionManager.spellingDicts.value ?: return null
+        val ext = dicts.firstNotNullOfOrNull {
+            if (it.spelling.locale.localeTag() == locale.localeTag()) it else null
+        } ?: dicts.firstNotNullOfOrNull {
+            if (it.spelling.locale.language == locale.language) it else null
         } ?: return null
-        val ref = entry.key
-        val cachedExt = spellingExtCache[ref]
-        if (cachedExt != null) {
-            return cachedExt.dict
+        if (!ext.isLoaded()) {
+            ext.load(appContext).onFailure { flogError { it.toString() } }
         }
-        return assetManager.loadExtension(ref) { c: SpellingDict.Meta, w, f -> SpellingExtension(c, w, f) }.fold(
-            onSuccess = {
-                spellingExtCache[ref] = it
-                it.dict
-            },
-            onFailure = {
-                flogError { it.toString() }
-                return null
-            }
-        )*/
-        return null
+        return ext.dict
     }
 
     fun prepareImport(sourceId: String, archiveUri: Uri) = runCatching<SpellingExtensionEditor> {
@@ -150,7 +141,7 @@ class SpellingManager(context: Context) {
                     ),
                     workingDir = tempDictDir,
                     spelling = SpellingExtensionConfigEditor().apply {
-                        locale = supportedLocale.toString()
+                        locale = supportedLocale.languageTag()
                         originalSourceId = sourceId
                         while (entries.hasMoreElements()) {
                             val entry = entries.nextElement()
@@ -190,6 +181,7 @@ class SpellingManager(context: Context) {
                         }
                     }
                 )
+                tempFile.delete()
                 extensionEditor
             }
             "free_office" -> {
@@ -222,7 +214,7 @@ class SpellingManager(context: Context) {
                     ),
                     workingDir = tempDictDir,
                     spelling = SpellingExtensionConfigEditor().apply {
-                        locale = supportedLocale.toString()
+                        locale = supportedLocale!!.languageTag()
                         originalSourceId = sourceId
                         while (entries.hasMoreElements()) {
                             val entry = entries.nextElement()
@@ -268,6 +260,7 @@ class SpellingManager(context: Context) {
                         }
                     }
                 )
+                tempFile.delete()
                 extensionEditor
             }
             else -> error("Unsupported source!")
