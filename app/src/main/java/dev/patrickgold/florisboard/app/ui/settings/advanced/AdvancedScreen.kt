@@ -22,8 +22,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppTheme
+import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.app.ui.res.stringRes
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
@@ -35,6 +35,10 @@ import dev.patrickgold.jetpref.ui.compose.Preference
 import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
 import dev.patrickgold.jetpref.ui.compose.SwitchPreference
 import dev.patrickgold.jetpref.ui.compose.entry
+
+class DebugOnPurposeCrashException : Exception(
+    "Success! The app crashed purposely to display this beautiful screen we all love :)"
+)
 
 @Composable
 fun AdvancedScreen() = FlorisScreen(title = stringRes(R.string.settings__advanced__title)) {
@@ -160,6 +164,12 @@ fun AdvancedScreen() = FlorisScreen(title = stringRes(R.string.settings__advance
             title = stringRes(R.string.pref__devtools__reset_flag__label, "flag_name" to "isImeSetUp"),
             summary = stringRes(R.string.pref__devtools__reset_flag_is_ime_set_up__summary),
             onClick = { prefs.internal.isImeSetUp.set(false) },
+            enabledIf = { prefs.devtools.enabled isEqualTo true },
+        )
+        Preference(
+            title = stringRes(R.string.pref__devtools__test_crash_report__label),
+            summary = stringRes(R.string.pref__devtools__test_crash_report__summary),
+            onClick = { throw DebugOnPurposeCrashException() },
             enabledIf = { prefs.devtools.enabled isEqualTo true },
         )
     }

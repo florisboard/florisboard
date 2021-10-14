@@ -22,6 +22,7 @@ import androidx.core.text.isDigitsOnly
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.databinding.FlorisboardBinding
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
@@ -57,7 +58,6 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardIconSet
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
-import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.FlorisRef
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -85,7 +85,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private val florisboard get() = FlorisBoard.getInstance()
     private val oldPrefs get() = Preferences.default()
     private val prefs by florisPreferenceModel()
-    val symbolsWithSpaceAfter: List<String>
+    var symbolsWithSpaceAfter: List<String> = listOf()
     private val activeEditorInstance: EditorInstance
         get() = florisboard.activeEditorInstance
 
@@ -132,10 +132,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     init {
         florisboard.addEventListener(this)
-        val data =
-            AssetManager.default().loadTextAsset(FlorisRef.assets("ime/text/symbols-with-space.json")).getOrThrow()
-        val json = JSONArray(data)
-        this.symbolsWithSpaceAfter = List(json.length()){ json.getString(it) }
     }
 
     val evaluator = object : ComputingEvaluator {
@@ -239,7 +235,11 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     override fun onCreate() {
         flogInfo(LogTopic.IMS_EVENTS)
 
-        layoutManager = LayoutManager()
+        val data =
+            florisboard.assetManager().value.loadTextAsset(FlorisRef.assets("ime/text/symbols-with-space.json")).getOrThrow()
+        val json = JSONArray(data)
+        this.symbolsWithSpaceAfter = List(json.length()){ json.getString(it) }
+        layoutManager = LayoutManager(florisboard)
         textKeyboardIconSet = TextKeyboardIconSet.new(florisboard)
         inputEventDispatcher.keyEventReceiver = this
         isNumberRowVisible = prefs.keyboard.numberRow.get()
@@ -426,7 +426,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 }
             }
             if (prefs.glide.enabled.get()) {
-                GlideTypingManager.getInstance().setWordData(newSubtype)
+                GlideTypingManager.getInstance(florisboard).setWordData(newSubtype)
             }
             if (doRefreshLayouts) {
                 setActiveKeyboard(getActiveKeyboardMode(), newSubtype)

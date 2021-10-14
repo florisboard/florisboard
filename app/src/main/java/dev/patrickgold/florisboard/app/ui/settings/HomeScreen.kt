@@ -39,9 +39,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.app.ui.res.stringRes
 import dev.patrickgold.florisboard.common.launchActivity
 import dev.patrickgold.florisboard.common.launchUrl
 import dev.patrickgold.florisboard.oldsettings.SettingsMainActivity
@@ -97,9 +97,19 @@ fun HomeScreen() = FlorisScreen(
         }
     }
     Preference(
+        iconId = R.drawable.ic_palette,
+        title = stringRes(R.string.settings__theme__title),
+        onClick = { navController.navigate(Routes.Settings.Theme) },
+    )
+    Preference(
         iconId = R.drawable.ic_keyboard,
         title = stringRes(R.string.settings__keyboard__title),
         onClick = { navController.navigate(Routes.Settings.Keyboard) },
+    )
+    Preference(
+        iconId = R.drawable.ic_spellcheck,
+        title = stringRes(R.string.settings__spelling__title),
+        onClick = { navController.navigate(Routes.Settings.Spelling) },
     )
     Preference(
         iconId = R.drawable.ic_gesture,

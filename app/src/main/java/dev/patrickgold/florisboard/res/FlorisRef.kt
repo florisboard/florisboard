@@ -19,6 +19,14 @@ package dev.patrickgold.florisboard.res
 import android.content.Context
 import android.net.Uri
 import androidx.annotation.VisibleForTesting
+import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+import java.io.File
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -35,6 +43,7 @@ import kotlin.contracts.contract
  * @property uri The underlying URI, which can be used for external references
  *  to pass along to the system.
  */
+@Serializable(with = FlorisRef.Serializer::class)
 @JvmInline
 value class FlorisRef private constructor(val uri: Uri) {
     companion object {
@@ -191,7 +200,7 @@ value class FlorisRef private constructor(val uri: Uri) {
      * Returns if this URI contains data for all valid parts of a FlorisRef.
      */
     val isValid: Boolean
-        get() = scheme.isNotBlank() && authority.isNotBlank() && relativePath.isNotBlank()
+        get() = scheme.isNotBlank() && authority.isNotBlank()
 
     /**
      * Returns if this URI contains data for all valid parts of a FlorisRef.
@@ -214,6 +223,18 @@ value class FlorisRef private constructor(val uri: Uri) {
             isInternal -> "${context.filesDir.absolutePath}/$relativePath"
             else -> uri.path ?: ""
         }
+    }
+
+    /**
+     * Returns the absolute file on the device file storage for this reference,
+     * depending on the [context] and the [scheme].
+     *
+     * @param context The context used to get the absolute file for various directories.
+     *
+     * @return The absolute file of this reference.
+     */
+    fun absoluteFile(context: Context): File {
+        return File(absolutePath(context))
     }
 
     /**
@@ -266,5 +287,25 @@ value class FlorisRef private constructor(val uri: Uri) {
      */
     override fun toString(): String {
         return uri.toString()
+    }
+
+    object Serializer : PreferenceSerializer<FlorisRef>, KSerializer<FlorisRef> {
+        override val descriptor = PrimitiveSerialDescriptor("FlorisRef", PrimitiveKind.STRING)
+
+        override fun serialize(value: FlorisRef): String {
+            return value.toString()
+        }
+
+        override fun serialize(encoder: Encoder, value: FlorisRef) {
+            encoder.encodeString(value.toString())
+        }
+
+        override fun deserialize(value: String): FlorisRef {
+            return from(value)
+        }
+
+        override fun deserialize(decoder: Decoder): FlorisRef {
+            return from(decoder.decodeString())
+        }
     }
 }

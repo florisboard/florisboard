@@ -43,7 +43,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.ui.res.stringRes
+import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.common.InputMethodUtils
 
 @Composable
@@ -94,7 +94,7 @@ fun PreviewKeyboardField(
                 }
             }
         },
-        keyboardOptions = KeyboardOptions(autoCorrect = false),
+        keyboardOptions = KeyboardOptions(autoCorrect = true),
         singleLine = true,
         shape = RectangleShape,
         colors = TextFieldDefaults.textFieldColors(

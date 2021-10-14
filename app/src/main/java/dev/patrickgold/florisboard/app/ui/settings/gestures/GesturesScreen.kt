@@ -18,8 +18,8 @@ package dev.patrickgold.florisboard.app.ui.settings.gestures
 
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.app.ui.res.stringRes
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.jetpref.ui.compose.DialogSliderPreference
 import dev.patrickgold.jetpref.ui.compose.ListPreference

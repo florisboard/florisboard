@@ -32,16 +32,23 @@ fun FlorisScreen(
     title: String,
     backArrowVisible: Boolean = true,
     scrollable: Boolean = true,
-    bottomBar: @Composable () -> Unit = { },
+    iconSpaceReserved: Boolean = true,
     actions: @Composable RowScope.() -> Unit = { },
+    bottomBar: @Composable () -> Unit = { },
+    floatingActionButton: @Composable () -> Unit = { },
     content: PreferenceUiContent<AppPrefs>,
 ) {
     Scaffold(
         topBar = { FlorisAppBar(title, backArrowVisible, actions) },
         bottomBar = bottomBar,
+        floatingActionButton = floatingActionButton,
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
-            PreferenceLayout(florisPreferenceModel(), scrollable = scrollable) {
+            PreferenceLayout(
+                florisPreferenceModel(),
+                scrollable = scrollable,
+                iconSpaceReserved = iconSpaceReserved,
+            ) {
                 content(this)
             }
         }

@@ -16,13 +16,14 @@
 
 package dev.patrickgold.florisboard.ime.text.layout
 
+import android.content.Context
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogWarning
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
-import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.ime.popup.PopupExtension
 import dev.patrickgold.florisboard.ime.popup.PopupManager
 import dev.patrickgold.florisboard.ime.text.key.*
@@ -42,8 +43,8 @@ private data class LTN(
 /**
  * Class which manages layout loading and caching.
  */
-class LayoutManager {
-    private val assetManager get() = AssetManager.default()
+class LayoutManager(context: Context) {
+    private val assetManager by context.assetManager()
     private val prefs by florisPreferenceModel()
 
     private val layoutCache: HashMap<String, Deferred<Result<Layout>>> = hashMapOf()

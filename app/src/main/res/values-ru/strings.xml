@@ -75,10 +75,10 @@
     <string name="settings__theme__title" comment="Title of the Theme fragment">Тема клавиатуры</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Не определено</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Режим темы</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Всегда день</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Всегда ночь</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Использовать системные настройки</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Следовать времени</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Всегда день</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Всегда ночь</string>
+    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Использовать системные настройки</string>
+    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Следовать времени</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Время восхода</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Время заката</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Дневная тема</string>
@@ -215,8 +215,6 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Управление внутренним словарём пользователя</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Добавление, просмотр и удаление записей во внутреннем пользовательском словаре</string>
     <string name="pref__correction__title" comment="Preference group title">Исправления</string>
-    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">Проверка правописания</string>
-    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">Управление и настройка сервиса проверки правописания</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Заглавные автоматически</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Использовать заглавные буквы в зависимости от текущего контекста ввода</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Запоминать состояние Caps Lock</string>
@@ -280,42 +278,16 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Показывать значения используемой выделенной памяти и максимальный использованный объём в правом верхнем углу</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Очистить внутренний словарь пользователя</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Удаление всех слов из базы внутреннего пользовательского словаря</string>
-    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Настройки проверки правописания</string>
-    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Управление словарями</string>
-    <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Учитывать раскладки клавиатуры</string>
-    <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">Словари проверки правописания не установлены. Нажмите кнопку \"+\" внизу, чтобы установить его.</string>
-    <string name="settings__spelling__dictionary_index_invalid" comment="String for the Dictionary index invalid error card. %s will be replaced by the app name.">Произошла ошибка при индексировании установленных словарей проверки правописания. Попробуйте перезапустить %s или сообщите об ошибке.</string>
-    <string name="settings__spelling__dict_sources_info" comment="String for the Dictionary sources info.">Где взять словари для проверки правописания?</string>
+    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Словари проверки правописания не установлены. Нажмите кнопку \"+\" внизу, чтобы установить его.</string>
+    <string name="settings__spelling__dict_sources_info__title" comment="String for the Dictionary sources info.">Где взять словари для проверки правописания?</string>
     <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Расширение / Архив</string>
     <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Файл словаря + affix</string>
     <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Включить проверку правописания</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Ничего не задано</string>
-    <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">Проверьте системные настройки</string>
-    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Управление словарями</string>
-    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
-        <item quantity="one">%d установлен</item>
-        <item quantity="few">%d установлено</item>
-        <item quantity="many">%d установлено</item>
-        <item quantity="other">%d установлено</item>
-    </plurals>
-    <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">Точная настройка</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NOT IMPLEMENTED] Использовать имена контактов</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Проверка правописания будет просматривать имена в вашем списке контактов</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Использовать записи из словаря пользователя</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Проверка правописания будеть использовать записи из пользовательских словарей, если они существуют</string>
-    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Импорт нового словаря</string>
-    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Выбор источника</string>
-    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Выбор языка</string>
-    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">Код языка (например, en_US)</string>
-    <string name="settings__spelling__import_dict_s2__title" comment="Title for the import dict sheet (step 2)">Добавление файлов для импорта</string>
-    <string name="settings__spelling__import_dict_s2__select_aff" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Выбор файла affix (.aff)</string>
-    <string name="settings__spelling__import_dict_s2__select_dic" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Выбор файла словаря (.dic)</string>
-    <string name="settings__spelling__import_dict_s3__title" comment="Title for the import dict sheet (step 3)">Проверка импортируемых файлов</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_locale" comment="Text for the verify files dialog (step 3)">Язык: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_original" comment="Text for the verify files dialog (step 3)">Источник: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_any" comment="Text for the verify files dialog (the first %s will be replaced by a file extension, the second by a file name) (step 3)">%s файл: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_readme" comment="Text for the verify files dialog (step 3)">Информационный файл: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_license" comment="Text for the verify files dialog (step 3)">Файл лицензии: %s</string>
     <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info sheet">FlorisBoard использует Nuspell в качестве средства проверки орфографии. Это означает, что доступно огромное количество словарей, так как Hunspell используется и многими другими программами. В списке ниже показано несколько выбранных вручную источников, которые поддерживает менеджер импорта. Загрузите файл архива или файлы словаря, затем при импортировании укажите правильный источник (это важно для правильного чтения формата архива).</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">если в данном списке нет словарей для вашего языка или диалекта, вы можете самостоятельно найти требуемый словарь Hunspell и импортировать его файлы \"aff \" и \"dic\".</string>
     <!-- About UI strings -->

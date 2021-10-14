@@ -19,8 +19,12 @@ package dev.patrickgold.florisboard.app
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
+import android.view.View
+import android.view.ViewTreeObserver
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -33,14 +37,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.app.res.ProvideLocalizedResources
+import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.PreviewKeyboardField
 import dev.patrickgold.florisboard.app.ui.components.SystemUi
-import dev.patrickgold.florisboard.app.ui.res.ProvideLocalizedResources
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.InputMethodUtils
@@ -48,6 +56,7 @@ import dev.patrickgold.florisboard.common.SystemSettingsObserver
 import dev.patrickgold.florisboard.util.AndroidVersion
 import dev.patrickgold.florisboard.util.PackageManagerUtils
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.ui.compose.ProvideDefaultDialogPrefStrings
 
 enum class AppTheme(val id: String) {
     AUTO("auto"),
@@ -65,6 +74,7 @@ val LocalIsFlorisBoardSelected = compositionLocalOf { false }
 
 class FlorisAppActivity : ComponentActivity() {
     private val prefs by florisPreferenceModel()
+    private var isDatastoreReady by mutableStateOf(false)
     private var appTheme by mutableStateOf(AppTheme.AUTO)
     private var showAppIcon = true
     private var resourcesContext by mutableStateOf(this as Context)
@@ -85,10 +95,14 @@ class FlorisAppActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
 
         InputMethodUtils.startObserveIsFlorisBoardEnabled(this, isFlorisBoardEnabledObserver)
         InputMethodUtils.startObserveIsFlorisBoardSelected(this, isFlorisBoardSelectedObserver)
 
+        prefs.datastoreReadyStatus.observe(this) {
+            isDatastoreReady = it
+        }
         prefs.advanced.settingsTheme.observe(this) {
             appTheme = it
         }
@@ -110,11 +124,28 @@ class FlorisAppActivity : ComponentActivity() {
                 FlorisAppTheme(theme = appTheme) {
                     Surface(color = MaterialTheme.colors.background) {
                         SystemUi()
-                        AppContent()
+                        if (isDatastoreReady) {
+                            AppContent()
+                        }
                     }
                 }
             }
         }
+
+        // PreDraw observer for SplashScreen
+        val content = findViewById<View>(android.R.id.content)
+        content.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    return if (isDatastoreReady) {
+                        content.viewTreeObserver.removeOnPreDrawListener(this)
+                        true
+                    } else {
+                        false
+                    }
+                }
+            }
+        )
     }
 
     override fun onPause() {
@@ -136,6 +167,7 @@ class FlorisAppActivity : ComponentActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
+        prefs.forceSyncToDisk()
         InputMethodUtils.stopObserveIsFlorisBoardEnabled(this, isFlorisBoardEnabledObserver)
         InputMethodUtils.stopObserveIsFlorisBoardSelected(this, isFlorisBoardSelectedObserver)
     }
@@ -144,6 +176,7 @@ class FlorisAppActivity : ComponentActivity() {
         return this.setLocale(locale.base)
     }
 
+    @OptIn(ExperimentalAnimationApi::class)
     @Composable
     private fun AppContent() {
         val isImeSetUp by prefs.internal.isImeSetUp.observeAsState()
@@ -153,14 +186,27 @@ class FlorisAppActivity : ComponentActivity() {
             LocalIsFlorisBoardEnabled provides isFlorisBoardEnabled,
             LocalIsFlorisBoardSelected provides isFlorisBoardSelected,
         ) {
-            Column {
-                Routes.AppNavHost(
-                    modifier = Modifier.weight(1.0f),
-                    navController = navController,
-                    startDestination = if (isImeSetUp) { Routes.Settings.Home } else { Routes.Setup.Home },
-                )
-                if (isImeSetUp) {
-                    PreviewKeyboardField()
+            ProvideDefaultDialogPrefStrings(
+                confirmLabel = stringRes(R.string.assets__action__ok),
+                dismissLabel = stringRes(R.string.assets__action__cancel),
+                neutralLabel = stringRes(R.string.assets__action__default),
+            ) {
+                Column {
+                    Routes.AppNavHost(
+                        modifier = Modifier.weight(1.0f),
+                        navController = navController,
+                        startDestination = if (isImeSetUp) { Routes.Settings.Home } else { Routes.Setup.Home },
+                    )
+                    val navBackStackEntry by navController.currentBackStackEntryAsState()
+                    val previewVisible = when (navBackStackEntry?.destination?.route) {
+                        Routes.Setup.Home, Routes.Settings.About, Routes.Settings.ProjectLicense,
+                        Routes.Settings.ThirdPartyLicenses, Routes.Settings.ImportSpellingArchive,
+                        Routes.Settings.ImportSpellingAffDic, Routes.Ext.View -> false
+                        else -> true
+                    }
+                    AnimatedVisibility(visible = previewVisible) {
+                        PreviewKeyboardField()
+                    }
                 }
             }
         }

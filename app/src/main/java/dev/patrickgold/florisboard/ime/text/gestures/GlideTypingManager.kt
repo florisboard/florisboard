@@ -1,12 +1,13 @@
 package dev.patrickgold.florisboard.ime.text.gestures
 
+import android.content.Context
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.nlp.SuggestionList
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
-import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.FlorisRef
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -20,17 +21,19 @@ import kotlin.math.min
  * Handles the [GlideTypingClassifier]. Basically responsible for linking [GlideTypingGesture.Detector]
  * with [GlideTypingClassifier].
  */
-class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainScope() {
+class GlideTypingManager(context: Context) : GlideTypingGesture.Listener, CoroutineScope by MainScope() {
     private var glideTypingClassifier = StatisticalGlideTypingClassifier()
     private val prefs by florisPreferenceModel()
+    private val assetManager by context.assetManager()
 
     companion object {
         private const val MAX_SUGGESTION_COUNT = 8
 
         private lateinit var glideTypingManager: GlideTypingManager
-        fun getInstance(): GlideTypingManager {
+        // FIXME: remove singleton logic and add instance to application
+        fun getInstance(context: Context): GlideTypingManager {
             if (!this::glideTypingManager.isInitialized) {
-                glideTypingManager = GlideTypingManager()
+                glideTypingManager = GlideTypingManager(context)
             }
             return glideTypingManager
         }
@@ -75,8 +78,7 @@ class GlideTypingManager : GlideTypingGesture.Listener, CoroutineScope by MainSc
         launch(Dispatchers.Default) {
             if (wordDataCache.isEmpty()) {
                 // FIXME: get this info from dictionary.
-                val data =
-                    AssetManager.default().loadTextAsset(FlorisRef.assets("ime/dict/data.json"))
+                val data = assetManager.loadTextAsset(FlorisRef.assets("ime/dict/data.json"))
                         .getOrThrow()
                 val json = JSONObject(data)
                 wordDataCache.putAll(json.keys().asSequence().map { Pair(it, json.getInt(it)) })

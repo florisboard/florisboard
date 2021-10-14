@@ -16,15 +16,21 @@
 
 package dev.patrickgold.florisboard.app.prefs
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
+import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
+import dev.patrickgold.florisboard.ime.theme.ThemeMode
+import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
 import dev.patrickgold.jetpref.datastore.preferenceModel
+import java.time.LocalTime
 
 fun florisPreferenceModel() = preferenceModel(AppPrefs::class, ::AppPrefs)
 
@@ -366,5 +372,57 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                 mergeHintPopups = mergeHintPopupsEnabled.get(),
             )
         }
+    }
+
+    val spelling = Spelling()
+    inner class Spelling {
+        val languageMode = enum(
+            key = "spelling__language_mode",
+            default = SpellingLanguageMode.USE_KEYBOARD_SUBTYPES,
+        )
+        val useContacts = boolean(
+            key = "spelling__use_contacts",
+            default = true,
+        )
+        val useUdmEntries = boolean(
+            key = "spelling__use_udm_entries",
+            default = true,
+        )
+    }
+
+    val theme = Theme()
+    inner class Theme {
+        val mode = enum(
+            key = "theme__mode",
+            default = ThemeMode.FOLLOW_SYSTEM,
+        )
+        val dayThemeAdaptToApp = boolean(
+            key = "theme__day_theme_adapt_to_app",
+            default = false,
+        )
+        val dayThemeRef = custom(
+            key = "theme__day_theme_ref",
+            default = FlorisRef.assets("ime/theme/floris_day.json"),
+            serializer = FlorisRef.Serializer,
+        )
+        val nightThemeAdaptToApp = boolean(
+            key = "theme__night_theme_adapt_to_app",
+            default = false,
+        )
+        val nightThemeRef = custom(
+            key = "theme__night_theme_ref",
+            default = FlorisRef.assets("ime/theme/floris_night.json"),
+            serializer = FlorisRef.Serializer,
+        )
+        @RequiresApi(Build.VERSION_CODES.O)
+        val sunriseTime = localTime(
+            key = "theme__sunrise_time",
+            default = LocalTime.of(6, 0),
+        )
+        @RequiresApi(Build.VERSION_CODES.O)
+        val sunsetTime = localTime(
+            key = "theme__sunset_time",
+            default = LocalTime.of(18, 0),
+        )
     }
 }

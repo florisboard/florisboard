@@ -75,10 +75,10 @@
     <string name="settings__theme__title" comment="Title of the Theme fragment">Θέμα πληκτρολογίου</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Μη ορισμένο</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Λειτουργία θέματος</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Πάντα μέρα</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Πάντα νύχτα</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Σύμφωνα με το σύστημα</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Σύμφωνα με την ώρα</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Πάντα μέρα</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Πάντα νύχτα</string>
+    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Σύμφωνα με το σύστημα</string>
+    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Σύμφωνα με την ώρα</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Ώρα ανατολής</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Ώρα δύσης</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Θέμα ημέρας</string>
@@ -223,8 +223,6 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Διαχείριση εσωτερικού λεξικού χρήστη</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Προσθήκη, προβολή, και αφαίρεση εισαγωγών για το εσωτερικό λεξικό χρήστη</string>
     <string name="pref__correction__title" comment="Preference group title">Διορθώσεις</string>
-    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">Ορθογραφικός έλεγχος</string>
-    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">Διαχείριση και ρύθμιση της υπηρεσίας ορθογραφικού ελέγχου</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Αυτόματη χρήση κεφαλαίων</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Κεφαλαιοποίηση λέξεων βάσει του παρόντος περιεχομένου εισαγωγής</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Διατήρηση κατάστασης κεφαλαίων</string>
@@ -288,40 +286,16 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Δημιουργεί ένα επικάλυμμα με τη χρήση της μνήμης σωρού και του μέγιστου μεγέθους στην πάνω-δεξιά γωνία</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Διαγραφή βάσης δεδομένων εσωτερικού λεξικού χρήστη</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Διαγράφει όλες τις λέξεις από τον πίνακα δεδομένων του λεξικού</string>
-    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Ρυθμίσεις ορθογραφικού ελέγχου</string>
-    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Διαχείριση λεξικών</string>
-    <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Χρήση υποτύπων πληκτρολογίου</string>
-    <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">Δεν υπάρχουν εγκατεστημένα λεξικά ορθογραφικού ελέγχου. Προσθέστε το πρώτο με το \'+\'-πλήκτρο πιο κάτω!</string>
-    <string name="settings__spelling__dictionary_index_invalid" comment="String for the Dictionary index invalid error card. %s will be replaced by the app name.">Ένα σφάλμα παρουσιάστηκε κατά την ευρετηρίαση των εγκατεστημένων λεξικών. Δοκιμάστε να επανεκκινήσετε το %s ή να υποβάλλετε μία αναφορά προβλήματος για αυτό.</string>
-    <string name="settings__spelling__dict_sources_info" comment="String for the Dictionary sources info.">Πού μπορώ να βρω λεξικά ορθογραφικού ελέγχου;</string>
+    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Δεν υπάρχουν εγκατεστημένα λεξικά ορθογραφικού ελέγχου. Προσθέστε το πρώτο με το \'+\'-πλήκτρο πιο κάτω!</string>
+    <string name="settings__spelling__dict_sources_info__title" comment="String for the Dictionary sources info.">Πού μπορώ να βρω λεξικά ορθογραφικού ελέγχου;</string>
     <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Προέκταση / Αρχείο</string>
     <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Πρόθυμα + Αρχείο λεξικού</string>
     <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Ενεργός ορθογραφικός έλεγχος</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Κανένα ορισμένο</string>
-    <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">Ελέγχος στις ρυθμίσεις συστήματος</string>
-    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Διαχείριση λεξικών ορθογραφικού ελέγχου</string>
-    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
-        <item quantity="one">%d εγκατεστημένο</item>
-        <item quantity="other">%d εγκατεστημένα</item>
-    </plurals>
-    <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">Μικρό-ρύθμιση</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[ΜΗ ΕΦΑΡΜΟΣΜΈΝΟ] Χρήση ονομάτων από τις επαφές</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Ο ορθογραφικός έλεγχος θα ψάξει ονόματα από τη λίστα επαφών</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Χρήση καταχωρήσεων λεξικού χρήστη</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Ο ορθογραφικός έλεγχος θα ψάξει τις καταχωρήσεις από το λεξικό χρήστη, εάν αυτές είναι ενεργές</string>
-    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Εισαγωγή νέου λεξικού</string>
-    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Επιλογή πηγής</string>
-    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Επιλογή γλώσσας</string>
-    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">Κωδικός γλώσσας (π.χ. en_US)</string>
-    <string name="settings__spelling__import_dict_s2__title" comment="Title for the import dict sheet (step 2)">Προσθήκη αρχείων προς εισαγωγή</string>
-    <string name="settings__spelling__import_dict_s2__select_aff" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Επιλογή αρχείου προσφύματος (.aff)</string>
-    <string name="settings__spelling__import_dict_s2__select_dic" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Επιλογή αρχείου λεξικού (.dic)</string>
-    <string name="settings__spelling__import_dict_s3__title" comment="Title for the import dict sheet (step 3)">Επαλήθευση των αρχείων εισαγωγής</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_locale" comment="Text for the verify files dialog (step 3)">Τοποθεσία: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_original" comment="Text for the verify files dialog (step 3)">Αρχική πηγή: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_any" comment="Text for the verify files dialog (the first %s will be replaced by a file extension, the second by a file name) (step 3)">%s αρχείο: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_readme" comment="Text for the verify files dialog (step 3)">Αρχείο readme: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_license" comment="Text for the verify files dialog (step 3)">Αρχείο άδειας: %s</string>
     <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info sheet">Το FlorisBoard χρησιμοποιεί το Nuspell ως μηχανή ορθογραφικού ελέγχου, το οποίο σημαίνει πως υπάρχει ένας τεράστιος αριθμός διαθέσιμων λεξικών, καθώς το Hunspell χρησιμοποιείται από πολλά άλλα προγράμματα επίσης. Η παρακάτω λίστα δείχνει μερικές επιλεγμένες πηγές τις οποίες ο διαχειριστής εισαγωγής υποστηρίζει. Κατεβάστε είτε το αρχειοθετημένο αρχείο είτε τα αρχεία του λεξικού, έπειτα στο διαχειριστή εισαγωγής επιλέξτε τη σωστή πηγή (είναι σημαντικό να διαβάσετε σωστά τη μορφή του αρχείου).</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">εάν αυτή η λίστα δεν περιέχει λεξικά για τη γλώσσα ή διάλεκτό σας, μπορείτε επίσης να αναζητήσετε χειροκίνητα κάποιο λεξικό Hunspell και να εισάγετε τα \'aff\' και \'dic\' αρχεία για αυτό.</string>
     <!-- About UI strings -->

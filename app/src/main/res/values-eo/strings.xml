@@ -46,10 +46,10 @@
     <string name="settings__theme__title" comment="Title of the Theme fragment">Klavaro etoso</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nedifinita</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Etosa reĝimo</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Ĉiama tago</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Ĉiama nokto</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Laŭ operaciumo</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Laŭ tempo</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Ĉiama tago</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Ĉiama nokto</string>
+    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Laŭ operaciumo</string>
+    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Laŭ tempo</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Taga etoso</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nokta etoso</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Krei malplenan etoson</string>

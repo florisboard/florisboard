@@ -18,9 +18,9 @@ package dev.patrickgold.florisboard.app.ui.settings.clipboard
 
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.res.pluralsRes
+import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.app.ui.res.pluralsRes
-import dev.patrickgold.florisboard.app.ui.res.stringRes
 import dev.patrickgold.jetpref.ui.compose.DialogSliderPreference
 import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
 import dev.patrickgold.jetpref.ui.compose.SwitchPreference

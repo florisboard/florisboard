@@ -16,29 +16,101 @@
 
 package dev.patrickgold.florisboard.res.ext
 
-import java.io.Closeable
+import android.content.Context
+import dev.patrickgold.florisboard.common.resultErr
+import dev.patrickgold.florisboard.common.resultOk
+import dev.patrickgold.florisboard.res.FlorisRef
+import dev.patrickgold.florisboard.res.ZipUtils
+import kotlinx.serialization.Polymorphic
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import java.io.File
 
 /**
  * An extension container holding a parsed config, a working directory file
  * object as well as a reference to the original flex file.
  *
- * @property config The parsed config of this extension.
+ * @property meta The parsed config of this extension.
  * @property workingDir The working directory, used as a cache and as a staging
  *  area for modifications to extension files.
- * @property flexFile Optional, defines where the original flex file is stored.
+ * @property sourceRef Optional, defines where the original flex file is stored.
  */
-open class Extension<C : ExtensionConfig>(
-    val config: C,
-    val workingDir: File,
-    val flexFile: File?
-) : Closeable {
+@Polymorphic
+@Serializable
+abstract class Extension {
+    @Transient var workingDir: File? = null
+    @Transient var sourceRef: FlorisRef? = null
 
-    /**
-     * Closes the extension and deletes the temporary files. After invoking this
-     * method, this object and its cache files must never be touched again.
-     */
-    override fun close() {
-        workingDir.deleteRecursively()
+    abstract val meta: ExtensionMeta
+    abstract val dependencies: List<String>?
+
+    abstract fun serialType(): String
+
+    fun isLoaded() = workingDir != null
+
+    open fun onBeforeLoad(context: Context, cacheDir: File) {
+        /* Empty */
     }
+
+    open fun onAfterLoad(context: Context, cacheDir: File) {
+        /* Empty */
+    }
+
+    fun load(context: Context, force: Boolean = false): Result<Unit> {
+        val cacheDir = File(context.cacheDir, meta.id)
+        if (cacheDir.exists()) {
+            if (force) {
+                cacheDir.deleteRecursively()
+            } else {
+                // TODO: check if extension loaded should be kept as is
+                cacheDir.deleteRecursively()
+            }
+        }
+        cacheDir.mkdirs()
+        val sourceRef = sourceRef ?: return resultOk()
+        onBeforeLoad(context, cacheDir)
+        ZipUtils.unzip(context, sourceRef, cacheDir).onFailure { return resultErr(it) }
+        workingDir = cacheDir
+        onAfterLoad(context, cacheDir)
+        return resultOk()
+    }
+
+    open fun onBeforeUnload(context: Context, cacheDir: File) {
+        /* Empty */
+    }
+
+    open fun onAfterUnload(context: Context, cacheDir: File) {
+        /* Empty */
+    }
+
+    fun unload(context: Context) {
+        val cacheDir = workingDir ?: File(context.cacheDir, meta.id)
+        if (!cacheDir.exists()) return
+        onBeforeUnload(context, cacheDir)
+        cacheDir.deleteRecursively()
+        workingDir = null
+        onAfterUnload(context, cacheDir)
+    }
+
+    fun readExtensionFile(context: Context, relPath: String): String? {
+        val cacheDir = File(context.cacheDir, meta.id)
+        if (cacheDir.exists() && cacheDir.isDirectory) {
+            val file = File(cacheDir, relPath)
+            if (file.exists() && file.isFile) {
+                return try {
+                    file.readText()
+                } catch (e: Exception) {
+                    null
+                }
+            }
+        }
+        return null
+    }
+
+    abstract fun edit(): ExtensionEditor
+}
+
+interface ExtensionEditor {
+    val meta: ExtensionMetaEditor
+    val workingDir: File?
 }

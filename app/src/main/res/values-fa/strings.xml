@@ -74,10 +74,10 @@
     <string name="settings__theme__title" comment="Title of the Theme fragment">طرح زمینه صفحه کلید</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">تعریف نشده</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">حالت طرح‌زمینه</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">همیشه روز</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">همیشه شب</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">پیروی از سیستم</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">پیروی از زمان</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">همیشه روز</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">همیشه شب</string>
+    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">پیروی از سیستم</string>
+    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">پیروی از زمان</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">زمان طلوع</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">زمان غروب</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">طرح‌زمینه روز</string>
@@ -189,8 +189,6 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">مدیریت لغتنامه داخلی کاربر</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">افزودن، مشاهده و حذف کردن لغات از لغتنامه داخلی کاربر</string>
     <string name="pref__correction__title" comment="Preference group title">تصحیح</string>
-    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">چک کننده نگارش</string>
-    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">مدیریت و تنظیم سرویس چک کننده نگارش</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">حرف اول بزرگ به صورت خودکار</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">بزرگ کردن حرف اول بر اساس محتوای ورودی</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">به یاد داشتن حالت caps lock</string>
@@ -254,15 +252,7 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">استفاده از حافظه هیپ را رونویسی می کند و اندازه را حداکثری می کند در گوشه بالا سمت راست</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">پاک کردن پایگاه داده لغتنامه داخلی کاربر</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">پاک کردن تمام کلمات از جدول پایگاه داده لغتنامه</string>
-    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">تنظیمات چک کننده نگارش</string>
-    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">مدیریت لغتنامه ها</string>
-    <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">استفاده از زیرنوع ها</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">بدون تنظیم</string>
-    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
-        <item quantity="one">%d نصب شده</item>
-        <item quantity="other">%d نصب شده</item>
-    </plurals>
-    <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">تنظیم-مناسب</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">درباره</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">آیکون برنامه فلوریس بورد</string>

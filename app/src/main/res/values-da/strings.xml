@@ -61,8 +61,8 @@
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Dette undertastatur findes allerede!</string>
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tastaturtema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ikke defineret</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Altid dag</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Altid nat</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Altid dag</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Altid nat</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nyt tema</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Redigér tema</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Navn</string>
@@ -112,7 +112,6 @@
     <string name="settings__advanced__title" comment="Title of Advanced settings">Avanceret</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Lys</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Mørk</string>
-    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Vælg sprog</string>
     <!-- About UI strings -->
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privatlivspolitik</string>
     <!-- Assets strings -->

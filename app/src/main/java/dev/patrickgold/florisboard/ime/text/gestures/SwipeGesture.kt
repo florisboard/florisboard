@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.text.gestures
 import android.content.Context
 import android.view.MotionEvent
 import android.view.VelocityTracker
+import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
@@ -80,7 +81,7 @@ abstract class SwipeGesture {
                 val absDiffY = event.getY(pointer.index) - gesturePointer.firstY
                 val relDiffX = event.getX(pointer.index) - gesturePointer.lastX
                 val relDiffY = event.getY(pointer.index) - gesturePointer.lastY
-                val thresholdWidth = prefs.gestures.swipeDistanceThreshold.get()
+                val thresholdWidth = prefs.gestures.swipeDistanceThreshold.get().dp.value.toDouble()
                 val unitWidth = thresholdWidth / 4.0
                 return if (alwaysTriggerOnMove || abs(relDiffX) > (thresholdWidth / 2.0) || abs(relDiffY) > (thresholdWidth / 2.0)) {
                     gesturePointer.lastX = event.getX(pointer.index)
@@ -118,8 +119,8 @@ abstract class SwipeGesture {
                 val velocityY = ViewUtils.px2dp(velocityTracker.getYVelocity(pointer.id))
                 flogDebug(LogTopic.GESTURES) { "Velocity: $velocityX $velocityY dp/s" }
                 pointerMap.removeById(pointer.id)
-                val thresholdSpeed = prefs.gestures.swipeVelocityThreshold.get()
-                val thresholdWidth = prefs.gestures.swipeDistanceThreshold.get()
+                val thresholdSpeed = prefs.gestures.swipeVelocityThreshold.get().toDouble()
+                val thresholdWidth = prefs.gestures.swipeDistanceThreshold.get().dp.value.toDouble()
                 val unitWidth = thresholdWidth / 4.0
                 return if ((abs(absDiffX) > thresholdWidth || abs(absDiffY) > thresholdWidth) && (abs(velocityX) > thresholdSpeed || abs(velocityY) > thresholdSpeed)) {
                     val direction = detectDirection(absDiffX.toDouble(), absDiffY.toDouble())

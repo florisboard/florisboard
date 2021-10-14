@@ -10,10 +10,6 @@
         <attr name="unit" format="string"/>
     </declare-styleable>
 
-    <declare-styleable name="TimePickerDialogPreferenceAttrs">
-        <attr name="android:defaultValue" format="integer"/>
-    </declare-styleable>
-
     <declare-styleable name="TextKeyboardView">
         <attr name="isPreviewKeyboard" format="boolean"/>
         <attr name="isSmartbarKeyboard" format="boolean"/>

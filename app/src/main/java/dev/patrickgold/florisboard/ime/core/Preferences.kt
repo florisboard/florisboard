@@ -21,10 +21,7 @@ import android.content.SharedPreferences
 import android.os.Build
 import androidx.core.os.UserManagerCompat
 import androidx.preference.PreferenceManager
-import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.text.smartbar.CandidateView
-import dev.patrickgold.florisboard.ime.theme.ThemeMode
-import dev.patrickgold.florisboard.util.TimeUtil
 import dev.patrickgold.florisboard.util.VersionName
 import java.lang.ref.WeakReference
 
@@ -46,9 +43,7 @@ class Preferences(
     val internal = Internal(this)
     val localization = Localization(this)
     val smartbar = Smartbar(this)
-    val spelling = Spelling(this)
     val suggestion = Suggestion(this)
-    val theme = Theme(this)
 
 
     /**
@@ -108,30 +103,6 @@ class Preferences(
                     Default preferences not initialized! Make sure to call initDefault()
                     before accessing the default preferences.
                 """.trimIndent())
-        }
-    }
-
-    /**
-     * Tells the [PreferenceManager] to set the defined preferences to their default values, if
-     * they have not been initialized yet.
-     */
-    fun initDefaultPreferences() {
-        try {
-            applicationContext.get()?.let { context ->
-                PreferenceManager.setDefaultValues(context, R.xml.prefs_keyboard, true)
-                PreferenceManager.setDefaultValues(context, R.xml.prefs_theme, true)
-                PreferenceManager.setDefaultValues(context, R.xml.prefs_typing, true)
-            }
-
-            //theme.dayThemeRef = "assets:ime/theme/floris_day.json"
-            //theme.nightThemeRef = "assets:ime/theme/floris_night.json"
-            //setPref(Localization.SUBTYPES, "-234/de-AT/euro/c=qwertz")
-            val subtypes = getPref(Localization.SUBTYPES, "")
-            if (subtypes.matches(OLD_SUBTYPES_REGEX)) {
-                setPref(Localization.SUBTYPES, "")
-            }
-        } catch (e: Exception) {
-            e.fillInStackTrace()
         }
     }
 
@@ -233,25 +204,6 @@ class Preferences(
     }
 
     /**
-     * Wrapper class for Spelling preferences.
-     */
-    class Spelling(private val prefs: Preferences) {
-        companion object {
-            const val ACTIVE_SPELLCHECKER =         "spelling__active_spellchecker"
-            const val MANAGE_DICTIONARIES =         "spelling__manage_dictionaries"
-            const val USE_CONTACTS =                "spelling__use_contacts"
-            const val USE_UDM_ENTRIES =             "spelling__use_udm_entries"
-        }
-
-        var useContacts: Boolean
-            get() =  prefs.getPref(USE_CONTACTS, true)
-            set(v) = prefs.setPref(USE_CONTACTS, v)
-        var useUdmEntries: Boolean
-            get() =  prefs.getPref(USE_UDM_ENTRIES, true)
-            set(v) = prefs.setPref(USE_UDM_ENTRIES, v)
-    }
-
-    /**
      * Wrapper class for suggestion preferences.
      */
     class Suggestion(private val prefs: Preferences) {
@@ -286,42 +238,5 @@ class Preferences(
         var usePrevWords: Boolean
             get() =  prefs.getPref(USE_PREV_WORDS, true)
             set(v) = prefs.setPref(USE_PREV_WORDS, v)
-    }
-
-    /**
-     * Wrapper class for theme preferences.
-     */
-    class Theme(private val prefs: Preferences) {
-        companion object {
-            const val MODE =                        "theme__mode"
-            const val DAY_THEME_REF =               "theme__day_theme_ref"
-            const val DAY_THEME_ADAPT_TO_APP =      "theme__day_theme_adapt_to_app"
-            const val NIGHT_THEME_REF =             "theme__night_theme_ref"
-            const val NIGHT_THEME_ADAPT_TO_APP =    "theme__night_theme_adapt_to_app"
-            const val SUNRISE_TIME =                "theme__sunrise_time"
-            const val SUNSET_TIME =                 "theme__sunset_time"
-        }
-
-        var mode: ThemeMode
-            get() =  ThemeMode.fromString(prefs.getPref(MODE, ThemeMode.FOLLOW_SYSTEM.toString()))
-            set(v) = prefs.setPref(MODE, v)
-        var dayThemeRef: String
-            get() =  prefs.getPref(DAY_THEME_REF, "assets:ime/theme/floris_day.json")
-            set(v) = prefs.setPref(DAY_THEME_REF, v)
-        var dayThemeAdaptToApp: Boolean
-            get() =  prefs.getPref(DAY_THEME_ADAPT_TO_APP, false)
-            set(v) = prefs.setPref(DAY_THEME_ADAPT_TO_APP, v)
-        var nightThemeRef: String
-            get() =  prefs.getPref(NIGHT_THEME_REF, "assets:ime/theme/floris_night.json")
-            set(v) = prefs.setPref(NIGHT_THEME_REF, v)
-        var nightThemeAdaptToApp: Boolean
-            get() =  prefs.getPref(NIGHT_THEME_ADAPT_TO_APP, false)
-            set(v) = prefs.setPref(NIGHT_THEME_ADAPT_TO_APP, v)
-        var sunriseTime: Int
-            get() =  prefs.getPref(SUNRISE_TIME, TimeUtil.encode(6, 0))
-            set(v) = prefs.setPref(SUNRISE_TIME, v)
-        var sunsetTime: Int
-            get() =  prefs.getPref(SUNSET_TIME, TimeUtil.encode(18, 0))
-            set(v) = prefs.setPref(SUNSET_TIME, v)
     }
 }

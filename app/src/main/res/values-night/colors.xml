@@ -3,4 +3,6 @@
     <color name="cardViewBackgroundColor">#404040</color>
     <color name="toolbarForegroundColor">#FFFFFF</color>
     <color name="windowBackground">#303030</color>
+
+    <color name="florisApp_windowBackground">#FF1F1F1F</color>
 </resources>

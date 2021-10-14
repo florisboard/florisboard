@@ -14,28 +14,22 @@
  * limitations under the License.
  */
 
+@file:Suppress("NOTHING_TO_INLINE")
+
 package dev.patrickgold.florisboard.common
 
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
-
-inline fun <T> resultOk(value: () -> T): Result<T> {
-    contract {
-        callsInPlace(value, InvocationKind.EXACTLY_ONCE)
-    }
-    return Result.success(value())
+inline fun resultOk(): Result<Unit> {
+    return Result.success(Unit)
 }
 
-inline fun <T> resultErr(error: () -> Throwable): Result<T> {
-    contract {
-        callsInPlace(error, InvocationKind.EXACTLY_ONCE)
-    }
-    return Result.failure(error())
+inline fun <T> resultOk(value: T): Result<T> {
+    return Result.success(value)
 }
 
-inline fun <T> resultErrStr(error: () -> String): Result<T> {
-    contract {
-        callsInPlace(error, InvocationKind.EXACTLY_ONCE)
-    }
-    return Result.failure(Exception(error()))
+inline fun <T> resultErr(error: Throwable): Result<T> {
+    return Result.failure(error)
+}
+
+inline fun <T> resultErrStr(error: String): Result<T> {
+    return Result.failure(Exception(error))
 }

@@ -36,14 +36,15 @@ import androidx.autofill.inline.v1.InlineSuggestionUi
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.debug.flogInfo
-import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.FlorisRef
-import dev.patrickgold.florisboard.util.TimeUtil
+import dev.patrickgold.florisboard.util.AndroidVersion
+import java.time.LocalTime
 import java.util.concurrent.CopyOnWriteArrayList
 
 /**
@@ -54,7 +55,7 @@ class ThemeManager private constructor(
     private val applicationContext: Context,
     private val assetManager: AssetManager
 ) {
-    private val prefs get() = Preferences.default()
+    private val prefs by florisPreferenceModel()
     private val callbackReceivers: CopyOnWriteArrayList<OnThemeUpdatedListener> = CopyOnWriteArrayList()
     private val packageManager: PackageManager? = applicationContext.packageManager
 
@@ -251,41 +252,44 @@ class ThemeManager private constructor(
 
     private fun evaluateActiveThemeRef(): FlorisRef {
         flogInfo(LogTopic.THEME_MANAGER) { prefs.theme.mode.toString() }
-        flogInfo(LogTopic.THEME_MANAGER) { prefs.theme.dayThemeRef }
-        flogInfo(LogTopic.THEME_MANAGER) { prefs.theme.nightThemeRef }
-        return FlorisRef.from(
-            when (prefs.theme.mode) {
-                ThemeMode.ALWAYS_DAY -> {
-                    isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp
-                    prefs.theme.dayThemeRef
-                }
-                ThemeMode.ALWAYS_NIGHT -> {
-                    isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp
-                    prefs.theme.nightThemeRef
-                }
-                ThemeMode.FOLLOW_SYSTEM -> if (applicationContext.resources.configuration.uiMode and
-                    Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-                ) {
-                    isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp
-                    prefs.theme.nightThemeRef
-                } else {
-                    isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp
-                    prefs.theme.dayThemeRef
-                }
-                ThemeMode.FOLLOW_TIME -> {
-                    val current = TimeUtil.currentLocalTime()
-                    val sunrise = TimeUtil.decode(prefs.theme.sunriseTime)
-                    val sunset = TimeUtil.decode(prefs.theme.sunsetTime)
-                    if (TimeUtil.isNightTime(sunrise, sunset, current)) {
-                        isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp
-                        prefs.theme.nightThemeRef
+        flogInfo(LogTopic.THEME_MANAGER) { prefs.theme.dayThemeRef.get().toString() }
+        flogInfo(LogTopic.THEME_MANAGER) { prefs.theme.nightThemeRef.get().toString() }
+        return when (prefs.theme.mode.get()) {
+            ThemeMode.ALWAYS_DAY -> {
+                isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp.get()
+                prefs.theme.dayThemeRef.get()
+            }
+            ThemeMode.ALWAYS_NIGHT -> {
+                isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp.get()
+                prefs.theme.nightThemeRef.get()
+            }
+            ThemeMode.FOLLOW_SYSTEM -> if (applicationContext.resources.configuration.uiMode and
+                Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+            ) {
+                isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp.get()
+                prefs.theme.nightThemeRef.get()
+            } else {
+                isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp.get()
+                prefs.theme.dayThemeRef.get()
+            }
+            ThemeMode.FOLLOW_TIME -> {
+                if (AndroidVersion.ATLEAST_O) {
+                    val current = LocalTime.now()
+                    val sunrise = prefs.theme.sunriseTime.get()
+                    val sunset = prefs.theme.sunsetTime.get()
+                    if (current in sunrise..sunset) {
+                        isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp.get()
+                        prefs.theme.dayThemeRef.get()
                     } else {
-                        isAdaptiveThemeEnabled = prefs.theme.dayThemeAdaptToApp
-                        prefs.theme.dayThemeRef
+                        isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp.get()
+                        prefs.theme.nightThemeRef.get()
                     }
+                } else {
+                    isAdaptiveThemeEnabled = prefs.theme.nightThemeAdaptToApp.get()
+                    prefs.theme.nightThemeRef.get()
                 }
             }
-        )
+        }
     }
 
     private fun indexThemeRefs() {

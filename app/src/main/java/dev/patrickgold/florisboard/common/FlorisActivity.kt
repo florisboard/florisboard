@@ -26,7 +26,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.snackbar.Snackbar
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.core.Preferences
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.cancel
@@ -35,7 +35,7 @@ abstract class FlorisActivity<V : ViewBinding> : AppCompatActivity(), CoroutineS
     private var _binding: V? = null
     protected val binding: V
         get() = _binding!!
-    protected val prefs: Preferences get() = Preferences.default()
+    protected val prefs by florisPreferenceModel()
 
     private var errorDialog: AlertDialog? = null
     private var errorSnackbar: Snackbar? = null
