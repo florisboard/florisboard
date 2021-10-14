@@ -38,7 +38,6 @@ object LogTopic {
     const val GESTURES: FlogTopic =             32u
     const val SMARTBAR: FlogTopic =             64u
     const val THEME_MANAGER: FlogTopic =        128u
-    const val ASSET_MANAGER: FlogTopic =        256u
 
     const val GLIDE: FlogTopic =                512u
     const val CLIPBOARD: FlogTopic =            1024u
@@ -46,4 +45,8 @@ object LogTopic {
 
     const val SPELL_EVENTS: FlogTopic =         4096u
     const val EDITOR_INSTANCE: FlogTopic =      0x00_00_20_00u
+
+    const val FILE_IO: FlogTopic =              0x00_01_00_00u
+    const val EXT_MANAGER: FlogTopic =          0x00_02_00_00u
+    const val EXT_INDEXING: FlogTopic =         0x00_04_00_00u
 }

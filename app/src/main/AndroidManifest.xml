@@ -20,6 +20,19 @@
     <!-- Permission needed to vibrate if the user has key press vibration enabled -->
     <uses-permission android:name="android.permission.VIBRATE"/>
 
+    <!-- Android 11+ only: Define that FlorisBoard requests to see all apps that
+          ship with an IME or Spell Check service. This is used to guide the user
+          in the Settings Ui why FlorisBoard may not be working.
+     -->
+    <queries>
+        <intent>
+            <action android:name="android.view.InputMethod"/>
+        </intent>
+        <intent>
+            <action android:name="android.service.textservice.SpellCheckerService"/>
+        </intent>
+    </queries>
+
     <application
         android:name="dev.patrickgold.florisboard.FlorisApplication"
         android:allowBackup="false"
@@ -81,6 +94,7 @@
             android:launchMode="singleTask"
             android:roundIcon="@mipmap/floris_app_icon_round"
             android:targetActivity="dev.patrickgold.florisboard.app.FlorisAppActivity"
+            android:theme="@style/FlorisAppTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -107,22 +121,6 @@
             android:name="dev.patrickgold.florisboard.oldsettings.ThemeEditorActivity"
             android:icon="@mipmap/floris_app_icon"
             android:label="@string/settings__theme_editor__title"
-            android:theme="@style/SettingsTheme"/>
-
-        <!-- Spelling Activity -->
-        <activity
-            android:name="dev.patrickgold.florisboard.oldsettings.spelling.SpellingActivity"
-            android:icon="@mipmap/floris_app_icon"
-            android:label="@string/settings__spelling__title_overview"
-            android:roundIcon="@mipmap/floris_app_icon_round"
-            android:theme="@style/SettingsTheme"/>
-
-        <!-- Setup Activity -->
-        <activity
-            android:name="dev.patrickgold.florisboard.setup.SetupActivity"
-            android:icon="@mipmap/floris_app_icon"
-            android:label="@string/setup__title"
-            android:roundIcon="@mipmap/floris_app_icon_round"
             android:theme="@style/SettingsTheme"/>
 
         <!-- Crash Dialog Activity -->

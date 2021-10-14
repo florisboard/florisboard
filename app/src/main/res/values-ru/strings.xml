@@ -75,10 +75,10 @@
     <string name="settings__theme__title" comment="Title of the Theme fragment">Тема клавиатуры</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Не определено</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Режим темы</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Всегда день</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Всегда ночь</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Использовать системные настройки</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Следовать времени</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Всегда день</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Всегда ночь</string>
+    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Использовать системные настройки</string>
+    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Следовать времени</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Время восхода</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Время заката</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Дневная тема</string>
@@ -215,8 +215,6 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Управление внутренним словарём пользователя</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Добавление, просмотр и удаление записей во внутреннем пользовательском словаре</string>
     <string name="pref__correction__title" comment="Preference group title">Исправления</string>
-    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">Проверка правописания</string>
-    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">Управление и настройка сервиса проверки правописания</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Заглавные автоматически</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Использовать заглавные буквы в зависимости от текущего контекста ввода</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Запоминать состояние Caps Lock</string>
@@ -252,30 +250,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">Общие жесты</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Жесты пробела</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Другие жесты / Пороговые значения жестов</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Не задано</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Перейти к предыдущему режиму клавиатуры</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Перейти к следующему режиму клавиатуры</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Точное удаление символов</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Удалить текущее слово</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Точное удаление слова</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Скрыть клавиатуру</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Вставить пробел</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Переместить курсор вверх</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Переместить курсор вниз</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Переместить курсор влево</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Переместить курсор вправо</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Переместить курсор в начало строки</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Переместить курсор в конец строки</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Переместить курсор в начало страницы</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Переместить курсор в конец страницы</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Открыть буфер обмена/историю</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Shift</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Повторить</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Отменить</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Показать способ ввода</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Переключиться на предыдущую клавиатуру</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Переключиться на предыдущую раскладку</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Переключиться на следующую раскладку</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Жест вверх</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Жест вниз</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Жест влево</string>
@@ -286,17 +260,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Долгое нажатие пробела</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Жест влево на кнопке удаления</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Порог скорости жеста</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Очень медленно</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Медленно</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Нормально</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Быстро</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Очень быстро</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Порог срабатывания жеста</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Очень короткий</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Короткий</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Нормальный</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Длинный</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Очень длинный</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Дополнительные</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Настройки темы</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Светлая</string>
@@ -314,42 +278,16 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Показывать значения используемой выделенной памяти и максимальный использованный объём в правом верхнем углу</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Очистить внутренний словарь пользователя</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Удаление всех слов из базы внутреннего пользовательского словаря</string>
-    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Настройки проверки правописания</string>
-    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Управление словарями</string>
-    <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">Учитывать раскладки клавиатуры</string>
-    <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">Словари проверки правописания не установлены. Нажмите кнопку \"+\" внизу, чтобы установить его.</string>
-    <string name="settings__spelling__dictionary_index_invalid" comment="String for the Dictionary index invalid error card. %s will be replaced by the app name.">Произошла ошибка при индексировании установленных словарей проверки правописания. Попробуйте перезапустить %s или сообщите об ошибке.</string>
-    <string name="settings__spelling__dict_sources_info" comment="String for the Dictionary sources info.">Где взять словари для проверки правописания?</string>
+    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Словари проверки правописания не установлены. Нажмите кнопку \"+\" внизу, чтобы установить его.</string>
+    <string name="settings__spelling__dict_sources_info__title" comment="String for the Dictionary sources info.">Где взять словари для проверки правописания?</string>
     <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Расширение / Архив</string>
     <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Файл словаря + affix</string>
     <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Включить проверку правописания</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Ничего не задано</string>
-    <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">Проверьте системные настройки</string>
-    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">Управление словарями</string>
-    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
-        <item quantity="one">%d установлен</item>
-        <item quantity="few">%d установлено</item>
-        <item quantity="many">%d установлено</item>
-        <item quantity="other">%d установлено</item>
-    </plurals>
-    <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">Точная настройка</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NOT IMPLEMENTED] Использовать имена контактов</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Проверка правописания будет просматривать имена в вашем списке контактов</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Использовать записи из словаря пользователя</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Проверка правописания будеть использовать записи из пользовательских словарей, если они существуют</string>
-    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Импорт нового словаря</string>
-    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Выбор источника</string>
-    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Выбор языка</string>
-    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">Код языка (например, en_US)</string>
-    <string name="settings__spelling__import_dict_s2__title" comment="Title for the import dict sheet (step 2)">Добавление файлов для импорта</string>
-    <string name="settings__spelling__import_dict_s2__select_aff" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Выбор файла affix (.aff)</string>
-    <string name="settings__spelling__import_dict_s2__select_dic" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">Выбор файла словаря (.dic)</string>
-    <string name="settings__spelling__import_dict_s3__title" comment="Title for the import dict sheet (step 3)">Проверка импортируемых файлов</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_locale" comment="Text for the verify files dialog (step 3)">Язык: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_original" comment="Text for the verify files dialog (step 3)">Источник: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_any" comment="Text for the verify files dialog (the first %s will be replaced by a file extension, the second by a file name) (step 3)">%s файл: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_readme" comment="Text for the verify files dialog (step 3)">Информационный файл: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_license" comment="Text for the verify files dialog (step 3)">Файл лицензии: %s</string>
     <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info sheet">FlorisBoard использует Nuspell в качестве средства проверки орфографии. Это означает, что доступно огромное количество словарей, так как Hunspell используется и многими другими программами. В списке ниже показано несколько выбранных вручную источников, которые поддерживает менеджер импорта. Загрузите файл архива или файлы словаря, затем при импортировании укажите правильный источник (это важно для правильного чтения формата архива).</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">если в данном списке нет словарей для вашего языка или диалекта, вы можете самостоятельно найти требуемый словарь Hunspell и импортировать его файлы \"aff \" и \"dic\".</string>
     <!-- About UI strings -->
@@ -404,26 +342,7 @@
     <string name="assets__error__snackbar_message">Что-то пошло не так</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Настройка</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Назад</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Отмена</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Далее</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Готово</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">ОК</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Добро пожаловать!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Спасибо, что попробовали FlorisBoard! Перед тем, как вы сможете начать использовать FlorisBoard, мы должны сделать обычные вещи и включить их в настройках системы, настроить предпочтительный язык/раскладку и т.д. Но не волнуйтесь, мастер настройки проведёт вас через это!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard уважает вашу конфиденциальность и не собирает никакие пользовательские данные. Подробнее здесь:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">Исходный код FlorisBoard общедоступен для каждого, поэтому вы можете легко проверить, что делает FlorisBoard в фоновом режиме. Проверьте репозиторий по ссылке ниже.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Последняя вещь перед началом настройки: если у вас возникнут какие-либо ошибки/сбои/проблемы с FlorisBoard или у появятся предложения, перейдите в репозиторий GitHub по ссылке ниже и сообщите о проблеме. Это будет полезно для всех пользователей!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Для начала настройки нажмите <i>Далее</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Включить FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android требует, чтобы каждая пользовательская клавиатура была включена вручную, прежде чем вы сможете её использовать. Нажмите кнопку ниже, чтобы перейти в <i>Настройки языка и ввода</i>, затем убедитесь, что установили флажок напротив \"<i>FlorisBoard</i>\".</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard успешно включён. Для продолжения нажмите <i>Далее</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Открыть настройки \"Язык и ввод\"</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">Сделать FlorisBoard клавиатурой по умолчанию</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard теперь включён в вашей системе. Чтобы активно использовать его, переключитесь на FlorisBoard, выбрав его в диалоговом окне выбора ввода!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">Клавиатура по умолчанию успешно переключена на FlorisBoard!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Переключить клавиатуру</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Установка завершена!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Сообщение об ошибке FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Извините за неудобства, но в FlorisBoard произошёл сбой из-за непредвиденной ошибки.</string>

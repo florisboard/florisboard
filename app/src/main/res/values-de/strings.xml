@@ -75,10 +75,10 @@
     <string name="settings__theme__title" comment="Title of the Theme fragment">Tastaturdesign</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nicht definiert</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Design-Modus</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">Immer Tagmodus</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">Immer Nachtmodus</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">Systemkonform</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">Zeit-basierend</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Immer Tagmodus</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Immer Nachtmodus</string>
+    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Systemkonform</string>
+    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Zeit-basierend</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Sonnenaufgangszeit</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Sonnenuntergangszeit</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Helles Design</string>
@@ -209,8 +209,6 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Internes Benutzerwörterbuch verwalten</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Hinzufügen, ansehen und bearbeiten von Einträgen für das interne Benutzerwörterbuch</string>
     <string name="pref__correction__title" comment="Preference group title">Korrekturen</string>
-    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">Rechtschreibprüfung</string>
-    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">Verwalte und konfiguriere den Rechtschreibservice</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Autom. Groß-/Kleinschreibung</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Automatisches Großschreiben je nach aktuellem Kontext</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Status der festgestellten Umschalttaste merken</string>
@@ -246,30 +244,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">Allgemeine Gesten</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Leertaste Gesten</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Andere Gesten / Gesten Schwellenwerte</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">Keine Aktion</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">Zyklus vom vorherigen Tastaturmodus</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">Zyklus zum nächsten Tastaturmodus</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">Einzelne Zeichen exakt löschen</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">Aktuelles Wort löschen</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">Einzelne Wörter exakt löschen</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">Tastatur verstecken</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">Leerzeichen einfügen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">Cursor nach oben bewegen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">Cursor nach unten bewegen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">Cursor nach links bewegen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">Cursor nach rechts bewegen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">Cursor an den Zeilenanfang bewegen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">Cursor an das Zeilenende bewegen</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">Bewege den Cursor zum Anfang der Seite</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">Bewege den Cursor zum Ende der Seite</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">Zwischenablage Verlauf öffnen</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">Umschalttaste</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">Wiederherstellen</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">Rückgängig machen</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">Auswahl der Eingabemethode anzeigen</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">Zur vorherigen Tastatur wechseln</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">Zum vorherigen Eingabestil wechseln</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">Zum nächsten Eingabestil wechseln</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Nach oben wischen</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Nach unten streichen</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Nach links streichen</string>
@@ -280,17 +254,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">Leertaste lang drücken</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">Löschtaste nach links streichen</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">Gesten-Geschwindigkeitsschwelle</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">Sehr langsam</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">Langsam</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">Normal</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">Schnell</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">Sehr schnell</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">Gesten-Distanzschwelle</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">Sehr kurz</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">Kurz</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">Normal</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">Lang</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">Sehr lang</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">Erweitert</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">App-Design</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Hell</string>
@@ -308,22 +272,8 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Blende die Heap-Speicherverbrauch und der Maximal Größe in der rechte obere Ecke</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Interne Benutzerwörterbuch-Datenbank leeren</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Leert alle Wörter von der Wörterbuch-Datenbank</string>
-    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">Rechtschreibprüfungseinstellungen</string>
-    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">Wörterbücher verwalten</string>
-    <string name="settings__spelling__dict_sources_info" comment="String for the Dictionary sources info.">Wo bekomme ich die Rechtschreibkorrektur-Wörterbücher her?</string>
+    <string name="settings__spelling__dict_sources_info__title" comment="String for the Dictionary sources info.">Wo bekomme ich die Rechtschreibkorrektur-Wörterbücher her?</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Nichts ausgewählt</string>
-    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
-        <item quantity="one">%d installiert</item>
-        <item quantity="other">%d installiert</item>
-    </plurals>
-    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">Neues Wörterbuch importieren</string>
-    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">Quelle auswählen</string>
-    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">Sprache auswählen</string>
-    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">Sprachkürzel (z.B. \'en_US\')</string>
-    <string name="settings__spelling__import_dict_s3__title" comment="Title for the import dict sheet (step 3)">Prüfe Importdateien</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_any" comment="Text for the verify files dialog (the first %s will be replaced by a file extension, the second by a file name) (step 3)">%s Datei: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_readme" comment="Text for the verify files dialog (step 3)">Liesmich Datei: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_license" comment="Text for the verify files dialog (step 3)">Lizenzdatei: %s</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">wenn diese Liste kein Wörterbuch für deine Sprache oder Dialekt enthält, kannst du manuell nach einem Hunspell-Wörterbuch suchen und die \'aff\' und \'dic\'-Dateien importieren.</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Über</string>
@@ -376,26 +326,7 @@
     <string name="assets__error__snackbar_message">Etwas hat nicht geklappt</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Einrichtung</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">Zurück</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">Abbrechen</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">Weiter</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">Abschließen</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">Okay</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">Herzlich willkommen!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">Vielen Dank, dass Sie FlorisBoard ausprobieren! Bevor Sie loslegen können, muss FlorisBoard in den Systemeinstellungen aktiviert und Sprache, Design, etc. eingerichtet werden... Aber keine Sorge - Der Einrichtungsassistenz wird sie durch die Konfiguration leiten!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">FlorisBoard respektiert Ihre Privatsphäre vollständig und sammelt keine Nutzungsdaten. Für mehr Informationen:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">Der Quellcode für FlorisBoard ist für alle öffentlich zugänglich, so können Sie leicht selbst überprüfen, wie FlorisBoard im Hintergrund arbeitet. Besuchen Sie dafür das Repository.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">Ein letzter Hinweis, bevor die Einrichtung startet - Wenn Sie Fehler finden oder Vorschläge zur Verbesserung haben, besuchen Sie unser Repository auf GitHub und erstellen sie eine Fehlermeldung. Mit Ihrer Hilfe kann FlorisBoard noch besser werden!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">Um die Einrichtung zu starten, klicken sie auf <i>WEITER</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">FlorisBoard aktivieren</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">Android verlangt, dass Tastaturen manuell aktiviert werden müssen, bevor sie benutzt werden können. Klicken Sie auf die Schaltfläche um in die Einstellungen für <i>Sprache und Eingabe</i> zu gelangen, stellen Sie sicher, dass dort \'<i>FlorisBoard</i>\' aktiviert ist.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">FlorisBoard wurde erfolgreich aktiviert. Um fortzufahren klicken sie auf <i>WEITER</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">Öffne Sprachen und Eingabe</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">FlorisBoard als Standard einrichten</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">FlorisBoard ist nun auf ihrem System aktiviert. Um es zu benutzen, wählen Sie bei der Standard-Eingabemethode FlorisBoard aus!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">FlorisBoard wurde erfolgreich als Standard-Tastatur ausgewählt!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">Tastatur wechseln</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">Einrichtung abgeschlossen!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard Fehlermeldung</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Entschuldigung für die Unannehmlichkeiten, aber FlorisBoard ist aufgrund eines unerwarteten Fehlers abgestürzt.</string>

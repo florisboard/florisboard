@@ -75,10 +75,10 @@
     <string name="settings__theme__title" comment="Title of the Theme fragment">ثيم لوحة المفاتيح</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">غير محدد</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">وضع الثيم</string>
-    <string name="pref__theme__mode__always_day" comment="Preference value for theme mode">دائما نهاري</string>
-    <string name="pref__theme__mode__always_night" comment="Preference value for theme mode">دائما ليلي</string>
-    <string name="pref__theme__mode__follow_system" comment="Preference value for theme mode">اتبّاع النظام</string>
-    <string name="pref__theme__mode__follow_time" comment="Preference value for theme mode">اتبّاع الوقت</string>
+    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">دائما نهاري</string>
+    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">دائما ليلي</string>
+    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">اتبّاع النظام</string>
+    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">اتبّاع الوقت</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">وقت الشروق</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">وقت الغروب</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">نسق نهاري</string>
@@ -223,8 +223,6 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">إدارة قاموس الداخلي للمستخدم</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">إضافة وعرض وإزالة الإدخالات لقاموس المستخدم الداخلي</string>
     <string name="pref__correction__title" comment="Preference group title">الإصلاحات</string>
-    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">المدقق الإملائي</string>
-    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">إدارة وتكوين خدمة المدقق الإملائي</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">استخدام الأحرف الكبيرة تلقائيًا</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">استخدام الأحرف الكبيرة في الكلمات على حسب سياق نص الإدخال الحالي</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">تذكر حالة زر الأحرف الكبيرة</string>
@@ -260,30 +258,6 @@
     <string name="pref__gestures__general_title" comment="Preference group title">الإيماءات العامة</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">إيماءات شريط المسافة</string>
     <string name="pref__gestures__other_title" comment="Preference group title">إيماءات أخرى / حدود الإيماءات</string>
-    <string name="pref__gestures__swipe_action__no_action" comment="Preference value for swipe action">بدون إجراء</string>
-    <string name="pref__gestures__swipe_action__cycle_to_previous_keyboard_mode" comment="Preference value for swipe action">التبديل إلى لوحة المفاتيح السابقة</string>
-    <string name="pref__gestures__swipe_action__cycle_to_next_keyboard_mode" comment="Preference value for swipe action">التبديل الى لوحة المفاتيح التالية</string>
-    <string name="pref__gestures__swipe_action__delete_characters_precisely" comment="Preference value for swipe action">حذف الحروف بدقة</string>
-    <string name="pref__gestures__swipe_action__delete_word" comment="Preference value for swipe action">حذف الكلمة الحالية</string>
-    <string name="pref__gestures__swipe_action__delete_words_precisely" comment="Preference value for swipe action">حذف الكلمات بدقة</string>
-    <string name="pref__gestures__swipe_action__hide_keyboard" comment="Preference value for swipe action">إخفاء لوحة المفاتيح</string>
-    <string name="pref__gestures__swipe_action__insert_space" comment="Preference value for swipe action">إدراج مسافة</string>
-    <string name="pref__gestures__swipe_action__move_cursor_up" comment="Preference value for swipe action">تحريك المؤشر إلى الأعلى</string>
-    <string name="pref__gestures__swipe_action__move_cursor_down" comment="Preference value for swipe action">تحريك المؤشر إلى الأسفل</string>
-    <string name="pref__gestures__swipe_action__move_cursor_left" comment="Preference value for swipe action">تحريك المؤشر إلى اليسار</string>
-    <string name="pref__gestures__swipe_action__move_cursor_right" comment="Preference value for swipe action">تحريك المؤشر إلى اليمين</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_line" comment="Preference value for swipe action">حرك المؤشر إلى بداية السطر</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_line" comment="Preference value for swipe action">حرك المؤشر إلى نهاية السطر</string>
-    <string name="pref__gestures__swipe_action__move_cursor_start_of_page" comment="Preference value for swipe action">حرك المؤشر إلى بداية الصفحة</string>
-    <string name="pref__gestures__swipe_action__move_cursor_end_of_page" comment="Preference value for swipe action">حرك المؤشر إلى نهاية الصفحة</string>
-    <string name="pref__gestures__swipe_action__switch_to_clipboard_context" comment="Preference value for swipe action">فتح مدير الحافظة /السجل</string>
-    <string name="pref__gestures__swipe_action__shift" comment="Preference value for swipe action">مفتاح التحويل</string>
-    <string name="pref__gestures__swipe_action__redo" comment="Preference value for swipe action">إعادة</string>
-    <string name="pref__gestures__swipe_action__undo" comment="Preference value for swipe action">تراجع</string>
-    <string name="pref__gestures__swipe_action__show_input_method_picker" comment="Preference value for swipe action">إظهار مبدل طريقة الإدخال</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_keyboard" comment="Preference value for swipe action">التبديل إلى لوحة المفاتيح السابقة</string>
-    <string name="pref__gestures__swipe_action__switch_to_prev_subtype" comment="Preference value for swipe action">التبديل إلى النوع الفرعي السابق</string>
-    <string name="pref__gestures__swipe_action__switch_to_next_subtype" comment="Preference value for swipe action">التبديل إلى النوع الفرعي التالي</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">السحب للأعلى</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">السحب للأسفل</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">السحب لليسار</string>
@@ -294,17 +268,7 @@
     <string name="pref__gestures__space_bar_long_press__label" comment="Preference title">الضغط المطول على شريط المسافة</string>
     <string name="pref__gestures__delete_key_swipe_left__label" comment="Preference title">السحب لليسار من خلال مفتاح الحذف</string>
     <string name="pref__gestures__swipe_velocity_threshold__label" comment="Preference title">عتبة سرعة السحب</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_slow" comment="Preference value for swipe velocity threshold">بطيئة جداً</string>
-    <string name="pref__gestures__swipe_velocity_threshold__slow" comment="Preference value for swipe velocity threshold">بطيئة</string>
-    <string name="pref__gestures__swipe_velocity_threshold__normal" comment="Preference value for swipe velocity threshold">عادية</string>
-    <string name="pref__gestures__swipe_velocity_threshold__fast" comment="Preference value for swipe velocity threshold">سريعة</string>
-    <string name="pref__gestures__swipe_velocity_threshold__very_fast" comment="Preference value for swipe velocity threshold">سريعة جداً</string>
     <string name="pref__gestures__swipe_distance_threshold__label" comment="Preference title">عتبة مسافة السحب</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_short" comment="Preference value for swipe distance threshold">قصيرة جداً</string>
-    <string name="pref__gestures__swipe_distance_threshold__short" comment="Preference value for swipe distance threshold">قصيرة</string>
-    <string name="pref__gestures__swipe_distance_threshold__normal" comment="Preference value for swipe distance threshold">عادية</string>
-    <string name="pref__gestures__swipe_distance_threshold__long" comment="Preference value for swipe distance threshold">طويلة</string>
-    <string name="pref__gestures__swipe_distance_threshold__very_long" comment="Preference value for swipe distance threshold">طويلة جداً</string>
     <string name="settings__advanced__title" comment="Title of Advanced settings">إعدادات متقدمة</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">إعدادات المظهر</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">فاتح</string>
@@ -322,44 +286,16 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">يعرض طبقة تراكبية في الزاوية العلوية اليمنى على لوحة المفاتيح لاستخدام ذاكرة الكومة والحجم الأقصى لها</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">مسح قاعدة بيانات القاموس الداخلي للمستخدم</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">يمسح كل الكلمات من جدول قاعدة بيانات القاموس</string>
-    <string name="settings__spelling__title_overview" comment="Title of the Spelling activity (overview)">إعدادات المدقق الإملائي</string>
-    <string name="settings__spelling__title_manage_dictionaries" comment="Title of the Spelling activity (dictionary management)">إدارة القواميس</string>
-    <string name="settings__spelling__use_floris_subtypes" comment="String for the subtype in the system settings">استخدم الأنواع الفرعية للوحة المفاتيح</string>
-    <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">لا توجد قواميس مدقق إملائي مثبتة حاليًا. أضف أول واحد بالزر \"+\" أدناه!</string>
-    <string name="settings__spelling__dictionary_index_invalid" comment="String for the Dictionary index invalid error card. %s will be replaced by the app name.">حدث خطأ أثناء فهرسة قواميس المدقق الإملائي المثبتة. حاول إعادة تشغيل %s أو تقديم تقرير خطأ لهذا الغرض.</string>
-    <string name="settings__spelling__dict_sources_info" comment="String for the Dictionary sources info.">من أين أحصل على قواميس المدقق الإملائي؟</string>
+    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">لا توجد قواميس مدقق إملائي مثبتة حاليًا. أضف أول واحد بالزر \"+\" أدناه!</string>
+    <string name="settings__spelling__dict_sources_info__title" comment="String for the Dictionary sources info.">من أين أحصل على قواميس المدقق الإملائي؟</string>
     <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">ملحق / أرشيف</string>
     <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">ملف قاموس + Affix</string>
     <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">المدقق الإملائي النشط</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">لا شيء محدد</string>
-    <string name="pref__spelling__active_spellchecker__summary_check_in_system" comment="Summary of Active spellchecker pref">تحقق في إعدادات النظام</string>
-    <string name="pref__spelling__manage_dictionaries__label" comment="Label of Manage dictionaries pref">إدارة القواميس و المدقق الإملائي</string>
-    <plurals name="pref__spelling__manage_dictionaries__summary" comment="Summary of Manage dictionaries pref (%d will be replaced by the number of dictionaries).">
-        <item quantity="zero">%d مثبت</item>
-        <item quantity="one">%d مثبت</item>
-        <item quantity="two">%d مثبت</item>
-        <item quantity="few">%d مثبت</item>
-        <item quantity="many">%d مثبت</item>
-        <item quantity="other">%d مثبت</item>
-    </plurals>
-    <string name="pref__spelling__group_fine_adjustment__title" comment="Title of Fine-adjustment sub-group">تعديلات دقيقة</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[لم يتم التنفيذ] استخدم أسماء من جهات الاتصال</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">سيقوم المدقق الإملائي بالبحث عن الأسماء من قائمة جهات الاتصال الخاصة بك</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">استخدم إدخالات قاموس المستخدم</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">سيبحث المدقق الإملائي عن إدخالات من قواميس المستخدم ، إذا تم تمكينها</string>
-    <string name="settings__spelling__import_dict__title" comment="Title for the import dict sheet">استيراد قاموس جديد</string>
-    <string name="settings__spelling__import_dict_s1__title" comment="Title for the import dict sheet (step 1)">حدد المصدر</string>
-    <string name="settings__spelling__import_dict_s11__title" comment="Title for the import dict sheet (step 1-1)">تحديد اللغة</string>
-    <string name="settings__spelling__import_dict_s11__hint" comment="Hint for the language code field on import dict sheet (step 1-1)">رمز اللغة (مثلًا en_GB)</string>
-    <string name="settings__spelling__import_dict_s2__title" comment="Title for the import dict sheet (step 2)">إضافة الملفات المراد استيرادها</string>
-    <string name="settings__spelling__import_dict_s2__select_aff" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">حدد ملف الملاحق (.aff)</string>
-    <string name="settings__spelling__import_dict_s2__select_dic" comment="String for select aff file, do not alter '.aff', this is a file extension! (step 2)">حدد ملف القاموس (.dic)</string>
-    <string name="settings__spelling__import_dict_s3__title" comment="Title for the import dict sheet (step 3)">تحقق من استيراد الملفات</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_locale" comment="Text for the verify files dialog (step 3)">اللغة: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_original" comment="Text for the verify files dialog (step 3)">المصدر الاصلي: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_any" comment="Text for the verify files dialog (the first %s will be replaced by a file extension, the second by a file name) (step 3)">%s ملف: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_readme" comment="Text for the verify files dialog (step 3)">ملف أقراني: %s</string>
-    <string name="settings__spelling__import_dict_s3__verify_files_license" comment="Text for the verify files dialog (step 3)">ملف الرخصة: %s</string>
     <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info sheet">يستخدم FlorisBoard Nuspell كمحرك للمدقق الإملائي ، مما يعني أن هناك قدرًا هائلاً من القواميس المتاحة ، حيث يتم استخدام Hunspell بواسطة العديد من البرامج الأخرى أيضًا. تعرض القائمة أدناه بعض المصادر المختارة يدويًا والتي يدعمها مدير الاستيراد. قم بتنزيل إما ملف الأرشيف أو ملفات القاموس ، ثم اختر المصدر الصحيح في مدير الاستيراد (من المهم قراءة تنسيق الأرشيف بشكل صحيح).</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">إذا كانت هذه القائمة لا تحتوي على قواميس للغة أو لهجتك ، فيمكنك أيضًا البحث يدويًا عن قاموس Hunspell واستيراد ملف \"aff\" و \"dic\" لهذا الغرض.</string>
     <!-- About UI strings -->
@@ -417,26 +353,7 @@
     <string name="assets__error__snackbar_message">لقد حدث خطأ ما</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">الإعداد</string>
-    <string name="setup__prev_button" comment="Label of Previous button in Setup (try to find a short translation due to limited space in UI)">السابق</string>
-    <string name="setup__cancel_button" comment="Label of Cancel button in Setup">إلغاء</string>
-    <string name="setup__next_button" comment="Label of Next button in Setup (try to find a short translation due to limited space in UI)">التالي</string>
-    <string name="setup__finish_button" comment="Label of Finish button in Setup">إنهاء</string>
-    <string name="setup__ok_button" comment="Label of OK button in Setup">حسنًا</string>
-    <string name="setup__welcome__title" comment="Title of Welcome fragment in Setup">مرحبا!</string>
-    <string name="setup__welcome__intro" comment="Paragraph in Welcome fragment in Setup">شكرا على تجربة FlorisBoard! قبل أن تتمكن من البدء في استخدامه ، يتعين علينا القيام بالأشياء المعتادة وذلك بتمكينه في إعدادات النظام ، وإعداد لغتك / تخطيطك المفضل ، إلخ... ولكن لا تقلق - سيرشدك معالج الإعداد خلال هذا!</string>
-    <string name="setup__welcome__privacy" comment="Paragraph in Welcome fragment in Setup">يحترم FlorisBoard خصوصيتك تمامًا ولا يجمع أي بيانات مستخدم. لمزيد من المعلومات انظر هنا:</string>
-    <string name="setup__welcome__trust" comment="Paragraph in Welcome fragment in Setup">مصدر التعليمات البرمجية لـ FlorisBoard متاح للجميع ، لذا يمكنك بسهولة مراجعة ما يفعله FlorisBoard في الخلفية. يرجى مراجعة الرابط الخاص بالمستودع أدناه.</string>
-    <string name="setup__welcome__contribute" comment="Paragraph in Welcome fragment in Setup">شيء أخير قبل بدء الإعداد - إذا واجهت أي أخطاء / أعطال / مشكلات في FlorisBoard أو كان لديك طلب ميزة - توجه إلى مستودع GitHub الموجود في الرابط أدناه واطرح مشكلة. هذا يساعد في تحسين التجربة لجميع المستخدمين!</string>
-    <string name="setup__welcome__outro" comment="Paragraph in Welcome fragment in Setup">لبدء الإعداد إضغط على <i>التالي</i>.</string>
     <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">قم بتفعيل FlorisBoard</string>
-    <string name="setup__enable_ime__text_before_enabled" comment="Description of state in Enable IME fragment before user enabled">يتطلب Android تمكين كل لوحة مفاتيح مخصصة يدويًا قبل أن تتمكن من استخدامها. إضغط على الزر أدناه للتوجه إلى <i>اللغات و الإدخال</i> الإعدادات, ثم تأكد من إختيار \'<i>FlorisBoard</i>\'.</string>
-    <string name="setup__enable_ime__text_after_enabled" comment="Description of state in Enable IME fragment after user enabled">تم تفعيل FlorisBoard بنجاح. للمواصلة إضغط على <i>التالي</i>!</string>
-    <string name="setup__enable_ime__text_button_language_and_input" comment="Label of language and input button in Enable IME fragment">فتح إعدادات اللغات و الإدخال</string>
-    <string name="setup__make_default__title" comment="Title of Make IME default fragment in Setup">جعل FlorisBoard افتراضيًا</string>
-    <string name="setup__make_default__text_before_switch" comment="Description of state in Make IME default fragment before user switched">تم تمكين FlorisBoard الآن في نظامك. لاستخدامه بشكل دائم ، قم بالتبديل إلى FlorisBoard عن طريق تحديده في مربع حوار محدد الإدخال!</string>
-    <string name="setup__make_default__text_after_switch" comment="Description of state in Make IME default fragment after user switched">تم تبديل لوحة المفاتيح الإفتراضية إلى FlorisBoard بنجاح!</string>
-    <string name="setup__make_default__text_switch_button" comment="Label of switch button in Make IME default fragment">تبديل لوحة المفاتيح</string>
-    <string name="setup__finish__title" comment="Title of Setup finished fragment in Setup">تم إنهاء الاعداد!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">تقرير حول خطأ في FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">نأسف للإزعاج ، ولكن FlorisBoard تعطل بسبب خطأ غير متوقع.</string>

@@ -1,65 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ListPreference
-        android:defaultValue="follow_system"
-        app:entries="@array/pref__theme__mode__entries"
-        app:entryValues="@array/pref__theme__mode__values"
-        app:key="theme__mode"
-        app:icon="@drawable/ic_brightness_auto"
-        app:title="@string/pref__theme__mode__label"
-        app:useSimpleSummaryProvider="true"/>
-
-    <PreferenceCategory
-        app:key="theme__day_group"
-        app:title="@string/pref__theme__day">
-
-        <dev.patrickgold.florisboard.oldsettings.components.ThemeSelectorPreference
-            android:defaultValue="assets:ime/theme/floris_day.json"
-            app:key="theme__day_theme_ref"
-            app:icon="@drawable/ic_light_mode"
-            app:title="@string/pref__theme__any_theme__label"/>
-
-        <dev.patrickgold.florisboard.oldsettings.components.TimePickerDialogPreference
-            android:defaultValue="1536"
-            app:key="theme__sunrise_time"
-            app:icon="@drawable/ic_schedule"
-            app:title="@string/pref__theme__sunrise_time__label"/>
-
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
-            app:key="theme__day_theme_adapt_to_app"
-            app:icon="@drawable/ic_format_paint"
-            app:title="@string/pref__theme__any_theme_adapt_to_app__label"
-            app:summary="@string/pref__theme__any_theme_adapt_to_app__summary"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:key="theme__night_group"
-        app:title="@string/pref__theme__night">
-
-        <dev.patrickgold.florisboard.oldsettings.components.ThemeSelectorPreference
-            android:defaultValue="assets:ime/theme/floris_night.json"
-            app:key="theme__night_theme_ref"
-            app:icon="@drawable/ic_dark_mode"
-            app:title="@string/pref__theme__any_theme__label"/>
-
-        <dev.patrickgold.florisboard.oldsettings.components.TimePickerDialogPreference
-            android:defaultValue="4608"
-            app:key="theme__sunset_time"
-            app:icon="@drawable/ic_schedule"
-            app:title="@string/pref__theme__sunset_time__label"/>
-
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
-            app:key="theme__night_theme_adapt_to_app"
-            app:icon="@drawable/ic_format_paint"
-            app:title="@string/pref__theme__any_theme_adapt_to_app__label"
-            app:summary="@string/pref__theme__any_theme_adapt_to_app__summary"/>
-
-    </PreferenceCategory>
+    <Preference
+        app:title="This screen is not available anymore in the old Settings UI. Please use the screen available in the new UI!"
+        app:iconSpaceReserved="false"/>
 
 </PreferenceScreen>

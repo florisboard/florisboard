@@ -24,6 +24,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -36,7 +37,13 @@ fun FlorisAppBar(
 ) {
     TopAppBar(
         navigationIcon = backNavBtn(backArrowVisible),
-        title = { Text(text = title) },
+        title = {
+            Text(
+                text = title,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+            )
+        },
         actions = actions,
         backgroundColor = Color.Transparent,
         elevation = 0.dp,

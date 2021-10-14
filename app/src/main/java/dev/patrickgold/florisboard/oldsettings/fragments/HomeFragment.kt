@@ -24,10 +24,9 @@ import android.view.View
 import android.view.ViewGroup
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisAppActivity
+import dev.patrickgold.florisboard.common.InputMethodUtils
 import dev.patrickgold.florisboard.databinding.SettingsFragmentHomeBinding
-import dev.patrickgold.florisboard.ime.InputMethodUtils
 import dev.patrickgold.florisboard.oldsettings.SettingsMainActivity
-import dev.patrickgold.florisboard.setup.SetupActivity
 
 class HomeFragment : SettingsMainActivity.SettingsFragment() {
     private lateinit var binding: SettingsFragmentHomeBinding
@@ -38,18 +37,6 @@ class HomeFragment : SettingsMainActivity.SettingsFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = SettingsFragmentHomeBinding.inflate(inflater, container, false)
-        binding.imeNotEnabledCard.setOnClickListener {
-            Intent(context, SetupActivity::class.java).apply {
-                putExtra(SetupActivity.EXTRA_SHOW_SINGLE_STEP, SetupActivity.Step.ENABLE_IME)
-                startActivity(this)
-            }
-        }
-        binding.imeNotSelectedCard.setOnClickListener {
-            Intent(context, SetupActivity::class.java).apply {
-                putExtra(SetupActivity.EXTRA_SHOW_SINGLE_STEP, SetupActivity.Step.MAKE_DEFAULT)
-                startActivity(this)
-            }
-        }
         binding.newSettings.setOnClickListener {
             Intent(context, FlorisAppActivity::class.java).apply {
                 startActivity(this)

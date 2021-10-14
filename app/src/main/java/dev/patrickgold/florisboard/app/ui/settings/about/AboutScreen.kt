@@ -19,10 +19,7 @@ package dev.patrickgold.florisboard.app.ui.settings.about
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,25 +29,24 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.res.ResourcesCompat
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
+import dev.patrickgold.florisboard.app.ui.components.FlorisCanvasIcon
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.common.InputMethodUtils
 import dev.patrickgold.florisboard.common.launchUrl
-import dev.patrickgold.florisboard.ime.InputMethodUtils
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.jetpref.ui.compose.Preference
 
 @Composable
-fun AboutScreen() = FlorisScreen(title = stringResource(R.string.about__title)) {
+fun AboutScreen() = FlorisScreen(title = stringRes(R.string.about__title)) {
     val navController = LocalNavController.current
     val context = LocalContext.current
     val appVersion = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
@@ -62,9 +58,13 @@ fun AboutScreen() = FlorisScreen(title = stringResource(R.string.about__title)) 
             .fillMaxWidth()
             .padding(top = 24.dp, bottom = 32.dp)
     ) {
-        FlorisAppIcon()
+        FlorisCanvasIcon(
+            modifier = Modifier.requiredSize(64.dp),
+            iconId = R.mipmap.floris_app_icon,
+            contentDescription = "FlorisBoard app icon",
+        )
         Text(
-            text = stringResource(R.string.floris_app_name),
+            text = stringRes(R.string.floris_app_name),
             fontSize = 24.sp,
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier.padding(top = 16.dp),
@@ -72,7 +72,7 @@ fun AboutScreen() = FlorisScreen(title = stringResource(R.string.about__title)) 
     }
     Preference(
         iconId = R.drawable.ic_info,
-        title = stringResource(R.string.about__version__title),
+        title = stringRes(R.string.about__version__title),
         summary = appVersion,
         onClick = {
             try {
@@ -94,53 +94,32 @@ fun AboutScreen() = FlorisScreen(title = stringResource(R.string.about__title)) 
     )
     Preference(
         iconId = R.drawable.ic_history,
-        title = stringResource(R.string.about__changelog__title),
-        summary = stringResource(R.string.about__changelog__summary),
-        onClick = { launchUrl(context, R.string.florisboard__changelog_url, arrayOf(BuildConfig.VERSION_NAME)) },
+        title = stringRes(R.string.about__changelog__title),
+        summary = stringRes(R.string.about__changelog__summary),
+        onClick = { launchUrl(context, R.string.florisboard__changelog_url, "version" to BuildConfig.VERSION_NAME) },
     )
     Preference(
         iconId = R.drawable.ic_code,
-        title = stringResource(R.string.about__repository__title),
-        summary = stringResource(R.string.about__repository__summary),
+        title = stringRes(R.string.about__repository__title),
+        summary = stringRes(R.string.about__repository__summary),
         onClick = { launchUrl(context, R.string.florisboard__repo_url) },
     )
     Preference(
         iconId = R.drawable.ic_policy,
-        title = stringResource(R.string.about__privacy_policy__title),
-        summary = stringResource(R.string.about__privacy_policy__summary),
+        title = stringRes(R.string.about__privacy_policy__title),
+        summary = stringRes(R.string.about__privacy_policy__summary),
         onClick = { launchUrl(context, R.string.florisboard__privacy_policy_url) },
     )
     Preference(
         iconId = R.drawable.ic_description,
-        title = stringResource(R.string.about__project_license__title),
-        summary = stringResource(R.string.about__project_license__summary, "Apache 2.0"),
+        title = stringRes(R.string.about__project_license__title),
+        summary = stringRes(R.string.about__project_license__summary, "license_name" to "Apache 2.0"),
         onClick = { navController.navigate(Routes.Settings.ProjectLicense) },
     )
     Preference(
         iconId = R.drawable.ic_description,
-        title = stringResource(id = R.string.about__third_party_licenses__title),
-        summary = stringResource(id = R.string.about__third_party_licenses__summary),
+        title = stringRes(id = R.string.about__third_party_licenses__title),
+        summary = stringRes(id = R.string.about__third_party_licenses__summary),
         onClick = { navController.navigate(Routes.Settings.ThirdPartyLicenses) },
     )
-}
-
-@Composable
-private fun FlorisAppIcon() {
-    ResourcesCompat.getDrawable(
-        LocalContext.current.resources,
-        R.mipmap.floris_app_icon, LocalContext.current.theme
-    )?.let { drawable ->
-        val bitmap = Bitmap.createBitmap(
-            drawable.intrinsicWidth, drawable.intrinsicHeight,
-            Bitmap.Config.ARGB_8888
-        )
-        val canvas = Canvas(bitmap)
-        drawable.setBounds(0, 0, canvas.width, canvas.height)
-        drawable.draw(canvas)
-        Image(
-            bitmap = bitmap.asImageBitmap(),
-            contentDescription = "FlorisBoard App Icon",
-            modifier = Modifier.requiredSize(64.dp),
-        )
-    }
 }

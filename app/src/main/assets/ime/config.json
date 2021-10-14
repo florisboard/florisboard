@@ -803,8 +803,18 @@
         "characters": "igbo"
       }
     },
-	  {
+    {
       "id": 3500,
+      "languageTag": "hoc",
+      "composer": "appender",
+      "currencySet": "indian_rupee",
+      "preferred": {
+        "characters": "warang_citi",
+        "numericRow": "warang_citi"
+      }
+    },
+    {
+      "id": 3600,
       "languageTag": "ur-PK",
       "composer": "appender",
       "currencySet": "pakistani_rupee",

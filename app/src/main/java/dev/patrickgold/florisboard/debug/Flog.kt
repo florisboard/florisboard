@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.debug
 import android.content.Context
 import android.os.Build
 import android.util.Log
+import dev.patrickgold.florisboard.appContext
 import java.lang.ref.WeakReference
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -239,7 +240,7 @@ object Flog {
      * Installs the flog utility for given [applicationContext] and sets the relevant
      * configuration variables based on the given config values.
      *
-     * @param applicationContext The application context, used for file logging. The context
+     * @param context The application context, used for file logging. The context
      *  will be wrapped in a [WeakReference] to prevent memory leaks.
      * @param isFloggingEnabled If logging is enabled. If this value is false, all calls to
      *  the flog methods will be ignored and no logs will be written, regardless of the topics
@@ -252,13 +253,13 @@ object Flog {
      *  for logging to Logcat or [OUTPUT_FILE] to a logging file.
      */
     fun install(
-        applicationContext: Context,
+        context: Context,
         isFloggingEnabled: Boolean,
         flogTopics: FlogTopic,
         flogLevels: FlogLevel,
         flogOutputs: FlogOutput
     ) {
-        this.applicationContext = WeakReference(applicationContext)
+        this.applicationContext = WeakReference(context.appContext().value)
         this.isFloggingEnabled = isFloggingEnabled
         this.flogTopics = flogTopics
         this.flogLevels = flogLevels

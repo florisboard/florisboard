@@ -16,14 +16,21 @@
 
 package dev.patrickgold.florisboard.app.prefs
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
+import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
+import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
+import dev.patrickgold.florisboard.ime.theme.ThemeMode
+import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
 import dev.patrickgold.jetpref.datastore.preferenceModel
+import java.time.LocalTime
 
 fun florisPreferenceModel() = preferenceModel(AppPrefs::class, ::AppPrefs)
 
@@ -97,6 +104,78 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val overrideWordSuggestionsMinHeapRestriction = boolean(
             key = "devtools__override_word_suggestions_min_heap_restriction",
             default = false,
+        )
+    }
+
+    val gestures = Gestures()
+    inner class Gestures {
+        val swipeUp = enum(
+            key = "gestures__swipe_up",
+            default = SwipeAction.SHIFT,
+        )
+        val swipeDown = enum(
+            key = "gestures__swipe_down",
+            default = SwipeAction.HIDE_KEYBOARD,
+        )
+        val swipeLeft = enum(
+            key = "gestures__swipe_left",
+            default = SwipeAction.SWITCH_TO_NEXT_SUBTYPE,
+        )
+        val swipeRight = enum(
+            key = "gestures__swipe_right",
+            default = SwipeAction.SWITCH_TO_PREV_SUBTYPE,
+        )
+        val spaceBarSwipeUp = enum(
+            key = "gestures__space_bar_swipe_up",
+            default = SwipeAction.SWITCH_TO_CLIPBOARD_CONTEXT,
+        )
+        val spaceBarSwipeLeft = enum(
+            key = "gestures__space_bar_swipe_left",
+            default = SwipeAction.MOVE_CURSOR_LEFT,
+        )
+        val spaceBarSwipeRight = enum(
+            key = "gestures__space_bar_swipe_right",
+            default = SwipeAction.MOVE_CURSOR_RIGHT,
+        )
+        val spaceBarLongPress = enum(
+            key = "gestures__space_bar_long_press",
+            default = SwipeAction.SHOW_INPUT_METHOD_PICKER,
+        )
+        val deleteKeySwipeLeft = enum(
+            key = "gestures__delete_key_swipe_left",
+            default = SwipeAction.DELETE_CHARACTERS_PRECISELY,
+        )
+        val swipeDistanceThreshold = int(
+            key = "gestures__swipe_distance_threshold",
+            default = 32,
+        )
+        val swipeVelocityThreshold = int(
+            key = "gestures__swipe_velocity_threshold",
+            default = 1900,
+        )
+    }
+
+    val glide = Glide()
+    inner class Glide {
+        val enabled = boolean(
+            key = "glide__enabled",
+            default = false,
+        )
+        val showTrail = boolean(
+            key = "glide__show_trail",
+            default = true,
+        )
+        val trailDuration = int(
+            key = "glide__trail_fade_duration",
+            default = 200,
+        )
+        val showPreview = boolean(
+            key = "glide__show_preview",
+            default = true,
+        )
+        val previewRefreshDelay = int(
+            key = "glide__preview_refresh_delay",
+            default = 150,
         )
     }
 
@@ -183,6 +262,10 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "internal__home_is_beta_toolbox_collapsed",
             default = false,
         )
+        val isImeSetUp = boolean(
+            key = "internal__is_ime_set_up",
+            default = false,
+        )
     }
 
     val keyboard = Keyboard()
@@ -235,8 +318,12 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "keyboard__landscape_input_ui_mode",
             default = LandscapeInputUiMode.DYNAMICALLY_SHOW,
         )
-        val heightFactor = int(
-            key = "keyboard__height_factor",
+        val heightFactorPortrait = int(
+            key = "keyboard__height_factor_portrait",
+            default = 100,
+        )
+        val heightFactorLandscape = int(
+            key = "keyboard__height_factor_landscape",
             default = 100,
         )
         val keySpacingVertical = float(
@@ -285,5 +372,57 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                 mergeHintPopups = mergeHintPopupsEnabled.get(),
             )
         }
+    }
+
+    val spelling = Spelling()
+    inner class Spelling {
+        val languageMode = enum(
+            key = "spelling__language_mode",
+            default = SpellingLanguageMode.USE_KEYBOARD_SUBTYPES,
+        )
+        val useContacts = boolean(
+            key = "spelling__use_contacts",
+            default = true,
+        )
+        val useUdmEntries = boolean(
+            key = "spelling__use_udm_entries",
+            default = true,
+        )
+    }
+
+    val theme = Theme()
+    inner class Theme {
+        val mode = enum(
+            key = "theme__mode",
+            default = ThemeMode.FOLLOW_SYSTEM,
+        )
+        val dayThemeAdaptToApp = boolean(
+            key = "theme__day_theme_adapt_to_app",
+            default = false,
+        )
+        val dayThemeRef = custom(
+            key = "theme__day_theme_ref",
+            default = FlorisRef.assets("ime/theme/floris_day.json"),
+            serializer = FlorisRef.Serializer,
+        )
+        val nightThemeAdaptToApp = boolean(
+            key = "theme__night_theme_adapt_to_app",
+            default = false,
+        )
+        val nightThemeRef = custom(
+            key = "theme__night_theme_ref",
+            default = FlorisRef.assets("ime/theme/floris_night.json"),
+            serializer = FlorisRef.Serializer,
+        )
+        @RequiresApi(Build.VERSION_CODES.O)
+        val sunriseTime = localTime(
+            key = "theme__sunrise_time",
+            default = LocalTime.of(6, 0),
+        )
+        @RequiresApi(Build.VERSION_CODES.O)
+        val sunsetTime = localTime(
+            key = "theme__sunset_time",
+            default = LocalTime.of(18, 0),
+        )
     }
 }

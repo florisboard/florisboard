@@ -20,7 +20,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.res.Configuration
 import androidx.core.os.UserManagerCompat
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.common.NativeStr
@@ -34,14 +33,13 @@ import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
+import dev.patrickgold.florisboard.ime.spelling.SpellingService
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.res.AssetManager
-import dev.patrickgold.florisboard.res.FlorisRef
+import dev.patrickgold.florisboard.res.ext.ExtensionManager
 import dev.patrickgold.florisboard.util.AndroidVersion
 import dev.patrickgold.jetpref.datastore.JetPrefApplication
-import timber.log.Timber
 import java.io.File
-import java.util.*
 import kotlin.Exception
 
 @Suppress("unused")
@@ -51,9 +49,6 @@ class FlorisApplication : JetPrefApplication() {
 
         private external fun nativeInitICUData(path: NativeStr): Int
 
-        var systemLanguage: String = "en"
-            private set
-
         init {
             try {
                 System.loadLibrary("florisboard-native")
@@ -62,30 +57,30 @@ class FlorisApplication : JetPrefApplication() {
         }
     }
 
+    val prefs by florisPreferenceModel()
+
+    val assetManager by lazy { AssetManager(this) }
+    val extensionManager by lazy { ExtensionManager(this) }
+    val spellingManager by lazy { SpellingManager(this) }
+    val spellingService by lazy { SpellingService(this) }
+
     override fun onCreate() {
         super.onCreate()
         try {
-            if (BuildConfig.DEBUG) {
-                Timber.plant(Timber.DebugTree())
-            }
             Flog.install(
-                applicationContext = this,
+                context = this,
                 isFloggingEnabled = BuildConfig.DEBUG,
                 flogTopics = LogTopic.ALL,
                 flogLevels = Flog.LEVEL_ALL,
-                flogOutputs = Flog.OUTPUT_CONSOLE
+                flogOutputs = Flog.OUTPUT_CONSOLE,
             )
             initICU()
             CrashUtility.install(this)
-            systemLanguage = Locale.getDefault().toLanguageTag()
-            val prefs by florisPreferenceModel()
-            val oldPrefs = Preferences.initDefault(this)
-            val assetManager = AssetManager.init(this)
-            SpellingManager.init(this, FlorisRef.assets("ime/spelling/config.json"))
+
+            Preferences.initDefault(this)
             SubtypeManager.init(this)
             DictionaryManager.init(this)
             ThemeManager.init(this, assetManager)
-            oldPrefs.initDefaultPreferences()
         } catch (e: Exception) {
             CrashUtility.stageException(e)
             return
@@ -94,16 +89,6 @@ class FlorisApplication : JetPrefApplication() {
         /*Register a receiver so user config can be applied once device protracted storage is available*/
         if (!UserManagerCompat.isUserUnlocked(this) && AndroidVersion.ATLEAST_N) {
             registerReceiver(BootComplete(), IntentFilter(Intent.ACTION_USER_UNLOCKED))
-        }
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        systemLanguage = if (AndroidVersion.ATLEAST_N) {
-            newConfig.locales.get(0).toLanguageTag()
-        } else {
-            @Suppress("deprecation")
-            newConfig.locale.toLanguageTag()
         }
     }
 
@@ -133,27 +118,43 @@ class FlorisApplication : JetPrefApplication() {
         }
     }
 
-    fun init() {
-        CrashUtility.install(this)
-        val prefs = Preferences.initDefault(this)
-        val assetManager = AssetManager.init(this)
-        SubtypeManager.init(this)
-        DictionaryManager.init(this)
-        ThemeManager.init(this, assetManager)
-        prefs.initDefaultPreferences()
-    }
-
-    private class BootComplete : BroadcastReceiver() {
-
+    private inner class BootComplete : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            if(Intent.ACTION_USER_UNLOCKED == intent?.action){
+            if (intent == null) return
+            if (intent.action == Intent.ACTION_USER_UNLOCKED) {
                 try {
-                    (context as FlorisApplication).unregisterReceiver(this)
-                    context.init()
-                } catch (e : Exception) {
-                    e.fillInStackTrace()
+                    unregisterReceiver(this)
+                } catch (e: Exception) {
+                    flogError { e.toString() }
                 }
             }
         }
     }
+}
+
+private fun Context.florisApplication(): FlorisApplication {
+    return when (this) {
+        is FlorisApplication -> this
+        else -> this.applicationContext as FlorisApplication
+    }
+}
+
+fun Context.appContext() = lazy {
+    this.florisApplication()
+}
+
+fun Context.assetManager() = lazy {
+    this.florisApplication().assetManager
+}
+
+fun Context.extensionManager() = lazy {
+    this.florisApplication().extensionManager
+}
+
+fun Context.spellingManager() = lazy {
+    this.florisApplication().spellingManager
+}
+
+fun Context.spellingService() = lazy {
+    this.florisApplication().spellingService
 }

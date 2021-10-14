@@ -20,22 +20,21 @@ import android.service.textservice.SpellCheckerService
 import android.view.textservice.SentenceSuggestionsInfo
 import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextInfo
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
 import dev.patrickgold.florisboard.ime.spelling.SpellingService
 import kotlinx.coroutines.runBlocking
 
 class FlorisSpellCheckerService : SpellCheckerService() {
-    companion object {
-        private const val USE_FLORIS_SUBTYPES_LOCALE: String = "zz"
-    }
-
+    private val prefs by florisPreferenceModel()
     private val dictionaryManager get() = DictionaryManager.default()
-    private val spellingService: SpellingService = SpellingService.globalInstance()
+    private val spellingService by spellingService()
     private val subtypeManager get() = SubtypeManager.default()
 
     override fun onCreate() {
@@ -61,21 +60,25 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         private var cachedSpellingLocale: FlorisLocale? = null
 
         override fun onCreate() {
-            flogInfo(LogTopic.SPELL_EVENTS) { "Session locale: $locale" }
+            flogInfo(LogTopic.SPELL_EVENTS) { "Session requested locale: $locale" }
 
             setupSpellingIfNecessary()
         }
 
         private fun setupSpellingIfNecessary() {
-            val evaluatedLocale = when (locale) {
-                null -> Subtype.DEFAULT.locale
-                USE_FLORIS_SUBTYPES_LOCALE -> (subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT).locale
-                else -> FlorisLocale.from(locale)
+            val evaluatedLocale = when (prefs.spelling.languageMode.get()) {
+                SpellingLanguageMode.USE_KEYBOARD_SUBTYPES -> {
+                    (subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT).locale
+                }
+                else -> {
+                    FlorisLocale.default()
+                }
             }
 
             if (evaluatedLocale != cachedSpellingLocale) {
                 cachedSpellingLocale = evaluatedLocale
             }
+            flogInfo(LogTopic.SPELL_EVENTS) { "Session actual locale: ${cachedSpellingLocale?.languageTag()}" }
         }
 
         private fun spellMultiple(
