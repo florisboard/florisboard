@@ -18,16 +18,17 @@ package dev.patrickgold.florisboard.app.ui.settings.spelling
 
 import android.content.ComponentName
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -91,15 +92,25 @@ fun SpellingScreen() = FlorisScreen(
                         val remoteAppInfo = pm.getApplicationInfo(systemSpellCheckerPkgName, 0)
                         spellCheckerIcon = pm.getApplicationIcon(remoteAppInfo)
                         spellCheckerLabel = pm.getApplicationLabel(remoteAppInfo).toString()
-                    } catch (e: PackageManager.NameNotFoundException) {
+                    } catch (e: Exception) {
                         spellCheckerIcon = null
                     }
                     FlorisSimpleCard(
                         icon = {
                             if (spellCheckerIcon != null) {
                                 FlorisCanvasIcon(
-                                    modifier = Modifier.padding(end = 8.dp).requiredSize(32.dp),
+                                    modifier = Modifier
+                                        .padding(end = 8.dp)
+                                        .requiredSize(32.dp),
                                     drawable = spellCheckerIcon,
+                                )
+                            } else {
+                                Icon(
+                                    modifier = Modifier
+                                        .padding(end = 8.dp)
+                                        .requiredSize(32.dp),
+                                    painter = painterResource(R.drawable.ic_help_outline),
+                                    contentDescription = null,
                                 )
                             }
                         },

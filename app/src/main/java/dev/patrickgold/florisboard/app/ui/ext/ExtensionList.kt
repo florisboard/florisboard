@@ -30,6 +30,7 @@ import dev.patrickgold.jetpref.ui.compose.JetPrefListItem
 fun <T : Extension> ExtensionList(
     extList: List<T>,
     modifier: Modifier = Modifier,
+    summaryProvider: (T) -> String? = { null },
 ) {
     val navController = LocalNavController.current
 
@@ -44,6 +45,7 @@ fun <T : Extension> ExtensionList(
                         navController.navigate(Routes.Ext.View(ext.meta.id))
                     },
                 text = ext.meta.title,
+                secondaryText = summaryProvider(ext),
             )
         }
     }

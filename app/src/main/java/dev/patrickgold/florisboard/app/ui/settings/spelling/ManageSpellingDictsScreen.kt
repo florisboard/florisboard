@@ -65,7 +65,12 @@ fun ManageSpellingDictsScreen() = FlorisScreen(
 
     val spellingDicts by extensionManager.spellingDicts.observeAsState()
     if (spellingDicts != null && spellingDicts!!.isNotEmpty()) {
-        ExtensionList(extList = spellingDicts!!)
+        ExtensionList(
+            extList = spellingDicts!!,
+            summaryProvider = { ext ->
+                "${ext.spelling.locale.languageTag()} | ${ext.meta.version} | ${ext.spelling.originalSourceId}"
+            },
+        )
     } else {
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),

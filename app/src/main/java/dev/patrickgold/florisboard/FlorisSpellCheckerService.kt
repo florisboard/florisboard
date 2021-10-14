@@ -60,7 +60,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         private var cachedSpellingLocale: FlorisLocale? = null
 
         override fun onCreate() {
-            flogInfo(LogTopic.SPELL_EVENTS) { "Session locale: $locale" }
+            flogInfo(LogTopic.SPELL_EVENTS) { "Session requested locale: $locale" }
 
             setupSpellingIfNecessary()
         }
@@ -71,13 +71,14 @@ class FlorisSpellCheckerService : SpellCheckerService() {
                     (subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT).locale
                 }
                 else -> {
-                    locale?.let { FlorisLocale.from(it) } ?: Subtype.DEFAULT.locale
+                    FlorisLocale.default()
                 }
             }
 
             if (evaluatedLocale != cachedSpellingLocale) {
                 cachedSpellingLocale = evaluatedLocale
             }
+            flogInfo(LogTopic.SPELL_EVENTS) { "Session actual locale: ${cachedSpellingLocale?.languageTag()}" }
         }
 
         private fun spellMultiple(

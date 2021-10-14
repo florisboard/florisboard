@@ -59,16 +59,20 @@ class SpellingService(context: Context) {
     private val globalCache = LruCache<FlorisLocale, SuggestionsCache>(LRU_CACHE_MAX_LOCALE_ENTRIES)
     private val globalCacheGuard = Mutex(locked = false)
 
-    private suspend fun getSuggestionsCache(locale: FlorisLocale): SuggestionsCache {
+    private suspend fun getSuggestionsCache(locale: FlorisLocale): SuggestionsCache? {
         return globalCacheGuard.withLock {
             val suCache = globalCache.get(locale)
             if (suCache != null) {
                 suCache
             } else {
                 val spellingDict = spellingManager.getSpellingDict(locale)
-                val newCache = SuggestionsCache(LRU_CACHE_MAX_SUGGESTIONS_INFO_ENTRIES, spellingDict)
-                globalCache.put(locale, newCache)
-                newCache
+                if (spellingDict != null) {
+                    val newCache = SuggestionsCache(LRU_CACHE_MAX_SUGGESTIONS_INFO_ENTRIES, spellingDict)
+                    globalCache.put(locale, newCache)
+                    newCache
+                } else {
+                    null
+                }
             }
         }
     }
@@ -78,7 +82,7 @@ class SpellingService(context: Context) {
     }
 
     suspend fun spellAsync(locale: FlorisLocale, word: String, suggestionsLimit: Int): Deferred<SuggestionsInfo> {
-        val suggestionsCache = getSuggestionsCache(locale)
+        val suggestionsCache = getSuggestionsCache(locale) ?: return scope.async { emptySuggestionsInfo() }
         return suggestionsCache.getOrGenerateAsync(word) { spellingDict ->
             var isWordOk = false
             if (prefs.spelling.useUdmEntries.get()) {
@@ -98,7 +102,7 @@ class SpellingService(context: Context) {
         }
     }
 
-    private inner class SuggestionsCache(size: Int, private val spellingDict: SpellingDict?) {
+    private inner class SuggestionsCache(size: Int, private val spellingDict: SpellingDict) {
         private val localCache = LruCache<String, Deferred<SuggestionsInfo>>(size)
         private val localCacheGuard = Mutex(locked = false)
 
@@ -115,11 +119,7 @@ class SpellingService(context: Context) {
                     cachedInfo
                 } else {
                     val newInfo = scope.async {
-                        if (spellingDict != null) {
-                            generator(spellingDict)
-                        } else {
-                            emptySuggestionsInfo()
-                        }
+                        generator(spellingDict)
                     }
                     localCache.put(word, newInfo)
                     newInfo
