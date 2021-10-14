@@ -58,7 +58,10 @@
         ]
       },
       "s": {
-        "main": { "$": "auto_text_key", "code":  223, "label": "ß" },
+        "main": { "$": "case_selector",
+          "lower": { "code":  223, "label": "ß" },
+          "upper": { "code": 7838, "label": "ẞ" }
+        },
         "relevant": [
           { "$": "auto_text_key", "code":  353, "label": "š" },
           { "$": "auto_text_key", "code":  347, "label": "ś" }
