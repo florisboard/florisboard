@@ -18,23 +18,34 @@ package dev.patrickgold.florisboard.app.ui.settings.spelling
 
 import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
+import dev.patrickgold.florisboard.app.ui.components.FlorisCanvasIcon
+import dev.patrickgold.florisboard.app.ui.components.FlorisErrorCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.components.FlorisSimpleCard
+import dev.patrickgold.florisboard.app.ui.components.FlorisWarningCard
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionList
 import dev.patrickgold.florisboard.common.launchActivity
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
-import dev.patrickgold.florisboard.util.AndroidSettingsSecure
+import dev.patrickgold.florisboard.util.AndroidSettings
 import dev.patrickgold.jetpref.ui.compose.ListPreference
 import dev.patrickgold.jetpref.ui.compose.Preference
 import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
@@ -61,36 +72,74 @@ fun SpellingScreen() = FlorisScreen(
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
 
-    val currentSpellCheckerId by AndroidSettingsSecure.observeAsState("selected_spell_checker")
-    val spellCheckerEnabled by AndroidSettingsSecure.observeAsState("spell_checker_enabled")
-    Preference(
-        title = stringRes(R.string.pref__spelling__active_spellchecker__label),
-        summary = when {
-            spellCheckerEnabled == "0" -> {
-                stringRes(R.string.pref__spelling__active_spellchecker__summary_disabled)
+    val systemSpellCheckerId by AndroidSettings.Secure.observeAsState("selected_spell_checker")
+    val systemSpellCheckerEnabled by AndroidSettings.Secure.observeAsState("spell_checker_enabled")
+    val systemSpellCheckerSubtypeIndex by AndroidSettings.Secure.observeAsState("selected_spell_checker_subtype")
+    val systemSpellCheckerPkgName = runCatching {
+        ComponentName.unflattenFromString(systemSpellCheckerId!!)!!.packageName
+    }.getOrDefault("null")
+    val openSystemSpellCheckerSettings = {
+        val componentToLaunch = ComponentName(
+            "com.android.settings",
+            "com.android.settings.Settings\$SpellCheckersSettingsActivity",
+        )
+        launchActivity(context) {
+            it.addCategory(Intent.CATEGORY_LAUNCHER)
+            it.component = componentToLaunch
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+    }
+    PreferenceGroup(title = stringRes(R.string.pref__spelling__active_spellchecker__label)) {
+        Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp)) {
+            if (systemSpellCheckerEnabled == "1") {
+                if (systemSpellCheckerId == null) {
+                    FlorisWarningCard(
+                        text = stringRes(R.string.pref__spelling__active_spellchecker__summary_none),
+                        onClick = openSystemSpellCheckerSettings,
+                    )
+                } else {
+                    var spellCheckerIcon: Drawable?
+                    var spellCheckerLabel = "Unknown"
+                    try {
+                        val pm = context.packageManager
+                        val remoteAppInfo = pm.getApplicationInfo(systemSpellCheckerPkgName, 0)
+                        spellCheckerIcon = pm.getApplicationIcon(remoteAppInfo)
+                        spellCheckerLabel = pm.getApplicationLabel(remoteAppInfo).toString()
+                    } catch (e: PackageManager.NameNotFoundException) {
+                        spellCheckerIcon = null
+                    }
+                    FlorisSimpleCard(
+                        icon = {
+                            if (spellCheckerIcon != null) {
+                                FlorisCanvasIcon(
+                                    modifier = Modifier.requiredSize(32.dp),
+                                    drawable = spellCheckerIcon,
+                                )
+                            }
+                        },
+                        text = spellCheckerLabel,
+                        secondaryText = systemSpellCheckerPkgName,
+                        onClick = openSystemSpellCheckerSettings,
+                    )
+                    if (systemSpellCheckerPkgName == context.packageName && systemSpellCheckerSubtypeIndex == "0") {
+                        FlorisWarningCard(
+                            modifier = Modifier.padding(top = 8.dp),
+                            text = stringRes(
+                                R.string.pref__spelling__active_spellchecker__summary_use_sys_lang_set,
+                                "use_floris_config" to stringRes(R.string.settings__spelling__use_floris_config),
+                            ),
+                            onClick = openSystemSpellCheckerSettings,
+                        )
+                    }
+                }
+            } else {
+                FlorisErrorCard(
+                    text = stringRes(R.string.pref__spelling__active_spellchecker__summary_disabled),
+                    onClick = openSystemSpellCheckerSettings,
+                )
             }
-            currentSpellCheckerId == null -> {
-                stringRes(R.string.pref__spelling__active_spellchecker__summary_none)
-            }
-            currentSpellCheckerId!!.startsWith("${context.packageName}/") -> {
-                stringRes(R.string.floris_app_name)
-            }
-            else -> {
-                stringRes(R.string.pref__spelling__active_spellchecker__summary_non_fb_set, "spell_checker_name" to currentSpellCheckerId)
-            }
-        },
-        onClick = {
-            val componentToLaunch = ComponentName(
-                "com.android.settings",
-                "com.android.settings.Settings\$SpellCheckersSettingsActivity"
-            )
-            launchActivity(context) {
-                it.addCategory(Intent.CATEGORY_LAUNCHER)
-                it.component = componentToLaunch
-                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            }
-        },
-    )
+        }
+    }
     Preference(
         title = stringRes(R.string.settings__spelling__dict_sources_info),
         onClick = { navController.navigate(Routes.Settings.SpellingInfo) },
@@ -99,16 +148,19 @@ fun SpellingScreen() = FlorisScreen(
     PreferenceGroup(title = stringRes(R.string.pref__spelling__group_spellchecker_config__title)) {
         ListPreference(
             prefs.spelling.languageMode,
+            iconId = R.drawable.ic_language,
             title = stringRes(R.string.pref__spelling__language_mode__label),
             entries = SpellingLanguageMode.listEntries(),
         )
         SwitchPreference(
             prefs.spelling.useContacts,
+            iconId = R.drawable.ic_contacts,
             title = stringRes(R.string.pref__spelling__use_contacts__label),
             summary = stringRes(R.string.pref__spelling__use_contacts__summary),
         )
         SwitchPreference(
             prefs.spelling.useUdmEntries,
+            iconId = R.drawable.ic_library_books,
             title = stringRes(R.string.pref__spelling__use_udm_entries__label),
             summary = stringRes(R.string.pref__spelling__use_udm_entries__summary),
         )

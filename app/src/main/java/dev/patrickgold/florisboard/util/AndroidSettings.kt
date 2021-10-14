@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.util
 
+import android.content.Context
+import android.net.Uri
 import android.provider.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -26,7 +28,21 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import dev.patrickgold.florisboard.common.SystemSettingsObserver
 
-object AndroidSettingsSecure {
+abstract class AndroidSettingsHelper {
+    abstract fun getString(context: Context, key: String): String?
+
+    abstract fun getUriFor(key: String): Uri?
+
+    private fun observe(context: Context, key: String, observer: SystemSettingsObserver) {
+        getUriFor(key)?.let { uri ->
+            context.contentResolver.registerContentObserver(uri, false, observer)
+        }
+    }
+
+    private fun removeObserver(context: Context, observer: SystemSettingsObserver) {
+        context.contentResolver.unregisterContentObserver(observer)
+    }
+
     @Composable
     fun observeAsState(key: String) = observeAsState(key, null)
 
@@ -34,19 +50,28 @@ object AndroidSettingsSecure {
     fun observeAsState(key: String, initial: String?): State<String?> {
         val lifecycleOwner = LocalLifecycleOwner.current
         val context = LocalContext.current
-        val contentResolver = context.contentResolver
         val state = remember(key) { mutableStateOf(initial) }
         DisposableEffect(lifecycleOwner) {
             val observer = SystemSettingsObserver(context) {
-                state.value = Settings.Secure.getString(contentResolver, key)
+                state.value = getString(context, key)
             }
-            contentResolver.registerContentObserver(
-                Settings.Secure.getUriFor(key), false, observer
-            )
+            observe(context, key, observer)
             onDispose {
-                contentResolver.unregisterContentObserver(observer)
+                removeObserver(context, observer)
             }
         }
         return state
+    }
+}
+
+object AndroidSettings {
+    val Secure = object : AndroidSettingsHelper() {
+        override fun getString(context: Context, key: String): String? {
+            return Settings.Secure.getString(context.contentResolver, key)
+        }
+
+        override fun getUriFor(key: String): Uri? {
+            return Settings.Secure.getUriFor(key)
+        }
     }
 }

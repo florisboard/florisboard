@@ -19,10 +19,7 @@ package dev.patrickgold.florisboard.app.ui.settings.about
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,17 +29,16 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.res.ResourcesCompat
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
+import dev.patrickgold.florisboard.app.ui.components.FlorisCanvasIcon
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.InputMethodUtils
 import dev.patrickgold.florisboard.common.launchUrl
@@ -62,7 +58,11 @@ fun AboutScreen() = FlorisScreen(title = stringRes(R.string.about__title)) {
             .fillMaxWidth()
             .padding(top = 24.dp, bottom = 32.dp)
     ) {
-        FlorisAppIcon()
+        FlorisCanvasIcon(
+            modifier = Modifier.requiredSize(64.dp),
+            iconId = R.mipmap.floris_app_icon,
+            contentDescription = "FlorisBoard app icon",
+        )
         Text(
             text = stringRes(R.string.floris_app_name),
             fontSize = 24.sp,
@@ -122,25 +122,4 @@ fun AboutScreen() = FlorisScreen(title = stringRes(R.string.about__title)) {
         summary = stringRes(id = R.string.about__third_party_licenses__summary),
         onClick = { navController.navigate(Routes.Settings.ThirdPartyLicenses) },
     )
-}
-
-@Composable
-private fun FlorisAppIcon() {
-    ResourcesCompat.getDrawable(
-        LocalContext.current.resources,
-        R.mipmap.floris_app_icon, LocalContext.current.theme
-    )?.let { drawable ->
-        val bitmap = Bitmap.createBitmap(
-            drawable.intrinsicWidth, drawable.intrinsicHeight,
-            Bitmap.Config.ARGB_8888
-        )
-        val canvas = Canvas(bitmap)
-        drawable.setBounds(0, 0, canvas.width, canvas.height)
-        drawable.draw(canvas)
-        Image(
-            bitmap = bitmap.asImageBitmap(),
-            contentDescription = "FlorisBoard App Icon",
-            modifier = Modifier.requiredSize(64.dp),
-        )
-    }
 }
