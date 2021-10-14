@@ -426,7 +426,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 }
             }
             if (prefs.glide.enabled.get()) {
-                GlideTypingManager.getInstance().setWordData(newSubtype)
+                GlideTypingManager.getInstance(florisboard).setWordData(newSubtype)
             }
             if (doRefreshLayouts) {
                 setActiveKeyboard(getActiveKeyboardMode(), newSubtype)

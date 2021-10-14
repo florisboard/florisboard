@@ -144,7 +144,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
     private val glideTypingDetector = GlideTypingGesture.Detector(context)
     private val glideTypingManager: GlideTypingManager
-        get() = GlideTypingManager.getInstance()
+        get() = GlideTypingManager.getInstance(context)
     private val glideDataForDrawing: MutableList<Pair<GlideTypingGesture.Detector.Position, Long>> = mutableListOf()
     private val fadingGlide: MutableList<Pair<GlideTypingGesture.Detector.Position, Long>> = mutableListOf()
     private var fadingGlideRadius: Float = 0.0f
@@ -1293,7 +1293,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         }
         post {
             val keys = keyboard.keys().asSequence().toList()
-            GlideTypingManager.getInstance().setLayout(keys)
+            GlideTypingManager.getInstance(context).setLayout(keys)
         }
     }
 
