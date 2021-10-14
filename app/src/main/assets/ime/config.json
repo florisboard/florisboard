@@ -812,6 +812,15 @@
         "characters": "warang_citi",
         "numericRow": "warang_citi"
       }
+    },
+    {
+      "id": 3600,
+      "languageTag": "ur-PK",
+      "composer": "appender",
+      "currencySet": "pakistani_rupee",
+      "preferred": {
+        "characters": "urdu_phonetic"
+      }
     }
   ]
 }
