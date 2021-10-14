@@ -189,8 +189,6 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">مدیریت لغتنامه داخلی کاربر</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">افزودن، مشاهده و حذف کردن لغات از لغتنامه داخلی کاربر</string>
     <string name="pref__correction__title" comment="Preference group title">تصحیح</string>
-    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">چک کننده نگارش</string>
-    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">مدیریت و تنظیم سرویس چک کننده نگارش</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">حرف اول بزرگ به صورت خودکار</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">بزرگ کردن حرف اول بر اساس محتوای ورودی</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">به یاد داشتن حالت caps lock</string>

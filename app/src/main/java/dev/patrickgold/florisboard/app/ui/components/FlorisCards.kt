@@ -35,6 +35,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 
+private val IconRequiredSize = 32.dp
+private val IconEndPadding = 8.dp
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FlorisSimpleCard(
@@ -95,7 +98,7 @@ fun FlorisErrorCard(
         contentColor = Color.White,
         onClick = onClick,
         icon = { Icon(
-            modifier = Modifier.padding(end = 8.dp).requiredSize(24.dp),
+            modifier = Modifier.padding(end = IconEndPadding).requiredSize(IconRequiredSize),
             painter = painterResource(R.drawable.ic_error_outline),
             contentDescription = null,
         ) },
@@ -115,8 +118,26 @@ fun FlorisWarningCard(
         contentColor = Color.Black,
         onClick = onClick,
         icon = { Icon(
-            modifier = Modifier.padding(end = 8.dp).requiredSize(24.dp),
+            modifier = Modifier.padding(end = IconEndPadding).requiredSize(IconRequiredSize),
             painter = painterResource(R.drawable.ic_warning_outline),
+            contentDescription = null,
+        ) },
+        text = text,
+    )
+}
+
+@Composable
+fun FlorisInfoCard(
+    text: String,
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
+) {
+    FlorisSimpleCard(
+        modifier = modifier,
+        onClick = onClick,
+        icon = { Icon(
+            modifier = Modifier.padding(end = IconEndPadding).requiredSize(IconRequiredSize),
+            painter = painterResource(R.drawable.ic_info),
             contentDescription = null,
         ) },
         text = text,

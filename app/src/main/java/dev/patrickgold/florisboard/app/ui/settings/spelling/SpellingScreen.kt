@@ -23,14 +23,11 @@ import android.graphics.drawable.Drawable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
@@ -41,7 +38,6 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisErrorCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.app.ui.components.FlorisSimpleCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisWarningCard
-import dev.patrickgold.florisboard.app.ui.ext.ExtensionList
 import dev.patrickgold.florisboard.common.launchActivity
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
@@ -56,17 +52,6 @@ import dev.patrickgold.jetpref.ui.compose.annotations.ExperimentalJetPrefUi
 @Composable
 fun SpellingScreen() = FlorisScreen(
     title = stringRes(R.string.settings__spelling__title),
-    floatingActionButton = {
-        val navController = LocalNavController.current
-        FloatingActionButton(
-            onClick = { navController.navigate(Routes.Settings.ImportSpellingArchive) },
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_add),
-                contentDescription = "Add dictionary",
-            )
-        }
-    },
 ) {
     val navController = LocalNavController.current
     val context = LocalContext.current
@@ -89,8 +74,9 @@ fun SpellingScreen() = FlorisScreen(
             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
     }
+    val florisSpellCheckerEnabled = systemSpellCheckerPkgName == context.packageName && systemSpellCheckerSubtypeIndex != "0"
     PreferenceGroup(title = stringRes(R.string.pref__spelling__active_spellchecker__label)) {
-        Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp)) {
+        Column(modifier = Modifier.padding(horizontal = 8.dp)) {
             if (systemSpellCheckerEnabled == "1") {
                 if (systemSpellCheckerId == null) {
                     FlorisWarningCard(
@@ -112,7 +98,7 @@ fun SpellingScreen() = FlorisScreen(
                         icon = {
                             if (spellCheckerIcon != null) {
                                 FlorisCanvasIcon(
-                                    modifier = Modifier.requiredSize(32.dp),
+                                    modifier = Modifier.padding(end = 8.dp).requiredSize(32.dp),
                                     drawable = spellCheckerIcon,
                                 )
                             }
@@ -140,9 +126,16 @@ fun SpellingScreen() = FlorisScreen(
             }
         }
     }
+    val spellingDicts by extensionManager.spellingDicts.observeAsState()
     Preference(
-        title = stringRes(R.string.settings__spelling__dict_sources_info),
-        onClick = { navController.navigate(Routes.Settings.SpellingInfo) },
+        iconId = R.drawable.ic_library_books,
+        title = stringRes(R.string.settings__spelling__manage_dicts__title),
+        summary = stringRes(
+            R.string.settings__spelling__manage_dicts__n_installed,
+            "n" to (spellingDicts?.size ?: 0).toString(),
+        ),
+        onClick = { navController.navigate(Routes.Settings.ManageSpellingDicts) },
+        enabledIf = { florisSpellCheckerEnabled },
     )
 
     PreferenceGroup(title = stringRes(R.string.pref__spelling__group_spellchecker_config__title)) {
@@ -151,27 +144,21 @@ fun SpellingScreen() = FlorisScreen(
             iconId = R.drawable.ic_language,
             title = stringRes(R.string.pref__spelling__language_mode__label),
             entries = SpellingLanguageMode.listEntries(),
+            enabledIf = { florisSpellCheckerEnabled },
         )
         SwitchPreference(
             prefs.spelling.useContacts,
             iconId = R.drawable.ic_contacts,
             title = stringRes(R.string.pref__spelling__use_contacts__label),
             summary = stringRes(R.string.pref__spelling__use_contacts__summary),
+            enabledIf = { florisSpellCheckerEnabled },
         )
         SwitchPreference(
             prefs.spelling.useUdmEntries,
             iconId = R.drawable.ic_library_books,
             title = stringRes(R.string.pref__spelling__use_udm_entries__label),
             summary = stringRes(R.string.pref__spelling__use_udm_entries__summary),
+            enabledIf = { florisSpellCheckerEnabled },
         )
-    }
-
-    PreferenceGroup(title = stringRes(R.string.pref__spelling__group_installed_dictionaries__title)) {
-        val spellingDicts by extensionManager.spellingDicts.observeAsState()
-        if (spellingDicts != null && spellingDicts!!.isNotEmpty()) {
-            ExtensionList(extList = spellingDicts!!)
-        } else {
-            Preference(title = "no dicts found")
-        }
     }
 }

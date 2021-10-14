@@ -33,7 +33,7 @@ import dev.patrickgold.jetpref.ui.compose.annotations.ExperimentalJetPrefUi
 @OptIn(ExperimentalJetPrefUi::class)
 @Composable
 fun SpellingInfoScreen() = FlorisScreen(
-    title = stringRes(R.string.settings__spelling__dict_sources_info),
+    title = stringRes(R.string.settings__spelling__dict_sources_info__title),
     iconSpaceReserved = false,
 ) {
     val context = LocalContext.current

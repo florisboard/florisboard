@@ -173,8 +173,6 @@
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Tárolt szavak ajánlása a belső felhasználói szótárból</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Belső felhasználói szótár kezelése</string>
     <string name="pref__correction__title" comment="Preference group title">Javítások</string>
-    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">Helyesírás-ellenőrző</string>
-    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">Helyesírás-ellenőrző szolgáltatás kezelése és beállítása</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatikusan nagy kezdőbetű</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Kezdje nagybetűvel a szavakat a bemeneti környezet alapján</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Caps lock állapot megjegyzése</string>

@@ -209,8 +209,6 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Internes Benutzerwörterbuch verwalten</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Hinzufügen, ansehen und bearbeiten von Einträgen für das interne Benutzerwörterbuch</string>
     <string name="pref__correction__title" comment="Preference group title">Korrekturen</string>
-    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">Rechtschreibprüfung</string>
-    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">Verwalte und konfiguriere den Rechtschreibservice</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Autom. Groß-/Kleinschreibung</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Automatisches Großschreiben je nach aktuellem Kontext</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Status der festgestellten Umschalttaste merken</string>
@@ -274,7 +272,7 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Blende die Heap-Speicherverbrauch und der Maximal Größe in der rechte obere Ecke</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Interne Benutzerwörterbuch-Datenbank leeren</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Leert alle Wörter von der Wörterbuch-Datenbank</string>
-    <string name="settings__spelling__dict_sources_info" comment="String for the Dictionary sources info.">Wo bekomme ich die Rechtschreibkorrektur-Wörterbücher her?</string>
+    <string name="settings__spelling__dict_sources_info__title" comment="String for the Dictionary sources info.">Wo bekomme ich die Rechtschreibkorrektur-Wörterbücher her?</string>
     <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Nichts ausgewählt</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">wenn diese Liste kein Wörterbuch für deine Sprache oder Dialekt enthält, kannst du manuell nach einem Hunspell-Wörterbuch suchen und die \'aff\' und \'dic\'-Dateien importieren.</string>
     <!-- About UI strings -->

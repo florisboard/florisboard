@@ -251,8 +251,6 @@
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Manage internal user dictionary</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Add, view, and remove entries for the internal user dictionary</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
-    <string name="pref__correction__manage_spell_checker__label" comment="Preference title">Spell checker</string>
-    <string name="pref__correction__manage_spell_checker__summary" comment="Preference summary">Manage and configure the spell checker service</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalization</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalize words based on the current input context</string>
     <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Remember caps lock state</string>
@@ -328,15 +326,12 @@
     <string name="pref__devtools__test_crash_report__label" comment="Label of Test Crash Report in Advanced">Test crash report screen</string>
     <string name="pref__devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Advanced">Debug action to purposely produce a crash</string>
 
+    <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Spell checker</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Use keyboard spell checker config</string>
-    <string name="settings__spelling__no_dictionaries_installed" comment="String for the No dictionaries installed card.">No spell checker dictionaries currently installed. Add the first one with the \'+\'-button below!</string>
-    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Extension / Archive</string>
-    <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Affix + Dictionary file</string>
     <string name="pref__spelling__active_spellchecker__label">Inline text field spell checking</string>
     <string name="pref__spelling__active_spellchecker__summary_disabled">Disabled system-wide. No red lines will appear in text fields for incorrect words. Tap to change.</string>
     <string name="pref__spelling__active_spellchecker__summary_none">No inline text spell checker service set. Tap to change.</string>
-    <string name="pref__spelling__active_spellchecker__summary_non_fb_set">You are currently using another spell checker: {spell_checker_name}</string>
     <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Option \"Languages\" in the system spell checker screen is set to \"Use system languages\". Due to a bug this may cause {app_name} to not perform inline spell checking. Consider changing it to \"{use_floris_config}\".</string>
     <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Configuration</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Languages</string>
@@ -344,7 +339,11 @@
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Spell checker will look up names from your contact list</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Use user dictionary entries</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Spell checker will look up entries from the user dictionaries, if these are enabled</string>
-    <string name="pref__spelling__group_installed_dictionaries__title" comment="Title of Installed dictionaries sub-group">Installed dictionaries</string>
+    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Manage dictionaries</string>
+    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} installed</string>
+    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">No spell checker dictionaries currently installed. Add the first one with the \'+\'-button below!</string>
+    <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Extension / Archive</string>
+    <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Affix + Dictionary file</string>
     <string name="settings__spelling__import__title" comment="Title for the import screen">Import new dictionary</string>
     <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Select source</string>
     <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">Select the source from where you downloaded the third-party extension. This helps in correctly parsing the non-FlorisBoard extension format and converting it into a FlorisBoard one.</string>
@@ -357,7 +356,7 @@
     <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Select dictionary file (.dic)</string>
     <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Verify import</string>
     <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">Verify that the below metadata is correct. If something is incorrect, you can switch back to a previous step and re-select the source / re-import the archive.</string>
-    <string name="settings__spelling__dict_sources_info" comment="String for the Dictionary sources info">Dictionary sources info</string>
+    <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">Where do I get dictionaries?</string>
     <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info screen">FlorisBoard uses Nuspell as the spell checker engine, which means there is a vast amount of dictionaries available, as Hunspell is used by many other software as well. The list below shows a few hand-selected sources which the import manager supports. Download either the archive file or the dictionary files, then in the import manager choose the correct source (this is important to correctly read the archive format).</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">if this list does not contain dictionaries for your language or dialect, you can also manually search for a Hunspell dictionary and import the \'aff\' and \'dic\' file for this.</string>
 
