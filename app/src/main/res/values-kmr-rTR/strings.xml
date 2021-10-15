@@ -39,6 +39,7 @@
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Heke xuya be, nîşan dide ku moda taybet çalak e. Dema hat tikandin, agahdariya der barê moda taybet de nîşan dide.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Mîhengan</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Sazkirina xwe biceribîne</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Alîkarî</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Mal</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Klavye</string>
@@ -47,7 +48,7 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Jed</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Rawêj</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Jixwebera Sîstemê</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">Bi xêr hatî %s</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">Bi xêr hatî {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard di pergalê de ne çalak e û ji ber vê yekê dê wekî rêbazek têketê di hilbijarka têketê de tune be. Ji bo çareserkirina vê pirsgirêkê li vir bitikin.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard wekî metoda têketê ya pêşdarazî nayê hilbijartin. Ji bo çareserkirina vê pirsgirêkê li vir bitikin.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Ziman û klavye</string>
@@ -62,6 +63,7 @@
     <string name="settings__localization__subtype_characters_layout" comment="Label for layout dropdown in subtype dialog">Rêza karakteran</string>
     <string name="settings__localization__subtype_symbols_layout" comment="Label for layout dropdown in subtype dialog">Nîska sereke ya sembolan</string>
     <string name="settings__localization__subtype_symbols2_layout" comment="Label for layout dropdown in subtype dialog">Nîşa duyemîn a sembolan</string>
+    <string name="settings__localization__subtype_composer" comment="Label for composer dropdown in subtype dialog.">Bestekar</string>
     <string name="settings__localization__subtype_currency_set" comment="Label for currency set dropdown in subtype dialog. 'set' is used as a noun here and can be compared to a group of elements (in this case currency symbols).">Danûsa pereyan</string>
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Rêzkirina hejmarkî</string>
     <string name="settings__localization__subtype_numeric_advanced_layout" comment="Label for layout dropdown in subtype dialog">Rêza hejmarkî (pêşketî)</string>
@@ -69,13 +71,9 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Rêza sereke ya telefonê</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Rêza duyemîn a telefonê</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ev jêrnivîs jixwe heye!</string>
-    <string name="settings__theme__title" comment="Title of the Theme fragment">Tema klavyeyê</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (saznekirî)</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nenas</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Moda tema</string>
-    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Her dem roj</string>
-    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Her dem şev</string>
-    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Pergalê bişopîne</string>
-    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Demê bişopîne</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Dema rojbûnê</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">dema berava rojê</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Rûkara Rojê</string>
@@ -149,6 +147,13 @@
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Nîv rengê şeffaf</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Rengê nivîsarê</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Taybetmendiya taybet (%s)</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback preferences fragment">Deng &amp; Vibrasyon</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Dengvedan / Deng</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Paşvegerên deng çalak bike</string>
+    <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Ji bo bûyerên têketinê dengan lê bide, girêdayî eyarên pergalê ye</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Eyarên denga system îhmal bike</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Di pergalê de deng neçalak be jî, li jêr tercîhan bi kar bînin. Dema ku gustîlka pergalê tê bêdengkirin naxebite</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Klavye</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Rêza hejmar</string>
     <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Rêza jimareya nîşankirî</string>
     <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Sembolên nîşankirî</string>
@@ -164,10 +169,11 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Derengketina bişkojka bişkojka dirêj</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Darişka fezayê vediguhere rêza karakteran</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Dema ku di sembolan an jî hejmarê de be, bi xweber bara fezayê vediguhere karakteran</string>
-    <string name="settings__typing__title" comment="Title of Typing experience fragment">Serpêhatiya nivîsandinê</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Smartbar çalak bike</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wê li ser klavyeyê nîşan bide</string>
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Serpêhatiya nivîsandinê</string>
     <string name="pref__suggestion__title" comment="Preference group title">Pêşniyar</string>
+    <string name="pref__dictionary__title" comment="Preference group title">Ferheng</string>
     <string name="pref__correction__title" comment="Preference group title">Rastkirin</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Bixweber-kapîtalîzasyon</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Li gorî konteksa têkevinê ya niha peyvan mezin bikin</string>
@@ -175,12 +181,16 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock dê bimîne dema ku diçe qada textek din</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Dema du-cihî</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Lêdana du caran li ser baroya cîhê serdemek li dû cîhek vedigire</string>
-    <string name="settings__gestures__title" comment="Title of Gestures fragment">Jest &amp; Bi şemitandin binivîse</string>
+    <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Peyv</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Jest &amp; Bi şemitandin binivîse</string>
     <string name="pref__glide__title" comment="Preference group title">Bi şemitandin binivîse</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Bi şemitandin binivîse çalak bike</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Bi rêya nameyên xwe tiliya xwe di nava peyvê de binivîse</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">Rêya şemitandinê nîşan bide</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Wê piştî her peyvekê wenda bibe</string>
+    <string name="pref__glide_trail_fade_duration">Şemitîna şopê dema ku diherike</string>
+    <string name="pref__glide_preview_refresh_delay">Pêşdîtin derengketina tazekirinê</string>
+    <string name="pref__glide__show_preview">Di dema tîpkirina şemitînê de pêşdîtinê nîşan bide</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Tevgerên giştî</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Tevgerên barê fezayê</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Tevgerên din / Behreyên tevgerê</string>
@@ -199,9 +209,12 @@
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Mijara mîhengan</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Ronî</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tarî</string>
+    <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Ziman</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Di destpêkirinê de îkona sepan nîşan bide</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Moda taybet bi zorê</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Tu taybetiyên ku divê bi daneyên xwe yên têvel bi demkî bixebite neçalak bike</string>
+    <string name="settings__devtools__title" comment="Title of Devtools settings">Amûrên pêşdebir</string>
+    <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Derbar</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Îkona Sepan ya FlorisBoard</string>
@@ -222,7 +235,6 @@
     <string name="assets__action__cancel_confirm_message">Tu dixwazî guhertinên ku hatine torandin jê biavêjî? Ev çalakî nikare bi carekê ve were îdamkirin.</string>
     <string name="assets__action__delete">Jêbirin</string>
     <string name="assets__action__delete_confirm_title">Jêbirinê piştrast bike</string>
-    <string name="assets__action__delete_confirm_message">Tu dixwazî \"%s\" jê bibî? Ev çalakî nikare bi carekê ve were îdamkirin.</string>
     <string name="assets__action__edit">Destkarî</string>
     <string name="assets__action__export">Hinardin</string>
     <string name="assets__action__import">Veberhêne</string>
@@ -233,8 +245,6 @@
     <string name="assets__error__invalid">Seqet</string>
     <string name="assets__error__snackbar_message">Tiştek şaş çû</string>
     <!-- Setup UI strings -->
-    <string name="setup__title" comment="Title of Setup">Damezirandin</string>
-    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Bikêrkirin FlorisBoard</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Raporta xeletiya FlorisBoard</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Bigire</string>
@@ -252,10 +262,8 @@
     <string name="clip__paste_item">Bizeliqêne</string>
     <string name="clip__back_to_text_input">Vegere navnîşa nivîsê</string>
     <string name="clip__cant_paste">Ev sepan destûrê nade ku vê naverokê pêve bike.</string>
-    <!-- glide strings -->
-    <string name="pref__glide_trail_fade_duration">Şemitîna şopê dema ku diherike</string>
-    <string name="pref__glide_preview_refresh_delay">Pêşdîtin derengketina tazekirinê</string>
-    <string name="pref__glide__show_preview">Di dema tîpkirina şemitînê de pêşdîtinê nîşan bide</string>
+    <!-- Extension strings -->
+    <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->

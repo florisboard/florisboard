@@ -47,7 +47,6 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Eleet</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Oletus</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Järjestelmän oletus</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">Tervetuloa %siin</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoardia ei ole otettu järjestelmäasetuksissa käyttöön eikä sen vuoksi ole valittavissa syöttötavaksi. Klikkaa tästä ratkaistaksesi ongelman.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoardia ei ole valittu oletussyöttötavaksi. Klikkaa tästä ratkaistaksesi ongelman.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Kielet &amp; näppäimistöasettelut</string>
@@ -64,13 +63,8 @@
     <string name="settings__localization__subtype_numeric_layout" comment="Label for layout dropdown in subtype dialog">Numeroasettelu</string>
     <string name="settings__localization__subtype_numeric_row_layout" comment="Label for layout dropdown in subtype dialog">Numerorivin asettelu</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Tämä asettelu on jo lisätty!</string>
-    <string name="settings__theme__title" comment="Title of the Theme fragment">Näppäimistön teema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ei määritelty</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Teema</string>
-    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Aina päivä</string>
-    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Aina yö</string>
-    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Noudata järjestelmän teemaa</string>
-    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Vaihda kellonajan mukaan</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Aurinko nousee</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Aurinko laskee</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Päiväteema</string>
@@ -144,9 +138,9 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Pitkän painalluksen viive</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Palaa kirjainasetteluun välilyönnillä</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Välilyönnin painaminen symboli- tai numeroasettelussa vaihtaa näppäimistön automaattisesti kirjainasetteluun</string>
-    <string name="settings__typing__title" comment="Title of Typing experience fragment">Kirjoituskokemus</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Ota älypalkki käyttöön</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Näkyy näppäimistön yläpuolella</string>
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Kirjoituskokemus</string>
     <string name="pref__suggestion__title" comment="Preference group title">Ehdotukset</string>
     <string name="pref__correction__title" comment="Preference group title">Korjaukset</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automaattiset isot kirjaimet</string>
@@ -157,12 +151,13 @@
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Kun välilyöntiä napautetaan kahdesti, lisätään piste ja välilyönti</string>
     <string name="settings__udm__all_languages" comment="Label of the For all languages entry in the language list">Kaikille kielille</string>
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Sana</string>
-    <string name="settings__gestures__title" comment="Title of Gestures fragment">Eleet &amp; liukukirjoitus</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Eleet &amp; liukukirjoitus</string>
     <string name="pref__glide__title" comment="Preference group title">Liukukirjoitus</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Ota liukukirjoitus käyttöön</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Syötä sana liu\'uttamalla sormea sen kirjaimilla</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">Näytä liu\'un jälki</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Häviää joka sanan jälkeen</string>
+    <string name="pref__glide_trail_fade_duration">Liu\'un jäljen häivytysaika</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Yleiset eleet</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Välilyönnin eleet</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Pyyhkäisy ylös</string>
@@ -182,6 +177,7 @@
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Tumma</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Näytä sovellus sovellusvalikossa</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Pakota yksityinen tila</string>
+    <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Tietoa</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoardin kuvake</string>
@@ -206,8 +202,6 @@
     <string name="assets__error__details">Tiedot</string>
     <string name="assets__error__snackbar_message">Jokin meni pieleen</string>
     <!-- Setup UI strings -->
-    <string name="setup__title" comment="Title of Setup">Asennus</string>
-    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Ota FlorisBoard käyttöön</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoardin virheraportti</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Pahoittelut, FlorisBoard kaatui odottamattoman virheen vuoksi.</string>
@@ -236,8 +230,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Säilytä leikepöydän kohteet</string>
     <string name="pref__clipboard__limit_history_size__label">Rajoita historian kokoa</string>
     <string name="pref__clipboard__max_history_size__label">Historian maksimikoko</string>
-    <!-- glide strings -->
-    <string name="pref__glide_trail_fade_duration">Liu\'un jäljen häivytysaika</string>
+    <!-- Extension strings -->
+    <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->

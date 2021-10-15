@@ -43,7 +43,6 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gester</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Standard</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Systemstandard</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">Välkommen till %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard är inte aktiverad och kommer därför inte vara tillgänglig som inmatningsmetod i inmatningsväljaren. Tryck här för att lösa problemet.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard är inte vald som standard inmatningsmetod. Tryck här för att lösa problemet.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Språk &amp; Tangentbordslayouter</string>
@@ -56,13 +55,8 @@
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Redigera undertyp</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Språk</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Denna undertyp finns redan!</string>
-    <string name="settings__theme__title" comment="Title of the Theme fragment">Tangentbordstema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Odefinierad</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Temaläge</string>
-    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Alltid dag</string>
-    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Alltid natt</string>
-    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Följ systemet</string>
-    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Följ tid</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Soluppgångstid</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Solnedgångstid</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Dag tema</string>
@@ -145,6 +139,7 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Visa appikonen i startprogrammet</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Tvinga privatläge</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Kommer inaktivera alla funktioner som tillfälligt måste fungera med din inmatad data</string>
+    <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Om</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">FlorisBoard appikon</string>
@@ -165,7 +160,6 @@
     <string name="assets__action__cancel_confirm_message">Är du säker på att du vill ta bort alla icke sparade ändringar? Denna åtgärden kan inte ångras efter den har utförts.</string>
     <string name="assets__action__delete">Radera</string>
     <string name="assets__action__delete_confirm_title">Bekräfta radering</string>
-    <string name="assets__action__delete_confirm_message">Är du säker på att du vill radera \"%s\"? Denna åtgärden kan inte ångras efter den har utförts.</string>
     <string name="assets__action__edit">Redigera</string>
     <string name="assets__action__export">Exportera</string>
     <string name="assets__action__import">Importera</string>
@@ -174,12 +168,11 @@
     <string name="assets__action__yes">Ja</string>
     <string name="assets__error__invalid">Ogiltig</string>
     <!-- Setup UI strings -->
-    <string name="setup__title" comment="Title of Setup">Konfiguration</string>
-    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Aktivera FlorisBoard</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Stäng</string>
     <!-- Clipboard strings -->
-    <!-- glide strings -->
+    <!-- Extension strings -->
+    <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->

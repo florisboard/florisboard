@@ -47,7 +47,6 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gesztusok</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Alapértelmezett</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Rendszer alapértelmezett</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">A %s üdvözli</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard nincs engedélyezve a rendszerben, így nem lesz elérhető, beviteli módszerként a bevitelválasztóban. A probléma megoldásához kattintson ide.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">A FlorisBoard nincs kiválasztva alapértelmezett beviteli módszerként. A probléma megoldásához kattintson ide.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Nyelvek és billentyűzetkiosztások</string>
@@ -69,13 +68,8 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Elsődleges telefonelrendezés</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Másodlagos telefonelrendezés</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ez az altípus már létezik!</string>
-    <string name="settings__theme__title" comment="Title of the Theme fragment">Billentyűzet téma</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nem meghatározott</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Téma mód</string>
-    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Mindig nappali</string>
-    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Mindig éjszakai</string>
-    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Rendszertéma követése</string>
-    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Idő követése</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Napkelte ideje</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Napnyugta ideje</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Nappali téma</string>
@@ -164,9 +158,9 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Hosszú gombnyomás késleltetése</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Szóköz automatikusan visszavált a karakterelrendezésre</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">A szóköz lenyomáskor automatikusan visszavált a karakterekre, amikor a szimbólumok vagy a számok jelennek meg</string>
-    <string name="settings__typing__title" comment="Title of Typing experience fragment">Gépelési élmény</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Okossáv engedélyezése</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">A billentyűzet tetején fog megjelenni</string>
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Gépelési élmény</string>
     <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
     <string name="pref__dictionary__title" comment="Preference group title">Szótár</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Belső felhasználói szótár engedélyezése</string>
@@ -189,12 +183,15 @@
     <string name="settings__udm__dialog__freq_error_empty" comment="Error label for the frequency in the user dictionary add/edit dialog">Adjon meg egy gyakoriság értéket!</string>
     <string name="settings__udm__dialog__freq_error_invalid" comment="Error label for the frequency in the user dictionary add/edit dialog">Egy érvényes számot adjon meg a megadott határok között!</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Nyelvkód (opcionális)</string>
-    <string name="settings__gestures__title" comment="Title of Gestures fragment">Gesztusok és csúsztatott gépelés</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Gesztusok és csúsztatott gépelés</string>
     <string name="pref__glide__title" comment="Preference group title">Csúsztatott gépelés</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Csúsztatott gépelés engedélyezése</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Írjon be egy szót úgy, hogy ujját a betűin keresztülcsúsztatja</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">Nyomvonal megjelenítése</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Minden szó után eltűnik</string>
+    <string name="pref__glide_trail_fade_duration">Nyomvonal elhalványulási ideje</string>
+    <string name="pref__glide_preview_refresh_delay">Frissítési késleltetés megtekintése</string>
+    <string name="pref__glide__show_preview">Előnézet megjelenítése csúsztatott gépelés közben</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Általános gesztusok</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Szóköz gesztusok</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Egyéb gesztusok / gesztusküszöb</string>
@@ -218,8 +215,8 @@
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Minden funkciót ki fog kapcsolni ideiglenesen, amely a bemeneti adatokkal dolgozik</string>
     <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Fejlesztői eszközök engedélyezése</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Heap memória statisztika megjelenítése</string>
-    <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Nincs beállítva</string>
-    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info sheet">ha ez a lista nem tartalmazza a szótárakat a nyelvéhez, vagy a nyelvjárásához, manuálisan is kereshet egy Hunspell szótárat és importálhatja az \'aff\' és a \'dic\' fájlokat ezért.</string>
+    <!-- Spelling UI strings -->
+    <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">ha ez a lista nem tartalmazza a szótárakat a nyelvéhez, vagy a nyelvjárásához, manuálisan is kereshet egy Hunspell szótárat és importálhatja az \'aff\' és a \'dic\' fájlokat ezért.</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Névjegy</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">A FlorisBoard alkalmazásikonja</string>
@@ -242,7 +239,6 @@
     <string name="assets__action__cancel_confirm_message">Biztosan el szeretne vetni minden mentetlen változtatást? Ezt a műveletet nem lehet visszavonni.</string>
     <string name="assets__action__delete">Törlés</string>
     <string name="assets__action__delete_confirm_title">Törlés megerősítése</string>
-    <string name="assets__action__delete_confirm_message">Biztosan törölni szeretné ezt \"%s\"? Ezt a műveletet nem lehet visszavonni.</string>
     <string name="assets__action__edit">Szerkesztés</string>
     <string name="assets__action__export">Exportálás</string>
     <string name="assets__action__import">Importálás</string>
@@ -256,8 +252,6 @@
     <string name="assets__error__invalid">Érvénytelen</string>
     <string name="assets__error__snackbar_message">Valami rosszul sült el</string>
     <!-- Setup UI strings -->
-    <string name="setup__title" comment="Title of Setup">Beállítás</string>
-    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">FlorisBoard engedélyezése</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard hibajelentés</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Elnézést a kellemetlenségért, de a FlorisBoard összeomlott egy váratlan hiba miatt.</string>
@@ -288,10 +282,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Vágólapelemek megtartása</string>
     <string name="pref__clipboard__limit_history_size__label">Előzmények méretének korlátozása</string>
     <string name="pref__clipboard__max_history_size__label">Maximum előzményméret</string>
-    <!-- glide strings -->
-    <string name="pref__glide_trail_fade_duration">Nyomvonal elhalványulási ideje</string>
-    <string name="pref__glide_preview_refresh_delay">Frissítési késleltetés megtekintése</string>
-    <string name="pref__glide__show_preview">Előnézet megjelenítése csúsztatott gépelés közben</string>
+    <!-- Extension strings -->
+    <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->

@@ -34,7 +34,6 @@
     <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">Откажи</string>
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">Избриши</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Локал</string>
-    <string name="settings__theme__title" comment="Title of the Theme fragment">Тема тастатуре</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Недефинисано</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Мод теме</string>
     <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Изабрана тема</string>
@@ -55,12 +54,14 @@
     <string name="settings__theme_editor__value_type_other" comment="Theme value type">Друго</string>
     <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Текст</string>
     <string name="settings__theme__group_key" comment="Theme group label">Кључ</string>
+    <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <!-- Assets strings -->
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <!-- Clipboard strings -->
-    <!-- glide strings -->
+    <!-- Extension strings -->
+    <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->

@@ -10,9 +10,7 @@
     <!-- Emoji strings -->
     <!-- Smartbar strings -->
     <!-- Settings UI strings -->
-    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Keine Rechtschreibkorrektur-Wörterbücher installiert. Füge erst eins mit dem \'+\'-Button unten hinzu!</string>
-    <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Aktive Rechtschreibkorrektur</string>
-    <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Keine gesetzt</string>
+    <!-- Spelling UI strings -->
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NICHT IMPLEMENTIERT] Nutze Namen von Kontakten</string>
     <!-- About UI strings -->
     <!-- Assets strings -->
@@ -24,7 +22,8 @@
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <!-- Clipboard strings -->
-    <!-- glide strings -->
+    <!-- Extension strings -->
+    <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->

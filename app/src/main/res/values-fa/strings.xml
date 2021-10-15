@@ -47,7 +47,6 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">اشارات</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">پیشفرض</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">پیشفرض سیستم</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">خوش آمدید به %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">فلوریس بورد در سیستم به عنوان روش ورودی فعلا نیست و به این علت به عنوان روش ورودی قابل انتخاب نیست. برای حل این مشکل اینجا کلیک کنید.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">فلوریس بود به عنوان روش ورودی پیش فرض انتخاب نشده. برای حل این مشکل اینجا کلیک کنید.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">زبان ها &amp; چیدمان های صفحه کلید</string>
@@ -71,13 +70,9 @@
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">چیدمان فرعی موبایل</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">این زیرنوع درحال حاضر وجود دارد!</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (نصب نشده)</string>
-    <string name="settings__theme__title" comment="Title of the Theme fragment">طرح زمینه صفحه کلید</string>
+    <string name="settings__theme__title" comment="Title of the Theme screen">تم</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">تعریف نشده</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">حالت طرح‌زمینه</string>
-    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">همیشه روز</string>
-    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">همیشه شب</string>
-    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">پیروی از سیستم</string>
-    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">پیروی از زمان</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">زمان طلوع</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">زمان غروب</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">طرح‌زمینه روز</string>
@@ -175,9 +170,9 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">تاخیر فشردن طولانی کلید</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">نوار فاصله به چیدمان متنی بازمیگرداند</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">در حالت نمادین یا عددها، با فشار نوار فاصله به صورت خودکار به حالت نوشتار متنی برمیگردد</string>
-    <string name="settings__typing__title" comment="Title of Typing experience fragment">تجربه در تایپ کردن</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">فعال سازی نوار هوشمند</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">بالای صفحه‌کلید نمایش داده خواهند شد</string>
+    <string name="settings__typing__title" comment="Title of Typing experience screen">تجربه در تایپ کردن</string>
     <string name="pref__suggestion__title" comment="Preference group title">پیشنهادات</string>
     <string name="pref__dictionary__title" comment="Preference group title">لغتنامه</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">فعالسازی سیستم لغتنامه کاربر</string>
@@ -215,12 +210,15 @@
     <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">این اختصار شامل حروف غیرمجاز میباشد.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">کد زبان (اختیاری)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">این کد زبان داده شده از حالت پیشبینی شده پشتیبانی نمی کند. کد داده شده یا باید فقط زبان باشد (مثل fa) یا یک زبان و کشور باشد(مثل fa_IR) یا یک زبان و کشور به همراه اسکریپت باشد (fa_IR-script).</string>
-    <string name="settings__gestures__title" comment="Title of Gestures fragment">اشارات &amp; نوشتن گلایدی</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">اشارات &amp; نوشتن گلایدی</string>
     <string name="pref__glide__title" comment="Preference group title">نوشتن گلایدی</string>
     <string name="pref__glide__enabled__label" comment="Preference title">فعال سازی دنباله نویسی</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">نوشتن حروف با حرکت مداوم و نگه داشتن روی حرف مورد نظر</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">نمایش دنباله پروازی</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">بعد از هر کلمه ناپدید خواهد شد</string>
+    <string name="pref__glide_trail_fade_duration">مدت زمان محو شدن دنباله پروازی</string>
+    <string name="pref__glide_preview_refresh_delay">پیشنمایش تاخیر در تازه‌سازی</string>
+    <string name="pref__glide__show_preview">مشاهده پیشنمایش هنگام دنباله نویسی</string>
     <string name="pref__gestures__general_title" comment="Preference group title">اشارات کلی</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">حرکات نوار فاصله</string>
     <string name="pref__gestures__other_title" comment="Preference group title">دیگر اشارات/ آشارات آستانه</string>
@@ -252,7 +250,15 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">استفاده از حافظه هیپ را رونویسی می کند و اندازه را حداکثری می کند در گوشه بالا سمت راست</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">پاک کردن پایگاه داده لغتنامه داخلی کاربر</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">پاک کردن تمام کلمات از جدول پایگاه داده لغتنامه</string>
-    <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">بدون تنظیم</string>
+    <!-- Spelling UI strings -->
+    <string name="settings__spelling__title" comment="Title of the Spelling screen">چک کننده نگارش</string>
+    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">پیکربندی</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">زبان‌ها</string>
+    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">مدیریت لغتنامه ها</string>
+    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} نصب شده</string>
+    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">درحال حاضر هیچ لغتنامه ای برای چک کننده نگارش نصب نشده است. اولین لغتنامه را با زدن روی دکمه \'+\' زیر اضافه کنید!</string>
+    <string name="settings__spelling__import__title" comment="Title for the import screen">وارد کردن لغتنامه جدید</string>
+    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">انتخاب منبع</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">درباره</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">آیکون برنامه فلوریس بورد</string>
@@ -270,8 +276,6 @@
     <string name="about__privacy_policy__title" comment="Preference title">سیاست حریم خصوصی</string>
     <string name="about__privacy_policy__summary" comment="Preference summary">سیاست حریم خصوصی برای این پروژه</string>
     <string name="about__project_license__title" comment="Preference title">گواهی های پروژه</string>
-    <string name="about__project_license__summary" comment="Preference summary (%s will insert license name)">فلوریس بورد زیر نظر %s دارای گواهی می باشد</string>
-    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">خطا: ناتوانی در بارگذاری متن گواهی.\n-&gt; دلیل: %s</string>
     <string name="about__third_party_licenses__title" comment="Preference title">گواهی های شخص ثالث</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">گواهی های استفاده از کتابخانه های شخص ثالث استفاده شده در این برنامه</string>
     <!-- Assets strings -->
@@ -286,13 +290,14 @@
     <string name="assets__action__cancel">لغو</string>
     <string name="assets__action__cancel_confirm_title">تائید لغو</string>
     <string name="assets__action__cancel_confirm_message">آیا مطمئنید که می خواهید هر یک از تغییرات ذخیره نشده را لغو کنید؟ این عمل در صورت اجرا غیرقابل بازگشت خواهد بود.</string>
+    <string name="assets__action__default">پیشفرض</string>
     <string name="assets__action__delete">حذف</string>
     <string name="assets__action__delete_confirm_title">تائید حذف</string>
-    <string name="assets__action__delete_confirm_message">آیا مطمعنید که می خواهید \"%s\" را حذف کنید؟ این عمل دز صورت اجرا، غیرقابل بازگشت خواهد بود.</string>
     <string name="assets__action__edit">ویرایش</string>
     <string name="assets__action__export">استخراج</string>
     <string name="assets__action__import">واردکردن</string>
     <string name="assets__action__no">خیر</string>
+    <string name="assets__action__ok">تأیید</string>
     <string name="assets__action__save">ذخیره</string>
     <string name="assets__action__select">انتخاب</string>
     <string name="assets__action__select_dir">انتخاب مسیر</string>
@@ -302,8 +307,6 @@
     <string name="assets__error__invalid">نامعتبر</string>
     <string name="assets__error__snackbar_message">یک چیزی اشتباه پیش رفت</string>
     <!-- Setup UI strings -->
-    <string name="setup__title" comment="Title of Setup">راه‌اندازی</string>
-    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">فعال سازی فبوریس بورد</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">گزارش خطای فلوریس بورد</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">با عرض پوزش برای این مشکل به وجود آمده، اما فلوریس بورد به یک دلیل پیش‌بینی نشده، متوقف شد.</string>
@@ -334,13 +337,27 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">بازیابی موارد کلیپ‌بورد</string>
     <string name="pref__clipboard__limit_history_size__label">محدود کردن اندازه تاریخچه</string>
     <string name="pref__clipboard__max_history_size__label">حداکثر اندازه تاریخچه</string>
-    <!-- glide strings -->
-    <string name="pref__glide_trail_fade_duration">مدت زمان محو شدن دنباله پروازی</string>
-    <string name="pref__glide_preview_refresh_delay">پیشنمایش تاخیر در تازه‌سازی</string>
-    <string name="pref__glide__show_preview">مشاهده پیشنمایش هنگام دنباله نویسی</string>
+    <!-- Extension strings -->
+    <string name="ext__meta__authors">سازندگان</string>
+    <string name="ext__meta__description">توضیحات</string>
+    <string name="ext__meta__homepage">صفحه اصلی</string>
+    <string name="ext__meta__id">شناسه</string>
+    <string name="ext__meta__issue_tracker">دنبال‌کننده‌ی ایرادات</string>
+    <string name="ext__meta__keywords">کلید واژه‌ها</string>
+    <string name="ext__meta__license">مجوز</string>
+    <string name="ext__meta__title">عنوان</string>
+    <string name="ext__meta__version">نسخه</string>
+    <string name="ext__error__not_found_title">افزونه یافت نشد</string>
+    <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->
+    <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">استفاده از زبان سیستم</string>
+    <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">استفاده از زیرنوع های صفحه کلید</string>
+    <string name="enum__theme_mode__always_day" comment="Enum value label">همیشه روز</string>
+    <string name="enum__theme_mode__always_night" comment="Enum value label">همیشه شب</string>
+    <string name="enum__theme_mode__follow_system" comment="Enum value label">پیروی از سیستم</string>
+    <string name="enum__theme_mode__follow_time" comment="Enum value label">پیروی از زمان</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
 </resources>

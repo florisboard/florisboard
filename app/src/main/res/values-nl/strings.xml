@@ -39,6 +39,7 @@
     <string name="smartbar__quick_action__private_mode" comment="Content-description for the private mode button in Smartbar">Geeft aan dat de privémodus actief is wanneer zichtbaar. Toont informatie over de privémodus bij het aanklikken.</string>
     <!-- Settings UI strings -->
     <string name="settings__title" comment="Title of Settings">Instellingen</string>
+    <string name="settings__preview_keyboard" comment="Hint for try your setup box">Probeer je nieuwe instellingen</string>
     <string name="settings__help" comment="General label for help buttons in Settings">Help</string>
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">Startscherm</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">Toetsenbord</string>
@@ -47,7 +48,6 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gebaren</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Standaard</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Systeemstandaard</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">Welkom bij %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard is niet ingeschakeld in het systeem en zal dus niet beschikbaar zijn als een invoermethode in de invoermethode-kiezer. Klik hier om dit probleem op te lossen.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard is niet geselecteerd als de standaard invoermethode. Klik hier om dit probleem op te lossen.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Talen &amp; Indelingen</string>
@@ -71,13 +71,8 @@
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Telefoon secundaire layout</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Deze indeling bestaat al!</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (niet geïnstalleerd)</string>
-    <string name="settings__theme__title" comment="Title of the Theme fragment">Toetsenbordthema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ongedefinieerd</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Thema modus</string>
-    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Altijd dag</string>
-    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Altijd nacht</string>
-    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Volg systeeminstelling</string>
-    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Volg tijd</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Zonsopgang</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Zonsondergang</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Dagthema</string>
@@ -157,7 +152,9 @@
     <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Geluid afspelen bij invoer, afhankelijk van systeeminstellingen</string>
     <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Systeemgeluidsinstellingen negeren</string>
     <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Gebruik onderstaande voorkeuren ook al is het systeemgeluid uitgeschakeld. Werkt niet als de systeemringtone is gemutet</string>
+    <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Geluidsvolume bij invoer</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Trillen bij toetsaanslag</string>
+    <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Geluidje bij lang indrukken toets</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Trilsterkte</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Trillen bij toetsaanslag</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Nummerrij</string>
@@ -175,9 +172,9 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Vertraging voor lange toetsdruk</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Spatiebalk wisselt terug naar tekenlayout</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">De spatiebalk indrukken wisselt automatisch terug naar tekenmodus wanneer in symbool- of nummermodus</string>
-    <string name="settings__typing__title" comment="Title of Typing experience fragment">Typervaring</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Schakel Slimme Balk in</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Word getoond boven het toetsenbord</string>
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Typervaring</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggesties</string>
     <string name="pref__dictionary__title" comment="Preference group title">Woordenboek</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Activeer het persoonlijke woordenboek van het systeem</string>
@@ -215,12 +212,15 @@
     <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Deze afkorting bevat ongeldige tekens.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Taalcode (optioneel)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">Deze taalcode komt niet overeen met de verwachte syntax. De code moet ofwel enkel de taal (bv. \"en\"), een taal en een lan (bv. \"en_US\") of een taal, land en script (bv. \"en_US-script\") bevatten.</string>
-    <string name="settings__gestures__title" comment="Title of Gestures fragment">Gebaren &amp; Vegen</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Gebaren &amp; Vegen</string>
     <string name="pref__glide__title" comment="Preference group title">Vegend typen</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Glijdend typen inschakelen</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Typ een woord door je vinger over de letters te vegen</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">Veegspoor tonen</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Verdwijnt na elk woord</string>
+    <string name="pref__glide_trail_fade_duration">Vervaagtijd veegspoor</string>
+    <string name="pref__glide_preview_refresh_delay">Vertraging vernieuwing voorbeeld</string>
+    <string name="pref__glide__show_preview">Toon voorbeeld tijdens vegend typen</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Algemene gebaren</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Spatiebalkgebaren</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Andere gebaren / Drempelwaardes voor gebaren</string>
@@ -248,7 +248,7 @@
     <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Toont het heap-memorygebruik en maximale grootte in de rechterbovenhoek</string>
     <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Wis database van het interne persoonlijke woordenboek</string>
     <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Wis alle woorden van de woordenlijst in de datatabel</string>
-    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Geen woordenboeken voor spellingscontrole geïnstalleerd. Voeg de eerste toe via de \'+\'-toets!</string>
+    <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Over</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">App-pictogram van FlorisBoard</string>
@@ -271,7 +271,6 @@
     <string name="assets__action__cancel_confirm_message">Weet je zeker dat je onopgeslagen wijzigingen wil verwerpen? Deze actie kan niet ongedaan gemaakt worden.</string>
     <string name="assets__action__delete">Verwijderen</string>
     <string name="assets__action__delete_confirm_title">Verwijderen bevestigen</string>
-    <string name="assets__action__delete_confirm_message">Weet je zeker dat je %s wil verwijderen? Deze actie kan niet ongedaan gemaakt worden.</string>
     <string name="assets__action__edit">Bewerken</string>
     <string name="assets__action__export">Exporteren</string>
     <string name="assets__action__import">Importeren</string>
@@ -282,8 +281,6 @@
     <string name="assets__error__invalid">Ongeldig</string>
     <string name="assets__error__snackbar_message">Er is iets mis gegaan</string>
     <!-- Setup UI strings -->
-    <string name="setup__title" comment="Title of Setup">Setup</string>
-    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">FlorisBoard inschakelen</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Foutenrapport FlorisBoard</string>
     <string name="crash_dialog__description" comment="Description of crash dialog">Sorry voor het ongemak, maar FlorisBoard is gecrashed omwille van een onverwachte fout.</string>
@@ -314,10 +311,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Bewaar klembord-items</string>
     <string name="pref__clipboard__limit_history_size__label">Beperk geschiedenisgrootte</string>
     <string name="pref__clipboard__max_history_size__label">Maximale grootte geschiedenis</string>
-    <!-- glide strings -->
-    <string name="pref__glide_trail_fade_duration">Vervaagtijd veegspoor</string>
-    <string name="pref__glide_preview_refresh_delay">Vertraging vernieuwing voorbeeld</string>
-    <string name="pref__glide__show_preview">Toon voorbeeld tijdens vegend typen</string>
+    <!-- Extension strings -->
+    <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->

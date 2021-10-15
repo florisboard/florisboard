@@ -47,16 +47,17 @@
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">그룹 편집</string>
     <string name="settings__theme_editor__add_attr_dialog_title" comment="Title of the add attribute dialog in the theme editor">속성 추가</string>
     <string name="settings__theme_editor__edit_attr_dialog_title" comment="Title of the edit attribute dialog in the theme editor">속성 편집</string>
+    <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <!-- Assets strings -->
     <string name="assets__action__yes">예</string>
     <string name="assets__error__details">세부사항</string>
     <string name="assets__error__invalid">유효하지 않음</string>
     <!-- Setup UI strings -->
-    <string name="setup__title" comment="Title of Setup">설정</string>
     <!-- Crash Dialog strings -->
     <!-- Clipboard strings -->
-    <!-- glide strings -->
+    <!-- Extension strings -->
+    <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->

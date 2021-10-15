@@ -47,7 +47,6 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gesta</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Výchozí</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Výchozí nastavení systému</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">Vítejte ve %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBord není povolena v systému a proto nemůže být použita jako metoda zadávání. Klikněte sem pro vyřešení tohoto problému.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard není vybrán jako výchozí vstupní metoda. Kliknutím sem tento problém vyřešíte.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Jazyky &amp; rozložení klávesnice</string>
@@ -69,13 +68,8 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Primární telefonní rozložení</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Sekundární telefonní rozložení</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Tento podtyp již existuje!</string>
-    <string name="settings__theme__title" comment="Title of the Theme fragment">Motiv klávesnice</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nedefinováno</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Režim motivu</string>
-    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Vždy denní</string>
-    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Vždy noční</string>
-    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Podle systému</string>
-    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Podle času</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Čas východu slunce</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Čas západu slunce</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Denní motiv</string>
@@ -164,9 +158,9 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Délka dlouhého stisku</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Mezerník přepne znovu do písmenného rozložení</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Stisknutím mezerníku se automaticky vrátíte z nabídky čísel/symbolů ke klasické klávesnici</string>
-    <string name="settings__typing__title" comment="Title of Typing experience fragment">Zážitek z psaní</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Povolit chytrou lištu</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Zobrazí se v horní části klávesnice</string>
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Zážitek z psaní</string>
     <string name="pref__suggestion__title" comment="Preference group title">Návrhy</string>
     <string name="pref__dictionary__title" comment="Preference group title">Slovník</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Použít vlastní systémový slovník</string>
@@ -202,12 +196,13 @@
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Zástupce (nepovinné)</string>
     <string name="settings__udm__dialog__shortcut_error_invalid" comment="Error label for the shortcut in the user dictionary add/edit dialog">Toto slovo obsahuje neplatné znaky.</string>
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Kód jazyka (nepovinné)</string>
-    <string name="settings__gestures__title" comment="Title of Gestures fragment">Gesta &amp; Psaní tahem</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Gesta &amp; Psaní tahem</string>
     <string name="pref__glide__title" comment="Preference group title">Psaní tahem</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Povolit psaní tahem</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Zadejte slovo posouváním přes jeho písmena</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">Zobrazit stopu tahu</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Zmizí po každém slově</string>
+    <string name="pref__glide__show_preview">Zobrazit náhled při psaní tahem</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Obecná gesta</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Gesta na mezerníku</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Další gesta / Trvání gest</string>
@@ -232,9 +227,7 @@
     <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Zapnout vývojářské nástroje</string>
     <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Nástroje pro debugování a řešení problémů</string>
     <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Zobrazit statistiky paměťové haldy</string>
-    <string name="settings__spelling__dict_sources_info__title" comment="String for the Dictionary sources info.">Kde najdu slovníky pro kontrolu pravopisu?</string>
-    <string name="pref__spelling__active_spellchecker__label" comment="Label of Active spellchecker pref">Aktivní kontrola pravopisu</string>
-    <string name="pref__spelling__active_spellchecker__summary_none" comment="Summary of Active spellchecker pref">Není nastaveno</string>
+    <!-- Spelling UI strings -->
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[ZATÍM NEPOUŽITO] Použít jména z kontaktů</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Kontrola pravopisu bude používat jména z vašeho seznamu kontaktů</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Použít slova z vlastního slovníku</string>
@@ -262,7 +255,6 @@
     <string name="assets__action__cancel_confirm_message">Opravdu chcete zahodit všechny neuložené změny? Tuto operaci nelze po provedení vrátit zpět.</string>
     <string name="assets__action__delete">Odstranit</string>
     <string name="assets__action__delete_confirm_title">Potvrdit odstranění</string>
-    <string name="assets__action__delete_confirm_message">Opravdu chcete odstranit \"%s\"? Tuto operaci nelze po provedení vrátit zpět.</string>
     <string name="assets__action__edit">Upravit</string>
     <string name="assets__action__export">Exportovat</string>
     <string name="assets__action__import">Importovat</string>
@@ -276,8 +268,6 @@
     <string name="assets__error__invalid">Neplatné</string>
     <string name="assets__error__snackbar_message">Něco se pokazilo</string>
     <!-- Setup UI strings -->
-    <string name="setup__title" comment="Title of Setup">Prvotní nastavení</string>
-    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Povolit FlorisBoard</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Zpráva o chybě florisboardu</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Kopírovat do schránky</string>
@@ -301,8 +291,8 @@
     <string name="pref__clipboard__enable_clipboard_history__label">Zapnout historii schránky</string>
     <string name="pref__clipboard__limit_history_size__label">Omezit velikost historie</string>
     <string name="pref__clipboard__max_history_size__label">Max velikost historie</string>
-    <!-- glide strings -->
-    <string name="pref__glide__show_preview">Zobrazit náhled při psaní tahem</string>
+    <!-- Extension strings -->
+    <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->

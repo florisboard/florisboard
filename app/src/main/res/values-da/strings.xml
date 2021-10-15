@@ -46,7 +46,6 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Bevægelser</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Standard</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Systemstandard</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">Velkommen til %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard er ikke slået til i systemet og er derfor ikke tilgængelig som inputsmetode i inputvælgeren. Klik her for at løse problemet.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard er ikke valgt som standard inputmetode. Klik her for at løse problemet.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Sprog &amp; Tastaturlayout</string>
@@ -59,10 +58,7 @@
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Ændre undertastatur</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Landestandard</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Dette undertastatur findes allerede!</string>
-    <string name="settings__theme__title" comment="Title of the Theme fragment">Tastaturtema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ikke defineret</string>
-    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Altid dag</string>
-    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Altid nat</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nyt tema</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Redigér tema</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Navn</string>
@@ -83,9 +79,9 @@
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Tekstfarve</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastetryk</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Langt tastetryk forsinkelse</string>
-    <string name="settings__typing__title" comment="Title of Typing experience fragment">Skriveoplevelse</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Aktivér Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Vil blive vist over tastaturet</string>
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Skriveoplevelse</string>
     <string name="pref__suggestion__title" comment="Preference group title">Forslag</string>
     <string name="pref__dictionary__title" comment="Preference group title">Ordbog</string>
     <string name="pref__correction__title" comment="Preference group title">Rettelser</string>
@@ -100,7 +96,7 @@
     <string name="settings__udm__dialog__word_label" comment="Label for the word in the user dictionary add/edit dialog">Ord</string>
     <string name="settings__udm__dialog__word_error_empty" comment="Error label for the word in the user dictionary add/edit dialog">Indtast venligst et ord!</string>
     <string name="settings__udm__dialog__shortcut_label" comment="Label for the shortcut in the user dictionary add/edit dialog">Genvej (valgfri)</string>
-    <string name="settings__gestures__title" comment="Title of Gestures fragment">Bevægelser &amp; Strygeskrivning</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Bevægelser &amp; Strygeskrivning</string>
     <string name="pref__glide__title" comment="Preference group title">Strygeskrivning</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Skriv ord ved at stryge fingeren igennem bogstaver</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Vil forsvinde efter hvert ord</string>
@@ -112,6 +108,7 @@
     <string name="settings__advanced__title" comment="Title of Advanced settings">Avanceret</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Lys</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Mørk</string>
+    <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privatlivspolitik</string>
     <!-- Assets strings -->
@@ -132,7 +129,6 @@
     <string name="assets__error__details">Detaljer</string>
     <string name="assets__error__invalid">Ugyldig</string>
     <!-- Setup UI strings -->
-    <string name="setup__title" comment="Title of Setup">Opsætning</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard fejlrapport</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Luk</string>
@@ -140,7 +136,8 @@
     <string name="clip__clear_history">Ryd historik</string>
     <string name="clip__delete_item">Slet</string>
     <string name="clip__paste_item">Indsæt</string>
-    <!-- glide strings -->
+    <!-- Extension strings -->
+    <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->

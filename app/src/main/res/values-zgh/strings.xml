@@ -21,13 +21,13 @@
     <string name="settings__navigation__home" comment="Long-press hint of bottom nav item Home in Settings">ⴰⵙⵏⵓⴱⴳ</string>
     <string name="settings__navigation__keyboard" comment="Long-press hint of bottom nav item Keyboard in Settings">ⴰⵏⴰⵙⵉⵡ</string>
     <string name="settings__navigation__typing" comment="Long-press hint of bottom nav item Typing in Settings">ⵜⵉⵔⵔⴰ</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">ⴱⵔⵔⴽ ⴳ %s</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">ⵔⵏⵓ</string>
     <string name="settings__localization__subtype_cancel" comment="Subtype dialog cancel button">ⵙⵔ</string>
     <string name="settings__localization__subtype_delete" comment="Subtype dialog delete button">ⴽⴽⵙ</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">ⵜⵓⵜⵍⴰⵢⵜ</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">ⴰⵏⴰⵙⵉⵡ</string>
     <string name="pref__suggestion__title" comment="Preference group title">ⵉⵙⵓⵎⵔⵏ</string>
+    <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">ⵅⴼ</string>
     <!-- Assets strings -->
@@ -35,7 +35,8 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">ⵔⴳⵍ</string>
     <!-- Clipboard strings -->
-    <!-- glide strings -->
+    <!-- Extension strings -->
+    <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->

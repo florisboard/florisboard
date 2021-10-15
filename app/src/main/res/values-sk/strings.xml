@@ -92,12 +92,14 @@
     <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Zobrazenie pomocného kľúča</string>
     <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Zobrazí konfigurovateľný pomocný kláves vedľa medzerníka</string>
     <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Akcia užitočného kľúča</string>
+    <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <!-- Assets strings -->
     <!-- Setup UI strings -->
     <!-- Crash Dialog strings -->
     <!-- Clipboard strings -->
-    <!-- glide strings -->
+    <!-- Extension strings -->
+    <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->

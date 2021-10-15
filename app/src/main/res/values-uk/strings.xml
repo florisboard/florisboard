@@ -47,7 +47,6 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Жести</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">За замовчуванням</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Системний за замовчуванням</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">Ласкаво просимо до %s</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard не ввімкнено в системі, тому він не буде доступним як метод вводу в меню вибору методу вводу. Натисніть сюди, щоб виправити це.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard не вибрано як стандартний метод вводу. Натисніть сюди, щоб виправити це.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Мова &amp; Розкладка клавіатури</string>
@@ -69,13 +68,9 @@
     <string name="settings__localization__subtype_phone_layout" comment="Label for layout dropdown in subtype dialog">Основна телефонна розкладка</string>
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Додаткова телефонна розкладка</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Цей підтип вже існує!</string>
-    <string name="settings__theme__title" comment="Title of the Theme fragment">Тема клавіатури</string>
+    <string name="settings__theme__title" comment="Title of the Theme screen">Тема</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Не визначено</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Режим теми</string>
-    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Завжди день</string>
-    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Завжди ніч</string>
-    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Дотримуватись системи</string>
-    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Дотримуватись часу</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Час сходу</string>
     <string name="pref__theme__sunset_time__label" comment="Label of the sunset time preference">Час заходу</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Денна тема</string>
@@ -164,9 +159,9 @@
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Затримка при натисканні</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Пробіл перемикає назад в буквенну розкладку</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Натискання пробіл автоматичну перемикає на буквенну розкладку коли знаходиться в символьній або цифровій</string>
-    <string name="settings__typing__title" comment="Title of Typing experience fragment">Налаштування вводу тексту</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Увімкнути Розумну панель</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Буде показано над клавіатурою</string>
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Налаштування вводу тексту</string>
     <string name="pref__suggestion__title" comment="Preference group title">Пропозиції</string>
     <string name="pref__correction__title" comment="Preference group title">Корекції</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Великі літери автоматично</string>
@@ -175,12 +170,15 @@
     <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps Lock буде залишатись при переході на інше текстове поле</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Період подвійного пробілу</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Двічі натиснувши на пробіл, вставляється крапка, за якою йде пробіл</string>
-    <string name="settings__gestures__title" comment="Title of Gestures fragment">Жести та безперервний ввід</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Жести та безперервний ввід</string>
     <string name="pref__glide__title" comment="Preference group title">Безперервний ввід</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Увімкнути безперервний ввід</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Введіть слово, провівши пальцем по буквах</string>
     <string name="pref__glide__show_trail__label" comment="Preference title">Показувати безперервний слід</string>
     <string name="pref__glide__show_trail__summary" comment="Preference summary">Зникає після кожного слова</string>
+    <string name="pref__glide_trail_fade_duration">Час зникання безперервного сліду</string>
+    <string name="pref__glide_preview_refresh_delay">Затримка оновлення попереднього перегляду</string>
+    <string name="pref__glide__show_preview">Попередній перегляд під час безперервного вводу</string>
     <string name="pref__gestures__general_title" comment="Preference group title">Загальні жести</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Жести пробілу</string>
     <string name="pref__gestures__other_title" comment="Preference group title">Інші жести / Пороги жестів</string>
@@ -203,6 +201,7 @@
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Примусово приватний режим</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Відключає всі функції, які повинні тимчасово працювати з вашими даними вводу</string>
     <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Увімкнути параметри розробника</string>
+    <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Про додаток</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Значок програми FlorisBoard</string>
@@ -225,7 +224,6 @@
     <string name="assets__action__cancel_confirm_message">Ви впевнені, що хочете скасувати будь-які незбережені зміни? Цю дію неможливо скасувати після виконання.</string>
     <string name="assets__action__delete">Видалити</string>
     <string name="assets__action__delete_confirm_title">Підтвердьте видалення</string>
-    <string name="assets__action__delete_confirm_message">Ви впевнені, що хочете видалити \"%s\"? Цю дію неможливо скасувати після виконання.</string>
     <string name="assets__action__edit">Редагувати</string>
     <string name="assets__action__export">Експорт</string>
     <string name="assets__action__import">Імпорт</string>
@@ -236,8 +234,6 @@
     <string name="assets__error__invalid">Помилка</string>
     <string name="assets__error__snackbar_message">Щось пішло не так</string>
     <!-- Setup UI strings -->
-    <string name="setup__title" comment="Title of Setup">Налаштування</string>
-    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Увімкнути FlorisBoard</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Звіт про помилку FlorisBoard</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Зкопіювати в системний буфер обміну</string>
@@ -264,10 +260,8 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Зберігати буфер обміну</string>
     <string name="pref__clipboard__limit_history_size__label">Обмежити розмір історії</string>
     <string name="pref__clipboard__max_history_size__label">Максимальний розмір історії</string>
-    <!-- glide strings -->
-    <string name="pref__glide_trail_fade_duration">Час зникання безперервного сліду</string>
-    <string name="pref__glide_preview_refresh_delay">Затримка оновлення попереднього перегляду</string>
-    <string name="pref__glide__show_preview">Попередній перегляд під час безперервного вводу</string>
+    <!-- Extension strings -->
+    <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->

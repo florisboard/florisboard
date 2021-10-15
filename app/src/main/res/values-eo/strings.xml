@@ -34,7 +34,6 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gestoj</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Defaŭlta</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Sistema defaŭlta</string>
-    <string name="settings__home__title" comment="Title of the Home fragment">Bonvenon al %s</string>
     <string name="settings__localization__subtype_add" comment="Subtype dialog add button">Aldoni</string>
     <string name="settings__localization__subtype_add_title" comment="Title of subtype dialog when adding a new subtype">Aldoni subspeco</string>
     <string name="settings__localization__subtype_apply" comment="Subtype dialog apply button">Apliki</string>
@@ -43,13 +42,8 @@
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Redakti subspeco</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Lokaĵaro</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Ĉi tiu subtipo jam ekzistas!</string>
-    <string name="settings__theme__title" comment="Title of the Theme fragment">Klavaro etoso</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Nedifinita</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Etosa reĝimo</string>
-    <string name="enum__theme_mode__always_day" comment="Preference value for theme mode">Ĉiama tago</string>
-    <string name="enum__theme_mode__always_night" comment="Preference value for theme mode">Ĉiama nokto</string>
-    <string name="enum__theme_mode__follow_system" comment="Preference value for theme mode">Laŭ operaciumo</string>
-    <string name="enum__theme_mode__follow_time" comment="Preference value for theme mode">Laŭ tempo</string>
     <string name="pref__theme__day" comment="Label of the day group (day means light theme)">Taga etoso</string>
     <string name="pref__theme__night" comment="Label of the night group (night means dark theme)">Nokta etoso</string>
     <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Krei malplenan etoson</string>
@@ -95,6 +89,7 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Hela</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Malhela</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Montri aplikaĵo bildeto en aplikaĵolanĉilo</string>
+    <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Pri</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">Aplikaĵo bildeto de FlorisBoard</string>
@@ -120,12 +115,11 @@
     <string name="assets__action__yes">Jes</string>
     <string name="assets__error__invalid">Nevalida</string>
     <!-- Setup UI strings -->
-    <string name="setup__title" comment="Title of Setup">Agordaĵo</string>
-    <string name="setup__enable_ime__title" comment="Title of Enable IME fragment in Setup">Aktivigi FlorisBoard</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Fermi</string>
     <!-- Clipboard strings -->
-    <!-- glide strings -->
+    <!-- Extension strings -->
+    <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->
