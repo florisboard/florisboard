@@ -549,7 +549,7 @@
       "id": 801,
       "languageTag": "fa-FA",
       "composer": "appender",
-      "currencySet": "iranian_rial",
+      "currencySet": "Rial",
       "preferred": {
         "characters": "persian",
         "symbols": "persian",
@@ -561,7 +561,7 @@
       "id": 901,
       "languageTag": "ar",
       "composer": "appender",
-      "currencySet": "dollar",
+      "currencySet": "Rial",
       "preferred": {
         "characters": "arabic",
         "symbols": "eastern",
