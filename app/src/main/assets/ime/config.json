@@ -113,8 +113,8 @@
       ]
     },
     {
-      "name": "iranian_rial",
-      "label": "Iranian rial (﷼)",
+      "name": "Rial",
+      "label": "Rial (﷼)",
       "slots": [
         { "code":65020, "label": "﷼" },
         { "code":   36, "label": "$" },
