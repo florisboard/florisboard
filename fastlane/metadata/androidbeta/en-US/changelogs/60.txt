@@ -1,0 +1,4 @@
+This release adds a new spell checker screen and partly overhauls the theme manager UI.
+Additionally some bugs have been fixed and some parts of the UI are now animated.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.14-beta04
