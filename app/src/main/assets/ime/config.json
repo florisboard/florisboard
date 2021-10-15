@@ -113,18 +113,6 @@
       ]
     },
     {
-      "name": "iranian_rial",
-      "label": "Iranian rial (﷼)",
-      "slots": [
-        { "code":65020, "label": "﷼" },
-        { "code":   36, "label": "$" },
-        { "code": 8364, "label": "€" },
-        { "code":  162, "label": "¢" },
-        { "code":  163, "label": "£" },
-        { "code":  165, "label": "¥" }
-      ]
-    },
-    {
       "name": "israeli_new_shekel",
       "label": "Israeli new shekel (₪)",
       "slots": [
@@ -230,6 +218,18 @@
         { "code":   36, "label": "$" },
         { "code":  165, "label": "¥" },
         { "code": 8369, "label": "₱" }
+      ]
+    },
+    {
+      "name": "rial",
+      "label": "Rial (﷼)",
+      "slots": [
+        { "code":65020, "label": "﷼" },
+        { "code":   36, "label": "$" },
+        { "code": 8364, "label": "€" },
+        { "code":  162, "label": "¢" },
+        { "code":  163, "label": "£" },
+        { "code":  165, "label": "¥" }
       ]
     },
     {
@@ -549,7 +549,7 @@
       "id": 801,
       "languageTag": "fa-FA",
       "composer": "appender",
-      "currencySet": "iranian_rial",
+      "currencySet": "rial",
       "preferred": {
         "characters": "persian",
         "symbols": "persian",
@@ -561,7 +561,7 @@
       "id": 901,
       "languageTag": "ar",
       "composer": "appender",
-      "currencySet": "dollar",
+      "currencySet": "rial",
       "preferred": {
         "characters": "arabic",
         "symbols": "eastern",
