@@ -224,9 +224,9 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Zobrazit ikonu aplikace na domovské obrazovce</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Vynutit soukromý režim</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Dočasně vypne všechny funkce, které pracují se vstupními daty</string>
-    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Zapnout vývojářské nástroje</string>
-    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Nástroje pro debugování a řešení problémů</string>
-    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Zobrazit statistiky paměťové haldy</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Zapnout vývojářské nástroje</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Nástroje pro debugování a řešení problémů</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Zobrazit statistiky paměťové haldy</string>
     <!-- Spelling UI strings -->
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[ZATÍM NEPOUŽITO] Použít jména z kontaktů</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Kontrola pravopisu bude používat jména z vašeho seznamu kontaktů</string>

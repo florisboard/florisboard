@@ -213,8 +213,8 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Alkalmazás megjelenítése a kezdőképernyőn</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Privát mód kényszerítése</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Minden funkciót ki fog kapcsolni ideiglenesen, amely a bemeneti adatokkal dolgozik</string>
-    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Fejlesztői eszközök engedélyezése</string>
-    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Heap memória statisztika megjelenítése</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Fejlesztői eszközök engedélyezése</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Heap memória statisztika megjelenítése</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">ha ez a lista nem tartalmazza a szótárakat a nyelvéhez, vagy a nyelvjárásához, manuálisan is kereshet egy Hunspell szótárat és importálhatja az \'aff\' és a \'dic\' fájlokat ezért.</string>
     <!-- About UI strings -->

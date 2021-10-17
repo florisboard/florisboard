@@ -27,11 +27,33 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import dev.patrickgold.florisboard.common.SystemSettingsObserver
+import java.lang.reflect.Modifier
+import kotlin.reflect.KClass
 
-abstract class AndroidSettingsHelper {
+abstract class AndroidSettingsHelper(
+    private val kClass: KClass<*>,
+    val groupId: String,
+) {
     abstract fun getString(context: Context, key: String): String?
 
     abstract fun getUriFor(key: String): Uri?
+
+    private fun reflectionGetAllStaticFields(kClass: KClass<*>) = sequence<Pair<String, String>> {
+        for (field in kClass.java.declaredFields) {
+            if (Modifier.isStatic(field.modifiers)) {
+                try {
+                    val value = field.get(null) as? String ?: continue
+                    yield(field.name to value)
+                } catch (e: Exception) {
+                    // Cannot access field, continue on to next one
+                }
+            }
+        }
+    }
+
+    fun getAllKeys(): Sequence<Pair<String, String>> {
+        return reflectionGetAllStaticFields(kClass)
+    }
 
     private fun observe(context: Context, key: String, observer: SystemSettingsObserver) {
         getUriFor(key)?.let { uri ->
@@ -65,13 +87,33 @@ abstract class AndroidSettingsHelper {
 }
 
 object AndroidSettings {
-    val Secure = object : AndroidSettingsHelper() {
+    val Global = object : AndroidSettingsHelper(Settings.Global::class, "global") {
+        override fun getString(context: Context, key: String): String? {
+            return Settings.Global.getString(context.contentResolver, key)
+        }
+
+        override fun getUriFor(key: String): Uri? {
+            return Settings.Global.getUriFor(key)
+        }
+    }
+
+    val Secure = object : AndroidSettingsHelper(Settings.Secure::class, "secure") {
         override fun getString(context: Context, key: String): String? {
             return Settings.Secure.getString(context.contentResolver, key)
         }
 
         override fun getUriFor(key: String): Uri? {
             return Settings.Secure.getUriFor(key)
+        }
+    }
+
+    val System = object : AndroidSettingsHelper(Settings.System::class, "system") {
+        override fun getString(context: Context, key: String): String? {
+            return Settings.System.getString(context.contentResolver, key)
+        }
+
+        override fun getUriFor(key: String): Uri? {
+            return Settings.System.getUriFor(key)
         }
     }
 }

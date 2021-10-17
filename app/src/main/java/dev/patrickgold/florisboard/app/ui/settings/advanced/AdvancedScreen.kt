@@ -16,34 +16,21 @@
 
 package dev.patrickgold.florisboard.app.ui.settings.advanced
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
-import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
 import dev.patrickgold.florisboard.util.AndroidVersion
-import dev.patrickgold.jetpref.ui.compose.JetPrefAlertDialog
 import dev.patrickgold.jetpref.ui.compose.ListPreference
 import dev.patrickgold.jetpref.ui.compose.ListPreferenceEntry
-import dev.patrickgold.jetpref.ui.compose.Preference
-import dev.patrickgold.jetpref.ui.compose.PreferenceGroup
 import dev.patrickgold.jetpref.ui.compose.SwitchPreference
 import dev.patrickgold.jetpref.ui.compose.entry
 
-class DebugOnPurposeCrashException : Exception(
-    "Success! The app crashed purposely to display this beautiful screen we all love :)"
-)
 
 @Composable
 fun AdvancedScreen() = FlorisScreen(title = stringRes(R.string.settings__advanced__title)) {
-    val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
-
     ListPreference(
         prefs.advanced.settingsTheme,
         title = stringRes(R.string.pref__advanced__settings_theme__label),
@@ -134,68 +121,6 @@ fun AdvancedScreen() = FlorisScreen(title = stringRes(R.string.settings__advance
         title = stringRes(R.string.pref__advanced__force_private_mode__label),
         summary = stringRes(R.string.pref__advanced__force_private_mode__summary),
     )
-
-    PreferenceGroup(title = stringRes(R.string.settings__devtools__title)) {
-        SwitchPreference(
-            prefs.devtools.enabled,
-            title = stringRes(R.string.pref__devtools__enabled__label),
-            summary = stringRes(R.string.pref__devtools__enabled__summary),
-        )
-        SwitchPreference(
-            prefs.devtools.showHeapMemoryStats,
-            title = stringRes(R.string.pref__devtools__show_heap_memory_stats__label),
-            summary = stringRes(R.string.pref__devtools__show_heap_memory_stats__summary),
-            enabledIf = { prefs.devtools.enabled isEqualTo true },
-        )
-        // TODO: remove this preference once word suggestions are re-implemented in 0.3.15
-        SwitchPreference(
-            prefs.devtools.overrideWordSuggestionsMinHeapRestriction,
-            title = "Override min heap size restriction for word suggestions",
-            summary = "This allows you to use word suggestions even if your heap size is not intended for it and can break FlorisBoard",
-            enabledIf = { prefs.devtools.enabled isEqualTo true },
-        )
-        Preference(
-            title = stringRes(R.string.pref__devtools__clear_udm_internal_database__label),
-            summary = stringRes(R.string.pref__devtools__clear_udm_internal_database__summary),
-            onClick = { setShowDialog(true) },
-            enabledIf = { prefs.devtools.enabled isEqualTo true },
-        )
-        Preference(
-            title = stringRes(R.string.pref__devtools__reset_flag__label, "flag_name" to "isImeSetUp"),
-            summary = stringRes(R.string.pref__devtools__reset_flag_is_ime_set_up__summary),
-            onClick = { prefs.internal.isImeSetUp.set(false) },
-            enabledIf = { prefs.devtools.enabled isEqualTo true },
-        )
-        Preference(
-            title = stringRes(R.string.pref__devtools__test_crash_report__label),
-            summary = stringRes(R.string.pref__devtools__test_crash_report__summary),
-            onClick = { throw DebugOnPurposeCrashException() },
-            enabledIf = { prefs.devtools.enabled isEqualTo true },
-        )
-    }
-
-    if (showDialog) {
-        JetPrefAlertDialog(
-            title = stringRes(R.string.assets__action__delete_confirm_title),
-            confirmLabel = stringRes(R.string.assets__action__delete),
-            onConfirm = {
-                DictionaryManager.default().let {
-                    it.loadUserDictionariesIfNecessary()
-                    it.florisUserDictionaryDao()?.deleteAll()
-                }
-                setShowDialog(false)
-            },
-            dismissLabel = stringRes(R.string.assets__action__cancel),
-            onDismiss = { setShowDialog(false) },
-        ) {
-            Text(
-                text = stringRes(
-                    R.string.assets__action__delete_confirm_message,
-                    "database_name" to FlorisUserDictionaryDatabase.DB_FILE_NAME,
-                )
-            )
-        }
-    }
 }
 
 private fun FlorisLocale.listEntry(): ListPreferenceEntry<String> {

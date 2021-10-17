@@ -201,7 +201,8 @@ class FlorisAppActivity : ComponentActivity() {
                     val previewVisible = when (navBackStackEntry?.destination?.route) {
                         Routes.Setup.Home, Routes.Settings.About, Routes.Settings.ProjectLicense,
                         Routes.Settings.ThirdPartyLicenses, Routes.Settings.ImportSpellingArchive,
-                        Routes.Settings.ImportSpellingAffDic, Routes.Ext.View -> false
+                        Routes.Settings.ImportSpellingAffDic, Routes.Devtools.AndroidLocales,
+                        Routes.Devtools.AndroidSettings, Routes.Devtools.Home, Routes.Ext.View -> false
                         else -> true
                     }
                     AnimatedVisibility(visible = previewVisible) {

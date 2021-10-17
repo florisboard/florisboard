@@ -122,6 +122,11 @@ fun HomeScreen() = FlorisScreen(
         onClick = { navController.navigate(Routes.Settings.Clipboard) },
     )
     Preference(
+        iconId = R.drawable.ic_adb,
+        title = stringRes(R.string.devtools__title),
+        onClick = { navController.navigate(Routes.Devtools.Home) },
+    )
+    Preference(
         iconId = R.drawable.ic_build,
         title = stringRes(R.string.settings__advanced__title),
         onClick = { navController.navigate(Routes.Settings.Advanced) },

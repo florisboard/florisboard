@@ -278,17 +278,17 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Immer aktiviert in Android 10+ aufgrund von System-Beschränkungen</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Privaten Modus erzwingen</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Wird alle Funktionen deaktivieren, die vorübergehend mit deinen Eingabedaten arbeiten</string>
-    <string name="settings__devtools__title" comment="Title of Devtools settings">Entwicklerwerkzeuge</string>
-    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Entwickler-Werkzeuge ein/aus</string>
-    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Tools spezial entwickelt für Debugging und Fehlersuche</string>
-    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Zeige Heap-Speicher Statistik</string>
-    <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Blende die Heap-Speicherverbrauch und der Maximal Größe in der rechte obere Ecke</string>
-    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Interne Benutzerwörterbuch-Datenbank leeren</string>
-    <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Leert alle Wörter von der Wörterbuch-Datenbank</string>
-    <string name="pref__devtools__reset_flag__label" comment="Label of Reset flag preferences in Advanced">\"{flag_name}\"-Einstellung zurücksetzen</string>
-    <string name="pref__devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Advanced">Debug Aktion: Setup Bildschirm erneut anzeigen</string>
-    <string name="pref__devtools__test_crash_report__label" comment="Label of Test Crash Report in Advanced">Test-Absturzbericht Ansicht</string>
-    <string name="pref__devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Advanced">Debug-Aktion, um absichtlich einen Absturz zu verursachen</string>
+    <string name="devtools__title" comment="Title of Devtools settings">Entwicklerwerkzeuge</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Entwickler-Werkzeuge ein/aus</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Tools spezial entwickelt für Debugging und Fehlersuche</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Zeige Heap-Speicher Statistik</string>
+    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Blende die Heap-Speicherverbrauch und der Maximal Größe in der rechte obere Ecke</string>
+    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Interne Benutzerwörterbuch-Datenbank leeren</string>
+    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Leert alle Wörter von der Wörterbuch-Datenbank</string>
+    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Advanced">\"{flag_name}\"-Einstellung zurücksetzen</string>
+    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Advanced">Debug Aktion: Setup Bildschirm erneut anzeigen</string>
+    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Advanced">Test-Absturzbericht Ansicht</string>
+    <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Advanced">Debug-Aktion, um absichtlich einen Absturz zu verursachen</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Rechtschreibprüfung</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Verwende Tastatur-Rechtschreibprüfung-Konfiguration</string>
