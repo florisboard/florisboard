@@ -75,7 +75,10 @@ fun SpellingScreen() = FlorisScreen(
             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
     }
-    val florisSpellCheckerEnabled = systemSpellCheckerPkgName == context.packageName && systemSpellCheckerSubtypeIndex != "0"
+    val florisSpellCheckerEnabled =
+        systemSpellCheckerEnabled == "1" &&
+        systemSpellCheckerPkgName == context.packageName &&
+        systemSpellCheckerSubtypeIndex != "0"
     PreferenceGroup(title = stringRes(R.string.pref__spelling__active_spellchecker__label)) {
         Column(modifier = Modifier.padding(horizontal = 8.dp)) {
             if (systemSpellCheckerEnabled == "1") {
