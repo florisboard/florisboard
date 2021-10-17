@@ -55,7 +55,6 @@ import dev.patrickgold.florisboard.common.InputMethodUtils
 import dev.patrickgold.florisboard.common.SystemSettingsObserver
 import dev.patrickgold.florisboard.util.AndroidVersion
 import dev.patrickgold.florisboard.util.PackageManagerUtils
-import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.ui.compose.ProvideDefaultDialogPrefStrings
 
 enum class AppTheme(val id: String) {
@@ -179,7 +178,6 @@ class FlorisAppActivity : ComponentActivity() {
     @OptIn(ExperimentalAnimationApi::class)
     @Composable
     private fun AppContent() {
-        val isImeSetUp by prefs.internal.isImeSetUp.observeAsState()
         val navController = rememberNavController()
         CompositionLocalProvider(
             LocalNavController provides navController,
@@ -195,14 +193,15 @@ class FlorisAppActivity : ComponentActivity() {
                     Routes.AppNavHost(
                         modifier = Modifier.weight(1.0f),
                         navController = navController,
-                        startDestination = if (isImeSetUp) { Routes.Settings.Home } else { Routes.Setup.Home },
+                        startDestination = Routes.Splash.Screen,
                     )
                     val navBackStackEntry by navController.currentBackStackEntryAsState()
                     val previewVisible = when (navBackStackEntry?.destination?.route) {
-                        Routes.Setup.Home, Routes.Settings.About, Routes.Settings.ProjectLicense,
+                        Routes.Setup.Screen, Routes.Settings.About, Routes.Settings.ProjectLicense,
                         Routes.Settings.ThirdPartyLicenses, Routes.Settings.ImportSpellingArchive,
                         Routes.Settings.ImportSpellingAffDic, Routes.Devtools.AndroidLocales,
-                        Routes.Devtools.AndroidSettings, Routes.Devtools.Home, Routes.Ext.View -> false
+                        Routes.Devtools.AndroidSettings, Routes.Devtools.Home, Routes.Ext.View,
+                        Routes.Splash.Screen -> false
                         else -> true
                     }
                     AnimatedVisibility(visible = previewVisible) {

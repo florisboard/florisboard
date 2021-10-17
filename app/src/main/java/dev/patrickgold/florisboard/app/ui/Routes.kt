@@ -40,10 +40,19 @@ import dev.patrickgold.florisboard.app.ui.settings.spelling.SpellingInfoScreen
 import dev.patrickgold.florisboard.app.ui.settings.spelling.SpellingScreen
 import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeScreen
 import dev.patrickgold.florisboard.app.ui.setup.SetupScreen
+import dev.patrickgold.florisboard.app.ui.splash.SplashScreen
 import dev.patrickgold.florisboard.common.curlyFormat
 
 @Suppress("FunctionName")
 object Routes {
+    object Splash {
+        const val Screen = "splash"
+    }
+
+    object Setup {
+        const val Screen = "setup"
+    }
+
     object Settings {
         const val Home = "settings"
 
@@ -67,10 +76,6 @@ object Routes {
         const val About = "settings/about"
         const val ProjectLicense = "settings/about/project-license"
         const val ThirdPartyLicenses = "settings/about/third-party-licenses"
-    }
-
-    object Setup {
-        const val Home = "setup"
     }
 
     object Devtools {
@@ -97,6 +102,10 @@ object Routes {
             navController = navController,
             startDestination = startDestination,
         ) {
+            composable(Splash.Screen) { SplashScreen() }
+
+            composable(Setup.Screen) { SetupScreen() }
+
             composable(Settings.Home) { HomeScreen() }
 
             composable(Settings.Theme) { ThemeScreen() }
@@ -118,8 +127,6 @@ object Routes {
             composable(Settings.About) { AboutScreen() }
             composable(Settings.ProjectLicense) { ProjectLicenseScreen() }
             composable(Settings.ThirdPartyLicenses) { ThirdPartyLicensesScreen() }
-
-            composable(Setup.Home) { SetupScreen() }
 
             composable(Devtools.Home) { DevtoolsScreen() }
             composable(Devtools.AndroidLocales) { AndroidLocalesScreen() }

@@ -121,7 +121,11 @@ fun SetupScreen() = FlorisScreen(
                 StepText(stringRes(R.string.setup__finish_up__description_p2))
                 StepButton(label = stringRes(R.string.setup__finish_up__finish_btn)) {
                     this@FlorisScreen.prefs.internal.isImeSetUp.set(true)
-                    navController.navigate(Routes.Settings.Home)
+                    navController.navigate(Routes.Settings.Home) {
+                        popUpTo(Routes.Setup.Screen) {
+                            inclusive = true
+                        }
+                    }
                 }
             },
         ),
