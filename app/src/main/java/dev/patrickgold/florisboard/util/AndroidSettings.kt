@@ -71,11 +71,9 @@ abstract class AndroidSettingsHelper(
     @Composable
     fun observeAsState(
         key: String,
-        initial: String? = null,
         foregroundOnly: Boolean = false,
     ) = observeAsState(
         key = key,
-        initial = initial,
         foregroundOnly = foregroundOnly,
         transform = { it },
     )
@@ -83,13 +81,12 @@ abstract class AndroidSettingsHelper(
     @Composable
     fun <R> observeAsState(
         key: String,
-        initial: R,
         foregroundOnly: Boolean = false,
         transform: (String?) -> R,
     ): State<R> {
         val lifecycleOwner = LocalLifecycleOwner.current
         val context = LocalContext.current
-        val state = remember(key) { mutableStateOf(initial) }
+        val state = remember(key) { mutableStateOf(transform(getString(context, key))) }
         DisposableEffect(lifecycleOwner.lifecycle) {
             val observer = SystemSettingsObserver(context) {
                 state.value = transform(getString(context, key))

@@ -208,7 +208,7 @@ class SpellingManager(context: Context) {
                     meta = ExtensionMetaEditor(
                         id = ExtensionDefaults.createIdForImport("spelling"),
                         version = "0.0.0",
-                        title = "LibreOffice import",
+                        title = "FreeOffice import",
                         authors = mutableListOf(ExtensionAuthorEditor(name = "Unknown")),
                         license = "unknown",
                     ),

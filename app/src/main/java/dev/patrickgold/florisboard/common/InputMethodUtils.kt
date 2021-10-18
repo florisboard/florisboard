@@ -35,7 +35,6 @@ object InputMethodUtils {
         foregroundOnly: Boolean = false,
     ) = AndroidSettings.Secure.observeAsState(
         key = Settings.Secure.ENABLED_INPUT_METHODS,
-        initial = false,
         foregroundOnly = foregroundOnly,
         transform = { parseIsFlorisboardEnabled(context, it.toString()) },
     )
@@ -46,7 +45,6 @@ object InputMethodUtils {
         foregroundOnly: Boolean = false,
     ) = AndroidSettings.Secure.observeAsState(
         key = Settings.Secure.DEFAULT_INPUT_METHOD,
-        initial = false,
         foregroundOnly = foregroundOnly,
         transform = { parseIsFlorisboardSelected(context, it.toString()) },
     )
