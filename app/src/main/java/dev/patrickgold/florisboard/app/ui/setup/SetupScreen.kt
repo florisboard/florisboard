@@ -31,7 +31,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,8 +40,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.LocalIsFlorisBoardEnabled
-import dev.patrickgold.florisboard.app.LocalIsFlorisBoardSelected
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
@@ -66,8 +65,14 @@ fun SetupScreen() = FlorisScreen(
     val navController = LocalNavController.current
     val context = LocalContext.current
 
-    val isFlorisBoardEnabled = LocalIsFlorisBoardEnabled.current
-    val isFlorisBoardSelected = LocalIsFlorisBoardSelected.current
+    val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(
+        context = context,
+        foregroundOnly = true,
+    )
+    val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(
+        context = context,
+        foregroundOnly = true,
+    )
     val stepState = rememberSaveable(saver = FlorisStepState.Saver) {
         val initStep = when {
             !isFlorisBoardEnabled -> Step.EnableIme
@@ -77,7 +82,7 @@ fun SetupScreen() = FlorisScreen(
         FlorisStepState.new(init = initStep)
     }
 
-    SideEffect {
+    LaunchedEffect(isFlorisBoardEnabled, isFlorisBoardSelected) {
         stepState.setCurrentAuto(when {
             !isFlorisBoardEnabled -> Step.EnableIme
             !isFlorisBoardSelected -> Step.SelectIme

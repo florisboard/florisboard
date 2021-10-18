@@ -26,6 +26,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import dev.patrickgold.florisboard.common.SystemSettingsObserver
 import java.lang.reflect.Modifier
 import kotlin.reflect.KClass
@@ -58,6 +60,7 @@ abstract class AndroidSettingsHelper(
     private fun observe(context: Context, key: String, observer: SystemSettingsObserver) {
         getUriFor(key)?.let { uri ->
             context.contentResolver.registerContentObserver(uri, false, observer)
+            observer.dispatchChange(false, uri)
         }
     }
 
@@ -66,20 +69,53 @@ abstract class AndroidSettingsHelper(
     }
 
     @Composable
-    fun observeAsState(key: String) = observeAsState(key, null)
+    fun observeAsState(
+        key: String,
+        initial: String? = null,
+        foregroundOnly: Boolean = false,
+    ) = observeAsState(
+        key = key,
+        initial = initial,
+        foregroundOnly = foregroundOnly,
+        transform = { it },
+    )
 
     @Composable
-    fun observeAsState(key: String, initial: String?): State<String?> {
+    fun <R> observeAsState(
+        key: String,
+        initial: R,
+        foregroundOnly: Boolean = false,
+        transform: (String?) -> R,
+    ): State<R> {
         val lifecycleOwner = LocalLifecycleOwner.current
         val context = LocalContext.current
         val state = remember(key) { mutableStateOf(initial) }
-        DisposableEffect(lifecycleOwner) {
+        DisposableEffect(lifecycleOwner.lifecycle) {
             val observer = SystemSettingsObserver(context) {
-                state.value = getString(context, key)
+                state.value = transform(getString(context, key))
             }
-            observe(context, key, observer)
-            onDispose {
-                removeObserver(context, observer)
+            if (foregroundOnly) {
+                val eventObserver = LifecycleEventObserver { _, event ->
+                    when (event) {
+                        Lifecycle.Event.ON_RESUME -> {
+                            observe(context, key, observer)
+                        }
+                        Lifecycle.Event.ON_PAUSE -> {
+                            removeObserver(context, observer)
+                        }
+                        else -> {}
+                    }
+                }
+                lifecycleOwner.lifecycle.addObserver(eventObserver)
+                onDispose {
+                    lifecycleOwner.lifecycle.removeObserver(eventObserver)
+                    removeObserver(context, observer)
+                }
+            } else {
+                observe(context, key, observer)
+                onDispose {
+                    removeObserver(context, observer)
+                }
             }
         }
         return state

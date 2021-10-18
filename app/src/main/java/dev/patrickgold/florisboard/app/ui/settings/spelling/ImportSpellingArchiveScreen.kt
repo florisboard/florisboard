@@ -28,7 +28,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -109,14 +109,10 @@ fun ImportSpellingArchiveScreen() = FlorisScreen(
         FlorisStepState.new(init = Step.SelectSource)
     }
 
-    // Removing this rather useless seeming variable causes side effect
-    //  to not refresh. Maybe a JC compositor bug?
-    val selectedIndex = sourceSelectedIndex
-    val archiveEditor = importArchiveEditor
-    SideEffect {
+    LaunchedEffect(sourceSelectedIndex, importArchiveEditor) {
         stepState.setCurrentAuto(when {
-            selectedIndex <= 0 -> Step.SelectSource
-            archiveEditor == null -> Step.ImportArchive
+            sourceSelectedIndex <= 0 -> Step.SelectSource
+            importArchiveEditor == null -> Step.ImportArchive
             else -> Step.VerifyImport
         })
     }

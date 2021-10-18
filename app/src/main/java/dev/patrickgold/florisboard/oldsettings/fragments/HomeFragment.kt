@@ -24,7 +24,6 @@ import android.view.View
 import android.view.ViewGroup
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisAppActivity
-import dev.patrickgold.florisboard.common.InputMethodUtils
 import dev.patrickgold.florisboard.databinding.SettingsFragmentHomeBinding
 import dev.patrickgold.florisboard.oldsettings.SettingsMainActivity
 
@@ -60,19 +59,6 @@ class HomeFragment : SettingsMainActivity.SettingsFragment() {
     }
 
     private fun updateImeIssueCardsVisibilities() {
-        val isImeEnabled = InputMethodUtils.checkIsFlorisboardEnabled(requireContext())
-        val isImeSelected = InputMethodUtils.checkIsFlorisboardSelected(requireContext())
-        binding.imeNotEnabledCard.visibility =
-            if (isImeEnabled) {
-                View.GONE
-            } else {
-                View.VISIBLE
-            }
-        binding.imeNotSelectedCard.visibility =
-            if (!isImeEnabled || isImeSelected) {
-                View.GONE
-            } else {
-                View.VISIBLE
-            }
+        // removed
     }
 }

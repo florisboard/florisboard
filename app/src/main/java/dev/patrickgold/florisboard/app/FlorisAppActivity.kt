@@ -31,7 +31,6 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -51,8 +50,6 @@ import dev.patrickgold.florisboard.app.ui.components.PreviewKeyboardField
 import dev.patrickgold.florisboard.app.ui.components.SystemUi
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
 import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.common.InputMethodUtils
-import dev.patrickgold.florisboard.common.SystemSettingsObserver
 import dev.patrickgold.florisboard.util.AndroidVersion
 import dev.patrickgold.florisboard.util.PackageManagerUtils
 import dev.patrickgold.jetpref.ui.compose.ProvideDefaultDialogPrefStrings
@@ -68,9 +65,6 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
     error("LocalNavController not initialized")
 }
 
-val LocalIsFlorisBoardEnabled = compositionLocalOf { false }
-val LocalIsFlorisBoardSelected = compositionLocalOf { false }
-
 class FlorisAppActivity : ComponentActivity() {
     private val prefs by florisPreferenceModel()
     private var isDatastoreReady by mutableStateOf(false)
@@ -78,26 +72,9 @@ class FlorisAppActivity : ComponentActivity() {
     private var showAppIcon = true
     private var resourcesContext by mutableStateOf(this as Context)
 
-    private var isFlorisBoardEnabled by mutableStateOf(false)
-    private var isFlorisBoardSelected by mutableStateOf(false)
-
-    private val isFlorisBoardEnabledObserver by lazy {
-        SystemSettingsObserver(this) {
-            isFlorisBoardEnabled = InputMethodUtils.checkIsFlorisboardEnabled(this@FlorisAppActivity)
-        }
-    }
-    private val isFlorisBoardSelectedObserver by lazy {
-        SystemSettingsObserver(this) {
-            isFlorisBoardSelected = InputMethodUtils.checkIsFlorisboardSelected(this@FlorisAppActivity)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-
-        InputMethodUtils.startObserveIsFlorisBoardEnabled(this, isFlorisBoardEnabledObserver)
-        InputMethodUtils.startObserveIsFlorisBoardSelected(this, isFlorisBoardSelectedObserver)
 
         prefs.datastoreReadyStatus.observe(this) {
             isDatastoreReady = it
@@ -167,8 +144,6 @@ class FlorisAppActivity : ComponentActivity() {
         super.onDestroy()
 
         prefs.forceSyncToDisk()
-        InputMethodUtils.stopObserveIsFlorisBoardEnabled(this, isFlorisBoardEnabledObserver)
-        InputMethodUtils.stopObserveIsFlorisBoardSelected(this, isFlorisBoardSelectedObserver)
     }
 
     private fun Configuration.setLocale(locale: FlorisLocale) {
@@ -179,11 +154,7 @@ class FlorisAppActivity : ComponentActivity() {
     @Composable
     private fun AppContent() {
         val navController = rememberNavController()
-        CompositionLocalProvider(
-            LocalNavController provides navController,
-            LocalIsFlorisBoardEnabled provides isFlorisBoardEnabled,
-            LocalIsFlorisBoardSelected provides isFlorisBoardSelected,
-        ) {
+        CompositionLocalProvider(LocalNavController provides navController) {
             ProvideDefaultDialogPrefStrings(
                 confirmLabel = stringRes(R.string.assets__action__ok),
                 dismissLabel = stringRes(R.string.assets__action__cancel),

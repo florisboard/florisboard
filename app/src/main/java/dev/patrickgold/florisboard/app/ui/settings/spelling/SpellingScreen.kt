@@ -58,9 +58,18 @@ fun SpellingScreen() = FlorisScreen(
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
 
-    val systemSpellCheckerId by AndroidSettings.Secure.observeAsState("selected_spell_checker")
-    val systemSpellCheckerEnabled by AndroidSettings.Secure.observeAsState("spell_checker_enabled")
-    val systemSpellCheckerSubtypeIndex by AndroidSettings.Secure.observeAsState("selected_spell_checker_subtype")
+    val systemSpellCheckerId by AndroidSettings.Secure.observeAsState(
+        key = "selected_spell_checker",
+        foregroundOnly = true,
+    )
+    val systemSpellCheckerEnabled by AndroidSettings.Secure.observeAsState(
+        key = "spell_checker_enabled",
+        foregroundOnly = true,
+    )
+    val systemSpellCheckerSubtypeIndex by AndroidSettings.Secure.observeAsState(
+        key = "selected_spell_checker_subtype",
+        foregroundOnly = true,
+    )
     val systemSpellCheckerPkgName = runCatching {
         ComponentName.unflattenFromString(systemSpellCheckerId!!)!!.packageName
     }.getOrDefault("null")
