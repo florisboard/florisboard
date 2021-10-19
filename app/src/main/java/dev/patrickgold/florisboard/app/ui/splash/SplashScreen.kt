@@ -20,7 +20,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,8 +42,8 @@ fun SplashScreen() = Box(
     val isImeSetUp by prefs.internal.isImeSetUp.observeAsState()
     val navController = LocalNavController.current
 
-    if (isModelLoaded) {
-        SideEffect {
+    LaunchedEffect(isModelLoaded) {
+        if (isModelLoaded) {
             navController.navigate(if (isImeSetUp) Routes.Settings.Home else Routes.Setup.Screen) {
                 popUpTo(Routes.Splash.Screen) {
                     inclusive = true
