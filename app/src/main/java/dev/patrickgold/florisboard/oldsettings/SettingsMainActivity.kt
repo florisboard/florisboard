@@ -39,10 +39,8 @@ import kotlinx.coroutines.MainScope
 
 internal const val FRAGMENT_TAG = "FRAGMENT_TAG"
 private const val PREF_RES_ID = "PREF_RES_ID"
-private const val SELECTED_ITEM_ID = "SELECTED_ITEM_ID"
 
 class SettingsMainActivity : AppCompatActivity(),
-    BottomNavigationView.OnNavigationItemSelectedListener,
     SharedPreferences.OnSharedPreferenceChangeListener,
     CoroutineScope by MainScope() {
 
@@ -71,51 +69,10 @@ class SettingsMainActivity : AppCompatActivity(),
         //       a reference to the included layout...
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-
-        binding.bottomNavigation.setOnNavigationItemSelectedListener(this)
-        binding.bottomNavigation.selectedItemId =
-            savedInstanceState?.getInt(SELECTED_ITEM_ID) ?: R.id.settings__navigation__home
+        supportActionBar?.setTitle(R.string.settings__typing__title)
+        loadFragment(TypingFragment())
 
         AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(SELECTED_ITEM_ID, binding.bottomNavigation.selectedItemId)
-    }
-
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.settings__navigation__home -> {
-                supportActionBar?.title = String.format(
-                    resources.getString(R.string.settings__home__title),
-                    resources.getString(R.string.floris_app_name)
-                )
-                loadFragment(HomeFragment())
-                true
-            }
-            R.id.settings__navigation__keyboard -> {
-                supportActionBar?.setTitle(R.string.settings__keyboard__title)
-                loadFragment(PrefFragment.createFromResource(R.xml.prefs_keyboard))
-                true
-            }
-            R.id.settings__navigation__typing -> {
-                supportActionBar?.setTitle(R.string.settings__typing__title)
-                loadFragment(TypingFragment())
-                true
-            }
-            R.id.settings__navigation__theme -> {
-                supportActionBar?.setTitle(R.string.settings__theme__title)
-                loadFragment(PrefFragment.createFromResource(R.xml.prefs_theme))
-                true
-            }
-            R.id.settings__navigation__gestures -> {
-                supportActionBar?.setTitle(R.string.settings__gestures__title)
-                loadFragment(PrefFragment.createFromResource(R.xml.prefs_gestures))
-                true
-            }
-            else -> false
-        }
     }
 
     private fun loadFragment(fragment: Fragment) {
@@ -123,14 +80,6 @@ class SettingsMainActivity : AppCompatActivity(),
             .beginTransaction()
             .replace(binding.pageFrame.id, fragment, FRAGMENT_TAG)
             .commit()
-    }
-
-    override fun onBackPressed() {
-        if (binding.bottomNavigation.selectedItemId != R.id.settings__navigation__home) {
-            binding.bottomNavigation.selectedItemId = R.id.settings__navigation__home
-        } else {
-            super.onBackPressed()
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

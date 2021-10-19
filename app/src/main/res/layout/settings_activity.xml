@@ -1,6 +1,5 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -20,16 +19,5 @@
             android:layout_height="wrap_content"/>
 
     </androidx.core.widget.NestedScrollView>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="?colorPrimary"
-        app:itemIconTint="@drawable/bottom_nav_bar_color_selector"
-        app:itemTextColor="@drawable/bottom_nav_bar_color_selector"
-        app:labelVisibilityMode="labeled"
-        app:menu="@menu/settings_navigation" />
 
 </LinearLayout>
