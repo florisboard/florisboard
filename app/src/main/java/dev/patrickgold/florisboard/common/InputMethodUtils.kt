@@ -22,6 +22,7 @@ import android.content.Intent
 import android.provider.Settings
 import android.view.inputmethod.InputMethodManager
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.util.AndroidSettings
 
@@ -31,7 +32,7 @@ private const val IME_SERVICE_CLASS_NAME = "dev.patrickgold.florisboard.FlorisIm
 object InputMethodUtils {
     @Composable
     fun observeIsFlorisboardEnabled(
-        context: Context,
+        context: Context = LocalContext.current,
         foregroundOnly: Boolean = false,
     ) = AndroidSettings.Secure.observeAsState(
         key = Settings.Secure.ENABLED_INPUT_METHODS,
@@ -41,7 +42,7 @@ object InputMethodUtils {
 
     @Composable
     fun observeIsFlorisboardSelected(
-        context: Context,
+        context: Context = LocalContext.current,
         foregroundOnly: Boolean = false,
     ) = AndroidSettings.Secure.observeAsState(
         key = Settings.Secure.DEFAULT_INPUT_METHOD,
@@ -66,7 +67,6 @@ object InputMethodUtils {
         val intent = Intent()
         intent.action = Settings.ACTION_INPUT_METHOD_SETTINGS
         intent.addCategory(Intent.CATEGORY_DEFAULT)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
 

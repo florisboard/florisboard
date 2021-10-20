@@ -65,14 +65,8 @@ fun SetupScreen() = FlorisScreen(
     val navController = LocalNavController.current
     val context = LocalContext.current
 
-    val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(
-        context = context,
-        foregroundOnly = true,
-    )
-    val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(
-        context = context,
-        foregroundOnly = true,
-    )
+    val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
+    val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)
     val stepState = rememberSaveable(saver = FlorisStepState.Saver) {
         val initStep = when {
             !isFlorisBoardEnabled -> Step.EnableIme

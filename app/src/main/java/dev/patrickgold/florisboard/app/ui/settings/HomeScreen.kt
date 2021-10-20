@@ -57,16 +57,10 @@ fun HomeScreen() = FlorisScreen(
 ) {
     val navController = LocalNavController.current
     val context = LocalContext.current
-    val isCollapsed by prefs.internal.homeIsBetaToolboxCollapsed.observeAsState(true)
+    val isCollapsed by prefs.internal.homeIsBetaToolboxCollapsed.observeAsState()
 
-    val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(
-        context = context,
-        foregroundOnly = true,
-    )
-    val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(
-        context = context,
-        foregroundOnly = true,
-    )
+    val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled()
+    val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected()
     if (!isFlorisBoardEnabled) {
         FlorisErrorCard(
             modifier = Modifier.padding(8.dp),
