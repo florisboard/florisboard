@@ -34,7 +34,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ContentAlpha
@@ -216,7 +218,10 @@ private fun ColumnScope.Step(
         exit = fadeOut(animationSpec = animSpec),
     ) {
         Box(modifier = Modifier.padding(start = 56.dp)) {
-            Column(modifier = Modifier.fillMaxSize()) {
+            Column(modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+            ) {
                 content()
             }
         }
@@ -258,7 +263,9 @@ private fun StepHeader(
                 .background(backgroundColor),
         ) {
             Text(
-                modifier = Modifier.align(Alignment.Center).padding(horizontal = 16.dp),
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(horizontal = 16.dp),
                 text = title,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
