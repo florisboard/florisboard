@@ -64,5 +64,6 @@ data class ThemeExtension(
 data class ThemeExtensionConfig(
     val isNightTheme: Boolean = true,
     val isMaterialYouAware: Boolean = false,
+    val isBorderless: Boolean = false,
     val stylesheet: String,
 )
