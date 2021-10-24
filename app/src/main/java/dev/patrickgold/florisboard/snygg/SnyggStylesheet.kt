@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.snygg
 
-import dev.patrickgold.florisboard.snygg.value.SnyggExplicitInheritValue
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -55,7 +54,7 @@ class SnyggStylesheetSerializer : KSerializer<SnyggStylesheet> {
     override fun serialize(encoder: Encoder, value: SnyggStylesheet) {
         val rawRuleMap = value.rules.mapValues { (_, propertySet) ->
             propertySet.properties.mapValues { (_, snyggValue) ->
-                snyggValue.encoder().encode(snyggValue).getOrElse { "" }
+                snyggValue.encoder().serialize(snyggValue).getOrThrow()
             }
         }
         ruleMapSerializer.serialize(encoder, rawRuleMap)
@@ -69,11 +68,8 @@ class SnyggStylesheetSerializer : KSerializer<SnyggStylesheet> {
             val properties = rawProperties.mapValues { (name, value) ->
                 val propertySpec = propertySetSpec.propertySpec(name)
                 if (propertySpec != null) {
-                    if (value.trim() == "inherit") {
-                        return@mapValues SnyggExplicitInheritValue
-                    }
                     for (encoder in propertySpec.encoders) {
-                        encoder.decode(value).onSuccess { snyggValue ->
+                        encoder.deserialize(value).onSuccess { snyggValue ->
                             return@mapValues snyggValue
                         }
                     }

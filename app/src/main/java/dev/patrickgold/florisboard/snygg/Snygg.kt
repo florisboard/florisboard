@@ -56,7 +56,7 @@ object Snygg {
             property(
                 name = Property.Background,
                 level = SnyggLevel.BASIC,
-                supportedValues = listOf(SnyggSolidColorValue),
+                supportedValues(SnyggSolidColorValue),
             )
         }
     })

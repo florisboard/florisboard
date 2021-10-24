@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.snygg.value
 import dev.patrickgold.florisboard.common.stringBuilder
 
 interface SnyggValueSpec {
-    val required: Boolean
     val id: String?
 
     fun parse(str: String, dstMap: SnyggIdToValueMap): Result<SnyggIdToValueMap>
@@ -32,7 +31,6 @@ fun SnyggValueSpec(block: SnyggValueSpecBuilder.() -> SnyggValueSpec): SnyggValu
 }
 
 data class SnyggNumberValueSpec<T : Comparable<T>>(
-    override val required: Boolean,
     override val id: String?,
     val prefix: String?,
     val suffix: String?,
@@ -40,7 +38,7 @@ data class SnyggNumberValueSpec<T : Comparable<T>>(
     val min: T? = null,
     val max: T? = null,
     val namedNumbers: List<Pair<String, T>>,
-    val strToNumber: (String) -> T?,
+    val strToNumber: (String) -> T,
 ) : SnyggValueSpec {
 
     override fun parse(str: String, dstMap: SnyggIdToValueMap) = runCatching<SnyggIdToValueMap> {
@@ -62,30 +60,14 @@ data class SnyggNumberValueSpec<T : Comparable<T>>(
             check(valStr.endsWith(suffix))
             valStr = valStr.removeSuffix(suffix)
         }
-        val number: T?
-        if (required) {
-            number = strToNumber(valStr)
-            checkNotNull(number) { "Value spec required=true, thus this value cannot be null" }
-        } else {
-            number = try {
-                strToNumber(valStr)
-            } catch (e: Exception) {
-                null
-            }
-        }
-        if (number != null) {
-            dstMap.add(id to number.coerceIn(min, max))
-        }
+        val number = strToNumber(valStr)
+        dstMap.add(id to number.coerceIn(min, max))
         return@runCatching dstMap
     }
 
     override fun pack(srcMap: SnyggIdToValueMap) = runCatching<String> {
         checkNotNull(id)
-        val value: T = if (required) {
-            srcMap.getOrThrow(id)
-        } else {
-            srcMap.getOrNull(id) ?: return@runCatching ""
-        }
+        val value = srcMap.getOrThrow<T>(id)
         val namedValue = namedNumbers.find { it.second == value }
         if (namedValue != null) {
             return@runCatching namedValue.first
@@ -100,7 +82,6 @@ data class SnyggNumberValueSpec<T : Comparable<T>>(
 }
 
 data class SnyggKeywordValueSpec(
-    override val required: Boolean,
     override val id: String?,
     val keywords: List<String>,
 ) : SnyggValueSpec {
@@ -122,7 +103,6 @@ data class SnyggKeywordValueSpec(
 }
 
 data class SnyggFunctionValueSpec(
-    override val required: Boolean,
     override val id: String?,
     val name: String,
     val innerSpec: SnyggValueSpec,
@@ -144,7 +124,6 @@ data class SnyggFunctionValueSpec(
 }
 
 data class SnyggListValueSpec(
-    override val required: Boolean,
     override val id: String?,
     val separator: String,
     val valueSpecs: List<SnyggValueSpec>,
@@ -189,38 +168,32 @@ class SnyggValueSpecBuilder {
     }
 
     inline fun spacedList(
-        required: Boolean = true,
         valueFormatsBlock: SnyggValueFormatListBuilder.() -> Unit,
     ) = SnyggListValueSpec(
-        required = required,
         id = null,
         separator = " ",
         valueSpecs = SnyggValueFormatListBuilder().let { valueFormatsBlock(it); it.build() },
     )
 
     inline fun commaList(
-        required: Boolean = true,
         valueFormatsBlock: SnyggValueFormatListBuilder.() -> Unit,
     ) = SnyggListValueSpec(
-        required = required,
         id = null,
         separator = ",",
         valueSpecs = SnyggValueFormatListBuilder().let { valueFormatsBlock(it); it.build() },
     )
 
     inline fun function(
-        required: Boolean = true,
         name: String,
         innerSpecBuilder: SnyggValueSpecBuilder.() -> SnyggValueSpec,
-    ) = SnyggFunctionValueSpec(required, id = null, name, innerSpecBuilder(Instance))
+    ) = SnyggFunctionValueSpec(id = null, name, innerSpecBuilder(Instance))
 
     fun rgbaColor(
-        required: Boolean = true,
         idR: String = "r",
         idG: String = "g",
         idB: String = "b",
         idA: String = "a",
-    ) = function(required, "rgba") {
+    ) = function(name = "rgba") {
         val min = 0.0f
         val max = 1.0f
         commaList {
@@ -232,13 +205,11 @@ class SnyggValueSpecBuilder {
     }
 
     fun keywords(
-        required: Boolean = true,
         id: String? = null,
         keywords: List<String>,
-    ) = SnyggKeywordValueSpec(required, id, keywords)
+    ) = SnyggKeywordValueSpec(id, keywords)
 
     fun int(
-        required: Boolean = true,
         id: String? = null,
         prefix: String? = null,
         suffix: String? = null,
@@ -246,10 +217,9 @@ class SnyggValueSpecBuilder {
         min: Int? = null,
         max: Int? = null,
         namedNumbers: List<Pair<String, Int>> = listOf(),
-    ) = SnyggNumberValueSpec(required, id, prefix, suffix, unit, min, max, namedNumbers, strToNumber = { it.toInt() })
+    ) = SnyggNumberValueSpec(id, prefix, suffix, unit, min, max, namedNumbers, strToNumber = { it.toInt() })
 
     fun float(
-        required: Boolean = true,
         id: String? = null,
         prefix: String? = null,
         suffix: String? = null,
@@ -257,5 +227,5 @@ class SnyggValueSpecBuilder {
         min: Float? = null,
         max: Float? = null,
         namedNumbers: List<Pair<String, Float>> = listOf(),
-    ) = SnyggNumberValueSpec(required, id, prefix, suffix, unit, min, max, namedNumbers, strToNumber = { it.toFloat() })
+    ) = SnyggNumberValueSpec(id, prefix, suffix, unit, min, max, namedNumbers, strToNumber = { it.toFloat() })
 }

@@ -34,13 +34,13 @@ data class SnyggDpSizeValue(val dp: Dp) : SnyggSizeValue {
             float(id = Size, unit = DpUnit)
         }
 
-        override fun encode(v: SnyggValue) = runCatching<String> {
+        override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggDpSizeValue)
             val map = SnyggIdToValueMap.new(Size to v.dp.value)
             return spec.pack(map)
         }
 
-        override fun decode(v: String) = runCatching<SnyggValue> {
+        override fun deserialize(v: String) = runCatching<SnyggValue> {
             val map = SnyggIdToValueMap.new()
             spec.parse(v, map)
             val size = map.getOrThrow<Float>(Size)
@@ -57,13 +57,13 @@ data class SnyggSpSizeValue(val sp: TextUnit) : SnyggSizeValue {
             float(id = Size, unit = SpUnit)
         }
 
-        override fun encode(v: SnyggValue) = runCatching<String> {
+        override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggSpSizeValue)
             val map = SnyggIdToValueMap.new(Size to v.sp.value)
             return spec.pack(map)
         }
 
-        override fun decode(v: String) = runCatching<SnyggValue> {
+        override fun deserialize(v: String) = runCatching<SnyggValue> {
             val map = SnyggIdToValueMap.new()
             spec.parse(v, map)
             val size = map.getOrThrow<Float>(Size)
@@ -80,13 +80,13 @@ data class SnyggPercentageSizeValue(val percentage: Float) : SnyggSizeValue {
             float(id = Size, unit = PercentageUnit)
         }
 
-        override fun encode(v: SnyggValue) = runCatching<String> {
+        override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggPercentageSizeValue)
             val map = SnyggIdToValueMap.new(Size to v.percentage * 100.0f)
             return spec.pack(map)
         }
 
-        override fun decode(v: String) = runCatching<SnyggValue> {
+        override fun deserialize(v: String) = runCatching<SnyggValue> {
             val map = SnyggIdToValueMap.new()
             spec.parse(v, map)
             val size = map.getOrThrow<Float>(Size) / 100.0f

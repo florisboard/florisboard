@@ -26,12 +26,12 @@ data class SnyggSolidColorValue(val color: Color) : SnyggAppearanceValue {
             rgbaColor()
         }
 
-        override fun encode(v: SnyggValue) = runCatching<String> {
+        override fun serialize(v: SnyggValue) = runCatching<String> {
             require(v is SnyggSolidColorValue)
             TODO("Not yet implemented")
         }
 
-        override fun decode(v: String) = runCatching<SnyggValue> {
+        override fun deserialize(v: String) = runCatching<SnyggValue> {
             TODO("Not yet implemented")
         }
     }
@@ -51,6 +51,3 @@ data class SnyggSolidColorValue(val color: Color) : SnyggAppearanceValue {
 //    val relPath: String,
 //) : SnyggAppearanceValue()
 //
-//data class Inherit(
-//    val rawValue: String = "inherit",
-//) : SnyggAppearanceValue()

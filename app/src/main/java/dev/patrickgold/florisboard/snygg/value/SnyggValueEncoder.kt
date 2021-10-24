@@ -16,10 +16,32 @@
 
 package dev.patrickgold.florisboard.snygg.value
 
+/**
+ * SnyggValueEncoder is responsible for the representation of a [SnyggValue] specification and for providing methods
+ * for encoding and decoding a [SnyggValue] for the serialization process.
+ *
+ * A SnyggValueEncoder is typically implemented in the Companion of a SnyggValue sub-class, as this allows to use the
+ * value class name in the Snygg stylesheet spec's `supportedValues` field. This is not an requirement though and any
+ * sub-class / object is allowed to be used.
+ */
 interface SnyggValueEncoder {
+    /**
+     * Describes the format of the [SnyggValue] in the serialized state of the value in the Json file. This spec is
+     * used in the serialization process of this encoder for providing
+     */
     val spec: SnyggValueSpec
 
-    fun encode(v: SnyggValue): Result<String>
+    /**
+     * Serialize given Snygg value [v] and return a String representation of it. This method is exception-free, which
+     * means it must **never** throw an exception. If an error during serialization occurs, it should be returned as a
+     * failed result.
+     */
+    fun serialize(v: SnyggValue): Result<String>
 
-    fun decode(v: String): Result<SnyggValue>
+    /**
+     * Deserialize given String [v] and return a Snygg value object of it. This method is exception-free, which
+     * means it must **never** throw an exception. If an error during deserialization occurs, it should be returned as
+     * a failed result.
+     */
+    fun deserialize(v: String): Result<SnyggValue>
 }
