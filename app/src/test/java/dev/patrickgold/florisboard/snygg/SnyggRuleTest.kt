@@ -1,4 +1,4 @@
-package dev.patrickgold.florisboard.ime.snygg
+package dev.patrickgold.florisboard.snygg
 
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe

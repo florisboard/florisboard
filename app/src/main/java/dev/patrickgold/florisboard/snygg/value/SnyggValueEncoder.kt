@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.snygg
+package dev.patrickgold.florisboard.snygg.value
 
-import kotlinx.serialization.Serializable
+interface SnyggValueEncoder {
+    val spec: SnyggValueSpec
 
-@Serializable
-data class SnyggPropertySet(
-    val background: SnyggAppearanceProperty = SnyggAppearanceProperty.Inherit(),
-    val borderColor: SnyggAppearanceProperty = SnyggAppearanceProperty.Inherit(),
-    val foreground: SnyggAppearanceProperty = SnyggAppearanceProperty.Inherit(),
-    val shadowColor: SnyggAppearanceProperty = SnyggAppearanceProperty.Inherit(),
-)
+    fun encode(v: SnyggValue): Result<String>
+
+    fun decode(v: String): Result<SnyggValue>
+}

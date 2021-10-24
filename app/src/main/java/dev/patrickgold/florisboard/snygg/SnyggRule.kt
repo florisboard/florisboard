@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.snygg
+package dev.patrickgold.florisboard.snygg
 
 import dev.patrickgold.florisboard.common.curlyFormat
 import dev.patrickgold.florisboard.common.stringBuilder
@@ -41,7 +41,6 @@ private const val HOVER_SELECTOR = "hover"
 private const val FOCUS_SELECTOR = "focus"
 private const val PRESSED_SELECTOR = "pressed"
 
-// snygg = Swedish for stylish
 @Serializable(with = SnyggRuleSerializer::class)
 data class SnyggRule(
     val element: String,

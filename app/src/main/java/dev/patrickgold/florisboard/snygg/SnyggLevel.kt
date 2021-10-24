@@ -14,27 +14,9 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.snygg
+package dev.patrickgold.florisboard.snygg
 
-import kotlinx.serialization.Serializable
-
-typealias SnyggStylesheetRules = Map<SnyggRule, SnyggPropertySet>
-
-@Serializable
-class SnyggStylesheet( val rules: SnyggStylesheetRules) {
-    fun get(
-        element: String,
-        code: Int = -1,
-        group: Int = -1,
-        inputMode: Int = -1,
-        isHover: Boolean = false,
-        isFocus: Boolean = false,
-        isPressed: Boolean = false,
-    ): SnyggPropertySet {
-        TODO()
-    }
-
-    fun merge(other: SnyggStylesheet): SnyggStylesheet {
-        TODO()
-    }
+enum class SnyggLevel {
+    BASIC,
+    ADVANCED;
 }

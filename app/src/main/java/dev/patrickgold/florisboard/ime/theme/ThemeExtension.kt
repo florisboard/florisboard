@@ -18,7 +18,7 @@ package dev.patrickgold.florisboard.ime.theme
 
 import android.content.Context
 import dev.patrickgold.florisboard.assetManager
-import dev.patrickgold.florisboard.ime.snygg.SnyggStylesheet
+import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.res.ext.Extension
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
