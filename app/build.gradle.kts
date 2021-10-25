@@ -52,7 +52,6 @@ android {
         }
 
         ndk {
-            //abiFilters += listOf("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
             abiFilters += listOf("armeabi-v7a", "arm64-v8a")
         }
 
@@ -90,6 +89,11 @@ android {
 
             isDebuggable = true
             isJniDebuggable = true
+
+            ndk {
+                // For running FlorisBoard on the emulator
+                abiFilters += listOf("x86", "x86_64")
+            }
 
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_debug")
             resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_debug_round")
