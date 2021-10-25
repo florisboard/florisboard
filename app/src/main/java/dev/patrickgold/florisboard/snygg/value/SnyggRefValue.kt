@@ -16,34 +16,31 @@
 
 package dev.patrickgold.florisboard.snygg.value
 
-import androidx.compose.ui.graphics.Color
+private const val RelPath = "relPath"
+private const val FileFunction = "file"
+private val RefMatcher = """^[a-z0-9]([a-z0-9-]*[a-z0-9])?(/[a-z0-9]([a-z0-9-]*[a-z0-9])?)*${'$'}""".toRegex()
 
-sealed interface SnyggAppearanceValue : SnyggValue
+sealed interface SnyggRefValue : SnyggValue
 
-data class SnyggSolidColorValue(val color: Color) : SnyggAppearanceValue {
+data class SnyggImageRefValue(val relPath: String) : SnyggRefValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
-            rgbaColor()
+            function(name = FileFunction) { string(id = RelPath, regex = RefMatcher) }
         }
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
-            require(v is SnyggSolidColorValue)
-            TODO("Not yet implemented")
+            require(v is SnyggImageRefValue)
+            val map = SnyggIdToValueMap.new(RelPath to v.relPath)
+            return spec.pack(map)
         }
 
         override fun deserialize(v: String) = runCatching<SnyggValue> {
-            TODO("Not yet implemented")
+            val map = SnyggIdToValueMap.new()
+            spec.parse(v, map)
+            val relPath = map.getOrThrow<String>(RelPath)
+            return@runCatching SnyggImageRefValue(relPath)
         }
     }
 
     override fun encoder() = Companion
 }
-
-//data class LinearGradient(
-//    val dummy: Int,
-//) : SnyggAppearanceValue()
-//
-//data class RadialGradient(
-//    val dummy: Int,
-//) : SnyggAppearanceValue()
-//

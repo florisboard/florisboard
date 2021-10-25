@@ -102,6 +102,27 @@ data class SnyggKeywordValueSpec(
     }
 }
 
+data class SnyggStringValueSpec(
+    override val id: String?,
+    val regex: Regex,
+) : SnyggValueSpec {
+
+    override fun parse(str: String, dstMap: SnyggIdToValueMap) = runCatching<SnyggIdToValueMap> {
+        checkNotNull(id)
+        val valStr = str.trim()
+        check(valStr matches regex)
+        dstMap.add(id to valStr)
+        return@runCatching dstMap
+    }
+
+    override fun pack(srcMap: SnyggIdToValueMap) = runCatching<String> {
+        checkNotNull(id)
+        val value = srcMap.getOrThrow<String>(id)
+        check(value matches regex)
+        return@runCatching value
+    }
+}
+
 data class SnyggFunctionValueSpec(
     override val id: String?,
     val name: String,
@@ -208,6 +229,11 @@ class SnyggValueSpecBuilder {
         id: String? = null,
         keywords: List<String>,
     ) = SnyggKeywordValueSpec(id, keywords)
+
+    fun string(
+        id: String? = null,
+        regex: Regex,
+    ) = SnyggStringValueSpec(id, regex)
 
     fun int(
         id: String? = null,
