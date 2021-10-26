@@ -60,8 +60,9 @@ data class SnyggNumberValueSpec<T : Comparable<T>>(
             check(valStr.endsWith(suffix))
             valStr = valStr.removeSuffix(suffix)
         }
-        val number = strToNumber(valStr)
-        dstMap.add(id to number.coerceIn(min, max))
+        val number = strToNumber(valStr.trim())
+        check(number.coerceIn(min, max) == number)
+        dstMap.add(id to number)
         return@runCatching dstMap
     }
 
@@ -72,6 +73,7 @@ data class SnyggNumberValueSpec<T : Comparable<T>>(
         if (namedValue != null) {
             return@runCatching namedValue.first
         }
+        check(value.coerceIn(min, max) == value)
         return@runCatching stringBuilder {
             prefix?.let { append(it) }
             append(value)

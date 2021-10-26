@@ -31,7 +31,7 @@ sealed interface SnyggSizeValue : SnyggValue
 data class SnyggDpSizeValue(val dp: Dp) : SnyggSizeValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
-            float(id = Size, unit = DpUnit)
+            float(id = Size, unit = DpUnit, min = 0.0f)
         }
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
@@ -54,7 +54,7 @@ data class SnyggDpSizeValue(val dp: Dp) : SnyggSizeValue {
 data class SnyggSpSizeValue(val sp: TextUnit) : SnyggSizeValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
-            float(id = Size, unit = SpUnit)
+            float(id = Size, unit = SpUnit, min = 0.0f)
         }
 
         override fun serialize(v: SnyggValue) = runCatching<String> {
@@ -77,7 +77,7 @@ data class SnyggSpSizeValue(val sp: TextUnit) : SnyggSizeValue {
 data class SnyggPercentageSizeValue(val percentage: Float) : SnyggSizeValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
-            float(id = Size, unit = PercentageUnit)
+            float(id = Size, unit = PercentageUnit, min = 0.0f, max = 100.0f)
         }
 
         override fun serialize(v: SnyggValue) = runCatching<String> {

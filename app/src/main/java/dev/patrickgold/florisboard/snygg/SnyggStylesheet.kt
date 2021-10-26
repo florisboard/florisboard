@@ -40,7 +40,7 @@ class SnyggStylesheet(val rules: SnyggStylesheetRules) {
         TODO()
     }
 
-    fun merge(other: SnyggStylesheet): SnyggStylesheet {
+    operator fun plus(other: SnyggStylesheet): SnyggStylesheet {
         TODO()
     }
 }
