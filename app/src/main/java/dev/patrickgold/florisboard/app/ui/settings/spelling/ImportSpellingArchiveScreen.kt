@@ -50,6 +50,7 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisStepLayout
 import dev.patrickgold.florisboard.app.ui.components.FlorisStepState
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingExtensionEditor
+import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import dev.patrickgold.florisboard.spellingManager
 import dev.patrickgold.jetpref.ui.compose.JetPrefAlertDialog
 import dev.patrickgold.jetpref.ui.compose.annotations.ExperimentalJetPrefUi
@@ -71,7 +72,7 @@ fun ImportSpellingArchiveScreen() = FlorisScreen(
     val extensionManager by context.extensionManager()
     val spellingManager by context.spellingManager()
 
-    val sources = remember { listOf("-") + spellingManager.config.importSources.map { it.label } }
+    val sources = remember { listOf("-") + SpellingManager.Config.importSources.map { it.label } }
     var sourceExpanded by remember { mutableStateOf(false) }
     var sourceSelectedIndex by rememberSaveable { mutableStateOf(0) }
 
@@ -87,7 +88,7 @@ fun ImportSpellingArchiveScreen() = FlorisScreen(
             //  was cancelled (mostly by pressing the back button), so
             //  we don't display an error message here.
             if (uri == null) return@rememberLauncherForActivityResult
-            val importSource = spellingManager.config.importSources[sourceSelectedIndex - 1]
+            val importSource = SpellingManager.Config.importSources[sourceSelectedIndex - 1]
             spellingManager.prepareImport(importSource.id, uri).fold(
                 onSuccess = {
                     importArchiveUri = uri

@@ -26,7 +26,6 @@ import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.res.ExternalContentUtils
-import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ext.ExtensionAuthor
 import dev.patrickgold.florisboard.res.ext.ExtensionAuthorEditor
 import dev.patrickgold.florisboard.res.ext.ExtensionDefaults
@@ -68,6 +67,71 @@ class SpellingManager(context: Context) {
 
         const val AFF_EXT: String = "aff"
         const val DIC_EXT: String = "dic"
+
+        val Config = SpellingConfig(
+            basePath = "ime/spelling",
+            importSources = listOf(
+                SpellingConfig.ImportSource(
+                    id = "mozilla_firefox",
+                    label = "Mozilla Firefox Add-ons",
+                    url = "https://addons.mozilla.org/firefox/language-tools/",
+                    format = SpellingConfig.ImportFormat.Archive(
+                        file = SpellingConfig.FileInput(
+                            fileNameRegex = """^.+\.xpi${'$'}""".toRegex(),
+                            isRequired = true,
+                        ),
+                    ),
+                ),
+                SpellingConfig.ImportSource(
+                    id = "libre_office",
+                    label = "LibreOffice [CURRENTLY UNSUPPORTED]",
+                    url = "https://extensions.libreoffice.org/?Tags%5B%5D=50",
+                    format = SpellingConfig.ImportFormat.Archive(
+                        file = SpellingConfig.FileInput(
+                            fileNameRegex = """^.+\.oxt${'$'}""".toRegex(),
+                            isRequired = true,
+                        ),
+                    ),
+                ),
+                SpellingConfig.ImportSource(
+                    id = "open_office",
+                    label = "Apache OpenOffice [CURRENTLY UNSUPPORTED]",
+                    url = "https://extensions.openoffice.org/en/search?f%5B0%5D=field_project_tags%3A157",
+                    format = SpellingConfig.ImportFormat.Archive(
+                        file = SpellingConfig.FileInput(
+                            fileNameRegex = """^.+\.oxt${'$'}""".toRegex(),
+                            isRequired = true,
+                        ),
+                    ),
+                ),
+                SpellingConfig.ImportSource(
+                    id = "free_office",
+                    label = "SoftMaker FreeOffice",
+                    url = "https://www.freeoffice.com/en/download/dictionaries",
+                    format = SpellingConfig.ImportFormat.Archive(
+                        file = SpellingConfig.FileInput(
+                            fileNameRegex = """^.+\.sox${'$'}""".toRegex(),
+                            isRequired = true,
+                        ),
+                    ),
+                ),
+                SpellingConfig.ImportSource(
+                    id = "gh_wooorm",
+                    label = "GitHub collection by Titus Wormer",
+                    url = "https://github.com/wooorm/dictionaries",
+                    format = SpellingConfig.ImportFormat.Raw(
+                        affFile = SpellingConfig.FileInput(
+                            fileNameRegex = """^.+\.aff${'$'}""".toRegex(),
+                            isRequired = true,
+                        ),
+                        dicFile = SpellingConfig.FileInput(
+                            fileNameRegex = """^.+\.dic${'$'}""".toRegex(),
+                            isRequired = true,
+                        ),
+                    ),
+                ),
+            ),
+        )
     }
 
     private val appContext by context.appContext()
@@ -75,16 +139,15 @@ class SpellingManager(context: Context) {
 
     private val assetManager by appContext.assetManager()
 
-    val config = assetManager.loadJsonAsset<SpellingConfig>(FlorisRef.assets("ime/spelling/config.json")).getOrDefault(SpellingConfig.default())
     val importSourceLabels: List<String>
     val importSourceUrls: List<String?>
 
     init {
-        config.importSources.map { it.label }.toMutableList().let {
+        Config.importSources.map { it.label }.toMutableList().let {
             it.add(0, "-")
             importSourceLabels = it.toList()
         }
-        config.importSources.map { it.url }.toMutableList().let {
+        Config.importSources.map { it.url }.toMutableList().let {
             it.add(0, "-")
             importSourceUrls = it.toList()
         }

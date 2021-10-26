@@ -31,7 +31,6 @@ import dev.patrickgold.florisboard.ime.keyboard.CharWidthSelector
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.VariationSelector
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiKeyData
-import dev.patrickgold.florisboard.ime.spelling.SpellingConfig
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
 import dev.patrickgold.florisboard.ime.text.composing.HangulUnicode
@@ -82,10 +81,6 @@ class AssetManager(context: Context) {
                 subclass(KanaUnicode::class, KanaUnicode.serializer())
                 subclass(WithRules::class, WithRules.serializer())
                 default { Appender.serializer() }
-            }
-            polymorphic(SpellingConfig.ImportFormat::class) {
-                subclass(SpellingConfig.ImportFormat.Archive::class, SpellingConfig.ImportFormat.Archive.serializer())
-                subclass(SpellingConfig.ImportFormat.Raw::class, SpellingConfig.ImportFormat.Raw.serializer())
             }
         }
     }
