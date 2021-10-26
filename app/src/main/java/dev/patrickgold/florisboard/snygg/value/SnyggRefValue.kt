@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.snygg.value
 
 private const val RelPath = "relPath"
-private const val FileFunction = "file"
+private const val ImageFunction = "image"
 private val RefMatcher = """^[a-z0-9]([a-z0-9-]*[a-z0-9])?(/[a-z0-9]([a-z0-9-]*[a-z0-9])?)*${'$'}""".toRegex()
 
 sealed interface SnyggRefValue : SnyggValue
@@ -25,7 +25,7 @@ sealed interface SnyggRefValue : SnyggValue
 data class SnyggImageRefValue(val relPath: String) : SnyggRefValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {
-            function(name = FileFunction) { string(id = RelPath, regex = RefMatcher) }
+            function(name = ImageFunction) { string(id = RelPath, regex = RefMatcher) }
         }
 
         override fun serialize(v: SnyggValue) = runCatching<String> {

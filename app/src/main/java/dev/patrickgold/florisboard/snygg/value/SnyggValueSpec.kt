@@ -217,13 +217,11 @@ class SnyggValueSpecBuilder {
         idB: String = "b",
         idA: String = "a",
     ) = function(name = "rgba") {
-        val min = 0.0f
-        val max = 1.0f
         commaList {
-            +float(id = idR, min = min, max = max)
-            +float(id = idG, min = min, max = max)
-            +float(id = idB, min = min, max = max)
-            +float(id = idA, min = min, max = max)
+            +int(id = idR, min = RgbaColor.RedMin, max = RgbaColor.RedMax)
+            +int(id = idG, min = RgbaColor.GreenMin, max = RgbaColor.GreenMax)
+            +int(id = idB, min = RgbaColor.BlueMin, max = RgbaColor.BlueMax)
+            +float(id = idA, min = RgbaColor.AlphaMin, max = RgbaColor.AlphaMax)
         }
     }
 

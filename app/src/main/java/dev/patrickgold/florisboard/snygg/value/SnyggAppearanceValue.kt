@@ -20,6 +20,24 @@ import androidx.compose.ui.graphics.Color
 
 sealed interface SnyggAppearanceValue : SnyggValue
 
+object RgbaColor {
+    const val RedMin = 0
+    const val RedMax = 255
+    val Red = RedMin..RedMax
+
+    const val GreenMin = 0
+    const val GreenMax = 255
+    val Green = GreenMin..GreenMax
+
+    const val BlueMin = 0
+    const val BlueMax = 255
+    val Blue = BlueMin..BlueMax
+
+    const val AlphaMin = 0.0f
+    const val AlphaMax = 1.0f
+    val Alpha = AlphaMin..AlphaMax
+}
+
 data class SnyggSolidColorValue(val color: Color) : SnyggAppearanceValue {
     companion object : SnyggValueEncoder {
         override val spec = SnyggValueSpec {

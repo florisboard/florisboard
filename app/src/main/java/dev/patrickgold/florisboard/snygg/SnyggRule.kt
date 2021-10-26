@@ -52,6 +52,7 @@ data class SnyggRule(
     val pressedSelector: Boolean = false,
 ) {
     companion object {
+        @Suppress("RegExpRedundantEscape", "RegExpSingleCharAlternation")
         private val RuleValidator =
             """^[a-zA-Z0-9-]+(\[(code|group|normal)=(\+|-)?([0-9]+)(\|(\+|-)?([0-9]+))*\])*(:(hover|focus|pressed))*${'$'}""".toRegex()
         private val placeholders = mapOf(
@@ -121,6 +122,16 @@ data class SnyggRule(
         appendSelector(PRESSED_SELECTOR, pressedSelector)
     }
 
+    fun edit() = SnyggRuleEditor(
+        element,
+        codes.toMutableList(),
+        groups.toMutableList(),
+        modes.toMutableList(),
+        focusSelector,
+        hoverSelector,
+        pressedSelector,
+    )
+
     private fun StringBuilder.appendAttribute(key: String, entries: List<Int>) {
         if (entries.isNotEmpty()) {
             append(ATTRIBUTE_OPEN)
@@ -142,6 +153,18 @@ data class SnyggRule(
             append(key)
         }
     }
+}
+
+class SnyggRuleEditor(
+    var element: String = "",
+    val codes: MutableList<Int> = mutableListOf(),
+    val groups: MutableList<Int> = mutableListOf(),
+    val modes: MutableList<Int> = mutableListOf(),
+    var hoverSelector: Boolean = false,
+    var focusSelector: Boolean = false,
+    var pressedSelector: Boolean = false,
+) {
+    fun build() = SnyggRule(element, codes, groups, modes, hoverSelector, focusSelector, pressedSelector)
 }
 
 @OptIn(ExperimentalSerializationApi::class)

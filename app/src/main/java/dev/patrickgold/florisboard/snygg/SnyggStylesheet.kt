@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.snygg
 
+import dev.patrickgold.florisboard.ime.theme.spec.FlorisImeUiSpec
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -24,10 +25,8 @@ import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-typealias SnyggStylesheetRules = Map<SnyggRule, SnyggPropertySet>
-
 @Serializable(with = SnyggStylesheetSerializer::class)
-class SnyggStylesheet(val rules: SnyggStylesheetRules) {
+class SnyggStylesheet(val rules: Map<SnyggRule, SnyggPropertySet>) {
     fun get(
         element: String,
         code: Int = -1,
@@ -42,6 +41,59 @@ class SnyggStylesheet(val rules: SnyggStylesheetRules) {
 
     operator fun plus(other: SnyggStylesheet): SnyggStylesheet {
         TODO()
+    }
+
+    fun edit(): SnyggStylesheetEditor {
+        val ruleMap = rules
+            .mapKeys { (rule, _) -> rule.edit() }
+            .mapValues { (_, propertySet) -> propertySet.edit() }
+        return SnyggStylesheetEditor(ruleMap)
+    }
+}
+
+fun SnyggStylesheet(stylesheetBlock: SnyggStylesheetEditor.() -> Unit): SnyggStylesheet {
+    val builder = SnyggStylesheetEditor()
+    stylesheetBlock(builder)
+    return builder.build()
+}
+
+class SnyggStylesheetEditor(initRules: Map<SnyggRuleEditor, SnyggPropertySetEditor>? = null){
+    val rules = mutableMapOf<SnyggRuleEditor, SnyggPropertySetEditor>()
+
+    init {
+        if (initRules != null) {
+            rules.putAll(initRules)
+        }
+    }
+
+    operator fun String.invoke(
+        codes: List<Int> = listOf(),
+        groups: List<Int> = listOf(),
+        modes: List<Int> = listOf(),
+        hoverSelector: Boolean = false,
+        focusSelector: Boolean = false,
+        pressedSelector: Boolean = false,
+        propertySetBlock: SnyggPropertySetEditor.() -> Unit,
+    ) {
+        val propertySetEditor = SnyggPropertySetEditor()
+        propertySetBlock(propertySetEditor)
+        val ruleEditor = SnyggRuleEditor(
+            element = this,
+            codes.toMutableList(),
+            groups.toMutableList(),
+            modes.toMutableList(),
+            hoverSelector,
+            focusSelector,
+            pressedSelector,
+        )
+        rules[ruleEditor] = propertySetEditor
+    }
+
+    fun build(): SnyggStylesheet {
+        val rulesMap = rules
+            .mapKeys { (ruleEditor, _) -> ruleEditor.build() }
+            .mapValues { (_, propertySetEditor) -> propertySetEditor.build() }
+        return SnyggStylesheet(rulesMap)
     }
 }
 
@@ -64,7 +116,9 @@ class SnyggStylesheetSerializer : KSerializer<SnyggStylesheet> {
         val rawRuleMap = ruleMapSerializer.deserialize(decoder)
         val ruleMap = mutableMapOf<SnyggRule, SnyggPropertySet>()
         for ((rule, rawProperties) in rawRuleMap) {
-            val propertySetSpec = Snygg.Spec.propertySetSpec(rule.element) ?: continue
+            // FIXME: hardcoding which spec to use, the selection should happen dynamically
+            val stylesheetSpec = FlorisImeUiSpec
+            val propertySetSpec = stylesheetSpec.propertySetSpec(rule.element) ?: continue
             val properties = rawProperties.mapValues { (name, value) ->
                 val propertySpec = propertySetSpec.propertySpec(name)
                 if (propertySpec != null) {

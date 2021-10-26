@@ -16,48 +16,30 @@
 
 package dev.patrickgold.florisboard.snygg
 
-import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
-
 /**
- * Main object for defining all Snygg constants and the stylesheet specification.
+ * Main object for defining all known Snygg property names.
  *
  * snygg = Swedish for stylish
  */
 object Snygg {
-    object Element {
-        const val Smartbar = "smartbar"
-    }
+    const val Width = "width"
+    const val Height = "height"
 
-    object Property {
-        const val Width = "width"
-        const val Height = "height"
+    const val Background = "background"
 
-        const val Background = "background"
+    const val Border = "border"
+    const val BorderTop = "border-top"
+    const val BorderBottom = "border-bottom"
+    const val BorderStart = "border-start"
+    const val BorderEnd = "border-end"
 
-        const val Border = "border"
-        const val BorderTop = "border-top"
-        const val BorderBottom = "border-bottom"
-        const val BorderStart = "border-start"
-        const val BorderEnd = "border-end"
+    const val FontFamily = "font-family"
+    const val FontSize = "font-size"
+    const val FontStyle = "font-style"
+    const val FontVariant = "font-variant"
+    const val FontWeight = "font-weight"
 
-        const val FontFamily = "font-family"
-        const val FontSize = "font-size"
-        const val FontStyle = "font-style"
-        const val FontVariant = "font-variant"
-        const val FontWeight = "font-weight"
+    const val Foreground = "foreground"
 
-        const val Foreground = "foreground"
-
-        const val Shadow = "shadow"
-    }
-
-    object Spec : SnyggSpec({
-        element(Element.Smartbar) {
-            property(
-                name = Property.Background,
-                level = SnyggLevel.BASIC,
-                supportedValues(SnyggSolidColorValue),
-            )
-        }
-    })
+    const val Shadow = "shadow"
 }
