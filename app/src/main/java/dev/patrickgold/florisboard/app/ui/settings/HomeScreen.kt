@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.app.ui.settings
 
-import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -41,7 +40,10 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
+import dev.patrickgold.florisboard.app.ui.components.FlorisErrorCard
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.components.FlorisWarningCard
+import dev.patrickgold.florisboard.common.InputMethodUtils
 import dev.patrickgold.florisboard.common.launchActivity
 import dev.patrickgold.florisboard.common.launchUrl
 import dev.patrickgold.florisboard.oldsettings.SettingsMainActivity
@@ -55,9 +57,27 @@ fun HomeScreen() = FlorisScreen(
 ) {
     val navController = LocalNavController.current
     val context = LocalContext.current
-    val isCollapsed by prefs.internal.homeIsBetaToolboxCollapsed.observeAsState(true)
+    val isCollapsed by prefs.internal.homeIsBetaToolboxCollapsed.observeAsState()
 
-    Card(modifier = Modifier.padding(16.dp)) {
+    val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
+    val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)
+    if (!isFlorisBoardEnabled) {
+        FlorisErrorCard(
+            modifier = Modifier.padding(8.dp),
+            showIcon = false,
+            text = stringRes(R.string.settings__home__ime_not_enabled),
+            onClick = { InputMethodUtils.showImeEnablerActivity(context) },
+        )
+    } else if (!isFlorisBoardSelected) {
+        FlorisWarningCard(
+            modifier = Modifier.padding(8.dp),
+            showIcon = false,
+            text = stringRes(R.string.settings__home__ime_not_selected),
+            onClick = { InputMethodUtils.showImePicker(context) },
+        )
+    }
+
+    Card(modifier = Modifier.padding(8.dp)) {
         Column(modifier = Modifier.padding(horizontal = 16.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text(
@@ -86,16 +106,14 @@ fun HomeScreen() = FlorisScreen(
                 }) {
                     Text("Open Feedback Thread")
                 }
-                Spacer(modifier = Modifier.height(8.dp))
-                Button(onClick = {
-                    launchActivity(context, SettingsMainActivity::class) { it.flags = Intent.FLAG_ACTIVITY_NEW_TASK }
-                }) {
-                    Text("Open Old Settings")
-                }
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }
     }
+    Preference(
+        title = "Remains of old settings",
+        onClick = { launchActivity(context, SettingsMainActivity::class) },
+    )
     Preference(
         iconId = R.drawable.ic_palette,
         title = stringRes(R.string.settings__theme__title),
@@ -120,6 +138,11 @@ fun HomeScreen() = FlorisScreen(
         iconId = R.drawable.ic_assignment,
         title = stringRes(R.string.settings__clipboard__title),
         onClick = { navController.navigate(Routes.Settings.Clipboard) },
+    )
+    Preference(
+        iconId = R.drawable.ic_adb,
+        title = stringRes(R.string.devtools__title),
+        onClick = { navController.navigate(Routes.Devtools.Home) },
     )
     Preference(
         iconId = R.drawable.ic_build,

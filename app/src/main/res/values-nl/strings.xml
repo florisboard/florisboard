@@ -242,12 +242,12 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">App-pictogram in launcher tonen</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forceer privémodus</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Schakelt alle functies uit die tijdelijk gebruik maken van uw invoerdata</string>
-    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Activeer ontwikkelaarshulpmiddelen</string>
-    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Hulpmiddelen specifiek voor debuggen en problemen verhelpen</string>
-    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Toon heap memory stats</string>
-    <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Toont het heap-memorygebruik en maximale grootte in de rechterbovenhoek</string>
-    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Wis database van het interne persoonlijke woordenboek</string>
-    <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Wis alle woorden van de woordenlijst in de datatabel</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Activeer ontwikkelaarshulpmiddelen</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Hulpmiddelen specifiek voor debuggen en problemen verhelpen</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Toon heap memory stats</string>
+    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Toont het heap-memorygebruik en maximale grootte in de rechterbovenhoek</string>
+    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Wis database van het interne persoonlijke woordenboek</string>
+    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Wis alle woorden van de woordenlijst in de datatabel</string>
     <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Over</string>

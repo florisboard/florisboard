@@ -277,15 +277,15 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sistem kısıtlamaları dolayısıyla Android 10 ve üstünde her zaman etkin</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Gizli modu zorla</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Yazma verilerinizle geçici olarak çalışması gereken tüm özellikleri kapatacaktır</string>
-    <string name="settings__devtools__title" comment="Title of Devtools settings">Geliştirici araçları</string>
-    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Geliştirici araçlarını etkinleştir</string>
-    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Hata ayıklama ve sorun giderme için özel tasarlanmış araçlar</string>
-    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Küme bellek istatistiklerini göster</string>
-    <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Küme bellek kullanımını ve en fazla boyutunu sağ üst köşede gösterir</string>
-    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Dahili kullanıcı sözlüğü veritabanını temizle</string>
-    <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Sözlük veritabanı tablosundaki tüm sözcükleri temizler</string>
-    <string name="pref__devtools__reset_flag__label" comment="Label of Reset flag preferences in Advanced">\"{flag_name}\" işaretini sıfırla</string>
-    <string name="pref__devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Advanced">Kurulum ekranını yeniden göstermek için hata ayıklama eylemi</string>
+    <string name="devtools__title" comment="Title of Devtools settings">Geliştirici araçları</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Geliştirici araçlarını etkinleştir</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Hata ayıklama ve sorun giderme için özel tasarlanmış araçlar</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Küme bellek istatistiklerini göster</string>
+    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Küme bellek kullanımını ve en fazla boyutunu sağ üst köşede gösterir</string>
+    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Dahili kullanıcı sözlüğü veritabanını temizle</string>
+    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Sözlük veritabanı tablosundaki tüm sözcükleri temizler</string>
+    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Advanced">\"{flag_name}\" işaretini sıfırla</string>
+    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Advanced">Kurulum ekranını yeniden göstermek için hata ayıklama eylemi</string>
     <!-- Spelling UI strings -->
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[HENÜZ UYGULANMAMIŞ] Rehberdeki isimleri kullan</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Yazım denetleyici rehberinizdeki isimlere bakacak</string>

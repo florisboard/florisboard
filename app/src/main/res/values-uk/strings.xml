@@ -200,7 +200,7 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Показувати значок програми на робочому столі</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Примусово приватний режим</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Відключає всі функції, які повинні тимчасово працювати з вашими даними вводу</string>
-    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Увімкнути параметри розробника</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Увімкнути параметри розробника</string>
     <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Про додаток</string>

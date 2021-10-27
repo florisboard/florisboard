@@ -55,7 +55,7 @@
         <item name="android:navigationBarColor">@color/navigationBarColor</item>
     </style>
 
-    <style name="FlorisAppTheme" parent="Theme.SplashScreen">
+    <style name="FlorisAppTheme" parent="Theme.SplashScreen.IconBackground">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -69,7 +69,8 @@
         <!-- SplashScreen related attributes -->
         <item name="postSplashScreenTheme">@style/Theme.AppCompat.DayNight.NoActionBar</item>
         <item name="windowSplashScreenBackground">@color/florisApp_windowBackground</item>
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/floris_app_icon</item>
+        <item name="windowSplashScreenIconBackgroundColor">@color/ic_app_icon_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/floris_app_icon_foreground</item>
     </style>
 
     <style name="CrashDialogTheme" parent="Theme.AppCompat.DayNight"/>

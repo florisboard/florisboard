@@ -26,7 +26,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
 import dev.patrickgold.florisboard.common.launchUrl
-import dev.patrickgold.florisboard.spellingManager
+import dev.patrickgold.florisboard.ime.spelling.SpellingManager
 import dev.patrickgold.jetpref.ui.compose.Preference
 import dev.patrickgold.jetpref.ui.compose.annotations.ExperimentalJetPrefUi
 
@@ -37,13 +37,12 @@ fun SpellingInfoScreen() = FlorisScreen(
     iconSpaceReserved = false,
 ) {
     val context = LocalContext.current
-    val spellingManager by context.spellingManager()
 
     Text(
         modifier = Modifier.padding(horizontal = 16.dp),
         text = stringRes(R.string.settings__spelling__dict_sources_info__intro),
     )
-    for (source in spellingManager.config.importSources) {
+    for (source in SpellingManager.Config.importSources) {
         Preference(
             title = source.label,
             summary = source.url,

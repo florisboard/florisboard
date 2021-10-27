@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.app.ui.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -38,6 +39,8 @@ import dev.patrickgold.florisboard.R
 private val IconRequiredSize = 32.dp
 private val IconEndPadding = 8.dp
 
+private val CardContentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FlorisSimpleCard(
@@ -46,6 +49,7 @@ fun FlorisSimpleCard(
     secondaryText: String? = null,
     backgroundColor: Color = MaterialTheme.colors.surface,
     contentColor: Color = contentColorFor(backgroundColor),
+    contentPadding: PaddingValues = CardContentPadding,
     icon: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null,
 ) {
@@ -57,7 +61,7 @@ fun FlorisSimpleCard(
         contentColor = contentColor,
     ) {
         Row(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(contentPadding),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             if (icon != null) {
@@ -90,6 +94,8 @@ fun FlorisSimpleCard(
 fun FlorisErrorCard(
     text: String,
     modifier: Modifier = Modifier,
+    showIcon: Boolean = true,
+    contentPadding: PaddingValues = CardContentPadding,
     onClick: (() -> Unit)? = null,
 ) {
     FlorisSimpleCard(
@@ -97,12 +103,13 @@ fun FlorisErrorCard(
         backgroundColor = Color(0xFFCC0000),
         contentColor = Color.White,
         onClick = onClick,
-        icon = { Icon(
+        icon = if (showIcon) ({ Icon(
             modifier = Modifier.padding(end = IconEndPadding).requiredSize(IconRequiredSize),
             painter = painterResource(R.drawable.ic_error_outline),
             contentDescription = null,
-        ) },
+        ) }) else null,
         text = text,
+        contentPadding = contentPadding,
     )
 }
 
@@ -110,6 +117,8 @@ fun FlorisErrorCard(
 fun FlorisWarningCard(
     text: String,
     modifier: Modifier = Modifier,
+    showIcon: Boolean = true,
+    contentPadding: PaddingValues = CardContentPadding,
     onClick: (() -> Unit)? = null,
 ) {
     FlorisSimpleCard(
@@ -117,12 +126,13 @@ fun FlorisWarningCard(
         backgroundColor = Color.Yellow,
         contentColor = Color.Black,
         onClick = onClick,
-        icon = { Icon(
+        icon = if (showIcon) ({ Icon(
             modifier = Modifier.padding(end = IconEndPadding).requiredSize(IconRequiredSize),
             painter = painterResource(R.drawable.ic_warning_outline),
             contentDescription = null,
-        ) },
+        ) }) else null,
         text = text,
+        contentPadding = contentPadding,
     )
 }
 
@@ -130,16 +140,19 @@ fun FlorisWarningCard(
 fun FlorisInfoCard(
     text: String,
     modifier: Modifier = Modifier,
+    showIcon: Boolean = true,
+    contentPadding: PaddingValues = CardContentPadding,
     onClick: (() -> Unit)? = null,
 ) {
     FlorisSimpleCard(
         modifier = modifier,
         onClick = onClick,
-        icon = { Icon(
+        icon = if (showIcon) ({ Icon(
             modifier = Modifier.padding(end = IconEndPadding).requiredSize(IconRequiredSize),
             painter = painterResource(R.drawable.ic_info),
             contentDescription = null,
-        ) },
+        ) }) else null,
         text = text,
+        contentPadding = contentPadding,
     )
 }

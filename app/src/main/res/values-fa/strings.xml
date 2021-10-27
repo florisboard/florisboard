@@ -243,13 +243,13 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">همیشه فعال شده بخاطر محدودیت های سیستم عامل های اندروید 10 به بالا</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">حالت خصوصی اجباری</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">هر ویژگی که که باید با ورودی شما کار کنند را موقتا غیرفعال می کند</string>
-    <string name="settings__devtools__title" comment="Title of Devtools settings">ابزار های توسعه دهنده</string>
-    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">فعال‌سازی ابزار های توسعه دهنده</string>
-    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">ابزار هایی که مخصوصا برای اشکال‌یابی و اشکال‌زدایی استفاده می‌شود</string>
-    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">نمایش وضعیت حافظه هیپ</string>
-    <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">استفاده از حافظه هیپ را رونویسی می کند و اندازه را حداکثری می کند در گوشه بالا سمت راست</string>
-    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">پاک کردن پایگاه داده لغتنامه داخلی کاربر</string>
-    <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">پاک کردن تمام کلمات از جدول پایگاه داده لغتنامه</string>
+    <string name="devtools__title" comment="Title of Devtools settings">ابزار های توسعه دهنده</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Advanced">فعال‌سازی ابزار های توسعه دهنده</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">ابزار هایی که مخصوصا برای اشکال‌یابی و اشکال‌زدایی استفاده می‌شود</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">نمایش وضعیت حافظه هیپ</string>
+    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">استفاده از حافظه هیپ را رونویسی می کند و اندازه را حداکثری می کند در گوشه بالا سمت راست</string>
+    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">پاک کردن پایگاه داده لغتنامه داخلی کاربر</string>
+    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">پاک کردن تمام کلمات از جدول پایگاه داده لغتنامه</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">چک کننده نگارش</string>
     <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">پیکربندی</string>

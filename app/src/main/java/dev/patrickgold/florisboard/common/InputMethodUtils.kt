@@ -16,89 +16,57 @@
 
 package dev.patrickgold.florisboard.common
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.database.ContentObserver
 import android.provider.Settings
 import android.view.inputmethod.InputMethodManager
-import dev.patrickgold.florisboard.BuildConfig
-import dev.patrickgold.florisboard.debug.flogInfo
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import dev.patrickgold.florisboard.debug.flogDebug
+import dev.patrickgold.florisboard.util.AndroidSettings
 
-private const val IME_ID: String =
-    "dev.patrickgold.florisboard/.FlorisImeService"
-private const val IME_ID_BETA: String =
-    "dev.patrickgold.florisboard.beta/dev.patrickgold.florisboard.FlorisImeService"
-private const val IME_ID_DEBUG: String =
-    "dev.patrickgold.florisboard.debug/dev.patrickgold.florisboard.FlorisImeService"
+private const val DELIMITER = ':'
+private const val IME_SERVICE_CLASS_NAME = "dev.patrickgold.florisboard.FlorisImeService"
 
 object InputMethodUtils {
-    fun checkIsFlorisboardEnabled(context: Context): Boolean {
-        val activeImeIds = Settings.Secure.getString(
-            context.contentResolver,
-            Settings.Secure.ENABLED_INPUT_METHODS
-        ) ?: "(none)"
-        flogInfo { "List of active IMEs: $activeImeIds" }
-        return when {
-            BuildConfig.DEBUG -> {
-                activeImeIds.split(":").contains(IME_ID_DEBUG)
-            }
-            context.packageName.endsWith(".beta") -> {
-                activeImeIds.split(":").contains(IME_ID_BETA)
-            }
-            else -> {
-                activeImeIds.split(":").contains(IME_ID)
-            }
-        }
+    @Composable
+    fun observeIsFlorisboardEnabled(
+        context: Context = LocalContext.current,
+        foregroundOnly: Boolean = false,
+    ) = AndroidSettings.Secure.observeAsState(
+        key = Settings.Secure.ENABLED_INPUT_METHODS,
+        foregroundOnly = foregroundOnly,
+        transform = { parseIsFlorisboardEnabled(context, it.toString()) },
+    )
+
+    @Composable
+    fun observeIsFlorisboardSelected(
+        context: Context = LocalContext.current,
+        foregroundOnly: Boolean = false,
+    ) = AndroidSettings.Secure.observeAsState(
+        key = Settings.Secure.DEFAULT_INPUT_METHOD,
+        foregroundOnly = foregroundOnly,
+        transform = { parseIsFlorisboardSelected(context, it.toString()) },
+    )
+
+    fun parseIsFlorisboardEnabled(context: Context, activeImeIds: String): Boolean {
+        flogDebug { activeImeIds }
+        return activeImeIds.split(DELIMITER).map { componentStr ->
+            ComponentName.unflattenFromString(componentStr)
+        }.any { it?.packageName == context.packageName && it?.className == IME_SERVICE_CLASS_NAME }
     }
 
-    fun checkIsFlorisboardSelected(context: Context): Boolean {
-        val selectedImeId = Settings.Secure.getString(
-            context.contentResolver,
-            Settings.Secure.DEFAULT_INPUT_METHOD
-        ) ?: "(none)"
-        flogInfo { "Selected IME: $selectedImeId" }
-        return when {
-            BuildConfig.DEBUG -> {
-                selectedImeId == IME_ID_DEBUG
-            }
-            context.packageName.endsWith(".beta") -> {
-                selectedImeId.split(":").contains(IME_ID_BETA)
-            }
-            else -> {
-                selectedImeId == IME_ID
-            }
-        }
-    }
-
-    fun startObserveIsFlorisBoardEnabled(context: Context, observer: ContentObserver) {
-        val resolver = context.contentResolver ?: return
-        resolver.registerContentObserver(
-            Settings.Secure.getUriFor(Settings.Secure.ENABLED_INPUT_METHODS), false, observer
-        )
-    }
-
-    fun stopObserveIsFlorisBoardEnabled(context: Context, observer: ContentObserver) {
-        val resolver = context.contentResolver ?: return
-        resolver.unregisterContentObserver(observer)
-    }
-
-    fun startObserveIsFlorisBoardSelected(context: Context, observer: ContentObserver) {
-        val resolver = context.contentResolver ?: return
-        resolver.registerContentObserver(
-            Settings.Secure.getUriFor(Settings.Secure.DEFAULT_INPUT_METHOD), false, observer
-        )
-    }
-
-    fun stopObserveIsFlorisBoardSelected(context: Context, observer: ContentObserver) {
-        val resolver = context.contentResolver ?: return
-        resolver.unregisterContentObserver(observer)
+    fun parseIsFlorisboardSelected(context: Context, selectedImeId: String): Boolean {
+        flogDebug { selectedImeId }
+        val component = ComponentName.unflattenFromString(selectedImeId)
+        return component?.packageName == context.packageName && component?.className == IME_SERVICE_CLASS_NAME
     }
 
     fun showImeEnablerActivity(context: Context) {
         val intent = Intent()
         intent.action = Settings.ACTION_INPUT_METHOD_SETTINGS
         intent.addCategory(Intent.CATEGORY_DEFAULT)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
 

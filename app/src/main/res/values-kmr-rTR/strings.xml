@@ -213,7 +213,7 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Di destpêkirinê de îkona sepan nîşan bide</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Moda taybet bi zorê</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Tu taybetiyên ku divê bi daneyên xwe yên têvel bi demkî bixebite neçalak bike</string>
-    <string name="settings__devtools__title" comment="Title of Devtools settings">Amûrên pêşdebir</string>
+    <string name="devtools__title" comment="Title of Devtools settings">Amûrên pêşdebir</string>
     <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Derbar</string>

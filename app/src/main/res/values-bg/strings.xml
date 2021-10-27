@@ -277,15 +277,15 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Винаги видима за Android 10+ поради ограничения на системата</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Принуждаване на поверителен режим</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Изключват се всички функции, които временно работят с вашите входни данни</string>
-    <string name="settings__devtools__title" comment="Title of Devtools settings">Инструменти за разработка</string>
-    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Развойни инструменти</string>
-    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Използват се за отстраняване на дефекти</string>
-    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Статистика за динамичната памет</string>
-    <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Показва се информация за динамичната памет в горния десен ъгъл</string>
-    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Изтриване на данните от речника към приложението</string>
-    <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Премахват се всички думи от таблицата с речника</string>
-    <string name="pref__devtools__reset_flag__label" comment="Label of Reset flag preferences in Advanced">Нулиране на „{flag_name}“</string>
-    <string name="pref__devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Advanced">За отстраняване на дефекти в първоначалния екран</string>
+    <string name="devtools__title" comment="Title of Devtools settings">Инструменти за разработка</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Развойни инструменти</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Използват се за отстраняване на дефекти</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Статистика за динамичната памет</string>
+    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Показва се информация за динамичната памет в горния десен ъгъл</string>
+    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Изтриване на данните от речника към приложението</string>
+    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Премахват се всички думи от таблицата с речника</string>
+    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Advanced">Нулиране на „{flag_name}“</string>
+    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Advanced">За отстраняване на дефекти в първоначалния екран</string>
     <!-- Spelling UI strings -->
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NOT IMPLEMENTED] Имена от контактите</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">При проверка на правописа се използват имената от контактите</string>

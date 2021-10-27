@@ -21,6 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import dev.patrickgold.florisboard.app.ui.devtools.AndroidLocalesScreen
+import dev.patrickgold.florisboard.app.ui.devtools.AndroidSettingsScreen
+import dev.patrickgold.florisboard.app.ui.devtools.DevtoolsScreen
 import dev.patrickgold.florisboard.app.ui.ext.ExtensionViewScreen
 import dev.patrickgold.florisboard.app.ui.settings.HomeScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.AboutScreen
@@ -37,10 +40,19 @@ import dev.patrickgold.florisboard.app.ui.settings.spelling.SpellingInfoScreen
 import dev.patrickgold.florisboard.app.ui.settings.spelling.SpellingScreen
 import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeScreen
 import dev.patrickgold.florisboard.app.ui.setup.SetupScreen
+import dev.patrickgold.florisboard.app.ui.splash.SplashScreen
 import dev.patrickgold.florisboard.common.curlyFormat
 
 @Suppress("FunctionName")
 object Routes {
+    object Splash {
+        const val Screen = "splash"
+    }
+
+    object Setup {
+        const val Screen = "setup"
+    }
+
     object Settings {
         const val Home = "settings"
 
@@ -66,8 +78,12 @@ object Routes {
         const val ThirdPartyLicenses = "settings/about/third-party-licenses"
     }
 
-    object Setup {
-        const val Home = "setup"
+    object Devtools {
+        const val Home = "devtools"
+
+        const val AndroidLocales = "devtools/android/locales"
+        const val AndroidSettings = "devtools/android/settings/{name}"
+        fun AndroidSettings(name: String) = AndroidSettings.curlyFormat("name" to name)
     }
 
     object Ext {
@@ -86,6 +102,10 @@ object Routes {
             navController = navController,
             startDestination = startDestination,
         ) {
+            composable(Splash.Screen) { SplashScreen() }
+
+            composable(Setup.Screen) { SetupScreen() }
+
             composable(Settings.Home) { HomeScreen() }
 
             composable(Settings.Theme) { ThemeScreen() }
@@ -108,7 +128,12 @@ object Routes {
             composable(Settings.ProjectLicense) { ProjectLicenseScreen() }
             composable(Settings.ThirdPartyLicenses) { ThirdPartyLicensesScreen() }
 
-            composable(Setup.Home) { SetupScreen() }
+            composable(Devtools.Home) { DevtoolsScreen() }
+            composable(Devtools.AndroidLocales) { AndroidLocalesScreen() }
+            composable(Devtools.AndroidSettings) { navBackStack ->
+                val name = navBackStack.arguments?.getString("name")
+                AndroidSettingsScreen(name)
+            }
 
             composable(Ext.View) { navBackStack ->
                 val extensionId = navBackStack.arguments?.getString("id")

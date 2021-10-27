@@ -20,12 +20,14 @@ import android.content.ComponentName
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -58,24 +60,37 @@ fun SpellingScreen() = FlorisScreen(
     val context = LocalContext.current
     val extensionManager by context.extensionManager()
 
-    val systemSpellCheckerId by AndroidSettings.Secure.observeAsState("selected_spell_checker")
-    val systemSpellCheckerEnabled by AndroidSettings.Secure.observeAsState("spell_checker_enabled")
-    val systemSpellCheckerSubtypeIndex by AndroidSettings.Secure.observeAsState("selected_spell_checker_subtype")
-    val systemSpellCheckerPkgName = runCatching {
-        ComponentName.unflattenFromString(systemSpellCheckerId!!)!!.packageName
-    }.getOrDefault("null")
+    val systemSpellCheckerId by AndroidSettings.Secure.observeAsState(
+        key = "selected_spell_checker",
+        foregroundOnly = true,
+    )
+    val systemSpellCheckerEnabled by AndroidSettings.Secure.observeAsState(
+        key = "spell_checker_enabled",
+        foregroundOnly = true,
+    )
+    val systemSpellCheckerSubtypeIndex by AndroidSettings.Secure.observeAsState(
+        key = "selected_spell_checker_subtype",
+        foregroundOnly = true,
+    )
+    val systemSpellCheckerPkgName = remember(systemSpellCheckerId) {
+        runCatching {
+            ComponentName.unflattenFromString(systemSpellCheckerId!!)!!.packageName
+        }.getOrDefault("null")
+    }
     val openSystemSpellCheckerSettings = {
         val componentToLaunch = ComponentName(
             "com.android.settings",
             "com.android.settings.Settings\$SpellCheckersSettingsActivity",
         )
         launchActivity(context) {
-            it.addCategory(Intent.CATEGORY_LAUNCHER)
+            it.addCategory(Intent.CATEGORY_DEFAULT)
             it.component = componentToLaunch
-            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
     }
-    val florisSpellCheckerEnabled = systemSpellCheckerPkgName == context.packageName && systemSpellCheckerSubtypeIndex != "0"
+    val florisSpellCheckerEnabled =
+        systemSpellCheckerEnabled == "1" &&
+        systemSpellCheckerPkgName == context.packageName &&
+        systemSpellCheckerSubtypeIndex != "0"
     PreferenceGroup(title = stringRes(R.string.pref__spelling__active_spellchecker__label)) {
         Column(modifier = Modifier.padding(horizontal = 8.dp)) {
             if (systemSpellCheckerEnabled == "1") {
@@ -116,6 +131,7 @@ fun SpellingScreen() = FlorisScreen(
                         },
                         text = spellCheckerLabel,
                         secondaryText = systemSpellCheckerPkgName,
+                        contentPadding = PaddingValues(all = 8.dp),
                         onClick = openSystemSpellCheckerSettings,
                     )
                     if (systemSpellCheckerPkgName == context.packageName && systemSpellCheckerSubtypeIndex == "0") {
@@ -125,6 +141,7 @@ fun SpellingScreen() = FlorisScreen(
                                 R.string.pref__spelling__active_spellchecker__summary_use_sys_lang_set,
                                 "use_floris_config" to stringRes(R.string.settings__spelling__use_floris_config),
                             ),
+                            contentPadding = PaddingValues(all = 8.dp),
                             onClick = openSystemSpellCheckerSettings,
                         )
                     }
@@ -132,6 +149,7 @@ fun SpellingScreen() = FlorisScreen(
             } else {
                 FlorisErrorCard(
                     text = stringRes(R.string.pref__spelling__active_spellchecker__summary_disabled),
+                    contentPadding = PaddingValues(all = 8.dp),
                     onClick = openSystemSpellCheckerSettings,
                 )
             }

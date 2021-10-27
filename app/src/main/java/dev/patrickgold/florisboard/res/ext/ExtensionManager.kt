@@ -28,6 +28,7 @@ import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ZipUtils
+import dev.patrickgold.florisboard.util.AndroidVersion
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -109,15 +110,25 @@ class ExtensionManager(context: Context) {
         private val internalModuleDir = internalModuleRef.absoluteFile(appContext)
 
         private var staticExtensions = listOf<T>()
-        private val fileObserver = object : FileObserver(
-            internalModuleDir, CLOSE_WRITE or DELETE or MOVED_FROM or MOVED_TO,
-        ) {
-            override fun onEvent(event: Int, path: String?) {
-                flogDebug(LogTopic.EXT_INDEXING) { "FileObserver.onEvent { event=$event path=$path }" }
-                if (path == null) return
-                ioScope.launch {
-                    refresh()
-                }
+        private val fileObserverMask =
+            FileObserver.CLOSE_WRITE or FileObserver.DELETE or
+            FileObserver.MOVED_FROM or FileObserver.MOVED_TO
+        private val fileObserver = if (AndroidVersion.ATLEAST_Q) {
+            object : FileObserver(internalModuleDir, fileObserverMask) {
+                override fun onEvent(event: Int, path: String?) = onEventCallback(event, path)
+            }
+        } else {
+            @Suppress("DEPRECATION")
+            object : FileObserver(internalModuleDir.absolutePath, fileObserverMask) {
+                override fun onEvent(event: Int, path: String?) = onEventCallback(event, path)
+            }
+        }
+
+        fun onEventCallback(event: Int, path: String?) {
+            flogDebug(LogTopic.EXT_INDEXING) { "FileObserver.onEvent { event=$event path=$path }" }
+            if (path == null) return
+            ioScope.launch {
+                refresh()
             }
         }
 

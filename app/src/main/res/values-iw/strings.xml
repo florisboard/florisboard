@@ -199,9 +199,9 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">הצד את סמל האפליקציה בLauncher</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">כפה מצב פרטיות</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">יבטל כל תכולה אשר חייבת להשתמש בצורה זמנית בקלט שלך</string>
-    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">אפשר כלי מפתח</string>
-    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">כלים שתוכננו במיוחד לצורך איתור באגים ופתרון בעיות</string>
-    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">הראה נתונים סטטיסטיים של זיכרון ערימה</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Advanced">אפשר כלי מפתח</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">כלים שתוכננו במיוחד לצורך איתור באגים ופתרון בעיות</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">הראה נתונים סטטיסטיים של זיכרון ערימה</string>
     <!-- Spelling UI strings -->
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">אודות</string>

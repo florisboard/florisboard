@@ -40,7 +40,6 @@ import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.FlorisCanvasIcon
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
-import dev.patrickgold.florisboard.common.InputMethodUtils
 import dev.patrickgold.florisboard.common.launchUrl
 import dev.patrickgold.florisboard.ime.clip.FlorisClipboardManager
 import dev.patrickgold.jetpref.ui.compose.Preference
@@ -76,7 +75,7 @@ fun AboutScreen() = FlorisScreen(title = stringRes(R.string.about__title)) {
         summary = appVersion,
         onClick = {
             try {
-                val isImeSelected = InputMethodUtils.checkIsFlorisboardSelected(context)
+                val isImeSelected = false // TODO: fix this mess anyways
                 if (isImeSelected) {
                     FlorisClipboardManager.getInstance().addNewPlaintext(appVersion)
                 } else {

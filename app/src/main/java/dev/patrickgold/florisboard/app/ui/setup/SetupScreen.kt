@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.app.ui.setup
 
+import android.content.Intent
+import android.provider.Settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,7 +33,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,8 +42,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.LocalIsFlorisBoardEnabled
-import dev.patrickgold.florisboard.app.LocalIsFlorisBoardSelected
+import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
@@ -49,7 +51,11 @@ import dev.patrickgold.florisboard.app.ui.components.FlorisStep
 import dev.patrickgold.florisboard.app.ui.components.FlorisStepLayout
 import dev.patrickgold.florisboard.app.ui.components.FlorisStepState
 import dev.patrickgold.florisboard.common.InputMethodUtils
+import dev.patrickgold.florisboard.common.launchActivity
 import dev.patrickgold.florisboard.common.launchUrl
+import dev.patrickgold.florisboard.util.AndroidSettings
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 
 private object Step {
     const val EnableIme: Int = 1
@@ -66,8 +72,8 @@ fun SetupScreen() = FlorisScreen(
     val navController = LocalNavController.current
     val context = LocalContext.current
 
-    val isFlorisBoardEnabled = LocalIsFlorisBoardEnabled.current
-    val isFlorisBoardSelected = LocalIsFlorisBoardSelected.current
+    val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
+    val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)
     val stepState = rememberSaveable(saver = FlorisStepState.Saver) {
         val initStep = when {
             !isFlorisBoardEnabled -> Step.EnableIme
@@ -77,12 +83,37 @@ fun SetupScreen() = FlorisScreen(
         FlorisStepState.new(init = initStep)
     }
 
-    SideEffect {
+    LaunchedEffect(isFlorisBoardEnabled, isFlorisBoardSelected) {
         stepState.setCurrentAuto(when {
             !isFlorisBoardEnabled -> Step.EnableIme
             !isFlorisBoardSelected -> Step.SelectIme
             else -> Step.FinishUp
         })
+    }
+
+    // Below block allows to return from the system IME enabler activity
+    // as soon as it gets selected.
+    LaunchedEffect(Unit) {
+        while (isActive) {
+            delay(200)
+            val imeIds = AndroidSettings.Secure.getString(
+                context,
+                Settings.Secure.ENABLED_INPUT_METHODS,
+            ) ?: "(null)"
+            val isEnabled = InputMethodUtils.parseIsFlorisboardEnabled(context, imeIds)
+            if (stepState.getCurrentAuto().value == Step.EnableIme &&
+                stepState.getCurrentManual().value == -1 &&
+                !isFlorisBoardEnabled &&
+                !isFlorisBoardSelected &&
+                isEnabled
+            ) {
+                launchActivity(context, FlorisAppActivity::class) {
+                    it.flags = (Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
+                        or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                        or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                }
+            }
+        }
     }
 
     FlorisStepLayout(
@@ -121,7 +152,11 @@ fun SetupScreen() = FlorisScreen(
                 StepText(stringRes(R.string.setup__finish_up__description_p2))
                 StepButton(label = stringRes(R.string.setup__finish_up__finish_btn)) {
                     this@FlorisScreen.prefs.internal.isImeSetUp.set(true)
-                    navController.navigate(Routes.Settings.Home)
+                    navController.navigate(Routes.Settings.Home) {
+                        popUpTo(Routes.Setup.Screen) {
+                            inclusive = true
+                        }
+                    }
                 }
             },
         ),

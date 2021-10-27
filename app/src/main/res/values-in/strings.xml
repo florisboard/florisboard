@@ -279,17 +279,17 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Selalu diaktifkan di Android 10+ karena pembatasan sistem</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Paksa mode pribadi</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Akan menonaktifkan fitur apapun yang harus berfungsi sementara dengan data input Anda</string>
-    <string name="settings__devtools__title" comment="Title of Devtools settings">Alat pengembang</string>
-    <string name="pref__devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Aktifkan alat pengembang</string>
-    <string name="pref__devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Alat yang dirancang khusus untuk debugging dan pemecahan masalah</string>
-    <string name="pref__devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Tampilkan statistik tumpukan memori</string>
-    <string name="pref__devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Melapisi penggunaan tumpukan memori dan ukuran maksimal di sudut kanan atas</string>
-    <string name="pref__devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Bersihkan data kamus pengguna internal</string>
-    <string name="pref__devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Akan membersihkan semua kata-kata dari tabel database kamus</string>
-    <string name="pref__devtools__reset_flag__label" comment="Label of Reset flag preferences in Advanced">Atur ulang flag \"{flag_name}\"</string>
-    <string name="pref__devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Advanced">Aksi debug untuk menampilkan kembali layar pengaturan</string>
-    <string name="pref__devtools__test_crash_report__label" comment="Label of Test Crash Report in Advanced">Layar testingan laporan crash</string>
-    <string name="pref__devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Advanced">Aksi debug untuk membuat crash secara sengaja</string>
+    <string name="devtools__title" comment="Title of Devtools settings">Alat pengembang</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Aktifkan alat pengembang</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Alat yang dirancang khusus untuk debugging dan pemecahan masalah</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Tampilkan statistik tumpukan memori</string>
+    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Melapisi penggunaan tumpukan memori dan ukuran maksimal di sudut kanan atas</string>
+    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Bersihkan data kamus pengguna internal</string>
+    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Akan membersihkan semua kata-kata dari tabel database kamus</string>
+    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Advanced">Atur ulang flag \"{flag_name}\"</string>
+    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Advanced">Aksi debug untuk menampilkan kembali layar pengaturan</string>
+    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Advanced">Layar testingan laporan crash</string>
+    <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Advanced">Aksi debug untuk membuat crash secara sengaja</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Pemeriksa ejaan</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Gunakan konfigurasi pemeriksa ejaan keyboard</string>

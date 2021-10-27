@@ -13,6 +13,7 @@ android {
     ndkVersion = "22.1.7171670"
 
     compileOptions {
+        isCoreLibraryDesugaringEnabled = true
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -28,6 +29,7 @@ android {
         targetSdk = 30
         versionCode = 60
         versionName = "0.3.14"
+        multiDexEnabled = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -50,7 +52,6 @@ android {
         }
 
         ndk {
-            //abiFilters += listOf("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
             abiFilters += listOf("armeabi-v7a", "arm64-v8a")
         }
 
@@ -72,7 +73,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.0-alpha05"
+        kotlinCompilerExtensionVersion = "1.1.0-alpha06"
     }
 
     externalNativeBuild {
@@ -89,8 +90,14 @@ android {
             isDebuggable = true
             isJniDebuggable = true
 
+            ndk {
+                // For running FlorisBoard on the emulator
+                abiFilters += listOf("x86", "x86_64")
+            }
+
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_debug")
             resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_debug_round")
+            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_debug_foreground")
             resValue("string", "floris_app_name", "FlorisBoard Debug")
         }
 
@@ -102,6 +109,7 @@ android {
 
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_beta")
             resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_beta_round")
+            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_beta_foreground")
             resValue("string", "floris_app_name", "FlorisBoard Beta")
         }
 
@@ -110,6 +118,7 @@ android {
 
             resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_release")
             resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_release_round")
+            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_release_foreground")
             resValue("string", "floris_app_name", "@string/app_name")
         }
     }
@@ -137,10 +146,10 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.3.1") // possibly remove after settings rework
     implementation("androidx.appcompat:appcompat:1.3.1") // possibly remove after settings rework
     implementation("androidx.autofill:autofill:1.1.0")
-    implementation("androidx.compose.material:material:1.1.0-alpha05")
-    implementation("androidx.compose.runtime:runtime-livedata:1.1.0-alpha05")
-    implementation("androidx.compose.ui:ui:1.1.0-alpha05")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.1.0-alpha05")
+    implementation("androidx.compose.material:material:1.1.0-alpha06")
+    implementation("androidx.compose.runtime:runtime-livedata:1.1.0-alpha06")
+    implementation("androidx.compose.ui:ui:1.1.0-alpha06")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.1.0-alpha06")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0") // possibly remove after settings rework
     implementation("androidx.core:core-ktx:1.6.0")
     implementation("androidx.core:core-splashscreen:1.0.0-alpha02")
@@ -152,12 +161,13 @@ dependencies {
     implementation("com.google.android.material:material:1.4.0") // possibly remove after settings rework
     implementation("com.jaredrummler:colorpicker:1.1.0") // possibly remove after settings rework
     implementation("com.nambimobile.widgets:expandable-fab:1.0.2") // possibly remove after settings rework
-    implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-alpha09")
-    implementation("dev.patrickgold.jetpref:jetpref-ui-compose:0.1.0-alpha09")
+    implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-alpha11")
+    implementation("dev.patrickgold.jetpref:jetpref-ui-compose:0.1.0-alpha11")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
     implementation("androidx.room:room-runtime:2.3.0")
     kapt("androidx.room:room-compiler:2.3.0")
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")
 
     testImplementation("io.kotest:kotest-runner-junit5:4.6.3")
     testImplementation("io.kotest:kotest-assertions-core:4.6.3")

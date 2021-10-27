@@ -1,7 +1,0 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <Preference
-        app:title="This screen is not available anymore in the old Settings UI. Please use the screen available in the new UI!"
-        app:iconSpaceReserved="false"/>
-
-</PreferenceScreen>

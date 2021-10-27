@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard
 
+import android.app.Application
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -38,12 +39,12 @@ import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.res.AssetManager
 import dev.patrickgold.florisboard.res.ext.ExtensionManager
 import dev.patrickgold.florisboard.util.AndroidVersion
-import dev.patrickgold.jetpref.datastore.JetPrefApplication
+import dev.patrickgold.jetpref.datastore.JetPrefManager
 import java.io.File
 import kotlin.Exception
 
 @Suppress("unused")
-class FlorisApplication : JetPrefApplication() {
+class FlorisApplication : Application() {
     companion object {
         private const val ICU_DATA_ASSET_PATH = "icu/icudt69l.dat"
 
@@ -67,6 +68,7 @@ class FlorisApplication : JetPrefApplication() {
     override fun onCreate() {
         super.onCreate()
         try {
+            JetPrefManager.init(this, saveIntervalMs = 1_000)
             Flog.install(
                 context = this,
                 isFloggingEnabled = BuildConfig.DEBUG,
