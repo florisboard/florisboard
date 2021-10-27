@@ -230,6 +230,7 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Säilytä leikepöydän kohteet</string>
     <string name="pref__clipboard__limit_history_size__label">Rajoita historian kokoa</string>
     <string name="pref__clipboard__max_history_size__label">Historian maksimikoko</string>
+    <!-- Devtools strings -->
     <!-- Extension strings -->
     <!-- General strings -->
     <!-- Screen orientation strings -->

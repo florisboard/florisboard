@@ -48,6 +48,7 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Gebaren</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Standaard</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Systeemstandaard</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">Welkom bij {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard is niet ingeschakeld in het systeem en zal dus niet beschikbaar zijn als een invoermethode in de invoermethode-kiezer. Klik hier om dit probleem op te lossen.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard is niet geselecteerd als de standaard invoermethode. Klik hier om dit probleem op te lossen.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Talen &amp; Indelingen</string>
@@ -71,6 +72,7 @@
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Telefoon secundaire layout</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Deze indeling bestaat al!</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (niet geïnstalleerd)</string>
+    <string name="settings__theme__title" comment="Title of the Theme screen">Thema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ongedefinieerd</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Thema modus</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Zonsopgang</string>
@@ -155,6 +157,17 @@
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Geluidsvolume bij invoer</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Trillen bij toetsaanslag</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Geluidje bij lang indrukken toets</string>
+    <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Geluiden voor herhaalde toetsacties</string>
+    <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Geluiden voor veeggebaren</string>
+    <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Geluiden voor veegbewegingen</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptische Feedback / Vibratie</string>
+    <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Schakel haptische feedback in</string>
+    <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Vibreer bij invoer, afhankelijk van systeeminstellingen</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Systeeminstellingen negeren</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Gebruik onderstaande voorkeuren, zelfs als haptiek is uitgeschakeld in het systeem</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Vibratie rechtstreeks activeren</string>
+    <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Trigger trillingen rechtstreeks in plaats van Android\'s haptische feedback functieset</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Trillingsduur</string>
     <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Trilsterkte</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Trillen bij toetsaanslag</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Nummerrij</string>
@@ -242,13 +255,31 @@
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">App-pictogram in launcher tonen</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forceer privémodus</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Schakelt alle functies uit die tijdelijk gebruik maken van uw invoerdata</string>
-    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Activeer ontwikkelaarshulpmiddelen</string>
-    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Hulpmiddelen specifiek voor debuggen en problemen verhelpen</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Toon heap memory stats</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Toont het heap-memorygebruik en maximale grootte in de rechterbovenhoek</string>
-    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Wis database van het interne persoonlijke woordenboek</string>
-    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Wis alle woorden van de woordenlijst in de datatabel</string>
     <!-- Spelling UI strings -->
+    <string name="settings__spelling__title" comment="Title of the Spelling screen">Spellingcontrole</string>
+    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Gebruik toetsenbord spellingscontrole configuratie</string>
+    <string name="pref__spelling__active_spellchecker__label">Inline tekstveld spellingscontrole</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Systeem-breed uitgeschakeld. Er zullen geen rode lijnen verschijnen in tekstvelden voor incorrecte woorden. Klik om te wijzigen.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Geen inline spellingscontrole ingesteld. Klik om te wijzigen.</string>
+    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Optie \"Talen\" in het spellingscontrolescherm van het systeem is ingesteld op \"Gebruik systeemtalen\". Door een bug kan dit ertoe leiden dat {app_name} geen inline spellingcontrole uitvoert. Overweeg om dit te veranderen in \"{use_floris_config}\".</string>
+    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Configuratie</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Talen</string>
+    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Beheer woordenboeken</string>
+    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} geïnstalleerd</string>
+    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Er zijn momenteel geen woordenboeken voor spellingscontrole geïnstalleerd. Voeg de eerste toe met de \'+\'-knop hieronder!</string>
+    <string name="settings__spelling__import__title" comment="Title for the import screen">Nieuw woordenboek importeren</string>
+    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Selecteer bron</string>
+    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">Selecteer de bron van waar u de extensie van derden heeft gedownload. Dit helpt bij het correct verwerken van de niet-FlorisBoard extensie-indeling en het omzetten in een FlorisBoard extensie-indeling.</string>
+    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Importeer archief</string>
+    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">Importeer nu het archief door het bestand te kiezen in het bestandkiezer dialoogvenster.</string>
+    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Selecteer taal</string>
+    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Taalcode (bv. en_US)</string>
+    <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">Woordenboekbestand importeren</string>
+    <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">Selecteer affix-bestand (.aff)</string>
+    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Selecteer woordenboekbestand (.dic)</string>
+    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Verifieer import</string>
+    <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">Controleer of de onderstaande metadata correct is. Als er iets niet klopt, kunt u teruggaan naar een vorige stap en de bron opnieuw selecteren / het archief opnieuw importeren.</string>
+    <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">Waar kan ik woordenboeken vinden?</string>
     <!-- About UI strings -->
     <string name="about__title" comment="Title of About activity">Over</string>
     <string name="about__app_icon_content_description" comment="Content description of app icon in About">App-pictogram van FlorisBoard</string>
@@ -269,12 +300,14 @@
     <string name="assets__action__cancel">Annuleren</string>
     <string name="assets__action__cancel_confirm_title">Annuleren bevestigen</string>
     <string name="assets__action__cancel_confirm_message">Weet je zeker dat je onopgeslagen wijzigingen wil verwerpen? Deze actie kan niet ongedaan gemaakt worden.</string>
+    <string name="assets__action__default">Standaard</string>
     <string name="assets__action__delete">Verwijderen</string>
     <string name="assets__action__delete_confirm_title">Verwijderen bevestigen</string>
     <string name="assets__action__edit">Bewerken</string>
     <string name="assets__action__export">Exporteren</string>
     <string name="assets__action__import">Importeren</string>
     <string name="assets__action__no">Nee</string>
+    <string name="assets__action__ok">OK</string>
     <string name="assets__action__save">Opslaan</string>
     <string name="assets__action__yes">Ja</string>
     <string name="assets__error__details">Details</string>
@@ -311,11 +344,30 @@
     <string name="pref__clipboard__enable_clipboard_history__summary">Bewaar klembord-items</string>
     <string name="pref__clipboard__limit_history_size__label">Beperk geschiedenisgrootte</string>
     <string name="pref__clipboard__max_history_size__label">Maximale grootte geschiedenis</string>
+    <!-- Devtools strings -->
     <!-- Extension strings -->
+    <string name="ext__meta__authors">Auteurs</string>
+    <string name="ext__meta__description">Beschrijving</string>
+    <string name="ext__meta__homepage">Startpagina</string>
+    <string name="ext__meta__id">ID</string>
+    <string name="ext__meta__issue_tracker">Probleemtracker</string>
+    <string name="ext__meta__keywords">Trefwoorden</string>
+    <string name="ext__meta__license">Licentie</string>
+    <string name="ext__meta__title">Titel</string>
+    <string name="ext__meta__version">Versie</string>
+    <string name="ext__error__not_found_title">Extensie niet gevonden</string>
+    <string name="ext__error__not_found_description">Er kon geen extensie met ID \"{id}\" gevonden worden.</string>
     <!-- General strings -->
+    <string name="general__no_browser_app_found_for_url">Geen browser app gevonden voor het afhandelen van URL {url}</string>
     <!-- Screen orientation strings -->
     <!-- State strings -->
     <!-- Enum label and description strings -->
+    <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Systeemtalen gebruiken</string>
+    <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Gebruik toetsenbord subtypes</string>
+    <string name="enum__theme_mode__always_day" comment="Enum value label">Altijd dag</string>
+    <string name="enum__theme_mode__always_night" comment="Enum value label">Altijd nacht</string>
+    <string name="enum__theme_mode__follow_system" comment="Enum value label">Volg systeeminstelling</string>
+    <string name="enum__theme_mode__follow_time" comment="Enum value label">Volg tijd</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
 </resources>

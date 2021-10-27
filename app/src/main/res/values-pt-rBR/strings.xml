@@ -278,17 +278,6 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sempre ativado no Android 10+ devido a restrições do sistema</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Forçar o modo privado</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Isso desativará quaisquer recursos que tenham que trabalhar temporariamente com seus dados de digitação</string>
-    <string name="devtools__title" comment="Title of Devtools settings">Ferramentas de desenvolvedor</string>
-    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Ativar ferramentas de desenvolvedor</string>
-    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Ferramentas especificamente projetadas para depuração e solução de problemas</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Mostrar estatísticas de memória heap</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Sobrepõe o uso da memória heap e o tamanho máximo no canto superior direito</string>
-    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Limpar banco de dados do dicionário de usuário interno</string>
-    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Limpa todas as palavras da tabela do banco de dados do dicionário</string>
-    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Advanced">Redefinir sinalizador \"{flag_name}\"</string>
-    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Advanced">Ação de depuração para mostrar novamente a tela de configuração</string>
-    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Advanced">Tela de relatório de falha de teste</string>
-    <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Advanced">Ação de depuração para produzir uma falha propositalmente</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Corretor ortográfico</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Usar configuração do corretor ortográfico do teclado</string>
@@ -425,6 +414,23 @@
     <string name="pref__clipboard__clean_up_after__label">Limpar itens antigos depois</string>
     <string name="pref__clipboard__limit_history_size__label">Limitar o tamanho do histórico</string>
     <string name="pref__clipboard__max_history_size__label">Tamanho máximo do histórico</string>
+    <!-- Devtools strings -->
+    <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Ferramentas de desenvolvedor</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Ativar ferramentas de desenvolvedor</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Ferramentas projetadas especificamente para depuração e solução de problemas</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Mostrar estatísticas de memória heap</string>
+    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Sobrepõe o uso da memória heap e o tamanho máximo no canto superior direito</string>
+    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Limpar banco de dados de dicionário interno do usuário</string>
+    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Limpa todas as palavras da tabela do banco de dados do dicionário</string>
+    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Redefinir flag \"{flag_name}\"</string>
+    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Ação de depuração para mostrar novamente a tela de configuração</string>
+    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Tela de relatório de falha de teste</string>
+    <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">Ação de depuração para produzir uma falha propositalmente</string>
+    <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Ferramentas do sistema Android</string>
+    <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Configurações globais do Android</string>
+    <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Configurações seguras do Android</string>
+    <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Configurações do sistema Android</string>
+    <string name="devtools__android_locales__title" comment="Title of Android locales screen">Localização do sistema</string>
     <!-- Extension strings -->
     <string name="ext__meta__authors">Autores</string>
     <string name="ext__meta__description">Descrição</string>

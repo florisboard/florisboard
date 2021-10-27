@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">FlorisBoard</string>
     <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pause</string>
     <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Vent</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Tre-prikket ikon. Hvis synlig, viser at flere tegn er tilgængelige ved længere tryk.</string>
@@ -46,6 +47,7 @@
     <string name="settings__navigation__gestures" comment="Long-press hint of bottom nav item Gestures in Settings">Bevægelser</string>
     <string name="settings__default" comment="General string which is used when a preference has the default value set">Standard</string>
     <string name="settings__system_default" comment="General string which is used when a preference has the system default value set">Systemstandard</string>
+    <string name="settings__home__title" comment="Title of the Home fragment">Velkommen til {app_name}</string>
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard er ikke slået til i systemet og er derfor ikke tilgængelig som inputsmetode i inputvælgeren. Klik her for at løse problemet.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard er ikke valgt som standard inputmetode. Klik her for at løse problemet.</string>
     <string name="settings__localization__title" comment="Title of languages and layout box in the Typing fragment">Sprog &amp; Tastaturlayout</string>
@@ -58,15 +60,22 @@
     <string name="settings__localization__subtype_edit_title" comment="Title of subtype dialog when editing an existing subtype">Ændre undertastatur</string>
     <string name="settings__localization__subtype_locale" comment="Label for locale dropdown in subtype dialog">Landestandard</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Dette undertastatur findes allerede!</string>
+    <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (ikke installeret)</string>
+    <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Ikke defineret</string>
+    <string name="pref__theme__any_theme__label" comment="Label of the theme selector preference">Valgte tema</string>
+    <string name="settings__theme_manager__create_empty" comment="Label of the Create empty FAB action">Opret tomt tema</string>
     <string name="settings__theme_manager__theme_new_title" comment="Title template for a new theme">Nyt tema</string>
     <string name="settings__theme_editor__title" comment="Title of the edit theme activity">Redigér tema</string>
     <string name="settings__theme_editor__name_label" comment="Label of name input">Navn</string>
     <string name="settings__theme_editor__type_label" comment="Label of type input">Type</string>
     <string name="settings__theme_editor__add_group_dialog_title" comment="Title of the add group dialog in the theme editor">Tilføj gruppe</string>
     <string name="settings__theme_editor__edit_group_dialog_title" comment="Title of the edit group dialog in the theme editor">Redigér gruppe</string>
+    <string name="settings__theme_editor__edit_theme_name_dialog_title" comment="Title of the edit theme name dialog in the theme editor">Redigér tema navn</string>
+    <string name="settings__theme_editor__value_type_reference" comment="Theme value type">Reference</string>
     <string name="settings__theme_editor__value_type_reference_group" comment="Theme value type sub-field">Gruppe</string>
     <string name="settings__theme_editor__value_type_on_off" comment="Theme value type">Skift</string>
+    <string name="settings__theme_editor__value_type_other" comment="Theme value type">Andet</string>
     <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Tekst</string>
     <string name="settings__theme__group_window" comment="Theme group label">Vindue &amp; System</string>
     <string name="settings__theme__group_keyboard" comment="Theme group label">Tastatur</string>
@@ -74,10 +83,18 @@
     <string name="settings__theme__group_media" comment="Theme group label">Mediekontekst</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">SmartBjælke</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Baggrundsfarve</string>
+    <string name="settings__theme__attr_foreground" comment="Theme attribute label">Forgrundsfarve</string>
+    <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Forgrundsfarve (alternativ)</string>
     <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Primær farve</string>
     <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Primær farve (mørk)</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Tekstfarve</string>
+    <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Aktivér lydfeedback</string>
+    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibrationsvarighed</string>
+    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibrationsstyrke</string>
+    <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Tastatur</string>
+    <string name="pref__keyboard__group_layout__label" comment="Preference group title">Opsætning</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Tastetryk</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup synlighed</string>
     <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Langt tastetryk forsinkelse</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Aktivér Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Vil blive vist over tastaturet</string>
@@ -109,38 +126,109 @@
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Lys</string>
     <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Mørk</string>
     <!-- Spelling UI strings -->
+    <string name="settings__spelling__title" comment="Title of the Spelling screen">Stavekontrol</string>
+    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Konfiguration</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Sprog</string>
+    <string name="settings__spelling__import__title" comment="Title for the import screen">Importér ny ordbog</string>
+    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Vælg kilde</string>
+    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Importér arkiv</string>
+    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Vælg sprog</string>
     <!-- About UI strings -->
+    <string name="about__title" comment="Title of About activity">Omkring</string>
     <string name="about__view_privacy_policy" comment="Label of View privacy policy button in About">Privatlivspolitik</string>
+    <string name="about__view_source_code" comment="Label of View source code button in About">Source kode</string>
+    <string name="about__version__title" comment="Preference title">Version</string>
+    <string name="about__version_copied__title" comment="Title of the toast for copying the version string">Version kopieret til udklipsholderen</string>
+    <string name="about__version_copied__error" comment="Title of the error toast for copying the version string (%s will contain the generated crash message title)">Noget gik galt: %s</string>
+    <string name="about__privacy_policy__title" comment="Preference title">Privatlivspolitik</string>
+    <string name="about__privacy_policy__summary" comment="Preference summary">Privatlivspolitikken for dette projekt</string>
+    <string name="about__project_license__title" comment="Preference title">Projektlicens</string>
     <!-- Assets strings -->
+    <plurals name="assets__file__authors">
+        <item quantity="one">Forfatter</item>
+        <item quantity="other">Forfattere</item>
+    </plurals>
     <string name="assets__file__name">Navn</string>
+    <string name="assets__file__source">Kilde</string>
     <string name="assets__action__add">Tilføj</string>
     <string name="assets__action__apply">Anvend</string>
     <string name="assets__action__cancel">Annullér</string>
     <string name="assets__action__cancel_confirm_title">Bekræft annullering</string>
+    <string name="assets__action__default">Standard</string>
     <string name="assets__action__delete">Slet</string>
     <string name="assets__action__delete_confirm_title">Bekræft sletning</string>
     <string name="assets__action__edit">Redigér</string>
     <string name="assets__action__export">Eksportér</string>
     <string name="assets__action__import">Importér</string>
     <string name="assets__action__no">Nej</string>
+    <string name="assets__action__ok">Ok</string>
     <string name="assets__action__save">Gem</string>
     <string name="assets__action__select">Vælg</string>
+    <string name="assets__action__select_file">Vælg fil</string>
     <string name="assets__action__yes">Ja</string>
     <string name="assets__error__details">Detaljer</string>
     <string name="assets__error__invalid">Ugyldig</string>
+    <string name="assets__error__snackbar_message">Noget gik galt</string>
     <!-- Setup UI strings -->
+    <string name="setup__title" comment="Title of Setup">Velkommen!</string>
+    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privatlivspolitik</string>
+    <string name="setup__enable_ime__title">Aktivér {app_name}</string>
+    <string name="setup__select_ime__title">Vælg {app_name}</string>
+    <string name="setup__select_ime__switch_keyboard_btn">Skift tastatur</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">FlorisBoard fejlrapport</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Luk</string>
     <!-- Clipboard strings -->
+    <string name="clip__context_header">Udklipsholderhistorik</string>
     <string name="clip__clear_history">Ryd historik</string>
     <string name="clip__delete_item">Slet</string>
     <string name="clip__paste_item">Indsæt</string>
+    <string name="settings__clipboard__title">Udklipsholder</string>
+    <string name="pref__clipboard__clipboard_history_title">Udklipsholderhistorik</string>
+    <!-- Devtools strings -->
     <!-- Extension strings -->
+    <string name="ext__meta__description">Beskriveslse</string>
+    <string name="ext__meta__homepage">Hjemmeside</string>
+    <string name="ext__meta__keywords">Nøgleord</string>
+    <string name="ext__meta__license">Licens</string>
+    <string name="ext__meta__title">Titel</string>
+    <string name="ext__meta__version">Version</string>
+    <string name="ext__error__not_found_title">Udvidelse ikke fundet</string>
     <!-- General strings -->
     <!-- Screen orientation strings -->
     <!-- State strings -->
+    <string name="state__disabled">Deaktivéret</string>
+    <string name="state__enabled">Aktivéret</string>
     <!-- Enum label and description strings -->
+    <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Vis aldrig</string>
+    <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Vis altid</string>
+    <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Vis dynamisk</string>
+    <string name="enum__swipe_action__delete_word" comment="Enum value label">Slet nuværende ord</string>
+    <string name="enum__swipe_action__insert_space" comment="Enum value label">Indsæt mellemrum</string>
+    <string name="enum__swipe_action__undo" comment="Enum value label">Fortryd</string>
+    <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Skift til forrige tastatur</string>
+    <string name="enum__theme_mode__always_day" comment="Enum value label">Altid dag</string>
+    <string name="enum__theme_mode__always_night" comment="Enum value label">Altid nat</string>
+    <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Skift til emojis</string>
+    <string name="enum__utility_key_action__switch_language" comment="Enum value label">Skift sprog</string>
+    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Skift tastatur app</string>
+    <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dynamisk: Skift til emojis / Skift sprog</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
+    <plurals name="unit__hours__written">
+        <item quantity="one">{v} time</item>
+        <item quantity="other">{v} timer</item>
+    </plurals>
+    <plurals name="unit__minutes__written">
+        <item quantity="one">{v} minut</item>
+        <item quantity="other">{v} minutter</item>
+    </plurals>
+    <plurals name="unit__seconds__written">
+        <item quantity="one">{v} sekund</item>
+        <item quantity="other">{v} sekunder</item>
+    </plurals>
+    <plurals name="unit__items__written">
+        <item quantity="one">{v} emne</item>
+        <item quantity="other">{v} emner</item>
+    </plurals>
 </resources>

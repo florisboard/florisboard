@@ -14,8 +14,8 @@
     <string name="private_mode_dialog__text" comment="Text of the private mode dialog">The icon you just clicked at indicates that FlorisBoard works in the private mode. This means that all features which require to process and temporarily save your input stop working. This applies at minimum to the following features (if they\'ve been turned on previously):\n\n - Next word algorithm adjustments\n\n - Clipboard paste suggestions\n\n - Clipboard history\n\nFlorisBoard enters this mode either if an app requests it or if it was specifically enabled in the advanced settings.</string>
 -->
     <!-- Media strings -->
-    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">ايموجي</string>
-    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">رموز تعبيرية</string>
+    <string name="media__tab__emojis" comment="Tab description for emojis in the media UI">رموز تعبيرية</string>
+    <string name="media__tab__emoticons" comment="Tab description for emoticons in the media UI">رموز المشاعر</string>
     <string name="media__tab__kaomoji" comment="Tab description for kaomoji in the media UI">كاوموجي</string>
     <!-- Emoji strings -->
     <string name="emoji__category__smileys_emotion" comment="Emoji category name">وجوه تعبيرية و عواطف</string>
@@ -278,17 +278,6 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">ممكّن دائمًا على اندرويد 10+ فما فوق بسبب قيود النظام</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">فرض الوضع الخاص</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">سيتم تعطيل أي ميزات تعمل مؤقتًا باستعمال بيانات الإدخال الخاصة بك</string>
-    <string name="devtools__title" comment="Title of Devtools settings">أدوات المطورين</string>
-    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Advanced">تفعيل أدوات المطور</string>
-    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">أدوات مصممة خصيصًا لتصحيح الأخطاء واستكشاف العلل وإصلاحها</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">إظهار إحصائيات كومة الذاكرة</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">يعرض طبقة تراكبية في الزاوية العلوية اليمنى على لوحة المفاتيح لاستخدام ذاكرة الكومة والحجم الأقصى لها</string>
-    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">مسح قاعدة بيانات القاموس الداخلي للمستخدم</string>
-    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">يمسح كل الكلمات من جدول قاعدة بيانات القاموس</string>
-    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Advanced">إعادة تعيين إشارة \"{flag_name}\"</string>
-    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Advanced">إجراء التصحيح الاختباري لإعادة إظهار شاشة الإعداد</string>
-    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Advanced">اختبار شاشة تقرير الأخطاء</string>
-    <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Advanced">إجراء التصحيح لإحداث عطل عمدا</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">المدقق الإملائي</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">استخدم اعدادات المدقق الإملائي المدمجة بلوحة المفاتيح</string>
@@ -298,7 +287,7 @@
     <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">تم تعيين خيار \"اللغات\" في شاشة المدقق الإملائي للنظام على \"استخدام لغات النظام\". نظرًا لوجود خطأ ، قد يتسبب هذا في عدم قيام {app_name} بإجراء تدقيق إملائي مضمّن. ضع في اعتبارك تغييره إلى \"{use_floris_config}\".</string>
     <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">التكوين</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">اللغات</string>
-    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[لم يتم التنفيذ] استخدم أسماء من جهات الاتصال</string>
+    <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[لم يتم التنفيذ] استخدم الأسماء من جهات الاتصال</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">سيقوم المدقق الإملائي بالبحث عن الأسماء من قائمة جهات الاتصال الخاصة بك</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">استخدم إدخالات قاموس المستخدم</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">سيبحث المدقق الإملائي عن إدخالات من قواميس المستخدم ، إذا تم تمكينها</string>
@@ -383,13 +372,13 @@
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">سياسة الخصوصية</string>
     <string name="setup__footer__repository" comment="Repository label for URL">المستودع</string>
     <string name="setup__enable_ime__title">تفعيل {app_name}</string>
-    <string name="setup__enable_ime__description">يتطلب نظام Android تمكين كل لوحة مفاتيح مخصصة بشكل منفصل قبل أن تتمكن من استخدامها. افتح النظام <i> اعدادات اللغة و الأدخال </i> وتمكينها \"{app_name}\".</string>
+    <string name="setup__enable_ime__description">يتطلب نظام Android تمكين كل لوحة مفاتيح مخصصة بشكل منفصل قبل أن تتمكن من استخدامها. افتح النظام <i> اعدادات اللغة و الأدخال </i> وتمكين \"{app_name}\".</string>
     <string name="setup__enable_ime__open_settings_btn">افتح إعدادات النظام</string>
     <string name="setup__select_ime__title">اختيار {app_name}</string>
-    <string name="setup__select_ime__description">{app_name} تم تمكينه الآن في نظامك. لاستخدامه بشكل دائم ، قم بالتبديل إلى {app_name} عن طريق تحديده في مربع حوار محدد الإدخال!</string>
+    <string name="setup__select_ime__description">تم تمكين {app_name} الآن في نظامك. لاستخدامه بشكل دائم ، قم بالتبديل إلى {app_name} عن طريق تحديده في مربع حوار محدد الإدخال!</string>
     <string name="setup__select_ime__switch_keyboard_btn">تبديل لوحة المفاتيح</string>
     <string name="setup__finish_up__title">تم انهاء الاعداد</string>
-    <string name="setup__finish_up__description_p1">{app_name} ممكّن الآن في النظام وجاهز للتخصيص بأسلوبك.</string>
+    <string name="setup__finish_up__description_p1">تم تمكين{app_name} في النظام وجاهز للتخصيص بأسلوبك.</string>
     <string name="setup__finish_up__description_p2">إذا واجهت أي مشاكل أو أخطاء أو أعطال أو اذا كنت ترغب فقط في تقديم اقتراح ، تحقق من مستودع المشروع من شاشة \"حول التطبيق\"!</string>
     <string name="setup__finish_up__finish_btn">أبدأ بالتخصيص</string>
     <!-- Crash Dialog strings -->
@@ -405,7 +394,7 @@
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">توقف FlorisBoard عن العمل…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">انقر لعرض تفاصيل الخطأ</string>
     <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">يبدو أن FlorisBoard يوقف عن العمل بشكل متكرر…</string>
-    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">العودة إلى لوحة المفاتيح السابقة لإيقاف حلقة التعطل الغير منتهية. انقر لعرض تفاصيل الخطأ</string>
+    <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">تم العودة إلى لوحة المفاتيح السابقة لإيقاف التعطل المتكرر الغير منتهي. انقر لعرض تفاصيل الخطأ</string>
     <!-- Clipboard strings -->
     <string name="clip__context_header">سجل الحافظة</string>
     <string name="clip__clear_history">مسح السجل</string>
@@ -429,6 +418,23 @@
     <string name="pref__clipboard__clean_up_after__label">تنظيف العناصر القديمة بعد</string>
     <string name="pref__clipboard__limit_history_size__label">تحديد حجم السجل</string>
     <string name="pref__clipboard__max_history_size__label">الحد الأقصى لحجم السجل</string>
+    <!-- Devtools strings -->
+    <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">أدوات المطور</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">تفعيل أدوات المطور</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">أدوات مصممة خصيصًا لتصحيح الأخطاء واستكشاف العلل وإصلاحها</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">إظهار إحصائيات كومة الذاكرة</string>
+    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">يعرض طبقة تراكبية في الزاوية العلوية اليمنى على لوحة المفاتيح لاستخدام ذاكرة الكومة والحجم الأقصى لها</string>
+    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">مسح قاعدة بيانات القاموس الداخلي للمستخدم</string>
+    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">يمسح كل الكلمات من جدول قاعدة بيانات القاموس</string>
+    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">إعادة تعيين إشارة \"{flag_name}\"</string>
+    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">إجراء التصحيح الاختباري لإعادة إظهار شاشة الإعداد</string>
+    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">اختبار شاشة تقرير الأخطاء</string>
+    <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">إجراء التصحيح لإحداث عطل عمدا</string>
+    <string name="devtools__group_android__title" comment="Title of Android group in Devtools">أدوات نظام أندرويد</string>
+    <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">إعدادات أندرويد العامة</string>
+    <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">إعدادات أندرويد الأمنة</string>
+    <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">إعدادات نظام أندرويد</string>
+    <string name="devtools__android_locales__title" comment="Title of Android locales screen">لغات النظام</string>
     <!-- Extension strings -->
     <string name="ext__meta__authors">المؤلفون</string>
     <string name="ext__meta__description">التفاصيل</string>

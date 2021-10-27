@@ -72,6 +72,7 @@
     <string name="settings__localization__subtype_phone2_layout" comment="Label for layout dropdown in subtype dialog">Telefon ikincil dizilimi</string>
     <string name="settings__localization__subtype_error_already_exists" comment="Error message shown in subtype dialog when a subtype to add already exists">Bu dil/dizilim zaten var!</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">%s (yüklü değil)</string>
+    <string name="settings__theme__title" comment="Title of the Theme screen">Tema</string>
     <string name="settings__theme__undefined" comment="General string for an undefined preference value">Tanımlanmamış</string>
     <string name="pref__theme__mode__label" comment="Label of the theme mode preference">Tema modu</string>
     <string name="pref__theme__sunrise_time__label" comment="Label of the sunrise time preference">Gündoğumu saati</string>
@@ -277,22 +278,37 @@
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Sistem kısıtlamaları dolayısıyla Android 10 ve üstünde her zaman etkin</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Gizli modu zorla</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Yazma verilerinizle geçici olarak çalışması gereken tüm özellikleri kapatacaktır</string>
-    <string name="devtools__title" comment="Title of Devtools settings">Geliştirici araçları</string>
-    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Geliştirici araçlarını etkinleştir</string>
-    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Hata ayıklama ve sorun giderme için özel tasarlanmış araçlar</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Küme bellek istatistiklerini göster</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Küme bellek kullanımını ve en fazla boyutunu sağ üst köşede gösterir</string>
-    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Dahili kullanıcı sözlüğü veritabanını temizle</string>
-    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Sözlük veritabanı tablosundaki tüm sözcükleri temizler</string>
-    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Advanced">\"{flag_name}\" işaretini sıfırla</string>
-    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Advanced">Kurulum ekranını yeniden göstermek için hata ayıklama eylemi</string>
     <!-- Spelling UI strings -->
+    <string name="settings__spelling__title" comment="Title of the Spelling screen">Yazım denetleyicisi</string>
+    <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Klavye yazım denetleyicisi ayarlarını kullan</string>
+    <string name="pref__spelling__active_spellchecker__label">Satır içi metin alanı yazım denetimi</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Sistem genelinde devre dışı bırakıldı. Yanlış kelimeler için metin alanlarında kırmızı çizgiler görünmeyecektir. Değiştirmek için dokunun.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Satır içi metin yazım denetimi hizmeti ayarlanmadı. Değiştirmek için dokunun.</string>
+    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Sistem yazım denetimi ekranındaki \"Diller\" seçeneği \"Sistem dillerini kullan\" olarak ayarlanmıştır. Bir hata nedeniyle bu, {app_name} öğesinin satır içi yazım denetimi yapmamasına neden olabilir. \"{use_floris_config}\" olarak değiştirmeyi düşünün.</string>
+    <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Ayarlar</string>
+    <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Diller</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[HENÜZ UYGULANMAMIŞ] Rehberdeki isimleri kullan</string>
     <string name="pref__spelling__use_contacts__summary" comment="Summary of Use contact list pref">Yazım denetleyici rehberinizdeki isimlere bakacak</string>
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Kullanıcı sözlüğünü kullan</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">Eğer aktifse, yazım denetleyici kullanıcı sözlüğünüzdeki girdilere bakacak</string>
+    <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Sözlükleri yönet</string>
+    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} yüklendi</string>
+    <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Hiç bir yazım denetleme sözlüğü yüklü değil. Aşağıdaki \'+\' tuşunu kullanarak ilkini ekleyin!</string>
     <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Uzantı / Arşiv</string>
     <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Ekler + Sözlük dosyası</string>
+    <string name="settings__spelling__import__title" comment="Title for the import screen">Yeni sözlük içe aktar</string>
+    <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Kaynağı seçin</string>
+    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">Üçüncü taraf uzantısını indirdiğiniz kaynağı seçin. Bu, FlorisBoard olmayan uzantı biçiminin doğru bir şekilde ayrıştırılmasına ve onu bir FlorisBoard biçimine dönüştürülmesine yardımcı olur.</string>
+    <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Arşiv içe aktar</string>
+    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">Şimdi dosya yöneticisinde dosyayı seçerek arşivi içe aktarın.</string>
+    <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Dil Seçin</string>
+    <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Dil kodu (Örn. tr_TR)</string>
+    <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">Sözlük dosyasını içeri aktar</string>
+    <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">Ekler dosyasını seçin (.aff)</string>
+    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Sözlük dosyasını seçin (.dic)</string>
+    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">İçe aktarmayı onayla</string>
+    <string name="settings__spelling__import_any_s3__p1" comment="Paragraph for the import any screen (step 2)">Aşağıdaki meta verilerin doğru olduğunu doğrulayın. Bir şey yanlışsa, bir önceki adıma geri dönebilir ve kaynağı yeniden seçebilir / arşivi yeniden içe aktarabilirsiniz.</string>
+    <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">Sözlükleri nereden edinebilirim?</string>
     <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info screen">FlorisBoard yazım denetimi motoru olarak Nuspell\'i kullanır. Bu bir çok program tarafından da kullanıldığı için halihazırda oldukça fazla sözlük bulunduğu anlamına gelir. Aşağıdaki liste, içe aktarma yöneticisi tarafından desteklenen elle seçilmiş bazı kaynakları gösterir. İster sözlük, ister arşiv dosyalarını indirin, içe aktarma yöneticisinde doğru kaynağı seçtiğinize emin olun (bu dosyaların doğru şekilde okunması için önemlidir).</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">Eğer bu liste dilinize veya lehçenize ait sözlüğü içermiyorsa; kendiniz Hunspell sözlük dosyalarını arayabilir, \'aff\' ve \'dic\' dosyalarını içe aktarabilirsiniz.</string>
     <!-- About UI strings -->
@@ -329,6 +345,7 @@
     <string name="assets__action__cancel">İptal</string>
     <string name="assets__action__cancel_confirm_title">İptali onayla</string>
     <string name="assets__action__cancel_confirm_message">Kaydedilmemiş değişiklikleri iptal etmek istediğine emin misin? Bu işlem geri alınamaz.</string>
+    <string name="assets__action__default">Varsayılan</string>
     <string name="assets__action__delete">Sil</string>
     <string name="assets__action__delete_confirm_title">Silmeyi onayla</string>
     <string name="assets__action__delete_confirm_message">\"{database_name}\"’yi silmek istediğinize emin misiniz? Bu işlem yapıldıktan sonra geri alınamaz.</string>
@@ -336,6 +353,7 @@
     <string name="assets__action__export">Dışa aktar</string>
     <string name="assets__action__import">İçe aktar</string>
     <string name="assets__action__no">Hayır</string>
+    <string name="assets__action__ok">Tamam</string>
     <string name="assets__action__save">Kaydet</string>
     <string name="assets__action__select">Seç</string>
     <string name="assets__action__select_dir">Dizini seçin</string>
@@ -396,8 +414,21 @@
     <string name="pref__clipboard__clean_up_after__label">Eski öğeleri temizleme süresi</string>
     <string name="pref__clipboard__limit_history_size__label">Geçmiş boyutunu sınırla</string>
     <string name="pref__clipboard__max_history_size__label">En fazla geçmiş boyutu</string>
+    <!-- Devtools strings -->
     <!-- Extension strings -->
+    <string name="ext__meta__authors">Oluşturanlar</string>
+    <string name="ext__meta__description">Açıklama</string>
+    <string name="ext__meta__homepage">Ana Sayfa</string>
+    <string name="ext__meta__id">Kimlik</string>
+    <string name="ext__meta__issue_tracker">Sorun izleyici</string>
+    <string name="ext__meta__keywords">Anahtar Kelimeler</string>
+    <string name="ext__meta__license">Lisans</string>
+    <string name="ext__meta__title">Başlık</string>
+    <string name="ext__meta__version">Sürüm</string>
+    <string name="ext__error__not_found_title">Eklenti bulunamadı</string>
+    <string name="ext__error__not_found_description">\"{id}\" kimlikli uzantı bulunamadı.</string>
     <!-- General strings -->
+    <string name="general__no_browser_app_found_for_url">{url} adresini açmak için tarayıcı uygulaması bulunamadı</string>
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Dikey</string>
     <string name="screen_orientation__landscape">Yatay</string>
@@ -419,6 +450,8 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Kapalı</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">Sağ el modu</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">Sol el modu</string>
+    <string name="enum__spelling_language_mode__use_system_languages" comment="Enum value label">Sistem dillerini kullan</string>
+    <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Klavye alt türlerini kullan</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Eylem yok</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Önceki klavye moduna geç</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Sonraki klavye moduna geç</string>
@@ -443,6 +476,10 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Önceki klavyeye geç</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Önceki alt tipe geç</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Sonraki alt tipe geç</string>
+    <string name="enum__theme_mode__always_day" comment="Enum value label">Her zaman gündüz</string>
+    <string name="enum__theme_mode__always_night" comment="Enum value label">Her zaman gece</string>
+    <string name="enum__theme_mode__follow_system" comment="Enum value label">Sistem ile aynı</string>
+    <string name="enum__theme_mode__follow_time" comment="Enum value label">Saate göre</string>
     <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Emojileri göster</string>
     <string name="enum__utility_key_action__switch_language" comment="Enum value label">Dili değiştir</string>
     <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Klavye uygulamasını değiştir</string>

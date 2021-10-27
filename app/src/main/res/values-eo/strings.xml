@@ -118,6 +118,7 @@
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Fermi</string>
     <!-- Clipboard strings -->
+    <!-- Devtools strings -->
     <!-- Extension strings -->
     <!-- General strings -->
     <!-- Screen orientation strings -->

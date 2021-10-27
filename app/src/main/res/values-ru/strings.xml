@@ -113,7 +113,7 @@
     <string name="settings__theme_editor__value_type_other_text" comment="Theme value type sub-field">Текст</string>
     <string name="settings__theme_editor__value_preview_content_description" comment="Theme value preview content description">Предварительный просмотр темы</string>
     <string name="settings__theme_editor__error_theme_label_empty" comment="Error text for an empty theme label">Пожалуйста, введите название темы</string>
-    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Пожалуйста, введите название группы, которое содержит только латинские буквы (a–z и/или A–Z), двоеточие (:) для подгруппы или дополнительные цифры (0–9), тильду (~) и подчёркивание (_) для метки.</string>
+    <string name="settings__theme_editor__error_group_name" comment="Error text for an invalid group name">Пожалуйста, введите название группы, которое содержит только латинские буквы (a–z и/или A–Z), двоеточие (:) для подгруппы или дополнительные цифры (0–9), тильду (~) и подчеркивание (_) для метки.</string>
     <string name="settings__theme_editor__error_group_name_empty" comment="Error text for an empty group name">Пожалуйста, введите название группы.</string>
     <string name="settings__theme_editor__error_group_name_already_exists" comment="Error text for a duplicate group name">Это название группы уже присутствует в этой теме. Пожалуйста, выберите другое.</string>
     <string name="settings__theme_editor__error_attr_name" comment="Error text for an invalid attribute name">Пожалуйста, введите имя атрибута, которое содержит только латинские символы a-z и/или A-Z.</string>
@@ -144,7 +144,7 @@
     <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Основной цвет (тёмный)</string>
     <string name="settings__theme__attr_colorAccent" comment="Theme attribute label">Цветовой акцент</string>
     <string name="settings__theme__attr_navBarColor" comment="Theme attribute label">Цвет панели навигации</string>
-    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Панель навигации тёмного переднего плана</string>
+    <string name="settings__theme__attr_navBarLight" comment="Theme attribute label">Панель навигации темного переднего плана</string>
     <string name="settings__theme__attr_semiTransparentColor" comment="Theme attribute label">Полупрозрачный цвет</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Цвет текста</string>
     <string name="settings__theme__attr_custom" comment="Theme attribute label (%s is custom attribute name)">Пользовательский атрибут (%s)</string>
@@ -153,7 +153,7 @@
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Использовать аудиоотклик</string>
     <string name="pref__input_feedback__audio_enabled__summary" comment="Preference summary">Воспроизводить звуки при вводе в зависимости от системных настроек</string>
     <string name="pref__input_feedback__audio_ignore_system_settings__label" comment="Preference title">Игнорировать системные настройки аудиоотклика</string>
-    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Использовать нижеприведённые настройки, даже если звук в системе отключён. Не используются, когда отключён системный рингтон.</string>
+    <string name="pref__input_feedback__audio_ignore_system_settings__summary" comment="Preference summary">Использовать нижеприведенные настройки, даже если звук в системе отключен. Не используются, когда отключен системный рингтон</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Громкость звука при вводе</string>
     <string name="pref__input_feedback__audio_feat_key_press__label" comment="Preference title">Звук нажатия кнопки</string>
     <string name="pref__input_feedback__audio_feat_key_long_press__label" comment="Preference title">Звук долгого нажатия кнопки</string>
@@ -164,7 +164,7 @@
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Использовать виброотклик</string>
     <string name="pref__input_feedback__haptic_enabled__summary" comment="Preference summary">Вибрирация при вводе в зависимости от системных настроек</string>
     <string name="pref__input_feedback__haptic_ignore_system_settings__label" comment="Preference title">Игнорировать системные настройки виброотклика</string>
-    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Использовать нижеприведённые настройки, даже если в системе виброотклик отключён</string>
+    <string name="pref__input_feedback__haptic_ignore_system_settings__summary" comment="Preference summary">Использовать нижеприведенные настройки, даже если в системе виброотклик отключен</string>
     <string name="pref__input_feedback__haptic_use_vibrator__label" comment="Preference title">Использовать вибрацию напрямую</string>
     <string name="pref__input_feedback__haptic_use_vibrator__summary" comment="Preference summary">Использовать функцию вибрации напрямую вместо использования набора функций виброотклика Android</string>
     <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Продолжительность вибрации</string>
@@ -212,11 +212,11 @@
     <string name="pref__dictionary__title" comment="Preference group title">Словарь</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Использовать системный словарь пользователя</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Предлагать слова, находящиеся в системном словаре пользователя</string>
-    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Управление системным словарём пользователя</string>
+    <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Управление системным словарем пользователя</string>
     <string name="pref__dictionary__manage_system_user_dictionary__summary" comment="Preference summary">Добавление, просмотр и удаление записей в системном пользовательском словаре</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Использовать внутренний словарь пользователя</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Предлагать слова, находящиеся во внутреннем словаре пользователя</string>
-    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Управление внутренним словарём пользователя</string>
+    <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Управление внутренним словарем пользователя</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Добавление, просмотр и удаление записей во внутреннем пользовательском словаре</string>
     <string name="pref__correction__title" comment="Preference group title">Исправления</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Заглавные автоматически</string>
@@ -271,26 +271,20 @@
     <string name="settings__advanced__title" comment="Title of Advanced settings">Дополнительные</string>
     <string name="pref__advanced__settings_theme__label" comment="Label of Settings theme preference in Advanced">Настройки темы</string>
     <string name="pref__advanced__settings_theme__light" comment="Possible value of Settings theme preference in Advanced">Светлая</string>
-    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Тёмная</string>
-    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Тёмная AMOLED</string>
+    <string name="pref__advanced__settings_theme__dark" comment="Possible value of Settings theme preference in Advanced">Темная</string>
+    <string name="pref__advanced__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Advanced">Темная AMOLED</string>
     <string name="pref__advanced__settings_language__label" comment="Label of Settings language preference in Advanced">Настройки языка</string>
     <string name="pref__advanced__show_app_icon__label" comment="Label of Show app icon preference in Advanced">Показывать значок приложения на рабочем столе</string>
     <string name="pref__advanced__show_app_icon__summary_atleast_q" comment="Summary of Show app icon preference in Advanced for Android 10+">Всегда включено на Android 10+ из-за системных ограничений</string>
     <string name="pref__advanced__force_private_mode__label" comment="Label of Force private mode preference in Advanced">Принудительный приватный режим</string>
     <string name="pref__advanced__force_private_mode__summary" comment="Summary of Force private mode preference in Advanced">Отключит все функции, которые должны временно работать с вашими входными данными.</string>
-    <string name="devtools__title" comment="Title of Devtools settings">Инструменты разработчика</string>
-    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Advanced">Включить инструменты разработчика</string>
-    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Advanced">Инструменты, специально разработанные для отладки и устранения ошибок</string>
-    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Advanced">Показывать статистику выделения памяти</string>
-    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Advanced">Показывать значения используемой выделенной памяти и максимальный использованный объём в правом верхнем углу</string>
-    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Advanced">Очистить внутренний словарь пользователя</string>
-    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Advanced">Удаление всех слов из базы внутреннего пользовательского словаря</string>
-    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Advanced">Сбросить флаг \"{flag_name}\"</string>
-    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Advanced">Действие отладки для повторного отображения экрана настройки</string>
-    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Advanced">Тест отчёта об ошибке</string>
     <!-- Spelling UI strings -->
     <string name="settings__spelling__title" comment="Title of the Spelling screen">Проверка правописания</string>
     <string name="settings__spelling__use_floris_config" comment="String used for the stub subtype in the system spell checker UI">Использовать настройки проверки правописания</string>
+    <string name="pref__spelling__active_spellchecker__label">Проверка орфографии в текстовых полях</string>
+    <string name="pref__spelling__active_spellchecker__summary_disabled">Отключено для всей системы. В случае написания слов неправильно в текстовых полях не появятся красные подчёркивания. Нажмите, чтобы изменить.</string>
+    <string name="pref__spelling__active_spellchecker__summary_none">Не настроена служба проверки орфографии текстовых полей. Нажмите, чтобы изменить.</string>
+    <string name="pref__spelling__active_spellchecker__summary_use_sys_lang_set">Параметр \"Языки\" на экране настройки проверки орфографии установлен на \"Использовать системные языки\". Из-за ошибки это может привести к тому, что {app_name} не будет выполнять проверку орфографии в текстовых полях. Попробуйте изменить значение параметра на \"{use_floris_config}\".</string>
     <string name="pref__spelling__group_spellchecker_config__title" comment="Title of Fine-adjustment sub-group">Параметры</string>
     <string name="pref__spelling__language_mode__label" comment="Label of Language mode pref">Язык</string>
     <string name="pref__spelling__use_contacts__label" comment="Label of Use contact list pref">[NOT IMPLEMENTED] Использовать имена контактов</string>
@@ -304,7 +298,9 @@
     <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Файл словаря + affix</string>
     <string name="settings__spelling__import__title" comment="Title for the import screen">Импортировать новый словарь</string>
     <string name="settings__spelling__import_archive_s1__title" comment="Title for the import archive screen (step 1)">Выбрать источник</string>
+    <string name="settings__spelling__import_archive_s1__p1" comment="Paragraph for the import archive screen (step 1)">Укажите источник, из которого вы скачали стороннее расширение. Это поможет правильно определить формат стороннего расширения и преобразовать его в формат FlorisBoard.</string>
     <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Импорт архива</string>
+    <string name="settings__spelling__import_archive_s2__p1" comment="Paragraph for the import archive screen (step 2)">Теперь импортируйте архив, выбрав файл в диалоговом окне выбора файлов.</string>
     <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Выберите язык</string>
     <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Код языка (например, en_US)</string>
     <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">Импорт файлов affix и файлов словаря</string>
@@ -334,6 +330,7 @@
     <string name="about__project_license__title" comment="Preference title">Лицензия проекта</string>
     <string name="about__project_license__summary" comment="Preference summary">FlorisBoard выпускается под лицензией {license_name}</string>
     <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Ошибка: невозможно загрузить текст лицензии.\nПричина: {error_message}</string>
+    <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Ссылка на диспетчер активов не определена</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Лицензии третьих сторон</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Лицензии сторонних библиотек, используемых в данном приложении</string>
     <!-- Assets strings -->
@@ -349,7 +346,7 @@
     <string name="assets__action__apply">Применить</string>
     <string name="assets__action__cancel">Отмена</string>
     <string name="assets__action__cancel_confirm_title">Подтвердите отмену</string>
-    <string name="assets__action__cancel_confirm_message">Отменить любые несохранённые изменения? Это действие нельзя отменить после выполнения.</string>
+    <string name="assets__action__cancel_confirm_message">Вы уверены, что хотите отменить любые несохраненные изменения? Это действие нельзя отменить после выполнения.</string>
     <string name="assets__action__default">По умолчанию</string>
     <string name="assets__action__delete">Удалить</string>
     <string name="assets__action__delete_confirm_title">Подтвердите удаление</string>
@@ -369,11 +366,11 @@
     <string name="assets__error__snackbar_message">Что-то пошло не так</string>
     <!-- Setup UI strings -->
     <string name="setup__title" comment="Title of Setup">Добро пожаловать!</string>
-    <string name="setup__intro_message" comment="Short intro message welcoming new users">Спасибо за выбор {app_name}! Это небольшое руководство проведёт вас через необходимые шаги для использования {app_name} на вашем устройстве.</string>
+    <string name="setup__intro_message" comment="Short intro message welcoming new users">Спасибо за выбор {app_name}! Это небольшое руководство проведет вас через необходимые шаги для использования {app_name} на вашем устройстве.</string>
     <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Политика конфиденциальности</string>
     <string name="setup__footer__repository" comment="Repository label for URL">Репозиторий</string>
     <string name="setup__enable_ime__title">Включить {app_name}</string>
-    <string name="setup__enable_ime__description">Android требует, чтобы каждая пользовательская клавиатура была включена отдельно, прежде чем вы сможете её использовать. Откройте системные <i>Настройки языка и ввода</i> и там включите \"{app_name}\".</string>
+    <string name="setup__enable_ime__description">Android требует, чтобы каждая пользовательская клавиатура была включена отдельно, прежде чем вы сможете ее использовать. Откройте системные <i>Настройки языка и ввода</i> и там включите \"{app_name}\".</string>
     <string name="setup__enable_ime__open_settings_btn">Открыть системные настройки</string>
     <string name="setup__select_ime__title">Выбрать {app_name}</string>
     <string name="setup__select_ime__description">Теперь приложение {app_name} включено. Чтобы им пользоваться, переключитесь на {app_name}, выбрав в диалоговом окне указания способа ввода.</string>
@@ -384,17 +381,17 @@
     <string name="setup__finish_up__finish_btn">Начните настройку!</string>
     <!-- Crash Dialog strings -->
     <string name="crash_dialog__title" comment="Title of crash dialog">Сообщение об ошибке FlorisBoard</string>
-    <string name="crash_dialog__description" comment="Description of crash dialog">Извините за неудобства, но в FlorisBoard произошёл сбой из-за непредвиденной ошибки.</string>
+    <string name="crash_dialog__description" comment="Description of crash dialog">Извините за неудобства, но в FlorisBoard произошел сбой из-за непредвиденной ошибки.</string>
     <string name="crash_dialog__report_instructions" comment="Issue tracker report instructions for the crash dialog. The %s placeholder is the name of the crash report template and always in English/LTR.">Если хотите сообщить об этой ошибке, сначала проверьте трекер проблем на GitHub, не сообщалось ли уже о вашем сбое.\nЕсли нет, скопируйте сгенерированный журнал ошибки и откройте новую проблему. Используйте шаблон \"%s\" и заполните описание, шаги для воспроизведения ошибки и вставьте сгенерированный журнал в конце. Это поможет сделать FlorisBoard лучше и стабильнее для всех. Спасибо!</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Копировать в системный буфер обмена</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Скопировано в системный буфер обмена</string>
     <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Невозможно скопировать в системный буфер обмена: компонент менеджера буфера обмена не найден</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Открыть трекер проблем (GitHub)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Закрыть</string>
-    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Отчёты об ошибках FlorisBoard</string>
+    <string name="crash_notification_channel__title" comment="Title of crash notification channel">Отчеты об ошибках FlorisBoard</string>
     <string name="crash_once_notification__title" comment="Title of the notification for a single crash">FlorisBoard перестал работать…</string>
     <string name="crash_once_notification__body" comment="Body of the notification for a single crash">Нажмите, чтобы увидеть детали об ошибке</string>
-    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Кажется, FlorisBoard постоянно перестаёт работать…</string>
+    <string name="crash_multiple_notification__title" comment="Title of the notification for consecutive crashes">Кажется, в работе FlorisBoard постоянно возникают проблемы…</string>
     <string name="crash_multiple_notification__body" comment="Body of the notification for consecutive crashes">Возвращение к предыдущей клавиатуре, чтобы остановить бесконечный цикл сбоя. Нажмите, чтобы просмотреть детали об ошибке.</string>
     <!-- Clipboard strings -->
     <string name="clip__context_header">История буфера обмена</string>
@@ -419,6 +416,7 @@
     <string name="pref__clipboard__clean_up_after__label">Очистить старые элементы через</string>
     <string name="pref__clipboard__limit_history_size__label">Ограничить размер истории</string>
     <string name="pref__clipboard__max_history_size__label">Максимальный размер истории</string>
+    <!-- Devtools strings -->
     <!-- Extension strings -->
     <string name="ext__meta__authors">Авторы</string>
     <string name="ext__meta__description">Описание</string>
@@ -443,8 +441,11 @@
     <string name="state__enabled">Включено</string>
     <!-- Enum label and description strings -->
     <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Приоритет акценту</string>
+    <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">Начальный символ, выбираемый долгим нажатием, всегда является основным акцентом или символом подсказки, если основной акцент недоступен</string>
     <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Приоритет подсказке</string>
+    <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">Начальный символ, выбираемый долгим нажатием, всегда является символом подсказки или основным акцентом, если символ подсказки недоступен</string>
     <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Умный приоритет</string>
+    <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">Начальный символ, выбираемый долгим нажатием, динамически определяется как основной акцент или символ подсказки, основываясь на текущем языке и раскладке</string>
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Не показывать</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Всегда показывать</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Динамическое отображение</string>
@@ -478,11 +479,37 @@
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Переключиться на предыдущую раскладку</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Переключиться на следующую раскладку</string>
     <string name="enum__theme_mode__always_day" comment="Enum value label">Всегда светлая</string>
-    <string name="enum__theme_mode__always_night" comment="Enum value label">Всегда тёмная</string>
+    <string name="enum__theme_mode__always_night" comment="Enum value label">Всегда темная</string>
+    <string name="enum__theme_mode__follow_system" comment="Enum value label">Следовать системе</string>
+    <string name="enum__theme_mode__follow_time" comment="Enum value label">Следовать времени</string>
     <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Переключиться на эмодзи</string>
     <string name="enum__utility_key_action__switch_language" comment="Enum value label">Переключить язык</string>
     <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Переключить приложение клавиатуры</string>
     <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Динамическое: переключиться на эмодзи / переключить язык</string>
     <!-- Unit strings (symbols) -->
     <!-- Unit strings (written words) -->
+    <plurals name="unit__hours__written">
+        <item quantity="one">{v} час</item>
+        <item quantity="few">{v} часа</item>
+        <item quantity="many">{v} часов</item>
+        <item quantity="other">{v} часов</item>
+    </plurals>
+    <plurals name="unit__minutes__written">
+        <item quantity="one">{v} минута</item>
+        <item quantity="few">{v} минуты</item>
+        <item quantity="many">{v} минут</item>
+        <item quantity="other">{v} минут</item>
+    </plurals>
+    <plurals name="unit__seconds__written">
+        <item quantity="one">{v} секунда</item>
+        <item quantity="few">{v} секунды</item>
+        <item quantity="many">{v} секунд</item>
+        <item quantity="other">{v} секунд</item>
+    </plurals>
+    <plurals name="unit__items__written">
+        <item quantity="one">{v} элемент</item>
+        <item quantity="few">{v} элемента</item>
+        <item quantity="many">{v} элементов</item>
+        <item quantity="other">{v} элементов</item>
+    </plurals>
 </resources>
