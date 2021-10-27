@@ -1,0 +1,27 @@
+name: Crowdin Upload Sources
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - "app/src/main/res/values/strings.xml"
+      - ".github/workflows/crowdin-upload.yml"
+
+jobs:
+  upload-to-crowdin:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Upload
+        uses: crowdin/github-action@1.4.0
+        with:
+          config: "crowdin.yml"
+          upload_sources: true
+          upload_translations: false
+          download_translations: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FSEC_CROWDIN_PROJECT_ID: ${{ secrets.FSEC_CROWDIN_PROJECT_ID }}
+          FSEC_CROWDIN_PERSONAL_TOKEN: ${{ secrets.FSEC_CROWDIN_PERSONAL_TOKEN }}
