@@ -1,0 +1,4 @@
+This release fixes crashes for Android 7.1 and lower and some additional crashes in the spelling UI.
+Furthermore, some bug fixes are included and internally the work for a new theme engine has begun.
+
+Detailed changelog: https://github.com/florisboard/florisboard/releases/tag/v0.3.14-beta05
