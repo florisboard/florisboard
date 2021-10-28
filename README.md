@@ -64,6 +64,8 @@ Beginning with v0.4.0 FlorisBoard will follow [SemVer](https://semver.org/#summa
 - Integrated clipboard manager / history
 - Emoji keyboard (although lacking some features)
 
+Feature roadmap: See [ROADMAP.md](ROADMAP.md)
+
 ## Contributing
 Wanna contribute to FlorisBoard? That's great to hear! There are lots of
 different ways to help out. Bug reporting, making pull requests,

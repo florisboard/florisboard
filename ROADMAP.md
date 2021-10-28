@@ -16,14 +16,14 @@ patch number is a feature upgrade. As this naming convention is more confusing
 than useful, after the v0.4.0 release a new release/development cycle will be
 introduced.
 
-### 0.3.13 (currently in development and soon done)
+### 0.3.13 (done)
 - Spell checking (mainly completed and relatively well working, Smartbar integration still missing)
 - Performance improvements in keyboard rendering
 - Audio/haptic feedback rework
 - Lots and lots of bug fixing in all areas, really fix some annoying bugs
 - New layouts added by contributors
 
-### 0.3.14
+### 0.3.14 (currently in progress)
 - Re-write of the Preference core
   - Reduce redundancy in key/default value definitions
   - Avoid having to manually add redundant code for adding a new pref
@@ -39,27 +39,31 @@ introduced.
 - Implement base-UI for extensions and further continue development
   of existing Flex (FlorisBoard extension) format
   - Allows for a continuous experience of customizing FlorisBoard in different areas
-  - Planned in the future (not in this version though) what will use Flex:
+  - Planned what will use Flex:
     - Themes
     - Layouts (Characters, symbols, numeric, ...)
     - Composers for non-Latin script languages
-    - Word suggestion dictionaries
+    - Word suggestion dictionaries (not in 0.3.14)
     - Spell check dictionaries
-    - User dictionaries
-    - Other features that require only data and no logic
+    - User dictionaries (not in 0.3.14)
+    - Other features that require only data and no logic (not in 0.3.14)
 - Maybe full backup of preferences? Not 100% confirmed though and may be pushed back
+- Theme rework part I:
+    - Custom key corner radius
+    - Custom key border color (not shadow!!)
+    - Re-work theme internals so they use Flex extension format and FlexCSS
+    - Community repository on GitHub for theme sharing across users (when Theme Flex format is ready)
+- Improvement of the Smartbar
+  - Allow to have multiple Smartbars
+  - Better candidate view (in prep for 0.3.15/0.3.16)
 
-### 0.3.15
+### 0.3.15/16/17
+- Note that 0.3.15 may be a hotfix release for the preference rework and will not contain the
+  planned new word predictions
 - Re-adding word suggestions (at least for Latin-based languages at first)
   - Importing the dictionaries as well as management relies on the Flex extension core and UI in Kotlin
   - Actually parsing and generating suggestions happens in C++ to avoid another OOM catastrophe like in 0.3.9/10
   - The actual format of the dictionary and word list source is not decided yet
-- Improvement of the candidate view in Smartbar (for word suggestions)
-- Theme rework part I:
-  - Custom key corner radius
-  - Custom key border color (not shadow!!)
-  - Re-work theme internals so they use Flex format
-  - Community repository on GitHub for theme sharing across users (when Theme Flex format is ready)
 
 ### 0.4.0
 - Prepare FlorisBoard repository and app store presence for public beta release
