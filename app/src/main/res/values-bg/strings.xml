@@ -287,6 +287,7 @@
     <string name="pref__spelling__use_udm_entries__label" comment="Label of Use user dictionary entries pref">Потребителски речнци</string>
     <string name="pref__spelling__use_udm_entries__summary" comment="Summary of Use user dictionary entries pref">При проверка на правописа се използват и потребителските речници, ако са включени</string>
     <string name="settings__spelling__manage_dicts__title" comment="Title for the manage dictionaries screen">Управление на речници</string>
+    <string name="settings__spelling__manage_dicts__n_installed" comment="Summary for the manage dictionaries pref">{n} добавен</string>
     <string name="settings__spelling__manage_dicts__no_dicts_installed" comment="String for the No dictionaries installed card.">Липсват речници за проверка на правописа. Добавете, чрез докосване на бутона „+“</string>
     <string name="settings__spelling__fab_extension_archive" comment="FAB option Extension archive.">Разширение или архив</string>
     <string name="settings__spelling__fab_affix_dictionary" comment="FAB option Affix dictionary.">Файлове на речник и афикси</string>
@@ -295,7 +296,11 @@
     <string name="settings__spelling__import_archive_s2__title" comment="Title for the import archive screen (step 2)">Внасяне на архив</string>
     <string name="settings__spelling__import_aff_dic_s1__title" comment="Title for the import aff/dic screen (step 1)">Избиране на език</string>
     <string name="settings__spelling__import_aff_dic_s1__hint" comment="Hint for the import aff/dic screen (step 1)">Код на език (напр. bg)</string>
+    <string name="settings__spelling__import_aff_dic_s2__title" comment="Title for the import aff/dic screen (step 2)">Внасяне на афикси/речници</string>
     <string name="settings__spelling__import_aff_dic_s2__select_aff" comment="Label for the import aff/dic screen (step 2)">Изберете файл с афикси (.aff)</string>
+    <string name="settings__spelling__import_aff_dic_s2__select_dic" comment="Label for the import aff/dic screen (step 2)">Изберете файл на речника (.dic)</string>
+    <string name="settings__spelling__import_any_s3__title" comment="Title for the import any screen (step 3)">Проверяване на внесеното</string>
+    <string name="settings__spelling__dict_sources_info__title" comment="Title for the Dictionary sources info">От къде да се снабдя с речници?</string>
     <string name="settings__spelling__dict_sources_info__intro" comment="Intro for the dict sources info screen">FlorisBoard използва Nuspell за проверка на правописа. Това означава, че съществуват огромно количество речници, защото Hunspell се използва и от други софтуерни продукти. Следният списък съдържа само ръчно подбрани източници, с възможност за внасяне. Изтеглете или архива, или файловете на речника, после в помощника за внасяне изберете правилните файлове (важно за правилното разпознаване на формата на архива).</string>
     <string name="settings__spelling__dict_sources_info__other" comment="Other text for the dict sources info screen">Ако в списъка липсва вашият език или диалект, потърсете речници на Hunspell и внесете файловете на „aff“ и „dic“.</string>
     <!-- About UI strings -->
@@ -332,6 +337,7 @@
     <string name="assets__action__cancel">Отказ</string>
     <string name="assets__action__cancel_confirm_title">Потвърждаване на отказ</string>
     <string name="assets__action__cancel_confirm_message">Наистина ли искате да отхвърлите всички незапазени промени? Това действие веднъж изпълнено не може да бъде отменено.</string>
+    <string name="assets__action__default">По подразбиране</string>
     <string name="assets__action__delete">Изтриване</string>
     <string name="assets__action__delete_confirm_title">Потвърждаване на изтриване</string>
     <string name="assets__action__delete_confirm_message">Наистина ли искате да изтриете „{database_name}“? Това действие веднъж изпълнено не може да бъде отменено.</string>
@@ -339,6 +345,7 @@
     <string name="assets__action__export">Изнасяне</string>
     <string name="assets__action__import">Внасяне</string>
     <string name="assets__action__no">Не</string>
+    <string name="assets__action__ok">Добре</string>
     <string name="assets__action__save">Запазване</string>
     <string name="assets__action__select">Изберете</string>
     <string name="assets__action__select_dir">Избиране на папка</string>
@@ -400,7 +407,30 @@
     <string name="pref__clipboard__limit_history_size__label">Ограничаване на броя</string>
     <string name="pref__clipboard__max_history_size__label">Максимален брой елементи</string>
     <!-- Devtools strings -->
+    <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Развойни инструменти</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Развойни инструменти</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Използват се за отстраняване на дефекти</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Статистика за динамичната памет</string>
+    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Показва се информация за динамичната памет в горния десен ъгъл</string>
+    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Изтриване на данните от речника към приложението</string>
+    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Премахват се всички думи от таблицата с речника</string>
+    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Нулиране на „{flag_name}“</string>
+    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">За отстраняване на дефекти в първоначалния екран</string>
+    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Изпробване на доклада на грешка</string>
+    <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">За нарочно създаване на срив</string>
+    <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Системни инструменти на Android</string>
+    <string name="devtools__android_locales__title" comment="Title of Android locales screen">Езици на системата</string>
     <!-- Extension strings -->
+    <string name="ext__meta__authors">Автори</string>
+    <string name="ext__meta__description">Описание</string>
+    <string name="ext__meta__homepage">Страница</string>
+    <string name="ext__meta__id">Идентификатор</string>
+    <string name="ext__meta__issue_tracker">Система за дефекти</string>
+    <string name="ext__meta__keywords">Ключови думи</string>
+    <string name="ext__meta__license">Лиценз</string>
+    <string name="ext__meta__title">Заглавие</string>
+    <string name="ext__meta__version">Издание</string>
+    <string name="ext__error__not_found_description">Няма разширение с идентификатор „{id}“.</string>
     <!-- General strings -->
     <!-- Screen orientation strings -->
     <string name="screen_orientation__portrait">Портрет</string>
@@ -423,6 +453,7 @@
     <string name="enum__one_handed_mode__off" comment="Enum value label">Изключено</string>
     <string name="enum__one_handed_mode__start" comment="Enum value label">За дясна ръка</string>
     <string name="enum__one_handed_mode__end" comment="Enum value label">За лява ръка</string>
+    <string name="enum__spelling_language_mode__use_keyboard_subtypes" comment="Enum value label">Използване на подвидове на клавиатурата</string>
     <string name="enum__swipe_action__no_action" comment="Enum value label">Без действие</string>
     <string name="enum__swipe_action__cycle_to_previous_keyboard_mode" comment="Enum value label">Предишен режим на клавиатура</string>
     <string name="enum__swipe_action__cycle_to_next_keyboard_mode" comment="Enum value label">Следващ режим на клавиатура</string>
@@ -447,6 +478,10 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Превключва се предишна клавиатура</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Превключва се предишен подвид</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Превключва се следващ подвид</string>
+    <string name="enum__theme_mode__always_day" comment="Enum value label">Винаги ден</string>
+    <string name="enum__theme_mode__always_night" comment="Enum value label">Винаги нощ</string>
+    <string name="enum__theme_mode__follow_system" comment="Enum value label">Според системата</string>
+    <string name="enum__theme_mode__follow_time" comment="Enum value label">Според часа</string>
     <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Превключва емоджи</string>
     <string name="enum__utility_key_action__switch_language" comment="Enum value label">Превключва езика</string>
     <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Избира приложение за клавиатура</string>

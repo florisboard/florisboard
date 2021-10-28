@@ -389,6 +389,22 @@
     <string name="pref__clipboard__limit_history_size__label">Ierobežot vēstures lielumu</string>
     <string name="pref__clipboard__max_history_size__label">Lielākais pieļaujamais vēstures lielums</string>
     <!-- Devtools strings -->
+    <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Izstrādātāju rīki</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Iespējot izstrādātāju rīkus</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Rīki, kas ir paredzēti atkļūdošanai un traucējummeklēšanai</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Rādīt grēdas atmiņas statistiku</string>
+    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Rāda grēdas atmiņas izmantojumu un lielāko iespējamo izmēru augšējā labajā stūrī</string>
+    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Iztīrīt iekšējās lietotāja vārdnīcas datubāzi</string>
+    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Tiek izņemti visi vārdi no vārdnīcas datubāzes tabulas</string>
+    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Atiestatīt iezīmi \"{flag_name}\"</string>
+    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Atkļūdošanas darbība uzstādīšanas ekrāna atkārtotai parādīšanai</string>
+    <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Pārbaudes avārijas ziņošanas skats</string>
+    <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">Atkļūdošanas darbība, lai apzināti izraisītu avāriju</string>
+    <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Android sistēmas rīki</string>
+    <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Vispārējie Android iestatījumi</string>
+    <string name="devtools__android_settings_secure__title" comment="Title of Android settings (secure) screen">Drošie Android iestatījumi</string>
+    <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Sistēmas Android iestatījumi</string>
+    <string name="devtools__android_locales__title" comment="Title of Android locales screen">Sistēmas lokalizācijas</string>
     <!-- Extension strings -->
     <!-- General strings -->
     <!-- Screen orientation strings -->

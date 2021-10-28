@@ -83,8 +83,10 @@
     <string name="settings__theme__group_media" comment="Theme group label">Mediekontekst</string>
     <string name="settings__theme__group_smartbar" comment="Theme group label">SmartBjælke</string>
     <string name="settings__theme__attr_background" comment="Theme attribute label">Baggrundsfarve</string>
+    <string name="settings__theme__attr_backgroundActive" comment="Theme attribute label">Baggrundsfarve (aktiv)</string>
     <string name="settings__theme__attr_foreground" comment="Theme attribute label">Forgrundsfarve</string>
     <string name="settings__theme__attr_foregroundAlt" comment="Theme attribute label">Forgrundsfarve (alternativ)</string>
+    <string name="settings__theme__attr_showBorder" comment="Theme attribute label">Vis kant</string>
     <string name="settings__theme__attr_colorPrimary" comment="Theme attribute label">Primær farve</string>
     <string name="settings__theme__attr_colorPrimaryDark" comment="Theme attribute label">Primær farve (mørk)</string>
     <string name="settings__theme__attr_textColor" comment="Theme attribute label">Tekstfarve</string>

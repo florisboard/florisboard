@@ -408,6 +408,18 @@
     <string name="pref__clipboard__limit_history_size__label">Taille limite de l\'historique</string>
     <string name="pref__clipboard__max_history_size__label">Taille maximale de l\'historique</string>
     <!-- Devtools strings -->
+    <string name="devtools__title" comment="Title of Devtools screen. Translators: treat this string as 'Developer tools' for translation, except a similar short term is available for your language.">Outils de développement</string>
+    <string name="devtools__enabled__label" comment="Label of Enable developer tools in Devtools">Activer les outils de développeur</string>
+    <string name="devtools__enabled__summary" comment="Summary of Enable developer tools in Devtools">Outils spécialement conçus pour le débogage et le dépannage</string>
+    <string name="devtools__show_heap_memory_stats__label" comment="Label of Show heap memory stats in Devtools">Afficher les statistiques de mémoire de tas</string>
+    <string name="devtools__show_heap_memory_stats__summary" comment="Summary of Show heap memory stats in Devtools">Afficher en superposé l\'utilisation de mémoire tas et sa taille maximale dans le coin haut droit</string>
+    <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Effacer la base de données du dictionnaire utilisateur interne</string>
+    <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Efface tous les mots de la table de la base de données du dictionnaire</string>
+    <string name="devtools__reset_flag__label" comment="Label of Reset flag preferences in Devtools">Réinitialisation du drapeau \"{flag_name}\"</string>
+    <string name="devtools__reset_flag_is_ime_set_up__summary" comment="Summary of Reset is IME set up flag in Devtools">Action de débogage pour réafficher l\'écran de configuration</string>
+    <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">Action de débogage pour produire intentionnellement un plantage</string>
+    <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Outils système Android</string>
+    <string name="devtools__android_settings_global__title" comment="Title of Android settings (global) screen">Paramètres Android globaux</string>
     <!-- Extension strings -->
     <!-- General strings -->
     <!-- Screen orientation strings -->
