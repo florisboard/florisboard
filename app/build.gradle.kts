@@ -73,7 +73,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.0-alpha06"
+        kotlinCompilerExtensionVersion = "1.1.0-beta01"
     }
 
     externalNativeBuild {
@@ -146,15 +146,15 @@ dependencies {
     implementation("androidx.activity:activity-ktx:1.3.1") // possibly remove after settings rework
     implementation("androidx.appcompat:appcompat:1.3.1") // possibly remove after settings rework
     implementation("androidx.autofill:autofill:1.1.0")
-    implementation("androidx.compose.material:material:1.1.0-alpha06")
-    implementation("androidx.compose.runtime:runtime-livedata:1.1.0-alpha06")
-    implementation("androidx.compose.ui:ui:1.1.0-alpha06")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.1.0-alpha06")
+    implementation("androidx.compose.material:material:1.1.0-beta01")
+    implementation("androidx.compose.runtime:runtime-livedata:1.1.0-beta01")
+    implementation("androidx.compose.ui:ui:1.1.0-beta01")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.1.0-beta01")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0") // possibly remove after settings rework
-    implementation("androidx.core:core-ktx:1.6.0")
+    implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.core:core-splashscreen:1.0.0-alpha02")
     implementation("androidx.fragment:fragment-ktx:1.3.6") // possibly remove after settings rework
-    implementation("androidx.navigation:navigation-compose:2.4.0-alpha10")
+    implementation("androidx.navigation:navigation-compose:2.4.0-beta01")
     implementation("androidx.preference:preference-ktx:1.1.1") // possibly remove after settings rework
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.18.0")
     implementation("com.google.android.flexbox:flexbox:3.0.0") // possibly remove after settings rework
