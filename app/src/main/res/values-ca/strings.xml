@@ -162,7 +162,7 @@
     <string name="pref__smartbar__enabled__label" comment="Preference title">Habilita la barra intel·ligent</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Es mostrarà a la part superior del teclat</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggeriments</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Diccionari</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Diccionari</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Habilita el diccionari d\'usuari del sistema</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Suggereix paraules emmagatzemades al diccionari d\'usuari del sistema</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Gestiona el diccionari d\'usuari del sistema</string>

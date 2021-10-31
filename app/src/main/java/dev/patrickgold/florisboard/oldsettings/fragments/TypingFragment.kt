@@ -58,14 +58,6 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
 
         updateSubtypeListView()
 
-        childFragmentManager
-            .beginTransaction()
-            .replace(
-                binding.prefsFrame.id,
-                TypingInnerFragment()
-            )
-            .commit()
-
         return binding.root
     }
 

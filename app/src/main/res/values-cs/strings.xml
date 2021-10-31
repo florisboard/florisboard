@@ -162,7 +162,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Zobrazí se v horní části klávesnice</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Zážitek z psaní</string>
     <string name="pref__suggestion__title" comment="Preference group title">Návrhy</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Slovník</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Slovník</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Použít vlastní systémový slovník</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Nabízet slova uložená ve vlastním systémovém slovníku</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Spravovat vlastní systémový slovník</string>

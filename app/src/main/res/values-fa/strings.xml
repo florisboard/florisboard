@@ -174,7 +174,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">بالای صفحه‌کلید نمایش داده خواهند شد</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">تجربه در تایپ کردن</string>
     <string name="pref__suggestion__title" comment="Preference group title">پیشنهادات</string>
-    <string name="pref__dictionary__title" comment="Preference group title">لغتنامه</string>
+    <string name="settings__dictionary__title" comment="Preference group title">لغتنامه</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">فعالسازی سیستم لغتنامه کاربر</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">پیشنهاد دادن کلمات ذخیره شده از سیستم لغتنامه کاربر</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">مدیریت سیستم لغتنامه کاربر</string>

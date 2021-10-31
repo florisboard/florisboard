@@ -33,7 +33,6 @@ class Preferences(
     else
         PreferenceManager.getDefaultSharedPreferences(context)
 
-    val dictionary = Dictionary(this)
     val localization = Localization(this)
 
 
@@ -95,25 +94,6 @@ class Preferences(
                     before accessing the default preferences.
                 """.trimIndent())
         }
-    }
-
-    /**
-     * Wrapper class for dictionary preferences.
-     */
-    class Dictionary(private val prefs: Preferences) {
-        companion object {
-            const val ENABLE_SYSTEM_USER_DICTIONARY =   "suggestion__enable_system_user_dictionary"
-            const val MANAGE_SYSTEM_USER_DICTIONARY =   "suggestion__manage_system_user_dictionary"
-            const val ENABLE_FLORIS_USER_DICTIONARY =   "suggestion__enable_floris_user_dictionary"
-            const val MANAGE_FLORIS_USER_DICTIONARY =   "suggestion__manage_floris_user_dictionary"
-        }
-
-        var enableSystemUserDictionary: Boolean
-            get() =  prefs.getPref(ENABLE_SYSTEM_USER_DICTIONARY, true)
-            set(v) = prefs.setPref(ENABLE_SYSTEM_USER_DICTIONARY, v)
-        var enableFlorisUserDictionary: Boolean
-            get() =  prefs.getPref(ENABLE_FLORIS_USER_DICTIONARY, true)
-            set(v) = prefs.setPref(ENABLE_FLORIS_USER_DICTIONARY, v)
     }
 
     /**

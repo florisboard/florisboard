@@ -125,6 +125,18 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
     }
 
+    val dictionary = Dictionary()
+    inner class Dictionary {
+        val enableSystemUserDictionary = boolean(
+            key = "suggestion__enable_system_user_dictionary",
+            default = true,
+        )
+        val enableFlorisUserDictionary = boolean(
+            key = "suggestion__enable_floris_user_dictionary",
+            default = true,
+        )
+    }
+
     val gestures = Gestures()
     inner class Gestures {
         val swipeUp = enum(

@@ -189,7 +189,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Word getoond boven het toetsenbord</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Typervaring</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggesties</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Woordenboek</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Woordenboek</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Activeer het persoonlijke woordenboek van het systeem</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Stel woorden voor uit het persoonlijke woordenboek van het systeem</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Beheer persoonlijke woordenboek van het systeem</string>

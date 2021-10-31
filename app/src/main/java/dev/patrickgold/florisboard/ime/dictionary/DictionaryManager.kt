@@ -18,9 +18,9 @@ package dev.patrickgold.florisboard.ime.dictionary
 
 import android.content.Context
 import androidx.room.Room
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.debug.flogError
-import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.nlp.SuggestionList
 import dev.patrickgold.florisboard.ime.nlp.Word
@@ -37,7 +37,7 @@ class DictionaryManager private constructor(
     private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
     private val applicationContext: WeakReference<Context> = WeakReference(context.applicationContext ?: context)
-    private val prefs get() = Preferences.default()
+    private val prefs by florisPreferenceModel()
 
     private val dictionaryCache: MutableMap<String, Dictionary> = mutableMapOf()
 
@@ -115,7 +115,7 @@ class DictionaryManager private constructor(
         if (florisDao == null && systemDao == null) {
             return
         }
-        if (prefs.dictionary.enableFlorisUserDictionary) {
+        if (prefs.dictionary.enableFlorisUserDictionary.get()) {
             florisDao?.query(word, locale)?.let {
                 for (entry in it) {
                     destSuggestionList.add(entry.word, entry.freq)
@@ -127,7 +127,7 @@ class DictionaryManager private constructor(
                 }
             }
         }
-        if (prefs.dictionary.enableSystemUserDictionary) {
+        if (prefs.dictionary.enableSystemUserDictionary.get()) {
             systemDao?.query(word, locale)?.let {
                 for (entry in it) {
                     destSuggestionList.add(entry.word, entry.freq)
@@ -148,11 +148,11 @@ class DictionaryManager private constructor(
             return false
         }
         var ret = false
-        if (prefs.dictionary.enableFlorisUserDictionary) {
+        if (prefs.dictionary.enableFlorisUserDictionary.get()) {
             ret = ret || florisDao?.queryExactFuzzyLocale(word, locale)?.isNotEmpty() ?: false
             ret = ret || florisDao?.queryShortcut(word, locale)?.isNotEmpty() ?: false
         }
-        if (prefs.dictionary.enableSystemUserDictionary) {
+        if (prefs.dictionary.enableSystemUserDictionary.get()) {
             ret = ret || systemDao?.queryExactFuzzyLocale(word, locale)?.isNotEmpty() ?: false
             ret = ret || systemDao?.queryShortcut(word, locale)?.isNotEmpty() ?: false
         }
@@ -161,7 +161,7 @@ class DictionaryManager private constructor(
 
     @Synchronized
     fun florisUserDictionaryDao(): UserDictionaryDao? {
-        return if (prefs.dictionary.enableFlorisUserDictionary) {
+        return if (prefs.dictionary.enableFlorisUserDictionary.get()) {
             florisUserDictionaryDatabase?.userDictionaryDao()
         } else {
             null
@@ -170,7 +170,7 @@ class DictionaryManager private constructor(
 
     @Synchronized
     fun florisUserDictionaryDatabase(): FlorisUserDictionaryDatabase? {
-        return if (prefs.dictionary.enableFlorisUserDictionary) {
+        return if (prefs.dictionary.enableFlorisUserDictionary.get()) {
             florisUserDictionaryDatabase
         } else {
             null
@@ -179,7 +179,7 @@ class DictionaryManager private constructor(
 
     @Synchronized
     fun systemUserDictionaryDao(): UserDictionaryDao? {
-        return if (prefs.dictionary.enableSystemUserDictionary) {
+        return if (prefs.dictionary.enableSystemUserDictionary.get()) {
             systemUserDictionaryDatabase?.userDictionaryDao()
         } else {
             null
@@ -188,7 +188,7 @@ class DictionaryManager private constructor(
 
     @Synchronized
     fun systemUserDictionaryDatabase(): SystemUserDictionaryDatabase? {
-        return if (prefs.dictionary.enableSystemUserDictionary) {
+        return if (prefs.dictionary.enableSystemUserDictionary.get()) {
             systemUserDictionaryDatabase
         } else {
             null
@@ -199,14 +199,14 @@ class DictionaryManager private constructor(
     fun loadUserDictionariesIfNecessary() {
         val context = applicationContext.get() ?: return
 
-        if (florisUserDictionaryDatabase == null && prefs.dictionary.enableFlorisUserDictionary) {
+        if (florisUserDictionaryDatabase == null && prefs.dictionary.enableFlorisUserDictionary.get()) {
             florisUserDictionaryDatabase = Room.databaseBuilder(
                 context,
                 FlorisUserDictionaryDatabase::class.java,
                 FlorisUserDictionaryDatabase.DB_FILE_NAME
             ).allowMainThreadQueries().build()
         }
-        if (systemUserDictionaryDatabase == null && prefs.dictionary.enableSystemUserDictionary) {
+        if (systemUserDictionaryDatabase == null && prefs.dictionary.enableSystemUserDictionary.get()) {
             systemUserDictionaryDatabase = SystemUserDictionaryDatabase(context)
         }
     }

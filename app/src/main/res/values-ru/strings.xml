@@ -209,7 +209,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Будет показано над клавиатурой</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Настройки ввода текста</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Словарь</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Словарь</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Использовать системный словарь пользователя</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Предлагать слова, находящиеся в системном словаре пользователя</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Управление системным словарем пользователя</string>

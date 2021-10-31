@@ -209,7 +209,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Se mostrará en la parte superior del teclado</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Experiencia de escritura</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugerencias</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Diccionario</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Diccionario</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Habilitar diccionario personal del sistema</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Sugerir palabras almacenadas en el diccionario personal del sistema</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Administrar diccionario personal del sistema</string>

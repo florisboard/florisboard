@@ -195,7 +195,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Pojawi się na górze klawiatury</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Doświadczenie w pisaniu</string>
     <string name="pref__suggestion__title" comment="Preference group title">Sugestie</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Słownik</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Słownik</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Włącz systemowy słownik użytkownika</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Sugeruj słowa przechowywane w słowniku użytkownika systemu</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Zarządzaj systemowym słownikiem użytkownika</string>

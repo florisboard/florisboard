@@ -209,7 +209,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Показва се над първия ред</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Изживяване при въвеждане</string>
     <string name="pref__suggestion__title" comment="Preference group title">Предложения</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Речник</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Речник</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Системен потребителски речник</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Предлагат се думи от системния потребителски речник</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Управление на системния потребителски речник</string>

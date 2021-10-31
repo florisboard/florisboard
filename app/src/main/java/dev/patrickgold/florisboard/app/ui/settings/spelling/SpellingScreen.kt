@@ -141,7 +141,6 @@ fun SpellingScreen() = FlorisScreen(
                                 R.string.pref__spelling__active_spellchecker__summary_use_sys_lang_set,
                                 "use_floris_config" to stringRes(R.string.settings__spelling__use_floris_config),
                             ),
-                            contentPadding = PaddingValues(all = 8.dp),
                             onClick = openSystemSpellCheckerSettings,
                         )
                     }
@@ -149,7 +148,6 @@ fun SpellingScreen() = FlorisScreen(
             } else {
                 FlorisErrorCard(
                     text = stringRes(R.string.pref__spelling__active_spellchecker__summary_disabled),
-                    contentPadding = PaddingValues(all = 8.dp),
                     onClick = openSystemSpellCheckerSettings,
                 )
             }

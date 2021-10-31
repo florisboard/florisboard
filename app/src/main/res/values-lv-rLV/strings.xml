@@ -208,7 +208,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Tiks rādīta tastatūras augšpusē</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Rakstīšanas pieredze</string>
     <string name="pref__suggestion__title" comment="Preference group title">Ieteikumi</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Vārdnīca</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Vārdnīca</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Iespējot sistēmas lietotāja vārdnīcu</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Ieteikt vārdus, kas tiek glabāti sistēmas lietotāja vārdnīcā</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Pārvaldīt sistēmas lietotāja vārdnīcu</string>

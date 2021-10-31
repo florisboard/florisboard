@@ -102,7 +102,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Vil blive vist over tastaturet</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Skriveoplevelse</string>
     <string name="pref__suggestion__title" comment="Preference group title">Forslag</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Ordbog</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Ordbog</string>
     <string name="pref__correction__title" comment="Preference group title">Rettelser</string>
     <string name="pref__correction__auto_capitalization__label" comment="Preference title">Automatisk stort bogstav</string>
     <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Gør bogstaver i ord store baseret på nuværende inputskontekst</string>

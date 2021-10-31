@@ -31,6 +31,7 @@ import dev.patrickgold.florisboard.app.ui.settings.about.ProjectLicenseScreen
 import dev.patrickgold.florisboard.app.ui.settings.about.ThirdPartyLicensesScreen
 import dev.patrickgold.florisboard.app.ui.settings.advanced.AdvancedScreen
 import dev.patrickgold.florisboard.app.ui.settings.clipboard.ClipboardScreen
+import dev.patrickgold.florisboard.app.ui.settings.dictionary.DictionaryScreen
 import dev.patrickgold.florisboard.app.ui.settings.gestures.GesturesScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.InputFeedbackScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.KeyboardScreen
@@ -72,6 +73,8 @@ object Routes {
         const val ManageSpellingDicts = "settings/spelling/manage-dicts"
         const val ImportSpellingArchive = "settings/spelling/import-archive"
         const val ImportSpellingAffDic = "settings/spelling/import-aff-dic"
+
+        const val Dictionary = "settings/dictionary"
 
         const val Gestures = "settings/gestures"
 
@@ -127,6 +130,8 @@ object Routes {
             composable(Settings.SpellingInfo) { SpellingInfoScreen() }
             composable(Settings.ManageSpellingDicts) { ManageSpellingDictsScreen() }
             composable(Settings.ImportSpellingArchive) { ImportSpellingArchiveScreen() }
+
+            composable(Settings.Dictionary) { DictionaryScreen() }
 
             composable(Settings.Gestures) { GesturesScreen() }
 

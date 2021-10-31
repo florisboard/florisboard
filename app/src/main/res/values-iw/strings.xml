@@ -153,7 +153,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">יהיה ממוקם מעל המקלדת</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">חווית הקלדה</string>
     <string name="pref__suggestion__title" comment="Preference group title">הצעות</string>
-    <string name="pref__dictionary__title" comment="Preference group title">מילון</string>
+    <string name="settings__dictionary__title" comment="Preference group title">מילון</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">אפשר מילון משתמשי מערכת</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">הצע מילים המאוחסנות במילון משתמשי המערכת</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">נהל את מילון משתמשי המערכת</string>

@@ -210,7 +210,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Akan tampil di atas papan ketik</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Pengalaman mengetik</string>
     <string name="pref__suggestion__title" comment="Preference group title">Saran</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Kamus</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Kamus</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Aktifkan kamus pengguna sistem</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Sarankan kata-kata tersimpan di kamus pengguna sistem</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Kelola kamus pengguna sistem</string>

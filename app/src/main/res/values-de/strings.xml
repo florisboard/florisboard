@@ -209,7 +209,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Wird über der Tastatur angezeigt</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Tipperlebnis</string>
     <string name="pref__suggestion__title" comment="Preference group title">Vorschläge</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Wörterbuch</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Wörterbuch</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">System-Wörterbuch aktivieren</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Wörter vorschlagen, die im System-Benutzerwörterbuch gespeichert sind</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">System-Benutzerwörterbuch verwalten</string>

@@ -198,7 +198,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Verrà mostrato in cima alla tastiera</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Esperienza di digitazione</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggerimenti</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Dizionario</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Dizionario</string>
     <string name="pref__dictionary__enable_system_user_dictionary__label" comment="Preference title">Abilita il dizionario utente di sistema</string>
     <string name="pref__dictionary__enable_system_user_dictionary__summary" comment="Preference summary">Suggerisci le parole contenute nel dizionario utente di sistema</string>
     <string name="pref__dictionary__manage_system_user_dictionary__label" comment="Preference title">Gestisci il dizionario utente di sistema</string>

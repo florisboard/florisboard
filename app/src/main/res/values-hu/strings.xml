@@ -162,7 +162,7 @@
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">A billentyűzet tetején fog megjelenni</string>
     <string name="settings__typing__title" comment="Title of Typing experience screen">Gépelési élmény</string>
     <string name="pref__suggestion__title" comment="Preference group title">Javaslatok</string>
-    <string name="pref__dictionary__title" comment="Preference group title">Szótár</string>
+    <string name="settings__dictionary__title" comment="Preference group title">Szótár</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__label" comment="Preference title">Belső felhasználói szótár engedélyezése</string>
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Tárolt szavak ajánlása a belső felhasználói szótárból</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Belső felhasználói szótár kezelése</string>
