@@ -225,7 +225,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
                     setupDevtools(prefs.devtools.enabled.get() && it)
                 }
 
-                AppVersionUtils.updateVersionOnInstallAndLastUse(this, oldPrefs)
+                AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
 
                 florisClipboardManager = FlorisClipboardManager.getInstance().also {
                     it.initialize(this)

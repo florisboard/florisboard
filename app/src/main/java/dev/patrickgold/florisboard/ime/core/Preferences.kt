@@ -22,8 +22,6 @@ import android.os.Build
 import androidx.core.os.UserManagerCompat
 import androidx.preference.PreferenceManager
 import dev.patrickgold.florisboard.ime.text.smartbar.CandidateView
-import dev.patrickgold.florisboard.util.VersionName
-import java.lang.ref.WeakReference
 
 /**
  * Helper class for an organized access to the shared preferences.
@@ -36,11 +34,8 @@ class Preferences(
     else
         PreferenceManager.getDefaultSharedPreferences(context)
 
-    private val applicationContext: WeakReference<Context> = WeakReference(context.applicationContext)
-
     val correction = Correction(this)
     val dictionary = Dictionary(this)
-    val internal = Internal(this)
     val localization = Localization(this)
     val smartbar = Smartbar(this)
     val suggestion = Suggestion(this)
@@ -145,32 +140,6 @@ class Preferences(
         var enableFlorisUserDictionary: Boolean
             get() =  prefs.getPref(ENABLE_FLORIS_USER_DICTIONARY, true)
             set(v) = prefs.setPref(ENABLE_FLORIS_USER_DICTIONARY, v)
-    }
-
-    /**
-     * Wrapper class for internal preferences. A preference qualifies as an internal pref if the
-     * user has no ability to control this preference's value directly (via a UI pref view).
-     */
-    class Internal(private val prefs: Preferences) {
-        companion object {
-            const val IS_IME_SET_UP =               "internal__is_ime_set_up"
-            const val VERSION_ON_INSTALL =          "internal__version_on_install"
-            const val VERSION_LAST_USE =            "internal__version_last_use"
-            const val VERSION_LAST_CHANGELOG =      "internal__version_last_changelog"
-        }
-
-        var isImeSetUp: Boolean
-            get() =  prefs.getPref(IS_IME_SET_UP, false)
-            set(v) = prefs.setPref(IS_IME_SET_UP, v)
-        var versionOnInstall: String
-            get() =  prefs.getPref(VERSION_ON_INSTALL, VersionName.DEFAULT_RAW)
-            set(v) = prefs.setPref(VERSION_ON_INSTALL, v)
-        var versionLastUse: String
-            get() =  prefs.getPref(VERSION_LAST_USE, VersionName.DEFAULT_RAW)
-            set(v) = prefs.setPref(VERSION_LAST_USE, v)
-        var versionLastChangelog: String
-            get() =  prefs.getPref(VERSION_LAST_CHANGELOG, VersionName.DEFAULT_RAW)
-            set(v) = prefs.setPref(VERSION_LAST_CHANGELOG, v)
     }
 
     /**

@@ -28,6 +28,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.res.FlorisRef
+import dev.patrickgold.florisboard.util.VersionName
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
 import dev.patrickgold.jetpref.datastore.preferenceModel
 import java.time.LocalTime
@@ -265,6 +266,18 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val isImeSetUp = boolean(
             key = "internal__is_ime_set_up",
             default = false,
+        )
+        val versionOnInstall = string(
+            key = "internal__version_on_install",
+            default = VersionName.DEFAULT_RAW,
+        )
+        val versionLastUse = string(
+            key = "internal__version_last_use",
+            default = VersionName.DEFAULT_RAW,
+        )
+        val versionLastChangelog = string(
+            key = "internal__version_last_changelog",
+            default = VersionName.DEFAULT_RAW,
         )
     }
 

@@ -25,7 +25,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceFragmentCompat
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.databinding.SettingsActivityBinding
@@ -33,7 +32,6 @@ import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.oldsettings.fragments.*
-import dev.patrickgold.florisboard.util.AppVersionUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 
@@ -71,8 +69,6 @@ class SettingsMainActivity : AppCompatActivity(),
         setSupportActionBar(toolbar)
         supportActionBar?.setTitle(R.string.settings__typing__title)
         loadFragment(TypingFragment())
-
-        AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
     }
 
     private fun loadFragment(fragment: Fragment) {

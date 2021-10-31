@@ -51,6 +51,7 @@ import dev.patrickgold.florisboard.app.ui.components.SystemUi
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.util.AndroidVersion
+import dev.patrickgold.florisboard.util.AppVersionUtils
 import dev.patrickgold.florisboard.util.PackageManagerUtils
 import dev.patrickgold.jetpref.ui.compose.ProvideDefaultDialogPrefStrings
 
@@ -93,6 +94,7 @@ class FlorisAppActivity : ComponentActivity() {
             }
         }
 
+        AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
         WindowCompat.setDecorFitsSystemWindows(window, true)
 
         setContent {
