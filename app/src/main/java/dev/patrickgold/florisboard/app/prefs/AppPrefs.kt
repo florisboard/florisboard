@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.app.prefs
 import android.os.Build
 import androidx.annotation.RequiresApi
 import dev.patrickgold.florisboard.app.AppTheme
+import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
@@ -414,6 +415,18 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
                 mergeHintPopups = mergeHintPopupsEnabled.get(),
             )
         }
+    }
+
+    val localization = Localization()
+    inner class Localization {
+        val activeSubtypeId = int(
+            key = "localization__active_subtype_id",
+            default = Subtype.DEFAULT.id,
+        )
+        val subtypes = string(
+            key = "localization__subtypes",
+            default = "",
+        )
     }
 
     val smartbar = Smartbar()

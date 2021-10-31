@@ -111,7 +111,7 @@ fun HomeScreen() = FlorisScreen(
         }
     }
     Preference(
-        title = "Remains of old settings",
+        title = "Localization (old UI)",
         onClick = { launchActivity(context, SettingsMainActivity::class) },
     )
     Preference(

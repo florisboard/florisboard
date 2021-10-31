@@ -25,7 +25,6 @@ import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
 import dev.patrickgold.florisboard.ime.spelling.SpellingService
@@ -35,7 +34,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
     private val prefs by florisPreferenceModel()
     private val dictionaryManager get() = DictionaryManager.default()
     private val spellingService by spellingService()
-    private val subtypeManager get() = SubtypeManager.default()
+    private val subtypeManager by subtypeManager()
 
     override fun onCreate() {
         flogInfo(LogTopic.SPELL_EVENTS)

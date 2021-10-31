@@ -30,7 +30,6 @@ import dev.patrickgold.florisboard.debug.Flog
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.debug.flogInfo
-import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingManager
@@ -64,6 +63,7 @@ class FlorisApplication : Application() {
     val extensionManager by lazy { ExtensionManager(this) }
     val spellingManager by lazy { SpellingManager(this) }
     val spellingService by lazy { SpellingService(this) }
+    val subtypeManager by lazy { SubtypeManager(this) }
 
     override fun onCreate() {
         super.onCreate()
@@ -88,8 +88,6 @@ class FlorisApplication : Application() {
                 prefs.initializeForContext(this)
             }
 
-            Preferences.initDefault(this)
-            SubtypeManager.init(this)
             DictionaryManager.init(this)
             ThemeManager.init(this, assetManager)
         } catch (e: Exception) {
@@ -160,4 +158,8 @@ fun Context.spellingManager() = lazy {
 
 fun Context.spellingService() = lazy {
     this.florisApplication().spellingService
+}
+
+fun Context.subtypeManager() = lazy {
+    this.florisApplication().subtypeManager
 }

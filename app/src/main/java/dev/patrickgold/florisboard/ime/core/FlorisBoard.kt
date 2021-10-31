@@ -72,6 +72,7 @@ import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackManager
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.keyboard.updateKeyboardState
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
+import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.florisboard.util.debugSummarize
 import dev.patrickgold.florisboard.util.findViewWithType
 import dev.patrickgold.florisboard.util.refreshLayoutOf
@@ -144,7 +145,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
 
     lateinit var activeEditorInstance: EditorInstance
 
-    val subtypeManager: SubtypeManager get() = SubtypeManager.default()
+    val subtypeManager by subtypeManager()
     val composer: Composer get() = subtypeManager.imeConfig.composerFromName.getValue(activeSubtype.composerName)
     lateinit var activeSubtype: Subtype
     private var currentThemeIsNight: Boolean = false

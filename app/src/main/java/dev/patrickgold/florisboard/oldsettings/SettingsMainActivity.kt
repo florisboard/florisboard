@@ -16,37 +16,31 @@
 
 package dev.patrickgold.florisboard.oldsettings
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.preference.PreferenceFragmentCompat
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.databinding.SettingsActivityBinding
-import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.oldsettings.fragments.*
+import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 
 internal const val FRAGMENT_TAG = "FRAGMENT_TAG"
-private const val PREF_RES_ID = "PREF_RES_ID"
 
 class SettingsMainActivity : AppCompatActivity(),
-    SharedPreferences.OnSharedPreferenceChangeListener,
     CoroutineScope by MainScope() {
 
     lateinit var binding: SettingsActivityBinding
     lateinit var layoutManager: LayoutManager
-    private val prefs get() = Preferences.default()
     private val newPrefs by florisPreferenceModel()
-    val subtypeManager: SubtypeManager get() = SubtypeManager.default()
+    val subtypeManager by subtypeManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         layoutManager = LayoutManager(this)
@@ -67,7 +61,7 @@ class SettingsMainActivity : AppCompatActivity(),
         //       a reference to the included layout...
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar?.setTitle(R.string.settings__typing__title)
+        supportActionBar?.setTitle(R.string.settings__localization__title)
         loadFragment(TypingFragment())
     }
 
@@ -88,23 +82,6 @@ class SettingsMainActivity : AppCompatActivity(),
         }
     }
 
-    override fun onSharedPreferenceChanged(sp: SharedPreferences?, key: String?) {}
-
-    override fun onResume() {
-        prefs.shared.registerOnSharedPreferenceChangeListener(this)
-        super.onResume()
-    }
-
-    override fun onPause() {
-        prefs.shared.unregisterOnSharedPreferenceChangeListener(this)
-        super.onPause()
-    }
-
-    override fun onDestroy() {
-        prefs.shared.unregisterOnSharedPreferenceChangeListener(this)
-        super.onDestroy()
-    }
-
     abstract class SettingsFragment : Fragment() {
         protected lateinit var settingsMainActivity: SettingsMainActivity
         protected lateinit var subtypeManager: SubtypeManager
@@ -114,28 +91,6 @@ class SettingsMainActivity : AppCompatActivity(),
 
             settingsMainActivity = activity as SettingsMainActivity
             subtypeManager = settingsMainActivity.subtypeManager
-        }
-    }
-
-    class PrefFragment : PreferenceFragmentCompat() {
-        companion object {
-            fun createFromResource(prefResId: Int): PrefFragment {
-                val args = Bundle()
-                args.putInt(PREF_RES_ID, prefResId)
-                val fragment = PrefFragment()
-                fragment.arguments = args
-                return fragment
-            }
-        }
-
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            setPreferencesFromResource(arguments?.getInt(PREF_RES_ID) ?: 0, rootKey)
-        }
-
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            listView.isFocusable = false
-            listView.isNestedScrollingEnabled = false
-            super.onViewCreated(view, savedInstanceState)
         }
     }
 }

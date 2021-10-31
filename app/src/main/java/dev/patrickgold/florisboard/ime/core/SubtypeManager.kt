@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.core
 
 import android.content.Context
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.debug.*
@@ -36,28 +37,17 @@ import kotlin.collections.ArrayList
  * @property subtypes The currently active subtypes.
  */
 class SubtypeManager(
-    private val packageName: String,
-    applicationContext: Context,
+    context: Context,
+    private val packageName: String = context.packageName,
 ) : CoroutineScope by MainScope() {
-    private val assetManager by applicationContext.assetManager()
-    private val prefs get() = Preferences.default()
 
     companion object {
         const val IME_CONFIG_FILE_PATH = "ime/config.json"
         const val SUBTYPE_LIST_STR_DELIMITER = ";"
-
-        private var instance: SubtypeManager? = null
-
-        fun init(context: Context): SubtypeManager {
-            val defaultInstance = SubtypeManager(context.packageName, context.applicationContext)
-            instance = defaultInstance
-            return defaultInstance
-        }
-
-        fun default(): SubtypeManager = instance!!
-
-        fun defaultOrNull(): SubtypeManager? = instance
     }
+
+    private val assetManager by context.assetManager()
+    private val prefs by florisPreferenceModel()
 
     var imeConfig: FlorisBoard.ImeConfig = FlorisBoard.ImeConfig(packageName)
     private val _subtypes: ArrayList<Subtype> = ArrayList()
@@ -66,16 +56,20 @@ class SubtypeManager(
     init {
         imeConfig = loadImeConfig(IME_CONFIG_FILE_PATH)
 
-        val listRaw = prefs.localization.subtypes
-        if (listRaw.isNotBlank()) {
-            listRaw.split(SUBTYPE_LIST_STR_DELIMITER).forEach {
-                _subtypes.add(Subtype.fromString(it))
+        prefs.datastoreReadyStatus.observeForever { isReady ->
+            if (isReady) {
+                val listRaw = prefs.localization.subtypes.get()
+                if (listRaw.isNotBlank()) {
+                    listRaw.split(SUBTYPE_LIST_STR_DELIMITER).forEach {
+                        _subtypes.add(Subtype.fromString(it))
+                    }
+                }
             }
         }
     }
 
     private fun syncSubtypeListToPrefs() {
-        prefs.localization.subtypes = _subtypes.joinToString(SUBTYPE_LIST_STR_DELIMITER)
+        prefs.localization.subtypes.set(_subtypes.joinToString(SUBTYPE_LIST_STR_DELIMITER))
     }
 
     /**
@@ -150,15 +144,15 @@ class SubtypeManager(
     fun getActiveSubtype(): Subtype? {
         val subtypeList = _subtypes
         for (subtype in subtypeList) {
-            if (subtype.id == prefs.localization.activeSubtypeId) {
+            if (subtype.id == prefs.localization.activeSubtypeId.get()) {
                 return subtype
             }
         }
         return if (subtypeList.isNotEmpty()) {
-            prefs.localization.activeSubtypeId = subtypeList[0].id
+            prefs.localization.activeSubtypeId.set(subtypeList[0].id)
             subtypeList[0]
         } else {
-            prefs.localization.activeSubtypeId = Subtype.DEFAULT.id
+            prefs.localization.activeSubtypeId.set(Subtype.DEFAULT.id)
             null
         }
     }
@@ -224,7 +218,7 @@ class SubtypeManager(
             }
         }
         syncSubtypeListToPrefs()
-        if (subtypeToRemove.id == prefs.localization.activeSubtypeId) {
+        if (subtypeToRemove.id == prefs.localization.activeSubtypeId.get()) {
             getActiveSubtype()
         }
     }
@@ -250,10 +244,10 @@ class SubtypeManager(
         if (triggerNextSubtype) {
             newActiveSubtype = subtypeList.last()
         }
-        prefs.localization.activeSubtypeId = when (newActiveSubtype) {
+        prefs.localization.activeSubtypeId.set(when (newActiveSubtype) {
             null -> Subtype.DEFAULT.id
             else -> newActiveSubtype.id
-        }
+        })
         return newActiveSubtype
     }
 
@@ -278,10 +272,10 @@ class SubtypeManager(
         if (triggerNextSubtype) {
             newActiveSubtype = subtypeList.first()
         }
-        prefs.localization.activeSubtypeId = when (newActiveSubtype) {
+        prefs.localization.activeSubtypeId.set(when (newActiveSubtype) {
             null -> Subtype.DEFAULT.id
             else -> newActiveSubtype.id
-        }
+        })
         return newActiveSubtype
     }
 }
