@@ -11,74 +11,6 @@
 
     <PreferenceCategory
         app:iconSpaceReserved="false"
-        app:title="@string/pref__suggestion__title">
-
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            app:dependency="smartbar__enabled"
-            app:key="suggestion__api30_inline_suggestions_enabled"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__suggestion__api30_inline_suggestions_enabled__label"
-            app:summary="@string/pref__suggestion__api30_inline_suggestions_enabled__summary"/>
-
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
-            android:dependency="smartbar__enabled"
-            app:key="suggestion__enabled"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__suggestion__enabled__label"
-            app:summary="@string/pref__suggestion__enabled__summary"/>
-
-        <ListPreference
-            android:defaultValue="dynamic_scrollable"
-            app:dependency="suggestion__enabled"
-            app:entries="@array/pref__suggestion__display_mode__entries"
-            app:entryValues="@array/pref__suggestion__display_mode__values"
-            app:key="suggestion__display_mode"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__suggestion__display_mode__label"
-            app:useSimpleSummaryProvider="true"/>
-
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            app:dependency="suggestion__enabled"
-            app:key="suggestion__use_prev_words"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__suggestion__use_pref_words__label"
-            app:summary="@string/pref__suggestion__use_pref_words__summary"/>
-
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            app:dependency="suggestion__enabled"
-            app:key="suggestion__block_possibly_offensive"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__suggestion__block_possibly_offensive__label"
-            app:summary="@string/pref__suggestion__block_possibly_offensive__summary"/>
-
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            app:dependency="suggestion__enabled"
-            app:key="suggestion__clipboard_content_enabled"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__suggestion__clipboard_content_enabled__label"
-            app:summary="@string/pref__suggestion__clipboard_content_enabled__summary"/>
-
-        <dev.patrickgold.florisboard.oldsettings.components.DialogSeekBarPreference
-            app:allowDividerAbove="false"
-            android:defaultValue="60"
-            app:dependency="suggestion__clipboard_content_enabled"
-            app:key="suggestion__clipboard_content_timeout"
-            app:min="30"
-            app:max="150"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__suggestion__clipboard_content_timeout__label"
-            app:seekBarIncrement="5"
-            app:unit=" s"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
         app:title="@string/pref__dictionary__title">
 
         <SwitchPreferenceCompat
@@ -108,33 +40,6 @@
             app:iconSpaceReserved="false"
             app:title="@string/pref__dictionary__manage_floris_user_dictionary__label"
             app:summary="@string/pref__dictionary__manage_floris_user_dictionary__summary"/>
-
-    </PreferenceCategory>
-
-    <PreferenceCategory
-        app:iconSpaceReserved="false"
-        app:title="@string/pref__correction__title">
-
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            app:key="correction__auto_capitalization"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__correction__auto_capitalization__label"
-            app:summary="@string/pref__correction__auto_capitalization__summary"/>
-
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
-            app:key="correction__remember_caps_lock_state"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__correction__remember_caps_lock_state__label"
-            app:summary="@string/pref__correction__remember_caps_lock_state__summary"/>
-
-        <SwitchPreferenceCompat
-            android:defaultValue="true"
-            app:key="correction__double_space_period"
-            app:iconSpaceReserved="false"
-            app:title="@string/pref__correction__double_space_period__label"
-            app:summary="@string/pref__correction__double_space_period__summary"/>
 
     </PreferenceCategory>
 

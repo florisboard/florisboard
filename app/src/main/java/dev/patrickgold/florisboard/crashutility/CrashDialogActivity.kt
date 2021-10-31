@@ -64,9 +64,9 @@ class CrashDialogActivity : AppCompatActivity() {
             if (oldPrefs != null && prefs != null) {
                 try {
                     appendLine("smartbar = ${oldPrefs.smartbar.enabled}")
-                    appendLine("suggestions = ${oldPrefs.suggestion.enabled}")
-                    appendLine("suggestions_clipboard = ${oldPrefs.suggestion.clipboardContentEnabled}")
-                    appendLine("suggestions_next_word = ${oldPrefs.suggestion.usePrevWords}")
+                    appendLine("suggestions = ${prefs.suggestion.enabled.get()}")
+                    appendLine("suggestions_clipboard = ${prefs.suggestion.clipboardContentEnabled.get()}")
+                    appendLine("suggestions_next_word = ${prefs.suggestion.usePrevWords.get()}")
                     appendLine("glide = ${prefs.glide.enabled.get()}")
                     appendLine("clipboard_internal = ${prefs.clipboard.useInternalClipboard.get()}")
                     appendLine("clipboard_history = ${prefs.clipboard.enableHistory.get()}")

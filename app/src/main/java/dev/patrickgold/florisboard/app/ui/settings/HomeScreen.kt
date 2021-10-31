@@ -126,6 +126,11 @@ fun HomeScreen() = FlorisScreen(
     )
     Preference(
         iconId = R.drawable.ic_spellcheck,
+        title = stringRes(R.string.settings__typing__title),
+        onClick = { navController.navigate(Routes.Settings.Typing) },
+    )
+    Preference(
+        iconId = R.drawable.ic_spellcheck,
         title = stringRes(R.string.settings__spelling__title),
         onClick = { navController.navigate(Routes.Settings.Spelling) },
     )

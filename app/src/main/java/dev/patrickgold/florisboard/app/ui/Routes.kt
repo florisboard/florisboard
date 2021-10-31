@@ -39,6 +39,7 @@ import dev.patrickgold.florisboard.app.ui.settings.spelling.ManageSpellingDictsS
 import dev.patrickgold.florisboard.app.ui.settings.spelling.SpellingInfoScreen
 import dev.patrickgold.florisboard.app.ui.settings.spelling.SpellingScreen
 import dev.patrickgold.florisboard.app.ui.settings.theme.ThemeScreen
+import dev.patrickgold.florisboard.app.ui.settings.typing.TypingScreen
 import dev.patrickgold.florisboard.app.ui.setup.SetupScreen
 import dev.patrickgold.florisboard.app.ui.splash.SplashScreen
 import dev.patrickgold.florisboard.common.curlyFormat
@@ -60,6 +61,8 @@ object Routes {
 
         const val Keyboard = "settings/keyboard"
         const val InputFeedback = "settings/keyboard/input-feedback"
+
+        const val Typing = "settings/typing"
 
         const val Spelling = "settings/spelling"
         const val SpellingInfo = "settings/spelling/info"
@@ -112,6 +115,8 @@ object Routes {
 
             composable(Settings.Keyboard) { KeyboardScreen() }
             composable(Settings.InputFeedback) { InputFeedbackScreen() }
+
+            composable(Settings.Typing) { TypingScreen() }
 
             composable(Settings.Spelling) { SpellingScreen() }
             composable(Settings.SpellingInfo) { SpellingInfoScreen() }

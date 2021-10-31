@@ -21,7 +21,6 @@ import android.content.SharedPreferences
 import android.os.Build
 import androidx.core.os.UserManagerCompat
 import androidx.preference.PreferenceManager
-import dev.patrickgold.florisboard.ime.text.smartbar.CandidateView
 
 /**
  * Helper class for an organized access to the shared preferences.
@@ -34,11 +33,9 @@ class Preferences(
     else
         PreferenceManager.getDefaultSharedPreferences(context)
 
-    val correction = Correction(this)
     val dictionary = Dictionary(this)
     val localization = Localization(this)
     val smartbar = Smartbar(this)
-    val suggestion = Suggestion(this)
 
 
     /**
@@ -102,28 +99,6 @@ class Preferences(
     }
 
     /**
-     * Wrapper class for correction preferences.
-     */
-    class Correction(private val prefs: Preferences) {
-        companion object {
-            const val AUTO_CAPITALIZATION =         "correction__auto_capitalization"
-            const val DOUBLE_SPACE_PERIOD =         "correction__double_space_period"
-            const val MANAGE_SPELL_CHECKER =        "correction__manage_spell_checker"
-            const val REMEMBER_CAPS_LOCK_STATE =    "correction__remember_caps_lock_state"
-        }
-
-        var autoCapitalization: Boolean
-            get() =  prefs.getPref(AUTO_CAPITALIZATION, true)
-            set(v) = prefs.setPref(AUTO_CAPITALIZATION, v)
-        var doubleSpacePeriod: Boolean
-            get() =  prefs.getPref(DOUBLE_SPACE_PERIOD, true)
-            set(v) = prefs.setPref(DOUBLE_SPACE_PERIOD, v)
-        var rememberCapsLockState: Boolean
-            get() =  prefs.getPref(REMEMBER_CAPS_LOCK_STATE, false)
-            set(v) = prefs.setPref(REMEMBER_CAPS_LOCK_STATE, v)
-    }
-
-    /**
      * Wrapper class for dictionary preferences.
      */
     class Dictionary(private val prefs: Preferences) {
@@ -170,42 +145,5 @@ class Preferences(
         var enabled: Boolean
             get() =  prefs.getPref(ENABLED, true)
             set(v) = prefs.setPref(ENABLED, v)
-    }
-
-    /**
-     * Wrapper class for suggestion preferences.
-     */
-    class Suggestion(private val prefs: Preferences) {
-        companion object {
-            const val API30_INLINE_SUGGESTIONS_ENABLED =    "suggestion__api30_inline_suggestions_enabled"
-            const val BLOCK_POSSIBLY_OFFENSIVE =            "suggestion__block_possibly_offensive"
-            const val CLIPBOARD_CONTENT_ENABLED =           "suggestion__clipboard_content_enabled"
-            const val CLIPBOARD_CONTENT_TIMEOUT =           "suggestion__clipboard_content_timeout"
-            const val DISPLAY_MODE =                        "suggestion__display_mode"
-            const val ENABLED =                             "suggestion__enabled"
-            const val USE_PREV_WORDS =                      "suggestion__use_prev_words"
-        }
-
-        var api30InlineSuggestionsEnabled: Boolean
-            get() =  prefs.getPref(API30_INLINE_SUGGESTIONS_ENABLED, true)
-            set(v) = prefs.setPref(API30_INLINE_SUGGESTIONS_ENABLED, v)
-        var blockPossiblyOffensive: Boolean
-            get() =  prefs.getPref(BLOCK_POSSIBLY_OFFENSIVE, true)
-            set(v) = prefs.setPref(BLOCK_POSSIBLY_OFFENSIVE, v)
-        var clipboardContentEnabled: Boolean
-            get() =  prefs.getPref(CLIPBOARD_CONTENT_ENABLED, false)
-            set(v) = prefs.setPref(CLIPBOARD_CONTENT_ENABLED, v)
-        var clipboardContentTimeout: Int
-            get() =  prefs.getPref(CLIPBOARD_CONTENT_TIMEOUT, 30)
-            set(v) = prefs.setPref(CLIPBOARD_CONTENT_TIMEOUT, v)
-        var displayMode: CandidateView.DisplayMode
-            get() =  CandidateView.DisplayMode.fromString(prefs.getPref(DISPLAY_MODE, CandidateView.DisplayMode.DYNAMIC_SCROLLABLE.toString()))
-            set(v) = prefs.setPref(DISPLAY_MODE, v)
-        var enabled: Boolean
-            get() =  prefs.getPref(ENABLED, true)
-            set(v) = prefs.setPref(ENABLED, v)
-        var usePrevWords: Boolean
-            get() =  prefs.getPref(USE_PREV_WORDS, true)
-            set(v) = prefs.setPref(USE_PREV_WORDS, v)
     }
 }

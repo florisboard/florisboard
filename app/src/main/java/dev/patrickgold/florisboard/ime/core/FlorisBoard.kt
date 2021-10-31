@@ -437,7 +437,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateInlineSuggestionsRequest(uiExtras: Bundle): InlineSuggestionsRequest? {
-        return if (oldPrefs.smartbar.enabled && oldPrefs.suggestion.api30InlineSuggestionsEnabled) {
+        return if (oldPrefs.smartbar.enabled && prefs.suggestion.api30InlineSuggestionsEnabled.get()) {
             flogInfo(LogTopic.IMS_EVENTS) {
                 "Creating inline suggestions request because Smartbar and inline suggestions are enabled."
             }

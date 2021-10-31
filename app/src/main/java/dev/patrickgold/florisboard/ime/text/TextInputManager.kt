@@ -33,7 +33,6 @@ import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
-import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.TextProcessor
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
@@ -83,7 +82,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     var isGlidePostEffect: Boolean = false
     private val florisboard get() = FlorisBoard.getInstance()
-    private val oldPrefs get() = Preferences.default()
     private val prefs by florisPreferenceModel()
     var symbolsWithSpaceAfter: List<String> = listOf()
     private val activeEditorInstance: EditorInstance
@@ -346,7 +344,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             KeyboardMode.PHONE,
             KeyboardMode.PHONE2 -> false
             else -> activeState.keyVariation != KeyVariation.PASSWORD &&
-                    oldPrefs.suggestion.enabled// &&
+                    prefs.suggestion.enabled.get()// &&
             //!instance.inputAttributes.flagTextAutoComplete &&
             //!instance.inputAttributes.flagTextNoSuggestions
         } && run {
@@ -366,7 +364,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         setActiveKeyboardMode(keyboardMode, updateState = false)
         instance.composingEnabledChanged()
         activeState.updateIsPrivate()
-        if (!oldPrefs.correction.rememberCapsLockState) {
+        if (!prefs.correction.rememberCapsLockState.get()) {
             activeState.capsLock = false
         }
         isGlidePostEffect = false
@@ -461,7 +459,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     currentWord = currentWord.text,
                     preceidingWords = listOf(),
                     subtype = florisboard.activeSubtype,
-                    allowPossiblyOffensive = !oldPrefs.suggestion.blockPossiblyOffensive,
+                    allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
                     maxSuggestionCount = 16
                 ) { suggestions ->
                     withContext(Dispatchers.Main) {
@@ -487,7 +485,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     private fun updateCapsState() {
         if (!activeState.capsLock) {
-            activeState.caps = oldPrefs.correction.autoCapitalization &&
+            activeState.caps = prefs.correction.autoCapitalization.get() &&
                     activeEditorInstance.cursorCapsMode != InputAttributes.CapsMode.NONE
         }
     }
@@ -764,7 +762,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         if (prefs.keyboard.spaceBarSwitchesToCharacters.get() && getActiveKeyboardMode() != KeyboardMode.CHARACTERS) {
             setActiveKeyboardMode(KeyboardMode.CHARACTERS)
         }
-        if (oldPrefs.correction.doubleSpacePeriod) {
+        if (prefs.correction.doubleSpacePeriod.get()) {
             if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventUp, prefs.keyboard.longPressDelay.get().toLong())) {
                 val text = activeEditorInstance.getTextBeforeCursor(2)
                 if (text.length == 2 && !text.matches("""[.!?‽\s][\s]""".toRegex())) {

@@ -226,7 +226,7 @@
 
     <string name="settings__typing__title" comment="Title of Typing experience screen">Typing experience</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
-    <string translatable="false" name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">Inline suggestions</string>
+    <string translatable="false" name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">System autofill suggestions</string>
     <string translatable="false" name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services (password managers, ...)</string>
     <string translatable="false" name="pref__suggestion__enabled__label" comment="Preference title">[EXPERIMENTAL] Display suggestions while you type</string>
     <string translatable="false" name="pref__suggestion__enabled__summary" comment="Preference summary">Will show in the Smartbar, currently only English (US). May fail to load if insufficient heap size is available.</string>

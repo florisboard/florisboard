@@ -36,8 +36,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 
-private val IconRequiredSize = 32.dp
-private val IconEndPadding = 8.dp
+private val IconRequiredSize = 24.dp
+private val IconEndPadding = 16.dp
 
 private val CardContentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
 

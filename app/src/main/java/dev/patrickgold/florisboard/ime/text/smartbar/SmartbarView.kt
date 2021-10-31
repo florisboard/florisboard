@@ -34,7 +34,6 @@ import dev.patrickgold.florisboard.databinding.SmartbarBinding
 import dev.patrickgold.florisboard.debug.*
 import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.core.Preferences
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.keyboard.updateKeyboardState
@@ -58,7 +57,6 @@ import kotlin.math.roundToInt
  */
 class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, ThemeManager.OnThemeUpdatedListener {
     private val florisboard = FlorisBoard.getInstanceOrNull()
-    private val oldPrefs get() = Preferences.default()
     private val prefs by florisPreferenceModel()
     private val themeManager = ThemeManager.default()
     private var eventListener: WeakReference<EventListener?> = WeakReference(null)
@@ -114,7 +112,7 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
 
         binding.backButton.setOnClickListener { eventListener.get()?.onSmartbarBackButtonPressed() }
 
-        binding.candidates.updateDisplaySettings(oldPrefs.suggestion.displayMode, oldPrefs.suggestion.clipboardContentTimeout * 1_000)
+        binding.candidates.updateDisplaySettings(prefs.suggestion.displayMode.get(), prefs.suggestion.clipboardContentTimeout.get() * 1_000)
 
         mainScope.launch(Dispatchers.Default) {
             florisboard?.let {
@@ -291,11 +289,11 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
     fun sync() {
         binding.numberRow.sync()
         binding.clipboardCursorRow.sync()
-        binding.candidates.updateDisplaySettings(oldPrefs.suggestion.displayMode, oldPrefs.suggestion.clipboardContentTimeout * 1_000)
+        binding.candidates.updateDisplaySettings(prefs.suggestion.displayMode.get(), prefs.suggestion.clipboardContentTimeout.get() * 1_000)
     }
 
     fun onPrimaryClipChanged() {
-        if (oldPrefs.suggestion.enabled && oldPrefs.suggestion.clipboardContentEnabled && !cachedState.isPrivateMode) {
+        if (prefs.suggestion.enabled.get() && prefs.suggestion.clipboardContentEnabled.get() && !cachedState.isPrivateMode) {
             florisboard?.florisClipboardManager?.primaryClip?.let { binding.candidates.updateClipboardItem(it) }
         }
     }

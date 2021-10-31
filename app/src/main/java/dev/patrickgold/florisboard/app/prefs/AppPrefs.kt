@@ -26,6 +26,7 @@ import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
+import dev.patrickgold.florisboard.ime.text.smartbar.CandidateView
 import dev.patrickgold.florisboard.ime.theme.ThemeMode
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.util.VersionName
@@ -89,6 +90,22 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val maxHistorySize = int(
             key = "clipboard__max_history_size",
             default = 20,
+        )
+    }
+
+    val correction = Correction()
+    inner class Correction {
+        val autoCapitalization = boolean(
+            key = "correction__auto_capitalization",
+            default = true,
+        )
+        val doubleSpacePeriod = boolean(
+            key = "correction__double_space_period",
+            default = true,
+        )
+        val rememberCapsLockState = boolean(
+            key = "correction__remember_caps_lock_state",
+            default = false,
         )
     }
 
@@ -400,6 +417,38 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         val useUdmEntries = boolean(
             key = "spelling__use_udm_entries",
             default = true,
+        )
+    }
+
+    val suggestion = Suggestion()
+    inner class Suggestion {
+        val api30InlineSuggestionsEnabled = boolean(
+            key = "suggestion__api30_inline_suggestions_enabled",
+            default = true,
+        )
+        val enabled = boolean(
+            key = "suggestion__enabled",
+            default = false,
+        )
+        val displayMode = enum(
+            key = "suggestion__display_mode",
+            default = CandidateView.DisplayMode.DYNAMIC_SCROLLABLE,
+        )
+        val usePrevWords = boolean(
+            key = "suggestion__use_prev_words",
+            default = true,
+        )
+        val blockPossiblyOffensive = boolean(
+            key = "suggestion__block_possibly_offensive",
+            default = true,
+        )
+        val clipboardContentEnabled = boolean(
+            key = "suggestion__clipboard_content_enabled",
+            default = false,
+        )
+        val clipboardContentTimeout = int(
+            key = "suggestion__clipboard_content_timeout",
+            default = 30,
         )
     }
 
