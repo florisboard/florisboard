@@ -58,7 +58,7 @@ class FlorisApplication : Application() {
         }
     }
 
-    val prefs by florisPreferenceModel()
+    private val prefs by florisPreferenceModel()
 
     val assetManager by lazy { AssetManager(this) }
     val extensionManager by lazy { ExtensionManager(this) }
@@ -68,7 +68,7 @@ class FlorisApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         try {
-            JetPrefManager.init(this, saveIntervalMs = 1_000)
+            JetPrefManager.init(saveIntervalMs = 1_000)
             Flog.install(
                 context = this,
                 isFloggingEnabled = BuildConfig.DEBUG,
@@ -76,8 +76,17 @@ class FlorisApplication : Application() {
                 flogLevels = Flog.LEVEL_ALL,
                 flogOutputs = Flog.OUTPUT_CONSOLE,
             )
-            initICU()
             CrashUtility.install(this)
+
+            if (AndroidVersion.ATLEAST_N && !UserManagerCompat.isUserUnlocked(this)) {
+                val context = createDeviceProtectedStorageContext()
+                initICU(context)
+                prefs.initializeForContext(context)
+                registerReceiver(BootComplete(), IntentFilter(Intent.ACTION_USER_UNLOCKED))
+            } else {
+                initICU(this)
+                prefs.initializeForContext(this)
+            }
 
             Preferences.initDefault(this)
             SubtypeManager.init(this)
@@ -87,26 +96,17 @@ class FlorisApplication : Application() {
             CrashUtility.stageException(e)
             return
         }
-
-        /*Register a receiver so user config can be applied once device protracted storage is available*/
-        if (!UserManagerCompat.isUserUnlocked(this) && AndroidVersion.ATLEAST_N) {
-            registerReceiver(BootComplete(), IntentFilter(Intent.ACTION_USER_UNLOCKED))
-        }
     }
 
-    fun initICU(): Boolean {
+    fun initICU(context: Context): Boolean {
         try {
-            val context = if (AndroidVersion.ATLEAST_N) {
-                createDeviceProtectedStorageContext()
-            } else {
-                this
-            }
             val androidAssetManager = context.assets ?: return false
-            val dstDataFile = File(context.cacheDir, "icudt.dat")
-            dstDataFile.outputStream().use { os ->
+            val icuTmpDataFile = File(context.cacheDir, "icudt.dat")
+            icuTmpDataFile.outputStream().use { os ->
                 androidAssetManager.open(ICU_DATA_ASSET_PATH).use { it.copyTo(os) }
             }
-            val status = nativeInitICUData(dstDataFile.absolutePath.toNativeStr())
+            val status = nativeInitICUData(icuTmpDataFile.absolutePath.toNativeStr())
+            icuTmpDataFile.delete()
             return if (status != 0) {
                 flogError { "Native ICU data initializing failed with error code $status!" }
                 false
@@ -129,6 +129,7 @@ class FlorisApplication : Application() {
                 } catch (e: Exception) {
                     flogError { e.toString() }
                 }
+                prefs.initializeForContext(this@FlorisApplication)
             }
         }
     }
