@@ -35,7 +35,6 @@ class Preferences(
 
     val dictionary = Dictionary(this)
     val localization = Localization(this)
-    val smartbar = Smartbar(this)
 
 
     /**
@@ -132,18 +131,5 @@ class Preferences(
         var subtypes: String
             get() =  prefs.getPref(SUBTYPES, "")
             set(v) = prefs.setPref(SUBTYPES, v)
-    }
-
-    /**
-     * Wrapper class for Smartbar preferences.
-     */
-    class Smartbar(private val prefs: Preferences) {
-        companion object {
-            const val ENABLED =                     "smartbar__enabled"
-        }
-
-        var enabled: Boolean
-            get() =  prefs.getPref(ENABLED, true)
-            set(v) = prefs.setPref(ENABLED, v)
     }
 }

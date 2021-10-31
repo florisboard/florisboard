@@ -221,6 +221,7 @@
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Space bar switches back to character layout</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Pressing space bar automatically switches back to characters when in symbols or numeric</string>
 
+    <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
     <string name="pref__smartbar__enabled__label" comment="Preference title">Enable Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Will show on top of the keyboard</string>
 

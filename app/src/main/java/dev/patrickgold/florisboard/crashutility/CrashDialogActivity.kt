@@ -28,13 +28,11 @@ import dev.patrickgold.florisboard.app.prefs.AppPrefs
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.databinding.CrashDialogBinding
 import dev.patrickgold.florisboard.debug.*
-import dev.patrickgold.florisboard.ime.core.Preferences
 
 class CrashDialogActivity : AppCompatActivity() {
     private lateinit var binding: CrashDialogBinding
     private var stacktraces: List<CrashUtility.Stacktrace> = listOf()
     private var errorReport: StringBuilder = StringBuilder()
-    private var oldPrefs: Preferences? = null
     private var prefs: AppPrefs? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +43,6 @@ class CrashDialogActivity : AppCompatActivity() {
         // We secure the PrefHelper usage here because the PrefHelper could potentially be the
         // source of the crash, thus making the crash dialog unusable if not wrapped.
         try {
-            oldPrefs = Preferences.default()
             prefs = florisPreferenceModel().preferenceModel
         } catch (_: Exception) {
         }
@@ -59,11 +56,10 @@ class CrashDialogActivity : AppCompatActivity() {
             appendLine()
             appendLine("#### Features enabled")
             appendLine("```kt")
-            val oldPrefs = oldPrefs
             val prefs = prefs
-            if (oldPrefs != null && prefs != null) {
+            if (prefs != null) {
                 try {
-                    appendLine("smartbar = ${oldPrefs.smartbar.enabled}")
+                    appendLine("smartbar = ${prefs.smartbar.enabled.get()}")
                     appendLine("suggestions = ${prefs.suggestion.enabled.get()}")
                     appendLine("suggestions_clipboard = ${prefs.suggestion.clipboardContentEnabled.get()}")
                     appendLine("suggestions_next_word = ${prefs.suggestion.usePrevWords.get()}")

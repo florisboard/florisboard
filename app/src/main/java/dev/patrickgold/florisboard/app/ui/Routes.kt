@@ -34,6 +34,7 @@ import dev.patrickgold.florisboard.app.ui.settings.clipboard.ClipboardScreen
 import dev.patrickgold.florisboard.app.ui.settings.gestures.GesturesScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.InputFeedbackScreen
 import dev.patrickgold.florisboard.app.ui.settings.keyboard.KeyboardScreen
+import dev.patrickgold.florisboard.app.ui.settings.smartbar.SmartbarScreen
 import dev.patrickgold.florisboard.app.ui.settings.spelling.ImportSpellingArchiveScreen
 import dev.patrickgold.florisboard.app.ui.settings.spelling.ManageSpellingDictsScreen
 import dev.patrickgold.florisboard.app.ui.settings.spelling.SpellingInfoScreen
@@ -61,6 +62,8 @@ object Routes {
 
         const val Keyboard = "settings/keyboard"
         const val InputFeedback = "settings/keyboard/input-feedback"
+
+        const val Smartbar = "settings/smartbar"
 
         const val Typing = "settings/typing"
 
@@ -115,6 +118,8 @@ object Routes {
 
             composable(Settings.Keyboard) { KeyboardScreen() }
             composable(Settings.InputFeedback) { InputFeedbackScreen() }
+
+            composable(Settings.Smartbar) { SmartbarScreen() }
 
             composable(Settings.Typing) { TypingScreen() }
 

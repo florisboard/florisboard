@@ -125,6 +125,11 @@ fun HomeScreen() = FlorisScreen(
         onClick = { navController.navigate(Routes.Settings.Keyboard) },
     )
     Preference(
+        iconId = null,
+        title = stringRes(R.string.settings__smartbar__title),
+        onClick = { navController.navigate(Routes.Settings.Smartbar) },
+    )
+    Preference(
         iconId = R.drawable.ic_spellcheck,
         title = stringRes(R.string.settings__typing__title),
         onClick = { navController.navigate(Routes.Settings.Typing) },

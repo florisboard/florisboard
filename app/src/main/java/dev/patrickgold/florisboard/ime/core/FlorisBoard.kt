@@ -116,7 +116,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
     val themeContext: Context
         get() = _themeContext ?: this
 
-    private val oldPrefs: Preferences get() = Preferences.default()
     private val prefs by florisPreferenceModel()
     val activeState: KeyboardState = KeyboardState.new()
 
@@ -437,7 +436,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreateInlineSuggestionsRequest(uiExtras: Bundle): InlineSuggestionsRequest? {
-        return if (oldPrefs.smartbar.enabled && prefs.suggestion.api30InlineSuggestionsEnabled.get()) {
+        return if (prefs.smartbar.enabled.get() && prefs.suggestion.api30InlineSuggestionsEnabled.get()) {
             flogInfo(LogTopic.IMS_EVENTS) {
                 "Creating inline suggestions request because Smartbar and inline suggestions are enabled."
             }

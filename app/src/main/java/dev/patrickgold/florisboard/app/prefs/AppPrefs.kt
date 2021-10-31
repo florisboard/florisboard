@@ -404,6 +404,14 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         }
     }
 
+    val smartbar = Smartbar()
+    inner class Smartbar {
+        val enabled = boolean(
+            key = "smartbar__enabled",
+            default = true,
+        )
+    }
+
     val spelling = Spelling()
     inner class Spelling {
         val languageMode = enum(

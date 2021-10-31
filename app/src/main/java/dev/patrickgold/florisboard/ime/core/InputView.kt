@@ -40,7 +40,6 @@ import kotlin.math.roundToInt
  */
 class InputView : LinearLayout {
     private val florisboard get() = FlorisBoard.getInstance()
-    private val oldPrefs get() = Preferences.default()
     private val prefs by florisPreferenceModel()
 
     var desiredInputViewHeight: Float = resources.getDimension(R.dimen.inputView_baseHeight)
@@ -102,7 +101,7 @@ class InputView : LinearLayout {
             baseHeight += additionalHeight
             baseTextInputHeight += additionalHeight
         }
-        val smartbarDisabled = !oldPrefs.smartbar.enabled ||
+        val smartbarDisabled = !prefs.smartbar.enabled.get() ||
                 tim.activeState.keyVariation == KeyVariation.PASSWORD && prefs.keyboard.numberRow.get() && !prefs.suggestion.api30InlineSuggestionsEnabled.get()
         if (smartbarDisabled) {
             baseHeight = baseTextInputHeight
