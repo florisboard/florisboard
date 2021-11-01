@@ -58,6 +58,7 @@ class SubtypeManager(
 
         prefs.datastoreReadyStatus.observeForever { isReady ->
             if (isReady) {
+                _subtypes.clear()
                 val listRaw = prefs.localization.subtypes.get()
                 if (listRaw.isNotBlank()) {
                     listRaw.split(SUBTYPE_LIST_STR_DELIMITER).forEach {

@@ -130,7 +130,7 @@ fun HomeScreen() = FlorisScreen(
         onClick = { navController.navigate(Routes.Settings.Smartbar) },
     )
     Preference(
-        iconId = R.drawable.ic_spellcheck,
+        iconId = R.drawable.ic_settings_suggest,
         title = stringRes(R.string.settings__typing__title),
         onClick = { navController.navigate(Routes.Settings.Typing) },
     )
@@ -140,7 +140,7 @@ fun HomeScreen() = FlorisScreen(
         onClick = { navController.navigate(Routes.Settings.Spelling) },
     )
     Preference(
-        iconId = null,
+        iconId = R.drawable.ic_library_books,
         title = stringRes(R.string.settings__dictionary__title),
         onClick = { navController.navigate(Routes.Settings.Dictionary) },
     )

@@ -225,7 +225,7 @@
     <string name="pref__smartbar__enabled__label" comment="Preference title">Enable Smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Will show on top of the keyboard</string>
 
-    <string name="settings__typing__title" comment="Title of Typing experience screen">Typing experience</string>
+    <string name="settings__typing__title" comment="Title of Typing experience screen">Suggestions &amp; Corrections</string>
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
     <string translatable="false" name="pref__suggestion__api30_inline_suggestions_enabled__label" comment="Preference title">System autofill suggestions</string>
     <string translatable="false" name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services (password managers, ...)</string>
