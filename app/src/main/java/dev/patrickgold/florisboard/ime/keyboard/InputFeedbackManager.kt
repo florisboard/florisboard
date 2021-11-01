@@ -33,6 +33,10 @@ import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.util.AndroidVersion
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 /**
  * Input feedback manager responsible to process and perform audio and haptic
@@ -73,6 +77,7 @@ class InputFeedbackManager private constructor(private val ims: InputMethodServi
     private val audioManager = ims.getSystemService(Context.AUDIO_SERVICE) as? AudioManager
     private val vibrator = ims.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
     private val contentResolver = ims.contentResolver
+    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     fun keyPress(data: KeyData = TextKeyData.UNSPECIFIED) {
         if (prefs.inputFeedback.audioFeatKeyPress.get()) performAudioFeedback(data, 1.0)
@@ -112,16 +117,18 @@ class InputFeedbackManager private constructor(private val ims: InputMethodServi
             if (!systemPref(Settings.System.SOUND_EFFECTS_ENABLED)) return
         }
 
-        val volume = (prefs.inputFeedback.audioVolume.get() * factor) / 100.0
-        val effect = when (data.code) {
-            KeyCode.DELETE -> AudioManager.FX_KEYPRESS_DELETE
-            KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN
-            KeyCode.SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR
-            else -> AudioManager.FX_KEYPRESS_STANDARD
-        }
-        if (volume in 0.01..1.00) {
-            flogDebug { "Perform audio with volume=$volume and effect=$effect" }
-            audioManager.playSoundEffect(effect, volume.toFloat())
+        scope.launch {
+            val volume = (prefs.inputFeedback.audioVolume.get() * factor) / 100.0
+            val effect = when (data.code) {
+                KeyCode.DELETE -> AudioManager.FX_KEYPRESS_DELETE
+                KeyCode.ENTER -> AudioManager.FX_KEYPRESS_RETURN
+                KeyCode.SPACE -> AudioManager.FX_KEYPRESS_SPACEBAR
+                else -> AudioManager.FX_KEYPRESS_STANDARD
+            }
+            if (volume in 0.01..1.00) {
+                flogDebug { "Perform audio with volume=$volume and effect=$effect" }
+                audioManager.playSoundEffect(effect, volume.toFloat())
+            }
         }
     }
 
@@ -133,42 +140,44 @@ class InputFeedbackManager private constructor(private val ims: InputMethodServi
             if (!systemPref(Settings.System.HAPTIC_FEEDBACK_ENABLED)) return
         }
 
-        if (!prefs.inputFeedback.hapticUseVibrator.get()) {
-            val view = ims.window?.window?.decorView ?: return
-            val hfc = if (factor < 1.0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-                HapticFeedbackConstants.TEXT_HANDLE_MOVE
-            } else {
-                HapticFeedbackConstants.KEYBOARD_TAP
+        scope.launch {
+            if (!prefs.inputFeedback.hapticUseVibrator.get()) {
+                val view = ims.window?.window?.decorView ?: return@launch
+                val hfc = if (factor < 1.0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+                    HapticFeedbackConstants.TEXT_HANDLE_MOVE
+                } else {
+                    HapticFeedbackConstants.KEYBOARD_TAP
+                }
+                val didPerform = view.performHapticFeedback(hfc,
+                    HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING or
+                        HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
+                )
+                if (didPerform) return@launch
+                // If not performed fall back to using the vibrator directly
             }
-            val didPerform = view.performHapticFeedback(hfc,
-                HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING or
-                    HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
-            )
-            if (didPerform) return
-            // If not performed fall back to using the vibrator directly
-        }
 
-        val duration = prefs.inputFeedback.hapticVibrationDuration.get()
-        if (duration != 0) {
-            val effectiveDuration = (duration * factor).toLong().coerceAtLeast(1L)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val strength = when {
-                    vibrator.hasAmplitudeControl() -> prefs.inputFeedback.hapticVibrationStrength.get()
-                    else -> VibrationEffect.DEFAULT_AMPLITUDE
-                }
-                if (strength != 0) {
-                    val effectiveStrength = when {
-                        vibrator.hasAmplitudeControl() -> (255.0 * ((strength * factor) / 100.0)).toInt().coerceIn(1, 255)
-                        else -> strength
+            val duration = prefs.inputFeedback.hapticVibrationDuration.get()
+            if (duration != 0) {
+                val effectiveDuration = (duration * factor).toLong().coerceAtLeast(1L)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    val strength = when {
+                        vibrator.hasAmplitudeControl() -> prefs.inputFeedback.hapticVibrationStrength.get()
+                        else -> VibrationEffect.DEFAULT_AMPLITUDE
                     }
-                    flogDebug { "Perform haptic with duration=$effectiveDuration and strength=$effectiveStrength" }
-                    val effect = VibrationEffect.createOneShot(effectiveDuration, effectiveStrength)
-                    vibrator.vibrate(effect)
+                    if (strength != 0) {
+                        val effectiveStrength = when {
+                            vibrator.hasAmplitudeControl() -> (255.0 * ((strength * factor) / 100.0)).toInt().coerceIn(1, 255)
+                            else -> strength
+                        }
+                        flogDebug { "Perform haptic with duration=$effectiveDuration and strength=$effectiveStrength" }
+                        val effect = VibrationEffect.createOneShot(effectiveDuration, effectiveStrength)
+                        vibrator.vibrate(effect)
+                    }
+                } else {
+                    flogDebug { "Perform haptic with duration=$effectiveDuration" }
+                    @Suppress("DEPRECATION")
+                    vibrator.vibrate(effectiveDuration)
                 }
-            } else {
-                flogDebug { "Perform haptic with duration=$effectiveDuration" }
-                @Suppress("DEPRECATION")
-                vibrator.vibrate(effectiveDuration)
             }
         }
     }
