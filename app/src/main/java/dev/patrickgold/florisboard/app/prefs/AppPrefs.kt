@@ -178,7 +178,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val swipeDistanceThreshold = int(
             key = "gestures__swipe_distance_threshold",
-            default = 32,
+            default = 36,
         )
         val swipeVelocityThreshold = int(
             key = "gestures__swipe_velocity_threshold",

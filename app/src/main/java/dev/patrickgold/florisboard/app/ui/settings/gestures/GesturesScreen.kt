@@ -136,7 +136,7 @@ fun GesturesScreen() = FlorisScreen(title = stringRes(R.string.settings__gesture
             title = stringRes(R.string.pref__gestures__swipe_distance_threshold__label),
             unit = stringRes(R.string.unit__display_pixel__symbol),
             min = 12,
-            max = 48,
+            max = 72,
             stepIncrement = 1,
         )
     }
