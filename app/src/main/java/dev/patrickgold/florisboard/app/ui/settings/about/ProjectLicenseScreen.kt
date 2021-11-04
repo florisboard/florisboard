@@ -16,9 +16,7 @@
 
 package dev.patrickgold.florisboard.app.ui.settings.about
 
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -29,15 +27,25 @@ import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.components.FlorisScreen
+import dev.patrickgold.florisboard.app.ui.components.florisHorizontalScroll
+import dev.patrickgold.florisboard.app.ui.components.florisVerticalScroll
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.res.FlorisRef
 
 @Composable
-fun ProjectLicenseScreen() = FlorisScreen(title = stringRes(R.string.about__project_license__title)) {
+fun ProjectLicenseScreen() = FlorisScreen(
+    title = stringRes(R.string.about__project_license__title),
+    scrollable = false,
+) {
     val context = LocalContext.current
     val assetManager by context.assetManager()
 
-    SelectionContainer(modifier = Modifier.fillMaxWidth()) {
+    SelectionContainer(
+        modifier = Modifier
+            .fillMaxSize()
+            .florisVerticalScroll()
+            .florisHorizontalScroll(),
+    ) {
         val licenseText = assetManager.loadTextAsset(
             FlorisRef.assets("license/project_license.txt")
         ).getOrElse {
@@ -51,7 +59,6 @@ fun ProjectLicenseScreen() = FlorisScreen(title = stringRes(R.string.about__proj
             fontFamily = FontFamily.Monospace,
             fontSize = 10.sp,
             softWrap = false,
-            modifier = Modifier.horizontalScroll(rememberScrollState()),
         )
     }
 }

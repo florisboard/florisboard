@@ -43,10 +43,15 @@ fun FlorisScreen(
         bottomBar = bottomBar,
         floatingActionButton = floatingActionButton,
     ) { innerPadding ->
-        Box(modifier = Modifier.padding(innerPadding)) {
+        val modifier = if (scrollable) {
+            Modifier.florisVerticalScroll()
+        } else {
+            Modifier
+        }
+        Box(modifier = modifier.padding(innerPadding)) {
             PreferenceLayout(
                 florisPreferenceModel(),
-                scrollable = scrollable,
+                scrollable = false,
                 iconSpaceReserved = iconSpaceReserved,
             ) {
                 content(this)

@@ -34,9 +34,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ContentAlpha
@@ -245,7 +243,7 @@ private fun ColumnScope.Step(
         ) {
             Column(modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
+                .florisVerticalScroll(),
             ) {
                 content()
             }
