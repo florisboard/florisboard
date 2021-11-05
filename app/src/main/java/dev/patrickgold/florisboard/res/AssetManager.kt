@@ -48,44 +48,44 @@ import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import java.io.File
 
+val DefaultJsonConfig = Json {
+    classDiscriminator = "$"
+    encodeDefaults = true
+    ignoreUnknownKeys = true
+    isLenient = true
+    serializersModule = SerializersModule {
+        polymorphic(AbstractKeyData::class) {
+            subclass(TextKeyData::class, TextKeyData.serializer())
+            subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
+            subclass(MultiTextKeyData::class, MultiTextKeyData.serializer())
+            subclass(EmojiKeyData::class, EmojiKeyData.serializer())
+            subclass(CaseSelector::class, CaseSelector.serializer())
+            subclass(VariationSelector::class, VariationSelector.serializer())
+            subclass(CharWidthSelector::class, CharWidthSelector.serializer())
+            subclass(KanaSelector::class, KanaSelector.serializer())
+            default { TextKeyData.serializer() }
+        }
+        polymorphic(KeyData::class) {
+            subclass(TextKeyData::class, TextKeyData.serializer())
+            subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
+            subclass(MultiTextKeyData::class, MultiTextKeyData.serializer())
+            subclass(EmojiKeyData::class, EmojiKeyData.serializer())
+            default { TextKeyData.serializer() }
+        }
+        polymorphic(Composer::class) {
+            subclass(Appender::class, Appender.serializer())
+            subclass(HangulUnicode::class, HangulUnicode.serializer())
+            subclass(KanaUnicode::class, KanaUnicode.serializer())
+            subclass(WithRules::class, WithRules.serializer())
+            default { Appender.serializer() }
+        }
+    }
+}
+
 class AssetManager(context: Context) {
     val appContext by context.appContext()
 
-    val jsonConfig = Json {
-        classDiscriminator = "$"
-        encodeDefaults = true
-        ignoreUnknownKeys = true
-        isLenient = true
-        serializersModule = SerializersModule {
-            polymorphic(AbstractKeyData::class) {
-                subclass(TextKeyData::class, TextKeyData.serializer())
-                subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
-                subclass(MultiTextKeyData::class, MultiTextKeyData.serializer())
-                subclass(EmojiKeyData::class, EmojiKeyData.serializer())
-                subclass(CaseSelector::class, CaseSelector.serializer())
-                subclass(VariationSelector::class, VariationSelector.serializer())
-                subclass(CharWidthSelector::class, CharWidthSelector.serializer())
-                subclass(KanaSelector::class, KanaSelector.serializer())
-                default { TextKeyData.serializer() }
-            }
-            polymorphic(KeyData::class) {
-                subclass(TextKeyData::class, TextKeyData.serializer())
-                subclass(AutoTextKeyData::class, AutoTextKeyData.serializer())
-                subclass(MultiTextKeyData::class, MultiTextKeyData.serializer())
-                subclass(EmojiKeyData::class, EmojiKeyData.serializer())
-                default { TextKeyData.serializer() }
-            }
-            polymorphic(Composer::class) {
-                subclass(Appender::class, Appender.serializer())
-                subclass(HangulUnicode::class, HangulUnicode.serializer())
-                subclass(KanaUnicode::class, KanaUnicode.serializer())
-                subclass(WithRules::class, WithRules.serializer())
-                default { Appender.serializer() }
-            }
-        }
-    }
-
-    fun jsonConfig(action: JsonBuilder.() -> Unit) = Json(jsonConfig) {
+    fun jsonConfig(action: JsonBuilder.() -> Unit) = Json(DefaultJsonConfig) {
         this.action()
     }
 
@@ -220,7 +220,7 @@ class AssetManager(context: Context) {
         }
     }
 
-    inline fun <reified T> loadJsonAsset(ref: FlorisRef, jsonConfig: Json = this.jsonConfig): Result<T> {
+    inline fun <reified T> loadJsonAsset(ref: FlorisRef, jsonConfig: Json = DefaultJsonConfig): Result<T> {
         return loadTextAsset(ref).fold(
             onSuccess = { runCatching { jsonConfig.decodeFromString(it) } },
             onFailure = { resultErr(it) }
@@ -230,34 +230,34 @@ class AssetManager(context: Context) {
     fun <T> loadJsonAsset(
         ref: FlorisRef,
         serializer: KSerializer<T>,
-        jsonConfig: Json = this.jsonConfig,
+        jsonConfig: Json = DefaultJsonConfig,
     ) = runCatching<T> {
         val jsonStr = loadTextAsset(ref).getOrThrow()
         jsonConfig.decodeFromString(serializer, jsonStr)
     }
 
-    inline fun <reified T> loadJsonAsset(file: File, jsonConfig: Json = this.jsonConfig): Result<T> {
+    inline fun <reified T> loadJsonAsset(file: File, jsonConfig: Json = DefaultJsonConfig): Result<T> {
         return readTextFile(file).fold(
             onSuccess = { runCatching { jsonConfig.decodeFromString(it) } },
             onFailure = { resultErr(it) }
         )
     }
 
-    inline fun <reified T> loadJsonAsset(uri: Uri, maxSize: Int, jsonConfig: Json = this.jsonConfig): Result<T> {
+    inline fun <reified T> loadJsonAsset(uri: Uri, maxSize: Int, jsonConfig: Json = DefaultJsonConfig): Result<T> {
         return loadTextAsset(uri, maxSize).fold(
             onSuccess = { runCatching { jsonConfig.decodeFromString(it) } },
             onFailure = { resultErr(it) }
         )
     }
 
-    inline fun <reified T> loadJsonAsset(jsonStr: String, jsonConfig: Json = this.jsonConfig): Result<T> {
+    inline fun <reified T> loadJsonAsset(jsonStr: String, jsonConfig: Json = DefaultJsonConfig): Result<T> {
         return runCatching { jsonConfig.decodeFromString(jsonStr) }
     }
 
     fun <T> loadJsonAsset(
         jsonStr: String,
         serializer: KSerializer<T>,
-        jsonConfig: Json = this.jsonConfig,
+        jsonConfig: Json = DefaultJsonConfig,
     ) = runCatching<T> {
         jsonConfig.decodeFromString(serializer, jsonStr)
     }
@@ -284,21 +284,21 @@ class AssetManager(context: Context) {
         return ExternalContentUtils.readAllTextFromUri(appContext, uri, maxSize)
     }
 
-    inline fun <reified T> writeJsonAsset(ref: FlorisRef, asset: T, jsonConfig: Json = this.jsonConfig): Result<Unit> {
+    inline fun <reified T> writeJsonAsset(ref: FlorisRef, asset: T, jsonConfig: Json = DefaultJsonConfig): Result<Unit> {
         return runCatching { jsonConfig.encodeToString(asset) }.fold(
             onSuccess = { writeTextAsset(ref, it) },
             onFailure = { resultErr(it) }
         )
     }
 
-    inline fun <reified T> writeJsonAsset(file: File, asset: T, jsonConfig: Json = this.jsonConfig): Result<Unit> {
+    inline fun <reified T> writeJsonAsset(file: File, asset: T, jsonConfig: Json = DefaultJsonConfig): Result<Unit> {
         return runCatching { jsonConfig.encodeToString(asset) }.fold(
             onSuccess = { writeTextFile(file, it) },
             onFailure = { resultErr(it) }
         )
     }
 
-    inline fun <reified T> writeJsonAsset(uri: Uri, asset: T, jsonConfig: Json = this.jsonConfig): Result<Unit> {
+    inline fun <reified T> writeJsonAsset(uri: Uri, asset: T, jsonConfig: Json = DefaultJsonConfig): Result<Unit> {
         return runCatching { jsonConfig.encodeToString(asset) }.fold(
             onSuccess = { writeTextAsset(uri, it) },
             onFailure = { resultErr(it) }
