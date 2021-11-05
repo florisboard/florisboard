@@ -3,12 +3,12 @@ package dev.patrickgold.florisboard.ime.text.gestures
 import android.content.Context
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.assetManager
-import dev.patrickgold.florisboard.ime.core.FlorisBoard
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.nlp.SuggestionList
 import dev.patrickgold.florisboard.ime.text.TextInputManager
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKey
 import dev.patrickgold.florisboard.res.FlorisRef
+import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -25,6 +25,7 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener, Corout
     private var glideTypingClassifier = StatisticalGlideTypingClassifier()
     private val prefs by florisPreferenceModel()
     private val assetManager by context.assetManager()
+    private val subtypeManager by context.subtypeManager()
 
     companion object {
         private const val MAX_SUGGESTION_COUNT = 8
@@ -66,7 +67,7 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener, Corout
      * Change the layout of the internal gesture classifier
      */
     fun setLayout(keys: List<TextKey>) {
-        glideTypingClassifier.setLayout(keys, FlorisBoard.getInstance().activeSubtype)
+        glideTypingClassifier.setLayout(keys, subtypeManager.activeSubtype())
     }
 
     private val wordDataCache = hashMapOf<String, Int>()

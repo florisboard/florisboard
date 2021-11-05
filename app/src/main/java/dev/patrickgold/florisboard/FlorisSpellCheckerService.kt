@@ -24,7 +24,6 @@ import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogInfo
-import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.spelling.SpellingLanguageMode
 import dev.patrickgold.florisboard.ime.spelling.SpellingService
@@ -67,7 +66,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         private fun setupSpellingIfNecessary() {
             val evaluatedLocale = when (prefs.spelling.languageMode.get()) {
                 SpellingLanguageMode.USE_KEYBOARD_SUBTYPES -> {
-                    (subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT).locale
+                    subtypeManager.activeSubtype().locale
                 }
                 else -> {
                     FlorisLocale.default()

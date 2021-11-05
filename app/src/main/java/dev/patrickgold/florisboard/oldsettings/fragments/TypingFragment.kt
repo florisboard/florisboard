@@ -219,7 +219,7 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
     }
 
     private fun updateSubtypeListView() {
-        val subtypes = subtypeManager.subtypes
+        val subtypes = subtypeManager.subtypes()
         binding.subtypeListView.removeAllViews()
         if (subtypes.isEmpty()) {
             binding.subtypeNotConfWarning.visibility = View.VISIBLE

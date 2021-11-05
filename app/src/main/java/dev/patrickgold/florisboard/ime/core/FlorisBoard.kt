@@ -145,9 +145,8 @@ open class FlorisBoard : LifecycleInputMethodService(),
 
     lateinit var activeEditorInstance: EditorInstance
 
-    val subtypeManager by subtypeManager()
-    val composer: Composer get() = subtypeManager.imeConfig.composerFromName.getValue(activeSubtype.composerName)
-    lateinit var activeSubtype: Subtype
+    private val subtypeManager by subtypeManager()
+    val composer: Composer get() = subtypeManager.imeConfig.composerFromName.getValue(subtypeManager.activeSubtype().composerName)
     private var currentThemeIsNight: Boolean = false
     private var currentThemeResId: Int = 0
     private var isWindowShown: Boolean = false
@@ -211,7 +210,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
 
                 imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
                 inputFeedbackManager = InputFeedbackManager.new(this)
-                activeSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
 
                 currentThemeIsNight = themeManager.activeTheme.isNightTheme
                 currentThemeResId = getDayNightBaseThemeId(currentThemeIsNight)
@@ -514,13 +512,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
         }
         isWindowShown = true
 
-        val newActiveSubtype = subtypeManager.getActiveSubtype() ?: Subtype.DEFAULT
-        if (newActiveSubtype != activeSubtype) {
-            activeSubtype = newActiveSubtype
-            onSubtypeChanged(activeSubtype, true)
-        } else {
-            onSubtypeChanged(activeSubtype, false)
-        }
         setActiveInput(R.id.text_input)
         updateOneHandedPanelVisibility()
         themeManager.update()
@@ -744,8 +735,8 @@ open class FlorisBoard : LifecycleInputMethodService(),
     fun executeSwipeAction(swipeAction: SwipeAction) {
         when (swipeAction) {
             SwipeAction.HIDE_KEYBOARD -> requestHideSelf(0)
-            SwipeAction.SWITCH_TO_PREV_SUBTYPE -> switchToPrevSubtype()
-            SwipeAction.SWITCH_TO_NEXT_SUBTYPE -> switchToNextSubtype()
+            SwipeAction.SWITCH_TO_PREV_SUBTYPE -> subtypeManager.switchToPrevSubtype()
+            SwipeAction.SWITCH_TO_NEXT_SUBTYPE -> subtypeManager.switchToNextSubtype()
             SwipeAction.SWITCH_TO_PREV_KEYBOARD -> switchToPrevKeyboard()
             else -> textInputManager.executeSwipeAction(swipeAction)
         }
@@ -767,7 +758,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
      * @return If the language switch should be shown.
      */
     fun shouldShowLanguageSwitch(): Boolean {
-        return subtypeManager.subtypes.size > 1
+        return subtypeManager.subtypes().size > 1
     }
 
     fun switchToPrevKeyboard(){
@@ -800,25 +791,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
             flogError { "Unable to switch to the next IME" }
             imeManager?.showInputMethodPicker()
         }
-    }
-
-    fun switchToPrevSubtype() {
-        flogInfo(LogTopic.IMS_EVENTS)
-        activeSubtype = subtypeManager.switchToPrevSubtype() ?: Subtype.DEFAULT
-        onSubtypeChanged(activeSubtype, true)
-    }
-
-    fun switchToNextSubtype() {
-        flogInfo(LogTopic.IMS_EVENTS)
-        activeSubtype = subtypeManager.switchToNextSubtype() ?: Subtype.DEFAULT
-        onSubtypeChanged(activeSubtype, true)
-    }
-
-    private fun onSubtypeChanged(newSubtype: Subtype, doRefreshLayouts: Boolean) {
-        flogInfo(LogTopic.SUBTYPE_MANAGER) { "New subtype: $newSubtype" }
-        textInputManager.onSubtypeChanged(newSubtype, doRefreshLayouts)
-        mediaInputManager.onSubtypeChanged(newSubtype, doRefreshLayouts)
-        clipInputManager.onSubtypeChanged(newSubtype, doRefreshLayouts)
     }
 
     fun setActiveInput(type: Int, forceSwitchToCharacters: Boolean = false) {
@@ -915,7 +887,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
 
         fun onApplyThemeAttributes() {}
         fun onPrimaryClipChanged() {}
-        fun onSubtypeChanged(newSubtype: Subtype, doRefreshLayouts: Boolean) {}
     }
 
     private enum class ResponseState {

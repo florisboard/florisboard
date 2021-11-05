@@ -58,6 +58,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardView
 import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import dev.patrickgold.florisboard.res.FlorisRef
+import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -83,6 +84,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     var isGlidePostEffect: Boolean = false
     private val florisboard get() = FlorisBoard.getInstance()
     private val prefs by florisPreferenceModel()
+    private val subtypeManager by florisboard.subtypeManager()
     var symbolsWithSpaceAfter: List<String> = listOf()
     private val activeEditorInstance: EditorInstance
         get() = florisboard.activeEditorInstance
@@ -206,7 +208,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
 
         override fun getActiveSubtype(): Subtype {
-            return florisboard.activeSubtype
+            return subtypeManager.activeSubtype.value!!
         }
 
         override fun getKeyVariation(): KeyVariation {
@@ -222,7 +224,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
 
         override fun getSlotData(data: KeyData): KeyData? {
-            return florisboard.subtypeManager.getCurrencySet(getActiveSubtype()).getSlot(data.code)
+            return subtypeManager.getCurrencySet(getActiveSubtype()).getSlot(data.code)
         }
     }
 
@@ -242,7 +244,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         inputEventDispatcher.keyEventReceiver = this
         isNumberRowVisible = prefs.keyboard.numberRow.get()
         activeEditorInstance.wordHistoryChangedListener = this
-        var subtypes = florisboard.subtypeManager.subtypes
+        var subtypes = subtypeManager.subtypes()
         if (subtypes.isEmpty()) {
             subtypes = listOf(Subtype.DEFAULT)
         }
@@ -254,6 +256,21 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
         prefs.advanced.forcePrivateMode.observe(florisboard) {
             activeState.updateIsPrivate(it)
+        }
+
+        subtypeManager.activeSubtype.observe(florisboard) { newSubtype ->
+            launch {
+                if (activeState.isComposingEnabled) {
+                    launch(Dispatchers.IO) {
+                        dictionaryManager.prepareDictionaries(newSubtype)
+                    }
+                }
+                if (prefs.glide.enabled.get()) {
+                    GlideTypingManager.getInstance(florisboard).setWordData(newSubtype)
+                }
+                setActiveKeyboard(getActiveKeyboardMode(), newSubtype)
+            }
+            isGlidePostEffect = false
         }
     }
 
@@ -398,7 +415,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         isManualSelectionModeStart = false
         isManualSelectionModeEnd = false
         activeState.isQuickActionsVisible = false
-        setActiveKeyboard(mode, florisboard.activeSubtype, updateState)
+        setActiveKeyboard(mode, subtypeManager.activeSubtype(), updateState)
     }
 
     private fun setActiveKeyboard(mode: KeyboardMode, subtype: Subtype, updateState: Boolean = true) = launch(Dispatchers.IO) {
@@ -414,23 +431,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 florisboard.dispatchCurrentStateToInputUi()
             }
         }
-    }
-
-    override fun onSubtypeChanged(newSubtype: Subtype, doRefreshLayouts: Boolean) {
-        launch {
-            if (activeState.isComposingEnabled) {
-                launch(Dispatchers.IO) {
-                    dictionaryManager.prepareDictionaries(newSubtype)
-                }
-            }
-            if (prefs.glide.enabled.get()) {
-                GlideTypingManager.getInstance(florisboard).setWordData(newSubtype)
-            }
-            if (doRefreshLayouts) {
-                setActiveKeyboard(getActiveKeyboardMode(), newSubtype)
-            }
-        }
-        isGlidePostEffect = false
     }
 
     /**
@@ -458,7 +458,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 dictionaryManager.suggest(
                     currentWord = currentWord.text,
                     preceidingWords = listOf(),
-                    subtype = florisboard.activeSubtype,
+                    subtype = subtypeManager.activeSubtype(),
                     allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
                     maxSuggestionCount = 16
                 ) { suggestions ->
@@ -639,7 +639,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private fun handleLanguageSwitch() {
         when (prefs.keyboard.utilityKeyAction.get()) {
             UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
-            UtilityKeyAction.SWITCH_LANGUAGE -> florisboard.switchToNextSubtype()
+            UtilityKeyAction.SWITCH_LANGUAGE -> subtypeManager.switchToNextSubtype()
             else -> florisboard.switchToNextKeyboard()
         }
     }
@@ -937,7 +937,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                         KeyType.CHARACTER,
                         KeyType.NUMERIC -> {
                             val text = data.asString(isForDisplay = false)
-                            if (isGlidePostEffect && (TextProcessor.isWord(text, florisboard.activeSubtype.locale) || text.isDigitsOnly())) {
+                            if (isGlidePostEffect && (TextProcessor.isWord(text, subtypeManager.activeSubtype().locale) || text.isDigitsOnly())) {
                                 activeEditorInstance.commitText(" ")
                             }
                             activeEditorInstance.commitText(text)
@@ -946,7 +946,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                             KeyCode.PHONE_PAUSE,
                             KeyCode.PHONE_WAIT -> {
                                 val text = data.asString(isForDisplay = false)
-                                if (isGlidePostEffect && (TextProcessor.isWord(text, florisboard.activeSubtype.locale) || text.isDigitsOnly())) {
+                                if (isGlidePostEffect && (TextProcessor.isWord(text, subtypeManager.activeSubtype().locale) || text.isDigitsOnly())) {
                                     activeEditorInstance.commitText(" ")
                                 }
                                 activeEditorInstance.commitText(text)
@@ -956,7 +956,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     else -> when (data.type) {
                         KeyType.CHARACTER, KeyType.NUMERIC ->{
                             val text = data.asString(isForDisplay = false)
-                            if (isGlidePostEffect && (TextProcessor.isWord(text, florisboard.activeSubtype.locale) || text.isDigitsOnly())) {
+                            if (isGlidePostEffect && (TextProcessor.isWord(text, subtypeManager.activeSubtype().locale) || text.isDigitsOnly())) {
                                 activeEditorInstance.commitText(" ")
                             }
                             activeEditorInstance.commitText(text)
@@ -1000,8 +1000,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     fun fixCase(word: String): String {
         return when {
-            activeState.capsLock -> word.uppercase(florisboard.activeSubtype.locale.base)
-            activeState.caps -> word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(florisboard.activeSubtype.locale.base) else it.toString() }
+            activeState.capsLock -> word.uppercase(subtypeManager.activeSubtype().locale.base)
+            activeState.caps -> word.replaceFirstChar { if (it.isLowerCase()) it.titlecase(subtypeManager.activeSubtype().locale.base) else it.toString() }
             else -> word
         }
     }
