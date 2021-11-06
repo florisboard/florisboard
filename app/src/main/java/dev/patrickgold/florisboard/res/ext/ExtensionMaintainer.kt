@@ -25,8 +25,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.math.min
 
-@Serializable(with = ExtensionAuthorSerializer::class)
-data class ExtensionAuthor(
+@Serializable(with = ExtensionMaintainerSerializer::class)
+data class ExtensionMaintainer(
     val name: String,
     val email: String? = null,
     val url: String? = null,
@@ -34,7 +34,7 @@ data class ExtensionAuthor(
     companion object {
         private val ValidationRegex = """^\s*[\p{L}\d._-][\p{L}\d\s._-]*(<[^<>]+>)?\s*(\([^()]+\))?\s*${'$'}""".toRegex()
 
-        fun from(str: String): ExtensionAuthor? {
+        fun from(str: String): ExtensionMaintainer? {
             if (str.isBlank() || !ValidationRegex.matches(str)) {
                 return null
             }
@@ -51,15 +51,15 @@ data class ExtensionAuthor(
             val name = str.substring(nameStart, nameEnd).trim()
             val email = str.substring(emailStart, emailEnd).trim().takeIf { it.isNotBlank() }
             val url = str.substring(urlStart, urlEnd).trim().takeIf { it.isNotBlank() }
-            return ExtensionAuthor(name, email, url)
+            return ExtensionMaintainer(name, email, url)
         }
 
-        fun fromOrTakeRaw(str: String): ExtensionAuthor {
-            return from(str) ?: ExtensionAuthor(str)
+        fun fromOrTakeRaw(str: String): ExtensionMaintainer {
+            return from(str) ?: ExtensionMaintainer(str)
         }
     }
 
-    fun edit() = ExtensionAuthorEditor(name, email ?: "", url ?: "")
+    fun edit() = ExtensionMaintainerEditor(name, email ?: "", url ?: "")
 
     override fun toString() = stringBuilder {
         append(name)
@@ -72,30 +72,30 @@ data class ExtensionAuthor(
     }
 }
 
-data class ExtensionAuthorEditor(
+data class ExtensionMaintainerEditor(
     var name: String = "",
     var email: String = "",
     var url: String = "",
 ) {
     fun build() = runCatching {
-        val author = ExtensionAuthor(
+        val maintainer = ExtensionMaintainer(
             name.trim(),
             email.trim().ifBlank { null },
             url.trim().ifBlank { null },
         )
-        check(author.name.isNotBlank()) { "Extension author name cannot be blank" }
-        return@runCatching author
+        check(maintainer.name.isNotBlank()) { "Extension maintainer name cannot be blank" }
+        return@runCatching maintainer
     }
 }
 
-private class ExtensionAuthorSerializer : KSerializer<ExtensionAuthor> {
-    override val descriptor = PrimitiveSerialDescriptor("ExtensionAuthor", PrimitiveKind.STRING)
+private class ExtensionMaintainerSerializer : KSerializer<ExtensionMaintainer> {
+    override val descriptor = PrimitiveSerialDescriptor("ExtensionMaintainer", PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, value: ExtensionAuthor) {
+    override fun serialize(encoder: Encoder, value: ExtensionMaintainer) {
         encoder.encodeString(value.toString())
     }
 
-    override fun deserialize(decoder: Decoder): ExtensionAuthor {
-        return ExtensionAuthor.fromOrTakeRaw(decoder.decodeString())
+    override fun deserialize(decoder: Decoder): ExtensionMaintainer {
+        return ExtensionMaintainer.fromOrTakeRaw(decoder.decodeString())
     }
 }

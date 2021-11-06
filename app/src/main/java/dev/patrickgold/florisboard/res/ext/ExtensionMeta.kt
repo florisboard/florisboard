@@ -78,16 +78,18 @@ data class ExtensionMeta(
     val issueTracker: String? = null,
 
     /**
-     * A list of authors who actively worked on the content of this extension.
+     * A list of maintainers who (actively) worked on putting the content together for this extension. Note that
+     * the actual author of each file within the extension (theme, layout, e.g.) may be different and is specified
+     * in the file meta itself.
      *
-     * Format: `Your Name <email@address.com> (www.author.com)`
+     * Format: `Your Name <email@address.com> (www.maintainer.com)`
      *  - Name is required
      *  - Email is optional, if included must be within the `<` and `>` symbols
      *  - URL is optional, if included must be within the `(` and `)` symbols
      *
      * Order of the above fields is important for parsing.
      */
-    val authors: List<ExtensionAuthor>,
+    val maintainers: List<ExtensionMaintainer>,
 
     /**
      * A valid license identifier, according to the [SPDX license list](https://spdx.org/licenses/).
@@ -97,7 +99,7 @@ data class ExtensionMeta(
 ) {
     fun edit() = ExtensionMetaEditor(
         id, version, title, description ?: "", keywords?.toMutableList() ?: mutableListOf(),
-        homepage ?: "", issueTracker ?: "", authors.map { it.edit() }.toMutableList(), license
+        homepage ?: "", issueTracker ?: "", maintainers.map { it.edit() }.toMutableList(), license
     )
 }
 
@@ -109,7 +111,7 @@ data class ExtensionMetaEditor(
     var keywords: MutableList<String> = mutableListOf(),
     var homepage: String = "",
     var issueTracker: String = "",
-    var authors: MutableList<ExtensionAuthorEditor> = mutableListOf(),
+    var maintainers: MutableList<ExtensionMaintainerEditor> = mutableListOf(),
     var license: String = "",
 ) {
     fun build() = runCatching {
@@ -121,13 +123,13 @@ data class ExtensionMetaEditor(
             keywords.mapNotNull { it.trim().ifBlank { null } }.ifEmpty { null },
             homepage.trim().ifBlank { null },
             issueTracker.trim().ifBlank { null },
-            authors.map { it.build().getOrThrow() },
+            maintainers.map { it.build().getOrThrow() },
             license.trim(),
         )
         check(meta.id.isNotBlank()) { "Extension ID cannot be blank" }
         check(meta.version.isNotBlank()) { "Extension version string cannot be blank" }
         check(meta.title.isNotBlank()) { "Extension title cannot be blank" }
-        check(meta.authors.isNotEmpty()) { "At least one extension author must be defined" }
+        check(meta.maintainers.isNotEmpty()) { "At least one extension maintainer must be defined" }
         check(meta.license.isNotBlank()) { "Extension license identifier cannot be blank" }
         return@runCatching meta
     }
