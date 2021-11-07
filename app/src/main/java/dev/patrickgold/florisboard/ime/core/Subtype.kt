@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Patrick Goldinger
+ * Copyright (C) 2021 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,99 +17,46 @@
 package dev.patrickgold.florisboard.ime.core
 
 import dev.patrickgold.florisboard.common.FlorisLocale
-import dev.patrickgold.florisboard.ime.text.composing.Appender
-import dev.patrickgold.florisboard.ime.text.layout.LayoutType
+import dev.patrickgold.florisboard.common.stringBuilder
+import dev.patrickgold.florisboard.ime.keyboard.LayoutType
+import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import kotlinx.serialization.*
-import java.util.*
 
 /**
  * Data class which represents an user-specified set of language and layout. String representations
- * of this object are stored as an array in the shared prefs.
- * @property id The ID of this subtype. Although this can be any numeric value, its value
- *  typically matches the one of the [DefaultSubtype] with the same locale.
- * @property locale The locale this subtype is bound to.
- * @property composerName The composer name to composer characters the way they should.
- * @property currencySetName The currency set name to display the correct currency symbols for this subtype.
+ * of this object are stored as an Json array in the preference datastore.
+ *
+ * @property id The ID of this subtype.
+ * @property primaryLocale The primary locale of this subtype.
+ * @property secondaryLocales The secondary locales of this subtype. May be an empty list.
+ * @property composer The composer name to composer characters the way they should.
+ * @property currencySet The currency set name to display the correct currency symbols for this subtype.
+ * @property popupMapping The popup mapping name to correctly show popups for this subtype.
  * @property layoutMap The layout map to properly display the correct layout for each layout type.
  */
+@Serializable
 data class Subtype(
     val id: Int,
-    val locale: FlorisLocale,
-    val composerName: String,
-    val currencySetName: String,
+    val primaryLocale: FlorisLocale,
+    val secondaryLocales: List<FlorisLocale>,
+    val composer: ExtensionComponentName,
+    val currencySet: ExtensionComponentName,
+    val popupMapping: ExtensionComponentName,
     val layoutMap: SubtypeLayoutMap,
 ) {
-    private val _hashCode: Int
-
     companion object {
         /**
          * Subtype to use when prefs do not contain any valid subtypes.
          */
         val DEFAULT = Subtype(
             id = -1,
-            locale = FlorisLocale.ENGLISH,
-            composerName = Appender.name,
-            currencySetName = "\$default",
-            layoutMap = SubtypeLayoutMap(characters = "qwerty")
+            primaryLocale = FlorisLocale.ENGLISH,
+            secondaryLocales = emptyList(),
+            composer = ExtensionComponentName("org.florisboard.composers", "appender"),
+            currencySet = ExtensionComponentName("org.florisboard.currencysets", "dollar"),
+            popupMapping = ExtensionComponentName("org.florisboard.localization", "en"),
+            layoutMap = SubtypeLayoutMap(characters = ExtensionComponentName("org.florisboard.layouts", "qwerty")),
         )
-
-        /**
-         * Converts the string representation of this object to a [Subtype]. Must be in the
-         * following format:
-         *  <id>/<language_code>/<currency_set_name>/c=<layout_name>
-         * or
-         *  <id>/<language_tag>/<currency_set_name>/c=<layout_name>
-         * Eg: 101/en_US/dollar/c=qwerty
-         *     201/de-DE/euro/c=qwertz
-         * If the given [str] does not match this format an [InvalidPropertiesFormatException]
-         * will be thrown.
-         */
-        fun fromString(str: String): Subtype {
-            val data = str.split("/")
-            when (data.size) {
-                4 -> {
-                    val locale = FlorisLocale.fromTag(data[1])
-                    return Subtype(
-                        data[0].toInt(),
-                        locale,
-                        Appender.name,
-                        data[2],
-                        SubtypeLayoutMap.fromString(data[3])
-                    )
-                }
-                5 -> {
-                    val locale = FlorisLocale.fromTag(data[1])
-                    return Subtype(
-                        data[0].toInt(),
-                        locale,
-                        data[2],
-                        data[3],
-                        SubtypeLayoutMap.fromString(data[4])
-                    )
-                }
-                else -> throw InvalidPropertiesFormatException(
-                    "Given string contains more or less than 5 properties..."
-                )
-            }
-        }
-    }
-
-    init {
-        var result = id
-        result = 31 * result + locale.hashCode()
-        result = 31 * result + composerName.hashCode()
-        result = 31 * result + currencySetName.hashCode()
-        result = 31 * result + layoutMap.hashCode()
-        _hashCode = result
-    }
-
-    /**
-     * Converts this object into its string representation. Format:
-     *  <id>/<language_tag>/<composer_name>/<currency_set_name>/<layout_map>
-     */
-    override fun toString(): String {
-        val languageTag = locale.languageTag()
-        return "$id/$languageTag/$composerName/$currencySetName/$layoutMap"
     }
 
     /**
@@ -117,40 +64,29 @@ data class Subtype(
      *  <id>/<language_tag>/<currency_set_name>
      */
     fun toShortString(): String {
-        val languageTag = locale.languageTag()
-        return "$id/$languageTag/$currencySetName"
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Subtype
-
-        if (id != other.id) return false
-        if (locale != other.locale) return false
-        if (composerName != other.composerName) return false
-        if (currencySetName != other.currencySetName) return false
-        if (layoutMap != other.layoutMap) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return _hashCode
+        val languageTag = primaryLocale.languageTag()
+        return "$id/$languageTag/$currencySet"
     }
 }
 
 @Serializable
 data class SubtypeLayoutMap(
-    val characters: String = CHARACTERS_DEFAULT,
-    val symbols: String = SYMBOLS_DEFAULT,
-    val symbols2: String = SYMBOLS2_DEFAULT,
-    val numeric: String = NUMERIC_DEFAULT,
-    val numericAdvanced: String = NUMERIC_ADVANCED_DEFAULT,
-    val numericRow: String = NUMERIC_ROW_DEFAULT,
-    val phone: String = PHONE_DEFAULT,
-    val phone2: String = PHONE2_DEFAULT,
+    @SerialName(CHARACTERS_CODE)
+    val characters: ExtensionComponentName = CHARACTERS_DEFAULT,
+    @SerialName(SYMBOLS_CODE)
+    val symbols: ExtensionComponentName = SYMBOLS_DEFAULT,
+    @SerialName(SYMBOLS2_CODE)
+    val symbols2: ExtensionComponentName = SYMBOLS2_DEFAULT,
+    @SerialName(NUMERIC_CODE)
+    val numeric: ExtensionComponentName = NUMERIC_DEFAULT,
+    @SerialName(NUMERIC_ADVANCED_CODE)
+    val numericAdvanced: ExtensionComponentName = NUMERIC_ADVANCED_DEFAULT,
+    @SerialName(NUMERIC_ROW_CODE)
+    val numericRow: ExtensionComponentName = NUMERIC_ROW_DEFAULT,
+    @SerialName(PHONE_CODE)
+    val phone: ExtensionComponentName = PHONE_DEFAULT,
+    @SerialName(PHONE2_CODE)
+    val phone2: ExtensionComponentName = PHONE2_DEFAULT,
 ) {
     @Transient private var _hashCode: Int = 0
 
@@ -167,45 +103,14 @@ data class SubtypeLayoutMap(
         private const val EQUALS =                      "="
         private const val DELIMITER =                   ","
 
-        private const val CHARACTERS_DEFAULT =          "qwerty"
-        private const val SYMBOLS_DEFAULT =             "western"
-        private const val SYMBOLS2_DEFAULT =            "western"
-        private const val NUMERIC_DEFAULT =             "western_arabic"
-        private const val NUMERIC_ADVANCED_DEFAULT =    "western_arabic"
-        private const val NUMERIC_ROW_DEFAULT =         "western_arabic"
-        private const val PHONE_DEFAULT =               "telpad"
-        private const val PHONE2_DEFAULT =              "telpad"
-
-        fun fromString(str: String): SubtypeLayoutMap {
-            var characters: String = CHARACTERS_DEFAULT
-            var symbols: String = SYMBOLS_DEFAULT
-            var symbols2: String = SYMBOLS2_DEFAULT
-            var numeric: String = NUMERIC_DEFAULT
-            var numericAdvanced: String = NUMERIC_ADVANCED_DEFAULT
-            var numericRow: String = NUMERIC_ROW_DEFAULT
-            var phone: String = PHONE_DEFAULT
-            var phone2: String = PHONE2_DEFAULT
-            for (layout in str.split(DELIMITER)) {
-                val layoutSplit = layout.split(EQUALS)
-                if (layoutSplit.size == 2) {
-                    val code = layoutSplit[0].trim()
-                    val layoutName = layoutSplit[1].trim()
-                    when (code) {
-                        CHARACTERS_CODE -> characters = layoutName
-                        SYMBOLS_CODE -> symbols = layoutName
-                        SYMBOLS2_CODE -> symbols2 = layoutName
-                        NUMERIC_CODE -> numeric = layoutName
-                        NUMERIC_ADVANCED_CODE -> numericAdvanced = layoutName
-                        NUMERIC_ROW_CODE -> numericRow = layoutName
-                        PHONE_CODE -> phone = layoutName
-                        PHONE2_CODE -> phone2 = layoutName
-                    }
-                }
-            }
-            return SubtypeLayoutMap(
-                characters, symbols, symbols2, numeric, numericAdvanced, numericRow, phone, phone2
-            )
-        }
+        private val CHARACTERS_DEFAULT =          ExtensionComponentName("org.florisboard.layouts", "qwerty")
+        private val SYMBOLS_DEFAULT =             ExtensionComponentName("org.florisboard.layouts", "western")
+        private val SYMBOLS2_DEFAULT =            ExtensionComponentName("org.florisboard.layouts", "western")
+        private val NUMERIC_DEFAULT =             ExtensionComponentName("org.florisboard.layouts", "western_arabic")
+        private val NUMERIC_ADVANCED_DEFAULT =    ExtensionComponentName("org.florisboard.layouts", "western_arabic")
+        private val NUMERIC_ROW_DEFAULT =         ExtensionComponentName("org.florisboard.layouts", "western_arabic")
+        private val PHONE_DEFAULT =               ExtensionComponentName("org.florisboard.layouts", "telpad")
+        private val PHONE2_DEFAULT =              ExtensionComponentName("org.florisboard.layouts", "telpad")
     }
 
     init {
@@ -220,7 +125,7 @@ data class SubtypeLayoutMap(
         _hashCode = result
     }
 
-    operator fun get(layoutType: LayoutType): String? {
+    operator fun get(layoutType: LayoutType): ExtensionComponentName? {
         return when (layoutType) {
             LayoutType.CHARACTERS -> characters
             LayoutType.SYMBOLS -> symbols
@@ -234,56 +139,52 @@ data class SubtypeLayoutMap(
         }
     }
 
-    override fun toString(): String {
-        return StringBuilder(128).run {
-            append(CHARACTERS_CODE)
-            append(EQUALS)
-            append(characters)
+    override fun toString() = stringBuilder(128) {
+        append(CHARACTERS_CODE)
+        append(EQUALS)
+        append(characters)
 
-            append(DELIMITER)
+        append(DELIMITER)
 
-            append(SYMBOLS_CODE)
-            append(EQUALS)
-            append(symbols)
+        append(SYMBOLS_CODE)
+        append(EQUALS)
+        append(symbols)
 
-            append(DELIMITER)
+        append(DELIMITER)
 
-            append(SYMBOLS2_CODE)
-            append(EQUALS)
-            append(symbols2)
+        append(SYMBOLS2_CODE)
+        append(EQUALS)
+        append(symbols2)
 
-            append(DELIMITER)
+        append(DELIMITER)
 
-            append(NUMERIC_ROW_CODE)
-            append(EQUALS)
-            append(numericRow)
+        append(NUMERIC_ROW_CODE)
+        append(EQUALS)
+        append(numericRow)
 
-            append(DELIMITER)
+        append(DELIMITER)
 
-            append(NUMERIC_CODE)
-            append(EQUALS)
-            append(numeric)
+        append(NUMERIC_CODE)
+        append(EQUALS)
+        append(numeric)
 
-            append(DELIMITER)
+        append(DELIMITER)
 
-            append(NUMERIC_ADVANCED_CODE)
-            append(EQUALS)
-            append(numericAdvanced)
+        append(NUMERIC_ADVANCED_CODE)
+        append(EQUALS)
+        append(numericAdvanced)
 
-            append(DELIMITER)
+        append(DELIMITER)
 
-            append(PHONE_CODE)
-            append(EQUALS)
-            append(phone)
+        append(PHONE_CODE)
+        append(EQUALS)
+        append(phone)
 
-            append(DELIMITER)
+        append(DELIMITER)
 
-            append(PHONE2_CODE)
-            append(EQUALS)
-            append(phone2)
-
-            toString()
-        }
+        append(PHONE2_CODE)
+        append(EQUALS)
+        append(phone2)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -312,20 +213,17 @@ data class SubtypeLayoutMap(
 /**
  * Data class which represents a predefined set of language and preferred layout.
  *
- * @property id The ID of this subtype.
  * @property locale The locale of this subtype. Beware its different name in json: 'languageTag'.
- * @property currencySetName The currency set name of this subtype. Beware its different name in json: 'currencySet'.
+ * @property currencySet The currency set name of this subtype.
  * @property preferred The preferred layout map for this subtype's locale.
  */
 @Serializable
-data class DefaultSubtype(
-    var id: Int,
+data class SubtypePreset(
     @Serializable(with = FlorisLocale.Serializer::class)
     @SerialName("languageTag")
-    var locale: FlorisLocale,
-    @SerialName("composer")
-    var composerName: String,
-    @SerialName("currencySet")
-    var currencySetName: String,
-    var preferred: SubtypeLayoutMap
+    val locale: FlorisLocale,
+    val composer: ExtensionComponentName,
+    val currencySet: ExtensionComponentName,
+    val popupMapping: ExtensionComponentName,
+    val preferred: SubtypeLayoutMap
 )

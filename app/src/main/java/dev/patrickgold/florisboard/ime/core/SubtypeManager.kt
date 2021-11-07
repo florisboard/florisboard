@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Patrick Goldinger
+ * Copyright (C) 2021 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,10 +23,15 @@ import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.debug.*
-import dev.patrickgold.florisboard.ime.text.key.CurrencySet
+import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.res.FlorisRef
+import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 /**
  * Class which acts as a high level helper for the raw implementation of subtypes in the prefs.
@@ -43,11 +48,13 @@ class SubtypeManager(
 ) : CoroutineScope by MainScope() {
 
     companion object {
-        const val IME_CONFIG_FILE_PATH = "ime/config.json"
-        const val SUBTYPE_LIST_STR_DELIMITER = ";"
+        private val SubtypeJsonConfig = Json {
+            isLenient = false
+        }
     }
 
     private val assetManager by context.assetManager()
+    private val keyboardManager by context.keyboardManager()
     private val prefs by florisPreferenceModel()
 
     val imeConfig: FlorisBoard.ImeConfig
@@ -58,11 +65,12 @@ class SubtypeManager(
     val activeSubtype: LiveData<Subtype> get() = _activeSubtype
 
     init {
-        imeConfig = loadImeConfig(IME_CONFIG_FILE_PATH, packageName)
+        // TODO: remove this
+        imeConfig = loadImeConfig("ime/config.json", packageName)
 
         prefs.localization.subtypes.observeForever { listRaw ->
             val list = if (listRaw.isNotBlank()) {
-                listRaw.split(SUBTYPE_LIST_STR_DELIMITER).map { Subtype.fromString(it) }
+                SubtypeJsonConfig.decodeFromString<List<Subtype>>(listRaw)
             } else {
                 emptyList()
             }
@@ -76,7 +84,8 @@ class SubtypeManager(
     fun activeSubtype() = _activeSubtype.value!!
 
     private fun persistNewSubtypeList(list: List<Subtype>) {
-        prefs.localization.subtypes.set(list.joinToString(SUBTYPE_LIST_STR_DELIMITER))
+        val listRaw = SubtypeJsonConfig.encodeToString(list)
+        prefs.localization.subtypes.set(listRaw)
     }
 
     /**
@@ -130,19 +139,28 @@ class SubtypeManager(
      * list, if it does not exist.
      *
      * @param locale The locale of the subtype to be added.
-     * @param composerName The composer name of the subtype to be added.
-     * @param currencySetName The currency set name of the subtype to be added.
+     * @param composer The composer name of the subtype to be added.
+     * @param currencySet The currency set name of the subtype to be added.
+     * @param popupMapping The popup mapping name of the subtype to be added.
      * @param layoutMap The layout map of the subtype to be added.
      * @return True if the subtype was added, false otherwise. A return value of false indicates
      *  that the subtype already exists.
      */
-    fun addSubtype(locale: FlorisLocale, composerName: String, currencySetName: String, layoutMap: SubtypeLayoutMap): Boolean {
+    fun addSubtype(
+        locale: FlorisLocale,
+        composer: ExtensionComponentName,
+        currencySet: ExtensionComponentName,
+        popupMapping: ExtensionComponentName,
+        layoutMap: SubtypeLayoutMap,
+    ): Boolean {
         return addSubtype(
             Subtype(
-                (locale.hashCode() + 31 * layoutMap.hashCode() + 31 * currencySetName.hashCode()),
+                (locale.hashCode() + 31 * layoutMap.hashCode() + 31 * currencySet.hashCode()),
                 locale,
-                composerName,
-                currencySetName,
+                emptyList(),
+                composer,
+                currencySet,
+                popupMapping,
                 layoutMap
             )
         )
@@ -155,7 +173,7 @@ class SubtypeManager(
      * @return The currency set or a fallback.
      */
     fun getCurrencySet(subtypeToSearch: Subtype): CurrencySet {
-        return imeConfig.currencySets.find { it.name == subtypeToSearch.currencySetName } ?: CurrencySet.default()
+        return keyboardManager.resources.currencySets.value?.get(subtypeToSearch.currencySet) ?: CurrencySet.default()
     }
 
     /**
@@ -176,8 +194,8 @@ class SubtypeManager(
      * @return The default system locale or null, if no matching default system subtype could be
      *  found.
      */
-    fun getDefaultSubtypeForLocale(locale: FlorisLocale): DefaultSubtype? {
-        return imeConfig.defaultSubtypes.find { it.locale == locale }
+    fun getDefaultSubtypeForLocale(locale: FlorisLocale): SubtypePreset? {
+        return keyboardManager.resources.subtypePresets.value?.find { it.locale == locale }
     }
 
     /**
