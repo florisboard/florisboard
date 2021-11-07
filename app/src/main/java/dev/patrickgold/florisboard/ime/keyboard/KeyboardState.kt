@@ -22,8 +22,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.view.children
+import androidx.lifecycle.LiveData
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
+import java.util.concurrent.atomic.AtomicInteger
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+import kotlin.properties.Delegates
 
 /**
  * This class is a helper managing the state of the text input logic which
@@ -41,6 +46,9 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
  *          |          |        1 |          | Caps flag
  *          |          |       1  |          | Caps lock flag
  *          |          |      1   |          | Is selection active (length > 0)
+ *          |          |     1    |          | Is manual selection mode
+ *          |          |    1     |          | Is manual selection mode (start)
+ *          |          |   1      |          | Is manual selection mode (end)
  *          |          | 1        |          | Is private mode
  *          |        1 |          |          | Is Smartbar quick actions visible
  *          |       1  |          |          | Is Smartbar showing inline suggestions
@@ -74,12 +82,16 @@ import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
  * The resulting structure is only relevant during a runtime lifespan and
  * thus can easily be changed without worrying about destroying some saved state.
  *
- * @property value The internal register used to store the flags and region ints that
+ * @property rawValue The internal register used to store the flags and region ints that
  *  this keyboard state represents.
  * @property maskOfInterest The mask which is applied when comparing this state with another.
  *  Is useful if only parts of a state instance is relevant to look at.
  */
-class KeyboardState private constructor(var value: ULong, var maskOfInterest: ULong) {
+class KeyboardState private constructor(
+    initValue: ULong,
+    private var maskOfInterest: ULong,
+) : LiveData<KeyboardState>() {
+
     companion object {
         const val M_KEYBOARD_MODE: ULong =                  0x0Fu
         const val O_KEYBOARD_MODE: Int =                    0
@@ -89,6 +101,9 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
         const val F_CAPS: ULong =                           0x00000100u
         const val F_CAPS_LOCK: ULong =                      0x00000200u
         const val F_IS_SELECTION_MODE: ULong =              0x00000400u
+        const val F_IS_MANUAL_SELECTION_MODE: ULong =       0x00000800u
+        const val F_IS_MANUAL_SELECTION_MODE_START: ULong = 0x00001000u
+        const val F_IS_MANUAL_SELECTION_MODE_END: ULong =   0x00002000u
         const val F_IS_PRIVATE_MODE: ULong =                0x00008000u
         const val F_IS_QUICK_ACTIONS_VISIBLE: ULong =       0x00010000u
         const val F_IS_SHOWING_INLINE_SUGGESTIONS: ULong =  0x00020000u
@@ -105,14 +120,80 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
         const val INTEREST_TEXT: ULong =                    0xFF_FF_FF_FF_00_FF_FF_FFu
         const val INTEREST_MEDIA: ULong =                   0x00_00_00_00_FF_00_00_00u
 
+        const val BATCH_ZERO: Int =                         0
+
         fun new(
             value: ULong = STATE_ALL_ZERO,
             maskOfInterest: ULong = INTEREST_ALL
         ) = KeyboardState(value, maskOfInterest)
     }
 
+    private var rawValue by Delegates.observable(initValue) { _, _, _ -> dispatchState() }
+    private val batchEditCount = AtomicInteger(BATCH_ZERO)
+
     val imeOptions: ImeOptions = ImeOptions(this)
     val inputAttributes: InputAttributes = InputAttributes(this)
+
+    init {
+        dispatchState()
+    }
+
+    override fun setValue(value: KeyboardState?) {
+        error("Do not use setValue() directly")
+    }
+
+    override fun postValue(value: KeyboardState?) {
+        error("Do not use postValue() directly")
+    }
+
+    /**
+     * Dispatches the new state to all observers if [batchEditCount] is [BATCH_ZERO] (= no active batch edits).
+     */
+    private fun dispatchState() {
+        if (batchEditCount.get() == BATCH_ZERO) {
+            try {
+                super.setValue(this)
+            } catch (e: Exception) {
+                super.postValue(this)
+            }
+        }
+    }
+
+    /**
+     * Begins a batch edit. Any modifications done during an active batch edit will not be dispatched to observers
+     * until [endBatchEdit] is called. At any time given there can be multiple active batch edits at once. This
+     * method is thread-safe and can be called from any thread.
+     */
+    fun beginBatchEdit() {
+        batchEditCount.incrementAndGet()
+    }
+
+    /**
+     * Ends a batch edit. Will dispatch the current state if there are no more other batch edits active. This method is
+     * thread-safe and can be called from any thread.
+     */
+    fun endBatchEdit() {
+        batchEditCount.decrementAndGet()
+        dispatchState()
+    }
+
+    /**
+     * Performs a batch edit by executing the modifier [block]. Any exception that [block] throws will be caught and
+     * re-thrown after correctly ending the batch edit.
+     */
+    inline fun batchEdit(block: (KeyboardState) -> Unit) {
+        contract {
+            callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        }
+        beginBatchEdit()
+        try {
+            block(this)
+        } catch (e: Throwable) {
+            throw e
+        } finally {
+            endBatchEdit()
+        }
+    }
 
     /**
      * Resets this state register.
@@ -121,7 +202,7 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
      *  Defaults to [STATE_ALL_ZERO].
      */
     fun reset(newValue: ULong = STATE_ALL_ZERO) {
-        value = newValue
+        rawValue = newValue
     }
 
     /**
@@ -131,7 +212,7 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
      *  the reset.
      */
     fun reset(newState: KeyboardState) {
-        value = newState.value
+        rawValue = newState.rawValue
     }
 
     /**
@@ -141,28 +222,30 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
      *  to the info this object provides.
      */
     fun update(editorInfo: EditorInfo) {
+        beginBatchEdit()
         imeOptions.update(editorInfo)
         inputAttributes.update(editorInfo)
+        endBatchEdit()
     }
 
     internal fun getFlag(f: ULong): Boolean {
-        return (value and f) != STATE_ALL_ZERO
+        return (rawValue and f) != STATE_ALL_ZERO
     }
 
     internal fun setFlag(f: ULong, v: Boolean) {
-        value = if (v) { value or f } else { value and f.inv() }
+        rawValue = if (v) { rawValue or f } else { rawValue and f.inv() }
     }
 
     internal fun getRegion(m: ULong, o: Int): Int {
-        return ((value shr o) and m).toInt()
+        return ((rawValue shr o) and m).toInt()
     }
 
     internal fun setRegion(m: ULong, o: Int, v: Int) {
-        value = (value and (m shl o).inv()) or ((v.toULong() and m) shl o)
+        rawValue = (rawValue and (m shl o).inv()) or ((v.toULong() and m) shl o)
     }
 
     fun isEqualTo(other: KeyboardState): Boolean {
-        return (other.value and maskOfInterest) == (value and maskOfInterest)
+        return (other.rawValue and maskOfInterest) == (rawValue and maskOfInterest)
     }
 
     fun isDifferentTo(other: KeyboardState): Boolean {
@@ -170,7 +253,7 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
     }
 
     override fun hashCode(): Int {
-        var result = value.hashCode()
+        var result = rawValue.hashCode()
         result = 31 * result + maskOfInterest.hashCode()
         return result
     }
@@ -181,7 +264,7 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
 
         other as KeyboardState
 
-        if (value != other.value) return false
+        if (rawValue != other.rawValue) return false
         if (maskOfInterest != other.maskOfInterest) return false
         if (imeOptions != other.imeOptions) return false
         if (inputAttributes != other.inputAttributes) return false
@@ -208,6 +291,18 @@ class KeyboardState private constructor(var value: ULong, var maskOfInterest: UL
     var isSelectionMode: Boolean
         get() = getFlag(F_IS_SELECTION_MODE)
         set(v) { setFlag(F_IS_SELECTION_MODE, v) }
+
+    var isManualSelectionMode: Boolean
+        get() = getFlag(F_IS_MANUAL_SELECTION_MODE)
+        set(v) { setFlag(F_IS_MANUAL_SELECTION_MODE, v) }
+
+    var isManualSelectionModeStart: Boolean
+        get() = getFlag(F_IS_MANUAL_SELECTION_MODE_START)
+        set(v) { setFlag(F_IS_MANUAL_SELECTION_MODE_START, v) }
+
+    var isManualSelectionModeEnd: Boolean
+        get() = getFlag(F_IS_MANUAL_SELECTION_MODE_END)
+        set(v) { setFlag(F_IS_MANUAL_SELECTION_MODE_END, v) }
 
     var isCursorMode: Boolean
         get() = !isSelectionMode
