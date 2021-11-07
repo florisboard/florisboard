@@ -24,6 +24,7 @@ import dev.patrickgold.florisboard.assetManager
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogError
+import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.res.FlorisRef
@@ -40,14 +41,16 @@ import java.io.File
 
 class ExtensionManager(context: Context) {
     companion object {
+        private const val IME_KEYBOARD_PATH = "ime/keyboard"
         private const val IME_SPELLING_PATH = "ime/spelling"
-        private const val IME_THEME_PATH = "ime/theme"
+        private const val IME_THEME_PATH = "ime/themes"
     }
 
     private val appContext by context.appContext()
     private val assetManager by context.assetManager()
     private val ioScope = CoroutineScope(Dispatchers.IO)
 
+    val keyboardExtensions = ExtensionIndex(KeyboardExtension.serializer(), IME_KEYBOARD_PATH)
     val spellingDicts = ExtensionIndex(SpellingExtension.serializer(), IME_SPELLING_PATH)
     val themes = ExtensionIndex(ThemeExtension.serializer(), IME_THEME_PATH)
 
@@ -58,6 +61,7 @@ class ExtensionManager(context: Context) {
         encodeDefaults = false
         serializersModule = SerializersModule {
             polymorphic(Extension::class) {
+                subclass(KeyboardExtension::class, KeyboardExtension.serializer())
                 subclass(SpellingExtension::class, SpellingExtension.serializer())
                 subclass(ThemeExtension::class, ThemeExtension.serializer())
             }
@@ -124,7 +128,7 @@ class ExtensionManager(context: Context) {
             }
         }
 
-        fun onEventCallback(event: Int, path: String?) {
+        private fun onEventCallback(event: Int, path: String?) {
             flogDebug(LogTopic.EXT_INDEXING) { "FileObserver.onEvent { event=$event path=$path }" }
             if (path == null) return
             ioScope.launch {
