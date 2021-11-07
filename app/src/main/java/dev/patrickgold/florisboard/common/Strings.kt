@@ -21,11 +21,11 @@ package dev.patrickgold.florisboard.common
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-inline fun <R> stringBuilder(builder: StringBuilder.() -> R): String {
+inline fun <R> stringBuilder(capacity: Int = 16, builder: StringBuilder.() -> R): String {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val sb = StringBuilder()
+    val sb = StringBuilder(capacity)
     builder(sb)
     return sb.toString()
 }
