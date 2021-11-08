@@ -16,7 +16,9 @@
 
 package dev.patrickgold.florisboard.res.ext
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
 
 /**
  * Interface for an `extension.json` file, which serves as a configuration of an extension
@@ -32,6 +34,7 @@ import kotlinx.serialization.Serializable
  *
  * Should multiple files exist which match the regex, always the first match will be used.
  */
+@OptIn(ExperimentalSerializationApi::class)
 @Serializable
 data class ExtensionMeta(
     /**
@@ -89,6 +92,7 @@ data class ExtensionMeta(
      *
      * Order of the above fields is important for parsing.
      */
+    @JsonNames("authors")
     val maintainers: List<ExtensionMaintainer>,
 
     /**

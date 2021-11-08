@@ -33,6 +33,10 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
+val SubtypeJsonConfig = Json {
+    isLenient = false
+}
+
 /**
  * Class which acts as a high level helper for the raw implementation of subtypes in the prefs.
  * Also interprets the default subtype list defined in ime/config.json and provides helper
@@ -46,12 +50,6 @@ class SubtypeManager(
     context: Context,
     packageName: String = context.packageName,
 ) : CoroutineScope by MainScope() {
-
-    companion object {
-        private val SubtypeJsonConfig = Json {
-            isLenient = false
-        }
-    }
 
     private val assetManager by context.assetManager()
     private val keyboardManager by context.keyboardManager()

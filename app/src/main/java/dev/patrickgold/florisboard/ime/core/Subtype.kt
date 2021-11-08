@@ -50,7 +50,7 @@ data class Subtype(
          */
         val DEFAULT = Subtype(
             id = -1,
-            primaryLocale = FlorisLocale.ENGLISH,
+            primaryLocale = FlorisLocale.from("en", "US"),
             secondaryLocales = emptyList(),
             composer = ExtensionComponentName("org.florisboard.composers", "appender"),
             currencySet = ExtensionComponentName("org.florisboard.currencysets", "dollar"),
@@ -224,6 +224,6 @@ data class SubtypePreset(
     val locale: FlorisLocale,
     val composer: ExtensionComponentName,
     val currencySet: ExtensionComponentName,
-    val popupMapping: ExtensionComponentName,
-    val preferred: SubtypeLayoutMap
+    val popupMapping: ExtensionComponentName? = null,
+    val preferred: SubtypeLayoutMap,
 )

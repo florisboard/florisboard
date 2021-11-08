@@ -27,6 +27,7 @@ import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
 import dev.patrickgold.florisboard.ime.spelling.SpellingExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
+import dev.patrickgold.florisboard.res.DefaultJsonConfig
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.util.AndroidVersion
@@ -35,9 +36,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import java.io.File
+
+@OptIn(ExperimentalSerializationApi::class)
+val ExtensionJsonConfig = Json(DefaultJsonConfig) {
+    prettyPrint = true
+    prettyPrintIndent = "  "
+    encodeDefaults = false
+    serializersModule = SerializersModule {
+        polymorphic(Extension::class) {
+            subclass(KeyboardExtension::class, KeyboardExtension.serializer())
+            subclass(SpellingExtension::class, SpellingExtension.serializer())
+            subclass(ThemeExtension::class, ThemeExtension.serializer())
+        }
+    }
+}
 
 class ExtensionManager(context: Context) {
     companion object {
@@ -54,20 +70,6 @@ class ExtensionManager(context: Context) {
     val spellingDicts = ExtensionIndex(SpellingExtension.serializer(), IME_SPELLING_PATH)
     val themes = ExtensionIndex(ThemeExtension.serializer(), IME_THEME_PATH)
 
-    @OptIn(ExperimentalSerializationApi::class)
-    private val jsonConfig = assetManager.jsonConfig {
-        prettyPrint = true
-        prettyPrintIndent = "  "
-        encodeDefaults = false
-        serializersModule = SerializersModule {
-            polymorphic(Extension::class) {
-                subclass(KeyboardExtension::class, KeyboardExtension.serializer())
-                subclass(SpellingExtension::class, SpellingExtension.serializer())
-                subclass(ThemeExtension::class, ThemeExtension.serializer())
-            }
-        }
-    }
-
     fun import(ext: Extension) = runCatching {
         val extFileName = ExtensionDefaults.createFlexName(ext.meta.id)
         val relGroupPath = when (ext) {
@@ -76,7 +78,7 @@ class ExtensionManager(context: Context) {
             else -> error("Unknown extension type")
         }
         ext.sourceRef = FlorisRef.internal(relGroupPath).subRef(extFileName)
-        assetManager.writeJsonAsset(File(ext.workingDir!!, ExtensionDefaults.MANIFEST_FILE_NAME), ext, jsonConfig).getOrThrow()
+        assetManager.writeJsonAsset(File(ext.workingDir!!, ExtensionDefaults.MANIFEST_FILE_NAME), ext, ExtensionJsonConfig).getOrThrow()
         writeExtension(ext).getOrThrow()
         ext.unload(appContext)
         ext.workingDir = null
@@ -156,7 +158,7 @@ class ExtensionManager(context: Context) {
                 onSuccess = { extRefs ->
                     for (extRef in extRefs) {
                         val fileRef = extRef.subRef(ExtensionDefaults.MANIFEST_FILE_NAME)
-                        assetManager.loadJsonAsset(fileRef, serializer, jsonConfig).fold(
+                        assetManager.loadJsonAsset(fileRef, serializer, ExtensionJsonConfig).fold(
                             onSuccess = { ext ->
                                 ext.sourceRef = extRef
                                 list.add(ext)
@@ -185,7 +187,7 @@ class ExtensionManager(context: Context) {
                         }
                         ZipUtils.readFileFromArchive(appContext, extRef, ExtensionDefaults.MANIFEST_FILE_NAME).fold(
                             onSuccess = { metaStr ->
-                                assetManager.loadJsonAsset(metaStr, serializer, jsonConfig).fold(
+                                assetManager.loadJsonAsset(metaStr, serializer, ExtensionJsonConfig).fold(
                                     onSuccess = { ext ->
                                         ext.sourceRef = extRef
                                         list.add(ext)
