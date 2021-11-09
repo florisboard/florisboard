@@ -432,7 +432,7 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Configurações do sistema Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Localização do sistema</string>
     <!-- Extension strings -->
-    <string name="ext__meta__authors">Autores</string>
+    <string name="ext__meta__maintainers">Autores</string>
     <string name="ext__meta__description">Descrição</string>
     <string name="ext__meta__homepage">Página inicial</string>
     <string name="ext__meta__id">ID</string>

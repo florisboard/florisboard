@@ -35,15 +35,15 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
-import dev.patrickgold.florisboard.ime.text.key.CurrencySet
+import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardIconSet
-import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeValue
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.oldsettings.components.ThemeAttrGroupView
 import dev.patrickgold.florisboard.oldsettings.components.ThemeAttrView
@@ -57,7 +57,7 @@ import kotlinx.coroutines.launch
 class ThemeEditorActivity : AppCompatActivity() {
     private lateinit var binding: ThemeEditorActivityBinding
     private val mainScope = MainScope()
-    private lateinit var layoutManager: LayoutManager
+    private val keyboardManager by keyboardManager()
     private val themeManager: ThemeManager = ThemeManager.default()
 
     private lateinit var textKeyboardIconSet: TextKeyboardIconSet
@@ -100,8 +100,6 @@ class ThemeEditorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ThemeEditorActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        layoutManager = LayoutManager(this)
 
         FlorisRef.from(intent.getStringExtra(EXTRA_THEME_REF) ?: "").takeIf { it.isValid }?.let { ref ->
             editedThemeRef = ref
@@ -337,7 +335,7 @@ class ThemeEditorActivity : AppCompatActivity() {
             }
         }
         mainScope.launch {
-            binding.keyboardPreview.setComputedKeyboard(layoutManager.computeKeyboardAsync(
+            binding.keyboardPreview.setComputedKeyboard(keyboardManager.computeKeyboardAsync(
                 KeyboardMode.CHARACTERS, Subtype.DEFAULT
             ).await())
             binding.keyboardPreview.onThemeUpdated(editedTheme)

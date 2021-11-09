@@ -115,6 +115,11 @@ fun HomeScreen() = FlorisScreen(
         onClick = { launchActivity(context, SettingsMainActivity::class) },
     )
     Preference(
+        iconId = R.drawable.ic_language,
+        title = stringRes(R.string.settings__localization__title),
+        onClick = { navController.navigate(Routes.Settings.Localization) },
+    )
+    Preference(
         iconId = R.drawable.ic_palette,
         title = stringRes(R.string.settings__theme__title),
         onClick = { navController.navigate(Routes.Settings.Theme) },

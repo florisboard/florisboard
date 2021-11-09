@@ -416,7 +416,7 @@
     <string name="pref__clipboard__max_history_size__label">Tamanho máximo do histórico</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
-    <string name="ext__meta__authors">Autores</string>
+    <string name="ext__meta__maintainers">Autores</string>
     <string name="ext__meta__description">Descrição</string>
     <string name="ext__meta__homepage">Página web</string>
     <string name="ext__meta__id">ID</string>

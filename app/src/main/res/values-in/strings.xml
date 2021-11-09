@@ -432,7 +432,7 @@ Klik di sini untuk menyelesaikan masalah ini.</string>
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Pengaturan sistem Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Sistem lokal</string>
     <!-- Extension strings -->
-    <string name="ext__meta__authors">Pembuat</string>
+    <string name="ext__meta__maintainers">Pembuat</string>
     <string name="ext__meta__description">Deskripsi</string>
     <string name="ext__meta__homepage">Beranda</string>
     <string name="ext__meta__id">ID</string>

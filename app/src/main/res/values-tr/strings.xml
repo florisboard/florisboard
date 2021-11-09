@@ -432,7 +432,7 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Sistem Android ayarları</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Yerel sistem ayarları</string>
     <!-- Extension strings -->
-    <string name="ext__meta__authors">Oluşturanlar</string>
+    <string name="ext__meta__maintainers">Oluşturanlar</string>
     <string name="ext__meta__description">Açıklama</string>
     <string name="ext__meta__homepage">Ana Sayfa</string>
     <string name="ext__meta__id">Kimlik</string>

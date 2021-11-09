@@ -436,7 +436,7 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">إعدادات نظام أندرويد</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">لغات النظام</string>
     <!-- Extension strings -->
-    <string name="ext__meta__authors">المؤلفون</string>
+    <string name="ext__meta__maintainers">المؤلفون</string>
     <string name="ext__meta__description">التفاصيل</string>
     <string name="ext__meta__homepage">الصفحة الرئيسية</string>
     <string name="ext__meta__id">المعرف</string>

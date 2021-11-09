@@ -346,7 +346,7 @@
     <string name="pref__clipboard__max_history_size__label">Maximale grootte geschiedenis</string>
     <!-- Devtools strings -->
     <!-- Extension strings -->
-    <string name="ext__meta__authors">Auteurs</string>
+    <string name="ext__meta__maintainers">Auteurs</string>
     <string name="ext__meta__description">Beschrijving</string>
     <string name="ext__meta__homepage">Startpagina</string>
     <string name="ext__meta__id">ID</string>

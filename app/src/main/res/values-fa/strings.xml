@@ -348,7 +348,7 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">تنظیمات سیستم اندروید</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">منطقه های سیستم</string>
     <!-- Extension strings -->
-    <string name="ext__meta__authors">سازندگان</string>
+    <string name="ext__meta__maintainers">سازندگان</string>
     <string name="ext__meta__description">توضیحات</string>
     <string name="ext__meta__homepage">صفحه اصلی</string>
     <string name="ext__meta__id">شناسه</string>

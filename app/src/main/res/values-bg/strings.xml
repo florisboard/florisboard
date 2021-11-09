@@ -421,7 +421,7 @@
     <string name="devtools__group_android__title" comment="Title of Android group in Devtools">Системни инструменти на Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Езици на системата</string>
     <!-- Extension strings -->
-    <string name="ext__meta__authors">Автори</string>
+    <string name="ext__meta__maintainers">Автори</string>
     <string name="ext__meta__description">Описание</string>
     <string name="ext__meta__homepage">Страница</string>
     <string name="ext__meta__id">Идентификатор</string>

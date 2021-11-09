@@ -41,20 +41,20 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
-import dev.patrickgold.florisboard.ime.text.key.CurrencySet
+import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.*
-import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.ime.theme.ThemeMetaOnly
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.res.FlorisRef
 import kotlinx.coroutines.launch
 
 class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
-    private lateinit var layoutManager: LayoutManager
     private val themeManager get() = ThemeManager.default()
     private val assetManager by assetManager()
+    private val keyboardManager by keyboardManager()
 
     private lateinit var textKeyboardIconSet: TextKeyboardIconSet
     private val textComputingEvaluator = object : ComputingEvaluator by DefaultComputingEvaluator {
@@ -134,8 +134,6 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        layoutManager = LayoutManager(this)
 
         key = intent.getStringExtra(EXTRA_KEY) ?: ""
         defaultValue = intent.getStringExtra(EXTRA_DEFAULT_VALUE) ?: ""
@@ -405,7 +403,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
             setCheckedRadioButton(selectId!!)
         }
         launch {
-            binding.keyboardPreview.setComputedKeyboard(layoutManager.computeKeyboardAsync(
+            binding.keyboardPreview.setComputedKeyboard(keyboardManager.computeKeyboardAsync(
                 KeyboardMode.CHARACTERS, Subtype.DEFAULT
             ).await())
             binding.keyboardPreview.onThemeUpdated(selectedTheme)

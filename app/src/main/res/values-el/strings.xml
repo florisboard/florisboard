@@ -431,7 +431,7 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">Συστημικές ρυθμίσεις Android</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">Τοποθεσίες συστήματος</string>
     <!-- Extension strings -->
-    <string name="ext__meta__authors">Συντάκτες</string>
+    <string name="ext__meta__maintainers">Συντάκτες</string>
     <string name="ext__meta__description">Περιγραφή</string>
     <string name="ext__meta__homepage">Αρχική σελίδα</string>
     <string name="ext__meta__id">Ταυτότητα</string>

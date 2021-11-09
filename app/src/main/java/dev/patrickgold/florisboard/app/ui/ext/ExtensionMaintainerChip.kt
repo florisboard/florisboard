@@ -31,13 +31,13 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.ui.components.FlorisChip
 import dev.patrickgold.florisboard.common.launchUrl
-import dev.patrickgold.florisboard.res.ext.ExtensionAuthor
+import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
 import dev.patrickgold.jetpref.ui.compose.JetPrefAlertDialog
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ExtensionAuthorChip(
-    author: ExtensionAuthor,
+fun ExtensionMaintainerChip(
+    maintainer: ExtensionMaintainer,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -45,39 +45,39 @@ fun ExtensionAuthorChip(
 
     FlorisChip(
         modifier = modifier,
-        text = author.name,
+        text = maintainer.name,
         trailingIcons = when {
-            author.email != null && author.url != null -> listOf(
+            maintainer.email != null && maintainer.url != null -> listOf(
                 R.drawable.ic_email,
                 R.drawable.ic_link,
             )
-            author.email != null -> listOf(R.drawable.ic_email)
-            author.url != null -> listOf(R.drawable.ic_link)
+            maintainer.email != null -> listOf(R.drawable.ic_email)
+            maintainer.url != null -> listOf(R.drawable.ic_link)
             else -> listOf()
         },
         onClick = { showDialog = !showDialog },
-        enabled = author.email != null || author.url != null,
+        enabled = maintainer.email != null || maintainer.url != null,
         shape = RoundedCornerShape(4.dp),
     )
 
     if (showDialog) {
         JetPrefAlertDialog(
-            title = author.name,
+            title = maintainer.name,
             onDismiss = { showDialog = false },
         ) {
             Column {
-                if (author.email != null) {
+                if (maintainer.email != null) {
                     FlorisChip(
-                        onClick = { launchUrl(context, "mailto:${author.email}") },
-                        text = author.email,
+                        onClick = { launchUrl(context, "mailto:${maintainer.email}") },
+                        text = maintainer.email,
                         leadingIcons = listOf(R.drawable.ic_email),
                         shape = RoundedCornerShape(4.dp),
                     )
                 }
-                if (author.url != null) {
+                if (maintainer.url != null) {
                     FlorisChip(
-                        onClick = { launchUrl(context, author.url.toString()) },
-                        text = author.url.toString(),
+                        onClick = { launchUrl(context, maintainer.url.toString()) },
+                        text = maintainer.url.toString(),
                         leadingIcons = listOf(R.drawable.ic_link),
                         shape = RoundedCornerShape(4.dp),
                     )
@@ -90,32 +90,32 @@ fun ExtensionAuthorChip(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewChipNameOnly() {
-    val author = ExtensionAuthor(
+    val maintainer = ExtensionMaintainer(
         name = "Jane Doe",
         email = null,
         url = null,
     )
-    ExtensionAuthorChip(author)
+    ExtensionMaintainerChip(maintainer)
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun PreviewChipNameAndEmail() {
-    val author = ExtensionAuthor(
+    val maintainer = ExtensionMaintainer(
         name = "Jane Doe",
         email = "jane.doe@example.com",
         url = null,
     )
-    ExtensionAuthorChip(author)
+    ExtensionMaintainerChip(maintainer)
 }
 
 @Preview(showBackground = true)
 @Composable
 private fun PreviewChipNameAndUrl() {
-    val author = ExtensionAuthor(
+    val maintainer = ExtensionMaintainer(
         name = "Jane Doe",
         email = null,
         url = "jane-doe.example.com",
     )
-    ExtensionAuthorChip(author)
+    ExtensionMaintainerChip(maintainer)
 }

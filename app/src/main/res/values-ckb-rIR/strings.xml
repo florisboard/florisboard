@@ -433,7 +433,7 @@
     <string name="devtools__android_settings_system__title" comment="Title of Android settings (system) screen">ڕێکخستنەکانی سیستەمی ئەندرۆید</string>
     <string name="devtools__android_locales__title" comment="Title of Android locales screen">زمانەکانی سیستەم</string>
     <!-- Extension strings -->
-    <string name="ext__meta__authors">دارێژەر</string>
+    <string name="ext__meta__maintainers">دارێژەر</string>
     <string name="ext__meta__description">زانیاری</string>
     <string name="ext__meta__homepage">پەڕەی سەرەکی</string>
     <string name="ext__meta__id">ID</string>

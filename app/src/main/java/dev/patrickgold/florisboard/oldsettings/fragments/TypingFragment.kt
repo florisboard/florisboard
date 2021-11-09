@@ -31,14 +31,12 @@ import dev.patrickgold.florisboard.databinding.SettingsFragmentTypingBinding
 import dev.patrickgold.florisboard.databinding.SettingsFragmentTypingSubtypeDialogBinding
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypeLayoutMap
-import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
-import dev.patrickgold.florisboard.ime.text.layout.LayoutType
 import dev.patrickgold.florisboard.oldsettings.SettingsMainActivity
 import dev.patrickgold.florisboard.util.initItems
 import dev.patrickgold.florisboard.util.setOnSelectedListener
 
 class TypingFragment : SettingsMainActivity.SettingsFragment() {
-    private val layoutManager: LayoutManager
+    /*private val layoutManager: LayoutManager
         get() = (activity as? SettingsMainActivity)?.layoutManager!!
 
     private lateinit var binding: SettingsFragmentTypingBinding
@@ -245,5 +243,5 @@ class TypingFragment : SettingsMainActivity.SettingsFragment() {
                 binding.subtypeListView.addView(itemView.root)
             }
         }
-    }
+    }*/
 }

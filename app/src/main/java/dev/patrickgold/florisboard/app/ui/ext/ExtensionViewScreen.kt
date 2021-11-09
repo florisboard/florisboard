@@ -46,7 +46,7 @@ import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtensionConfig
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.res.ext.Extension
-import dev.patrickgold.florisboard.res.ext.ExtensionAuthor
+import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
 
 @Composable
@@ -75,14 +75,14 @@ private fun ViewScreen(ext: Extension) = FlorisScreen(
         ext.meta.description?.let { Text(it) }
         Spacer(modifier = Modifier.height(16.dp))
         ExtensionMetaRowScrollableChips(
-            label = stringRes(R.string.ext__meta__authors),
+            label = stringRes(R.string.ext__meta__maintainers),
             showDividerAbove = false,
         ) {
-            for ((n, author) in ext.meta.authors.withIndex()) {
+            for ((n, maintainer) in ext.meta.maintainers.withIndex()) {
                 if (n > 0) {
                     Spacer(modifier = Modifier.width(8.dp))
                 }
-                ExtensionAuthorChip(author)
+                ExtensionMaintainerChip(maintainer)
             }
         }
         ExtensionMetaRowSimpleText(label = stringRes(R.string.ext__meta__id)) {
@@ -204,9 +204,9 @@ private fun PreviewExtensionViewerScreen() {
             keywords = listOf("Beach", "Sea", "Sun"),
             homepage = "https://example.com",
             issueTracker = "https://git.example.com/issues",
-            authors = listOf(
+            maintainers = listOf(
                 "Max Mustermann <max.mustermann@example.com> (maxmustermann.example.com)",
-            ).map { ExtensionAuthor.fromOrTakeRaw(it) },
+            ).map { ExtensionMaintainer.fromOrTakeRaw(it) },
             license = "apache-2.0",
         ),
         dependencies = null,

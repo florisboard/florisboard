@@ -427,7 +427,7 @@
     <string name="devtools__test_crash_report__label" comment="Label of Test Crash Report in Devtools">Test-Absturzbericht Ansicht</string>
     <string name="devtools__test_crash_report__summary" comment="Summary of Test Crash Report in Devtools">Debug-Aktion, um absichtlich einen Absturz zu verursachen</string>
     <!-- Extension strings -->
-    <string name="ext__meta__authors">Ersteller</string>
+    <string name="ext__meta__maintainers">Ersteller</string>
     <string name="ext__meta__description">Beschreibung</string>
     <string name="ext__meta__homepage">Startseite</string>
     <string name="ext__meta__id">ID</string>

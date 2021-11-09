@@ -26,7 +26,6 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.databinding.SettingsActivityBinding
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
-import dev.patrickgold.florisboard.ime.text.layout.LayoutManager
 import dev.patrickgold.florisboard.oldsettings.fragments.*
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
@@ -38,13 +37,10 @@ class SettingsMainActivity : AppCompatActivity(),
     CoroutineScope by MainScope() {
 
     lateinit var binding: SettingsActivityBinding
-    lateinit var layoutManager: LayoutManager
     private val newPrefs by florisPreferenceModel()
     val subtypeManager by subtypeManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        layoutManager = LayoutManager(this)
-
         val mode = when (newPrefs.advanced.settingsTheme.get().id) {
             "light" -> AppCompatDelegate.MODE_NIGHT_NO
             "dark" -> AppCompatDelegate.MODE_NIGHT_YES
