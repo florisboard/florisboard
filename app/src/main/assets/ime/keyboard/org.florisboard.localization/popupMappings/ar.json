@@ -1,0 +1,103 @@
+{
+  "all": {
+    "ق": {
+      "relevant": [
+        { "code": 1704, "label": "ڨ" }
+      ]
+    },
+    "ف": {
+      "relevant": [
+        { "code": 1701, "label": "ڥ" },
+        { "code": 1700, "label": "ڤ" },
+        { "code": 1698, "label": "ڢ" }
+      ]
+    },
+    "ه": {
+      "relevant": [
+        { "code": 1726, "label": "ھ" }
+      ]
+    },
+    "ج": {
+      "relevant": [
+        { "code": 1670, "label": "چ" }
+      ]
+    },
+    "ش": {
+      "relevant": [
+        { "code": 1692, "label": "ڜ" }
+      ]
+    },
+    "ي": {
+      "main": { "code": 1574, "label": "ئ" },
+      "relevant": [
+        { "code": 1609, "label": "ى" }
+      ]
+    },
+    "ب": {
+      "relevant": [
+        { "code": 1662, "label": "پ" }
+      ]
+    },
+    "ل": {
+      "relevant": [
+        { "code": 65275, "label": "لا" },
+        { "code": 65273, "label": "لإ" },
+        { "code": 65271, "label": "لأ" },
+        { "code": 65269, "label": "لآ" }
+      ]
+    },
+    "ا": {
+      "main": { "code": 1571, "label": "أ" },
+      "relevant": [
+        { "code": 1570, "label": "آ" },
+        { "code": 1569, "label": "ء" },
+        { "code": 1573, "label": "إ" },
+        { "code": 1649, "label": "ٱ" }
+      ]
+    },
+    "ك": {
+      "relevant": [
+        { "code": 1705, "label": "ک"},
+        { "code": 1711, "label": "گ" }
+      ]
+    },
+    "ى": {
+      "main": { "code": 1574, "label": "ئ" }
+    },
+    "ز": {
+      "relevant": [
+        { "code": 1688, "label": "ژ" }
+      ]
+    },
+    "~right": {
+      "main": { "code": 1611, "label": "ً" },
+      "relevant": [
+        { "code": 1622, "label": "ٖ" },
+        { "code": 1648, "label": "ٰ" },
+        { "code": 1619, "label": "ٓ" },
+        { "code": 1615, "label": "ُ" },
+        { "code": 1616, "label": "ِ" },
+        { "code": 1614, "label": "َ" },
+        { "code": 1600, "label": "ـ" },
+        { "code": 1621, "label": "ٕ" },
+        { "code": 1620, "label": "ٔ" },
+        { "code": 1617, "label": "ّ" },
+        { "code": 1612, "label": "ٌ" },
+        { "code": 1613, "label": "ٍ" },
+        { "code": 1618, "label": "ْ" }
+      ]
+    }
+  },
+  "uri": {
+    "~right": {
+      "main": { "code": -255, "label": ".ir"},
+      "relevant": [
+        { "code": -255, "label": ".gov" },
+        { "code": -255, "label": ".edu" },
+        { "code": -255, "label": ".com" },
+        { "code": -255, "label": ".org" },
+        { "code": -255, "label": ".net" }
+      ]
+    }
+  }
+}

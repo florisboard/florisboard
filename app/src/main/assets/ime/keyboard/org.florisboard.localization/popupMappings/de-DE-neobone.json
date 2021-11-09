@@ -1,0 +1,13 @@
+{
+  "uri": {
+    "~right": {
+      "main": { "code": -255, "label": ".com" },
+      "relevant": [
+        { "code": -255, "label": ".ch" },
+        { "code": -255, "label": ".de" },
+        { "code": -255, "label": ".at" },
+        { "code": -255, "label": ".net" }
+      ]
+    }
+  }
+}

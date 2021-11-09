@@ -1,0 +1,75 @@
+{
+  "all": {
+    "α": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  940, "label": "ά" }
+      ]
+    },
+    "ε": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  941, "label": "έ" }
+      ]
+    },
+    "η": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  942, "label": "ή" }
+      ]
+    },
+    "ι": {
+      "main": { "$": "auto_text_key", "code":  943, "label": "ί" },
+      "relevant": [
+        { "$": "auto_text_key", "code":  912, "label": "ΐ" },
+        { "$": "auto_text_key", "code":  970, "label": "ϊ" }
+      ]
+    },
+    "ο": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  972, "label": "ό" }
+      ]
+    },
+    "υ": {
+      "main": { "$": "auto_text_key", "code":  973, "label": "ύ" },
+      "relevant": [
+        { "$": "auto_text_key", "code":  944, "label": "ΰ" },
+        { "$": "auto_text_key", "code":  971, "label": "ϋ" }
+      ]
+    },
+    "ω": {
+      "relevant": [
+        { "$": "auto_text_key", "code":  974, "label": "ώ" }
+      ]
+    },
+    "~right": {
+      "main": { "code":   44, "label": "," },
+      "relevant": [
+        { "code":   38, "label": "&" },
+        { "code":   37, "label": "%" },
+        { "code":   43, "label": "+" },
+        { "code":   34, "label": "\"" },
+        { "code":   45, "label": "-" },
+        { "code":   58, "label": ":" },
+        { "code":   39, "label": "'" },
+        { "code":   64, "label": "@" },
+        { "code":   59, "label": ";" },
+        { "code":   47, "label": "/" },
+        { "code":   40, "label": "(" },
+        { "code":   41, "label": ")" },
+        { "code":   35, "label": "#" },
+        { "code":   33, "label": "!" },
+        { "code":   63, "label": "?" }
+      ]
+    }
+  },
+  "uri": {
+    "~right": {
+      "main": { "code": -255, "label": ".com" },
+      "relevant": [
+        { "code": -255, "label": ".gov" },
+        { "code": -255, "label": ".edu" },
+        { "code": -255, "label": ".gr" },
+        { "code": -255, "label": ".org" },
+        { "code": -255, "label": ".net" }
+      ]
+    }
+  }
+}
