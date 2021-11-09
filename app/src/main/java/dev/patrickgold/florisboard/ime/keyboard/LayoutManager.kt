@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Patrick Goldinger
+ * Copyright (C) 2021 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.layout
+package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -23,8 +23,6 @@ import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogWarning
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
-import dev.patrickgold.florisboard.ime.popup.PopupExtension
 import dev.patrickgold.florisboard.ime.popup.PopupManager
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.*
@@ -42,7 +40,7 @@ private data class LTN(
 
 /**
  * Class which manages layout loading and caching.
- */
+ *
 class LayoutManager(context: Context) {
     private val assetManager by context.assetManager()
     private val prefs by florisPreferenceModel()
@@ -53,7 +51,8 @@ class LayoutManager(context: Context) {
     private val extendedPopupsCacheGuard: Mutex = Mutex(locked = false)
     private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
-    private val indexedLayoutRefs: EnumMap<LayoutType, MutableList<Pair<FlorisRef, LayoutMetaOnly>>> = EnumMap(LayoutType::class.java)
+    private val indexedLayoutRefs: EnumMap<LayoutType, MutableList<Pair<FlorisRef, LayoutMetaOnly>>> = EnumMap(
+        LayoutType::class.java)
 
     init {
         for (type in LayoutType.values()) {
@@ -363,4 +362,4 @@ class LayoutManager(context: Context) {
             }
         }
     }
-}
+}*/

@@ -76,7 +76,7 @@ class DictionaryManager private constructor(
         block: (suggestions: SuggestionList) -> Unit
     ) {
         val suggestions = SuggestionList.new(maxSuggestionCount)
-        queryUserDictionary(currentWord, subtype.locale, suggestions)
+        queryUserDictionary(currentWord, subtype.primaryLocale, suggestions)
         loadDictionary(FLORIS_EN_REF).onSuccess {
             it.getTokenPredictions(preceidingWords, currentWord, maxSuggestionCount, allowPossiblyOffensive, suggestions)
         }

@@ -16,91 +16,67 @@
 
 package dev.patrickgold.florisboard.ime.onehanded
 
-import android.content.Context
-import android.content.res.ColorStateList
-import android.content.res.Resources
-import android.util.AttributeSet
-import android.view.Gravity
-import android.widget.ImageButton
-import android.widget.LinearLayout
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
-import dev.patrickgold.florisboard.ime.core.FlorisBoard
-import dev.patrickgold.florisboard.ime.theme.Theme
-import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.app.res.stringRes
+import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackManager
 
-class OneHandedPanel : LinearLayout, ThemeManager.OnThemeUpdatedListener {
-    private var florisboard: FlorisBoard? = null
-    private var themeManager: ThemeManager? = null
-    private val prefs by florisPreferenceModel()
-
-    private var closeBtn: ImageButton? = null
-    private var moveBtn: ImageButton? = null
-
-    private val panelSide: String
-
-    constructor(context: Context) : this(context, null)
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        context.obtainStyledAttributes(attrs, R.styleable.OneHandedPanel).apply {
-            panelSide = getString(R.styleable.OneHandedPanel_panelSide) ?: OneHandedMode.START
-            recycle()
+@Composable
+fun RowScope.OneHandedPanel(
+    inputFeedbackManager: InputFeedbackManager,
+    panelSide: OneHandedMode,
+    weight: Float,
+) {
+    val prefs by florisPreferenceModel()
+    Column(
+        modifier = Modifier
+            .fillMaxHeight()
+            .weight(weight)
+            .background(MaterialTheme.colors.primary),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceEvenly,
+    ) {
+        IconButton(onClick = {
+            inputFeedbackManager.keyPress()
+            prefs.keyboard.oneHandedMode.set(OneHandedMode.OFF)
+        }) {
+            Icon(
+                painter = painterResource(R.drawable.ic_zoom_out_map),
+                contentDescription = stringRes(R.string.one_handed__close_btn_content_description),
+            )
         }
-        orientation = VERTICAL
-        gravity = Gravity.CENTER_VERTICAL
-    }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        florisboard = FlorisBoard.getInstanceOrNull()
-        themeManager = ThemeManager.defaultOrNull()
-
-        closeBtn = findViewWithTag("one_handed_ctrl_close")
-        closeBtn?.setOnClickListener {
-            florisboard?.let {
-                it.inputFeedbackManager.keyPress()
-                prefs.keyboard.oneHandedMode.set(OneHandedMode.OFF)
-                it.updateOneHandedPanelVisibility()
-            }
+        IconButton(onClick = {
+            inputFeedbackManager.keyPress()
+            prefs.keyboard.oneHandedMode.set(panelSide)
+        }) {
+            Icon(
+                painter = painterResource(
+                    if (panelSide == OneHandedMode.START) {
+                        R.drawable.ic_keyboard_arrow_left
+                    } else {
+                        R.drawable.ic_keyboard_arrow_right
+                    }
+                ),
+                contentDescription = stringRes(
+                    if (panelSide == OneHandedMode.START) {
+                        R.string.one_handed__move_start_btn_content_description
+                    } else {
+                        R.string.one_handed__move_end_btn_content_description
+                    }
+                ),
+            )
         }
-        moveBtn = findViewWithTag("one_handed_ctrl_move")
-        moveBtn?.setOnClickListener {
-            florisboard?.let {
-                it.inputFeedbackManager.keyPress()
-                prefs.keyboard.oneHandedMode.set(panelSide)
-                it.updateOneHandedPanelVisibility()
-            }
-        }
-
-        themeManager?.registerOnThemeUpdatedListener(this)
-    }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        florisboard = null
-        themeManager?.unregisterOnThemeUpdatedListener(this)
-        themeManager = null
-
-        closeBtn?.setOnClickListener(null)
-        closeBtn = null
-        moveBtn?.setOnClickListener(null)
-        moveBtn = null
-    }
-
-    override fun onThemeUpdated(theme: Theme) {
-        setBackgroundColor(theme.getAttr(Theme.Attr.ONE_HANDED_BACKGROUND).toSolidColor().color)
-        ColorStateList.valueOf(theme.getAttr(Theme.Attr.ONE_HANDED_FOREGROUND).toSolidColor().color).also {
-            closeBtn?.imageTintList = it
-            moveBtn?.imageTintList = it
-        }
-        closeBtn?.invalidate()
-        moveBtn?.invalidate()
-        invalidate()
-    }
-
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val width = (Resources.getSystem().displayMetrics.widthPixels) *
-            ((100 - prefs.keyboard.oneHandedModeScaleFactor.get()) / 100.0f)
-        super.onMeasure(MeasureSpec.makeMeasureSpec(width.toInt(),  MeasureSpec.EXACTLY), heightMeasureSpec)
     }
 }

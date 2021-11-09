@@ -349,7 +349,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
             key = "keyboard__font_size_multiplier_landscape",
             default = 100,
         )
-        val oneHandedMode = string(
+        val oneHandedMode = enum(
             key = "keyboard__one_handed_mode",
             default = OneHandedMode.OFF,
         )
@@ -425,7 +425,7 @@ class AppPrefs : PreferenceModel("florisboard-app-prefs") {
         )
         val subtypes = string(
             key = "localization__subtypes",
-            default = "",
+            default = "[]",
         )
     }
 

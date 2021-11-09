@@ -55,7 +55,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
             mergePopups(computed, evaluator, computedPopups::merge)
             if (keyboardMode == KeyboardMode.CHARACTERS || keyboardMode == KeyboardMode.NUMERIC_ADVANCED ||
                 keyboardMode == KeyboardMode.SYMBOLS || keyboardMode == KeyboardMode.SYMBOLS2) {
-                val computedLabel = computed.label.lowercase(evaluator.getActiveSubtype().locale)
+                val computedLabel = computed.label.lowercase(evaluator.getActiveSubtype().primaryLocale)
                 val extLabel = when (computed.groupId) {
                     KeyData.GROUP_ENTER -> {
                         "~enter"

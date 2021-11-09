@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.key
+package dev.patrickgold.florisboard.ime.keyboard
 
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import kotlinx.serialization.Serializable
 import kotlin.math.abs
 
 @Serializable
 class CurrencySet(
-    val name: String,
+    val id: String,
     val label: String,
     private val slots: List<TextKeyData>
 ) {
@@ -40,14 +41,14 @@ class CurrencySet(
         }
 
         fun default(): CurrencySet = CurrencySet(
-            name = "\$default",
+            id = "\$default",
             label = "Default",
             slots = listOf(
-                TextKeyData(code =   36, label = "$"),
-                TextKeyData(code =  162, label = "¢"),
+                TextKeyData(code = 36, label = "$"),
+                TextKeyData(code = 162, label = "¢"),
                 TextKeyData(code = 8364, label = "€"),
-                TextKeyData(code =  163, label = "£"),
-                TextKeyData(code =  165, label = "¥"),
+                TextKeyData(code = 163, label = "£"),
+                TextKeyData(code = 165, label = "¥"),
                 TextKeyData(code = 8369, label = "₱")
             )
         )
@@ -59,6 +60,6 @@ class CurrencySet(
     }
 
     override fun toString(): String {
-        return "${CurrencySet::class.simpleName} { name=$name, label\"$label\", slots=$slots }"
+        return "${CurrencySet::class.simpleName} { id=$id, label\"$label\", slots=$slots }"
     }
 }

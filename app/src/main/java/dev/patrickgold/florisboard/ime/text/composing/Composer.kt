@@ -1,9 +1,9 @@
 package dev.patrickgold.florisboard.ime.text.composing
 
-import kotlinx.serialization.Contextual
+import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.Transient
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
@@ -19,9 +19,9 @@ interface Composer {
 @SerialName("appender")
 class Appender : Composer {
     companion object {
-        const val name = "appender"
+        val name = ExtensionComponentName("org.florisboard.composers", "appender")
     }
-    override val name: String = Appender.name
+    override val name: String = Appender.name.toString()
     override val label: String = "Appender"
     override val toRead: Int = 0
 

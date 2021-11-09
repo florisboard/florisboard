@@ -14,53 +14,39 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.text.layout
+package dev.patrickgold.florisboard.ime.keyboard
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-/**
- * Defines the type of the layout.
- */
 @Serializable(with = LayoutTypeSerializer::class)
-enum class LayoutType {
-    CHARACTERS,
-    CHARACTERS_MOD,
-    EXTENSION,
-    NUMERIC,
-    NUMERIC_ADVANCED,
-    NUMERIC_ROW,
-    PHONE,
-    PHONE2,
-    SYMBOLS,
-    SYMBOLS_MOD,
-    SYMBOLS2,
-    SYMBOLS2_MOD;
-
-    override fun toString(): String {
-        return super.toString().replace("_", "/").lowercase()
-    }
-
-    companion object {
-        fun fromString(string: String): LayoutType {
-            return valueOf(string.replace("/", "_").uppercase())
-        }
-    }
+enum class LayoutType(val id: String) {
+    CHARACTERS("characters"),
+    CHARACTERS_MOD("characters-mod"),
+    EXTENSION("extension"),
+    NUMERIC("numeric"),
+    NUMERIC_ADVANCED("numeric-advanced"),
+    NUMERIC_ROW("numeric-row"),
+    PHONE("phone"),
+    PHONE2("phone2"),
+    SYMBOLS("symbols"),
+    SYMBOLS_MOD("symbols-mod"),
+    SYMBOLS2("symbols2"),
+    SYMBOLS2_MOD("symbols2-mod");
 }
 
-class LayoutTypeSerializer : KSerializer<LayoutType> {
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("LayoutType", PrimitiveKind.STRING)
+private class LayoutTypeSerializer : KSerializer<LayoutType> {
+    override val descriptor = PrimitiveSerialDescriptor("LayoutType", PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: LayoutType) {
-        encoder.encodeString(value.toString())
+        encoder.encodeString(value.id)
     }
 
     override fun deserialize(decoder: Decoder): LayoutType {
-        return LayoutType.fromString(decoder.decodeString())
+        return LayoutType.values().find { it.id == decoder.decodeString() }!!
     }
 }

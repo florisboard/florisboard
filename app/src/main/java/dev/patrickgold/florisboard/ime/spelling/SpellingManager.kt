@@ -26,8 +26,8 @@ import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.debug.flogInfo
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.res.ExternalContentUtils
-import dev.patrickgold.florisboard.res.ext.ExtensionAuthor
-import dev.patrickgold.florisboard.res.ext.ExtensionAuthorEditor
+import dev.patrickgold.florisboard.res.ext.ExtensionMaintainer
+import dev.patrickgold.florisboard.res.ext.ExtensionMaintainerEditor
 import dev.patrickgold.florisboard.res.ext.ExtensionDefaults
 import dev.patrickgold.florisboard.res.ext.ExtensionMetaEditor
 import kotlinx.serialization.SerialName
@@ -198,8 +198,8 @@ class SpellingManager(context: Context) {
                         version = manifest.version ?: "0.0.0",
                         title = manifest.name ?: "Imported spelling dict",
                         description = manifest.description ?: "",
-                        authors = manifest.author?.let { mutableListOf(ExtensionAuthor.fromOrTakeRaw(it).edit()) }
-                            ?: mutableListOf(ExtensionAuthorEditor(name = "Unknown")),
+                        maintainers = manifest.author?.let { mutableListOf(ExtensionMaintainer.fromOrTakeRaw(it).edit()) }
+                            ?: mutableListOf(ExtensionMaintainerEditor(name = "Unknown")),
                         license = "unknown",
                     ),
                     workingDir = tempDictDir,
@@ -272,7 +272,7 @@ class SpellingManager(context: Context) {
                         id = ExtensionDefaults.createIdForImport("spelling"),
                         version = "0.0.0",
                         title = "FreeOffice import",
-                        authors = mutableListOf(ExtensionAuthorEditor(name = "Unknown")),
+                        maintainers = mutableListOf(ExtensionMaintainerEditor(name = "Unknown")),
                         license = "unknown",
                     ),
                     workingDir = tempDictDir,

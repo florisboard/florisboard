@@ -28,7 +28,7 @@ class TextKeyboard(
     val arrangement: Array<Array<TextKey>>,
     val mode: KeyboardMode,
     val extendedPopupMapping: PopupMapping?,
-    val extendedPopupMappingDefault: PopupMapping?
+    val extendedPopupMappingDefault: PopupMapping?,
 ) : Keyboard() {
     val rowCount: Int
         get() = arrangement.size

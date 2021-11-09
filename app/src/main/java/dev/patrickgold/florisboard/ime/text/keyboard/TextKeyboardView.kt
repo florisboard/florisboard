@@ -1175,7 +1175,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                             key.foregroundDrawableId = R.drawable.ic_space_bar
                         }
                         KeyboardMode.CHARACTERS -> {
-                            key.label = subtypeManager.activeSubtype().locale.let { it.displayName() }
+                            key.label = subtypeManager.activeSubtype().primaryLocale.let { it.displayName() }
                         }
                         else -> {
                         }

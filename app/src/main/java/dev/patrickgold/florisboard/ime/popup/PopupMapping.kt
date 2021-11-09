@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Patrick Goldinger
+ * Copyright (C) 2021 Patrick Goldinger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
 package dev.patrickgold.florisboard.ime.popup
 
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
-import dev.patrickgold.florisboard.res.Asset
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
+import dev.patrickgold.florisboard.res.ext.ExtensionComponent
 import kotlinx.serialization.Serializable
 
 /**
@@ -27,20 +27,10 @@ import kotlinx.serialization.Serializable
  */
 typealias PopupMapping = Map<KeyVariation, Map<String, PopupSet<AbstractKeyData>>>
 
-/**
- * Class which contains an extended popup mapping to use for adding popups subtype based on the
- * keyboard layout.
- *
- * @property mapping The mapping of the base keys to their popups. See [PopupMapping] for more info.
- */
 @Serializable
-class PopupExtension(
-    override val name: String,
-    override val label: String = name,
+data class PopupMappingComponent(
+    override val id: String,
+    override val label: String = id,
     override val authors: List<String>,
-    val mapping: PopupMapping
-) : Asset {
-    companion object {
-        fun empty() = PopupExtension("", "", listOf(), mapOf())
-    }
-}
+    val mappingFile: String? = null,
+) : ExtensionComponent

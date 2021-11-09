@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.theme.Theme
 import dev.patrickgold.florisboard.ime.theme.ThemeManager
+import dev.patrickgold.florisboard.keyboardManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -58,6 +59,7 @@ import kotlin.math.roundToInt
 class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, ThemeManager.OnThemeUpdatedListener {
     private val florisboard = FlorisBoard.getInstanceOrNull()
     private val prefs by florisPreferenceModel()
+    private val keyboardManager by context.keyboardManager()
     private val themeManager = ThemeManager.default()
     private var eventListener: WeakReference<EventListener?> = WeakReference(null)
     private val mainScope = MainScope()
@@ -116,7 +118,7 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
 
         mainScope.launch(Dispatchers.Default) {
             florisboard?.let {
-                val layout = florisboard.textInputManager.layoutManager.computeKeyboardAsync(
+                val layout = keyboardManager.computeKeyboardAsync(
                     KeyboardMode.SMARTBAR_CLIPBOARD_CURSOR_ROW,
                     Subtype.DEFAULT
                 ).await()
@@ -130,7 +132,7 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
 
         mainScope.launch(Dispatchers.Default) {
             florisboard?.let {
-                val layout = florisboard.textInputManager.layoutManager.computeKeyboardAsync(
+                val layout = keyboardManager.computeKeyboardAsync(
                     KeyboardMode.SMARTBAR_NUMBER_ROW,
                     Subtype.DEFAULT
                 ).await()
@@ -358,7 +360,7 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
         binding.inlineSuggestionsStrip.removeAllViews()
         val florisboard = florisboard ?: return
         if (suggestionViews.isEmpty()) {
-            florisboard.activeState.isShowingInlineSuggestions = false
+            keyboardManager.activeState.isShowingInlineSuggestions = false
             return
         } else {
             for (suggestionView in suggestionViews) {
@@ -367,9 +369,9 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
                 }
                 binding.inlineSuggestionsStrip.addView(suggestionView)
             }
-            florisboard.activeState.isShowingInlineSuggestions = true
+            keyboardManager.activeState.isShowingInlineSuggestions = true
         }
-        updateKeyboardState(florisboard.activeState)
+        updateKeyboardState(keyboardManager.activeState)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
