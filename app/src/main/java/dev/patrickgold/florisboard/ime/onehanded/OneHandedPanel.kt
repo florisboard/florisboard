@@ -16,14 +16,12 @@
 
 package dev.patrickgold.florisboard.ime.onehanded
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,6 +30,10 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackManager
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
+import dev.patrickgold.florisboard.snygg.ui.snyggBackground
+import dev.patrickgold.florisboard.snygg.ui.solidColor
 
 @Composable
 fun RowScope.OneHandedPanel(
@@ -40,11 +42,12 @@ fun RowScope.OneHandedPanel(
     weight: Float,
 ) {
     val prefs by florisPreferenceModel()
+    val oneHandedPanelStyle = FlorisImeTheme.style.get(FlorisImeUi.OneHandedPanel)
     Column(
         modifier = Modifier
             .fillMaxHeight()
             .weight(weight)
-            .background(MaterialTheme.colors.primary),
+            .snyggBackground(oneHandedPanelStyle.background),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceEvenly,
     ) {
@@ -55,6 +58,7 @@ fun RowScope.OneHandedPanel(
             Icon(
                 painter = painterResource(R.drawable.ic_zoom_out_map),
                 contentDescription = stringRes(R.string.one_handed__close_btn_content_description),
+                tint = oneHandedPanelStyle.foreground.solidColor(),
             )
         }
         IconButton(onClick = {
@@ -76,6 +80,7 @@ fun RowScope.OneHandedPanel(
                         R.string.one_handed__move_end_btn_content_description
                     }
                 ),
+                tint = oneHandedPanelStyle.foreground.solidColor(),
             )
         }
     }

@@ -52,6 +52,10 @@ class SnyggPropertySet(val properties: Map<String, SnyggValue>) {
     val shadow = properties[Snygg.Shadow] ?: SnyggImplicitInheritValue
 
     fun edit() = SnyggPropertySetEditor(properties)
+
+    override fun toString(): String {
+        return properties.toString()
+    }
 }
 
 class SnyggPropertySetEditor(initProperties: Map<String, SnyggValue>? = null) {

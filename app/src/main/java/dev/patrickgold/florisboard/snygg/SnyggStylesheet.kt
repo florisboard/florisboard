@@ -16,7 +16,9 @@
 
 package dev.patrickgold.florisboard.snygg
 
-import dev.patrickgold.florisboard.ime.theme.spec.FlorisImeUiSpec
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import dev.patrickgold.florisboard.ime.theme.FlorisImeUiSpec
 import dev.patrickgold.florisboard.snygg.value.SnyggImplicitInheritValue
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -27,6 +29,11 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = SnyggStylesheetSerializer::class)
 class SnyggStylesheet(val rules: Map<SnyggRule, SnyggPropertySet>) {
+    companion object {
+        private val FallbackPropertySet = SnyggPropertySet(mapOf())
+    }
+
+    @Composable
     fun get(
         element: String,
         code: Int = -1,
@@ -36,7 +43,10 @@ class SnyggStylesheet(val rules: Map<SnyggRule, SnyggPropertySet>) {
         isFocus: Boolean = false,
         isPressed: Boolean = false,
     ): SnyggPropertySet {
-        TODO()
+        // TODO fix behavior
+        return remember(element, code, group, inputMode, isHover, isFocus, isPressed) {
+            rules.filter { (rule, _) -> rule.element == element }.values.firstOrNull() ?: FallbackPropertySet
+        }
     }
 
     operator fun plus(other: SnyggStylesheet): SnyggStylesheet {

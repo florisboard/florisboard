@@ -20,7 +20,12 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
-        freeCompilerArgs = listOf("-Xallow-result-return-type", "-Xopt-in=kotlin.RequiresOptIn", "-Xopt-in=kotlin.contracts.ExperimentalContracts")
+        freeCompilerArgs = listOf(
+            "-Xallow-result-return-type",
+            "-Xopt-in=kotlin.RequiresOptIn",
+            "-Xopt-in=kotlin.contracts.ExperimentalContracts",
+            "-Xjvm-default=compatibility",
+        )
     }
 
     defaultConfig {
@@ -156,7 +161,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.3.6") // possibly remove after settings rework
     implementation("androidx.navigation:navigation-compose:2.4.0-beta01")
     implementation("androidx.preference:preference-ktx:1.1.1") // possibly remove after settings rework
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.18.0")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.20.2")
     implementation("com.google.android.flexbox:flexbox:3.0.0") // possibly remove after settings rework
     implementation("com.google.android.material:material:1.4.0") // possibly remove after settings rework
     implementation("com.jaredrummler:colorpicker:1.1.0") // possibly remove after settings rework

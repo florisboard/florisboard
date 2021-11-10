@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.theme.spec
+package dev.patrickgold.florisboard.ime.theme
 
 object FlorisImeUi {
     const val Keyboard = "keyboard"
 
+    const val OneHandedPanel = "one-handed-panel"
+
     const val Smartbar = "smartbar"
+
+    const val SystemNavBar = "system-nav-bar"
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.theme.spec
+package dev.patrickgold.florisboard.ime.theme
 
 import dev.patrickgold.florisboard.snygg.Snygg
 import dev.patrickgold.florisboard.snygg.SnyggLevel
@@ -30,7 +30,28 @@ object FlorisImeUiSpec : SnyggSpec({
         )
     }
 
+    element(FlorisImeUi.OneHandedPanel) {
+        property(
+            name = Snygg.Background,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+        property(
+            name = Snygg.Foreground,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+    }
+
     element(FlorisImeUi.Smartbar) {
+        property(
+            name = Snygg.Background,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+    }
+
+    element(FlorisImeUi.SystemNavBar) {
         property(
             name = Snygg.Background,
             level = SnyggLevel.BASIC,

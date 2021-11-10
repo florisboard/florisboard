@@ -47,7 +47,7 @@ import dev.patrickgold.florisboard.app.res.ProvideLocalizedResources
 import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.app.ui.Routes
 import dev.patrickgold.florisboard.app.ui.components.PreviewKeyboardField
-import dev.patrickgold.florisboard.app.ui.components.SystemUi
+import dev.patrickgold.florisboard.app.ui.components.SystemUiApp
 import dev.patrickgold.florisboard.app.ui.theme.FlorisAppTheme
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.util.AndroidVersion
@@ -101,7 +101,7 @@ class FlorisAppActivity : ComponentActivity() {
             ProvideLocalizedResources(resourcesContext) {
                 FlorisAppTheme(theme = appTheme) {
                     Surface(color = MaterialTheme.colors.background) {
-                        SystemUi()
+                        SystemUiApp()
                         if (isDatastoreReady) {
                             AppContent()
                         }
