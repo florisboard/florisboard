@@ -21,6 +21,7 @@ import android.view.View
 import android.view.WindowManager
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -115,6 +116,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         SnyggSurface(
             modifier = Modifier
                 .fillMaxWidth()
+                .wrapContentHeight()
                 .align(Alignment.BottomStart)
                 .onGloballyPositioned { coords -> composeInputViewInnerHeight = coords.size.height },
             background = keyboardStyle.background,
@@ -125,7 +127,12 @@ class FlorisImeService : LifecycleInputMethodService() {
             } else {
                 prefs.keyboard.bottomOffsetLandscape
             }.observeAsTransformingState { it.dp }
-            Row(modifier = Modifier.fillMaxWidth().padding(bottom = bottomOffset)) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(IntrinsicSize.Min)
+                    .padding(bottom = bottomOffset),
+            ) {
                 val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
                 val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsState()
                 val keyboardWeight = when {
@@ -138,7 +145,7 @@ class FlorisImeService : LifecycleInputMethodService() {
                         weight = 1f - keyboardWeight,
                     )
                 }
-                Box(modifier = Modifier.weight(keyboardWeight)) {
+                Box(modifier = Modifier.weight(keyboardWeight).wrapContentHeight()) {
                     TextInputLayout()
                 }
                 if (oneHandedMode == OneHandedMode.START && configuration.isOrientationPortrait()) {

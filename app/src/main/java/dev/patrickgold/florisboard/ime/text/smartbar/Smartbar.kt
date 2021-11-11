@@ -16,24 +16,30 @@
 
 package dev.patrickgold.florisboard.ime.text.smartbar
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.ime.keyboard.LocalKeyboardRowBaseHeight
+import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.ui.snyggBackground
 
 @Composable
 fun Smartbar() {
+    val prefs by florisPreferenceModel()
     val smartbarStyle = FlorisImeTheme.style.get(FlorisImeUi.Smartbar)
+    val keyboardRowBaseHeight = LocalKeyboardRowBaseHeight.current * 0.753f
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(40.dp)
-            .snyggBackground(smartbarStyle.background),
+            .height(keyboardRowBaseHeight)
+            .snyggBackground(smartbarStyle.background)
+            .clickable { prefs.keyboard.oneHandedMode.set(OneHandedMode.END) },
     ) {
 
     }
