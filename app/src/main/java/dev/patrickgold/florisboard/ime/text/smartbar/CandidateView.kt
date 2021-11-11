@@ -52,7 +52,6 @@ import kotlin.math.abs
 class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
     private var themeManager: ThemeManager? = null
     private var florisClipboardManager: FlorisClipboardManager? = null
-    private var eventListener: WeakReference<SmartbarView.EventListener?> = WeakReference(null)
     private var displayMode: DisplayMode = DisplayMode.DYNAMIC_SCROLLABLE
 
     private val candidates: ArrayList<String> = ArrayList()
@@ -130,10 +129,6 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         clipboardItem = newClipboardCandidate
         clipboardItemTime = System.currentTimeMillis()
         recomputeCandidates()
-    }
-
-    fun setEventListener(listener: SmartbarView.EventListener?) {
-        eventListener = WeakReference(listener)
     }
 
     fun updateDisplaySettings(newDisplayMode: DisplayMode, newClipboardContentTimeout: Int) {
@@ -323,10 +318,8 @@ class CandidateView : View, ThemeManager.OnThemeUpdatedListener {
         computedCandidates.getOrNull(index)?.let { candidate ->
             when (candidate) {
                 is ComputedCandidate.Word -> {
-                    eventListener.get()?.onSmartbarCandidatePressed(candidate.word)
                 }
                 is ComputedCandidate.Clip -> {
-                    eventListener.get()?.onSmartbarClipboardCandidatePressed(candidate.clipboardItem)
                     clipboardItem = null
                     recomputeCandidates()
                 }

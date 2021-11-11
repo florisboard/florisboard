@@ -29,7 +29,7 @@ import androidx.compose.ui.res.painterResource
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.stringRes
-import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackManager
+import dev.patrickgold.florisboard.ime.keyboard.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.snygg.ui.snyggBackground
@@ -37,11 +37,11 @@ import dev.patrickgold.florisboard.snygg.ui.solidColor
 
 @Composable
 fun RowScope.OneHandedPanel(
-    inputFeedbackManager: InputFeedbackManager,
     panelSide: OneHandedMode,
     weight: Float,
 ) {
     val prefs by florisPreferenceModel()
+    val inputFeedbackController = LocalInputFeedbackController.current
     val oneHandedPanelStyle = FlorisImeTheme.style.get(FlorisImeUi.OneHandedPanel)
     Column(
         modifier = Modifier
@@ -52,7 +52,7 @@ fun RowScope.OneHandedPanel(
         verticalArrangement = Arrangement.SpaceEvenly,
     ) {
         IconButton(onClick = {
-            inputFeedbackManager.keyPress()
+            inputFeedbackController.keyPress()
             prefs.keyboard.oneHandedMode.set(OneHandedMode.OFF)
         }) {
             Icon(
@@ -62,7 +62,7 @@ fun RowScope.OneHandedPanel(
             )
         }
         IconButton(onClick = {
-            inputFeedbackManager.keyPress()
+            inputFeedbackController.keyPress()
             prefs.keyboard.oneHandedMode.set(panelSide)
         }) {
             Icon(

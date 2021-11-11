@@ -67,14 +67,13 @@ import dev.patrickgold.florisboard.ime.theme.ThemeManager
 import dev.patrickgold.florisboard.util.AppVersionUtils
 import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.databinding.FlorisboardBinding
-import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackManager
+import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.updateKeyboardState
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.florisboard.util.debugSummarize
 import dev.patrickgold.florisboard.util.findViewWithType
-import dev.patrickgold.florisboard.util.refreshLayoutOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -128,7 +127,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
     private var eventListeners: CopyOnWriteArrayList<EventListener> = CopyOnWriteArrayList()
 
     var imeManager: InputMethodManager? = null
-    lateinit var inputFeedbackManager: InputFeedbackManager
+    lateinit var inputFeedbackController: InputFeedbackController
     var florisClipboardManager: FlorisClipboardManager? = null
     private val themeManager: ThemeManager = ThemeManager.default()
 
@@ -211,7 +210,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
                 }
 
                 imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-                inputFeedbackManager = InputFeedbackManager.new(this)
+                inputFeedbackController = InputFeedbackController.new(this)
 
                 currentThemeIsNight = themeManager.activeTheme.isNightTheme
                 currentThemeResId = getDayNightBaseThemeId(currentThemeIsNight)
@@ -413,7 +412,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
 
         if (!finishingInput) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                textInputManager.smartbarView?.clearInlineSuggestions()
+                //textInputManager.smartbarView?.clearInlineSuggestions()
             }
         }
         activeEditorInstance.finishInputView()
@@ -469,7 +468,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
         flogInfo(LogTopic.IMS_EVENTS) {
             "Received inline suggestions response with ${response.inlineSuggestions.size} suggestion(s) provided."
         }
-        textInputManager.smartbarView?.clearInlineSuggestions()
+        //textInputManager.smartbarView?.clearInlineSuggestions()
         postPendingResponse(response)
         return true
     }
@@ -490,9 +489,9 @@ open class FlorisBoard : LifecycleInputMethodService(),
         pendingResponse = Runnable {
             pendingResponse = null
             if (responseState == ResponseState.START_INPUT && inlineSuggestions.isEmpty()) {
-                textInputManager.smartbarView?.clearInlineSuggestions()
+                //textInputManager.smartbarView?.clearInlineSuggestions()
             } else {
-                textInputManager.smartbarView?.showInlineSuggestions(inlineSuggestions)
+                //textInputManager.smartbarView?.showInlineSuggestions(inlineSuggestions)
             }
             responseState = ResponseState.RESET
         }.also { handler.post(it) }
@@ -737,13 +736,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
                   Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED or
                   Intent.FLAG_ACTIVITY_CLEAR_TOP
         applicationContext.startActivity(i)
-    }
-
-    /**
-     * @return If the language switch should be shown.
-     */
-    fun shouldShowLanguageSwitch(): Boolean {
-        return subtypeManager.subtypes().size > 1
     }
 
     fun switchToPrevKeyboard(){

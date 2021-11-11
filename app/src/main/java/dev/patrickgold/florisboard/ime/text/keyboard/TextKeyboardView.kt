@@ -64,6 +64,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
     private var computedKeyboard: TextKeyboard? = null
     private var iconSet: TextKeyboardIconSet? = null
+    private var keyboardRowBaseHeight: Float = 0f
 
     private var cachedTheme: Theme? = null
     private var cachedState: KeyboardState = KeyboardState.new(maskOfInterest = KeyboardState.INTEREST_TEXT)
@@ -196,6 +197,10 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
     fun setComputingEvaluator(evaluator: ComputingEvaluator?) {
         externalComputingEvaluator = evaluator
+    }
+
+    fun setKeyboardRowBaseHeight(baseHeight: Float) {
+        keyboardRowBaseHeight = baseHeight
     }
 
     fun setComputedKeyboard(keyboard: TextKeyboard) {
@@ -444,7 +449,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             if (prefs.keyboard.popupEnabled.get() && popupManager.isSuitableForPopups(key)) {
                 popupManager.show(key, keyHintConfiguration)
             }
-            florisboard!!.inputFeedbackManager.keyPress(key.computedData)
+            florisboard!!.inputFeedbackController.keyPress(key.computedData)
             key.setPressed(true) { invalidate(key) }
             if (pointer.initialKey == null) {
                 pointer.initialKey = key
@@ -470,7 +475,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                     KeyCode.SHIFT -> {
                         delay((delayMillis * 2.5f).toLong())
                         florisboard!!.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.SHIFT_LOCK))
-                        florisboard!!.inputFeedbackManager.keyLongPress(key.computedData)
+                        florisboard!!.inputFeedbackController.keyLongPress(key.computedData)
                     }
                     KeyCode.LANGUAGE_SWITCH -> {
                         delay((delayMillis * 2.0f).toLong())
@@ -486,7 +491,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                             ).isNotEmpty()
                         ) {
                             popupManager.extend(key, keyHintConfiguration)
-                            florisboard!!.inputFeedbackManager.keyLongPress(key.computedData)
+                            florisboard!!.inputFeedbackController.keyLongPress(key.computedData)
                         }
                     }
                 }
@@ -642,7 +647,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 SwipeAction.DELETE_CHARACTERS_PRECISELY -> {
                     florisboard.activeEditorInstance.apply {
                         if (abs(event.relUnitCountX) > 0) {
-                            florisboard.inputFeedbackManager.gestureMovingSwipe(TextKeyData.DELETE)
+                            florisboard.inputFeedbackController.gestureMovingSwipe(TextKeyData.DELETE)
                         }
                         markComposingRegion(null)
                         if (selection.isValid) {
@@ -658,7 +663,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 SwipeAction.DELETE_WORDS_PRECISELY -> {
                     florisboard.activeEditorInstance.apply {
                         if (abs(event.relUnitCountX) > 0) {
-                            florisboard.inputFeedbackManager.gestureMovingSwipe(TextKeyData.DELETE)
+                            florisboard.inputFeedbackController.gestureMovingSwipe(TextKeyData.DELETE)
                         }
                         markComposingRegion(null)
                         if (selection.isValid) {
@@ -698,7 +703,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                                 it
                             }
                             if (count > 0) {
-                                florisboard.inputFeedbackManager.gestureMovingSwipe(TextKeyData.SPACE)
+                                florisboard.inputFeedbackController.gestureMovingSwipe(TextKeyData.SPACE)
                                 florisboard.textInputManager.inputEventDispatcher.send(
                                     InputKeyEvent.downUp(
                                         TextKeyData.ARROW_LEFT, count
@@ -718,7 +723,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                                 it
                             }
                             if (count > 0) {
-                                florisboard.inputFeedbackManager.gestureMovingSwipe(TextKeyData.SPACE)
+                                florisboard.inputFeedbackController.gestureMovingSwipe(TextKeyData.SPACE)
                                 florisboard.textInputManager.inputEventDispatcher.send(
                                     InputKeyEvent.downUp(
                                         TextKeyData.ARROW_RIGHT, count
@@ -769,8 +774,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         val desiredHeight = if (isSmartbarKeyboardView || isPreviewMode) {
             MeasureSpec.getSize(heightMeasureSpec).toFloat()
         } else {
-            (florisboard?.uiBinding?.inputView?.desiredTextKeyboardViewHeight ?: MeasureSpec.getSize(heightMeasureSpec)
-                .toFloat())
+            keyboardRowBaseHeight * (computedKeyboard?.rowCount ?: 0)
         } * if (isPreviewMode) {
             0.90f
         } else {
@@ -801,9 +805,6 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             bounds.bottom = when {
                 isSmartbarKeyboardView -> {
                     measuredHeight
-                }
-                florisboard?.uiBinding?.inputView?.shouldGiveAdditionalSpace == true && keyboard.mode != KeyboardMode.CHARACTERS -> {
-                    (measuredHeight / (keyboard.rowCount + 0.5f).coerceAtMost(5.0f)).toInt()
                 }
                 else -> {
                     measuredHeight / keyboard.rowCount.coerceAtLeast(1)

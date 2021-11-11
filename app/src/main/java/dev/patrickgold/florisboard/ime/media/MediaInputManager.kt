@@ -133,7 +133,7 @@ class MediaInputManager private constructor() : CoroutineScope by MainScope(),
         }
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
-                florisboard.inputFeedbackManager.keyPress(data)
+                florisboard.inputFeedbackController.keyPress(data)
                 florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.down(data))
             }
             MotionEvent.ACTION_UP -> {

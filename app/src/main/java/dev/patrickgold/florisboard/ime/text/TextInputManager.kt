@@ -42,10 +42,10 @@ import dev.patrickgold.florisboard.ime.keyboard.InputAttributes
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.Keyboard
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
-import dev.patrickgold.florisboard.ime.keyboard.updateKeyboardState
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
+import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
@@ -55,7 +55,6 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardIconSet
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardView
-import dev.patrickgold.florisboard.ime.text.smartbar.SmartbarView
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.res.FlorisRef
 import dev.patrickgold.florisboard.subtypeManager
@@ -79,7 +78,7 @@ import org.json.JSONArray
  * instance and the Smartbar.
  */
 class TextInputManager private constructor() : CoroutineScope by MainScope(), InputKeyEventReceiver,
-    FlorisBoard.EventListener, SmartbarView.EventListener, EditorInstance.WordHistoryChangedListener {
+    FlorisBoard.EventListener, EditorInstance.WordHistoryChangedListener {
 
     private val florisboard get() = FlorisBoard.getInstance()
     private val prefs by florisPreferenceModel()
@@ -108,8 +107,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         )
     )
 
-    internal var smartbarView: SmartbarView? = null
-
     private var newCapsState: Boolean = false
     private var isNumberRowVisible: Boolean = false
 
@@ -127,100 +124,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     init {
         florisboard.addEventListener(this)
-    }
-
-    val evaluator = object : ComputingEvaluator {
-        override fun evaluateCaps(): Boolean {
-            return activeState.caps || activeState.capsLock
-        }
-
-        override fun evaluateCaps(data: KeyData): Boolean {
-            return evaluateCaps() && data.code >= KeyCode.SPACE
-        }
-
-        override fun evaluateCharHalfWidth(): Boolean = activeState.isCharHalfWidth
-
-        override fun evaluateKanaKata(): Boolean = activeState.isKanaKata
-
-        override fun evaluateKanaSmall(): Boolean = activeState.isKanaSmall
-
-        override fun evaluateEnabled(data: KeyData): Boolean {
-            return when (data.code) {
-                KeyCode.CLIPBOARD_COPY,
-                KeyCode.CLIPBOARD_CUT -> {
-                    activeState.isSelectionMode && activeState.isRichInputEditor
-                }
-                KeyCode.CLIPBOARD_PASTE -> {
-                    // such gore. checks
-                    // 1. has a clipboard item
-                    // 2. the clipboard item has any of the supported mime types of the editor OR is plain text.
-                    florisboard.florisClipboardManager?.canBePasted(
-                        florisboard.florisClipboardManager?.primaryClip
-                    ) == true
-                }
-                KeyCode.CLIPBOARD_SELECT_ALL -> {
-                    activeState.isRichInputEditor
-                }
-                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
-                    prefs.clipboard.enableHistory.get()
-                }
-                else -> true
-            }
-        }
-
-        override fun evaluateVisible(data: KeyData): Boolean {
-            return when (data.code) {
-                KeyCode.SWITCH_TO_TEXT_CONTEXT,
-                KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
-                    val tempUtilityKeyAction = when {
-                        prefs.keyboard.utilityKeyEnabled.get() -> prefs.keyboard.utilityKeyAction.get()
-                        else -> UtilityKeyAction.DISABLED
-                    }
-                    when (tempUtilityKeyAction) {
-                        UtilityKeyAction.DISABLED,
-                        UtilityKeyAction.SWITCH_LANGUAGE,
-                        UtilityKeyAction.SWITCH_KEYBOARD_APP -> false
-                        UtilityKeyAction.SWITCH_TO_EMOJIS -> true
-                        UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS -> !florisboard.shouldShowLanguageSwitch()
-                    }
-                }
-                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> prefs.clipboard.enableHistory.get()
-                KeyCode.LANGUAGE_SWITCH -> {
-                    val tempUtilityKeyAction = when {
-                        prefs.keyboard.utilityKeyEnabled.get() -> prefs.keyboard.utilityKeyAction.get()
-                        else -> UtilityKeyAction.DISABLED
-                    }
-                    when (tempUtilityKeyAction) {
-                        UtilityKeyAction.DISABLED,
-                        UtilityKeyAction.SWITCH_TO_EMOJIS -> false
-                        UtilityKeyAction.SWITCH_LANGUAGE,
-                        UtilityKeyAction.SWITCH_KEYBOARD_APP -> true
-                        UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS -> florisboard.shouldShowLanguageSwitch()
-                    }
-                }
-                else -> true
-            }
-        }
-
-        override fun getActiveSubtype(): Subtype {
-            return subtypeManager.activeSubtype.value!!
-        }
-
-        override fun getKeyVariation(): KeyVariation {
-            return activeState.keyVariation
-        }
-
-        override fun getKeyboard(): Keyboard {
-            throw NotImplementedError() // Correct value must be inserted by the TextKeyboardView
-        }
-
-        override fun isSlot(data: KeyData): Boolean {
-            return CurrencySet.isCurrencySlot(data.code)
-        }
-
-        override fun getSlotData(data: KeyData): KeyData? {
-            return subtypeManager.getCurrencySet(getActiveSubtype()).getSlot(data.code)
-        }
     }
 
     /**
@@ -273,14 +176,14 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
         textInputKeyboardView = uiBinding.text.mainKeyboardView.also {
             it.setIconSet(textKeyboardIconSet)
-            it.setComputingEvaluator(evaluator)
+            it.setComputingEvaluator(DefaultComputingEvaluator)
             it.sync()
         }
 
-        smartbarView = uiBinding.text.smartbar.root.also {
-            it.setEventListener(this)
-            it.sync()
-        }
+        //smartbarView = uiBinding.text.smartbar.root.also {
+        //    it.setEventListener(this)
+        //    it.sync()
+        //}
 
         setActiveKeyboardMode(getActiveKeyboardMode())
     }
@@ -290,9 +193,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     override fun onDestroy() {
         flogInfo(LogTopic.IMS_EVENTS)
-
-        smartbarView?.setEventListener(null)
-        smartbarView = null
 
         textInputKeyboardView?.setComputingEvaluator(null)
         textInputKeyboardView = null
@@ -379,7 +279,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
         isGlidePostEffect = false
         updateCapsState()
-        smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+        //smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
     }
 
     override fun onWindowShown() {
@@ -387,7 +287,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             dictionaryManager.loadUserDictionariesIfNecessary()
         }
         textInputKeyboardView?.sync()
-        smartbarView?.sync()
+        //smartbarView?.sync()
     }
 
     /**
@@ -441,7 +341,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         wordsAfterCurrent: List<EditorInstance.Region>
     ) {
         if (currentWord == null || !currentWord.isValid) {
-            smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+            //smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
             return
         }
         if (activeState.isComposingEnabled && !inputEventDispatcher.isPressed(KeyCode.DELETE) && !isGlidePostEffect) {
@@ -455,8 +355,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                     maxSuggestionCount = 16
                 ) { suggestions ->
                     withContext(Dispatchers.Main) {
-                        smartbarView?.setCandidateSuggestionWords(startTime, suggestions)
-                        smartbarView?.updateCandidateSuggestionCapsState()
+                        //smartbarView?.setCandidateSuggestionWords(startTime, suggestions)
+                        //smartbarView?.updateCandidateSuggestionCapsState()
                     }
                 }
                 if (BuildConfig.DEBUG) {
@@ -465,10 +365,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
                 }
             }
         }
-    }
-
-    override fun onPrimaryClipChanged() {
-        smartbarView?.onPrimaryClipChanged()
     }
 
     /**
@@ -522,58 +418,58 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
     }
 
-    override fun onSmartbarBackButtonPressed() {
-        florisboard.inputFeedbackManager.keyPress()
-        setActiveKeyboardMode(KeyboardMode.CHARACTERS)
-    }
-
-    override fun onSmartbarCandidatePressed(word: String) {
-        florisboard.inputFeedbackManager.keyPress()
-        isGlidePostEffect = false
-        activeEditorInstance.commitCompletion(word)
-    }
-
-    override fun onSmartbarClipboardCandidatePressed(clipboardItem: ClipboardItem) {
-        florisboard.inputFeedbackManager.keyPress()
-        isGlidePostEffect = false
-        activeEditorInstance.commitClipboardItem(clipboardItem)
-    }
-
-    override fun onSmartbarPrivateModeButtonClicked() {
-        florisboard.inputFeedbackManager.keyPress()
-        Toast.makeText(florisboard, R.string.private_mode_dialog__title, Toast.LENGTH_LONG).show()
-    }
-
-    override fun onSmartbarQuickActionPressed(quickActionId: Int) {
-        florisboard.inputFeedbackManager.keyPress()
-        when (quickActionId) {
-            R.id.quick_action_toggle -> {
-                activeState.isQuickActionsVisible = !activeState.isQuickActionsVisible
-                smartbarView?.updateKeyboardState(activeState)
-                return
-            }
-            R.id.quick_action_switch_to_editing_context -> {
-                if (activeState.keyboardMode == KeyboardMode.EDITING) {
-                    setActiveKeyboardMode(KeyboardMode.CHARACTERS)
-                } else {
-                    setActiveKeyboardMode(KeyboardMode.EDITING)
-                }
-            }
-            R.id.quick_action_switch_to_media_context -> florisboard.setActiveInput(R.id.media_input)
-            R.id.quick_action_open_settings -> florisboard.launchSettings()
-            R.id.quick_action_one_handed_toggle -> florisboard.toggleOneHandedMode(isRight = true)
-            R.id.quick_action_undo -> {
-                inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.UNDO))
-                return
-            }
-            R.id.quick_action_redo -> {
-                inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.REDO))
-                return
-            }
-        }
-        activeState.isQuickActionsVisible = false
-        smartbarView?.updateKeyboardState(activeState)
-    }
+    //override fun onSmartbarBackButtonPressed() {
+    //    florisboard.inputFeedbackController.keyPress()
+    //    setActiveKeyboardMode(KeyboardMode.CHARACTERS)
+    //}
+//
+    //override fun onSmartbarCandidatePressed(word: String) {
+    //    florisboard.inputFeedbackController.keyPress()
+    //    isGlidePostEffect = false
+    //    activeEditorInstance.commitCompletion(word)
+    //}
+//
+    //override fun onSmartbarClipboardCandidatePressed(clipboardItem: ClipboardItem) {
+    //    florisboard.inputFeedbackController.keyPress()
+    //    isGlidePostEffect = false
+    //    activeEditorInstance.commitClipboardItem(clipboardItem)
+    //}
+//
+    //override fun onSmartbarPrivateModeButtonClicked() {
+    //    florisboard.inputFeedbackController.keyPress()
+    //    Toast.makeText(florisboard, R.string.private_mode_dialog__title, Toast.LENGTH_LONG).show()
+    //}
+//
+    //override fun onSmartbarQuickActionPressed(quickActionId: Int) {
+    //    florisboard.inputFeedbackController.keyPress()
+    //    when (quickActionId) {
+    //        R.id.quick_action_toggle -> {
+    //            activeState.isQuickActionsVisible = !activeState.isQuickActionsVisible
+    //            smartbarView?.updateKeyboardState(activeState)
+    //            return
+    //        }
+    //        R.id.quick_action_switch_to_editing_context -> {
+    //            if (activeState.keyboardMode == KeyboardMode.EDITING) {
+    //                setActiveKeyboardMode(KeyboardMode.CHARACTERS)
+    //            } else {
+    //                setActiveKeyboardMode(KeyboardMode.EDITING)
+    //            }
+    //        }
+    //        R.id.quick_action_switch_to_media_context -> florisboard.setActiveInput(R.id.media_input)
+    //        R.id.quick_action_open_settings -> florisboard.launchSettings()
+    //        R.id.quick_action_one_handed_toggle -> florisboard.toggleOneHandedMode(isRight = true)
+    //        R.id.quick_action_undo -> {
+    //            inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.UNDO))
+    //            return
+    //        }
+    //        R.id.quick_action_redo -> {
+    //            inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.REDO))
+    //            return
+    //        }
+    //    }
+    //    activeState.isQuickActionsVisible = false
+    //    smartbarView?.updateKeyboardState(activeState)
+    //}
 
     /**
      * Handles a [KeyCode.DELETE] event.
@@ -582,7 +478,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         if (isGlidePostEffect){
             handleDeleteWord()
             isGlidePostEffect = false
-            smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
+            //smartbarView?.setCandidateSuggestionWords(System.nanoTime(), null)
         } else {
             activeState.batchEdit {
                 it.isManualSelectionMode = false
@@ -653,7 +549,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             activeState.caps = true
             activeState.capsLock = false
         }
-        smartbarView?.updateCandidateSuggestionCapsState()
     }
 
     /**
@@ -661,7 +556,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
      */
     private fun handleShiftUp() {
         activeState.caps = newCapsState
-        smartbarView?.updateCandidateSuggestionCapsState()
     }
 
     /**
@@ -670,7 +564,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     private fun handleShiftCancel() {
         activeState.caps = false
         activeState.capsLock = false
-        smartbarView?.updateCandidateSuggestionCapsState()
     }
 
     /**
@@ -682,7 +575,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             newCapsState = true
             activeState.caps = true
             activeState.capsLock = true
-            smartbarView?.updateCandidateSuggestionCapsState()
         }
     }
 
@@ -968,7 +860,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     override fun onInputKeyRepeat(ev: InputKeyEvent) {
-        florisboard.inputFeedbackManager.keyRepeatedAction(ev.data)
+        florisboard.inputFeedbackController.keyRepeatedAction(ev.data)
         onInputKeyUp(ev)
     }
 
@@ -999,6 +891,5 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
 
     private fun KeyboardState.updateIsPrivate(force: Boolean = prefs.advanced.forcePrivateMode.get()) {
         this.isPrivateMode = force || this.imeOptions.flagNoPersonalizedLearning
-        smartbarView?.updateKeyboardState(this)
     }
 }

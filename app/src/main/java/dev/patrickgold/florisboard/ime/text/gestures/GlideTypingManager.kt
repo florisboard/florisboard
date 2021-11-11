@@ -117,12 +117,12 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener, Corout
                 ).map { textInputManager.fixCase(it) }.forEach {
                     suggestionList.add(it, 255)
                 }
-                textInputManager.smartbarView?.setCandidateSuggestionWords(
-                    time,
-                    suggestionList
-                )
+                //textInputManager.smartbarView?.setCandidateSuggestionWords(
+                //    time,
+                //    suggestionList
+                //)
                 suggestionList.dispose()
-                textInputManager.smartbarView?.updateCandidateSuggestionCapsState()
+                //textInputManager.smartbarView?.updateCandidateSuggestionCapsState()
                 if (commit && suggestions.isNotEmpty()) {
                     textInputManager.handleGesture(suggestions.first())
                 }

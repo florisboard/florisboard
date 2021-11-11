@@ -25,6 +25,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -37,6 +39,7 @@ import androidx.compose.ui.platform.AbstractComposeView
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.app.res.ProvideLocalizedResources
@@ -44,13 +47,16 @@ import dev.patrickgold.florisboard.app.ui.components.SystemUiIme
 import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.common.isOrientationLandscape
 import dev.patrickgold.florisboard.common.isOrientationPortrait
+import dev.patrickgold.florisboard.common.observeAsTransformingState
 import dev.patrickgold.florisboard.debug.flogDebug
-import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackManager
+import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
+import dev.patrickgold.florisboard.ime.keyboard.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.LocalKeyboardRowBaseHeight
 import dev.patrickgold.florisboard.ime.keyboard.ProvideKeyboardRowBaseHeight
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedPanel
+import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
@@ -65,66 +71,7 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     private var composeInputView: View? = null
     private var composeInputViewInnerHeight: Int = 0
-    private val inputFeedbackManager by lazy { InputFeedbackManager.new(this) }
-
-    @Composable
-    private fun ImeUiWrapper() {
-        ProvideLocalizedResources(this) {
-            ProvideKeyboardRowBaseHeight {
-                CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
-                    FlorisImeTheme {
-                        // Outer box is necessary as an "outer window"
-                        Box(modifier = Modifier.fillMaxWidth()) {
-                            ImeUi()
-                        }
-                        SystemUiIme()
-                    }
-                }
-            }
-        }
-    }
-
-    @Composable
-    private fun BoxScope.ImeUi() {
-        val keyboardStyle = FlorisImeTheme.style.get(FlorisImeUi.Keyboard)
-        flogDebug { keyboardStyle.toString() }
-        val height = LocalKeyboardRowBaseHeight.current * 5
-        SnyggSurface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(height)
-                .align(Alignment.BottomStart)
-                .onGloballyPositioned { coords -> composeInputViewInnerHeight = coords.size.height },
-            background = keyboardStyle.background,
-        ) {
-            Row(modifier = Modifier.fillMaxSize()) {
-                val configuration = LocalConfiguration.current
-                val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
-                val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsState()
-                val keyboardWeight = when {
-                    oneHandedMode == OneHandedMode.OFF || configuration.isOrientationLandscape() -> 1f
-                    else -> oneHandedModeScaleFactor / 100f
-                }
-                if (oneHandedMode == OneHandedMode.END && configuration.isOrientationPortrait()) {
-                    OneHandedPanel(
-                        inputFeedbackManager,
-                        panelSide = OneHandedMode.START,
-                        weight = 1f - keyboardWeight,
-                    )
-                }
-                Box(modifier = Modifier.weight(keyboardWeight)) {
-                    Button(onClick = { toggleOneHandedMode(isRight = true) }) { Text(text = "Content") }
-                }
-                if (oneHandedMode == OneHandedMode.START && configuration.isOrientationPortrait()) {
-                    OneHandedPanel(
-                        inputFeedbackManager,
-                        panelSide = OneHandedMode.END,
-                        weight = 1f - keyboardWeight,
-                    )
-                }
-            }
-        }
-    }
+    private val inputFeedbackController by lazy { InputFeedbackController.new(this) }
 
     override fun onCreate() {
         super.onCreate()
@@ -140,6 +87,68 @@ class FlorisImeService : LifecycleInputMethodService() {
     override fun onCreateCandidatesView(): View? {
         // We do not use the framework's candidate view, but an integrated one within the IME Ui.
         return null
+    }
+
+    @Composable
+    private fun ImeUiWrapper() {
+        ProvideLocalizedResources(this) {
+            ProvideKeyboardRowBaseHeight {
+                CompositionLocalProvider(
+                    LocalInputFeedbackController provides inputFeedbackController,
+                    LocalLayoutDirection provides LayoutDirection.Ltr,
+                ) {
+                    FlorisImeTheme {
+                        // Outer box is necessary as an "outer window"
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            ImeUi()
+                        }
+                        SystemUiIme()
+                    }
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun BoxScope.ImeUi() {
+        val keyboardStyle = FlorisImeTheme.style.get(FlorisImeUi.Keyboard)
+        SnyggSurface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomStart)
+                .onGloballyPositioned { coords -> composeInputViewInnerHeight = coords.size.height },
+            background = keyboardStyle.background,
+        ) {
+            val configuration = LocalConfiguration.current
+            val bottomOffset by if (configuration.isOrientationPortrait()) {
+                prefs.keyboard.bottomOffsetPortrait
+            } else {
+                prefs.keyboard.bottomOffsetLandscape
+            }.observeAsTransformingState { it.dp }
+            Row(modifier = Modifier.fillMaxWidth().padding(bottom = bottomOffset)) {
+                val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
+                val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsState()
+                val keyboardWeight = when {
+                    oneHandedMode == OneHandedMode.OFF || configuration.isOrientationLandscape() -> 1f
+                    else -> oneHandedModeScaleFactor / 100f
+                }
+                if (oneHandedMode == OneHandedMode.END && configuration.isOrientationPortrait()) {
+                    OneHandedPanel(
+                        panelSide = OneHandedMode.START,
+                        weight = 1f - keyboardWeight,
+                    )
+                }
+                Box(modifier = Modifier.weight(keyboardWeight)) {
+                    TextInputLayout()
+                }
+                if (oneHandedMode == OneHandedMode.START && configuration.isOrientationPortrait()) {
+                    OneHandedPanel(
+                        panelSide = OneHandedMode.END,
+                        weight = 1f - keyboardWeight,
+                    )
+                }
+            }
+        }
     }
 
     override fun updateFullscreenMode() {

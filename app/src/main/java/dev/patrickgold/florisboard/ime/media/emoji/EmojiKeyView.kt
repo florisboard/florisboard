@@ -106,7 +106,7 @@ class EmojiKeyView(
                     emojiKeyboardView.isScrollBlocked = true
                     emojiKeyboardView.popupManager.show(key, KeyHintConfiguration.HINTS_DISABLED)
                     emojiKeyboardView.popupManager.extend(key, KeyHintConfiguration.HINTS_DISABLED)
-                    florisboard?.inputFeedbackManager?.keyPress(TextKeyData.UNSPECIFIED)
+                    florisboard?.inputFeedbackController?.keyPress(TextKeyData.UNSPECIFIED)
                 }, delayMillis.toLong())
             }
             MotionEvent.ACTION_MOVE -> {
@@ -134,7 +134,7 @@ class EmojiKeyView(
                     retData != null && !isCancelled
                 ) {
                     if (!emojiKeyboardView.isScrollBlocked) {
-                        florisboard?.inputFeedbackManager?.keyPress(TextKeyData.UNSPECIFIED)
+                        florisboard?.inputFeedbackController?.keyPress(TextKeyData.UNSPECIFIED)
                     }
                     (retData as? EmojiKeyData)?.let { florisboard?.mediaInputManager?.sendEmojiKeyPress(it) }
                     performClick()

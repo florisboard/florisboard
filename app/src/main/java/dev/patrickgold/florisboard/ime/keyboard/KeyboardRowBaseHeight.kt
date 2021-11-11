@@ -19,36 +19,19 @@ package dev.patrickgold.florisboard.ime.keyboard
 import android.content.res.Resources
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.common.isOrientationLandscape
+import dev.patrickgold.florisboard.common.observeAsTransformingState
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
-import dev.patrickgold.jetpref.datastore.model.PreferenceData
-import dev.patrickgold.jetpref.datastore.model.PreferenceObserver
 import dev.patrickgold.jetpref.datastore.model.observeAsState
-
-@Composable
-private fun <V : Any, R : Any> PreferenceData<V>.observeAsState2(transform: (V) -> R): State<R> {
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val state = remember(key) { mutableStateOf(transform(get())) }
-    DisposableEffect(this, lifecycleOwner) {
-        val observer = PreferenceObserver<V> { newValue -> state.value = transform(newValue) }
-        observe(lifecycleOwner, observer)
-        onDispose { removeObserver(observer) }
-    }
-    return state
-}
 
 val LocalKeyboardRowBaseHeight = staticCompositionLocalOf { 65.dp }
 
@@ -58,10 +41,10 @@ fun ProvideKeyboardRowBaseHeight(content: @Composable () -> Unit) {
     val resources = LocalContext.current.resources
     val configuration = LocalConfiguration.current
 
-    val heightFactorPortrait by prefs.keyboard.heightFactorPortrait.observeAsState2 { it.toFloat() / 100f }
-    val heightFactorLandscape by prefs.keyboard.heightFactorLandscape.observeAsState2 { it.toFloat() / 100f }
+    val heightFactorPortrait by prefs.keyboard.heightFactorPortrait.observeAsTransformingState { it.toFloat() / 100f }
+    val heightFactorLandscape by prefs.keyboard.heightFactorLandscape.observeAsTransformingState { it.toFloat() / 100f }
     val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
-    val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsState2 { it.toFloat() / 100f }
+    val oneHandedModeScaleFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsTransformingState { it.toFloat() / 100f }
 
     val baseRowHeight = remember(
         configuration, resources, heightFactorPortrait, heightFactorLandscape,

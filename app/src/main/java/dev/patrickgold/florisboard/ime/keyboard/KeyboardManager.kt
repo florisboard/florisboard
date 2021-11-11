@@ -53,6 +53,13 @@ class KeyboardManager(context: Context) {
         subtype: Subtype
     ): Deferred<TextKeyboard> = scope.async { TextKeyboard(emptyArray(), KeyboardMode.CHARACTERS, null, null) }
 
+    /**
+     * @return If the language switch should be shown.
+     */
+    fun shouldShowLanguageSwitch(): Boolean {
+        return subtypeManager.subtypes().size > 1
+    }
+
     inner class KeyboardManagerResources {
         private val cachedLayouts = mutableMapOf<ExtensionComponentName, DeferredResult<LayoutArrangement>>()
         private val cachedLayoutsGuard = Mutex()

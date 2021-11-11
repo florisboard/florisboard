@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.text.smartbar
 
-import android.content.Context
+/*import android.content.Context
 import android.os.Build
 import android.util.AttributeSet
 import android.util.Size
@@ -51,11 +51,13 @@ import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.math.roundToInt
 
+*/
 /**
  * View class which manages the state and the UI of the Smartbar, a key element in the usefulness
  * of FlorisBoard. The view automatically tries to get the current FlorisBoard instance, which it
  * needs to decide when a specific feature component is shown.
- */
+ *//*
+
 class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, ThemeManager.OnThemeUpdatedListener {
     private val florisboard = FlorisBoard.getInstanceOrNull()
     private val prefs by florisPreferenceModel()
@@ -91,12 +93,14 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
         binding = SmartbarBinding.bind(this)
     }
 
-    /**
+    */
+/**
      * Called by Android when this view has been attached to a window. At this point we can be
      * certain that all children have been instantiated and that we can begin working with them.
      * After initializing all child views, this method registers the SmartbarView in the
      * TextInputManager, which then starts working together with this view.
-     */
+     *//*
+
     override fun onAttachedToWindow() {
         flogInfo { "onAttachedToWindow()" }
 
@@ -170,7 +174,8 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
         super.onDetachedFromWindow()
     }
 
-    /**
+    */
+/**
      * Updates the visibility of features based on the provided attributes.
      *
      * @param actionStartAreaVisible True if the action start area should be shown, else false.
@@ -181,7 +186,8 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
      * @param actionEndAreaVisible True if the action end area should be shown, else false.
      * @param actionEndAreaId The ID of the element to show within the action end area. Set to null
      *  to leave this area blank.
-     */
+     *//*
+
     private fun configureFeatureVisibility(
         actionStartAreaVisible: Boolean = cachedActionStartAreaVisible,
         @IdRes actionStartAreaId: Int? = cachedActionStartAreaId,
@@ -311,20 +317,24 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
         //
     }
 
-    /**
+    */
+/**
      * Clears the inline suggestions and triggers thw Smartbar update cycle.
-     */
+     *//*
+
     @RequiresApi(Build.VERSION_CODES.R)
     fun clearInlineSuggestions() {
         updateInlineSuggestionStrip(listOf())
     }
 
-    /**
+    */
+/**
      * Inflates the given inline suggestions. Once all provided views are ready, the suggestions
      * strip is updated and the Smartbar update cycle is triggered.
      *
      * @param inlineSuggestions A collection of inline suggestions to be inflated and shown.
-     */
+     *//*
+
     @RequiresApi(Build.VERSION_CODES.R)
     fun showInlineSuggestions(inlineSuggestions: Collection<InlineSuggestion>) {
         if (inlineSuggestions.isEmpty()) {
@@ -348,12 +358,14 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
         }
     }
 
-    /**
+    */
+/**
      * Updates the suggestion strip with given inline content views and triggers the Smartbar
      * update cycle.
      *
      * @param suggestionViews A collection of inline content views to show.
-     */
+     *//*
+
     @RequiresApi(Build.VERSION_CODES.R)
     private fun updateInlineSuggestionStrip(suggestionViews: Collection<InlineContentView?>) {
         flogDebug { "Updating the inline suggestion strip with ${suggestionViews.size} items" }
@@ -405,10 +417,12 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
         binding.candidates.setEventListener(listener)
     }
 
-    /**
+    */
+/**
      * Event listener interface which can be used by other classes to receive updates when something
      * important happens in the Smartbar.
-     */
+     *//*
+
     interface EventListener {
         fun onSmartbarBackButtonPressed() {}
         fun onSmartbarCandidatePressed(word: String) {}
@@ -418,3 +432,4 @@ class SmartbarView : ConstraintLayout, KeyboardState.OnUpdateStateListener, Them
         fun onSmartbarQuickActionPressed(@IdRes quickActionId: Int) {}
     }
 }
+*/

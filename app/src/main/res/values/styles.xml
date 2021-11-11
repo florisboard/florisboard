@@ -1,32 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="SmartbarContainer">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:gravity">center</item>
-        <item name="android:orientation">horizontal</item>
-    </style>
-
-    <style name="SmartbarQuickAction" parent="Widget.AppCompat.Button">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_margin">@dimen/smartbar_button_margin</item>
-        <item name="android:background">@drawable/shape_oval</item>
-        <item name="android:backgroundTint">#FFFFFF</item>
-        <item name="android:padding">@dimen/smartbar_button_padding</item>
-        <item name="android:scaleType">fitCenter</item>
-        <item name="android:tint">#000000</item>
-    </style>
-
-    <style name="SmartbarQuickAction.Toggle">
-        <item name="android:autoMirrored">true</item>
-    </style>
-
-    <style name="SmartbarQuickAction.PrivateModeButton">
-        <item name="android:background">@drawable/shape_rect_rounded</item>
-    </style>
-
     <style name="TextEditingButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">0dp</item>
@@ -34,32 +8,6 @@
         <item name="android:soundEffectsEnabled">false</item>
         <item name="android:hapticFeedbackEnabled">false</item>
         <item name="android:scaleType">center</item>
-    </style>
-
-    <style name="SettingsCardView" parent="Widget.MaterialComponents.CardView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">16dp</item>
-        <item name="android:layout_marginEnd">16dp</item>
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:layout_marginBottom">8dp</item>
-        <item name="contentPadding">8dp</item>
-        <item name="cardBackgroundColor">@color/cardViewBackgroundColor</item>
-        <item name="cardCornerRadius">4dp</item>
-    </style>
-    <style name="SettingsCardView.Clickable">
-        <item name="android:foreground">?selectableItemBackground</item>
-        <item name="android:clickable">true</item>
-        <item name="android:focusable">true</item>
-    </style>
-    <style name="SettingsCardView.Clickable.Success">
-        <item name="cardBackgroundColor">?colorSuccess</item>
-    </style>
-    <style name="SettingsCardView.Clickable.Warning">
-        <item name="cardBackgroundColor">?colorWarning</item>
-    </style>
-    <style name="SettingsCardView.Clickable.Error">
-        <item name="cardBackgroundColor">?colorError</item>
     </style>
 
 </resources>

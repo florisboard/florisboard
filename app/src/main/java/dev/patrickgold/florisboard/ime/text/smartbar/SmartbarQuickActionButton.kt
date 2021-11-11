@@ -54,13 +54,13 @@ class SmartbarQuickActionButton : androidx.appcompat.widget.AppCompatImageButton
     }
 
     override fun onThemeUpdated(theme: Theme) {
-        if (id == R.id.private_mode_button) {
-            background.setTint(theme.getAttr(Theme.Attr.PRIVATE_MODE_BACKGROUND).toSolidColor().color)
-            setColorFilter(theme.getAttr(Theme.Attr.PRIVATE_MODE_FOREGROUND).toSolidColor().color)
-        } else {
-            background.setTint(theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND).toSolidColor().color)
-            setColorFilter(theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_FOREGROUND).toSolidColor().color)
-        }
+        //if (id == R.id.private_mode_button) {
+        //    background.setTint(theme.getAttr(Theme.Attr.PRIVATE_MODE_BACKGROUND).toSolidColor().color)
+        //    setColorFilter(theme.getAttr(Theme.Attr.PRIVATE_MODE_FOREGROUND).toSolidColor().color)
+        //} else {
+        //    background.setTint(theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_BACKGROUND).toSolidColor().color)
+        //    setColorFilter(theme.getAttr(Theme.Attr.SMARTBAR_BUTTON_FOREGROUND).toSolidColor().color)
+        //}
         invalidate()
     }
 }

@@ -36,7 +36,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         foreground = rgbaColor(238, 238, 238)
     }
     FlorisImeUi.Smartbar {
-        background = rgbaColor(255, 255, 255)
+        background = rgbaColor(0, 0, 0, 0f)
     }
     FlorisImeUi.SystemNavBar {
         background = rgbaColor(33, 33, 33)

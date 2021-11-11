@@ -25,6 +25,7 @@ import android.os.Vibrator
 import android.provider.Settings
 import android.view.HapticFeedbackConstants
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -38,13 +39,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
+val LocalInputFeedbackController = staticCompositionLocalOf<InputFeedbackController> { error("not init") }
+
 /**
- * Input feedback manager responsible to process and perform audio and haptic
+ * Input feedback controller is responsible to process and perform audio and haptic
  * feedback for user interactions based on the system and floris preferences.
  */
-class InputFeedbackManager private constructor(private val ims: InputMethodService) {
+class InputFeedbackController private constructor(private val ims: InputMethodService) {
     companion object {
-        fun new(ims: InputMethodService) = InputFeedbackManager(ims)
+        fun new(ims: InputMethodService) = InputFeedbackController(ims)
 
         @Composable
         fun hasAmplitudeControl(): Boolean {
