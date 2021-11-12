@@ -18,10 +18,7 @@
 
 package dev.patrickgold.florisboard.ime.keyboard
 
-import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.core.view.children
 import androidx.lifecycle.LiveData
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
@@ -341,36 +338,4 @@ class KeyboardState private constructor(
     var isKanaSmall: Boolean
         get() = getFlag(F_IS_KANA_SMALL)
         set(v) { setFlag(F_IS_KANA_SMALL, v) }
-
-    interface OnUpdateStateListener {
-        /**
-         * Adds the ability for Views to intercept a update keyboard state dispatch.
-         *
-         * @param newState Reference to the new state.
-         *
-         * @return True if the update was intercepted (and thus the child views have to
-         *  be manually updated if needed, false if no interception happened.
-         */
-        fun onInterceptUpdateKeyboardState(newState: KeyboardState): Boolean = false
-
-        /**
-         * A new keyboard state is dispatched to all views in this view tree.
-         *
-         * @param newState Reference to the new state.
-         */
-        fun onUpdateKeyboardState(newState: KeyboardState)
-    }
-}
-
-fun View.updateKeyboardState(newState: KeyboardState) {
-    val intercepted: Boolean
-    if (this is KeyboardState.OnUpdateStateListener) {
-        intercepted = this.onInterceptUpdateKeyboardState(newState)
-        this.onUpdateKeyboardState(newState)
-    } else {
-        intercepted = false
-    }
-    if (this is ViewGroup && !intercepted) {
-        this.children.forEach { it.updateKeyboardState(newState) }
-    }
 }

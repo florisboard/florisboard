@@ -33,6 +33,7 @@ import dev.patrickgold.florisboard.ime.core.*
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.DefaultComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
+import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard.Keyboard
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
@@ -63,11 +64,13 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
     private val subtypeManager by context.subtypeManager()
 
     private var computedKeyboard: TextKeyboard? = null
-    private var iconSet: TextKeyboardIconSet? = null
-    private var keyboardRowBaseHeight: Float = 0f
+    private val iconSet: TextKeyboardIconSet = TextKeyboardIconSet.new(context)
+    var keyboardRowBaseHeight: Float = 0f
+    var inputFeedbackController: InputFeedbackController? = null
+    private val inputEventDispatcher get() = keyboardManager.inputEventDispatcher
 
-    private var cachedTheme: Theme? = null
-    private var cachedState: KeyboardState = KeyboardState.new(maskOfInterest = KeyboardState.INTEREST_TEXT)
+    private val cachedTheme: Theme = Theme.BASE_THEME
+    private val cachedState: KeyboardState = KeyboardState.new(maskOfInterest = KeyboardState.INTEREST_TEXT)
 
     private var externalComputingEvaluator: ComputingEvaluator? = null
     private val internalComputingEvaluator = object : ComputingEvaluator {
@@ -199,10 +202,6 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         externalComputingEvaluator = evaluator
     }
 
-    fun setKeyboardRowBaseHeight(baseHeight: Float) {
-        keyboardRowBaseHeight = baseHeight
-    }
-
     fun setComputedKeyboard(keyboard: TextKeyboard) {
         flogInfo(LogTopic.TEXT_KEYBOARD_VIEW) { keyboard.mode.toString() }
         val renderViewDiff = keyboard.keyCount - childCount
@@ -225,12 +224,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         }
     }
 
-    fun setIconSet(textKeyboardIconSet: TextKeyboardIconSet) {
-        flogInfo(LogTopic.TEXT_KEYBOARD_VIEW) { computedKeyboard?.mode?.toString() ?: "" }
-        iconSet = textKeyboardIconSet
-    }
-
-    override fun onUpdateKeyboardState(newState: KeyboardState) {
+    fun onUpdateKeyboardState(newState: KeyboardState) {
         flogInfo(LogTopic.TEXT_KEYBOARD_VIEW) { computedKeyboard?.mode?.toString() ?: "" }
         if (isMeasured) {
             if (cachedState.isDifferentTo(newState)) {
@@ -272,7 +266,6 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        cachedTheme = null
         glideTypingDetector.let {
             it.unregisterListener(this)
             it.unregisterListener(glideTypingManager)
@@ -281,7 +274,6 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
     override fun onTouchEventInternal(event: MotionEvent) {
         flogDebug { "event=$event" }
-        val dispatcher = florisboard?.textInputManager?.inputEventDispatcher ?: return
         swipeGestureDetector.onTouchEvent(event)
 
         if (prefs.glide.enabled.get() && computedKeyboard?.mode == KeyboardMode.CHARACTERS) {
@@ -302,7 +294,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
         when (event.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
-                dispatcher.send(InputKeyEvent.down(TextKeyData.INTERNAL_BATCH_EDIT))
+                inputEventDispatcher.send(InputKeyEvent.down(TextKeyData.INTERNAL_BATCH_EDIT))
                 val pointerIndex = event.actionIndex
                 val pointerId = event.getPointerId(pointerIndex)
                 val pointer = pointerMap.add(pointerId, pointerIndex)
@@ -356,7 +348,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                             pointer.hasTriggeredGestureMove = true
                             pointer.activeKey?.let { activeKey ->
                                 activeKey.setPressed(false) { invalidate(activeKey) }
-                                florisboard!!.textInputManager.inputEventDispatcher.let { dispatcher ->
+                                dispatcher.let { dispatcher ->
                                     if (dispatcher.isPressed(activeKey.computedData.code)) {
                                         dispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
                                     }
@@ -395,7 +387,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 }
             }
             MotionEvent.ACTION_UP -> {
-                dispatcher.send(InputKeyEvent.up(TextKeyData.INTERNAL_BATCH_EDIT))
+                inputEventDispatcher.send(InputKeyEvent.up(TextKeyData.INTERNAL_BATCH_EDIT))
                 val pointerIndex = event.actionIndex
                 val pointerId = event.getPointerId(pointerIndex)
                 for (pointer in pointerMap) {
@@ -431,7 +423,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                     onTouchCancelInternal(event, pointer)
                 }
                 pointerMap.clear()
-                dispatcher.send(InputKeyEvent.up(TextKeyData.INTERNAL_BATCH_EDIT))
+                inputEventDispatcher.send(InputKeyEvent.up(TextKeyData.INTERNAL_BATCH_EDIT))
             }
         }
     }
@@ -443,13 +435,11 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
             event.getX(pointer.index).roundToInt(), event.getY(pointer.index).roundToInt()
         )
         if (key != null && key.isEnabled) {
-            florisboard!!.textInputManager.inputEventDispatcher.let { dispatcher ->
-                dispatcher.send(InputKeyEvent.down(key.computedData))
-            }
+            inputEventDispatcher.send(InputKeyEvent.down(key.computedData))
             if (prefs.keyboard.popupEnabled.get() && popupManager.isSuitableForPopups(key)) {
                 popupManager.show(key, keyHintConfiguration)
             }
-            florisboard!!.inputFeedbackController.keyPress(key.computedData)
+            inputFeedbackController?.keyPress(key.computedData)
             key.setPressed(true) { invalidate(key) }
             if (pointer.initialKey == null) {
                 pointer.initialKey = key
@@ -474,15 +464,13 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                     }
                     KeyCode.SHIFT -> {
                         delay((delayMillis * 2.5f).toLong())
-                        florisboard!!.textInputManager.inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.SHIFT_LOCK))
-                        florisboard!!.inputFeedbackController.keyLongPress(key.computedData)
+                        inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.SHIFT_LOCK))
+                        inputFeedbackController?.keyLongPress(key.computedData)
                     }
                     KeyCode.LANGUAGE_SWITCH -> {
                         delay((delayMillis * 2.0f).toLong())
                         pointer.shouldBlockNextUp = true
-                        florisboard!!.textInputManager.inputEventDispatcher.let { dispatcher ->
-                            dispatcher.send(InputKeyEvent.downUp(TextKeyData.SHOW_INPUT_METHOD_PICKER))
-                        }
+                        inputEventDispatcher.send(InputKeyEvent.downUp(TextKeyData.SHOW_INPUT_METHOD_PICKER))
                     }
                     else -> {
                         delay(delayMillis)
@@ -491,7 +479,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                             ).isNotEmpty()
                         ) {
                             popupManager.extend(key, keyHintConfiguration)
-                            florisboard!!.inputFeedbackController.keyLongPress(key.computedData)
+                            inputFeedbackController?.keyLongPress(key.computedData)
                         }
                     }
                 }
@@ -534,30 +522,28 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         val activeKey = pointer.activeKey
         if (initialKey != null && activeKey != null) {
             activeKey.setPressed(false) { invalidate(activeKey) }
-            florisboard!!.textInputManager.inputEventDispatcher.let { dispatcher ->
-                if (popupManager.isSuitableForPopups(activeKey)) {
-                    val retData = popupManager.getActiveKeyData(activeKey, keyHintConfiguration)
-                    if (retData != null && !pointer.hasTriggeredGestureMove) {
-                        if (retData == activeKey.computedData) {
-                            dispatcher.send(InputKeyEvent.up(activeKey.computedData))
-                        } else {
-                            if (dispatcher.isPressed(activeKey.computedData.code)) {
-                                dispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
-                            }
-                            dispatcher.send(InputKeyEvent.downUp(retData))
-                        }
+            if (popupManager.isSuitableForPopups(activeKey)) {
+                val retData = popupManager.getActiveKeyData(activeKey, keyHintConfiguration)
+                if (retData != null && !pointer.hasTriggeredGestureMove) {
+                    if (retData == activeKey.computedData) {
+                        inputEventDispatcher.send(InputKeyEvent.up(activeKey.computedData))
                     } else {
-                        if (dispatcher.isPressed(activeKey.computedData.code)) {
-                            dispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
+                        if (inputEventDispatcher.isPressed(activeKey.computedData.code)) {
+                            inputEventDispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
                         }
+                        inputEventDispatcher.send(InputKeyEvent.downUp(retData))
                     }
-                    popupManager.hide()
                 } else {
-                    if (pointer.hasTriggeredGestureMove) {
-                        dispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
-                    } else {
-                        dispatcher.send(InputKeyEvent.up(activeKey.computedData))
+                    if (inputEventDispatcher.isPressed(activeKey.computedData.code)) {
+                        inputEventDispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
                     }
+                }
+                popupManager.hide()
+            } else {
+                if (pointer.hasTriggeredGestureMove) {
+                    inputEventDispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
+                } else {
+                    inputEventDispatcher.send(InputKeyEvent.up(activeKey.computedData))
                 }
             }
             pointer.activeKey = null
@@ -568,16 +554,13 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
 
     private fun onTouchCancelInternal(event: MotionEvent, pointer: TouchPointer) {
         flogDebug(LogTopic.TEXT_KEYBOARD_VIEW) { "pointer=$pointer" }
-        val florisboard = florisboard ?: return
         pointer.longPressJob?.cancel()
         pointer.longPressJob = null
 
         val activeKey = pointer.activeKey
         if (activeKey != null) {
             activeKey.setPressed(false) { invalidate(activeKey) }
-            florisboard.textInputManager.inputEventDispatcher.let { dispatcher ->
-                dispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
-            }
+            inputEventDispatcher.send(InputKeyEvent.cancel(activeKey.computedData))
             if (popupManager.isSuitableForPopups(activeKey)) {
                 popupManager.hide()
             }
@@ -588,7 +571,6 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
     }
 
     override fun onSwipe(event: SwipeGesture.Event): Boolean {
-        val florisboard = florisboard ?: return false
         val pointer = pointerMap.findById(event.pointerId) ?: return false
         val initialKey = pointer.initialKey ?: return false
         val activeKey = pointer.activeKey
@@ -604,11 +586,11 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 initialKey.computedData.code == KeyCode.SHIFT && activeKey?.computedData?.code != KeyCode.SHIFT &&
                     event.type == SwipeGesture.Type.TOUCH_UP -> {
                     activeKey?.let {
-                        florisboard.textInputManager.inputEventDispatcher.send(
+                        inputEventDispatcher.send(
                             InputKeyEvent.up(popupManager.getActiveKeyData(it, keyHintConfiguration) ?: it.computedData)
                         )
                     }
-                    florisboard.textInputManager.inputEventDispatcher.send(InputKeyEvent.cancel(TextKeyData.SHIFT))
+                    inputEventDispatcher.send(InputKeyEvent.cancel(TextKeyData.SHIFT))
                     true
                 }
                 initialKey.computedData.code > KeyCode.SPACE && !popupManager.isShowingExtendedPopup -> when {
@@ -638,7 +620,6 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
     }
 
     private fun handleDeleteSwipe(event: SwipeGesture.Event): Boolean {
-        val florisboard = florisboard ?: return false
         if (cachedState.isRawInputEditor) return false
         val pointer = pointerMap.findById(event.pointerId) ?: return false
 
@@ -647,7 +628,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 SwipeAction.DELETE_CHARACTERS_PRECISELY -> {
                     florisboard.activeEditorInstance.apply {
                         if (abs(event.relUnitCountX) > 0) {
-                            florisboard.inputFeedbackController.gestureMovingSwipe(TextKeyData.DELETE)
+                            inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
                         }
                         markComposingRegion(null)
                         if (selection.isValid) {
@@ -663,7 +644,7 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                 SwipeAction.DELETE_WORDS_PRECISELY -> {
                     florisboard.activeEditorInstance.apply {
                         if (abs(event.relUnitCountX) > 0) {
-                            florisboard.inputFeedbackController.gestureMovingSwipe(TextKeyData.DELETE)
+                            inputFeedbackController?.gestureMovingSwipe(TextKeyData.DELETE)
                         }
                         markComposingRegion(null)
                         if (selection.isValid) {
@@ -689,7 +670,6 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
     }
 
     private fun handleSpaceSwipe(event: SwipeGesture.Event): Boolean {
-        val florisboard = florisboard ?: return false
         val pointer = pointerMap.findById(event.pointerId) ?: return false
 
         return when (event.type) {
@@ -703,8 +683,8 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                                 it
                             }
                             if (count > 0) {
-                                florisboard.inputFeedbackController.gestureMovingSwipe(TextKeyData.SPACE)
-                                florisboard.textInputManager.inputEventDispatcher.send(
+                                inputFeedbackController?.gestureMovingSwipe(TextKeyData.SPACE)
+                                inputEventDispatcher.send(
                                     InputKeyEvent.downUp(
                                         TextKeyData.ARROW_LEFT, count
                                     )
@@ -723,8 +703,8 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
                                 it
                             }
                             if (count > 0) {
-                                florisboard.inputFeedbackController.gestureMovingSwipe(TextKeyData.SPACE)
-                                florisboard.textInputManager.inputEventDispatcher.send(
+                                inputFeedbackController?.gestureMovingSwipe(TextKeyData.SPACE)
+                                inputEventDispatcher.send(
                                     InputKeyEvent.downUp(
                                         TextKeyData.ARROW_RIGHT, count
                                     )
@@ -1025,9 +1005,9 @@ class TextKeyboardView : KeyboardView, SwipeGesture.Listener, GlideTypingGesture
         return size
     }
 
-    override fun onThemeUpdated(theme: Theme) {
+    fun onThemeUpdated(theme: Theme) {
         if (isPreviewMode) {
-            cachedTheme = theme
+            //cachedTheme = theme
             backgroundDrawable.apply {
                 paint.color = theme.getAttr(Theme.Attr.KEYBOARD_BACKGROUND).toSolidColor().color
             }

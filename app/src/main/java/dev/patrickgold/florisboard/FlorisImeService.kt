@@ -28,8 +28,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material.Button
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -49,10 +47,8 @@ import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.common.isOrientationLandscape
 import dev.patrickgold.florisboard.common.isOrientationPortrait
 import dev.patrickgold.florisboard.common.observeAsTransformingState
-import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.LocalInputFeedbackController
-import dev.patrickgold.florisboard.ime.keyboard.LocalKeyboardRowBaseHeight
 import dev.patrickgold.florisboard.ime.keyboard.ProvideKeyboardRowBaseHeight
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
@@ -62,9 +58,27 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
 import dev.patrickgold.jetpref.datastore.model.observeAsState
+import java.lang.ref.WeakReference
 
 /**
- * Core class responsible for linking together all managers and UI providers to provide an IME service.
+ * Global weak reference for the [FlorisImeService] class. This is needed as certain actions (request hide, switch to
+ * another input method, getting the editor instance / input connection, etc.) can only be performed by an IME
+ * service class and no context-bound managers.
+ *
+ * Consider using this reference only if absolutely needed. This reference must **never** be used to access state, only
+ * to trigger an action. This reference is weak and will not prevent GC of the service class, thus expect that this
+ * reference's value can be null at any time given.
+ */
+var FlorisImeServiceReference = WeakReference<FlorisImeService?>(null)
+    private set
+
+/**
+ * Core class responsible for linking together all managers and UI compose-ables to provide an IME service. Sets
+ * up the window and context to be lifecycle-aware, so LiveData and Jetpack Compose can be used without issues.
+ *
+ * This is a new implementation for the keyboard service class and is replacing the old core class bit by bit.
+ * The main objective for the new class is to hold as few state as possible and delegate tasks to context-bound
+ * manager classes.
  */
 class FlorisImeService : LifecycleInputMethodService() {
     private val prefs by florisPreferenceModel()
@@ -76,6 +90,7 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onCreate() {
         super.onCreate()
+        FlorisImeServiceReference = WeakReference(this)
     }
 
     override fun onCreateInputView(): View {
@@ -86,8 +101,19 @@ class FlorisImeService : LifecycleInputMethodService() {
     }
 
     override fun onCreateCandidatesView(): View? {
-        // We do not use the framework's candidate view, but an integrated one within the IME Ui.
+        // Disable the default candidates view
         return null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        FlorisImeServiceReference = WeakReference(null)
+        composeInputView = null
+    }
+
+    override fun onFinishInputView(finishingInput: Boolean) {
+        super.onFinishInputView(finishingInput)
+        keyboardManager.activeState.reset()
     }
 
     @Composable
@@ -200,13 +226,6 @@ class FlorisImeService : LifecycleInputMethodService() {
         ViewUtils.updateLayoutGravityOf(inputArea, Gravity.BOTTOM)
         val composeView = composeInputView ?: return
         ViewUtils.updateLayoutHeightOf(composeView, layoutHeight)
-    }
-
-    fun toggleOneHandedMode(isRight: Boolean) {
-        prefs.keyboard.oneHandedMode.set(when (prefs.keyboard.oneHandedMode.get()) {
-            OneHandedMode.OFF -> if (isRight) { OneHandedMode.END } else { OneHandedMode.START }
-            else -> OneHandedMode.OFF
-        })
     }
 
     private inner class ComposeInputView : AbstractComposeView(this) {

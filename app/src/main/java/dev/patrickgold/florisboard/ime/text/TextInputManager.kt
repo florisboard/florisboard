@@ -175,7 +175,6 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         flogInfo(LogTopic.IMS_EVENTS)
 
         textInputKeyboardView = uiBinding.text.mainKeyboardView.also {
-            it.setIconSet(textKeyboardIconSet)
             it.setComputingEvaluator(DefaultComputingEvaluator)
             it.sync()
         }

@@ -19,11 +19,19 @@ package dev.patrickgold.florisboard.ime.keyboard
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
+import dev.patrickgold.florisboard.ime.core.InputKeyEvent
+import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
+import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMapping
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyVariation
+import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
@@ -38,15 +46,27 @@ import kotlinx.coroutines.sync.Mutex
 
 typealias DeferredResult<T> = Deferred<Result<T>>
 
-class KeyboardManager(context: Context) {
+class KeyboardManager(context: Context) : InputKeyEventReceiver {
+    private val prefs by florisPreferenceModel()
     private val extensionManager by context.extensionManager()
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     val resources = KeyboardManagerResources()
 
-    val activeState: KeyboardState = KeyboardState.new()
+    val activeState = KeyboardState.new()
     val computedKeyboard: LiveData<TextKeyboard> = MutableLiveData(PlaceholderLoadingKeyboard)
+    val computingEvaluator: ComputingEvaluator = KeyboardManagerComputingEvaluator()
+    val inputEventDispatcher = InputEventDispatcher.new(
+        repeatableKeyCodes = intArrayOf(
+            KeyCode.ARROW_DOWN,
+            KeyCode.ARROW_LEFT,
+            KeyCode.ARROW_RIGHT,
+            KeyCode.ARROW_UP,
+            KeyCode.DELETE,
+            KeyCode.FORWARD_DELETE
+        )
+    ).also { it.keyEventReceiver = this }
 
     fun computeKeyboardAsync(
         keyboardMode: KeyboardMode,
@@ -58,6 +78,29 @@ class KeyboardManager(context: Context) {
      */
     fun shouldShowLanguageSwitch(): Boolean {
         return subtypeManager.subtypes().size > 1
+    }
+
+    fun toggleOneHandedMode(isRight: Boolean) {
+        prefs.keyboard.oneHandedMode.set(when (prefs.keyboard.oneHandedMode.get()) {
+            OneHandedMode.OFF -> if (isRight) { OneHandedMode.END } else { OneHandedMode.START }
+            else -> OneHandedMode.OFF
+        })
+    }
+
+    override fun onInputKeyDown(ev: InputKeyEvent) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onInputKeyUp(ev: InputKeyEvent) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onInputKeyCancel(ev: InputKeyEvent) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onInputKeyRepeat(ev: InputKeyEvent) {
+        TODO("Not yet implemented")
     }
 
     inner class KeyboardManagerResources {
@@ -111,6 +154,101 @@ class KeyboardManager(context: Context) {
             currencySets.postValue(localCurrencySets)
             layouts.postValue(localLayouts)
             popupMappings.postValue(localPopupMappings)
+        }
+    }
+
+    private inner class KeyboardManagerComputingEvaluator : ComputingEvaluator {
+        override fun evaluateCaps(): Boolean {
+            return activeState.caps || activeState.capsLock
+        }
+
+        override fun evaluateCaps(data: KeyData): Boolean {
+            return evaluateCaps() && data.code >= KeyCode.SPACE
+        }
+
+        override fun evaluateCharHalfWidth(): Boolean = activeState.isCharHalfWidth
+
+        override fun evaluateKanaKata(): Boolean = activeState.isKanaKata
+
+        override fun evaluateKanaSmall(): Boolean = activeState.isKanaSmall
+
+        override fun evaluateEnabled(data: KeyData): Boolean {
+            return when (data.code) {
+                KeyCode.CLIPBOARD_COPY,
+                KeyCode.CLIPBOARD_CUT -> {
+                    activeState.isSelectionMode && activeState.isRichInputEditor
+                }
+                KeyCode.CLIPBOARD_PASTE -> {
+                    // such gore. checks
+                    // 1. has a clipboard item
+                    // 2. the clipboard item has any of the supported mime types of the editor OR is plain text.
+                    //florisboard.florisClipboardManager?.canBePasted(
+                    //    florisboard.florisClipboardManager?.primaryClip
+                    //) == true
+                    false
+                }
+                KeyCode.CLIPBOARD_SELECT_ALL -> {
+                    activeState.isRichInputEditor
+                }
+                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
+                    prefs.clipboard.enableHistory.get()
+                }
+                else -> true
+            }
+        }
+
+        override fun evaluateVisible(data: KeyData): Boolean {
+            return when (data.code) {
+                KeyCode.SWITCH_TO_TEXT_CONTEXT,
+                KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
+                    val tempUtilityKeyAction = when {
+                        prefs.keyboard.utilityKeyEnabled.get() -> prefs.keyboard.utilityKeyAction.get()
+                        else -> UtilityKeyAction.DISABLED
+                    }
+                    when (tempUtilityKeyAction) {
+                        UtilityKeyAction.DISABLED,
+                        UtilityKeyAction.SWITCH_LANGUAGE,
+                        UtilityKeyAction.SWITCH_KEYBOARD_APP -> false
+                        UtilityKeyAction.SWITCH_TO_EMOJIS -> true
+                        UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS -> !shouldShowLanguageSwitch()
+                    }
+                }
+                KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> prefs.clipboard.enableHistory.get()
+                KeyCode.LANGUAGE_SWITCH -> {
+                    val tempUtilityKeyAction = when {
+                        prefs.keyboard.utilityKeyEnabled.get() -> prefs.keyboard.utilityKeyAction.get()
+                        else -> UtilityKeyAction.DISABLED
+                    }
+                    when (tempUtilityKeyAction) {
+                        UtilityKeyAction.DISABLED,
+                        UtilityKeyAction.SWITCH_TO_EMOJIS -> false
+                        UtilityKeyAction.SWITCH_LANGUAGE,
+                        UtilityKeyAction.SWITCH_KEYBOARD_APP -> true
+                        UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS -> shouldShowLanguageSwitch()
+                    }
+                }
+                else -> true
+            }
+        }
+
+        override fun getActiveSubtype(): Subtype {
+            return subtypeManager.activeSubtype.value!!
+        }
+
+        override fun getKeyVariation(): KeyVariation {
+            return activeState.keyVariation
+        }
+
+        override fun getKeyboard(): Keyboard {
+            throw NotImplementedError() // Correct value must be inserted by the TextKeyboardView
+        }
+
+        override fun isSlot(data: KeyData): Boolean {
+            return CurrencySet.isCurrencySlot(data.code)
+        }
+
+        override fun getSlotData(data: KeyData): KeyData? {
+            return subtypeManager.getCurrencySet(getActiveSubtype()).getSlot(data.code)
         }
     }
 }

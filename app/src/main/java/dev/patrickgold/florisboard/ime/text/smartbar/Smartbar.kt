@@ -33,11 +33,11 @@ import dev.patrickgold.florisboard.snygg.ui.snyggBackground
 fun Smartbar() {
     val prefs by florisPreferenceModel()
     val smartbarStyle = FlorisImeTheme.style.get(FlorisImeUi.Smartbar)
-    val keyboardRowBaseHeight = LocalKeyboardRowBaseHeight.current * 0.753f
+    val smartbarHeight = LocalKeyboardRowBaseHeight.current * 0.753f
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(keyboardRowBaseHeight)
+            .height(smartbarHeight)
             .snyggBackground(smartbarStyle.background)
             .clickable { prefs.keyboard.oneHandedMode.set(OneHandedMode.END) },
     ) {

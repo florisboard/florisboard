@@ -68,7 +68,6 @@ import dev.patrickgold.florisboard.util.AppVersionUtils
 import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.databinding.FlorisboardBinding
 import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
-import dev.patrickgold.florisboard.ime.keyboard.updateKeyboardState
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.subtypeManager
@@ -205,9 +204,6 @@ open class FlorisBoard : LifecycleInputMethodService(),
                 flogInfo(LogTopic.IMS_EVENTS)
 
                 activeEditorInstance = EditorInstance(this, keyboardManager.activeState)
-                keyboardManager.activeState.observe(this) { newState ->
-                    uiBinding?.inputView?.updateKeyboardState(newState)
-                }
 
                 imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
                 inputFeedbackController = InputFeedbackController.new(this)
