@@ -18,6 +18,9 @@ package dev.patrickgold.florisboard.ime.theme
 
 object FlorisImeUi {
     const val Keyboard = "keyboard"
+    const val Key = "key"
+    const val KeyHint = "key-hint"
+    const val KeyPopup = "key-popup"
 
     const val OneHandedPanel = "one-handed-panel"
 

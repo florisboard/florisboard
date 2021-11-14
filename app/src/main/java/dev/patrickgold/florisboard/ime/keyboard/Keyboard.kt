@@ -87,7 +87,7 @@ abstract class Keyboard {
      *
      * @return The key for given coords or null if no key touch hit box is defined for this position.
      */
-    abstract fun getKeyForPos(pointerX: Int, pointerY: Int): Key?
+    abstract fun getKeyForPos(pointerX: Float, pointerY: Float): Key?
 
     /**
      * Returns an iterator which allows to loop through all keys within the layout, independent of the actual
@@ -96,11 +96,13 @@ abstract class Keyboard {
     abstract fun keys(): Iterator<Key>
 
     /**
-     * Layouts the keys according the the dimensions and parameters provided by given [keyboardView]. This method's
+     * Layouts the keys according the the dimensions and parameters provided by given arguments. This method's
      * exact behavior is highly dependent aon the actual subclass.
-     *
-     * @param keyboardView The parent keyboard view which is used to gather the absolute dimensions and other
-     *  subclass specific parameters.
      */
-    abstract fun layout(keyboardView: KeyboardView)
+    abstract fun layout(
+        keyboardWidth: Float,
+        keyboardHeight: Float,
+        desiredKey: Key,
+        isOrientationPortrait: Boolean,
+    )
 }

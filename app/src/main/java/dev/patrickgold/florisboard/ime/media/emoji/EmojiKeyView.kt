@@ -159,8 +159,8 @@ class EmojiKeyView(
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
-        key.visibleBounds.set(left, top, right, bottom)
-        key.touchBounds.set(left, top, right, bottom)
+        //key.visibleBounds.set(left, top, right, bottom)
+        //key.touchBounds.set(left, top, right, bottom)
     }
 
     override fun onThemeUpdated(theme: Theme) {

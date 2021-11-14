@@ -68,10 +68,6 @@ class PopupManager<V : View>(
     val isShowingExtendedPopup: Boolean
         get() = popupViewExt.isShowing
 
-    companion object {
-        const val POPUP_EXTENSION_PATH_REL: String = "ime/text/characters/extended_popups"
-    }
-
     init {
         keyPopupWidth = keyboardView.resources.getDimension(R.dimen.key_width).toInt()
         keyPopupHeight = keyboardView.resources.getDimension(R.dimen.key_height).toInt()
@@ -186,31 +182,31 @@ class PopupManager<V : View>(
      */
     private fun calc(key: Key) {
         if (keyboardView is TextKeyboardView) {
-            when (keyboardView.resources.configuration.orientation) {
-                Configuration.ORIENTATION_LANDSCAPE -> {
-                    if (keyboardView.isSmartbarKeyboardView) {
-                        keyPopupWidth = (key.visibleBounds.width() * 1.0f).toInt()
-                        keyPopupHeight = (keyboardView.desiredKey.visibleBounds.height() * 3.0f * 1.2f).toInt()
-                    } else {
-                        keyPopupWidth = (keyboardView.desiredKey.visibleBounds.width() * 1.0f).toInt()
-                        keyPopupHeight = (keyboardView.desiredKey.visibleBounds.height() * 3.0f).toInt()
-                    }
-                }
-                else -> {
-                    if (keyboardView.isSmartbarKeyboardView) {
-                        keyPopupWidth = (key.visibleBounds.width() * 1.1f).toInt()
-                        keyPopupHeight = (keyboardView.desiredKey.visibleBounds.height() * 2.5f * 1.2f).toInt()
-                    } else {
-                        keyPopupWidth = (keyboardView.desiredKey.visibleBounds.width() * 1.1f).toInt()
-                        keyPopupHeight = (keyboardView.desiredKey.visibleBounds.height() * 2.5f).toInt()
-                    }
-                }
-            }
+            //when (keyboardView.resources.configuration.orientation) {
+            //    Configuration.ORIENTATION_LANDSCAPE -> {
+            //        if (keyboardView.isSmartbarKeyboardView) {
+            //            keyPopupWidth = (key.visibleBounds.width * 1.0f).toInt()
+            //            keyPopupHeight = (keyboardView.desiredKey.visibleBounds.height * 3.0f * 1.2f).toInt()
+            //        } else {
+            //            keyPopupWidth = (keyboardView.desiredKey.visibleBounds.width * 1.0f).toInt()
+            //            keyPopupHeight = (keyboardView.desiredKey.visibleBounds.height * 3.0f).toInt()
+            //        }
+            //    }
+            //    else -> {
+            //        if (keyboardView.isSmartbarKeyboardView) {
+            //            keyPopupWidth = (key.visibleBounds.width * 1.1f).toInt()
+            //            keyPopupHeight = (keyboardView.desiredKey.visibleBounds.height * 2.5f * 1.2f).toInt()
+            //        } else {
+            //            keyPopupWidth = (keyboardView.desiredKey.visibleBounds.width * 1.1f).toInt()
+            //            keyPopupHeight = (keyboardView.desiredKey.visibleBounds.height * 2.5f).toInt()
+            //        }
+            //    }
+            //}
         } else if (keyboardView is EmojiKeyboardView) {
-            keyPopupWidth = key.visibleBounds.width()
-            keyPopupHeight = (key.visibleBounds.height() * 2.5f).toInt()
+            keyPopupWidth = key.visibleBounds.width.toInt()
+            keyPopupHeight = (key.visibleBounds.height * 2.5f).toInt()
         }
-        keyPopupDiffX = (key.visibleBounds.width() - keyPopupWidth) / 2
+        keyPopupDiffX = (key.visibleBounds.width.toInt() - keyPopupWidth) / 2
     }
 
     /**
@@ -316,7 +312,7 @@ class PopupManager<V : View>(
                     anchorRight -> keyboardView.measuredWidth -
                             (key.visibleBounds.left + keyPopupDiffX + keyPopupWidth)
                     else -> 0
-                }
+                }.toInt()
                 while (offset > 0) {
                     if (availableSpace >= offset * keyPopupWidth) {
                         break
@@ -401,7 +397,7 @@ class PopupManager<V : View>(
             row1count > 0 -> keyPopupHeight * 0.4f * 2.0f
             else -> keyPopupHeight * 0.4f
         }.toInt()
-        val x = ((key.visibleBounds.width() - keyPopupWidth) / 2) + when {
+        val x = ((key.visibleBounds.width.toInt() - keyPopupWidth) / 2) + when {
             anchorLeft -> -anchorOffset * keyPopupWidth
             anchorRight -> -extWidth + keyPopupWidth + anchorOffset * keyPopupWidth
             else -> 0
@@ -472,8 +468,8 @@ class PopupManager<V : View>(
             }
             anchorRight -> when {
                 // check if out of boundary on x-axis
-                x > key.visibleBounds.width() - keyPopupDiffX + (anchorOffset + 1) * keyPopupWidth ||
-                x < (key.visibleBounds.width() - keyPopupDiffX - (row0count + 1 - anchorOffset) * keyPopupWidth) -> {
+                x > key.visibleBounds.width - keyPopupDiffX + (anchorOffset + 1) * keyPopupWidth ||
+                x < (key.visibleBounds.width - keyPopupDiffX - (row0count + 1 - anchorOffset) * keyPopupWidth) -> {
                     return false
                 }
                 // row 1

@@ -21,6 +21,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
+import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 
 private val LocalConfig = staticCompositionLocalOf<ThemeExtensionConfig> { error("not init") }
@@ -30,6 +31,14 @@ private val LocalStyle = staticCompositionLocalOf<SnyggStylesheet> { error("not 
 val FlorisImeThemeBaseStyle = SnyggStylesheet {
     FlorisImeUi.Keyboard {
         background = rgbaColor(33, 33, 33)
+    }
+    FlorisImeUi.Key {
+        background = rgbaColor(66, 66, 66)
+        foreground = rgbaColor(255, 255, 255)
+    }
+    FlorisImeUi.Key(codes = listOf(KeyCode.ENTER)) {
+        background = rgbaColor(76, 175, 80)
+        foreground = rgbaColor(255, 255, 255)
     }
     FlorisImeUi.OneHandedPanel {
         background = rgbaColor(27, 94, 32)

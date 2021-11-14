@@ -19,11 +19,13 @@ package dev.patrickgold.florisboard.ime.keyboard
 import android.content.res.Resources
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -33,7 +35,20 @@ import dev.patrickgold.florisboard.common.observeAsTransformingState
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
-val LocalKeyboardRowBaseHeight = staticCompositionLocalOf { 65.dp }
+private val LocalKeyboardRowBaseHeight = staticCompositionLocalOf { 65.dp }
+private val LocalSmartbarHeight = staticCompositionLocalOf { 40.dp }
+
+object FlorisImeSizing {
+    val keyboardRowBaseHeight: Dp
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalKeyboardRowBaseHeight.current
+
+    val smartbarHeight: Dp
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalSmartbarHeight.current
+}
 
 @Composable
 fun ProvideKeyboardRowBaseHeight(content: @Composable () -> Unit) {
@@ -56,7 +71,10 @@ fun ProvideKeyboardRowBaseHeight(content: @Composable () -> Unit) {
         }
     }
 
-    CompositionLocalProvider(LocalKeyboardRowBaseHeight provides ViewUtils.px2dp(baseRowHeight).dp) {
+    CompositionLocalProvider(
+        LocalKeyboardRowBaseHeight provides ViewUtils.px2dp(baseRowHeight).dp,
+        LocalSmartbarHeight provides ViewUtils.px2dp(baseRowHeight * 0.753f).dp,
+    ) {
         content()
     }
 }

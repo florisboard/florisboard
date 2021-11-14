@@ -16,13 +16,13 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
-import android.graphics.Rect
+import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.common.FlorisRect
+import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.keyboard.Keyboard
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardView
 import dev.patrickgold.florisboard.ime.popup.PopupMapping
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import kotlin.math.abs
-import kotlin.math.roundToInt
 
 class TextKeyboard(
     val arrangement: Array<Array<TextKey>>,
@@ -30,6 +30,8 @@ class TextKeyboard(
     val extendedPopupMapping: PopupMapping?,
     val extendedPopupMappingDefault: PopupMapping?,
 ) : Keyboard() {
+    private val prefs by florisPreferenceModel()
+
     val rowCount: Int
         get() = arrangement.size
 
@@ -37,44 +39,44 @@ class TextKeyboard(
         get() = arrangement.sumOf { it.size }
 
     companion object {
-        fun layoutDrawableBounds(key: TextKey, factor: Double) {
-            layoutForegroundBounds(key, key.visibleDrawableBounds, 0.21 * (1.0 / factor), isLabel = false)
+        fun layoutDrawableBounds(key: TextKey, factor: Float) {
+            layoutForegroundBounds(key, key.visibleDrawableBounds, 0.21f * (1.0f / factor), isLabel = false)
         }
 
         fun layoutLabelBounds(key: TextKey) {
-            layoutForegroundBounds(key, key.visibleLabelBounds, 0.28, isLabel = true)
+            layoutForegroundBounds(key, key.visibleLabelBounds, 0.28f, isLabel = true)
         }
 
-        private fun layoutForegroundBounds(key: TextKey, bounds: Rect, factor: Double, isLabel: Boolean) {
+        private fun layoutForegroundBounds(key: TextKey, bounds: FlorisRect, factor: Float, isLabel: Boolean) {
             bounds.apply {
-                val w = key.visibleBounds.width().toDouble()
-                val h = key.visibleBounds.height().toDouble()
-                val xOffset: Double
-                val yOffset: Double
+                val w = key.visibleBounds.width
+                val h = key.visibleBounds.height
+                val xOffset: Float
+                val yOffset: Float
                 if (w < h) {
                     xOffset = factor * w
                     yOffset = if ((key.computedData.code == KeyCode.SPACE || key.computedData.code == KeyCode.CJK_SPACE) && isLabel) {
                         xOffset
                     } else {
-                        (h - (w - 2.0 * xOffset)) / 2.0
+                        (h - (w - 2.0f * xOffset)) / 2.0f
                     }
                 } else {
                     yOffset = factor * h
                     xOffset = if ((key.computedData.code == KeyCode.SPACE || key.computedData.code == KeyCode.CJK_SPACE) && isLabel) {
                         yOffset
                     } else {
-                        (w - (h - 2.0 * yOffset)) / 2.0
+                        (w - (h - 2.0f * yOffset)) / 2.0f
                     }
                 }
-                left = key.visibleBounds.left + xOffset.toInt()
-                top = key.visibleBounds.top + yOffset.toInt()
-                right = key.visibleBounds.right - xOffset.toInt()
-                bottom = key.visibleBounds.bottom - yOffset.toInt()
+                left = key.visibleBounds.left + xOffset
+                top = key.visibleBounds.top + yOffset
+                right = key.visibleBounds.right - xOffset
+                bottom = key.visibleBounds.bottom - yOffset
             }
         }
     }
 
-    override fun getKeyForPos(pointerX: Int, pointerY: Int): TextKey? {
+    override fun getKeyForPos(pointerX: Float, pointerY: Float): TextKey? {
         for (key in keys()) {
             if (key.touchBounds.contains(pointerX, pointerY)) {
                 return key
@@ -83,24 +85,32 @@ class TextKeyboard(
         return null
     }
 
-    override fun layout(keyboardView: KeyboardView) {
-        if (arrangement.isEmpty() || keyboardView !is TextKeyboardView) return
+    override fun layout(
+        keyboardWidth: Float,
+        keyboardHeight: Float,
+        desiredKey: Key,
+        isOrientationPortrait: Boolean,
+    ) {
+        if (arrangement.isEmpty()) return
 
-        val desiredTouchBounds = keyboardView.desiredKey.touchBounds
-        val desiredVisibleBounds = keyboardView.desiredKey.visibleBounds
-        if (desiredTouchBounds.isEmpty || desiredVisibleBounds.isEmpty) return
-        val keyboardWidth = keyboardView.measuredWidth.toDouble()
-        val keyboardHeight = keyboardView.measuredHeight.toDouble()
+        val desiredTouchBounds = desiredKey.touchBounds
+        val desiredVisibleBounds = desiredKey.visibleBounds
+        if (desiredTouchBounds.isEmpty() || desiredVisibleBounds.isEmpty()) return
         if (keyboardWidth.isNaN() || keyboardHeight.isNaN()) return
-        val rowMarginH = abs(desiredTouchBounds.width() - desiredVisibleBounds.width())
-        val rowMarginV = (keyboardHeight - desiredTouchBounds.height() * rowCount.toDouble()) / (rowCount - 1).coerceAtLeast(1).toDouble()
+        val rowMarginH = abs(desiredTouchBounds.width - desiredVisibleBounds.width)
+        val rowMarginV = (keyboardHeight - desiredTouchBounds.height * rowCount.toFloat()) / (rowCount - 1).coerceAtLeast(1).toFloat()
+        val fontSizeMultiplier = if (isOrientationPortrait) {
+            prefs.keyboard.fontSizeMultiplierPortrait.get()
+        } else {
+            prefs.keyboard.fontSizeMultiplierLandscape.get()
+        } / 100.0f
 
         for ((r, row) in rows().withIndex()) {
-            val posY = (desiredTouchBounds.height() + rowMarginV) * r
-            val availableWidth = (keyboardWidth - rowMarginH) / desiredTouchBounds.width()
-            var requestedWidth = 0.0
-            var shrinkSum = 0.0
-            var growSum = 0.0
+            val posY = (desiredTouchBounds.height + rowMarginV) * r
+            val availableWidth = (keyboardWidth - rowMarginH) / desiredTouchBounds.width
+            var requestedWidth = 0.0f
+            var shrinkSum = 0.0f
+            var growSum = 0.0f
             for (key in row) {
                 requestedWidth += key.flayWidthFactor
                 shrinkSum += key.flayShrink
@@ -109,60 +119,60 @@ class TextKeyboard(
             if (requestedWidth <= availableWidth) {
                 // Requested with is smaller or equal to the available with, so we can grow
                 val additionalWidth = availableWidth - requestedWidth
-                var posX = rowMarginH / 2.0
+                var posX = rowMarginH / 2.0f
                 for ((k, key) in row.withIndex()) {
-                    val keyWidth = desiredTouchBounds.width() * when (growSum) {
-                        0.0 -> when (k) {
-                            0, row.size - 1 -> key.flayWidthFactor + additionalWidth / 2.0
+                    val keyWidth = desiredTouchBounds.width * when (growSum) {
+                        0.0f -> when (k) {
+                            0, row.size - 1 -> key.flayWidthFactor + additionalWidth / 2.0f
                             else -> key.flayWidthFactor
                         }
                         else -> key.flayWidthFactor + additionalWidth * (key.flayGrow / growSum)
                     }
                     key.touchBounds.apply {
-                        left = posX.roundToInt()
-                        top = posY.roundToInt()
-                        right = (posX + keyWidth).roundToInt()
-                        bottom = (posY + desiredTouchBounds.height()).roundToInt()
+                        left = posX
+                        top = posY
+                        right = posX + keyWidth
+                        bottom = posY + desiredTouchBounds.height
                     }
                     key.visibleBounds.apply {
                         left = key.touchBounds.left + abs(desiredTouchBounds.left - desiredVisibleBounds.left) + when {
-                            growSum == 0.0 && k == 0 -> ((additionalWidth / 2.0) * desiredTouchBounds.width()).roundToInt()
-                            else -> 0
+                            growSum == 0.0f && k == 0 -> ((additionalWidth / 2.0f) * desiredTouchBounds.width)
+                            else -> 0.0f
                         }
                         top = key.touchBounds.top + abs(desiredTouchBounds.top - desiredVisibleBounds.top)
                         right = key.touchBounds.right - abs(desiredTouchBounds.right - desiredVisibleBounds.right) - when {
-                            growSum == 0.0 && k == row.size - 1 -> ((additionalWidth / 2.0) * desiredTouchBounds.width()).roundToInt()
-                            else -> 0
+                            growSum == 0.0f && k == row.size - 1 -> ((additionalWidth / 2.0f) * desiredTouchBounds.width)
+                            else -> 0.0f
                         }
                         bottom = key.touchBounds.bottom - abs(desiredTouchBounds.bottom - desiredVisibleBounds.bottom)
                     }
-                    layoutDrawableBounds(key, keyboardView.fontSizeMultiplier)
+                    layoutDrawableBounds(key, fontSizeMultiplier)
                     layoutLabelBounds(key)
                     posX += keyWidth
                     // After-adjust touch bounds for the row margin
                     key.touchBounds.apply {
                         if (k == 0) {
-                            left = 0
+                            left = 0.0f
                         } else if (k == row.size - 1) {
-                            right = keyboardWidth.roundToInt()
+                            right = keyboardWidth
                         }
                     }
                 }
             } else {
                 // Requested size too big, must shrink.
                 val clippingWidth = requestedWidth - availableWidth
-                var posX = rowMarginH / 2.0
+                var posX = rowMarginH / 2.0f
                 for ((k, key) in row.withIndex()) {
-                    val keyWidth = desiredTouchBounds.width() * if (key.flayShrink == 0.0) {
+                    val keyWidth = desiredTouchBounds.width * if (key.flayShrink == 0.0f) {
                         key.flayWidthFactor
                     } else {
                         key.flayWidthFactor - clippingWidth * (key.flayShrink / shrinkSum)
                     }
                     key.touchBounds.apply {
-                        left = posX.roundToInt()
-                        top = posY.roundToInt()
-                        right = (posX + keyWidth).roundToInt()
-                        bottom = (posY + desiredTouchBounds.height()).roundToInt()
+                        left = posX
+                        top = posY
+                        right = posX + keyWidth
+                        bottom = posY + desiredTouchBounds.height
                     }
                     key.visibleBounds.apply {
                         left = key.touchBounds.left + abs(desiredTouchBounds.left - desiredVisibleBounds.left)
@@ -170,15 +180,15 @@ class TextKeyboard(
                         right = key.touchBounds.right - abs(desiredTouchBounds.right - desiredVisibleBounds.right)
                         bottom = key.touchBounds.bottom - abs(desiredTouchBounds.bottom - desiredVisibleBounds.bottom)
                     }
-                    layoutDrawableBounds(key, keyboardView.fontSizeMultiplier)
+                    layoutDrawableBounds(key, fontSizeMultiplier)
                     layoutLabelBounds(key)
                     posX += keyWidth
                     // After-adjust touch bounds for the row margin
                     key.touchBounds.apply {
                         if (k == 0) {
-                            left = 0
+                            left = 0.0f
                         } else if (k == row.size - 1) {
-                            right = keyboardWidth.roundToInt()
+                            right = keyboardWidth
                         }
                     }
                 }

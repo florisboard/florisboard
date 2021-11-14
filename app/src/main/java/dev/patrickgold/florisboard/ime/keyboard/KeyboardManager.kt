@@ -240,7 +240,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
 
         override fun getKeyboard(): Keyboard {
-            throw NotImplementedError() // Correct value must be inserted by the TextKeyboardView
+            return computedKeyboard.value!!
         }
 
         override fun isSlot(data: KeyData): Boolean {

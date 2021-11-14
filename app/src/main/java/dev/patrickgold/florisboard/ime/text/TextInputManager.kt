@@ -175,8 +175,8 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         flogInfo(LogTopic.IMS_EVENTS)
 
         textInputKeyboardView = uiBinding.text.mainKeyboardView.also {
-            it.setComputingEvaluator(DefaultComputingEvaluator)
-            it.sync()
+            //it.setComputingEvaluator(DefaultComputingEvaluator)
+            //it.sync()
         }
 
         //smartbarView = uiBinding.text.smartbar.root.also {
@@ -193,7 +193,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     override fun onDestroy() {
         flogInfo(LogTopic.IMS_EVENTS)
 
-        textInputKeyboardView?.setComputingEvaluator(null)
+        //textInputKeyboardView?.setComputingEvaluator(null)
         textInputKeyboardView = null
         keyboards.clear()
 
@@ -320,7 +320,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
             ).await()
         }.await()
         withContext(Dispatchers.Main) {
-            textInputKeyboardView?.setComputedKeyboard(activeKeyboard)
+            //textInputKeyboardView?.setComputedKeyboard(activeKeyboard)
         }
     }
 

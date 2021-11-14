@@ -29,6 +29,18 @@ object FlorisImeUiSpec : SnyggSpec({
             supportedValues(SnyggSolidColorValue),
         )
     }
+    element(FlorisImeUi.Key) {
+        property(
+            name = Snygg.Background,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+        property(
+            name = Snygg.Foreground,
+            level = SnyggLevel.BASIC,
+            supportedValues(SnyggSolidColorValue),
+        )
+    }
 
     element(FlorisImeUi.OneHandedPanel) {
         property(

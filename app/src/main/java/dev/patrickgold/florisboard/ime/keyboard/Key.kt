@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.keyboard
 
-import android.graphics.Rect
+import dev.patrickgold.florisboard.common.FlorisRect
 
 /**
  * Abstract class describing the smallest computed unit in a computed keyboard. Each key represents exactly one key
@@ -49,38 +49,38 @@ abstract class Key(open val data: AbstractKeyData) {
     /**
      * The touch bounds of this key. All bounds defined here are absolute coordinates within the parent keyboard.
      */
-    open val touchBounds: Rect = Rect()
+    open val touchBounds: FlorisRect = FlorisRect.empty()
 
     /**
      * The visible bounds of this key. All bounds defined here are absolute coordinates within the parent keyboard.
      */
-    open val visibleBounds: Rect = Rect()
+    open val visibleBounds: FlorisRect = FlorisRect.empty()
 
     /**
      * The visible drawable bounds of this key. All bounds defined here are absolute coordinates within the parent
      * keyboard.
      */
-    open val visibleDrawableBounds: Rect = Rect()
+    open val visibleDrawableBounds: FlorisRect = FlorisRect.empty()
 
     /**
      * The visible label bounds of this key. All bounds defined here are absolute coordinates within the parent
      * keyboard.
      */
-    open val visibleLabelBounds: Rect = Rect()
+    open val visibleLabelBounds: FlorisRect = FlorisRect.empty()
 
     /**
      * Specifies how much this key is willing to shrink if too many keys are in a keyboard row. A value of 0.0
      * indicates that the key does not want to shrink in such scenario. This value should not be set manually, only
      * by the key's compute method and is used in the layout process to determine the real key width.
      */
-    open var flayShrink: Double = 0.0
+    open var flayShrink: Float = 0f
 
     /**
      * Specifies how much this key is willing to grow if too few keys are in a keyboard row. A value of 0.0
      * indicates that the key does not want to grow in such scenario. This value should not be set manually, only
      * by the key's compute method and is used in the layout process to determine the real key width.
      */
-    open var flayGrow: Double = 0.0
+    open var flayGrow: Float = 0f
 
     /**
      * Specifies the relative proportional width this key aims to get in respective to the keyboard view's desired key
@@ -88,7 +88,7 @@ abstract class Key(open val data: AbstractKeyData) {
      * 0.0 is basically equivalent to setting [isVisible] to false. This value should not be set manually, only
      * by the key's compute method and is used in the layout process to determine the real key width.
      */
-    open var flayWidthFactor: Double = 0.0
+    open var flayWidthFactor: Float = 0f
 
     /**
      * The computed UI label of this key. This value is used by the keyboard view to temporarily save the label string

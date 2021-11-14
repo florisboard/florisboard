@@ -16,8 +16,10 @@
 
 package dev.patrickgold.florisboard.common
 
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.unit.IntOffset
 import kotlin.math.absoluteValue
 import kotlin.math.max
 import kotlin.math.min
@@ -46,6 +48,14 @@ class FlorisRect private constructor(
         fun from(r: FlorisRect) = FlorisRect(r.left, r.top, r.right, r.bottom)
     }
 
+    fun applyFrom(other: FlorisRect): FlorisRect {
+        left = other.left
+        top = other.top
+        right = other.right
+        bottom = other.bottom
+        return this
+    }
+
     fun isEmpty(): Boolean {
         return left >= right || top >= bottom
     }
@@ -70,11 +80,13 @@ class FlorisRect private constructor(
         return offsetX >= left && offsetX < right && offsetY >= top && offsetY < bottom
     }
 
-    val width: Float
+    var width: Float
         get() = right - left
+        set(v) { right = left + v }
 
-    val height: Float
+    var height: Float
         get() = bottom - top
+        set(v) { bottom = top + v }
 
     val size: Size
         get() = Size(width, height)
@@ -183,4 +195,34 @@ class FlorisRect private constructor(
 
     val bottomRight: Offset
         get() = Offset(right, bottom)
+
+    override fun toString(): String {
+        return "FlorisRect(left = $left, top = $top, right = $right, bottom = $bottom)"
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as FlorisRect
+
+        if (left != other.left) return false
+        if (top != other.top) return false
+        if (right != other.right) return false
+        if (bottom != other.bottom) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = left.hashCode()
+        result = 31 * result + top.hashCode()
+        result = 31 * result + right.hashCode()
+        result = 31 * result + bottom.hashCode()
+        return result
+    }
 }
+
+@Suppress("NOTHING_TO_INLINE")
+@Stable
+inline fun Offset.toIntOffset() = IntOffset(x.toInt(), y.toInt())

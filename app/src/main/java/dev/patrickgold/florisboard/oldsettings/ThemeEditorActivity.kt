@@ -111,9 +111,9 @@ class ThemeEditorActivity : AppCompatActivity() {
         binding.themeNameEditBtn.setOnClickListener { showMetaEditDialog() }
 
         textKeyboardIconSet = TextKeyboardIconSet.new(this)
-        binding.keyboardPreview.setIconSet(textKeyboardIconSet)
-        binding.keyboardPreview.setComputingEvaluator(textComputingEvaluator)
-        binding.keyboardPreview.sync()
+        //binding.keyboardPreview.setIconSet(textKeyboardIconSet)
+        //binding.keyboardPreview.setComputingEvaluator(textComputingEvaluator)
+        //binding.keyboardPreview.sync()
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -320,7 +320,7 @@ class ThemeEditorActivity : AppCompatActivity() {
             label = themeLabel,
             attributes = tempMap.toMap()
         )
-        binding.keyboardPreview.onThemeUpdated(editedTheme)
+        //binding.keyboardPreview.onThemeUpdated(editedTheme)
     }
 
     /**
@@ -335,10 +335,10 @@ class ThemeEditorActivity : AppCompatActivity() {
             }
         }
         mainScope.launch {
-            binding.keyboardPreview.setComputedKeyboard(keyboardManager.computeKeyboardAsync(
-                KeyboardMode.CHARACTERS, Subtype.DEFAULT
-            ).await())
-            binding.keyboardPreview.onThemeUpdated(editedTheme)
+            //binding.keyboardPreview.setComputedKeyboard(keyboardManager.computeKeyboardAsync(
+            //    KeyboardMode.CHARACTERS, Subtype.DEFAULT
+            //).await())
+            //binding.keyboardPreview.onThemeUpdated(editedTheme)
         }
         sortGroups()
     }

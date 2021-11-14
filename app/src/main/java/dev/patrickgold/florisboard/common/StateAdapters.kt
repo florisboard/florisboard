@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.common
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisallowComposableCalls
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -28,7 +29,9 @@ import dev.patrickgold.jetpref.datastore.model.PreferenceData
 import dev.patrickgold.jetpref.datastore.model.PreferenceObserver
 
 @Composable
-fun <V : Any, R : Any> PreferenceData<V>.observeAsTransformingState(transform: (V) -> R): State<R> {
+inline fun <V : Any, R : Any> PreferenceData<V>.observeAsTransformingState(
+    crossinline transform: @DisallowComposableCalls (V) -> R,
+): State<R> {
     val lifecycleOwner = LocalLifecycleOwner.current
     val state = remember(key) { mutableStateOf(transform(get())) }
     DisposableEffect(this, lifecycleOwner) {
@@ -43,7 +46,9 @@ fun <V : Any, R : Any> PreferenceData<V>.observeAsTransformingState(transform: (
 fun <V> LiveData<V>.observeAsNonNullState(): State<V> = observeAsTransformingState { it!! }
 
 @Composable
-fun <V, R> LiveData<V>.observeAsTransformingState(transform: (V?) -> R): State<R> {
+inline fun <V, R> LiveData<V>.observeAsTransformingState(
+    crossinline transform: @DisallowComposableCalls (V?) -> R,
+): State<R> {
     val lifecycleOwner = LocalLifecycleOwner.current
     val state = remember { mutableStateOf(transform(value)) }
     DisposableEffect(this, lifecycleOwner) {

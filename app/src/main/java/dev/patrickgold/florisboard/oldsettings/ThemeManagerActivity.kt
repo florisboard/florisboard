@@ -159,9 +159,9 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         binding.themeExportBtn.setOnClickListener { onActionClicked(it) }
 
         textKeyboardIconSet = TextKeyboardIconSet.new(this)
-        binding.keyboardPreview.setIconSet(textKeyboardIconSet)
-        binding.keyboardPreview.setComputingEvaluator(textComputingEvaluator)
-        binding.keyboardPreview.sync()
+        //binding.keyboardPreview.setIconSet(textKeyboardIconSet)
+        //binding.keyboardPreview.setComputingEvaluator(textComputingEvaluator)
+        //binding.keyboardPreview.sync()
 
         buildUi()
     }
@@ -248,7 +248,7 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
         setThemeRefInPrefs(selectedRef)
         themeManager.loadTheme(assetRef).onSuccess {
             selectedTheme = it
-            binding.keyboardPreview.onThemeUpdated(it)
+            //binding.keyboardPreview.onThemeUpdated(it)
         }
     }
 
@@ -403,10 +403,10 @@ class ThemeManagerActivity : FlorisActivity<ThemeManagerActivityBinding>() {
             setCheckedRadioButton(selectId!!)
         }
         launch {
-            binding.keyboardPreview.setComputedKeyboard(keyboardManager.computeKeyboardAsync(
-                KeyboardMode.CHARACTERS, Subtype.DEFAULT
-            ).await())
-            binding.keyboardPreview.onThemeUpdated(selectedTheme)
+            //binding.keyboardPreview.setComputedKeyboard(keyboardManager.computeKeyboardAsync(
+            //    KeyboardMode.CHARACTERS, Subtype.DEFAULT
+            //).await())
+            //binding.keyboardPreview.onThemeUpdated(selectedTheme)
         }
     }
 }
