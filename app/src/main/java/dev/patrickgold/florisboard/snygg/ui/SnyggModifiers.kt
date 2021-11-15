@@ -21,8 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
+import dev.patrickgold.florisboard.snygg.value.SnyggDpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
+import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
 
 fun Modifier.snyggBackground(
@@ -46,5 +50,19 @@ fun SnyggValue.shape(): Shape {
     return when (this) {
         is SnyggShapeValue -> this.shape
         else -> RectangleShape
+    }
+}
+
+fun SnyggValue.dpSize(): Dp {
+    return when (this) {
+        is SnyggDpSizeValue -> this.dp
+        else -> Dp.Unspecified
+    }
+}
+
+fun SnyggValue.spSize(): TextUnit {
+    return when (this) {
+        is SnyggSpSizeValue -> this.sp
+        else -> TextUnit.Unspecified
     }
 }

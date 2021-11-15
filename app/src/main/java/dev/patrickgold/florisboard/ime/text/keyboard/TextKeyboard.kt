@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
-import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.common.FlorisRect
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.keyboard.Keyboard
@@ -30,8 +29,6 @@ class TextKeyboard(
     val extendedPopupMapping: PopupMapping?,
     val extendedPopupMappingDefault: PopupMapping?,
 ) : Keyboard() {
-    private val prefs by florisPreferenceModel()
-
     val rowCount: Int
         get() = arrangement.size
 
@@ -89,7 +86,6 @@ class TextKeyboard(
         keyboardWidth: Float,
         keyboardHeight: Float,
         desiredKey: Key,
-        isOrientationPortrait: Boolean,
     ) {
         if (arrangement.isEmpty()) return
 
@@ -99,11 +95,6 @@ class TextKeyboard(
         if (keyboardWidth.isNaN() || keyboardHeight.isNaN()) return
         val rowMarginH = abs(desiredTouchBounds.width - desiredVisibleBounds.width)
         val rowMarginV = (keyboardHeight - desiredTouchBounds.height * rowCount.toFloat()) / (rowCount - 1).coerceAtLeast(1).toFloat()
-        val fontSizeMultiplier = if (isOrientationPortrait) {
-            prefs.keyboard.fontSizeMultiplierPortrait.get()
-        } else {
-            prefs.keyboard.fontSizeMultiplierLandscape.get()
-        } / 100.0f
 
         for ((r, row) in rows().withIndex()) {
             val posY = (desiredTouchBounds.height + rowMarginV) * r
@@ -146,8 +137,6 @@ class TextKeyboard(
                         }
                         bottom = key.touchBounds.bottom - abs(desiredTouchBounds.bottom - desiredVisibleBounds.bottom)
                     }
-                    layoutDrawableBounds(key, fontSizeMultiplier)
-                    layoutLabelBounds(key)
                     posX += keyWidth
                     // After-adjust touch bounds for the row margin
                     key.touchBounds.apply {
@@ -180,8 +169,6 @@ class TextKeyboard(
                         right = key.touchBounds.right - abs(desiredTouchBounds.right - desiredVisibleBounds.right)
                         bottom = key.touchBounds.bottom - abs(desiredTouchBounds.bottom - desiredVisibleBounds.bottom)
                     }
-                    layoutDrawableBounds(key, fontSizeMultiplier)
-                    layoutLabelBounds(key)
                     posX += keyWidth
                     // After-adjust touch bounds for the row margin
                     key.touchBounds.apply {

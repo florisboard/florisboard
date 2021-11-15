@@ -23,6 +23,7 @@ import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRectangleShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
+import dev.patrickgold.florisboard.snygg.value.SnyggSpSizeValue
 
 object FlorisImeUiSpec : SnyggSpec({
     element(FlorisImeUi.Keyboard) {
@@ -42,6 +43,11 @@ object FlorisImeUiSpec : SnyggSpec({
             name = Snygg.Foreground,
             level = SnyggLevel.BASIC,
             supportedValues(SnyggSolidColorValue),
+        )
+        property(
+            name = Snygg.FontSize,
+            level = SnyggLevel.ADVANCED,
+            supportedValues(SnyggSpSizeValue),
         )
         property(
             name = Snygg.Shape,

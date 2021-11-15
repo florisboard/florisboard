@@ -21,6 +21,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.snygg.SnyggStylesheet
 
@@ -35,11 +36,20 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
     FlorisImeUi.Key {
         background = rgbaColor(66, 66, 66)
         foreground = rgbaColor(255, 255, 255)
+        fontSize = size(22.sp)
         shape = roundedCornerShape(20)
     }
     FlorisImeUi.Key(codes = listOf(KeyCode.ENTER)) {
         background = rgbaColor(76, 175, 80)
         foreground = rgbaColor(255, 255, 255)
+        fontSize = size(22.sp)
+        shape = roundedCornerShape(20)
+    }
+    FlorisImeUi.Key(codes = listOf(KeyCode.SPACE)) {
+        background = rgbaColor(66, 66, 66)
+        foreground = rgbaColor(144, 144, 144)
+        fontSize = size(12.sp)
+        shape = roundedCornerShape(20)
     }
     FlorisImeUi.OneHandedPanel {
         background = rgbaColor(27, 94, 32)

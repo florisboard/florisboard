@@ -103,6 +103,5 @@ abstract class Keyboard {
         keyboardWidth: Float,
         keyboardHeight: Float,
         desiredKey: Key,
-        isOrientationPortrait: Boolean,
     )
 }

@@ -33,6 +33,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
@@ -46,6 +47,7 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.keyboard.LocalInputFeedbackController
+import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
 import dev.patrickgold.florisboard.ime.text.key.KeyType
@@ -54,7 +56,9 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.snygg.ui.SnyggSurface
 import dev.patrickgold.florisboard.snygg.ui.solidColor
+import dev.patrickgold.florisboard.snygg.ui.spSize
 import dev.patrickgold.florisboard.subtypeManager
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 // TODO clean up code style
 @Composable
@@ -97,23 +101,40 @@ fun TextKeyboardLayout(
             key.compute(keyboardManager.computingEvaluator)
             computeLabelsAndDrawables(key, activeKeyboard, activeState, keyHintConfiguration, subtypeManager)
         }
-        activeKeyboard.layout(
-            keyboardWidth, keyboardHeight, desiredKey,
-            isOrientationPortrait = configuration.isOrientationPortrait(),
-        )
+        activeKeyboard.layout(keyboardWidth, keyboardHeight, desiredKey)
 
+        val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
+        val oneHandedModeFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsTransformingState { it / 100.0f }
+        val fontSizeMultiplierBase by if (configuration.isOrientationPortrait()) {
+            prefs.keyboard.fontSizeMultiplierPortrait
+        } else {
+            prefs.keyboard.fontSizeMultiplierLandscape
+        }.observeAsTransformingState { it / 100.0f }
+        val fontSizeMultiplier = fontSizeMultiplierBase * if (oneHandedMode != OneHandedMode.OFF) {
+            oneHandedModeFactor
+        } else {
+            1.0f
+        }
         for (key in activeKeyboard.keys()) {
-            TextKeyButton(key)
+            TextKeyButton(key, fontSizeMultiplier)
         }
     }
 }
 
 @Composable
-private fun TextKeyButton(key: TextKey) = with(LocalDensity.current) {
+private fun TextKeyButton(key: TextKey, fontSizeMultiplier: Float) = with(LocalDensity.current) {
     val keyStyle = FlorisImeTheme.style.get(
         element = FlorisImeUi.Key,
         code = key.computedData.code,
     )
+    val fontSize = keyStyle.fontSize.spSize() * fontSizeMultiplier * when (key.computedData.code) {
+        KeyCode.VIEW_CHARACTERS,
+        KeyCode.VIEW_SYMBOLS,
+        KeyCode.VIEW_SYMBOLS2 -> 0.80f
+        KeyCode.VIEW_NUMERIC,
+        KeyCode.VIEW_NUMERIC_ADVANCED -> 0.55f
+        else -> 1.0f
+    }
     SnyggSurface(
         modifier = Modifier
             .requiredSize(key.visibleBounds.size.toDpSize())
@@ -128,11 +149,19 @@ private fun TextKeyButton(key: TextKey) = with(LocalDensity.current) {
                     .align(Alignment.Center),
                 text = label,
                 color = keyStyle.foreground.solidColor(),
+                fontSize = fontSize,
+                maxLines = 1,
+                softWrap = false,
+                overflow = when (key.computedData.code) {
+                    KeyCode.SPACE -> TextOverflow.Ellipsis
+                    else -> TextOverflow.Visible
+                },
             )
         }
         key.foregroundDrawableId?.let { drawableId ->
             Icon(
                 modifier = Modifier
+                    .requiredSize(fontSize.toDp() * 1.1f)
                     .align(Alignment.Center),
                 painter = painterResource(drawableId),
                 contentDescription = null,
