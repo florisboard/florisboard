@@ -169,7 +169,7 @@ dependencies {
     implementation("dev.patrickgold.jetpref:jetpref-datastore-model:0.1.0-alpha12")
     implementation("dev.patrickgold.jetpref:jetpref-ui-compose:0.1.0-alpha12")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
     implementation("androidx.room:room-runtime:2.3.0")
     kapt("androidx.room:room-compiler:2.3.0")
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.1.5")

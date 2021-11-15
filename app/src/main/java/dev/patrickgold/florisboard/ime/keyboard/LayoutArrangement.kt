@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.keyboard
 
 import dev.patrickgold.florisboard.res.ext.ExtensionComponent
+import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import kotlinx.serialization.Serializable
 
 typealias LayoutArrangement = List<List<AbstractKeyData>>
@@ -27,5 +28,8 @@ data class LayoutArrangementComponent(
     override val label: String,
     override val authors: List<String>,
     val direction: String,
+    val modifier: ExtensionComponentName? = null,
     val arrangementFile: String? = null,
-) : ExtensionComponent
+) : ExtensionComponent {
+    fun arrangementFile(type: LayoutType) = arrangementFile ?: "layouts/$type/$id.json"
+}

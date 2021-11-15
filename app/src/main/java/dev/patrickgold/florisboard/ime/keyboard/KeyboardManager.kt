@@ -27,22 +27,20 @@ import dev.patrickgold.florisboard.ime.core.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
-import dev.patrickgold.florisboard.ime.popup.PopupMapping
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
-import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.async
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
 
 typealias DeferredResult<T> = Deferred<Result<T>>
 
@@ -52,11 +50,17 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+    private val keyboardRefreshRequestChannel = Channel<Unit>(Channel.CONFLATED)
+    private val layoutManager = LayoutManager(context)
+    private val keyboardCache = TextKeyboardCache()
+
+    val computingEvaluator: ComputingEvaluator = KeyboardManagerComputingEvaluator()
     val resources = KeyboardManagerResources()
 
+    private val _activeKeyboard = MutableLiveData(PlaceholderLoadingKeyboard)
+    val activeKeyboard: LiveData<TextKeyboard> get() = _activeKeyboard
     val activeState = KeyboardState.new()
-    val computedKeyboard: LiveData<TextKeyboard> = MutableLiveData(PlaceholderLoadingKeyboard)
-    val computingEvaluator: ComputingEvaluator = KeyboardManagerComputingEvaluator()
+
     val inputEventDispatcher = InputEventDispatcher.new(
         repeatableKeyCodes = intArrayOf(
             KeyCode.ARROW_DOWN,
@@ -68,10 +72,32 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         )
     ).also { it.keyEventReceiver = this }
 
-    fun computeKeyboardAsync(
-        keyboardMode: KeyboardMode,
-        subtype: Subtype
-    ): Deferred<TextKeyboard> = scope.async { TextKeyboard(emptyArray(), KeyboardMode.CHARACTERS, null, null) }
+    init {
+        activeState.observeForever { newState ->
+            if (newState.keyboardMode != activeKeyboard.value?.mode) {
+                keyboardRefreshRequestChannel.trySend(Unit)
+            }
+        }
+        subtypeManager.activeSubtype.observeForever {
+            keyboardRefreshRequestChannel.trySend(Unit)
+        }
+        resources.anyChanged.observeForever {
+            keyboardRefreshRequestChannel.trySend(Unit)
+        }
+        scope.launch {
+            for (req in keyboardRefreshRequestChannel) {
+                val subtype = subtypeManager.activeSubtype()
+                val mode = activeState.keyboardMode
+                val computedKeyboard = keyboardCache.getOrElseAsync(mode, subtype) {
+                    layoutManager.computeKeyboardAsync(
+                        keyboardMode = mode,
+                        subtype = subtype,
+                    ).await()
+                }.await()
+                _activeKeyboard.postValue(computedKeyboard)
+            }
+        }
+    }
 
     /**
      * @return If the language switch should be shown.
@@ -104,16 +130,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     inner class KeyboardManagerResources {
-        private val cachedLayouts = mutableMapOf<ExtensionComponentName, DeferredResult<LayoutArrangement>>()
-        private val cachedLayoutsGuard = Mutex()
-
-        private val cachedPopupMappings = mutableMapOf<ExtensionComponentName, DeferredResult<PopupMapping>>()
-        private val cachedPopupMappingsGuard = Mutex()
-
         val currencySets = MutableLiveData<Map<ExtensionComponentName, CurrencySet>>()
         val layouts = MutableLiveData<Map<LayoutType, Map<ExtensionComponentName, LayoutArrangementComponent>>>()
         val popupMappings = MutableLiveData<Map<ExtensionComponentName, PopupMappingComponent>>()
         val subtypePresets = MutableLiveData<List<SubtypePreset>>()
+
+        val anyChanged = MutableLiveData(Unit)
 
         init {
             extensionManager.keyboardExtensions.observeForever { keyboardExtensions ->
@@ -154,6 +176,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             currencySets.postValue(localCurrencySets)
             layouts.postValue(localLayouts)
             popupMappings.postValue(localPopupMappings)
+            anyChanged.postValue(Unit)
         }
     }
 
@@ -240,7 +263,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
 
         override fun getKeyboard(): Keyboard {
-            return computedKeyboard.value!!
+            return activeKeyboard.value!!
         }
 
         override fun isSlot(data: KeyData): Boolean {

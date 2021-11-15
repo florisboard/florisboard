@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.keyboard
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.res.ext.Extension
+import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.res.ext.ExtensionEditor
 import dev.patrickgold.florisboard.res.ext.ExtensionMeta
 import kotlinx.serialization.SerialName
@@ -42,4 +43,36 @@ data class KeyboardExtension(
     override fun edit(): ExtensionEditor {
         TODO("Not yet implemented")
     }
+}
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun extCoreComposer(id: String): ExtensionComponentName {
+    return ExtensionComponentName(
+        extensionId = "org.florisboard.composers",
+        componentId = id,
+    )
+}
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun extCoreCurrencySet(id: String): ExtensionComponentName {
+    return ExtensionComponentName(
+        extensionId = "org.florisboard.currencysets",
+        componentId = id,
+    )
+}
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun extCoreLayout(id: String): ExtensionComponentName {
+    return ExtensionComponentName(
+        extensionId = "org.florisboard.layouts",
+        componentId = id,
+    )
+}
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun extCorePopupMapping(id: String): ExtensionComponentName {
+    return ExtensionComponentName(
+        extensionId = "org.florisboard.localization",
+        componentId = id,
+    )
 }

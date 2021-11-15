@@ -33,4 +33,6 @@ data class PopupMappingComponent(
     override val label: String = id,
     override val authors: List<String>,
     val mappingFile: String? = null,
-) : ExtensionComponent
+) : ExtensionComponent {
+    fun mappingFile() = "popupMappings/$id.json"
+}

@@ -1,6 +1,6 @@
 package dev.patrickgold.florisboard.ime.text.composing
 
-import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
+import dev.patrickgold.florisboard.ime.keyboard.extCoreComposer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
@@ -19,7 +19,7 @@ interface Composer {
 @SerialName("appender")
 class Appender : Composer {
     companion object {
-        val name = ExtensionComponentName("org.florisboard.composers", "appender")
+        val name = extCoreComposer("appender")
     }
     override val name: String = Appender.name.toString()
     override val label: String = "Appender"

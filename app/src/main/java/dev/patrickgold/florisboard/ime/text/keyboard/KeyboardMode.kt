@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 enum class KeyboardMode(val value: Int) {
+    UNSPECIFIED(-1),
     CHARACTERS(0),
     EDITING(1),
     SYMBOLS(2),

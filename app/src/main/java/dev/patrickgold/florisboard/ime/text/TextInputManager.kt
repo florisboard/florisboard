@@ -147,7 +147,7 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
         }
         for (subtype in subtypes) {
             for (mode in KeyboardMode.values()) {
-                keyboards.set(mode, subtype, keyboard = keyboardManager.computeKeyboardAsync(mode, subtype))
+                //keyboards.set(mode, subtype, keyboard = keyboardManager.computeKeyboardAsync(mode, subtype))
             }
         }
 
@@ -313,12 +313,12 @@ class TextInputManager private constructor() : CoroutineScope by MainScope(), In
     }
 
     private fun setActiveKeyboard(mode: KeyboardMode, subtype: Subtype) = launch(Dispatchers.IO) {
-        val activeKeyboard = keyboards.getOrElseAsync(mode, subtype) {
-            keyboardManager.computeKeyboardAsync(
-                keyboardMode = mode,
-                subtype = subtype
-            ).await()
-        }.await()
+        //val activeKeyboard = keyboards.getOrElseAsync(mode, subtype) {
+        //    keyboardManager.computeKeyboardAsync(
+        //        keyboardMode = mode,
+        //        subtype = subtype
+        //    ).await()
+        //}.await()
         withContext(Dispatchers.Main) {
             //textInputKeyboardView?.setComputedKeyboard(activeKeyboard)
         }

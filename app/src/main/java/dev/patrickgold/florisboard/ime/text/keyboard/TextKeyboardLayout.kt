@@ -69,13 +69,13 @@ fun TextKeyboardLayout(
     val subtypeManager by context.subtypeManager()
 
     val activeState by keyboardManager.activeState.observeAsNonNullState()
-    val computedKeyboard by keyboardManager.computedKeyboard.observeAsNonNullState()
+    val activeKeyboard by keyboardManager.activeKeyboard.observeAsNonNullState()
     val inputFeedbackController = LocalInputFeedbackController.current
 
     BoxWithConstraints(
         modifier = modifier
             .fillMaxWidth()
-            .height(FlorisImeSizing.keyboardRowBaseHeight * computedKeyboard.rowCount),
+            .height(FlorisImeSizing.keyboardRowBaseHeight * activeKeyboard.rowCount),
     ) {
         if (constraints.isZero) {
             return@BoxWithConstraints
@@ -88,21 +88,21 @@ fun TextKeyboardLayout(
         val desiredKey = remember { TextKey(data = TextKeyData.UNSPECIFIED) }
         desiredKey.touchBounds.apply {
             width = keyboardWidth / 10.0f
-            height = keyboardHeight / computedKeyboard.rowCount.coerceAtLeast(1).toFloat()
+            height = keyboardHeight / activeKeyboard.rowCount.coerceAtLeast(1).toFloat()
         }
         desiredKey.visibleBounds.applyFrom(desiredKey.touchBounds).deflateBy(keyMarginH, keyMarginV)
         TextKeyboard.layoutDrawableBounds(desiredKey, 1.0f)
         TextKeyboard.layoutLabelBounds(desiredKey)
-        for (key in computedKeyboard.keys()) {
+        for (key in activeKeyboard.keys()) {
             key.compute(keyboardManager.computingEvaluator)
-            computeLabelsAndDrawables(key, computedKeyboard, activeState, keyHintConfiguration, subtypeManager)
+            computeLabelsAndDrawables(key, activeKeyboard, activeState, keyHintConfiguration, subtypeManager)
         }
-        computedKeyboard.layout(
+        activeKeyboard.layout(
             keyboardWidth, keyboardHeight, desiredKey,
             isOrientationPortrait = configuration.isOrientationPortrait(),
         )
 
-        for (key in computedKeyboard.keys()) {
+        for (key in activeKeyboard.keys()) {
             TextKeyButton(key)
         }
     }
@@ -147,7 +147,7 @@ private fun TextKeyButton(key: TextKey) = with(LocalDensity.current) {
 @Composable
 private fun computeLabelsAndDrawables(
     key: TextKey,
-    computedKeyboard: TextKeyboard,
+    activeKeyboard: TextKeyboard,
     activeState: KeyboardState,
     keyHintConfiguration: KeyHintConfiguration,
     subtypeManager: SubtypeManager,
@@ -216,7 +216,7 @@ private fun computeLabelsAndDrawables(
                 }
             }
             KeyCode.SPACE, KeyCode.CJK_SPACE -> {
-                when (computedKeyboard.mode) {
+                when (activeKeyboard.mode) {
                     KeyboardMode.NUMERIC,
                     KeyboardMode.NUMERIC_ADVANCED,
                     KeyboardMode.PHONE,

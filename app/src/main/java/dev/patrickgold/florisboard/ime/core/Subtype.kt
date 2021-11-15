@@ -19,6 +19,10 @@ package dev.patrickgold.florisboard.ime.core
 import dev.patrickgold.florisboard.common.FlorisLocale
 import dev.patrickgold.florisboard.common.stringBuilder
 import dev.patrickgold.florisboard.ime.keyboard.LayoutType
+import dev.patrickgold.florisboard.ime.keyboard.extCoreComposer
+import dev.patrickgold.florisboard.ime.keyboard.extCoreCurrencySet
+import dev.patrickgold.florisboard.ime.keyboard.extCoreLayout
+import dev.patrickgold.florisboard.ime.keyboard.extCorePopupMapping
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import kotlinx.serialization.*
 
@@ -52,10 +56,10 @@ data class Subtype(
             id = -1,
             primaryLocale = FlorisLocale.from("en", "US"),
             secondaryLocales = emptyList(),
-            composer = ExtensionComponentName("org.florisboard.composers", "appender"),
-            currencySet = ExtensionComponentName("org.florisboard.currencysets", "dollar"),
-            popupMapping = ExtensionComponentName("org.florisboard.localization", "en"),
-            layoutMap = SubtypeLayoutMap(characters = ExtensionComponentName("org.florisboard.layouts", "qwerty")),
+            composer = extCoreComposer("appender"),
+            currencySet = extCoreCurrencySet("dollar"),
+            popupMapping = extCorePopupMapping("en"),
+            layoutMap = SubtypeLayoutMap(characters = extCoreLayout("qwerty")),
         )
     }
 
@@ -103,14 +107,14 @@ data class SubtypeLayoutMap(
         private const val EQUALS =                      "="
         private const val DELIMITER =                   ","
 
-        private val CHARACTERS_DEFAULT =          ExtensionComponentName("org.florisboard.layouts", "qwerty")
-        private val SYMBOLS_DEFAULT =             ExtensionComponentName("org.florisboard.layouts", "western")
-        private val SYMBOLS2_DEFAULT =            ExtensionComponentName("org.florisboard.layouts", "western")
-        private val NUMERIC_DEFAULT =             ExtensionComponentName("org.florisboard.layouts", "western_arabic")
-        private val NUMERIC_ADVANCED_DEFAULT =    ExtensionComponentName("org.florisboard.layouts", "western_arabic")
-        private val NUMERIC_ROW_DEFAULT =         ExtensionComponentName("org.florisboard.layouts", "western_arabic")
-        private val PHONE_DEFAULT =               ExtensionComponentName("org.florisboard.layouts", "telpad")
-        private val PHONE2_DEFAULT =              ExtensionComponentName("org.florisboard.layouts", "telpad")
+        private val CHARACTERS_DEFAULT =          extCoreLayout("qwerty")
+        private val SYMBOLS_DEFAULT =             extCoreLayout("western")
+        private val SYMBOLS2_DEFAULT =            extCoreLayout("western")
+        private val NUMERIC_DEFAULT =             extCoreLayout("western_arabic")
+        private val NUMERIC_ADVANCED_DEFAULT =    extCoreLayout("western_arabic")
+        private val NUMERIC_ROW_DEFAULT =         extCoreLayout("western_arabic")
+        private val PHONE_DEFAULT =               extCoreLayout("telpad")
+        private val PHONE2_DEFAULT =              extCoreLayout("telpad")
     }
 
     init {
