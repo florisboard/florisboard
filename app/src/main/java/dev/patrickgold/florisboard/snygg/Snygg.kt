@@ -42,4 +42,6 @@ object Snygg {
     const val Foreground = "foreground"
 
     const val Shadow = "shadow"
+
+    const val Shape = "shape"
 }

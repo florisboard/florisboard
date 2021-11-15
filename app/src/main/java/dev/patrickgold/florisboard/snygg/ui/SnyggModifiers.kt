@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import dev.patrickgold.florisboard.snygg.value.SnyggShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 import dev.patrickgold.florisboard.snygg.value.SnyggValue
 
@@ -38,5 +39,12 @@ fun SnyggValue.solidColor(): Color {
     return when (this) {
         is SnyggSolidColorValue -> this.color
         else -> Color.Unspecified
+    }
+}
+
+fun SnyggValue.shape(): Shape {
+    return when (this) {
+        is SnyggShapeValue -> this.shape
+        else -> RectangleShape
     }
 }

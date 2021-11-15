@@ -19,6 +19,9 @@ package dev.patrickgold.florisboard.ime.theme
 import dev.patrickgold.florisboard.snygg.Snygg
 import dev.patrickgold.florisboard.snygg.SnyggLevel
 import dev.patrickgold.florisboard.snygg.SnyggSpec
+import dev.patrickgold.florisboard.snygg.value.SnyggCutCornerShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRectangleShapeValue
+import dev.patrickgold.florisboard.snygg.value.SnyggRoundedCornerShapeValue
 import dev.patrickgold.florisboard.snygg.value.SnyggSolidColorValue
 
 object FlorisImeUiSpec : SnyggSpec({
@@ -39,6 +42,11 @@ object FlorisImeUiSpec : SnyggSpec({
             name = Snygg.Foreground,
             level = SnyggLevel.BASIC,
             supportedValues(SnyggSolidColorValue),
+        )
+        property(
+            name = Snygg.Shape,
+            level = SnyggLevel.ADVANCED,
+            supportedValues(SnyggRectangleShapeValue, SnyggCutCornerShapeValue, SnyggRoundedCornerShapeValue),
         )
     }
 

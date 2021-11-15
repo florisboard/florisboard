@@ -115,10 +115,11 @@ private fun TextKeyButton(key: TextKey) = with(LocalDensity.current) {
         code = key.computedData.code,
     )
     SnyggSurface(
-        background = keyStyle.background,
         modifier = Modifier
             .requiredSize(key.visibleBounds.size.toDpSize())
             .absoluteOffset { key.visibleBounds.topLeft.toIntOffset() },
+        background = keyStyle.background,
+        shape = keyStyle.shape,
     ) {
         key.label?.let { label ->
             Text(

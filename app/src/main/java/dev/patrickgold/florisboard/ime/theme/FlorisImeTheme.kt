@@ -35,6 +35,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
     FlorisImeUi.Key {
         background = rgbaColor(66, 66, 66)
         foreground = rgbaColor(255, 255, 255)
+        shape = roundedCornerShape(20)
     }
     FlorisImeUi.Key(codes = listOf(KeyCode.ENTER)) {
         background = rgbaColor(76, 175, 80)

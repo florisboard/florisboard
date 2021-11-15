@@ -25,18 +25,4 @@ import dev.patrickgold.florisboard.ime.text.smartbar.Smartbar
 fun TextInputLayout() = Column {
     Smartbar()
     TextKeyboardLayout()
-    //AndroidView(
-    //    modifier = Modifier.fillMaxWidth().wrapContentHeight(),
-    //    factory = { ctx -> TextKeyboardView(ctx).also { view ->
-    //        view.setComputingEvaluator(keyboardManager.computingEvaluator)
-    //        view.inputFeedbackController = inputFeedbackController
-    //    } },
-    //    update = { view ->
-    //        view.keyboardRowBaseHeight = keyboardRowBaseHeightPx
-    //        view.onUpdateKeyboardState(activeState)
-    //        view.setComputedKeyboard(computedKeyboard)
-    //        view.sync()
-    //        view.requestLayout()
-    //    },
-    //)
 }
