@@ -91,6 +91,7 @@ class ExtensionManager(context: Context) {
     }
 
     fun getExtensionById(id: String): Extension? {
+        keyboardExtensions.value?.find { it.meta.id == id }?.let { return it }
         spellingDicts.value?.find { it.meta.id == id }?.let { return it }
         themes.value?.find { it.meta.id == id }?.let { return it }
         return null

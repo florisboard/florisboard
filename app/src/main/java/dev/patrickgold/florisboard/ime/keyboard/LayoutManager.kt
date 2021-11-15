@@ -20,7 +20,8 @@ import android.content.Context
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.assetManager
-import dev.patrickgold.florisboard.common.resultErrStr
+import dev.patrickgold.florisboard.common.DeferredResult
+import dev.patrickgold.florisboard.common.runCatchingAsync
 import dev.patrickgold.florisboard.debug.LogTopic
 import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.debug.flogWarning
@@ -31,9 +32,11 @@ import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.key.*
 import dev.patrickgold.florisboard.ime.text.keyboard.*
 import dev.patrickgold.florisboard.keyboardManager
+import dev.patrickgold.florisboard.res.ZipUtils
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -66,9 +69,9 @@ class LayoutManager(context: Context) {
     private val extensionManager by context.extensionManager()
     private val keyboardManager by context.keyboardManager()
 
-    private val layoutCache: HashMap<LTN, Deferred<Result<CachedLayout>>> = hashMapOf()
+    private val layoutCache: HashMap<LTN, DeferredResult<CachedLayout>> = hashMapOf()
     private val layoutCacheGuard: Mutex = Mutex(locked = false)
-    private val popupMappingCache: HashMap<ExtensionComponentName, Deferred<Result<CachedPopupMapping>>> = hashMapOf()
+    private val popupMappingCache: HashMap<ExtensionComponentName, DeferredResult<CachedPopupMapping>> = hashMapOf()
     private val popupMappingCacheGuard: Mutex = Mutex(locked = false)
     private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
@@ -77,62 +80,58 @@ class LayoutManager(context: Context) {
      *
      * @return A deferred result for a layout.
      */
-    private fun loadLayoutAsync(ltn: LTN?): Deferred<Result<CachedLayout>> = ioScope.async {
-        if (ltn == null) {
-            return@async resultErrStr("Invalid argument value for 'ltn': null")
-        }
-        layoutCacheGuard.lock()
-        val cached = layoutCache[ltn]
-        if (cached != null) {
-            flogDebug(LogTopic.LAYOUT_MANAGER) { "Using cache for '${ltn.name}'" }
-            layoutCacheGuard.unlock()
-            return@async cached.await()
-        } else {
-            flogDebug(LogTopic.LAYOUT_MANAGER) { "Loading '${ltn.name}'" }
-            val meta = keyboardManager.resources.layouts.value?.get(ltn.type)?.get(ltn.name)
-                ?: return@async resultErrStr("No indexed entry found for ${ltn.type} - ${ltn.name}")
-            val ext = extensionManager.getExtensionById(ltn.name.extensionId)
-                ?: return@async resultErrStr("Extension ${ltn.name.extensionId} not found")
-            val path = meta.arrangementFile(ltn.type)
-            val layout = async {
-                runCatching {
-                    val jsonStr = ext.readExtensionFile(appContext, path)!!
-                    val arrangement = assetManager.loadJsonAsset<LayoutArrangement>(jsonStr).getOrThrow()
-                    CachedLayout(ltn.type, ltn.name, meta, arrangement)
+    private fun loadLayoutAsync(ltn: LTN?) = ioScope.runCatchingAsync {
+        require(ltn != null) { "Invalid argument value for 'ltn': null" }
+        layoutCacheGuard.withLock {
+            val cached = layoutCache[ltn]
+            if (cached != null) {
+                flogDebug(LogTopic.LAYOUT_MANAGER) { "Using cache for '${ltn.name}'" }
+                return@withLock cached
+            } else {
+                flogDebug(LogTopic.LAYOUT_MANAGER) { "Loading '${ltn.name}'" }
+                val meta = keyboardManager.resources.layouts.value?.get(ltn.type)?.get(ltn.name)
+                    ?: error("No indexed entry found for ${ltn.type} - ${ltn.name}")
+                val ext = extensionManager.getExtensionById(ltn.name.extensionId)
+                    ?: error("Extension ${ltn.name.extensionId} not found")
+                val path = meta.arrangementFile(ltn.type)
+                val layout = async {
+                    runCatching {
+                        val jsonStr = ZipUtils.readFileFromArchive(appContext, ext.sourceRef!!, path).getOrThrow()
+                        val arrangement = assetManager.loadJsonAsset<LayoutArrangement>(jsonStr).getOrThrow()
+                        CachedLayout(ltn.type, ltn.name, meta, arrangement)
+                    }
                 }
+                layoutCache[ltn] = layout
+                return@withLock layout
             }
-            layoutCache[ltn] = layout
-            layoutCacheGuard.unlock()
-            return@async layout.await()
-        }
+        }.await().getOrThrow()
     }
 
-    private fun loadPopupMappingAsync(subtype: Subtype? = null): Deferred<Result<CachedPopupMapping>> = ioScope.async {
+    private fun loadPopupMappingAsync(subtype: Subtype? = null) = ioScope.runCatchingAsync {
         val name = subtype?.popupMapping ?: extCorePopupMapping("default")
-        popupMappingCacheGuard.lock()
-        val cached = popupMappingCache[name]
-        if (cached != null) {
-            flogDebug(LogTopic.LAYOUT_MANAGER) { "Using cache for '$name'" }
-            popupMappingCacheGuard.unlock()
-            return@async cached.await()
-        } else {
-            flogDebug(LogTopic.LAYOUT_MANAGER) { "Loading '$name'" }
-            val meta = keyboardManager.resources.popupMappings.value?.get(name)
-                ?: return@async resultErrStr("No indexed entry found for $name")
-            val ext = extensionManager.getExtensionById(name.extensionId)
-                ?: return@async resultErrStr("Extension ${name.extensionId} not found")
-            val path = meta.mappingFile()
-            val popupMapping = async {
-                runCatching {
-                    val jsonStr = ext.readExtensionFile(appContext, path)!!
-                    val mapping = assetManager.loadJsonAsset<PopupMapping>(jsonStr).getOrThrow()
-                    CachedPopupMapping(name, meta, mapping)
+        popupMappingCacheGuard.withLock {
+            val cached = popupMappingCache[name]
+            if (cached != null) {
+                flogDebug(LogTopic.LAYOUT_MANAGER) { "Using cache for '$name'" }
+                return@withLock cached
+            } else {
+                flogDebug(LogTopic.LAYOUT_MANAGER) { "Loading '$name'" }
+                val meta = keyboardManager.resources.popupMappings.value?.get(name)
+                    ?: error("No indexed entry found for $name")
+                val ext = extensionManager.getExtensionById(name.extensionId)
+                    ?: error("Extension ${name.extensionId} not found")
+                val path = meta.mappingFile()
+                val popupMapping = async {
+                    runCatching {
+                        val jsonStr = ZipUtils.readFileFromArchive(appContext, ext.sourceRef!!, path).getOrThrow()
+                        val mapping = assetManager.loadJsonAsset<PopupMapping>(jsonStr).getOrThrow()
+                        CachedPopupMapping(name, meta, mapping)
+                    }
                 }
+                popupMappingCache[name] = popupMapping
+                return@withLock popupMapping
             }
-            popupMappingCache[name] = popupMapping
-            popupMappingCacheGuard.unlock()
-            return@async popupMapping.await()
-        }
+        }.await().getOrThrow()
     }
 
     /**
@@ -151,7 +150,7 @@ class LayoutManager(context: Context) {
      * @param extension The extension layout type and name.
      * @return a [TextKeyboard] object, regardless of the specified LTNs or errors.
      */
-    private suspend fun mergeLayoutsAsync(
+    private suspend fun mergeLayouts(
         keyboardMode: KeyboardMode,
         subtype: Subtype,
         main: LTN? = null,
@@ -161,7 +160,9 @@ class LayoutManager(context: Context) {
         val extendedPopupsDefault = loadPopupMappingAsync()
         val extendedPopups = loadPopupMappingAsync(subtype)
 
-        val mainLayout = loadLayoutAsync(main).await().getOrNull()
+        val mainLayout = loadLayoutAsync(main).await().onFailure {
+            flogWarning { "$keyboardMode - main - $it" }
+        }.getOrNull()
         val modifierToLoad = if (mainLayout?.meta?.modifier != null) {
             val layoutType = when (mainLayout.type) {
                 LayoutType.SYMBOLS -> {
@@ -178,8 +179,12 @@ class LayoutManager(context: Context) {
         } else {
             modifier
         }
-        val modifierLayout = loadLayoutAsync(modifierToLoad).await().getOrNull()
-        val extensionLayout = loadLayoutAsync(extension).await().getOrNull()
+        val modifierLayout = loadLayoutAsync(modifierToLoad).await().onFailure {
+            flogWarning { "$keyboardMode - mod - $it" }
+        }.getOrNull()
+        val extensionLayout = loadLayoutAsync(extension).await().onFailure {
+            flogWarning { "$keyboardMode - ext - $it" }
+        }.getOrNull()
 
         val computedArrangement: ArrayList<Array<TextKey>> = arrayListOf()
 
@@ -232,7 +237,7 @@ class LayoutManager(context: Context) {
         if (keyboardMode == KeyboardMode.CHARACTERS) {
             val symbolsComputedArrangement = computeKeyboardAsync(KeyboardMode.SYMBOLS, subtype).await().arrangement
             // number row hint always happens on first row
-            if (prefs.keyboard.hintedNumberRowEnabled.get()) {
+            if (prefs.keyboard.hintedNumberRowEnabled.get() && symbolsComputedArrangement.isNotEmpty()) {
                 val row = computedArrangement[0]
                 val symbolRow = symbolsComputedArrangement[0]
                 addRowHints(row, symbolRow, KeyType.NUMERIC)
@@ -339,7 +344,7 @@ class LayoutManager(context: Context) {
             }
         }
 
-        return@async mergeLayoutsAsync(keyboardMode, subtype, main, modifier, extension)
+        return@async mergeLayouts(keyboardMode, subtype, main, modifier, extension)
     }
 
     /**

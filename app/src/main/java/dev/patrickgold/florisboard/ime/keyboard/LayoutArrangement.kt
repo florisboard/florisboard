@@ -31,5 +31,5 @@ data class LayoutArrangementComponent(
     val modifier: ExtensionComponentName? = null,
     val arrangementFile: String? = null,
 ) : ExtensionComponent {
-    fun arrangementFile(type: LayoutType) = arrangementFile ?: "layouts/$type/$id.json"
+    fun arrangementFile(type: LayoutType) = arrangementFile ?: "layouts/${type.id}/$id.json"
 }

@@ -69,7 +69,7 @@ data class Subtype(
      */
     fun toShortString(): String {
         val languageTag = primaryLocale.languageTag()
-        return "$id/$languageTag/$currencySet"
+        return "$id/$languageTag/$currencySet/${layoutMap.characters}"
     }
 }
 

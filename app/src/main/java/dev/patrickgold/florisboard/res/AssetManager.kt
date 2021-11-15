@@ -43,7 +43,6 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonBuilder
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import java.io.File
@@ -84,10 +83,6 @@ val DefaultJsonConfig = Json {
 
 class AssetManager(context: Context) {
     val appContext by context.appContext()
-
-    fun jsonConfig(action: JsonBuilder.() -> Unit) = Json(DefaultJsonConfig) {
-        this.action()
-    }
 
     @Deprecated(message = "deleteAsset is deprecated in favor of delete")
     fun deleteAsset(ref: FlorisRef): Result<Unit> {

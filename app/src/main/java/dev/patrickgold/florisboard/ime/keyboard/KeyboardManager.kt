@@ -36,13 +36,11 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.launch
-
-typealias DeferredResult<T> = Deferred<Result<T>>
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val prefs by florisPreferenceModel()
@@ -50,13 +48,13 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-    private val keyboardRefreshRequestChannel = Channel<Unit>(Channel.CONFLATED)
     private val layoutManager = LayoutManager(context)
     private val keyboardCache = TextKeyboardCache()
 
     val computingEvaluator: ComputingEvaluator = KeyboardManagerComputingEvaluator()
     val resources = KeyboardManagerResources()
 
+    private val activeKeyboardGuard = Mutex(locked = false)
     private val _activeKeyboard = MutableLiveData(PlaceholderLoadingKeyboard)
     val activeKeyboard: LiveData<TextKeyboard> get() = _activeKeyboard
     val activeState = KeyboardState.new()
@@ -73,29 +71,31 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     ).also { it.keyEventReceiver = this }
 
     init {
-        activeState.observeForever { newState ->
-            if (newState.keyboardMode != activeKeyboard.value?.mode) {
-                keyboardRefreshRequestChannel.trySend(Unit)
+        resources.anyChanged.observeForever {
+            updateActiveKeyboard {
+                keyboardCache.clear()
             }
+        }
+        activeState.observeForever {
+            updateActiveKeyboard()
         }
         subtypeManager.activeSubtype.observeForever {
-            keyboardRefreshRequestChannel.trySend(Unit)
+            updateActiveKeyboard()
         }
-        resources.anyChanged.observeForever {
-            keyboardRefreshRequestChannel.trySend(Unit)
-        }
-        scope.launch {
-            for (req in keyboardRefreshRequestChannel) {
-                val subtype = subtypeManager.activeSubtype()
-                val mode = activeState.keyboardMode
-                val computedKeyboard = keyboardCache.getOrElseAsync(mode, subtype) {
-                    layoutManager.computeKeyboardAsync(
-                        keyboardMode = mode,
-                        subtype = subtype,
-                    ).await()
-                }.await()
-                _activeKeyboard.postValue(computedKeyboard)
-            }
+    }
+
+    private fun updateActiveKeyboard(action: () -> Unit = { }) = scope.launch {
+        activeKeyboardGuard.withLock {
+            action()
+            val subtype = subtypeManager.activeSubtype()
+            val mode = activeState.keyboardMode
+            val computedKeyboard = keyboardCache.getOrElseAsync(mode, subtype) {
+                layoutManager.computeKeyboardAsync(
+                    keyboardMode = mode,
+                    subtype = subtype,
+                ).await()
+            }.await()
+            _activeKeyboard.postValue(computedKeyboard)
         }
     }
 
@@ -157,7 +157,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 keyboardExtension.layouts.forEach { (type, layoutComponents) ->
                     for (layoutComponent in layoutComponents) {
-                        localLayouts[type]!![ExtensionComponentName(keyboardExtension.meta.id, layoutComponent.id)] = layoutComponent
+                        localLayouts[LayoutType.values().first { it.id == type }]!![ExtensionComponentName(keyboardExtension.meta.id, layoutComponent.id)] = layoutComponent
                     }
                 }
                 keyboardExtension.popupMappings.forEach { popupMapping ->

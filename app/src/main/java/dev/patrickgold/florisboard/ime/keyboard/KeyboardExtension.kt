@@ -33,7 +33,7 @@ data class KeyboardExtension(
     override val meta: ExtensionMeta,
     override val dependencies: List<String>? = null,
     val currencySets: List<CurrencySet> = listOf(),
-    val layouts: Map<LayoutType, List<LayoutArrangementComponent>> = mapOf(),
+    val layouts: Map<String, List<LayoutArrangementComponent>> = mapOf(),
     val popupMappings: List<PopupMappingComponent> = listOf(),
     val subtypePresets: List<SubtypePreset> = listOf(),
 ) : Extension() {
