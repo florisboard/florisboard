@@ -30,16 +30,16 @@ import kotlinx.serialization.encoding.Encoder
 @Serializable(with = SnyggStylesheetSerializer::class)
 class SnyggStylesheet(val rules: Map<SnyggRule, SnyggPropertySet>) {
     companion object {
-        private const val MinIntValue = 0
+        private const val Unspecified = Int.MIN_VALUE
         private val FallbackPropertySet = SnyggPropertySet(mapOf())
     }
 
     @Composable
     fun get(
         element: String,
-        code: Int = -1,
-        group: Int = -1,
-        mode: Int = -1,
+        code: Int = Unspecified,
+        group: Int = Unspecified,
+        mode: Int = Unspecified,
         isHover: Boolean = false,
         isFocus: Boolean = false,
         isPressed: Boolean = false,
@@ -49,31 +49,31 @@ class SnyggStylesheet(val rules: Map<SnyggRule, SnyggPropertySet>) {
 
     fun getStatic(
         element: String,
-        code: Int = -1,
-        group: Int = -1,
-        mode: Int = -1,
+        code: Int = Unspecified,
+        group: Int = Unspecified,
+        mode: Int = Unspecified,
         isHover: Boolean = false,
         isFocus: Boolean = false,
         isPressed: Boolean = false,
     ): SnyggPropertySet {
         val possibleRules = rules.filter { (rule, _) -> rule.element == element }
         possibleRules.keys.find { rule ->
-            code < MinIntValue || rule.codes.contains(code)
-                && group < MinIntValue || rule.groups.contains(group)
-                && mode < MinIntValue || rule.modes.contains(mode)
-                && isHover == rule.hoverSelector
-                && isFocus == rule.focusSelector
-                && isPressed == rule.pressedSelector
+            (code == Unspecified || rule.codes.contains(code))
+                && (group == Unspecified || rule.groups.contains(group))
+                && (mode == Unspecified || rule.modes.contains(mode))
+                && (isHover == rule.hoverSelector)
+                && (isFocus == rule.focusSelector)
+                && (isPressed == rule.pressedSelector)
         }?.let { return possibleRules[it]!! }
         possibleRules.keys.find { rule ->
-            isHover == rule.hoverSelector
-                && isFocus == rule.focusSelector
-                && isPressed == rule.pressedSelector
+            (isHover == rule.hoverSelector)
+                && (isFocus == rule.focusSelector)
+                && (isPressed == rule.pressedSelector)
         }?.let { return possibleRules[it]!! }
         possibleRules.keys.find { rule ->
-            code < MinIntValue || rule.codes.contains(code)
-                && group < MinIntValue || rule.groups.contains(group)
-                && mode < MinIntValue || rule.modes.contains(mode)
+            (code == Unspecified || rule.codes.contains(code))
+                && (group == Unspecified || rule.groups.contains(group))
+                && (mode == Unspecified || rule.modes.contains(mode))
         }?.let { return possibleRules[it]!! }
         return possibleRules.values.firstOrNull() ?: FallbackPropertySet
     }
