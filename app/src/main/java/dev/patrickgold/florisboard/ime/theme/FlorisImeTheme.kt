@@ -39,8 +39,20 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet {
         fontSize = size(22.sp)
         shape = roundedCornerShape(20)
     }
+    FlorisImeUi.Key(pressedSelector = true) {
+        background = rgbaColor(97, 97, 97)
+        foreground = rgbaColor(255, 255, 255)
+        fontSize = size(22.sp)
+        shape = roundedCornerShape(20)
+    }
     FlorisImeUi.Key(codes = listOf(KeyCode.ENTER)) {
         background = rgbaColor(76, 175, 80)
+        foreground = rgbaColor(255, 255, 255)
+        fontSize = size(22.sp)
+        shape = roundedCornerShape(20)
+    }
+    FlorisImeUi.Key(codes = listOf(KeyCode.ENTER), pressedSelector = true) {
+        background = rgbaColor(56, 142, 60)
         foreground = rgbaColor(255, 255, 255)
         fontSize = size(22.sp)
         shape = roundedCornerShape(20)

@@ -17,6 +17,9 @@
 package dev.patrickgold.florisboard.common
 
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.unit.IntOffset
@@ -25,10 +28,10 @@ import kotlin.math.max
 import kotlin.math.min
 
 class FlorisRect private constructor(
-    var left: Float,
-    var top: Float,
-    var right: Float,
-    var bottom: Float,
+    left: Float,
+    top: Float,
+    right: Float,
+    bottom: Float,
 ) {
     companion object {
         fun empty() = FlorisRect(0.0f, 0.0f, 0.0f, 0.0f)
@@ -47,6 +50,11 @@ class FlorisRect private constructor(
 
         fun from(r: FlorisRect) = FlorisRect(r.left, r.top, r.right, r.bottom)
     }
+
+    var left: Float by mutableStateOf(left)
+    var top: Float by mutableStateOf(top)
+    var right: Float by mutableStateOf(right)
+    var bottom: Float by mutableStateOf(bottom)
 
     fun applyFrom(other: FlorisRect): FlorisRect {
         left = other.left

@@ -16,11 +16,9 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
-import dev.patrickgold.florisboard.common.FlorisRect
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.keyboard.Keyboard
 import dev.patrickgold.florisboard.ime.popup.PopupMapping
-import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import kotlin.math.abs
 
 class TextKeyboard(
@@ -34,44 +32,6 @@ class TextKeyboard(
 
     val keyCount: Int
         get() = arrangement.sumOf { it.size }
-
-    companion object {
-        fun layoutDrawableBounds(key: TextKey, factor: Float) {
-            layoutForegroundBounds(key, key.visibleDrawableBounds, 0.21f * (1.0f / factor), isLabel = false)
-        }
-
-        fun layoutLabelBounds(key: TextKey) {
-            layoutForegroundBounds(key, key.visibleLabelBounds, 0.28f, isLabel = true)
-        }
-
-        private fun layoutForegroundBounds(key: TextKey, bounds: FlorisRect, factor: Float, isLabel: Boolean) {
-            bounds.apply {
-                val w = key.visibleBounds.width
-                val h = key.visibleBounds.height
-                val xOffset: Float
-                val yOffset: Float
-                if (w < h) {
-                    xOffset = factor * w
-                    yOffset = if ((key.computedData.code == KeyCode.SPACE || key.computedData.code == KeyCode.CJK_SPACE) && isLabel) {
-                        xOffset
-                    } else {
-                        (h - (w - 2.0f * xOffset)) / 2.0f
-                    }
-                } else {
-                    yOffset = factor * h
-                    xOffset = if ((key.computedData.code == KeyCode.SPACE || key.computedData.code == KeyCode.CJK_SPACE) && isLabel) {
-                        yOffset
-                    } else {
-                        (w - (h - 2.0f * yOffset)) / 2.0f
-                    }
-                }
-                left = key.visibleBounds.left + xOffset
-                top = key.visibleBounds.top + yOffset
-                right = key.visibleBounds.right - xOffset
-                bottom = key.visibleBounds.bottom - yOffset
-            }
-        }
-    }
 
     override fun getKeyForPos(pointerX: Float, pointerY: Float): TextKey? {
         for (key in keys()) {

@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.text.keyboard
 
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,32 +26,30 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
-import dev.patrickgold.florisboard.app.res.stringRes
 import dev.patrickgold.florisboard.common.isOrientationPortrait
 import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.common.observeAsTransformingState
 import dev.patrickgold.florisboard.common.toIntOffset
-import dev.patrickgold.florisboard.ime.core.SubtypeManager
+import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
+import dev.patrickgold.florisboard.ime.core.InputKeyEvent
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.keyboard.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
-import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.keyboardManager
@@ -61,9 +60,11 @@ import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.observeAsState
 
 // TODO clean up code style
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TextKeyboardLayout(
     modifier: Modifier = Modifier,
+    isPreview: Boolean,
 ) = with(LocalDensity.current) {
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
@@ -74,34 +75,52 @@ fun TextKeyboardLayout(
 
     val activeState by keyboardManager.activeState.observeAsNonNullState()
     val activeKeyboard by keyboardManager.activeKeyboard.observeAsNonNullState()
-    val inputFeedbackController = LocalInputFeedbackController.current
 
     BoxWithConstraints(
         modifier = modifier
             .fillMaxWidth()
-            .height(FlorisImeSizing.keyboardRowBaseHeight * activeKeyboard.rowCount),
+            .height(FlorisImeSizing.keyboardRowBaseHeight * activeKeyboard.rowCount)
+        //.pointerInput(Unit) {
+        //    forEachGesture {
+        //        awaitPointerEventScope {
+        //            flogDebug { "Await first pointer" }
+        //            val down = awaitFirstDown(requireUnconsumed = false)
+        //            flogDebug { down.toString() }
+        //            do {
+        //                flogDebug { "Await pointer event" }
+        //                val event = awaitPointerEvent()
+        //                val cancelled = event.changes.any { it.positionChangeConsumed() }
+        //                if (!cancelled) {
+        //                    for (pointer in event.changes) {
+        //                        if (pointer.positionChanged())
+        //                        flogDebug { pointer.toString() }
+        //                    }
+        //                }
+        //            } while (!cancelled)
+        //        }
+        //    }
+        //}
     ) {
         if (constraints.isZero) {
             return@BoxWithConstraints
         }
         val keyMarginH by prefs.keyboard.keySpacingHorizontal.observeAsTransformingState { it.dp.toPx() }
         val keyMarginV by prefs.keyboard.keySpacingVertical.observeAsTransformingState { it.dp.toPx() }
-        val keyHintConfiguration = prefs.keyboard.keyHintConfiguration()
-        val keyboardWidth = constraints.maxWidth.toFloat()
-        val keyboardHeight = constraints.maxHeight.toFloat()
         val desiredKey = remember { TextKey(data = TextKeyData.UNSPECIFIED) }
-        desiredKey.touchBounds.apply {
-            width = keyboardWidth / 10.0f
-            height = keyboardHeight / activeKeyboard.rowCount.coerceAtLeast(1).toFloat()
+        LaunchedEffect(activeKeyboard, constraints, activeState) {
+            val keyboardWidth = constraints.maxWidth.toFloat()
+            val keyboardHeight = constraints.maxHeight.toFloat()
+            desiredKey.touchBounds.apply {
+                width = keyboardWidth / 10.0f
+                height = keyboardHeight / activeKeyboard.rowCount.coerceAtLeast(1).toFloat()
+            }
+            desiredKey.visibleBounds.applyFrom(desiredKey.touchBounds).deflateBy(keyMarginH, keyMarginV)
+            for (key in activeKeyboard.keys()) {
+                key.compute(keyboardManager.computingEvaluator)
+                key.computeLabelsAndDrawables(context, keyboardManager.computingEvaluator)
+            }
+            activeKeyboard.layout(keyboardWidth, keyboardHeight, desiredKey)
         }
-        desiredKey.visibleBounds.applyFrom(desiredKey.touchBounds).deflateBy(keyMarginH, keyMarginV)
-        TextKeyboard.layoutDrawableBounds(desiredKey, 1.0f)
-        TextKeyboard.layoutLabelBounds(desiredKey)
-        for (key in activeKeyboard.keys()) {
-            key.compute(keyboardManager.computingEvaluator)
-            computeLabelsAndDrawables(key, activeKeyboard, activeState, keyHintConfiguration, subtypeManager)
-        }
-        activeKeyboard.layout(keyboardWidth, keyboardHeight, desiredKey)
 
         val oneHandedMode by prefs.keyboard.oneHandedMode.observeAsState()
         val oneHandedModeFactor by prefs.keyboard.oneHandedModeScaleFactor.observeAsTransformingState { it / 100.0f }
@@ -116,16 +135,22 @@ fun TextKeyboardLayout(
             1.0f
         }
         for (key in activeKeyboard.keys()) {
-            TextKeyButton(key, fontSizeMultiplier)
+            TextKeyButton(key, keyboardManager.inputEventDispatcher, fontSizeMultiplier)
         }
     }
 }
 
 @Composable
-private fun TextKeyButton(key: TextKey, fontSizeMultiplier: Float) = with(LocalDensity.current) {
+private fun TextKeyButton(
+    key: TextKey,
+    inputEventDispatcher: InputEventDispatcher,
+    fontSizeMultiplier: Float,
+) = with(LocalDensity.current) {
+    val inputFeedbackController = LocalInputFeedbackController.current
     val keyStyle = FlorisImeTheme.style.get(
         element = FlorisImeUi.Key,
         code = key.computedData.code,
+        isPressed = key.isPressed,
     )
     val fontSize = keyStyle.fontSize.spSize() * fontSizeMultiplier * when (key.computedData.code) {
         KeyCode.VIEW_CHARACTERS,
@@ -138,7 +163,22 @@ private fun TextKeyButton(key: TextKey, fontSizeMultiplier: Float) = with(LocalD
     SnyggSurface(
         modifier = Modifier
             .requiredSize(key.visibleBounds.size.toDpSize())
-            .absoluteOffset { key.visibleBounds.topLeft.toIntOffset() },
+            .absoluteOffset { key.visibleBounds.topLeft.toIntOffset() }
+            .pointerInput(key.computedData) {
+                detectTapGestures(
+                    onPress = {
+                        key.isPressed = true
+                        inputEventDispatcher.send(InputKeyEvent.down(key.computedData))
+                        inputFeedbackController.keyPress(key.computedData)
+                        if (tryAwaitRelease()) {
+                            inputEventDispatcher.send(InputKeyEvent.up(key.computedData))
+                        } else {
+                            inputEventDispatcher.send(InputKeyEvent.cancel(key.computedData))
+                        }
+                        key.isPressed = false
+                    },
+                )
+            },
         background = keyStyle.background,
         shape = keyStyle.shape,
     ) {
@@ -169,150 +209,4 @@ private fun TextKeyButton(key: TextKey, fontSizeMultiplier: Float) = with(LocalD
             )
         }
     }
-}
-
-/**
- * Computes the labels and drawables needed to draw the key.
- */
-@Composable
-private fun computeLabelsAndDrawables(
-    key: TextKey,
-    activeKeyboard: TextKeyboard,
-    activeState: KeyboardState,
-    keyHintConfiguration: KeyHintConfiguration,
-    subtypeManager: SubtypeManager,
-): TextKey {
-    // Reset attributes first to avoid invalid states if not updated
-    key.label = null
-    key.hintedLabel = null
-    key.foregroundDrawableId = null
-
-    val data = key.computedData
-    if (data.type == KeyType.CHARACTER && data.code != KeyCode.SPACE && data.code != KeyCode.CJK_SPACE
-        && data.code != KeyCode.HALF_SPACE && data.code != KeyCode.KESHIDA || data.type == KeyType.NUMERIC
-    ) {
-        key.label = data.asString(isForDisplay = true)
-        key.computedPopups.getPopupKeys(keyHintConfiguration).hint?.asString(isForDisplay = true).let {
-            key.hintedLabel = it
-        }
-    } else {
-        when (data.code) {
-            KeyCode.ARROW_LEFT -> {
-                key.foregroundDrawableId = R.drawable.ic_keyboard_arrow_left
-            }
-            KeyCode.ARROW_RIGHT -> {
-                key.foregroundDrawableId = R.drawable.ic_keyboard_arrow_right
-            }
-            KeyCode.CLIPBOARD_COPY -> {
-                key.foregroundDrawableId = R.drawable.ic_content_copy
-            }
-            KeyCode.CLIPBOARD_CUT -> {
-                key.foregroundDrawableId = R.drawable.ic_content_cut
-            }
-            KeyCode.CLIPBOARD_PASTE -> {
-                key.foregroundDrawableId = R.drawable.ic_content_paste
-            }
-            KeyCode.CLIPBOARD_SELECT_ALL -> {
-                key.foregroundDrawableId = R.drawable.ic_select_all
-            }
-            KeyCode.DELETE -> {
-                key.foregroundDrawableId = R.drawable.ic_backspace
-            }
-            KeyCode.ENTER -> {
-                val imeOptions = activeState.imeOptions
-                key.foregroundDrawableId = when (imeOptions.enterAction) {
-                    ImeOptions.EnterAction.DONE -> R.drawable.ic_done
-                    ImeOptions.EnterAction.GO -> R.drawable.ic_arrow_right_alt
-                    ImeOptions.EnterAction.NEXT -> R.drawable.ic_arrow_right_alt
-                    ImeOptions.EnterAction.NONE -> R.drawable.ic_keyboard_return
-                    ImeOptions.EnterAction.PREVIOUS -> R.drawable.ic_arrow_right_alt
-                    ImeOptions.EnterAction.SEARCH -> R.drawable.ic_search
-                    ImeOptions.EnterAction.SEND -> R.drawable.ic_send
-                    ImeOptions.EnterAction.UNSPECIFIED -> R.drawable.ic_keyboard_return
-                }
-                if (imeOptions.flagNoEnterAction) {
-                    key.foregroundDrawableId = R.drawable.ic_keyboard_return
-                }
-            }
-            KeyCode.LANGUAGE_SWITCH -> {
-                key.foregroundDrawableId = R.drawable.ic_language
-            }
-            KeyCode.PHONE_PAUSE -> key.label = stringRes(R.string.key__phone_pause)
-            KeyCode.PHONE_WAIT -> key.label = stringRes(R.string.key__phone_wait)
-            KeyCode.SHIFT -> {
-                key.foregroundDrawableId = when (activeState.caps) {
-                    true -> R.drawable.ic_keyboard_capslock
-                    else -> R.drawable.ic_keyboard_arrow_up
-                }
-            }
-            KeyCode.SPACE, KeyCode.CJK_SPACE -> {
-                when (activeKeyboard.mode) {
-                    KeyboardMode.NUMERIC,
-                    KeyboardMode.NUMERIC_ADVANCED,
-                    KeyboardMode.PHONE,
-                    KeyboardMode.PHONE2 -> {
-                        key.foregroundDrawableId = R.drawable.ic_space_bar
-                    }
-                    KeyboardMode.CHARACTERS -> {
-                        key.label = subtypeManager.activeSubtype().primaryLocale.let { it.displayName() }
-                    }
-                    else -> {
-                    }
-                }
-            }
-            KeyCode.SWITCH_TO_MEDIA_CONTEXT -> {
-                key.foregroundDrawableId = R.drawable.ic_sentiment_satisfied
-            }
-            KeyCode.SWITCH_TO_CLIPBOARD_CONTEXT -> {
-                key.foregroundDrawableId = R.drawable.ic_assignment
-            }
-            KeyCode.KANA_SWITCHER -> {
-                key.foregroundDrawableId = if (activeState.isKanaKata) {
-                    R.drawable.ic_keyboard_kana_switcher_kata
-                } else {
-                    R.drawable.ic_keyboard_kana_switcher_hira
-                }
-            }
-            KeyCode.CHAR_WIDTH_SWITCHER -> {
-                key.foregroundDrawableId = if (activeState.isCharHalfWidth) {
-                    R.drawable.ic_keyboard_char_width_switcher_full
-                } else {
-                    R.drawable.ic_keyboard_char_width_switcher_half
-                }
-            }
-            KeyCode.CHAR_WIDTH_FULL -> {
-                key.foregroundDrawableId = R.drawable.ic_keyboard_char_width_switcher_full
-            }
-            KeyCode.CHAR_WIDTH_HALF -> {
-                key.foregroundDrawableId = R.drawable.ic_keyboard_char_width_switcher_half
-            }
-            KeyCode.SWITCH_TO_TEXT_CONTEXT,
-            KeyCode.VIEW_CHARACTERS -> {
-                key.label = stringRes(R.string.key__view_characters)
-            }
-            KeyCode.VIEW_NUMERIC,
-            KeyCode.VIEW_NUMERIC_ADVANCED -> {
-                key.label = stringRes(R.string.key__view_numeric)
-            }
-            KeyCode.VIEW_PHONE -> {
-                key.label = stringRes(R.string.key__view_phone)
-            }
-            KeyCode.VIEW_PHONE2 -> {
-                key.label = stringRes(R.string.key__view_phone2)
-            }
-            KeyCode.VIEW_SYMBOLS -> {
-                key.label = stringRes(R.string.key__view_symbols)
-            }
-            KeyCode.VIEW_SYMBOLS2 -> {
-                key.label = stringRes(R.string.key__view_symbols2)
-            }
-            KeyCode.HALF_SPACE -> {
-                key.label = stringRes(R.string.key__view_half_space)
-            }
-            KeyCode.KESHIDA -> {
-                key.label = stringRes(R.string.key__view_keshida)
-            }
-        }
-    }
-    return key
 }

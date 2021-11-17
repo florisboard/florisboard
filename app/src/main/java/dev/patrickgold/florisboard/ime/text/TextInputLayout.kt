@@ -24,5 +24,5 @@ import dev.patrickgold.florisboard.ime.text.smartbar.Smartbar
 @Composable
 fun TextInputLayout() = Column {
     Smartbar()
-    TextKeyboardLayout()
+    TextKeyboardLayout(isPreview = false)
 }

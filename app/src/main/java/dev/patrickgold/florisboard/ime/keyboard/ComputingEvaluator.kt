@@ -34,6 +34,8 @@ interface ComputingEvaluator {
 
     fun evaluateVisible(data: KeyData): Boolean
 
+    fun getActiveState(): KeyboardState
+
     fun getActiveSubtype(): Subtype
 
     fun getKeyVariation(): KeyVariation
@@ -59,6 +61,8 @@ object DefaultComputingEvaluator : ComputingEvaluator {
     override fun evaluateEnabled(data: KeyData): Boolean = true
 
     override fun evaluateVisible(data: KeyData): Boolean = true
+
+    override fun getActiveState(): KeyboardState = KeyboardState.new()
 
     override fun getActiveSubtype(): Subtype = Subtype.DEFAULT
 

@@ -20,6 +20,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
+import dev.patrickgold.florisboard.debug.flogDebug
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
@@ -31,6 +32,7 @@ import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
+import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboard
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardCache
 import dev.patrickgold.florisboard.res.ext.ExtensionComponentName
@@ -114,19 +116,26 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     override fun onInputKeyDown(ev: InputKeyEvent) {
-        TODO("Not yet implemented")
+        flogDebug { "DOWN: $ev" }
     }
 
     override fun onInputKeyUp(ev: InputKeyEvent) {
-        TODO("Not yet implemented")
+        flogDebug { "UP: $ev" }
+        when (ev.data.code) {
+            KeyCode.VIEW_CHARACTERS -> activeState.keyboardMode = KeyboardMode.CHARACTERS
+            KeyCode.VIEW_NUMERIC -> activeState.keyboardMode = KeyboardMode.NUMERIC
+            KeyCode.VIEW_NUMERIC_ADVANCED -> activeState.keyboardMode = KeyboardMode.NUMERIC_ADVANCED
+            KeyCode.VIEW_PHONE -> activeState.keyboardMode = KeyboardMode.PHONE
+            KeyCode.VIEW_PHONE2 -> activeState.keyboardMode = KeyboardMode.PHONE2
+            KeyCode.VIEW_SYMBOLS -> activeState.keyboardMode = KeyboardMode.SYMBOLS
+            KeyCode.VIEW_SYMBOLS2 -> activeState.keyboardMode = KeyboardMode.SYMBOLS2
+        }
     }
 
     override fun onInputKeyCancel(ev: InputKeyEvent) {
-        TODO("Not yet implemented")
     }
 
     override fun onInputKeyRepeat(ev: InputKeyEvent) {
-        TODO("Not yet implemented")
     }
 
     inner class KeyboardManagerResources {
@@ -252,6 +261,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                 }
                 else -> true
             }
+        }
+
+        override fun getActiveState(): KeyboardState {
+            return activeState
         }
 
         override fun getActiveSubtype(): Subtype {
