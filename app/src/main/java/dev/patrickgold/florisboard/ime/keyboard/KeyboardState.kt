@@ -250,9 +250,7 @@ class KeyboardState private constructor(
     }
 
     override fun hashCode(): Int {
-        var result = rawValue.hashCode()
-        result = 31 * result + maskOfInterest.hashCode()
-        return result
+        return rawValue.hashCode()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -262,9 +260,6 @@ class KeyboardState private constructor(
         other as KeyboardState
 
         if (rawValue != other.rawValue) return false
-        if (maskOfInterest != other.maskOfInterest) return false
-        if (imeOptions != other.imeOptions) return false
-        if (inputAttributes != other.inputAttributes) return false
 
         return true
     }

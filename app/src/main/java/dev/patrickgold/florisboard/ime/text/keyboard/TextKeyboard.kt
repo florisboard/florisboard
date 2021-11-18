@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 import dev.patrickgold.florisboard.ime.keyboard.Key
 import dev.patrickgold.florisboard.ime.keyboard.Keyboard
 import dev.patrickgold.florisboard.ime.popup.PopupMapping
+import java.util.*
 import kotlin.math.abs
 
 class TextKeyboard(
@@ -27,6 +28,8 @@ class TextKeyboard(
     val extendedPopupMapping: PopupMapping?,
     val extendedPopupMappingDefault: PopupMapping?,
 ) : Keyboard() {
+    val uniqueComposeUuid: UUID = UUID.randomUUID()
+
     val rowCount: Int
         get() = arrangement.size
 

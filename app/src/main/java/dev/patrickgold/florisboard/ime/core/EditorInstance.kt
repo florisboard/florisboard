@@ -43,12 +43,13 @@ import dev.patrickgold.florisboard.ime.clip.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clip.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard.InputAttributes
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardState
 import dev.patrickgold.florisboard.ime.text.TextInputManager
+import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
+import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.util.debugSummarize
 
-class EditorInstance(private val ims: InputMethodService, private val activeState: KeyboardState) {
+class EditorInstance(private val ims: InputMethodService) {
     companion object {
         private const val CAPACITY_CHARS: Int = 1000
         private const val CAPACITY_LINES: Int = 10
@@ -59,6 +60,9 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
         private const val CURSOR_UPDATE_DISABLED: Int = 0
     }
 
+    private val keyboardManager by ims.keyboardManager()
+
+    private val activeState get() = keyboardManager.activeState
     val cachedInput: CachedInput = CachedInput()
     internal var extractedToken: Int = 0
     private var lastReportedComposingBounds: Bounds = Bounds(-1, -1)
@@ -222,12 +226,13 @@ class EditorInstance(private val ims: InputMethodService, private val activeStat
         }
     }
 
+    private val composer = Appender()
     /**
      * Internal helper, replacing a call to inputConnection.commitText with text composition in mind.
      */
     fun doCommitText(text: String): Pair<Boolean, String> {
         val ic = inputConnection ?: return Pair(false, "")
-        val composer: Composer = FlorisBoard.getInstance().composer
+        //val composer: Composer = FlorisBoard.getInstance().composer
         return if (text.length != 1) {
             Pair(ic.commitText(text, 1), text)
         } else {

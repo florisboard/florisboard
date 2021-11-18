@@ -40,8 +40,6 @@ interface ComputingEvaluator {
 
     fun getKeyVariation(): KeyVariation
 
-    fun getKeyboard(): Keyboard
-
     fun isSlot(data: KeyData): Boolean
 
     fun getSlotData(data: KeyData): KeyData?
@@ -67,8 +65,6 @@ object DefaultComputingEvaluator : ComputingEvaluator {
     override fun getActiveSubtype(): Subtype = Subtype.DEFAULT
 
     override fun getKeyVariation(): KeyVariation = KeyVariation.NORMAL
-
-    override fun getKeyboard(): Keyboard = throw NotImplementedError()
 
     override fun isSlot(data: KeyData): Boolean = false
 

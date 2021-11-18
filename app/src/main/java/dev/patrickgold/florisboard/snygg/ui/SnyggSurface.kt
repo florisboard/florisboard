@@ -60,7 +60,7 @@ fun SnyggSurface(
     }
     CompositionLocalProvider(
         LocalContentColor provides contentColor,
-        LocalAbsoluteElevation provides absoluteElevation
+        LocalAbsoluteElevation provides absoluteElevation,
     ) {
         Box(
             modifier
@@ -73,8 +73,7 @@ fun SnyggSurface(
                 .clip(shapeValue)
                 .then(clickAndSemanticsModifier),
             propagateMinConstraints = true,
-        ) {
-            content()
-        }
+            content = content,
+        )
     }
 }

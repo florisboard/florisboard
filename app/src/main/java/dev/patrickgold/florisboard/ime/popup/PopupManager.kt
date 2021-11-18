@@ -559,3 +559,47 @@ class PopupManager<V : View>(
         popupLayerView?.removeView(popupViewExt)
     }
 }
+
+/**
+ * TODO: Stub, implement compose UI solution
+ */
+class PopupManagerStub() {
+
+    /** Is true if the preview popup is visible to the user, else false */
+    val isShowingPopup: Boolean
+        get() = false
+    /** Is true if the extended popup is visible to the user, else false */
+    val isShowingExtendedPopup: Boolean
+        get() = false
+
+    fun isSuitableForPopups(key: Key): Boolean {
+        return false
+    }
+
+    fun show(key: Key, keyHintConfiguration: KeyHintConfiguration) {
+    }
+
+    fun extend(key: Key, keyHintConfiguration: KeyHintConfiguration) {
+    }
+
+    fun propagateMotionEvent(key: Key, event: MotionEvent, pointerIndex: Int): Boolean {
+        return false
+    }
+
+    fun getActiveKeyData(key: Key, keyHintConfiguration: KeyHintConfiguration): KeyData? {
+        return null
+    }
+
+    fun getActiveEmojiKeyData(key: Key): KeyData? {
+        return null
+    }
+
+    /**
+     * Hides the key preview popup as well as the extended popup.
+     */
+    fun hide() {
+    }
+
+    fun dismissAllPopups() {
+    }
+}

@@ -18,11 +18,23 @@ package dev.patrickgold.florisboard.ime.text
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.LocalContext
+import dev.patrickgold.florisboard.common.observeAsNonNullState
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyboardLayout
 import dev.patrickgold.florisboard.ime.text.smartbar.Smartbar
+import dev.patrickgold.florisboard.keyboardManager
 
 @Composable
 fun TextInputLayout() = Column {
+    val context = LocalContext.current
+    val keyboardManager by context.keyboardManager()
+
+    val activeKeyboard by keyboardManager.activeKeyboard.observeAsNonNullState()
+
     Smartbar()
-    TextKeyboardLayout(isPreview = false)
+    TextKeyboardLayout(
+        keyboard = activeKeyboard,
+        isPreview = false,
+    )
 }

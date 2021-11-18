@@ -203,7 +203,7 @@ open class FlorisBoard : LifecycleInputMethodService(),
                 // "Main" try..catch block
                 flogInfo(LogTopic.IMS_EVENTS)
 
-                activeEditorInstance = EditorInstance(this, keyboardManager.activeState)
+                activeEditorInstance = EditorInstance(this)
 
                 imeManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
                 inputFeedbackController = InputFeedbackController.new(this)

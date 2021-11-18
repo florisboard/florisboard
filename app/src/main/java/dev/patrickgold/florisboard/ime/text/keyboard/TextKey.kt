@@ -17,9 +17,6 @@
 package dev.patrickgold.florisboard.ime.text.keyboard
 
 import android.content.Context
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
 import dev.patrickgold.florisboard.common.lowercase
@@ -34,15 +31,14 @@ import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.*
 
 class TextKey(override val data: AbstractKeyData) : Key(data) {
-    var computedData: KeyData by mutableStateOf(TextKeyData.UNSPECIFIED)
+    var computedData: KeyData = TextKeyData.UNSPECIFIED
         private set
     val computedPopups: MutablePopupSet<KeyData> = MutablePopupSet()
-    var computedSymbolHint: KeyData? by mutableStateOf(null)
-    var computedNumberHint: KeyData? by mutableStateOf(null)
+    var computedSymbolHint: KeyData? = null
+    var computedNumberHint: KeyData? = null
 
-    fun compute(evaluator: ComputingEvaluator) {
-        val keyboard = (evaluator.getKeyboard() as? TextKeyboard)
-        val keyboardMode = keyboard?.mode ?: KeyboardMode.CHARACTERS
+    fun compute(keyboard: TextKeyboard, evaluator: ComputingEvaluator) {
+        val keyboardMode = keyboard.mode
         val computed = data.compute(evaluator)
 
         if (computed == null || !evaluator.evaluateVisible(computed)) {
@@ -78,8 +74,8 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                         computedLabel
                     }
                 }
-                val extendedPopupsDefault = keyboard?.extendedPopupMappingDefault
-                val extendedPopups = keyboard?.extendedPopupMapping
+                val extendedPopupsDefault = keyboard.extendedPopupMappingDefault
+                val extendedPopups = keyboard.extendedPopupMapping
                 var popupSet: PopupSet<AbstractKeyData>? = null
                 val kv = evaluator.getKeyVariation()
                 if (popupSet == null && kv == KeyVariation.PASSWORD) {
@@ -224,6 +220,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
      */
     fun computeLabelsAndDrawables(
         context: Context,
+        keyboard: TextKeyboard,
         evaluator: ComputingEvaluator,
     ) {
         // Reset attributes first to avoid invalid states if not updated
@@ -291,7 +288,7 @@ class TextKey(override val data: AbstractKeyData) : Key(data) {
                     }
                 }
                 KeyCode.SPACE, KeyCode.CJK_SPACE -> {
-                    when ((evaluator.getKeyboard() as? TextKeyboard)?.mode) {
+                    when (keyboard.mode) {
                         KeyboardMode.NUMERIC,
                         KeyboardMode.NUMERIC_ADVANCED,
                         KeyboardMode.PHONE,

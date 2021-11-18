@@ -19,8 +19,11 @@ package dev.patrickgold.florisboard.ime.keyboard
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.prefs.florisPreferenceModel
-import dev.patrickgold.florisboard.debug.flogDebug
+import dev.patrickgold.florisboard.appContext
+import dev.patrickgold.florisboard.debug.LogTopic
+import dev.patrickgold.florisboard.debug.flogError
 import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.core.InputEventDispatcher
 import dev.patrickgold.florisboard.ime.core.InputKeyEvent
@@ -29,7 +32,9 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.core.SubtypePreset
 import dev.patrickgold.florisboard.ime.onehanded.OneHandedMode
 import dev.patrickgold.florisboard.ime.popup.PopupMappingComponent
+import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
+import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
 import dev.patrickgold.florisboard.ime.text.keyboard.KeyboardMode
@@ -46,6 +51,7 @@ import kotlinx.coroutines.sync.withLock
 
 class KeyboardManager(context: Context) : InputKeyEventReceiver {
     private val prefs by florisPreferenceModel()
+    private val appContext by context.appContext()
     private val extensionManager by context.extensionManager()
     private val subtypeManager by context.subtypeManager()
 
@@ -56,10 +62,12 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     val computingEvaluator: ComputingEvaluator = KeyboardManagerComputingEvaluator()
     val resources = KeyboardManagerResources()
 
+    private val activeEditorInstance get() = FlorisImeService.activeEditorInstance()
     private val activeKeyboardGuard = Mutex(locked = false)
     private val _activeKeyboard = MutableLiveData(PlaceholderLoadingKeyboard)
     val activeKeyboard: LiveData<TextKeyboard> get() = _activeKeyboard
     val activeState = KeyboardState.new()
+    private var newCapsState: Boolean = false
 
     val inputEventDispatcher = InputEventDispatcher.new(
         repeatableKeyCodes = intArrayOf(
@@ -97,6 +105,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
                     subtype = subtype,
                 ).await()
             }.await()
+            for (key in computedKeyboard.keys()) {
+                key.compute(computedKeyboard, computingEvaluator)
+                key.computeLabelsAndDrawables(appContext, computedKeyboard, computingEvaluator)
+            }
             _activeKeyboard.postValue(computedKeyboard)
         }
     }
@@ -115,13 +127,112 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         })
     }
 
+    fun executeSwipeAction(action: SwipeAction) {
+        //
+    }
+
+    /**
+     * Handles a [KeyCode.DELETE] event.
+     */
+    private fun handleDelete() {
+        activeState.batchEdit {
+            it.isManualSelectionMode = false
+            it.isManualSelectionModeStart = false
+            it.isManualSelectionModeEnd = false
+        }
+        activeEditorInstance?.deleteBackwards()
+    }
+
+    /**
+     * Handles a [KeyCode.DELETE_WORD] event.
+     */
+    private fun handleDeleteWord() {
+        activeState.batchEdit {
+            it.isManualSelectionMode = false
+            it.isManualSelectionModeStart = false
+            it.isManualSelectionModeEnd = false
+        }
+        activeEditorInstance?.deleteWordBackwards()
+    }
+
+    /**
+     * Handles a [KeyCode.ENTER] event.
+     */
+    private fun handleEnter() {
+        if (activeState.imeOptions.flagNoEnterAction) {
+            activeEditorInstance?.performEnter()
+        } else {
+            when (activeState.imeOptions.enterAction) {
+                ImeOptions.EnterAction.DONE,
+                ImeOptions.EnterAction.GO,
+                ImeOptions.EnterAction.NEXT,
+                ImeOptions.EnterAction.PREVIOUS,
+                ImeOptions.EnterAction.SEARCH,
+                ImeOptions.EnterAction.SEND -> {
+                    activeEditorInstance?.performEnterAction(activeState.imeOptions.enterAction)
+                }
+                else -> activeEditorInstance?.performEnter()
+            }
+        }
+    }
+
+    /**
+     * Handles a [KeyCode.SHIFT] down event.
+     */
+    private fun handleShiftDown(ev: InputKeyEvent) {
+        if (ev.isConsecutiveEventOf(inputEventDispatcher.lastKeyEventDown, prefs.keyboard.longPressDelay.get().toLong())) {
+            newCapsState = true
+            activeState.caps = true
+            activeState.capsLock = true
+        } else {
+            newCapsState = !activeState.caps
+            activeState.caps = true
+            activeState.capsLock = false
+        }
+    }
+
+    /**
+     * Handles a [KeyCode.SHIFT] up event.
+     */
+    private fun handleShiftUp() {
+        activeState.caps = newCapsState
+    }
+
+    /**
+     * Handles a [KeyCode.SHIFT] up event.
+     */
+    private fun handleShiftLock() {
+        val lastKeyEvent = inputEventDispatcher.lastKeyEventDown ?: return
+        if (lastKeyEvent.data.code == KeyCode.SHIFT && lastKeyEvent.action == InputKeyEvent.Action.DOWN) {
+            newCapsState = true
+            activeState.batchEdit {
+                it.caps = true
+                it.capsLock = true
+            }
+        }
+    }
+
+    /**
+     * Handles a [KeyCode.SHIFT] cancel event.
+     */
+    private fun handleShiftCancel() {
+        activeState.caps = false
+        activeState.capsLock = false
+    }
+
     override fun onInputKeyDown(ev: InputKeyEvent) {
-        flogDebug { "DOWN: $ev" }
+        when (ev.data.code) {
+            KeyCode.SHIFT -> handleShiftDown(ev)
+        }
     }
 
     override fun onInputKeyUp(ev: InputKeyEvent) {
-        flogDebug { "UP: $ev" }
         when (ev.data.code) {
+            KeyCode.DELETE -> handleDelete()
+            KeyCode.DELETE_WORD -> handleDeleteWord()
+            KeyCode.ENTER -> handleEnter()
+            KeyCode.SHIFT -> handleShiftUp()
+            KeyCode.SHIFT_LOCK -> handleShiftLock()
             KeyCode.VIEW_CHARACTERS -> activeState.keyboardMode = KeyboardMode.CHARACTERS
             KeyCode.VIEW_NUMERIC -> activeState.keyboardMode = KeyboardMode.NUMERIC
             KeyCode.VIEW_NUMERIC_ADVANCED -> activeState.keyboardMode = KeyboardMode.NUMERIC_ADVANCED
@@ -129,10 +240,41 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.VIEW_PHONE2 -> activeState.keyboardMode = KeyboardMode.PHONE2
             KeyCode.VIEW_SYMBOLS -> activeState.keyboardMode = KeyboardMode.SYMBOLS
             KeyCode.VIEW_SYMBOLS2 -> activeState.keyboardMode = KeyboardMode.SYMBOLS2
+            else -> when (activeState.keyboardMode) {
+                KeyboardMode.NUMERIC,
+                KeyboardMode.NUMERIC_ADVANCED,
+                KeyboardMode.PHONE,
+                KeyboardMode.PHONE2 -> when (ev.data.type) {
+                    KeyType.CHARACTER,
+                    KeyType.NUMERIC -> {
+                        val text = ev.data.asString(isForDisplay = false)
+                        activeEditorInstance?.commitText(text)
+                    }
+                    else -> when (ev.data.code) {
+                        KeyCode.PHONE_PAUSE,
+                        KeyCode.PHONE_WAIT -> {
+                            val text = ev.data.asString(isForDisplay = false)
+                            activeEditorInstance?.commitText(text)
+                        }
+                    }
+                }
+                else -> when (ev.data.type) {
+                    KeyType.CHARACTER, KeyType.NUMERIC ->{
+                        val text = ev.data.asString(isForDisplay = false)
+                        activeEditorInstance?.commitText(text)
+                    }
+                    else -> {
+                        flogError(LogTopic.KEY_EVENTS) { "Received unknown key: $ev.data" }
+                    }
+                }
+            }
         }
     }
 
     override fun onInputKeyCancel(ev: InputKeyEvent) {
+        when (ev.data.code) {
+            KeyCode.SHIFT -> handleShiftCancel()
+        }
     }
 
     override fun onInputKeyRepeat(ev: InputKeyEvent) {
@@ -273,10 +415,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 
         override fun getKeyVariation(): KeyVariation {
             return activeState.keyVariation
-        }
-
-        override fun getKeyboard(): Keyboard {
-            return activeKeyboard.value!!
         }
 
         override fun isSlot(data: KeyData): Boolean {

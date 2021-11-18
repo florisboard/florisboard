@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -47,6 +48,7 @@ import dev.patrickgold.florisboard.common.ViewUtils
 import dev.patrickgold.florisboard.common.isOrientationLandscape
 import dev.patrickgold.florisboard.common.isOrientationPortrait
 import dev.patrickgold.florisboard.common.observeAsTransformingState
+import dev.patrickgold.florisboard.ime.core.EditorInstance
 import dev.patrickgold.florisboard.ime.keyboard.InputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.ProvideKeyboardRowBaseHeight
@@ -81,9 +83,21 @@ var FlorisImeServiceReference = WeakReference<FlorisImeService?>(null)
  * manager classes.
  */
 class FlorisImeService : LifecycleInputMethodService() {
+    companion object {
+        fun activeEditorInstance(): EditorInstance? {
+            return FlorisImeServiceReference.get()?.activeEditorInstance
+        }
+
+        fun inputFeedbackController(): InputFeedbackController? {
+            return FlorisImeServiceReference.get()?.inputFeedbackController
+        }
+    }
+
     private val prefs by florisPreferenceModel()
     private val keyboardManager by keyboardManager()
 
+    private val activeEditorInstance by lazy { EditorInstance(this) }
+    private val activeState get() = keyboardManager.activeState
     private var composeInputView: View? = null
     private var composeInputViewInnerHeight: Int = 0
     private val inputFeedbackController by lazy { InputFeedbackController.new(this) }
@@ -111,9 +125,41 @@ class FlorisImeService : LifecycleInputMethodService() {
         composeInputView = null
     }
 
+    override fun onBindInput() {
+        super.onBindInput()
+        activeEditorInstance.bindInput()
+    }
+
+    override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
+        super.onStartInput(attribute, restarting)
+        activeEditorInstance.startInput(attribute)
+    }
+
+    override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
+        super.onStartInputView(info, restarting)
+        if (info != null) {
+            activeState.batchEdit {
+                it.update(info)
+                it.isSelectionMode = (info.initialSelEnd - info.initialSelStart) != 0
+            }
+        }
+        activeEditorInstance.startInputView(info)
+    }
+
     override fun onFinishInputView(finishingInput: Boolean) {
         super.onFinishInputView(finishingInput)
-        keyboardManager.activeState.reset()
+        activeState.reset()
+        activeEditorInstance.finishInputView()
+    }
+
+    override fun onFinishInput() {
+        super.onFinishInput()
+        activeEditorInstance.finishInput()
+    }
+
+    override fun onUnbindInput() {
+        super.onUnbindInput()
+        activeEditorInstance.unbindInput()
     }
 
     @Composable
