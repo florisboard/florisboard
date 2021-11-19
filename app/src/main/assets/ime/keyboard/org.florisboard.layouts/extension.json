@@ -1,0 +1,83 @@
+{
+  "$": "ime.extension.keyboard",
+  "meta": {
+    "id": "org.florisboard.layouts",
+    "version": "0.1.0",
+    "title": "Default layouts",
+    "description": "Default layouts which are always available.",
+    "maintainers": [ "patrickgold <patrick@patrickgold.dev>" ],
+    "license": "apache-2.0"
+  },
+  "layouts": {
+    "characters": [
+      {
+        "id": "qwerty",
+        "label": "QWERTY",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      },
+      {
+        "id": "qwertz",
+        "label": "QWERTZ",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
+    "characters-mod": [
+      {
+        "id": "default",
+        "label": "Default character modifier layout",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
+    "phone": [
+      {
+        "id": "telpad",
+        "label": "Simple telpad input",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
+    "phone2": [
+      {
+        "id": "telpad",
+        "label": "Simple telpad input (advanced controls)",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
+    "symbols": [
+      {
+        "id": "western",
+        "label": "Western",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
+    "symbols-mod": [
+      {
+        "id": "default",
+        "label": "Default",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
+    "symbols2": [
+      {
+        "id": "western",
+        "label": "Western",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ],
+    "symbols2-mod": [
+      {
+        "id": "default",
+        "label": "Default",
+        "authors": [ "patrickgold" ],
+        "direction": "ltr"
+      }
+    ]
+  }
+}
